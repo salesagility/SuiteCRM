@@ -302,7 +302,7 @@ class StateSaver
      */
     public function pushErrorLevel($key = 'level', $namespace = 'error_reporting')
     {
-        LoggerManager::getLogger()->warn('Saving error level. Try to remove the error_reporting() function from your code.');
+        //LoggerManager::getLogger()->warn('Saving error level. Try to remove the error_reporting() function from your code.');
         $level = error_reporting();
         $this->push($level, $key, $namespace);
     }
@@ -316,7 +316,7 @@ class StateSaver
      */
     public function popErrorLevel($key = 'level', $namespace = 'error_reporting')
     {
-        LoggerManager::getLogger()->error('Pop error level. Try to remove the error_reporting() function from your code.');
+        //LoggerManager::getLogger()->error('Pop error level. Try to remove the error_reporting() function from your code.');
         $level = $this->pop($key, $namespace);
         error_reporting($level);
     }

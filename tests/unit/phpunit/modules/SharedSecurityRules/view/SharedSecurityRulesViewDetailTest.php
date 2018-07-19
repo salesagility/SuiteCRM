@@ -47,7 +47,12 @@ include_once __DIR__ . '/../../../../../../modules/SharedSecurityRules/views/vie
  */
 class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
               
-    public function testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueTypeWithCurrentBeanWithModulePathArray() {
+    /**
+     * testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueTypeWithCurrentBeanWithModulePathArray
+     * 
+     * @global type $current_user
+     */
+    public function testPreDisplayWithModulePathArray() {
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('accounts');
@@ -110,7 +115,11 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
     } 
     
               
-    public function testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueTypeWithCurrentBeanWithModulePath() {
+    /**
+     * 
+     * @global type $current_user
+     */
+    public function testPreDisplayWithModulePath() {
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('accounts');
@@ -172,7 +181,12 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $state->popTable('users');
     } 
           
-    public function testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueTypeWithCurrentBean() {
+    /**
+     * testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueTypeWithCurrentBean
+     * 
+     * @global type $current_user
+     */
+    public function testPreDisplayWithCurrentBean() {
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('accounts');
@@ -233,7 +247,12 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $state->popTable('users');
     } 
           
-    public function testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueType() {
+    /**
+     * testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueType
+     * 
+     * @global type $current_user
+     */
+    public function testPreDisplayWidthDateValueType() {
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('accounts');
@@ -294,7 +313,12 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $state->popTable('users');
     } 
           
-    public function testPreDisplayWithBeanIdAndSharedSecurityRoleCondition() {
+    /**
+     * testPreDisplayWithBeanIdAndSharedSecurityRoleCondition
+     * 
+     * @global type $current_user
+     */
+    public function testPreDisplayWithSharedSecurityRoleCondition() {
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('accounts');
