@@ -287,12 +287,12 @@ myBufferedListenerObject.refit = function() {
 }
 
 function getSideBarCurrentWidth() {
-	var $sideBarContainer = $('#sidebar_container');
-	if (!$sideBarContainer.length) {
-		return 0;
-	}
+  var $sideBarContainer = $('#sidebar_container');
+  if (!$sideBarContainer.length) {
+    return 0;
+  }
 
-	var $firstDivChild = $sideBarContainer.children('div:first');
+  var $firstDivChild = $sideBarContainer.children('div:first');
   if (!$firstDivChild.length || !$firstDivChild.is(':visible')) {
     return 0;
   }
