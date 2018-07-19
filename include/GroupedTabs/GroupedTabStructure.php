@@ -43,16 +43,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class GroupedTabStructure
 {
-    /** 
+    /**
      * Prepare the tabs structure.
      * Uses 'Other' tab functionality.
      * If $modList is not specified, $modListHeader is used as default.
-     * 
+     *
      * @param   array   optional list of modules considered valid
-     * @param   array   optional array to temporarily union into the root of the tab structure 
+     * @param   array   optional array to temporarily union into the root of the tab structure
     * @param bool  if  we set this param true, the other group tab will be returned no matter  $sugar_config['other_group_tab_displayed'] is true or false
      * @param bool  We use label value as return array key by default. But we can set this param true, that we can use the label name as return array key.
-     * 
+     *
      * @return  array   the complete tab-group structure
      */
     public function get_tab_structure($modList = '', $patch = '', $ignoreSugarConfig=false, $labelAsKey=false)

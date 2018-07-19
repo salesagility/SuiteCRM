@@ -134,7 +134,7 @@ $state->popErrorLevel();
 $state->popPHPConfigOptions();
 
 /**
- * Clean the merge data results, removing any emptys or blanks that should not be displayed 
+ * Clean the merge data results, removing any emptys or blanks that should not be displayed
  * to the user on the confirm layout screen.
  *
  * @param array $data

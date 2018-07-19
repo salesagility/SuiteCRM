@@ -240,7 +240,7 @@ class JitReports extends Jit
 		
     /**
      * wrapper function to return the html code containing the chart in a div
-     * 
+     *
      * @param 	string $name 	name of the div
      *			string $xmlFile	location of the XML file
      *			string $style	optional additional styles for the div

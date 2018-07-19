@@ -10,7 +10,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -28,7 +28,7 @@ r23115 - 2007-05-25 13:07:34 -0700 (Fri, 25 May 2007) - clee - Updated to suppor
 
 r22603 - 2007-05-09 13:43:21 -0700 (Wed, 09 May 2007) - clee - Removed warning where there is no include value supplied.
 
-r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee - 
+r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee -
 
 */
 
@@ -47,7 +47,7 @@ r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee -
  * Name:     sugar_include<br>
  * Purpose:  Handles rendering the global file includes from the metadata files defined
  *           in templateMeta=>includes.
- * 
+ *
  * @author Collin Lee {clee@sugarcrm.com}
  * @param array
  * @param Smarty

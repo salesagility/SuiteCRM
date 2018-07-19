@@ -116,7 +116,7 @@ class ImportView extends SugarView
 
     /**
      * Send our output to the importer controller.
-     * 
+     *
      * @param string $html
      * @param string $submitContent
      * @param string $script

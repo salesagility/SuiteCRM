@@ -64,7 +64,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * Note that deployed relationships are readonly and cannot be modified - getDeployedRelationships() takes care of marking them as such
      * Assumes that only called for modules which exist in $beansList - otherwise get_module_info will break
      * This means that load() cannot be called for Activities, only Tasks, Notes, etc
-     * 
+     *
      * Note that we may need to adjust the cardinality for any custom relationships that we do not have entries for in the working directory
      * These relationships might have been loaded from an installation package by ModuleInstaller, or the custom/working directory might have been cleared at some point
      * The cardinality in the installed relationship is not necessarily correct for custom relationships, which currently are all built as many-to-many relationships
@@ -220,7 +220,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * We can assume that both sides of the relationship are deployed modules as this is only called within the context of DeployedRelationships
      * @param string $thisModuleName    Name of the related module
      * @param string $sourceModuleName  Name of the primary module
-     * @return string Name of the relate field, if found; null otherwise    
+     * @return string Name of the relate field, if found; null otherwise
      */
     
     private static function identifyRelateField($thisModuleName, $sourceModuleName)

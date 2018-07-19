@@ -46,7 +46,7 @@ require_once('include/VarDefHandler/VarDefHandler.php');
 class LeadsVarDefHandler extends VarDefHandler
 {
     /**
-     * Overriden to filter legacy pre-5.1 calls and meetings 
+     * Overriden to filter legacy pre-5.1 calls and meetings
      * @see VarDefHandler::get_vardef_array()
      */
     public function get_vardef_array($use_singular=false, $remove_dups = false, $use_field_name = false, $use_field_label = false)

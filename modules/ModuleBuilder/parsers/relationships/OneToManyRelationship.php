@@ -48,14 +48,14 @@ require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.p
  * The One-To-Many relationships created by this class are a combination of a subpanel and a custom relate field
  * The LHS (One) module will receive a new subpanel for the RHS module. The subpanel gets its data ('get_subpanel_data') from a link field that references a new Relationship
  * The RHS (Many) module will receive a new relate field to point back to the LHS
- * 
+ *
  * OOB modules implement One-To-Many relationships as:
- * 
+ *
  * On the LHS (One) side:
  * A Relationship of type one-to-many in the rhs modules vardefs.php
  * A link field in the same vardefs.php with 'relationship'= the relationship name and 'source'='non-db'
  * A subpanel which gets its data (get_subpanel_data) from the link field
- * 
+ *
  * On the RHS (Many) side:
  * A Relate field in the vardefs, formatted as in this example, which references a link field:
  * 'name' => 'account_name',

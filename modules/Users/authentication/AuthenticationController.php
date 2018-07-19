@@ -68,7 +68,7 @@ class AuthenticationController
 
     /**
      * Get auth controller object
-     * @param string $type 
+     * @param string $type
      * @return SugarAuthenticate
      */
     protected function getAuthController($type)

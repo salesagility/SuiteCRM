@@ -60,10 +60,10 @@ class SubpanelMerge extends ListViewMerge
     protected $viewDefs = 'SubPanel';
     /**
      * Loads the meta data of the original, new, and custom file into the variables originalData, newData, and customData respectively it then transforms them into a structure that EditView Merge would understand
-     * 
+     *
      * @param STRING $module - name of the module's files that are to be merged
      * @param STRING $original_file - path to the file that originally shipped with sugar
-     * @param STRING $new_file - path to the new file that is shipping with the patch 
+     * @param STRING $new_file - path to the new file that is shipping with the patch
      * @param STRING $custom_file - path to the custom file
      */
     protected function loadData($module, $original_file, $new_file, $custom_file)
@@ -87,7 +87,7 @@ class SubpanelMerge extends ListViewMerge
     /**
      * This will save the merged data to a file
      *
-     * @param STRING $to - path of the file to save it to 
+     * @param STRING $to - path of the file to save it to
      * @return BOOLEAN - success or failure of the save
      */
     public function save($to)

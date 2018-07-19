@@ -118,7 +118,7 @@ function markEmailAddressInvalid($email_address)
 
 /**
  * Get the existing campaign log entry by tracker key.
- * 
+ *
  * @param string Target Key
  * @return array Campaign Log Row
  */
@@ -136,7 +136,7 @@ function getExistingCampaignLogEntry($identifier)
 
 /**
  * Scan the bounced email searching for a valid target identifier.
- * 
+ *
  * @param string Email Description
  * @return array Results including matches and identifier
  */

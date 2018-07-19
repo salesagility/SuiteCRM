@@ -301,9 +301,9 @@ class actionSendEmail extends actionBase
 
     /**
      * Return true on success otherwise false.
-     * Use actionSendEmail::getLastEmailsSuccess() and actionSendEmail::getLastEmailsFailed() 
+     * Use actionSendEmail::getLastEmailsSuccess() and actionSendEmail::getLastEmailsFailed()
      * methods to get last email sending status
-     * 
+     *
      * @param SugarBean $bean
      * @param array $params
      * @param bool $in_save

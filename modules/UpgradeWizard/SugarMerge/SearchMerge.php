@@ -64,7 +64,7 @@ class SearchMerge extends ListViewMerge
      *
      * @param STRING $module - name of the module's files that are to be merged
      * @param STRING $original_file - path to the file that originally shipped with sugar
-     * @param STRING $new_file - path to the new file that is shipping with the patch 
+     * @param STRING $new_file - path to the new file that is shipping with the patch
      * @param STRING $custom_file - path to the custom file
      */
     protected function loadData($module, $original_file, $new_file, $custom_file)
@@ -104,8 +104,8 @@ class SearchMerge extends ListViewMerge
 	
     /**
      * This builds the array of fields from the merged fields in the right order
-     * when building the panels for a list view the most important thing is order 
-     * so we ensure the fields that came from the custom file keep 
+     * when building the panels for a list view the most important thing is order
+     * so we ensure the fields that came from the custom file keep
      * their order then we add any new fields at the end
      *
      * @return ARRAY
@@ -144,7 +144,7 @@ class SearchMerge extends ListViewMerge
      *
      * @param STRING $module - name of the module's files that are to be merged
      * @param STRING $original_file - path to the file that originally shipped with sugar
-     * @param STRING $new_file - path to the new file that is shipping with the patch 
+     * @param STRING $new_file - path to the new file that is shipping with the patch
      * @param STRING $custom_file - path to the custom file
      * @param BOOLEAN $save - boolean on if it should save the results to the custom file or not
      * @return BOOLEAN - if the merged file was saved if false is passed in for the save parameter it always returns true

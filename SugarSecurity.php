@@ -90,13 +90,13 @@ class ScanFileIncludes extends SugarSecure
         $found = '';
         /*preg_match_all("'(require_once\([^\)]*\\$[^\)]*\))'si", $contents, $results, PREG_SET_ORDER);
         foreach($results as $result){
-        	
-        	$found .= "\n" . $result[0];	
+
+        	$found .= "\n" . $result[0];
         }
         $results = array();
         preg_match_all("'include_once\([^\)]*\\$[^\)]*\)'si", $contents, $results, PREG_SET_ORDER);
         foreach($results as $result){
-        	$found .= "\n" . $result[0];	
+        	$found .= "\n" . $result[0];
         }
         */
         $results = array();

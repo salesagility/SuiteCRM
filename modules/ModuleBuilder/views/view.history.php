@@ -164,7 +164,7 @@ class ViewHistory extends SugarView
     }
 
     /**
- 	 * Restores a layout to its current customized state. 
+ 	 * Restores a layout to its current customized state.
  	 * Called when leaving a restored layout without saving.
  	 */
     public function unrestore()

@@ -264,8 +264,8 @@ if (!isset($_REQUEST['inline']) || $_REQUEST['inline'] != 'inline') {
 }
 
 /**
- * This function takes in 3 parameters and determines the appropriate image source.  
- * 
+ * This function takes in 3 parameters and determines the appropriate image source.
+ *
  * @param  int $num parameter is the "health" parameter being tracked whenever there is something wrong.  (higher number =bad)
  * @param  int $total Parameter is the total number things being checked.
  * @return string HTML img tag

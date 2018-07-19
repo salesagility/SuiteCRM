@@ -112,10 +112,10 @@ $sugarDependentDropdown = array(
 				 * 'name' will be prepended by the 'grouping' value and a delimiter "::".  It then will be prepended by
 				 * a numeric index in increments of 100. If the user inserts actions inbetween retrieved action rows,
 				 * the index will be 1/2 of the delta (i. e., "50" if inserted between index 0 and index 100).
-				 * 
+				 *
 				 * This element will have the following as it's name in the form:
 				 * 		"actionGroup::0::action0"
-				 * Subsequent elements will have the following: 
+				 * Subsequent elements will have the following:
 				 * 		"actionGroup::100::action0"
 				 */
 				'name'		=> 'action0',	// name of form element
@@ -123,7 +123,7 @@ $sugarDependentDropdown = array(
 				 * The above applies to "id" in addition to:
 				 * "id" will further be appended by ":::" and a numeric index in increments of 1 (0, 1, 2, 3, etc).  This is
 				 * to allow us to identify which element is currently being acted upon.
-				 * 
+				 *
 				 * The example below will ultimately have the id "actionGroup::0::action0" in the DOM.
 				 */
 				'id'		=> 'action0',	// id of form element - an internal index will be appended to this value 0, 100, 200, etc.
@@ -206,7 +206,7 @@ $sugarDependentDropdown = array(
 					 * If further processing is required (like more dropdowns
 					 * or input fields), create handlers that have "onchange"
 					 * handlers to further process subsequent elements.
-					 * 
+					 *
 					 * See SUGAR.routing.handleDependentDropdown() found in
 					 * "include/SugarDependentDropdown/javascript/SugarDependentDropdown.
 					 * js" for an example of how to continue cascading the

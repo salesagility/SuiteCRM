@@ -10,7 +10,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -92,7 +92,7 @@ class TCPDFBarcode
     protected $barcode_array;
 		
     /**
-     * This is the class constructor. 
+     * This is the class constructor.
      * Return an array representations for common 1D barcodes:<ul>
      * <li>$arrcode['code'] code to be printed on text label</li>
      * <li>$arrcode['maxh'] max bar height</li>
@@ -110,7 +110,7 @@ class TCPDFBarcode
         $this->setBarcode($code, $type);
     }
 	
-    /** 
+    /**
      * Return an array representations of barcode.
  	 * @return array
      */
@@ -119,7 +119,7 @@ class TCPDFBarcode
         return $this->barcode_array;
     }
 	
-    /** 
+    /**
      * Set the barcode.
      * @param string $code code to print
  	 * @param string $type type of barcode: <ul><li>C39 : CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.</li><li>C39+ : CODE 39 with checksum</li><li>C39E : CODE 39 EXTENDED</li><li>C39E+ : CODE 39 EXTENDED + CHECKSUM</li><li>C93 : CODE 93 - USS-93</li><li>S25 : Standard 2 of 5</li><li>S25+ : Standard 2 of 5 + CHECKSUM</li><li>I25 : Interleaved 2 of 5</li><li>I25+ : Interleaved 2 of 5 + CHECKSUM</li><li>C128A : CODE 128 A</li><li>C128B : CODE 128 B</li><li>C128C : CODE 128 C</li><li>EAN2 : 2-Digits UPC-Based Extention</li><li>EAN5 : 5-Digits UPC-Based Extention</li><li>EAN8 : EAN 8</li><li>EAN13 : EAN 13</li><li>UPCA : UPC-A</li><li>UPCE : UPC-E</li><li>MSI : MSI (Variation of Plessey code)</li><li>MSI+ : MSI + CHECKSUM (modulo 11)</li><li>POSTNET : POSTNET</li><li>PLANET : PLANET</li><li>RMS4CC : RMS4CC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code)</li><li>KIX : KIX (Klant index - Customer index)</li><li>IMB: Intelligent Mail Barcode - Onecode - USPS-B-3200</li><li>CODABAR : CODABAR</li><li>CODE11 : CODE 11</li><li>PHARMA : PHARMACODE</li><li>PHARMA2T : PHARMACODE TWO-TRACKS</li></ul>
@@ -626,7 +626,7 @@ class TCPDFBarcode
 	
     /**
      * MSI.
-     * Variation of Plessey code, with similar applications 
+     * Variation of Plessey code, with similar applications
      * Contains digits (0 to 9) and encodes the data only in the width of bars.
      * @param string $code code to represent.
      * @param boolean $checksum if true add a checksum to the code (modulo 11)
@@ -824,7 +824,7 @@ class TCPDFBarcode
     }
 	
     /**
-     * C128 barcodes. 
+     * C128 barcodes.
      * Very capable code, excellent density, high reliability; in very wide use world-wide
      * @param string $code code to represent.
      * @param string $type barcode type: A, B or C
@@ -1758,7 +1758,7 @@ class TCPDFBarcode
 	
     /**
      * IMB - Intelligent Mail Barcode - Onecode - USPS-B-3200
-     * (requires PHP bcmath extension) 
+     * (requires PHP bcmath extension)
      * Intelligent Mail barcode is a 65-bar code for use on mail in the United States.
      * The fields are described as follows:<ul><li>The Barcode Identifier shall be assigned by USPS to encode the presort identification that is currently printed in human readable form on the optional endorsement line (OEL) as well as for future USPS use. This shall be two digits, with the second digit in the range of 0–4. The allowable encoding ranges shall be 00–04, 10–14, 20–24, 30–34, 40–44, 50–54, 60–64, 70–74, 80–84, and 90–94.</li><li>The Service Type Identifier shall be assigned by USPS for any combination of services requested on the mailpiece. The allowable encoding range shall be 000http://it2.php.net/manual/en/function.dechex.php–999. Each 3-digit value shall correspond to a particular mail class with a particular combination of service(s). Each service program, such as OneCode Confirm and OneCode ACS, shall provide the list of Service Type Identifier values.</li><li>The Mailer or Customer Identifier shall be assigned by USPS as a unique, 6 or 9 digit number that identifies a business entity. The allowable encoding range for the 6 digit Mailer ID shall be 000000- 899999, while the allowable encoding range for the 9 digit Mailer ID shall be 900000000-999999999.</li><li>The Serial or Sequence Number shall be assigned by the mailer for uniquely identifying and tracking mailpieces. The allowable encoding range shall be 000000000–999999999 when used with a 6 digit Mailer ID and 000000-999999 when used with a 9 digit Mailer ID. e. The Delivery Point ZIP Code shall be assigned by the mailer for routing the mailpiece. This shall replace POSTNET for routing the mailpiece to its final delivery point. The length may be 0, 5, 9, or 11 digits. The allowable encoding ranges shall be no ZIP Code, 00000–99999,  000000000–999999999, and 00000000000–99999999999.</li></ul>
      * @param string $code code to print, separate the ZIP (routing code) from the rest using a minus char '-' (BarcodeID_ServiceTypeID_MailerID_SerialNumber-RoutingCode)
@@ -1886,7 +1886,7 @@ class TCPDFBarcode
 	
     /**
      * Convert large integer number to hexadecimal representation.
-     * (requires PHP bcmath extension) 
+     * (requires PHP bcmath extension)
      * @param string $number number to convert specified as a string
      * @return string hexadecimal representation
      */
@@ -1911,7 +1911,7 @@ class TCPDFBarcode
 	
     /**
      * Convert large hexadecimal number to decimal representation (string).
-     * (requires PHP bcmath extension) 
+     * (requires PHP bcmath extension)
      * @param string $hex hexadecimal number to convert specified as a string
      * @return string hexadecimal representation
      */

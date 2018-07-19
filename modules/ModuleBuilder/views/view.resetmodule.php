@@ -136,7 +136,7 @@ class ViewResetmodule extends SugarView
     
     /**
      * Removes all custom fields created in studio
-     * 
+     *
      * @return html output record of the field deleted
      */
     public function removeCustomFields()
@@ -169,7 +169,7 @@ class ViewResetmodule extends SugarView
     
     /**
      * Removes the metadata files for all known studio layouts.
-     * 
+     *
      * @return html output record of the files deleted
      */
     public function removeCustomLayouts()
@@ -196,7 +196,7 @@ class ViewResetmodule extends SugarView
     
     /**
      * Removes all custom relationships containing this module
-     * 
+     *
      * @return html output record of the files deleted
      */
     public function removeCustomRelationships()

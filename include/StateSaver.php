@@ -444,7 +444,7 @@ class StateSaver
     /**
      * Getter for PHP Configuration Options
      * @see more at StateCheckerConfig::$phpConfigOptionKeys
-     * 
+     *
      * @return array
      */
     public static function getPHPConfigOptions()
@@ -461,7 +461,7 @@ class StateSaver
     /**
      * Setter for PHP Configuration Options
      * @see more at StateCheckerConfig::$phpConfigOptionKeys
-     * 
+     *
      * @param array $configOptions
      * @throws StateSaverException
      */
@@ -478,7 +478,7 @@ class StateSaver
     /**
      * Store PHP Configuration Options
      * @see more at StateCheckerConfig::$phpConfigOptionKeys
-     * 
+     *
      * @param string $key
      * @param string $namespace
      */
@@ -491,7 +491,7 @@ class StateSaver
     /**
      * Restore PHP Configuration Options
      * @see more at StateCheckerConfig::$phpConfigOptionKeys
-     * 
+     *
      * @param string $key
      * @param string $namespace
      */

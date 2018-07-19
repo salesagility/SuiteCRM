@@ -82,7 +82,7 @@ if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
 if(!$focus->campaign_type == "NewsLetter"){
     include ('modules/Campaigns/NewsLetterTrackDetailView.php');
 } else{
-    
+
 */
     echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$focus->name), true);
     

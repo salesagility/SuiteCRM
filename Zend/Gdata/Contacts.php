@@ -118,7 +118,7 @@ class Zend_Gdata_Contacts extends Zend_Gdata
 
     /**
      * Set the max results that the feed should return.
-     * 
+     *
      * @param  $maxResults
      * @return void
      */

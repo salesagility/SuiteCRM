@@ -1174,7 +1174,7 @@ class XMLSecurityDSig
      *
      * @param $node  The node the signature element should be inserted into.
      * @param $beforeNode  The node the signature element should be located before.
-     * 
+     *
      * @return DOMNode The signature element node
      */
     public function insertSignature($node, $beforeNode = null)
@@ -1324,7 +1324,7 @@ class XMLSecurityDSig
      * The KeyInfo element will be created if one does not exist in the document.
      *
      * @param DOMNode $node The node to append to the KeyInfo.
-     * 
+     *
      * @return DOMNode The KeyInfo element node
      */
     public function appendToKeyInfo($node)

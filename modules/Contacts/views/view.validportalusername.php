@@ -43,12 +43,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * ContactsViewValidPortalUsername.php
- * 
+ *
  * This class overrides SugarView and provides an implementation for the ValidPortalUsername
  * method used for checking whether or not an existing portal user_name has already been assigned.
  * We take advantage of the MVC framework to provide this action which is invoked from
  * a javascript AJAX request.
- * 
+ *
  * @author Collin Lee
  * */
  

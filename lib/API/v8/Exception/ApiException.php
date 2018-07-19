@@ -73,7 +73,7 @@ class ApiException extends LangException
     protected $detail;
 
     /**
-     * 
+     *
      * @param string $message
      * @param integer $code
      * @param \Exception $previous
@@ -114,7 +114,7 @@ class ApiException extends LangException
     }
     
     /**
-     * 
+     *
      * @return array
      */
     public function getSource()

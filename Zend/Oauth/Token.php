@@ -40,14 +40,14 @@ abstract class Zend_Oauth_Token
 
     /**
      * Token parameters
-     * 
+     *
      * @var array
      */
     protected $_params = array();
 
     /**
      * OAuth response object
-     * 
+     *
      * @var Zend_Http_Response
      */
     protected $_response = null;

@@ -1099,7 +1099,7 @@ class SugarController
         
     /**
      * action: Send Confirm Opt In Email to Contact/Lead/Account/Prospect
-     * 
+     *
      * @global array $app_strings using for user messages about error/success status of action
      */
     public function action_sendConfirmOptInEmail()

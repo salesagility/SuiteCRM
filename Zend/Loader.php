@@ -207,8 +207,8 @@ class Zend_Loader
      *
      * If no path provided, uses current include_path. Works around issues that
      * occur when the path includes stream schemas.
-     * 
-     * @param  string|null $path 
+     *
+     * @param  string|null $path
      * @return array
      */
     public static function explodeIncludePath($path = null)

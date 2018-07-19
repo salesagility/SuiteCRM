@@ -58,7 +58,7 @@ if (ACLController::checkAccess('Campaigns', 'edit', true)) {
 /*
 if(ACLController::checkAccess('Campaigns', 'edit', true))
 	$module_menu[]=	array(
-		"index.php?module=Campaigns&action=EditView&return_module=Campaigns&return_action=index", 
+		"index.php?module=Campaigns&action=EditView&return_module=Campaigns&return_action=index",
 		$mod_strings['LNK_NEW_CAMPAIGN'],"CreateCampaigns"
 	);
 */

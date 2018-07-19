@@ -50,7 +50,7 @@ require_once("modules/Leads/Lead.php");
 
 /**
  * Class for sending email reminders of meetings and call to invitees
- * 
+ *
  */
 class EmailReminder
 {
@@ -203,7 +203,7 @@ class EmailReminder
      * @param XTemplate $xtpl
      * @param SugarBean $bean
      * @param User $user
-     * @return XTemplate 
+     * @return XTemplate
     */
     protected function setReminderBody(XTemplate $xtpl, SugarBean $bean, User $user)
     {

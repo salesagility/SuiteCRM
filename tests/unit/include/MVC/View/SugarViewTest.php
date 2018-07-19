@@ -285,11 +285,11 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     	try {
     		//check first with invalid value and test if it throws an exception
     		$menu = $SugarView->getMenu();
-    		
-    		 
+
+
     	} catch (Exception $e) {
     		$this->assertTrue(TRUE);
-    		
+
     	} */
 
         //check with valid value and check if it returns an array.

@@ -10,7 +10,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -92,7 +92,7 @@ class TCPDF2DBarcode
     protected $barcode_array;
 	
     /**
-     * This is the class constructor. 
+     * This is the class constructor.
      * Return an array representations for 2D barcodes:<ul>
      * <li>$arrcode['code'] code to be printed on text label</li>
      * <li>$arrcode['num_rows'] required number of rows</li>
@@ -106,7 +106,7 @@ class TCPDF2DBarcode
         $this->setBarcode($code, $type);
     }
 	
-    /** 
+    /**
      * Return an array representations of barcode.
  	 * @return array
      */
@@ -115,7 +115,7 @@ class TCPDF2DBarcode
         return $this->barcode_array;
     }
 	
-    /** 
+    /**
      * Set the barcode.
      * @param string $code code to print
  	 * @param string $type type of barcode: <ul><li>TEST</li><li>...TO BE IMPLEMENTED</li></ul>

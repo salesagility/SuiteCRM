@@ -59,7 +59,7 @@ class Popup_Picker
 
 	
 	/*
-	 * 
+	 *
 	 */
     public function _get_where_clause()
     {

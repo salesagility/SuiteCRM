@@ -22,7 +22,7 @@
 
 /**
  * Modifications by SugarCRM
- * 
+ *
  * April 12, 2011 - asandberg: Changed mime-type for jpg files to image/jpeg
  * March 14, 2011 - asandberg: Added support for Google API v3: http://code.google.com/p/gdata-samples/source/browse/trunk/doclist/OCRDemo/DocsBeta.php
  * March 10, 2011 - asandberg: Added getSupportedMimeTypes function

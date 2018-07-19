@@ -52,7 +52,7 @@ $server->register(
 
 
 /**
- * Get a list of the relationship records that have been modified within a 
+ * Get a list of the relationship records that have been modified within a
  * specified date range.  This is used to perform a sync with a mobile client.
  * The results are paged.
  *
@@ -70,7 +70,7 @@ $server->register(
  * @param xsd:string $relationship_name
  * @param xsd:string $deletion_date
  * @param xsd:int $php_serialize
- * @return 
+ * @return
  */
 function sync_get_modified_relationships($session, $module_name, $related_module, $from_date, $to_date, $offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1)
 {

@@ -69,7 +69,7 @@ $settings = array(
         /*
          * Key rollover
          * If you plan to update the SP x509cert and privateKey
-         * you can define here the new x509cert and it will be 
+         * you can define here the new x509cert and it will be
          * published on the SP metadata so Identity Providers can
          * read them and get ready for rollover.
          */
@@ -113,7 +113,7 @@ $settings = array(
         // 'certFingerprintAlgorithm' => 'sha1',
 
         /* In some scenarios the IdP uses different certificates for
-         * signing/encryption, or is under key rollover phase and more 
+         * signing/encryption, or is under key rollover phase and more
          * than one certificate is published on IdP metadata.
          * In order to handle that the toolkit offers that parameter.
          * (when used, 'x509cert' and 'certFingerprint' values are

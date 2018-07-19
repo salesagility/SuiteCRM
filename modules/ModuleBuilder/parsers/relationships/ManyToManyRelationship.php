@@ -48,7 +48,7 @@ require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.p
  * The LHS (One) module will receive a new subpanel for the RHS module
  * The RHS (Many) module will receive a new subpanel for the RHS module
  * The subpanels get their data ('get_subpanel_data') from two link fields (one each) that reference a new Relationship
- * 
+ *
  * In OOB modules it's done the same way (e.g. cases_bugs)
  */
 

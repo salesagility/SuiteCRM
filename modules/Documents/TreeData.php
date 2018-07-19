@@ -65,7 +65,7 @@ function get_node_data($params, $get_array=false)
 }
 
 /*
- *  
+ *
  *
  */
  function get_category_nodes($href_string)

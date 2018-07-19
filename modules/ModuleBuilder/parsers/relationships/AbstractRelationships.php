@@ -414,8 +414,8 @@ class AbstractRelationships
             	) ;
             }
             
-            /* do not use the following write_array_to_file method to write the label file - 
-             * module installer appends each of the label files together (as it does for all files) 
+            /* do not use the following write_array_to_file method to write the label file -
+             * module installer appends each of the label files together (as it does for all files)
 			 * into a combined label file and so the last $mod_strings is the only one received by the application */
         	// write_array_to_file ( 'mod_strings', array ( $definition [ 'system_label' ] => $definition [ 'display_label' ] ), $filename, "a" ) ;
         }

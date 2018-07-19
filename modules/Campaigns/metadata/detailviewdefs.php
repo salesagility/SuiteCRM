@@ -97,14 +97,14 @@ array(
             ),
           ),
             /*
-          5 => 
+          5 =>
           array (
             'customCode' => '<input title="{$APP.LBL_MAILMERGE}" class="button" onclick="this.form.return_module.value=\'Campaigns\'; this.form.return_action.value=\'TrackDetailView\';this.form.action.value=\'MailMerge\';SUGAR.ajaxUI.submitForm(this.form);" type="submit" name="button" id="mail_merge_button" value="{$APP.LBL_MAILMERGE}">',
-            'sugar_html' => 
+            'sugar_html' =>
             array (
               'type' => 'submit',
               'value' => '{$APP.LBL_MAILMERGE}',
-              'htmlOptions' => 
+              'htmlOptions' =>
               array (
                 'title' => '{$APP.LBL_MAILMERGE}',
                 'class' => 'button',

@@ -434,22 +434,22 @@ EOQ;
             //$duplicateProspects = $this->checkForDuplicates($prefix);
             if(isset($duplicateProspects)){
             	$get='module=Prospects&action=ShowDuplicates';
-            	
+
             	//add all of the post fields to redirect get string
-            	foreach ($focus->column_fields as $field) 
+            	foreach ($focus->column_fields as $field)
             	{
             		if (!empty($focus->$field))
             		{
             			$get .= "&Prospects$field=".urlencode($focus->$field);
-            		}	
+            		}
             	}
-            	
-            	foreach ($focus->additional_column_fields as $field) 
+
+            	foreach ($focus->additional_column_fields as $field)
             	{
             		if (!empty($focus->$field))
             		{
             			$get .= "&Prospects$field=".urlencode($focus->$field);
-            		}	
+            		}
             	}
 
             	//create list of suspected duplicate prospect id's in redirect get string

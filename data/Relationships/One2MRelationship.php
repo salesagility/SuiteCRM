@@ -156,7 +156,7 @@ class One2MRelationship extends M2MRelationship
 
     /**
      * Just overriding the function from M2M to prevent it from occuring
-     * 
+     *
      * The logic for dealing with adding self-referencing one-to-many relations is in the add() method
      */
     protected function addSelfReferencing($lhs, $rhs, $additionalFields = array())

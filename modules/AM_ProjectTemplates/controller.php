@@ -281,7 +281,7 @@ class AM_ProjectTemplatesController extends SugarController
             $end_date = Date('Y-m-d', strtotime("+ " . $duration . " days"));
         }
 
-        //------------------------------------------- ?>
+        //-------------------------------------------?>
 
         <script type="text/javascript">
             //Get the height if the #gantt div and add 18px

@@ -260,7 +260,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     /**
      * Get consumer secret
      *
-     * Returns RSA private key if set; otherwise, returns any previously set 
+     * Returns RSA private key if set; otherwise, returns any previously set
      * consumer secret.
      *
      * @return string
@@ -451,7 +451,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     /**
      * Get request token URL
      *
-     * If no request token URL has been set, but a site URL has, returns the 
+     * If no request token URL has been set, but a site URL has, returns the
      * site URL with the string "/request_token" appended.
      *
      * @return string
@@ -486,7 +486,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     /**
      * Get access token URL
      *
-     * If no access token URL has been set, but a site URL has, returns the 
+     * If no access token URL has been set, but a site URL has, returns the
      * site URL with the string "/access_token" appended.
      *
      * @return string
@@ -543,7 +543,7 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     /**
      * Get authorization URL
      *
-     * If no authorization URL has been set, but a site URL has, returns the 
+     * If no authorization URL has been set, but a site URL has, returns the
      * site URL with the string "/authorize" appended.
      *
      * @return string

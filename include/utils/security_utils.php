@@ -41,12 +41,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-/* 
- * func: query_module_access 
+/*
+ * func: query_module_access
  * param: $moduleName
- * 
+ *
  * returns 1 if user has access to a module, else returns 0
- * 
+ *
  */
 
 $modules_exempt_from_availability_check['Activities']='Activities';

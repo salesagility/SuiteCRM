@@ -50,6 +50,6 @@ class SugarWidgetFieldFullname extends SugarWidgetFieldName
     /*
     function SugarWidgetFieldName(&$layout_manager) {
         parent::SugarWidgetFieldVarchar($layout_manager);
-        $this->reporter = $this->layout_manager->getAttribute('reporter');  
+        $this->reporter = $this->layout_manager->getAttribute('reporter');
     }*/
 }

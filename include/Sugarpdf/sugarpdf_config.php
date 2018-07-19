@@ -89,9 +89,9 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
      * It can be either one of the following values (case insensitive)
      * or a custom format in the form of a two-element array containing
      * the width and the height (expressed in the unit given by unit).
-     * 4A0, 2A0, A0, A1, A2, A3, A4 (default), A5, A6, A7, A8, A9, A10, 
-     * B0, B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, C0, C1, C2, C3, C4, 
-     * C5, C6, C7, C8, C9, C10, RA0, RA1, RA2, RA3, RA4, SRA0, SRA1, 
+     * 4A0, 2A0, A0, A1, A2, A3, A4 (default), A5, A6, A7, A8, A9, A10,
+     * B0, B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, C0, C1, C2, C3, C4,
+     * C5, C6, C7, C8, C9, C10, RA0, RA1, RA2, RA3, RA4, SRA0, SRA1,
      * SRA2, SRA3, SRA4, LETTER, LEGAL, EXECUTIVE, FOLIO.
      */
     defineFromUserPreference("PDF_PAGE_FORMAT", $sugarpdf_default["PDF_PAGE_FORMAT"]);
@@ -258,7 +258,7 @@ defineFromConfig("PDF_JPEG_QUALITY", $sugarpdf_default["PDF_JPEG_QUALITY"]);
 defineFromConfig("PDF_PDF_VERSION", $sugarpdf_default["PDF_PDF_VERSION"]);
 
 /**
- * Set document protection (available are: copy, print, modify, annot-forms. Seperate with a coma) 
+ * Set document protection (available are: copy, print, modify, annot-forms. Seperate with a coma)
  */
 defineFromConfig("PDF_PROTECTION", $sugarpdf_default["PDF_PROTECTION"]);
 
@@ -317,7 +317,7 @@ function defineFromConfig($value, $default)
  * use the default value.
  * SUGARPDF_USE_FOCUS is use to load the preference of the none current user. To use
  * this constant you have to define a global variable $focus_user.
- * 
+ *
  * @param $value    settings to search
  * @param $default  default value
  */

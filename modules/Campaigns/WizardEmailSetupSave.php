@@ -113,10 +113,10 @@ if (isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')) {
     }
 
 /*
- * This function will re-add the post variables that exist with the specified prefix.  
+ * This function will re-add the post variables that exist with the specified prefix.
  * It will add them minus the specified prefix.  This is needed in order to reuse the save functionality,
  * which does not expect the prefix, and still use the generic create summary functionality in wizard, which
- * does expect the prefix.  
+ * does expect the prefix.
  */
 function clean_up_post($prefix)
 {

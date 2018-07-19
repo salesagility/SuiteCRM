@@ -62,7 +62,7 @@ abstract class PersonFormBase extends FormBase
     
     /**
      * buildTableForm
-     * 
+     *
      * This function creates a table with form data.  It is used by the form base code when checking for duplicates
      *
      * @param $rows Array of duplicate row data

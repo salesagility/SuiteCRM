@@ -47,7 +47,7 @@ require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.p
  * Class to manage the metadata for a One-To-One Relationship
  * The LHS module will receive a new relate field to point back to the RHS
  * The RHS module will receive a new relate field to point back to the LHS
- * 
+ *
  * OOB modules implement One-To-One relationships as:
  * A Relationship of type one-to-one in one modules vardefs.php
  * A single link field in the same vardefs.php with 'relationship'= the relationship name, and 'link-type'='one', 'Module'=other side, and 'source'='non-db'

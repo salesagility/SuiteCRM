@@ -45,7 +45,7 @@ if (! defined('sugarEntry') || ! sugarEntry) {
 /*
  * Modify an exising Subpanel
  * Typically called from Studio for a deployed (OOB or installed custom module)
- * 
+ *
  * Uses the listview editor to modify the subpanel
  * Uses SubPanelDefinitions to load the definitions for the subpanel, and SubPanel to save them, using the unique SubPanel override mechanism
  * There are two relevant modules for every subpanel - the module whose detailview this subpanel will appear in ($module_name), and the module that is the source of the data for the subpanel ($subPanelParentModule)
@@ -176,7 +176,7 @@ class ParserModifySubPanel extends ParserModifyListView
     /*
      * Save the modified definitions for a subpanel
      * Obtains the field definitions from a _REQUEST array, and merges them with the other fields from the original definitions
-     * Uses the subpanel override mechanism from SubPanel to save them 
+     * Uses the subpanel override mechanism from SubPanel to save them
      */
     public function handleSave()
     {

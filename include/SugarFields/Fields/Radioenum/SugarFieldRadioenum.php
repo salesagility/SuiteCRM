@@ -50,12 +50,12 @@ class SugarFieldRadioenum extends SugarFieldBase
 {
     /**
      * Decrypt encrypt fields values before inserting them into the emails
-     * 
+     *
      * @param string $inputField
      * @param mixed $vardef
      * @param mixed $displayParams
      * @param int $tabindex
-     * @return string 
+     * @return string
     */
     public function getEmailTemplateValue($inputField, $vardef, $displayParams = array(), $tabindex = 0)
     {

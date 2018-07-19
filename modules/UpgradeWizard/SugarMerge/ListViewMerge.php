@@ -63,7 +63,7 @@ class ListViewMerge extends EditViewMerge
     	 *
     	 * @param STRING $module - name of the module's files that are to be merged
     	 * @param STRING $original_file - path to the file that originally shipped with sugar
-    	 * @param STRING $new_file - path to the new file that is shipping with the patch 
+    	 * @param STRING $new_file - path to the new file that is shipping with the patch
     	 * @param STRING $custom_file - path to the custom file
     	 */
     protected function loadData($module, $original_file, $new_file, $custom_file)
@@ -99,8 +99,8 @@ class ListViewMerge extends EditViewMerge
         
     /**
      * This builds the array of fields from the merged fields in the appropriate order
-     * when building the panels for a list view the most important thing is order 
-     * so we ensure the fields that came from the custom file keep 
+     * when building the panels for a list view the most important thing is order
+     * so we ensure the fields that came from the custom file keep
      * their order then we add any new fields at the end
      *
      * @return ARRAY
@@ -136,7 +136,7 @@ class ListViewMerge extends EditViewMerge
     /**
      * This will save the merged data to a file
      *
-     * @param STRING $to - path of the file to save it to 
+     * @param STRING $to - path of the file to save it to
      * @return BOOLEAN - success or failure of the save
      */
     public function save($to)
