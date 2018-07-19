@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,8 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $role = new ACLRole();
-if(isset($_REQUEST['record'])){
-	$role->mark_deleted($_REQUEST['record']);
+if (isset($_REQUEST['record'])) {
+    $role->mark_deleted($_REQUEST['record']);
 }
 require_once('include/formbase.php');
 handleRedirect();

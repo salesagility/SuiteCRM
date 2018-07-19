@@ -4,7 +4,7 @@ namespace Step\Acceptance;
 
 use \AcceptanceTester as Tester;
 
-class ListView  extends Tester
+class ListView extends Tester
 {
 
     /**
@@ -23,7 +23,7 @@ class ListView  extends Tester
     public function clickFilterButton()
     {
         $I = $this;
-        $I->click('a.glyphicon-filter','.searchLink');
+        $I->click('a.glyphicon-filter', '.searchLink');
         $I->waitForFilterModalVisible();
     }
 

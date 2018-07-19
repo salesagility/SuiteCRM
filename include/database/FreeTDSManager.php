@@ -75,9 +75,9 @@ class FreeTDSManager extends MssqlManager
             'relate'   => 'nvarchar',
             'multienum'=> 'nvarchar(max)',
             'html'     => 'nvarchar(max)',
-			'longhtml' => 'text',
-	    'emailbody' => 'nvarchar(max)',
-    		'datetime' => 'datetime',
+            'longhtml' => 'text',
+        'emailbody' => 'nvarchar(max)',
+            'datetime' => 'datetime',
             'datetimecombo' => 'datetime',
             'time'     => 'datetime',
             'bool'     => 'bit',
@@ -92,18 +92,18 @@ class FreeTDSManager extends MssqlManager
             'url'      => 'nvarchar',
             'encrypt'  => 'nvarchar',
             'file'     => 'nvarchar',
-	        'decimal_tpl' => 'decimal(%d, %d)',
+            'decimal_tpl' => 'decimal(%d, %d)',
     );
 
     public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
     {
-		global $app_strings;
-        if(is_array($sql)) {
+        global $app_strings;
+        if (is_array($sql)) {
             return $this->queryArray($sql, $dieOnError, $msg, $suppress);
         }
 
-		$sql = $this->_appendN($sql);
-		return parent::query($sql, $dieOnError, $msg, $suppress, $keepResult);
+        $sql = $this->_appendN($sql);
+        return parent::query($sql, $dieOnError, $msg, $suppress, $keepResult);
     }
 
     /**

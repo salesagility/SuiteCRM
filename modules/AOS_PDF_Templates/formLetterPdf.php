@@ -46,7 +46,7 @@ global $sugar_config, $current_user;
 
 $bean = BeanFactory::getBean($_REQUEST['module']);
 
-if(!$bean){
+if (!$bean) {
     sugar_die("Invalid Module");
 }
 
@@ -69,9 +69,9 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
 }
 
 
-$template = BeanFactory::getBean('AOS_PDF_Templates',$_REQUEST['templateID']);
+$template = BeanFactory::getBean('AOS_PDF_Templates', $_REQUEST['templateID']);
 
-if(!$template){
+if (!$template) {
     sugar_die("Invalid Template");
 }
 
@@ -164,7 +164,6 @@ foreach ($recordIds as $recordId) {
         $pdf->writeHTML($printable);
 
         rename($sugar_config['upload_dir'] . 'nfile.pdf', $sugar_config['upload_dir'] . $note->id);
-
     } catch (mPDF_exception $e) {
         echo $e;
     }

@@ -192,8 +192,8 @@ $dictionary['AOR_Report'] = array(
 	'unified_search'=>true,
 );
 
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Reports','AOR_Report', array('basic','assignable','security_groups'));
+VardefManager::createVardef('AOR_Reports', 'AOR_Report', array('basic','assignable','security_groups'));
 

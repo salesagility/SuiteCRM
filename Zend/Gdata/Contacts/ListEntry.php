@@ -111,37 +111,37 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
 
-            case $this->lookupNamespace('gd') . ':' . 'name';
+            case $this->lookupNamespace('gd') . ':' . 'name':
                 $item = new Zend_Gdata_Contacts_Extension_Name();
                 $item->transferFromDOM($child);
                 $this->_names = $item;
             break;
 
-            case $this->lookupNamespace('gContact') . ':' . 'birthday';
+            case $this->lookupNamespace('gContact') . ':' . 'birthday':
                 $item = new Zend_Gdata_Contacts_Extension_Birthday();
                 $item->transferFromDOM($child);
                 $this->_birthday = $item;
             break;
 
-            case $this->lookupNamespace('gd') . ':' . 'phoneNumber';
+            case $this->lookupNamespace('gd') . ':' . 'phoneNumber':
                 $item = new Zend_Gdata_Contacts_Extension_PhoneNumber();
                 $item->transferFromDOM($child);
                 $this->_phones[] = $item;
             break;
 
-            case $this->lookupNamespace('gd') . ':' . 'email';
+            case $this->lookupNamespace('gd') . ':' . 'email':
                 $item = new Zend_Gdata_Contacts_Extension_Email();
                 $item->transferFromDOM($child);
                 $this->_emails[] = $item;
             break;
 
-            case $this->lookupNamespace('gd') . ':' . 'structuredPostalAddress';
+            case $this->lookupNamespace('gd') . ':' . 'structuredPostalAddress':
                 $item = new Zend_Gdata_Contacts_Extension_Address();
                 $item->transferFromDOM($child);
                 $this->_addresses[] = $item;
             break;
 
-            case $this->lookupNamespace('gd') . ':' . 'organization';
+            case $this->lookupNamespace('gd') . ':' . 'organization':
                 $item = new Zend_Gdata_Contacts_Extension_Organization();
                 $item->transferFromDOM($child);
                 $this->_organization = $item;
@@ -215,19 +215,19 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
     {
         $results = array();
         $primaryEmail = $this->getPrimaryEmail();
-        if($primaryEmail !== FALSE)
+        if($primaryEmail !== false)
             $results['email1'] =  $primaryEmail;
         else
         {
             $nonPrimaryEmail = $this->getNextNonPrimaryEmail();
-            if($nonPrimaryEmail !== FALSE)
+            if($nonPrimaryEmail !== false)
                 $results['email1'] = $nonPrimaryEmail;
             else
                 return array();
         }
 
         $secondaryEmail = $this->getNextNonPrimaryEmail();
-        if($secondaryEmail !== FALSE)
+        if($secondaryEmail !== false)
             $results['email2'] = $secondaryEmail;
         
         return $results;
@@ -235,7 +235,7 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
     }
     protected function getPrimaryEmail()
     {
-        $results = FALSE;
+        $results = false;
         foreach($this->_emails as $emailEntry)
         {
             if( $emailEntry->isPrimary() )
@@ -246,7 +246,7 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
 
     protected function getNextNonPrimaryEmail()
     {
-        $results = FALSE;
+        $results = false;
         foreach($this->_emails as $k => $emailEntry)
         {
             if( !$emailEntry->isPrimary() )

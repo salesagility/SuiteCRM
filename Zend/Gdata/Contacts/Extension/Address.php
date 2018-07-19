@@ -47,7 +47,7 @@ class Zend_Gdata_Contacts_Extension_Address extends Zend_Gdata_Extension
 
     protected $_rootNamespace = 'gd';
     protected $_rootElement = 'structuredPostalAddress';
-    protected $_isPrimary = FALSE;
+    protected $_isPrimary = false;
     protected $_addressType = null;
     protected $_transformMapping = array('work' => 'primary', 'home' => 'alt', '' => 'primary');
     /**

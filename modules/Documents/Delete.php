@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -54,18 +56,19 @@ global $mod_strings;
 
 
 
-if(!isset($_REQUEST['record']))
-	sugar_die($mod_strings['ERR_DELETE_RECORD']);
+if (!isset($_REQUEST['record'])) {
+    sugar_die($mod_strings['ERR_DELETE_RECORD']);
+}
 $focus = new Document();
 $focus->retrieve($_REQUEST['record']);
-if(!$focus->ACLAccess('Delete')){
-	ACLController::displayNoAccess(true);
-	sugar_cleanup(true);
+if (!$focus->ACLAccess('Delete')) {
+    ACLController::displayNoAccess(true);
+    sugar_cleanup(true);
 }
 if (isset($_REQUEST['object']) && $_REQUEST['object']="documentrevision") {
-	//delete document revision.
-	$focus = new DocumentRevision();
-	UploadFile::unlink_file($_REQUEST['revision_id'],$_REQUEST['filename']);
+    //delete document revision.
+    $focus = new DocumentRevision();
+    UploadFile::unlink_file($_REQUEST['revision_id'], $_REQUEST['filename']);
 }
 
 $focus->mark_deleted($_REQUEST['record']);

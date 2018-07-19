@@ -102,7 +102,7 @@ class Zend_Gdata_Contacts extends Zend_Gdata
         $query = new Zend_Gdata_Query(self::CONTACT_FEED_URI);
         $query->maxResults = $this->maxResults;
         $query->startIndex = $this->startIndex;
-        return parent::getFeed($query,'Zend_Gdata_Contacts_ListFeed');
+        return parent::getFeed($query, 'Zend_Gdata_Contacts_ListFeed');
     }
 
     /**
@@ -113,7 +113,7 @@ class Zend_Gdata_Contacts extends Zend_Gdata
      */
     public function getContactEntry($entryID)
     {
-        return parent::getEntry($entryID,'Zend_Gdata_Contacts_ListEntry');
+        return parent::getEntry($entryID, 'Zend_Gdata_Contacts_ListEntry');
     }
 
     /**

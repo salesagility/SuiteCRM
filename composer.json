@@ -30,14 +30,13 @@
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
-    "mikey179/vfsStream": "1.4.*",
+    "mikey179/vfsStream": "1.6.*",
     "codeception/codeception": "^2.0",
     "fzaninotto/Faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
     "browserstack/browserstack-local": "dev-master",
     "consolidation/robo": "^1.0.0",
-    "mockery/mockery": "^0.9.9",
-    "symfony/yaml": "^3.4"
+    "mockery/mockery": "^0.9.9"
   },
   "scripts": {},
   "prefer-stable": true,

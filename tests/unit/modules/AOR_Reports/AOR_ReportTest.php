@@ -3,21 +3,12 @@
 
 class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        global $current_user;
-        get_sugar_config_defaults();
-        $current_user = new User();
-    }
-
     public function testAOR_Report()
     {
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //execute the contructor and check for the Object type and  attributes
         $aor_Report = new AOR_Report();
@@ -33,8 +24,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'importable', $aor_Report);
         
         // clean up
-        
-        
     }
 
     public function testbean_implements()
@@ -57,7 +46,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aor_reports');
         $state->pushFile('modules/AOD_Index/Index/Index/read.lock.file');
         $state->pushFile('modules/AOD_Index/Index/Index/segments_3n');
-        $state->pushTable('aod_indexevent');
         $state->pushFile('modules/AOD_Index/Index/Index/read-lock-processing.lock.file');
         $state->pushFile('modules/AOD_Index/Index/Index/write.lock.file');
         $state->pushFile('modules/AOD_Index/Index/Index/optimization.lock.file');
@@ -128,7 +116,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popFile('modules/AOD_Index/Index/Index/optimization.lock.file');
         $state->popFile('modules/AOD_Index/Index/Index/write.lock.file');
         $state->popFile('modules/AOD_Index/Index/Index/read-lock-processing.lock.file');
-        $state->popTable('aod_indexevent');
         $state->popFile('modules/AOD_Index/Index/Index/segments_3n');
         $state->popFile('modules/AOD_Index/Index/Index/read.lock.file');
         $state->popTable('aor_reports');
@@ -144,7 +131,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aor_Report = new AOR_Report();
@@ -158,8 +145,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetReportFields()
@@ -173,19 +158,50 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_report_chart()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushGlobal('dictionary');
+        $state->pushGlobal('app_list_strings');
+        $state->pushGlobal('current_user');
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
+        
+        $chartBean = BeanFactory::getBean('AOR_Charts');
+        $charts = (array)$chartBean->get_full_list();
+        
 
         //execute the method and verify that it returns chart display script. strings returned vary due to included chart id.
-        $expected = '';
         $result = $aor_Report->build_report_chart();
-        $this->assertEquals($expected, $result);
+        foreach ($charts as $chart) {
+            $this->assertContains($chart->id, $result);
+        }
+        
+        // clean up
+        
+        unset($GLOBALS['_SESSION']);
+        unset($GLOBALS['objectList']);
+        unset($GLOBALS['mod_strings']);
+        unset($GLOBALS['toHTML']);
+        unset($GLOBALS['module']);
+        unset($GLOBALS['action']);
+        unset($GLOBALS['disable_date_format']);
+        unset($GLOBALS['fill_in_rel_depth']);
+        unset($GLOBALS['currentModule']);
+        $state->popGlobal('current_user');
+        $state->popGlobal('app_list_strings');
+        $state->popGlobal('dictionary');
+        $state->popGlobals();
     }
 
     public function testbuild_group_report()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
+        
+        // test
         
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+} 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,7 +49,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 global $mod_strings;
-$module_menu = Array(
-	Array("index.php?module=MailMerge&action=index&reset=true", $mod_strings['LNK_NEW_MAILMERGE'],"Create"),
-	Array("index.php?module=Documents&action=EditView&return_module=MailMerge&return_action=EditView", $mod_strings['LNK_UPLOAD_TEMPLATE'],"List"),
-	);
+$module_menu = array(
+    array("index.php?module=MailMerge&action=index&reset=true", $mod_strings['LNK_NEW_MAILMERGE'],"Create"),
+    array("index.php?module=Documents&action=EditView&return_module=MailMerge&return_action=EditView", $mod_strings['LNK_UPLOAD_TEMPLATE'],"List"),
+    );

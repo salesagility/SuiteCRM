@@ -66,7 +66,7 @@ $searchdefs['Opportunities'] = array(
         'default' => true,
         'width' => '10%',
       ),
-	  array ('name' => 'open_only', 'label' => 'LBL_OPEN_ITEMS', 'type' => 'bool', 'default' => false, 'width' => '10%'),
+      array ('name' => 'open_only', 'label' => 'LBL_OPEN_ITEMS', 'type' => 'bool', 'default' => false, 'width' => '10%'),
       array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
 
     ),
@@ -134,6 +134,6 @@ $searchdefs['Opportunities'] = array(
       ),
     ),
   ),
-					
+                    
 );
 

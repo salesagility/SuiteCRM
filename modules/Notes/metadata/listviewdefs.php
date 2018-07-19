@@ -99,7 +99,7 @@ array (
     'label' => 'LBL_CREATED_BY',
     'width' => '10%',
     'default' => true,
-	'related_fields' =>  array ( 'created_by' ),
+    'related_fields' =>  array ( 'created_by' ),
   ),
   'DATE_MODIFIED' => 
   array (

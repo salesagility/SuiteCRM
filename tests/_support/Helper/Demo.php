@@ -6,5 +6,4 @@ namespace Helper;
 
 class Demo extends \Codeception\Module
 {
-
 }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,14 +43,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetFieldURL extends SugarWidgetFieldVarchar
 {
- 	/* Display item as link
+    /* Display item as link
      * @param array $layout_def definition of field which we want to display as link
      * @return string html code
      */
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         $urlValue = trim($this->_get_list_value($layout_def));
         return '<a target="_blank" href="' . $urlValue . '">' . $urlValue . "</a>";
     }
-    
 }

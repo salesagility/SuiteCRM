@@ -23,7 +23,7 @@ class NotInOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][Comparators][NotInOperator][isValid][expected type to be string] $operator'),
-            function() {
+            function () {
                 self::$operator->isValid(array());
             }
         );
@@ -31,7 +31,6 @@ class NotInOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testIsValidTagWithInvalidName()
     {
-
         $this->assertFalse(self::$operator->isValid(self::$operator->toFilterTag('eq2')));
     }
 

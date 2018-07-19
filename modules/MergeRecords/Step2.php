@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -88,7 +90,7 @@ echo '<form onsubmit="return check_form(\'MassUpdate\');" id="MassUpdate" name="
 $focus->populate_search_params($_REQUEST);
 echo $focus->get_inputs_for_search_params($_REQUEST);
 
-$where_clauses = Array();
+$where_clauses = array();
 $where_clauses = $focus->create_where_statement();
 $where = $focus->generate_where_statement($where_clauses);
 
@@ -100,39 +102,40 @@ $ListView->delete = false;
 $module = $_REQUEST['merge_module'];
 $metadataFile = null;
 $foundViewDefs = false;
-if(file_exists('custom/modules/' . $module. '/metadata/listviewdefs.php')){
+if (file_exists('custom/modules/' . $module. '/metadata/listviewdefs.php')) {
     $metadataFile = 'custom/modules/' . $module . '/metadata/listviewdefs.php';
     $foundViewDefs = true;
-}else{
-    if(file_exists('custom/modules/'.$module.'/metadata/metafiles.php')){
+} else {
+    if (file_exists('custom/modules/'.$module.'/metadata/metafiles.php')) {
         require_once('custom/modules/'.$module.'/metadata/metafiles.php');
-        if(!empty($metafiles[$module]['listviewdefs'])){
+        if (!empty($metafiles[$module]['listviewdefs'])) {
             $metadataFile = $metafiles[$module]['listviewdefs'];
             $foundViewDefs = true;
         }
-    }elseif(file_exists('modules/'.$module.'/metadata/metafiles.php')){
+    } elseif (file_exists('modules/'.$module.'/metadata/metafiles.php')) {
         require_once('modules/'.$module.'/metadata/metafiles.php');
-        if(!empty($metafiles[$module]['listviewdefs'])){
+        if (!empty($metafiles[$module]['listviewdefs'])) {
             $metadataFile = $metafiles[$module]['listviewdefs'];
             $foundViewDefs = true;
         }
     }
 }
-if(!$foundViewDefs && file_exists('modules/'.$module.'/metadata/listviewdefs.php')){
-        $metadataFile = 'modules/'.$module.'/metadata/listviewdefs.php';
+if (!$foundViewDefs && file_exists('modules/'.$module.'/metadata/listviewdefs.php')) {
+    $metadataFile = 'modules/'.$module.'/metadata/listviewdefs.php';
 }
 require_once($metadataFile);
 $displayColumns = array();
-if(!empty($_REQUEST['displayColumns'])) {
-    foreach(explode('|', $_REQUEST['displayColumns']) as $num => $col) {
-        if(!empty($listViewDefs[$module][$col])) 
+if (!empty($_REQUEST['displayColumns'])) {
+    foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
+        if (!empty($listViewDefs[$module][$col])) {
             $displayColumns[$col] = $listViewDefs[$module][$col];
-    }    
-}
-else {
-    foreach($listViewDefs[$module] as $col => $params) {
-        if(!empty($params['default']) && $params['default'])
+        }
+    }
+} else {
+    foreach ($listViewDefs[$module] as $col => $params) {
+        if (!empty($params['default']) && $params['default']) {
             $displayColumns[$col] = $params;
+        }
     }
 } 
 $params = array('massupdate' => true, 'export' => false, 'handleMassupdate' => false );

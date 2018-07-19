@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,74 +43,74 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class DocumentsParseRule extends BaseRule {
-
-function __construct() {
-
-}
+class DocumentsParseRule extends BaseRule
+{
+    public function __construct()
+    {
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function DocumentsParseRule(){
+    public function DocumentsParseRule()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-function preParse($panels, $view) {
-		foreach($panels as $name=>$panel) {
-		   	foreach($panel as $rowCount=>$row) {
-		   	  	 foreach($row as $key=>$column) {
-		   	  	     if($this->matches($column, '/^related_doc_id$/')) {
-		   	  	 	 	$panels[$name][$rowCount][$key] = 'related_doc_name';
-		   	  	 	 } else if($this->matches($column, '/^related_doc_rev_id$/')) {
-		   	  	 	 	$panels[$name][$rowCount][$key] = ($view == 'EditView') ? 'related_doc_rev_number' : 'related_doc_name';
-		   	  	 	 } else if($this->matches($column, '/^user_date_format$/')) {
-		   	  	 	 	$panels[$name][$rowCount][$key] = 'active_date';
-		   	  	 	 } else if($this->matches($column, '/^is_template_checked$/')) {
-		   	  	 	 	$panels[$name][$rowCount][$key] = 'is_template';
-		   	  	 	 } else if($this->matches($column, '/^last_rev_creator$/')) {
-		   	  	 	 	$panels[$name][$rowCount][$key] = 'last_rev_created_name';
-		   	  	 	 } else if($this->matches($column, '/^last_rev_date$/')) {
-		   	  	 	 	$panels[$name][$rowCount][$key] = 'last_rev_create_date';
-		   	  	 	 } else if($this->matches($column, '/^save_file$/')) {
-		   	  	 	 	$panels[$name][$rowCount][$key] = 'filename';
-		   	  	 	 } else if($this->matches($column, '/^subcategory$/')) {
-		   	  	 	 	$panels[$name][$rowCount][$key] = 'subcategory_id';
-		   	  	 	 } else if($this->matches($column, '/^category$/')) {
-		   	  	 	 	$panels[$name][$rowCount][$key] = 'category_id';
-		   	  	 	 } else if($this->matches($column, '/^related_document_version$/')) {
-		   	  	 	 	$panels[$name][$rowCount][$key] = 'related_doc_rev_number';
-		   	  	 	 }
-		   	  	 } //foreach
-		   	} //foreach
-		} //foreach
+    public function preParse($panels, $view)
+    {
+        foreach ($panels as $name=>$panel) {
+            foreach ($panel as $rowCount=>$row) {
+                foreach ($row as $key=>$column) {
+                    if ($this->matches($column, '/^related_doc_id$/')) {
+                        $panels[$name][$rowCount][$key] = 'related_doc_name';
+                    } elseif ($this->matches($column, '/^related_doc_rev_id$/')) {
+                        $panels[$name][$rowCount][$key] = ($view == 'EditView') ? 'related_doc_rev_number' : 'related_doc_name';
+                    } elseif ($this->matches($column, '/^user_date_format$/')) {
+                        $panels[$name][$rowCount][$key] = 'active_date';
+                    } elseif ($this->matches($column, '/^is_template_checked$/')) {
+                        $panels[$name][$rowCount][$key] = 'is_template';
+                    } elseif ($this->matches($column, '/^last_rev_creator$/')) {
+                        $panels[$name][$rowCount][$key] = 'last_rev_created_name';
+                    } elseif ($this->matches($column, '/^last_rev_date$/')) {
+                        $panels[$name][$rowCount][$key] = 'last_rev_create_date';
+                    } elseif ($this->matches($column, '/^save_file$/')) {
+                        $panels[$name][$rowCount][$key] = 'filename';
+                    } elseif ($this->matches($column, '/^subcategory$/')) {
+                        $panels[$name][$rowCount][$key] = 'subcategory_id';
+                    } elseif ($this->matches($column, '/^category$/')) {
+                        $panels[$name][$rowCount][$key] = 'category_id';
+                    } elseif ($this->matches($column, '/^related_document_version$/')) {
+                        $panels[$name][$rowCount][$key] = 'related_doc_rev_number';
+                    }
+                } //foreach
+            } //foreach
+        } //foreach
 	return $panels;
-}
+    }
 
-function parsePanels(& $panels, $view) {
-
-		foreach($panels as $name=>$panel) {
-	   	  foreach($panel as $rowCount=>$row) {
-	   	  	 foreach($row as $key=>$column) {
-				if($this->matches($column, '/related_doc_id/si') ||
+    public function parsePanels(& $panels, $view)
+    {
+        foreach ($panels as $name=>$panel) {
+            foreach ($panel as $rowCount=>$row) {
+                foreach ($row as $key=>$column) {
+                    if ($this->matches($column, '/related_doc_id/si') ||
 				   $this->matches($column, '/related_doc_rev_id/si') ||
 				   $this->matches($column, '/latest_revision/si') ||
 				   $this->matches($column, '/file_name/si')) {
-	   	  	 	   $panels[$name][$rowCount][$key] = '';
-				}
-	   	  	 } //foreach
-	   	  } //foreach
-	   } //foreach
+                        $panels[$name][$rowCount][$key] = '';
+                    }
+                } //foreach
+            } //foreach
+        } //foreach
 
 	   return $panels;
-}
-
+    }
 }

@@ -49,5 +49,4 @@ class EmailException extends Exception
 {
     const NO_DEFAULT_FROM_ADDR = 10;
     const NO_DEFAULT_FROM_EMAIL = 20;
-
 }

@@ -65,8 +65,7 @@ class EmailsDraftDetailView extends EmailsDetailView
         $tpl = 'include/DetailView/DetailView.tpl',
         $createFocus = true,
         $metadataFileName = 'detaildraft'
-    )
-    {
+    ) {
         parent::setup($module, $focus, $metadataFile, get_custom_file_if_exists($tpl), $createFocus, $metadataFileName);
     }
 }

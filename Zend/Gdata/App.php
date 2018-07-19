@@ -1224,7 +1224,7 @@ class Zend_Gdata_App
      */
     public function useObjectMapping($value)
     {
-        if ($value === True) {
+        if ($value === true) {
             $this->_useObjectMapping = true;
         } else {
             $this->_useObjectMapping = false;

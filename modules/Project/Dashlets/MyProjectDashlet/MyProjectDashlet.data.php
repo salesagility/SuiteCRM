@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * SugarCRM is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004 - 2008 SugarCRM Inc.
@@ -41,7 +43,7 @@ global $current_user;
 
 $dashletData['MyProjectDashlet']['searchFields'] =  array( 
                                                             'estimated_end_date'         => array('default' => ''),
-		                                           'estimated_start_date'        => array('default' => ''),
+                                                   'estimated_start_date'        => array('default' => ''),
                                                             'status'         => array('default' => ''),
                                                             'assigned_user_id' => array('type'    => 'assigned_user_name',
                                                                                         'default' => $current_user->name)
@@ -56,9 +58,9 @@ $dashletData['MyProjectDashlet']['columns'] = array('name' => array('width'   =>
                                                                                      'label'   => 'LBL_LIST_ASSIGNED_USER',
                                                                                      'default' => true),
                                                                  'estimated_start_date' => array('width' => '10',
-										    'label' => 'LBL_DATE_START'),
-								 'estimated_end_date' => array('width' => '10',
+                                            'label' => 'LBL_DATE_START'),
+                                 'estimated_end_date' => array('width' => '10',
                                                                                     'label' => 'LBL_DATE_END'),
-								 'status' => array('width' => '5',
+                                 'status' => array('width' => '5',
                                                                                     'label' => 'LBL_STATUS'),
 );

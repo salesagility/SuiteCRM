@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,7 +47,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Opportunity'] = array ('column_fields' => Array("id"
+$fields_array['Opportunity'] = array ('column_fields' => array("id"
 		, "name"
 		, "opportunity_type"
 		, "lead_source"
@@ -64,8 +66,8 @@ $fields_array['Opportunity'] = array ('column_fields' => Array("id"
 		, "description"
 		,"campaign_id"
 		),
-        'list_fields' => Array('id', 'name', 'account_id', 'sales_stage', 'account_name', 'date_closed', 'amount', 'assigned_user_name', 'assigned_user_id','sales_stage','probability','lead_source','opportunity_type'
+        'list_fields' => array('id', 'name', 'account_id', 'sales_stage', 'account_name', 'date_closed', 'amount', 'assigned_user_name', 'assigned_user_id','sales_stage','probability','lead_source','opportunity_type'
 	, "amount_usdollar"
 	),
-        'required_fields' => Array('name'=>1, 'date_closed'=>2, 'amount'=>3, 'sales_stage'=>4, 'account_name'=>5),
+        'required_fields' => array('name'=>1, 'date_closed'=>2, 'amount'=>3, 'sales_stage'=>4, 'account_name'=>5),
 );

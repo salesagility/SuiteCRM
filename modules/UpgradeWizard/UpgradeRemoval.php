@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -59,76 +61,68 @@ class UpgradeRemoval
      */
     public $version = '';
 
-/**
- * getFilesToRemove
- * Return array of files/directories to remove.  Default implementation returns empty array.
- * 
- * @param int $version integer value of original version to be upgraded
- * @return mixed $files Array of files/directories to remove
- */
-public function getFilesToRemove($version)
-{
-	return array();
-}
+    /**
+     * getFilesToRemove
+     * Return array of files/directories to remove.  Default implementation returns empty array.
+     * 
+     * @param int $version integer value of original version to be upgraded
+     * @return mixed $files Array of files/directories to remove
+     */
+    public function getFilesToRemove($version)
+    {
+        return array();
+    }
 
-/**
- * processFilesToRemove
- * This method handles removing the array of files/directories specified.
- * 
- * @param mixed $files 
- */
-public function processFilesToRemove($files=array())
-{
-	if(empty($files) || !is_array($files))
-	{
-		return;
-	}	
+    /**
+     * processFilesToRemove
+     * This method handles removing the array of files/directories specified.
+     * 
+     * @param mixed $files 
+     */
+    public function processFilesToRemove($files=array())
+    {
+        if (empty($files) || !is_array($files)) {
+            return;
+        }	
 	
-	require_once('include/dir_inc.php');
+        require_once('include/dir_inc.php');
 	
-	if(!file_exists('custom/backup'))
-	{
-	   mkdir_recursive('custom/backup');
-	}
+        if (!file_exists('custom/backup')) {
+            mkdir_recursive('custom/backup');
+        }
 	
-	foreach($files as $file)
-	{		
-		if(file_exists($file))
-		{
-			$this->backup($file);   
-			if(is_dir($file))
-			{
-			  rmdir_recursive($file);	
-			} else {
-			  unlink($file);
-			}
-	    }
-	}
-}
+        foreach ($files as $file) {
+            if (file_exists($file)) {
+                $this->backup($file);   
+                if (is_dir($file)) {
+                    rmdir_recursive($file);
+                } else {
+                    unlink($file);
+                }
+            }
+        }
+    }
 
 
-/**
- * backup
- * Private method to handle backing up the file to custom/backup directory
- * 
- * @param $file File or directory to backup to custom/backup directory
- */
-protected function backup($file)
-{
-	$basename = basename($file);
-	$basepath = str_replace($basename, '', $file);
+    /**
+     * backup
+     * Private method to handle backing up the file to custom/backup directory
+     * 
+     * @param $file File or directory to backup to custom/backup directory
+     */
+    protected function backup($file)
+    {
+        $basename = basename($file);
+        $basepath = str_replace($basename, '', $file);
 
-	if(!empty($basepath) && !file_exists('custom/backup/' . $basepath))
-	{
-	   mkdir_recursive('custom/backup/' . $basepath);
-	}
+        if (!empty($basepath) && !file_exists('custom/backup/' . $basepath)) {
+            mkdir_recursive('custom/backup/' . $basepath);
+        }
 	
-	if(is_dir($file))
-	{
-    	copy_recursive($file, 'custom/backup/' . $file);	
-	} else {
-		copy($file, 'custom/backup/' . $file);
-	}
-}
-
+        if (is_dir($file)) {
+            copy_recursive($file, 'custom/backup/' . $file);
+        } else {
+            copy($file, 'custom/backup/' . $file);
+        }
+    }
 }

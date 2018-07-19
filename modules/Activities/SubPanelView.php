@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -71,12 +73,12 @@ global $focus_meetings_list;
 global $focus_calls_list;
 global $focus_emails_list;
 
-$open_activity_list = Array();
-$history_list = Array();
+$open_activity_list = array();
+$history_list = array();
 
 foreach ($focus_tasks_list as $task) {
-	if ($task->status != "Not Started" && $task->status != "In Progress" && $task->status != "Pending Input") {
-		$history_list[] = Array('name' => $task->name,
+    if ($task->status != "Not Started" && $task->status != "In Progress" && $task->status != "Pending Input") {
+        $history_list[] = array('name' => $task->name,
 									 'id' => $task->id,
 									 'type' => "Task",
 									 'direction' => '',
@@ -89,14 +91,13 @@ foreach ($focus_tasks_list as $task) {
 									 'contact_name' => $task->contact_name,
 									 'date_modified' => $timedate->to_display_date($task->date_modified, true),
 									 );
-	}
-	else {
-		if ($task->date_due == '0000-00-00') $date_due = '';
-		else {
-			$date_due = $task->date_due;
-
-		}
-		$open_activity_list[] = Array('name' => $task->name,
+    } else {
+        if ($task->date_due == '0000-00-00') {
+            $date_due = '';
+        } else {
+            $date_due = $task->date_due;
+        }
+        $open_activity_list[] = array('name' => $task->name,
 									 'id' => $task->id,
 									 'type' => "Task",
 									 'direction' => '',
@@ -109,12 +110,12 @@ foreach ($focus_tasks_list as $task) {
 									 'contact_name' => $task->contact_name,
 									 'date_due' => $date_due
 									 );
-	}
+    }
 }
 
 foreach ($focus_meetings_list as $meeting) {
-		if ($meeting->status != "Planned") {
-		$history_list[] = Array('name' => $meeting->name,
+    if ($meeting->status != "Planned") {
+        $history_list[] = array('name' => $meeting->name,
 									 'id' => $meeting->id,
 									 'type' => "Meeting",
 									 'direction' => '',
@@ -127,9 +128,8 @@ foreach ($focus_meetings_list as $meeting) {
 									 'contact_name' => $meeting->contact_name,
 									 'date_modified' => $meeting->date_modified
 									 );
-	}
-	else {
-		$open_activity_list[] = Array('name' => $meeting->name,
+    } else {
+        $open_activity_list[] = array('name' => $meeting->name,
 									 'id' => $meeting->id,
 									 'type' => "Meeting",
 									 'direction' => '',
@@ -142,12 +142,12 @@ foreach ($focus_meetings_list as $meeting) {
 									 'contact_name' => $meeting->contact_name,
 									 'date_due' => $meeting->date_start
 									 );
-	}
+    }
 }
 
 foreach ($focus_calls_list as $call) {
-	if ($call->status != "Planned") {
-		$history_list[] = Array('name' => $call->name,
+    if ($call->status != "Planned") {
+        $history_list[] = array('name' => $call->name,
 									 'id' => $call->id,
 									 'type' => "Call",
 									 'direction' => $call->direction,
@@ -160,9 +160,8 @@ foreach ($focus_calls_list as $call) {
 									 'contact_name' => $call->contact_name,
 									 'date_modified' => $call->date_modified
 									 );
-	}
-	else {
-		$open_activity_list[] = Array('name' => $call->name,
+    } else {
+        $open_activity_list[] = array('name' => $call->name,
 									 'id' => $call->id,
 									 'direction' => $call->direction,
 									 'type' => "Call",
@@ -175,11 +174,11 @@ foreach ($focus_calls_list as $call) {
 									 'contact_name' => $call->contact_name,
 									 'date_due' => $call->date_start
 									 );
-	}
+    }
 }
 
 foreach ($focus_emails_list as $email) {
-	$history_list[] = Array('name' => $email->name,
+    $history_list[] = array('name' => $email->name,
 									 'id' => $email->id,
 									 'type' => "Email",
 									 'direction' => '',
@@ -195,7 +194,7 @@ foreach ($focus_emails_list as $email) {
 }
 
 foreach ($focus_notes_list as $note) {
-	$history_list[] = Array('name' => $note->name,
+    $history_list[] = array('name' => $note->name,
 									 'id' => $note->id,
 									 'type' => "Note",
 									 'direction' => '',
@@ -208,28 +207,23 @@ foreach ($focus_notes_list as $note) {
 									 'contact_name' => $note->contact_name,
 									 'date_modified' => $note->date_modified
 									 );
-	if (!empty($note->filename))
-	{
-		$count = count($history_list);
-		$count--;
-		$history_list[$count]['filename'] = $note->filename;
-		$history_list[$count]['fileurl'] = UploadFile::get_upload_url($note);
-	}
-
+    if (!empty($note->filename)) {
+        $count = count($history_list);
+        $count--;
+        $history_list[$count]['filename'] = $note->filename;
+        $history_list[$count]['fileurl'] = UploadFile::get_upload_url($note);
+    }
 }
 
-if ($currentModule == 'Contacts')
-{
-	$xtpl=new XTemplate ('modules/Activities/SubPanelViewContacts.html');
-	$xtpl->assign("CONTACT_ID", $focus->id);
-}
-else
-{
-	$xtpl=new XTemplate ('modules/Activities/SubPanelView.html');
+if ($currentModule == 'Contacts') {
+    $xtpl=new XTemplate ('modules/Activities/SubPanelViewContacts.html');
+    $xtpl->assign("CONTACT_ID", $focus->id);
+} else {
+    $xtpl=new XTemplate ('modules/Activities/SubPanelView.html');
 }
 
-$xtpl->assign("DELETE_INLINE_PNG",  SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"', null,null,'.gif',$app_strings['LNK_DELETE']));
-$xtpl->assign("EDIT_INLINE_PNG",  SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle" border="0"', null,null,'.gif',$app_strings['LNK_EDIT']));
+$xtpl->assign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_DELETE']));
+$xtpl->assign("EDIT_INLINE_PNG", SugarThemeRegistry::current()->getImage('edit_inline', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_EDIT']));
 
 $xtpl->assign("MOD", $current_module_strings);
 $xtpl->assign("APP", $app_strings);
@@ -237,27 +231,18 @@ $xtpl->assign("APP", $app_strings);
 $button  = "<form border='0' action='index.php' method='post' name='form' id='form'>\n";
 $button .= "<input type='hidden' name='module'>\n";
 $button .= "<input type='hidden' name='type'>\n";
-if ($currentModule == 'Accounts')
-{
-	$button .= "<input type='hidden' name='parent_type' value='Accounts'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
-}
-elseif ($currentModule == 'Opportunities')
-{
-	$button .= "<input type='hidden' name='parent_type' value='Opportunities'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
-}
-elseif ($currentModule == 'Cases')
-{
-	$button .= "<input type='hidden' name='parent_type' value='Cases'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
-}
-elseif ($currentModule == 'Contacts')
-{
-	$button .= "<input type='hidden' name='contact_id' value='$focus->id'>\n<input type='hidden' name='contact_name' value='$focus->first_name $focus->last_name'>\n";
-	$button .= "<input type='hidden' name='parent_type' value='Accounts'>\n<input type='hidden' name='parent_id' value='$focus->account_id'>\n<input type='hidden' name='parent_name' value='$focus->account_name'>\n";
-	$button .= "<input type='hidden' name='to_email_addrs' value='$focus->email1'>\n";
-}
-else
-{
-	$button .= "<input type='hidden' name='parent_type' value='$currentModule'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
+if ($currentModule == 'Accounts') {
+    $button .= "<input type='hidden' name='parent_type' value='Accounts'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
+} elseif ($currentModule == 'Opportunities') {
+    $button .= "<input type='hidden' name='parent_type' value='Opportunities'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
+} elseif ($currentModule == 'Cases') {
+    $button .= "<input type='hidden' name='parent_type' value='Cases'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
+} elseif ($currentModule == 'Contacts') {
+    $button .= "<input type='hidden' name='contact_id' value='$focus->id'>\n<input type='hidden' name='contact_name' value='$focus->first_name $focus->last_name'>\n";
+    $button .= "<input type='hidden' name='parent_type' value='Accounts'>\n<input type='hidden' name='parent_id' value='$focus->account_id'>\n<input type='hidden' name='parent_name' value='$focus->account_name'>\n";
+    $button .= "<input type='hidden' name='to_email_addrs' value='$focus->email1'>\n";
+} else {
+    $button .= "<input type='hidden' name='parent_type' value='$currentModule'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
 }
 
 $button .= "<input type='hidden' name='return_module' value='".$currentModule."'>\n";
@@ -266,9 +251,8 @@ $button .= "<input type='hidden' name='return_id' value='".$focus->id."'>\n";
 $button .= "<input type='hidden' name='type' value='out'>\n";
 $button .= "<input type='hidden' name='action'>\n";
 
-if($currentModule != 'Project' && $currentModule != 'ProjectTask')
-{
-	$button .= "<input title='".$current_module_strings['LBL_NEW_TASK_BUTTON_TITLE']."'  class='button' onclick=\"this.form.action.value='EditView';this.form.module.value='Tasks'\" type='submit' name='button' value='".$current_module_strings['LBL_NEW_TASK_BUTTON_LABEL']."'>\n";
+if ($currentModule != 'Project' && $currentModule != 'ProjectTask') {
+    $button .= "<input title='".$current_module_strings['LBL_NEW_TASK_BUTTON_TITLE']."'  class='button' onclick=\"this.form.action.value='EditView';this.form.module.value='Tasks'\" type='submit' name='button' value='".$current_module_strings['LBL_NEW_TASK_BUTTON_LABEL']."'>\n";
 }
 
 $button .= "<input title='".$current_module_strings['LBL_SCHEDULE_MEETING_BUTTON_TITLE']."'  class='button' onclick=\"this.form.action.value='EditView';this.form.module.value='Meetings'\" type='submit' name='button' value='".$current_module_strings['LBL_SCHEDULE_MEETING_BUTTON_LABEL']."'>\n";
@@ -285,10 +269,11 @@ echo get_form_header($current_module_strings['LBL_OPEN_ACTIVITIES'], $button, fa
 $xtpl->assign("RETURN_URL", "&return_module=$currentModule&return_action=DetailView&return_id=$focus->id");
 
 $oddRow = true;
-if (count($open_activity_list) > 0) $open_activity_list = array_csort($open_activity_list, 'date_due', SORT_DESC);
-foreach($open_activity_list as $activity)
-{
-	$activity_fields = array(
+if (count($open_activity_list) > 0) {
+    $open_activity_list = array_csort($open_activity_list, 'date_due', SORT_DESC);
+}
+foreach ($open_activity_list as $activity) {
+    $activity_fields = array(
 		'ID' => $activity['id'],
 		'NAME' => $activity['name'],
 		'MODULE' => $activity['module'],
@@ -300,53 +285,51 @@ foreach($open_activity_list as $activity)
 		'DATE' => $activity['date_due']
 	);
 
-	if (empty($activity['direction'])) {
-		$activity_fields['TYPE'] = $app_list_strings['activity_dom'][$activity['type']];
-	}
-	else {
-		$activity_fields['TYPE'] = $app_list_strings['call_direction_dom'][$activity['direction']].' '.$app_list_strings['activity_dom'][$activity['type']];
-	}
-	if (isset($activity['parent_type'])) $activity_fields['PARENT_MODULE'] = $activity['parent_type'];
-	switch ($activity['type']) {
+    if (empty($activity['direction'])) {
+        $activity_fields['TYPE'] = $app_list_strings['activity_dom'][$activity['type']];
+    } else {
+        $activity_fields['TYPE'] = $app_list_strings['call_direction_dom'][$activity['direction']].' '.$app_list_strings['activity_dom'][$activity['type']];
+    }
+    if (isset($activity['parent_type'])) {
+        $activity_fields['PARENT_MODULE'] = $activity['parent_type'];
+    }
+    switch ($activity['type']) {
 		case 'Call':
-			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Calls&status=Held&record=".$activity['id']."&status=Held'>".SugarThemeRegistry::current()->getImage("close_inline","title=".translate('LBL_LIST_CLOSE','Activities')." border='0'",null,null,'.gif',$mod_strings['LBL_LIST_CLOSE'])."</a>";
+			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Calls&status=Held&record=".$activity['id']."&status=Held'>".SugarThemeRegistry::current()->getImage("close_inline", "title=".translate('LBL_LIST_CLOSE', 'Activities')." border='0'", null, null, '.gif', $mod_strings['LBL_LIST_CLOSE'])."</a>";
 			$activity_fields['STATUS'] = $app_list_strings['call_status_dom'][$activity['status']];
 			break;
 		case 'Meeting':
-			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Meetings&status=Held&record=".$activity['id']."&status=Held'>".SugarThemeRegistry::current()->getImage("close_inline","title=".translate('LBL_LIST_CLOSE','Activities')." border='0'", null,null,'.gif',$mod_strings['LBL_LIST_CLOSE'])."</a>";
+			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Meetings&status=Held&record=".$activity['id']."&status=Held'>".SugarThemeRegistry::current()->getImage("close_inline", "title=".translate('LBL_LIST_CLOSE', 'Activities')." border='0'", null, null, '.gif', $mod_strings['LBL_LIST_CLOSE'])."</a>";
 			$activity_fields['STATUS'] = $app_list_strings['meeting_status_dom'][$activity['status']];
 			break;
 		case 'Task':
-			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Tasks&status=Completed&record=".$activity['id']."&status=Completed'>".SugarThemeRegistry::current()->getImage("close_inline","title=".translate('LBL_LIST_CLOSE','Activities')." border='0'", null,null,'.gif',$mod_strings['LBL_LIST_CLOSE'])."</a>";
+			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Tasks&status=Completed&record=".$activity['id']."&status=Completed'>".SugarThemeRegistry::current()->getImage("close_inline", "title=".translate('LBL_LIST_CLOSE', 'Activities')." border='0'", null, null, '.gif', $mod_strings['LBL_LIST_CLOSE'])."</a>";
 			$activity_fields['STATUS'] = $app_list_strings['task_status_dom'][$activity['status']];
 			break;
 	}
 
- global $odd_bg;
- global $even_bg;
- global $hilite_bg;
- global $click_bg;
-$xtpl->assign("BG_HILITE", $hilite_bg);
-$xtpl->assign("BG_CLICK", $click_bg);
-$xtpl->assign("ACTIVITY_MODULE_PNG", '<span class="suitepicon suitepicon-module-'.$activity_fields['MODULE'].'"></span>');
-	$xtpl->assign("ACTIVITY", $activity_fields);
+    global $odd_bg;
+    global $even_bg;
+    global $hilite_bg;
+    global $click_bg;
+    $xtpl->assign("BG_HILITE", $hilite_bg);
+    $xtpl->assign("BG_CLICK", $click_bg);
+    $xtpl->assign("ACTIVITY_MODULE_PNG", '<span class="suitepicon suitepicon-module-'.$activity_fields['MODULE'].'"></span>');
+    $xtpl->assign("ACTIVITY", $activity_fields);
 
-	if($oddRow)
-    {
+    if ($oddRow) {
         //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'oddListRow');
-		$xtpl->assign("BG_COLOR", $odd_bg);
-    }
-    else
-    {
+        $xtpl->assign("ROW_COLOR", 'oddListRow');
+        $xtpl->assign("BG_COLOR", $odd_bg);
+    } else {
         //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'evenListRow');
-		$xtpl->assign("BG_COLOR", $even_bg);
+        $xtpl->assign("ROW_COLOR", 'evenListRow');
+        $xtpl->assign("BG_COLOR", $even_bg);
     }
     $oddRow = !$oddRow;
 
-	$xtpl->parse("open_activity.row");
-// Put the rows in.
+    $xtpl->parse("open_activity.row");
+    // Put the rows in.
 }
 
 $xtpl->parse("open_activity");
@@ -367,15 +350,19 @@ $encoded_popup_request_data = $json->encode($popup_request_data);
 $button  = "<form border='0' action='index.php' method='post' name='form' id='form'>\n";
 $button .= "<input type='hidden' name='module'>\n";
 $button .= "<input type='hidden' name='type' value='archived'>\n";
-if ($currentModule == 'Accounts') $button .= "<input type='hidden' name='parent_type' value='Accounts'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
-if ($currentModule == 'Opportunities') $button .= "<input type='hidden' name='parent_type' value='Opportunities'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
-elseif ($currentModule == 'Cases') $button .= "<input type='hidden' name='parent_type' value='Cases'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
-elseif ($currentModule == 'Contacts') {
-	$button .= "<input type='hidden' name='contact_id' value='$focus->id'>\n<input type='hidden' name='contact_name' value='$focus->first_name $focus->last_name'>\n";
-  $button .= "<input type='hidden' name='to_email_addrs' value='$focus->email1'>\n";
-	$button .= "<input type='hidden' name='parent_type' value='Accounts'>\n<input type='hidden' name='parent_id' value='$focus->account_id'>\n<input type='hidden' name='parent_name' value='$focus->account_name'>\n";
-}else{
-	$button .= "<input type='hidden' name='parent_type' value='$currentModule'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
+if ($currentModule == 'Accounts') {
+    $button .= "<input type='hidden' name='parent_type' value='Accounts'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
+}
+if ($currentModule == 'Opportunities') {
+    $button .= "<input type='hidden' name='parent_type' value='Opportunities'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
+} elseif ($currentModule == 'Cases') {
+    $button .= "<input type='hidden' name='parent_type' value='Cases'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
+} elseif ($currentModule == 'Contacts') {
+    $button .= "<input type='hidden' name='contact_id' value='$focus->id'>\n<input type='hidden' name='contact_name' value='$focus->first_name $focus->last_name'>\n";
+    $button .= "<input type='hidden' name='to_email_addrs' value='$focus->email1'>\n";
+    $button .= "<input type='hidden' name='parent_type' value='Accounts'>\n<input type='hidden' name='parent_id' value='$focus->account_id'>\n<input type='hidden' name='parent_name' value='$focus->account_name'>\n";
+} else {
+    $button .= "<input type='hidden' name='parent_type' value='$currentModule'>\n<input type='hidden' name='parent_id' value='$focus->id'>\n<input type='hidden' name='parent_name' value='$focus->name'>\n";
 }
 $button .= "<input type='hidden' name='return_module' value='".$currentModule."'>\n";
 $button .= "<input type='hidden' name='return_action' value='".$action."'>\n";
@@ -392,10 +379,11 @@ echo get_form_header($current_module_strings['LBL_HISTORY'], $button, false);
 $xtpl->assign("RETURN_URL", "&return_module=$currentModule&return_action=DetailView&return_id=$focus->id");
 
 $oddRow = true;
-if (count($history_list) > 0) $history_list = array_csort($history_list, 'date_modified', SORT_DESC);
-foreach($history_list as $activity)
-{
-	$activity_fields = array(
+if (count($history_list) > 0) {
+    $history_list = array_csort($history_list, 'date_modified', SORT_DESC);
+}
+foreach ($history_list as $activity) {
+    $activity_fields = array(
 		'ID' => $activity['id'],
 		'NAME' => $activity['name'],
 		'MODULE' => $activity['module'],
@@ -406,14 +394,13 @@ foreach($history_list as $activity)
 		'PARENT_ID' => $activity['parent_id'],
 		'DATE' => $activity['date_modified'],
 	);
-	if (empty($activity['direction'])) {
-		$activity_fields['TYPE'] = $app_list_strings['activity_dom'][$activity['type']];
-	}
-	else {
-		$activity_fields['TYPE'] = $app_list_strings['call_direction_dom'][$activity['direction']].' '.$app_list_strings['activity_dom'][$activity['type']];
-	}
+    if (empty($activity['direction'])) {
+        $activity_fields['TYPE'] = $app_list_strings['activity_dom'][$activity['type']];
+    } else {
+        $activity_fields['TYPE'] = $app_list_strings['call_direction_dom'][$activity['direction']].' '.$app_list_strings['activity_dom'][$activity['type']];
+    }
 
-	switch ($activity['type']) {
+    switch ($activity['type']) {
 		case 'Call':
 			$activity_fields['STATUS'] = $app_list_strings['call_status_dom'][$activity['status']];
 			break;
@@ -425,32 +412,33 @@ foreach($history_list as $activity)
 			break;
 	}
 
-	if (isset($activity['location'])) $activity_fields['LOCATION'] = $activity['location'];
-	if (isset($activity['filename'])) {
-		$activity_fields['ATTACHMENT'] = "<a href='".$activity['fileurl']."' target='_blank'>".SugarThemeRegistry::current()->getImage("attachment","border='0' align='absmiddle'",null,null,'.gif',$activity['filename'])."</a>";
+    if (isset($activity['location'])) {
+        $activity_fields['LOCATION'] = $activity['location'];
+    }
+    if (isset($activity['filename'])) {
+        $activity_fields['ATTACHMENT'] = "<a href='".$activity['fileurl']."' target='_blank'>".SugarThemeRegistry::current()->getImage("attachment", "border='0' align='absmiddle'", null, null, '.gif', $activity['filename'])."</a>";
     }
 
-	if (isset($activity['parent_type'])) $activity_fields['PARENT_MODULE'] = $activity['parent_type'];
-
-	$xtpl->assign("ACTIVITY", $activity_fields);
-	$xtpl->assign("ACTIVITY_MODULE_PNG",  '<span class="suitepicon suitepicon-module-'.$activity_fields['MODULE'].'"></span>');
-
-	if($oddRow)
-    {
-        //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'oddListRow');
-		$xtpl->assign("BG_COLOR", $odd_bg);
+    if (isset($activity['parent_type'])) {
+        $activity_fields['PARENT_MODULE'] = $activity['parent_type'];
     }
-    else
-    {
+
+    $xtpl->assign("ACTIVITY", $activity_fields);
+    $xtpl->assign("ACTIVITY_MODULE_PNG", '<span class="suitepicon suitepicon-module-'.$activity_fields['MODULE'].'"></span>');
+
+    if ($oddRow) {
         //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'evenListRow');
-		$xtpl->assign("BG_COLOR", $even_bg);
+        $xtpl->assign("ROW_COLOR", 'oddListRow');
+        $xtpl->assign("BG_COLOR", $odd_bg);
+    } else {
+        //todo move to themes
+        $xtpl->assign("ROW_COLOR", 'evenListRow');
+        $xtpl->assign("BG_COLOR", $even_bg);
     }
     $oddRow = !$oddRow;
 
-	$xtpl->parse("history.row");
-// Put the rows in.
+    $xtpl->parse("history.row");
+    // Put the rows in.
 }
 
 $xtpl->parse("history");

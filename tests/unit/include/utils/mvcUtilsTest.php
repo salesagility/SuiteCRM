@@ -8,7 +8,7 @@ class mvc_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throws an exception
@@ -20,8 +20,6 @@ class mvc_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetPrintLink()
@@ -30,7 +28,7 @@ class mvc_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //test without setting REQUEST param
         $expected = "javascript:void window.open('index.php?','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
@@ -60,7 +58,7 @@ class mvc_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         global $sugar_config;
         $ajaxUIDisabled = isset($sugar_config['disableAjaxUI']) && $sugar_config['disableAjaxUI'];
 
-        if(!$ajaxUIDisabled) {
+        if (!$ajaxUIDisabled) {
             $this->assertSame('?action=ajaxui#ajaxUILoc=', ajaxLink(''));
             $testModules = array(
                 'Calendar',
@@ -104,9 +102,9 @@ class mvc_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'OAuthKeys'
             );
             $bannedModules = ajaxBannedModules();
-            foreach($testModules as $module) {
+            foreach ($testModules as $module) {
                 $uri = "index.php?module=$module&action=detail&record=1";
-                if(!in_array($module, $bannedModules)) {
+                if (!in_array($module, $bannedModules)) {
                     $this->assertSame("?action=ajaxui#ajaxUILoc=" . urlencode($uri), ajaxLink($uri));
                 } else {
                     $this->assertSame($uri, ajaxLink($uri));

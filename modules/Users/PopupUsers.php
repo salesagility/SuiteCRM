@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -64,17 +66,16 @@ $current_module_strings = return_module_language($current_language, 'Users');
 $seed_object = new User();
 
 $where = "";
-if(isset($_REQUEST['query']))
-{
-	$search_fields = Array("first_name", "last_name", "user_name");
+if (isset($_REQUEST['query'])) {
+    $search_fields = array("first_name", "last_name", "user_name");
 
-	$where_clauses = Array();
+    $where_clauses = array();
 
-	append_where_clause($where_clauses, "first_name", "users.first_name");
-	append_where_clause($where_clauses, "last_name", "users.last_name");
-	append_where_clause($where_clauses, "user_name", "users.user_name");
+    append_where_clause($where_clauses, "first_name", "users.first_name");
+    append_where_clause($where_clauses, "last_name", "users.last_name");
+    append_where_clause($where_clauses, "user_name", "users.user_name");
 
-	$where = generate_where_statement($where_clauses);
+    $where = generate_where_statement($where_clauses);
 }
 
 
@@ -102,13 +103,21 @@ $form->assign("APP", $app_strings);
 $form->assign("MODULE_NAME", $currentModule);
 $form->assign("parent_id", $parent_id);
 $form->assign("parent_name", $parent_name);
-if (isset($_REQUEST['form_submit'])) $form->assign("FORM_SUBMIT", $_REQUEST['form_submit']);
+if (isset($_REQUEST['form_submit'])) {
+    $form->assign("FORM_SUBMIT", $_REQUEST['form_submit']);
+}
 $form->assign("FORM", $from_form);
 $form->assign("RECORD_VALUE", $_REQUEST['record']);
 
-if (isset($_REQUEST['first_name'])) $last_search['FIRST_NAME'] = $_REQUEST['first_name'];
-if (isset($_REQUEST['last_name'])) $last_search['LAST_NAME'] = $_REQUEST['last_name'];
-if (isset($_REQUEST['user_name'])) $last_search['USER_NAME'] = $_REQUEST['user_name'];
+if (isset($_REQUEST['first_name'])) {
+    $last_search['FIRST_NAME'] = $_REQUEST['first_name'];
+}
+if (isset($_REQUEST['last_name'])) {
+    $last_search['LAST_NAME'] = $_REQUEST['last_name'];
+}
+if (isset($_REQUEST['user_name'])) {
+    $last_search['USER_NAME'] = $_REQUEST['user_name'];
+}
 
 insert_popup_header($theme);
 

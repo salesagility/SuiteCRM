@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,10 +44,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $listViewDefs['Contacts'] = array(
-	'NAME' => array(
-		'width' => '20%', 		
-		'label' => 'LBL_LIST_NAME', 
-		'link' => true,
+    'NAME' => array(
+        'width' => '20%', 		
+        'label' => 'LBL_LIST_NAME', 
+        'link' => true,
         'contextMenu' => array('objectType' => 'sugarPerson', 
                                'metaData' => array('contact_id' => '{$ID}', 
                                                    'module' => 'Contacts',
@@ -58,20 +60,20 @@ $listViewDefs['Contacts'] = array(
                                                    'parent_type' => 'Account', 
                                                    'notes_parent_type' => 'Account')
                               ),
-		'orderBy' => 'name',
+        'orderBy' => 'name',
         'default' => true,
         'related_fields' => array('first_name', 'last_name', 'salutation', 'account_name', 'account_id'),
-		), 
-	'TITLE' => array(
-		'width' => '15%', 
-		'label' => 'LBL_LIST_TITLE',
+        ), 
+    'TITLE' => array(
+        'width' => '15%', 
+        'label' => 'LBL_LIST_TITLE',
         'default' => true), 
-	'ACCOUNT_NAME' => array(
-		'width' => '34%', 
-		'label' => 'LBL_LIST_ACCOUNT_NAME', 
-		'module' => 'Accounts',
-		'id' => 'ACCOUNT_ID',
-		'link' => true,
+    'ACCOUNT_NAME' => array(
+        'width' => '34%', 
+        'label' => 'LBL_LIST_ACCOUNT_NAME', 
+        'module' => 'Accounts',
+        'id' => 'ACCOUNT_ID',
+        'link' => true,
         'contextMenu' => array('objectType' => 'sugarAccount', 
                                'metaData' => array('return_module' => 'Contacts', 
                                                    'return_action' => 'ListView', 
@@ -86,17 +88,17 @@ $listViewDefs['Contacts'] = array(
         'sortable'=> true,
         'ACLTag' => 'ACCOUNT',
         'related_fields' => array('account_id')),
-	'EMAIL1' => array(
-		'width' => '15%', 
-		'label' => 'LBL_LIST_EMAIL_ADDRESS',
-		'sortable' => false,
-		'link' => true,
-		'customCode' => '{$EMAIL1_LINK}',
+    'EMAIL1' => array(
+        'width' => '15%', 
+        'label' => 'LBL_LIST_EMAIL_ADDRESS',
+        'sortable' => false,
+        'link' => true,
+        'customCode' => '{$EMAIL1_LINK}',
         'default' => true
-		),  
-	'PHONE_WORK' => array(
-		'width' => '15%', 
-		'label' => 'LBL_OFFICE_PHONE',
+        ),  
+    'PHONE_WORK' => array(
+        'width' => '15%', 
+        'label' => 'LBL_OFFICE_PHONE',
         'default' => true),
     'DEPARTMENT' => array(
         'width' => '10', 
@@ -137,9 +139,9 @@ $listViewDefs['Contacts'] = array(
     'PRIMARY_ADDRESS_POSTALCODE' => array(
         'width' => '10', 
         'label' => 'LBL_PRIMARY_ADDRESS_POSTALCODE'),
-    'ALT_ADDRESS_COUNTRY' => array(
+    'PRIMARY_ADDRESS_COUNTRY' => array(
         'width' => '10', 
-        'label' => 'LBL_ALT_ADDRESS_COUNTRY'),
+        'label' => 'LBL_PRIMARY_ADDRESS_COUNTRY'),
     'ALT_ADDRESS_STREET' => array(
         'width' => '10', 
         'label' => 'LBL_ALT_ADDRESS_STREET'),
@@ -177,6 +179,6 @@ $listViewDefs['Contacts'] = array(
     'DATE_ENTERED' => array(
         'width' => '10', 
         'label' => 'LBL_DATE_ENTERED',
-		'default' => true)       
+        'default' => true)       
 );
 

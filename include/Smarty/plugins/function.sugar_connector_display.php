@@ -56,7 +56,9 @@ r41724 - 2008-11-13 08:55:42 -0800 (Thu, 13 Nov 2008) - Collin Lee - Made change
 */
 
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -101,15 +103,13 @@ function smarty_function_sugar_connector_display($params, &$smarty)
     $bean = $params['bean'];
     $field = $params['field'];
     $type = $bean->field_name_map[$field]['type'];
-    if($type == 'text') {
-       echo strlen($bean->$field) > 50 ? substr($bean->$field, 0, 47) . '...' : $bean->field;
-    } else if($type == 'link') {
-       echo "<a href='{$bean->$field}' target='_blank'>{$bean->$field}</a>"; 
+    if ($type == 'text') {
+        echo strlen($bean->$field) > 50 ? substr($bean->$field, 0, 47) . '...' : $bean->field;
+    } elseif ($type == 'link') {
+        echo "<a href='{$bean->$field}' target='_blank'>{$bean->$field}</a>";
     } else {
-       echo $bean->$field;
+        echo $bean->$field;
     }
 }
 
 /* vim: set expandtab: */
-
-?>

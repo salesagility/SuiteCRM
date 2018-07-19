@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+} 
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
@@ -28,6 +30,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $mod_strings, $app_strings, $sugar_config;
  
-if(ACLController::checkAccess('AOS_PDF_Templates', 'edit', true))$module_menu[]=Array("index.php?module=AOS_PDF_Templates&action=EditView&return_module=AOS_PDF_Templates&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create", 'AOS_PDF_Templates');
-if(ACLController::checkAccess('AOS_PDF_Templates', 'list', true))$module_menu[]=Array("index.php?module=AOS_PDF_Templates&action=index&return_module=AOS_PDF_Templates&return_action=DetailView", $mod_strings['LNK_LIST'],"List", 'AOS_PDF_Templates');
-if(ACLController::checkAccess('AOS_PDF_Templates', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=AOS_PDF_Templates&return_module=AOS_PDF_Templates&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'AOS_PDF_Templates');
+if (ACLController::checkAccess('AOS_PDF_Templates', 'edit', true)) {
+    $module_menu[]=array("index.php?module=AOS_PDF_Templates&action=EditView&return_module=AOS_PDF_Templates&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create", 'AOS_PDF_Templates');
+}
+if (ACLController::checkAccess('AOS_PDF_Templates', 'list', true)) {
+    $module_menu[]=array("index.php?module=AOS_PDF_Templates&action=index&return_module=AOS_PDF_Templates&return_action=DetailView", $mod_strings['LNK_LIST'],"List", 'AOS_PDF_Templates');
+}
+if (ACLController::checkAccess('AOS_PDF_Templates', 'import', true)) {
+    $module_menu[]=array("index.php?module=Import&action=Step1&import_module=AOS_PDF_Templates&return_module=AOS_PDF_Templates&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'AOS_PDF_Templates');
+}

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,7 +53,7 @@ $dashletData['MyMeetingsDashlet']['searchFields'] = array('name'             => 
 
                                                           'assigned_user_id' => array('type'    => 'assigned_user_name', 
                                                                                       'default' => $current_user->name,
-																					  'label'   => 'LBL_ASSIGNED_TO'),);
+                                                                                      'label'   => 'LBL_ASSIGNED_TO'),);
 $dashletData['MyMeetingsDashlet']['columns'] = array('set_complete' => array('width'    => '1', 
                                                                              'label'    => 'LBL_LIST_CLOSE',
                                                                              'default'  => true,
@@ -69,7 +71,7 @@ $dashletData['MyMeetingsDashlet']['columns'] = array('set_complete' => array('wi
                                                                           'id' => 'PARENT_ID',
                                                                           'ACLTag' => 'PARENT',
                                                                           'related_fields' => array('parent_id', 'parent_type'),
-																		  'default' => true),
+                                                                          'default' => true),
                                                    'duration' => array('width'    => '15', 
                                                                        'label'    => 'LBL_DURATION',
                                                                        'sortable' => false,
@@ -78,11 +80,11 @@ $dashletData['MyMeetingsDashlet']['columns'] = array('set_complete' => array('wi
                                                                          'label'   => 'LBL_DATE',
                                                                          'default' => true,
                                                                          'related_fields' => array('time_start')),
-											   'set_accept_links'=> array('width'    => '10', 
-																		   'label'    => 'LBL_ACCEPT_THIS',
-																		   'sortable' => false,
-																		   'default' => true,
-																		   'related_fields' => array('status')),
+                                               'set_accept_links'=> array('width'    => '10', 
+                                                                           'label'    => 'LBL_ACCEPT_THIS',
+                                                                           'sortable' => false,
+                                                                           'default' => true,
+                                                                           'related_fields' => array('status')),
                                                    'status' => array('width'   => '8', 
                                                                      'label'   => 'LBL_STATUS'),
                                                    'date_entered' => array('width'   => '15', 

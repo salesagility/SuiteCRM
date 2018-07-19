@@ -26,7 +26,7 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $jjwgMaps = new jjwg_Maps();
 
@@ -39,21 +39,19 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testsaveConfiguration()
     {
         self::markTestIncomplete('environment dependency');
         
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('config');
         $state->pushTable('tracker');
 
-	// test
+        // test
         
         $jjwgMaps = new jjwg_Maps();
 
@@ -69,7 +67,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('tracker');
         $state->popTable('config');
-
     }
 
     public function testupdateGeocodeInfo()
@@ -146,12 +143,12 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testupdateGeocodeInfoByAssocQuery()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('accounts_cstm');
 
-	// test
+        // test
         
         $jjwgMaps = new jjwg_Maps();
 
@@ -174,12 +171,12 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testupdateGeocodeInfoByBeanQuery()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('accounts_cstm');
 
-	// test
+        // test
         
         $jjwgMaps = new jjwg_Maps();
         $bean = new Account();
@@ -233,7 +230,7 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test for Account Object type 
         $address = array('id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5');
         $result = $jjwgMaps->defineMapsAddress('Account', $address);
-        //var_dump($result);
+        
         $this->assertEquals(array('address' => 'addr 1, addr 2, addr 3, addr 4, addr 5'), $result);
 
         //test for Contact Object type
@@ -333,7 +330,7 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $jjwgMaps = new jjwg_Maps();
@@ -351,8 +348,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetProspectLists()

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,15 +47,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['UserPreferences'] = array ('column_fields' => Array(
-		'id'
-		,'category'
-		,'name'
-		,'contents'
-		,'assigned_user_id'
-		,'date_entered'
-		,'date_modified'
-		,'deleted'
-		),
+$fields_array['UserPreferences'] = array ('column_fields' => array(
+        'id'
+        ,'category'
+        ,'name'
+        ,'contents'
+        ,'assigned_user_id'
+        ,'date_entered'
+        ,'date_modified'
+        ,'deleted'
+        ),
         'list_fields' =>  array('id', 'contents','category'),
 );
