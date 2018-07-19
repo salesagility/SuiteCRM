@@ -91,6 +91,7 @@ class ElasticSearchEngine extends SearchEngine
     {
         $query->trim();
         $query->replace('-', ' ');
+        $query->convertEncoding();
 
         $string = $query->getSearchString();
 

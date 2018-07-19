@@ -114,6 +114,14 @@ class SearchQuery
     }
 
     /**
+     * Removes HTML entities and converts them in UTF-8 characters.
+     */
+    public function convertEncoding()
+    {
+        $this->query['query'] = mb_convert_encoding($this->query['query'], 'UTF-8', 'HTML-ENTITIES');
+    }
+
+    /**
      * Creates a query object from a query string, i.e. from a search from.
      *
      * `$size` and `$from` are for pagination.
