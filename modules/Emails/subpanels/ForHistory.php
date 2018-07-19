@@ -79,11 +79,11 @@ $subpanel_layout = array(
         'contact_name_owner'=>array(
             'usage'=>'query_only',
             'force_exists'=>true
-        ),  
+        ),
         'contact_name_mod'=>array(
             'usage'=>'query_only',
             'force_exists'=>true
-        ),  
+        ),
 		'date_modified' => array(
 			'width'					=> '10%',
 		),
@@ -108,5 +108,5 @@ $subpanel_layout = array(
 			'force_exists'			=> true
 		),
 	), // end list_fields
-);		
+);
 

@@ -40,40 +40,40 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 $searchFields['Cases'] = array(
-  'name' => 
+  'name' =>
   array(
     'query_type' => 'default',
   ),
-  'account_name' => 
+  'account_name' =>
   array(
     'query_type' => 'default',
-    'db_field' => 
+    'db_field' =>
     array(
       0 => 'accounts.name',
     ),
   ),
-  'status' => 
+  'status' =>
   array(
     'query_type' => 'default',
     'options' => 'case_status_dom',
     'template_var' => 'STATUS_OPTIONS',
   ),
-  'priority' => 
+  'priority' =>
   array(
     'query_type' => 'default',
     'options' => 'case_priority_dom',
     'template_var' => 'PRIORITY_OPTIONS',
     'options_add_blank' => true,
   ),
-  'case_number' => 
+  'case_number' =>
   array(
     'query_type' => 'default',
     'operator' => 'in',
   ),
-  'current_user_only' => 
+  'current_user_only' =>
   array(
     'query_type' => 'default',
-    'db_field' => 
+    'db_field' =>
     array(
       0 => 'assigned_user_id',
     ),
@@ -81,19 +81,19 @@ $searchFields['Cases'] = array(
     'vname' => 'LBL_CURRENT_USER_FILTER',
     'type' => 'bool',
   ),
-  'assigned_user_id' => 
+  'assigned_user_id' =>
   array(
     'query_type' => 'default',
   ),
-  'open_only' => 
+  'open_only' =>
   array(
     'query_type' => 'default',
-    'db_field' => 
+    'db_field' =>
     array(
       0 => 'status',
     ),
     'operator' => 'not in',
-    'closed_values' => 
+    'closed_values' =>
     array(
       0 => 'Closed',
       1 => 'Rejected',
@@ -104,43 +104,43 @@ $searchFields['Cases'] = array(
     ),
     'type' => 'bool',
   ),
-  'range_date_entered' => 
+  'range_date_entered' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'start_range_date_entered' => 
+  'start_range_date_entered' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'end_range_date_entered' => 
+  'end_range_date_entered' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'range_date_modified' => 
+  'range_date_modified' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'start_range_date_modified' => 
+  'start_range_date_modified' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'end_range_date_modified' => 
+  'end_range_date_modified' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'state' => 
+  'state' =>
   array(
     'query_type' => 'default',
   ),

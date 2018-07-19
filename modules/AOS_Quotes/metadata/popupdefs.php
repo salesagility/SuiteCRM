@@ -30,12 +30,12 @@ $_module_name = 'aos_quotes';
 $popupMeta = array('moduleMain' => $module_name,
 						'varName' => $module_name,
 						'orderBy' => $_module_name.'.name',
-						'whereClauses' => 
-							array('name' => $_module_name.'.name', 
+						'whereClauses' =>
+							array('name' => $_module_name.'.name',
 									'billing_address_city' => $_module_name.'.billing_address_city',
 									'phone_office' => $_module_name.'.phone_office'),
 						'searchInputs' =>
-							array('name', 
+							array('name',
 								  'billing_address_city',
 								  'phone_office',
 								  'industry'

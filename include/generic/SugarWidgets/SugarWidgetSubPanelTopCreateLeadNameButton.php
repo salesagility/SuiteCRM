@@ -75,7 +75,7 @@ class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopB
             }
             if (isset($defines['focus']->billing_address_city)) {
                 $additionalFormFields['primary_address_city'] = $defines['focus']->billing_address_city;
-            }						  		
+            }
             if (isset($defines['focus']->billing_address_state)) {
                 $additionalFormFields['primary_address_state'] = $defines['focus']->billing_address_state;
             }
@@ -108,7 +108,7 @@ class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopB
             }
             if (isset($defines['focus']->primary_address_city)) {
                 $additionalFormFields['primary_address_city'] = $defines['focus']->primary_address_city;
-            }						  		
+            }
             if (isset($defines['focus']->primary_address_state)) {
                 $additionalFormFields['primary_address_state'] = $defines['focus']->primary_address_state;
             }

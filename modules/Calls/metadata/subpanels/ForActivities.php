@@ -78,11 +78,11 @@ $subpanel_layout = array(
 			'contact_name_owner'=>array(
 			'usage'=>'query_only',
 			'force_exists'=>true
-			),	
+			),
 			'contact_name_mod'=>array(
 			'usage'=>'query_only',
 			'force_exists'=>true
-			),	
+			),
 		'contact_id'=>array(
 			'usage'=>'query_only',
 			
@@ -97,7 +97,7 @@ $subpanel_layout = array(
 			'widget_class' => 'SubPanelDetailViewLink',
 		 	'target_record_key' => 'assigned_user_id',
 			'target_module' => 'Employees',
-			'width' => '10%',		
+			'width' => '10%',
 		),
 		'edit_button'=>array(
 			'vname' => 'LBL_EDIT_BUTTON',
@@ -120,7 +120,7 @@ $subpanel_layout = array(
 	
 		),
 		'recurring_source'=>array(
-			'usage'=>'query_only',	
+			'usage'=>'query_only',
 		),
 					
 	),

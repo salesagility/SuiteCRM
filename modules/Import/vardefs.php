@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $dictionary['ImportMap'] = array(
-    'table' => 'import_maps', 
+    'table' => 'import_maps',
     'comment' => 'Import mapping control table',
     'fields' => array(
         'id' => array(
@@ -157,24 +157,24 @@ $dictionary['ImportMap'] = array(
             'default'=>'no',
             'comment' => 'Indicator if mapping is published',
             ),
-        ),                                
+        ),
     'indices' => array(
         array(
-            'name' =>'import_mapspk', 
-            'type' =>'primary', 
+            'name' =>'import_mapspk',
+            'type' =>'primary',
             'fields'=>array('id')
             ),
         array(
-            'name' =>'idx_owner_module_name', 
-            'type' =>'index', 
+            'name' =>'idx_owner_module_name',
+            'type' =>'index',
             'fields'=>array('assigned_user_id','module','name','deleted')
             ),
         )
     );
                                   
-$dictionary['UsersLastImport'] = array( 
-    'table' => 'users_last_import', 
-    'comment' => 'Maintains rows last imported by user', 
+$dictionary['UsersLastImport'] = array(
+    'table' => 'users_last_import',
+    'comment' => 'Maintains rows last imported by user',
     'fields' => array(
         'id' => array(
             'name' => 'id',
@@ -228,13 +228,13 @@ $dictionary['UsersLastImport'] = array(
         ),
     'indices' => array(
         array(
-            'name' =>'users_last_importpk', 
-            'type' =>'primary', 
+            'name' =>'users_last_importpk',
+            'type' =>'primary',
             'fields'=>array('id')
             ),
         array(
-            'name' =>'idx_user_id', 
-            'type' =>'index', 
+            'name' =>'idx_user_id',
+            'type' =>'index',
             'fields'=>array('assigned_user_id')
             )
         )

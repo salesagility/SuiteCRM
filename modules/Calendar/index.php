@@ -68,9 +68,9 @@ $cal = new Calendar($_REQUEST['view'], array(), $views);
 
 
 if ($cal->view == "sharedMonth" || $cal->view == "sharedWeek") {
-    $cal->init_shared();	
-    global $shared_user;				
-    $shared_user = new User();	
+    $cal->init_shared();
+    global $shared_user;
+    $shared_user = new User();
     foreach ($cal->shared_ids as $member) {
         $shared_user->retrieve($member);
         $cal->add_activities($shared_user);

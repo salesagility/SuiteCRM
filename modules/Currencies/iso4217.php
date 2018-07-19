@@ -39,1460 +39,1460 @@
 
 
 $fullIsoList = array(
-  'ALL' => 
+  'ALL' =>
   array(
     'full_name' => 'Albania, Leke',
     'name' => 'Leke',
     'code' => 'ALL',
     'symbol' => 'Lek',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '76',
       1 => ' 101',
       2 => ' 107',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '4c',
       1 => ' 65',
       2 => ' 6b',
     ),
   ),
-  'USD' => 
+  'USD' =>
   array(
     'full_name' => 'US Dollars',
     'name' => 'Dollars',
     'code' => 'USD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'AFN' => 
+  'AFN' =>
   array(
     'full_name' => 'Afghanistan, Afghanis',
     'name' => 'Afghanis',
     'code' => 'AFN',
     'symbol' => 'Ø',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '1547',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '60b',
     ),
   ),
-  'ARS' => 
+  'ARS' =>
   array(
     'full_name' => 'Argentina, Pesos',
     'name' => 'Pesos',
     'code' => 'ARS',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'AWG' => 
+  'AWG' =>
   array(
     'full_name' => 'Aruba, Guilders',
     'name' => 'Guilders',
     'code' => 'AWG',
     'symbol' => 'Æ',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '402',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '192',
     ),
   ),
-  'AUD' => 
+  'AUD' =>
   array(
     'full_name' => 'Australia, Dollars',
     'name' => 'Dollars',
     'code' => 'AUD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'AZN' => 
+  'AZN' =>
   array(
     'full_name' => 'Azerbaijan, New Manats',
     'name' => 'New Manats',
     'code' => 'AZN',
     'symbol' => 'aÐ¼Ð°Ð½',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '1084',
       1 => ' 1072',
       2 => ' 1085',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '43c',
       1 => ' 430',
       2 => ' 43d',
     ),
   ),
-  'BSD' => 
+  'BSD' =>
   array(
     'full_name' => 'Bahamas, Dollars',
     'name' => 'Dollars',
     'code' => 'BSD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'BBD' => 
+  'BBD' =>
   array(
     'full_name' => 'Barbados, Dollars',
     'name' => 'Dollars',
     'code' => 'BBD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'BYR' => 
+  'BYR' =>
   array(
     'full_name' => 'Belarus, Rubles',
     'name' => 'Rubles',
     'code' => 'BYR',
     'symbol' => 'p.',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '112',
       1 => ' 46',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '70',
       1 => ' 2e',
     ),
   ),
-  'EUR' => 
+  'EUR' =>
   array(
     'full_name' => 'Belgium, Euro',
     'name' => 'Euro',
     'code' => 'EUR',
     'symbol' => 'â¬',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8364',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20ac',
     ),
   ),
-  'BZD' => 
+  'BZD' =>
   array(
     'full_name' => 'Belize, Dollars',
     'name' => 'Dollars',
     'code' => 'BZD',
     'symbol' => 'BZ$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '66',
       1 => ' 90',
       2 => ' 36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '42',
       1 => ' 5a',
       2 => ' 24',
     ),
   ),
-  'BMD' => 
+  'BMD' =>
   array(
     'full_name' => 'Bermuda, Dollars',
     'name' => 'Dollars',
     'code' => 'BMD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'BOB' => 
+  'BOB' =>
   array(
     'full_name' => 'Bolivia, Bolivianos',
     'name' => 'Bolivianos',
     'code' => 'BOB',
     'symbol' => '$b',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
       1 => ' 98',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
       1 => ' 62',
     ),
   ),
-  'BAM' => 
+  'BAM' =>
   array(
     'full_name' => 'Bosnia and Herzegovina, Convertible Marka',
     'name' => 'Convertible Marka',
     'code' => 'BAM',
     'symbol' => 'KM',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '75',
       1 => ' 77',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '4b',
       1 => ' 4d',
     ),
   ),
-  'BWP' => 
+  'BWP' =>
   array(
     'full_name' => 'Botswana, Pulas',
     'name' => 'Pulas',
     'code' => 'BWP',
     'symbol' => 'P',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '80',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '50',
     ),
   ),
-  'BGN' => 
+  'BGN' =>
   array(
     'full_name' => 'Bulgaria, Leva',
     'name' => 'Leva',
     'code' => 'BGN',
     'symbol' => 'Ð»Ð²',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '1083',
       1 => ' 1074',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '43b',
       1 => ' 432',
     ),
   ),
-  'BRL' => 
+  'BRL' =>
   array(
     'full_name' => 'Brazil, Reais',
     'name' => 'Reais',
     'code' => 'BRL',
     'symbol' => 'R$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '82',
       1 => ' 36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '52',
       1 => ' 24',
     ),
   ),
-  'GBP' => 
+  'GBP' =>
   array(
     'full_name' => 'British Pounds',
     'name' => 'Pounds',
     'code' => 'GBP',
     'symbol' => 'Â£',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '163',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a3',
     ),
   ),
-  'BND' => 
+  'BND' =>
   array(
     'full_name' => 'Brunei Darussalam, Dollars',
     'name' => 'Dollars',
     'code' => 'BND',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'KHR' => 
+  'KHR' =>
   array(
     'full_name' => 'Cambodia, Riels',
     'name' => 'Riels',
     'code' => 'KHR',
     'symbol' => 'á',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '6107',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '17db',
     ),
   ),
-  'CAD' => 
+  'CAD' =>
   array(
     'full_name' => 'Canada, Dollars',
     'name' => 'Dollars',
     'code' => 'CAD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'KYD' => 
+  'KYD' =>
   array(
     'full_name' => 'Cayman Islands, Dollars',
     'name' => 'Dollars',
     'code' => 'KYD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'CLP' => 
+  'CLP' =>
   array(
     'full_name' => 'Chile, Pesos',
     'name' => 'Pesos',
     'code' => 'CLP',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'CNY' => 
+  'CNY' =>
   array(
     'full_name' => 'China, Yuan Renminbi',
     'name' => 'Yuan Renminbi',
     'code' => 'CNY',
     'symbol' => 'Â¥',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '165',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a5',
     ),
   ),
-  'COP' => 
+  'COP' =>
   array(
     'full_name' => 'Colombia, Pesos',
     'name' => 'Pesos',
     'code' => 'COP',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'CRC' => 
+  'CRC' =>
   array(
     'full_name' => 'Costa Rica, ColÃ³n',
     'name' => 'ColÃ³n',
     'code' => 'CRC',
     'symbol' => 'â¡',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8353',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a1',
     ),
   ),
-  'HRK' => 
+  'HRK' =>
   array(
     'full_name' => 'Croatia, Kuna',
     'name' => 'Kuna',
     'code' => 'HRK',
     'symbol' => 'kn',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '107',
       1 => ' 110',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '6b',
       1 => ' 6e',
     ),
   ),
-  'CUP' => 
+  'CUP' =>
   array(
     'full_name' => 'Cuba, Pesos',
     'name' => 'Pesos',
     'code' => 'CUP',
     'symbol' => 'â±',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8369',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20b1',
     ),
   ),
-  'CZK' => 
+  'CZK' =>
   array(
     'full_name' => 'Czech Republic, Koruny',
     'name' => 'Koruny',
     'code' => 'CZK',
     'symbol' => 'KÄ',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '75',
       1 => ' 269',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '4b',
       1 => ' 10d',
     ),
   ),
-  'DKK' => 
+  'DKK' =>
   array(
     'full_name' => 'Denmark, Kroner',
     'name' => 'Kroner',
     'code' => 'DKK',
     'symbol' => 'kr',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '107',
       1 => ' 114',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '6b',
       1 => ' 72',
     ),
   ),
-  'DOP' => 
+  'DOP' =>
   array(
     'full_name' => 'Dominican Republic, Pesos',
     'name' => 'Pesos',
     'code' => 'DOP',
     'symbol' => 'RD$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '82',
       1 => ' 68',
       2 => ' 36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '52',
       1 => ' 44',
       2 => ' 24',
     ),
   ),
-  'XCD' => 
+  'XCD' =>
   array(
     'full_name' => 'East Caribbean, Dollars',
     'name' => 'Dollars',
     'code' => 'XCD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'EGP' => 
+  'EGP' =>
   array(
     'full_name' => 'Egypt, Pounds',
     'name' => 'Pounds',
     'code' => 'EGP',
     'symbol' => 'Â£',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '163',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a3',
     ),
   ),
-  'SVC' => 
+  'SVC' =>
   array(
     'full_name' => 'El Salvador, Colones',
     'name' => 'Colones',
     'code' => 'SVC',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'EEK' => 
+  'EEK' =>
   array(
     'full_name' => 'Estonia, Krooni',
     'name' => 'Krooni',
     'code' => 'EEK',
     'symbol' => 'kr',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '107',
       1 => ' 114',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '6b',
       1 => ' 72',
     ),
   ),
-  'FKP' => 
+  'FKP' =>
   array(
     'full_name' => 'Falkland Islands, Pounds',
     'name' => 'Pounds',
     'code' => 'FKP',
     'symbol' => 'Â£',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '163',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a3',
     ),
   ),
-  'FJD' => 
+  'FJD' =>
   array(
     'full_name' => 'Fiji, Dollars',
     'name' => 'Dollars',
     'code' => 'FJD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'GHC' => 
+  'GHC' =>
   array(
     'full_name' => 'Ghana, Cedis',
     'name' => 'Cedis',
     'code' => 'GHC',
     'symbol' => 'Â¢',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '162',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a2',
     ),
   ),
-  'GIP' => 
+  'GIP' =>
   array(
     'full_name' => 'Gibraltar, Pounds',
     'name' => 'Pounds',
     'code' => 'GIP',
     'symbol' => 'Â£',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '163',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a3',
     ),
   ),
-  'GTQ' => 
+  'GTQ' =>
   array(
     'full_name' => 'Guatemala, Quetzales',
     'name' => 'Quetzales',
     'code' => 'GTQ',
     'symbol' => 'Q',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '81',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '51',
     ),
   ),
-  'GGP' => 
+  'GGP' =>
   array(
     'full_name' => 'Guernsey, Pounds',
     'name' => 'Pounds',
     'code' => 'GGP',
     'symbol' => 'Â£',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '163',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a3',
     ),
   ),
-  'GYD' => 
+  'GYD' =>
   array(
     'full_name' => 'Guyana, Dollars',
     'name' => 'Dollars',
     'code' => 'GYD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'HNL' => 
+  'HNL' =>
   array(
     'full_name' => 'Honduras, Lempiras',
     'name' => 'Lempiras',
     'code' => 'HNL',
     'symbol' => 'L',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '76',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '4c',
     ),
   ),
-  'HKD' => 
+  'HKD' =>
   array(
     'full_name' => 'Hong Kong, Dollars',
     'name' => 'Dollars',
     'code' => 'HKD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'HUF' => 
+  'HUF' =>
   array(
     'full_name' => 'Hungary, Forint',
     'name' => 'Forint',
     'code' => 'HUF',
     'symbol' => 'Ft',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '70',
       1 => ' 116',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '46',
       1 => ' 74',
     ),
   ),
-  'ISK' => 
+  'ISK' =>
   array(
     'full_name' => 'Iceland, Kronur',
     'name' => 'Kronur',
     'code' => 'ISK',
     'symbol' => 'kr',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '107',
       1 => ' 114',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '6b',
       1 => ' 72',
     ),
   ),
-  'INR' => 
+  'INR' =>
   array(
     'full_name' => 'India, Rupees',
     'name' => 'Rupees',
     'code' => 'INR',
     'symbol' => 'â¨',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8360',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a8',
     ),
   ),
-  'IDR' => 
+  'IDR' =>
   array(
     'full_name' => 'Indonesia, Rupiahs',
     'name' => 'Rupiahs',
     'code' => 'IDR',
     'symbol' => 'Rp',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '82',
       1 => ' 112',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '52',
       1 => ' 70',
     ),
   ),
-  'IRR' => 
+  'IRR' =>
   array(
     'full_name' => 'Iran, Rials',
     'name' => 'Rials',
     'code' => 'IRR',
     'symbol' => 'ï·¼',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '65020',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'fdfc',
     ),
   ),
-  'IMP' => 
+  'IMP' =>
   array(
     'full_name' => 'Isle of Man, Pounds',
     'name' => 'Pounds',
     'code' => 'IMP',
     'symbol' => 'Â£',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '163',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a3',
     ),
   ),
-  'ILS' => 
+  'ILS' =>
   array(
     'full_name' => 'Israel, New Shekels',
     'name' => 'New Shekels',
     'code' => 'ILS',
     'symbol' => 'âª',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8362',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20aa',
     ),
   ),
-  'JMD' => 
+  'JMD' =>
   array(
     'full_name' => 'Jamaica, Dollars',
     'name' => 'Dollars',
     'code' => 'JMD',
     'symbol' => 'J$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '74',
       1 => ' 36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '4a',
       1 => ' 24',
     ),
   ),
-  'JPY' => 
+  'JPY' =>
   array(
     'full_name' => 'Japan, Yen',
     'name' => 'Yen',
     'code' => 'JPY',
     'symbol' => 'Â¥',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '165',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a5',
     ),
   ),
-  'JEP' => 
+  'JEP' =>
   array(
     'full_name' => 'Jersey, Pounds',
     'name' => 'Pounds',
     'code' => 'JEP',
     'symbol' => 'Â£',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '163',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a3',
     ),
   ),
-  'KZT' => 
+  'KZT' =>
   array(
     'full_name' => 'Kazakhstan, Tenge',
     'name' => 'Tenge',
     'code' => 'KZT',
     'symbol' => 'Ð»Ð²',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '1083',
       1 => ' 1074',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '43b',
       1 => ' 432',
     ),
   ),
-  'KPW' => 
+  'KPW' =>
   array(
     'full_name' => 'Korea (North), Won',
     'name' => 'Won',
     'code' => 'KPW',
     'symbol' => 'â©',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8361',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a9',
     ),
   ),
-  'KRW' => 
+  'KRW' =>
   array(
     'full_name' => 'Korea (South), Won',
     'name' => 'Won',
     'code' => 'KRW',
     'symbol' => 'â©',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8361',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a9',
     ),
   ),
-  'KGS' => 
+  'KGS' =>
   array(
     'full_name' => 'Kyrgyzstan, Soms',
     'name' => 'Soms',
     'code' => 'KGS',
     'symbol' => 'Ð»Ð²',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '1083',
       1 => ' 1074',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '43b',
       1 => ' 432',
     ),
   ),
-  'LAK' => 
+  'LAK' =>
   array(
     'full_name' => 'Laos, Kips',
     'name' => 'Kips',
     'code' => 'LAK',
     'symbol' => 'â­',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8365',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20ad',
     ),
   ),
-  'LVL' => 
+  'LVL' =>
   array(
     'full_name' => 'Latvia, Lati',
     'name' => 'Lati',
     'code' => 'LVL',
     'symbol' => 'Ls',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '76',
       1 => ' 115',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '4c',
       1 => ' 73',
     ),
   ),
-  'LBP' => 
+  'LBP' =>
   array(
     'full_name' => 'Lebanon, Pounds',
     'name' => 'Pounds',
     'code' => 'LBP',
     'symbol' => 'Â£',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '163',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a3',
     ),
   ),
-  'LRD' => 
+  'LRD' =>
   array(
     'full_name' => 'Liberia, Dollars',
     'name' => 'Dollars',
     'code' => 'LRD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'CHF' => 
+  'CHF' =>
   array(
     'full_name' => 'Liechtenstein, Switzerland Francs',
     'name' => 'Switzerland Francs',
     'code' => 'CHF',
     'symbol' => 'CHF',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '67',
       1 => ' 72',
       2 => ' 70',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '43',
       1 => ' 48',
       2 => ' 46',
     ),
   ),
-  'LTL' => 
+  'LTL' =>
   array(
     'full_name' => 'Lithuania, Litai',
     'name' => 'Litai',
     'code' => 'LTL',
     'symbol' => 'Lt',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '76',
       1 => ' 116',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '4c',
       1 => ' 74',
     ),
   ),
-  'MKD' => 
+  'MKD' =>
   array(
     'full_name' => 'Macedonia, Denars',
     'name' => 'Denars',
     'code' => 'MKD',
     'symbol' => 'Ð´ÐµÐ½',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '1076',
       1 => ' 1077',
       2 => ' 1085',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '434',
       1 => ' 435',
       2 => ' 43d',
     ),
   ),
-  'MYR' => 
+  'MYR' =>
   array(
     'full_name' => 'Malaysia, Ringgits',
     'name' => 'Ringgits',
     'code' => 'MYR',
     'symbol' => 'RM',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '82',
       1 => ' 77',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '52',
       1 => ' 4d',
     ),
   ),
-  'MUR' => 
+  'MUR' =>
   array(
     'full_name' => 'Mauritius, Rupees',
     'name' => 'Rupees',
     'code' => 'MUR',
     'symbol' => 'â¨',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8360',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a8',
     ),
   ),
-  'MXN' => 
+  'MXN' =>
   array(
     'full_name' => 'Mexico, Pesos',
     'name' => 'Pesos',
     'code' => 'MXN',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'MNT' => 
+  'MNT' =>
   array(
     'full_name' => 'Mongolia, Tugriks',
     'name' => 'Tugriks',
     'code' => 'MNT',
     'symbol' => 'â®',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8366',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20ae',
     ),
   ),
-  'MZN' => 
+  'MZN' =>
   array(
     'full_name' => 'Mozambique, Meticais',
     'name' => 'Meticais',
     'code' => 'MZN',
     'symbol' => 'MT',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '77',
       1 => ' 84',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '4d',
       1 => ' 54',
     ),
   ),
-  'NAD' => 
+  'NAD' =>
   array(
     'full_name' => 'Namibia, Dollars',
     'name' => 'Dollars',
     'code' => 'NAD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'NPR' => 
+  'NPR' =>
   array(
     'full_name' => 'Nepal, Rupees',
     'name' => 'Rupees',
     'code' => 'NPR',
     'symbol' => 'â¨',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8360',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a8',
     ),
   ),
-  'ANG' => 
+  'ANG' =>
   array(
     'full_name' => 'Netherlands Antilles, Guilders',
     'name' => 'Guilders',
     'code' => 'ANG',
     'symbol' => 'Æ',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '402',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '192',
     ),
   ),
-  'NZD' => 
+  'NZD' =>
   array(
     'full_name' => 'New Zealand, Dollars',
     'name' => 'Dollars',
     'code' => 'NZD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'NIO' => 
+  'NIO' =>
   array(
     'full_name' => 'Nicaragua, Cordobas',
     'name' => 'Cordobas',
     'code' => 'NIO',
     'symbol' => 'C$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '67',
       1 => ' 36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '43',
       1 => ' 24',
     ),
   ),
-  'NGN' => 
+  'NGN' =>
   array(
     'full_name' => 'Nigeria, Nairas',
     'name' => 'Nairas',
     'code' => 'NGN',
     'symbol' => 'â¦',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8358',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a6',
     ),
   ),
-  'NOK' => 
+  'NOK' =>
   array(
     'full_name' => 'Norway, Krone',
     'name' => 'Krone',
     'code' => 'NOK',
     'symbol' => 'kr',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '107',
       1 => ' 114',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '6b',
       1 => ' 72',
     ),
   ),
-  'OMR' => 
+  'OMR' =>
   array(
     'full_name' => 'Oman, Rials',
     'name' => 'Rials',
     'code' => 'OMR',
     'symbol' => 'ï·¼',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '65020',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'fdfc',
     ),
   ),
-  'PKR' => 
+  'PKR' =>
   array(
     'full_name' => 'Pakistan, Rupees',
     'name' => 'Rupees',
     'code' => 'PKR',
     'symbol' => 'â¨',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8360',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a8',
     ),
   ),
-  'PAB' => 
+  'PAB' =>
   array(
     'full_name' => 'Panama, Balboa',
     'name' => 'Balboa',
     'code' => 'PAB',
     'symbol' => 'B/.',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '66',
       1 => ' 47',
       2 => ' 46',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '42',
       1 => ' 2f',
       2 => ' 2e',
     ),
   ),
-  'PYG' => 
+  'PYG' =>
   array(
     'full_name' => 'Paraguay, Guarani',
     'name' => 'Guarani',
     'code' => 'PYG',
     'symbol' => 'Gs',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '71',
       1 => ' 115',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '47',
       1 => ' 73',
     ),
   ),
-  'PEN' => 
+  'PEN' =>
   array(
     'full_name' => 'Peru, Nuevos Soles',
     'name' => 'Nuevos Soles',
     'code' => 'PEN',
     'symbol' => 'S/.',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '83',
       1 => ' 47',
       2 => ' 46',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '53',
       1 => ' 2f',
       2 => ' 2e',
     ),
   ),
-  'PHP' => 
+  'PHP' =>
   array(
     'full_name' => 'Philippines, Pesos',
     'name' => 'Pesos',
     'code' => 'PHP',
     'symbol' => 'Php',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '80',
       1 => ' 104',
       2 => ' 112',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '50',
       1 => ' 68',
       2 => ' 70',
     ),
   ),
-  'PLN' => 
+  'PLN' =>
   array(
     'full_name' => 'Poland, Zlotych',
     'name' => 'Zlotych',
     'code' => 'PLN',
     'symbol' => 'zÅ',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '122',
       1 => ' 322',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '7a',
       1 => ' 142',
     ),
   ),
-  'QAR' => 
+  'QAR' =>
   array(
     'full_name' => 'Qatar, Rials',
     'name' => 'Rials',
     'code' => 'QAR',
     'symbol' => 'ï·¼',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '65020',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'fdfc',
     ),
   ),
-  'RON' => 
+  'RON' =>
   array(
     'full_name' => 'Romania, New Lei',
     'name' => 'New Lei',
     'code' => 'RON',
     'symbol' => 'lei',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '108',
       1 => ' 101',
       2 => ' 105',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '6c',
       1 => ' 65',
       2 => ' 69',
     ),
   ),
-  'RUB' => 
+  'RUB' =>
   array(
     'full_name' => 'Russia, Rubles',
     'name' => 'Rubles',
     'code' => 'RUB',
     'symbol' => 'ÑÑÐ±',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '1088',
       1 => ' 1091',
       2 => ' 1073',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '440',
       1 => ' 443',
       2 => ' 431',
     ),
   ),
-  'SHP' => 
+  'SHP' =>
   array(
     'full_name' => 'Saint Helena, Pounds',
     'name' => 'Pounds',
     'code' => 'SHP',
     'symbol' => 'Â£',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '163',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a3',
     ),
   ),
-  'SAR' => 
+  'SAR' =>
   array(
     'full_name' => 'Saudi Arabia, Riyals',
     'name' => 'Riyals',
     'code' => 'SAR',
     'symbol' => 'ï·¼',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '65020',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'fdfc',
     ),
   ),
-  'RSD' => 
+  'RSD' =>
   array(
     'full_name' => 'Serbia, Dinars',
     'name' => 'Dinars',
     'code' => 'RSD',
     'symbol' => 'ÐÐ¸Ð½.',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '1044',
       1 => ' 1080',
       2 => ' 1085',
       3 => ' 46',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '414',
       1 => ' 438',
@@ -1500,351 +1500,351 @@ $fullIsoList = array(
       3 => ' 2e',
     ),
   ),
-  'SCR' => 
+  'SCR' =>
   array(
     'full_name' => 'Seychelles, Rupees',
     'name' => 'Rupees',
     'code' => 'SCR',
     'symbol' => 'â¨',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8360',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a8',
     ),
   ),
-  'SGD' => 
+  'SGD' =>
   array(
     'full_name' => 'Singapore, Dollars',
     'name' => 'Dollars',
     'code' => 'SGD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'SBD' => 
+  'SBD' =>
   array(
     'full_name' => 'Solomon Islands, Dollars',
     'name' => 'Dollars',
     'code' => 'SBD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'SOS' => 
+  'SOS' =>
   array(
     'full_name' => 'Somalia, Shillings',
     'name' => 'Shillings',
     'code' => 'SOS',
     'symbol' => 'S',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '83',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '53',
     ),
   ),
-  'ZAR' => 
+  'ZAR' =>
   array(
     'full_name' => 'South Africa, Rand',
     'name' => 'Rand',
     'code' => 'ZAR',
     'symbol' => 'R',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '82',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '52',
     ),
   ),
-  'LKR' => 
+  'LKR' =>
   array(
     'full_name' => 'Sri Lanka, Rupees',
     'name' => 'Rupees',
     'code' => 'LKR',
     'symbol' => 'â¨',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8360',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a8',
     ),
   ),
-  'SEK' => 
+  'SEK' =>
   array(
     'full_name' => 'Sweden, Kronor',
     'name' => 'Kronor',
     'code' => 'SEK',
     'symbol' => 'kr',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '107',
       1 => ' 114',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '6b',
       1 => ' 72',
     ),
   ),
-  'SRD' => 
+  'SRD' =>
   array(
     'full_name' => 'Suriname, Dollars',
     'name' => 'Dollars',
     'code' => 'SRD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'SYP' => 
+  'SYP' =>
   array(
     'full_name' => 'Syria, Pounds',
     'name' => 'Pounds',
     'code' => 'SYP',
     'symbol' => 'Â£',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '163',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'a3',
     ),
   ),
-  'TWD' => 
+  'TWD' =>
   array(
     'full_name' => 'Taiwan, New Dollars',
     'name' => 'New Dollars',
     'code' => 'TWD',
     'symbol' => 'NT$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '78',
       1 => ' 84',
       2 => ' 36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '4e',
       1 => ' 54',
       2 => ' 24',
     ),
   ),
-  'THB' => 
+  'THB' =>
   array(
     'full_name' => 'Thailand, Baht',
     'name' => 'Baht',
     'code' => 'THB',
     'symbol' => 'à¸¿',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '3647',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'e3f',
     ),
   ),
-  'TTD' => 
+  'TTD' =>
   array(
     'full_name' => 'Trinidad and Tobago, Dollars',
     'name' => 'Dollars',
     'code' => 'TTD',
     'symbol' => 'TT$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '84',
       1 => ' 84',
       2 => ' 36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '54',
       1 => ' 54',
       2 => ' 24',
     ),
   ),
-  'TRY' => 
+  'TRY' =>
   array(
     'full_name' => 'Turkey, Lira',
     'name' => 'Lira',
     'code' => 'TRY',
     'symbol' => 'TL',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '84',
       1 => ' 76',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '54',
       1 => ' 4c',
     ),
   ),
-  'TRL' => 
+  'TRL' =>
   array(
     'full_name' => 'Turkey, Liras',
     'name' => 'Liras',
     'code' => 'TRL',
     'symbol' => 'â¤',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8356',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20a4',
     ),
   ),
-  'TVD' => 
+  'TVD' =>
   array(
     'full_name' => 'Tuvalu, Dollars',
     'name' => 'Dollars',
     'code' => 'TVD',
     'symbol' => '$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
     ),
   ),
-  'UAH' => 
+  'UAH' =>
   array(
     'full_name' => 'Ukraine, Hryvnia',
     'name' => 'Hryvnia',
     'code' => 'UAH',
     'symbol' => 'â´',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8372',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20b4',
     ),
   ),
-  'UYU' => 
+  'UYU' =>
   array(
     'full_name' => 'Uruguay, Pesos',
     'name' => 'Pesos',
     'code' => 'UYU',
     'symbol' => '$U',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '36',
       1 => ' 85',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '24',
       1 => ' 55',
     ),
   ),
-  'UZS' => 
+  'UZS' =>
   array(
     'full_name' => 'Uzbekistan, Sums',
     'name' => 'Sums',
     'code' => 'UZS',
     'symbol' => 'Ð»Ð²',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '1083',
       1 => ' 1074',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '43b',
       1 => ' 432',
     ),
   ),
-  'VEF' => 
+  'VEF' =>
   array(
     'full_name' => 'Venezuela, Bolivares Fuertes',
     'name' => 'Bolivares Fuertes',
     'code' => 'VEF',
     'symbol' => 'Bs',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '66',
       1 => ' 115',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '42',
       1 => ' 73',
     ),
   ),
-  'VND' => 
+  'VND' =>
   array(
     'full_name' => 'Vietnam, Dong',
     'name' => 'Dong',
     'code' => 'VND',
     'symbol' => 'â«',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '8363',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '20ab',
     ),
   ),
-  'YER' => 
+  'YER' =>
   array(
     'full_name' => 'Yemen, Rials',
     'name' => 'Rials',
     'code' => 'YER',
     'symbol' => 'ï·¼',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '65020',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => 'fdfc',
     ),
   ),
-  'ZWD' => 
+  'ZWD' =>
   array(
     'full_name' => 'Zimbabwe, Zimbabwe Dollars',
     'name' => 'Zimbabwe Dollars',
     'code' => 'ZWD',
     'symbol' => 'Z$',
-    'unicode' => 
+    'unicode' =>
     array(
       0 => '90',
       1 => ' 36',
     ),
-    'unihex' => 
+    'unihex' =>
     array(
       0 => '5a',
       1 => ' 24',

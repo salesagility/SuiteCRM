@@ -80,7 +80,7 @@ switch ($_REQUEST['commitStep']) {
 	case 'final_touches':
 		logThis('commitJson->finalTouches() called.');
 		$persistence = commitAjaxFinalTouches($persistence);
-	break;	
+	break;
 }
 
 savePersistence($persistence);

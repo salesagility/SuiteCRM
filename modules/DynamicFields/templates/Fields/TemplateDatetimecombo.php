@@ -65,7 +65,7 @@ class TemplateDatetimecombo extends TemplateRange
     
     public $hoursStrings = array(
     	'' => '',
-    	'01' => '01',	
+    	'01' => '01',
     	'02' => '02',
     	'03' => '03',
     	'04' => '04',
@@ -82,7 +82,7 @@ class TemplateDatetimecombo extends TemplateRange
     public $hoursStrings24 = array(
     	'' => '',
         '00' => '00',
-    	'01' => '01',	
+    	'01' => '01',
     	'02' => '02',
     	'03' => '03',
     	'04' => '04',
@@ -94,7 +94,7 @@ class TemplateDatetimecombo extends TemplateRange
     	'10' => '10',
     	'11' => '11',
     	'12' => '12',
-    	'13' => '13',	
+    	'13' => '13',
     	'14' => '14',
     	'15' => '15',
     	'16' => '16',
@@ -105,11 +105,11 @@ class TemplateDatetimecombo extends TemplateRange
     	'21' => '21',
     	'22' => '22',
     	'23' => '23',
-    );    
+    );
     
     public $minutesStrings = array(
     	'' => '',
-    	'00' => '00',	
+    	'00' => '00',
     	'15' => '15',
     	'30' => '30',
     	'45' => '45',
@@ -144,7 +144,7 @@ class TemplateDatetimecombo extends TemplateRange
             $_REQUEST['default'] = $_REQUEST['defaultDate'].'&'.$_REQUEST['defaultTime'];
 
             $defaultTime = $_REQUEST['defaultTime'];
-            $hours = substr($defaultTime, 0, 2); 
+            $hours = substr($defaultTime, 0, 2);
             $minutes = substr($defaultTime, 3, 2);
             $meridiem = substr($defaultTime, 5, 2);
             if (empty($meridiem)) {

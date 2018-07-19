@@ -3,9 +3,9 @@
 $dictionary["project_users_1"] = array(
   'true_relationship_type' => 'many-to-many',
   'from_studio' => true,
-  'relationships' => 
+  'relationships' =>
   array(
-    'project_users_1' => 
+    'project_users_1' =>
     array(
       'lhs_module' => 'Project',
       'lhs_table' => 'project',
@@ -20,20 +20,20 @@ $dictionary["project_users_1"] = array(
     ),
   ),
   'table' => 'project_users_1_c',
-  'fields' => 
+  'fields' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
-    2 => 
+    2 =>
     array(
       'name' => 'deleted',
       'type' => 'bool',
@@ -41,35 +41,35 @@ $dictionary["project_users_1"] = array(
       'default' => '0',
       'required' => true,
     ),
-    3 => 
+    3 =>
     array(
       'name' => 'project_users_1project_ida',
       'type' => 'varchar',
       'len' => 36,
     ),
-    4 => 
+    4 =>
     array(
       'name' => 'project_users_1users_idb',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
-  'indices' => 
+  'indices' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'project_users_1spk',
       'type' => 'primary',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'id',
       ),
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'project_users_1_alt',
       'type' => 'alternate_key',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'project_users_1project_ida',
         1 => 'project_users_1users_idb',

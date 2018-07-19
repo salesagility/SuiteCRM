@@ -47,8 +47,8 @@ $popupMeta = array(
     'moduleMain' => 'Contact',
     'varName' => 'CONTACT',
     'orderBy' => 'contacts.first_name, contacts.last_name',
-    'whereClauses' => 
-        array('first_name' => 'contacts.first_name', 
+    'whereClauses' =>
+        array('first_name' => 'contacts.first_name',
                 'last_name' => 'contacts.last_name',
                 'account_name' => 'accounts.name',
                 'account_id' => 'accounts.id'),
@@ -62,14 +62,14 @@ $popupMeta = array(
               ),
     'listviewdefs' => array(
         'NAME' => array(
-            'width' => '20%', 
+            'width' => '20%',
             'label' => 'LBL_LIST_NAME',
             'link' => true,
             'default' => true,
-            'related_fields' => array('first_name', 'last_name', 'salutation', 'account_name', 'account_id')), 
+            'related_fields' => array('first_name', 'last_name', 'salutation', 'account_name', 'account_id')),
         'ACCOUNT_NAME' => array(
-            'width' => '25', 
-            'label' => 'LBL_LIST_ACCOUNT_NAME', 
+            'width' => '25',
+            'label' => 'LBL_LIST_ACCOUNT_NAME',
             'module' => 'Accounts',
             'id' => 'ACCOUNT_ID',
             'default' => true,
@@ -77,17 +77,17 @@ $popupMeta = array(
             'ACLTag' => 'ACCOUNT',
             'related_fields' => array('account_id')),
         'TITLE' => array(
-            'width' => '15%', 
+            'width' => '15%',
             'label' => 'LBL_LIST_TITLE',
-            'default' => true), 
+            'default' => true),
         'LEAD_SOURCE' => array(
-            'width' => '15%', 
+            'width' => '15%',
             'label' => 'LBL_LEAD_SOURCE',
-            'default' => true), 
+            'default' => true),
         ),
     'searchdefs'   => array(
-        'first_name', 
-        'last_name', 
+        'first_name',
+        'last_name',
         array('name' => 'account_name', 'type' => 'varchar',),
         'title',
         'lead_source',

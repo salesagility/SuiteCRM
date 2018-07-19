@@ -103,7 +103,7 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum
         }
 
         // Bug 40022
-        // IS filter doesn't add the carets (^) to multienum custom field values  
+        // IS filter doesn't add the carets (^) to multienum custom field values
         $input_name0 = $this->encodeMultienumCustom($layout_def, $input_name0);
         
         return $this->_get_column_select($layout_def)." = ".$this->reporter->db->quoted($input_name0)."\n";
@@ -117,7 +117,7 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum
         }
 
         // Bug 50549
-        // IS NOT filter doesn't add the carets (^) to multienum custom field values  
+        // IS NOT filter doesn't add the carets (^) to multienum custom field values
         $input_name0 = $this->encodeMultienumCustom($layout_def, $input_name0);
         
         return $this->_get_column_select($layout_def)." <> ".$this->reporter->db->quoted($input_name0)."\n";

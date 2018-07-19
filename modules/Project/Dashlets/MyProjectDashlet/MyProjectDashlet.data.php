@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $current_user;
 
-$dashletData['MyProjectDashlet']['searchFields'] =  array( 
+$dashletData['MyProjectDashlet']['searchFields'] =  array(
                                                             'estimated_end_date'         => array('default' => ''),
                                                    'estimated_start_date'        => array('default' => ''),
                                                             'status'         => array('default' => ''),
@@ -49,12 +49,12 @@ $dashletData['MyProjectDashlet']['searchFields'] =  array(
                                                                                         'default' => $current_user->name)
 
                                                             );
-$dashletData['MyProjectDashlet']['columns'] = array('name' => array('width'   => '40', 
+$dashletData['MyProjectDashlet']['columns'] = array('name' => array('width'   => '40',
                                                                        'label'   => 'LBL_NAME',
                                                                        'link'    => true,
                                                                        'default' => true),
 
-                                                                 'assigned_user_name' => array('width'   => '8', 
+                                                                 'assigned_user_name' => array('width'   => '8',
                                                                                      'label'   => 'LBL_LIST_ASSIGNED_USER',
                                                                                      'default' => true),
                                                                  'estimated_start_date' => array('width' => '10',

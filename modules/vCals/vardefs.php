@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 		// Create the indexes
 $dictionary['vCal'] = array('table' => 'vcals'
                                ,'fields' => array(
-  'id' => 
+  'id' =>
   array(
     'name' => 'id',
     'vname' => 'LBL_NAME',
@@ -52,7 +52,7 @@ $dictionary['vCal'] = array('table' => 'vcals'
     'required'=>true,
     'reportable'=>false,
   ),
-     'deleted' => 
+     'deleted' =>
   array(
     'name' => 'deleted',
     'vname' => 'LBL_DELETED',
@@ -60,38 +60,38 @@ $dictionary['vCal'] = array('table' => 'vcals'
     'required' => false,
     'reportable'=>false,
   ),
-  'date_entered' => 
+  'date_entered' =>
   array(
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
   ),
-  'date_modified' => 
+  'date_modified' =>
   array(
     'name' => 'date_modified',
     'vname' => 'LBL_DATE_MODIFIED',
     'type' => 'datetime',
   ),
-    'user_id' => 
+    'user_id' =>
   array(
     'name' => 'user_id',
     'type' => 'id',
 	'required'=>true,
 	'reportable'=>false,
   ),
-    'type' => 
+    'type' =>
   array(
     'name' => 'type',
     'type' => 'varchar',
     'len' => 100,
   ),
-  'source' => 
+  'source' =>
   array(
     'name' => 'source',
     'type' => 'varchar',
     'len' => 100,
   ),
-  'content' => 
+  'content' =>
   array(
     'name' => 'content',
     'type' => 'text',

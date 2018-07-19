@@ -103,7 +103,7 @@ if (!empty($_REQUEST['process'])) {
         if (! isset($db)) {
             $db = DBManagerFactory::getInstance();
         }
-        $db->query("UPDATE sugarfeed SET deleted = '1'");        
+        $db->query("UPDATE sugarfeed SET deleted = '1'");
         echo(translate('LBL_RECORDS_DELETED', 'SugarFeed'));
     }
 

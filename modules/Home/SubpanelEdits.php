@@ -49,7 +49,7 @@ if (file_exists('modules/'. $_REQUEST['target_module'] . '/EditView.php')) {
     $tpl = $_REQUEST['tpl'];
     if (is_file('modules/' . $target_module . '/' . $target_module . 'QuickCreate.php')) { // if there is a quickcreate override
         require_once('modules/' . $target_module . '/' . $target_module . 'QuickCreate.php');
-        $editviewClass     = $target_module . 'QuickCreate'; // eg. OpportunitiesQuickCreate 
+        $editviewClass     = $target_module . 'QuickCreate'; // eg. OpportunitiesQuickCreate
         $editview          = new $editviewClass($target_module, 'modules/' . $target_module . '/tpls/' . $tpl);
         $editview->viaAJAX = true;
     } else { // else use base class

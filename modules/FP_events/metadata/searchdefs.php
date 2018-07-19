@@ -1,28 +1,28 @@
 <?php
 $module_name = 'FP_events';
-$searchdefs [$module_name] = 
+$searchdefs [$module_name] =
 array(
-  'layout' => 
+  'layout' =>
   array(
-    'basic_search' => 
+    'basic_search' =>
     array(
       0 => 'name',
-      1 => 
+      1 =>
       array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
       ),
     ),
-    'advanced_search' => 
+    'advanced_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'date_start' => 
+      'date_start' =>
       array(
         'type' => 'datetimecombo',
         'label' => 'LBL_DATE',
@@ -30,7 +30,7 @@ array(
         'default' => true,
         'name' => 'date_start',
       ),
-      'date_end' => 
+      'date_end' =>
       array(
         'type' => 'datetimecombo',
         'label' => 'LBL_DATE_END',
@@ -38,7 +38,7 @@ array(
         'default' => true,
         'name' => 'date_end',
       ),
-      'fp_event_locations_fp_events_1_name' => 
+      'fp_event_locations_fp_events_1_name' =>
       array(
         'type' => 'relate',
         'link' => true,
@@ -48,15 +48,15 @@ array(
         'default' => true,
         'name' => 'fp_event_locations_fp_events_1_name',
       ),
-      'assigned_user_id' => 
+      'assigned_user_id' =>
       array(
         'name' => 'assigned_user_id',
         'label' => 'LBL_ASSIGNED_TO',
         'type' => 'enum',
-        'function' => 
+        'function' =>
         array(
           'name' => 'get_user_array',
-          'params' => 
+          'params' =>
           array(
             0 => false,
           ),
@@ -66,11 +66,11 @@ array(
       ),
     ),
   ),
-  'templateMeta' => 
+  'templateMeta' =>
   array(
     'maxColumns' => '3',
     'maxColumnsBasic' => '4',
-    'widths' => 
+    'widths' =>
     array(
       'label' => '10',
       'field' => '30',

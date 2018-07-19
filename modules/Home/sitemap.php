@@ -82,7 +82,7 @@ function sm_build_array()
     //if the sitemap array is already stored, then pass it back
     if (isset($_SESSION['SM_ARRAY']) && !empty($_SESSION['SM_ARRAY'])) {
         return $_SESSION['SM_ARRAY'];
-    }   
+    }
 
 
     include("include/modules.php");
@@ -133,6 +133,6 @@ function sm_build_array()
     //reset the modstrings to current module
     $mod_strings = $orig_modstrings ;
     //store master array into session variable
-    $_SESSION['SM_ARRAY'] = $mstr_array; 
+    $_SESSION['SM_ARRAY'] = $mstr_array;
     return $mstr_array;
 }

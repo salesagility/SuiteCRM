@@ -62,7 +62,7 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
         $action = 'DeleteRelationship';
         $record = $layout_def['fields']['ID'];
         $current_module=$layout_def['module'];
-        //in document revisions subpanel ,users are now allowed to 
+        //in document revisions subpanel ,users are now allowed to
         //delete the latest revsion of a document. this will be tested here
         //and if the condition is met delete button will be removed.
         $hideremove=false;

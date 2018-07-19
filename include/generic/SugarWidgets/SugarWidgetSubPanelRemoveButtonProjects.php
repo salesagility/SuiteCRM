@@ -70,8 +70,8 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
         }
 
         $record = $layout_def['fields']['ID'];
-        $current_module=$layout_def['module'];	
-        $hideremove=false;			
+        $current_module=$layout_def['module'];
+        $hideremove=false;
         
         $return_module = $_REQUEST['module'];
         $return_action = 'SubPanelViewer';

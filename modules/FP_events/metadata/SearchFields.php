@@ -1,14 +1,14 @@
 <?php
 // created: 2015-02-17 15:21:07
 $searchFields['FP_events'] = array(
-  'name' => 
+  'name' =>
   array(
     'query_type' => 'default',
   ),
-  'current_user_only' => 
+  'current_user_only' =>
   array(
     'query_type' => 'default',
-    'db_field' => 
+    'db_field' =>
     array(
       0 => 'assigned_user_id',
     ),
@@ -16,77 +16,77 @@ $searchFields['FP_events'] = array(
     'vname' => 'LBL_CURRENT_USER_FILTER',
     'type' => 'bool',
   ),
-  'assigned_user_id' => 
+  'assigned_user_id' =>
   array(
     'query_type' => 'default',
   ),
-  'range_date_entered' => 
-  array(
-    'query_type' => 'default',
-    'enable_range_search' => true,
-    'is_date_field' => true,
-  ),
-  'start_range_date_entered' => 
+  'range_date_entered' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'end_range_date_entered' => 
+  'start_range_date_entered' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'range_date_modified' => 
+  'end_range_date_entered' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'start_range_date_modified' => 
+  'range_date_modified' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'end_range_date_modified' => 
+  'start_range_date_modified' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'range_date_start' => 
+  'end_range_date_modified' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'start_range_date_start' => 
+  'range_date_start' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'end_range_date_start' => 
+  'start_range_date_start' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'range_date_end' => 
+  'end_range_date_start' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'start_range_date_end' => 
+  'range_date_end' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'end_range_date_end' => 
+  'start_range_date_end' =>
+  array(
+    'query_type' => 'default',
+    'enable_range_search' => true,
+    'is_date_field' => true,
+  ),
+  'end_range_date_end' =>
   array(
     'query_type' => 'default',
     'enable_range_search' => true,

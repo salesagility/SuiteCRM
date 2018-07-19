@@ -4,7 +4,7 @@ $dictionary['jjwg_Address_Cache'] = array(
 	'table'=>'jjwg_address_cache',
 	'audited'=>true,
 	'fields'=>array(
-  'lat' => 
+  'lat' =>
   array(
     'required' => true,
     'name' => 'lat',
@@ -22,7 +22,7 @@ $dictionary['jjwg_Address_Cache'] = array(
     'size' => '20',
     'precision' => '8',
   ),
-  'lng' => 
+  'lng' =>
   array(
     'required' => true,
     'name' => 'lng',
@@ -40,7 +40,7 @@ $dictionary['jjwg_Address_Cache'] = array(
     'size' => '20',
     'precision' => '8',
   ),
-  'name' => 
+  'name' =>
   array(
     'name' => 'name',
     'vname' => 'LBL_NAME',

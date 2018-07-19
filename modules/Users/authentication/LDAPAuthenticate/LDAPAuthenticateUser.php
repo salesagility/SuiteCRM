@@ -193,7 +193,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
                 }
                 $GLOBALS['log']->debug("ldapauth: Searching for user: " . $user_search);
 
-                //user is not a member of the group if the count is zero get the logs and return no id so it fails login        
+                //user is not a member of the group if the count is zero get the logs and return no id so it fails login
                 if (!isset($user_uid)
                     || ldap_count_entries($ldapconn, ldap_search($ldapconn, $group_name, $user_search)) ==  0) {
                     $GLOBALS['log']->fatal("ldapauth: User ($name) is not a member of the LDAP group");

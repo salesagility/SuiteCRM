@@ -53,7 +53,7 @@ $subpanel_layout = array(
 	'list_fields' => array(
 		'tracker_name'=>array(
 	 		'vname' => 'LBL_SUBPANEL_TRACKER_NAME',
-			'widget_class' => 'SubPanelDetailViewLink', 		
+			'widget_class' => 'SubPanelDetailViewLink',
 			'width' => '20%',
 		),
 		'tracker_url'=>array(

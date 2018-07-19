@@ -101,7 +101,7 @@ $smarty->assign('editImage', $editImage);
 $deleteImage = SugarThemeRegistry::current()->getImage('delete_inline', '', null, null, '.gif', $mod_strings['LBL_MB_DELETE']);
 $recycleImage = SugarThemeRegistry::current()->getImage('icon_Delete', '', 48, 48, '.gif', $mod_strings['LBL_MB_DELETE']);
 $smarty->assign('deleteImage', $deleteImage);
-$smarty->assign('recycleImage', $recycleImage);	
+$smarty->assign('recycleImage', $recycleImage);
 
 //#30205
 global $sugar_config;

@@ -27,7 +27,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author Salesagility Ltd <support@salesagility.com>
  */
 
-$searchFields['AOS_PDF_Templates'] = 
+$searchFields['AOS_PDF_Templates'] =
 	array(
 		'name' => array( 'query_type'=>'default'),
 		'current_user_only'=> array('query_type'=>'default','db_field'=>array('created_by'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),

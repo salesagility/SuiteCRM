@@ -77,7 +77,7 @@ foreach ($_REQUEST as $key=>$value) {
 			        $depth=$pssplit[count($pssplit)-1];
 			        //parmeter is surrounded  by PARAMN_ and depth info.
 			        unset($pssplit[count($pssplit)-1]);
-			        unset($pssplit[0]);	
+			        unset($pssplit[0]);
 			        $params1['NODES'][$depth][implode('_', $pssplit)]=$value;
 			    } else {
 			        if ($key=='module') {
@@ -90,7 +90,7 @@ foreach ($_REQUEST as $key=>$value) {
 			    }
 			}
 	}
-}	
+}
 $modulename=$params1['TREE']['module']; ///module is a required parameter for the tree.
 require('include/modules.php');
 if (!empty($modulename) && !empty($func_name) && isset($beanList[$modulename])) {

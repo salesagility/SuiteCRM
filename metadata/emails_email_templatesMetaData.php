@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $dictionary["emails_email_templates"] = array(
   'true_relationship_type' => 'one-to-one',
   'from_studio' => true,
-  'relationships' => 
+  'relationships' =>
   array(
     'emails_email_templates' =>
     array(
@@ -62,20 +62,20 @@ $dictionary["emails_email_templates"] = array(
     ),
   ),
   'table' => 'emails_email_templates',
-  'fields' => 
+  'fields' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
-    2 => 
+    2 =>
     array(
       'name' => 'deleted',
       'type' => 'bool',
@@ -83,44 +83,44 @@ $dictionary["emails_email_templates"] = array(
       'default' => '0',
       'required' => true,
     ),
-    3 => 
+    3 =>
     array(
       'name' => 'emails_email_templates_ida',
       'type' => 'varchar',
       'len' => 36,
     ),
-    4 => 
+    4 =>
     array(
       'name' => 'emails_email_templates_idb',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
-  'indices' => 
+  'indices' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'emails_email_templatesspk',
       'type' => 'primary',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'id',
       ),
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'emails_email_templates_ida1',
       'type' => 'index',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'emails_email_templates_ida',
       ),
     ),
-    2 => 
+    2 =>
     array(
       'name' => 'emails_email_templates_idb2',
       'type' => 'index',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'emails_email_templates_idb',
       ),

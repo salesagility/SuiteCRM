@@ -39,7 +39,7 @@
 
 $dictionary["aok_knowledgebase_categories"] = array(
   'true_relationship_type' => 'many-to-many',
-  'relationships' => 
+  'relationships' =>
   array(
     'aok_knowledgebase_categories' =>
     array(
@@ -56,20 +56,20 @@ $dictionary["aok_knowledgebase_categories"] = array(
     ),
   ),
   'table' => 'aok_knowledgebase_categories',
-  'fields' => 
+  'fields' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
-    2 => 
+    2 =>
     array(
       'name' => 'deleted',
       'type' => 'bool',
@@ -77,35 +77,35 @@ $dictionary["aok_knowledgebase_categories"] = array(
       'default' => '0',
       'required' => true,
     ),
-    3 => 
+    3 =>
     array(
       'name' => 'aok_knowledgebase_id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    4 => 
+    4 =>
     array(
       'name' => 'aok_knowledge_base_categories_id',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
-  'indices' => 
+  'indices' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'aok_knowledgebase_categoriesspk',
       'type' => 'primary',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'id',
       ),
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'aok_knowledgebase_categories_alt',
       'type' => 'alternate_key',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'aok_knowledgebase_id',
         1 => 'aok_knowledge_base_categories_id',

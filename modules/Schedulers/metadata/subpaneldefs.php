@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $layout_defs['Schedulers'] = array(
-	// list of what Subpanels to show in the DetailView 
-	'subpanel_setup' => array( 
+	// list of what Subpanels to show in the DetailView
+	'subpanel_setup' => array(
         'times' => array(
 			'order' => 20,
 			'module' => 'SchedulersJobs',

@@ -62,43 +62,43 @@ $popupMeta = array(
 	  5 => 'assigned_user_id',
 	),
     'searchdefs' => array(
-	  'first_name' => 
+	  'first_name' =>
 	  array(
 	    'name' => 'first_name',
 	    'width' => '10%',
 	  ),
-	  'last_name' => 
+	  'last_name' =>
 	  array(
 	    'name' => 'last_name',
 	    'width' => '10%',
 	  ),
 	  'email',
-	  'account_name' => 
+	  'account_name' =>
 	  array(
 	    'type' => 'varchar',
 	    'label' => 'LBL_ACCOUNT_NAME',
 	    'width' => '10%',
 	    'name' => 'account_name',
 	  ),
-	  'lead_source' => 
+	  'lead_source' =>
 	  array(
 	    'name' => 'lead_source',
 	    'width' => '10%',
 	  ),
-	  'status' => 
+	  'status' =>
 	  array(
 	    'name' => 'status',
 	    'width' => '10%',
 	  ),
-	  'assigned_user_id' => 
+	  'assigned_user_id' =>
 	  array(
 	    'name' => 'assigned_user_id',
 	    'type' => 'enum',
 	    'label' => 'LBL_ASSIGNED_TO',
-	    'function' => 
+	    'function' =>
 	    array(
 	      'name' => 'get_user_array',
-	      'params' => 
+	      'params' =>
 	      array(
 	        0 => false,
 	      ),
@@ -107,13 +107,13 @@ $popupMeta = array(
 	  ),
 	),
     'listviewdefs' => array(
-	  'NAME' => 
+	  'NAME' =>
 	  array(
 	    'width' => '30%',
 	    'label' => 'LBL_LIST_NAME',
 	    'link' => true,
 	    'default' => true,
-	    'related_fields' => 
+	    'related_fields' =>
 	    array(
 	      0 => 'first_name',
 	      1 => 'last_name',
@@ -121,7 +121,7 @@ $popupMeta = array(
 	    ),
 	    'name' => 'name',
 	  ),
-	  'ACCOUNT_NAME' => 
+	  'ACCOUNT_NAME' =>
 	  array(
 	    'type' => 'varchar',
 	    'label' => 'LBL_ACCOUNT_NAME',
@@ -129,21 +129,21 @@ $popupMeta = array(
 	    'default' => true,
 	    'name' => 'account_name',
 	  ),
-	  'STATUS' => 
+	  'STATUS' =>
 	  array(
 	    'width' => '10%',
 	    'label' => 'LBL_LIST_STATUS',
 	    'default' => true,
 	    'name' => 'status',
 	  ),
-	  'LEAD_SOURCE' => 
+	  'LEAD_SOURCE' =>
 	  array(
 	    'width' => '10%',
 	    'label' => 'LBL_LEAD_SOURCE',
 	    'default' => true,
 	    'name' => 'lead_source',
 	  ),
-	  'ASSIGNED_USER_NAME' => 
+	  'ASSIGNED_USER_NAME' =>
 	  array(
 	    'width' => '10%',
 	    'label' => 'LBL_LIST_ASSIGNED_USER',

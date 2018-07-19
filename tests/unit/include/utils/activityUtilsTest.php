@@ -29,7 +29,7 @@ class activity_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));
 
-        //with rel_users_table set by default 
+        //with rel_users_table set by default
         $bean = new Meeting();
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));

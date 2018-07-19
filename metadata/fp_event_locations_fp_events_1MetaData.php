@@ -3,9 +3,9 @@
 $dictionary["fp_event_locations_fp_events_1"] = array(
   'true_relationship_type' => 'one-to-many',
   'from_studio' => true,
-  'relationships' => 
+  'relationships' =>
   array(
-    'fp_event_locations_fp_events_1' => 
+    'fp_event_locations_fp_events_1' =>
     array(
       'lhs_module' => 'FP_Event_Locations',
       'lhs_table' => 'fp_event_locations',
@@ -20,20 +20,20 @@ $dictionary["fp_event_locations_fp_events_1"] = array(
     ),
   ),
   'table' => 'fp_event_locations_fp_events_1_c',
-  'fields' => 
+  'fields' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
-    2 => 
+    2 =>
     array(
       'name' => 'deleted',
       'type' => 'bool',
@@ -41,44 +41,44 @@ $dictionary["fp_event_locations_fp_events_1"] = array(
       'default' => '0',
       'required' => true,
     ),
-    3 => 
+    3 =>
     array(
       'name' => 'fp_event_locations_fp_events_1fp_event_locations_ida',
       'type' => 'varchar',
       'len' => 36,
     ),
-    4 => 
+    4 =>
     array(
       'name' => 'fp_event_locations_fp_events_1fp_events_idb',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
-  'indices' => 
+  'indices' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'fp_event_locations_fp_events_1spk',
       'type' => 'primary',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'id',
       ),
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'fp_event_locations_fp_events_1_ida1',
       'type' => 'index',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'fp_event_locations_fp_events_1fp_event_locations_ida',
       ),
     ),
-    2 => 
+    2 =>
     array(
       'name' => 'fp_event_locations_fp_events_1_alt',
       'type' => 'alternate_key',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'fp_event_locations_fp_events_1fp_events_idb',
       ),

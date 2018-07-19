@@ -38,16 +38,16 @@
  ********************************************************************************/
 
 $module_name = 'AOK_KnowledgeBase';
-$listViewDefs [$module_name] = 
+$listViewDefs [$module_name] =
 array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '32%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
-  'STATUS' => 
+  'STATUS' =>
   array(
     'type' => 'enum',
     'default' => true,
@@ -55,7 +55,7 @@ array(
     'label' => 'LBL_STATUS',
     'width' => '10%',
   ),
-  'AUTHOR' => 
+  'AUTHOR' =>
   array(
     'type' => 'relate',
     'studio' => 'visible',
@@ -65,7 +65,7 @@ array(
     'width' => '10%',
     'default' => true,
   ),
-  'APPROVER' => 
+  'APPROVER' =>
   array(
     'type' => 'relate',
     'studio' => 'visible',
@@ -75,28 +75,28 @@ array(
     'width' => '10%',
     'default' => true,
   ),
-  'REVISION' => 
+  'REVISION' =>
   array(
     'type' => 'varchar',
     'label' => 'LBL_REVISION',
     'width' => '10%',
     'default' => true,
   ),
-  'DATE_ENTERED' => 
+  'DATE_ENTERED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
   ),
-  'DATE_MODIFIED' => 
+  'DATE_MODIFIED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',
     'width' => '10%',
     'default' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'width' => '9%',
     'label' => 'LBL_ASSIGNED_TO_NAME',

@@ -41,15 +41,15 @@ $viewdefs['DocumentRevisions']['DetailView'] = array(
     'templateMeta' => array('maxColumns' => '2',
                             'form' => array(
                                 'buttons' => array(),
-                                'hidden'=>array('<input type="hidden" name="old_id" value="{$fields.document_revision_id.value}">')), 
+                                'hidden'=>array('<input type="hidden" name="old_id" value="{$fields.document_revision_id.value}">')),
                             'widths' => array(
-                                array('label' => '10', 'field' => '30'), 
+                                array('label' => '10', 'field' => '30'),
                                 array('label' => '10', 'field' => '30')
                                 ),
         ),
-    'panels' => 
+    'panels' =>
     array(
-        '' => 
+        '' =>
         array(
             array(
                 'document_name',

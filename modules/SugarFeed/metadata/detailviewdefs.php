@@ -39,11 +39,11 @@
 
 $module_name = 'SugarFeed';
 $viewdefs[$module_name]['DetailView'] = array(
-'templateMeta' => array('form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 
+'templateMeta' => array('form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE',
                                                          )),
-                        'maxColumns' => '2', 
+                        'maxColumns' => '2',
                         'widths' => array(
-                                        array('label' => '10', 'field' => '30'), 
+                                        array('label' => '10', 'field' => '30'),
                                         array('label' => '10', 'field' => '30')
                                         ),
                         ),
@@ -71,5 +71,5 @@ $viewdefs[$module_name]['DetailView'] = array(
   array(
     'description',
   ),
-)   
+)
 );

@@ -38,15 +38,15 @@
  ********************************************************************************/
 
 $viewdefs['Opportunities']['EditView'] = array(
-    'templateMeta' => array('maxColumns' => '2', 
+    'templateMeta' => array('maxColumns' => '2',
                             'widths' => array(
-                                            array('label' => '10', 'field' => '30'), 
+                                            array('label' => '10', 'field' => '30'),
                                             array('label' => '10', 'field' => '30')
                                             ),
     'javascript' => '{$PROBABILITY_SCRIPT}',
 ),
  'panels' =>array(
-  'default' => 
+  'default' =>
   array(
     
     array(
@@ -65,7 +65,7 @@ $viewdefs['Opportunities']['EditView'] = array(
       'sales_stage',
       'lead_source',
     ),
-    array(      
+    array(
         'probability',
           'campaign_name',
     ),

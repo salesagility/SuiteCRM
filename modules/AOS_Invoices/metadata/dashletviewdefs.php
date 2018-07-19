@@ -29,9 +29,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $current_user;
 
-$dashletData['AOS_InvoicesDashlet']['searchFields'] = 
+$dashletData['AOS_InvoicesDashlet']['searchFields'] =
 array(
-'date_entered' => 
+'date_entered' =>
 	array(
 		'default' => ''
 		),
@@ -39,80 +39,80 @@ array(
 	array(
 		'default' => ''
 		),
-'assigned_user_id' => 
+'assigned_user_id' =>
 	array(
-		'type' => 'assigned_user_name', 
+		'type' => 'assigned_user_name',
 		'default' => $current_user->name
 		)
 	);
-$dashletData['AOS_InvoicesDashlet']['columns'] =  
-array( 
-'number'=> 
+$dashletData['AOS_InvoicesDashlet']['columns'] =
+array(
+'number'=>
 	array(
 		'width' => '5',
 		'label'   => 'LBL_LIST_NUM',
 		'default' => true
-		),  
-'name' => 
+		),
+'name' =>
 	array(
-		'width'   => '20', 
+		'width'   => '20',
 		'label'   => 'LBL_LIST_NAME',
 		'link'    => true,
 		'default' => true
 		),
 		
-'billing_account' => 
+'billing_account' =>
 	array(
 		'width' => '20',
 		'label'   => 'LBL_BILLING_ACCOUNT'
 		),
-'billing_contact' => 
+'billing_contact' =>
 	array(
 		'width' => '15',
 		'label'   => 'LBL_BILLING_CONTACT'
-		),	
-'status' => 
+		),
+'status' =>
 	array(
-		'width'   => '15', 
+		'width'   => '15',
 		'label'   => 'LBL_STATUS',
 		'default' => true
 		),
 'total_amount' =>
 	array(
-		'width'   => '15', 
+		'width'   => '15',
 		'label'   => 'LBL_GRAND_TOTAL',
 		'currency_format' => true,
 		'default' => true
 		),
-'due_date' => 
+'due_date' =>
 	array(
 		'width' => '15',
 		'label'   => 'LBL_DUE_DATE',
 		'default' => true
 		),
-'invoice_date' => 
+'invoice_date' =>
 	array(
 		'width' => '15',
 		'label'   => 'LBL_INVOICE_DATE'
 		),
-'date_entered' => 
+'date_entered' =>
 	array(
-		'width'   => '15', 
+		'width'   => '15',
 		'label'   => 'LBL_DATE_ENTERED'
 		),
-'date_modified' => 
+'date_modified' =>
 	array(
-		'width'   => '15', 
+		'width'   => '15',
 		'label'   => 'LBL_DATE_MODIFIED'
-		),    
-'created_by' => 
+		),
+'created_by' =>
 	array(
-		'width'   => '8', 
+		'width'   => '8',
 		'label'   => 'LBL_CREATED'
 		),
-'assigned_user_name' => 
+'assigned_user_name' =>
 	array(
-		'width'   => '8', 
+		'width'   => '8',
 		'label'   => 'LBL_LIST_ASSIGNED_USER'
 		),
 	);

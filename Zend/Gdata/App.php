@@ -644,7 +644,7 @@ class Zend_Gdata_App
         preg_match("/^(.*?)(\?.*)?$/", $url, $matches);
         $this->_httpClient->setUri($matches[1]);
         $queryArray = $uri->getQueryAsArray();
-        foreach ($queryArray as $name => $value) { 
+        foreach ($queryArray as $name => $value) {
           $this->_httpClient->setParameterGet($name, $value);
         }
 

@@ -58,7 +58,7 @@ class MyClosedOpportunitiesDashlet extends Dashlet
         global $current_user, $app_strings;
         parent::__construct($id);
         $this->isConfigurable = true;
-        $this->isRefreshable = true;        
+        $this->isRefreshable = true;
 
         if (empty($def['title'])) {
             $this->title = translate('LBL_MY_CLOSED_OPPORTUNITIES', 'Opportunities');
@@ -70,15 +70,15 @@ class MyClosedOpportunitiesDashlet extends Dashlet
             $this->autoRefresh = $def['autoRefresh'];
         }
         
-        $this->seedBean = new Opportunity();      
+        $this->seedBean = new Opportunity();
 
         $qry = "SELECT * from opportunities WHERE assigned_user_id = '" . $current_user->id . "' AND deleted=0";
-        $result = $this->seedBean->db->query($this->seedBean->create_list_count_query($qry));	
+        $result = $this->seedBean->db->query($this->seedBean->create_list_count_query($qry));
         $row = $this->seedBean->db->fetchByAssoc($result);
 
         $this->total_opportunities = $row['c'];
         $qry = "SELECT * from opportunities WHERE assigned_user_id = '" . $current_user->id . "' AND sales_stage = 'Closed Won'  AND deleted=0";
-        $result = $this->seedBean->db->query($this->seedBean->create_list_count_query($qry));	
+        $result = $this->seedBean->db->query($this->seedBean->create_list_count_query($qry));
         $row = $this->seedBean->db->fetchByAssoc($result);
 
         $this->total_opportunities_won = $row['c'];
@@ -91,10 +91,10 @@ class MyClosedOpportunitiesDashlet extends Dashlet
     {
         $ss = new Sugar_Smarty();
         $ss->assign('lblTotalOpportunities', translate('LBL_TOTAL_OPPORTUNITIES', 'Opportunities'));
-        $ss->assign('lblClosedWonOpportunities', translate('LBL_CLOSED_WON_OPPORTUNITIES', 'Opportunities'));    	
+        $ss->assign('lblClosedWonOpportunities', translate('LBL_CLOSED_WON_OPPORTUNITIES', 'Opportunities'));
     	
         $ss->assign('total_opportunities', $this->total_opportunities);
-        $ss->assign('total_opportunities_won', $this->total_opportunities_won);    	
+        $ss->assign('total_opportunities_won', $this->total_opportunities_won);
     	
         return parent::display() . $ss->fetch('modules/Opportunities/Dashlets/MyClosedOpportunitiesDashlet/MyClosedOpportunitiesDashlet.tpl');
     }

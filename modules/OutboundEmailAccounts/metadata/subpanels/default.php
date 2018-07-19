@@ -1,22 +1,22 @@
 <?php
 $module_name='OutboundEmailAccounts';
 $subpanel_layout = array(
-  'top_buttons' => 
+  'top_buttons' =>
   array(
-    0 => 
+    0 =>
     array(
       'widget_class' => 'SubPanelTopCreateButton',
     ),
-    1 => 
+    1 =>
     array(
       'widget_class' => 'SubPanelTopSelectButton',
       'popup_module' => 'OutboundEmailAccount',
     ),
   ),
   'where' => '',
-  'list_fields' => 
+  'list_fields' =>
   array(
-    'name' => 
+    'name' =>
     array(
       'vname' => 'LBL_NAME',
       'widget_class' => 'SubPanelDetailViewLink',
@@ -31,13 +31,13 @@ $subpanel_layout = array(
 //      'width' => '10%',
 //      'default' => true,
 //    ),
-    'date_modified' => 
+    'date_modified' =>
     array(
       'vname' => 'LBL_DATE_MODIFIED',
       'width' => '45%',
       'default' => true,
     ),
-    'edit_button' => 
+    'edit_button' =>
     array(
       'vname' => 'LBL_EDIT_BUTTON',
       'widget_class' => 'SubPanelEditButton',
@@ -45,7 +45,7 @@ $subpanel_layout = array(
       'width' => '4%',
       'default' => true,
     ),
-    'remove_button' => 
+    'remove_button' =>
     array(
       'vname' => 'LBL_REMOVE',
       'widget_class' => 'SubPanelRemoveButton',

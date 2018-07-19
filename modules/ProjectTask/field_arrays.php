@@ -68,7 +68,7 @@ $fields_array['ProjectTask'] = array('column_fields' => array(
 		'milestone_flag',
 		'percent_complete',
 		'estimated_effort',
-		'utilization', 
+		'utilization',
 		'order_number',
 		'task_number',
 		'deleted',

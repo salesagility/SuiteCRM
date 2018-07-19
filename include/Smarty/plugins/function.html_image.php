@@ -112,7 +112,7 @@ function smarty_function_html_image($params, &$smarty)
             (require_once(SMARTY_CORE_DIR . 'core.is_secure.php')) &&
             (!smarty_core_is_secure($_params, $smarty))) {
             $smarty->trigger_error("html_image: (secure) '$_image_path' not in secure directory", E_USER_NOTICE);
-        }        
+        }
         
         if (!isset($params['width'])) {
             $width = $_image_data[0];

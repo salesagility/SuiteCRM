@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $listViewDefs['Documents'] = array(
-  'DOCUMENT_NAME' => 
+  'DOCUMENT_NAME' =>
   array(
     'width' => '20%',
     'label' => 'LBL_NAME',
@@ -52,7 +52,7 @@ $listViewDefs['Documents'] = array(
     'default' => true,
     'bold' => true,
   ),
-  'FILENAME' => 
+  'FILENAME' =>
   array(
     'width' => '20%',
     'label' => 'LBL_FILENAME',
@@ -61,38 +61,38 @@ $listViewDefs['Documents'] = array(
     'bold' => false,
     'displayParams' => array( 'module' => 'Documents', ),
     'sortable' => false,
-    'related_fields' => 
+    'related_fields' =>
     array(
         0 => 'document_revision_id',
-        1 => 'doc_id', 
+        1 => 'doc_id',
         2 => 'doc_type',
         3 => 'doc_url',
     ),
   ),
-  'CATEGORY_ID' => 
+  'CATEGORY_ID' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_CATEGORY',
     'default' => true,
   ),
-  'SUBCATEGORY_ID' => 
+  'SUBCATEGORY_ID' =>
   array(
     'width' => '15%',
     'label' => 'LBL_LIST_SUBCATEGORY',
     'default' => true,
   ),
-  'LAST_REV_CREATE_DATE' => 
+  'LAST_REV_CREATE_DATE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_LAST_REV_DATE',
     'default' => true,
     'sortable' => false,
-    'related_fields' => 
+    'related_fields' =>
     array(
       0 => 'document_revision_id',
     ),
   ),
-  'EXP_DATE' => 
+  'EXP_DATE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_EXP_DATE',

@@ -153,7 +153,7 @@ EOQ;
         }
         if (empty($focus->name)) {
             return null;
-        }	
+        }
         if (!isset($focus->assigned_user_id) || $focus->assigned_user_id == '') {
             $focus->assigned_user_id = $GLOBALS['current_user']->id;
         }

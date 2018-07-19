@@ -110,9 +110,9 @@ class ViewSearchProperties extends ViewList
             }
         }
         
-        $this->ss->assign('no_searchdefs_defined', !$is_enabled);	
+        $this->ss->assign('no_searchdefs_defined', !$is_enabled);
         $this->ss->assign('display_data', $display_data);
-        $this->ss->assign('modules_sources', $modules_sources);    	
+        $this->ss->assign('modules_sources', $modules_sources);
         $this->ss->assign('sources', $sources);
         $this->ss->assign('mod', $GLOBALS['mod_strings']);
         $this->ss->assign('APP', $GLOBALS['app_strings']);

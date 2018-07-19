@@ -150,7 +150,7 @@ array(
           ),
         ),
         
-        array(        
+        array(
           array(
             'name' => 'duration',
             'customCode' => '
@@ -168,7 +168,7 @@ array(
                     {/literal}
                 </script>            
             ',
-          ),          
+          ),
 //          array (
 //            'name' => 'reminder_time',
 //            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',

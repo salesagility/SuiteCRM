@@ -29,26 +29,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $sugar_config;
 $listViewDefs['AOS_Invoices'] =
 array(
-  'NUMBER' => 
+  'NUMBER' =>
   array(
     'width' => '5%',
     'label' => 'LBL_LIST_NUM',
     'default' => true,
   ),
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '15%',
     'label' => 'LBL_ACCOUNT_NAME',
     'link' => true,
     'default' => true,
   ),
-  'STATUS' => 
+  'STATUS' =>
   array(
     'width' => '10%',
     'label' => 'LBL_STATUS',
     'default' => true,
   ),
-  'BILLING_CONTACT' => 
+  'BILLING_CONTACT' =>
   array(
     'width' => '11%',
     'label' => 'LBL_BILLING_CONTACT',
@@ -61,7 +61,7 @@ array(
               'billing_contact_id',
           ),
   ),
-  'BILLING_ACCOUNT' => 
+  'BILLING_ACCOUNT' =>
   array(
     'width' => '15%',
     'label' => 'LBL_BILLING_ACCOUNT',
@@ -74,20 +74,20 @@ array(
               'billing_account_id',
           ),
   ),
-  'TOTAL_AMOUNT' => 
+  'TOTAL_AMOUNT' =>
   array(
     'width' => '10%',
     'label' => 'LBL_GRAND_TOTAL',
     'default' => true,
     'currency_format' => true,
   ),
-  'DUE_DATE' => 
+  'DUE_DATE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_DUE_DATE',
     'default' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'width' => '10%',
     'label' => 'LBL_ASSIGNED_USER',
@@ -97,97 +97,97 @@ array(
     'link' => true,
     'related_fields' => array('assigned_user_id')
   ),
-  'ANNUAL_REVENUE' => 
+  'ANNUAL_REVENUE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_ANNUAL_REVENUE',
     'default' => false,
   ),
-  'BILLING_ADDRESS_STREET' => 
+  'BILLING_ADDRESS_STREET' =>
   array(
     'width' => '15%',
     'label' => 'LBL_BILLING_ADDRESS_STREET',
     'default' => false,
   ),
-  'BILLING_ADDRESS_CITY' => 
+  'BILLING_ADDRESS_CITY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_CITY',
     'default' => false,
   ),
-  'BILLING_ADDRESS_STATE' => 
+  'BILLING_ADDRESS_STATE' =>
   array(
     'width' => '7%',
     'label' => 'LBL_BILLING_ADDRESS_STATE',
     'default' => false,
   ),
-  'BILLING_ADDRESS_POSTALCODE' => 
+  'BILLING_ADDRESS_POSTALCODE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_BILLING_ADDRESS_POSTALCODE',
     'default' => false,
   ),
-  'BILLING_ADDRESS_COUNTRY' => 
+  'BILLING_ADDRESS_COUNTRY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_BILLING_ADDRESS_COUNTRY',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_STREET' => 
+  'SHIPPING_ADDRESS_STREET' =>
   array(
     'width' => '15%',
     'label' => 'LBL_SHIPPING_ADDRESS_STREET',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_CITY' => 
+  'SHIPPING_ADDRESS_CITY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_SHIPPING_ADDRESS_CITY',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_STATE' => 
+  'SHIPPING_ADDRESS_STATE' =>
   array(
     'width' => '7%',
     'label' => 'LBL_SHIPPING_ADDRESS_STATE',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_POSTALCODE' => 
+  'SHIPPING_ADDRESS_POSTALCODE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_SHIPPING_ADDRESS_POSTALCODE',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_COUNTRY' => 
+  'SHIPPING_ADDRESS_COUNTRY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_SHIPPING_ADDRESS_COUNTRY',
     'default' => false,
   ),
-  'PHONE_ALTERNATE' => 
+  'PHONE_ALTERNATE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_PHONE_ALT',
     'default' => false,
   ),
-  'WEBSITE' => 
+  'WEBSITE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_WEBSITE',
     'default' => false,
   ),
-  'OWNERSHIP' => 
+  'OWNERSHIP' =>
   array(
     'width' => '10%',
     'label' => 'LBL_OWNERSHIP',
     'default' => false,
   ),
-  'EMPLOYEES' => 
+  'EMPLOYEES' =>
   array(
     'width' => '10%',
     'label' => 'LBL_EMPLOYEES',
     'default' => false,
   ),
-  'TICKER_SYMBOL' => 
+  'TICKER_SYMBOL' =>
   array(
     'width' => '10%',
     'label' => 'LBL_TICKER_SYMBOL',

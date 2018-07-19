@@ -37,20 +37,20 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$searchdefs ['Cases'] = 
+$searchdefs ['Cases'] =
 array(
-  'layout' => 
+  'layout' =>
   array(
-    'basic_search' => 
+    'basic_search' =>
     array(
       0 => 'name',
-      1 => 
+      1 =>
       array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
       ),
-      2 => 
+      2 =>
       array(
         'name' => 'open_only',
         'label' => 'LBL_OPEN_ITEMS',
@@ -60,27 +60,27 @@ array(
       ),
         3 => array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
     ),
-    'advanced_search' => 
+    'advanced_search' =>
     array(
-      'case_number' => 
+      'case_number' =>
       array(
         'name' => 'case_number',
         'default' => true,
         'width' => '10%',
       ),
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'account_name' => 
+      'account_name' =>
       array(
         'name' => 'account_name',
         'default' => true,
         'width' => '10%',
       ),
-      'type' => 
+      'type' =>
       array(
         'type' => 'enum',
         'label' => 'LBL_TYPE',
@@ -88,7 +88,7 @@ array(
         'default' => true,
         'name' => 'type',
       ),
-      'state' => 
+      'state' =>
       array(
         'type' => 'enum',
         'default' => true,
@@ -96,21 +96,21 @@ array(
         'width' => '10%',
         'name' => 'state',
       ),
-      'status' => 
+      'status' =>
       array(
         'name' => 'status',
         'default' => true,
         'width' => '10%',
       ),
-      'assigned_user_id' => 
+      'assigned_user_id' =>
       array(
         'name' => 'assigned_user_id',
         'type' => 'enum',
         'label' => 'LBL_ASSIGNED_TO',
-        'function' => 
+        'function' =>
         array(
           'name' => 'get_user_array',
-          'params' => 
+          'params' =>
           array(
             0 => false,
           ),
@@ -118,7 +118,7 @@ array(
         'default' => true,
         'width' => '10%',
       ),
-      'priority' => 
+      'priority' =>
       array(
         'name' => 'priority',
         'default' => true,
@@ -126,11 +126,11 @@ array(
       ),
     ),
   ),
-  'templateMeta' => 
+  'templateMeta' =>
   array(
     'maxColumns' => '3',
     'maxColumnsBasic' => '4',
-    'widths' => 
+    'widths' =>
     array(
       'label' => '10',
       'field' => '30',

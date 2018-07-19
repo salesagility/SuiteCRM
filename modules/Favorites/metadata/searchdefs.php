@@ -49,13 +49,13 @@ array(
                 'field' => '30',
             ),
     ),
-  'layout' => 
+  'layout' =>
   array(
-    'basic_search' => 
+    'basic_search' =>
     array(
 
     ),
-    'advanced_search' => 
+    'advanced_search' =>
     array(
 
     ),

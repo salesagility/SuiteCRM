@@ -88,7 +88,7 @@ class ProjectTaskQuickCreate extends QuickCreate
 		);
 
         $encoded_parent_popup_request_data = $json->encode($popup_request_data);
-        $this->ss->assign('encoded_parent_popup_request_data', $encoded_parent_popup_request_data);        
+        $this->ss->assign('encoded_parent_popup_request_data', $encoded_parent_popup_request_data);
         
         $popup_request_data = array(
 			'call_back_function' => 'set_return',

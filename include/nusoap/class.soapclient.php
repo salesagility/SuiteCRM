@@ -389,7 +389,7 @@ class nusoap_client extends nusoap_base
             // no WSDL
             //$this->namespaces['ns1'] = $namespace;
             $nsPrefix = 'ns' . rand(1000, 9999);
-            // serialize 
+            // serialize
             $payload = '';
             if (is_string($params)) {
                 $this->debug("serializing param string for operation $operation");

@@ -45,35 +45,35 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $listViewDefs ['Project'] =
 array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '25%',
     'label' => 'LBL_LIST_NAME',
     'link' => true,
     'default' => true,
   ),
-  'PRIORITY' => 
+  'PRIORITY' =>
   array(
     'type' => 'enum',
     'label' => 'LBL_PRIORITY',
     'width' => '10%',
     'default' => true,
   ),
-  'STATUS' => 
+  'STATUS' =>
   array(
     'width' => '10%',
     'label' => 'LBL_STATUS',
     'link' => false,
     'default' => true,
   ),
-  'ESTIMATED_START_DATE' => 
+  'ESTIMATED_START_DATE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_DATE_START',
     'link' => false,
     'default' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_ASSIGNED_USER_ID',
@@ -81,7 +81,7 @@ array(
     'id' => 'ASSIGNED_USER_ID',
     'default' => true,
   ),
-  'ESTIMATED_END_DATE' => 
+  'ESTIMATED_END_DATE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_DATE_END',

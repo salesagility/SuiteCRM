@@ -43,13 +43,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /* this table should never get created, it should only be used as a template for the acutal audit tables
  * for each moudule.
  */
-$dictionary['audit'] = 
+$dictionary['audit'] =
 		array( 'table' => 'audit',
               	'fields' => array(
-              	      'id'=> array('name' =>'id', 'type' =>'id', 'len'=>'36','required'=>true), 
-              	      'parent_id'=>array('name' =>'parent_id', 'type' =>'id', 'len'=>'36','required'=>true),               	                   	
+              	      'id'=> array('name' =>'id', 'type' =>'id', 'len'=>'36','required'=>true),
+              	      'parent_id'=>array('name' =>'parent_id', 'type' =>'id', 'len'=>'36','required'=>true),
 				      'date_created'=>array('name' =>'date_created','type' => 'datetime'),
-				      'created_by'=>array('name' =>'created_by','type' => 'varchar','len' => 36),				
+				      'created_by'=>array('name' =>'created_by','type' => 'varchar','len' => 36),
 					  'field_name'=>array('name' =>'field_name','type' => 'varchar','len' => 100),
 					  'data_type'=>array('name' =>'data_type','type' => 'varchar','len' => 100),
 					  'before_value_string'=>array('name' =>'before_value_string','type' => 'varchar'),

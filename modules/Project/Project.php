@@ -337,7 +337,7 @@ class Project extends SugarBean
     {
         global $current_user, $db;
 		
-        $focus = $this; 
+        $focus = $this;
 
         //--- check if project template is same or changed.
         $new_template_id = property_exists($focus, 'am_projecttemplates_project_1am_projecttemplates_ida') ?
@@ -348,7 +348,7 @@ class Project extends SugarBean
         $project_template = $focus->get_linked_beans('am_projecttemplates_project_1', 'AM_ProjectTemplates');
         foreach ($project_template as $ptemplate) {
             $current_template_id = $ptemplate->id;
-        }				
+        }
         //----------------------------------------------------------------
 
 
@@ -368,7 +368,7 @@ class Project extends SugarBean
                 $userInvitees = explode(',', trim($_POST['user_invitees'], ','));
             } else {
                 $userInvitees = array();
-            }		
+            }
 
 
             if (!empty($_POST['contact_invitees'])) {
@@ -382,7 +382,7 @@ class Project extends SugarBean
             $existingUsers = array();
 
             $deleteContacts = array();
-            $existingContacts = array();		
+            $existingContacts = array();
 
             if (!empty($this->id)) {
 
@@ -476,7 +476,7 @@ class Project extends SugarBean
         ////////////////////////////////////////
 
         if ($current_template_id != $new_template_id) {
-            $project_start = $focus->estimated_start_date;			
+            $project_start = $focus->estimated_start_date;
             //Get project start date
             if ($project_start!='') {
                 $dateformat = $current_user->getPreference('datef');
@@ -511,7 +511,7 @@ class Project extends SugarBean
                     $bh = $bh[0];
                     if ($bh->open) {
                         $open_h = $bh ? $bh->opening_hours : 9;
-                        $close_h = $bh ? $bh->closing_hours : 17;							
+                        $close_h = $bh ? $bh->closing_hours : 17;
 						
                         $start_time = DateTime::createFromFormat('Y-m-d', $start);
 
@@ -538,7 +538,7 @@ class Project extends SugarBean
             if ($override_business_hours != 1 || empty($bhours)) {
                 $bhours = array('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
             }
-            //---------------------------			
+            //---------------------------
 			
             //copy all resources from template to project
             $template->load_relationship('am_projecttemplates_users_1');
@@ -611,7 +611,7 @@ class Project extends SugarBean
                     }
 
                     $enddate = $enddate->modify('+1 Days');
-                } 
+                }
                 $enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
 
 

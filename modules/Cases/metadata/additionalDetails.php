@@ -66,11 +66,11 @@ function additionalDetailsaCase($fields)
         if (strlen($fields['RESOLUTION']) > 300) {
             $overlib_string .= '...';
         }
-    }		
+    }
 	
-    return array('fieldToAddTo' => 'NAME', 
-				 'string' => $overlib_string, 
+    return array('fieldToAddTo' => 'NAME',
+				 'string' => $overlib_string,
 				 'width' => '400',
-				 'editLink' => "index.php?action=EditView&module=Cases&return_module=Cases&record={$fields['ID']}", 
+				 'editLink' => "index.php?action=EditView&module=Cases&return_module=Cases&record={$fields['ID']}",
 				 'viewLink' => "index.php?action=DetailView&module=Cases&return_module=Cases&record={$fields['ID']}");
 }

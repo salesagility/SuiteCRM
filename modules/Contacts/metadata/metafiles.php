@@ -44,7 +44,7 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
  $metafiles['Contacts'] = array(
-	'detailviewdefs'  => 	'modules/Contacts/metadata/detailviewdefs.php', 	
+	'detailviewdefs'  => 	'modules/Contacts/metadata/detailviewdefs.php',
 	'editviewdefs'    => 	'modules/Contacts/metadata/editviewdefs.php',
  	'listviewdefs'    => 	'modules/Contacts/metadata/listviewdefs.php',
  	'searchdefs'      =>    'modules/Contacts/metadata/searchdefs.php',

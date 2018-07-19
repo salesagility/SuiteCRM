@@ -48,9 +48,9 @@ $dictionary['users_feeds'] = array( 'table' => 'users_feeds'
       , array('name' =>'rank', 'type' =>'int', 'required' => false)
       , array('name' => 'date_modified','type' => 'datetime')
       , array('name' =>'deleted', 'type' =>'bool', 'len'=>'', 'default'=>'0', 'required' => false)
-                                                      ) 
+                                                      )
                                  , 'indices' => array(
   
-       array('name' =>'idx_ud_user_id', 'type' =>'index', 'fields'=>array('user_id', 'feed_id'))                                  
+       array('name' =>'idx_ud_user_id', 'type' =>'index', 'fields'=>array('user_id', 'feed_id'))
                                                       )
                                   );

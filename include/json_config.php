@@ -166,7 +166,7 @@ class json_config
         } elseif ($module == 'AM_ProjectTemplates') {
             $focus->load_relationships('users');
             $users=$focus->get_linked_beans('am_projecttemplates_users_1', 'User');
-        }		
+        }
 		
 		
         $module_arr['users_arr'] = array();

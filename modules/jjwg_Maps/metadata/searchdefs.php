@@ -2,19 +2,19 @@
 
 $module_name = 'jjwg_Maps';
 
-$searchdefs[$module_name] = 
+$searchdefs[$module_name] =
 array(
-  'layout' => 
+  'layout' =>
   array(
-    'basic_search' => 
+    'basic_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'module_type' => 
+      'module_type' =>
       array(
         'type' => 'enum',
         'default' => true,
@@ -24,7 +24,7 @@ array(
         'width' => '10%',
         'name' => 'module_type',
       ),
-      'current_user_only' => 
+      'current_user_only' =>
       array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
@@ -33,15 +33,15 @@ array(
         'width' => '10%',
       ),
     ),
-    'advanced_search' => 
+    'advanced_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'unit_type' => 
+      'unit_type' =>
       array(
         'type' => 'enum',
         'default' => true,
@@ -51,7 +51,7 @@ array(
         'width' => '10%',
         'name' => 'unit_type',
       ),
-      'distance' => 
+      'distance' =>
       array(
         'type' => 'float',
         'label' => 'LBL_DISTANCE',
@@ -59,7 +59,7 @@ array(
         'default' => true,
         'name' => 'distance',
       ),
-      'module_type' => 
+      'module_type' =>
       array(
         'type' => 'enum',
         'default' => true,
@@ -69,7 +69,7 @@ array(
         'width' => '10%',
         'name' => 'module_type',
       ),
-      'description' => 
+      'description' =>
       array(
         'type' => 'text',
         'label' => 'LBL_DESCRIPTION',
@@ -78,15 +78,15 @@ array(
         'default' => true,
         'name' => 'description',
       ),
-      'assigned_user_id' => 
+      'assigned_user_id' =>
       array(
         'name' => 'assigned_user_id',
         'label' => 'LBL_ASSIGNED_TO',
         'type' => 'enum',
-        'function' => 
+        'function' =>
         array(
           'name' => 'get_user_array',
-          'params' => 
+          'params' =>
           array(
             0 => false,
           ),
@@ -96,10 +96,10 @@ array(
       ),
     ),
   ),
-  'templateMeta' => 
+  'templateMeta' =>
   array(
     'maxColumns' => '3',
-    'widths' => 
+    'widths' =>
     array(
       'label' => '10',
       'field' => '30',

@@ -1,139 +1,139 @@
 <?php
 // created: 2018-05-16 12:26:27
 $unified_search_modules_display = array(
-  'AOP_Case_Events' => 
+  'AOP_Case_Events' =>
   array(
     'visible' => false,
   ),
-  'AOP_Case_Updates' => 
+  'AOP_Case_Updates' =>
   array(
     'visible' => false,
   ),
-  'AOR_Reports' => 
+  'AOR_Reports' =>
   array(
     'visible' => false,
   ),
-  'AOS_Contracts' => 
+  'AOS_Contracts' =>
   array(
     'visible' => false,
   ),
-  'AOS_Invoices' => 
+  'AOS_Invoices' =>
   array(
     'visible' => false,
   ),
-  'AOS_PDF_Templates' => 
+  'AOS_PDF_Templates' =>
   array(
     'visible' => false,
   ),
-  'AOS_Product_Categories' => 
+  'AOS_Product_Categories' =>
   array(
     'visible' => false,
   ),
-  'AOS_Products' => 
+  'AOS_Products' =>
   array(
     'visible' => false,
   ),
-  'AOS_Quotes' => 
+  'AOS_Quotes' =>
   array(
     'visible' => false,
   ),
-  'AOW_Processed' => 
+  'AOW_Processed' =>
   array(
     'visible' => false,
   ),
-  'AOW_WorkFlow' => 
+  'AOW_WorkFlow' =>
   array(
     'visible' => false,
   ),
-  'Accounts' => 
+  'Accounts' =>
   array(
     'visible' => true,
   ),
-  'Bugs' => 
+  'Bugs' =>
   array(
     'visible' => false,
   ),
-  'Calls' => 
+  'Calls' =>
   array(
     'visible' => true,
   ),
-  'Calls_Reschedule' => 
+  'Calls_Reschedule' =>
   array(
     'visible' => false,
   ),
-  'Campaigns' => 
+  'Campaigns' =>
   array(
     'visible' => false,
   ),
-  'Cases' => 
+  'Cases' =>
   array(
     'visible' => true,
   ),
-  'Contacts' => 
+  'Contacts' =>
   array(
     'visible' => true,
   ),
-  'Documents' => 
+  'Documents' =>
   array(
     'visible' => true,
   ),
-  'FP_Event_Locations' => 
+  'FP_Event_Locations' =>
   array(
     'visible' => false,
   ),
-  'FP_events' => 
+  'FP_events' =>
   array(
     'visible' => false,
   ),
-  'Leads' => 
+  'Leads' =>
   array(
     'visible' => true,
   ),
-  'Meetings' => 
+  'Meetings' =>
   array(
     'visible' => true,
   ),
-  'Notes' => 
+  'Notes' =>
   array(
     'visible' => true,
   ),
-  'Opportunities' => 
+  'Opportunities' =>
   array(
     'visible' => true,
   ),
-  'Project' => 
+  'Project' =>
   array(
     'visible' => false,
   ),
-  'ProjectTask' => 
+  'ProjectTask' =>
   array(
     'visible' => false,
   ),
-  'ProspectLists' => 
+  'ProspectLists' =>
   array(
     'visible' => false,
   ),
-  'Prospects' => 
+  'Prospects' =>
   array(
     'visible' => false,
   ),
-  'Tasks' => 
+  'Tasks' =>
   array(
     'visible' => false,
   ),
-  'jjwg_Address_Cache' => 
+  'jjwg_Address_Cache' =>
   array(
     'visible' => false,
   ),
-  'jjwg_Areas' => 
+  'jjwg_Areas' =>
   array(
     'visible' => false,
   ),
-  'jjwg_Maps' => 
+  'jjwg_Maps' =>
   array(
     'visible' => false,
   ),
-  'jjwg_Markers' => 
+  'jjwg_Markers' =>
   array(
     'visible' => false,
   ),

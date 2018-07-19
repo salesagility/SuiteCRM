@@ -55,7 +55,7 @@ class SugarWidgetSubPanelGetLatestButton extends SugarWidgetField
     public function displayList(&$layout_def)
     {
         //if the contract has been executed or selected_revision is same as latest revision
-        //then hide the latest button. 		
+        //then hide the latest button.
         //if the contract state is executed or document is not a template hide this action.
         if ((!empty($layout_def['fields']['CONTRACT_STATUS']) && $layout_def['fields']['CONTRACT_STATUS']=='executed') or
             $layout_def['fields']['SELECTED_REVISION_ID']== $layout_def['fields']['LATEST_REVISION_ID']) {

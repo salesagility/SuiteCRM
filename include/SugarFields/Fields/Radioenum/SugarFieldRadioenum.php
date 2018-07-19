@@ -68,7 +68,7 @@ class SugarFieldRadioenum extends SugarFieldBase
             if (isset($app_list_strings[$vardef['options']][$inputField])) {
                 return $app_list_strings[$vardef['options']][$inputField];
             }
-        } 
+        }
         return $inputField;
     }
 }

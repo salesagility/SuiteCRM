@@ -1,6 +1,6 @@
 <?php
 $dictionary['securitygroups_acl_roles'] = array(
-    'table' => 'securitygroups_acl_roles', 
+    'table' => 'securitygroups_acl_roles',
     'fields' => array(
         array('name' =>'id', 'type' =>'char', 'len'=>'36', 'required'=>true, 'default'=>'')
       , array('name' =>'securitygroup_id', 'type' =>'char', 'len'=>'36')

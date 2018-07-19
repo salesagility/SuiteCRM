@@ -40,34 +40,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$listViewDefs ['Accounts'] = 
+$listViewDefs ['Accounts'] =
 array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '20%',
     'label' => 'LBL_LIST_ACCOUNT_NAME',
     'link' => true,
     'default' => true,
   ),
-  'BILLING_ADDRESS_CITY' => 
+  'BILLING_ADDRESS_CITY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_CITY',
     'default' => true,
   ),
-  'BILLING_ADDRESS_COUNTRY' => 
+  'BILLING_ADDRESS_COUNTRY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_BILLING_ADDRESS_COUNTRY',
     'default' => true,
   ),
-  'PHONE_OFFICE' => 
+  'PHONE_OFFICE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_PHONE',
     'default' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_ASSIGNED_USER',
@@ -75,7 +75,7 @@ array(
     'id' => 'ASSIGNED_USER_ID',
     'default' => true,
   ),
-  'EMAIL1' => 
+  'EMAIL1' =>
   array(
     'width' => '15%',
     'label' => 'LBL_EMAIL_ADDRESS',
@@ -84,139 +84,139 @@ array(
     'customCode' => '{$EMAIL1_LINK}',
     'default' => true,
   ),
-  'DATE_ENTERED' => 
+  'DATE_ENTERED' =>
   array(
     'width' => '5%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => true,
   ),
-  'ACCOUNT_TYPE' => 
+  'ACCOUNT_TYPE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_TYPE',
     'default' => false,
   ),
-  'INDUSTRY' => 
+  'INDUSTRY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_INDUSTRY',
     'default' => false,
   ),
-  'ANNUAL_REVENUE' => 
+  'ANNUAL_REVENUE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_ANNUAL_REVENUE',
     'default' => false,
   ),
-  'PHONE_FAX' => 
+  'PHONE_FAX' =>
   array(
     'width' => '10%',
     'label' => 'LBL_PHONE_FAX',
     'default' => false,
   ),
-  'BILLING_ADDRESS_STREET' => 
+  'BILLING_ADDRESS_STREET' =>
   array(
     'width' => '15%',
     'label' => 'LBL_BILLING_ADDRESS_STREET',
     'default' => false,
   ),
-  'BILLING_ADDRESS_STATE' => 
+  'BILLING_ADDRESS_STATE' =>
   array(
     'width' => '7%',
     'label' => 'LBL_BILLING_ADDRESS_STATE',
     'default' => false,
   ),
-  'BILLING_ADDRESS_POSTALCODE' => 
+  'BILLING_ADDRESS_POSTALCODE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_BILLING_ADDRESS_POSTALCODE',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_STREET' => 
+  'SHIPPING_ADDRESS_STREET' =>
   array(
     'width' => '15%',
     'label' => 'LBL_SHIPPING_ADDRESS_STREET',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_CITY' => 
+  'SHIPPING_ADDRESS_CITY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_SHIPPING_ADDRESS_CITY',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_STATE' => 
+  'SHIPPING_ADDRESS_STATE' =>
   array(
     'width' => '7%',
     'label' => 'LBL_SHIPPING_ADDRESS_STATE',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_POSTALCODE' => 
+  'SHIPPING_ADDRESS_POSTALCODE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_SHIPPING_ADDRESS_POSTALCODE',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_COUNTRY' => 
+  'SHIPPING_ADDRESS_COUNTRY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_SHIPPING_ADDRESS_COUNTRY',
     'default' => false,
   ),
-  'RATING' => 
+  'RATING' =>
   array(
     'width' => '10%',
     'label' => 'LBL_RATING',
     'default' => false,
   ),
-  'PHONE_ALTERNATE' => 
+  'PHONE_ALTERNATE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_OTHER_PHONE',
     'default' => false,
   ),
-  'WEBSITE' => 
+  'WEBSITE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_WEBSITE',
     'default' => false,
   ),
-  'OWNERSHIP' => 
+  'OWNERSHIP' =>
   array(
     'width' => '10%',
     'label' => 'LBL_OWNERSHIP',
     'default' => false,
   ),
-  'EMPLOYEES' => 
+  'EMPLOYEES' =>
   array(
     'width' => '10%',
     'label' => 'LBL_EMPLOYEES',
     'default' => false,
   ),
-  'SIC_CODE' => 
+  'SIC_CODE' =>
   array(
     'width' => '10%',
     'label' => 'LBL_SIC_CODE',
     'default' => false,
   ),
-  'TICKER_SYMBOL' => 
+  'TICKER_SYMBOL' =>
   array(
     'width' => '10%',
     'label' => 'LBL_TICKER_SYMBOL',
     'default' => false,
   ),
-  'DATE_MODIFIED' => 
+  'DATE_MODIFIED' =>
   array(
     'width' => '5%',
     'label' => 'LBL_DATE_MODIFIED',
     'default' => false,
   ),
-  'CREATED_BY_NAME' => 
+  'CREATED_BY_NAME' =>
   array(
     'width' => '10%',
     'label' => 'LBL_CREATED',
     'default' => false,
   ),
-  'MODIFIED_BY_NAME' => 
+  'MODIFIED_BY_NAME' =>
   array(
     'width' => '10%',
     'label' => 'LBL_MODIFIED',

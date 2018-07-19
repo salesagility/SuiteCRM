@@ -96,8 +96,8 @@ class Zend_Oauth_Http_Utility
         }
         $encodedParams = array();
         foreach ($params as $key => $value) {
-            $encodedParams[] = self::urlEncode($key) 
-                             . '=' 
+            $encodedParams[] = self::urlEncode($key)
+                             . '='
                              . self::urlEncode($value);
         }
         return implode('&', $encodedParams);
@@ -123,7 +123,7 @@ class Zend_Oauth_Http_Utility
                     continue;
                 }
             }
-            $headerValue[] = self::urlEncode($key) 
+            $headerValue[] = self::urlEncode($key)
                            . '="'
                            . self::urlEncode($value) . '"';
         }

@@ -28,7 +28,7 @@ $dictionary['AOW_Action'] = array(
 	'audited'=>false,
 	'duplicate_merge'=>true,
 	'fields'=>array(
-  'aow_workflow_id' => 
+  'aow_workflow_id' =>
   array(
     'required' => false,
     'name' => 'aow_workflow_id',
@@ -47,7 +47,7 @@ $dictionary['AOW_Action'] = array(
     'len' => 36,
     'size' => '20',
   ),
-  'action_order' => 
+  'action_order' =>
   array(
     'required' => false,
     'name' => 'action_order',
@@ -68,7 +68,7 @@ $dictionary['AOW_Action'] = array(
     'enable_range_search' => false,
     'disable_num_format' => '',
   ),
-  'action' => 
+  'action' =>
   array(
     'required' => false,
     'name' => 'action',

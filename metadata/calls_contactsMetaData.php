@@ -49,12 +49,12 @@ $dictionary['calls_contacts'] = array( 'table' => 'calls_contacts'
       , array('name' =>'accept_status', 'type' =>'varchar', 'len'=>'25', 'default'=>'none')
       , array('name' => 'date_modified','type' => 'datetime')
       , array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>false)
-                                                      )     
+                                                      )
                                   , 'indices' => array(
        array('name' =>'calls_contactspk', 'type' =>'primary', 'fields'=>array('id'))
       , array('name' =>'idx_con_call_call', 'type' =>'index', 'fields'=>array('call_id'))
       , array('name' =>'idx_con_call_con', 'type' =>'index', 'fields'=>array('contact_id'))
-      , array('name' => 'idx_call_contact', 'type'=>'alternate_key', 'fields'=>array('call_id','contact_id'))            
+      , array('name' => 'idx_call_contact', 'type'=>'alternate_key', 'fields'=>array('call_id','contact_id'))
                                                       )
 
  	  , 'relationships' => array('calls_contacts' => array('lhs_module'=> 'Calls', 'lhs_table'=> 'calls', 'lhs_key' => 'id',

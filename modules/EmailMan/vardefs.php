@@ -40,7 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['EmailMan'] = 
+$dictionary['EmailMan'] =
 array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => array(
     'date_entered' => array(
         'name' => 'date_entered',
@@ -61,7 +61,7 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
         'reportable' =>false,
         'comment' => 'User ID representing assigned-to user',
     ),
-    'id' => 
+    'id' =>
     array(
         'name' => 'id',
         'vname' => 'LBL_ID',
@@ -69,7 +69,7 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
         'len' => '11',
         'auto_increment'=>true,
         'comment' => 'Unique identifier',
-    ),	
+    ),
     'campaign_id' => array(
         'name' => 'campaign_id',
         'vname' => 'LBL_CAMPAIGN_ID',

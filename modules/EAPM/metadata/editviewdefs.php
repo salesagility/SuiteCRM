@@ -70,8 +70,8 @@ $viewdefs[$module_name]['EditView'] = array(
             'name' => 'application',
             'displayParams'=>array('required'=>true)
         ),
-        array('name' => 'note', 
-              'type'=>'text', 
+        array('name' => 'note',
+              'type'=>'text',
               'customCode' => '{if $fields.validated.value}{$MOD.LBL_CONNECTED}<div id="eapm_notice_div" style="display: none;"></div>{else}<div id="eapm_notice_div">&nbsp;</div>{/if}',
               'label' => 'LBL_STATUS',
         ),

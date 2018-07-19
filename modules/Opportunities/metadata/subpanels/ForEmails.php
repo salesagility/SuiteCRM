@@ -80,7 +80,7 @@ $subpanel_layout = array(
 			'vname' => 'LBL_REMOVE',
 			'widget_class' => 'SubPanelRemoveButton',
 			'width' => '4%',
-		),				
+		),
 		'currency_id'=>array(
 			'usage'=>'query_only',
 		),

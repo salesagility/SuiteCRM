@@ -51,7 +51,7 @@ $dictionary['contacts_users'] = array( 'table' => 'contacts_users'
        array('name' =>'contacts_userspk', 'type' =>'primary', 'fields'=>array('id'))
       , array('name' =>'idx_con_users_con', 'type' =>'index', 'fields'=>array('contact_id'))
       , array('name' =>'idx_con_users_user', 'type' =>'index', 'fields'=>array('user_id'))
-      , array('name' =>'idx_contacts_users', 'type' =>'alternate_key', 'fields'=>array('contact_id', 'user_id'))     
+      , array('name' =>'idx_contacts_users', 'type' =>'alternate_key', 'fields'=>array('contact_id', 'user_id'))
         )
  	  , 'relationships' => array('contacts_users' => array('lhs_module'=> 'Contacts', 'lhs_table'=> 'contacts', 'lhs_key' => 'id',
 							  'rhs_module'=> 'Users', 'rhs_table'=> 'users', 'rhs_key' => 'id',

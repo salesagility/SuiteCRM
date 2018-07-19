@@ -53,7 +53,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
 
-//        
+//
 //
 
 //
@@ -105,9 +105,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //
 //        //test hardDelete method
 
-//        
+//
 //        // clean up
-//        
+//
 
 
 
@@ -365,7 +365,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -451,7 +451,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -489,7 +489,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete('This test changes the error level');
         
 
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -542,7 +542,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::markTestIncomplete('This test changes the error level');
         
 
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -668,7 +668,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -786,7 +786,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -815,7 +815,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -849,7 +849,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -877,7 +877,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -909,7 +909,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -937,7 +937,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -965,7 +965,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -995,7 +995,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1026,7 +1026,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1349,7 +1349,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1403,7 +1403,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1434,7 +1434,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1511,7 +1511,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1539,7 +1539,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1565,7 +1565,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1619,7 +1619,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1697,7 +1697,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1729,7 +1729,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1761,7 +1761,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1797,7 +1797,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -1829,7 +1829,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -4120,7 +4120,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('This test changes the error level');
         
-        // save state 
+        // save state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');

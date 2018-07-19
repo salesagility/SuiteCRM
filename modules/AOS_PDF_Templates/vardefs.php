@@ -104,7 +104,7 @@ $dictionary['AOS_PDF_Templates'] = array(
                 'size' => '20',
                 'studio' => 'visible',
             ),
-  'sample' => 
+  'sample' =>
   array(
     'required' => '0',
     'name' => 'sample',
@@ -138,7 +138,7 @@ $dictionary['AOS_PDF_Templates'] = array(
       'help' => '',
       'reportable' => 0,
   ),
-  'pdfheader' => 
+  'pdfheader' =>
   array(
     'required' => false,
     'name' => 'pdfheader',
@@ -157,7 +157,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'rows' => '4',
     'cols' => '20',
   ),
-  'pdffooter' => 
+  'pdffooter' =>
   array(
     'required' => false,
     'name' => 'pdffooter',

@@ -95,7 +95,7 @@ class SugarpdfSmarty extends Sugarpdf
         error_reporting(E_ALL);
         set_time_limit(1800);
         
-        //Create new page           
+        //Create new page
         $this->AddPage();
         $this->SetFont(PDF_FONT_NAME_MAIN, '', 8);
         

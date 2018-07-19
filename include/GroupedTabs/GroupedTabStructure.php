@@ -88,7 +88,7 @@ class GroupedTabStructure
         $moduleExtraMenu = array();
         if (!should_hide_iframes()) {
             $iFrame = new iFrame();
-            $frames = $iFrame->lookup_frames('tab');	
+            $frames = $iFrame->lookup_frames('tab');
             foreach ($frames as $key => $values) {
                 $moduleExtraMenu[$key] = $values;
             }
@@ -110,20 +110,20 @@ class GroupedTabStructure
             foreach ($subModules['modules'] as $key => $subModule) {
                 /* Perform a case-insensitive in_array check
                  * and mark whichever module matched as used.
-                 */ 
+                 */
                 foreach ($modList as $module) {
                     if (is_string($module) && strcasecmp($subModule, $module) === 0) {
                         if ($labelAsKey) {
                             $retStruct[$subModules['label']]['modules'][$module] = $app_list_strings['moduleList'][$module];
                         } else {
                             $retStruct[$app_strings[$subModules['label']]]['modules'][$module] = $app_list_strings['moduleList'][$module];
-                        }                        
+                        }
                         $mlhUsed[$module] = true;
                         break;
                     }
                 }
             }
-            //remove the group tabs if it has no sub modules under it	        
+            //remove the group tabs if it has no sub modules under it
             if ($labelAsKey) {
                 if (empty($retStruct[$subModules['label']]['modules'])) {
                     unset($retStruct[$subModules['label']]);

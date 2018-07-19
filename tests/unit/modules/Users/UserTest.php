@@ -1052,7 +1052,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         //test with id and is_admin set
         $user->is_admin = 1;
-        $this->assertEquals(true, $user->isAdminForModule("Accounts")); 
+        $this->assertEquals(true, $user->isAdminForModule("Accounts"));
         
         
         // clean up

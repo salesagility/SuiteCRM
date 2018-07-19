@@ -391,7 +391,7 @@ class chart
             echo '</tr><tr><td rowspan="3" class="main_table day">'.$mod_strings['LBL_RESOURCE_CHART_WEEK'].'</td>';
             foreach ($time_span as $year => $months) {
                 $wcount= 0;
-                foreach ($months as $month => $weeks) {//count the number of weeks in each month        
+                foreach ($months as $month => $weeks) {//count the number of weeks in each month
                     /*foreach ($weeks as $week)
                     {
                         $wcount++;
@@ -481,7 +481,7 @@ class chart
             echo '</tr><tr><td rowspan="3" class="main_table day">'.$mod_strings['LBL_RESOURCE_CHART_MONTH'].'</td>';
             foreach ($time_span as $year => $quarters) {
                 $qcount= 0;
-                foreach ($quarters as $quarter => $months) {//count the number of months in each quarter        
+                foreach ($quarters as $quarter => $months) {//count the number of months in each quarter
                 
                     $qcount+= count($months);
                 }
@@ -648,7 +648,7 @@ class chart
     }
 
 
-    //count number of months between task start day and chart current month 
+    //count number of months between task start day and chart current month
     public function count_months($start, $day, $x)
     {
         $sdate = DateTime::createFromFormat('Y-m-d', $start);

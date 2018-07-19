@@ -91,7 +91,7 @@ class TemplateRelatedTextField extends TemplateText
         }
         //return 'NOT AVAILABLE';
         return $this->get_html_edit();
-    }   
+    }
 
     public function get_xtpl_search()
     {
@@ -285,7 +285,7 @@ class TemplateRelatedTextField extends TemplateText
                 $idName = $basename.++$count.'_c' ;
             }
             $id->name = $idName ;
-            $id->reportable = false;				
+            $id->reportable = false;
             $id->save($df);
 	        
             // record the id field's name, and save

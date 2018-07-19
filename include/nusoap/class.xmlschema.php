@@ -233,7 +233,7 @@ class nusoap_xmlschema extends nusoap_base
         $depth = $this->depth++;
         // set self as current value for this depth
         $this->depth_array[$depth] = $pos;
-        $this->message[$pos] = array('cdata' => ''); 
+        $this->message[$pos] = array('cdata' => '');
         if ($depth > 0) {
             $this->defaultNamespace[$pos] = $this->defaultNamespace[$this->depth_array[$depth - 1]];
         } else {
@@ -619,7 +619,7 @@ class nusoap_xmlschema extends nusoap_base
                     }
                 }
             }
-        } 
+        }
         // complex types
         foreach ($this->complexTypes as $typeName => $attrs) {
             $contentStr = '';

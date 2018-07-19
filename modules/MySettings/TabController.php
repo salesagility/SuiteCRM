@@ -84,7 +84,7 @@ class TabController
                             unset($tabs[$id]);
                         }
                     }
-                    ACLController :: filterModuleList($tabs); 
+                    ACLController :: filterModuleList($tabs);
                     $tabs = $this->get_key_array($tabs);
                     $system_tabs_result = $tabs;
                 } else {
@@ -115,7 +115,7 @@ class TabController
             } elseif (isset($tabs['iFrames'])) {
                 unset($tabs['iFrames']);
             }
-        } 
+        }
 
         return array($tabs,$unsetTabs);
     }

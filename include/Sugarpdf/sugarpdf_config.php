@@ -74,11 +74,11 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 
     /*
      * Custom path for images (use for loaded logos)
-     */ 
+     */
     define("K_PATH_CUSTOM_IMAGES", $sugarpdf_default["K_PATH_CUSTOM_IMAGES"]);
     /*
      * Default path for images
-     */ 
+     */
     define("K_PATH_IMAGES", $sugarpdf_default["K_PATH_IMAGES"]);
     /*
      * Blank image

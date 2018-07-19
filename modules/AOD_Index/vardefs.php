@@ -42,7 +42,7 @@ $dictionary['AOD_Index'] = array(
 	'audited'=>true,
 		'duplicate_merge'=>true,
 		'fields'=>array(
-  'last_optimised' => 
+  'last_optimised' =>
   array(
     'required' => false,
     'name' => 'last_optimised',
@@ -63,7 +63,7 @@ $dictionary['AOD_Index'] = array(
     'enable_range_search' => false,
     'dbType' => 'datetime',
   ),
-  'location' => 
+  'location' =>
   array(
     'required' => false,
     'name' => 'location',

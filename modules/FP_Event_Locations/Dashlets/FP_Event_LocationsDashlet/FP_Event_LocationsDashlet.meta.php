@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $app_strings;
 
 $dashletMeta['FP_Event_LocationsDashlet'] = array('module'		=> 'FP_Event_Locations',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'FP_Event_Locations'), 
+										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'FP_Event_Locations'),
                                           'description' => 'A customizable view into FP_Event_Locations',
                                           'icon'        => 'icon_FP_Event_Locations_32.gif',
                                           'category'    => 'Module Views');

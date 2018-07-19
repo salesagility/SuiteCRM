@@ -58,7 +58,7 @@ class registry_v3 extends registry
         $this->serviceClass->registerFunction(
 		    'get_module_fields_md5',
 		    array('session'=>'xsd:string', 'module_names'=>'tns:select_fields'),
-		    array('return'=>'tns:md5_results'));    
+		    array('return'=>'tns:md5_results'));
             
         $this->serviceClass->registerFunction(
 		    'get_available_modules',
@@ -68,12 +68,12 @@ class registry_v3 extends registry
         $this->serviceClass->registerFunction(
 		    'get_last_viewed',
 	        array('session'=>'xsd:string','module_names'=>'tns:module_names'),
-	        array('return'=>'tns:last_viewed_list'));     
+	        array('return'=>'tns:last_viewed_list'));
 	        
         $this->serviceClass->registerFunction(
 		    'get_upcoming_activities',
 	        array('session'=>'xsd:string'),
-	        array('return'=>'tns:upcoming_activities_list')); 
+	        array('return'=>'tns:upcoming_activities_list'));
 	        
         $this->serviceClass->registerFunction(
 		    'search_by_module',

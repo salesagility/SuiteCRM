@@ -85,7 +85,7 @@ function additionalDetailsContact($fields)
     }
     if (strlen($overlib_string) > 0 && !(strrpos($overlib_string, '<br>') == strlen($overlib_string) - 4)) {
         $overlib_string .= '<br>';
-    }  
+    }
     if (!empty($fields['PHONE_MOBILE'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_MOBILE_PHONE'] . '</b> <span class="phone">' . $fields['PHONE_MOBILE'] . '</span><br>';
     }
@@ -105,10 +105,10 @@ function additionalDetailsContact($fields)
         if (strlen($fields['DESCRIPTION']) > 300) {
             $overlib_string .= '...';
         }
-    }	
+    }
 	
-    return array('fieldToAddTo' => 'NAME', 
-				 'string' => $overlib_string, 
-				 'editLink' => "index.php?action=EditView&module=Contacts&return_module=Contacts&record={$fields['ID']}", 
+    return array('fieldToAddTo' => 'NAME',
+				 'string' => $overlib_string,
+				 'editLink' => "index.php?action=EditView&module=Contacts&return_module=Contacts&record={$fields['ID']}",
 				 'viewLink' => "index.php?action=DetailView&module=Contacts&return_module=Contacts&record={$fields['ID']}");
 }

@@ -1080,10 +1080,10 @@ eoq;
 
         case "setFolderViewSelection":
             
-            $user = 
+            $user =
                 isset($_REQUEST['user']) && $_REQUEST['user'] && isValidId($_REQUEST['user']) ?
-                    BeanFactory::getBean('Users', $_REQUEST['user']) : 
-                    $current_user;  
+                    BeanFactory::getBean('Users', $_REQUEST['user']) :
+                    $current_user;
             
             $out = handleSubs($_REQUEST['ieIdShow'], $email, $json, $user);
             

@@ -28,7 +28,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'table'=>'aos_line_item_groups',
     'audited'=>true,
     'fields'=>array(
-  'total_amt' => 
+  'total_amt' =>
   array(
     'required' => false,
     'name' => 'total_amt',
@@ -71,7 +71,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         'unified_search' => true,
         'required' => false,
   ),
-  'discount_amount' => 
+  'discount_amount' =>
   array(
     'required' => false,
     'name' => 'discount_amount',
@@ -104,7 +104,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         ),
         'len' => '26,6',
     ),
-  'subtotal_amount' => 
+  'subtotal_amount' =>
   array(
     'required' => false,
     'name' => 'subtotal_amount',
@@ -137,7 +137,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         ),
         'len' => '26,6',
     ),
-  'tax_amount' => 
+  'tax_amount' =>
   array(
     'required' => false,
     'name' => 'tax_amount',
@@ -170,7 +170,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         ),
         'len' => '26,6',
     ),
-  'subtotal_tax_amount' => 
+  'subtotal_tax_amount' =>
   array(
     'required' => false,
     'name' => 'subtotal_tax_amount',
@@ -238,7 +238,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         ),
         'len' => '26,6',
     ),
-  'parent_name' => 
+  'parent_name' =>
   array(
     'required' => false,
     'source' => 'non-db',
@@ -260,7 +260,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'id_name' => 'parent_id',
     'parent_type' => 'record_type_display',
   ),
-  'parent_type' => 
+  'parent_type' =>
   array(
     'required' => false,
     'name' => 'parent_type',
@@ -279,7 +279,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'dbType' => 'varchar',
     'studio' => 'hidden',
   ),
-  'parent_id' => 
+  'parent_id' =>
   array(
     'required' => false,
     'name' => 'parent_id',
@@ -353,8 +353,8 @@ $dictionary['AOS_Line_Item_Groups'] = array(
                 'lhs_module' => 'AOS_Line_Item_Groups',
                 'lhs_table' => 'aos_line_item_groups',
     'lhs_key' => 'id',
-    'rhs_module'=> 'AOS_Products_Quotes', 
-    'rhs_table'=> 'aos_products_quotes', 
+    'rhs_module'=> 'AOS_Products_Quotes',
+    'rhs_table'=> 'aos_products_quotes',
     'rhs_key' => 'group_id',
     'relationship_type'=>'one-to-many',
     ),

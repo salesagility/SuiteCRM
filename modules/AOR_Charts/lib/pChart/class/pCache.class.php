@@ -287,7 +287,7 @@
              return(null);
          }
 
-         /* Get the database extended information */     
+         /* Get the database extended information */
          $DBPos   = $CacheInfo["DBPos"];
          $PicSize = $CacheInfo["PicSize"];
 

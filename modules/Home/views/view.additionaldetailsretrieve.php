@@ -62,11 +62,11 @@ class HomeViewAdditionaldetailsretrieve extends SugarView
         // Bug 40216 - Add support for a custom additionalDetails.php file
         $additionalDetailsFile = $this->getAdditionalDetailsMetadataFile($moduleDir);
         
-        if (empty($beanFiles[$beanName]) || 
+        if (empty($beanFiles[$beanName]) ||
             empty($id) || !is_file($additionalDetailsFile)) {
             echo 'bad data';
             die();
-        } 
+        }
         
         require_once($beanFiles[$beanName]);
         require_once($additionalDetailsFile);
@@ -82,7 +82,7 @@ class HomeViewAdditionaldetailsretrieve extends SugarView
                 if ($value["type"] == "enum" && isset($app_list_strings[$value['options']][$bean->$field])) {
                     $bean->$field = $app_list_strings[$value['options']][$bean->$field];
                 }
-            }            
+            }
             
             $arr = array_change_key_case($bean->toArray(), CASE_UPPER);
         

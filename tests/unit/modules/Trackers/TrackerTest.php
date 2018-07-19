@@ -92,7 +92,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
 
         //test without setting headerDisplayed
-        Tracker::logPage();        
+        Tracker::logPage();
         $this->assertEquals(null, $_SESSION['lpage']);
 
         //test with headerDisplayed set

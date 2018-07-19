@@ -63,10 +63,10 @@ if (!empty($_REQUEST['saved_search_action'])) {
             break;
         case 'delete': // delete here
             $ss->handleDelete($_REQUEST['saved_search_select']);
-            break;			
+            break;
     }
 } elseif (!empty($_REQUEST['saved_search_select'])) { // requesting a search here.
-    if (!empty($_REQUEST['searchFormTab'])) { // where is the request from  
+    if (!empty($_REQUEST['searchFormTab'])) { // where is the request from
         $searchFormTab = $_REQUEST['searchFormTab'];
     } else {
         $searchFormTab = 'saved_views';

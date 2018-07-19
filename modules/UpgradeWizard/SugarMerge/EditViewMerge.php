@@ -183,7 +183,7 @@ class EditViewMerge
      * The ids of the panels found in original metadata fuke
      * 
      */
-    protected $newPanelIds = array();	
+    protected $newPanelIds = array();
 	
 	
     /**
@@ -387,7 +387,7 @@ class EditViewMerge
                 return $custom;
             }
         }
-        //default to returning the New version of the field 
+        //default to returning the New version of the field
         $this->log($new);
         return $new;
     }
@@ -403,7 +403,7 @@ class EditViewMerge
             if (isset($this->newFields[$field]) && isset($this->originalFields[$field])) {
                 //if both the custom field and the original match then we take the location of the custom field since it hasn't moved
                 $loc = $this->customFields[$field]['loc'];
-                $loc['source'] = 'custom';	
+                $loc['source'] = 'custom';
 
                 $do_merge = true;
 				
@@ -415,21 +415,21 @@ class EditViewMerge
                     $state = $prefix . 'address_state';
                     $country = $prefix . 'address_country';
 				   
-                    if (isset($this->customFields[$city]) || 
-				      isset($this->customFields[$postal_code]) || 
-				      isset($this->customFields[$state]) || 
+                    if (isset($this->customFields[$city]) ||
+				      isset($this->customFields[$postal_code]) ||
+				      isset($this->customFields[$state]) ||
 				      isset($this->customFields[$country])) {
                         $do_merge = false;
                         $this->mergedFields[$field] = array(
-							'data'=>$this->customFields[$field]['data'], 
+							'data'=>$this->customFields[$field]['data'],
 							'loc'=>$loc);
                     }
-                }			
+                }
 				
                 if ($do_merge) {
                     //but we still merge the meta data of the three
                     $this->mergedFields[$field] = array(
-						'data'=>$this->mergeField($this->originalFields[$field]['data'], $this->newFields[$field]['data'], $this->customFields[$field]['data']), 
+						'data'=>$this->mergeField($this->originalFields[$field]['data'], $this->newFields[$field]['data'], $this->customFields[$field]['data']),
 						'loc'=>$loc);
                 }
                 //if it's not set in the new fields then it was a custom field or an original field so we take the custom fields data and set the location source to custom
@@ -439,14 +439,14 @@ class EditViewMerge
             } else {
                 //otherwise  the field is in both new and custom but not in the orignal so we merge the new and custom data together and take the location from the custom
                 $this->mergedFields[$field] = array(
-					'data'=>$this->mergeField('', $this->newFields[$field]['data'], $this->customFields[$field]['data']), 
+					'data'=>$this->mergeField('', $this->newFields[$field]['data'], $this->customFields[$field]['data']),
 					'loc'=>$this->customFields[$field]['loc']);
 				
                 $this->mergedFields[$field]['loc']['source'] = 'custom';
                 //echo var_export($this->mergedFields[$field], true);
             }
 			
-            //then we clear out the field from 
+            //then we clear out the field from
             unset($this->originalFields[$field]);
             unset($this->customFields[$field]);
             unset($this->newFields[$field]);
@@ -467,13 +467,13 @@ class EditViewMerge
         $new_field_panel = $this->defaultPanel;
         foreach ($this->customPanelIds as $custom_panel_ids=>$panels) {
             $new_field_panel = $custom_panel_ids;
-        }		
+        }
 		
         foreach ($this->newFields as $field=>$data) {
             $data['loc']['source']= 'new';
             $data['loc']['panel'] = $new_field_panel;
             $this->mergedFields[$field] = array(
-					'data'=>$data['data'], 
+					'data'=>$data['data'],
 					'loc'=>$data['loc']);
             unset($this->newFields[$field]);
         }
@@ -572,7 +572,7 @@ class EditViewMerge
         $this->originalFields = $this->getFields($this->originalData[$this->module][$this->viewDefs][$this->panelName]);
         $this->originalPanelIds = $this->getPanelIds($this->originalData[$this->module][$this->viewDefs][$this->panelName]);
         $this->customFields = $this->getFields($this->customData[$this->module][$this->viewDefs][$this->panelName]);
-        $this->customPanelIds = $this->getPanelIds($this->customData[$this->module][$this->viewDefs][$this->panelName]);		
+        $this->customPanelIds = $this->getPanelIds($this->customData[$this->module][$this->viewDefs][$this->panelName]);
         $this->newFields = $this->getFields($this->newData[$this->module][$this->viewDefs][$this->panelName]);
         //echo var_export($this->newFields, true);
         $this->newPanelIds = $this->getPanelIds($this->newData[$this->module][$this->viewDefs][$this->panelName]);
@@ -601,10 +601,10 @@ class EditViewMerge
                 $panels = $panels[''];
             }
             $setDefaultPanel = true;
-        }		
+        }
 		
         if ($this->scanForMultiPanel) {
-            require_once('include/SugarFields/Parsers/MetaParser.php');			
+            require_once('include/SugarFields/Parsers/MetaParser.php');
             if ($setDefaultPanel || !MetaParser::hasMultiplePanels($panels)) {
                 $panels = array($this->defaultPanel=>$panels);
                 $this->isMultiPanel = false;
@@ -685,10 +685,10 @@ class EditViewMerge
                 $panels = $panels[''];
             }
             $setDefaultPanel = true;
-        }		
+        }
 		
         if ($this->scanForMultiPanel) {
-            require_once('include/SugarFields/Parsers/MetaParser.php');			
+            require_once('include/SugarFields/Parsers/MetaParser.php');
             if ($setDefaultPanel || !MetaParser::hasMultiplePanels($panels)) {
                 $panels = array($this->defaultPanel=>$panels);
                 $this->isMultiPanel = false;
@@ -700,7 +700,7 @@ class EditViewMerge
         }
 				
         return $panel_ids;
-    }	
+    }
 	
     /**
      * Loads the meta data of the original, new, and custom file into the variables originalData, newData, and customData respectively

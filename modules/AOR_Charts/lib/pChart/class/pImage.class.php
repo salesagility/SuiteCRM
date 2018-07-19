@@ -462,7 +462,7 @@
          }
 
          $Values = $this->removeVOIDFromArray($Title, $Values);
-         $ID = 0; 
+         $ID = 0;
          if ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION) {
              if (!isset($_SESSION)) {
                  return(-1);

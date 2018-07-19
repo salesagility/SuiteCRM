@@ -75,7 +75,7 @@ $subpanel_layout = array(
 			'width' => '5%',
 			'refresh_page'=>true,
 		),
-*/		
+*/
 		
 	),
 );

@@ -117,7 +117,7 @@ class ViewConvertLead extends SugarView
         
         /*
          * Setup filter for Account/Contact popup picker
-         */ 
+         */
         $filter = '';
         // Check if Lead has an account set
         if (!empty($this->focus->account_name)) {
@@ -208,7 +208,7 @@ class ViewConvertLead extends SugarView
                     } elseif (is_a($focus, "Company") && $field == 'phone_office') {
                         //Special case where company and person have the same field with a different name
                         $focus->phone_office = $this->focus->phone_work;
-                    } elseif (strpos($field, "billing_address") !== false && $focus->field_defs[$field]["type"] == "varchar") /* Bug 42219 fix */         
+                    } elseif (strpos($field, "billing_address") !== false && $focus->field_defs[$field]["type"] == "varchar") /* Bug 42219 fix */
                     {
                         $tmp_field = str_replace("billing_", "primary_", $field);
                         $focus->field_defs[$field]["type"] = "text";
@@ -444,7 +444,7 @@ class ViewConvertLead extends SugarView
         }
         
         // link account to contact, if we picked an existing contact and created a new account
-        if (!empty($beans['Accounts']->id) && !empty($beans['Contacts']->account_id) 
+        if (!empty($beans['Accounts']->id) && !empty($beans['Contacts']->account_id)
                 && $beans['Accounts']->id != $beans['Contacts']->account_id) {
             $beans['Contacts']->account_id = $beans['Accounts']->id;
         }
@@ -498,7 +498,7 @@ class ViewConvertLead extends SugarView
             $this->copyAddressFields($bean, $beans['Contacts']);
 
             $bean->save();
-            //if campaign id exists then there should be an entry in campaign_log table for the newly created contact: bug 44522	
+            //if campaign id exists then there should be an entry in campaign_log table for the newly created contact: bug 44522
             if (isset($lead->campaign_id) && $lead->campaign_id != null && $bean->object_name == "Contact") {
                 campaign_log_lead_or_contact_entry($lead->campaign_id, $lead, $beans['Contacts'], 'contact');
             }

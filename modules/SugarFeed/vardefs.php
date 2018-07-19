@@ -41,7 +41,7 @@ $dictionary['SugarFeed'] = array(
     'table'=>'sugarfeed',
     'audited'=>false,
     'fields'=>array(
-     'name' => 
+     'name' =>
   array(
     'name' => 'name',
     'type' => 'name',
@@ -55,7 +55,7 @@ $dictionary['SugarFeed'] = array(
     'merge_filter' => 'selected',  //field will be enabled for merge and will be a part of the default search criteria..other valid values for this property are enabled and disabled, default value is disabled.
                             //property value is case insensitive.
   ),
-   'description' => 
+   'description' =>
   array(
     'name' => 'description',
     'type' => 'name',
@@ -70,7 +70,7 @@ $dictionary['SugarFeed'] = array(
                             //property value is case insensitive.
   ),
   
-    'related_module' => 
+    'related_module' =>
   array(
     'name' => 'related_module',
     'type' => 'varchar',
@@ -83,7 +83,7 @@ $dictionary['SugarFeed'] = array(
     'merge_filter' => 'selected',  //field will be enabled for merge and will be a part of the default search criteria..other valid values for this property are enabled and disabled, default value is disabled.
                             //property value is case insensitive.
   ),
-   'related_id' => 
+   'related_id' =>
   array(
     'name' => 'related_id',
     'type' => 'id',
@@ -95,7 +95,7 @@ $dictionary['SugarFeed'] = array(
     'merge_filter' => 'selected',  //field will be enabled for merge and will be a part of the default search criteria..other valid values for this property are enabled and disabled, default value is disabled.
                             //property value is case insensitive.
   ),
-     'link_url' => 
+     'link_url' =>
   array(
     'name' => 'link_url',
     'type' => 'varchar',
@@ -108,7 +108,7 @@ $dictionary['SugarFeed'] = array(
     'merge_filter' => 'selected',  //field will be enabled for merge and will be a part of the default search criteria..other valid values for this property are enabled and disabled, default value is disabled.
                             //property value is case insensitive.
   ),
-     'link_type' => 
+     'link_type' =>
   array(
     'name' => 'link_type',
     'type' => 'varchar',
@@ -127,7 +127,7 @@ $dictionary['SugarFeed'] = array(
     ),
 
     'indices' => array(
-        array('name' => 'sgrfeed_date', 
+        array('name' => 'sgrfeed_date',
               'type'=>'index',
               'fields'=>array('date_entered',
                               'deleted',

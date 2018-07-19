@@ -42,7 +42,7 @@ $dictionary['Calls_Reschedule'] = array(
     'audited'=>true,
         'duplicate_merge'=>true,
         'fields'=>array(
-  'reason' => 
+  'reason' =>
   array(
     'required' => false,
     'name' => 'reason',

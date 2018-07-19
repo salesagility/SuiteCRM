@@ -46,12 +46,12 @@ $popupMeta = array(
 	'varName' => 'EMAIL',
 	'orderBy' => 'name',
 	'whereClauses' => array(
-		'name' => 'emails.name', 
+		'name' => 'emails.name',
 		'contact_name' => 'contacts.last_name'
 	),
 	'searchInputs' => array(
-		'name', 
-		'contact_name', 
+		'name',
+		'contact_name',
 		'request_data'
 	),
 );

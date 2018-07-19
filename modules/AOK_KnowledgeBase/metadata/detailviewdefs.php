@@ -38,15 +38,15 @@
  ********************************************************************************/
 
 $module_name = 'AOK_KnowledgeBase';
-$viewdefs [$module_name] = 
+$viewdefs [$module_name] =
 array(
-  'DetailView' => 
+  'DetailView' =>
   array(
-    'templateMeta' => 
+    'templateMeta' =>
     array(
-      'form' => 
+      'form' =>
       array(
-        'buttons' => 
+        'buttons' =>
         array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
@@ -55,23 +55,23 @@ array(
         ),
       ),
       'maxColumns' => '2',
-      'widths' => 
+      'widths' =>
       array(
-        0 => 
+        0 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
+        1 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => false,
-      'tabDefs' => 
+      'tabDefs' =>
       array(
-        'DEFAULT' => 
+        'DEFAULT' =>
         array(
           'newTab' => false,
           'panelDefault' => 'expanded',
@@ -79,40 +79,40 @@ array(
       ),
       'syncDetailEditViews' => true,
     ),
-    'panels' => 
+    'panels' =>
     array(
-      'default' => 
+      'default' =>
       array(
-        0 => 
+        0 =>
         array(
           0 => 'name',
         ),
-        1 => 
+        1 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'status',
             'studio' => 'visible',
             'label' => 'LBL_STATUS',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'revision',
             'label' => 'LBL_REVISION',
           ),
         ),
-        2 => 
+        2 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
             'customCode' => '{$fields.description.value}',
           ),
         ),
-        3 => 
+        3 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'additional_info',
             'comment' => 'Full text of the note',
@@ -120,20 +120,20 @@ array(
             'label' => 'LBL_ADDITIONAL_INFO',
           ),
         ),
-        4 => 
+        4 =>
         array(
           0 => 'date_entered',
-          1 => 
+          1 =>
           array(
             'name' => 'author',
             'studio' => 'visible',
             'label' => 'LBL_AUTHOR',
           ),
         ),
-        5 => 
+        5 =>
         array(
           0 => 'date_modified',
-          1 => 
+          1 =>
           array(
             'name' => 'approver',
             'studio' => 'visible',

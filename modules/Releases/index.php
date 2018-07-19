@@ -57,7 +57,7 @@ if ((!is_admin($GLOBALS['current_user']) && (!is_admin_for_module($GLOBALS['curr
 }
 
 $focus = new Release();
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_TITLE']), true); 
+echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_TITLE']), true);
 $is_edit = false;
 if (!empty($_REQUEST['record'])) {
     $result = $focus->retrieve($_REQUEST['record']);
@@ -109,7 +109,7 @@ if ($is_edit) {
     $edit_button .="<input type='hidden' name='record' value='$focus->id'>\n";
     $edit_button .="<input type='hidden' name='action'>\n";
     $edit_button .="<input type='hidden' name='edit'>\n";
-    $edit_button .="<input type='hidden' name='isDuplicate'>\n";			
+    $edit_button .="<input type='hidden' name='isDuplicate'>\n";
     $edit_button .="<input type='hidden' name='return_module' value='Releases'>\n";
     $edit_button .="<input type='hidden' name='return_action' value='index'>\n";
     $edit_button .="<input type='hidden' name='return_id' value=''>\n";

@@ -40,7 +40,7 @@ function smarty_function_sugar_fetch($params, &$smarty)
     if (empty($params['key'])) {
         $smarty->trigger_error("sugar_fetch: missing 'key' parameter");
         return;
-    }    
+    }
     if (empty($params['object'])) {
         $smarty->trigger_error("sugar_fetch: missing 'object' parameter");
         return;

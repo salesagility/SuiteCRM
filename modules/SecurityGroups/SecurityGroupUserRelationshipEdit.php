@@ -68,14 +68,14 @@ echo "\n</p>\n";
 $noninheritable = '';
 if (isset($focus->noninheritable) && $focus->noninheritable == true) {
     $noninheritable = 'CHECKED';
-} 
+}
 $xtpl->assign('noninheritable', $noninheritable);
 
 // primary_group
 $primary_group = '';
 if (isset($focus->primary_group) && $focus->primary_group == true) {
     $primary_group = 'CHECKED';
-} 
+}
 $xtpl->assign('primary_group', $primary_group);
 
 $xtpl->parse("main");

@@ -63,8 +63,8 @@ function additionalDetailsNote($fields)
         $overlib_string .= '<br>';
     }
 	
-    return array('fieldToAddTo' => 'NAME', 
-				 'string' => $overlib_string, 
-				 'editLink' => "index.php?action=EditView&module=Notes&return_module=Notes&record={$fields['ID']}", 
+    return array('fieldToAddTo' => 'NAME',
+				 'string' => $overlib_string,
+				 'editLink' => "index.php?action=EditView&module=Notes&return_module=Notes&record={$fields['ID']}",
 				 'viewLink' => "index.php?action=DetailView&module=Notes&return_module=Notes&record={$fields['ID']}");
 }

@@ -51,7 +51,7 @@ $dictionary['cases_bugs'] = array( 'table' => 'cases_bugs'
        array('name' =>'cases_bugspk', 'type' =>'primary', 'fields'=>array('id'))
       , array('name' =>'idx_cas_bug_cas', 'type' =>'index', 'fields'=>array('case_id'))
       , array('name' =>'idx_cas_bug_bug', 'type' =>'index', 'fields'=>array('bug_id'))
-      , array('name' => 'idx_case_bug', 'type'=>'alternate_key', 'fields'=>array('case_id','bug_id'))            
+      , array('name' => 'idx_case_bug', 'type'=>'alternate_key', 'fields'=>array('case_id','bug_id'))
       
                                                       )
  	  , 'relationships' => array('cases_bugs' => array('lhs_module'=> 'Cases', 'lhs_table'=> 'cases', 'lhs_key' => 'id',

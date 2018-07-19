@@ -57,10 +57,10 @@ function additionalDetailsProjectTask($fields)
     }
     if (!empty($fields['PERCENT_COMPLETE'])) {
         $overlib_string .= '<b>' . $mod_strings['LBL_PERCENT_COMPLETE'] . '</b> ' . $fields['PERCENT_COMPLETE'] . '%<br>';
-    }	
+    }
     if (!empty($fields['ESTIMATED_EFFORT'])) {
         $overlib_string .= '<b>' . $mod_strings['LBL_ESTIMATED_EFFORT'] . '</b> ' . $fields['ESTIMATED_EFFORT'] . '<br>';
-    }	
+    }
     if (!empty($fields['ACTUAL_EFFORT'])) {
         $overlib_string .= '<b>' . $mod_strings['LBL_ACTUAL_EFFORT'] . '</b> ' . $fields['ACTUAL_EFFORT'] . '<br>';
     }
@@ -76,10 +76,10 @@ function additionalDetailsProjectTask($fields)
         if (strlen($fields['DESCRIPTION']) > 300) {
             $overlib_string .= '...';
         }
-    }	
+    }
 
-    return array('fieldToAddTo' => 'NAME', 
-				 'string' => $overlib_string, 
-				 'editLink' => "index.php?action=EditView&module=ProjectTask&return_module=ProjectTask&record={$fields['ID']}", 
+    return array('fieldToAddTo' => 'NAME',
+				 'string' => $overlib_string,
+				 'editLink' => "index.php?action=EditView&module=ProjectTask&return_module=ProjectTask&record={$fields['ID']}",
 				 'viewLink' => "index.php?action=DetailView&module=ProjectTask&return_module=ProjectTask&record={$fields['ID']}");
 }

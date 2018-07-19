@@ -66,7 +66,7 @@ class SugarWidgetSubPanelTopArchiveEmailButton extends SugarWidgetSubPanelTopBut
         $additionalFormFields = array();
         $additionalFormFields['type'] = 'archived';
         // cn: bug 5727 - must override the parents' parent for contacts (which could be an Account)
-        $additionalFormFields['parent_type'] = $defines['focus']->module_dir; 
+        $additionalFormFields['parent_type'] = $defines['focus']->module_dir;
         $additionalFormFields['parent_id'] = $defines['focus']->id;
         $additionalFormFields['parent_name'] = $defines['focus']->name;
 

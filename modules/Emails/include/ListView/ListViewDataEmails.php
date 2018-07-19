@@ -542,7 +542,7 @@ class ListViewDataEmails extends ListViewData
                 $uid = $emailHeader['uid'];
                 $importedEmailBeans = BeanFactory::getBean('Emails');
                 $is_imported = $importedEmailBeans->get_full_list('',
-                    'emails.uid LIKE "' . $uid . '"'); 
+                    'emails.uid LIKE "' . $uid . '"');
                 
                 if (null === $is_imported) {
                     $is_imported = [];

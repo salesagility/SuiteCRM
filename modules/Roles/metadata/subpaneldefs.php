@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $layout_defs['Roles'] = array(
-	// list of what Subpanels to show in the DetailView 
+	// list of what Subpanels to show in the DetailView
 	'subpanel_setup' => array(
          'users' => array(
          'top_buttons' => array(

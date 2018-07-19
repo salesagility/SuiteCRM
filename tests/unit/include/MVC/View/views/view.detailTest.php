@@ -58,7 +58,7 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         
 
-        //execute the method with required attributes preset, it will initialize the dv(detail view) attribute. 
+        //execute the method with required attributes preset, it will initialize the dv(detail view) attribute.
         $view = new ViewDetail();
         $view->module = 'Users';
         $view->bean = new User();

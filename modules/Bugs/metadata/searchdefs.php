@@ -45,20 +45,20 @@
  */
   $searchdefs['Bugs'] = array(
 					'templateMeta' => array(
-							'maxColumns' => '3', 
-  							'maxColumnsBasic' => '4', 
-                            'widths' => array('label' => '10', 'field' => '30'),                 
+							'maxColumns' => '3',
+  							'maxColumnsBasic' => '4',
+                            'widths' => array('label' => '10', 'field' => '30'),
                            ),
-                    'layout' => array(  					
+                    'layout' => array(
 						'basic_search' => array(
-						 	'name', 
+						 	'name',
 							array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
 							
-					        array('name' => 'open_only', 'label' => 'LBL_OPEN_ITEMS', 'type' => 'bool', 'default' => false, 'width' => '10%'),       
+					        array('name' => 'open_only', 'label' => 'LBL_OPEN_ITEMS', 'type' => 'bool', 'default' => false, 'width' => '10%'),
 		      ),
 						'advanced_search' => array(
-							'bug_number', 
-							'name', 
+							'bug_number',
+							'name',
 							'resolution',
 							'found_in_release',
 							'fixed_in_release',

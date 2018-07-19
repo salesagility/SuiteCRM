@@ -160,7 +160,7 @@ switch ($_REQUEST['adminAction']) {
 	
 	default:
 		die();
-	break;	
+	break;
 }
 
 $ret = $json->encode($out, true);

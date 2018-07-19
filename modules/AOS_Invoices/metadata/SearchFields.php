@@ -33,7 +33,7 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-$searchFields['AOS_Invoices'] = 
+$searchFields['AOS_Invoices'] =
     array(
         'name' => array( 'query_type'=>'default'),
         'account_type'=> array('query_type'=>'default', 'options' => 'account_type_dom', 'template_var' => 'ACCOUNT_TYPE_OPTIONS'),

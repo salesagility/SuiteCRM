@@ -154,14 +154,14 @@ class SearchMerge extends ListViewMerge
         //Bug 37207
         if ($module == 'Connectors') {
             return false;
-        }			
+        }
 		
         $this->clear();
         $this->log("\n\n". 'Starting a merge in ' . get_class($this));
         $this->log('merging the following files');
         $this->log('original file:'  . $original_file);
         $this->log('new file:'  . $new_file);
-        $this->log('custom file:'  . $custom_file);	
+        $this->log('custom file:'  . $custom_file);
         if (empty($custom_file) && $save) {
             return true;
         } else {
@@ -182,7 +182,7 @@ class SearchMerge extends ListViewMerge
             return true;
         }
         return false;
-    }	
+    }
 	
     protected function mergeTemplateMeta()
     {

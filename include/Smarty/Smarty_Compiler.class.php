@@ -375,7 +375,7 @@ class Smarty_Compiler extends Smarty
         $compiled_content = preg_replace("~(?<!')language\s*=\s*[\"\']?\s*php\s*[\"\']?~", "<?php echo 'language=php' ?>\n", $compiled_content);
 
         // recover legit tags
-        $compiled_content = str_replace($tag_guard, '<?', $compiled_content); 
+        $compiled_content = str_replace($tag_guard, '<?', $compiled_content);
         
         // remove \n from the end of the file, if any
         if (strlen($compiled_content) && (substr($compiled_content, -1) == "\n")) {
@@ -1295,7 +1295,7 @@ class Smarty_Compiler extends Smarty
 
         if (empty($tokens)) {
             $_error_msg = $elseif ? "'elseif'" : "'if'";
-            $_error_msg .= ' statement requires arguments'; 
+            $_error_msg .= ' statement requires arguments';
             $this->_syntax_error($_error_msg, E_USER_ERROR, __FILE__, __LINE__);
         }
             

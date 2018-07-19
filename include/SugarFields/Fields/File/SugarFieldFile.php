@@ -171,7 +171,7 @@ class SugarFieldFile extends SugarFieldBase
             
             if (isset($params[$prefix . $vardef['docId']])
                  && ! empty($params[$prefix . $vardef['docId']])
-                 && isset($params[$prefix . $vardef['docType']]) 
+                 && isset($params[$prefix . $vardef['docType']])
                  && ! empty($params[$prefix . $vardef['docType']])
                 ) {
                 $bean->$field = $params[$prefix . $field . '_remoteName'];

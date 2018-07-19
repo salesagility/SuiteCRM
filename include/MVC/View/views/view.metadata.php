@@ -134,7 +134,7 @@ EOQ;
         echo "<div width='100%'></div><div><div style='float:left'>";
         switch ($do) {
  			case 'Modules':
- 				$this->printValue(VardefBrowser::findVardefs($modules));	
+ 				$this->printValue(VardefBrowser::findVardefs($modules));
  				break;
  			case 'Field Attributes':
  				$this->printValue(VardefBrowser::findFieldAttributes($attributes, $modules));

@@ -82,7 +82,7 @@ function additionalDetailsProspect($fields)
     }
     if (strlen($overlib_string) > 0 && !(strrpos($overlib_string, '<br>') == strlen($overlib_string) - 4)) {
         $overlib_string .= '<br>';
-    }  
+    }
     if (!empty($fields['PHONE_MOBILE'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_MOBILE_PHONE'] . '</b> <span class="phone">' . $fields['PHONE_MOBILE'] . '</span><br>';
     }
@@ -94,7 +94,7 @@ function additionalDetailsProspect($fields)
     }
 
     if (!empty($fields['EMAIL1'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_EMAIL_ADDRESS'] . '</b> ' . 
+        $overlib_string .= '<b>'. $mod_strings['LBL_EMAIL_ADDRESS'] . '</b> ' .
 								 "<a href=index.php?module=Emails&action=Compose&contact_id={$fields['ID']}&" .
 								 "parent_type=Contacts&parent_id={$fields['ID']}&to_addrs_ids={$fields['ID']}&to_addrs_names" .
 								 "={$fields['FIRST_NAME']}&nbsp;{$fields['LAST_NAME']}&to_addrs_emails={$fields['EMAIL1']}&" .
@@ -102,7 +102,7 @@ function additionalDetailsProspect($fields)
 								 "&return_module=Contacts&return_action=ListView'>{$fields['EMAIL1']}</a><br>";
     }
     if (!empty($fields['EMAIL2'])) {
-        $overlib_string .= '<b>'. $mod_strings['LBL_OTHER_EMAIL_ADDRESS'] . '</b> ' . 
+        $overlib_string .= '<b>'. $mod_strings['LBL_OTHER_EMAIL_ADDRESS'] . '</b> ' .
 								 "<a href=index.php?module=Emails&action=Compose&contact_id={$fields['ID']}&" .
 								 "parent_type=Contacts&parent_id={$fields['ID']}&to_addrs_ids={$fields['ID']}&to_addrs_names" .
 								 "={$fields['FIRST_NAME']}&nbsp;{$fields['LAST_NAME']}&to_addrs_emails={$fields['EMAIL2']}&" .
@@ -115,10 +115,10 @@ function additionalDetailsProspect($fields)
         if (strlen($fields['DESCRIPTION']) > 300) {
             $overlib_string .= '...';
         }
-    }	
+    }
 	
-    return array('fieldToAddTo' => 'FULL_NAME', 
-				 'string' => $overlib_string, 
-				 'editLink' => "index.php?action=EditView&module=Prospects&return_module=Prospects&record={$fields['ID']}", 
+    return array('fieldToAddTo' => 'FULL_NAME',
+				 'string' => $overlib_string,
+				 'editLink' => "index.php?action=EditView&module=Prospects&return_module=Prospects&record={$fields['ID']}",
 				 'viewLink' => "index.php?action=DetailView&module=Prospects&return_module=Prospects&record={$fields['ID']}");
 }

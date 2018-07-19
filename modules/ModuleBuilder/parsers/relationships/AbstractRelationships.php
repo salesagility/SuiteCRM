@@ -387,7 +387,7 @@ class AbstractRelationships
 	    		
             
             //Check for app strings
-            $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveLabels(): saving the following to {$filename}" 
+            $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveLabels(): saving the following to {$filename}"
                                       . print_r($definition, true)) ;
             if ($definition['module'] == 'application') {
                 $app_list_strings[$definition [ 'system_label' ]] = $definition [ 'display_label' ];
@@ -407,10 +407,10 @@ class AbstractRelationships
             
         	
             foreach ($sugar_config['languages'] as $lk => $lv) {
-                $installDefs [ $definition [ 'module' ] . "_$lk" ] = array( 
-            		'from' => "{$installDefPrefix}/relationships/language/{$definition [ 'module' ]}.php" , 
-            		'to_module' => $definition [ 'module' ] , 
-            		'language' => $lk 
+                $installDefs [ $definition [ 'module' ] . "_$lk" ] = array(
+            		'from' => "{$installDefPrefix}/relationships/language/{$definition [ 'module' ]}.php" ,
+            		'to_module' => $definition [ 'module' ] ,
+            		'language' => $lk
             	) ;
             }
             
@@ -521,9 +521,9 @@ class AbstractRelationships
             }
             file_put_contents($filename, $out);
             
-            $installDefs [ $moduleName ] = array( 
-            	'from' => "{$installDefPrefix}/relationships/vardefs/{$relName}_{$moduleName}.php" , 
-            	'to_module' => $moduleName 
+            $installDefs [ $moduleName ] = array(
+            	'from' => "{$installDefPrefix}/relationships/vardefs/{$relName}_{$moduleName}.php" ,
+            	'to_module' => $moduleName
             ) ;
         }
         

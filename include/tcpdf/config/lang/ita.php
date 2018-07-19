@@ -26,12 +26,12 @@ r46451 - 2009-04-23 16:57:40 -0700 (Thu, 23 Apr 2009) - jenny - tcpdf initial ch
 // File name   : ita.php
 // Begin       : 2004-03-03
 // Last Update : 2009-03-18
-// 
+//
 // Description : Language module for TCPDF
 //               (contains translated texts)
-// 
+//
 // Author: Nicola Asuni
-// 
+//
 // (c) Copyright:
 //               Nicola Asuni
 //               Tecnick.com s.r.l.
@@ -68,5 +68,5 @@ $l['a_meta_language'] = 'it';
 $l['w_page'] = 'pagina';
 
 //============================================================+
-// END OF FILE                                                 
+// END OF FILE
 //============================================================+

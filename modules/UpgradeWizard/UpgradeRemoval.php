@@ -83,7 +83,7 @@ class UpgradeRemoval
     {
         if (empty($files) || !is_array($files)) {
             return;
-        }	
+        }
 	
         require_once('include/dir_inc.php');
 	
@@ -93,7 +93,7 @@ class UpgradeRemoval
 	
         foreach ($files as $file) {
             if (file_exists($file)) {
-                $this->backup($file);   
+                $this->backup($file);
                 if (is_dir($file)) {
                     rmdir_recursive($file);
                 } else {

@@ -110,7 +110,7 @@ $subpanel_layout = array(
 			'widget_class' => 'SubPanelDetailViewLink',
 		 	'target_record_key' => 'assigned_user_id',
 			'target_module' => 'Employees',
-			'width' => '10%',			
+			'width' => '10%',
 		),
 		'assigned_user_owner' => array(
 			 'force_exists'=>true, //this will create a fake field since this field is not defined

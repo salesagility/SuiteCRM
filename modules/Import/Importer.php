@@ -527,7 +527,7 @@ class Importer
                     $focus->$key = $focus->parent_id;
                 }
             }
-        }					
+        }
         //bug# 40260 setting it true as the module in focus is involved in an import
         $focus->in_import=true;
         // call any logic needed for the module preSave

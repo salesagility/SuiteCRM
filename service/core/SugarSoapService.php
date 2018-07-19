@@ -79,7 +79,7 @@ abstract class SugarSoapService extends SugarWebService
      * @param Array $attrs - array(array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'xsd:string[]'))
      * @param String $arrayType - arrayType: namespace:name (xsd:string)
      * @access public
-     */    
+     */
     abstract public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs=array(), $arrayType='');
     
     /**

@@ -79,7 +79,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddrBeanRel = $rows;
         
         
@@ -281,7 +281,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddrBeanRel = $rows;
         
         $query = "SELECT * FROM contacts";
@@ -289,7 +289,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableContacts = $rows;
         
         $query = "SELECT * FROM email_addresses";
@@ -297,7 +297,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddresses = $rows;
         
         
@@ -509,7 +509,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddresses = $rows;
         
         $c = BeanFactory::getBean('Contacts');
@@ -978,7 +978,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddrBeanRel = $rows;
         
         $query = "SELECT * FROM contacts";
@@ -986,7 +986,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableContacts = $rows;
         
         $query = "SELECT * FROM email_addresses";
@@ -994,7 +994,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddresses = $rows;
         
         
@@ -1228,7 +1228,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddrBeanRel = $rows;
         
         $query = "SELECT * FROM contacts";
@@ -1236,7 +1236,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableContacts = $rows;
         
         $query = "SELECT * FROM email_addresses";
@@ -1244,7 +1244,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddresses = $rows;
         
         
@@ -1536,7 +1536,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableAccountsCstm = $rows;
         
         
@@ -2142,7 +2142,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $rows = [];
         while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableAccountsCstm = $rows;
         
         

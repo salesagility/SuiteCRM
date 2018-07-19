@@ -24,7 +24,7 @@
  *
  * @author SalesAgility <info@salesagility.com>
  */
-$searchFields['AOS_Quotes'] = 
+$searchFields['AOS_Quotes'] =
     array(
         'name' => array( 'query_type'=>'default'),
         'account_type'=> array('query_type'=>'default', 'options' => 'account_type_dom', 'template_var' => 'ACCOUNT_TYPE_OPTIONS'),

@@ -24,19 +24,19 @@
 
 $viewdefs ['AOR_Reports'] =
 array(
-  'EditView' => 
+  'EditView' =>
   array(
-    'templateMeta' => 
+    'templateMeta' =>
     array(
       'maxColumns' => '2',
-      'widths' => 
+      'widths' =>
       array(
-        0 => 
+        0 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
+        1 =>
         array(
           'label' => '10',
           'field' => '30',
@@ -48,18 +48,18 @@ array(
             'footerTpl' => 'modules/AOR_Reports/tpls/EditViewFooter.tpl',
         ),
     ),
-    'panels' => 
+    'panels' =>
     array(
-      'default' => 
+      'default' =>
       array(
-        0 => 
+        0 =>
         array(
           0 => 'name',
           1 => 'assigned_user_name',
         ),
-        1 => 
+        1 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'report_module',
             'studio' => 'visible',

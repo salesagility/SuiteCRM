@@ -127,9 +127,9 @@ class ViewHistory extends SugarView
         if (! empty($_REQUEST [ 'subpanel' ])) {
             $subpanel = ',"' . $_REQUEST [ 'subpanel' ] . '"' ;
         }
-        echo "<input type='button' name='close$sid' value='". translate('LBL_BTN_CLOSE')."' " . 
-                "class='button' onclick='ModuleBuilder.tabPanel.removeTab(ModuleBuilder.tabPanel.get(\"activeTab\"));' style='margin:5px;'>" . 
-             "<input type='button' name='restore$sid' value='" . translate('LBL_MB_RESTORE') . "' " .  
+        echo "<input type='button' name='close$sid' value='". translate('LBL_BTN_CLOSE')."' " .
+                "class='button' onclick='ModuleBuilder.tabPanel.removeTab(ModuleBuilder.tabPanel.get(\"activeTab\"));' style='margin:5px;'>" .
+             "<input type='button' name='restore$sid' value='" . translate('LBL_MB_RESTORE') . "' " .
                 "class='button' onclick='ModuleBuilder.history.revert(\"$this->module\",\"{$this->layout}\",\"$sid\"$subpanel);' style='margin:5px;'>" ;
         $this->history->restoreByTimestamp($sid) ;
         $view ;

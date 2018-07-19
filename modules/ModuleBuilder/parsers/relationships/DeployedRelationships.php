@@ -70,7 +70,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * The cardinality in the installed relationship is not necessarily correct for custom relationships, which currently are all built as many-to-many relationships
      * Instead we must obtain the true cardinality from a property we added to the relationship metadata when we created the relationship
      * This relationship metadata is accessed through the Table Dictionary
-     */ 
+     */
     public function load()
     {
         $relationships = $this->getDeployedRelationships() ;
@@ -246,7 +246,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     {
         $lhs = $relationship->lhs_module ;
         $rhs = $relationship->rhs_module ;
-        // if the lhs_module already has a subpanel or relate field sourced from the rhs_module, 
+        // if the lhs_module already has a subpanel or relate field sourced from the rhs_module,
     // or the rhs_module already has a subpanel or relate field sourced from the lhs_module,
     // then set "relationship_only" in the relationship
     
@@ -304,7 +304,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
 
             // now install the relationship - ModuleInstaller normally only does this as part of a package load where it installs the relationships defined in the manifest. However, we don't have a manifest or a package, so...
             
-            // If we were to chose to just use the Extension mechanism, without using the ModuleInstaller install_...() methods, we must : 
+            // If we were to chose to just use the Extension mechanism, without using the ModuleInstaller install_...() methods, we must :
             // 1)   place the information for each side of the relationship in the appropriate Ext directory for the module, which means specific $this->save...() methods for DeployedRelationships, and
             // 2)   we must also manually add the relationship into the custom/application/Ext/TableDictionary/tabledictionary.ext.php file as install_relationship doesn't handle that (install_relationships which requires the manifest however does)
             //      Relationships must be in tabledictionary.ext.php for the Admin command Rebuild Relationships to reliably work:
@@ -312,7 +312,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
             //      if the relationship is not defined in one of those four places it could be deleted during a rebuilt, or during a module installation (when RebuildRelationships.php deletes all entries in the Relationships table)
             // So instead of doing this, we use common save...() methods between DeployedRelationships and UndeployedRelationships that will produce installDefs,
             // and rather than building a full manifest file to carry them, we manually add these installDefs to the ModuleInstaller, and then
-            // individually call the appropriate ModuleInstaller->install_...() methods to take our relationship out of our staging area and expand it out to the individual module Ext areas       
+            // individually call the appropriate ModuleInstaller->install_...() methods to take our relationship out of our staging area and expand it out to the individual module Ext areas
 
             $GLOBALS [ 'mod_strings' ] = $adminModStrings ;
             require_once 'ModuleInstall/ModuleInstaller.php' ;

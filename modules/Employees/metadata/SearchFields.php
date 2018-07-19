@@ -40,10 +40,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$searchFields['Employees'] = 
+$searchFields['Employees'] =
 	array(
 		'first_name' => array( 'query_type'=>'default'),
-		'last_name'=> array('query_type'=>'default'),	
+		'last_name'=> array('query_type'=>'default'),
 		'search_name'=> array('query_type'=>'default','db_field'=>array('first_name','last_name'),'force_unifiedsearch'=>true),
         'email'=> array(
 			'query_type' => 'default',
@@ -61,7 +61,7 @@ $searchFields['Employees'] =
                 'SELECT id FROM users where phone_other LIKE',
                 'SELECT id FROM users where phone_work LIKE',
                 'SELECT id FROM users where phone_mobile LIKE',
-                'OR' =>true              
+                'OR' =>true
             ),
             'db_field' => array(
                 'id',

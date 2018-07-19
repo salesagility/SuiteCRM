@@ -1,18 +1,18 @@
 <?php
 $module_name = 'TemplateSectionLine';
-$searchdefs [$module_name] = 
+$searchdefs [$module_name] =
 array(
-  'layout' => 
+  'layout' =>
   array(
-    'basic_search' => 
+    'basic_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'grp' => 
+      'grp' =>
       array(
         'type' => 'varchar',
         'label' => 'LBL_GRP',
@@ -20,7 +20,7 @@ array(
         'default' => true,
         'name' => 'grp',
       ),
-      'description' => 
+      'description' =>
       array(
         'type' => 'text',
         'label' => 'LBL_DESCRIPTION',
@@ -29,7 +29,7 @@ array(
         'default' => true,
         'name' => 'description',
       ),
-      'current_user_only' => 
+      'current_user_only' =>
       array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
@@ -37,15 +37,15 @@ array(
         'default' => true,
         'width' => '10%',
       ),
-      'assigned_user_id' => 
+      'assigned_user_id' =>
       array(
         'name' => 'assigned_user_id',
         'label' => 'LBL_ASSIGNED_TO',
         'type' => 'enum',
-        'function' => 
+        'function' =>
         array(
           'name' => 'get_user_array',
-          'params' => 
+          'params' =>
           array(
             0 => false,
           ),
@@ -54,15 +54,15 @@ array(
         'default' => true,
       ),
     ),
-    'advanced_search' => 
+    'advanced_search' =>
     array(
-      'name' => 
+      'name' =>
       array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'grp' => 
+      'grp' =>
       array(
         'type' => 'varchar',
         'label' => 'LBL_GRP',
@@ -70,7 +70,7 @@ array(
         'default' => true,
         'name' => 'grp',
       ),
-      'description' => 
+      'description' =>
       array(
         'type' => 'text',
         'label' => 'LBL_DESCRIPTION',
@@ -79,7 +79,7 @@ array(
         'default' => true,
         'name' => 'description',
       ),
-      'current_user_only' => 
+      'current_user_only' =>
       array(
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
@@ -87,15 +87,15 @@ array(
         'width' => '10%',
         'name' => 'current_user_only',
       ),
-      'assigned_user_id' => 
+      'assigned_user_id' =>
       array(
         'name' => 'assigned_user_id',
         'label' => 'LBL_ASSIGNED_TO',
         'type' => 'enum',
-        'function' => 
+        'function' =>
         array(
           'name' => 'get_user_array',
-          'params' => 
+          'params' =>
           array(
             0 => false,
           ),
@@ -105,11 +105,11 @@ array(
       ),
     ),
   ),
-  'templateMeta' => 
+  'templateMeta' =>
   array(
     'maxColumns' => '3',
     'maxColumnsBasic' => '4',
-    'widths' => 
+    'widths' =>
     array(
       'label' => '10',
       'field' => '30',

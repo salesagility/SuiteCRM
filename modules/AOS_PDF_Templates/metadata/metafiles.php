@@ -32,7 +32,7 @@
  */
 $module_name = 'AOS_PDF_Templates';
  $metafiles[$module_name] = array(
-	'detailviewdefs'  => 	'modules/' . $module_name . '/metadata/detailviewdefs.php', 	
+	'detailviewdefs'  => 	'modules/' . $module_name . '/metadata/detailviewdefs.php',
 	'editviewdefs'    => 	'modules/' . $module_name . '/metadata/editviewdefs.php',
  	'listviewdefs'    => 	'modules/' . $module_name . '/metadata/listviewdefs.php',
  	'searchdefs'      =>    'modules/' . $module_name . '/metadata/searchdefs.php',

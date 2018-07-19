@@ -114,7 +114,7 @@ $subpanel_layout = array(
 	
 		),
 		'recurring_source'=>array(
-			'usage'=>'query_only',	
+			'usage'=>'query_only',
 		),
 					
 	),

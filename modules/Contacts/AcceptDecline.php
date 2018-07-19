@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $sugar_config, $dbconfig, $beanList, $beanFiles, $app_strings, $app_list_strings, $current_user;
 
-global $currentModule, $focus; 
+global $currentModule, $focus;
 
 if (!empty($_REQUEST['user_id'])) {
     $current_user = new User();

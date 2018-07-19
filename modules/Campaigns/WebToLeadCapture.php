@@ -87,7 +87,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     if (isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id'])) {
         $current_user = new User();
         $current_user->retrieve($_REQUEST['assigned_user_id']);
-    } 
+    }
 
     if (isset($camp_data) && $camp_data != null) {
         $leadForm = new LeadFormBase();
@@ -140,7 +140,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
             if (isset($_POST['email1']) && $_POST['email1'] != null) {
                 $lead->email1 = $_POST['email1'];
-            } 
+            }
             //in case there are old forms used webtolead_email1
             elseif (isset($_POST['webtolead_email1']) && $_POST['webtolead_email1'] != null) {
                 $lead->email1 = $_POST['webtolead_email1'];
@@ -148,7 +148,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 
             if (isset($_POST['email2']) && $_POST['email2'] != null) {
                 $lead->email2 = $_POST['email2'];
-            } 
+            }
             //in case there are old forms used webtolead_email2
             elseif (isset($_POST['webtolead_email2']) && $_POST['webtolead_email2'] != null) {
                 $lead->email2 = $_POST['webtolead_email2'];
@@ -168,12 +168,12 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             if (isset($lead->email1) && !empty($lead->email1)) {
                 $sea = new SugarEmailAddress();
                 $sea->AddUpdateEmailAddress($lead->email1, 0, 1);
-            }   
+            }
             if (isset($lead->email2) && !empty($lead->email2)) {
                 $sea = new SugarEmailAddress();
                 $sea->AddUpdateEmailAddress($lead->email2, 0, 1);
             }
-        }              
+        }
         if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
             // Get the redirect url, and make sure the query string is not too long
             $redirect_url = $_POST['redirect_url'];

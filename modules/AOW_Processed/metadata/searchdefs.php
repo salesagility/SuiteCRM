@@ -26,10 +26,10 @@
   $searchdefs['AOW_Processed'] = array(
 					'templateMeta' => array(
 							'maxColumns' => '3',
-  							'maxColumnsBasic' => '4', 
+  							'maxColumnsBasic' => '4',
                             'widths' => array('label' => '10', 'field' => '30'),
                            ),
-                    'layout' => array(  					
+                    'layout' => array(
 						'basic_search' => array(
 							'aow_workflow',
 							),

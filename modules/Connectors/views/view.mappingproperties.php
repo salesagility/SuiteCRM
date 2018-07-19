@@ -152,7 +152,7 @@ class ViewMappingProperties extends ViewList
 
         $this->ss->assign('display_data', $display_data);
         $this->ss->assign('empty_mapping', empty($display_data) ? true : false);
-        $this->ss->assign('dynamic_script', $script);  	
+        $this->ss->assign('dynamic_script', $script);
         $this->ss->assign('sources', $sources);
         $this->ss->assign('mod', $GLOBALS['mod_strings']);
         $this->ss->assign('APP', $GLOBALS['app_strings']);

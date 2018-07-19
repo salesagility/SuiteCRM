@@ -50,7 +50,7 @@ $viewdefs['EmailTemplates']['DetailView'] = array(
                                             ),
     ),
  'panels' =>array(
-  'default' => 
+  'default' =>
   array(
     
     array(
@@ -66,7 +66,7 @@ $viewdefs['EmailTemplates']['DetailView'] = array(
       
       array(
         'name' => 'description',
-        'displayParams' => 
+        'displayParams' =>
         array(
           'rows' => '1',
           'cols' => '90',
@@ -78,7 +78,7 @@ $viewdefs['EmailTemplates']['DetailView'] = array(
       
       array(
         'name' => 'tracker_url',
-        'fields' => 
+        'fields' =>
         array(
           'tracker_url',
           'url_text',
@@ -90,7 +90,7 @@ $viewdefs['EmailTemplates']['DetailView'] = array(
       
       array(
         'name' => 'subject',
-        'displayParams' => 
+        'displayParams' =>
         array(
           'rows' => '1',
           'cols' => '90',
@@ -106,7 +106,7 @@ $viewdefs['EmailTemplates']['DetailView'] = array(
       
       array(
         'name' => 'body_html',
-        'displayParams' => 
+        'displayParams' =>
         array(
           'rows' => '20',
           'cols' => '100',

@@ -70,7 +70,7 @@ class SugarSecure
                 $this->scan($path .'/' . $entry);
             }
             if (is_file($path . '/'. $entry) && substr($entry, strlen($entry) - strlen($ext), strlen($ext)) == $ext) {
-                $contents = file_get_contents($path .'/'. $entry);	
+                $contents = file_get_contents($path .'/'. $entry);
                 $this->scanContents($contents, $path .'/'. $entry);
             }
         }
@@ -161,7 +161,7 @@ class SugarSecureManager
     
     public function save()
     {
-        //reset($this->scanners);	
+        //reset($this->scanners);
         $name = 'SugarSecure'. time() . '.txt';
         while ($this->scanners  = next($this->scanners)) {
             $scanner->save($name);

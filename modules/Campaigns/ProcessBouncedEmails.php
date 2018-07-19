@@ -192,14 +192,14 @@ function campaign_process_bounced_emails(&$email, &$email_header)
                 if (!empty($row)) {
                     //do not create another campaign_log record is we already have an
                     //invalid email or send error entry for this tracker key.
-                    $query_log = "select * from campaign_log where target_tracker_key='{$row['target_tracker_key']}'"; 
+                    $query_log = "select * from campaign_log where target_tracker_key='{$row['target_tracker_key']}'";
                     $query_log .=" and (activity_type='invalid email' or activity_type='send error')";
                     $targeted = new CampaignLog();
                     $result_log=$targeted->db->query($query_log);
                     $row_log=$targeted->db->fetchByAssoc($result_log);
 
                     if (empty($row_log)) {
-                        $return_id = createBouncedCampaignLogEntry($row, $email, $email_description);	
+                        $return_id = createBouncedCampaignLogEntry($row, $email, $email_description);
                         return true;
                     } else {
                         $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier $identifier");
@@ -214,7 +214,7 @@ function campaign_process_bounced_emails(&$email, &$email_header)
                 return false;
             }
         } else {
-            $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");	
+            $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");
             return false;
         }
     } else {

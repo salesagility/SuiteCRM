@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $dictionary['SavedSearch'] = array('table' => 'saved_search',
 'fields' => array(
-  'id' => 
+  'id' =>
   array(
     'name' => 'id',
     'vname' => 'LBL_NAME',
@@ -50,21 +50,21 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'required'=>true,
     'reportable'=>false,
   ),
-  'name' => 
+  'name' =>
   array(
     'name' => 'name',
     'type' => 'varchar',
     'vname' => 'LBL_NAME',
     'len' => 150,
   ),
-  'search_module' => 
+  'search_module' =>
   array(
     'name' => 'search_module',
     'type' => 'varchar',
     'vname' => 'LBL_MODULE',
     'len' => 150,
   ),
-  'deleted' => 
+  'deleted' =>
   array(
     'name' => 'deleted',
     'vname' => 'LBL_CREATED_BY',
@@ -72,21 +72,21 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'required'=>true,
     'reportable'=>false,
   ),
-  'date_entered' => 
+  'date_entered' =>
   array(
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
     'required'=>true,
   ),
-  'date_modified' => 
+  'date_modified' =>
   array(
     'name' => 'date_modified',
     'vname' => 'LBL_DATE_MODIFIED',
     'type' => 'datetime',
     'required'=>true,
   ),
-  'assigned_user_id' => 
+  'assigned_user_id' =>
   array(
     'name' => 'assigned_user_id',
     'rname' => 'user_name',
@@ -99,7 +99,7 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'reportable'=>true,
     'massupdate' => false,
   ),
-  'assigned_user_name' => 
+  'assigned_user_name' =>
   array(
     'name' => 'assigned_user_name',
     'vname' => 'LBL_ASSIGNED_TO_NAME',
@@ -109,14 +109,14 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'source'=>'non-db',
     'table' => 'users',
   ),
-  'contents' => 
+  'contents' =>
   array(
     'name' => 'contents',
     'type' => 'text',
     'vname' => 'LBL_DESCRIPTION',
     'isnull' => true,
   ),
-  'description' => 
+  'description' =>
   array(
     'name' => 'description',
     'type' => 'text',
@@ -140,7 +140,7 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
    array('lhs_module'=> 'Users', 'lhs_table'=> 'users', 'lhs_key' => 'id',
    'rhs_module'=> 'SavedSearch', 'rhs_table'=> 'saved_search', 'rhs_key' => 'assigned_user_id',
    'relationship_type'=>'one-to-many')
-), 
+),
 
 'indices' => array(
        array('name' =>'savedsearchpk', 'type' =>'primary', 'fields'=>array('id')),

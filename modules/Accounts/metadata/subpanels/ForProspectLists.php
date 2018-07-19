@@ -60,12 +60,12 @@ $subpanel_layout = array(
         'phone_office' => array(
             'vname' => 'LBL_LIST_PHONE',
             'width' => '20%',
-        ),		
+        ),
         'email1' => array(
             'vname' => 'LBL_LIST_EMAIL',
             'widget_class' => 'SubPanelEmailLink',
             'width' => '20%',
-        ),		
+        ),
         'assigned_user_name' => array(
             'vname' => 'LBL_ASSIGNED_TO',
             'width' => '20%',

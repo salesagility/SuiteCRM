@@ -517,7 +517,7 @@ class StudioModule
 
         $spd = '';
         $spd_arr = array();
-        //iterate through modules and build subpanel array  
+        //iterate through modules and build subpanel array
         foreach ($modules_to_check as $mod_name) {
 
            /**

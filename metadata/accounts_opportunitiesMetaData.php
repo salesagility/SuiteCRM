@@ -47,10 +47,10 @@ $dictionary['accounts_opportunities'] = array( 'table' => 'accounts_opportunitie
       , array('name' =>'account_id', 'type' =>'varchar', 'len'=>'36', )
       , array('name' => 'date_modified','type' => 'datetime')
       , array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>false)
-      )                                  
+      )
       , 'indices' => array(
        array('name' =>'accounts_opportunitiespk', 'type' =>'primary', 'fields'=>array('id'))
-      , array('name' => 'idx_account_opportunity', 'type'=>'alternate_key', 'fields'=>array('account_id','opportunity_id'))      
+      , array('name' => 'idx_account_opportunity', 'type'=>'alternate_key', 'fields'=>array('account_id','opportunity_id'))
       , array('name' => 'idx_oppid_del_accid', 'type' => 'index', 'fields'=> array('opportunity_id', 'deleted', 'account_id'))
       )
       

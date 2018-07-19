@@ -53,7 +53,7 @@ $subpanel_layout = array(
 			'vname' => 'LBL_OBJECT_IMAGE',
 			'widget_class' => 'SubPanelIcon',
  		 	'width' => '2%',
-		),		
+		),
 		'name'=>array(
 			 'vname' => 'LBL_LIST_SUBJECT',
 			 'widget_class' => 'SubPanelDetailViewLink',
@@ -84,7 +84,7 @@ $subpanel_layout = array(
 			'widget_class' => 'SubPanelDetailViewLink',
 		 	'target_record_key' => 'assigned_user_id',
 			'target_module' => 'Employees',
-			'width' => '22%',			
+			'width' => '22%',
 		),
 		'edit_button'=>array(
 			'vname' => 'LBL_EDIT_BUTTON',
@@ -105,8 +105,8 @@ $subpanel_layout = array(
 		),
 		'time_due'=>array(
 			'usage'=>'query_only',
-			 'alias' => 'time_start'	
+			 'alias' => 'time_start'
 		)	,
 		
 	),
-);		
+);

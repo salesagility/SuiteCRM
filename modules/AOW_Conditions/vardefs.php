@@ -47,7 +47,7 @@ $dictionary['AOW_Condition'] = array(
     'len' => 36,
     'size' => '20',
   ),
-  'condition_order' => 
+  'condition_order' =>
   array(
     'required' => false,
     'name' => 'condition_order',
@@ -75,7 +75,7 @@ $dictionary['AOW_Condition'] = array(
     'vname' => 'LBL_MODULE_PATH',
     'isnull' => true,
   ),
-  'field' => 
+  'field' =>
   array(
     'required' => false,
     'name' => 'field',
@@ -97,7 +97,7 @@ $dictionary['AOW_Condition'] = array(
     'studio' => 'visible',
     'dependency' => false,
   ),
-  'operator' => 
+  'operator' =>
   array(
     'required' => false,
     'name' => 'operator',
@@ -139,7 +139,7 @@ $dictionary['AOW_Condition'] = array(
     'len' => '255',
     'size' => '20',
     ),
-  'value' => 
+  'value' =>
   array(
     'required' => false,
     'name' => 'value',

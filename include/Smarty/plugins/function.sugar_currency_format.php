@@ -67,7 +67,7 @@ function smarty_function_sugar_currency_format($params, &$smarty)
     // Bug #47406 : Currency field doesn't accept 0.00 as default value
     if (!isset($params['var']) || $params['var'] === '') {
         return '';
-    } 
+    }
     
     global $locale;
     if (empty($params['currency_id'])) {

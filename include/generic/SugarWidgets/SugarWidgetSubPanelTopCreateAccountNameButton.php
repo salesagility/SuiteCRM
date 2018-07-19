@@ -72,7 +72,7 @@ class SugarWidgetSubPanelTopCreateAccountNameButton extends SugarWidgetSubPanelT
         }
         if (isset($defines['focus']->billing_address_city)) {
             $additionalFormFields['primary_address_city'] = $defines['focus']->billing_address_city;
-        }						  		
+        }
         if (isset($defines['focus']->billing_address_state)) {
             $additionalFormFields['primary_address_state'] = $defines['focus']->billing_address_state;
         }

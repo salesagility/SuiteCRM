@@ -58,7 +58,7 @@ $subpanel_layout = array(
 			'name' => 'name',
 		 	'vname' => 'LBL_RESOURCE_NAME',
 			'width' => '93%',
-		),		
+		),
 		'remove_button'=>array(
 			'vname' => 'LBL_REMOVE',
 			'widget_class' => 'SubPanelRemoveButton',
@@ -70,6 +70,6 @@ $subpanel_layout = array(
 		),
 		'last_name' => array(
 		    'usage'=>'query_only',
-		)		
+		)
 	),
 );

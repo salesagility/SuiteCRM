@@ -52,13 +52,13 @@ $subpanel_layout = array(
         'recipient_name'=>array(
             'vname' => 'LBL_LIST_RECIPIENT_NAME',
             'width' => '10%',
-            'sortable'=>false,			
+            'sortable'=>false,
         ),
         'recipient_email'=>array(
             'vname' => 'LBL_LIST_RECIPIENT_EMAIL',
             'width' => '10%',
-            'sortable'=>false,			
-        ),		
+            'sortable'=>false,
+        ),
         'message_name' => array(
             'vname' => 'LBL_MARKETING_ID',
             'width' => '10%',
@@ -67,16 +67,16 @@ $subpanel_layout = array(
         'send_date_time' => array(
             'vname' => 'LBL_LIST_SEND_DATE_TIME',
             'width' => '10%',
-            'sortable'=>false,			
+            'sortable'=>false,
         ),
         'related_id'=>array(
             'usage'=>'query_only',
         ),
         'related_type'=>array(
-            'usage'=>'query_only',			
+            'usage'=>'query_only',
         ),
         'marketing_id' => array(
-            'usage'=>'query_only',			
+            'usage'=>'query_only',
         ),
     ),
-);		
+);

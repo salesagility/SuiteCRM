@@ -67,7 +67,7 @@ function get_body(&$ss, $vardef)
         $dt = explode("&", $vardef['display_default']); //+1 day&06:00pm
         $date = $dt[0];
         $defaultTime = $dt[1];
-        $hours = substr($defaultTime, 0, 2); 
+        $hours = substr($defaultTime, 0, 2);
         $minitues = substr($defaultTime, 3, 2);
         $meridiem = substr($defaultTime, 5, 2);
         if (!$show_meridiem) {

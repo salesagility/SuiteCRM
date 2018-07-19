@@ -2,7 +2,7 @@
 
 $dictionary["securitygroups_users"] = array(
   'table' => 'securitygroups_users',
-  'fields' => 
+  'fields' =>
   array(
     array(
       'name' => 'id',
@@ -29,7 +29,7 @@ $dictionary["securitygroups_users"] = array(
       'name' => 'user_id',
       'type' => 'varchar',
       'len' => 36,
-    ),  
+    ),
     array(
         'name' => 'primary_group',
         'vname' => 'LBL_PRIMARY_GROUP',
@@ -46,12 +46,12 @@ $dictionary["securitygroups_users"] = array(
         'comment' => 'Indicator for whether a group can be inherited by a record'
     ),
   ),
-  'indices' => 
+  'indices' =>
   array(
     array(
       'name' => 'securitygroups_usersspk',
       'type' => 'primary',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'id',
       ),
@@ -59,15 +59,15 @@ $dictionary["securitygroups_users"] = array(
     array(
       'name' => 'securitygroups_users_idxa',
       'type' => 'index',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'securitygroup_id',
       ),
-    ), 
+    ),
     array(
       'name' => 'securitygroups_users_idxb',
       'type' => 'index',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'user_id',
       ),
@@ -75,19 +75,19 @@ $dictionary["securitygroups_users"] = array(
     array(
       'name' => 'securitygroups_users_idxc',
       'type' => 'index',
-      'fields' => 
+      'fields' =>
       array('user_id','deleted','securitygroup_id','id'),
     ),
     array(
       'name' => 'securitygroups_users_idxd',
       'type' => 'index',
-      'fields' => 
+      'fields' =>
       array('user_id','deleted','securitygroup_id'),
     ),
   ),
-  'relationships' => 
+  'relationships' =>
   array(
-    'securitygroups_users' => 
+    'securitygroups_users' =>
     array(
       'lhs_module' => 'SecurityGroups',
       'lhs_table' => 'securitygroups',

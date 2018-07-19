@@ -85,7 +85,7 @@ $sel_fields=array();
 $temp_field_array = $focus->merge_bean->field_defs;
 $bean_data=array();
 foreach ($temp_field_array as $field_array) {
-    if (isset($field_array['merge_filter']) 
+    if (isset($field_array['merge_filter'])
 	) {
         if (strtolower($field_array['merge_filter'])=='enabled' or strtolower($field_array['merge_filter'])=='selected') {
             $col_name = $field_array['name'];

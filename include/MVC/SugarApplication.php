@@ -391,7 +391,7 @@ class SugarApplication
         $db = DBManagerFactory::getInstance();
         if (empty($row_count)) {
             $version_query = "SELECT count(*) as the_count FROM config WHERE category='info' AND name='sugar_version' AND " .
-                    $db->convert('value', 'text2char') . " = " . 
+                    $db->convert('value', 'text2char') . " = " .
                     $db->quoted($sugarDbVersion);
 
             $result = $db->query($version_query);

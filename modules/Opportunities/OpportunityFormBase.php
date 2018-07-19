@@ -207,7 +207,7 @@ EOQ;
         $json = getJSONobj();
         $prob_array = $json->encode($app_list_strings['sales_probability_dom']);
         //$prePopProb = '';
-        //if(empty($this->bean->id)) 
+        //if(empty($this->bean->id))
         $prePopProb = 'document.getElementsByName(\''.$prefix.'sales_stage\')[0].onchange();';
         $probability_script=<<<EOQ
 	<script>

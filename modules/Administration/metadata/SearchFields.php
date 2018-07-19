@@ -37,7 +37,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
- $searchFields['Administration'] = 
+ $searchFields['Administration'] =
     array(
         'user_name' => array(
             'query_type'=>'default',

@@ -46,13 +46,13 @@ global $mod_strings;
 $popupMeta = array('moduleMain' => 'Prospect',
 						'varName' => 'PROSPECT',
 						'orderBy' => 'prospects.last_name, prospects.first_name',
-						'whereClauses' => 
+						'whereClauses' =>
 							array('first_name' => 'prospects.first_name',
 									'last_name' => 'prospects.last_name'),
 						'searchInputs' =>
 							array('first_name', 'last_name'),
 						'selectDoms' =>
-							array('LIST_OPTIONS' => 
+							array('LIST_OPTIONS' =>
 											array('dom' => 'prospect_list_type_dom', 'searchInput' => 'list_type'),
 								  ),
 						'create' =>

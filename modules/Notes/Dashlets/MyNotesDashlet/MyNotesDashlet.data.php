@@ -45,20 +45,20 @@ global $current_user;
 
 $dashletData['MyNotesDashlet']['searchFields'] = array('date_entered'     => array('default' => ''),
 														'assigned_user_id' => array('type'    => 'assigned_user_name',
-																					'label'   => 'LBL_ASSIGNED_TO', 
+																					'label'   => 'LBL_ASSIGNED_TO',
 																					'default' => $current_user->name),
 																					'name' => array( 'default'=>''),
 														);
                                                                                            
 $dashletData['MyNotesDashlet']['columns'] = array(
-											  'name' => 
+											  'name' =>
 											  array(
 											    'width' => '40%',
 											    'label' => 'LBL_LIST_SUBJECT',
 											    'link' => true,
 											    'default' => true,
 											  ),
-											  'contact_name' => 
+											  'contact_name' =>
 											  array(
 											    'width' => '20%',
 											    'label' => 'LBL_LIST_CONTACT',
@@ -67,12 +67,12 @@ $dashletData['MyNotesDashlet']['columns'] = array(
 											    'module' => 'Contacts',
 											    'default' => true,
 											    'ACLTag' => 'CONTACT',
-											    'related_fields' => 
+											    'related_fields' =>
 											    array(
 											      0 => 'contact_id',
 											    ),
 											  ),
-											  'parent_name' => 
+											  'parent_name' =>
 											  array(
 											    'width' => '20%',
 											    'label' => 'LBL_LIST_RELATED_TO',
@@ -82,19 +82,19 @@ $dashletData['MyNotesDashlet']['columns'] = array(
 											    'default' => true,
 											    'sortable' => false,
 											    'ACLTag' => 'PARENT',
-											    'related_fields' => 
+											    'related_fields' =>
 											    array(
 											      0 => 'parent_id',
 											      1 => 'parent_type',
 											    ),
-											  ),  
-											  'filename' => 
+											  ),
+											  'filename' =>
 											  array(
 											    'width' => '20%',
 											    'label' => 'LBL_LIST_FILENAME',
 											    'default' => true,
 											    'type' => 'file',
-											    'related_fields' => 
+											    'related_fields' =>
 											    array(
 											      0 => 'file_url',
 											      1 => 'id',
@@ -106,21 +106,21 @@ $dashletData['MyNotesDashlet']['columns'] = array(
 											      'module' => 'Notes',
 											    ),
 											  ),
-											  'created_by_name' => 
+											  'created_by_name' =>
 											  array(
 											    'type' => 'relate',
 											    'label' => 'LBL_CREATED_BY',
 											    'width' => '10%',
 											    'default' => true,
 											  ),
-											  'date_entered' => 
+											  'date_entered' =>
 											  array(
 											    'type' => 'datetime',
 											    'label' => 'LBL_DATE_ENTERED',
 											    'width' => '10%',
 											    'default' => false,
 											  ),
-											  'date_modified' => 
+											  'date_modified' =>
 											  array(
 											    'width' => '20%',
 											    'label' => 'LBL_DATE_MODIFIED',

@@ -55,7 +55,7 @@ $subpanel_layout = array(
             'name'=>'phone_work',
             'vname' => 'LBL_LIST_PHONE',
             'width' => '10%',
-        ),      
+        ),
         'edit_button'=>array(
             'widget_class' => 'SubPanelEditSecurityGroupUserButton',
             'securitygroup_noninherit_id'=>'securitygroup_noninherit_id',

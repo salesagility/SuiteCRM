@@ -344,7 +344,7 @@ class ImportFile extends ImportDataSource
             }
         }
         
-        // If we couldn't detect the charset, set it to default export/import charset 
+        // If we couldn't detect the charset, set it to default export/import charset
         if (empty($charset_for_import)) {
             $charset_for_import = $locale->getExportCharset();
         }

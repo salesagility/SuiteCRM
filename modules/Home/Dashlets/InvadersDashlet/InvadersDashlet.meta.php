@@ -45,8 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $app_strings, $current_language;
 
-$dashletMeta['InvadersDashlet'] = array('title'       => 'LBL_TITLE', // array index in language pack 
-                                        'description' => 'LBL_DESCRIPTION', // array index in language pack 
+$dashletMeta['InvadersDashlet'] = array('title'       => 'LBL_TITLE', // array index in language pack
+                                        'description' => 'LBL_DESCRIPTION', // array index in language pack
                                         'icon'        => 'invade',
                                         'category'    => 'Tools',
                                         );

@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-$dictionary['queues_beans'] = array('table' => 'queues_beans', 
+$dictionary['queues_beans'] = array('table' => 'queues_beans',
 	'fields' => array(
 		'id' => array(
 			'name' => 'id',
@@ -102,11 +102,11 @@ $dictionary['queues_beans'] = array('table' => 'queues_beans',
 			'rhs_table'						=> 'emails',
 			'rhs_key' 						=> 'id',
 			'relationship_type' 			=> 'many-to-many',
-			'join_table'					=> 'queues_beans', 
-			'join_key_rhs'					=> 'object_id', 
+			'join_table'					=> 'queues_beans',
+			'join_key_rhs'					=> 'object_id',
 			'join_key_lhs'					=> 'queue_id',
 			'relationship_role_column'		=> 'module_dir',
-			'relationship_role_column_value'=> 'Emails'		
+			'relationship_role_column_value'=> 'Emails'
 		),
 	), /* end relationship definitions */
 	'indices' => array(

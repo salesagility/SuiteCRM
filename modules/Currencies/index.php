@@ -182,7 +182,7 @@ EOQ;
     $sugar_smarty->assign('SYMBOL', $focus->symbol);
     $sugar_smarty->assign('STATUS_OPTIONS', get_select_options_with_id($mod_strings['currency_status_dom'], $focus->status));
 	
-    //if (empty($focus->list_order)) $xtpl->assign('LIST_ORDER', count($focus->get_manufacturers(false,'All'))+1); 
+    //if (empty($focus->list_order)) $xtpl->assign('LIST_ORDER', count($focus->get_manufacturers(false,'All'))+1);
     //else $xtpl->assign('LIST_ORDER', $focus->list_order);
 	
     $sugar_smarty->display("modules/Currencies/EditView.tpl");

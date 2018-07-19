@@ -55,7 +55,7 @@ global $app_list_strings;
 global $current_language, $current_user;
 $current_module_strings = return_module_language($current_language, 'ProjectTask');
 
-$today = $timedate->nowDbDate(); 
+$today = $timedate->nowDbDate();
 $today = $timedate->handle_offset($today, $timedate->dbDayFormat, false);
 
 $ListView = new ListView();

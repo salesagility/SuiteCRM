@@ -620,8 +620,8 @@ class Meeting extends SugarBean
         }
 
         // cn: bug 9494 - passing a contact breaks this call
-        $notifyUser = ($meetingCurrentNotifyUserObjectName == 'User') ? 
-                        $meeting->current_notify_user : 
+        $notifyUser = ($meetingCurrentNotifyUserObjectName == 'User') ?
+                        $meeting->current_notify_user :
                         $current_user;
                 
         // cn: bug 8078 - fixed call to $timedate

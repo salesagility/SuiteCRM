@@ -62,7 +62,7 @@ if (!empty($_REQUEST['cron'])) {
     }
     echo '<input type="hidden" name="display_module" value="'.htmlspecialchars($_REQUEST['display_module']).'">'."\n";
     echo '</form>'."\n";
-    echo '<script language="javascript" type="text/javascript">document.redirect.submit();</script>'."\n"; 
+    echo '<script language="javascript" type="text/javascript">document.redirect.submit();</script>'."\n";
     echo '</body></html>';
   
     exit;

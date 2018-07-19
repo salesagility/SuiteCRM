@@ -143,7 +143,7 @@
                  $ImageMapColor = $this->pChartObject->toHTMLColor($BoxUpR, $BoxUpG, $BoxUpB);
              } else {
                  $ImageMapColor = $this->pChartObject->toHTMLColor($BoxDownR, $BoxDownG, $BoxDownB);
-             } 
+             }
 
              if ($Data["Orientation"] == SCALE_POS_LEFTRIGHT) {
                  if ($YZero > $this->pChartObject->GraphAreaY2-1) {

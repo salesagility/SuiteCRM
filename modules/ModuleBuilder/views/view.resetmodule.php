@@ -82,10 +82,10 @@ class ViewResetmodule extends SugarView
 			array("name" => "extensions", "label" => translate("LBL_CLEAR_EXTENSIONS")),
         ));
         
-        $ajax->addSection( 
+        $ajax->addSection(
             'center',
             "Reset ". translate($moduleName),
-            $smarty->fetch('modules/ModuleBuilder/tpls/resetModule.tpl') //"This works now" 
+            $smarty->fetch('modules/ModuleBuilder/tpls/resetModule.tpl') //"This works now"
         ) ;
         
         echo $ajax->getJavascript() ;
@@ -113,7 +113,7 @@ class ViewResetmodule extends SugarView
 			
         if (!empty($_REQUEST['extensions'])) {
             $out .= $this->removeCustomExtensions();
-        }	
+        }
 			
         
         $out .= "Complete!";
@@ -125,7 +125,7 @@ class ViewResetmodule extends SugarView
         $ajax->addCrumb("Reset ". translate($this->module), '') ;
         
         
-        $ajax->addSection( 
+        $ajax->addSection(
             'center',
             "Reset ". translate($this->module),
             $out

@@ -98,7 +98,7 @@ class ModuleBuilderViewWizard extends SugarView
         echo $this->ajax->getJavascript() ;
     }
 
-    public function processStudio( 
+    public function processStudio(
         $ajax
         ) {
         $this->ajax->addCrumb(translate('LBL_STUDIO'), 'ModuleBuilder.main("studio")') ;
@@ -172,16 +172,16 @@ class ModuleBuilderViewWizard extends SugarView
                     $this->help = 'moduleHelp' ;
                     global $current_user;
                     if (is_admin($current_user)) {
-                        $this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" " 
-                        . "onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=resetmodule&view_module=$this->editModule');\" value=\"" 
+                        $this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" "
+                        . "onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=resetmodule&view_module=$this->editModule');\" value=\""
                         . translate('LBL_RESET_MODULE') . '">' ;
                     }
             }
         }
     }
 
-    public function processMB( 
-        $ajax 
+    public function processMB(
+        $ajax
         ) {
         if (! isset($_REQUEST [ 'view_package' ])) {
             sugar_die("no ModuleBuilder package set") ;
@@ -262,46 +262,46 @@ class ModuleBuilderViewWizard extends SugarView
 
     public function generateMBViewButtons()
     {
-        $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_EDITVIEW' ] ] = 
-          array( 
-              'action' => "module=ModuleBuilder&MB=true&action=editLayout&view=".MB_EDITVIEW."&view_module={$this->editModule}&view_package={$this->package}" , 
-              'imageTitle' => 'EditView', 
+        $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_EDITVIEW' ] ] =
+          array(
+              'action' => "module=ModuleBuilder&MB=true&action=editLayout&view=".MB_EDITVIEW."&view_module={$this->editModule}&view_package={$this->package}" ,
+              'imageTitle' => 'EditView',
               'help'=>'viewBtnEditView'
           ) ;
-        $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_DETAILVIEW' ] ] = 
-          array( 
-              'action' => "module=ModuleBuilder&MB=true&action=editLayout&view=".MB_DETAILVIEW."&view_module={$this->editModule}&view_package={$this->package}" , 
-              'imageTitle' => 'DetailView', 
-              'help'=>'viewBtnListView'  
+        $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_DETAILVIEW' ] ] =
+          array(
+              'action' => "module=ModuleBuilder&MB=true&action=editLayout&view=".MB_DETAILVIEW."&view_module={$this->editModule}&view_package={$this->package}" ,
+              'imageTitle' => 'DetailView',
+              'help'=>'viewBtnListView'
           ) ;
-        $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_LISTVIEW' ] ] = 
-          array( 
-              'action' => "module=ModuleBuilder&MB=true&action=editLayout&view=".MB_LISTVIEW."&view_module={$this->editModule}&view_package={$this->package}" , 
-              'imageTitle' => 'ListView', 
-              'help'=>'viewBtnListView' 
+        $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_LISTVIEW' ] ] =
+          array(
+              'action' => "module=ModuleBuilder&MB=true&action=editLayout&view=".MB_LISTVIEW."&view_module={$this->editModule}&view_package={$this->package}" ,
+              'imageTitle' => 'ListView',
+              'help'=>'viewBtnListView'
           ) ;
-        $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_QUICKCREATE' ] ] = 
-          array( 
-              'action' => "module=ModuleBuilder&MB=true&action=editLayout&view=".MB_QUICKCREATE."&view_module={$this->editModule}&view_package={$this->package}" , 
-              'imageTitle' => 'QuickCreate', 
-              'help'=>'viewBtnQuickCreate' 
+        $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_QUICKCREATE' ] ] =
+          array(
+              'action' => "module=ModuleBuilder&MB=true&action=editLayout&view=".MB_QUICKCREATE."&view_module={$this->editModule}&view_package={$this->package}" ,
+              'imageTitle' => 'QuickCreate',
+              'help'=>'viewBtnQuickCreate'
           ) ;
         $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_SEARCH_FORMS' ] ] =
           array(
-              'action' => "module=ModuleBuilder&MB=true&action=wizard&view=search&view_module={$this->editModule}&view_package={$this->package}" , 
+              'action' => "module=ModuleBuilder&MB=true&action=wizard&view=search&view_module={$this->editModule}&view_package={$this->package}" ,
               'imageTitle' => 'BasicSearch' ,
               'help'=> 'searchBtn'
           ) ;
-        $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_DASHLET' ] ] = 
-          array( 
-              'action' => "module=ModuleBuilder&MB=true&action=wizard&view=dashlet&view_module={$this->editModule}&view_package={$this->package}" , 
-              'imageTitle' => 'Dashlet', 
-              'help'=>'viewBtnDashlet' 
+        $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_DASHLET' ] ] =
+          array(
+              'action' => "module=ModuleBuilder&MB=true&action=wizard&view=dashlet&view_module={$this->editModule}&view_package={$this->package}" ,
+              'imageTitle' => 'Dashlet',
+              'help'=>'viewBtnDashlet'
           ) ;
-        $this->buttons [ $GLOBALS [ 'mod_strings' ] ['LBL_POPUP'] ] = 
-        array( 
-            'imageTitle' => 'Popup',  
-            'action' => "module=ModuleBuilder&MB=true&action=wizard&view=popup&view_module={$this->editModule}&view_package={$this->package}", 
+        $this->buttons [ $GLOBALS [ 'mod_strings' ] ['LBL_POPUP'] ] =
+        array(
+            'imageTitle' => 'Popup',
+            'action' => "module=ModuleBuilder&MB=true&action=wizard&view=popup&view_module={$this->editModule}&view_package={$this->package}",
             'help'=>'PopupListViewBtn'
         );
     }

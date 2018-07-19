@@ -81,22 +81,22 @@ function additionalDetailsEmail($fields)
         }
     }
 	
-    $editLink = "index.php?action=EditView&module=Emails&record={$fields['ID']}"; 
-    $viewLink = "index.php?action=DetailView&module=Emails&record={$fields['ID']}";	
+    $editLink = "index.php?action=EditView&module=Emails&record={$fields['ID']}";
+    $viewLink = "index.php?action=DetailView&module=Emails&record={$fields['ID']}";
 
     $return_module = empty($_REQUEST['module']) ? 'Meetings' : $_REQUEST['module'];
     $return_action = empty($_REQUEST['action']) ? 'ListView' : $_REQUEST['action'];
     $type = empty($_REQUEST['type']) ? '' : $_REQUEST['type'];
     $user_id = empty($_REQUEST['assigned_user_id']) ? '' : $_REQUEST['assigned_user_id'];
 	
-    $additional_params = "&return_module=$return_module&return_action=$return_action&type=$type&assigned_user_id=$user_id"; 
+    $additional_params = "&return_module=$return_module&return_action=$return_action&type=$type&assigned_user_id=$user_id";
 	
     $editLink .= $additional_params;
     $viewLink .= $additional_params;
 	
-    return array('fieldToAddTo' => 'NAME', 
-				 'string' => $overlib_string, 
-				 'editLink' => $editLink, 
+    return array('fieldToAddTo' => 'NAME',
+				 'string' => $overlib_string,
+				 'editLink' => $editLink,
 				 'viewLink' => $viewLink);
 }
 

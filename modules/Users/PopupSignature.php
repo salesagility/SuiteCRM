@@ -64,7 +64,7 @@ if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
 $GLOBALS['log']->info('EmailTemplate detail view');
 
 ///////////////////////////////////////////////////////////////////////////////
-////	OUTPUT 
+////	OUTPUT
 echo insert_popup_header();
 echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_SIGNATURE'].' '.$focus->name), true);
 

@@ -47,6 +47,6 @@ function smarty_function_sugar_getwebpath($params, &$smarty)
 {
     if (!isset($params['file'])) {
         $smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'file');
-    } 
+    }
     return getWebPath($params['file']);
 }

@@ -49,12 +49,12 @@ $dictionary['meetings_leads'] = array( 'table' => 'meetings_leads'
       , array('name' =>'accept_status', 'type' =>'varchar', 'len'=>'25', 'default'=>'none')
       , array('name' => 'date_modified','type' => 'datetime')
       , array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>false)
-                                                      )     
+                                                      )
                                   , 'indices' => array(
        array('name' =>'meetings_leadspk', 'type' =>'primary', 'fields'=>array('id'))
       , array('name' =>'idx_lead_meeting_meeting', 'type' =>'index', 'fields'=>array('meeting_id'))
       , array('name' =>'idx_lead_meeting_lead', 'type' =>'index', 'fields'=>array('lead_id'))
-      , array('name' => 'idx_meeting_lead', 'type'=>'alternate_key', 'fields'=>array('meeting_id','lead_id'))            
+      , array('name' => 'idx_meeting_lead', 'type'=>'alternate_key', 'fields'=>array('meeting_id','lead_id'))
                                                       )
 
       , 'relationships' => array('meetings_leads' => array('lhs_module'=> 'Meetings', 'lhs_table'=> 'meetings', 'lhs_key' => 'id',

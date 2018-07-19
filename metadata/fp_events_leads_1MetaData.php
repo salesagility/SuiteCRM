@@ -3,9 +3,9 @@
 $dictionary["fp_events_leads_1"] = array(
   'true_relationship_type' => 'many-to-many',
   'from_studio' => true,
-  'relationships' => 
+  'relationships' =>
   array(
-    'fp_events_leads_1' => 
+    'fp_events_leads_1' =>
     array(
       'lhs_module' => 'FP_events',
       'lhs_table' => 'fp_events',
@@ -20,20 +20,20 @@ $dictionary["fp_events_leads_1"] = array(
     ),
   ),
   'table' => 'fp_events_leads_1_c',
-  'fields' => 
+  'fields' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
-    2 => 
+    2 =>
     array(
       'name' => 'deleted',
       'type' => 'bool',
@@ -41,13 +41,13 @@ $dictionary["fp_events_leads_1"] = array(
       'default' => '0',
       'required' => true,
     ),
-    3 => 
+    3 =>
     array(
       'name' => 'fp_events_leads_1fp_events_ida',
       'type' => 'varchar',
       'len' => 36,
     ),
-    4 => 
+    4 =>
     array(
       'name' => 'fp_events_leads_1leads_idb',
       'type' => 'varchar',
@@ -67,7 +67,7 @@ $dictionary["fp_events_leads_1"] = array(
       'len'=>'25',
       'default'=>'No Response',
     ),
-    7 => 
+    7 =>
     array(
       'name' => 'email_responded',
       'type' => 'int',
@@ -75,22 +75,22 @@ $dictionary["fp_events_leads_1"] = array(
       'default' => '0',
    ),
   ),
-  'indices' => 
+  'indices' =>
   array(
-    0 => 
+    0 =>
     array(
       'name' => 'fp_events_leads_1spk',
       'type' => 'primary',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'id',
       ),
     ),
-    1 => 
+    1 =>
     array(
       'name' => 'fp_events_leads_1_alt',
       'type' => 'alternate_key',
-      'fields' => 
+      'fields' =>
       array(
         0 => 'fp_events_leads_1fp_events_ida',
         1 => 'fp_events_leads_1leads_idb',

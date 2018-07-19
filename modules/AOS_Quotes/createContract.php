@@ -123,6 +123,6 @@
 	if (!empty($key)) {
 	    $quote->load_relationship($key);
 	    $quote->$key->add($contract->id);
-	} 
+	}
 	ob_clean();
 	header('Location: index.php?module=AOS_Contracts&action=EditView&record='.$contract->id);

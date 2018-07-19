@@ -68,7 +68,7 @@ function deleteAttachmentCallBack(text)
                         array('name'=>'name', 'displayParams'=>array('size'=>60)),''
                     ),
 
-					array( 
+					array(
 						'filename',
 
 	    			),

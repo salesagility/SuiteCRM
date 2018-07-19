@@ -578,7 +578,7 @@ class ACLAction extends SugarBean
                     $names[$act_name] = translate($ACLActions[$type_name]['actions'][$act_name]['label'], 'ACLActions');
                     $categories[$cat_name][$type_name][$act_name]['accessColor'] = ACLAction::AccessColor(isset($action['aclaccess']) ? $action['aclaccess'] : null);
                     if ($type_name== 'module') {
-                        if ($act_name != 'aclaccess' && 
+                        if ($act_name != 'aclaccess' &&
                                 (isset($categories[$cat_name]['module']['access']['aclaccess']) ? $categories[$cat_name]['module']['access']['aclaccess'] : null) == ACL_ALLOW_DISABLED) {
                             $categories[$cat_name][$type_name][$act_name]['accessColor'] = 'darkgray';
                             $disabled[] = $cat_name;

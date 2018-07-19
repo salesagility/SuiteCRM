@@ -69,7 +69,7 @@ $subpanel_layout = array(
  	    	'name' => 'template_types',
 	 	    'vname' => 'LBL_LIST_TEMPLATE_TYPE',
 		    'width' => '20%',
-		),		
+		),
        'latest_revision'=>array(
  	    	'name' => 'latest_revision',
 	 	    'vname' => 'LBL_LATEST_REVISION',
@@ -87,7 +87,7 @@ $subpanel_layout = array(
 			'widget_class' => 'SubPanelRemoveButton',
 		 	'module' => 'Documents',
 			'width' => '5%',
-		),		
+		),
 		'document_revision_id'=>array(
 			'usage'=>'query_only'
 		),

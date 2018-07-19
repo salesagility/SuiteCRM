@@ -80,7 +80,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
         $relatableModules = parent::findRelatableModules($includeActivitiesSubmodules) ;
         
         // now add in the undeployed modules - those in custom/modulebuilder
-        // note that if a module exists in both deployed and undeployed forms, the subpanels from the undeployed form are used...  
+        // note that if a module exists in both deployed and undeployed forms, the subpanels from the undeployed form are used...
 
         require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php' ;
         $mb = new ModuleBuilder() ;
@@ -373,9 +373,9 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
                     $parsedName = self::parseDeployedModuleName($deployedModuleName) ;
                     if (! isset($parsedName [ 'packageName' ])) {
                         $fieldsToAdd [$parsedName [ 'moduleName' ]] = $fieldName;
-                    } 
+                    }
                     //Bug 22348: We should add in the field for custom modules not in this package, if they have been deployed.
-                    elseif ($parsedName [ 'packageName' ] != $this->packageName 
+                    elseif ($parsedName [ 'packageName' ] != $this->packageName
                             && isset($GLOBALS [ 'beanList' ] [ $deployedModuleName ])) {
                         $fieldsToAdd [$deployedModuleName] = $fieldName;
                     }

@@ -66,7 +66,7 @@ error_reporting(E_ERROR);
 set_time_limit(0);
 set_upgrade_progress('layouts', 'in_progress');
 
-//If the user has seleceted which modules they want to merge, perform the filtering and 
+//If the user has seleceted which modules they want to merge, perform the filtering and
 //execute the merge.
 if (isset($_POST['layoutSelectedModules'])) {
     logThis('Layout Commits examining modules to revert');
@@ -226,7 +226,7 @@ function formatLayoutMergeDataForDisplay($layoutMergeData)
             $layouts[] = array('path' => $layoutPath, 'label' => $label);
         }
 
-        $results[$k]['layouts'] = $layouts; 
+        $results[$k]['layouts'] = $layouts;
         $results[$k]['moduleName'] = $app_list_strings['moduleList'][$k];
     }
 

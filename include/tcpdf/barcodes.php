@@ -30,24 +30,24 @@ r46451 - 2009-04-23 16:57:40 -0700 (Thu, 23 Apr 2009) - jenny - tcpdf initial ch
 // License     : GNU LGPL (http://www.gnu.org/copyleft/lesser.html)
 // 	----------------------------------------------------------------------------
 //  Copyright (C) 2008-2009 Nicola Asuni - Tecnick.com S.r.l.
-// 	
+//
 // 	This program is free software: you can redistribute it and/or modify
 // 	it under the terms of the GNU Lesser General Public License as published by
 // 	the Free Software Foundation, either version 2.1 of the License, or
 // 	(at your option) any later version.
-// 	
+//
 // 	This program is distributed in the hope that it will be useful,
 // 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 // 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // 	GNU Lesser General Public License for more details.
-// 	
+//
 // 	You should have received a copy of the GNU Lesser General Public License
 // 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// 	
+//
 // 	See LICENSE.TXT file for more information.
 //  ----------------------------------------------------------------------------
 //
-// Description : PHP class to creates array representations for 
+// Description : PHP class to creates array representations for
 //               common 1D barcodes to be used with TCPDF.
 //
 // Author: Nicola Asuni
@@ -550,7 +550,7 @@ class TCPDFBarcode
         }
         $bararray['bcode'][$k] = array('t' => true, 'w' => 1, 'h' => 1, 'p' => 0);
         $bararray['maxw'] += 1;
-        ++$k;		
+        ++$k;
         return $bararray;
     }
 	
@@ -568,7 +568,7 @@ class TCPDFBarcode
 			'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
 			'W', 'X', 'Y', 'Z', '-', '.', ' ', '$', '/', '+', '%');
         // translate special characters
-        $code = strtr($code, chr(128).chr(129).chr(130).chr(131), '$/+%');	
+        $code = strtr($code, chr(128).chr(129).chr(130).chr(131), '$/+%');
         $len = strlen($code);
         // calculate check digit C
         $p = 1;
@@ -678,7 +678,7 @@ class TCPDFBarcode
                 return false;
             }
             $seq .= $chr[$digit];
-        }		
+        }
         $seq .= '1001'; // right guard
         $bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
         return $this->binseq_to_array($seq, $bararray);
@@ -722,7 +722,7 @@ class TCPDFBarcode
                 return false;
             }
             $seq .= $chr[$digit];
-        }		
+        }
         $seq .= '1101011';
         $bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => array());
         return $this->binseq_to_array($seq, $bararray);
@@ -1278,7 +1278,7 @@ class TCPDFBarcode
 			'7'=>array('A','B','A','B','A'),
 			'8'=>array('A','B','A','A','B'),
 			'9'=>array('A','A','B','A','B')
-		);	
+		);
         $p = $parities[$len][$r];
         $seq = '1011'; // left guard bar
         $seq .= $codes[$p[0]][$code{0}];
@@ -1416,7 +1416,7 @@ class TCPDFBarcode
 			'W' => array(1,2,4,3),
 			'X' => array(2,1,3,4),
 			'Y' => array(2,1,4,3),
-			'Z' => array(2,2,3,3)		
+			'Z' => array(2,2,3,3)
 		);
         $code = strtoupper($code);
         $len = strlen($code);
@@ -1622,7 +1622,7 @@ class TCPDFBarcode
         $check %= 11;
         if ($check == 10) {
             $check = '-';
-        } 
+        }
         $code .= $check;
         if ($len > 10) {
             // calculate check digit K
@@ -1925,7 +1925,7 @@ class TCPDFBarcode
             $bitval = bcmul($bitval, 16);
         }
         return $dec;
-    }	
+    }
 	
     /**
      * Intelligent Mail Barcode calculation of Frame Check Sequence
@@ -2022,5 +2022,5 @@ class TCPDFBarcode
 } // end of class
 
 //============================================================+
-// END OF FILE                                                 
+// END OF FILE
 //============================================================+

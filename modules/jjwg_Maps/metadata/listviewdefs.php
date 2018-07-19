@@ -2,7 +2,7 @@
 
 $module_name = 'jjwg_Maps';
 
-$listViewDefs[$module_name] = 
+$listViewDefs[$module_name] =
 array(
   'MAP_ACTION' =>
   array(
@@ -12,7 +12,7 @@ array(
     'sortable' => false,
     'link' => true,
     'default' => true,
-    'related_fields' => 
+    'related_fields' =>
     array(
       0 => 'parent_type',
       1 => 'module_type',
@@ -21,14 +21,14 @@ array(
     'customCode' => '<a href="index.php?module='.$module_name.'&action=map_display'.
             '&relate_module={$PARENT_TYPE}&display_module={$MODULE_TYPE}&record={$ID}" >'.$GLOBALS['app_strings']['LBL_MAP'].' {$MODULE_TYPE}</a>',
   ),
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '25%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
-  'PARENT_NAME' => 
+  'PARENT_NAME' =>
   array(
     'type' => 'parent',
     'studio' => 'visible',
@@ -38,7 +38,7 @@ array(
     'ACLTag' => 'PARENT',
     'dynamic_module' => 'PARENT_TYPE',
     'id' => 'PARENT_ID',
-    'related_fields' => 
+    'related_fields' =>
     array(
       0 => 'parent_id',
       1 => 'parent_type',
@@ -46,7 +46,7 @@ array(
     'width' => '25%',
     'default' => true,
   ),
-  'MODULE_TYPE' => 
+  'MODULE_TYPE' =>
   array(
     'type' => 'enum',
     'default' => true,
@@ -55,14 +55,14 @@ array(
     'sortable' => false,
     'width' => '10%',
   ),
-  'DISTANCE' => 
+  'DISTANCE' =>
   array(
     'type' => 'float',
     'label' => 'LBL_DISTANCE',
     'width' => '10%',
     'default' => true,
   ),
-  'UNIT_TYPE' => 
+  'UNIT_TYPE' =>
   array(
     'type' => 'enum',
     'default' => true,
@@ -71,20 +71,20 @@ array(
     'sortable' => false,
     'width' => '10%',
   ),
-  'DATE_ENTERED' => 
+  'DATE_ENTERED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'width' => '9%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'default' => true,
   ),
-  'DESCRIPTION' => 
+  'DESCRIPTION' =>
   array(
     'type' => 'text',
     'label' => 'LBL_DESCRIPTION',
@@ -92,7 +92,7 @@ array(
     'width' => '10%',
     'default' => false,
   ),
-  'CREATED_BY_NAME' => 
+  'CREATED_BY_NAME' =>
   array(
     'type' => 'relate',
     'link' => 'created_by_link',
@@ -100,7 +100,7 @@ array(
     'width' => '10%',
     'default' => false,
   ),
-  'DATE_MODIFIED' => 
+  'DATE_MODIFIED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',

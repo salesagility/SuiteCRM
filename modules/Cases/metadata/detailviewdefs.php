@@ -37,15 +37,15 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$viewdefs ['Cases'] = 
+$viewdefs ['Cases'] =
 array(
-  'DetailView' => 
+  'DetailView' =>
   array(
-    'templateMeta' => 
+    'templateMeta' =>
     array(
-      'form' => 
+      'form' =>
       array(
-        'buttons' => 
+        'buttons' =>
         array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
@@ -54,50 +54,50 @@ array(
         ),
       ),
       'maxColumns' => '2',
-      'widths' => 
+      'widths' =>
       array(
-        0 => 
+        0 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
+        1 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => true,
-      'tabDefs' => 
+      'tabDefs' =>
       array(
-        'LBL_CASE_INFORMATION' => 
+        'LBL_CASE_INFORMATION' =>
         array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
-        'LBL_AOP_CASE_UPDATES' => 
+        'LBL_AOP_CASE_UPDATES' =>
         array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
-    'panels' => 
+    'panels' =>
     array(
-      'lbl_case_information' => 
+      'lbl_case_information' =>
       array(
-        0 => 
+        0 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'case_number',
             'label' => 'LBL_CASE_NUMBER',
           ),
           1 => 'priority',
         ),
-        1 => 
+        1 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'state',
             'comment' => 'The state of the case (i.e. open/closed)',
@@ -105,43 +105,43 @@ array(
           ),
           1 => 'status',
         ),
-        2 => 
+        2 =>
         array(
           0 => 'type',
           1 => 'account_name',
         ),
-        3 => 
+        3 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'name',
             'label' => 'LBL_SUBJECT',
           ),
         ),
-        4 => 
+        4 =>
         array(
           0 => 'description',
         ),
-        5 => 
+        5 =>
         array(
           0 => 'resolution',
         ),
-        6 => 
+        6 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO',
           ),
         ),
-        7 => 
+        7 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'date_entered',
             'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'date_modified',
             'label' => 'LBL_DATE_MODIFIED',
@@ -149,11 +149,11 @@ array(
           ),
         ),
       ),
-      'LBL_AOP_CASE_UPDATES' => 
+      'LBL_AOP_CASE_UPDATES' =>
       array(
-        0 => 
+        0 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'aop_case_updates_threaded',
             'studio' => 'visible',

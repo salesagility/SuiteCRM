@@ -44,16 +44,16 @@ $dictionary['linked_documents'] = array( 'table' => 'linked_documents'
    , 'fields' => array(
         array('name' =>'id', 'type' =>'varchar', 'len'=>'36')
       , array('name' =>'parent_id', 'type' =>'varchar', 'len'=>'36')
-      , array('name' =>'parent_type', 'type' =>'varchar', 'len'=>'25')      
+      , array('name' =>'parent_type', 'type' =>'varchar', 'len'=>'25')
       , array('name' =>'document_id', 'type' =>'varchar', 'len'=>'36')
       , array('name' =>'document_revision_id', 'type' =>'varchar', 'len'=>'36')
       , array('name' =>'date_modified','type' => 'datetime')
       , array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>false)
-   )   
+   )
    , 'indices' => array(
         array('name' =>'linked_documentspk', 'type' =>'primary', 'fields'=>array('id')),
-        array(	'name'			=> 'idx_parent_document', 
-                'type'			=> 'alternate_key', 
+        array(	'name'			=> 'idx_parent_document',
+                'type'			=> 'alternate_key',
                 'fields'		=> array('parent_type','parent_id','document_id'),
         ),
    )

@@ -110,7 +110,7 @@ $subpanel_layout = array(
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'assigned_user_id',
             'target_module' => 'Employees',
-            'width' => '10%',			
+            'width' => '10%',
         ),
         'edit_button' => array(
             'vname' => 'LBL_EDIT_BUTTON',

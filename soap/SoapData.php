@@ -78,16 +78,16 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     $error = new SoapError();
     $output_list = array();
     if (!validate_authenticated($session)) {
-        $error->set_error('invalid_login');	
+        $error->set_error('invalid_login');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     if (empty($beanList[$module_name]) || empty($beanList[$related_module])) {
-        $error->set_error('no_module');	
+        $error->set_error('no_module');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     global $current_user;
     if (!check_modules_access($current_user, $module_name, 'read') || !check_modules_access($current_user, $related_module, 'read')) {
-        $error->set_error('no_access');	
+        $error->set_error('no_access');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     // Cast to integer
@@ -127,7 +127,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     }
     if ($related_module == 'Meetings' || $related_module == 'Calls') {
         $query = string_format($query, array('m1'));
-    }	
+    }
     $results = retrieve_modified_relationships($module_name, $related_module, $query, $deleted, $offset, $max_results, $select_fields, $relationship_name);
 
     $list = $results['result'];
@@ -166,16 +166,16 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
     $field_list = array();
     $output_list = array();
     if (!validate_authenticated($session)) {
-        $error->set_error('invalid_login');	
+        $error->set_error('invalid_login');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     if (empty($beanList[$module_name])) {
-        $error->set_error('no_module');	
+        $error->set_error('no_module');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     global $current_user;
     if (!check_modules_access($current_user, $module_name, 'read')) {
-        $error->set_error('no_access');	
+        $error->set_error('no_access');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
 	
@@ -271,16 +271,16 @@ function get_attendee_list($session, $module_name, $id)
     $field_list = array();
     $output_list = array();
     if (!validate_authenticated($session)) {
-        $error->set_error('invalid_login');	
+        $error->set_error('invalid_login');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     if (empty($beanList[$module_name])) {
-        $error->set_error('no_module');	
+        $error->set_error('no_module');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     global $current_user;
     if (!check_modules_access($current_user, $module_name, 'read')) {
-        $error->set_error('no_access');	
+        $error->set_error('no_access');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
 	
@@ -302,7 +302,7 @@ function get_attendee_list($session, $module_name, $id)
             $join_field = "call";
         }
         $xml .= '<attendees>';
-        $result = $seed->db->query("SELECT users.id, $table_name.date_modified, first_name, last_name FROM users INNER JOIN $table_name ON $table_name.user_id = users.id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND $table_name.deleted = 0"); 
+        $result = $seed->db->query("SELECT users.id, $table_name.date_modified, first_name, last_name FROM users INNER JOIN $table_name ON $table_name.user_id = users.id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND $table_name.deleted = 0");
         $user = new User();
         while ($row = $seed->db->fetchByAssoc($result)) {
             $user->id = $row['id'];
@@ -313,10 +313,10 @@ function get_attendee_list($session, $module_name, $id)
             $xml .= '<last_name>'.$row['last_name'].'</last_name>';
             $xml .= '<email1>'.$email.'</email1>';
             $xml .= '</attendee>';
-        }	
+        }
         //now get contacts
         $table_name = $l_module_name."_contacts";
-        $result = $seed->db->query("SELECT contacts.id, $table_name.date_modified, first_name, last_name FROM contacts INNER JOIN $table_name ON $table_name.contact_id = contacts.id INNER JOIN $seed->table_name ON ".$seed->table_name.".id = ".$table_name.".".$join_field."_id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND ".$table_name.".deleted = 0 AND (contacts.id != ".$seed->table_name.".parent_id OR ".$seed->table_name.".parent_id IS NULL)"); 
+        $result = $seed->db->query("SELECT contacts.id, $table_name.date_modified, first_name, last_name FROM contacts INNER JOIN $table_name ON $table_name.contact_id = contacts.id INNER JOIN $seed->table_name ON ".$seed->table_name.".id = ".$table_name.".".$join_field."_id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND ".$table_name.".deleted = 0 AND (contacts.id != ".$seed->table_name.".parent_id OR ".$seed->table_name.".parent_id IS NULL)");
         $contact = new Contact();
         while ($row = $seed->db->fetchByAssoc($result)) {
             $contact->id = $row['id'];
@@ -327,7 +327,7 @@ function get_attendee_list($session, $module_name, $id)
             $xml .= '<last_name>'.$row['last_name'].'</last_name>';
             $xml .= '<email1>'.$email.'</email1>';
             $xml .= '</attendee>';
-        }					
+        }
         $xml .= '</attendees>';
     }
     $xml = base64_encode($xml);

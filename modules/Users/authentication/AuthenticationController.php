@@ -92,7 +92,7 @@ class AuthenticationController
             $type = 'SugarAuthenticate';
         }
 
-        if (!empty($_REQUEST['no_saml']) 
+        if (!empty($_REQUEST['no_saml'])
             && (
 				(is_subclass_of($type, 'SAMLAuthenticate') || 'SAMLAuthenticate' == $type) ||
 				(is_subclass_of($type, 'SAML2Authenticate') || 'SAML2Authenticate' == $type)

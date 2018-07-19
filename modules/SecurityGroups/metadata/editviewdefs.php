@@ -3,15 +3,15 @@
 $module_name = 'SecurityGroups';
 $viewdefs[$module_name]['EditView'] = array(
 
-    'templateMeta' => array('maxColumns' => '2', 
+    'templateMeta' => array('maxColumns' => '2',
 
                             'widths' => array(
 
-                                            array('label' => '10', 'field' => '30'), 
+                                            array('label' => '10', 'field' => '30'),
 
                                             array('label' => '10', 'field' => '30')
 
-                                            ),                                                                                                                                    
+                                            ),
 
                                             ),
 
@@ -19,7 +19,7 @@ $viewdefs[$module_name]['EditView'] = array(
 
                                             
  'panels' =>array(
-  'default' => 
+  'default' =>
   array(
     
     array(
@@ -35,7 +35,7 @@ $viewdefs[$module_name]['EditView'] = array(
 
     array(
         'noninheritable',
-    ),    
+    ),
     array(
       'description',
     ),

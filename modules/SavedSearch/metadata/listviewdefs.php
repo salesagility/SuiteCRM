@@ -45,14 +45,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $listViewDefs['SavedSearch'] = array(
 	'NAME' => array(
-		'width' => '40%', 		
+		'width' => '40%',
 		'label' => 'LBL_LIST_NAME',
 		'link' => true,
 		'customCode' => '<a  href="index.php?action=index&module=SavedSearch&saved_search_select={$ID}">{$NAME}</a>'),
 	'SEARCH_MODULE' => array(
-		'width' => '35%', 
-		'label' => 'LBL_LIST_MODULE'), 
+		'width' => '35%',
+		'label' => 'LBL_LIST_MODULE'),
 	'ASSIGNED_USER_NAME' => array(
-		'width' => '10%', 
+		'width' => '10%',
 		'label' => 'LBL_LIST_ASSIGNED_USER')
 );

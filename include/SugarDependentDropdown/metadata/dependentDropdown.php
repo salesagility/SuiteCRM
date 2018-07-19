@@ -254,7 +254,7 @@ $sugarDependentDropdown = array(
 					),*/
 				),
 			),
-		),	
+		),
 	),
 	/**
 	 * This is the criteria dependent dropdown metadata for Email 2.0's Rules

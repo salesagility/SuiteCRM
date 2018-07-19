@@ -286,9 +286,9 @@ class RelationshipHandler extends Relationship
                 if ($rel_array['relationship_role_column']!="") {
                     $relRole = $rel_array['relationship_role_column'];
                     $target_bean->$relRole = $rel_array['relationship_role_column_value'];
-                }				
+                }
                 //end if many-to-many
-            }	
+            }
 		
             if ($rel_array['relationship_type']=="one-to-many") {
                 $RHSKey = $rel_array['rhs_key'];
@@ -317,9 +317,9 @@ class RelationshipHandler extends Relationship
                 if ($rel_array['relationship_role_column']!="") {
                     $relRole = $rel_array['relationship_role_column'];
                     $target_bean->$relRole = $rel_array['relationship_role_column_value'];
-                }				
+                }
                 //end if many-to-many
-            }	
+            }
 		
             if ($rel_array['relationship_type']=="one-to-many") {
                 $RHSKey = $rel_array['rhs_key'];

@@ -11,7 +11,7 @@ class AssignGroups
         global $sugar_config;
 
         //only process if action is Save (meaning a user has triggered this event and not the portal or automated process)
-        if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'Save' 
+        if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'Save'
 		&& isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
 		&& empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {
             //Upload an attachment to an Email Template and save. If user with multi groups - popup select option
@@ -38,7 +38,7 @@ class AssignGroups
                 //well...ShowDuplicates doesn't pass through request vars unless they are defined in the module vardefs
                 //so we are screwed here...
                 global $current_language;
-                $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');	
+                $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');
                 unset($_SESSION['securitysuite_error']); //to be safe
                 $_SESSION['securitysuite_error'] = $ss_mod_strings['LBL_ERROR_DUPLICATE'];
             }
@@ -60,7 +60,7 @@ class AssignGroups
 			'id' => $bean->id
 		);
         }
-    } 
+    }
 
 
     public function popup_onload($event, $arguments)
@@ -80,11 +80,11 @@ class AssignGroups
 
         if (isset($action) && ($action == "Save" || $action == "SetTimezone")) {
             return;
-        }  
+        }
 
         if ((
 			//(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)
-			//|| 
+			//||
 			($module == "Users" && isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true)
 		)
 	
@@ -126,7 +126,7 @@ EOQ;
         $no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
         //check if security suite enabled
         $action = strtolower($action);
-        if (isset($module) && ($action == "list" || $action == "index" || $action == "listview") 
+        if (isset($module) && ($action == "list" || $action == "index" || $action == "listview")
     	&& (!isset($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] != true)
     	&& !array_key_exists($module, $no_mass_assign_list)
     	) {

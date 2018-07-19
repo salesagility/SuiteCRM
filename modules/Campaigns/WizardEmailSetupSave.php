@@ -61,7 +61,7 @@ $camp_steps[] = 'wiz_step2_';
 
     //name is used as key in post, it is also used in creation of summary page for wizard,
     //so let's clean up the posting so we can reuse the save functionality for inbound emails and
-    //from existing save.php's  
+    //from existing save.php's
     foreach ($camp_steps as $step) {
         clean_up_post($step);
     }

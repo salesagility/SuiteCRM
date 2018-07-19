@@ -52,7 +52,7 @@ $subpanel_layout = array(
 /*		'mass_update' => array (
 			
 		),
-*/		
+*/
 		'id'=>array(
 	//		 'widget_class' => 'SubPanelDetailViewLink',
 			 'vname' => 'LBL_EXECUTE_TIME',

@@ -97,6 +97,6 @@ if (isset($_REQUEST['form'])) {
     //if this navigation is going to list view, do not show the bean id, it will populate the mass update.
     if ($return_action == 'index') {
         $return_id ='';
-    }		
+    }
     header("Location: index.php?module=$return_module&action=$return_action&record=$return_id");
 }

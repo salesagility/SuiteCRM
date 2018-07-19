@@ -67,7 +67,7 @@ $popupMeta = array(
     'create' => array(
   'formBase' => 'AccountFormBase.php',
   'formBaseClass' => 'AccountFormBase',
-  'getFormBodyParams' => 
+  'getFormBodyParams' =>
   array(
     0 => '',
     1 => '',
@@ -76,54 +76,54 @@ $popupMeta = array(
   'createButton' => 'LNK_NEW_ACCOUNT',
 ),
     'searchdefs' => array(
-  'name' => 
+  'name' =>
   array(
     'name' => 'name',
     'width' => '10%',
   ),
-  'account_type' => 
+  'account_type' =>
   array(
     'type' => 'enum',
     'label' => 'LBL_TYPE',
     'width' => '10%',
     'name' => 'account_type',
   ),
-  'industry' => 
+  'industry' =>
   array(
     'type' => 'enum',
     'label' => 'LBL_INDUSTRY',
     'width' => '10%',
     'name' => 'industry',
   ),
-  'billing_address_city' => 
+  'billing_address_city' =>
   array(
     'name' => 'billing_address_city',
     'width' => '10%',
   ),
-  'billing_address_state' => 
+  'billing_address_state' =>
   array(
     'name' => 'billing_address_state',
     'width' => '10%',
   ),
-  'billing_address_country' => 
+  'billing_address_country' =>
   array(
     'name' => 'billing_address_country',
     'width' => '10%',
   ),
-  'email' => 
+  'email' =>
   array(
     'name' => 'email',
     'width' => '10%',
   ),
-  'assigned_user_id' => 
+  'assigned_user_id' =>
   array(
     'name' => 'assigned_user_id',
     'label' => 'LBL_ASSIGNED_TO',
     'type' => 'enum',
-    'function' => 
+    'function' =>
     array(
       'name' => 'get_user_array',
-      'params' => 
+      'params' =>
       array(
         0 => false,
       ),
@@ -132,7 +132,7 @@ $popupMeta = array(
   ),
 ),
     'listviewdefs' => array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '40%',
     'label' => 'LBL_LIST_ACCOUNT_NAME',
@@ -140,7 +140,7 @@ $popupMeta = array(
     'default' => true,
     'name' => 'name',
   ),
-  'ACCOUNT_TYPE' => 
+  'ACCOUNT_TYPE' =>
   array(
     'type' => 'enum',
     'label' => 'LBL_TYPE',
@@ -148,28 +148,28 @@ $popupMeta = array(
     'default' => true,
     'name' => 'account_type',
   ),
-  'BILLING_ADDRESS_CITY' => 
+  'BILLING_ADDRESS_CITY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_LIST_CITY',
     'default' => true,
     'name' => 'billing_address_city',
   ),
-  'BILLING_ADDRESS_STATE' => 
+  'BILLING_ADDRESS_STATE' =>
   array(
     'width' => '7%',
     'label' => 'LBL_STATE',
     'default' => true,
     'name' => 'billing_address_state',
   ),
-  'BILLING_ADDRESS_COUNTRY' => 
+  'BILLING_ADDRESS_COUNTRY' =>
   array(
     'width' => '10%',
     'label' => 'LBL_COUNTRY',
     'default' => true,
     'name' => 'billing_address_country',
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array(
     'width' => '2%',
     'label' => 'LBL_LIST_ASSIGNED_USER',

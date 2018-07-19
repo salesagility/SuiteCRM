@@ -114,7 +114,7 @@ abstract class PersonFormBase extends FormBase
 
         if (isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') {
             $_POST['return_action'] = 'DetailView';
-        } 
+        }
 	
         if (isset($_POST['return_action']) && $_POST['return_action'] == 'DetailView' && empty($_REQUEST['return_id'])) {
             unset($_POST['return_action']);

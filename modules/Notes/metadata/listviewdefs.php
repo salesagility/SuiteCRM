@@ -37,16 +37,16 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$listViewDefs ['Notes'] = 
+$listViewDefs ['Notes'] =
 array(
-  'NAME' => 
+  'NAME' =>
   array(
     'width' => '40%',
     'label' => 'LBL_LIST_SUBJECT',
     'link' => true,
     'default' => true,
   ),
-  'CONTACT_NAME' => 
+  'CONTACT_NAME' =>
   array(
     'width' => '20%',
     'label' => 'LBL_LIST_CONTACT',
@@ -55,12 +55,12 @@ array(
     'module' => 'Contacts',
     'default' => true,
     'ACLTag' => 'CONTACT',
-    'related_fields' => 
+    'related_fields' =>
     array(
       0 => 'contact_id',
     ),
   ),
-  'PARENT_NAME' => 
+  'PARENT_NAME' =>
   array(
     'width' => '20%',
     'label' => 'LBL_LIST_RELATED_TO',
@@ -70,20 +70,20 @@ array(
     'default' => true,
     'sortable' => false,
     'ACLTag' => 'PARENT',
-    'related_fields' => 
+    'related_fields' =>
     array(
       0 => 'parent_id',
       1 => 'parent_type',
     ),
   ),
   
-  'FILENAME' => 
+  'FILENAME' =>
   array(
     'width' => '20%',
     'label' => 'LBL_LIST_FILENAME',
     'default' => true,
     'type' => 'file',
-    'related_fields' => 
+    'related_fields' =>
     array(
       0 => 'file_url',
       1 => 'id',
@@ -93,7 +93,7 @@ array(
       'module' => 'Notes',
     ),
   ),
-  'CREATED_BY_NAME' => 
+  'CREATED_BY_NAME' =>
   array(
     'type' => 'relate',
     'label' => 'LBL_CREATED_BY',
@@ -101,19 +101,19 @@ array(
     'default' => true,
     'related_fields' =>  array( 'created_by' ),
   ),
-  'DATE_MODIFIED' => 
+  'DATE_MODIFIED' =>
   array(
     'width' => '20%',
     'label' => 'LBL_DATE_MODIFIED',
     'link' => false,
     'default' => false,
   ),
-  'DATE_ENTERED' => 
+  'DATE_ENTERED' =>
   array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
-  ),  
+  ),
 );
 

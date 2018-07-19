@@ -13,14 +13,14 @@ $popupMeta = array(
   4 => 'module_type',
 ),
     'searchdefs' => array(
-  'name' => 
+  'name' =>
   array(
     'type' => 'name',
     'label' => 'LBL_NAME',
     'width' => '10%',
     'name' => 'name',
   ),
-  'module_type' => 
+  'module_type' =>
   array(
     'type' => 'enum',
     'studio' => 'visible',
@@ -31,14 +31,14 @@ $popupMeta = array(
   ),
 ),
     'listviewdefs' => array(
-  'NAME' => 
+  'NAME' =>
   array(
     'type' => 'name',
     'label' => 'LBL_NAME',
     'width' => '10%',
     'default' => true,
   ),
-  'MODULE_TYPE' => 
+  'MODULE_TYPE' =>
   array(
     'type' => 'enum',
     'default' => true,

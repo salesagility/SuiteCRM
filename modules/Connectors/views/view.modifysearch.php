@@ -86,7 +86,7 @@ class ViewModifySearch extends SugarView
             if (!$s->isEnabledInAdminSearch() || !$s->isEnabledInWizard()) {
                 unset($connectors[$id]);
             }
-        }		
+        }
 
         $this->ss->assign('SOURCES', $connectors);
         echo $this->getModuleTitle(false);

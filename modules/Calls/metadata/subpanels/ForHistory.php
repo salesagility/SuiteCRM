@@ -118,7 +118,7 @@ $subpanel_layout = array(
 			'widget_class' => 'SubPanelDetailViewLink',
 		 	'target_record_key' => 'assigned_user_id',
 			'target_module' => 'Employees',
-			'width' => '10%',			
+			'width' => '10%',
 		),
 		'edit_button'=>array(
 			'vname' => 'LBL_EDIT_BUTTON',
@@ -135,7 +135,7 @@ $subpanel_layout = array(
 			'force_exists'=>true
 		),
 		'recurring_source'=>array(
-			'usage'=>'query_only',	
+			'usage'=>'query_only',
 		),
 	),
 );

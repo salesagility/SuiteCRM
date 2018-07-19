@@ -43,12 +43,12 @@ $viewdefs['Documents']['QuickCreate'] = array(
                                                             '<input type="hidden" name="parent_id" value="{$smarty.request.parent_id}">',
                                                             '<input type="hidden" name="parent_type" value="{$smarty.request.parent_type}">',)),
                                             
-                            'maxColumns' => '2', 
+                            'maxColumns' => '2',
                             'widths' => array(
-                                            array('label' => '10', 'field' => '30'), 
+                                            array('label' => '10', 'field' => '30'),
                                             array('label' => '10', 'field' => '30')
                                             ),
-                            'includes' => 
+                            'includes' =>
                               array(
                                 array('file' => 'include/javascript/popup_parent_helper.js'),
                                 array('file' => 'cache/include/javascript/sugar_grp_jsolait.js'),
@@ -56,14 +56,14 @@ $viewdefs['Documents']['QuickCreate'] = array(
                               ),
 ),
  'panels' =>array(
-  'default' => 
+  'default' =>
   array(
     
     array(
       'status_id',
     ),
     array(
-      array('name'=>'filename', 
+      array('name'=>'filename',
             'displayParams'=>array('required'=>true, 'onchangeSetFileNameTo' => 'document_name'),
             ),
     ),
@@ -73,7 +73,7 @@ $viewdefs['Documents']['QuickCreate'] = array(
        array('name'=>'revision',
             'customCode' => '<input name="revision" type="text" value="{$fields.revision.value}" {$DISABLED}>'
            ),
-    ),    
+    ),
     
     array(
        array('name'=>'active_date','displayParams'=>array('required'=>true)),

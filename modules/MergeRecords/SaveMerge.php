@@ -190,14 +190,14 @@ function handleEmailMerge($focus, $name, $data)
 
     //make sure id's to merge exist and are in array format
 
-    //get the existing email id's 
+    //get the existing email id's
     $focus->merge_bean->load_relationship($name);
     $exData = $focus->merge_bean->$name->get();
 
     if (!is_array($existingData) || empty($existingData)) {
         return;
     }
-    //query email and retrieve existing email address 
+    //query email and retrieve existing email address
     $exEmailQuery = 'Select id, email_address from email_addresses where id in (';
     $first = true;
     foreach ($exData as $id) {

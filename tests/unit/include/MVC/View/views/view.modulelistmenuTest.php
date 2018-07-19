@@ -20,7 +20,7 @@ class ViewModulelistmenuTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         }
         
         
-        //execute the method with required child objects preset. it should return some html. 
+        //execute the method with required child objects preset. it should return some html.
         $view = new ViewModulelistmenu();
         $view->ss = new Sugar_Smarty();
 

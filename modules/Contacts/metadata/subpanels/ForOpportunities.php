@@ -115,7 +115,7 @@ $subpanel_layout = array(
 		//kbrill Bug#17483
 		'edit_button'=>array(
 			'vname' => 'LBL_EDIT_BUTTON',
-		    //'widget_class' => 'SubPanelEditButton', 
+		    //'widget_class' => 'SubPanelEditButton',
 		    //C.L. Bug#18035, changed to use SubPanelEditRoleButton
 			'widget_class' => 'SubPanelEditRoleButton',
 			'role_id'=>'opportunity_role_id',

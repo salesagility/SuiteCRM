@@ -1,7 +1,7 @@
 <?php
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
-} 
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -63,7 +63,7 @@ require_once('modules/DynamicFields/DynamicField.php');
  if (!isset($_REQUEST['run'])) {
      $simulate = true;
      echo "SIMULATION MODE - NO CHANGES WILL BE MADE EXCEPT CLEARING CACHE";
- }	
+ }
 
  foreach ($modules as $the_module=>$fields) {
      if (isset($beanList[$the_module])) {
@@ -125,7 +125,7 @@ require_once('modules/DynamicFields/DynamicField.php');
  }
 	
 	
-	DynamicField::deleteCache();	
+	DynamicField::deleteCache();
 	echo '<br>Done<br>';
 	if ($simulate) {
 	    echo '<a href="index.php?module=Administration&action=UpgradeFields&run=true">Execute non-simulation mode</a>';

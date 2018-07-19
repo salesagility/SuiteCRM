@@ -40,7 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['roles_modules'] = array( 
+$dictionary['roles_modules'] = array(
 
 	'table' => 'roles_modules',
 

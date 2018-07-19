@@ -49,12 +49,12 @@ $dictionary['calls_leads'] = array( 'table' => 'calls_leads'
       , array('name' =>'accept_status', 'type' =>'varchar', 'len'=>'25', 'default'=>'none')
       , array('name' => 'date_modified','type' => 'datetime')
       , array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>false)
-                                                      )     
+                                                      )
                                   , 'indices' => array(
        array('name' =>'calls_leadspk', 'type' =>'primary', 'fields'=>array('id'))
       , array('name' =>'idx_lead_call_call', 'type' =>'index', 'fields'=>array('call_id'))
       , array('name' =>'idx_lead_call_lead', 'type' =>'index', 'fields'=>array('lead_id'))
-      , array('name' => 'idx_call_lead', 'type'=>'alternate_key', 'fields'=>array('call_id','lead_id'))            
+      , array('name' => 'idx_call_lead', 'type'=>'alternate_key', 'fields'=>array('call_id','lead_id'))
                                                       )
 
       , 'relationships' => array('calls_leads' => array('lhs_module'=> 'Calls', 'lhs_table'=> 'calls', 'lhs_key' => 'id',

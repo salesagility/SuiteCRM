@@ -68,16 +68,16 @@ function additionalDetailsCampaign($fields)
             $overlib_string .= '...';
         }
         $overlib_string .= '<br>';
-    }	
+    }
     if (!empty($fields['CONTENT'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_CAMPAIGN_CONTENT'] . '</b> ' . substr($fields['CONTENT'], 0, 300);
         if (strlen($fields['CONTENT']) > 300) {
             $overlib_string .= '...';
         }
-    }	
+    }
     
-    return array('fieldToAddTo' => 'NAME', 
-                 'string' => $overlib_string, 
-                 'editLink' => "index.php?action=EditView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}", 
+    return array('fieldToAddTo' => 'NAME',
+                 'string' => $overlib_string,
+                 'editLink' => "index.php?action=EditView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}",
                  'viewLink' => "index.php?action=DetailView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}");
 }

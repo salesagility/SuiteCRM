@@ -226,7 +226,7 @@ class Resource extends ResourceIdentifier
     /**
      * Reserved words which must not be used in the Json API Request / Response
      * @return array
-     */ 
+     */
     public function getReservedKeywords()
     {
         return self::$JSON_API_RESERVED_KEYWORDS;

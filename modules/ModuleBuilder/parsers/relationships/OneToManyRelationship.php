@@ -104,10 +104,10 @@ class OneToManyRelationship extends AbstractRelationship
             $source = $this->getJoinKeyLHS();
         }
  
-        return array( 
-        	$this->lhs_module => $this->getSubpanelDefinition( 
+        return array(
+        	$this->lhs_module => $this->getSubpanelDefinition(
         		$this->relationship_name, $this->rhs_module, $this->rhs_subpanel, $this->getRightModuleSystemLabel(), $source
-        	) 
+        	)
         );
     }
 

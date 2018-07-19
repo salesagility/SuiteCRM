@@ -472,7 +472,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetErrorMessages()
     {
-        //execute the method and check if it returns a array. 
+        //execute the method and check if it returns a array.
         $errorMessages = SugarApplication::getErrorMessages();
         $this->assertTrue(is_array($errorMessages));
     }

@@ -47,15 +47,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 $viewdefs = array(
-  'Contacts' => 
+  'Contacts' =>
   array(
-    'QuickCreate' => 
+    'QuickCreate' =>
     array(
-      'templateMeta' => 
+      'templateMeta' =>
       array(
-        'form' => 
+        'form' =>
         array(
-          'hidden' => 
+          'hidden' =>
           array(
             '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
             '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
@@ -67,7 +67,7 @@ $viewdefs = array(
           ),
         ),
         'maxColumns' => '2',
-        'widths' => 
+        'widths' =>
         array(
           array(
             'label' => '10',
@@ -79,9 +79,9 @@ $viewdefs = array(
           ),
         ),
       ),
-      'panels' => 
+      'panels' =>
       array(
-        'default' => 
+        'default' =>
         array(
 
           array(

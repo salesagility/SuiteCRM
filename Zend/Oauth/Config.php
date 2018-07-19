@@ -567,9 +567,9 @@ class Zend_Oauth_Config implements Zend_Oauth_Config_ConfigInterface
     {
         $method = strtoupper($method);
         if (!in_array($method, array(
-                Zend_Oauth::GET, 
-                Zend_Oauth::POST, 
-                Zend_Oauth::PUT, 
+                Zend_Oauth::GET,
+                Zend_Oauth::POST,
+                Zend_Oauth::PUT,
                 Zend_Oauth::DELETE,
             ))
         ) {

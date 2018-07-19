@@ -14,12 +14,12 @@ $popupMeta = array(
   5 => 'aor_reports_name',
 ),
     'searchdefs' => array(
-  'name' => 
+  'name' =>
   array(
     'name' => 'name',
     'width' => '10%',
   ),
-  'email' => 
+  'email' =>
   array(
     'name' => 'email',
     'label' => 'LBL_ANY_EMAIL',

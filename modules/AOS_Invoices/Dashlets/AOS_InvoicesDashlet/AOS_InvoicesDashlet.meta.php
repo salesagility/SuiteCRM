@@ -38,7 +38,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $app_strings;
 
 $dashletMeta['AOS_InvoicesDashlet'] = array('module'		=> 'AOS_Invoices',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOS_Invoices'), 
+										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOS_Invoices'),
                                           'description' => 'A customizable view into AOS_Invoices',
                                           'icon'        => 'themes/default/images/icon_AOS_Invoices_32.gif',
                                           'category'    => 'Module Views');

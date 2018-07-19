@@ -26,12 +26,12 @@ r46451 - 2009-04-23 16:57:40 -0700 (Thu, 23 Apr 2009) - jenny - tcpdf initial ch
 // File name   : eng.php
 // Begin       : 2004-03-03
 // Last Update : 2008-11-17
-// 
+//
 // Description : Language module for TCPDF
 //               (contains translated texts)
-// 
+//
 // Author: Nicola Asuni
-// 
+//
 // (c) Copyright:
 //               Nicola Asuni
 //               Tecnick.com s.r.l.
@@ -68,5 +68,5 @@ $l['a_meta_language'] = 'en';
 $l['w_page'] = 'page';
 
 //============================================================+
-// END OF FILE                                                 
+// END OF FILE
 //============================================================+

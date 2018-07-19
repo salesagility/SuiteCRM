@@ -478,7 +478,7 @@ class CalendarUtils
         }
         if ($contacts_filled) {
             $db->query($qu_contacts);
-        }		
+        }
         if ($leads_filled) {
             $db->query($qu_leads);
         }

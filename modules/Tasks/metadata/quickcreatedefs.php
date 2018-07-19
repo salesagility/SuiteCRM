@@ -37,19 +37,19 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$viewdefs ['Tasks'] = 
+$viewdefs ['Tasks'] =
 array(
-  'QuickCreate' => 
+  'QuickCreate' =>
   array(
-    'templateMeta' => 
+    'templateMeta' =>
     array(
-      'form' => 
+      'form' =>
       array(
-        'hidden' => 
+        'hidden' =>
         array(
            '<input type="hidden" name="isSaveAndNew" value="false">',
         ),
-        'buttons' => 
+        'buttons' =>
         array(
            'SAVE',
            'CANCEL',
@@ -60,7 +60,7 @@ array(
         ),
       ),
       'maxColumns' => '2',
-      'widths' => 
+      'widths' =>
       array(
          
         array(
@@ -75,16 +75,16 @@ array(
       ),
       'useTabs' => false,
     ),
-    'panels' => 
+    'panels' =>
     array(
-      'default' => 
+      'default' =>
       array(
          
         array(
            
           array(
             'name' => 'name',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'required' => true,
             ),
@@ -92,7 +92,7 @@ array(
            
           array(
             'name' => 'status',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'required' => true,
             ),
@@ -104,7 +104,7 @@ array(
           array(
             'name' => 'date_start',
             'type' => 'datetimecombo',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'showNoneCheckbox' => true,
               'showFormats' => true,
@@ -122,7 +122,7 @@ array(
           array(
             'name' => 'date_due',
             'type' => 'datetimecombo',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'showNoneCheckbox' => true,
               'showFormats' => true,
@@ -139,7 +139,7 @@ array(
            
           array(
             'name' => 'priority',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'required' => true,
             ),
@@ -155,7 +155,7 @@ array(
            
           array(
             'name' => 'description',
-            'displayParams' => 
+            'displayParams' =>
             array(
               'rows' => 8,
               'cols' => 60,

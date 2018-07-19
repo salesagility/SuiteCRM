@@ -53,7 +53,7 @@ $layout_defs['History'] = array(
             array('widget_class' => 'SubPanelTopSummaryButton'),
         ),
         
-//TODO try and merge with the activities		
+//TODO try and merge with the activities
         'list_fields' => array(
             'Meetings' => array(
                 'columns' => array(
@@ -129,7 +129,7 @@ $layout_defs['History'] = array(
                     array(
                         'name' => 'status',
                         'vname' => 'LBL_LIST_STATUS',
-                        'width' => '10%',	
+                        'width' => '10%',
                     ),
                     array(
                         'name' => 'category_id',
@@ -188,7 +188,7 @@ $layout_defs['History'] = array(
                         'widget_class' => 'SubPanelDetailViewLink',
                         'width' => '28%',
                     ),
-                    array( // this column does not exist on 
+                    array( // this column does not exist on
                         'name' => 'status',
                         'vname' => 'LBL_LIST_STATUS',
                         'width' => '10%',

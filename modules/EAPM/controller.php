@@ -164,7 +164,7 @@ class EAPMController extends SugarController
             }
             echo($js);
             return;
-        }            
+        }
         
         // redirect to detail view, as in save
         return parent::post_save();

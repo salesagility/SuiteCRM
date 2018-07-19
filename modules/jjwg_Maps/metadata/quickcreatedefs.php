@@ -2,21 +2,21 @@
 
 $module_name = 'jjwg_Maps';
 
-$viewdefs[$module_name] = 
+$viewdefs[$module_name] =
 array(
-  'QuickCreate' => 
+  'QuickCreate' =>
   array(
-    'templateMeta' => 
+    'templateMeta' =>
     array(
       'maxColumns' => '2',
-      'widths' => 
+      'widths' =>
       array(
-        0 => 
+        0 =>
         array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
+        1 =>
         array(
           'label' => '10',
           'field' => '30',
@@ -24,47 +24,47 @@ array(
       ),
       'useTabs' => false,
     ),
-    'panels' => 
+    'panels' =>
     array(
-      'default' => 
+      'default' =>
       array(
-        0 => 
+        0 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'name',
             'label' => 'LBL_NAME',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),
         ),
-        1 => 
+        1 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'parent_name',
             'studio' => 'visible',
             'label' => 'LBL_FLEX_RELATE',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'unit_type',
             'studio' => 'visible',
             'label' => 'LBL_UNIT_TYPE',
           ),
         ),
-        2 => 
+        2 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'module_type',
             'studio' => 'visible',
             'label' => 'LBL_MODULE_TYPE',
           ),
-          1 => 
+          1 =>
           array(
             'name' => 'distance',
             'label' => 'LBL_DISTANCE',

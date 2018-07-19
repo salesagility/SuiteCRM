@@ -26,7 +26,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-$searchFields['AOS_Contracts'] = 
+$searchFields['AOS_Contracts'] =
 	array(
 		'name' => array( 'query_type'=>'default'),
 		'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
@@ -40,7 +40,7 @@ $searchFields['AOS_Contracts'] =
 			                        and favorites.parent_type = 'AOS_Contracts'
 			                        and favorites.assigned_user_id = '{1}'",
             'db_field'=>array('id')),
-		//Range Search Support 
+		//Range Search Support
 	   'range_end_date' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
 	   'start_range_end_date' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
 	   'end_range_end_date' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),

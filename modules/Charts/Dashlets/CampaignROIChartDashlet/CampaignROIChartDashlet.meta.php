@@ -47,8 +47,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $app_strings, $current_language;
 
-$dashletMeta['CampaignROIChartDashlet'] = array('title'       => 'LBL_TITLE',  
+$dashletMeta['CampaignROIChartDashlet'] = array('title'       => 'LBL_TITLE',
                                                     'description' => 'LBL_TITLE',
-                                                    'icon'		  => 'icon_Charts_GroupBy_32.gif', 
+                                                    'icon'		  => 'icon_Charts_GroupBy_32.gif',
                                                     'category'    => 'Charts',
                                                     'module'	  => 'Campaigns',);

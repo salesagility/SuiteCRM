@@ -268,7 +268,7 @@ abstract class Zend_Oauth_Token
     /**
      * Limit serialisation stored data to the parameters
      */
-    public function __sleep() 
+    public function __sleep()
     {
         return array('_params');
     }
@@ -276,7 +276,7 @@ abstract class Zend_Oauth_Token
     /**
      * After serialisation, re-instantiate a HTTP utility class for use
      */
-    public function __wakeup() 
+    public function __wakeup()
     {
         $this->_httpUtility = new Zend_Oauth_Http_Utility;
     }

@@ -40,11 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  if (!defined('ACL_ALLOW_NONE')) {
      define('ACL_ALLOW_ADMIN_DEV', 100);
      define('ACL_ALLOW_ADMIN', 99);
-     define('ACL_ALLOW_ALL', 90);                        
+     define('ACL_ALLOW_ALL', 90);
      define('ACL_ALLOW_ENABLED', 89);
-     /* BEGIN - SECURITY GROUPS */ 
+     /* BEGIN - SECURITY GROUPS */
      define('ACL_ALLOW_GROUP', 80); //securitygroup
-     /* END - SECURITY GROUPS */ 
+     /* END - SECURITY GROUPS */
      define('ACL_ALLOW_OWNER', 75);
      define('ACL_ALLOW_NORMAL', 1);
      define('ACL_ALLOW_DEFAULT', 0);
@@ -67,15 +67,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  	ACL_ALLOW_DEFAULT=>array('color'=>'#008000', 'label'=>'LBL_ACCESS_DEFAULT', 'text_color'=>'white'),
  	ACL_ALLOW_DEV=>array('color'=>'#0000FF', 'label'=>'LBL_ACCESS_DEV', 'text_color'=>'white'),
  	ACL_ALLOW_ADMIN_DEV=>array('color'=>'#0000FF', 'label'=>'LBL_ACCESS_ADMIN_DEV', 'text_color'=>'white'),
- 	/* BEGIN - SECURITY GROUPS */ 
+ 	/* BEGIN - SECURITY GROUPS */
  	ACL_ALLOW_GROUP=>array('color'=>'#0000A0', 'label'=>'LBL_ACCESS_GROUP', 'text_color'=>'white'), //securitygroup
- 	/* END - SECURITY GROUPS */ 
+ 	/* END - SECURITY GROUPS */
  	);
 /**
  * $GLOBALS['ACLActions
  * These are the actions for a given type. It includes the ACCESS Levels for that action and the label for that action. Every an object of the category (e.g. module) is added all associated actions are added for that object
  */
-/* BEGIN - SECURITY GROUPS */ 
+/* BEGIN - SECURITY GROUPS */
 $GLOBALS['ACLActions'] = array(
 	'module'=>array('actions'=>
 						array(
@@ -135,4 +135,4 @@ $GLOBALS['ACLActions'] = array(
 					
 				),),
 );
-/* END - SECURITY GROUPS */ 
+/* END - SECURITY GROUPS */

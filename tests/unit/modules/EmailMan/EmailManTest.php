@@ -170,7 +170,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails_text');
         $state->pushTable('tracker');
         
-        // test 
+        // test
         
         $emailMan = new EmailMan();
 
