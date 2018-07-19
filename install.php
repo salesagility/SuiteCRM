@@ -518,13 +518,13 @@ EOQ;
         // store the submitted data because the 'Next' button was clicked
         switch ($workflow[trim($_REQUEST['current_step'])]) {
         case 'old_php.php':
-		$_SESSION['language'] = $_REQUEST['language'];
-		$_SESSION['setup_old_php'] = get_boolean_from_request('setup_old_php');
-		break;
+        $_SESSION['language'] = $_REQUEST['language'];
+        $_SESSION['setup_old_php'] = get_boolean_from_request('setup_old_php');
+        break;
 
-	case 'welcome.php':
-        	$_SESSION['language'] = $_REQUEST['language'];
-   			$_SESSION['setup_site_admin_user_name'] = 'admin';
+    case 'welcome.php':
+            $_SESSION['language'] = $_REQUEST['language'];
+            $_SESSION['setup_site_admin_user_name'] = 'admin';
 //        break;
 //      case 'license.php':
                 $_SESSION['setup_license_accept']   = get_boolean_from_request('setup_license_accept');
@@ -654,12 +654,12 @@ EOQ;
     case 'old_php.php':
     case 'welcome.php':
     case 'license.php':
-			//
-			// Check to see if session variables are working properly
-			//
-			$_SESSION['test_session'] = 'sessions are available';
+            //
+            // Check to see if session variables are working properly
+            //
+            $_SESSION['test_session'] = 'sessions are available';
         @session_write_close();
-			unset($_SESSION['test_session']);
+            unset($_SESSION['test_session']);
         @session_start();
 
             if (!isset($_SESSION['test_session'])) {

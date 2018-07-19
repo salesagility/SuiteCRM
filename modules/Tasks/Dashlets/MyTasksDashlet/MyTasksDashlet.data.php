@@ -46,13 +46,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user;
 
 $dashletData['MyTasksDashlet']['searchFields'] = array('name'           => array('default' => ''),
-													   'priority'       => array('default' => ''),
+                                                       'priority'       => array('default' => ''),
                                                        'status'         => array('default' => array('Not Started', 'In Progress', 'Pending Input')),
                                                        'date_entered'   => array('default' => ''),
                                                        'date_start'       => array('default' => ''),
                                                        'date_due'       => array('default' => ''),
                                                        'assigned_user_id' => array('type'    => 'assigned_user_name',
-																				   'label'   => 'LBL_ASSIGNED_TO',
+                                                                                   'label'   => 'LBL_ASSIGNED_TO',
                                                                                    'default' => $current_user->name));
 $dashletData['MyTasksDashlet']['columns'] = array('set_complete' => array('width'    => '1',
                                                                           'label'    => 'LBL_LIST_CLOSE',
@@ -70,14 +70,14 @@ $dashletData['MyTasksDashlet']['columns'] = array('set_complete' => array('width
                                                                          'id' => 'PARENT_ID',
                                                                          'ACLTag' => 'PARENT',
                                                                          'related_fields' => array('parent_id', 'parent_type'),
-																		 'default' => true,
-																		),
+                                                                         'default' => true,
+                                                                        ),
                                                    'priority' => array('width'   => '10',
                                                                        'label'   => 'LBL_PRIORITY',
                                                                        'default' => true),
-													'status' => array('width'   => '8',
+                                                    'status' => array('width'   => '8',
                                                                      'label'   => 'LBL_STATUS',
-																	 'default' => true),
+                                                                     'default' => true),
                                                    'date_start' => array('width'   => '15',
                                                                          'label'   => 'LBL_START_DATE',
                                                                          'default' => true),
@@ -99,9 +99,9 @@ $dashletData['MyTasksDashlet']['columns'] = array('set_complete' => array('width
                                                                                  'label'   => 'LBL_LIST_ASSIGNED_USER'),
                                                    'contact_name' => array('width'   => '8',
                                                                            'label'   => 'LBL_LIST_CONTACT',
-																		    'link' =>  true,
-																		    'id' => 'CONTACT_ID',//bug # 38712 it gave error on clicking on contacts from
-        																    'module' => 'Contacts',//my open tasks dashlet because some of the parameters were not set
-        																    'ACLTag' => 'CONTACT',// like id, link etc.
-        																    'related_fields' => array('contact_id')),
+                                                                            'link' =>  true,
+                                                                            'id' => 'CONTACT_ID',//bug # 38712 it gave error on clicking on contacts from
+                                                                            'module' => 'Contacts',//my open tasks dashlet because some of the parameters were not set
+                                                                            'ACLTag' => 'CONTACT',// like id, link etc.
+                                                                            'related_fields' => array('contact_id')),
                                                                          );

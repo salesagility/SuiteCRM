@@ -70,7 +70,7 @@ if (isset($_REQUEST['name'])) {
 if (isset($_REQUEST['search_module'])) {
     $search_form->assign('search_module', to_html($_REQUEST['search_module']));
 }
-	
+    
 $search_form->parse('main');
 $search_form->out('main');
 

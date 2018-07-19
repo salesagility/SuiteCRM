@@ -90,10 +90,18 @@ class ManyToManyRelationship extends AbstractRelationship
     public function buildVardefs()
     {
         $vardefs = array( ) ;
-        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition($this->lhs_module, $this->relationship_name, false,
-            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE') ;
-        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition($this->rhs_module, $this->relationship_name, false,
-            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE') ;
+        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition(
+            $this->lhs_module,
+            $this->relationship_name,
+            false,
+            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE'
+        ) ;
+        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition(
+            $this->rhs_module,
+            $this->relationship_name,
+            false,
+            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE'
+        ) ;
         return $vardefs ;
     }
     

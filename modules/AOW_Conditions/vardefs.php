@@ -24,10 +24,10 @@
 
 
 $dictionary['AOW_Condition'] = array(
-	'table'=>'aow_conditions',
-	'audited'=>false,
-	'duplicate_merge'=>true,
-	'fields'=>array(
+    'table'=>'aow_conditions',
+    'audited'=>false,
+    'duplicate_merge'=>true,
+    'fields'=>array(
   'aow_workflow_id' =>
   array(
     'required' => false,
@@ -168,7 +168,7 @@ $dictionary['AOW_Condition'] = array(
     'source'=>'non-db',
   ),
 ),
-	'relationships'=>array(
+    'relationships'=>array(
 ),
     'indices' => array(
         array(
@@ -177,9 +177,9 @@ $dictionary['AOW_Condition'] = array(
             'fields' => array('aow_workflow_id'),
         ),
     ),
-	'optimistic_locking'=>true,
-		'unified_search'=>true,
-	);
+    'optimistic_locking'=>true,
+        'unified_search'=>true,
+    );
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }

@@ -52,7 +52,7 @@ class ContactsViewMailMergePopup extends SugarView
     {
         parent::__construct();
     }
- 	
+    
     public function process()
     {
         $this->display();

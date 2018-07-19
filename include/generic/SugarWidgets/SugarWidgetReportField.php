@@ -115,12 +115,18 @@ class SugarWidgetReportField extends SugarWidgetField
         }
 
         if ($layout_def['name'] == 'weighted_sum') {
-            return sprintf("SUM(%s * %s * 0.01)", $this->reporter->db->convert("$alias.probability", "IFNULL", array(0)),
-            $this->reporter->db->convert("$alias.amount_usdollar", "IFNULL", array(0)));
+            return sprintf(
+                "SUM(%s * %s * 0.01)",
+                $this->reporter->db->convert("$alias.probability", "IFNULL", array(0)),
+            $this->reporter->db->convert("$alias.amount_usdollar", "IFNULL", array(0))
+            );
         }
         if ($layout_def['name'] == 'weighted_amount') {
-            return sprintf("AVG(%s * %s * 0.01)", $this->reporter->db->convert("$alias.probability", "IFNULL", array(0)),
-            $this->reporter->db->convert("$alias.amount_usdollar", "IFNULL", array(0)));
+            return sprintf(
+                "AVG(%s * %s * 0.01)",
+                $this->reporter->db->convert("$alias.probability", "IFNULL", array(0)),
+            $this->reporter->db->convert("$alias.amount_usdollar", "IFNULL", array(0))
+            );
         }
     }
 

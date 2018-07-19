@@ -52,9 +52,9 @@ class SugarWidgetSubPanelActivitiesStatusField extends SugarWidgetField
     {
         global $current_language;
         $app_list_strings = return_app_list_strings_language($current_language);
-		
+        
         $module = empty($layout_def['module']) ? '' : $layout_def['module'];
-		
+        
         if (isset($layout_def['varname'])) {
             $key = strtoupper($layout_def['varname']);
         } else {

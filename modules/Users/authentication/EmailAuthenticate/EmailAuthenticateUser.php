@@ -54,12 +54,12 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
 
 
     /**
-	 * this is called when a user logs in
-	 *
-	 * @param STRING $name
-	 * @param STRING $password
-	 * @return boolean
-	 */
+     * this is called when a user logs in
+     *
+     * @param STRING $name
+     * @param STRING $password
+     * @return boolean
+     */
     public function loadUserOnLogin($name, $password)
     {
         global $login_error;

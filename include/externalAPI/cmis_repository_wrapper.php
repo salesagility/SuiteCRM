@@ -969,7 +969,8 @@ xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/">
         }
         if ($content) {
             return CMISRepositoryWrapper :: processTemplate($contentTemplate, array(
-                "content" => base64_encode($content
+                "content" => base64_encode(
+                    $content
             ), "content_type" => $content_type));
         } else {
             return "";

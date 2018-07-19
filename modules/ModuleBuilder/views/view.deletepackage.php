@@ -60,8 +60,11 @@ class Viewdeletepackage extends SugarView
         global $mod_strings;
         
         $ajax = new AjaxCompose();
-        $ajax->addSection('center', $mod_strings['LBL_PACKAGE_DELETED'],
-            str_replace('[[package]]', $_REQUEST['package'], $mod_strings['LBL_PACKAGE_WAS_DELETED']));
+        $ajax->addSection(
+            'center',
+            $mod_strings['LBL_PACKAGE_DELETED'],
+            str_replace('[[package]]', $_REQUEST['package'], $mod_strings['LBL_PACKAGE_WAS_DELETED'])
+        );
         echo $ajax->getJavascript();
     }
 }

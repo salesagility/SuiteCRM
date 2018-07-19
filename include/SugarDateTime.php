@@ -427,7 +427,8 @@ class SugarDateTime extends DateTime
         $newdate->setDate(
              $year?$year:$this->year,
              $month?$month:$this->month,
-             $day?$day:$this->day);
+             $day?$day:$this->day
+        );
         $newdate->setTime(0, 0);
         return $newdate;
     }
@@ -445,7 +446,8 @@ class SugarDateTime extends DateTime
         $newdate->setDate(
              $year?$year:$this->year,
              $month?$month:$this->month,
-             $day?$day:$this->day);
+             $day?$day:$this->day
+        );
         $newdate->setTime(23, 59, 59);
         return $newdate;
     }

@@ -102,5 +102,4 @@ class Zend_Gdata_Calendar_ListFeed extends Zend_Gdata_Feed
         $this->_timezone = $value;
         return $this;
     }
-
 }

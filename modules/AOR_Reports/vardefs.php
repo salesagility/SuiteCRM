@@ -38,45 +38,45 @@
  ********************************************************************************/
 
 $dictionary['AOR_Report'] = array(
-	'table'=>'aor_reports',
-	'audited'=>true,
-	'duplicate_merge'=>true,
-	'fields'=>array(
-	  'report_module' =>
-	  array(
-		'required' => true,
-		'name' => 'report_module',
-		'vname' => 'LBL_REPORT_MODULE',
-		'type' => 'enum',
-		'massupdate' => 0,
-		'default' => '',
-		'no_default' => false,
-		'comments' => '',
-		'help' => '',
-		'importable' => 'true',
-		'duplicate_merge' => 'disabled',
-		'duplicate_merge_dom_value' => '0',
-		'audited' => true,
-		'reportable' => true,
-		'unified_search' => false,
-		'merge_filter' => 'disabled',
-		'len' => 100,
-		'size' => '20',
-		'options' => 'aor_moduleList',
-		'studio' => 'visible',
-		'dependency' => false,
-	  ),
+    'table'=>'aor_reports',
+    'audited'=>true,
+    'duplicate_merge'=>true,
+    'fields'=>array(
+      'report_module' =>
+      array(
+        'required' => true,
+        'name' => 'report_module',
+        'vname' => 'LBL_REPORT_MODULE',
+        'type' => 'enum',
+        'massupdate' => 0,
+        'default' => '',
+        'no_default' => false,
+        'comments' => '',
+        'help' => '',
+        'importable' => 'true',
+        'duplicate_merge' => 'disabled',
+        'duplicate_merge_dom_value' => '0',
+        'audited' => true,
+        'reportable' => true,
+        'unified_search' => false,
+        'merge_filter' => 'disabled',
+        'len' => 100,
+        'size' => '20',
+        'options' => 'aor_moduleList',
+        'studio' => 'visible',
+        'dependency' => false,
+      ),
 
-	'graphs_per_row' =>
-	array(
-		'required' => true,
-		'name' => 'graphs_per_row',
-		'vname' => 'LBL_GRAPHS_PER_ROW',
-		'type' => 'int',
-		'massupdate' => 0,
-		'default' => 2,
-		'no_default' => false,
-	),
+    'graphs_per_row' =>
+    array(
+        'required' => true,
+        'name' => 'graphs_per_row',
+        'vname' => 'LBL_GRAPHS_PER_ROW',
+        'type' => 'int',
+        'massupdate' => 0,
+        'default' => 2,
+        'no_default' => false,
+    ),
 
     'field_lines' =>
     array(
@@ -188,8 +188,8 @@ $dictionary['AOR_Report'] = array(
         'relationship_type'=>'one-to-many',
     ),
 ),
-	'optimistic_locking'=>true,
-	'unified_search'=>true,
+    'optimistic_locking'=>true,
+    'unified_search'=>true,
 );
 
 if (!class_exists('VardefManager')) {

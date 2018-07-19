@@ -50,7 +50,7 @@ $dashletData['MyOpportunitiesDashlet']['searchFields'] = array('date_entered'   
                                                                'sales_stage'      => array('default' =>
                                                                     array('Prospecting', 'Qualification', 'Needs Analysis', 'Value Proposition', 'Id. Decision Makers', 'Perception Analysis', 'Proposal/Price Quote', 'Negotiation/Review')),
                                                                'assigned_user_id' => array('type'    => 'assigned_user_name',
-                                                                     					   'label'   => 'LBL_ASSIGNED_TO',
+                                                                                            'label'   => 'LBL_ASSIGNED_TO',
                                                                                            'default' => $current_user->name));
                                                                                            
 $dashletData['MyOpportunitiesDashlet']['columns'] = array('name' => array('width'   => '35',
@@ -88,6 +88,6 @@ $dashletData['MyOpportunitiesDashlet']['columns'] = array('name' => array('width
                                                                                 'label'   => 'LBL_CREATED'),
                                                           'assigned_user_name' => array('width'   => '8',
                                                                                         'label'   => 'LBL_LIST_ASSIGNED_USER'),
-														  'next_step' => array('width' => '10',
-														        'label' => 'LBL_NEXT_STEP'),
+                                                          'next_step' => array('width' => '10',
+                                                                'label' => 'LBL_NEXT_STEP'),
                                                            );

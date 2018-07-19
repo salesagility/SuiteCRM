@@ -142,7 +142,12 @@ class Zend_Oauth_Http_Utility
      * @return string
      */
     public function sign(
-        array $params, $signatureMethod, $consumerSecret, $tokenSecret = null, $method = null, $url = null
+        array $params,
+        $signatureMethod,
+        $consumerSecret,
+        $tokenSecret = null,
+        $method = null,
+        $url = null
     ) {
         $className = '';
         $hashAlgo  = null;

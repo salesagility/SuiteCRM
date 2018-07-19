@@ -177,14 +177,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class nusoap_client extends nusoap_base
 {
     public $username = '';				// Username for HTTP authentication
-	public $password = '';				// Password for HTTP authentication
-	public $authtype = '';				// Type of HTTP authentication
-	public $certRequest = array();		// Certificate for HTTP SSL authentication
-	public $requestHeaders = false;	// SOAP headers in request (text)
-	public $responseHeaders = '';		// SOAP headers from response (incomplete namespace resolution) (text)
-	public $responseHeader = null;		// SOAP Header from response (parsed)
-	public $document = '';				// SOAP body response portion (incomplete namespace resolution) (text)
-	public $endpoint;
+    public $password = '';				// Password for HTTP authentication
+    public $authtype = '';				// Type of HTTP authentication
+    public $certRequest = array();		// Certificate for HTTP SSL authentication
+    public $requestHeaders = false;	// SOAP headers in request (text)
+    public $responseHeaders = '';		// SOAP headers from response (incomplete namespace resolution) (text)
+    public $responseHeader = null;		// SOAP Header from response (parsed)
+    public $document = '';				// SOAP body response portion (incomplete namespace resolution) (text)
+    public $endpoint;
     public $forceEndpoint = '';		// overrides WSDL endpoint
     public $proxyhost = '';
     public $proxyport = '';
@@ -192,25 +192,25 @@ class nusoap_client extends nusoap_base
     public $proxypassword = '';
     public $portName = '';				// port name to use in WSDL
     public $xml_encoding = '';			// character set encoding of incoming (response) messages
-	public $http_encoding = false;
+    public $http_encoding = false;
     public $timeout = 0;				// HTTP connection timeout
-	public $response_timeout = 30;		// HTTP response timeout
-	public $endpointType = '';			// soap|wsdl, empty for WSDL initialization error
-	public $persistentConnection = false;
+    public $response_timeout = 30;		// HTTP response timeout
+    public $endpointType = '';			// soap|wsdl, empty for WSDL initialization error
+    public $persistentConnection = false;
     public $defaultRpcParams = false;	// This is no longer used
-	public $request = '';				// HTTP request
-	public $response = '';				// HTTP response
-	public $responseData = '';			// SOAP payload of response
-	public $cookies = array();			// Cookies from response or for request
+    public $request = '';				// HTTP request
+    public $response = '';				// HTTP response
+    public $responseData = '';			// SOAP payload of response
+    public $cookies = array();			// Cookies from response or for request
     public $decode_utf8 = true;		// toggles whether the parser decodes element content w/ utf8_decode()
-	public $operations = array();		// WSDL operations, empty for WSDL initialization error
-	public $curl_options = array();	// User-specified cURL options
-	public $bindingType = '';			// WSDL operation binding type
-	public $use_curl = false;			// whether to always try to use cURL
+    public $operations = array();		// WSDL operations, empty for WSDL initialization error
+    public $curl_options = array();	// User-specified cURL options
+    public $bindingType = '';			// WSDL operation binding type
+    public $use_curl = false;			// whether to always try to use cURL
 
-	/*
-	 * fault related variables
-	 */
+    /*
+     * fault related variables
+     */
     /**
      * @var      fault
      * @access   public
@@ -317,7 +317,7 @@ class nusoap_client extends nusoap_base
         $this->faultstring = '';
         $this->faultcode = '';
         $this->opData = array();
-		
+        
         $this->debug("call: operation=$operation, namespace=$namespace, soapAction=$soapAction, rpcParams=$rpcParams, style=$style, use=$use, endpointType=$this->endpointType");
         $this->appendDebug('params=' . $this->varDump($params));
         $this->appendDebug('headers=' . $this->varDump($headers));
@@ -418,8 +418,8 @@ class nusoap_client extends nusoap_base
                 if ($namespace) {
                     // http://www.ws-i.org/Profiles/BasicProfile-1.1-2004-08-24.html R2735 says rpc/literal accessor elements should not be in a namespace
                     $payload = "<$nsPrefix:$operation xmlns:$nsPrefix=\"$namespace\">" .
-								$payload .
-								"</$nsPrefix:$operation>";
+                                $payload .
+                                "</$nsPrefix:$operation>";
                 } else {
                     $payload = "<$operation>" . $payload . "</$operation>";
                 }
@@ -427,12 +427,12 @@ class nusoap_client extends nusoap_base
                 $this->debug("wrapping RPC request with encoded method element");
                 if ($namespace) {
                     $payload = "<$nsPrefix:$operation xmlns:$nsPrefix=\"$namespace\">" .
-								$payload .
-								"</$nsPrefix:$operation>";
+                                $payload .
+                                "</$nsPrefix:$operation>";
                 } else {
                     $payload = "<$operation>" .
-								$payload .
-								"</$operation>";
+                                $payload .
+                                "</$operation>";
                 }
             }
         }
@@ -449,7 +449,7 @@ class nusoap_client extends nusoap_base
             $this->return = $return;
             $this->debug('sent message successfully and got a(n) '.gettype($return));
             $this->appendDebug('return=' . $this->varDump($return));
-			
+            
             // fault?
             if (is_array($return) && isset($return['faultcode'])) {
                 $this->debug('got fault');
@@ -562,83 +562,83 @@ class nusoap_client extends nusoap_base
     * the return value of this method will be an array
     * of those values.
     *
-	* @param    string $msg a SOAPx4 soapmsg object
-	* @param    string $soapaction SOAPAction value
-	* @param    integer $timeout set connection timeout in seconds
-	* @param	integer $response_timeout set response timeout in seconds
-	* @return	mixed native PHP types.
-	* @access   private
-	*/
+    * @param    string $msg a SOAPx4 soapmsg object
+    * @param    string $soapaction SOAPAction value
+    * @param    integer $timeout set connection timeout in seconds
+    * @param	integer $response_timeout set response timeout in seconds
+    * @return	mixed native PHP types.
+    * @access   private
+    */
     public function send($msg, $soapaction = '', $timeout=0, $response_timeout=30)
     {
         $this->checkCookies();
         // detect transport
         switch (true) {
-			// http(s)
-			case preg_match('/^http/', $this->endpoint):
-				$this->debug('transporting via HTTP');
-				if ($this->persistentConnection == true && is_object($this->persistentConnection)) {
-				    $http =& $this->persistentConnection;
-				} else {
-				    $http = new soap_transport_http($this->endpoint, $this->curl_options, $this->use_curl);
-				    if ($this->persistentConnection) {
-				        $http->usePersistentConnection();
-				    }
-				}
-				$http->setContentType($this->getHTTPContentType(), $this->getHTTPContentTypeCharset());
-				$http->setSOAPAction($soapaction);
-				if ($this->proxyhost && $this->proxyport) {
-				    $http->setProxy($this->proxyhost, $this->proxyport, $this->proxyusername, $this->proxypassword);
-				}
+            // http(s)
+            case preg_match('/^http/', $this->endpoint):
+                $this->debug('transporting via HTTP');
+                if ($this->persistentConnection == true && is_object($this->persistentConnection)) {
+                    $http =& $this->persistentConnection;
+                } else {
+                    $http = new soap_transport_http($this->endpoint, $this->curl_options, $this->use_curl);
+                    if ($this->persistentConnection) {
+                        $http->usePersistentConnection();
+                    }
+                }
+                $http->setContentType($this->getHTTPContentType(), $this->getHTTPContentTypeCharset());
+                $http->setSOAPAction($soapaction);
+                if ($this->proxyhost && $this->proxyport) {
+                    $http->setProxy($this->proxyhost, $this->proxyport, $this->proxyusername, $this->proxypassword);
+                }
                 if ($this->authtype != '') {
                     $http->setCredentials($this->username, $this->password, $this->authtype, array(), $this->certRequest);
                 }
-				if ($this->http_encoding != '') {
-				    $http->setEncoding($this->http_encoding);
-				}
-				$this->debug('sending message, length='.strlen($msg));
-				if (preg_match('/^http:/', $this->endpoint)) {
-				    //if(strpos($this->endpoint,'http:')){
-				    $this->responseData = $http->send($msg, $timeout, $response_timeout, $this->cookies);
-				} elseif (preg_match('/^https/', $this->endpoint)) {
-				    //} elseif(strpos($this->endpoint,'https:')){
-				    //if(phpversion() == '4.3.0-dev'){
-				    //$response = $http->send($msg,$timeout,$response_timeout);
-				    //$this->request = $http->outgoing_payload;
-				    //$this->response = $http->incoming_payload;
-				    //} else
-				    $this->responseData = $http->sendHTTPS($msg, $timeout, $response_timeout, $this->cookies);
-				} else {
-				    $this->setError('no http/s in endpoint url');
-				}
-				$this->request = $http->outgoing_payload;
-				$this->response = $http->incoming_payload;
-				$this->appendDebug($http->getDebug());
-				$this->UpdateCookies($http->incoming_cookies);
+                if ($this->http_encoding != '') {
+                    $http->setEncoding($this->http_encoding);
+                }
+                $this->debug('sending message, length='.strlen($msg));
+                if (preg_match('/^http:/', $this->endpoint)) {
+                    //if(strpos($this->endpoint,'http:')){
+                    $this->responseData = $http->send($msg, $timeout, $response_timeout, $this->cookies);
+                } elseif (preg_match('/^https/', $this->endpoint)) {
+                    //} elseif(strpos($this->endpoint,'https:')){
+                    //if(phpversion() == '4.3.0-dev'){
+                    //$response = $http->send($msg,$timeout,$response_timeout);
+                    //$this->request = $http->outgoing_payload;
+                    //$this->response = $http->incoming_payload;
+                    //} else
+                    $this->responseData = $http->sendHTTPS($msg, $timeout, $response_timeout, $this->cookies);
+                } else {
+                    $this->setError('no http/s in endpoint url');
+                }
+                $this->request = $http->outgoing_payload;
+                $this->response = $http->incoming_payload;
+                $this->appendDebug($http->getDebug());
+                $this->UpdateCookies($http->incoming_cookies);
 
-				// save transport object if using persistent connections
-				if ($this->persistentConnection) {
-				    $http->clearDebug();
-				    if (!is_object($this->persistentConnection)) {
-				        $this->persistentConnection = $http;
-				    }
-				}
-				
-				if ($err = $http->getError()) {
-				    $this->setError('HTTP Error: '.$err);
-				    return false;
-				} elseif ($this->getError()) {
-				    return false;
-				} else {
-				    $this->debug('got response, length='. strlen($this->responseData).' type='.$http->incoming_headers['content-type']);
-				    return $this->parseResponse($http->incoming_headers, $this->responseData);
-				}
-			break;
-			default:
-				$this->setError('no transport found, or selected transport is not yet supported!');
-			return false;
-			break;
-		}
+                // save transport object if using persistent connections
+                if ($this->persistentConnection) {
+                    $http->clearDebug();
+                    if (!is_object($this->persistentConnection)) {
+                        $this->persistentConnection = $http;
+                    }
+                }
+                
+                if ($err = $http->getError()) {
+                    $this->setError('HTTP Error: '.$err);
+                    return false;
+                } elseif ($this->getError()) {
+                    return false;
+                } else {
+                    $this->debug('got response, length='. strlen($this->responseData).' type='.$http->incoming_headers['content-type']);
+                    return $this->parseResponse($http->incoming_headers, $this->responseData);
+                }
+            break;
+            default:
+                $this->setError('no transport found, or selected transport is not yet supported!');
+            return false;
+            break;
+        }
     }
 
     /**
@@ -795,7 +795,7 @@ class nusoap_client extends nusoap_base
         $this->authtype = $authtype;
         $this->certRequest = $certRequest;
     }
-	
+    
     /**
     * use HTTP encoding
     *
@@ -807,7 +807,7 @@ class nusoap_client extends nusoap_base
         $this->debug("setHTTPEncoding(\"$enc\")");
         $this->http_encoding = $enc;
     }
-	
+    
     /**
     * Set whether to try to use cURL connections if possible
     *
@@ -830,7 +830,7 @@ class nusoap_client extends nusoap_base
         $this->debug("useHTTPPersistentConnection");
         $this->persistentConnection = true;
     }
-	
+    
     /**
     * gets the default RPC parameter setting.
     * If true, default is that call params are like RPC even for document style.
@@ -862,7 +862,7 @@ class nusoap_client extends nusoap_base
     {
         $this->defaultRpcParams = $rpcParams;
     }
-	
+    
     /**
     * dynamically creates an instance of a proxy class,
     * allowing user to directly call methods from wsdl
@@ -996,7 +996,7 @@ class nusoap_client extends nusoap_base
     {
         return $soapmsg;
     }
-	
+    
     /**
     * gets the HTTP content type for the current request.
     *
@@ -1009,7 +1009,7 @@ class nusoap_client extends nusoap_base
     {
         return 'text/xml';
     }
-	
+    
     /**
     * gets the HTTP content type charset for the current request.
     * returns false for non-text content types.

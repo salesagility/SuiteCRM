@@ -50,8 +50,10 @@ class SoapHelperWebServices
 {
     public function get_field_list($value, $fields, $translate = true)
     {
-        $GLOBALS['log']->info('Begin: SoapHelperWebServices->get_field_list(' . print_r($value,
-                true) . ', ' . print_r($fields, true) . ", $translate");
+        $GLOBALS['log']->info('Begin: SoapHelperWebServices->get_field_list(' . print_r(
+            $value,
+                true
+        ) . ', ' . print_r($fields, true) . ", $translate");
         $module_fields = array();
         $link_fields = array();
         if (!empty($value->field_defs)) {
@@ -98,8 +100,10 @@ class SoapHelperWebServices
                     $link_fields[$var['name']] = $entry;
                 } else {
                     if ($translate) {
-                        $entry['label'] = isset($var['vname']) ? translate($var['vname'],
-                            $value->module_dir) : $var['name'];
+                        $entry['label'] = isset($var['vname']) ? translate(
+                            $var['vname'],
+                            $value->module_dir
+                        ) : $var['name'];
                     } else {
                         $entry['label'] = isset($var['vname']) ? $var['vname'] : $var['name'];
                     }
@@ -418,8 +422,10 @@ class SoapHelperWebServices
                 $GLOBALS['log']->info('End: SoapHelperWebServices->check_modules_access - FAILED: write action on read_only module only available to admins');
 
                 return false;
-            } elseif ($action == 'write' && strcmp(strtolower($module_name),
-                    'users') == 0 && !$user->isAdminForModule($module_name)
+            } elseif ($action == 'write' && strcmp(
+                strtolower($module_name),
+                    'users'
+            ) == 0 && !$user->isAdminForModule($module_name)
             ) {
                 //rrs bug: 46000 - If the client is trying to write to the Users module and is not an admin then we need to stop them
                 return false;
@@ -542,8 +548,10 @@ class SoapHelperWebServices
         } // if
         $GLOBALS['log']->info('End: SoapHelperWebServices->get_name_value_list_for_fields');
         if ($this->isLogLevelDebug()) {
-            $GLOBALS['log']->debug('SoapHelperWebServices->get_name_value_list_for_fields - return data = ' . var_export($list,
-                    true));
+            $GLOBALS['log']->debug('SoapHelperWebServices->get_name_value_list_for_fields - return data = ' . var_export(
+                $list,
+                    true
+            ));
         } // if
 
         return $list;
@@ -709,8 +717,10 @@ class SoapHelperWebServices
         }
 
         if ($this->isLogLevelDebug()) {
-            $GLOBALS['log']->debug('SoapHelperWebServices->get_return_value_for_link_fields - link info = ' . var_export($link_name_to_value_fields_array,
-                    true));
+            $GLOBALS['log']->debug('SoapHelperWebServices->get_return_value_for_link_fields - link info = ' . var_export(
+                $link_name_to_value_fields_array,
+                    true
+            ));
         } // if
         $link_output = array();
         foreach ($link_name_to_value_fields_array as $link_name_value_fields) {
@@ -745,8 +755,10 @@ class SoapHelperWebServices
         } // foreach
         $GLOBALS['log']->debug('End: SoapHelperWebServices->get_return_value_for_link_fields');
         if ($this->isLogLevelDebug()) {
-            $GLOBALS['log']->debug('SoapHelperWebServices->get_return_value_for_link_fields - output = ' . var_export($link_output,
-                    true));
+            $GLOBALS['log']->debug('SoapHelperWebServices->get_return_value_for_link_fields - output = ' . var_export(
+                $link_output,
+                    true
+            ));
         } // if
 
         return $link_output;
@@ -1147,14 +1159,22 @@ class SoapHelperWebServices
             } else {
                 foreach ($contacts as $contact) {
                     if (!empty($trimmed_last) && strcmp($trimmed_last, $contact->last_name) == 0) {
-                        if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp($trimmed_email,
-                                    $contact->email1) == 0 || strcmp($trimmed_email,
-                                    $contact->email2) == 0 || strcmp($trimmed_email2,
-                                    $contact->email) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
+                        if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp(
+                            $trimmed_email,
+                                    $contact->email1
+                        ) == 0 || strcmp(
+                                        $trimmed_email,
+                                    $contact->email2
+                                    ) == 0 || strcmp(
+                                        $trimmed_email2,
+                                    $contact->email
+                                    ) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
                         ) {
                             $contact->load_relationship('accounts');
-                            if (empty($seed->account_name) || strcmp($seed->account_name,
-                                    $contact->account_name) == 0
+                            if (empty($seed->account_name) || strcmp(
+                                $seed->account_name,
+                                    $contact->account_name
+                            ) == 0
                             ) {
                                 $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - duplicte found ' . $contact->id);
 

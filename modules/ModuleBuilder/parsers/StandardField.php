@@ -124,7 +124,8 @@ class StandardField extends DynamicField
                    
             // Bug 37043 - Avoid writing out vardef defintions that are the default value.
             if (isset($newDef[$property]) &&
-                ((!isset($currdef[$property]) && !$this->isDefaultValue($property, $newDef[$property], $this->baseField))
+                (
+                    (!isset($currdef[$property]) && !$this->isDefaultValue($property, $newDef[$property], $this->baseField))
                     || (isset($currdef[$property]) && $currdef[$property] != $newDef[$property])
                 )
             ) {

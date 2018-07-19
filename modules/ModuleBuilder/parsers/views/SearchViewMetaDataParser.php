@@ -51,9 +51,9 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
      * @var array $variableMap
      */
     public static $variableMap = array(
-    						MB_BASICSEARCH => 'basic_search' ,
-    						MB_ADVANCEDSEARCH => 'advanced_search' ,
-    						) ;
+                            MB_BASICSEARCH => 'basic_search' ,
+                            MB_ADVANCEDSEARCH => 'advanced_search' ,
+                            ) ;
 
     /**
      * Columns is used by the view to construct the listview - each column is built by calling the named function
@@ -139,16 +139,16 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
                 return true;
             }
         }
-		
+        
         if (isset($def [ 'studio' ]) && is_array($def [ 'studio' ]) && isset($def [ 'studio' ]['searchview'])) {
             return $def [ 'studio' ]['searchview'] !== false &&
                   ($def [ 'studio' ]['searchview'] === true || $def [ 'studio' ]['searchview'] != 'false');
         }
-		
+        
         if (!parent::isValidField($key, $def)) {
             return false;
         }
-    	
+        
         //Special case to prevent multiple copies of assigned, modified, or created by user on the search view
         if (empty($def[ 'studio' ]) && $key == "assigned_user_name") {
             $origDefs = $this->getOriginalViewDefs();

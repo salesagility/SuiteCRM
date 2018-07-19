@@ -54,7 +54,7 @@ class ProspectFormBase
     {
         global $local_log;
         require_once('include/formbase.php');
-	
+    
         $focus = new Prospect();
         if (!checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -83,7 +83,7 @@ class ProspectFormBase
 
         if (!empty($query)) {
             $rows = array();
-		
+        
             $db = DBManagerFactory::getInstance();
             $result = $db->query($query.');');
             while ($row = $db->fetchByAssoc($result)) {
@@ -137,7 +137,7 @@ class ProspectFormBase
             if ($action != 'ShowDuplicates') {
                 $form .= "<td width='1%' nowrap='nowrap' ><a href='#' onClick=\"document.dupProspects.selectedProspect.value='${row['id']}';document.dupProspects.submit() \">[${app_strings['LBL_SELECT_BUTTON_LABEL']}]</a>&nbsp;&nbsp;</td>\n";
             }
-		
+        
             $wasSet = false;
 
             foreach ($row as $key=>$value) {
@@ -171,7 +171,7 @@ class ProspectFormBase
         if (!ACLController::checkAccess('Prospects', 'edit', true)) {
             return '';
         }
-	
+    
         if (empty($prospect)) {
             $prospect = new Prospect();
         }
@@ -400,15 +400,15 @@ EOQ;
     public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $theme;
-	
-	
-	
-	
+    
+    
+    
+    
         require_once('include/formbase.php');
-	
+    
         global $timedate;
-	
-	
+    
+    
         $focus = new Prospect();
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -420,14 +420,14 @@ EOQ;
         if (!isset($GLOBALS['check_notify'])) {
             $GLOBALS['check_notify']=false;
         }
-	
+    
         if (!isset($_POST[$prefix.'email_opt_out'])) {
             $focus->email_opt_out = 0;
         }
         if (!isset($_POST[$prefix.'do_not_call'])) {
             $focus->do_not_call = 0;
         }
-	
+    
         if (empty($_POST['record']) && empty($_POST['dup_checked'])) {
             /*
             // we don't check dupes on Prospects - this is the dirtiest data in the system

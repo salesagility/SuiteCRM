@@ -310,7 +310,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
                 $relationship_name = $dataSource;
                 //Try to set the relationship name to the real relationship, not the link.
                 if (!empty($defines['subpanel_definition']->parent_bean->field_defs[$dataSource])
-				 && !empty($defines['subpanel_definition']->parent_bean->field_defs[$dataSource]['relationship'])) {
+                 && !empty($defines['subpanel_definition']->parent_bean->field_defs[$dataSource]['relationship'])) {
                     $relationship_name = $defines['subpanel_definition']->parent_bean->field_defs[$dataSource]['relationship'];
                 }
             }

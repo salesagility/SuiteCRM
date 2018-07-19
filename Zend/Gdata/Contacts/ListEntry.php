@@ -85,7 +85,6 @@ require_once 'Zend/Gdata/Extension/Where.php';
  */
 class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
 {
-
     protected $_names = null;
     protected $_birthday = null;
     protected $_phones = array();
@@ -162,48 +161,46 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
                         'team_name' => '', 'assigned_user_name' => ''
                         );
 
-        if($this->_names != null)
-            $entry = array_merge($entry, $this->_names->toArray() );
+        if ($this->_names != null) {
+            $entry = array_merge($entry, $this->_names->toArray());
+        }
 
         //Get the self link so we can query for the contact details at a later date
-        foreach($this->_link as $linkEntry)
-        {
+        foreach ($this->_link as $linkEntry) {
             $linkRel = $linkEntry->getRel();
-            if( $linkRel != null && $linkRel == "self" )
-            {
+            if ($linkRel != null && $linkRel == "self") {
                 continue;
             }
         }
 
         //Get addresses
-        foreach($this->_addresses as $address)
-        {
-            $entry = array_merge($entry, $address->toArray() );
+        foreach ($this->_addresses as $address) {
+            $entry = array_merge($entry, $address->toArray());
         }
         //Process phones
-        foreach($this->_phones as $phoneEntry)
-        {
+        foreach ($this->_phones as $phoneEntry) {
             $key = "phone_" . $phoneEntry->getPhoneType();
             $entry[$key] = $phoneEntry->getNumber();
         }
 
         //Process emails
-         $entry = array_merge($entry, $this->getEmailAddresses() );
+        $entry = array_merge($entry, $this->getEmailAddresses());
 
         //Get Notes
-        if($this->_content != null)
+        if ($this->_content != null) {
             $entry['notes'] = $this->getContent()->getText();
+        }
 
         //ID
         $entry['id'] = $this->getId()->getText();
 
         //Birthday
-        if($this->_birthday != null)
+        if ($this->_birthday != null) {
             $entry['birthday'] = $this->_birthday->getBirthday();
+        }
 
         //Organization name and title
-        if($this->_organization != null)
-        {
+        if ($this->_organization != null) {
             $entry['account_name'] = $this->_organization->getOrganizationName();
             $entry['title'] = $this->_organization->getOrganizationTitle();
         }
@@ -215,31 +212,31 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
     {
         $results = array();
         $primaryEmail = $this->getPrimaryEmail();
-        if($primaryEmail !== false)
+        if ($primaryEmail !== false) {
             $results['email1'] =  $primaryEmail;
-        else
-        {
+        } else {
             $nonPrimaryEmail = $this->getNextNonPrimaryEmail();
-            if($nonPrimaryEmail !== false)
+            if ($nonPrimaryEmail !== false) {
                 $results['email1'] = $nonPrimaryEmail;
-            else
+            } else {
                 return array();
+            }
         }
 
         $secondaryEmail = $this->getNextNonPrimaryEmail();
-        if($secondaryEmail !== false)
+        if ($secondaryEmail !== false) {
             $results['email2'] = $secondaryEmail;
+        }
         
         return $results;
-
     }
     protected function getPrimaryEmail()
     {
         $results = false;
-        foreach($this->_emails as $emailEntry)
-        {
-            if( $emailEntry->isPrimary() )
+        foreach ($this->_emails as $emailEntry) {
+            if ($emailEntry->isPrimary()) {
                 return $emailEntry->getEmail();
+            }
         }
         return $results;
     }
@@ -247,10 +244,8 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
     protected function getNextNonPrimaryEmail()
     {
         $results = false;
-        foreach($this->_emails as $k => $emailEntry)
-        {
-            if( !$emailEntry->isPrimary() )
-            {
+        foreach ($this->_emails as $k => $emailEntry) {
+            if (!$emailEntry->isPrimary()) {
                 $results = $emailEntry->getEmail();
                 unset($this->_emails[$k]);
                 return $results;
@@ -258,5 +253,4 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
         }
         return $results;
     }
-
 }

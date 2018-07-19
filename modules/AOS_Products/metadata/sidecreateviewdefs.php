@@ -31,13 +31,13 @@ global $mod_strings;
 $module_name = 'AOS_Products';
 $viewdefs[$module_name]['SideQuickCreate'] = array(
     'templateMeta' => array('form'=>array('buttons'=>array('SAVE'),
-    								      'button_location'=>'bottom',
+                                          'button_location'=>'bottom',
                                           'headerTpl'=>'include/EditView/header.tpl',
                                           'footerTpl'=>'include/EditView/footer.tpl',
                                           ),
-							'maxColumns' => '1',
-							'panelClass'=>'none',
-							'labelsOnTop'=>true,
+                            'maxColumns' => '1',
+                            'panelClass'=>'none',
+                            'labelsOnTop'=>true,
                             'widths' => array(
                                             array('label' => '10', 'field' => '30'),
                                          ),

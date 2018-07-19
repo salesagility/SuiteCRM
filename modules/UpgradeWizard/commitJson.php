@@ -61,26 +61,26 @@ if (!isset($sugar_config) || empty($sugar_config)) {
 $persistence = getPersistence();
 
 switch ($_REQUEST['commitStep']) {
-	case 'run_sql':
-		ob_end_flush();
-		logThis('commitJson->runSql() called.');
-		$persistence = commitAjaxRunSql($persistence);
-	break;
+    case 'run_sql':
+        ob_end_flush();
+        logThis('commitJson->runSql() called.');
+        $persistence = commitAjaxRunSql($persistence);
+    break;
 
-	case 'get_errors':
-		logThis('commitJson->getErrors() called.');
-		commitAjaxGetSqlErrors($persistence);
-	break;
-	
-	case 'post_install':
-		logThis('commitJson->postInstall() called.');
-		commitAjaxPostInstall($persistence);
-	break;
-	
-	case 'final_touches':
-		logThis('commitJson->finalTouches() called.');
-		$persistence = commitAjaxFinalTouches($persistence);
-	break;
+    case 'get_errors':
+        logThis('commitJson->getErrors() called.');
+        commitAjaxGetSqlErrors($persistence);
+    break;
+    
+    case 'post_install':
+        logThis('commitJson->postInstall() called.');
+        commitAjaxPostInstall($persistence);
+    break;
+    
+    case 'final_touches':
+        logThis('commitJson->finalTouches() called.');
+        $persistence = commitAjaxFinalTouches($persistence);
+    break;
 }
 
 savePersistence($persistence);

@@ -167,8 +167,8 @@ class json_config
             $focus->load_relationships('users');
             $users=$focus->get_linked_beans('am_projecttemplates_users_1', 'User');
         }
-		
-		
+        
+        
         $module_arr['users_arr'] = array();
 
         foreach ($users as $user) {
@@ -231,7 +231,7 @@ class json_config
         require_once('include/utils/db_utils.php');
         $all_fields = $focus->column_fields;
         // MEETING SPECIFIC
-		$all_fields = array_merge($all_fields, array('required','accept_status','name')); // need name field for contacts and users
+        $all_fields = array_merge($all_fields, array('required','accept_status','name')); // need name field for contacts and users
         $all_fields = $this->listFilter($focus->module_dir, $all_fields);
         //$all_fields = array_merge($focus->column_fields,$focus->additional_column_fields);
 

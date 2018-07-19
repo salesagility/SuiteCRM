@@ -41,7 +41,7 @@
 class ViewNoaccess extends SugarView
 {
     public $type = 'noaccess';
-	
+    
     /**
      * @see SugarView::display()
      */

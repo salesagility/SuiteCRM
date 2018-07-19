@@ -423,6 +423,4 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
         $this->_entryLink = $value;
         return $this;
     }
-
-
 }

@@ -98,7 +98,8 @@ class SyncInboundEmailAccountsSubActionHandler
 
                 default:
                     throw new SyncInboundEmailAccountsNoMethodException(
-                        "trying to call an unsupported method: " . $subAction);
+                        "trying to call an unsupported method: " . $subAction
+                    );
 
             }
         } catch (SyncInboundEmailAccountsException $e) {
@@ -114,8 +115,11 @@ class SyncInboundEmailAccountsSubActionHandler
                     break;
 
                 default:
-                    throw new SyncInboundEmailAccountsException("Unknown error in sync process, see previous exception",
-                        SyncInboundEmailAccountsException::UNKNOWN_ERROR, $e);
+                    throw new SyncInboundEmailAccountsException(
+                        "Unknown error in sync process, see previous exception",
+                        SyncInboundEmailAccountsException::UNKNOWN_ERROR,
+                        $e
+                    );
 
             }
         }
@@ -140,7 +144,8 @@ class SyncInboundEmailAccountsSubActionHandler
             // validate for correct method
             if (!is_string($ret)) {
                 throw new SyncInboundEmailAccountsInvalidMethodTypeException(
-                    "Method name should be a string but received type is: " . gettype($ret));
+                    "Method name should be a string but received type is: " . gettype($ret)
+                );
             }
         }
 
@@ -295,8 +300,10 @@ class SyncInboundEmailAccountsSubActionHandler
     {
         if (file_exists(self::PROCESS_OUTPUT_FILE)) {
             if (!unlink(self::PROCESS_OUTPUT_FILE)) {
-                throw new SyncInboundEmailAccountsException("Unable to cleanup output file. Please check permission..",
-                    SyncInboundEmailAccountsException::PROCESS_OUTPUT_CLEANUP_ERROR);
+                throw new SyncInboundEmailAccountsException(
+                    "Unable to cleanup output file. Please check permission..",
+                    SyncInboundEmailAccountsException::PROCESS_OUTPUT_CLEANUP_ERROR
+                );
             }
         }
     }
@@ -309,8 +316,10 @@ class SyncInboundEmailAccountsSubActionHandler
     {
         $msg = "{$msg}<br>";
         if (false === file_put_contents(self::PROCESS_OUTPUT_FILE, $msg, FILE_APPEND)) {
-            throw new SyncInboundEmailAccountsException("Unable to write output file. Please check permission..",
-                SyncInboundEmailAccountsException::PROCESS_OUTPUT_WRITE_ERROR);
+            throw new SyncInboundEmailAccountsException(
+                "Unable to write output file. Please check permission..",
+                SyncInboundEmailAccountsException::PROCESS_OUTPUT_WRITE_ERROR
+            );
         }
     }
 

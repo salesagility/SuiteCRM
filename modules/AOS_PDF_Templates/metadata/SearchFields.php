@@ -28,15 +28,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $searchFields['AOS_PDF_Templates'] =
-	array(
-		'name' => array( 'query_type'=>'default'),
-		'current_user_only'=> array('query_type'=>'default','db_field'=>array('created_by'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
-		'assigned_user_id'=> array('query_type'=>'default'),
+    array(
+        'name' => array( 'query_type'=>'default'),
+        'current_user_only'=> array('query_type'=>'default','db_field'=>array('created_by'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+        'assigned_user_id'=> array('query_type'=>'default'),
         'favorites_only' => array(
             'query_type'=>'format',
             'operator' => 'subquery',
-			'checked_only' => true,
-			'subquery' => "SELECT favorites.parent_id FROM favorites
+            'checked_only' => true,
+            'subquery' => "SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
 			                        and favorites.parent_type = 'AOS_PDF_Templates'
 			                        and favorites.assigned_user_id = '{1}'",

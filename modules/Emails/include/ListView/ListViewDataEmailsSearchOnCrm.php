@@ -229,9 +229,11 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
                             $additionalDetailsFile = 'custom/modules/' . $this->lvde->seed->module_dir . '/metadata/additionalDetails.php';
                         }
                         require_once($additionalDetailsFile);
-                        $ar = $this->lvde->getAdditionalDetails($data[$dataIndex],
+                        $ar = $this->lvde->getAdditionalDetails(
+                            $data[$dataIndex],
                             (empty($this->lvde->additionalDetailsFunction) ? 'additionalDetails' : $this->lvde->additionalDetailsFunction) . $this->lvde->seed->object_name,
-                            $additionalDetailsEdit);
+                            $additionalDetailsEdit
+                        );
                     }
                     $pageData['additionalDetails'][$dataIndex] = $ar['string'];
                     $pageData['additionalDetails']['fieldToAddTo'] = $ar['fieldToAddTo'];

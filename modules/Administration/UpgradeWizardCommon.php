@@ -75,10 +75,10 @@ if (!defined('SUGARCRM_PRE_INSTALL_FILE')) {
     define('SUGARCRM_POST_UNINSTALL_FILE', 'scripts/post_uninstall.php');
 }
 $script_files = array(
-	"pre-install" => constant('SUGARCRM_PRE_INSTALL_FILE'),
-	"post-install" => constant('SUGARCRM_POST_INSTALL_FILE'),
-	"pre-uninstall" => constant('SUGARCRM_PRE_UNINSTALL_FILE'),
-	"post-uninstall" => constant('SUGARCRM_POST_UNINSTALL_FILE'),
+    "pre-install" => constant('SUGARCRM_PRE_INSTALL_FILE'),
+    "post-install" => constant('SUGARCRM_POST_INSTALL_FILE'),
+    "pre-uninstall" => constant('SUGARCRM_PRE_UNINSTALL_FILE'),
+    "post-uninstall" => constant('SUGARCRM_POST_UNINSTALL_FILE'),
 );
 
 
@@ -219,7 +219,7 @@ function getDiffFiles($unzip_dir, $install_file, $is_install = true, $previous_v
             }//fi
         }//fi
     }//fi
-	$modified_files = array();
+    $modified_files = array();
     if (!empty($installdefs['copy'])) {
         foreach ($installdefs['copy'] as $cp) {
             $cp['to'] = clean_path(str_replace('<basepath>', $unzip_dir, $cp['to']));
@@ -243,5 +243,5 @@ function getDiffFiles($unzip_dir, $install_file, $is_install = true, $previous_v
             }//fi
         }//rof
     }//fi
-	return $modified_files;
+    return $modified_files;
 }

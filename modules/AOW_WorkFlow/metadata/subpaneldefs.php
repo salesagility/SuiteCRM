@@ -27,16 +27,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $layout_defs['AOW_WorkFlow'] = array(
-	'subpanel_setup' => array(
-		'aow_processed' =>
- 		array(
-  			'order' => 100,
-			'module' => 'AOW_Processed',
-			'subpanel_name' => 'default',
-			'sort_order' => 'desc',
-			'sort_by' => 'date_entered',
-			'title_key' => 'AOW_Processed',
-			'get_subpanel_data' => 'aow_processed',
-		),
+    'subpanel_setup' => array(
+        'aow_processed' =>
+        array(
+            'order' => 100,
+            'module' => 'AOW_Processed',
+            'subpanel_name' => 'default',
+            'sort_order' => 'desc',
+            'sort_by' => 'date_entered',
+            'title_key' => 'AOW_Processed',
+            'get_subpanel_data' => 'aow_processed',
+        ),
     ),
 );

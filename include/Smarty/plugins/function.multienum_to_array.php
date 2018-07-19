@@ -81,12 +81,12 @@ function smarty_function_multienum_to_array($params, &$smarty)
             $ret = unencodeMultienum($params['string']);
         }
     }
-	
+    
     
     if (!empty($params['assign'])) {
         $smarty->assign($params['assign'], $ret);
         return "";
     }
-	
+    
     return ($ret);
 }

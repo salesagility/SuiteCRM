@@ -88,7 +88,7 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
         } elseif ($current_module === 'ACLRoles' && (!ACLController::checkAccess($current_module, 'edit', true))) {
             $hideremove = true;
         }
-		
+        
         $return_module = $_REQUEST['module'];
         $return_action = 'SubPanelViewer';
         $subpanel = $layout_def['subpanel_id'];

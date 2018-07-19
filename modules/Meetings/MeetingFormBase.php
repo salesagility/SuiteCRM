@@ -193,7 +193,7 @@ EOQ;
             $_POST['reminder_time'] = $current_user->getPreference('reminder_time');
             $_POST['reminder_checked']=1;
         }
-	
+    
         if (!isset($_POST['email_reminder_checked']) || (isset($_POST['email_reminder_checked']) && $_POST['email_reminder_checked'] == '0')) {
             $_POST['email_reminder_time'] = -1;
         }
@@ -201,10 +201,10 @@ EOQ;
             $_POST['email_reminder_time'] = $current_user->getPreference('email_reminder_time');
             $_POST['email_reminder_checked'] = 1;
         }
-	
+    
         // don't allow to set recurring_source from a form
         unset($_POST['recurring_source']);
-	
+    
         $time_format = $timedate->get_user_time_format();
         $time_separator = ":";
         if (preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
@@ -391,9 +391,9 @@ EOQ;
                     $focus->leads_arr[] = $_POST['parent_id'];
                 }
                 // Call the Meeting module's save function to handle saving other fields besides
-	    	// the users and contacts relationships
+            // the users and contacts relationships
             $focus->update_vcal = false;    // Bug #49195 : don't update vcal b/s related users aren't saved yet, create vcal cache below
-	    	$focus->save(true);
+            $focus->save(true);
                 $return_id = $focus->id;
                 if (empty($return_id)) {
                     //this is to handle the situation where the save fails, most likely because of a failure
@@ -477,7 +477,7 @@ EOQ;
                 }
 
                 ////	END REBUILD INVITEE RELATIONSHIPS
-	    	///////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////
             }
         }
 

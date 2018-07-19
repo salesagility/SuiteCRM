@@ -89,17 +89,25 @@ if (class_exists("ZipArchive")) {
 
         $archive = new PclZip($zip_archive);
         if ($forceOverwrite) {
-            if ($archive->extract(PCLZIP_OPT_BY_NAME, $archive_file,
-                                PCLZIP_OPT_PATH,    $to_dir,
-                                PCLZIP_OPT_REPLACE_NEWER) == 0) {
+            if ($archive->extract(
+                PCLZIP_OPT_BY_NAME,
+                $archive_file,
+                                PCLZIP_OPT_PATH,
+                $to_dir,
+                                PCLZIP_OPT_REPLACE_NEWER
+            ) == 0) {
                 if (!defined('SUITE_PHPUNIT_RUNNER')) {
                     die("Error: " . $archive->errorInfo(true));
                 }
                 return false;
             }
         } else {
-            if ($archive->extract(PCLZIP_OPT_BY_NAME, $archive_file,
-                                PCLZIP_OPT_PATH, $to_dir) == 0) {
+            if ($archive->extract(
+                PCLZIP_OPT_BY_NAME,
+                $archive_file,
+                                PCLZIP_OPT_PATH,
+                $to_dir
+            ) == 0) {
                 if (!defined('SUITE_PHPUNIT_RUNNER')) {
                     die("Error: " . $archive->errorInfo(true));
                 }

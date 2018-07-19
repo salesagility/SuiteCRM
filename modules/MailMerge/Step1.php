@@ -160,8 +160,8 @@ if (isset($_SESSION['MAILMERGE_RECORD'])) {
 
 
         if ($rModule != 'Contacts'
-    	   && $rModule != 'Leads' && $rModule != 'Products' && $rModule != 'Campaigns' && $rModule != 'Projects'
-    	   ) {
+           && $rModule != 'Leads' && $rModule != 'Products' && $rModule != 'Campaigns' && $rModule != 'Projects'
+           ) {
             $_SESSION['MAILMERGE_SKIP_REL'] = false;
             $xtpl->assign("STEP", "2");
             $xtpl->assign("SELECTED_OBJECTS", $selected_objects);
@@ -210,12 +210,12 @@ $xtpl->parse("main");
 $xtpl->out("main");
 
 /*function get_user_module_list($user){
-	global $app_list_strings, $current_language;
-	$app_list_strings = return_app_list_strings_language($current_language);
-	$modules = query_module_access_list($user);
-	global $modInvisList;
+    global $app_list_strings, $current_language;
+    $app_list_strings = return_app_list_strings_language($current_language);
+    $modules = query_module_access_list($user);
+    global $modInvisList;
 
-	return $modules;
+    return $modules;
 }*/
 
 function getDocumentRevisions()

@@ -42,7 +42,6 @@ require_once 'Zend/Gdata/YouTube/Extension/State.php';
  */
 class Zend_Gdata_YouTube_Extension_Control extends Zend_Gdata_App_Extension_Control
 {
-
     protected $_state = null;
 
     /**
@@ -127,7 +126,6 @@ class Zend_Gdata_YouTube_Extension_Control extends Zend_Gdata_App_Extension_Cont
     */
     public function getStateValue()
     {
-      return $this->getState()->getText();
+        return $this->getState()->getText();
     }
-
 }

@@ -79,18 +79,18 @@ $history_list = array();
 foreach ($focus_tasks_list as $task) {
     if ($task->status != "Not Started" && $task->status != "In Progress" && $task->status != "Pending Input") {
         $history_list[] = array('name' => $task->name,
-									 'id' => $task->id,
-									 'type' => "Task",
-									 'direction' => '',
-									 'module' => "Tasks",
-									 'status' => $task->status,
-									 'parent_id' => $task->parent_id,
-									 'parent_type' => $task->parent_type,
-									 'parent_name' => $task->parent_name,
-									 'contact_id' => $task->contact_id,
-									 'contact_name' => $task->contact_name,
-									 'date_modified' => $timedate->to_display_date($task->date_modified, true),
-									 );
+                                     'id' => $task->id,
+                                     'type' => "Task",
+                                     'direction' => '',
+                                     'module' => "Tasks",
+                                     'status' => $task->status,
+                                     'parent_id' => $task->parent_id,
+                                     'parent_type' => $task->parent_type,
+                                     'parent_name' => $task->parent_name,
+                                     'contact_id' => $task->contact_id,
+                                     'contact_name' => $task->contact_name,
+                                     'date_modified' => $timedate->to_display_date($task->date_modified, true),
+                                     );
     } else {
         if ($task->date_due == '0000-00-00') {
             $date_due = '';
@@ -98,115 +98,115 @@ foreach ($focus_tasks_list as $task) {
             $date_due = $task->date_due;
         }
         $open_activity_list[] = array('name' => $task->name,
-									 'id' => $task->id,
-									 'type' => "Task",
-									 'direction' => '',
-									 'module' => "Tasks",
-									 'status' => $task->status,
-									 'parent_id' => $task->parent_id,
-									 'parent_type' => $task->parent_type,
-									 'parent_name' => $task->parent_name,
-									 'contact_id' => $task->contact_id,
-									 'contact_name' => $task->contact_name,
-									 'date_due' => $date_due
-									 );
+                                     'id' => $task->id,
+                                     'type' => "Task",
+                                     'direction' => '',
+                                     'module' => "Tasks",
+                                     'status' => $task->status,
+                                     'parent_id' => $task->parent_id,
+                                     'parent_type' => $task->parent_type,
+                                     'parent_name' => $task->parent_name,
+                                     'contact_id' => $task->contact_id,
+                                     'contact_name' => $task->contact_name,
+                                     'date_due' => $date_due
+                                     );
     }
 }
 
 foreach ($focus_meetings_list as $meeting) {
     if ($meeting->status != "Planned") {
         $history_list[] = array('name' => $meeting->name,
-									 'id' => $meeting->id,
-									 'type' => "Meeting",
-									 'direction' => '',
-									 'module' => "Meetings",
-									 'status' => $meeting->status,
-									 'parent_id' => $meeting->parent_id,
-									 'parent_type' => $meeting->parent_type,
-									 'parent_name' => $meeting->parent_name,
-									 'contact_id' => $meeting->contact_id,
-									 'contact_name' => $meeting->contact_name,
-									 'date_modified' => $meeting->date_modified
-									 );
+                                     'id' => $meeting->id,
+                                     'type' => "Meeting",
+                                     'direction' => '',
+                                     'module' => "Meetings",
+                                     'status' => $meeting->status,
+                                     'parent_id' => $meeting->parent_id,
+                                     'parent_type' => $meeting->parent_type,
+                                     'parent_name' => $meeting->parent_name,
+                                     'contact_id' => $meeting->contact_id,
+                                     'contact_name' => $meeting->contact_name,
+                                     'date_modified' => $meeting->date_modified
+                                     );
     } else {
         $open_activity_list[] = array('name' => $meeting->name,
-									 'id' => $meeting->id,
-									 'type' => "Meeting",
-									 'direction' => '',
-									 'module' => "Meetings",
-									 'status' => $meeting->status,
-									 'parent_id' => $meeting->parent_id,
-									 'parent_type' => $meeting->parent_type,
-									 'parent_name' => $meeting->parent_name,
-									 'contact_id' => $meeting->contact_id,
-									 'contact_name' => $meeting->contact_name,
-									 'date_due' => $meeting->date_start
-									 );
+                                     'id' => $meeting->id,
+                                     'type' => "Meeting",
+                                     'direction' => '',
+                                     'module' => "Meetings",
+                                     'status' => $meeting->status,
+                                     'parent_id' => $meeting->parent_id,
+                                     'parent_type' => $meeting->parent_type,
+                                     'parent_name' => $meeting->parent_name,
+                                     'contact_id' => $meeting->contact_id,
+                                     'contact_name' => $meeting->contact_name,
+                                     'date_due' => $meeting->date_start
+                                     );
     }
 }
 
 foreach ($focus_calls_list as $call) {
     if ($call->status != "Planned") {
         $history_list[] = array('name' => $call->name,
-									 'id' => $call->id,
-									 'type' => "Call",
-									 'direction' => $call->direction,
-									 'module' => "Calls",
-									 'status' => $call->status,
-									 'parent_id' => $call->parent_id,
-									 'parent_type' => $call->parent_type,
-									 'parent_name' => $call->parent_name,
-									 'contact_id' => $call->contact_id,
-									 'contact_name' => $call->contact_name,
-									 'date_modified' => $call->date_modified
-									 );
+                                     'id' => $call->id,
+                                     'type' => "Call",
+                                     'direction' => $call->direction,
+                                     'module' => "Calls",
+                                     'status' => $call->status,
+                                     'parent_id' => $call->parent_id,
+                                     'parent_type' => $call->parent_type,
+                                     'parent_name' => $call->parent_name,
+                                     'contact_id' => $call->contact_id,
+                                     'contact_name' => $call->contact_name,
+                                     'date_modified' => $call->date_modified
+                                     );
     } else {
         $open_activity_list[] = array('name' => $call->name,
-									 'id' => $call->id,
-									 'direction' => $call->direction,
-									 'type' => "Call",
-									 'module' => "Calls",
-									 'status' => $call->status,
-									 'parent_id' => $call->parent_id,
-									 'parent_type' => $call->parent_type,
-									 'parent_name' => $call->parent_name,
-									 'contact_id' => $call->contact_id,
-									 'contact_name' => $call->contact_name,
-									 'date_due' => $call->date_start
-									 );
+                                     'id' => $call->id,
+                                     'direction' => $call->direction,
+                                     'type' => "Call",
+                                     'module' => "Calls",
+                                     'status' => $call->status,
+                                     'parent_id' => $call->parent_id,
+                                     'parent_type' => $call->parent_type,
+                                     'parent_name' => $call->parent_name,
+                                     'contact_id' => $call->contact_id,
+                                     'contact_name' => $call->contact_name,
+                                     'date_due' => $call->date_start
+                                     );
     }
 }
 
 foreach ($focus_emails_list as $email) {
     $history_list[] = array('name' => $email->name,
-									 'id' => $email->id,
-									 'type' => "Email",
-									 'direction' => '',
-									 'module' => "Emails",
-									 'status' => '',
-									 'parent_id' => $email->parent_id,
-									 'parent_type' => $email->parent_type,
-									 'parent_name' => $email->parent_name,
-									 'contact_id' => $email->contact_id,
-									 'contact_name' => $email->contact_name,
-									 'date_modified' => $email->date_start." ".$email->time_start
-									 );
+                                     'id' => $email->id,
+                                     'type' => "Email",
+                                     'direction' => '',
+                                     'module' => "Emails",
+                                     'status' => '',
+                                     'parent_id' => $email->parent_id,
+                                     'parent_type' => $email->parent_type,
+                                     'parent_name' => $email->parent_name,
+                                     'contact_id' => $email->contact_id,
+                                     'contact_name' => $email->contact_name,
+                                     'date_modified' => $email->date_start." ".$email->time_start
+                                     );
 }
 
 foreach ($focus_notes_list as $note) {
     $history_list[] = array('name' => $note->name,
-									 'id' => $note->id,
-									 'type' => "Note",
-									 'direction' => '',
-									 'module' => "Notes",
-									 'status' => '',
-									 'parent_id' => $note->parent_id,
-									 'parent_type' => $note->parent_type,
-									 'parent_name' => $note->parent_name,
-									 'contact_id' => $note->contact_id,
-									 'contact_name' => $note->contact_name,
-									 'date_modified' => $note->date_modified
-									 );
+                                     'id' => $note->id,
+                                     'type' => "Note",
+                                     'direction' => '',
+                                     'module' => "Notes",
+                                     'status' => '',
+                                     'parent_id' => $note->parent_id,
+                                     'parent_type' => $note->parent_type,
+                                     'parent_name' => $note->parent_name,
+                                     'contact_id' => $note->contact_id,
+                                     'contact_name' => $note->contact_name,
+                                     'date_modified' => $note->date_modified
+                                     );
     if (!empty($note->filename)) {
         $count = count($history_list);
         $count--;
@@ -274,16 +274,16 @@ if (count($open_activity_list) > 0) {
 }
 foreach ($open_activity_list as $activity) {
     $activity_fields = array(
-		'ID' => $activity['id'],
-		'NAME' => $activity['name'],
-		'MODULE' => $activity['module'],
-		'CONTACT_NAME' => $activity['contact_name'],
-		'CONTACT_ID' => $activity['contact_id'],
-		'PARENT_TYPE' => $activity['parent_type'],
-		'PARENT_NAME' => $activity['parent_name'],
-		'PARENT_ID' => $activity['parent_id'],
-		'DATE' => $activity['date_due']
-	);
+        'ID' => $activity['id'],
+        'NAME' => $activity['name'],
+        'MODULE' => $activity['module'],
+        'CONTACT_NAME' => $activity['contact_name'],
+        'CONTACT_ID' => $activity['contact_id'],
+        'PARENT_TYPE' => $activity['parent_type'],
+        'PARENT_NAME' => $activity['parent_name'],
+        'PARENT_ID' => $activity['parent_id'],
+        'DATE' => $activity['date_due']
+    );
 
     if (empty($activity['direction'])) {
         $activity_fields['TYPE'] = $app_list_strings['activity_dom'][$activity['type']];
@@ -294,19 +294,19 @@ foreach ($open_activity_list as $activity) {
         $activity_fields['PARENT_MODULE'] = $activity['parent_type'];
     }
     switch ($activity['type']) {
-		case 'Call':
-			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Calls&status=Held&record=".$activity['id']."&status=Held'>".SugarThemeRegistry::current()->getImage("close_inline", "title=".translate('LBL_LIST_CLOSE', 'Activities')." border='0'", null, null, '.gif', $mod_strings['LBL_LIST_CLOSE'])."</a>";
-			$activity_fields['STATUS'] = $app_list_strings['call_status_dom'][$activity['status']];
-			break;
-		case 'Meeting':
-			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Meetings&status=Held&record=".$activity['id']."&status=Held'>".SugarThemeRegistry::current()->getImage("close_inline", "title=".translate('LBL_LIST_CLOSE', 'Activities')." border='0'", null, null, '.gif', $mod_strings['LBL_LIST_CLOSE'])."</a>";
-			$activity_fields['STATUS'] = $app_list_strings['meeting_status_dom'][$activity['status']];
-			break;
-		case 'Task':
-			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Tasks&status=Completed&record=".$activity['id']."&status=Completed'>".SugarThemeRegistry::current()->getImage("close_inline", "title=".translate('LBL_LIST_CLOSE', 'Activities')." border='0'", null, null, '.gif', $mod_strings['LBL_LIST_CLOSE'])."</a>";
-			$activity_fields['STATUS'] = $app_list_strings['task_status_dom'][$activity['status']];
-			break;
-	}
+        case 'Call':
+            $activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Calls&status=Held&record=".$activity['id']."&status=Held'>".SugarThemeRegistry::current()->getImage("close_inline", "title=".translate('LBL_LIST_CLOSE', 'Activities')." border='0'", null, null, '.gif', $mod_strings['LBL_LIST_CLOSE'])."</a>";
+            $activity_fields['STATUS'] = $app_list_strings['call_status_dom'][$activity['status']];
+            break;
+        case 'Meeting':
+            $activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Meetings&status=Held&record=".$activity['id']."&status=Held'>".SugarThemeRegistry::current()->getImage("close_inline", "title=".translate('LBL_LIST_CLOSE', 'Activities')." border='0'", null, null, '.gif', $mod_strings['LBL_LIST_CLOSE'])."</a>";
+            $activity_fields['STATUS'] = $app_list_strings['meeting_status_dom'][$activity['status']];
+            break;
+        case 'Task':
+            $activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Tasks&status=Completed&record=".$activity['id']."&status=Completed'>".SugarThemeRegistry::current()->getImage("close_inline", "title=".translate('LBL_LIST_CLOSE', 'Activities')." border='0'", null, null, '.gif', $mod_strings['LBL_LIST_CLOSE'])."</a>";
+            $activity_fields['STATUS'] = $app_list_strings['task_status_dom'][$activity['status']];
+            break;
+    }
 
     global $odd_bg;
     global $even_bg;
@@ -339,10 +339,10 @@ echo "<BR>";
 
 //requestdata
 $popup_request_data = array(
-		'call_back_function' => 'set_return',
-		'form_name' => 'EditView',
-		'field_to_name_array' => array(),
-		);
+        'call_back_function' => 'set_return',
+        'form_name' => 'EditView',
+        'field_to_name_array' => array(),
+        );
 
 $json = getJSONobj();
 $encoded_popup_request_data = $json->encode($popup_request_data);
@@ -384,16 +384,16 @@ if (count($history_list) > 0) {
 }
 foreach ($history_list as $activity) {
     $activity_fields = array(
-		'ID' => $activity['id'],
-		'NAME' => $activity['name'],
-		'MODULE' => $activity['module'],
-		'CONTACT_NAME' => $activity['contact_name'],
-		'CONTACT_ID' => $activity['contact_id'],
-		'PARENT_TYPE' => $activity['parent_type'],
-		'PARENT_NAME' => $activity['parent_name'],
-		'PARENT_ID' => $activity['parent_id'],
-		'DATE' => $activity['date_modified'],
-	);
+        'ID' => $activity['id'],
+        'NAME' => $activity['name'],
+        'MODULE' => $activity['module'],
+        'CONTACT_NAME' => $activity['contact_name'],
+        'CONTACT_ID' => $activity['contact_id'],
+        'PARENT_TYPE' => $activity['parent_type'],
+        'PARENT_NAME' => $activity['parent_name'],
+        'PARENT_ID' => $activity['parent_id'],
+        'DATE' => $activity['date_modified'],
+    );
     if (empty($activity['direction'])) {
         $activity_fields['TYPE'] = $app_list_strings['activity_dom'][$activity['type']];
     } else {
@@ -401,16 +401,16 @@ foreach ($history_list as $activity) {
     }
 
     switch ($activity['type']) {
-		case 'Call':
-			$activity_fields['STATUS'] = $app_list_strings['call_status_dom'][$activity['status']];
-			break;
-		case 'Meeting':
-			$activity_fields['STATUS'] = $app_list_strings['meeting_status_dom'][$activity['status']];
-			break;
-		case 'Task':
-			$activity_fields['STATUS'] = $app_list_strings['task_status_dom'][$activity['status']];
-			break;
-	}
+        case 'Call':
+            $activity_fields['STATUS'] = $app_list_strings['call_status_dom'][$activity['status']];
+            break;
+        case 'Meeting':
+            $activity_fields['STATUS'] = $app_list_strings['meeting_status_dom'][$activity['status']];
+            break;
+        case 'Task':
+            $activity_fields['STATUS'] = $app_list_strings['task_status_dom'][$activity['status']];
+            break;
+    }
 
     if (isset($activity['location'])) {
         $activity_fields['LOCATION'] = $activity['location'];

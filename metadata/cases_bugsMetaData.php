@@ -54,9 +54,9 @@ $dictionary['cases_bugs'] = array( 'table' => 'cases_bugs'
       , array('name' => 'idx_case_bug', 'type'=>'alternate_key', 'fields'=>array('case_id','bug_id'))
       
                                                       )
- 	  , 'relationships' => array('cases_bugs' => array('lhs_module'=> 'Cases', 'lhs_table'=> 'cases', 'lhs_key' => 'id',
-							  'rhs_module'=> 'Bugs', 'rhs_table'=> 'bugs', 'rhs_key' => 'id',
-							  'relationship_type'=>'many-to-many',
-							  'join_table'=> 'cases_bugs', 'join_key_lhs'=>'case_id', 'join_key_rhs'=>'bug_id'))
+      , 'relationships' => array('cases_bugs' => array('lhs_module'=> 'Cases', 'lhs_table'=> 'cases', 'lhs_key' => 'id',
+                              'rhs_module'=> 'Bugs', 'rhs_table'=> 'bugs', 'rhs_key' => 'id',
+                              'relationship_type'=>'many-to-many',
+                              'join_table'=> 'cases_bugs', 'join_key_lhs'=>'case_id', 'join_key_rhs'=>'bug_id'))
                                                       
                                   );

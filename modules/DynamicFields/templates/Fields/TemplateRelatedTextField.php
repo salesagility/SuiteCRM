@@ -280,14 +280,14 @@ class TemplateRelatedTextField extends TemplateText
             $count = 0;
             $basename = strtolower(get_singular_bean_name($this->ext2)).'_id' ;
             $idName = $basename.'_c' ;
-	        
+            
             while ($df->fieldExists($idName, 'id')) {
                 $idName = $basename.++$count.'_c' ;
             }
             $id->name = $idName ;
             $id->reportable = false;
             $id->save($df);
-	        
+            
             // record the id field's name, and save
             $this->ext3 = $id->name;
             $this->id_name = $id->name;

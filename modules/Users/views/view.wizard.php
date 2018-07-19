@@ -103,7 +103,7 @@ class ViewWizard extends SugarView
         $this->ss->assign('ADDRESS_COUNTRY', $current_user->address_country);
         $configurator = new Configurator();
         if ($configurator->config['passwordsetting']['SystemGeneratedPasswordON']
-		        || $configurator->config['passwordsetting']['forgotpasswordON']) {
+                || $configurator->config['passwordsetting']['forgotpasswordON']) {
             $this->ss->assign('REQUIRED_EMAIL_ADDRESS', '1');
         } else {
             $this->ss->assign('REQUIRED_EMAIL_ADDRESS', '0');

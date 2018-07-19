@@ -114,7 +114,7 @@ class SugarFieldFile extends SugarFieldBase
             $upload_file->unlink_file($bean->$field);
             $bean->$field="";
         }
-		
+        
         $move=false;
         if (isset($_FILES[$prefix . $field . '_file']) && $upload_file->confirm_upload()) {
             $bean->$field = $upload_file->get_stored_file_name();

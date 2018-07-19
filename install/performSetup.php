@@ -107,12 +107,12 @@ $setup_site_log_level				='fatal';
 
 /*sugar_cache_clear('TeamSetsCache');
 if ( file_exists($cache_dir .'modules/Teams/TeamSetCache.php') ) {
-	unlink($cache_dir.'modules/Teams/TeamSetCache.php');
+    unlink($cache_dir.'modules/Teams/TeamSetCache.php');
 }
 
 sugar_cache_clear('TeamSetsMD5Cache');
 if ( file_exists($cache_dir.'modules/Teams/TeamSetMD5Cache.php') ) {
-	unlink($cache_dir.'modules/Teams/TeamSetMD5Cache.php');
+    unlink($cache_dir.'modules/Teams/TeamSetMD5Cache.php');
 }*/
 $langHeader = get_language_header();
 $out =<<<EOQ
@@ -384,8 +384,8 @@ enableSugarFeeds();
 
     //require_once('modules/Connectors/InstallDefaultConnectors.php');
 
-	///////////////////////////////////////////////////////////////////////////////
-	////    INSTALL PASSWORD TEMPLATES
+    ///////////////////////////////////////////////////////////////////////////////
+    ////    INSTALL PASSWORD TEMPLATES
     include('install/seed_data/Advanced_Password_SeedData.php');
 
 ///////////////////////////////////////////////////////////////////////////////

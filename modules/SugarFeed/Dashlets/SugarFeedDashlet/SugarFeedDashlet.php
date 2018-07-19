@@ -264,7 +264,13 @@ class SugarFeedDashlet extends DashletGeneric
 
             $where .= $module_limiter;
 
-            $this->lvs->setup($this->seedBean, $this->displayTpl, $where , $lvsParams, 0, $this->displayRows,
+            $this->lvs->setup(
+                $this->seedBean,
+                $this->displayTpl,
+                $where ,
+                $lvsParams,
+                0,
+                $this->displayRows,
                               array('name',
                                     'description',
                                     'date_entered',
@@ -279,7 +285,8 @@ class SugarFeedDashlet extends DashletGeneric
 
 
                                     'link_url',
-                                    'link_type'));
+                                    'link_type')
+            );
 
             foreach ($this->lvs->data['data'] as $row => $data) {
                 $this->lvs->data['data'][$row]['NAME'] = str_replace("{this.CREATED_BY}", get_assigned_user_name($this->lvs->data['data'][$row]['CREATED_BY']), $data['NAME']);
@@ -382,9 +389,13 @@ class SugarFeedDashlet extends DashletGeneric
             $text = htmlspecialchars($_REQUEST['text']);
             //allow for bold and italic user tags
             $text = preg_replace('/&amp;lt;(\/*[bi])&amp;gt;/i', '<$1>', $text);
-            SugarFeed::pushFeed($text, 'UserFeed', $GLOBALS['current_user']->id,
+            SugarFeed::pushFeed(
+                $text,
+                'UserFeed',
+                $GLOBALS['current_user']->id,
                                 $GLOBALS['current_user']->id,
-                                $_REQUEST['link_type'], $_REQUEST['link_url']
+                                $_REQUEST['link_type'],
+                $_REQUEST['link_url']
                                 );
         }
     }
@@ -395,9 +406,13 @@ class SugarFeedDashlet extends DashletGeneric
             $text = htmlspecialchars($_REQUEST['text']);
             //allow for bold and italic user tags
             $text = preg_replace('/&amp;lt;(\/*[bi])&amp;gt;/i', '<$1>', $text);
-            SugarFeed::pushFeed($text, 'SugarFeed', $_REQUEST['parentFeed'],
+            SugarFeed::pushFeed(
+                $text,
+                'SugarFeed',
+                $_REQUEST['parentFeed'],
                                 $GLOBALS['current_user']->id,
-                                '', ''
+                                '',
+                ''
                                 );
         }
     }

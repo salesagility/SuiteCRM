@@ -104,16 +104,16 @@ EOQ;
                 foreach ($form as $field_name=>$field) {
                     if ($field['app_action'] == $action) {
                         switch ($form_name) {
-							case 'by_id':
-								$script .= $this->getFieldByIdScript($field_name, $field);
-								break;
-							case 'by_name':
-								$script .= $this->getFieldByNameScript($field_name, $field);
-								break;
-							default:
-								$script .= $this->getFieldByFormScript($form_name, $field_name, $field);
-								break;
-						}
+                            case 'by_id':
+                                $script .= $this->getFieldByIdScript($field_name, $field);
+                                break;
+                            case 'by_name':
+                                $script .= $this->getFieldByNameScript($field_name, $field);
+                                break;
+                            default:
+                                $script .= $this->getFieldByFormScript($form_name, $field_name, $field);
+                                break;
+                        }
                     }
                 }
             }
@@ -127,15 +127,15 @@ EOQ;
     {
         $return_array = array();
         switch ($def['display_option']) {
-			case 'clear_link':
-				$return_array['href']= "#";
-				$return_array['className']= "nolink";
-				break;
-			default:
-				$return_array[$def['display_option']] = $def['display_option'];
-				break;
+            case 'clear_link':
+                $return_array['href']= "#";
+                $return_array['className']= "nolink";
+                break;
+            default:
+                $return_array[$def['display_option']] = $def['display_option'];
+                break;
 
-		}
+        }
         return $return_array;
     }
 

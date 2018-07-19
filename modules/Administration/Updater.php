@@ -93,8 +93,8 @@ if (get_CheckUpdates_config_setting()=='automatic') {
 
 
 /*if (isset($_REQUEST['useraction']) && $_REQUEST['useraction']=='CheckNow') {
-	check_now(get_sugarbeat());
-	loadLicense();
+    check_now(get_sugarbeat());
+    loadLicense();
 
 }*/
 

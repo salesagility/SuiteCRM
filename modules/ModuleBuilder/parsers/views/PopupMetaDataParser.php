@@ -204,8 +204,12 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
                 mkdir_recursive(dirname($writeFile));
             }
         } else {
-            $writeFile = $file = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName, null,
-                $this->_packageName);
+            $writeFile = $file = $this->implementation->getFileName(
+                MB_POPUPLIST,
+                $this->_moduleName,
+                null,
+                $this->_packageName
+            );
         }
         $this->implementation->getHistory()->append($file);
         if ($populate) {

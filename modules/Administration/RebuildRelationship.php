@@ -69,8 +69,14 @@ foreach ($GLOBALS['beanFiles'] as $bean => $file) {
                 echo $mod_strings ['LBL_REBUILD_REL_PROC_META'] . $focus->table_name . '...';
             }
             SugarBean::createRelationshipMeta($focus->getObjectName(), $db, $table_name, $empty, $focus->module_dir);
-            SugarBean::createRelationshipMeta($focus->getObjectName(), $db, $table_name, $empty, $focus->module_dir,
-                true);
+            SugarBean::createRelationshipMeta(
+                $focus->getObjectName(),
+                $db,
+                $table_name,
+                $empty,
+                $focus->module_dir,
+                true
+            );
             if (empty($_REQUEST ['silent'])) {
                 echo $mod_strings ['LBL_DONE'] . '<br>';
             }

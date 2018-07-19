@@ -129,19 +129,19 @@ class ModuleInstaller
         $total_steps = 5; //minimum number of steps with no tasks
         $current_step = 0;
         $tasks = array(
-			'pre_execute',
-			'install_copy',
-		    'install_extensions',
-			'install_images',
-			'install_dcactions',
-			'install_dashlets',
-			'install_connectors',
-			'install_layoutfields',
-			'install_relationships',
+            'pre_execute',
+            'install_copy',
+            'install_extensions',
+            'install_images',
+            'install_dcactions',
+            'install_dashlets',
+            'install_connectors',
+            'install_layoutfields',
+            'install_relationships',
             'enable_manifest_logichooks',
-			'post_execute',
-			'reset_opcodes',
-		);
+            'post_execute',
+            'reset_opcodes',
+        );
 
         $total_steps += count($tasks);
         if (file_exists($this->base_dir . '/manifest.php')) {
@@ -149,7 +149,7 @@ class ModuleInstaller
                 $current_step++;
                 display_progress_bar('install', $current_step, $total_steps);
                 echo '<div id ="displayLoglink" ><a href="#" onclick="document.getElementById(\'displayLog\').style.display=\'\'">'
-						.$app_strings['LBL_DISPLAY_LOG'].'</a> </div><div id="displayLog" style="display:none">';
+                        .$app_strings['LBL_DISPLAY_LOG'].'</a> </div><div id="displayLog" style="display:none">';
             }
 
             include($this->base_dir . '/manifest.php');
@@ -166,7 +166,7 @@ class ModuleInstaller
                     }//fi
                 }//fi
             }//fi
-				$this->id_name = $installdefs['id'];
+                $this->id_name = $installdefs['id'];
             $this->installdefs = $installdefs;
             if (!$this->silent) {
                 $current_step++;
@@ -200,14 +200,14 @@ class ModuleInstaller
                 echo '</div>';
             }
             $selectedActions = array(
-			'clearTpls',
-			'clearJsFiles',
-			'clearDashlets',
-			'clearVardefs',
-			'clearJsLangFiles',
-			'rebuildAuditTables',
-			'repairDatabase',
-		);
+            'clearTpls',
+            'clearJsFiles',
+            'clearDashlets',
+            'clearVardefs',
+            'clearJsLangFiles',
+            'rebuildAuditTables',
+            'repairDatabase',
+        );
             VardefManager::clearVardef();
             global $beanList, $beanFiles, $moduleList;
             if (file_exists('custom/application/Ext/Include/modules.ext.php')) {
@@ -482,7 +482,7 @@ class ModuleInstaller
      * Disable generic extension
      * @param string $section Install file section name
      * @param string $extname Extension directory
- 	 * @param string $module This extension belongs to a specific module
+     * @param string $module This extension belongs to a specific module
      */
     public function disableExt($section, $extname, $module = '')
     {
@@ -525,7 +525,7 @@ class ModuleInstaller
      * Enable generic extension
      * @param string $section Install file section name
      * @param string $extname Extension directory
- 	 * @param string $module This extension belongs to a specific module
+     * @param string $module This extension belongs to a specific module
      */
     public function enableExt($section, $extname, $module = '')
     {
@@ -1457,9 +1457,9 @@ class ModuleInstaller
             // check to see if we have any vardef or layoutdef entries to remove - must have a relationship['module'] parameter if we do
             if (!isset($rel_data[ 'module' ])) {
                 $mods = array(
-					$rel_data['relationships'][$rel_name]['lhs_module'],
-					$rel_data['relationships'][$rel_name]['rhs_module'],
-				);
+                    $rel_data['relationships'][$rel_name]['lhs_module'],
+                    $rel_data['relationships'][$rel_name]['rhs_module'],
+                );
             } else {
                 $mods = array($rel_data[ 'module' ]);
             }
@@ -1622,18 +1622,18 @@ class ModuleInstaller
         $current_step = 0;
         $this->base_dir = $base_dir;
         $tasks = array(
-			'pre_uninstall',
-			'uninstall_relationships',
-			'uninstall_copy',
-			'uninstall_dcactions',
-			'uninstall_dashlets',
-			'uninstall_connectors',
-			'uninstall_layoutfields',
-		    'uninstall_extensions',
+            'pre_uninstall',
+            'uninstall_relationships',
+            'uninstall_copy',
+            'uninstall_dcactions',
+            'uninstall_dashlets',
+            'uninstall_connectors',
+            'uninstall_layoutfields',
+            'uninstall_extensions',
             'uninstall_global_search',
-			'disable_manifest_logichooks',
-			'post_uninstall',
-		);
+            'disable_manifest_logichooks',
+            'post_uninstall',
+        );
         $total_steps += count($tasks); //now the real number of steps
         if (file_exists($this->base_dir . '/manifest.php')) {
             if (!$this->silent) {
@@ -1770,8 +1770,8 @@ class ModuleInstaller
         global $current_user,$beanFiles,$dictionary;
         $this->log(translate('LBL_MI_REPAIR_INDICES'));
         $_REQUEST['silent'] = true; // local var flagging echo'd output in repair script
-		$_REQUEST['mode'] = 'execute'; // flag to just go ahead and run the script
-		include("modules/Administration/RepairIndex.php");
+        $_REQUEST['mode'] = 'execute'; // flag to just go ahead and run the script
+        include("modules/Administration/RepairIndex.php");
     }
 
     /**
@@ -1820,7 +1820,7 @@ class ModuleInstaller
                     $override = array();
                     while ($entry = $dir->read()) {
                         if ((empty($filter) || substr_count($entry, $filter) > 0) && is_file($module_install.'/'.$entry)
-						  && $entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == ".php") {
+                          && $entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == ".php") {
                             if (substr($entry, 0, 9) == '_override') {
                                 $override[] = $entry;
                             } else {
@@ -1863,7 +1863,7 @@ class ModuleInstaller
             while ($entry = $dir->read()) {
                 $shouldSave = true;
                 if ((empty($filter) || substr_count($entry, $filter) > 0) && is_file($module_install.'/'.$entry)
-								  && $entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == ".php") {
+                                  && $entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == ".php") {
                     $file = file_get_contents($module_install . '/' . $entry);
                     $extension .= "\n". str_replace(array('<?php', '?>', '<?PHP', '<?'), array('','', '' ,''), $file);
                 }
@@ -1980,10 +1980,10 @@ class ModuleInstaller
     {
         foreach ($beans as $bean) {
             $dirs = array(
-				'custom/modules/' . $bean,
-				'custom/Extension/modules/' . $bean,
+                'custom/modules/' . $bean,
+                'custom/Extension/modules/' . $bean,
                 'custom/working/modules/' . $bean
-			);
+            );
             foreach ($dirs as $dir) {
                 if (is_dir($dir)) {
                     rmdir_recursive($dir);
@@ -2205,14 +2205,14 @@ class ModuleInstaller
         $total_steps = 3; //minimum number of steps with no tasks
         $current_step = 0;
         $tasks = array(
-								'enable_copy',
-								'enable_dashlets',
-								'enable_relationships',
-		                        'enable_extensions',
+                                'enable_copy',
+                                'enable_dashlets',
+                                'enable_relationships',
+                                'enable_extensions',
                                 'enable_global_search',
-		                        'enable_manifest_logichooks',
-								'reset_opcodes',
-		);
+                                'enable_manifest_logichooks',
+                                'reset_opcodes',
+        );
         $total_steps += count($tasks);
         if (file_exists($this->base_dir . '/manifest.php')) {
             if (!$this->silent) {
@@ -2235,7 +2235,7 @@ class ModuleInstaller
                     }//fi
                 }//fi
             }//fi
-				$this->id_name = $installdefs['id'];
+                $this->id_name = $installdefs['id'];
             $this->installdefs = $installdefs;
             $installed_modules = array();
             if (isset($installdefs['beans'])) {
@@ -2274,14 +2274,14 @@ class ModuleInstaller
         $current_step = 0;
         $this->base_dir = $base_dir;
         $tasks = array(
-							'disable_copy',
-							'disable_dashlets',
-							'disable_relationships',
-		                    'disable_extensions',
+                            'disable_copy',
+                            'disable_dashlets',
+                            'disable_relationships',
+                            'disable_extensions',
                             'disable_global_search',
-							'disable_manifest_logichooks',
-							'reset_opcodes',
-							);
+                            'disable_manifest_logichooks',
+                            'reset_opcodes',
+                            );
         $total_steps += count($tasks); //now the real number of steps
         if (file_exists($this->base_dir . '/manifest.php')) {
             if (!$this->silent) {

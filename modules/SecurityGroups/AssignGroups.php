@@ -12,8 +12,8 @@ class AssignGroups
 
         //only process if action is Save (meaning a user has triggered this event and not the portal or automated process)
         if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'Save'
-		&& isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
-		&& empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {
+        && isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
+        && empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {
             //Upload an attachment to an Email Template and save. If user with multi groups - popup select option
             //it will redirect to notes instead of EmailTemplate and relationship will fail...check below to avoid
             if (!empty($_REQUEST['module']) && $_REQUEST['module'] != $bean->module_dir) {
@@ -43,22 +43,22 @@ class AssignGroups
                 $_SESSION['securitysuite_error'] = $ss_mod_strings['LBL_ERROR_DUPLICATE'];
             }
         } elseif (isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
-		&& empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
-		&& isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature') { //Bug: 589
+        && empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
+        && isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature') { //Bug: 589
 
             //$_REQUEST['return_module'] = $bean->module_dir;
             //$_REQUEST['return_action'] = "DetailView";
             //$_REQUEST['return_id'] = $bean->id;
-		
+        
             //$_SESSION['securitygroups_popup_'.$bean->module_dir] = $bean->id;
-		
+        
             if (!isset($_SESSION['securitygroups_popup'])) {
                 $_SESSION['securitygroups_popup'] = array();
             }
             $_SESSION['securitygroups_popup'][] = array(
-			'module' => $bean->module_dir,
-			'id' => $bean->id
-		);
+            'module' => $bean->module_dir,
+            'id' => $bean->id
+        );
         }
     }
 
@@ -83,19 +83,19 @@ class AssignGroups
         }
 
         if ((
-			//(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)
-			//||
-			($module == "Users" && isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true)
-		)
-	
-		//&& isset($_SESSION['securitygroups_popup_'.$module]) && !empty($_SESSION['securitygroups_popup_'.$module])
-		&& !empty($_SESSION['securitygroups_popup'])
-	) {
+            //(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)
+            //||
+            ($module == "Users" && isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true)
+        )
+    
+        //&& isset($_SESSION['securitygroups_popup_'.$module]) && !empty($_SESSION['securitygroups_popup_'.$module])
+        && !empty($_SESSION['securitygroups_popup'])
+    ) {
             foreach ($_SESSION['securitygroups_popup'] as $popup_index => $popup) {
                 $record_id = $popup['id'];
                 $module = $popup['module'];
                 unset($_SESSION['securitygroups_popup'][$popup_index]);
-			
+            
                 require_once('modules/SecurityGroups/SecurityGroup.php');
                 $groupFocus = new SecurityGroup();
                 if ($module == 'Users') {
@@ -127,9 +127,9 @@ EOQ;
         //check if security suite enabled
         $action = strtolower($action);
         if (isset($module) && ($action == "list" || $action == "index" || $action == "listview")
-    	&& (!isset($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] != true)
-    	&& !array_key_exists($module, $no_mass_assign_list)
-    	) {
+        && (!isset($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] != true)
+        && !array_key_exists($module, $no_mass_assign_list)
+        ) {
             global $current_user;
             if (is_admin($current_user) || ACLAction::getUserAccessLevel($current_user->id, "SecurityGroups", 'access') == ACL_ALLOW_ENABLED) {
                 require_once('modules/SecurityGroups/SecurityGroup.php');

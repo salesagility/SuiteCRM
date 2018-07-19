@@ -48,25 +48,25 @@ global $current_user;
 $dashletData['MyAccountsDashlet']['searchFields'] = array(
   'date_entered' =>
   array(
-	'default' => '',
+    'default' => '',
   ),
   'account_type' =>
   array(
-	'default' => '',
+    'default' => '',
   ),
   'industry' =>
   array(
-	'default' => '',
+    'default' => '',
   ),
   'billing_address_country' =>
   array(
-	'default' => '',
+    'default' => '',
   ),
   'assigned_user_id' =>
   array(
-	'type' => 'assigned_user_name',
-	'default' => $current_user->name,
-	'label' => 'LBL_ASSIGNED_TO',
+    'type' => 'assigned_user_name',
+    'default' => $current_user->name,
+    'label' => 'LBL_ASSIGNED_TO',
   ),
 );
 $dashletData['MyAccountsDashlet']['columns'] =  array(

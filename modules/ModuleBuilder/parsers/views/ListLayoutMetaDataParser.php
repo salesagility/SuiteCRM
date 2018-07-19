@@ -127,8 +127,10 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         if ($populate) {
             $this->_populateFromRequest();
         }
-        $this->implementation->deploy(array_change_key_case($this->_viewdefs,
-            CASE_UPPER)); // force the field names back to upper case so the list view will work correctly
+        $this->implementation->deploy(array_change_key_case(
+            $this->_viewdefs,
+            CASE_UPPER
+        )); // force the field names back to upper case so the list view will work correctly
     }
 
     /**
@@ -288,8 +290,10 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
      */
     protected function _populateFromRequest()
     {
-        $GLOBALS ['log']->debug(get_class($this) . "->populateFromRequest() - fielddefs = " . print_r($this->_fielddefs,
-                true));
+        $GLOBALS ['log']->debug(get_class($this) . "->populateFromRequest() - fielddefs = " . print_r(
+            $this->_fielddefs,
+                true
+        ));
         /**
          * Transfer across any reserved fields, that is,
          * any where studio !== true, which are not editable but must be preserved
@@ -303,7 +307,8 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
              * If the field is on the layout, but studio disabled, put it back on the layout at the front
              */
             if (isset($def['studio']) && (
-                    (is_array($def['studio']) && isset($def['studio']['listview']) &&
+                    (
+                        is_array($def['studio']) && isset($def['studio']['listview']) &&
                         ($def['studio']['listview'] === false || strtolower($def['studio']['listview']) == 'false'
                             || strtolower($def['studio']['listview']) == 'required')
                     )
@@ -338,8 +343,10 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                             continue;
                         }
 
-                        $newViewdefs[$fieldname] = self::createViewDefsByFieldDefs($this->_fielddefs[$fieldname],
-                            get_class($this));
+                        $newViewdefs[$fieldname] = self::createViewDefsByFieldDefs(
+                            $this->_fielddefs[$fieldname],
+                            get_class($this)
+                        );
                     }
                 }
                 if (isset($newViewdefs [$fieldname]['enabled'])) {

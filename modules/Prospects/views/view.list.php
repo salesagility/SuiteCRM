@@ -47,7 +47,7 @@ class ProspectsViewList extends ViewList
     {
         parent::__construct();
     }
-	
+    
     public function preDisplay()
     {
         $this->lv = new ProspectsListViewSmarty();

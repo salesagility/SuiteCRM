@@ -65,9 +65,9 @@ class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopB
             $button = "<input title='$title'class='button' type='button' name='button' value='  $value  ' disabled/>\n";
             return $button;
         }
-		
+        
         $additionalFormFields = array();
-		
+        
         //from accounts
         if ($defines['focus']->object_name == 'Account') {
             if (isset($defines['focus']->billing_address_street)) {
@@ -125,7 +125,7 @@ class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopB
                 $additionalFormFields['contact_id'] = $defines['focus']->id;
             }
         }
-		
+        
         //from opportunities
         if ($defines['focus']->object_name == 'Opportunity') {
             if (isset($defines['focus']->id)) {
@@ -138,7 +138,7 @@ class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopB
                 $additionalFormFields['account_id'] = $defines['focus']->account_id;
             }
         }
-		
+        
         $button = $this->_get_form($defines, $additionalFormFields);
         $button .= "<input title='$title' class='button' type='submit' name='{$this->getWidgetId()}_button' id='{$this->getWidgetId()}' value='  $value  '/>\n";
         $button .= "</form>";

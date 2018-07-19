@@ -89,9 +89,9 @@ class nusoap_parser extends nusoap_base
     public $depth_array = array();
     public $debug_flag = true;
     public $soapresponse = null;	// parsed SOAP Body
-	public $soapheader = null;		// parsed SOAP Header
-	public $responseHeaders = '';	// incoming SOAP headers (text)
-	public $body_position = 0;
+    public $soapheader = null;		// parsed SOAP Header
+    public $responseHeaders = '';	// incoming SOAP headers (text)
+    public $body_position = 0;
     // for multiref parsing:
     // array of id => pos
     public $ids = array();
@@ -158,9 +158,11 @@ class nusoap_parser extends nusoap_base
             // Parse the XML file.
             if (!xml_parse($this->parser, $xml, true)) {
                 // Display an error message.
-                $err = sprintf('XML error parsing SOAP payload on line %d: %s',
-			    xml_get_current_line_number($this->parser),
-			    xml_error_string(xml_get_error_code($this->parser)));
+                $err = sprintf(
+                    'XML error parsing SOAP payload on line %d: %s',
+                xml_get_current_line_number($this->parser),
+                xml_error_string(xml_get_error_code($this->parser))
+                );
                 $this->debug($err);
                 $this->debug("XML payload:\n" . $xml);
                 $this->setError($err);
@@ -372,7 +374,7 @@ class nusoap_parser extends nusoap_base
             // get unqualified name
             $name = substr(strstr($name, ':'), 1);
         }
-		
+        
         // build to native type
         if (isset($this->body_position) && $pos > $this->body_position) {
             // deal w/ multirefs
@@ -434,7 +436,7 @@ class nusoap_parser extends nusoap_base
                 */
             }
         }
-		
+        
         // for doclit
         if ($this->status == 'header') {
             if ($this->root_header != $pos) {
@@ -565,9 +567,9 @@ class nusoap_parser extends nusoap_base
         }
         // obscure numeric types
         if ($type == 'nonPositiveInteger' || $type == 'negativeInteger'
-			|| $type == 'nonNegativeInteger' || $type == 'positiveInteger'
-			|| $type == 'unsignedInt'
-			|| $type == 'unsignedShort' || $type == 'unsignedByte') {
+            || $type == 'nonNegativeInteger' || $type == 'positiveInteger'
+            || $type == 'unsignedInt'
+            || $type == 'unsignedShort' || $type == 'unsignedByte') {
             return (int) $value;
         }
         // bogus: parser treats array with no elements as a simple type
@@ -600,16 +602,16 @@ class nusoap_parser extends nusoap_base
             // md array
             if (isset($this->message[$pos]['arrayCols']) && $this->message[$pos]['arrayCols'] != '') {
                 $r=0; // rowcount
-            	$c=0; // colcount
-            	foreach ($children as $child_pos) {
-            	    $this->debug("in buildVal, got an MD array element: $r, $c");
-            	    $params[$r][] = $this->message[$child_pos]['result'];
-            	    $c++;
-            	    if ($c == $this->message[$pos]['arrayCols']) {
-            	        $c = 0;
-            	        $r++;
-            	    }
-            	}
+                $c=0; // colcount
+                foreach ($children as $child_pos) {
+                    $this->debug("in buildVal, got an MD array element: $r, $c");
+                    $params[$r][] = $this->message[$child_pos]['result'];
+                    $c++;
+                    if ($c == $this->message[$pos]['arrayCols']) {
+                        $c = 0;
+                        $r++;
+                    }
+                }
                 // array
             } elseif ($this->message[$pos]['type'] == 'array' || $this->message[$pos]['type'] == 'Array') {
                 $this->debug('in buildVal, adding array '.$this->message[$pos]['name']);

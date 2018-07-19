@@ -47,11 +47,11 @@ if (!defined('sugarEntry')) {
  class SugarRest
  {
 
- 	/**
- 	 * Constructor
- 	 *
- 	 * @param String $implementation - name of the implementation class
- 	 */
+    /**
+     * Constructor
+     *
+     * @param String $implementation - name of the implementation class
+     */
      public function __construct($implementation)
      {
          $this->implementation = $implementation;
@@ -93,12 +93,12 @@ if (!defined('sugarEntry')) {
          } // else
      } // fn
 
-	/**
-	 * This function sends response to client containing error object
-	 *
-	 * @param SoapError $errorObject - This is an object of type SoapError
-	 * @access public
-	 */
+    /**
+     * This function sends response to client containing error object
+     *
+     * @param SoapError $errorObject - This is an object of type SoapError
+     * @access public
+     */
      public function fault($errorObject)
      {
          $this->faultServer->generateFaultResponse($errorObject);

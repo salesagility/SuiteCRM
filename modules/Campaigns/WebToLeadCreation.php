@@ -101,23 +101,23 @@ $web_post_url = $site_url.'/index.php?entryPoint=WebToPersonCapture';
 $json = getJSONobj();
 // Users Popup
 $popup_request_data = array(
-	'call_back_function' => 'set_return',
-	'form_name' => 'WebToLeadCreation',
-	'field_to_name_array' => array(
-		'id' => 'assigned_user_id',
-		'user_name' => 'assigned_user_name',
-		),
-	);
+    'call_back_function' => 'set_return',
+    'form_name' => 'WebToLeadCreation',
+    'field_to_name_array' => array(
+        'id' => 'assigned_user_id',
+        'user_name' => 'assigned_user_name',
+        ),
+    );
 $xtpl->assign('encoded_users_popup_request_data', $json->encode($popup_request_data));
 
 //Campaigns popup
 $popup_request_data = array(
-		'call_back_function' => 'set_return',
-		'form_name' => 'WebToLeadCreation',
-		'field_to_name_array' => array(
-			'id' => 'campaign_id',
-			'name' => 'campaign_name',
-		),
+        'call_back_function' => 'set_return',
+        'form_name' => 'WebToLeadCreation',
+        'field_to_name_array' => array(
+            'id' => 'campaign_id',
+            'name' => 'campaign_name',
+        ),
 );
 $encoded_users_popup_request_data = $json->encode($popup_request_data);
 $xtpl->assign('encoded_campaigns_popup_request_data', $json->encode($popup_request_data));

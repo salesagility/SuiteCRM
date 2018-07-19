@@ -65,11 +65,11 @@ class StudioParser
     public function getFileType($type, $setType=true)
     {
         switch ($type) {
-			case 'EditView':$type = 'edit'; break;
-			case 'SearchForm': $type= 'search';break;
-			case 'ListView': $type= 'list';break;
-			default: $type= 'detail';
-		}
+            case 'EditView':$type = 'edit'; break;
+            case 'SearchForm': $type= 'search';break;
+            case 'ListView': $type= 'list';break;
+            default: $type= 'detail';
+        }
 
         if ($setType) {
             $this->curType = $type;
@@ -301,7 +301,7 @@ EOQ;
                         $slotLookup[$slot[2]]['b']['value'] = '&nbsp;';
                     } else {
 
-						//now handle the adding of custom fields
+                        //now handle the adding of custom fields
                         if (substr_count($swapValue, 'add:')) {
                             $addfield = explode('add:', $_REQUEST['slot_'.$slotCount], 2);
 
@@ -361,9 +361,11 @@ EOQ;
                     return  $matches[0];
                 };
                 //preg_replace_callback doesn't seem to work w/o anonymous method
-                $output = preg_replace_callback("/name\s*=\s*[\"']([^\"']*)[\"']/Us",
-				$function,
-	                                                      $fileparts[1]);
+                $output = preg_replace_callback(
+                    "/name\s*=\s*[\"']([^\"']*)[\"']/Us",
+                $function,
+                                                          $fileparts[1]
+                );
 
 
 
@@ -393,7 +395,7 @@ EOQ;
         $match = array("'(<input)([^>]*>)'si" => "\$1 disabled readonly $2",
     "'(<input)([^>]*?type[ ]*=[ ]*[\'\"]submit[\'\"])([^>]*>)'si" => "\$1 disabled readonly style=\"display:none\" $2",
      "'(<select)([^>]*)'si" => "\$1 disabled readonly $2",
-		// "'<a .*>(.*)</a[^>]*>'siU"=>"\$1",
+        // "'<a .*>(.*)</a[^>]*>'siU"=>"\$1",
 "'(href[\ ]*=[\ ]*)([\'])([^\']*)([\'])'si" => "href=\$2javascript:void(0);\$2 alt=\$2\$3\$2", "'(href[\ ]*=[\ ]*)([\"])([^\"]*)([\"])'si" => "href=\$2javascript:void(0)\$2 title=\$2\$3\$2");
         return preg_replace(array_keys($match), array_values($match), $str);
     }

@@ -143,8 +143,8 @@ class ImportView extends SugarView
     }
 
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings, $app_list_strings;

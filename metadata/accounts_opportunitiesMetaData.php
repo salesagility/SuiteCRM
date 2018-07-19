@@ -55,8 +55,8 @@ $dictionary['accounts_opportunities'] = array( 'table' => 'accounts_opportunitie
       )
       
       ,'relationships' => array('accounts_opportunities' => array('lhs_module'=> 'Accounts', 'lhs_table'=> 'accounts', 'lhs_key' => 'id',
-							  'rhs_module'=> 'Opportunities', 'rhs_table'=> 'opportunities', 'rhs_key' => 'id',
-							  'relationship_type'=>'many-to-many',
-							  'join_table'=> 'accounts_opportunities', 'join_key_lhs'=>'account_id', 'join_key_rhs'=>'opportunity_id'))
-	  	
+                              'rhs_module'=> 'Opportunities', 'rhs_table'=> 'opportunities', 'rhs_key' => 'id',
+                              'relationship_type'=>'many-to-many',
+                              'join_table'=> 'accounts_opportunities', 'join_key_lhs'=>'account_id', 'join_key_rhs'=>'opportunity_id'))
+        
 );

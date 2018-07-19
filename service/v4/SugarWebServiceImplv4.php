@@ -112,7 +112,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
             self::$helperObject->setFaultObject($error);
             return;
         } elseif (function_exists('openssl_decrypt') && $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
-        		&& (empty($user_auth['encryption']) || $user_auth['encryption'] !== 'PLAIN')) {
+                && (empty($user_auth['encryption']) || $user_auth['encryption'] !== 'PLAIN')) {
             $password = self::$helperObject->decrypt_string($user_auth['password']);
             $authController->loggedIn = false; // reset login attempt to try again with decrypted password
             if ($authController->login($user_auth['user_name'], $password) && isset($_SESSION['authenticated_user_id'])) {
@@ -122,7 +122,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                  && (empty($user_auth['encryption']) || $user_auth['encryption'] == 'PLAIN')) {
             $authController->loggedIn = false; // reset login attempt to try again with md5 password
             if ($authController->login($user_auth['user_name'], md5($user_auth['password']), array('passwordEncrypted' => true))
-        		&& isset($_SESSION['authenticated_user_id'])) {
+                && isset($_SESSION['authenticated_user_id'])) {
                 $success = true;
             } else {
                 $error->set_error('ldap_error');
@@ -205,8 +205,14 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
         $link_name_to_fields_array,
         $track_view = false
     ) {
-        $result = parent::get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array,
-            $track_view);
+        $result = parent::get_entries(
+            $session,
+            $module_name,
+            $ids,
+            $select_fields,
+            $link_name_to_fields_array,
+            $track_view
+        );
         $relationshipList = $result['relationship_list'];
         $returnRelationshipList = array();
         foreach ($relationshipList as $rel) {
@@ -467,8 +473,8 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                 $seed = new $beanName();
                 require_once 'include/SearchForm/SearchForm2.php' ;
                 if ($beanName == "User"
-    			    || $beanName == "ProjectTask"
-    			    ) {
+                    || $beanName == "ProjectTask"
+                    ) {
                     if (!self::$helperObject->check_modules_access($current_user, $seed->module_dir, 'read')) {
                         continue;
                     } // if
@@ -478,8 +484,8 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                 }
 
                 if ($beanName != "User"
-    			    && $beanName != "ProjectTask"
-    			    ) {
+                    && $beanName != "ProjectTask"
+                    ) {
                     $searchForm = new SearchForm($seed, $name) ;
 
                     $searchForm->setup(array($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
@@ -574,7 +580,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                     } // if
                 } // else
 
-    			$GLOBALS['log']->info('SugarWebServiceImpl->search_by_module - query = ' . $main_query);
+                $GLOBALS['log']->info('SugarWebServiceImpl->search_by_module - query = ' . $main_query);
                 if ($max_results < -1) {
                     $result = $seed->db->query($main_query);
                 } else {
@@ -598,7 +604,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                             $nameValueArray[$field] = self::$helperObject->get_name_value($field, $row[$field]);
                         } // if
                     } // foreach
-    				$rowArray[] = $nameValueArray;
+                    $rowArray[] = $nameValueArray;
                 } // while
                 $output_list[] = array('name' => $name, 'records' => $rowArray);
             } // foreach

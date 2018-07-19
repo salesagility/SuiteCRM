@@ -96,7 +96,7 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSet_user_relationshipAndCheck_user_role_count()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');

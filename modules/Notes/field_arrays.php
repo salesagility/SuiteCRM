@@ -48,20 +48,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 $fields_array['Note'] = array('column_fields' => array("id"
-		, "date_entered"
-		, "date_modified"
-		, "modified_user_id"
-		, "created_by"
-		, "description"
-		, "name"
-		, "filename"
-		, "file_mime_type"
-		, "parent_type"
-		, "parent_id"
-		, "contact_id"
-		, "portal_flag"
-		),
+        , "date_entered"
+        , "date_modified"
+        , "modified_user_id"
+        , "created_by"
+        , "description"
+        , "name"
+        , "filename"
+        , "file_mime_type"
+        , "parent_type"
+        , "parent_id"
+        , "contact_id"
+        , "portal_flag"
+        ),
         'list_fields' =>  array('id', 'name', 'parent_type', 'parent_name', 'parent_id','date_modified', 'contact_id', 'contact_name','filename','file_mime_type'
-	),
+    ),
     'required_fields' =>  array("name"=>1),
 );

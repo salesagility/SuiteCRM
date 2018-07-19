@@ -43,27 +43,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-		$subpanel_layout = array(
-	
-		'top_buttons' => array(
-		),
-	
-		'where' => '',
-	
-	
-		'list_fields' => array(
-	        'name'=>array(
-			 	'vname' => 'LBL_LIST_NAME',
-				'widget_class' => 'SubPanelDetailViewLink',
-				'width' => '70%',
-			),
-			'date_start'=>array(
-			 	'vname' => 'LBL_DATE_START',
-				'width' => '15%',
-			),
-	        'date_finish'=>array(
-	            'vname' => 'LBL_DATE_FINISH',
-	            'width' => '15%',
-	        ),
-		),
-	);
+        $subpanel_layout = array(
+    
+        'top_buttons' => array(
+        ),
+    
+        'where' => '',
+    
+    
+        'list_fields' => array(
+            'name'=>array(
+                'vname' => 'LBL_LIST_NAME',
+                'widget_class' => 'SubPanelDetailViewLink',
+                'width' => '70%',
+            ),
+            'date_start'=>array(
+                'vname' => 'LBL_DATE_START',
+                'width' => '15%',
+            ),
+            'date_finish'=>array(
+                'vname' => 'LBL_DATE_FINISH',
+                'width' => '15%',
+            ),
+        ),
+    );

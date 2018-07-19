@@ -286,11 +286,23 @@ class Document extends File
         }
         if ($this->ACLAccess('DetailView')) {
             if (!empty($this->doc_type) && $this->doc_type != 'Sugar' && !empty($this->doc_url)) {
-                $file_url = "<a href='" . $this->doc_url . "' target='_blank'>" . SugarThemeRegistry::current()->getImage($this->doc_type . '_image_inline',
-                        'border="0"', null, null, '.png', $mod_strings['LBL_LIST_VIEW_DOCUMENT']) . "</a>";
+                $file_url = "<a href='" . $this->doc_url . "' target='_blank'>" . SugarThemeRegistry::current()->getImage(
+                    $this->doc_type . '_image_inline',
+                        'border="0"',
+                    null,
+                    null,
+                    '.png',
+                    $mod_strings['LBL_LIST_VIEW_DOCUMENT']
+                ) . "</a>";
             } else {
-                $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage($img_name,
-                        'border="0"', null, null, '.gif', $mod_strings['LBL_LIST_VIEW_DOCUMENT']) . "</a>";
+                $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage(
+                    $img_name,
+                        'border="0"',
+                    null,
+                    null,
+                    '.gif',
+                    $mod_strings['LBL_LIST_VIEW_DOCUMENT']
+                ) . "</a>";
             }
 
             $this->file_url = $file_url;
@@ -304,8 +316,10 @@ class Document extends File
         if (!empty($row)) {
             $this->last_rev_created_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
 
-            $this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert($row['rev_date'],
-                'datetime'));
+            $this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert(
+                $row['rev_date'],
+                'datetime'
+            ));
             $this->last_rev_mime_type = $row['file_mime_type'];
         }
 

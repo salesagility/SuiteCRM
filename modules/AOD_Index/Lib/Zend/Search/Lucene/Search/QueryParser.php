@@ -170,7 +170,8 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
      */
     public function __construct()
     {
-        parent::__construct(array(self::ST_COMMON_QUERY_ELEMENT,
+        parent::__construct(
+            array(self::ST_COMMON_QUERY_ELEMENT,
                                   self::ST_CLOSEDINT_RQ_START,
                                   self::ST_CLOSEDINT_RQ_FIRST_TERM,
                                   self::ST_CLOSEDINT_RQ_TO_TERM,
@@ -182,7 +183,8 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
                                   self::ST_OPENEDINT_RQ_LAST_TERM,
                                   self::ST_OPENEDINT_RQ_END
                                  ),
-                            Zend_Search_Lucene_Search_QueryToken::getTypes());
+                            Zend_Search_Lucene_Search_QueryToken::getTypes()
+        );
 
         $this->addRules(
              array(array(self::ST_COMMON_QUERY_ELEMENT, Zend_Search_Lucene_Search_QueryToken::TT_WORD,             self::ST_COMMON_QUERY_ELEMENT),
@@ -200,19 +202,22 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
                    array(self::ST_COMMON_QUERY_ELEMENT, Zend_Search_Lucene_Search_QueryToken::TT_OR_LEXEME,        self::ST_COMMON_QUERY_ELEMENT),
                    array(self::ST_COMMON_QUERY_ELEMENT, Zend_Search_Lucene_Search_QueryToken::TT_NOT_LEXEME,       self::ST_COMMON_QUERY_ELEMENT),
                    array(self::ST_COMMON_QUERY_ELEMENT, Zend_Search_Lucene_Search_QueryToken::TT_NUMBER,           self::ST_COMMON_QUERY_ELEMENT)
-                  ));
+                  )
+        );
         $this->addRules(
              array(array(self::ST_CLOSEDINT_RQ_START,      Zend_Search_Lucene_Search_QueryToken::TT_WORD,           self::ST_CLOSEDINT_RQ_FIRST_TERM),
                    array(self::ST_CLOSEDINT_RQ_FIRST_TERM, Zend_Search_Lucene_Search_QueryToken::TT_TO_LEXEME,      self::ST_CLOSEDINT_RQ_TO_TERM),
                    array(self::ST_CLOSEDINT_RQ_TO_TERM,    Zend_Search_Lucene_Search_QueryToken::TT_WORD,           self::ST_CLOSEDINT_RQ_LAST_TERM),
                    array(self::ST_CLOSEDINT_RQ_LAST_TERM,  Zend_Search_Lucene_Search_QueryToken::TT_RANGE_INCL_END, self::ST_COMMON_QUERY_ELEMENT)
-                  ));
+                  )
+        );
         $this->addRules(
              array(array(self::ST_OPENEDINT_RQ_START,      Zend_Search_Lucene_Search_QueryToken::TT_WORD,           self::ST_OPENEDINT_RQ_FIRST_TERM),
                    array(self::ST_OPENEDINT_RQ_FIRST_TERM, Zend_Search_Lucene_Search_QueryToken::TT_TO_LEXEME,      self::ST_OPENEDINT_RQ_TO_TERM),
                    array(self::ST_OPENEDINT_RQ_TO_TERM,    Zend_Search_Lucene_Search_QueryToken::TT_WORD,           self::ST_OPENEDINT_RQ_LAST_TERM),
                    array(self::ST_OPENEDINT_RQ_LAST_TERM,  Zend_Search_Lucene_Search_QueryToken::TT_RANGE_EXCL_END, self::ST_COMMON_QUERY_ELEMENT)
-                  ));
+                  )
+        );
 
 
 

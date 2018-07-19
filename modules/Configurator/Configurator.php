@@ -115,7 +115,7 @@ class Configurator
         // To remember checkbox state
         if (!$this->useAuthenticationClass && !$fromParseLoggerSettings) {
             if (isset($overrideArray['authenticationClass']) &&
-				$overrideArray['authenticationClass'] == 'SAMLAuthenticate') {
+                $overrideArray['authenticationClass'] == 'SAMLAuthenticate') {
                 unset($overrideArray['authenticationClass']);
             }
         }

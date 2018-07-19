@@ -63,9 +63,9 @@ $listViewDefs['ProspectLists'] = array(
         'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
         'default' => true),
-  	'DATE_ENTERED' => array(
-	    'type' => 'datetime',
-	    'label' => 'LBL_DATE_ENTERED',
-	    'width' => '10',
-	    'default' => true),
+    'DATE_ENTERED' => array(
+        'type' => 'datetime',
+        'label' => 'LBL_DATE_ENTERED',
+        'width' => '10',
+        'default' => true),
 );

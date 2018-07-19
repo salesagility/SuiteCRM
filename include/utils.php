@@ -1188,14 +1188,16 @@ function return_module_language($language, $module, $refresh = false)
     // cn: bug 6048 - merge en_us with requested language
     if ($language != $sugar_config['default_language']) {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh), $loaded_mod_strings
+                LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh),
+            $loaded_mod_strings
         );
     }
 
     // Load in en_us strings by default
     if ($language != 'en_us' && $sugar_config['default_language'] != 'en_us') {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, 'en_us', $refresh), $loaded_mod_strings
+                LanguageManager::loadModuleLanguage($module, 'en_us', $refresh),
+            $loaded_mod_strings
         );
     }
 
@@ -2089,7 +2091,9 @@ function clean_xss($str, $cleanImg = true)
     $matches = array_merge($matches, xss_check_pattern($javascript_regex, $str));
 
     if ($cleanImg) {
-        $matches = array_merge($matches, xss_check_pattern($imgsrc_regex, $str)
+        $matches = array_merge(
+            $matches,
+            xss_check_pattern($imgsrc_regex, $str)
         );
     }
 
@@ -4650,7 +4654,8 @@ function ajaxInit()
  * @return string
  */
 function getAbsolutePath(
-$path, $currentServer = false
+$path,
+    $currentServer = false
 ) {
     $path = trim($path);
 

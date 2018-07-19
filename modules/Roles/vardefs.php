@@ -119,11 +119,11 @@ $dictionary['Role'] = array('table' => 'roles'
   ),
   'users' =>
   array(
-  	'name' => 'users',
+    'name' => 'users',
     'type' => 'link',
     'relationship' => 'roles_users',
     'source'=>'non-db',
-	'vname'=>'LBL_USERS',
+    'vname'=>'LBL_USERS',
   ),
 )
 , 'indices' => array(

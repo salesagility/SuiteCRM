@@ -51,4 +51,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $mod_strings;
 $module_menu = array(
 
-	);
+    );

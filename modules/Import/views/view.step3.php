@@ -172,7 +172,8 @@ class ImportViewStep3 extends ImportView
         $this->ss->assign('INSTRUCTION', $this->getInstruction());
 
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
-        $this->ss->assign("STEP4_TITLE",
+        $this->ss->assign(
+            "STEP4_TITLE",
             strip_tags(str_replace("\n", "", getClassicModuleTitle(
                 $mod_strings['LBL_MODULE_NAME'],
                 array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_STEP_4_TITLE']),
@@ -331,8 +332,8 @@ class ImportViewStep3 extends ImportView
                     // see if we have a match
                     $selected = '';
                     if (strtolower($fieldname) == strtolower($field_name)
-							&& !in_array($fieldname, $mappedFields)
-							&& !in_array($fieldname, $ignored_fields)) {
+                            && !in_array($fieldname, $mappedFields)
+                            && !in_array($fieldname, $ignored_fields)) {
                         $selected = ' selected="selected" ';
                         $defaultField = $fieldname;
                         $mappedFields[] = $fieldname;

@@ -1,9 +1,9 @@
 <?php
 
 $dictionary['jjwg_Address_Cache'] = array(
-	'table'=>'jjwg_address_cache',
-	'audited'=>true,
-	'fields'=>array(
+    'table'=>'jjwg_address_cache',
+    'audited'=>true,
+    'fields'=>array(
   'lat' =>
   array(
     'required' => true,
@@ -60,9 +60,9 @@ $dictionary['jjwg_Address_Cache'] = array(
     'size' => '20',
   ),
 ),
-	'relationships'=>array(
+    'relationships'=>array(
 ),
-	'optimistic_locking'=>true,
+    'optimistic_locking'=>true,
 );
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');

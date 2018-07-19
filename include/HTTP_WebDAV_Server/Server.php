@@ -572,9 +572,11 @@ class HTTP_WebDAV_Server
                         if ($reqprop["xmlns"]==="DAV:" && $reqprop["name"]==="lockdiscovery") {
                             // lockdiscovery is handled by the base class
                             $files["files"][$filekey]["props"][]
-                                = $this->mkprop("DAV:",
+                                = $this->mkprop(
+                                    "DAV:",
                                                 "lockdiscovery",
-                                                $this->lockdiscovery($files["files"][$filekey]['path']));
+                                                $this->lockdiscovery($files["files"][$filekey]['path'])
+                                );
                         } else {
                             // add empty value for this property
                             $files["files"][$filekey]["noprops"][] =
@@ -1373,8 +1375,11 @@ class HTTP_WebDAV_Server
         }
 
         if ($http_host == $http_header_host &&
-            !strncmp($_SERVER["SCRIPT_NAME"], $path,
-                     strlen($_SERVER["SCRIPT_NAME"]))) {
+            !strncmp(
+                $_SERVER["SCRIPT_NAME"],
+                $path,
+                     strlen($_SERVER["SCRIPT_NAME"])
+            )) {
             $options["dest"] = substr($path, strlen($_SERVER["SCRIPT_NAME"]));
             if (!$this->_check_lock_status($options["dest"])) {
                 $this->http_status("423 Locked");
@@ -1472,14 +1477,18 @@ class HTTP_WebDAV_Server
     {
         if (method_exists($this, "checkAuth")) {
             // PEAR style method name
-            return $this->checkAuth(@$_SERVER["AUTH_TYPE"],
+            return $this->checkAuth(
+                @$_SERVER["AUTH_TYPE"],
                                      @$_SERVER["PHP_AUTH_USER"],
-                                     @$_SERVER["PHP_AUTH_PW"]);
+                                     @$_SERVER["PHP_AUTH_PW"]
+            );
         } elseif (method_exists($this, "check_auth")) {
             // old (pre 1.0) method name
-            return $this->check_auth(@$_SERVER["AUTH_TYPE"],
+            return $this->check_auth(
+                @$_SERVER["AUTH_TYPE"],
                                      @$_SERVER["PHP_AUTH_USER"],
-                                     @$_SERVER["PHP_AUTH_PW"]);
+                                     @$_SERVER["PHP_AUTH_PW"]
+            );
         } else {
             // no method found -> no authentication required
             return true;

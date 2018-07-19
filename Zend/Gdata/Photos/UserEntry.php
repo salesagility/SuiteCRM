@@ -83,7 +83,6 @@ require_once 'Zend/Gdata/App/Extension/Category.php';
  */
 class Zend_Gdata_Photos_UserEntry extends Zend_Gdata_Entry
 {
-
     protected $_entryClassName = 'Zend_Gdata_Photos_UserEntry';
 
     /**
@@ -141,7 +140,8 @@ class Zend_Gdata_Photos_UserEntry extends Zend_Gdata_Entry
 
         $category = new Zend_Gdata_App_Extension_Category(
             'http://schemas.google.com/photos/2007#user',
-            'http://schemas.google.com/g/2005#kind');
+            'http://schemas.google.com/g/2005#kind'
+        );
         $this->setCategory(array($category));
     }
 
@@ -362,5 +362,4 @@ class Zend_Gdata_Photos_UserEntry extends Zend_Gdata_Entry
         $this->_gphotoUser = $value;
         return $this;
     }
-
 }

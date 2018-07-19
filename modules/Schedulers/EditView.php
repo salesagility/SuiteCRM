@@ -203,12 +203,12 @@ $xtpl = new XTemplate('modules/Schedulers/EditView.html');
 // Days of the week
 $xtpl->assign('USE_ADV_BOOL', 'false');
 $xtDays = array(1 => 'MON',
-				2 => 'TUE',
-				3 => 'WED',
-				4 => 'THU',
-				5 => 'FRI',
-				6 => 'SAT',
-				0 => 'SUN');
+                2 => 'TUE',
+                3 => 'WED',
+                4 => 'THU',
+                5 => 'FRI',
+                6 => 'SAT',
+                0 => 'SUN');
 
 if ($exInterval[4] == '*') {
     $xtpl->assign('ALL', "CHECKED");
@@ -329,7 +329,7 @@ if (strstr($focus->job, 'url::')) {
 } else {
     $job_url = 'http://';
 }
-	
+    
 $xtpl->assign('JOB_FUNCTION', $job_function);
 $xtpl->assign('JOB_URL', $job_url);
 $xtpl->assign('JOB_INTERVAL', $focus->job_interval);

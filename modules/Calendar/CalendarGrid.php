@@ -47,20 +47,20 @@ global $timedate;
 class CalendarGrid
 {
     protected $cal; // Calendar object
-	public $style = ""; // style of calendar (basic or advanced); advanced contains time slots
-	protected $today_ts; // timestamp of today
-	protected $weekdays; // string array of names of week days
-	protected $startday; // first day of week
-	protected $scrollable; // scrolling in calendar
-	protected $time_step = 30; // time step
-	protected $time_format; // user time format
-	protected $date_time_format; // user date time format
-	protected $scroll_height; // height of scrollable div
+    public $style = ""; // style of calendar (basic or advanced); advanced contains time slots
+    protected $today_ts; // timestamp of today
+    protected $weekdays; // string array of names of week days
+    protected $startday; // first day of week
+    protected $scrollable; // scrolling in calendar
+    protected $time_step = 30; // time step
+    protected $time_format; // user time format
+    protected $date_time_format; // user date time format
+    protected $scroll_height; // height of scrollable div
 
-	/**
-	 * constructor
-	 * @param Calendar $cal
-	 */
+    /**
+     * constructor
+     * @param Calendar $cal
+     */
     public function __construct(Calendar $cal)
     {
         global $current_user;
@@ -293,42 +293,42 @@ class CalendarGrid
     public function mobile_get_type_colour($type)
     {
         switch ($type) {
-			case "meeting":
-				$colour = "#D2E5FC";
-				break;
-			case "call":
-				$colour = "#FCDCDC";
-				break;
-			case "task":
-				$colour = "#B1F5AE";
-				break;
-			default:
-				$colour = "#777777";
-				break;
-		}
+            case "meeting":
+                $colour = "#D2E5FC";
+                break;
+            case "call":
+                $colour = "#FCDCDC";
+                break;
+            case "task":
+                $colour = "#B1F5AE";
+                break;
+            default:
+                $colour = "#777777";
+                break;
+        }
         return $colour;
     }
 
     public function mobile_get_status_colour($type)
     {
         switch ($type) {
-			case "Held":
-			case "Completed":
-			$colour = "green";
-				break;
-			case "Planned":
-			case "Not Started":
-			case "In Progress":
-				$colour = "#1B4B94";
-				break;
-			case "Not Held":
-			case "Deferred":
-				$colour = "red";
-				break;
-			default:
-				$colour = "#777777";
-				break;
-		}
+            case "Held":
+            case "Completed":
+            $colour = "green";
+                break;
+            case "Planned":
+            case "Not Started":
+            case "In Progress":
+                $colour = "#1B4B94";
+                break;
+            case "Not Held":
+            case "Deferred":
+                $colour = "red";
+                break;
+            default:
+                $colour = "#777777";
+                break;
+        }
         return $colour;
     }
 

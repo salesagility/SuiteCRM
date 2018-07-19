@@ -254,11 +254,11 @@ foreach ($admin_group_header as $key=>$values) {
     $module_index = array_keys($values[3]);  //get the actual links..
     foreach ($module_index as $mod_key=>$mod_val) {
         if (is_admin($current_user) ||
-			in_array($mod_val, $access) ||
-		    $mod_val=='studio'||
-		    ($mod_val=='Forecasts' && in_array('ForecastSchedule', $access)) ||
-		    ($mod_val =='any')
-		   ) {
+            in_array($mod_val, $access) ||
+            $mod_val=='studio'||
+            ($mod_val=='Forecasts' && in_array('ForecastSchedule', $access)) ||
+            ($mod_val =='any')
+           ) {
             if (!is_admin($current_user)&& isset($values[3]['Administration'])) {
                 unset($values[3]['Administration']);
             }

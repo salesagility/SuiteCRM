@@ -70,7 +70,7 @@ class ProspectsViewDetail extends ViewDetail
     {
         if (isset($this->bean->lead_id) && !empty($this->bean->lead_id)) {
 
-			//get lead name
+            //get lead name
             $lead = new Lead();
             $lead->retrieve($this->bean->lead_id);
             $this->ss->assign('lead', $lead);

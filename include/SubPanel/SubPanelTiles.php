@@ -347,7 +347,9 @@ class SubPanelTiles
                 $arr = array();
                 // TODO: Remove x-template:
                 $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView(
-                    'include/SubPanel/tpls/SubPanelDynamic.tpl', $arr);
+                    'include/SubPanel/tpls/SubPanelDynamic.tpl',
+                    $arr
+                );
 
                 // Get subpanel buttons
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel, $subpanel_object->subpanel_query);

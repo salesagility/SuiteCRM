@@ -38,10 +38,10 @@
  ********************************************************************************/
 
 $dictionary['AOD_IndexEvent'] = array(
-	'table'=>'aod_indexevent',
-	'audited'=>true,
-		'duplicate_merge'=>true,
-		'fields'=>array(
+    'table'=>'aod_indexevent',
+    'audited'=>true,
+        'duplicate_merge'=>true,
+        'fields'=>array(
   'error' =>
   array(
     'required' => false,
@@ -108,15 +108,15 @@ $dictionary['AOD_IndexEvent'] = array(
     'size' => '20',
   ),
 ),
-	'relationships'=>array(
+    'relationships'=>array(
 ),
     'indices' => array(
         array('name' =>'idx_record_module' , 'type'=>'index' , 'fields'=>array('record_module')),
         array('name' =>'idx_record_id', 'type' =>'index', 'fields'=>array('record_id')),
     ),
-	'optimistic_locking'=>true,
-		'unified_search'=>false,
-	);
+    'optimistic_locking'=>true,
+        'unified_search'=>false,
+    );
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }

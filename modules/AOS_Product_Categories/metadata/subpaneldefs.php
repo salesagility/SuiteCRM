@@ -29,7 +29,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $layout_defs['AOS_Product_Categories'] = array(
-	'subpanel_setup' => array(
+    'subpanel_setup' => array(
         'sub_categories' => array(
             'order' => 100,
             'module' => 'AOS_Product_Categories',

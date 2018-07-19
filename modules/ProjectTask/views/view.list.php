@@ -235,11 +235,11 @@ class ProjectTaskViewList extends ViewList
         $where = '';
         if (isset($_REQUEST['query'])) {
             // we have a query
-	    	if (!empty($_SERVER['HTTP_REFERER']) && preg_match('/action=EditView/', $_SERVER['HTTP_REFERER'])) { // from EditView cancel
-	       		$searchForm->populateFromArray($storeQuery->query);
-	    	} else {
-	    	    $searchForm->populateFromRequest();
-	    	}
+            if (!empty($_SERVER['HTTP_REFERER']) && preg_match('/action=EditView/', $_SERVER['HTTP_REFERER'])) { // from EditView cancel
+                   $searchForm->populateFromArray($storeQuery->query);
+            } else {
+                $searchForm->populateFromRequest();
+            }
             $where_clauses = $searchForm->generateSearchWhere(true, $this->seed->module_dir);
             if (count($where_clauses) > 0) {
                 $where = '('. implode(' ) AND ( ', $where_clauses) . ')';
@@ -248,18 +248,18 @@ class ProjectTaskViewList extends ViewList
         }
         if ($use_old_search) {
             switch ($view) {
-				case 'basic_search':
-			    	$searchForm->setup();
-			        $searchForm->displayBasic($headers);
-			        break;
-			     case 'advanced_search':
-			     	$searchForm->setup();
-			        $searchForm->displayAdvanced($headers);
-			        break;
-			     case 'saved_views':
-			     	echo $searchForm->displaySavedViews($listViewDefs, $lv, $headers);
-			       break;
-			}
+                case 'basic_search':
+                    $searchForm->setup();
+                    $searchForm->displayBasic($headers);
+                    break;
+                 case 'advanced_search':
+                     $searchForm->setup();
+                    $searchForm->displayAdvanced($headers);
+                    break;
+                 case 'saved_views':
+                     echo $searchForm->displaySavedViews($listViewDefs, $lv, $headers);
+                   break;
+            }
         } else {
             echo $searchForm->display($headers);
         }

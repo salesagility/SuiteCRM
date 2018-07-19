@@ -55,7 +55,7 @@ class ChartsDashlet extends Dashlet
      *
      * @global string current language
      * @param guid $id id for the current dashlet (assigned from Home module)
-	 * @param report_id $report_id id of the saved report
+     * @param report_id $report_id id of the saved report
      * @param array $def options saved for this dashlet
      */
     public function __construct($id, $report_id, $def)

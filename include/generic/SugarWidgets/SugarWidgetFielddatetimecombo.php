@@ -81,7 +81,7 @@ class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime
             $end = $layout_def['input_name1'];
         }
         return "(".$this->_get_column_select($layout_def).">=".$this->reporter->db->convert($this->reporter->db->quoted($begin), "datetime").
-			" AND\n ".$this->_get_column_select($layout_def)."<=".$this->reporter->db->convert($this->reporter->db->quoted($end), "datetime").
-			")\n";
+            " AND\n ".$this->_get_column_select($layout_def)."<=".$this->reporter->db->convert($this->reporter->db->quoted($end), "datetime").
+            ")\n";
     }
 }

@@ -155,11 +155,11 @@ array(
         ),
       ),
       
-	  'LBL_PANEL_ASSIGNMENT' => array(
-	    array(
-		    'assigned_user_name',
-	    ),
-	  ),
+      'LBL_PANEL_ASSIGNMENT' => array(
+        array(
+            'assigned_user_name',
+        ),
+      ),
       
     ),
   ),

@@ -247,8 +247,10 @@ class Smarty_Compiler extends Smarty
                     continue;
                 }
                 if ($prefilter[3] || is_callable($prefilter[0])) {
-                    $source_content = call_user_func_array($prefilter[0],
-                                                            array($source_content, &$this));
+                    $source_content = call_user_func_array(
+                        $prefilter[0],
+                                                            array($source_content, &$this)
+                    );
                     $this->_plugins['prefilter'][$filter_name][3] = true;
                 } else {
                     $this->_trigger_fatal_error("[plugin] prefilter '$filter_name' is not implemented");
@@ -393,8 +395,10 @@ class Smarty_Compiler extends Smarty
                     continue;
                 }
                 if ($postfilter[3] || is_callable($postfilter[0])) {
-                    $compiled_content = call_user_func_array($postfilter[0],
-                                                              array($compiled_content, &$this));
+                    $compiled_content = call_user_func_array(
+                        $postfilter[0],
+                                                              array($compiled_content, &$this)
+                    );
                     $this->_plugins['postfilter'][$filter_name][3] = true;
                 } else {
                     $this->_trigger_fatal_error("Smarty plugin error: postfilter '$filter_name' is not implemented");
@@ -2082,8 +2086,12 @@ class Smarty_Compiler extends Smarty
 
             case 'get':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_GET";
@@ -2091,8 +2099,12 @@ class Smarty_Compiler extends Smarty
 
             case 'post':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_POST";
@@ -2100,8 +2112,12 @@ class Smarty_Compiler extends Smarty
 
             case 'cookies':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_COOKIE";
@@ -2109,8 +2125,12 @@ class Smarty_Compiler extends Smarty
 
             case 'env':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_ENV";
@@ -2118,8 +2138,12 @@ class Smarty_Compiler extends Smarty
 
             case 'server':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_SERVER";
@@ -2127,8 +2151,12 @@ class Smarty_Compiler extends Smarty
 
             case 'session':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_SESSION";
@@ -2140,8 +2168,12 @@ class Smarty_Compiler extends Smarty
              */
             case 'request':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 if ($this->request_use_auto_globals) {
@@ -2167,8 +2199,12 @@ class Smarty_Compiler extends Smarty
 
             case 'const':
                 if ($this->security && !$this->security_settings['ALLOW_CONSTANTS']) {
-                    $this->_syntax_error("(secure mode) constants not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) constants not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 array_shift($indexes);
@@ -2374,8 +2410,12 @@ class Smarty_Compiler extends Smarty
             }
             $message = " expected {/$_open_tag} (opened line $_line_no).";
         }
-        $this->_syntax_error("mismatched tag {/$close_tag}.$message",
-                             E_USER_ERROR, __FILE__, __LINE__);
+        $this->_syntax_error(
+            "mismatched tag {/$close_tag}.$message",
+                             E_USER_ERROR,
+            __FILE__,
+            __LINE__
+        );
     }
 }
 

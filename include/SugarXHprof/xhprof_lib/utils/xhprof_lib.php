@@ -326,10 +326,13 @@ function xhprof_normalize_metrics($raw_data, $num_runs)
  *
  *  @author Kannan
  */
-function xhprof_aggregate_runs($xhprof_runs_impl, $runs,
-                               $wts, $source="phprof",
-                               $use_script_name=false)
-{
+function xhprof_aggregate_runs(
+    $xhprof_runs_impl,
+    $runs,
+                               $wts,
+    $source="phprof",
+                               $use_script_name=false
+) {
     $raw_data_total = null;
     $raw_data       = null;
     $metrics        = array();
@@ -383,8 +386,10 @@ function xhprof_aggregate_runs($xhprof_runs_impl, $runs,
                     $new_main[$metric]  = $val + 0.00001;
                 }
                 $raw_data["main()"] = $new_main;
-                $raw_data[xhprof_build_parent_child_key("main()",
-                                                "__script::$page")]
+                $raw_data[xhprof_build_parent_child_key(
+                    "main()",
+                                                "__script::$page"
+                )]
           = $fake_edge;
             } else {
                 $use_script_name = false;
@@ -403,8 +408,10 @@ function xhprof_aggregate_runs($xhprof_runs_impl, $runs,
                     $child = substr($parent_child, 9);
                     // ignore the newly added edge from main()
                     if (substr($child, 0, 10) != "__script::") {
-                        $parent_child = xhprof_build_parent_child_key("__script::$page",
-                                                          $child);
+                        $parent_child = xhprof_build_parent_child_key(
+                            "__script::$page",
+                                                          $child
+                        );
                     }
                 }
             }
@@ -435,8 +442,10 @@ function xhprof_aggregate_runs($xhprof_runs_impl, $runs,
 
     $data['description'] = "Aggregated Report for $run_count runs: ".
                          "$runs_string $wts_string\n";
-    $data['raw'] = xhprof_normalize_metrics($raw_data_total,
-                                          $normalization_count);
+    $data['raw'] = xhprof_normalize_metrics(
+        $raw_data_total,
+                                          $normalization_count
+    );
     $data['bad_runs'] = $bad_runs;
 
     return $data;

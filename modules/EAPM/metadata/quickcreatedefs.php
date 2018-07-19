@@ -56,7 +56,7 @@ $viewdefs[$module_name]['QuickCreate'] = array(
       'assigned_user_name',
     ),
     array(
-	  'description',
+      'description',
       array('name'=>'team_name', 'displayParams'=>array('display'=>true)),
     ),
   ),

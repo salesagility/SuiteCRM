@@ -376,8 +376,12 @@ class SugarFieldBase
                     require_once($includeFile);
                 }
 
-                return $funcName($parentFieldArray, $vardef['name'], $parentFieldArray[strtoupper($vardef['name'])],
-                    $displayType);
+                return $funcName(
+                    $parentFieldArray,
+                    $vardef['name'],
+                    $parentFieldArray[strtoupper($vardef['name'])],
+                    $displayType
+                );
             } else {
                 $displayTypeFunc = 'get' . $displayType . 'Smarty';
 

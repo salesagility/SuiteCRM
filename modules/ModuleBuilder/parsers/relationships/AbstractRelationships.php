@@ -370,21 +370,21 @@ class AbstractRelationships
         global $sugar_config;
         
         mkdir_recursive("$basepath/language") ;
-    	
+        
         $headerString = "<?php\n//THIS FILE IS AUTO GENERATED, DO NOT MODIFY\n" ;
         $installDefs = array( ) ;
         foreach ($labelDefinitions as $definition) {
             $mod_strings = array();
             $app_list_strings = array();
-        	
+            
             $out = $headerString;
-        	
+            
             $filename = "{$basepath}/language/{$definition['module']}.php" ;
-    	
+        
             if (file_exists($filename)) {
                 include($filename);
             }
-	    		
+                
             
             //Check for app strings
             $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveLabels(): saving the following to {$filename}"
@@ -405,19 +405,19 @@ class AbstractRelationships
             fputs($fh, $out, strlen($out)) ;
             fclose($fh) ;
             
-        	
+            
             foreach ($sugar_config['languages'] as $lk => $lv) {
                 $installDefs [ $definition [ 'module' ] . "_$lk" ] = array(
-            		'from' => "{$installDefPrefix}/relationships/language/{$definition [ 'module' ]}.php" ,
-            		'to_module' => $definition [ 'module' ] ,
-            		'language' => $lk
-            	) ;
+                    'from' => "{$installDefPrefix}/relationships/language/{$definition [ 'module' ]}.php" ,
+                    'to_module' => $definition [ 'module' ] ,
+                    'language' => $lk
+                ) ;
             }
             
             /* do not use the following write_array_to_file method to write the label file -
              * module installer appends each of the label files together (as it does for all files)
-			 * into a combined label file and so the last $mod_strings is the only one received by the application */
-        	// write_array_to_file ( 'mod_strings', array ( $definition [ 'system_label' ] => $definition [ 'display_label' ] ), $filename, "a" ) ;
+             * into a combined label file and so the last $mod_strings is the only one received by the application */
+            // write_array_to_file ( 'mod_strings', array ( $definition [ 'system_label' ] => $definition [ 'display_label' ] ), $filename, "a" ) ;
         }
         
         return $installDefs ;
@@ -517,13 +517,13 @@ class AbstractRelationships
             foreach ($definitions as $definition) {
                 $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveVardefs(): saving the following to {$filename}" . print_r($definition, true)) ;
                 $out .= '$dictionary["' . $object . '"]["fields"]["' . $definition [ 'name' ] . '"] = '
-               		  . var_export_helper($definition) . ";\n";
+                         . var_export_helper($definition) . ";\n";
             }
             file_put_contents($filename, $out);
             
             $installDefs [ $moduleName ] = array(
-            	'from' => "{$installDefPrefix}/relationships/vardefs/{$relName}_{$moduleName}.php" ,
-            	'to_module' => $moduleName
+                'from' => "{$installDefPrefix}/relationships/vardefs/{$relName}_{$moduleName}.php" ,
+                'to_module' => $moduleName
             ) ;
         }
         

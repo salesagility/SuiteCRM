@@ -528,8 +528,10 @@ class OutboundEmail
             foreach ($values as $k => $val) {
                 $updvalues[] = "{$cols[$k]} = $val";
             }
-            $q = "UPDATE outbound_email SET " . implode(', ',
-                    $updvalues) . " WHERE id = " . $this->db->quoted($this->id);
+            $q = "UPDATE outbound_email SET " . implode(
+                ', ',
+                    $updvalues
+            ) . " WHERE id = " . $this->db->quoted($this->id);
         }
 
         $this->db->query($q, true);

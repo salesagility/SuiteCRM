@@ -160,7 +160,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         $mi->uninstall_relationship("custom/metadata/{$rel_name}MetaData.php");
         $mi->uninstallLabels('custom/Extension/modules/relationships/language/', $rel->buildLabels());
         $mi->uninstallExtLabels($rel->buildLabels());
-    	
+        
         // now clear all caches so that our changes are visible
         Relationship::delete_cache();
         $mi->rebuild_tabledictionary();

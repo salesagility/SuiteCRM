@@ -270,7 +270,10 @@ class Gantt
     public function substr_unicode($str, $s, $l = null)
     {
         return join("", array_slice(
-            preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY), $s, $l));
+            preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY),
+            $s,
+            $l
+        ));
     }
 
     // Function for basic field validation (present and neither empty nor only white space

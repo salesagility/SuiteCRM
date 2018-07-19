@@ -82,9 +82,15 @@ class aSubPanel
     public $search_query;
     public $base_collection_list = array();
 
-    public function __construct($name , $instance_properties , $parent_bean , $reload = false , $original_only = false,
-        $search_query = '', $collections = array())
-    {
+    public function __construct(
+        $name ,
+        $instance_properties ,
+        $parent_bean ,
+        $reload = false ,
+        $original_only = false,
+        $search_query = '',
+        $collections = array()
+    ) {
         if (isset($instance_properties['collection_list'])) {
             $this->base_collection_list = $instance_properties['collection_list'];
         }
@@ -183,8 +189,12 @@ class aSubPanel
             $searchForm = new SubPanelSearchForm($seed, $module, $this);
 
             $searchMetaData = $searchForm->retrieveSearchDefs($module);
-            $searchForm->setup($searchMetaData['searchdefs'], $searchMetaData['searchFields'],
-                'SubpanelSearchFormGeneric.tpl', 'basic_search');
+            $searchForm->setup(
+                $searchMetaData['searchdefs'],
+                $searchMetaData['searchFields'],
+                'SubpanelSearchFormGeneric.tpl',
+                'basic_search'
+            );
 
             $searchForm->populateFromRequest();
 

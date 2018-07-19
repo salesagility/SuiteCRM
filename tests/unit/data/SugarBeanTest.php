@@ -938,7 +938,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(0, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', $results['query']);
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+            $results['query']
+        );
 
         $query = /** @lang sql */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -966,7 +968,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', $results['query']);
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+            $results['query']
+        );
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -992,7 +996,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', $results['query']);
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+            $results['query']
+        );
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1018,7 +1024,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', $results['query']);
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+            $results['query']
+        );
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1043,7 +1051,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', $results['query']);
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+            $results['query']
+        );
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1069,7 +1079,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', $results['query']);
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+            $results['query']
+        );
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1094,7 +1106,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', $results['query']);
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+            $results['query']
+        );
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1115,7 +1129,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT * FROM contacts', $results['query']);
+            'SELECT DISTINCT * FROM contacts',
+            $results['query']
+        );
 
 
         // test
@@ -1131,7 +1147,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT * FROM contacts', $results['query']);
+            'SELECT DISTINCT * FROM contacts',
+            $results['query']
+        );
 
 
         // test
@@ -1150,7 +1168,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT * FROM contacts', $results['query']);
+            'SELECT DISTINCT * FROM contacts',
+            $results['query']
+        );
 
 
         // test
@@ -1163,7 +1183,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            null, $results['query']);
+            null,
+            $results['query']
+        );
 
 
         // test
@@ -1178,7 +1200,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-11.0, $results['previous_offset']);
         self::assertEquals(-1.0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT * FROM contacts', $results['query']);
+            'SELECT DISTINCT * FROM contacts',
+            $results['query']
+        );
 
 
         // test
@@ -1200,7 +1224,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(-10, $results['previous_offset']);
         self::assertEquals(0, $results['current_offset']);
         self::assertEquals(/** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', $results['query']);
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+            $results['query']
+        );
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1336,7 +1362,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $bean = new SugarBeanMock();
 
         $this->db->query(/** @lang sql */
-            "INSERT INTO contacts (id, date_entered, date_modified, modified_user_id, created_by, description, deleted, assigned_user_id, salutation, first_name, last_name, title, photo, department, do_not_call, phone_home, phone_mobile, phone_work, phone_other, phone_fax, primary_address_street, primary_address_city, primary_address_state, primary_address_postalcode, primary_address_country, alt_address_street, alt_address_city, alt_address_state, alt_address_postalcode, alt_address_country, assistant, assistant_phone, lead_source, reports_to_id, birthdate, campaign_id, joomla_account_id, portal_account_disabled, portal_user_type) VALUES ('test_parent_contact_1', '2017-08-04 00:00:11', '2017-08-11 00:00:22', 'aaa', 'bbb', 'ccc', '0', 'eee', 'fff', 'ggg', 'hhh', 'jjj', 'kkk', 'lll', '1', 'mmm', 'nnn', 'ooo', 'ppp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Single');");
+            "INSERT INTO contacts (id, date_entered, date_modified, modified_user_id, created_by, description, deleted, assigned_user_id, salutation, first_name, last_name, title, photo, department, do_not_call, phone_home, phone_mobile, phone_work, phone_other, phone_fax, primary_address_street, primary_address_city, primary_address_state, primary_address_postalcode, primary_address_country, alt_address_street, alt_address_city, alt_address_state, alt_address_postalcode, alt_address_country, assistant, assistant_phone, lead_source, reports_to_id, birthdate, campaign_id, joomla_account_id, portal_account_disabled, portal_user_type) VALUES ('test_parent_contact_1', '2017-08-04 00:00:11', '2017-08-11 00:00:22', 'aaa', 'bbb', 'ccc', '0', 'eee', 'fff', 'ggg', 'hhh', 'jjj', 'kkk', 'lll', '1', 'mmm', 'nnn', 'ooo', 'ppp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Single');"
+        );
         $results = $bean->retrieve_parent_fields(array(
             array(
                 array(
@@ -1355,7 +1382,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             ),
         ), $results);
         $this->db->query(/** @lang sql */
-            "DELETE FROM contacts WHERE id = 'test_parent_contact_1'");
+            "DELETE FROM contacts WHERE id = 'test_parent_contact_1'"
+        );
     }
 
     /**
@@ -2179,7 +2207,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $results = ob_get_contents();
         ob_get_clean();
         self::assertEquals(/** @lang text */
-            "Table already exists : $bean->table_name<br>", $results);
+            "Table already exists : $bean->table_name<br>",
+            $results
+        );
     }
 
     /**

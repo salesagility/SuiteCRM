@@ -54,16 +54,16 @@ require_once('include/MVC/View/SugarView.php');
 class AdministrationViewThemesettings extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   "<a href='index.php?module=Administration&action=index'>".$mod_strings['LBL_MODULE_NAME']."</a>",
-    	   $mod_strings['LBL_THEME_SETTINGS']
-    	   );
+           "<a href='index.php?module=Administration&action=index'>".$mod_strings['LBL_MODULE_NAME']."</a>",
+           $mod_strings['LBL_THEME_SETTINGS']
+           );
     }
     
     /**

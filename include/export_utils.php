@@ -269,7 +269,7 @@ function export($type, $records = null, $members = false, $sample=false)
 
                     // Bug 32463 - Properly have multienum field translated into something useful for the client
                     case 'multienum':
-			$valueArray = unencodeMultiEnum($value);
+            $valueArray = unencodeMultiEnum($value);
 
                         if (isset($focus->field_name_map[$fields_array[$key]]['options']) && isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']])) {
                             foreach ($valueArray as $multikey => $multivalue) {
@@ -278,19 +278,19 @@ function export($type, $records = null, $members = false, $sample=false)
                                 }
                             }
                         }
-			$value = implode(",", $valueArray);
+            $value = implode(",", $valueArray);
 
                         break;
 
-		case 'enum':
-			if (isset($focus->field_name_map[$fields_array[$key]]['options']) &&
-				isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) &&
-				isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value])
-			) {
-			    $value = $app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value];
-			}
+        case 'enum':
+            if (isset($focus->field_name_map[$fields_array[$key]]['options']) &&
+                isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) &&
+                isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value])
+            ) {
+                $value = $app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value];
+            }
 
-			break;
+            break;
                 }
                 }
 
@@ -900,7 +900,7 @@ function get_field_order_mapping($name='', $reorderArr = '', $exclude = true)
         if (!empty($field_order_array[$lname])) {
             foreach ($field_order_array[$lname] as $fk=> $fv) {
 
-	            //if the value exists as a key in the passed in array, add to temp array and remove from reorder array.
+                //if the value exists as a key in the passed in array, add to temp array and remove from reorder array.
                 //Do not force into the temp array as we don't want to violate acl's
                 if (array_key_exists($fk, $newReorder)) {
                     $temp_result_arr[$fk] = $newReorder[$fk];

@@ -54,7 +54,7 @@
 function smarty_function_sugar_getimage($params, &$smarty)
 {
 
-	// error checking for required parameters
+    // error checking for required parameters
     if (!isset($params['name'])) {
         $smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'name');
     }

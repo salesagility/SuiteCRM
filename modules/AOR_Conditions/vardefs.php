@@ -23,10 +23,10 @@
  */
 
 $dictionary['AOR_Condition'] = array(
-	'table'=>'aor_conditions',
-	'audited'=>false,
-	'duplicate_merge'=>true,
-	'fields'=>array(
+    'table'=>'aor_conditions',
+    'audited'=>false,
+    'duplicate_merge'=>true,
+    'fields'=>array(
   'aor_report_id' =>
   array(
     'required' => false,
@@ -200,7 +200,7 @@ $dictionary['AOR_Condition'] = array(
     'source'=>'non-db',
   ),
 ),
-	'relationships'=>array(
+    'relationships'=>array(
 ),
     'indices' => array(
         array(
@@ -209,8 +209,8 @@ $dictionary['AOR_Condition'] = array(
             'fields' => array('aor_report_id'),
         ),
     ),
-	'optimistic_locking'=>true,
-	'unified_search'=>true,
+    'optimistic_locking'=>true,
+    'unified_search'=>true,
 );
 
 if (!class_exists('VardefManager')) {

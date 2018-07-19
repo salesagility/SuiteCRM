@@ -42,7 +42,6 @@ require_once 'Zend/Gdata/Feed.php';
  */
 class Zend_Gdata_Extension_FeedLink extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'feedLink';
     protected $_countHint = null;
     protected $_href = null;
@@ -50,9 +49,13 @@ class Zend_Gdata_Extension_FeedLink extends Zend_Gdata_Extension
     protected $_rel = null;
     protected $_feed = null;
 
-    public function __construct($href = null, $rel = null,
-            $countHint = null, $readOnly = null, $feed = null)
-    {
+    public function __construct(
+        $href = null,
+        $rel = null,
+            $countHint = null,
+        $readOnly = null,
+        $feed = null
+    ) {
         parent::__construct();
         $this->_countHint = $countHint;
         $this->_href = $href;
@@ -109,11 +112,9 @@ class Zend_Gdata_Extension_FeedLink extends Zend_Gdata_Extension
         case 'readOnly':
             if ($attribute->nodeValue == "true") {
                 $this->_readOnly = true;
-            }
-            elseif ($attribute->nodeValue == "false") {
+            } elseif ($attribute->nodeValue == "false") {
                 $this->_readOnly = false;
-            }
-            else {
+            } else {
                 throw new Zend_Gdata_App_InvalidArgumentException("Expected 'true' or 'false' for gCal:selected#value.");
             }
             break;
@@ -171,5 +172,4 @@ class Zend_Gdata_Extension_FeedLink extends Zend_Gdata_Extension
         $this->_feed = $value;
         return $this;
     }
-
 }

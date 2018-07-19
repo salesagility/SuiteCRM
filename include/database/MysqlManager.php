@@ -130,7 +130,7 @@ class MysqlManager extends DBManager
         'relate' => 'varchar',
         'multienum' => 'text',
         'html' => 'text',
-	'emailbody' => 'nvarchar(max)',
+    'emailbody' => 'nvarchar(max)',
         'longhtml' => 'longtext',
         'datetime' => 'datetime',
         'datetimecombo' => 'datetime',
@@ -346,8 +346,10 @@ class MysqlManager extends DBManager
             $matches = array();
             preg_match_all('/(\w+)(?:\(([0-9]+,?[0-9]*)\)|)( unsigned)?/i', $row['Type'], $matches);
             $columns[$name]['type'] = strtolower($matches[1][0]);
-            if (isset($matches[2][0]) && in_array(strtolower($matches[1][0]),
-                    array('varchar', 'char', 'varchar2', 'int', 'decimal', 'float'))
+            if (isset($matches[2][0]) && in_array(
+                strtolower($matches[1][0]),
+                    array('varchar', 'char', 'varchar2', 'int', 'decimal', 'float')
+            )
             ) {
                 $columns[$name]['len'] = strtolower($matches[2][0]);
             }
@@ -915,8 +917,10 @@ class MysqlManager extends DBManager
                     if ($this->full_text_indexing_installed()) {
                         $columns[] = " FULLTEXT ($fields)";
                     } else {
-                        $GLOBALS['log']->debug('MYISAM engine is not available/enabled, full-text indexes will be skipped. Skipping:',
-                            $name);
+                        $GLOBALS['log']->debug(
+                            'MYISAM engine is not available/enabled, full-text indexes will be skipped. Skipping:',
+                            $name
+                        );
                     }
                     break;
             }

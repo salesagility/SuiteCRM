@@ -27,11 +27,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
  
 $popupMeta = array('moduleMain' => 'AOW_WorkFlow',
-						'varName' => 'AOW_WorkFlow',
-						'orderBy' => 'aow_workflow.name',
-						'whereClauses' =>
-							array('name' => 'aow_workflow.name',
-								),
-						    'searchInputs'=> array('aow_workflow_number', 'name', 'priority','status'),
-							
-						);
+                        'varName' => 'AOW_WorkFlow',
+                        'orderBy' => 'aow_workflow.name',
+                        'whereClauses' =>
+                            array('name' => 'aow_workflow.name',
+                                ),
+                            'searchInputs'=> array('aow_workflow_number', 'name', 'priority','status'),
+                            
+                        );

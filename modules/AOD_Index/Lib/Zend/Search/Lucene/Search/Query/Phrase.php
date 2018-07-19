@@ -434,9 +434,15 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
             $this->_termsPositions[$termId] = $reader->termPositions($term);
         }
         // sort resvectors in order of subquery cardinality increasing
-        array_multisort($resVectorsSizes, SORT_ASC, SORT_NUMERIC,
-                        $resVectorsIds,   SORT_ASC, SORT_NUMERIC,
-                        $resVectors);
+        array_multisort(
+            $resVectorsSizes,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $resVectorsIds,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $resVectors
+        );
 
         foreach ($resVectors as $nextResVector) {
             if ($this->_resVector === null) {

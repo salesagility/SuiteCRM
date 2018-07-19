@@ -84,13 +84,13 @@ class UpgradeRemoval
         if (empty($files) || !is_array($files)) {
             return;
         }
-	
+    
         require_once('include/dir_inc.php');
-	
+    
         if (!file_exists('custom/backup')) {
             mkdir_recursive('custom/backup');
         }
-	
+    
         foreach ($files as $file) {
             if (file_exists($file)) {
                 $this->backup($file);
@@ -118,7 +118,7 @@ class UpgradeRemoval
         if (!empty($basepath) && !file_exists('custom/backup/' . $basepath)) {
             mkdir_recursive('custom/backup/' . $basepath);
         }
-	
+    
         if (is_dir($file)) {
             copy_recursive($file, 'custom/backup/' . $file);
         } else {

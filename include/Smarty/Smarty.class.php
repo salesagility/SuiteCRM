@@ -953,8 +953,10 @@ class Smarty
         $_auto_id = $this->_get_auto_id($cache_id, $compile_id);
 
         if (!empty($this->cache_handler_func)) {
-            return call_user_func_array($this->cache_handler_func,
-                                  array('clear', &$this, &$dummy, $tpl_file, $cache_id, $compile_id, $exp_time));
+            return call_user_func_array(
+                $this->cache_handler_func,
+                                  array('clear', &$this, &$dummy, $tpl_file, $cache_id, $compile_id, $exp_time)
+            );
         } else {
             $_params = array('auto_base' => $this->cache_dir,
                             'auto_source' => $tpl_file,
@@ -1518,8 +1520,11 @@ class Smarty
      */
     public function _get_compile_path($resource_name)
     {
-        return $this->_get_auto_filename($this->compile_dir, $resource_name,
-                                         $this->_compile_id) . '.php';
+        return $this->_get_auto_filename(
+            $this->compile_dir,
+            $resource_name,
+                                         $this->_compile_id
+        ) . '.php';
     }
 
     /**
@@ -1569,15 +1574,19 @@ class Smarty
                     // call resource functions to fetch the template source and timestamp
                     if ($params['get_source']) {
                         $_source_return = isset($this->_plugins['resource'][$_resource_type]) &&
-                            call_user_func_array($this->_plugins['resource'][$_resource_type][0][0],
-                                                 array($_resource_name, &$params['source_content'], &$this));
+                            call_user_func_array(
+                                $this->_plugins['resource'][$_resource_type][0][0],
+                                                 array($_resource_name, &$params['source_content'], &$this)
+                            );
                     } else {
                         $_source_return = true;
                     }
 
                     $_timestamp_return = isset($this->_plugins['resource'][$_resource_type]) &&
-                        call_user_func_array($this->_plugins['resource'][$_resource_type][0][1],
-                                             array($_resource_name, &$params['resource_timestamp'], &$this));
+                        call_user_func_array(
+                            $this->_plugins['resource'][$_resource_type][0][1],
+                                             array($_resource_name, &$params['resource_timestamp'], &$this)
+                        );
 
                     $_return = $_source_return && $_timestamp_return;
                     break;
@@ -1592,7 +1601,8 @@ class Smarty
                 } else {
                     $_return = call_user_func_array(
                         $this->default_template_handler_func,
-                        array($_params['resource_type'], $_params['resource_name'], &$params['source_content'], &$params['resource_timestamp'], &$this));
+                        array($_params['resource_type'], $_params['resource_name'], &$params['source_content'], &$params['resource_timestamp'], &$this)
+                    );
                 }
             }
         }
@@ -1820,9 +1830,14 @@ class Smarty
      * @param integer $line
      * @param integer $error_type
      */
-    public function _trigger_fatal_error($error_msg, $tpl_file = null, $tpl_line = null,
-            $file = null, $line = null, $error_type = E_USER_ERROR)
-    {
+    public function _trigger_fatal_error(
+        $error_msg,
+        $tpl_file = null,
+        $tpl_line = null,
+            $file = null,
+        $line = null,
+        $error_type = E_USER_ERROR
+    ) {
         if (isset($file) && isset($line)) {
             $info = ' ('.basename($file).", line $line)";
         } else {
@@ -1959,7 +1974,7 @@ class Smarty
     {
         if (is_array($function)) {
             $_class_name = (is_object($function[0]) ?
-				get_class($function[0]) : $function[0]);
+                get_class($function[0]) : $function[0]);
             return $_class_name . '_' . $function[1];
         } else {
             return $function;

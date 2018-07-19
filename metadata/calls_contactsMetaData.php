@@ -57,9 +57,9 @@ $dictionary['calls_contacts'] = array( 'table' => 'calls_contacts'
       , array('name' => 'idx_call_contact', 'type'=>'alternate_key', 'fields'=>array('call_id','contact_id'))
                                                       )
 
- 	  , 'relationships' => array('calls_contacts' => array('lhs_module'=> 'Calls', 'lhs_table'=> 'calls', 'lhs_key' => 'id',
-							  'rhs_module'=> 'Contacts', 'rhs_table'=> 'contacts', 'rhs_key' => 'id',
-							  'relationship_type'=>'many-to-many',
-							  'join_table'=> 'calls_contacts', 'join_key_lhs'=>'call_id', 'join_key_rhs'=>'contact_id'))
+      , 'relationships' => array('calls_contacts' => array('lhs_module'=> 'Calls', 'lhs_table'=> 'calls', 'lhs_key' => 'id',
+                              'rhs_module'=> 'Contacts', 'rhs_table'=> 'contacts', 'rhs_key' => 'id',
+                              'relationship_type'=>'many-to-many',
+                              'join_table'=> 'calls_contacts', 'join_key_lhs'=>'call_id', 'join_key_rhs'=>'contact_id'))
 
 );

@@ -178,7 +178,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
         }
         if (is_array($cell)) {
 
-			//#22632
+            //#22632
             $value = unencodeMultienum($value);
             $cell=array();
             foreach ($value as $val) {

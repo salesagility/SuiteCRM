@@ -131,7 +131,8 @@ class FactorAuthEmailCode implements FactorAuthInterface
                     $mailer->ErrorInfo
             );
         } else {
-            $GLOBALS['log']->debug('FACTOR AUTH: token sent to user: ' .
+            $GLOBALS['log']->debug(
+                'FACTOR AUTH: token sent to user: ' .
                     $current_user->id . ', token: ' . '{$token}' . ' so we store it in the session'
             );
         }

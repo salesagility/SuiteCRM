@@ -54,17 +54,17 @@ define('DEFAULT_PORT', 389);
 class LDAPAuthenticateUser extends SugarAuthenticateUser
 {
 
-	/**
-	 * Does the actual authentication of the user and returns an id that will be used
-	 * to load the current user (loadUserOnSession)
-	 *
-	 * @param string $name
-	 * @param string $password
-	 * @param boolean $fallback
-	 * @return string id - used for loading the user
-	 *
-	 * Contributions by Erik Mitchell erikm@logicpd.com
-	 */
+    /**
+     * Does the actual authentication of the user and returns an id that will be used
+     * to load the current user (loadUserOnSession)
+     *
+     * @param string $name
+     * @param string $password
+     * @param boolean $fallback
+     * @return string id - used for loading the user
+     *
+     * Contributions by Erik Mitchell erikm@logicpd.com
+     */
     public function authenticateUser($name, $password, $fallback=false)
     {
         $server = $GLOBALS['ldap_config']->settings['ldap_hostname'];
@@ -90,7 +90,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         $GLOBALS['log']->debug("ldapauth.ldap_authenticate_user: ldap_rdn_lookup returned bind_user=" . $bind_user);
         if (!$bind_user) {
             $GLOBALS['log']->fatal("SECURITY: ldapauth: failed LDAP bind (login) by " .
-									$name . ", could not construct bind_user");
+                                    $name . ", could not construct bind_user");
             return '';
         }
 

@@ -50,7 +50,7 @@ function additionalDetailsProjectTask($fields)
         global $current_language;
         $mod_strings = return_module_language($current_language, 'ProjectTask');
     }
-		
+        
     $overlib_string = '';
     if (!empty($fields['PRIORITY'])) {
         $overlib_string .= '<b>' . $mod_strings['LBL_PRIORITY'] . '</b> ' . $fields['PRIORITY'] . '<br>';
@@ -70,7 +70,7 @@ function additionalDetailsProjectTask($fields)
     if (!empty($fields['DATE_START'])) {
         $overlib_string .= '<b>' . $mod_strings['LBL_DATE_START'] . '</b> ' . $fields['DATE_START'] . ' ' . $fields['TIME_START'] . '<br>';
     }
-		
+        
     if (!empty($fields['DESCRIPTION'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_DESCRIPTION'] . '</b> ' . substr($fields['DESCRIPTION'], 0, 300);
         if (strlen($fields['DESCRIPTION']) > 300) {
@@ -79,7 +79,7 @@ function additionalDetailsProjectTask($fields)
     }
 
     return array('fieldToAddTo' => 'NAME',
-				 'string' => $overlib_string,
-				 'editLink' => "index.php?action=EditView&module=ProjectTask&return_module=ProjectTask&record={$fields['ID']}",
-				 'viewLink' => "index.php?action=DetailView&module=ProjectTask&return_module=ProjectTask&record={$fields['ID']}");
+                 'string' => $overlib_string,
+                 'editLink' => "index.php?action=EditView&module=ProjectTask&return_module=ProjectTask&record={$fields['ID']}",
+                 'viewLink' => "index.php?action=DetailView&module=ProjectTask&return_module=ProjectTask&record={$fields['ID']}");
 }

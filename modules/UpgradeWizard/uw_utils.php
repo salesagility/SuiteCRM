@@ -2868,8 +2868,11 @@ function set_upgrade_vars()
             }
         }
         ksort($upgrade_config);
-        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
-                $upgrade_progress_file)) {
+        if (is_writable($upgrade_progress_file) && write_array_to_file(
+            "upgrade_config",
+            $upgrade_config,
+                $upgrade_progress_file
+        )) {
             //writing to the file
         }
     }
@@ -2960,8 +2963,11 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
             $upgrade_config[sizeof($upgrade_config)+1][$currStep]= $currState;
         }
 
-        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
-                $upgrade_progress_file)) {
+        if (is_writable($upgrade_progress_file) && write_array_to_file(
+            "upgrade_config",
+            $upgrade_config,
+                $upgrade_progress_file
+        )) {
             //writing to the file
         }
     }
@@ -3107,8 +3113,11 @@ function post_install_progress($progArray='', $action='')
                 $upgrade_config[sizeof($upgrade_config)]['commit']['post_install'][$key]=$val;
             }
         }
-        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
-                $upgrade_progress_file)) {
+        if (is_writable($upgrade_progress_file) && write_array_to_file(
+            "upgrade_config",
+            $upgrade_config,
+                $upgrade_progress_file
+        )) {
             //writing to the file
         }
     }

@@ -60,17 +60,17 @@ class JsChart extends SugarChart
     public function isSupported($chartType)
     {
         $charts = array(
-			"stacked group by chart",
-			"group by chart",
-			"bar chart",
-			"horizontal group by chart",
-			"horizontal",
-			"horizontal bar chart",
-			"pie chart",
-			"gauge chart",
-			"funnel chart 3D",
-			"line chart",
-		);
+            "stacked group by chart",
+            "group by chart",
+            "bar chart",
+            "horizontal group by chart",
+            "horizontal",
+            "horizontal bar chart",
+            "pie chart",
+            "gauge chart",
+            "funnel chart 3D",
+            "line chart",
+        );
 
         if (in_array($chartType, $charts)) {
             return true;
@@ -515,7 +515,7 @@ class JsChart extends SugarChart
                 $groupcontent .= $this->tab("\"valuelabels\": [\n".$subgroupValueLabelsStr, 2);
                 $groupcontent .= $this->tab("]\n", 2);
                 //$groupcontent .= $this->tab("\"links\": [\n".$subgroupLinksStr,2);
-				//$groupcontent .= $this->tab("]\n",2);
+                //$groupcontent .= $this->tab("]\n",2);
             }
 
             $groupcontent .= $this->tab("}", 1);

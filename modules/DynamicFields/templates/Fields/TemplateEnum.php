@@ -56,8 +56,8 @@ class TemplateEnum extends TemplateText
     {
         // ensure that the field dependency information is read in from any _REQUEST
         $this->localVardefMap = array(
-    		'trigger' => 'trigger',
-    		'action' => 'action' ,
+            'trigger' => 'trigger',
+            'action' => 'action' ,
             'visibility_grid' => 'visibility_grid',
         ) ;
         $this->vardef_map = array_merge($this->vardef_map, $this->localVardefMap) ;

@@ -215,10 +215,10 @@ class ListViewXTPL extends ListViewDisplay
         }
 
         $htmlText = "<tr class='pagination' role='presentation'>\n"
-				. "<td COLSPAN=\"20\" align=\"right\">\n"
-				. "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td align=\"left\">$export_link$merge_link$selected_objects_span</td>\n"
-				. "<td nowrap align=\"right\">".$startLink."&nbsp;&nbsp;".$prevLink."&nbsp;&nbsp;<span class='pageNumbers'>(".($this->data['pageData']['offsets']['current'] + 1) ." - ".($this->data['pageData']['offsets']['current'] + $this->rowCount)
-				. " ".$app_strings['LBL_LIST_OF']." ".$this->data['pageData']['offsets']['total'];
+                . "<td COLSPAN=\"20\" align=\"right\">\n"
+                . "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td align=\"left\">$export_link$merge_link$selected_objects_span</td>\n"
+                . "<td nowrap align=\"right\">".$startLink."&nbsp;&nbsp;".$prevLink."&nbsp;&nbsp;<span class='pageNumbers'>(".($this->data['pageData']['offsets']['current'] + 1) ." - ".($this->data['pageData']['offsets']['current'] + $this->rowCount)
+                . " ".$app_strings['LBL_LIST_OF']." ".$this->data['pageData']['offsets']['total'];
         if (!$this->data['pageData']['offsets']['totalCounted']) {
             $htmlText .= '+';
         }

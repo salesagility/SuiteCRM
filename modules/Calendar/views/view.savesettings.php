@@ -45,22 +45,22 @@ class CalendarViewSaveSettings extends SugarView
     {
         parent::SugarView();
     }
-	
+    
     public function process()
     {
         $this->display();
     }
-	
+    
     public function display()
     {
         global $current_user;
-		
+        
         $db_start = $this->to_db_time($_REQUEST['day_start_hours'], $_REQUEST['day_start_minutes'], $_REQUEST['day_start_meridiem']);
         $db_end = $this->to_db_time($_REQUEST['day_end_hours'], $_REQUEST['day_end_minutes'], $_REQUEST['day_end_meridiem']);
-		
+        
         $current_user->setPreference('day_start_time', $db_start, 0, 'global', $current_user);
         $current_user->setPreference('day_end_time', $db_end, 0, 'global', $current_user);
-		
+        
         $current_user->setPreference('CalendarActivities', base64_encode(serialize($_POST['activity'])));
 
         $current_user->setPreference('calendar_display_timeslots', $_REQUEST['display_timeslots'], 0, 'global', $current_user);
@@ -75,7 +75,7 @@ class CalendarViewSaveSettings extends SugarView
             header("Location: index.php?module=Calendar&action=index");
         }
     }
-	
+    
     private function to_db_time($hours, $minutes, $mer)
     {
         $hours = intval($hours);

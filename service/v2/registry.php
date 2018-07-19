@@ -88,110 +88,132 @@ class registry
         $this->serviceClass->registerFunction(
             'logout',
              array('session'=>'xsd:string'),
-             array());
+             array()
+        );
              
         $this->serviceClass->registerFunction(
             'get_entry',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'id'=>'xsd:string', 'select_fields'=>'tns:select_fields','link_name_to_fields_array'=>'tns:link_names_to_fields_array'),
-            array('return'=>'tns:get_entry_result_version2'));
+            array('return'=>'tns:get_entry_result_version2')
+        );
             
         $this->serviceClass->registerFunction(
             'get_entries',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'ids'=>'tns:select_fields', 'select_fields'=>'tns:select_fields', 'link_name_to_fields_array'=>'tns:link_names_to_fields_array'),
-            array('return'=>'tns:get_entry_result_version2'));
+            array('return'=>'tns:get_entry_result_version2')
+        );
             
         $this->serviceClass->registerFunction(
             'get_entry_list',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'query'=>'xsd:string', 'order_by'=>'xsd:string','offset'=>'xsd:int', 'select_fields'=>'tns:select_fields', 'link_name_to_fields_array'=>'tns:link_names_to_fields_array', 'max_results'=>'xsd:int', 'deleted'=>'xsd:int'),
-            array('return'=>'tns:get_entry_list_result_version2'));
+            array('return'=>'tns:get_entry_list_result_version2')
+        );
             
         $this->serviceClass->registerFunction(
             'set_relationship',
             array('session'=>'xsd:string','module_name'=>'xsd:string','module_id'=>'xsd:string','link_field_name'=>'xsd:string', 'related_ids'=>'tns:select_fields', 'name_value_list'=>'tns:name_value_list', 'delete'=>'xsd:int'),
-            array('return'=>'tns:new_set_relationship_list_result'));
+            array('return'=>'tns:new_set_relationship_list_result')
+        );
             
         $this->serviceClass->registerFunction(
             'set_relationships',
             array('session'=>'xsd:string','module_names'=>'tns:select_fields','module_ids'=>'tns:select_fields','link_field_names'=>'tns:select_fields','related_ids'=>'tns:new_set_relationhip_ids', 'name_value_lists'=>'tns:name_value_lists', 'delete_array' => 'tns:deleted_array'),
-            array('return'=>'tns:new_set_relationship_list_result'));
+            array('return'=>'tns:new_set_relationship_list_result')
+        );
             
         $this->serviceClass->registerFunction(
             'get_relationships',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'module_id'=>'xsd:string', 'link_field_name'=>'xsd:string', 'related_module_query'=>'xsd:string', 'related_fields'=>'tns:select_fields', 'related_module_link_name_to_fields_array'=>'tns:link_names_to_fields_array', 'deleted'=>'xsd:int'),
-            array('return'=>'tns:get_entry_result_version2'));
+            array('return'=>'tns:get_entry_result_version2')
+        );
             
         $this->serviceClass->registerFunction(
             'set_entry',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string',  'name_value_list'=>'tns:name_value_list'),
-            array('return'=>'tns:new_set_entry_result'));
+            array('return'=>'tns:new_set_entry_result')
+        );
             
         $this->serviceClass->registerFunction(
             'set_entries',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string',  'name_value_lists'=>'tns:name_value_lists'),
-            array('return'=>'tns:new_set_entries_result'));
+            array('return'=>'tns:new_set_entries_result')
+        );
                         
         $this->serviceClass->registerFunction(
             'get_server_info',
             array(),
-            array('return'=>'tns:get_server_info_result'));
+            array('return'=>'tns:get_server_info_result')
+        );
 
         $this->serviceClass->registerFunction(
             'get_user_id',
             array('session'=>'xsd:string'),
-            array('return'=>'xsd:string'));
+            array('return'=>'xsd:string')
+        );
             
         $this->serviceClass->registerFunction(
             'get_module_fields',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'fields'=>'tns:select_fields'),
-            array('return'=>'tns:new_module_fields'));
+            array('return'=>'tns:new_module_fields')
+        );
             
         $this->serviceClass->registerFunction(
             'seamless_login',
             array('session'=>'xsd:string'),
-            array('return'=>'xsd:int'));
+            array('return'=>'xsd:int')
+        );
             
         $this->serviceClass->registerFunction(
             'set_note_attachment',
             array('session'=>'xsd:string','note'=>'tns:new_note_attachment'),
-            array('return'=>'tns:new_set_entry_result'));
+            array('return'=>'tns:new_set_entry_result')
+        );
 
         $this->serviceClass->registerFunction(
             'get_note_attachment',
             array('session'=>'xsd:string', 'id'=>'xsd:string'),
-            array('return'=>'tns:new_return_note_attachment'));
+            array('return'=>'tns:new_return_note_attachment')
+        );
             
         $this->serviceClass->registerFunction(
             'set_document_revision',
             array('session'=>'xsd:string','note'=>'tns:document_revision'),
-            array('return'=>'tns:new_set_entry_result'));
+            array('return'=>'tns:new_set_entry_result')
+        );
 
         $this->serviceClass->registerFunction(
             'get_document_revision',
             array('session'=>'xsd:string','i'=>'xsd:string'),
-            array('return'=>'tns:new_return_document_revision'));
+            array('return'=>'tns:new_return_document_revision')
+        );
 
         $this->serviceClass->registerFunction(
             'search_by_module',
             array('session'=>'xsd:string','search_string'=>'xsd:string', 'modules'=>'tns:select_fields', 'offset'=>'xsd:int', 'max_results'=>'xsd:int'),
-            array('return'=>'tns:return_search_result'));
+            array('return'=>'tns:return_search_result')
+        );
 
         $this->serviceClass->registerFunction(
             'get_available_modules',
             array('session'=>'xsd:string'),
-            array('return'=>'tns:module_list'));
+            array('return'=>'tns:module_list')
+        );
 
         $this->serviceClass->registerFunction(
             'get_user_team_id',
             array('session'=>'xsd:string'),
-            array('return'=>'xsd:string'));
+            array('return'=>'xsd:string')
+        );
         $this->serviceClass->registerFunction(
             'set_campaign_merge',
             array('session'=>'xsd:string', 'targets'=>'tns:select_fields', 'campaign_id'=>'xsd:string'),
-            array());
+            array()
+        );
         $this->serviceClass->registerFunction(
             'get_entries_count',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'query'=>'xsd:string', 'deleted' => 'xsd:int'),
-            array('return'=>'tns:get_entries_count_result'));
+            array('return'=>'tns:get_entries_count_result')
+        );
 
             
         $GLOBALS['log']->info('END: registry->registerFunction');

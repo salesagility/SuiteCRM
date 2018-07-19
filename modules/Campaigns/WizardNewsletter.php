@@ -640,7 +640,7 @@ if ($campaign_type == 'general') {
 $ss->assign('TOTAL_STEPS', count($steps));
 $sshtml = create_wiz_step_divs($steps, $ss);
 $ss->assign('STEPS', $sshtml);
-     	   	
+             
 
 /**************************** FINAL END OF PAGE UI Stuff *******************/
 

@@ -33,7 +33,7 @@ class aowTemplateParser extends templateParser
         global $beanList;
 
         $person = array();
-	
+    
         foreach ($bean_arr as $bean_name => $bean_id) {
             $focus = BeanFactory::getBean($bean_name, $bean_id);
             $string = aowTemplateParser::parse_template_bean($string, strtolower($beanList[$bean_name]), $focus);

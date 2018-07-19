@@ -65,7 +65,7 @@ class SugarWidgetSubPanelTopCreateAccountNameButton extends SugarWidgetSubPanelT
             $button = "<input title='$title'class='button' type='button' name='button' value='  $value  ' disabled/>\n";
             return $button;
         }
-		
+        
         $additionalFormFields = array();
         if (isset($defines['focus']->billing_address_street)) {
             $additionalFormFields['primary_address_street'] = $defines['focus']->billing_address_street;
@@ -85,8 +85,8 @@ class SugarWidgetSubPanelTopCreateAccountNameButton extends SugarWidgetSubPanelT
         if (isset($defines['focus']->phone_office)) {
             $additionalFormFields['phone_work'] = $defines['focus']->phone_office;
         }
-		
-		
+        
+        
         $button = $this->_get_form($defines, $additionalFormFields);
         $button .= "<input title='$title' class='button' type='submit' name='{$this->getWidgetId()}' id='{$this->getWidgetId()}' value='  $value  '/>\n";
         $button .= "</form>";

@@ -81,7 +81,7 @@ class AccountsViewDetail extends ViewDetail
         formLetter::DVPopupHtml('Accounts');
 
         $this->dv->process();
-		
+        
         if (ACLController::checkAccess('Contacts', 'edit', true)) {
             $push_billing = $this->generatePushCode('billing');
             $push_shipping = $this->generatePushCode('shipping');
@@ -106,8 +106,8 @@ class AccountsViewDetail extends ViewDetail
         $address_fields = array('street', 'city', 'state', 'postalcode','country');
 
         $html = '<input class="button" title="' . $mod_strings['LBL_PUSH_CONTACTS_BUTTON_LABEL'] .
-		     '" type="button" onclick=\'open_contact_popup("Contacts", 600, 600, "&account_name=' .
-		     $this->bean->name . '&html=change_address';
+             '" type="button" onclick=\'open_contact_popup("Contacts", 600, 600, "&account_name=' .
+             $this->bean->name . '&html=change_address';
 
         foreach ($address_fields as $value) {
             $field_name = $param.'_address_'.$value;

@@ -46,18 +46,18 @@ if (isset($_REQUEST['style'])) {
 }
 if (isset($_REQUEST['module_name'])) {
     $the_strings = return_module_language($current_language, $_REQUEST['module_name']);
-	
-	
+    
+    
 
     global $app_strings;
     global $app_list_strings;
     global $mod_strings;
     global $current_user;
-	
+    
     echo SugarThemeRegistry::current()->getCSS();
     echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$_REQUEST['module_name']), true);
-	
-		
+    
+        
 
 
 
@@ -71,7 +71,7 @@ if (isset($_REQUEST['module_name'])) {
     if (isset($_REQUEST['sugar_body_only'])) {
         $xtpl->assign("SUGAR_BODY_ONLY", $_REQUEST['sugar_body_only']);
     }
-	
+    
     if (isset($_REQUEST['record'])) {
         $xtpl->assign("NO_EDIT", "readonly");
         $xtpl->assign("KEY", $_REQUEST['record']);

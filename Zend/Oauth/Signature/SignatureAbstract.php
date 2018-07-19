@@ -85,7 +85,7 @@ abstract class Zend_Oauth_Signature_SignatureAbstract
      * @param  null|string $url
      * @return string
      */
-    public abstract function sign(array $params, $method = null, $url = null);
+    abstract public function sign(array $params, $method = null, $url = null);
 
     /**
      * Normalize the base signature URL

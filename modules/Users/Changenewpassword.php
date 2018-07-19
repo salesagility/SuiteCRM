@@ -162,8 +162,10 @@ $sugar_smarty->assign('return_action', 'login');
 $sugar_smarty->assign("APP", $app_strings);
 $sugar_smarty->assign("INSTRUCTION", $app_strings['NTC_LOGIN_MESSAGE']);
 $sugar_smarty->assign("ERRORS", $errors);
-$sugar_smarty->assign("USERNAME_FIELD",
-    '<td scope="row" width="30%">' . $mod_strings['LBL_USER_NAME'] . ':</td><td width="70%"><input type="text" size="20" tabindex="1" id="user_name" name="user_name"  value=""></td>');
+$sugar_smarty->assign(
+    "USERNAME_FIELD",
+    '<td scope="row" width="30%">' . $mod_strings['LBL_USER_NAME'] . ':</td><td width="70%"><input type="text" size="20" tabindex="1" id="user_name" name="user_name"  value=""></td>'
+);
 $sugar_smarty->assign('PWDSETTINGS', $GLOBALS['sugar_config']['passwordsetting']);
 
 

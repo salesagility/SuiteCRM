@@ -44,20 +44,20 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
   $searchdefs['Employees'] = array(
-  					'templateMeta' => array('maxColumns' => '3', 'maxColumnsBasic' => '4',
+                    'templateMeta' => array('maxColumns' => '3', 'maxColumnsBasic' => '4',
                             'widths' => array('label' => '10', 'field' => '30'),
                            ),
                     'layout' => array(
-                    	'basic_search' => array(
-                    		array('name'=>'search_name','label' =>'LBL_NAME', 'type' => 'name'),
+                        'basic_search' => array(
+                            array('name'=>'search_name','label' =>'LBL_NAME', 'type' => 'name'),
                             array('name'=>'open_only_active_users', 'label'=>'LBL_ONLY_ACTIVE', 'type' => 'bool'),
-							),
-                    	'advanced_search' => array(
-                    	    'first_name',
-                    	    'last_name',
-                    	    'employee_status',
-                    	    'title',
-                    	    'phone' =>
+                            ),
+                        'advanced_search' => array(
+                            'first_name',
+                            'last_name',
+                            'employee_status',
+                            'title',
+                            'phone' =>
                               array(
                                 'name' => 'phone',
                                 'label' => 'LBL_ANY_PHONE',
@@ -65,8 +65,8 @@
                                 'default' => true,
                                 'width' => '10%',
                               ),
-                    	    'department',
-                    	    'email' =>
+                            'department',
+                            'email' =>
                               array(
                                 'name' => 'email',
                                 'label' => 'LBL_ANY_EMAIL',
@@ -74,7 +74,7 @@
                                 'default' => true,
                                 'width' => '10%',
                               ),
-                    	    'address_street' =>
+                            'address_street' =>
                               array(
                                 'name' => 'address_street',
                                 'label' => 'LBL_ANY_ADDRESS',
@@ -90,7 +90,7 @@
                                 'default' => true,
                                 'width' => '10%',
                               ),
-                    	    'address_state' =>
+                            'address_state' =>
                               array(
                                 'name' => 'address_state',
                                 'label' => 'LBL_STATE',
@@ -107,7 +107,7 @@
                                 'width' => '10%',
                               ),
                              
-                    	    'address_country' =>
+                            'address_country' =>
                               array(
                                 'name' => 'address_country',
                                 'label' => 'LBL_COUNTRY',
@@ -115,6 +115,6 @@
                                 'default' => true,
                                 'width' => '10%',
                               ),
-                    		),
-					),
- 			   );
+                            ),
+                    ),
+               );

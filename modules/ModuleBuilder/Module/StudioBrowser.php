@@ -47,7 +47,7 @@ function cmp($a, $b)
 class StudioBrowser
 {
     public $modules = array();
-	
+    
     public function loadModules()
     {
         global $current_user;
@@ -62,7 +62,7 @@ class StudioBrowser
             }
         }
     }
-	
+    
     public function loadRelatableModules()
     {
         $d = dir('modules');
@@ -75,7 +75,7 @@ class StudioBrowser
             }
         }
     }
-		
+        
     public function getNodes()
     {
         $this->loadModules();

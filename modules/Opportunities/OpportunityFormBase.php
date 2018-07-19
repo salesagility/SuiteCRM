@@ -48,7 +48,7 @@ class OpportunityFormBase
     public function checkForDuplicates($prefix)
     {
         require_once('include/formbase.php');
-	
+    
         $focus = new Opportunity();
         $query = '';
         $baseQuery = 'select id, name, sales_stage,amount, date_closed  from opportunities where deleted!=1 and (';
@@ -70,7 +70,7 @@ class OpportunityFormBase
             if ($i==-1) {
                 return null;
             }
-		
+        
             return $rows;
         }
         return null;
@@ -375,13 +375,13 @@ EOQ;
             /// SETUP ACCOUNT POPUP
 
             $popup_request_data = array(
-	'call_back_function' => 'set_return',
-	'form_name' => "{$prefix}OppSave",
-	'field_to_name_array' => array(
-		'id' => 'account_id',
-		'name' => 'account_name',
-		),
-	);
+    'call_back_function' => 'set_return',
+    'form_name' => "{$prefix}OppSave",
+    'field_to_name_array' => array(
+        'id' => 'account_id',
+        'name' => 'account_name',
+        ),
+    );
 
             $json = getJSONobj();
             $encoded_popup_request_data = $json->encode($popup_request_data);
@@ -438,10 +438,10 @@ EOQ;
     public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $current_user;
-	
-	
+    
+    
         require_once('include/formbase.php');
-	
+    
         $focus = new Opportunity();
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -468,7 +468,7 @@ EOQ;
             clone_relationship($focus->db, array('opportunities_contacts'), 'opportunity_id', $_POST['duplicate_parent_id'], $focus->id);
         }
         $return_id = $focus->id;
-	
+    
         $GLOBALS['log']->debug("Saved record with id of ".$return_id);
         if ($redirect) {
             handleRedirect($return_id, "Opportunities");

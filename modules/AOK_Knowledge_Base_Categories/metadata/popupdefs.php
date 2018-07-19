@@ -44,11 +44,11 @@ $module_name = 'AOK_Knowledge_Base_Categories';
 $object_name = 'AOK_Knowledge_Base_Categories';
 $_module_name = 'aok_knowledge_base_categories';
 $popupMeta = array('moduleMain' => $module_name,
-						'varName' => $object_name,
-						'orderBy' => $_module_name.'.name',
-						'whereClauses' =>
-							array('name' => $_module_name . '.name',
-								),
-						    'searchInputs'=> array($_module_name. '_number', 'name', 'priority','status'),
-							
-						);
+                        'varName' => $object_name,
+                        'orderBy' => $_module_name.'.name',
+                        'whereClauses' =>
+                            array('name' => $_module_name . '.name',
+                                ),
+                            'searchInputs'=> array($_module_name. '_number', 'name', 'priority','status'),
+                            
+                        );

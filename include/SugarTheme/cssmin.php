@@ -101,9 +101,9 @@ class cssmin
                     $styles[$style_tmp[0]] = $style_tmp[1];
                 }
                 $r[] = array(
-					"keys"		=> cssmin_array_clean($keys),
-					"styles"	=> cssmin_array_clean($styles)
-					);
+                    "keys"		=> cssmin_array_clean($keys),
+                    "styles"	=> cssmin_array_clean($styles)
+                    );
             }
         }
         return $r;

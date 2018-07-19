@@ -48,14 +48,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 $fields_array['ProspectList'] = array('column_fields' => array(
-				"id", "date_entered",
-				"date_modified", "modified_user_id",
-				"assigned_user_id", "created_by",
-				"name", "description",'list_type','domain_name',
-	),
+                "id", "date_entered",
+                "date_modified", "modified_user_id",
+                "assigned_user_id", "created_by",
+                "name", "description",'list_type','domain_name',
+    ),
         'list_fields' =>  array(
-				'id', 'name', 'description','list_type',
-				'assigned_user_id','assigned_user_name',
-	),
+                'id', 'name', 'description','list_type',
+                'assigned_user_id','assigned_user_name',
+    ),
     'required_fields' =>  array('name'=>1,'list_type'=>2),
 );

@@ -45,19 +45,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $listViewDefs['Bugs'] = array(
-	'BUG_NUMBER' => array(
-		'width' => '5',
-		'label' => 'LBL_LIST_NUMBER',
-		'link' => true,
+    'BUG_NUMBER' => array(
+        'width' => '5',
+        'label' => 'LBL_LIST_NUMBER',
+        'link' => true,
         'default' => true),
-	'NAME' => array(
-		'width' => '32',
-		'label' => 'LBL_LIST_SUBJECT',
-		'default' => true,
+    'NAME' => array(
+        'width' => '32',
+        'label' => 'LBL_LIST_SUBJECT',
+        'default' => true,
         'link' => true),
-	'STATUS' => array(
-		'width' => '10',
-		'label' => 'LBL_LIST_STATUS',
+    'STATUS' => array(
+        'width' => '10',
+        'label' => 'LBL_LIST_STATUS',
         'default' => true),
     'TYPE' => array(
         'width' => '10',
@@ -85,10 +85,10 @@ $listViewDefs['Bugs'] = array(
         'width' => '10',
         'label' => 'LBL_LIST_RESOLUTION',
         'default' => false),
-	'ASSIGNED_USER_NAME' => array(
-		'width' => '9',
-		'label' => 'LBL_LIST_ASSIGNED_USER',
-		'module' => 'Employees',
+    'ASSIGNED_USER_NAME' => array(
+        'width' => '9',
+        'label' => 'LBL_LIST_ASSIGNED_USER',
+        'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
         'default' => true)
 );

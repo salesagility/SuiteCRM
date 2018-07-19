@@ -47,7 +47,8 @@ $server->register(
     'sync_get_modified_relationships',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string','related_module'=>'xsd:string', 'from_date'=>'xsd:string', 'to_date'=>'xsd:string','offset'=>'xsd:int', 'max_results'=>'xsd:int','deleted'=>'xsd:int', 'module_id'=>'xsd:string', 'select_fields'=>'tns:select_fields', 'ids'=>'tns:select_fields', 'relationship_name'=>'xsd:string', 'deletion_date'=>'xsd:string', 'php_serialize'=>'xsd:int'),
     array('return'=>'tns:get_entry_list_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 
 
@@ -131,7 +132,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     $results = retrieve_modified_relationships($module_name, $related_module, $query, $deleted, $offset, $max_results, $select_fields, $relationship_name);
 
     $list = $results['result'];
-	
+    
     $xml = '<?xml version="1.0" encoding="utf-8"?><items>';
     foreach ($list as $value) {
         $val = array_get_return_value($value, $results['table_name']);
@@ -142,13 +143,13 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     }
     $xml .= '</items>';
     $next_offset = $offset + sizeof($output_list);
-	
+    
     if ($php_serialize == 0) {
         $myoutput = base64_encode($xml);
     } else {
         $myoutput = get_encoded($output_list);
     }
-	
+    
     return array('result_count'=>sizeof($output_list),'next_offset'=>0, 'total_count'=>sizeof($output_list), 'field_list'=>array(), 'entry_list'=>$myoutput , 'error'=>$error->get_soap_array());
 }
 
@@ -157,7 +158,8 @@ $server->register(
     'get_modified_entries',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'ids'=>'tns:select_fields', 'select_fields'=>'tns:select_fields'),
     array('return'=>'tns:get_sync_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 function get_modified_entries($session, $module_name, $ids, $select_fields)
 {
@@ -178,14 +180,14 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
         $error->set_error('no_access');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
-	
+    
     $class_name = $beanList[$module_name];
     require_once($beanFiles[$class_name]);
     $seed = new $class_name();
     //rsmith
     $in = '';
     $field_select ='';
-	
+    
     $table_name = $seed->table_name;
     if (isset($ids)) {
         foreach ($ids as $value) {
@@ -202,15 +204,15 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
             continue;
         }
         $field_select .= $table_name.".".$field;
-		
+        
         if ($index < (count($select_fields) - 1)) {
             $field_select .= ",";
             $index++;
         }
     }//end foreach
-	
+    
     $ids = array();
-	
+    
     //end rsmith
     if (!empty($in)) {
         $in .=')';
@@ -254,7 +256,7 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
     $xml .= "</items>";
 
     $xml = base64_encode($xml);
-	
+    
     return array('result'=>$xml, 'error'=>$error->get_soap_array());
 }
 
@@ -262,7 +264,8 @@ $server->register(
     'get_attendee_list',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'id'=>'xsd:string'),
     array('return'=>'tns:get_sync_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 function get_attendee_list($session, $module_name, $id)
 {
@@ -283,13 +286,13 @@ function get_attendee_list($session, $module_name, $id)
         $error->set_error('no_access');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
-	
+    
 
     $class_name = $beanList[$module_name];
     require_once($beanFiles[$class_name]);
     $seed = new $class_name();
-	
-	
+    
+    
     //rsmith
     $xml = '<?xml version="1.0" encoding="utf-8"?>';
     if ($module_name == 'Meetings' || $module_name == 'Calls') {

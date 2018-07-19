@@ -53,9 +53,9 @@ $dictionary['contacts_users'] = array( 'table' => 'contacts_users'
       , array('name' =>'idx_con_users_user', 'type' =>'index', 'fields'=>array('user_id'))
       , array('name' =>'idx_contacts_users', 'type' =>'alternate_key', 'fields'=>array('contact_id', 'user_id'))
         )
- 	  , 'relationships' => array('contacts_users' => array('lhs_module'=> 'Contacts', 'lhs_table'=> 'contacts', 'lhs_key' => 'id',
-							  'rhs_module'=> 'Users', 'rhs_table'=> 'users', 'rhs_key' => 'id',
-							  'relationship_type'=>'many-to-many',
-							  'join_table'=> 'contacts_users', 'join_key_lhs'=>'contact_id', 'join_key_rhs'=>'user_id'))
+      , 'relationships' => array('contacts_users' => array('lhs_module'=> 'Contacts', 'lhs_table'=> 'contacts', 'lhs_key' => 'id',
+                              'rhs_module'=> 'Users', 'rhs_table'=> 'users', 'rhs_key' => 'id',
+                              'relationship_type'=>'many-to-many',
+                              'join_table'=> 'contacts_users', 'join_key_lhs'=>'contact_id', 'join_key_rhs'=>'user_id'))
                                   
 );

@@ -46,7 +46,7 @@ class ViewClassic extends SugarView
      * @see SugarView::SugarView()
      */
     public function __construct(
- 	    $bean = null,
+        $bean = null,
         $view_object_map = array()
         ) {
         parent::__construct();

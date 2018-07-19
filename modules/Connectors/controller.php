@@ -48,8 +48,8 @@ require_once('include/MVC/Controller/SugarController.php');
 class ConnectorsController extends SugarController
 {
     public $admin_actions = array('ConnectorSettings', 'DisplayProperties', 'MappingProperties', 'ModifyMapping', 'ModifyDisplay', 'ModifyProperties',
-	                           'ModifySearch', 'SearchProperties', 'SourceProperties',
-	                           'SavedModifyDisplay', 'SaveModifyProperties', 'SaveModifySearch', 'RunTest');
+                               'ModifySearch', 'SearchProperties', 'SourceProperties',
+                               'SavedModifyDisplay', 'SaveModifyProperties', 'SaveModifySearch', 'RunTest');
 
 
     public function process()
@@ -193,7 +193,7 @@ class ConnectorsController extends SugarController
                 }//foreach
             }//fi
 
-			$ss->assign('mod', $GLOBALS['mod_strings']);
+            $ss->assign('mod', $GLOBALS['mod_strings']);
             $ss->assign('search_fields', $_trueFields);
             $ss->assign('source_id', $source);
             $ss->assign('fields', $seed->field_defs);
@@ -537,7 +537,7 @@ class ConnectorsController extends SugarController
         } //foreach
 
 
-		//Now update the field mapping entries
+        //Now update the field mapping entries
         foreach ($sources_modules as $id => $modules) {
             $source = SourceFactory::getSource($id);
             $mapping = $source->getMapping();
@@ -753,21 +753,21 @@ class ConnectorsController extends SugarController
     public function add_social_field($module, $field_name)
     {
         $field = array(
-				array(
-						'name' => $field_name,
-						'label' => 'LBL_' . strtoupper($field_name),
-						'type' => 'varchar',
-						'module' => $module,
-						'ext1' => 'LIST',
-						'default_value' => '',
-						'mass_update' => false,
-						'required' => false,
-						'reportable' => false,
-						'audited' => false,
-						'importable' => 'false',
-						'duplicate_merge' => false,
-				)
-		);
+                array(
+                        'name' => $field_name,
+                        'label' => 'LBL_' . strtoupper($field_name),
+                        'type' => 'varchar',
+                        'module' => $module,
+                        'ext1' => 'LIST',
+                        'default_value' => '',
+                        'mass_update' => false,
+                        'required' => false,
+                        'reportable' => false,
+                        'audited' => false,
+                        'importable' => 'false',
+                        'duplicate_merge' => false,
+                )
+        );
 
         $layout[$module] = $field_name;
 

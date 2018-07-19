@@ -75,10 +75,10 @@ class SugarLogger implements LoggerTemplate
     public static $filename_suffix = array(
         //bug#50265: Added none option for previous version users
         "" => "None",
-	    "%m_%Y"    => "Month_Year",
+        "%m_%Y"    => "Month_Year",
         "%d_%m"    => "Day_Month",
-	    "%m_%d_%y" => "Month_Day_Year",
-	    );
+        "%m_%d_%y" => "Month_Day_Year",
+        );
 
     /**
      * Let's us know if we've initialized the logger file
@@ -147,8 +147,8 @@ class SugarLogger implements LoggerTemplate
     }
 
     /**
-	 * Checks to see if the SugarLogger file can be created and written to
-	 */
+     * Checks to see if the SugarLogger file can be created and written to
+     */
     protected function _fileCanBeCreatedAndWrittenTo()
     {
         $this->_attemptToCreateIfNecessary();
@@ -156,8 +156,8 @@ class SugarLogger implements LoggerTemplate
     }
 
     /**
-	 * Creates the SugarLogger file if it doesn't exist
-	 */
+     * Creates the SugarLogger file if it doesn't exist
+     */
     protected function _attemptToCreateIfNecessary()
     {
         if (file_exists($this->full_log_file)) {
@@ -194,9 +194,9 @@ class SugarLogger implements LoggerTemplate
      * see LoggerTemplate::log()
      */
     public function log(
-	    $level,
-	    $message
-	    ) {
+        $level,
+        $message
+        ) {
         global $sugar_config;
 
         if (!$this->initialized) {
@@ -227,17 +227,18 @@ class SugarLogger implements LoggerTemplate
         }
 
         //write out to the file including the time in the dateFormat the process id , the user id , and the log level as well as the message
-        fwrite($this->fp,
-		    strftime($this->dateFormat) . ' [' . getmypid() . '][' . $userID . '][' . strtoupper($level) . '] ' . $message . "\n"
-		    );
+        fwrite(
+            $this->fp,
+            strftime($this->dateFormat) . ' [' . getmypid() . '][' . $userID . '][' . strtoupper($level) . '] ' . $message . "\n"
+            );
     }
 
     /**
      * rolls the logger file to start using a new file
      */
     protected function rollLog(
-	    $force = false
-	    ) {
+        $force = false
+        ) {
         if (!$this->initialized || empty($this->logSize)) {
             return;
         }
@@ -272,7 +273,7 @@ class SugarLogger implements LoggerTemplate
     }
 
     /**
-	 * This is needed to prevent unserialize vulnerability
+     * This is needed to prevent unserialize vulnerability
      */
     public function __wakeup()
     {

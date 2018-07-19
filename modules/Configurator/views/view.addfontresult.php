@@ -56,7 +56,8 @@ class ConfiguratorViewAddFontResult extends SugarView
         }
         $error = $this->addFont();
 
-        $this->ss->assign("MODULE_TITLE",
+        $this->ss->assign(
+            "MODULE_TITLE",
             getClassicModuleTitle(
                 $mod_strings['LBL_MODULE_ID'],
                 array($mod_strings['LBL_ADDFONTRESULT_TITLE']),

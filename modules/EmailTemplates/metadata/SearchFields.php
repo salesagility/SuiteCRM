@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $searchFields['EmailTemplates'] =
-	array(
-		'name' => array( 'query_type'=>'default'),
-		'description'=> array('query_type'=>'default'),
-	);
+    array(
+        'name' => array( 'query_type'=>'default'),
+        'description'=> array('query_type'=>'default'),
+    );

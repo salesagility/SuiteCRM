@@ -53,7 +53,7 @@ class ContactsViewEdit extends ViewEdit
 
     /**
      * @see SugarView::display()
-	 *
+     *
      * We are overridding the display method to manipulate the sectionPanels.
      * If portal is not enabled then don't show the Portal Information panel.
      */

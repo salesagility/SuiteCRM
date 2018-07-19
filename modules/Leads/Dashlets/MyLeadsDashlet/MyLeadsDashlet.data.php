@@ -45,11 +45,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $current_user;
 $dashletData['MyLeadsDashlet']['searchFields'] = array('date_entered'     => array('default' => ''),
-													   'title' => array('default' => ''),
-													   'primary_address_country' => array('default' => ''),
+                                                       'title' => array('default' => ''),
+                                                       'primary_address_country' => array('default' => ''),
                                                        //'status'           => array('default' => array('New', 'Assigned', 'In Process')),
-													   'assigned_user_id' => array('type'    => 'assigned_user_name',
-																				   'label'   => 'LBL_ASSIGNED_TO',
+                                                       'assigned_user_id' => array('type'    => 'assigned_user_name',
+                                                                                   'label'   => 'LBL_ASSIGNED_TO',
                                                                                    'default' => $current_user->name));
  
 $dashletData['MyLeadsDashlet']['columns'] = array('name' => array('width'          => '30',
@@ -59,7 +59,7 @@ $dashletData['MyLeadsDashlet']['columns'] = array('name' => array('width'       
                                                                   'related_fields' => array('first_name', 'last_name', 'salutation')),
                                                   'title' => array('width' => '20',
                                                                    'label' => 'LBL_TITLE',
-																   'default' => true),
+                                                                   'default' => true),
                                                   'lead_source' => array('width' => '10',
                                                                          'label' => 'LBL_LEAD_SOURCE'),
                                                   'status' => array('width' => '10',
@@ -71,9 +71,9 @@ $dashletData['MyLeadsDashlet']['columns'] = array('name' => array('width'       
                                                                     'label' => 'LBL_EMAIL_ADDRESS',
                                                                     'sortable' => false,
                                                                     'customCode' => '{$EMAIL1_LINK}',
-																	'default' => true),
+                                                                    'default' => true),
                                                   'account_name' => array('width' => '40',
-												  						  'label' => 'LBL_ACCOUNT_NAME'),
+                                                                          'label' => 'LBL_ACCOUNT_NAME'),
                                                   'phone_home' => array('width' => '10',
                                                                         'label' => 'LBL_HOME_PHONE'),
                                                   'phone_mobile' => array('width' => '10',

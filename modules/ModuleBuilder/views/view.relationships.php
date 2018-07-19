@@ -46,16 +46,16 @@ require_once('modules/ModuleBuilder/Module/StudioBrowser.php') ;
 class ViewRelationships extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   translate('LBL_MODULE_NAME', 'Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME', 'Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     public function display()
@@ -125,19 +125,19 @@ class ViewRelationships extends SugarView
             
             //#28668  , translate the relationship type before render it .
             switch ($rel['relationship_type']) {
-            	case 'one-to-one':
-            	$rel['relationship_type']  = translate('LBL_ONETOONE');
-            	break;
-            	case 'one-to-many':
-            	$rel['relationship_type']  = translate('LBL_ONETOMANY');
-            	break;
-            	case 'many-to-one':
-            	$rel['relationship_type']  = translate('LBL_MANYTOONE');
-            	break;
-            	case 'many-to-many':
-            	$rel['relationship_type']  = translate('LBL_MANYTOMANY');
-            	break;
-            	default: $rel['relationship_type']  = '';
+                case 'one-to-one':
+                $rel['relationship_type']  = translate('LBL_ONETOONE');
+                break;
+                case 'one-to-many':
+                $rel['relationship_type']  = translate('LBL_ONETOMANY');
+                break;
+                case 'many-to-one':
+                $rel['relationship_type']  = translate('LBL_MANYTOONE');
+                break;
+                case 'many-to-many':
+                $rel['relationship_type']  = translate('LBL_MANYTOMANY');
+                break;
+                default: $rel['relationship_type']  = '';
             }
             $rel [ 'name' ] = $relationshipName ;
             if ($rel [ 'is_custom' ] && isset($rel [ 'from_studio' ]) && $rel [ 'from_studio' ]) {

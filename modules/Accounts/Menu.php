@@ -50,7 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings, $app_strings, $sugar_config;
 
-		
+        
 if (ACLController::checkAccess('Accounts', 'edit', true)) {
     $module_menu[]=array("index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=index", $mod_strings['LNK_NEW_ACCOUNT'],"Create", 'Accounts');
 }

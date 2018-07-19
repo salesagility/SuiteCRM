@@ -451,13 +451,13 @@ class PopupSmarty extends ListViewSmarty
         } else {
             $this->should_process = false;
             $data = array(
-				'data'=>array(),
-			    'pageData'=>array(
-			    	'bean'=>array('moduleDir'=>$this->seed->module_dir),
-					'ordering'=>'',
-					'offsets'=>array('total'=>0,'next'=>0,'current'=>0),
-				),
-			);
+                'data'=>array(),
+                'pageData'=>array(
+                    'bean'=>array('moduleDir'=>$this->seed->module_dir),
+                    'ordering'=>'',
+                    'offsets'=>array('total'=>0,'next'=>0,'current'=>0),
+                ),
+            );
         }
 
         $this->fillDisplayColumnsWithVardefs();
@@ -553,9 +553,9 @@ class PopupSmarty extends ListViewSmarty
             $formbody = $formBase->$getFormMethod($prefix, $mod, $formBody);
 
             $addform = '<table><tr><td nowrap="nowrap" valign="top">'
-					. str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
-					. '</td></tr></table>'
-					. '<input type="hidden" name="action" value="Popup" />';
+                    . str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
+                    . '</td></tr></table>'
+                    . '<input type="hidden" name="action" value="Popup" />';
 
             return $addform;
         }

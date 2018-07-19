@@ -208,8 +208,11 @@ EOREGEX
             if ($trim) {
                 if ($trim[0] != '('
                         && substr($trim, -1) == ')') {
-                    $trim=trim(substr($trim,0,
-                                strpos($trim, '(')));
+                    $trim=trim(substr(
+                        $trim,
+                        0,
+                                strpos($trim, '(')
+                    ));
                 }
                 $tokens[$i]=$trim;
                 $token=$trim;

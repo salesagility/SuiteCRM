@@ -51,7 +51,7 @@ function additionalDetailsBug($fields)
         global $current_language;
         $mod_strings = return_module_language($current_language, 'Bugs');
     }
-		
+        
     $overlib_string = '';
 
     if (!empty($fields['DATE_ENTERED'])) {
@@ -66,7 +66,7 @@ function additionalDetailsBug($fields)
     if (!empty($fields['RESOLUTION'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_RESOLUTION'] . '</b> ' . $fields['RESOLUTION'] . '<br>';
     }
-				
+                
     if (!empty($fields['DESCRIPTION'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_DESCRIPTION'] . '</b> ' . substr($fields['DESCRIPTION'], 0, 300);
         if (strlen($fields['DESCRIPTION']) > 300) {
@@ -74,7 +74,7 @@ function additionalDetailsBug($fields)
         }
         $overlib_string .= '<br>';
     }
-		
+        
     if (!empty($fields['WORK_LOG'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_WORK_LOG'] . '</b> ' . substr($fields['WORK_LOG'], 0, 300);
         if (strlen($fields['WORK_LOG']) > 300) {
@@ -83,7 +83,7 @@ function additionalDetailsBug($fields)
     }
 
     return array('fieldToAddTo' => 'NAME',
-				 'string' => $overlib_string,
-				 'editLink' => "index.php?action=EditView&module=Bugs&return_module=Bugs&record={$fields['ID']}",
-				 'viewLink' => "index.php?action=DetailView&module=Bugs&return_module=Bugs&record={$fields['ID']}");
+                 'string' => $overlib_string,
+                 'editLink' => "index.php?action=EditView&module=Bugs&return_module=Bugs&record={$fields['ID']}",
+                 'viewLink' => "index.php?action=DetailView&module=Bugs&return_module=Bugs&record={$fields['ID']}");
 }

@@ -68,11 +68,11 @@ class ContactOpportunityRelationship extends SugarBean
     public $table_name = "opportunities_contacts";
     public $object_name = "ContactOpportunityRelationship";
     public $column_fields = array("id"
-		,"contact_id"
-		,"opportunity_id"
-		,"contact_role"
-		,'date_modified'
-		);
+        ,"contact_id"
+        ,"opportunity_id"
+        ,"contact_role"
+        ,'date_modified'
+        );
 
     public $new_schema = true;
 

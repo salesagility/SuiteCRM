@@ -27,21 +27,21 @@
         die;
     }
 
-	require_once('modules/AOS_Quotes/AOS_Quotes.php');
-	require_once('modules/AOS_Contracts/AOS_Contracts.php');
-	
-	//Setting values in Quotes
-	$quote = new AOS_Quotes();
-	$quote->retrieve($_REQUEST['record']);
+    require_once('modules/AOS_Quotes/AOS_Quotes.php');
+    require_once('modules/AOS_Contracts/AOS_Contracts.php');
+    
+    //Setting values in Quotes
+    $quote = new AOS_Quotes();
+    $quote->retrieve($_REQUEST['record']);
 
-	//Setting Contract Values
-	$contract = new AOS_Contracts();
-	$contract->name = $quote->name;
-	$contract->assigned_user_id = $quote->assigned_user_id;
-	$contract->total_contract_value = format_number($quote->total_amount);
-	$contract->contract_account_id = $quote->billing_account_id;
+    //Setting Contract Values
+    $contract = new AOS_Contracts();
+    $contract->name = $quote->name;
+    $contract->assigned_user_id = $quote->assigned_user_id;
+    $contract->total_contract_value = format_number($quote->total_amount);
+    $contract->contract_account_id = $quote->billing_account_id;
     $contract->contact_id = $quote->billing_contact_id;
-	$contract->opportunity_id = $quote->opportunity_id;
+    $contract->opportunity_id = $quote->opportunity_id;
 
     $contract->total_amt = $quote->total_amt;
     $contract->subtotal_amount = $quote->subtotal_amount;
@@ -117,12 +117,12 @@
         $prod_contract->save();
     }
 
-	//Setting contract quote relationship
-	require_once('modules/Relationships/Relationship.php');
-	$key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Contracts', $GLOBALS['db']);
-	if (!empty($key)) {
-	    $quote->load_relationship($key);
-	    $quote->$key->add($contract->id);
-	}
-	ob_clean();
-	header('Location: index.php?module=AOS_Contracts&action=EditView&record='.$contract->id);
+    //Setting contract quote relationship
+    require_once('modules/Relationships/Relationship.php');
+    $key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Contracts', $GLOBALS['db']);
+    if (!empty($key)) {
+        $quote->load_relationship($key);
+        $quote->$key->add($contract->id);
+    }
+    ob_clean();
+    header('Location: index.php?module=AOS_Contracts&action=EditView&record='.$contract->id);

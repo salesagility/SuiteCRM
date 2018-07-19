@@ -50,9 +50,9 @@ function additionalDetailsProject($fields)
         global $current_language;
         $mod_strings = return_module_language($current_language, 'AM_ProjectTemplates');
     }
-		
+        
     $overlib_string = '';
-	
+    
     if (!empty($fields['DESCRIPTION'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_DESCRIPTION'] . '</b> ' . substr($fields['DESCRIPTION'], 0, 300);
         if (strlen($fields['DESCRIPTION']) > 300) {
@@ -61,7 +61,7 @@ function additionalDetailsProject($fields)
     }
 
     return array('fieldToAddTo' => 'NAME',
-				 'string' => $overlib_string,
-				 'editLink' => "index.php?action=EditView&module=AM_ProjectTemplates&return_module=AM_ProjectTemplates&record={$fields['ID']}",
-				 'viewLink' => "index.php?action=DetailView&module=AM_ProjectTemplates&return_module=AM_ProjectTemplates&record={$fields['ID']}");
+                 'string' => $overlib_string,
+                 'editLink' => "index.php?action=EditView&module=AM_ProjectTemplates&return_module=AM_ProjectTemplates&record={$fields['ID']}",
+                 'viewLink' => "index.php?action=DetailView&module=AM_ProjectTemplates&return_module=AM_ProjectTemplates&record={$fields['ID']}");
 }

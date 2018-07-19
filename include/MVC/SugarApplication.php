@@ -787,7 +787,13 @@ class SugarApplication
      * already been sent
      */
     public static function setCookie(
-    $name, $value, $expire = 0, $path = '/', $domain = null, $secure = false, $httponly = true
+    $name,
+        $value,
+        $expire = 0,
+        $path = '/',
+        $domain = null,
+        $secure = false,
+        $httponly = true
     ) {
         if (is_null($domain)) {
             if (isset($_SERVER["HTTP_HOST"])) {

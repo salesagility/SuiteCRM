@@ -88,14 +88,19 @@ class ParserModifyListView extends ModuleBuilderParser
     {
         global $app_list_strings;
         $this->module_name = $module_name;
-        $mod_strings = return_module_language($GLOBALS ['current_language'],
-            $this->module_name); // needed solely so that listviewdefs that reference this can be included without error
+        $mod_strings = return_module_language(
+            $GLOBALS ['current_language'],
+            $this->module_name
+        ); // needed solely so that listviewdefs that reference this can be included without error
         $class = $GLOBALS ['beanList'] [$this->module_name];
         require_once($GLOBALS ['beanFiles'] [$class]);
         $this->module = new $class();
 
-        $loaded = $this->_loadFromFile('ListView', 'modules/' . $this->module_name . '/metadata/listviewdefs.php',
-            $this->module_name);
+        $loaded = $this->_loadFromFile(
+            'ListView',
+            'modules/' . $this->module_name . '/metadata/listviewdefs.php',
+            $this->module_name
+        );
         $this->originalListViewDefs = $loaded['viewdefs'] [$this->module_name];
         $this->_variables = $loaded['variables'];
         //		_pp($loaded);
@@ -193,8 +198,10 @@ class ParserModifyListView extends ModuleBuilderParser
                 $this->availableFields [$key] = $def;
             }
         }
-        $GLOBALS['log']->debug('parser.modifylistview.php->getAvailableFields(): field_defs=' . print_r($this->availableFields,
-                true));
+        $GLOBALS['log']->debug('parser.modifylistview.php->getAvailableFields(): field_defs=' . print_r(
+            $this->availableFields,
+                true
+        ));
         $modFields = !empty($this->module->field_name_map) ? $this->module->field_name_map : $this->module->field_defs;
         foreach ($modFields as $key => $def) {
             $fieldName = strtolower($key);
@@ -330,8 +337,10 @@ class ParserModifyListView extends ModuleBuilderParser
                     }
                     // sorting fields of certain types will cause a database engine problems
                     // we only check this for custom fields, as we assume that OOB fields have been independently confirmed as ok
-                    if (isset($this->module->field_defs [strtolower($fieldname)]) && (in_array($this->module->field_defs [strtolower($fieldname)] ['type'],
-                                $rejectTypes) || isset($this->module->field_defs [strtolower($fieldname)]['custom_module']))
+                    if (isset($this->module->field_defs [strtolower($fieldname)]) && (in_array(
+                        $this->module->field_defs [strtolower($fieldname)] ['type'],
+                                $rejectTypes
+                    ) || isset($this->module->field_defs [strtolower($fieldname)]['custom_module']))
                     ) {
                         $fields [$fieldname] ['sortable'] = false;
                     }
@@ -382,7 +391,9 @@ class ParserModifyListView extends ModuleBuilderParser
         $GLOBALS ["listViewDefs"] [$this->module_name] = $fields;
         // now clear the cache so that the results are immediately visible
         include_once('include/TemplateHandler/TemplateHandler.php');
-        TemplateHandler::clearCache($this->module_name,
-            "ListView.tpl"); // not currently cached, but here for the future
+        TemplateHandler::clearCache(
+            $this->module_name,
+            "ListView.tpl"
+        ); // not currently cached, but here for the future
     }
 }

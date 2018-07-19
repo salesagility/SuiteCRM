@@ -95,12 +95,12 @@ $xtpl->assign("MEETING_ID", $focus->id);
 $oddRow = true;
 foreach ($focus_users_list as $user) {
     $user_fields = array(
-		'USER_NAME' => $user->user_name,
-		'FULL_NAME' => $locale->getLocaleFormattedName($user->first_name, $user->last_name),
-		'ID' => $user->id,
-		'EMAIL' => $user->email1,
-		'PHONE_WORK' => $user->phone_work
-	);
+        'USER_NAME' => $user->user_name,
+        'FULL_NAME' => $locale->getLocaleFormattedName($user->first_name, $user->last_name),
+        'ID' => $user->id,
+        'EMAIL' => $user->email1,
+        'PHONE_WORK' => $user->phone_work
+    );
 
     $xtpl->assign("USER", $user_fields);
 
@@ -123,13 +123,13 @@ $xtpl->out("users");
 $oddRow = true;
 foreach ($focus_contacts_list as $contact) {
     $contact_fields = array(
-		'FIRST_NAME' => $contact->first_name,
-		'LAST_NAME' => $contact->last_name,
-		'ACCOUNT_NAME' => $contact->account_name,
-		'ID' => $contact->id,
-		'EMAIL' => $contact->email1,
-		'PHONE_WORK' => $contact->phone_work
-	);
+        'FIRST_NAME' => $contact->first_name,
+        'LAST_NAME' => $contact->last_name,
+        'ACCOUNT_NAME' => $contact->account_name,
+        'ID' => $contact->id,
+        'EMAIL' => $contact->email1,
+        'PHONE_WORK' => $contact->phone_work
+    );
 
     $xtpl->assign("CONTACT", $contact_fields);
 

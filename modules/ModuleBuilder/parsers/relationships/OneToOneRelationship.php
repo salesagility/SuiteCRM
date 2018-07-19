@@ -96,11 +96,17 @@ class OneToOneRelationship extends AbstractRelationship
     public function buildVardefs()
     {
         $vardefs = array( ) ;
-        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition($this->lhs_module, $this->relationship_name, false,
+        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition(
+            $this->lhs_module,
+            $this->relationship_name,
+            false,
             'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE',
             $this->relationship_only ? false : $this->getIDName($this->lhs_module)
         ) ;
-        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition($this->rhs_module, $this->relationship_name, false,
+        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition(
+            $this->rhs_module,
+            $this->relationship_name,
+            false,
             'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE',
             $this->relationship_only ? false : $this->getIDName($this->rhs_module)
         ) ;
@@ -108,10 +114,18 @@ class OneToOneRelationship extends AbstractRelationship
         if (!$this->relationship_only) {
             $vardefs [ $this->lhs_module ] [] = $this->getRelateFieldDefinition($this->rhs_module, $this->relationship_name, $this->getRightModuleSystemLabel()) ;
             $vardefs [ $this->rhs_module ] [] = $this->getRelateFieldDefinition($this->lhs_module, $this->relationship_name, $this->getLeftModuleSystemLabel()) ;
-            $vardefs [ $this->lhs_module ] [] = $this->getLink2FieldDefinition($this->rhs_module, $this->relationship_name , false,
-            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE') ;
-            $vardefs [ $this->rhs_module ] [] = $this->getLink2FieldDefinition($this->lhs_module, $this->relationship_name , false,
-            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE') ;
+            $vardefs [ $this->lhs_module ] [] = $this->getLink2FieldDefinition(
+                $this->rhs_module,
+                $this->relationship_name ,
+                false,
+            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE'
+            ) ;
+            $vardefs [ $this->rhs_module ] [] = $this->getLink2FieldDefinition(
+                $this->lhs_module,
+                $this->relationship_name ,
+                false,
+            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE'
+            ) ;
         }
         
         return $vardefs ;

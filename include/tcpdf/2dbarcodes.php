@@ -73,24 +73,24 @@ r46451 - 2009-04-23 16:57:40 -0700 (Thu, 23 Apr 2009) - jenny - tcpdf initial ch
  * @version 1.0.000
  */
 
-	/**
-	* PHP class to creates array representations for 2D barcodes to be used with TCPDF (http://www.tcpdf.org).<br>
-	* @name TCPDFBarcode
-	* @package com.tecnick.tcpdf
-	* @version 1.0.000
-	* @author Nicola Asuni
-	* @link http://www.tcpdf.org
-	* @license http://www.gnu.org/copyleft/lesser.html LGPL
-	*/
+    /**
+    * PHP class to creates array representations for 2D barcodes to be used with TCPDF (http://www.tcpdf.org).<br>
+    * @name TCPDFBarcode
+    * @package com.tecnick.tcpdf
+    * @version 1.0.000
+    * @author Nicola Asuni
+    * @link http://www.tcpdf.org
+    * @license http://www.gnu.org/copyleft/lesser.html LGPL
+    */
 class TCPDF2DBarcode
 {
-	
-	/**
-	 * @var array representation of barcode.
-	 * @access protected
-	 */
+    
+    /**
+     * @var array representation of barcode.
+     * @access protected
+     */
     protected $barcode_array;
-	
+    
     /**
      * This is the class constructor.
      * Return an array representations for 2D barcodes:<ul>
@@ -99,51 +99,51 @@ class TCPDF2DBarcode
      * <li>$arrcode['num_cols'] required number of columns</li>
      * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
      * @param string $code code to print
- 	 * @param string $type type of barcode: <ul><li>TEST</li><li>...TO BE IMPLEMENTED</li></ul>
+     * @param string $type type of barcode: <ul><li>TEST</li><li>...TO BE IMPLEMENTED</li></ul>
      */
     public function __construct($code, $type)
     {
         $this->setBarcode($code, $type);
     }
-	
+    
     /**
      * Return an array representations of barcode.
- 	 * @return array
+     * @return array
      */
     public function getBarcodeArray()
     {
         return $this->barcode_array;
     }
-	
+    
     /**
      * Set the barcode.
      * @param string $code code to print
- 	 * @param string $type type of barcode: <ul><li>TEST</li><li>...TO BE IMPLEMENTED</li></ul>
- 	 * @return array
+     * @param string $type type of barcode: <ul><li>TEST</li><li>...TO BE IMPLEMENTED</li></ul>
+     * @return array
      */
     public function setBarcode($code, $type)
     {
         $mode = explode(',', $type);
         switch (strtoupper($mode[0])) {
-			case 'TEST': { // TEST MODE
-				$this->barcode_array['num_rows'] = 5;
-				$this->barcode_array['num_cols'] = 15;
-				$this->barcode_array['bcode'] = array(
-					array(1,1,1,0,1,1,1,0,1,1,1,0,1,1,1),
-					array(0,1,0,0,1,0,0,0,1,0,0,0,0,1,0),
-					array(0,1,0,0,1,1,0,0,1,1,1,0,0,1,0),
-					array(0,1,0,0,1,0,0,0,0,0,1,0,0,1,0),
-					array(0,1,0,0,1,1,1,0,1,1,1,0,0,1,0)
-				);
-				break;
-			}
-			
-			// ... Add here real 2D barcodes ...
-			
-			default: {
-				$this->barcode_array = false;
-			}
-		}
+            case 'TEST': { // TEST MODE
+                $this->barcode_array['num_rows'] = 5;
+                $this->barcode_array['num_cols'] = 15;
+                $this->barcode_array['bcode'] = array(
+                    array(1,1,1,0,1,1,1,0,1,1,1,0,1,1,1),
+                    array(0,1,0,0,1,0,0,0,1,0,0,0,0,1,0),
+                    array(0,1,0,0,1,1,0,0,1,1,1,0,0,1,0),
+                    array(0,1,0,0,1,0,0,0,0,0,1,0,0,1,0),
+                    array(0,1,0,0,1,1,1,0,1,1,1,0,0,1,0)
+                );
+                break;
+            }
+            
+            // ... Add here real 2D barcodes ...
+            
+            default: {
+                $this->barcode_array = false;
+            }
+        }
     }
 } // end of class
 

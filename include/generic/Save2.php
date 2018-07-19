@@ -65,10 +65,14 @@ require_once('include/formbase.php');
 
 $refreshsubpanel=true;
 if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
-    save_from_report($_REQUEST['subpanel_id'] //report_id
-                     , $_REQUEST['record'] //parent_id
-                     , $_REQUEST['module'] //module_name
-                     , $_REQUEST['subpanel_field_name'] //link attribute name
+    save_from_report(
+        $_REQUEST['subpanel_id'] //report_id
+                     ,
+        $_REQUEST['record'] //parent_id
+                     ,
+        $_REQUEST['module'] //module_name
+                     ,
+        $_REQUEST['subpanel_field_name'] //link attribute name
     );
 } elseif (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'addtoprospectlist') {
     $GLOBALS['log']->debug(print_r($_REQUEST, true));
@@ -79,8 +83,16 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
         );
     } else {
         $parent = BeanFactory::getBean($_REQUEST['module'], $_REQUEST['record']);
-        add_to_prospect_list(urldecode($_REQUEST['subpanel_module_name']),$_REQUEST['parent_module'],$_REQUEST['parent_type'],$_REQUEST['subpanel_id'],
-            $_REQUEST['child_id'], $_REQUEST['link_attribute'], $_REQUEST['link_type'], $parent);
+        add_to_prospect_list(
+            urldecode($_REQUEST['subpanel_module_name']),
+            $_REQUEST['parent_module'],
+            $_REQUEST['parent_type'],
+            $_REQUEST['subpanel_id'],
+            $_REQUEST['child_id'],
+            $_REQUEST['link_attribute'],
+            $_REQUEST['link_type'],
+            $parent
+        );
     }
 
     $refreshsubpanel=false;

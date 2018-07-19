@@ -128,7 +128,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testpushFeed2()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');

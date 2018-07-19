@@ -13,11 +13,11 @@ $dictionary['securitygroups_acl_roles'] = array(
     ),
     'relationships' => array(
     
-    	'securitygroups_acl_roles' => array(
-			'lhs_module'=> 'SecurityGroups', 'lhs_table'=> 'securitygroups', 'lhs_key' => 'id',
-			'rhs_module'=> 'ACLRoles', 'rhs_table'=> 'acl_roles', 'rhs_key' => 'id',
-			'relationship_type'=>'many-to-many',
-			'join_table'=> 'securitygroups_acl_roles', 'join_key_lhs'=>'securitygroup_id', 'join_key_rhs'=>'role_id',
-		),
-  	)
+        'securitygroups_acl_roles' => array(
+            'lhs_module'=> 'SecurityGroups', 'lhs_table'=> 'securitygroups', 'lhs_key' => 'id',
+            'rhs_module'=> 'ACLRoles', 'rhs_table'=> 'acl_roles', 'rhs_key' => 'id',
+            'relationship_type'=>'many-to-many',
+            'join_table'=> 'securitygroups_acl_roles', 'join_key_lhs'=>'securitygroup_id', 'join_key_rhs'=>'role_id',
+        ),
+    )
 );

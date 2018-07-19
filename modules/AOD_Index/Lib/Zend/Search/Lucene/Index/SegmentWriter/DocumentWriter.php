@@ -123,8 +123,10 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
                         $field = clone($field);
                         $field->isIndexed = $field->isTokenized = false;
                     } else {
-                        $docNorms[$field->name] = chr($similarity->encodeNorm($similarity->lengthNorm($field->name,
-                                                                                                       $tokenCounter)*
+                        $docNorms[$field->name] = chr($similarity->encodeNorm($similarity->lengthNorm(
+                            $field->name,
+                                                                                                       $tokenCounter
+                        )*
                                                                                $document->boost*
                                                                                $field->boost));
                     }
@@ -166,8 +168,10 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
             }
 
             if (!isset($this->_norms[$fieldName])) {
-                $this->_norms[$fieldName] = str_repeat(chr($similarity->encodeNorm($similarity->lengthNorm($fieldName, 0))),
-                                                       $this->_docCount);
+                $this->_norms[$fieldName] = str_repeat(
+                    chr($similarity->encodeNorm($similarity->lengthNorm($fieldName, 0))),
+                                                       $this->_docCount
+                );
             }
 
             if (isset($docNorms[$fieldName])) {
@@ -217,12 +221,14 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
         /** Zend_Search_Lucene_Index_SegmentInfo */
         require_once 'Zend/Search/Lucene/Index/SegmentInfo.php';
 
-        return new Zend_Search_Lucene_Index_SegmentInfo($this->_directory,
+        return new Zend_Search_Lucene_Index_SegmentInfo(
+            $this->_directory,
                                                         $this->_name,
                                                         $this->_docCount,
                                                         -1,
                                                         null,
                                                         true,
-                                                        true);
+                                                        true
+        );
     }
 }

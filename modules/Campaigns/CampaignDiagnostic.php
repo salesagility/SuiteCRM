@@ -64,7 +64,7 @@ if (!isset($_REQUEST['inline']) || $_REQUEST['inline'] != 'inline') {
     $params = array();
     $params[] = "<a href='index.php?module=Campaigns&action=index'>{$mod_strings['LBL_MODULE_NAME']}</a>";
     $params[] = $mod_strings['LBL_CAMPAIGN_DIAGNOSTICS'];
-	
+    
     echo getClassicModuleTitle('Campaigns', $params, true);
 }
 

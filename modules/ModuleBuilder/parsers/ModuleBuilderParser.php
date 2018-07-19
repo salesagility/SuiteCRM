@@ -45,12 +45,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class ModuleBuilderParser
 {
     public $_defMap; // private - mapping from view to variable name inside the viewdef file
-	public $_variables = array(); // private - set of additional variables (other than the viewdefs) found in the viewdef file that need to be added to the file again when it is saved - used by ModuleBuilder
+    public $_variables = array(); // private - set of additional variables (other than the viewdefs) found in the viewdef file that need to be added to the file again when it is saved - used by ModuleBuilder
 
-	public function __construct()
-	{
-	    $this->_defMap = array('listview'=>'listViewDefs','searchview'=>'searchdefs','editview'=>'viewdefs','detailview'=>'viewdefs','quickcreate'=>'viewdefs');
-	}
+    public function __construct()
+    {
+        $this->_defMap = array('listview'=>'listViewDefs','searchview'=>'searchdefs','editview'=>'viewdefs','detailview'=>'viewdefs','quickcreate'=>'viewdefs');
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
@@ -145,13 +145,13 @@ class ModuleBuilderParser
 
             // write out the defs array itself
             switch (strtolower($view)) {
-                	case 'editview':
-                	case 'detailview':
-                	case 'quickcreate':
-                		$defs = array($view => $defs);
-                		break;
-                	default:
-                		break;
+                    case 'editview':
+                    case 'detailview':
+                    case 'quickcreate':
+                        $defs = array($view => $defs);
+                        break;
+                    default:
+                        break;
                 }
             $viewVariable = $this->_defMap[strtolower($view)];
             $out .= "\$$viewVariable = ";

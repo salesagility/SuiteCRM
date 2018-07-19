@@ -75,8 +75,14 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_entry');
 
-        return self::get_entries($session, $module_name, array($id), $select_fields, $link_name_to_fields_array,
-            $track_view);
+        return self::get_entries(
+            $session,
+            $module_name,
+            array($id),
+            $select_fields,
+            $link_name_to_fields_array,
+            $track_view
+        );
         $GLOBALS['log']->info('end: SugarWebServiceImpl->get_entry');
     }
 
@@ -90,8 +96,10 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      */
     public function get_module_fields_md5($session, $module_name)
     {
-        $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_fields_md5(v3_1) for module: ' . print_r($module_name,
-                true));
+        $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_fields_md5(v3_1) for module: ' . print_r(
+            $module_name,
+                true
+        ));
 
         $results = array();
         if (is_array($module_name)) {
@@ -102,8 +110,10 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
             $results[$module_name] = md5(serialize(self::get_module_fields($session, $module_name)));
         }
 
-        $GLOBALS['log']->info('End: SugarWebServiceImpl->get_module_fields_md5 (v3_1) for module: ' . print_r($module_name,
-                true));
+        $GLOBALS['log']->info('End: SugarWebServiceImpl->get_module_fields_md5 (v3_1) for module: ' . print_r(
+            $module_name,
+                true
+        ));
 
         return $results;
     }
@@ -154,8 +164,14 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
             $module_name = 'Prospects';
             $using_cp = true;
         }
-        if (!self::$helperObject->checkSessionAndModuleAccess($session, 'invalid_session', $module_name, 'read',
-            'no_access', $error)
+        if (!self::$helperObject->checkSessionAndModuleAccess(
+            $session,
+            'invalid_session',
+            $module_name,
+            'read',
+            'no_access',
+            $error
+        )
         ) {
             $GLOBALS['log']->info('No Access: SugarWebServiceImpl->get_entries');
 
@@ -191,8 +207,11 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
             }
             $output_list[] = self::$helperObject->get_return_value_for_fields($seed, $module_name, $select_fields);
             if (!empty($link_name_to_fields_array)) {
-                $linkoutput_list[] = self::$helperObject->get_return_value_for_link_fields($seed, $module_name,
-                    $link_name_to_fields_array);
+                $linkoutput_list[] = self::$helperObject->get_return_value_for_link_fields(
+                    $seed,
+                    $module_name,
+                    $link_name_to_fields_array
+                );
             }
 
             $GLOBALS['log']->info('Should we track view: ' . $track_view);
@@ -222,12 +241,20 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
 
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->set_entry');
         if (self::$helperObject->isLogLevelDebug()) {
-            $GLOBALS['log']->debug('SoapHelperWebServices->set_entry - input data is ' . var_export($name_value_list,
-                    true));
+            $GLOBALS['log']->debug('SoapHelperWebServices->set_entry - input data is ' . var_export(
+                $name_value_list,
+                    true
+            ));
         } // if
         $error = new SoapError();
-        if (!self::$helperObject->checkSessionAndModuleAccess($session, 'invalid_session', $module_name, 'write',
-            'no_access', $error)
+        if (!self::$helperObject->checkSessionAndModuleAccess(
+            $session,
+            'invalid_session',
+            $module_name,
+            'write',
+            'no_access',
+            $error
+        )
         ) {
             $GLOBALS['log']->info('End: SugarWebServiceImpl->set_entry');
 
@@ -262,9 +289,17 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
                 $return_fields[] = $value['name'];
             }
         }
-        if (!self::$helperObject->checkACLAccess($seed, 'Save', $error,
-                'no_access') || ($seed->deleted == 1 && !self::$helperObject->checkACLAccess($seed, 'Delete', $error,
-                    'no_access'))
+        if (!self::$helperObject->checkACLAccess(
+            $seed,
+            'Save',
+            $error,
+                'no_access'
+        ) || ($seed->deleted == 1 && !self::$helperObject->checkACLAccess(
+                    $seed,
+                    'Delete',
+                    $error,
+                    'no_access'
+                ))
         ) {
             $GLOBALS['log']->info('End: SugarWebServiceImpl->set_entry');
 
@@ -318,8 +353,11 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
         if (!empty($user_auth['encryption']) && $user_auth['encryption'] === 'PLAIN' && $authController->authController->userAuthenticateClass != "LDAPAuthenticateUser") {
             $user_auth['password'] = md5($user_auth['password']);
         }
-        $isLoginSuccess = $authController->login($user_auth['user_name'], $user_auth['password'],
-            array('passwordEncrypted' => true));
+        $isLoginSuccess = $authController->login(
+            $user_auth['user_name'],
+            $user_auth['password'],
+            array('passwordEncrypted' => true)
+        );
         $usr_id = $user->retrieve_user_id($user_auth['user_name']);
         if ($usr_id) {
             $user->retrieve($usr_id);
@@ -359,8 +397,10 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
             return;
         } elseif (function_exists('openssl_decrypt')) {
             $password = self::$helperObject->decrypt_string($user_auth['password']);
-            if ($authController->login($user_auth['user_name'],
-                    $password) && isset($_SESSION['authenticated_user_id'])
+            if ($authController->login(
+                $user_auth['user_name'],
+                    $password
+            ) && isset($_SESSION['authenticated_user_id'])
             ) {
                 $success = true;
             }
@@ -388,32 +428,50 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
             $nameValueArray['user_language'] = self::$helperObject->get_name_value('user_language', $current_language);
             $cur_id = $current_user->getPreference('currency');
             $nameValueArray['user_currency_id'] = self::$helperObject->get_name_value('user_currency_id', $cur_id);
-            $nameValueArray['user_is_admin'] = self::$helperObject->get_name_value('user_is_admin',
-                is_admin($current_user));
-            $nameValueArray['user_default_team_id'] = self::$helperObject->get_name_value('user_default_team_id',
-                $current_user->default_team);
-            $nameValueArray['user_default_dateformat'] = self::$helperObject->get_name_value('user_default_dateformat',
-                $current_user->getPreference('datef'));
-            $nameValueArray['user_default_timeformat'] = self::$helperObject->get_name_value('user_default_timeformat',
-                $current_user->getPreference('timef'));
+            $nameValueArray['user_is_admin'] = self::$helperObject->get_name_value(
+                'user_is_admin',
+                is_admin($current_user)
+            );
+            $nameValueArray['user_default_team_id'] = self::$helperObject->get_name_value(
+                'user_default_team_id',
+                $current_user->default_team
+            );
+            $nameValueArray['user_default_dateformat'] = self::$helperObject->get_name_value(
+                'user_default_dateformat',
+                $current_user->getPreference('datef')
+            );
+            $nameValueArray['user_default_timeformat'] = self::$helperObject->get_name_value(
+                'user_default_timeformat',
+                $current_user->getPreference('timef')
+            );
 
             $num_grp_sep = $current_user->getPreference('num_grp_sep');
             $dec_sep = $current_user->getPreference('dec_sep');
-            $nameValueArray['user_number_seperator'] = self::$helperObject->get_name_value('user_number_seperator',
-                empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep);
-            $nameValueArray['user_decimal_seperator'] = self::$helperObject->get_name_value('user_decimal_seperator',
-                empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep);
+            $nameValueArray['user_number_seperator'] = self::$helperObject->get_name_value(
+                'user_number_seperator',
+                empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep
+            );
+            $nameValueArray['user_decimal_seperator'] = self::$helperObject->get_name_value(
+                'user_decimal_seperator',
+                empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep
+            );
 
-            $nameValueArray['mobile_max_list_entries'] = self::$helperObject->get_name_value('mobile_max_list_entries',
-                $sugar_config['wl_list_max_entries_per_page']);
-            $nameValueArray['mobile_max_subpanel_entries'] = self::$helperObject->get_name_value('mobile_max_subpanel_entries',
-                $sugar_config['wl_list_max_entries_per_subpanel']);
+            $nameValueArray['mobile_max_list_entries'] = self::$helperObject->get_name_value(
+                'mobile_max_list_entries',
+                $sugar_config['wl_list_max_entries_per_page']
+            );
+            $nameValueArray['mobile_max_subpanel_entries'] = self::$helperObject->get_name_value(
+                'mobile_max_subpanel_entries',
+                $sugar_config['wl_list_max_entries_per_subpanel']
+            );
 
 
             $currencyObject = new Currency();
             $currencyObject->retrieve($cur_id);
-            $nameValueArray['user_currency_name'] = self::$helperObject->get_name_value('user_currency_name',
-                $currencyObject->name);
+            $nameValueArray['user_currency_name'] = self::$helperObject->get_name_value(
+                'user_currency_name',
+                $currencyObject->name
+            );
             $_SESSION['user_language'] = $current_language;
 
             return array('id' => session_id(), 'module_name' => 'Users', 'name_value_list' => $nameValueArray);
@@ -531,8 +589,14 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
         $error = new SoapError();
         $results = array();
         foreach ($a_module_names as $module_name) {
-            if (!self::$helperObject->checkSessionAndModuleAccess($session, 'invalid_session', $module_name, 'read',
-                'no_access', $error)
+            if (!self::$helperObject->checkSessionAndModuleAccess(
+                $session,
+                'invalid_session',
+                $module_name,
+                'read',
+                'no_access',
+                $error
+            )
             ) {
                 $GLOBALS['log']->info('End: SugarWebServiceImpl->get_module_layout');
                 continue;
@@ -600,8 +664,14 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
             $module_name = 'Prospects';
             $using_cp = true;
         }
-        if (!self::$helperObject->checkSessionAndModuleAccess($session, 'invalid_session', $module_name, 'read',
-            'no_access', $error)
+        if (!self::$helperObject->checkSessionAndModuleAccess(
+            $session,
+            'invalid_session',
+            $module_name,
+            'read',
+            'no_access',
+            $error
+        )
         ) {
             $GLOBALS['log']->info('End: SugarWebServiceImpl->get_entry_list');
 
@@ -645,8 +715,16 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
         if ($using_cp) {
             $response = $seed->retrieveTargetList($query, $select_fields, $offset, -1, -1, $deleted);
         } else {
-            $response = self::$helperObject->get_data_list($seed, $order_by, $query, $offset, -1, -1, $deleted,
-                $favorites);
+            $response = self::$helperObject->get_data_list(
+                $seed,
+                $order_by,
+                $query,
+                $offset,
+                -1,
+                -1,
+                $deleted,
+                $favorites
+            );
         } // else
         $list = $response['list'];
 
@@ -661,8 +739,11 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
 
             $output_list[] = self::$helperObject->get_return_value_for_fields($value, $module_name, $select_fields);
             if (!empty($link_name_to_fields_array)) {
-                $linkoutput_list[] = self::$helperObject->get_return_value_for_link_fields($value, $module_name,
-                    $link_name_to_fields_array);
+                $linkoutput_list[] = self::$helperObject->get_return_value_for_link_fields(
+                    $value,
+                    $module_name,
+                    $link_name_to_fields_array
+                );
             }
         } // foreach
 
@@ -775,8 +856,10 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
         $GLOBALS['log']->info('SugarWebServiceImpl->search_by_module - search string = ' . $search_string);
 
         if (!empty($search_string) && isset($search_string)) {
-            $search_string = trim(DBManagerFactory::getInstance()->quote(securexss(from_html(clean_string($search_string,
-                'UNIFIED_SEARCH')))));
+            $search_string = trim(DBManagerFactory::getInstance()->quote(securexss(from_html(clean_string(
+                $search_string,
+                'UNIFIED_SEARCH'
+            )))));
             foreach ($modules_to_search as $name => $beanName) {
                 $where_clauses_array = array();
                 $unifiedSearchFields = array();
@@ -805,14 +888,22 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
                 ) {
                     $searchForm = new SearchForm($seed, $name);
 
-                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '',
-                        'saved_views' /* hack to avoid setup doing further unwanted processing */);
+                    $searchForm->setup(
+                        array($name => array()),
+                        $unifiedSearchFields,
+                        '',
+                        'saved_views' /* hack to avoid setup doing further unwanted processing */
+                    );
                     $where_clauses = $searchForm->generateSearchWhere();
                     require_once 'include/SearchForm/SearchForm2.php';
                     $searchForm = new SearchForm($seed, $name);
 
-                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '',
-                        'saved_views' /* hack to avoid setup doing further unwanted processing */);
+                    $searchForm->setup(
+                        array($name => array()),
+                        $unifiedSearchFields,
+                        '',
+                        'saved_views' /* hack to avoid setup doing further unwanted processing */
+                    );
                     $where_clauses = $searchForm->generateSearchWhere();
                     $emailQuery = false;
 
@@ -861,8 +952,17 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
                         $where = "($where) AND users.deleted = 0 AND users.is_group = 0 AND users.employee_status = 'Active'";
                     }
 
-                    $ret_array = $seed->create_new_list_query('', $where, $filterFields, array(), 0, '', true, $seed,
-                        true);
+                    $ret_array = $seed->create_new_list_query(
+                        '',
+                        $where,
+                        $filterFields,
+                        array(),
+                        0,
+                        '',
+                        true,
+                        $seed,
+                        true
+                    );
                     if (empty($params) or !is_array($params)) {
                         $params = array();
                     }

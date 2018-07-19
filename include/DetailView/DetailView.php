@@ -262,10 +262,10 @@ class DetailView extends ListView
         if ($display_audit_link && (!isset($sugar_config['disc_client']) || $sugar_config['disc_client'] == false)) {
             //Audit link
             $popup_request_data = array(
-		        'call_back_function' => 'set_return',
-		        'form_name' => 'EditView',
-		        'field_to_name_array' => array(),
-		    );
+                'call_back_function' => 'set_return',
+                'form_name' => 'EditView',
+                'field_to_name_array' => array(),
+            );
             $json = getJSONobj();
             $encoded_popup_request_data = $json->encode($popup_request_data);
             $audit_link = "<a href='javascript:void(0)' onclick='open_popup(\"Audit\", \"600\", \"400\", \"&record=".$_REQUEST['record']."&module_name=".$_REQUEST['module']."\", true, false, $encoded_popup_request_data);'>".$this->local_app_strings['LNK_VIEW_CHANGE_LOG']."</a>";
@@ -431,7 +431,7 @@ class DetailView extends ListView
      * and navigating from list to detail for the first time.
      * if false in this case: the user changes the list query (which generates a new stamp) and pastes a URL
      * from a previously navigated item.
- 	 */
+     */
     public function isRequestFromListView($html_varName)
     {
         $varList = $this->getLocalSessionVariable($html_varName, "FROM_LIST_VIEW");

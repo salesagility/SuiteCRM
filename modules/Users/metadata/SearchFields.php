@@ -41,10 +41,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $searchFields['Users'] =
-	array(
-	    'user_name' => array( 'query_type'=>'default'),
-		'first_name' => array( 'query_type'=>'default'),
-		'last_name'=> array('query_type'=>'default'),
+    array(
+        'user_name' => array( 'query_type'=>'default'),
+        'first_name' => array( 'query_type'=>'default'),
+        'last_name'=> array('query_type'=>'default'),
         'search_name'=> array('query_type'=>'default','db_field'=>array('first_name','last_name'),'force_unifiedsearch'=>true),
         'is_admin'=> array('query_type'=>'default', 'operator'=>'=', 'input_type' => 'checkbox'),
         'is_group'=> array('query_type'=>'default', 'operator'=>'=', 'input_type' => 'checkbox'),
@@ -71,4 +71,4 @@ $searchFields['Users'] =
                 'id',
             )
         ),
-	);
+    );

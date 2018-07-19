@@ -41,18 +41,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
-	'comment' => 'OAuth tokens',
-	'audited'=>false,
-	'fields' => array(
-	  'id' =>
-	  array(
-	    'name' => 'id',
-	    'vname' => 'LBL_ID',
-	    'type' => 'id',
-	    'required'=>true,
-	    'reportable'=>true,
-	    'comment' => 'Unique identifier'
-	  ),
+    'comment' => 'OAuth tokens',
+    'audited'=>false,
+    'fields' => array(
+      'id' =>
+      array(
+        'name' => 'id',
+        'vname' => 'LBL_ID',
+        'type' => 'id',
+        'required'=>true,
+        'reportable'=>true,
+        'comment' => 'Unique identifier'
+      ),
       'secret' =>
       array(
             'name' => 'secret',
@@ -103,18 +103,18 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
 //            'type' => 'text',
 //            'comment' => 'Token auth data',
 //      ),
-	  'deleted' =>
-	  array(
-	    'name' => 'deleted',
-	    'vname' => 'LBL_DELETED',
-	    'type' => 'bool',
-	    'default' => '0',
-	    'reportable'=>false,
-	    'required' => true,
-	  	'isnull' => false,
-	    'comment' => 'Record deletion indicator'
-	  ),
-	'callback_url' =>
+      'deleted' =>
+      array(
+        'name' => 'deleted',
+        'vname' => 'LBL_DELETED',
+        'type' => 'bool',
+        'default' => '0',
+        'reportable'=>false,
+        'required' => true,
+        'isnull' => false,
+        'comment' => 'Record deletion indicator'
+      ),
+    'callback_url' =>
       array(
             'name' => 'callback_url',
             'vname' => 'LBL_CALLBACK_URL',
@@ -135,51 +135,51 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
         'source'=>'non-db',
       ),
       'consumer_name' =>
-	  array(
-		    'name' => 'consumer_name',
-		    'link'=>'consumer_link' ,
-		    'vname' => 'LBL_CONSUMER',
-		    'rname' => 'name',
-		    'type' => 'relate',
-		    'reportable'=>false,
-		    'source'=>'non-db',
-		    'table' => 'oauth_consumer',
-		    'id_name' => 'consumer',
-		    'module'=>'OAuthKeys',
-		    'duplicate_merge'=>'disabled'
-	  ),
-	 'assigned_user_id' =>
-		array(
-			'name' => 'assigned_user_id',
-			'rname' => 'user_name',
-			'id_name' => 'assigned_user_id',
-			'vname' => 'LBL_ASSIGNED_TO_ID',
-			'group'=>'assigned_user_name',
-			'type' => 'relate',
-			'table' => 'users',
-			'module' => 'Users',
-			'reportable'=>true,
-			'isnull' => 'false',
-			'dbType' => 'id',
-			'audited'=>true,
-			'comment' => 'User ID assigned to record',
+      array(
+            'name' => 'consumer_name',
+            'link'=>'consumer_link' ,
+            'vname' => 'LBL_CONSUMER',
+            'rname' => 'name',
+            'type' => 'relate',
+            'reportable'=>false,
+            'source'=>'non-db',
+            'table' => 'oauth_consumer',
+            'id_name' => 'consumer',
+            'module'=>'OAuthKeys',
             'duplicate_merge'=>'disabled'
-		),
-	 'assigned_user_name' =>
-	 array(
-		    'name' => 'assigned_user_name',
-		    'link'=>'assigned_user_link' ,
-		    'vname' => 'LBL_ASSIGNED_TO_NAME',
-		    'rname' => 'user_name',
-		    'type' => 'relate',
-		    'reportable'=>false,
-		    'source'=>'non-db',
-		    'table' => 'users',
-		    'id_name' => 'assigned_user_id',
-		    'module'=>'Users',
-		    'duplicate_merge'=>'disabled'
-	 ),
-	 'assigned_user_link' =>
+      ),
+     'assigned_user_id' =>
+        array(
+            'name' => 'assigned_user_id',
+            'rname' => 'user_name',
+            'id_name' => 'assigned_user_id',
+            'vname' => 'LBL_ASSIGNED_TO_ID',
+            'group'=>'assigned_user_name',
+            'type' => 'relate',
+            'table' => 'users',
+            'module' => 'Users',
+            'reportable'=>true,
+            'isnull' => 'false',
+            'dbType' => 'id',
+            'audited'=>true,
+            'comment' => 'User ID assigned to record',
+            'duplicate_merge'=>'disabled'
+        ),
+     'assigned_user_name' =>
+     array(
+            'name' => 'assigned_user_name',
+            'link'=>'assigned_user_link' ,
+            'vname' => 'LBL_ASSIGNED_TO_NAME',
+            'rname' => 'user_name',
+            'type' => 'relate',
+            'reportable'=>false,
+            'source'=>'non-db',
+            'table' => 'users',
+            'id_name' => 'assigned_user_id',
+            'module'=>'Users',
+            'duplicate_merge'=>'disabled'
+     ),
+     'assigned_user_link' =>
       array(
         'name' => 'assigned_user_link',
         'type' => 'link',
@@ -203,9 +203,9 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
    'relationships'=>array(
         'consumer_tokens' =>
            array('lhs_module'=> 'OAuthKeys', 'lhs_table'=> 'oauth_consumer', 'lhs_key' => 'id',
-   				'rhs_module'=> 'OAuthTokens', 'rhs_table'=> 'oauth_tokens', 'rhs_key' => 'consumer',
-   				'relationship_type'=>'one-to-many'),
-	  'oauthtokens_assigned_user' =>
+                'rhs_module'=> 'OAuthTokens', 'rhs_table'=> 'oauth_tokens', 'rhs_key' => 'consumer',
+                'relationship_type'=>'one-to-many'),
+      'oauthtokens_assigned_user' =>
            array('lhs_module'=> 'Users', 'lhs_table'=> 'users', 'lhs_key' => 'id',
            'rhs_module'=> 'OAuthTokens' , 'rhs_table'=> 'oauth_tokens', 'rhs_key' => 'assigned_user_id',
            'relationship_type'=>'one-to-many')

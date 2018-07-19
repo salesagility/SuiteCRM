@@ -307,9 +307,15 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
             require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
             $rewrittenQuery = new Zend_Search_Lucene_Search_Query_Boolean();
 
-            array_multisort($this->_scores,   SORT_DESC, SORT_NUMERIC,
-                            $this->_termKeys, SORT_ASC,  SORT_STRING,
-                            $this->_matches);
+            array_multisort(
+                $this->_scores,
+                SORT_DESC,
+                SORT_NUMERIC,
+                            $this->_termKeys,
+                SORT_ASC,
+                SORT_STRING,
+                            $this->_matches
+            );
 
             $termCount = 0;
             require_once 'Zend/Search/Lucene/Search/Query/Term.php';

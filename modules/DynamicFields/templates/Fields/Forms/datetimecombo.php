@@ -50,7 +50,7 @@ function get_body(&$ss, $vardef)
     $meridiem = "";
     $td = new TemplateDatetimecombo();
     $ss->assign('default_values', array_flip($td->dateStrings));
-	
+    
     global $timedate;
     $user_time_format = $timedate->get_user_time_format();
     $show_meridiem = preg_match('/pm$/i', $user_time_format) ? true : false;

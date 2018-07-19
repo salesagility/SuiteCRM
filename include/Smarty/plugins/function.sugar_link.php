@@ -89,10 +89,10 @@ function smarty_function_sugar_link($params, &$smarty)
         $link_url .= '&tab=true';
     } else {
         $action = (!empty($params['action']))?$params['action']:'index';
-	    
+        
         $link_url = 'index.php?';
         $link_url .= 'module='.$params['module'].'&action='.$action;
-	
+    
         if (!empty($params['record'])) {
             $link_url .= "&record=".$params['record'];
         }
@@ -100,12 +100,12 @@ function smarty_function_sugar_link($params, &$smarty)
             $link_url .= '&'.$params['extraparams'];
         }
     }
-	
+    
     if (isset($params['link_only']) && $params['link_only'] == 1) {
         // Let them just get the url, they want to put it someplace
         return ajaxLink($link_url);
     }
-	
+    
     $id = (!empty($params['id']))?' id="'.$params['id'].'"':'';
     $class = (!empty($params['class']))?' class="'.$params['class'].'"':'';
     $style = (!empty($params['style']))?' style="'.$params['style'].'"':'';

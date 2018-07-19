@@ -53,22 +53,22 @@ insert_popup_header($theme);
 
 $sugarteam = array( 'Julian Ostrow', 'Lam Huynh', 'Majed Itani', 'Joey Parsons', 'Ajay Gupta', 'Jason Nassi', 'Andy Dreisch', 'Roger Smith', 'Liliya Bederov', 'Sadek Baroudi', 'Franklin Liu', 'Jennifer Yim', 'Sujata Pamidi', 'Eddy Ramirez', 'Jenny Gonsalves', 'Collin Lee', 'David Wheeler', 'John Mertic', 'Ran Zhou', 'Shine Ye','Emily Gan','Randy Lee','Eric Yang','Oliver Yang','Andreas Sandberg');
 switch ($_REQUEST['style']) {
-	case 'rev':
-			$sugarteam = array_map('strrev', $sugarteam);
-			break;
-	case 'rand':
-			shuffle($sugarteam);
-			break;
-	case 'dec':
-			$sugarteam = array_reverse($sugarteam);
-			break;
-	case 'sort':
-			 sort($sugarteam);
-			 break;
-	case 'rsort':
-			 rsort($sugarteam);
-			 break;
-			 
+    case 'rev':
+            $sugarteam = array_map('strrev', $sugarteam);
+            break;
+    case 'rand':
+            shuffle($sugarteam);
+            break;
+    case 'dec':
+            $sugarteam = array_reverse($sugarteam);
+            break;
+    case 'sort':
+             sort($sugarteam);
+             break;
+    case 'rsort':
+             rsort($sugarteam);
+             break;
+             
 }
 
 $founders = array("<b>Founders:</b>", 'John Roberts', 'Clint Oram', 'Jacob Taylor');

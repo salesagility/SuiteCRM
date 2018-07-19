@@ -530,8 +530,12 @@ class EmailsController extends SugarController
         $folderOpenState = empty($folderOpenState) ? '' : $folderOpenState;
 
         try {
-            $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user,
-                true);
+            $ret = $email->et->folder->getUserFolders(
+                $rootNode,
+                sugar_unserialize($folderOpenState),
+                $current_user,
+                true
+            );
             $out = json_encode(array('response' => $ret));
         } catch (SugarFolderEmptyException $e) {
             $GLOBALS['log']->warn($e->getMessage());
@@ -738,7 +742,8 @@ class EmailsController extends SugarController
         if (!$accounts) {
             $url = 'index.php?module=Users&action=EditView&record=' . $current_user->id . "&showEmailSettingsPopup=1";
             SugarApplication::appendErrorMessage(
-                    "You don't have any valid email account settings yet. <a href=\"$url\">Click here to set your email accounts.</a>");
+                    "You don't have any valid email account settings yet. <a href=\"$url\">Click here to set your email accounts.</a>"
+            );
         }
         
         

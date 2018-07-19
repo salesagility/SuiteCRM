@@ -94,15 +94,22 @@ class _parse_lockinfo
         $xml_parser = xml_parser_create_ns("UTF-8", " ");
 
         // set tag and data handlers
-        xml_set_element_handler($xml_parser,
+        xml_set_element_handler(
+            $xml_parser,
                                 array(&$this, "_startElement"),
-                                array(&$this, "_endElement"));
-        xml_set_character_data_handler($xml_parser,
-                                       array(&$this, "_data"));
+                                array(&$this, "_endElement")
+        );
+        xml_set_character_data_handler(
+            $xml_parser,
+                                       array(&$this, "_data")
+        );
 
         // we want a case sensitive parser
-        xml_parser_set_option($xml_parser,
-                              XML_OPTION_CASE_FOLDING, false);
+        xml_parser_set_option(
+            $xml_parser,
+                              XML_OPTION_CASE_FOLDING,
+            false
+        );
 
         // parse input
         while ($this->success && !feof($f_in)) {

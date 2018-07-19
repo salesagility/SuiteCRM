@@ -164,7 +164,7 @@ class SugarChart
 
     /**
      * returns the header for the constructed xml file for sugarcharts
-	 *
+     *
      * @param 	nothing
      * @return	string $header XML header
      */
@@ -784,7 +784,7 @@ class SugarChart
     {
 
 
-		// generate strings for chart if it does not exist
+        // generate strings for chart if it does not exist
         global $current_language, $theme, $sugar_config,$app_strings;
 
         $this->app_strings = $app_strings;

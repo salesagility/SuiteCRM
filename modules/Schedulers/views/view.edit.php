@@ -46,13 +46,13 @@ require_once('include/MVC/View/views/view.edit.php');
 class SchedulersViewEdit extends ViewEdit
 {
     protected static $xtDays = array(
-				1 => 'MON',
-				2 => 'TUE',
-				3 => 'WED',
-				4 => 'THU',
-				5 => 'FRI',
-				6 => 'SAT',
-				0 => 'SUN');
+                1 => 'MON',
+                2 => 'TUE',
+                3 => 'WED',
+                4 => 'THU',
+                5 => 'FRI',
+                6 => 'SAT',
+                0 => 'SUN');
 
     public function __construct()
     {
@@ -62,8 +62,8 @@ class SchedulersViewEdit extends ViewEdit
     }
 
     /**
-	 * @see SugarView::_getModuleTitleListParam()
-	 */
+     * @see SugarView::_getModuleTitleListParam()
+     */
     protected function _getModuleTitleListParam($browserTitle = false)
     {
         global $mod_strings;

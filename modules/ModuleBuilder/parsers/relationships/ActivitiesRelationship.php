@@ -188,9 +188,9 @@ class ActivitiesRelationship extends OneToManyRelationship
         ActivitiesRelationship::$subpanelsAdded[$this->lhs_module] = true;
         $relationshipName = substr($this->relationship_name, 0, strrpos($this->relationship_name, '_'));
         return array( $this->lhs_module => array(
-        			  'activities' => $this->buildActivitiesSubpanelDefinition($relationshipName),
-        			  'history' => $this->buildHistorySubpanelDefinition($relationshipName) ,
-        			));
+                      'activities' => $this->buildActivitiesSubpanelDefinition($relationshipName),
+                      'history' => $this->buildHistorySubpanelDefinition($relationshipName) ,
+                    ));
     }
 
     /*
@@ -211,9 +211,9 @@ class ActivitiesRelationship extends OneToManyRelationship
         $relMetadata ['relationship_role_column_value'] = $this->definition [ 'lhs_module' ] ;
 
         return array( $this->lhs_module => array(
-    		'relationships' => array($relationshipName => $relMetadata),
-    		'fields' => '', 'indices' => '', 'table' => '')
-    	) ;
+            'relationships' => array($relationshipName => $relMetadata),
+            'fields' => '', 'indices' => '', 'table' => '')
+        ) ;
     }
 
     /*
@@ -266,7 +266,7 @@ class ActivitiesRelationship extends OneToManyRelationship
             'module' => 'History' ,
             'top_buttons' => array(
                 array( 'widget_class' => 'SubPanelTopCreateNoteButton' ) ,
-				array( 'widget_class' => 'SubPanelTopArchiveEmailButton'),
+                array( 'widget_class' => 'SubPanelTopArchiveEmailButton'),
                 array( 'widget_class' => 'SubPanelTopSummaryButton' ) ) ,
                 'collection_list' => array(
                     'meetings' => array(

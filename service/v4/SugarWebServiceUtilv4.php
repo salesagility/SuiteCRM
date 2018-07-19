@@ -104,8 +104,17 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
             $params['favorites'] = true;
         }
 
-        $query = $seed->create_new_list_query($order_by, $where, array(), $params, $show_deleted, '', false, null,
-            $single_select);
+        $query = $seed->create_new_list_query(
+            $order_by,
+            $where,
+            array(),
+            $params,
+            $show_deleted,
+            '',
+            false,
+            null,
+            $single_select
+        );
 
         return $seed->process_list_query($query, $row_offset, $limit, $max, $where);
     }
