@@ -53,6 +53,10 @@ class ElasticSearchHooks
 {
     public function beanSaved($bean, $event, $arguments)
     {
+        if (ElasticSearchIndexer::isEnabled() === false) {
+            return;
+        }
+
         try {
             $indexer = $this->getIndexer($bean);
             if ($this->isBlacklisted($bean, $indexer)) {
@@ -91,6 +95,10 @@ class ElasticSearchHooks
 
     public function beanDeleted($bean, $event, $arguments)
     {
+        if (ElasticSearchIndexer::isEnabled() === false) {
+            return;
+        }
+
         try {
             $indexer = $this->getIndexer($bean);
             if ($this->isBlacklisted($bean, $indexer)) {
