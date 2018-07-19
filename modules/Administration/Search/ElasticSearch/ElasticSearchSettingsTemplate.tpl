@@ -45,7 +45,7 @@
                         <label for="es-host">Host</label>
                         <input type="text" class="form-control"
                                id="es-host" name="host" value="{$config.host}">
-                        <small id="emailHelp" class="form-text text-muted">e.g. localhost, 192.168.1.1:9200,
+                        <small class="form-text text-muted">e.g. localhost, 192.168.1.1:9200,
                             mydomain.server.com:9201, https://192.168.1.3:9200
                         </small>
                     </div>
@@ -64,12 +64,23 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Schedulers</div>
                 <div class="panel-body tab-content">
-                    <label>The following schedulers were detected</label>
+                    <label>The following ElasticSearch schedulers were detected:</label>
                     <ul class="list-group">
-                        <li class="list-group-item">Elasticsearch Scheduler 1</li>
-                        <li class="list-group-item">Elasticsearch Scheduler 2</li>
-                        <li class="list-group-item">Elasticsearch Scheduler 3</li>
+                        {foreach from=$schedulers item=scheduler}
+                            <li class="list-group-item">
+                                {sugar_link
+                                module=$scheduler->module_name
+                                record=$scheduler->id
+                                label=$scheduler->name
+                                action='DetailView'}
+                                &mdash; last run: {$scheduler->last_run}</li>
+                            {foreachelse}
+                            <p class="error">No schedulers found. Consider creating one.</p>
+                        {/foreach}
                     </ul>
+                    <small class="form-text text-muted">The ElasticSearch module uses schedulers to keep the database
+                        and the indexing engine synchronised.
+                    </small>
                 </div>
             </div>
         </div>

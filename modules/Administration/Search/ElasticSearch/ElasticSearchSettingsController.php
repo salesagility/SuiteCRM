@@ -72,6 +72,7 @@ class ElasticSearchSettingsController
      */
     public function display()
     {
+        $this->view->ss->assign('schedulers', $this->getElasticsearchIndexingSchedulers());
         $this->view->display();
     }
 
@@ -118,5 +119,12 @@ class ElasticSearchSettingsController
         header('Location: index.php?module=Administration&action=index');
 
         die;
+    }
+
+    public function getElasticsearchIndexingSchedulers()
+    {
+        $where = "schedulers.job='function::runElasticSearchIndexerScheduler'";
+        $schedulers = BeanFactory::getBean('Schedulers')->get_full_list(null, $where);
+        return $schedulers;
     }
 }
