@@ -83,10 +83,10 @@ class aSubPanel
     public $base_collection_list = array();
 
     public function __construct(
-        $name ,
-        $instance_properties ,
-        $parent_bean ,
-        $reload = false ,
+        $name,
+        $instance_properties,
+        $parent_bean,
+        $reload = false,
         $original_only = false,
         $search_query = '',
         $collections = array()

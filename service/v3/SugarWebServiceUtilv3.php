@@ -352,10 +352,10 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
             $query = $this->generateUpcomingActivitiesWhereClause($seed, $meta);
 
             $response = $seed->get_list(/* Order by date field */"{$meta['date_field']} ASC",  /*Where clause */
-                $query, /* No Offset */ 
+                $query, /* No Offset */
                 0,
                                         /* No limit */-1, /* Max 10 items */
-                10, /*No Deleted */ 
+                10, /*No Deleted */
                 0
             );
 

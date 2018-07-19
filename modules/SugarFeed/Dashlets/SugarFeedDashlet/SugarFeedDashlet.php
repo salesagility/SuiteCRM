@@ -267,7 +267,7 @@ class SugarFeedDashlet extends DashletGeneric
             $this->lvs->setup(
                 $this->seedBean,
                 $this->displayTpl,
-                $where ,
+                $where,
                 $lvsParams,
                 0,
                 $this->displayRows,

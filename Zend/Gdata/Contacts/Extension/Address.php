@@ -83,8 +83,8 @@ class Zend_Gdata_Contacts_Extension_Address extends Zend_Gdata_Extension
             if (strtolower($attribute->nodeValue) == 'true') {
                 $this->_isPrimary = true;
             } else {
-                    $this->_isPrimary = false;
-                }
+                $this->_isPrimary = false;
+            }
             break;
 
         case 'rel':

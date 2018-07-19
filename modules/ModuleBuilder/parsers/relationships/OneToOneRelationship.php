@@ -116,13 +116,13 @@ class OneToOneRelationship extends AbstractRelationship
             $vardefs [ $this->rhs_module ] [] = $this->getRelateFieldDefinition($this->lhs_module, $this->relationship_name, $this->getLeftModuleSystemLabel()) ;
             $vardefs [ $this->lhs_module ] [] = $this->getLink2FieldDefinition(
                 $this->rhs_module,
-                $this->relationship_name ,
+                $this->relationship_name,
                 false,
             'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE'
             ) ;
             $vardefs [ $this->rhs_module ] [] = $this->getLink2FieldDefinition(
                 $this->lhs_module,
-                $this->relationship_name ,
+                $this->relationship_name,
                 false,
             'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE'
             ) ;
