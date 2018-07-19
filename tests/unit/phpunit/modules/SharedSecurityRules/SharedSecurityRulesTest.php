@@ -207,7 +207,6 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
         $role = BeanFactory::getBean('ACLRoles');
         $role->role_id = 'a_role_id';
         $role->user_id = $uid; 
-        $role->
         $rid = $role->save();
         $this->assertEquals($role->id, $rid);
         $ssra->parameters = base64_encode(serialize([
