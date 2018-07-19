@@ -86,12 +86,12 @@ class SugarSQLValidate
             return false;
         }
         // verify SELECT didn't change
-        if (count($parsed["SELECT"]) != 1 || $parsed["SELECT"][0] !== array ('expr_type' => 'colref','alias' => '`dummy`', 'base_expr' => 'dummy', 'sub_tree' => false)) {
+        if (count($parsed["SELECT"]) != 1 || $parsed["SELECT"][0] !== array('expr_type' => 'colref','alias' => '`dummy`', 'base_expr' => 'dummy', 'sub_tree' => false)) {
             $GLOBALS['log']->debug("validation failed SELECT");
             return false;
         }
         // verify FROM didn't change
-        if (count($parsed["FROM"]) != 1 || $parsed["FROM"][0] !== array ('table' => 'dummytable', 'alias' => 'dummytable', 'join_type' => 'JOIN', 'ref_type' => '', 'ref_clause' => '', 'base_expr' => false, 'sub_tree' => false)) {
+        if (count($parsed["FROM"]) != 1 || $parsed["FROM"][0] !== array('table' => 'dummytable', 'alias' => 'dummytable', 'join_type' => 'JOIN', 'ref_type' => '', 'ref_clause' => '', 'base_expr' => false, 'sub_tree' => false)) {
             $GLOBALS['log']->debug("validation failed FROM");
             return false;
         }

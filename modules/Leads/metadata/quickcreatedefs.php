@@ -48,15 +48,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $viewdefs ['Leads'] = 
-array (
+array(
   'QuickCreate' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'hidden' => 
-        array (
+        array(
           0 => '<input type="hidden" name="prospect_id" value="{if isset($smarty.request.prospect_id)}{$smarty.request.prospect_id}{else}{$bean->prospect_id}{/if}">',
           1 => '<input type="hidden" name="contact_id" value="{if isset($smarty.request.contact_id)}{$smarty.request.contact_id}{else}{$bean->contact_id}{/if}">',
           2 => '<input type="hidden" name="opportunity_id" value="{if isset($smarty.request.opportunity_id)}{$smarty.request.opportunity_id}{else}{$bean->opportunity_id}{/if}">',
@@ -65,14 +65,14 @@ array (
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -81,94 +81,94 @@ array (
       'useTabs' => false,
     ),
     'panels' => 
-    array (
+    array(
       'lbl_contact_information' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'first_name',
           ),
           1 => 
-          array (
+          array(
             'name' => 'status',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'last_name',
             'displayParams' => 
-            array (
+            array(
               'required' => true,
             ),
           ),
           1 => 
-          array (
+          array(
             'name' => 'phone_work',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'title',
           ),
           1 => 
-          array (
+          array(
             'name' => 'phone_mobile',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'department',
           ),
           1 => 
-          array (
+          array(
             'name' => 'phone_fax',
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'account_name',
           ),
           1 => 
-          array (
+          array(
             'name' => 'do_not_call',
           ),
         ),
         5 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'email1',
           ),
         ),
         6 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'lead_source',
           ),
           1 => 
-          array (
+          array(
             'name' => 'refered_by',
           ),
         ),
         7 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
           ),
           1 => 
-          array (
+          array(
             'name' => 'team_name',
           ),
         ),

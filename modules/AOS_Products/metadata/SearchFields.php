@@ -1,14 +1,14 @@
 <?php
-$searchFields['AOS_Products'] = array (
+$searchFields['AOS_Products'] = array(
   'name' => 
-  array (
+  array(
     'query_type' => 'default',
   ),
   'current_user_only' => 
-  array (
+  array(
     'query_type' => 'default',
     'db_field' => 
-    array (
+    array(
       0 => 'created_by',
     ),
     'my_items' => true,
@@ -16,67 +16,67 @@ $searchFields['AOS_Products'] = array (
     'type' => 'bool',
   ),
   'range_price' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
   ),
   'start_range_price' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
   ),
   'end_range_price' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
   ),
   'range_cost' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
   ),
   'start_range_cost' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
   ),
   'end_range_cost' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
   ),
   'range_date_entered' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'start_range_date_entered' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'end_range_date_entered' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'range_date_modified' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'start_range_date_modified' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'end_range_date_modified' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,

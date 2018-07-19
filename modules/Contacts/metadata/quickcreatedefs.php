@@ -46,17 +46,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$viewdefs = array (
+$viewdefs = array(
   'Contacts' => 
-  array (
+  array(
     'QuickCreate' => 
-    array (
+    array(
       'templateMeta' => 
-      array (
+      array(
         'form' => 
-        array (
+        array(
           'hidden' => 
-          array (
+          array(
             '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
             '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
             '<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
@@ -68,81 +68,81 @@ $viewdefs = array (
         ),
         'maxColumns' => '2',
         'widths' => 
-        array (
-          array (
+        array(
+          array(
             'label' => '10',
             'field' => '30',
           ),
-          array (
+          array(
             'label' => '10',
             'field' => '30',
           ),
         ),
       ),
       'panels' => 
-      array (
+      array(
         'default' => 
-        array (
+        array(
 
-          array (
+          array(
 
-            array (
+            array(
               'name' => 'first_name',
                 'customCode' => '{html_options name="salutation" id="salutation" options=$fields.salutation.options selected=$fields.salutation.value}'
                 . '&nbsp;<input name="first_name" id="first_name" size="25" maxlength="25" type="text" value="{$fields.first_name.value}">',
             ),
 
-            array (
+            array(
               'name' => 'account_name',
             ),
           ),
 
-          array (
+          array(
 
-            array (
+            array(
               'name' => 'last_name',
               'displayParams'=>array('required'=>true),
             ),
 
-            array (
+            array(
               'name' => 'phone_work',
             ),
           ),
 
-          array (
+          array(
 
-            array (
+            array(
               'name' => 'title',
             ),
 
-            array (
+            array(
               'name' => 'phone_mobile',
             ),
           ),
 
-          array (
+          array(
 
-            array (
+            array(
               'name' => 'phone_fax',
             ),
 
-            array (
+            array(
               'name' => 'do_not_call',
             ),
           ),
 
-          array (
-            array (
+          array(
+            array(
               'name' => 'email1',
             ),
-            array (
+            array(
               'name' => 'lead_source',
             ),
           ),
 
-          array (
+          array(
 
-            array (
+            array(
               'name' => 'assigned_user_name',
             ),
           ),

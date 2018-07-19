@@ -67,7 +67,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
          $rawurldecode = rawurldecode($list_value);
          $htmldecode = html_entity_decode($rawurldecode, ENT_QUOTES);
          $temp = $json->decode($htmldecode);
-         $dropdown = array () ;
+         $dropdown = array() ;
          // dropdown is received as an array of (name,value) pairs - now extract to name=>value format preserving order
          // we rely here on PHP to preserve the order of the received name=>value pairs - associative arrays in PHP are ordered
          if (is_array($temp)) {
@@ -193,7 +193,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
          //check for extra keys
          foreach ($sub as $key=>$value) {
              if (!isset($dom[$key])) {
-                 unset ($sub[$key]);
+                 unset($sub[$key]);
              }
          }
          //check for missing keys

@@ -27,9 +27,9 @@
 $dictionary['AOS_Line_Item_Groups'] = array(
     'table'=>'aos_line_item_groups',
     'audited'=>true,
-    'fields'=>array (
+    'fields'=>array(
   'total_amt' => 
-  array (
+  array(
     'required' => false,
     'name' => 'total_amt',
     'vname' => 'LBL_TOTAL_AMT',
@@ -45,7 +45,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'len' => '26,6',
   ),
   'total_amt_usdollar' =>
-    array (
+    array(
         'name' => 'total_amt_usdollar',
         'vname' => 'LBL_TOTAL_AMT_USDOLLAR',
         'type' => 'currency',
@@ -62,7 +62,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         'len' => '26,6',
     ),
    'name' =>
-    array (
+    array(
         'name' => 'name',
         'vname' => 'LBL_NAME',
         'type' => 'name',
@@ -72,7 +72,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         'required' => false,
   ),
   'discount_amount' => 
-  array (
+  array(
     'required' => false,
     'name' => 'discount_amount',
     'vname' => 'LBL_DISCOUNT_AMOUNT',
@@ -88,7 +88,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'len' => '26,6',
   ),
   'discount_amount_usdollar' =>
-    array (
+    array(
         'name' => 'discount_amount_usdollar',
         'vname' => 'LBL_DISCOUNT_AMOUNT_USDOLLAR',
         'type' => 'currency',
@@ -105,7 +105,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         'len' => '26,6',
     ),
   'subtotal_amount' => 
-  array (
+  array(
     'required' => false,
     'name' => 'subtotal_amount',
     'vname' => 'LBL_SUBTOTAL_AMOUNT',
@@ -121,7 +121,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'len' => '26,6',
   ),
   'subtotal_amount_usdollar' =>
-    array (
+    array(
         'name' => 'subtotal_amount_usdollar',
         'vname' => 'LBL_SUBTOTAL_AMOUNT_USDOLLAR',
         'type' => 'currency',
@@ -138,7 +138,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         'len' => '26,6',
     ),
   'tax_amount' => 
-  array (
+  array(
     'required' => false,
     'name' => 'tax_amount',
     'vname' => 'LBL_TAX_AMOUNT',
@@ -154,7 +154,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'len' => '26,6',
   ),
   'tax_amount_usdollar' =>
-    array (
+    array(
         'name' => 'tax_amount_usdollar',
         'vname' => 'LBL_TAX_AMOUNT_USDOLLAR',
         'type' => 'currency',
@@ -171,7 +171,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         'len' => '26,6',
     ),
   'subtotal_tax_amount' => 
-  array (
+  array(
     'required' => false,
     'name' => 'subtotal_tax_amount',
     'vname' => 'LBL_SUBTOTAL_TAX_AMOUNT',
@@ -187,7 +187,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'len' => '26,6',
   ),
   'subtotal_tax_amount_usdollar' =>
-    array (
+    array(
         'name' => 'subtotal_tax_amount_usdollar',
         'vname' => 'LBL_SUBTOTAL_TAX_AMOUNT_USDOLLAR',
         'type' => 'currency',
@@ -204,7 +204,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         'len' => '26,6',
     ),
   'total_amount' =>
-  array (
+  array(
     'required' => false,
     'name' => 'total_amount',
     'vname' => 'LBL_GROUP_TOTAL',
@@ -222,7 +222,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'options' => 'numeric_range_search_dom',
   ),
   'total_amount_usdollar' =>
-    array (
+    array(
         'name' => 'total_amount_usdollar',
         'vname' => 'LBL_GROUP_TOTAL_USDOLLAR',
         'type' => 'currency',
@@ -239,7 +239,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         'len' => '26,6',
     ),
   'parent_name' => 
-  array (
+  array(
     'required' => false,
     'source' => 'non-db',
     'name' => 'parent_name',
@@ -261,7 +261,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'parent_type' => 'record_type_display',
   ),
   'parent_type' => 
-  array (
+  array(
     'required' => false,
     'name' => 'parent_type',
     'vname' => 'LBL_PARENT_TYPE',
@@ -280,7 +280,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'studio' => 'hidden',
   ),
   'parent_id' => 
-  array (
+  array(
     'required' => false,
     'name' => 'parent_id',
     'vname' => 'LBL_PARENT_ID',
@@ -296,7 +296,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'len' => 36,
   ),
     'number' =>
-    array (
+    array(
         'required' => false,
         'name' => 'number',
         'vname' => 'LBL_LIST_NUM',
@@ -313,7 +313,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         'disable_num_format' => '',
     ),
   'currency_id' =>
-    array (
+    array(
         'required' => false,
         'name' => 'currency_id',
         'vname' => 'LBL_CURRENCY',
@@ -330,13 +330,13 @@ $dictionary['AOS_Line_Item_Groups'] = array(
         'size' => '20',
         'studio' => 'visible',
         'function' =>
-            array (
+            array(
                 'name' => 'getCurrencyDropDown',
                 'returns' => 'html',
             ),
     ),
   'aos_products_quotes' =>
-  array (
+  array(
     'name' => 'aos_products_quotes',
     'vname' => 'AOS_PRODUCT_QUOTES',
     'type' => 'link',
@@ -347,9 +347,9 @@ $dictionary['AOS_Line_Item_Groups'] = array(
  ),
  
 ),
-'relationships'=>array (
+'relationships'=>array(
     'groups_aos_product_quotes' =>
-    array (
+    array(
                 'lhs_module' => 'AOS_Line_Item_Groups',
                 'lhs_table' => 'aos_line_item_groups',
     'lhs_key' => 'id',

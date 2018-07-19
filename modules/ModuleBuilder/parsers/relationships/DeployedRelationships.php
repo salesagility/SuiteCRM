@@ -1,6 +1,6 @@
 <?php
-if (! defined ('sugarEntry') || ! sugarEntry) {
-    die ('Not A Valid Entry Point') ;
+if (! defined('sugarEntry') || ! sugarEntry) {
+    die('Not A Valid Entry Point') ;
 }
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -51,12 +51,12 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     public function __construct($moduleName)
     {
         $this->moduleName = $moduleName ;
-        $this->load () ;
+        $this->load() ;
     }
 
     public static function findRelatableModules($includeActivitiesSubmodules = true)
     {
-        return parent::findRelatableModules (true) ;
+        return parent::findRelatableModules(true) ;
     }
 
     /*
@@ -73,42 +73,42 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      */ 
     public function load()
     {
-        $relationships = $this->getDeployedRelationships () ;
+        $relationships = $this->getDeployedRelationships() ;
         
-        if (! empty ($relationships)) {
+        if (! empty($relationships)) {
             // load the relationship definitions for all installed custom relationships into $dictionary
-            $dictionary = array ( ) ;
-            if (file_exists ('custom/application/Ext/TableDictionary/tabledictionary.ext.php')) {
-                include ('custom/application/Ext/TableDictionary/tabledictionary.ext.php') ;
+            $dictionary = array( ) ;
+            if (file_exists('custom/application/Ext/TableDictionary/tabledictionary.ext.php')) {
+                include('custom/application/Ext/TableDictionary/tabledictionary.ext.php') ;
             }
             
             $invalidModules = array();
-            $validModules = array_keys (self::findRelatableModules ()) ;
+            $validModules = array_keys(self::findRelatableModules()) ;
             
             // now convert the relationships array into an array of AbstractRelationship objects
             foreach ($relationships as $name => $definition) {
                 if (($definition [ 'lhs_module' ] == $this->moduleName) || ($definition [ 'rhs_module' ] == $this->moduleName)) {
-                    if (in_array ($definition [ 'lhs_module' ], $validModules) && in_array ($definition [ 'rhs_module' ], $validModules)
-                        && ! in_array ($definition [ 'lhs_module' ], $invalidModules) && ! in_array ($definition [ 'rhs_module' ], $invalidModules)) {
+                    if (in_array($definition [ 'lhs_module' ], $validModules) && in_array($definition [ 'rhs_module' ], $validModules)
+                        && ! in_array($definition [ 'lhs_module' ], $invalidModules) && ! in_array($definition [ 'rhs_module' ], $invalidModules)) {
                         // identify the subpanels for this relationship - TODO: optimize this - currently does m x n scans through the subpanel list...
-                        $definition [ 'rhs_subpanel' ] = self::identifySubpanel ($definition [ 'lhs_module' ], $definition [ 'rhs_module' ]) ;
-                        $definition [ 'lhs_subpanel' ] = self::identifySubpanel ($definition [ 'rhs_module' ], $definition [ 'lhs_module' ]) ;
+                        $definition [ 'rhs_subpanel' ] = self::identifySubpanel($definition [ 'lhs_module' ], $definition [ 'rhs_module' ]) ;
+                        $definition [ 'lhs_subpanel' ] = self::identifySubpanel($definition [ 'rhs_module' ], $definition [ 'lhs_module' ]) ;
                         
                         // now adjust the cardinality with the true cardinality found in the relationships metadata (see method comment above)
                         
 
-                        if (! empty ($dictionary) && ! empty ($dictionary [ $name ])) {
-                            if (! empty ($dictionary [ $name ] [ 'true_relationship_type' ])) {
+                        if (! empty($dictionary) && ! empty($dictionary [ $name ])) {
+                            if (! empty($dictionary [ $name ] [ 'true_relationship_type' ])) {
                                 $definition [ 'relationship_type' ] = $dictionary [ $name ] [ 'true_relationship_type' ] ;
                             }
-                            if (! empty ($dictionary [ $name ] [ 'from_studio' ])) {
+                            if (! empty($dictionary [ $name ] [ 'from_studio' ])) {
                                 $definition [ 'from_studio' ] = $dictionary [ $name ] [ 'from_studio' ] ;
                             }
                             $definition [ 'is_custom' ] = true;
                         }
                             
                         
-                        $this->relationships [ $name ] = RelationshipFactory::newRelationship ($definition) ;
+                        $this->relationships [ $name ] = RelationshipFactory::newRelationship($definition) ;
                     }
                 }
             }
@@ -128,7 +128,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      */
     public function save()
     {
-        parent::_save ($this->relationships, "custom/working/modules/{$this->moduleName}") ;
+        parent::_save($this->relationships, "custom/working/modules/{$this->moduleName}") ;
     }
 
     /*
@@ -153,7 +153,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
             $this->removeFieldsFromDeployedLayout($rel);
         }
         require_once("ModuleInstall/ModuleInstaller.php");
-        require_once ('modules/Administration/QuickRepairAndRebuild.php') ;
+        require_once('modules/Administration/QuickRepairAndRebuild.php') ;
         $mi = new ModuleInstaller();
         $mi->silent = true;
         $mi->id_name = 'custom' . $rel_name; // provide the moduleinstaller with a unique name for this relationship - normally this value is set to the package key...
@@ -166,9 +166,9 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         $mi->rebuild_tabledictionary();
         
         $MBmodStrings = $GLOBALS [ 'mod_strings' ];
-        $GLOBALS [ 'mod_strings' ] = return_module_language ('', 'Administration') ;
-        $rac = new RepairAndClear () ;
-        $rac->repairAndClearAll (array ( 'clearAll', 'rebuildExtensions',  ), array ( $GLOBALS [ 'mod_strings' ] [ 'LBL_ALL_MODULES' ] ), true, false) ;
+        $GLOBALS [ 'mod_strings' ] = return_module_language('', 'Administration') ;
+        $rac = new RepairAndClear() ;
+        $rac->repairAndClearAll(array( 'clearAll', 'rebuildExtensions',  ), array( $GLOBALS [ 'mod_strings' ] [ 'LBL_ALL_MODULES' ] ), true, false) ;
         $GLOBALS [ 'mod_strings' ] = $MBmodStrings;
 
         //Bug 41070, supercedes the previous 40941 fix in this section
@@ -184,7 +184,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      */
     protected function getAllRelationships()
     {
-        return array_merge ($this->relationships, parent::getDeployedRelationships ()) ;
+        return array_merge($this->relationships, parent::getDeployedRelationships()) ;
     }
 
     /*
@@ -196,16 +196,16 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      */
     private static function identifySubpanel($thisModuleName, $sourceModuleName)
     {
-        $module = get_module_info ($thisModuleName) ;
-        require_once ('include/SubPanel/SubPanelDefinitions.php') ;
-        $spd = new SubPanelDefinitions ($module) ;
-        $subpanelNames = $spd->get_available_tabs () ; // actually these are the displayed subpanels
+        $module = get_module_info($thisModuleName) ;
+        require_once('include/SubPanel/SubPanelDefinitions.php') ;
+        $spd = new SubPanelDefinitions($module) ;
+        $subpanelNames = $spd->get_available_tabs() ; // actually these are the displayed subpanels
         
         foreach ($subpanelNames as $key => $name) {
-            $GLOBALS [ 'log' ]->debug ($thisModuleName . " " . $name) ;
+            $GLOBALS [ 'log' ]->debug($thisModuleName . " " . $name) ;
             
-            $subPanel = $spd->load_subpanel ($name) ;
-            if ($subPanel && ! isset ($subPanel->_instance_properties [ 'collection_list' ])) {
+            $subPanel = $spd->load_subpanel($name) ;
+            if ($subPanel && ! isset($subPanel->_instance_properties [ 'collection_list' ])) {
                 if ($sourceModuleName == $subPanel->_instance_properties [ 'module' ]) {
                     return $subPanel->_instance_properties [ 'subpanel_name' ] ;
                 }
@@ -225,10 +225,10 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     
     private static function identifyRelateField($thisModuleName, $sourceModuleName)
     {
-        $module = get_module_info ($thisModuleName) ;
+        $module = get_module_info($thisModuleName) ;
         
         foreach ($module->field_defs as $field) {
-            if ($field [ 'type' ] == 'relate' && isset ($field [ 'module' ]) && $field [ 'module' ] == $sourceModuleName) {
+            if ($field [ 'type' ] == 'relate' && isset($field [ 'module' ]) && $field [ 'module' ] == $sourceModuleName) {
                 return $field [ 'name' ] ;
             }
         }
@@ -273,33 +273,33 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         
         // and mark all as built so that the next time we come through we'll know and won't build again
         foreach ($this->relationships as $name => $relationship) {
-            $definition = $relationship->getDefinition () ;
+            $definition = $relationship->getDefinition() ;
             // activities will always appear on the rhs only - lhs will be always be this module in MB
-            if (strtolower ($definition [ 'rhs_module' ]) == 'activities') {
+            if (strtolower($definition [ 'rhs_module' ]) == 'activities') {
                 $this->activitiesToAdd = true ;
                 $relationshipName = $definition [ 'relationship_name' ] ;
                 foreach (self::$activities as $activitiesSubModuleLower => $activitiesSubModuleName) {
                     $definition [ 'rhs_module' ] = $activitiesSubModuleName ;
                     $definition [ 'for_activities' ] = true ;
                     $definition [ 'relationship_name' ] = $relationshipName . '_' . $activitiesSubModuleLower ;
-                    $this->relationships [ $definition [ 'relationship_name' ] ] = RelationshipFactory::newRelationship ($definition) ;
+                    $this->relationships [ $definition [ 'relationship_name' ] ] = RelationshipFactory::newRelationship($definition) ;
                 }
-                unset ($this->relationships [ $name ]) ;
+                unset($this->relationships [ $name ]) ;
             }
         }
         
-        $GLOBALS [ 'log' ]->info (get_class ($this) . "->build(): installing relationships") ;
+        $GLOBALS [ 'log' ]->info(get_class($this) . "->build(): installing relationships") ;
 
         $MBModStrings = $GLOBALS [ 'mod_strings' ] ;
-        $adminModStrings = return_module_language ('', 'Administration') ; // required by ModuleInstaller
+        $adminModStrings = return_module_language('', 'Administration') ; // required by ModuleInstaller
             
         foreach ($this->relationships as $name => $relationship) {
             $relationship->setFromStudio();
             $GLOBALS [ 'mod_strings' ] = $MBModStrings ;
-            $installDefs = parent::build ($basepath, "<basepath>", array ($name => $relationship )) ;
+            $installDefs = parent::build($basepath, "<basepath>", array($name => $relationship )) ;
 
             // and mark as built so that the next time we come through we'll know and won't build again
-            $relationship->setReadonly () ;
+            $relationship->setReadonly() ;
             $this->relationships [ $name ] = $relationship ;
 
             // now install the relationship - ModuleInstaller normally only does this as part of a package load where it installs the relationships defined in the manifest. However, we don't have a manifest or a package, so...
@@ -316,7 +316,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
 
             $GLOBALS [ 'mod_strings' ] = $adminModStrings ;
             require_once 'ModuleInstall/ModuleInstaller.php' ;
-            $mi = new ModuleInstaller () ;
+            $mi = new ModuleInstaller() ;
 
             $mi->id_name = 'custom' . $name ; // provide the moduleinstaller with a unique name for this relationship - normally this value is set to the package key...
             $mi->installdefs = $installDefs ;
@@ -324,32 +324,32 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
             $mi->silent = true ;
 
             
-            VardefManager::clearVardef () ;
+            VardefManager::clearVardef() ;
 
-            $mi->install_relationships () ;
-            $mi->install_languages () ;
-            $mi->install_vardefs () ;
-            $mi->install_layoutdefs () ;
+            $mi->install_relationships() ;
+            $mi->install_languages() ;
+            $mi->install_vardefs() ;
+            $mi->install_layoutdefs() ;
             $mi->install_extensions();
         }
         
         // Run through the module installer to rebuild the relationships once after everything is done.
         require_once 'ModuleInstall/ModuleInstaller.php' ;
-        $mi = new ModuleInstaller () ;
+        $mi = new ModuleInstaller() ;
         $mi->silent = true;
         $mi->rebuild_relationships();
 
         // now clear all caches so that our changes are visible
-        require_once ('modules/Administration/QuickRepairAndRebuild.php') ;
-        $rac = new RepairAndClear () ;
-        $rac->repairAndClearAll (array ( 'clearAll' ), array ( $GLOBALS [ 'mod_strings' ] [ 'LBL_ALL_MODULES' ] ), true, false) ;
+        require_once('modules/Administration/QuickRepairAndRebuild.php') ;
+        $rac = new RepairAndClear() ;
+        $rac->repairAndClearAll(array( 'clearAll' ), array( $GLOBALS [ 'mod_strings' ] [ 'LBL_ALL_MODULES' ] ), true, false) ;
 
         $GLOBALS [ 'mod_strings' ] = $MBModStrings ; // finally, restore the ModuleBuilder mod_strings
 
         // save out the updated definitions so that we keep track of the change in built status
-        $this->save () ;
+        $this->save() ;
         
-        $GLOBALS [ 'log' ]->info (get_class ($this) . "->build(): finished relationship installation") ;
+        $GLOBALS [ 'log' ]->info(get_class($this) . "->build(): finished relationship installation") ;
     }
 
     /*
@@ -365,15 +365,15 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         
         // these modules either lack editviews/detailviews or use custom mechanisms for the editview/detailview. In either case, we don't want to attempt to add a relate field to them
         // would be better if GridLayoutMetaDataParser could handle this gracefully, so we don't have to maintain this list here
-        $invalidModules = array ( 'emails' , 'kbdocuments' ) ;
+        $invalidModules = array( 'emails' , 'kbdocuments' ) ;
         
         foreach ($layoutAdditions as $deployedModuleName => $fieldName) {
-            if (! in_array (strtolower ($deployedModuleName), $invalidModules)) {
-                foreach (array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view) {
-                    $GLOBALS [ 'log' ]->info (get_class ($this) . ": adding $fieldName to $view layout for module $deployedModuleName") ;
-                    $parser = new GridLayoutMetaDataParser ($view, $deployedModuleName) ;
-                    $parser->addField (array ( 'name' => $fieldName )) ;
-                    $parser->handleSave (false) ;
+            if (! in_array(strtolower($deployedModuleName), $invalidModules)) {
+                foreach (array( MB_EDITVIEW , MB_DETAILVIEW ) as $view) {
+                    $GLOBALS [ 'log' ]->info(get_class($this) . ": adding $fieldName to $view layout for module $deployedModuleName") ;
+                    $parser = new GridLayoutMetaDataParser($view, $deployedModuleName) ;
+                    $parser->addField(array( 'name' => $fieldName )) ;
+                    $parser->handleSave(false) ;
                 }
             }
         }
@@ -390,19 +390,19 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     {
         
         // many-to-many relationships don't have fields so if we have a many-to-many we can just skip this...
-        if ($relationship->getType () == MB_MANYTOMANY) {
+        if ($relationship->getType() == MB_MANYTOMANY) {
             return false ;
         }
         
         $successful = true ;
-        $layoutAdditions = $relationship->buildFieldsToLayouts () ;
+        $layoutAdditions = $relationship->buildFieldsToLayouts() ;
         
         require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
         foreach ($layoutAdditions as $deployedModuleName => $fieldName) {
-            foreach (array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view) {
-                $parser = new GridLayoutMetaDataParser ($view, $deployedModuleName) ;
-                $parser->removeField ($fieldName);
-                $parser->handleSave (false) ;
+            foreach (array( MB_EDITVIEW , MB_DETAILVIEW ) as $view) {
+                $parser = new GridLayoutMetaDataParser($view, $deployedModuleName) ;
+                $parser->removeField($fieldName);
+                $parser->handleSave(false) ;
             }
         }
         

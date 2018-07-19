@@ -183,7 +183,7 @@ if (isset($_SESSION['Upgraded451Wizard']) && $_SESSION['Upgraded451Wizard']==tru
 	            'end',
 	            'cancel',
 	    	),
-	        'desc' => array (
+	        'desc' => array(
 	            $license_title,
 	            $mod_strings['LBL_UW_TITLE_PREFLIGHT'],
 	            $mod_strings['LBL_UW_TITLE_COMMIT'],
@@ -203,7 +203,7 @@ if (isset($_SESSION['Upgraded451Wizard']) && $_SESSION['Upgraded451Wizard']==tru
 		            'end',
 		            'cancel',
 		    ),
-		    'desc' => array (
+		    'desc' => array(
 		            $mod_strings['LBL_UW_TITLE_START'],
 		            $mod_strings['LBL_UW_TITLE_SYSTEM_CHECK'],
 		            $mod_strings['LBL_UW_TITLE_PREFLIGHT'],
@@ -230,7 +230,7 @@ if (isset($_SESSION['Upgraded451Wizard']) && $_SESSION['Upgraded451Wizard']==tru
 		            'end',
 		            'cancel',
 		    ),
-		    'desc' => array (
+		    'desc' => array(
 		            $mod_strings['LBL_UW_TITLE_START'],
 		            $mod_strings['LBL_UW_TITLE_SYSTEM_CHECK'],
 		            $mod_strings['LBL_UPLOAD_UPGRADE'],

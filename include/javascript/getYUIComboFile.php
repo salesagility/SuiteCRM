@@ -103,4 +103,4 @@ header("Pragma: dummy=bogus");
 header("Etag: $etag");
 header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 2592000));
 header("Content-Type: $contentType");
-echo ($out);
+echo($out);

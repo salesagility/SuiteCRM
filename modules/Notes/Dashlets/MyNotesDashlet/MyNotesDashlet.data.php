@@ -50,16 +50,16 @@ $dashletData['MyNotesDashlet']['searchFields'] = array('date_entered'     => arr
 																					'name' => array( 'default'=>''),
 														);
                                                                                            
-$dashletData['MyNotesDashlet']['columns'] = array (
+$dashletData['MyNotesDashlet']['columns'] = array(
 											  'name' => 
-											  array (
+											  array(
 											    'width' => '40%',
 											    'label' => 'LBL_LIST_SUBJECT',
 											    'link' => true,
 											    'default' => true,
 											  ),
 											  'contact_name' => 
-											  array (
+											  array(
 											    'width' => '20%',
 											    'label' => 'LBL_LIST_CONTACT',
 											    'link' => true,
@@ -68,12 +68,12 @@ $dashletData['MyNotesDashlet']['columns'] = array (
 											    'default' => true,
 											    'ACLTag' => 'CONTACT',
 											    'related_fields' => 
-											    array (
+											    array(
 											      0 => 'contact_id',
 											    ),
 											  ),
 											  'parent_name' => 
-											  array (
+											  array(
 											    'width' => '20%',
 											    'label' => 'LBL_LIST_RELATED_TO',
 											    'dynamic_module' => 'PARENT_TYPE',
@@ -83,19 +83,19 @@ $dashletData['MyNotesDashlet']['columns'] = array (
 											    'sortable' => false,
 											    'ACLTag' => 'PARENT',
 											    'related_fields' => 
-											    array (
+											    array(
 											      0 => 'parent_id',
 											      1 => 'parent_type',
 											    ),
 											  ),  
 											  'filename' => 
-											  array (
+											  array(
 											    'width' => '20%',
 											    'label' => 'LBL_LIST_FILENAME',
 											    'default' => true,
 											    'type' => 'file',
 											    'related_fields' => 
-											    array (
+											    array(
 											      0 => 'file_url',
 											      1 => 'id',
 											      2 => 'doc_id',
@@ -107,21 +107,21 @@ $dashletData['MyNotesDashlet']['columns'] = array (
 											    ),
 											  ),
 											  'created_by_name' => 
-											  array (
+											  array(
 											    'type' => 'relate',
 											    'label' => 'LBL_CREATED_BY',
 											    'width' => '10%',
 											    'default' => true,
 											  ),
 											  'date_entered' => 
-											  array (
+											  array(
 											    'type' => 'datetime',
 											    'label' => 'LBL_DATE_ENTERED',
 											    'width' => '10%',
 											    'default' => false,
 											  ),
 											  'date_modified' => 
-											  array (
+											  array(
 											    'width' => '20%',
 											    'label' => 'LBL_DATE_MODIFIED',
 											    'link' => false,

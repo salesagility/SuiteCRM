@@ -38,31 +38,31 @@
  ********************************************************************************/
 
 $module_name='AOK_KnowledgeBase';
-$subpanel_layout = array (
+$subpanel_layout = array(
   'top_buttons' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'widget_class' => 'SubPanelTopCreateButton',
     ),
     1 => 
-    array (
+    array(
       'widget_class' => 'SubPanelTopSelectButton',
       'popup_module' => 'AOK_KnowledgeBase',
     ),
   ),
   'where' => '',
   'list_fields' => 
-  array (
+  array(
     'name' => 
-    array (
+    array(
       'vname' => 'LBL_NAME',
       'widget_class' => 'SubPanelDetailViewLink',
       'width' => '45%',
       'default' => true,
     ),
     'status' => 
-    array (
+    array(
       'type' => 'enum',
       'default' => true,
       'studio' => 'visible',
@@ -70,7 +70,7 @@ $subpanel_layout = array (
       'width' => '10%',
     ),
     'author' => 
-    array (
+    array(
       'type' => 'relate',
       'studio' => 'visible',
       'vname' => 'LBL_AUTHOR',
@@ -83,14 +83,14 @@ $subpanel_layout = array (
       'target_record_key' => 'user_id_c',
     ),
     'date_entered' => 
-    array (
+    array(
       'type' => 'datetime',
       'vname' => 'LBL_DATE_ENTERED',
       'width' => '10%',
       'default' => true,
     ),
     'edit_button' => 
-    array (
+    array(
       'vname' => 'LBL_EDIT_BUTTON',
       'widget_class' => 'SubPanelEditButton',
       'module' => 'AOK_KnowledgeBase',
@@ -98,7 +98,7 @@ $subpanel_layout = array (
       'default' => true,
     ),
     'remove_button' => 
-    array (
+    array(
       'vname' => 'LBL_REMOVE',
       'widget_class' => 'SubPanelRemoveButton',
       'module' => 'AOK_KnowledgeBase',

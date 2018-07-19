@@ -1,68 +1,68 @@
 <?php
 $module_name = 'AM_ProjectTemplates';
 $viewdefs [$module_name] = 
-array (
+array(
   'QuickCreate' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
         'LBL_PANEL_ASSIGNMENT' =>
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => 
-          array (
+          array(
             'name' => 'status',
             'studio' => 'visible',
             'label' => 'LBL_STATUS',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => '',
           1 => 
-          array (
+          array(
             'name' => 'priority',
             'studio' => 'visible',
             'label' => 'LBL_PRIORITY',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'description',
             'comment' => 'Full text of the note',
             'studio' => 'visible',
@@ -72,9 +72,9 @@ array (
         ),
       ),
       'LBL_PANEL_ASSIGNMENT' =>
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'assigned_user_name',
         ),
       ),

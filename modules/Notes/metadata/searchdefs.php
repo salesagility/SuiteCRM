@@ -38,30 +38,30 @@
  ********************************************************************************/
 
 $searchdefs ['Notes'] = 
-array (
+array(
   'layout' => 
-  array (
+  array(
     'basic_search' => 
-    array (
+    array(
       'name' => 
-      array (
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      array ('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),             
-      array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+      array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),             
+      array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
     ),
     'advanced_search' => 
-    array (
+    array(
       'name' => 
-      array (
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
       'contact_name' => 
-      array (
+      array(
         'type' => 'name',
         'link' => 'contact',
         'label' => 'LBL_CONTACT_NAME',
@@ -70,7 +70,7 @@ array (
         'name' => 'contact_name',
       ),
       'parent_name' => 
-      array (
+      array(
         'type' => 'parent',
         'label' => 'LBL_RELATED_TO',
         'width' => '10%',
@@ -78,14 +78,14 @@ array (
         'name' => 'parent_name',
       ),
       'filename' => 
-      array (
+      array(
         'type' => 'name',
         'name' => 'filename',
         'default' => true,
         'width' => '10%',
       ),
       'date_entered' => 
-      array (
+      array(
         'type' => 'datetime',
         'label' => 'LBL_DATE_ENTERED',
         'width' => '10%',
@@ -96,11 +96,11 @@ array (
     ),
   ),
   'templateMeta' => 
-  array (
+  array(
     'maxColumns' => '3',
     'maxColumnsBasic' => '4', 
     'widths' => 
-    array (
+    array(
       'label' => '10',
       'field' => '30',
     ),

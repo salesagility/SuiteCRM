@@ -101,7 +101,7 @@ function get_new_record_form()
     global $timedate;
     
     $the_form = get_left_form_header($mod_strings['LBL_NEW_FORM_TITLE']);
-    $form = new XTemplate ('modules/Campaigns/Forms.html');
+    $form = new XTemplate('modules/Campaigns/Forms.html');
 
     $module_select = empty($_REQUEST['module_select']) ? ''
         : $_REQUEST['module_select'];

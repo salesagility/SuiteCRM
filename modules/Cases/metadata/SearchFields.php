@@ -39,42 +39,42 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-$searchFields['Cases'] = array (
+$searchFields['Cases'] = array(
   'name' => 
-  array (
+  array(
     'query_type' => 'default',
   ),
   'account_name' => 
-  array (
+  array(
     'query_type' => 'default',
     'db_field' => 
-    array (
+    array(
       0 => 'accounts.name',
     ),
   ),
   'status' => 
-  array (
+  array(
     'query_type' => 'default',
     'options' => 'case_status_dom',
     'template_var' => 'STATUS_OPTIONS',
   ),
   'priority' => 
-  array (
+  array(
     'query_type' => 'default',
     'options' => 'case_priority_dom',
     'template_var' => 'PRIORITY_OPTIONS',
     'options_add_blank' => true,
   ),
   'case_number' => 
-  array (
+  array(
     'query_type' => 'default',
     'operator' => 'in',
   ),
   'current_user_only' => 
-  array (
+  array(
     'query_type' => 'default',
     'db_field' => 
-    array (
+    array(
       0 => 'assigned_user_id',
     ),
     'my_items' => true,
@@ -82,19 +82,19 @@ $searchFields['Cases'] = array (
     'type' => 'bool',
   ),
   'assigned_user_id' => 
-  array (
+  array(
     'query_type' => 'default',
   ),
   'open_only' => 
-  array (
+  array(
     'query_type' => 'default',
     'db_field' => 
-    array (
+    array(
       0 => 'status',
     ),
     'operator' => 'not in',
     'closed_values' => 
-    array (
+    array(
       0 => 'Closed',
       1 => 'Rejected',
       2 => 'Duplicate',
@@ -105,43 +105,43 @@ $searchFields['Cases'] = array (
     'type' => 'bool',
   ),
   'range_date_entered' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'start_range_date_entered' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'end_range_date_entered' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'range_date_modified' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'start_range_date_modified' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'end_range_date_modified' => 
-  array (
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
   'state' => 
-  array (
+  array(
     'query_type' => 'default',
   ),
     'favorites_only' => array(

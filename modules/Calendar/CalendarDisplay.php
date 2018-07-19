@@ -278,7 +278,7 @@ class CalendarDisplay
             $pm = $match[2] == "pm" ? "%P" : "%p";
             $CALENDAR_FORMAT = $date_format . ' ' . $t23 . $time_separator . "%M" . $pm;
         }
-        $hours_arr = array ();
+        $hours_arr = array();
         $num_of_hours = 24;
         $start_at = 0;
         $TIME_MERIDIEM = "";

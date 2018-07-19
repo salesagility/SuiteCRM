@@ -27,22 +27,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author Salesagility Ltd <support@salesagility.com>
  */
 $listViewDefs ['AOS_PDF_Templates'] = 
-array (
+array(
   'NAME' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
   'TYPE' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_TYPE',
     'default' => true,
   ),
   'CREATED_BY_NAME' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_CREATED',
     'default' => true,
@@ -51,19 +51,19 @@ array (
     'id' => 'CREATED_BY',
   ),
   'MODIFIED_BY_NAME' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_MODIFIED_NAME',
     'default' => false,
   ),
   'DATE_ENTERED' =>
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => true,
   ),
   'DATE_MODIFIED' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_DATE_MODIFIED',
     'default' => true,

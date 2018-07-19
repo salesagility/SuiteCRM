@@ -92,7 +92,7 @@ class charts
         }
 
         //use the new template.
-        $xtpl=new XTemplate ('modules/Campaigns/chart.tpl');
+        $xtpl=new XTemplate('modules/Campaigns/chart.tpl');
         $xtpl->assign("GRAPHTITLE", 'Campaign Response by Recipient Activity');
         $xtpl->assign("Y_DEFAULT_ALT_TEXT", 'Rollover a bar to view details.');
 

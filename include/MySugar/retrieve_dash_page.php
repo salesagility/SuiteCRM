@@ -111,7 +111,7 @@ if (!$hasUserPreferences) {
                 'height' => 315,
             ));
 
-        $dashlets[create_guid()] = array ('className' => 'SugarFeedDashlet',
+        $dashlets[create_guid()] = array('className' => 'SugarFeedDashlet',
             'module' => 'SugarFeed',
             'forceColumn' => 1,
             'fileLocation' => $dashletsFiles['SugarFeedDashlet']['file'],

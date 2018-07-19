@@ -88,12 +88,12 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         $this->_moduleName = $moduleName;
         $this->_view = $view;
 
-        if (empty ($packageName)) {
+        if (empty($packageName)) {
             require_once 'modules/ModuleBuilder/parsers/views/DeployedMetaDataImplementation.php';
-            $this->implementation = new DeployedMetaDataImplementation ($view, $moduleName, self::$variableMap);
+            $this->implementation = new DeployedMetaDataImplementation($view, $moduleName, self::$variableMap);
         } else {
             require_once 'modules/ModuleBuilder/parsers/views/UndeployedMetaDataImplementation.php';
-            $this->implementation = new UndeployedMetaDataImplementation ($view, $moduleName, $packageName);
+            $this->implementation = new UndeployedMetaDataImplementation($view, $moduleName, $packageName);
         }
 
         $viewdefs = $this->implementation->getViewdefs();
@@ -106,11 +106,11 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         }
 
         $viewdefs = $viewdefs [self::$variableMap [$view]];
-        if (!isset ($viewdefs ['templateMeta'])) {
+        if (!isset($viewdefs ['templateMeta'])) {
             sugar_die(get_class($this) . ": missing templateMeta section in layout definition (case sensitive)");
         }
 
-        if (!isset ($viewdefs ['panels'])) {
+        if (!isset($viewdefs ['panels'])) {
             sugar_die(get_class($this) . ": missing panels section in layout definition (case sensitive)");
         }
 
@@ -169,7 +169,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         foreach ($this->_viewdefs ['panels'] as $panelID => $panel) {
             foreach ($panel as $rowID => $row) {
                 foreach ($row as $colID => $fieldName) {
-                    if (isset ($this->_fielddefs [$fieldName])) {
+                    if (isset($this->_fielddefs [$fieldName])) {
                         $viewDefinitions [$panelID] [$rowID] [$colID] = self::_trimFieldDefs($this->_fielddefs [$fieldName]);
                     } else {
                         if (isset($this->_originalViewDef [$fieldName]) && is_array($this->_originalViewDef [$fieldName])) {
@@ -272,11 +272,11 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
         // Available fields are those that are in the Model and the original layout definition, but not already shown in the View
         // So, because the formats of the two are different we brute force loop through View and unset the fields we find in a copy of Model
-        if (!empty ($this->_viewdefs)) {
+        if (!empty($this->_viewdefs)) {
             foreach ($this->_viewdefs ['panels'] as $panel) {
                 foreach ($panel as $row) {
                     foreach ($row as $field) {
-                        unset ($availableFields [$field]);
+                        unset($availableFields [$field]);
                     }
                 }
             }
@@ -300,7 +300,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
      */
     public function getPanelDependency($panelID)
     {
-        if (!isset ($this->_viewdefs ['templateMeta']['dependency']) && !isset ($this->_viewdefs ['templateMeta']['dependency'] [$panelID])) {
+        if (!isset($this->_viewdefs ['templateMeta']['dependency']) && !isset($this->_viewdefs ['templateMeta']['dependency'] [$panelID])) {
             return false;
         }
 
@@ -328,13 +328,13 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
             $panelId = array_shift(array_keys($panels));
         }
 
-        if (isset ($this->_viewdefs ['panels'] [$panelID])) {
+        if (isset($this->_viewdefs ['panels'] [$panelID])) {
             $panel = $this->_viewdefs ['panels'] [$panelID];
             $lastrow = count($panel) - 1; // index starts at 0
             $maxColumns = $this->getMaxColumns();
             $lastRowDef = $this->_viewdefs ['panels'] [$panelID] [$lastrow];
             for ($column = 0; $column < $maxColumns; $column++) {
-                if (!isset ($lastRowDef [$column])
+                if (!isset($lastRowDef [$column])
                     || (is_array($lastRowDef [$column]) && $lastRowDef [$column]['name'] == '(empty)')
                     || (is_string($lastRowDef [$column]) && $lastRowDef [$column] == '(empty)')
                 ) {
@@ -402,10 +402,10 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                 }
 
                 if ($empty) {
-                    unset ($this->_viewdefs ['panels'] [$panelID] [$lastRowID]);
+                    unset($this->_viewdefs ['panels'] [$panelID] [$lastRowID]);
                     // if the row was the only one in the panel, and the panel is not the first (default) panel, then remove the panel also
                     if (count($this->_viewdefs ['panels'] [$panelID]) == 0 && $panelID != $firstPanelID) {
-                        unset ($this->_viewdefs ['panels'] [$panelID]);
+                        unset($this->_viewdefs ['panels'] [$panelID]);
                     }
                 }
             }
@@ -424,7 +424,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
     public function setPanelDependency($panelID, $dependency)
     {
         // only accept dependencies for pre-existing panels
-        if (!isset ($this->_viewdefs ['panels'] [$panelID])) {
+        if (!isset($this->_viewdefs ['panels'] [$panelID])) {
             return false;
         }
 
@@ -498,7 +498,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                         }
                     } else {
                         // update fielddefs for this property in the provided position
-                        if (isset ($this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID])) {
+                        if (isset($this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID])) {
                             $fieldname = $this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID];
                             $fieldDefinitions [$fieldname] [$property] = $value;
                         }
@@ -564,7 +564,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                     $def = $previousViewDef[$field];
                 } //next see if the field was on the original layout.
                 else {
-                    if (isset ($this->_originalViewDef [$field])) {
+                    if (isset($this->_originalViewDef [$field])) {
                         $def = $this->_originalViewDef [$field];
                     } //Otherwise make up a viewdef for it from field_defs
                     else {
@@ -586,7 +586,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                         if ($startOfRow) {
                             $offset++;
                         }
-                        unset ($row [$colID]);
+                        unset($row [$colID]);
                     } else {
                         $startOfRow = false;
                     }
@@ -618,12 +618,12 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                                 $fieldDefinitions[$fieldname]);
                         } //next see if the field was on the original layout.
                         else {
-                            if (isset ($this->_originalViewDef [$fieldname])) {
+                            if (isset($this->_originalViewDef [$fieldname])) {
                                 $newRow[$colID - $offset] = $this->getNewRowItem($this->_originalViewDef[$fieldname],
                                     $fieldDefinitions[$fieldname]);
                             } //Otherwise make up a viewdef for it from field_defs
                             else {
-                                if (isset ($fieldDefinitions [$fieldname])) {
+                                if (isset($fieldDefinitions [$fieldname])) {
                                     $newRow [$colID - $offset] = self::_trimFieldDefs($fieldDefinitions [$fieldname]);
                                 } //No additional info on this field can be found, jsut use the name;
                                 else {
@@ -651,7 +651,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
     {
         //We should copy over the tabindex if it is set.
         $newRow = array();
-        if (isset ($fieldDefinitions) && !empty($fieldDefinitions['tabindex'])) {
+        if (isset($fieldDefinitions) && !empty($fieldDefinitions['tabindex'])) {
             if (is_array($source)) {
                 $newRow = $source;
             } else {
@@ -675,18 +675,18 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
     protected function _convertFromCanonicalForm($panels, $fieldDefinitions)
     {
         $newPanels = array();
-        if (empty ($panels)) {
+        if (empty($panels)) {
             return $newPanels;
         }
 
         // Fix for a flexibility in the format of the panel sections - if only one panel, then we don't have a panel level defined,
         // it goes straight into rows
         // See EditView2 for similar treatment
-        if (!empty ($panels) && count($panels) > 0) {
+        if (!empty($panels) && count($panels) > 0) {
             $keys = array_keys($panels);
             if (is_numeric($keys [0])) {
                 $defaultPanel = $panels;
-                unset ($panels); //blow away current value
+                unset($panels); //blow away current value
                 $panels ['default'] = $defaultPanel;
             }
         }
@@ -697,11 +697,11 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
             foreach ($panel as $rowID => $row) {
                 $cols = 0;
                 foreach ($row as $colID => $col) {
-                    if (!empty ($col)) {
+                    if (!empty($col)) {
                         if (is_string($col)) {
                             $fieldname = $col;
                         } else {
-                            if (!empty ($col ['name'])) {
+                            if (!empty($col ['name'])) {
                                 $fieldname = $col ['name'];
                             }
                         }

@@ -40,11 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['ImportMap'] = array (
+$dictionary['ImportMap'] = array(
     'table' => 'import_maps', 
     'comment' => 'Import mapping control table',
-    'fields' => array (
-        'id' => array (
+    'fields' => array(
+        'id' => array(
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
@@ -52,7 +52,7 @@ $dictionary['ImportMap'] = array (
             'reportable'=>false,
             'comment' => 'Unique identifier',
             ),
-        'name' => array (
+        'name' => array(
             'name' => 'name',
             'vname' => 'LBL_NAME',
             'type' => 'varchar',
@@ -60,7 +60,7 @@ $dictionary['ImportMap'] = array (
             'required'=>true,
             'comment' => 'Name of import map',
             ),
-        'source' => array (
+        'source' => array(
             'name' => 'source',
             'vname' => 'LBL_SOURCE',
             'type' => 'varchar',
@@ -68,7 +68,7 @@ $dictionary['ImportMap'] = array (
             'required'=>true,
             'comment' => '',
             ),
-        'enclosure' => array (
+        'enclosure' => array(
             'name' => 'enclosure',
             'vname' => 'LBL_CUSTOM_ENCLOSURE',
             'type' => 'varchar',
@@ -77,7 +77,7 @@ $dictionary['ImportMap'] = array (
             'comment' => '',
             'default' => ' ',
             ),
-        'delimiter' => array (
+        'delimiter' => array(
             'name' => 'delimiter',
             'vname' => 'LBL_CUSTOM_DELIMITER',
             'type' => 'varchar',
@@ -86,7 +86,7 @@ $dictionary['ImportMap'] = array (
             'comment' => '',
             'default' => ',',
             ),
-        'module' => array (
+        'module' => array(
             'name' => 'module',
             'vname' => 'LBL_MODULE',
             'type' => 'varchar',
@@ -94,19 +94,19 @@ $dictionary['ImportMap'] = array (
             'required'=>true,
             'comment' => 'Module used for import',
             ),
-        'content' => array (
+        'content' => array(
             'name' => 'content',
             'vname' => 'LBL_CONTENT',
             'type' => 'text',
             'comment' => 'Mappings for all columns',
             ),
-        'default_values' => array (
+        'default_values' => array(
             'name' => 'default_values',
             'vname' => 'LBL_CONTENT',
             'type' => 'text',
             'comment' => 'Default Values for all columns',
             ),
-        'has_header' => array (
+        'has_header' => array(
             'name' => 'has_header',
             'vname' => 'LBL_HAS_HEADER',
             'type' => 'bool',
@@ -114,7 +114,7 @@ $dictionary['ImportMap'] = array (
             'required'=>true,
             'comment' => 'Indicator if source file contains a header row',
             ),
-        'deleted' => array (
+        'deleted' => array(
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
@@ -122,21 +122,21 @@ $dictionary['ImportMap'] = array (
             'reportable'=>false,
             'comment' => 'Record deletion indicator',
             ),
-        'date_entered' => array (
+        'date_entered' => array(
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required'=>true,
             'comment' => 'Date record created',
             ),
-        'date_modified' => array (
+        'date_modified' => array(
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required'=>true,
             'comment' => 'Date record last modified',
             ),
-        'assigned_user_id' => array (
+        'assigned_user_id' => array(
             'name' => 'assigned_user_id',
             'rname' => 'user_name',
             'id_name' => 'assigned_user_id',
@@ -148,7 +148,7 @@ $dictionary['ImportMap'] = array (
             'reportable'=>false,
             'comment' => 'Assigned-to user',
             ),
-        'is_published' => array (
+        'is_published' => array(
             'name' => 'is_published',
             'vname' => 'LBL_IS_PUBLISHED',
             'type' => 'varchar',
@@ -158,7 +158,7 @@ $dictionary['ImportMap'] = array (
             'comment' => 'Indicator if mapping is published',
             ),
         ),                                
-    'indices' => array (
+    'indices' => array(
         array(
             'name' =>'import_mapspk', 
             'type' =>'primary', 
@@ -172,11 +172,11 @@ $dictionary['ImportMap'] = array (
         )
     );
                                   
-$dictionary['UsersLastImport'] = array ( 
+$dictionary['UsersLastImport'] = array( 
     'table' => 'users_last_import', 
     'comment' => 'Maintains rows last imported by user', 
-    'fields' => array (
-        'id' => array (
+    'fields' => array(
+        'id' => array(
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
@@ -184,7 +184,7 @@ $dictionary['UsersLastImport'] = array (
             'reportable'=>false,
             'comment' => 'Unique identifier'
             ),
-        'assigned_user_id' => array (
+        'assigned_user_id' => array(
             'name' => 'assigned_user_id',
             'rname' => 'user_name',
             'id_name' => 'assigned_user_id',
@@ -196,28 +196,28 @@ $dictionary['UsersLastImport'] = array (
             'reportable'=>false,
             'comment' => 'User assigned to this record'
             ),
-        'import_module' => array (
+        'import_module' => array(
             'name' => 'import_module',
             'vname' => 'LBL_BEAN_TYPE',
             'type' => 'varchar',
             'len' => '36',
             'comment' => 'Module for which import occurs'
             ),
-        'bean_type' => array (
+        'bean_type' => array(
             'name' => 'bean_type',
             'vname' => 'LBL_BEAN_TYPE',
             'type' => 'varchar',
             'len' => '36',
             'comment' => 'Bean type for which import occurs'
             ),
-        'bean_id' => array (
+        'bean_id' => array(
             'name' => 'bean_id',
             'vname' => 'LBL_BEAN_ID',
             'type' => 'id',
             'reportable'=>false,
             'comment' => 'ID of item identified by bean_type'
             ),
-        'deleted' => array (
+        'deleted' => array(
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
@@ -226,7 +226,7 @@ $dictionary['UsersLastImport'] = array (
             'comment' => 'Record deletion indicator'
             ),
         ),
-    'indices' => array (
+    'indices' => array(
         array(
             'name' =>'users_last_importpk', 
             'type' =>'primary', 

@@ -48,30 +48,30 @@ $viewdefs['DocumentRevisions']['DetailView'] = array(
                                 ),
         ),
     'panels' => 
-    array (
+    array(
         '' => 
-        array (
-            array (
+        array(
+            array(
                 'document_name',
                 'latest_revision',
             ),
             
-            array (
+            array(
                 'revision',
             ),
             
-            array (
+            array(
                 'filename',
             ),
             
-            array (
-                array (
+            array(
+                array(
                     'name' => 'date_entered',
                     'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
                 ),
             ),
 
-            array (
+            array(
                 'change_log',
             ),
         ),

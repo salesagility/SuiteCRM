@@ -42,15 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $dictionary['queues_beans'] = array('table' => 'queues_beans', 
-	'fields' => array (
-		'id' => array (
+	'fields' => array(
+		'id' => array(
 			'name' => 'id',
 			'vname' => 'LBL_ID',
 			'type' => 'id',
 			'required' => true,
 			'reportable'=>false,
 		),
-		'deleted' => array (
+		'deleted' => array(
 			'name' => 'deleted',
 			'vname' => 'LBL_DELETED',
 			'type' => 'bool',
@@ -58,26 +58,26 @@ $dictionary['queues_beans'] = array('table' => 'queues_beans',
 			'default' => '0',
 			'reportable'=>false,
 		),
-		'date_entered' => array (
+		'date_entered' => array(
 			'name' => 'date_entered',
 			'vname' => 'LBL_DATE_ENTERED',
 			'type' => 'datetime',
 			'required' => true,
 		),
-		'date_modified' => array (
+		'date_modified' => array(
 			'name' => 'date_modified',
 			'vname' => 'LBL_DATE_MODIFIED',
 			'type' => 'datetime',
 			'required' => true,
 		),
-		'queue_id' => array (
+		'queue_id' => array(
 			'name' => 'queue_id',
 			'vname' => 'LBL_QUEUE_ID',
 			'type' => 'id',
 			'required' => true,
 			'reportable'=>false,
 		),
-		'module_dir' => array (
+		'module_dir' => array(
 			'name' => 'module_dir',
 			'vname' => 'LBL_MODULE_DIR',
 			'type' => 'varchar',
@@ -85,7 +85,7 @@ $dictionary['queues_beans'] = array('table' => 'queues_beans',
 			'required' => true,
 			'reportable'=>false,
 		),
-		'object_id' => array (
+		'object_id' => array(
 			'name' => 'object_id',
 			'vname' => 'LBL_OBJECT_ID',
 			'type' => 'id',
@@ -93,7 +93,7 @@ $dictionary['queues_beans'] = array('table' => 'queues_beans',
 			'reportable'=>false,
 		),
 	),
-	'relationships' => array (
+	'relationships' => array(
 		'queues_emails_rel' => array(
 			'lhs_module'					=> 'Queues',
 			'lhs_table'						=> 'queues',
@@ -109,7 +109,7 @@ $dictionary['queues_beans'] = array('table' => 'queues_beans',
 			'relationship_role_column_value'=> 'Emails'		
 		),
 	), /* end relationship definitions */
-	'indices' => array (
+	'indices' => array(
 		array(
 			'name' => 'queues_itemspk',
 			'type' =>'primary',

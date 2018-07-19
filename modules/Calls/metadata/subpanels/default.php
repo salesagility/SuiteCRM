@@ -47,10 +47,10 @@ $subpanel_layout = array(
 	//the activities sub-panel.
 	
 	'top_buttons' => array(
-        array (
+        array(
 	 		 'widget_class'=>'SubPanelTopCreateButton',
 				),
-			array (
+			array(
 	 		 'widget_class'=>'SubPanelTopSelectButton', 'popup_module' => 'Calls'
 				),
 	),
@@ -92,7 +92,7 @@ $subpanel_layout = array(
 			 'vname' => 'LBL_DATE_TIME',
 			 'width' => '10%',
 		),
-		'assigned_user_name' => array (
+		'assigned_user_name' => array(
 			'name' => 'assigned_user_name',
 			'vname' => 'LBL_LIST_ASSIGNED_TO_NAME',
 			'widget_class' => 'SubPanelDetailViewLink',

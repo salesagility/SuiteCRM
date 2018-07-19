@@ -21687,11 +21687,11 @@ $sugar_demodata['quotes_seed_data']['quotes'][0] = array(
     'payment_terms' => 'Net 30',
 
     'bundle_data' => array(
-        0 => array (
+        0 => array(
             'bundle_name' => 'Computers',
             'bundle_stage' => 'Draft',
             'comment' => 'TK Desktop Computers',
-            'products' => array (
+            'products' => array(
                 1 => array('name'=>'TK 1000 Desktop', 'quantity'=>'1'),
                 2 => array('name'=>'TK m30 Desktop', 'quantity'=>'2'),
             ),
@@ -21710,11 +21710,11 @@ $sugar_demodata['quotes_seed_data']['quotes'][1] = array(
          
 
     'bundle_data' => array(
-        0 => array (
+        0 => array(
             'bundle_name' => 'Mirrors',
             'bundle_stage' => 'Draft',
             'comment' => 'Reflective Mirrors',
-            'products' => array (
+            'products' => array(
                 1 => array('name'=>'Reflective Mirror Widget', 'quantity'=>'2'),
             ),
         ),

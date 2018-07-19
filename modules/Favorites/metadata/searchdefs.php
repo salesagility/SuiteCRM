@@ -38,25 +38,25 @@
  ********************************************************************************/
 
 $searchdefs ['Favorites'] =
-array (
+array(
   'templateMeta' =>
-    array (
+    array(
         'maxColumns' => '3',
         'maxColumnsBasic' => '4',
         'widths' =>
-            array (
+            array(
                 'label' => '10',
                 'field' => '30',
             ),
     ),
   'layout' => 
-  array (
+  array(
     'basic_search' => 
-    array (
+    array(
 
     ),
     'advanced_search' => 
-    array (
+    array(
 
     ),
   ),

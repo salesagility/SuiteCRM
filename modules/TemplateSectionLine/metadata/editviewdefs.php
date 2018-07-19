@@ -1,45 +1,45 @@
 <?php
 $module_name = 'TemplateSectionLine';
 $viewdefs [$module_name] = 
-array (
+array(
   'EditView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '1',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
         ),
         1 =>
-          array (
+          array(
             'name' => 'grp',
             'label' => 'LBL_GRP',
           ),
@@ -48,11 +48,11 @@ array (
               'label' => 'LBL_ORD',
           ),
           3 =>
-              array (
+              array(
                   0 => 'description',
               ),
           4 =>
-              array (
+              array(
                   'name' => 'thumbnail',
                   'label' => 'LBL_THUMBNAIL',
               ),

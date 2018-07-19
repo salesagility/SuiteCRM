@@ -38,50 +38,50 @@
  ********************************************************************************/
 
 $searchdefs ['Cases'] = 
-array (
+array(
   'layout' => 
-  array (
+  array(
     'basic_search' => 
-    array (
+    array(
       0 => 'name',
       1 => 
-      array (
+      array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
       ),
       2 => 
-      array (
+      array(
         'name' => 'open_only',
         'label' => 'LBL_OPEN_ITEMS',
         'type' => 'bool',
         'default' => false,
         'width' => '10%',
       ),
-        3 => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+        3 => array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
     ),
     'advanced_search' => 
-    array (
+    array(
       'case_number' => 
-      array (
+      array(
         'name' => 'case_number',
         'default' => true,
         'width' => '10%',
       ),
       'name' => 
-      array (
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
       'account_name' => 
-      array (
+      array(
         'name' => 'account_name',
         'default' => true,
         'width' => '10%',
       ),
       'type' => 
-      array (
+      array(
         'type' => 'enum',
         'label' => 'LBL_TYPE',
         'width' => '10%',
@@ -89,7 +89,7 @@ array (
         'name' => 'type',
       ),
       'state' => 
-      array (
+      array(
         'type' => 'enum',
         'default' => true,
         'label' => 'LBL_STATE',
@@ -97,21 +97,21 @@ array (
         'name' => 'state',
       ),
       'status' => 
-      array (
+      array(
         'name' => 'status',
         'default' => true,
         'width' => '10%',
       ),
       'assigned_user_id' => 
-      array (
+      array(
         'name' => 'assigned_user_id',
         'type' => 'enum',
         'label' => 'LBL_ASSIGNED_TO',
         'function' => 
-        array (
+        array(
           'name' => 'get_user_array',
           'params' => 
-          array (
+          array(
             0 => false,
           ),
         ),
@@ -119,7 +119,7 @@ array (
         'width' => '10%',
       ),
       'priority' => 
-      array (
+      array(
         'name' => 'priority',
         'default' => true,
         'width' => '10%',
@@ -127,11 +127,11 @@ array (
     ),
   ),
   'templateMeta' => 
-  array (
+  array(
     'maxColumns' => '3',
     'maxColumnsBasic' => '4',
     'widths' => 
-    array (
+    array(
       'label' => '10',
       'field' => '30',
     ),

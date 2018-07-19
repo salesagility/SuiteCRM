@@ -88,15 +88,15 @@ $dashletData['MyDocumentsDashlet']['columns'] =  array('document_name' => array(
                                                                             'label'   => 'LBL_CREATED'),
                                                       'assigned_user_name' => array('width'   => '8', 
                                                                                      'label'   => 'LBL_LIST_ASSIGNED_USER'),
-                                                      'FILENAME' => array (
+                                                      'FILENAME' => array(
                                                                     'width' => '20%',
                                                                     'label' => 'LBL_FILENAME',
                                                                     'link' => true,
                                                                     'default' => false,
                                                                     'bold' => false,
-                                                                    'displayParams' => array ( 'module' => 'Documents', ),
+                                                                    'displayParams' => array( 'module' => 'Documents', ),
                                                                     'related_fields' =>
-                                                                    array (
+                                                                    array(
                                                                         0 => 'document_revision_id',
                                                                         1 => 'doc_id',
                                                                         2 => 'doc_type',

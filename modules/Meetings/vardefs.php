@@ -420,7 +420,7 @@ $dictionary['Meeting'] = array('table' => 'meetings',
                 'vname' => 'LBL_CASE',
             ),
         'aos_contracts' =>
-            array (
+            array(
                 'name' => 'aos_contracts',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_meetings',

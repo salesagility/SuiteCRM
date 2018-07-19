@@ -81,8 +81,7 @@ class registry_v4_1 extends registry_v4
     {
         parent::registerTypes();
 
-        $this->serviceClass->registerType
-           (
+        $this->serviceClass->registerType(
                'error_value',
                'complexType',
                'struct',
@@ -112,8 +111,7 @@ class registry_v4_1 extends registry_v4
 
         //modified_relationship_entry
         //This type consists of id, module_name and name_value_list type
-        $this->serviceClass->registerType
-            (
+        $this->serviceClass->registerType(
                  'modified_relationship_entry',
                  'complexType',
                  'struct',
@@ -128,8 +126,7 @@ class registry_v4_1 extends registry_v4
 
         //modified_relationship_result
         //the top level result array
-        $this->serviceClass->registerType
-            (
+        $this->serviceClass->registerType(
                 'modified_relationship_result',
                 'complexType',
                 'struct',

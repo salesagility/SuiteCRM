@@ -60,7 +60,7 @@ class ViewDropdowns extends SugarView
         $smarty = new Sugar_Smarty();
 		
         if (isset($_REQUEST['refreshTree'])) {
-            require_once ('modules/ModuleBuilder/Module/DropDownTree.php');
+            require_once('modules/ModuleBuilder/Module/DropDownTree.php');
             $mbt = new DropDownTree();
             $ajax->addSection('west', $mbt->getName(), $mbt->fetchNodes());
             $smarty->assign('refreshTree', true);

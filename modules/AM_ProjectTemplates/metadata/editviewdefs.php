@@ -1,21 +1,21 @@
 <?php
 $module_name = 'AM_ProjectTemplates';
 $viewdefs [$module_name] = 
-array (
+array(
   'EditView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -23,21 +23,21 @@ array (
 
 
       'form' => 
-      array (
+      array(
         'headerTpl' => 'modules/AM_ProjectTemplates/tpls/header.tpl',
         'footerTpl' => 'modules/AM_ProjectTemplates/tpls/footer.tpl',
         'buttons' => 
-        array (
+        array(
           0 =>          
-          array (
+          array(
             'customCode' => '<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" id ="SAVE_HEADER" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="SUGAR.project_template.fill_invitees();document.EditView.action.value=\'Save\'; document.EditView.return_action.value=\'view_GanttChart\'; {if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}document.EditView.return_id.value=\'\'; {/if} formSubmitCheck();"type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">',
           ),
           1 => 'CANCEL',
         ),
       'buttons_footer' =>
-        array (
+        array(
           0 =>          
-          array (
+          array(
             'customCode' => '<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" id ="SAVE_HEADER" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="SUGAR.project_template.fill_invitees();document.EditView.action.value=\'Save\'; document.EditView.return_action.value=\'view_GanttChart\'; {if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}document.EditView.return_id.value=\'\'; {/if} formSubmitCheck();"type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">',
           ),
           1 => 'CANCEL',
@@ -51,14 +51,14 @@ array (
 
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
         'LBL_PANEL_ASSIGNMENT' =>
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
@@ -66,24 +66,24 @@ array (
       'syncDetailEditViews' => true,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => 
-          array (
+          array(
             'name' => 'status',
             'studio' => 'visible',
             'label' => 'LBL_STATUS',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 'override_business_hours',
           1 => 
-          array (
+          array(
             'name' => 'priority',
             'studio' => 'visible',
             'label' => 'LBL_PRIORITY',
@@ -91,7 +91,7 @@ array (
         ),
 
         2 => 
-        array (
+        array(
           0 => 'assigned_user_name',
    
         ),

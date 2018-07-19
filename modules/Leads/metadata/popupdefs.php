@@ -41,11 +41,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-$popupMeta = array (
+$popupMeta = array(
     'moduleMain' => 'Lead',
     'varName' => 'LEAD',
     'orderBy' => 'last_name, first_name',
-    'whereClauses' => array (
+    'whereClauses' => array(
 		'first_name' => 'leads.first_name',
 		'last_name' => 'leads.last_name',
 		'lead_source' => 'leads.lead_source',
@@ -53,7 +53,7 @@ $popupMeta = array (
 		'account_name' => 'leads.account_name',
 		'assigned_user_id' => 'leads.assigned_user_id',
 	),
-    'searchInputs' => array (
+    'searchInputs' => array(
 	  0 => 'first_name',
 	  1 => 'last_name',
 	  2 => 'lead_source',
@@ -61,60 +61,60 @@ $popupMeta = array (
 	  4 => 'account_name',
 	  5 => 'assigned_user_id',
 	),
-    'searchdefs' => array (
+    'searchdefs' => array(
 	  'first_name' => 
-	  array (
+	  array(
 	    'name' => 'first_name',
 	    'width' => '10%',
 	  ),
 	  'last_name' => 
-	  array (
+	  array(
 	    'name' => 'last_name',
 	    'width' => '10%',
 	  ),
 	  'email',
 	  'account_name' => 
-	  array (
+	  array(
 	    'type' => 'varchar',
 	    'label' => 'LBL_ACCOUNT_NAME',
 	    'width' => '10%',
 	    'name' => 'account_name',
 	  ),
 	  'lead_source' => 
-	  array (
+	  array(
 	    'name' => 'lead_source',
 	    'width' => '10%',
 	  ),
 	  'status' => 
-	  array (
+	  array(
 	    'name' => 'status',
 	    'width' => '10%',
 	  ),
 	  'assigned_user_id' => 
-	  array (
+	  array(
 	    'name' => 'assigned_user_id',
 	    'type' => 'enum',
 	    'label' => 'LBL_ASSIGNED_TO',
 	    'function' => 
-	    array (
+	    array(
 	      'name' => 'get_user_array',
 	      'params' => 
-	      array (
+	      array(
 	        0 => false,
 	      ),
 	    ),
 	    'width' => '10%',
 	  ),
 	),
-    'listviewdefs' => array (
+    'listviewdefs' => array(
 	  'NAME' => 
-	  array (
+	  array(
 	    'width' => '30%',
 	    'label' => 'LBL_LIST_NAME',
 	    'link' => true,
 	    'default' => true,
 	    'related_fields' => 
-	    array (
+	    array(
 	      0 => 'first_name',
 	      1 => 'last_name',
 	      2 => 'salutation',
@@ -122,7 +122,7 @@ $popupMeta = array (
 	    'name' => 'name',
 	  ),
 	  'ACCOUNT_NAME' => 
-	  array (
+	  array(
 	    'type' => 'varchar',
 	    'label' => 'LBL_ACCOUNT_NAME',
 	    'width' => '10%',
@@ -130,21 +130,21 @@ $popupMeta = array (
 	    'name' => 'account_name',
 	  ),
 	  'STATUS' => 
-	  array (
+	  array(
 	    'width' => '10%',
 	    'label' => 'LBL_LIST_STATUS',
 	    'default' => true,
 	    'name' => 'status',
 	  ),
 	  'LEAD_SOURCE' => 
-	  array (
+	  array(
 	    'width' => '10%',
 	    'label' => 'LBL_LEAD_SOURCE',
 	    'default' => true,
 	    'name' => 'lead_source',
 	  ),
 	  'ASSIGNED_USER_NAME' => 
-	  array (
+	  array(
 	    'width' => '10%',
 	    'label' => 'LBL_LIST_ASSIGNED_USER',
 	    'default' => true,

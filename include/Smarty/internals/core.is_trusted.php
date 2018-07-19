@@ -22,7 +22,7 @@ function smarty_core_is_trusted($params, &$smarty)
         if (!empty($smarty->trusted_dir)) {
             $_rp = realpath($params['resource_name']);
             foreach ((array)$smarty->trusted_dir as $curr_dir) {
-                if (!empty($curr_dir) && is_readable ($curr_dir)) {
+                if (!empty($curr_dir) && is_readable($curr_dir)) {
                     $_cd = realpath($curr_dir);
                     if (strncmp($_rp, $_cd, strlen($_cd)) == 0
                         && substr($_rp, strlen($_cd), 1) == DIRECTORY_SEPARATOR) {

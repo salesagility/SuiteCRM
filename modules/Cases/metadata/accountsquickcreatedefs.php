@@ -39,9 +39,9 @@
 
 $viewdefs['Cases']['AccountsQuickCreate'] = array(
 'templateMeta' => array('form' => 
-                            array (
+                            array(
                               'hidden' => 
-                              array (
+                              array(
                                 0 => '<input type="hidden" name="account_id" value="{$smarty.request.account_id}">',
                                 1 => '<input type="hidden" name="account_name" value="{$smarty.request.account_name}">',
                               ),
@@ -54,22 +54,22 @@ $viewdefs['Cases']['AccountsQuickCreate'] = array(
                        ),
 'panels' =>
 
-array (
+array(
   
-  array (
-    array ('name'=>'name', 'displayParams'=>array('size'=>65, 'required'=>true)),
+  array(
+    array('name'=>'name', 'displayParams'=>array('size'=>65, 'required'=>true)),
     'priority'
   ),
   
-  array (
+  array(
     'status',
     array('name'=>'account_name', 'type'=>'readonly'),
   ),
   
-  array (
-    array (
+  array(
+    array(
       'name' => 'description',
-      'displayParams' => array ('rows' => '4','cols' => '60'),
+      'displayParams' => array('rows' => '4','cols' => '60'),
       'nl2br' => true,
     ),
   ),

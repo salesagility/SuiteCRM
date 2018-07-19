@@ -185,8 +185,8 @@ class ViewModulefield extends SugarView
                 $vardef['type'] = 'datetimecombo';
             }
             
-            require_once ('modules/DynamicFields/FieldCases.php') ;
-            $tf = get_widget (empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
+            require_once('modules/DynamicFields/FieldCases.php') ;
+            $tf = get_widget(empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
             $tf->module = $module;
             $tf->populateFromRow($vardef);
             $vardef = array_merge($vardef, $tf->get_field_def());
@@ -255,8 +255,8 @@ class ViewModulefield extends SugarView
                 }
             }
 
-            require_once ('modules/DynamicFields/FieldCases.php') ;
-            $tf = get_widget (empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
+            require_once('modules/DynamicFields/FieldCases.php') ;
+            $tf = get_widget(empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
             $tf->module = $module;
             $tf->populateFromRow($vardef);
             $vardef = array_merge($vardef, $tf->get_field_def());
@@ -323,8 +323,8 @@ class ViewModulefield extends SugarView
         $fv->ss->assign('importable_options', $GLOBALS['app_list_strings']['custom_fields_importable_dom']);
         $fv->ss->assign('duplicate_merge_options', $GLOBALS['app_list_strings']['custom_fields_merge_dup_dom']);
 
-        $triggers = array () ;
-        $existing_field_names = array () ;
+        $triggers = array() ;
+        $existing_field_names = array() ;
         foreach ($module->mbvardefs->vardefs['fields'] as $field) {
             if ($field [ 'type' ] == 'enum' || $field [ 'type'] == 'multienum') {
                 $triggers [] = $field [ 'name' ] ;

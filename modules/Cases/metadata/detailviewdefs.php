@@ -38,15 +38,15 @@
  ********************************************************************************/
 
 $viewdefs ['Cases'] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
@@ -55,50 +55,50 @@ array (
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => true,
       'tabDefs' => 
-      array (
+      array(
         'LBL_CASE_INFORMATION' => 
-        array (
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
         'LBL_AOP_CASE_UPDATES' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'lbl_case_information' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'case_number',
             'label' => 'LBL_CASE_NUMBER',
           ),
           1 => 'priority',
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'state',
             'comment' => 'The state of the case (i.e. open/closed)',
             'label' => 'LBL_STATE',
@@ -106,43 +106,43 @@ array (
           1 => 'status',
         ),
         2 => 
-        array (
+        array(
           0 => 'type',
           1 => 'account_name',
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
             'label' => 'LBL_SUBJECT',
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 'description',
         ),
         5 => 
-        array (
+        array(
           0 => 'resolution',
         ),
         6 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO',
           ),
         ),
         7 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'date_entered',
             'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
           ),
           1 => 
-          array (
+          array(
             'name' => 'date_modified',
             'label' => 'LBL_DATE_MODIFIED',
             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
@@ -150,11 +150,11 @@ array (
         ),
       ),
       'LBL_AOP_CASE_UPDATES' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'aop_case_updates_threaded',
             'studio' => 'visible',
             'label' => 'LBL_AOP_CASE_UPDATES_THREADED',

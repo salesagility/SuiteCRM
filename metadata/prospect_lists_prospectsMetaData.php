@@ -40,36 +40,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['prospect_lists_prospects'] = array ( 
+$dictionary['prospect_lists_prospects'] = array( 
 
 	'table' => 'prospect_lists_prospects',
 
-	'fields' => array (
-		array (
+	'fields' => array(
+		array(
 			'name' => 'id',
 			'type' => 'varchar',
 			'len' => '36',
 		),
-		array (
+		array(
 			'name' => 'prospect_list_id',
 			'type' => 'varchar',
 			'len' => '36',
 		),
-		array (
+		array(
 			'name' => 'related_id',
 			'type' => 'varchar',
 			'len' => '36',
 		),
-		array (
+		array(
 			'name' => 'related_type',
 			'type' => 'varchar',
 			'len' => '25',  //valid values are Prospect, Contact, Lead, User
 		),
-        array (
+        array(
 			'name' => 'date_modified',
 			'type' => 'datetime'
 		),
-		array (
+		array(
 			'name' => 'deleted',
 			'type' => 'bool',
 			'len' => '1',
@@ -77,28 +77,28 @@ $dictionary['prospect_lists_prospects'] = array (
 		),
 	),
 	
-	'indices' => array (
-		array (
+	'indices' => array(
+		array(
 			'name' => 'prospect_lists_prospectspk',
 			'type' => 'primary',
-			'fields' => array ( 'id' )
+			'fields' => array( 'id' )
 		),
-		array (
+		array(
 			'name' => 'idx_plp_pro_id',
 			'type' => 'index',
-			'fields' => array ('prospect_list_id')
+			'fields' => array('prospect_list_id')
 		),
-		array (
+		array(
 			'name' => 'idx_plp_rel_id',
 			'type' => 'alternate_key',
-			'fields' => array (	'related_id',
+			'fields' => array(	'related_id',
 								'related_type',
 								'prospect_list_id'
 						)
 		),
 	),
 	
- 	'relationships' => array (
+ 	'relationships' => array(
 		'prospect_list_contacts' => array(	'lhs_module'=> 'ProspectLists', 
 											'lhs_table'=> 'prospect_lists', 
 											'lhs_key' => 'id',

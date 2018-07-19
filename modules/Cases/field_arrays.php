@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Case'] = array ('column_fields' => array("id"
+$fields_array['Case'] = array('column_fields' => array("id"
         , "name"
         , "case_number"
         , "account_name"

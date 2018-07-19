@@ -71,7 +71,7 @@ $subpanel_layout = array(
 			'widget_class' => 'SubPanelEmailLink',
 			'width' => '35%',
 		),
-		'phone_work'=>array (
+		'phone_work'=>array(
 			'vname' => 'LBL_LIST_PHONE',
 			'width' => '26%',
 		),

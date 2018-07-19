@@ -30,7 +30,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $layout_defs['AOS_Contracts'] = array(
 	'subpanel_setup' => array(
-        'aos_contracts_documents' => array (
+        'aos_contracts_documents' => array(
             'order' => 100,
             'module' => 'Documents',
             'subpanel_name' => 'default',
@@ -39,20 +39,20 @@ $layout_defs['AOS_Contracts'] = array(
             'title_key' => 'Documents',
             'get_subpanel_data' => 'documents',
             'top_buttons' =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                     'widget_class' => 'SubPanelTopButtonQuickCreate',
                 ),
                 1 =>
-                array (
+                array(
                     'widget_class' => 'SubPanelTopSelectButton',
                     'mode' => 'MultiSelect',
                 ),
             ),
         ),
 		'aos_quotes_aos_contracts' =>
-		array (
+		array(
 	  		'order' => 100,
 			'module' => 'AOS_Quotes',
 			'subpanel_name' => 'default',
@@ -61,13 +61,13 @@ $layout_defs['AOS_Contracts'] = array(
 			'title_key' => 'AOS_Quotes',
 			'get_subpanel_data' => 'aos_quotes_aos_contracts',
 			'top_buttons' => 
-			array (
+			array(
 				0 => 
-				array (
+				array(
 					'widget_class' => 'SubPanelTopCreateButton',
 				),
 				1 => 
-				array (
+				array(
 					'widget_class' => 'SubPanelTopSelectButton',
 					'popup_module' => 'AOS_Quotes',
 		  				'mode' => 'MultiSelect',

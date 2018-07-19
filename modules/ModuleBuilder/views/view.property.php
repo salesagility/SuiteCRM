@@ -37,9 +37,9 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-require_once ('modules/ModuleBuilder/MB/AjaxCompose.php');
-require_once ('include/MVC/View/SugarView.php');
-require_once ('modules/ModuleBuilder/parsers/ParserFactory.php');
+require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
+require_once('include/MVC/View/SugarView.php');
+require_once('modules/ModuleBuilder/parsers/ParserFactory.php');
 
 class ViewProperty extends SugarView
 {

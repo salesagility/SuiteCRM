@@ -54,7 +54,7 @@ ini_set('memory_limit', -1);
      }
      global $sugar_config;
      if (!isset($sugar_config['default_permissions'])) {
-         $sugar_config['default_permissions'] = array (
+         $sugar_config['default_permissions'] = array(
                      'dir_mode' => 02770,
                      'file_mode' => 0660,
                      'user' => '',
@@ -74,10 +74,10 @@ function checkLoggerSettings()
     }
     global $sugar_config;
     if (!isset($sugar_config['logger'])) {
-        $sugar_config['logger'] =array (
+        $sugar_config['logger'] =array(
             'level'=>'fatal',
             'file' =>
-             array (
+             array(
               'ext' => '.log',
               'name' => 'sugarcrm',
               'dateFormat' => '%c',
@@ -101,10 +101,10 @@ function checkResourceSettings()
     global $sugar_config;
     if (!isset($sugar_config['resource_management'])) {
         $sugar_config['resource_management'] =
-          array (
+          array(
             'special_query_limit' => 50000,
             'special_query_modules' =>
-            array (
+            array(
               0 => 'Reports',
               1 => 'Export',
               2 => 'Import',
@@ -422,7 +422,7 @@ foreach ($beanFiles as $bean => $file) {
     if (file_exists($file)) {
         unset($GLOBALS['dictionary'][$bean]);
         require_once($file);
-        $focus = new $bean ();
+        $focus = new $bean();
         if (empty($focus->table_name) || isset($repairedTables[$focus->table_name])) {
             continue;
         }
@@ -445,8 +445,8 @@ foreach ($beanFiles as $bean => $file) {
     }
 }
 
-unset ($dictionary);
-include ("{$argv[3]}/modules/TableDictionary.php");
+unset($dictionary);
+include("{$argv[3]}/modules/TableDictionary.php");
 foreach ($dictionary as $meta) {
     $tablename = $meta['table'];
 

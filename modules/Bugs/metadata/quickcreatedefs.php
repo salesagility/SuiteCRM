@@ -47,96 +47,96 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
  
-$viewdefs = array (
+$viewdefs = array(
   'Bugs' => 
-  array (
+  array(
     'QuickCreate' => 
-    array (
+    array(
       'templateMeta' => 
-      array (
+      array(
         'form' => 
-        array (
+        array(
           'hidden' => 
-          array (
+          array(
             0 => '<input type="hidden" name="account_id" value="{$smarty.request.account_id}">',
             1 => '<input type="hidden" name="contact_id" value="{$smarty.request.contact_id}">',
           ),
         ),
         'maxColumns' => '2',
         'widths' => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'label' => '10',
             'field' => '30',
           ),
           1 => 
-          array (
+          array(
             'label' => '10',
             'field' => '30',
           ),
         ),
       ),
       'panels' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'priority',
             ),
             1 => 
-            array (
+            array(
               'name' => 'assigned_user_name',
             ),
           ),
           1 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'source',
             ),
             1 => 
-            array (
+            array(
               'name' => 'team_name',
             ),
           ),
           2 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'type',
             ),
             1 => 
-            array (
+            array(
               'name' => 'status',
             ),
           ),
           3 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'product_category',
             ),
             1 => 
-            array (
+            array(
               'name' => 'found_in_release',
             ),
           ),
           4 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'name',
               'displayParams'=>array('required'=>true),
             ),
           ),
           5 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'description',
             ),
           ),

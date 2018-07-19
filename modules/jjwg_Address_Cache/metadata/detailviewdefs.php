@@ -1,15 +1,15 @@
 <?php
 $module_name = 'jjwg_Address_Cache';
 $viewdefs [$module_name] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
@@ -17,14 +17,14 @@ array (
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -32,37 +32,37 @@ array (
       'useTabs' => false,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => 'assigned_user_name',
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'lat',
             'label' => 'LBL_LAT',
           ),
           1 => 
-          array (
+          array(
             'name' => 'lng',
             'label' => 'LBL_LNG',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'date_entered',
             'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
             'label' => 'LBL_DATE_ENTERED',
           ),
           1 => 
-          array (
+          array(
             'name' => 'date_modified',
             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
             'label' => 'LBL_DATE_MODIFIED',

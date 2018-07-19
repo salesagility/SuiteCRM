@@ -1,22 +1,22 @@
 <?php
-$dashletData['ProjectDashlet']['searchFields'] = array (
+$dashletData['ProjectDashlet']['searchFields'] = array(
   'date_entered' => 
-  array (
+  array(
     'default' => '',
   ),
   'date_modified' => 
-  array (
+  array(
     'default' => '',
   ),
   'assigned_user_id' => 
-  array (
+  array(
     'type' => 'assigned_user_name',
     'default' => 'Administrator',
   ),
 );
-$dashletData['ProjectDashlet']['columns'] = array (
+$dashletData['ProjectDashlet']['columns'] = array(
   'name' => 
-  array (
+  array(
     'width' => '30%',
     'label' => 'LBL_LIST_NAME',
     'link' => true,
@@ -24,7 +24,7 @@ $dashletData['ProjectDashlet']['columns'] = array (
     'name' => 'name',
   ),
   'status' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'label' => 'LBL_STATUS',
@@ -32,7 +32,7 @@ $dashletData['ProjectDashlet']['columns'] = array (
     'name' => 'status',
   ),
   'estimated_start_date' => 
-  array (
+  array(
     'type' => 'date',
     'label' => 'LBL_DATE_START',
     'width' => '10%',
@@ -40,14 +40,14 @@ $dashletData['ProjectDashlet']['columns'] = array (
     'name' => 'estimated_start_date',
   ),
   'assigned_user_name' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_LIST_ASSIGNED_USER',
     'name' => 'assigned_user_name',
     'default' => true,
   ),
   'estimated_end_date' => 
-  array (
+  array(
     'type' => 'date',
     'label' => 'LBL_DATE_END',
     'width' => '10%',
@@ -55,21 +55,21 @@ $dashletData['ProjectDashlet']['columns'] = array (
     'name' => 'estimated_end_date',
   ),
   'date_modified' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_DATE_MODIFIED',
     'name' => 'date_modified',
     'default' => false,
   ),
   'date_entered' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => false,
     'name' => 'date_entered',
   ),
   'created_by' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_CREATED',
     'name' => 'created_by',

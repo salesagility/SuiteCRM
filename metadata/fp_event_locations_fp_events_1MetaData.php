@@ -1,12 +1,12 @@
 <?php
 // created: 2013-04-25 10:18:48
-$dictionary["fp_event_locations_fp_events_1"] = array (
+$dictionary["fp_event_locations_fp_events_1"] = array(
   'true_relationship_type' => 'one-to-many',
   'from_studio' => true,
   'relationships' => 
-  array (
+  array(
     'fp_event_locations_fp_events_1' => 
-    array (
+    array(
       'lhs_module' => 'FP_Event_Locations',
       'lhs_table' => 'fp_event_locations',
       'lhs_key' => 'id',
@@ -21,20 +21,20 @@ $dictionary["fp_event_locations_fp_events_1"] = array (
   ),
   'table' => 'fp_event_locations_fp_events_1_c',
   'fields' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
     1 => 
-    array (
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
     2 => 
-    array (
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
@@ -42,44 +42,44 @@ $dictionary["fp_event_locations_fp_events_1"] = array (
       'required' => true,
     ),
     3 => 
-    array (
+    array(
       'name' => 'fp_event_locations_fp_events_1fp_event_locations_ida',
       'type' => 'varchar',
       'len' => 36,
     ),
     4 => 
-    array (
+    array(
       'name' => 'fp_event_locations_fp_events_1fp_events_idb',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
   'indices' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'fp_event_locations_fp_events_1spk',
       'type' => 'primary',
       'fields' => 
-      array (
+      array(
         0 => 'id',
       ),
     ),
     1 => 
-    array (
+    array(
       'name' => 'fp_event_locations_fp_events_1_ida1',
       'type' => 'index',
       'fields' => 
-      array (
+      array(
         0 => 'fp_event_locations_fp_events_1fp_event_locations_ida',
       ),
     ),
     2 => 
-    array (
+    array(
       'name' => 'fp_event_locations_fp_events_1_alt',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'fp_event_locations_fp_events_1fp_events_idb',
       ),
     ),

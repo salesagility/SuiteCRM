@@ -53,7 +53,7 @@ $subpanel_layout = array(
     
 
     'list_fields' => array(
-        'accept_status_name'=>array (
+        'accept_status_name'=>array(
             'vname' => 'LBL_LIST_ACCEPT_STATUS',
             'width' => '11%',
             'sortable'=>false
@@ -104,7 +104,7 @@ $subpanel_layout = array(
             'width' => '30%',
             'sortable' => false,
         ),
-        'phone_work'=>array (
+        'phone_work'=>array(
             'name'=>'phone_work',		
             'vname' => 'LBL_LIST_PHONE',
             'width' => '15%',

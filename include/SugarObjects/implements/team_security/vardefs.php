@@ -54,7 +54,7 @@ $vardefs = array(
    			'relationship_type'=>'one-to-many'
 		 ),
 	strtolower($module).'_teams' =>
-		array (
+		array(
 			'lhs_module'        => $module,
             'lhs_table'         => $table_name,
             'lhs_key'           => 'team_set_id',

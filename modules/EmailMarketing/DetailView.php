@@ -74,7 +74,7 @@ global $theme;
 
 $GLOBALS['log']->info("EmailMarketing Edit View");
 
-$xtpl=new XTemplate ('modules/EmailMarketing/DetailView.html');
+$xtpl=new XTemplate('modules/EmailMarketing/DetailView.html');
 
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);

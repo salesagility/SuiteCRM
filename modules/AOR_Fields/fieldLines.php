@@ -30,7 +30,7 @@ function display_field_lines($focus, $field, $value, $view)
     $html = '';
 
     if (!is_file('cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
-        require_once ('include/language/jsLanguage.php');
+        require_once('include/language/jsLanguage.php');
         jsLanguage::createModuleStringsCache('AOR_Fields', $GLOBALS['current_language']);
     }
 

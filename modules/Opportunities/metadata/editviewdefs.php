@@ -45,11 +45,11 @@ $viewdefs['Opportunities']['EditView'] = array(
                                             ),
     'javascript' => '{$PROBABILITY_SCRIPT}',
 ),
- 'panels' =>array (
+ 'panels' =>array(
   'default' => 
-  array (
+  array(
     
-    array (
+    array(
       array('name'=>'name'),
       'account_name',
     ),
@@ -57,22 +57,22 @@ $viewdefs['Opportunities']['EditView'] = array(
         array('name'=>'currency_id','label'=>'LBL_CURRENCY'),
         array('name'=>'date_closed'),
     ),
-    array (
+    array(
       array( 'name'=>'amount'),
       'opportunity_type',
     ),
-    array (
+    array(
       'sales_stage',
       'lead_source',
     ),
-    array (      
+    array(      
         'probability',
           'campaign_name',
     ),
-    array (
+    array(
           'next_step',
     ),
-    array (
+    array(
       'description',
     ),
   ),

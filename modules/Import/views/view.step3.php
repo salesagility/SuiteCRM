@@ -223,7 +223,7 @@ class ImportViewStep3 extends ImportView
                 // get field name
                 if (!empty($moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)])) {
                     $displayname = str_replace(":", "", $moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)]);
-                } elseif (!empty ($properties['vname'])) {
+                } elseif (!empty($properties['vname'])) {
                     $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
                 } else {
                     $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
@@ -316,7 +316,7 @@ class ImportViewStep3 extends ImportView
                 $defaultField = '';
                 foreach ($fields as $fieldname => $properties) {
                     // get field name
-                    if (!empty ($properties['vname'])) {
+                    if (!empty($properties['vname'])) {
                         $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
                     } else {
                         $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
@@ -401,7 +401,7 @@ class ImportViewStep3 extends ImportView
         $required = array();
         foreach (array_keys($this->bean->get_import_required_fields()) as $name) {
             $properties = $this->bean->getFieldDefinition($name);
-            if (!empty ($properties['vname'])) {
+            if (!empty($properties['vname'])) {
                 $required[$name] = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
             } else {
                 $required[$name] = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));

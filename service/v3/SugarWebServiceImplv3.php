@@ -420,7 +420,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
             $search_string = trim(DBManagerFactory::getInstance()->quote(securexss(from_html(clean_string($search_string, 'UNIFIED_SEARCH')))));
             foreach ($modules_to_search as $name => $beanName) {
                 $where_clauses_array = array();
-                $unifiedSearchFields = array () ;
+                $unifiedSearchFields = array() ;
                 foreach ($unified_search_modules[$name]['fields'] as $field=>$def) {
                     $unifiedSearchFields[$name] [ $field ] = $def ;
                     $unifiedSearchFields[$name] [ $field ]['value'] = $search_string;
@@ -443,14 +443,14 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                 if ($beanName != "User"
     			    && $beanName != "ProjectTask"
     			    ) {
-                    $searchForm = new SearchForm ($seed, $name) ;
+                    $searchForm = new SearchForm($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
-                    $searchForm = new SearchForm ($seed, $name) ;
+                    $searchForm = new SearchForm($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     $emailQuery = false;
 

@@ -201,7 +201,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $contact->first_name = "first";
         $contact->last_name = "last";
 
-        $expected = array (
+        $expected = array(
 					  'NAME' => 'first last',
 					  'DELETED' => 0,
 					  'FIRST_NAME' => 'first',

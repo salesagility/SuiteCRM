@@ -41,9 +41,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $dictionary['SavedSearch'] = array('table' => 'saved_search',
-'fields' => array (
+'fields' => array(
   'id' => 
-  array (
+  array(
     'name' => 'id',
     'vname' => 'LBL_NAME',
     'type' => 'id',
@@ -51,21 +51,21 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'reportable'=>false,
   ),
   'name' => 
-  array (
+  array(
     'name' => 'name',
     'type' => 'varchar',
     'vname' => 'LBL_NAME',
     'len' => 150,
   ),
   'search_module' => 
-  array (
+  array(
     'name' => 'search_module',
     'type' => 'varchar',
     'vname' => 'LBL_MODULE',
     'len' => 150,
   ),
   'deleted' => 
-  array (
+  array(
     'name' => 'deleted',
     'vname' => 'LBL_CREATED_BY',
     'type' => 'bool',
@@ -73,21 +73,21 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'reportable'=>false,
   ),
   'date_entered' => 
-  array (
+  array(
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
     'required'=>true,
   ),
   'date_modified' => 
-  array (
+  array(
     'name' => 'date_modified',
     'vname' => 'LBL_DATE_MODIFIED',
     'type' => 'datetime',
     'required'=>true,
   ),
   'assigned_user_id' => 
-  array (
+  array(
     'name' => 'assigned_user_id',
     'rname' => 'user_name',
     'id_name' => 'assigned_user_id',
@@ -100,7 +100,7 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'massupdate' => false,
   ),
   'assigned_user_name' => 
-  array (
+  array(
     'name' => 'assigned_user_name',
     'vname' => 'LBL_ASSIGNED_TO_NAME',
     'type' => 'varchar',
@@ -110,21 +110,21 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'table' => 'users',
   ),
   'contents' => 
-  array (
+  array(
     'name' => 'contents',
     'type' => 'text',
     'vname' => 'LBL_DESCRIPTION',
     'isnull' => true,
   ),
   'description' => 
-  array (
+  array(
     'name' => 'description',
     'type' => 'text',
     'vname' => 'LBL_DESCRIPTION',
     'isnull' => true,
   ),
   'assigned_user_link' =>
-  array (
+  array(
         'name' => 'assigned_user_link',
     'type' => 'link',
     'relationship' => 'saved_search_assigned_user',
@@ -135,14 +135,14 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'source'=>'non-db',
   ),
 ),
-'relationships' => array (
+'relationships' => array(
   'saved_search_assigned_user' =>
    array('lhs_module'=> 'Users', 'lhs_table'=> 'users', 'lhs_key' => 'id',
    'rhs_module'=> 'SavedSearch', 'rhs_table'=> 'saved_search', 'rhs_key' => 'assigned_user_id',
    'relationship_type'=>'one-to-many')
 ), 
 
-'indices' => array (
+'indices' => array(
        array('name' =>'savedsearchpk', 'type' =>'primary', 'fields'=>array('id')),
        array('name' =>'idx_desc', 'type'=>'index', 'fields'=>array('name','deleted')))
 );

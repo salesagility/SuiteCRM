@@ -77,7 +77,7 @@ class Viewpackage extends SugarView
             $name = (!empty($_REQUEST['package']))?$_REQUEST['package']:'';
             $mb->getPackage($name);
             
-            require_once ('modules/ModuleBuilder/MB/MBPackageTree.php') ;
+            require_once('modules/ModuleBuilder/MB/MBPackageTree.php') ;
             $mbt = new MBPackageTree();
             $nodes = $mbt->fetchNodes();
             

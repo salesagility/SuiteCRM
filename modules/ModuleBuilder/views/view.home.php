@@ -82,11 +82,11 @@ class ViewHome extends SugarView
         global $current_user;
         if (displayStudioForCurrentUser() == true) {
             //$this->buttons['Application'] = array ('action' => '', 'imageTitle' => 'Application', 'size' => '128', 'help'=>'appBtn');
-            $this->buttons[$GLOBALS['mod_strings']['LBL_STUDIO']] = array ('action' => 'javascript:ModuleBuilder.main("studio")', 'imageTitle' => 'Studio', 'size' => '128', 'help'=>'studioBtn');
+            $this->buttons[$GLOBALS['mod_strings']['LBL_STUDIO']] = array('action' => 'javascript:ModuleBuilder.main("studio")', 'imageTitle' => 'Studio', 'size' => '128', 'help'=>'studioBtn');
         }
         if (is_admin($current_user)) {
-            $this->buttons[$GLOBALS['mod_strings']['LBL_MODULEBUILDER']] = array ('action' => 'javascript:ModuleBuilder.main("mb")', 'imageTitle' => 'ModuleBuilder', 'size' => '128', 'help'=>'mbBtn');
+            $this->buttons[$GLOBALS['mod_strings']['LBL_MODULEBUILDER']] = array('action' => 'javascript:ModuleBuilder.main("mb")', 'imageTitle' => 'ModuleBuilder', 'size' => '128', 'help'=>'mbBtn');
         }
-        $this->buttons[$GLOBALS['mod_strings']['LBL_DROPDOWNEDITOR']] = array ('action' => 'javascript:ModuleBuilder.main("dropdowns")', 'imageTitle' => $GLOBALS['mod_strings']['LBL_HOME_EDIT_DROPDOWNS'], 'imageName' => 'DropDownEditor', 'size' => '128', 'help'=>'dropDownEditorBtn');
+        $this->buttons[$GLOBALS['mod_strings']['LBL_DROPDOWNEDITOR']] = array('action' => 'javascript:ModuleBuilder.main("dropdowns")', 'imageTitle' => $GLOBALS['mod_strings']['LBL_HOME_EDIT_DROPDOWNS'], 'imageName' => 'DropDownEditor', 'size' => '128', 'help'=>'dropDownEditorBtn');
     }
 }

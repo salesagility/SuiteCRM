@@ -187,7 +187,7 @@ abstract class AbstractMetaDataImplementation
 
         $variables = array();
         foreach ($moduleVariables as $name) {
-            if (isset ($$name)) {
+            if (isset($$name)) {
                 $variables [$name] = $$name;
             }
         }
@@ -216,11 +216,11 @@ abstract class AbstractMetaDataImplementation
         // Now tidy up the module name in the viewdef array
         // MB created definitions store the defs under packagename_modulename and later methods that expect to find them under modulename will fail
 
-        if (isset ($variables ['module_name'])) {
+        if (isset($variables ['module_name'])) {
             $mbName = $variables ['module_name'];
             if ($mbName != $this->_moduleName) {
                 $defs [$this->_moduleName] = $defs [$mbName];
-                unset ($defs [$mbName]);
+                unset($defs [$mbName]);
             }
         }
         $this->_variables = $variables;
@@ -399,16 +399,16 @@ abstract class AbstractMetaDataImplementation
             }
 
             if (is_array($def)) {
-                if (isset ($def ['name']) && !is_array($def ['name'])) { // found a 'name' definition, that is not the definition of a field called name :)
+                if (isset($def ['name']) && !is_array($def ['name'])) { // found a 'name' definition, that is not the definition of a field called name :)
                     // if this is a module field, then merge in the definition,
                     // otherwise this is a new field defined in the layout, so just take the definition
                     $fielddefs [$def ['name']] =
-                        (isset ($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']], $def) : $def;
+                        (isset($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']], $def) : $def;
                 } else {
                     // dealing with a listlayout which lacks 'name' keys, but which does have 'label' keys
-                    if (isset ($def ['label']) || isset ($def ['vname']) || isset($def ['widget_class'])) {
+                    if (isset($def ['label']) || isset($def ['vname']) || isset($def ['widget_class'])) {
                         $key = strtolower($key);
-                        $fielddefs [$key] = (isset ($fielddefs [$key])) ? array_merge($fielddefs [$key], $def) : $def;
+                        $fielddefs [$key] = (isset($fielddefs [$key])) ? array_merge($fielddefs [$key], $def) : $def;
                     } else {
                         $this->_mergeFielddefs($fielddefs, $def);
                     }
@@ -471,7 +471,7 @@ abstract class AbstractMetaDataImplementation
             default:
                 // get the module again, all so we can call this method statically
                 // without relying on the module stored in the class variables
-                $mb = new ModuleBuilder ();
+                $mb = new ModuleBuilder();
                 $module = &$mb->getPackageModule($packageName, $moduleName);
                 return $module->getModuleDir() . '/metadata/' . $filenames [$view] . '.php';
         }

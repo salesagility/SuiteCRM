@@ -386,8 +386,8 @@ class SugarSpot
             }
 
 
-            $searchForm = new SearchForm ($seed, $moduleName) ;
-            $searchForm->setup (array ( $moduleName => array() ), $searchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+            $searchForm = new SearchForm($seed, $moduleName) ;
+            $searchForm->setup(array( $moduleName => array() ), $searchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
             $where_clauses = $searchForm->generateSearchWhere() ;
 
             if (empty($where_clauses)) {

@@ -1,140 +1,140 @@
 <?php
 // created: 2018-05-16 12:26:27
-$unified_search_modules_display = array (
+$unified_search_modules_display = array(
   'AOP_Case_Events' => 
-  array (
+  array(
     'visible' => false,
   ),
   'AOP_Case_Updates' => 
-  array (
+  array(
     'visible' => false,
   ),
   'AOR_Reports' => 
-  array (
+  array(
     'visible' => false,
   ),
   'AOS_Contracts' => 
-  array (
+  array(
     'visible' => false,
   ),
   'AOS_Invoices' => 
-  array (
+  array(
     'visible' => false,
   ),
   'AOS_PDF_Templates' => 
-  array (
+  array(
     'visible' => false,
   ),
   'AOS_Product_Categories' => 
-  array (
+  array(
     'visible' => false,
   ),
   'AOS_Products' => 
-  array (
+  array(
     'visible' => false,
   ),
   'AOS_Quotes' => 
-  array (
+  array(
     'visible' => false,
   ),
   'AOW_Processed' => 
-  array (
+  array(
     'visible' => false,
   ),
   'AOW_WorkFlow' => 
-  array (
+  array(
     'visible' => false,
   ),
   'Accounts' => 
-  array (
+  array(
     'visible' => true,
   ),
   'Bugs' => 
-  array (
+  array(
     'visible' => false,
   ),
   'Calls' => 
-  array (
+  array(
     'visible' => true,
   ),
   'Calls_Reschedule' => 
-  array (
+  array(
     'visible' => false,
   ),
   'Campaigns' => 
-  array (
+  array(
     'visible' => false,
   ),
   'Cases' => 
-  array (
+  array(
     'visible' => true,
   ),
   'Contacts' => 
-  array (
+  array(
     'visible' => true,
   ),
   'Documents' => 
-  array (
+  array(
     'visible' => true,
   ),
   'FP_Event_Locations' => 
-  array (
+  array(
     'visible' => false,
   ),
   'FP_events' => 
-  array (
+  array(
     'visible' => false,
   ),
   'Leads' => 
-  array (
+  array(
     'visible' => true,
   ),
   'Meetings' => 
-  array (
+  array(
     'visible' => true,
   ),
   'Notes' => 
-  array (
+  array(
     'visible' => true,
   ),
   'Opportunities' => 
-  array (
+  array(
     'visible' => true,
   ),
   'Project' => 
-  array (
+  array(
     'visible' => false,
   ),
   'ProjectTask' => 
-  array (
+  array(
     'visible' => false,
   ),
   'ProspectLists' => 
-  array (
+  array(
     'visible' => false,
   ),
   'Prospects' => 
-  array (
+  array(
     'visible' => false,
   ),
   'Tasks' => 
-  array (
+  array(
     'visible' => false,
   ),
   'jjwg_Address_Cache' => 
-  array (
+  array(
     'visible' => false,
   ),
   'jjwg_Areas' => 
-  array (
+  array(
     'visible' => false,
   ),
   'jjwg_Maps' => 
-  array (
+  array(
     'visible' => false,
   ),
   'jjwg_Markers' => 
-  array (
+  array(
     'visible' => false,
   ),
 );

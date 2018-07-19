@@ -41,13 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 // created: 2005-10-19 11:16:08
-$acldefs['Accounts'] = array (
+$acldefs['Accounts'] = array(
   'forms' => 
-  array (
+  array(
     'by_name' => 
-    array (
+    array(
       'btn1' => 
-      array (
+      array(
         'display_option' => 'disabled',
         'action_option' => 'list',
         'app_action' => 'EditView',
@@ -56,7 +56,7 @@ $acldefs['Accounts'] = array (
     ),
   ),
   'form_names' => 
-  array (
+  array(
     'by_id' => 'by_id',
     'by_name' => 'by_name',
     'DetailView' => 'DetailView',

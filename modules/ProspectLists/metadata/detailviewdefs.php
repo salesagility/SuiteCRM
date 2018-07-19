@@ -48,30 +48,30 @@ array('customCode'=> '<input title="{$APP.LBL_EXPORT}"  class="button" type="but
                                         ),
                         ),
 'panels' => array(
-   'default' => array (
-  	  array (
+   'default' => array(
+  	  array(
   	  	  'name',
   	  	  array('name'=>'entry_count','label'=>'LBL_ENTRIES'),
   	  ),
-	  array (
+	  array(
 	      'list_type',
 	      'domain_name',
 	  ),
-	  array (
+	  array(
 	      'description',
 	  ),
 	),
 	'LBL_PANEL_ASSIGNMENT' => array(
-		array (
+		array(
 		  'assigned_user_name',  
-		  array (
+		  array(
 		      'name' => 'date_modified',
 		      'label' => 'LBL_DATE_MODIFIED',
 		      'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
 		  ),
 		),	
-		array (
-			array (
+		array(
+			array(
 		      'name' => 'date_entered',
 		      'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
 		  	),

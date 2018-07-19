@@ -18,11 +18,11 @@ $viewdefs[$module_name]['EditView'] = array(
                                             
 
                                             
- 'panels' =>array (
+ 'panels' =>array(
   'default' => 
-  array (
+  array(
     
-    array (
+    array(
       array('name' => 'name', 'displayParams'=>array('required'=>true)),
       'assigned_user_name',
     ),
@@ -33,10 +33,10 @@ $viewdefs[$module_name]['EditView'] = array(
 
 
 
-    array (
+    array(
         'noninheritable',
     ),    
-    array (
+    array(
       'description',
     ),
   ),

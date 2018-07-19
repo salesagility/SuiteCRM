@@ -28,7 +28,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $searchFields['AOS_PDF_Templates'] = 
-	array (
+	array(
 		'name' => array( 'query_type'=>'default'),
 		'current_user_only'=> array('query_type'=>'default','db_field'=>array('created_by'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
 		'assigned_user_id'=> array('query_type'=>'default'),
@@ -43,11 +43,11 @@ $searchFields['AOS_PDF_Templates'] =
             'db_field'=>array('id')),
 
         //Range Search Support
-        'range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-        'start_range_date_entered' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
-        'end_range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-        'range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-        'start_range_date_modified' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
-        'end_range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+        'range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+        'start_range_date_entered' => array('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
+        'end_range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+        'range_date_modified' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+        'start_range_date_modified' => array('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
+        'end_range_date_modified' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
 
     );

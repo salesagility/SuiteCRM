@@ -120,7 +120,7 @@ switch ($doaction) {
 }
 
 
-if (!empty ($_REQUEST['display'])) {
+if (!empty($_REQUEST['display'])) {
     echo "<h3>{$mod_strings['LBL_DISPLAYING_LOG']}</h3>";
     $process_id =  getmypid();
 
@@ -129,7 +129,7 @@ if (!empty ($_REQUEST['display'])) {
     if ($ignore_self) {
         echo $mod_strings['LBL_IT_WILL_BE_IGNORED'];
     }
-    if (empty ($_SESSION['log_file_size'])) {
+    if (empty($_SESSION['log_file_size'])) {
         $_SESSION['log_file_size'] = 0;
     }
     $cur_size = filesize($logFile);

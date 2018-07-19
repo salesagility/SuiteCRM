@@ -56,7 +56,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -96,7 +96,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -116,7 +116,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -143,7 +143,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();

@@ -41,25 +41,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-$default_modules_sources = array (
+$default_modules_sources = array(
   'Accounts' =>
-  array (
+  array(
      'ext_rest_insideview' => 'ext_rest_insideview',
   ),
   'Contacts' =>
-  array (
+  array(
      'ext_rest_insideview' => 'ext_rest_insideview',
   ),
   'Leads' =>
-  array (
+  array(
      'ext_rest_insideview' => 'ext_rest_insideview',
   ),
   'Prospects' =>
-  array (
+  array(
 
   ),
   'Opportunities' =>
-  array (
+  array(
     'ext_rest_insideview' => 'ext_rest_insideview',
   ),
 );

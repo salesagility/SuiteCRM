@@ -75,7 +75,7 @@ $subpanel_layout = array(
 	 		'vname' => 'LBL_LIST_DATE_CREATED',
 			'width' => '15%',
 		),
-		'assigned_user_name' => array (
+		'assigned_user_name' => array(
 			'name' => 'assigned_user_name',
 			'widget_class' => 'SubPanelDetailViewLink',
 		 	'target_record_key' => 'assigned_user_id',

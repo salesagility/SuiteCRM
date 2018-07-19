@@ -53,33 +53,33 @@ class RelationshipFactory
     public static function newRelationship($definition = array())
     {
         // handle the case where a relationship_type is not provided - set it to Many-To-Many as this was the usual type in ModuleBuilder
-        if (! isset ($definition [ 'relationship_type' ])) {
+        if (! isset($definition [ 'relationship_type' ])) {
             $definition [ 'relationship_type' ] = MB_MANYTOMANY ;
         }
             
-        if (!empty ($definition['for_activities']) && $definition['for_activities'] == true) {
+        if (!empty($definition['for_activities']) && $definition['for_activities'] == true) {
             require_once 'modules/ModuleBuilder/parsers/relationships/ActivitiesRelationship.php';
-            return new ActivitiesRelationship ($definition);
+            return new ActivitiesRelationship($definition);
         }
         
-        switch (strtolower ($definition [ 'relationship_type' ])) {
-            case strtolower (MB_ONETOONE):
+        switch (strtolower($definition [ 'relationship_type' ])) {
+            case strtolower(MB_ONETOONE):
                 require_once 'modules/ModuleBuilder/parsers/relationships/OneToOneRelationship.php' ;
-                return new OneToOneRelationship ($definition) ;
+                return new OneToOneRelationship($definition) ;
             
-            case strtolower (MB_ONETOMANY):
+            case strtolower(MB_ONETOMANY):
                 require_once 'modules/ModuleBuilder/parsers/relationships/OneToManyRelationship.php' ;
-                return new OneToManyRelationship ($definition) ;
+                return new OneToManyRelationship($definition) ;
                 
-            case strtolower (MB_MANYTOONE):
+            case strtolower(MB_MANYTOONE):
                 require_once 'modules/ModuleBuilder/parsers/relationships/ManyToOneRelationship.php' ;
-                return new ManyToOneRelationship ($definition) ;
+                return new ManyToOneRelationship($definition) ;
             
             // default case is Many-To-Many as this was the only type ModuleBuilder could create and so much of the MB code assumes Many-To-Many
             default:
                 $definition [ 'relationship_type' ] = MB_MANYTOMANY ;
                 require_once 'modules/ModuleBuilder/parsers/relationships/ManyToManyRelationship.php' ;
-                return new ManyToManyRelationship ($definition) ;
+                return new ManyToManyRelationship($definition) ;
         }
     }
 }

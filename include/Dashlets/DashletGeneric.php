@@ -394,7 +394,7 @@ class DashletGeneric extends Dashlet
     protected function loadCustomMetadata()
     {
         $customMetadate = 'custom/modules/'.$this->seedBean->module_dir.'/metadata/dashletviewdefs.php';
-        if (file_exists ($customMetadate)) {
+        if (file_exists($customMetadate)) {
             require($customMetadate);
             $this->searchFields = $dashletData[$this->seedBean->module_dir.'Dashlet']['searchFields'];
             foreach ($this->searchFields  as $key =>$def) {

@@ -48,8 +48,8 @@ $viewdefs['Users']['EditView'] = array(
                                 'footerTpl'=>'modules/Users/tpls/EditViewFooter.tpl',
                             ),
                       ),
-    'panels' => array (
-        'LBL_USER_INFORMATION' => array (
+    'panels' => array(
+        'LBL_USER_INFORMATION' => array(
             array('user_name',
                   array('name' => 'last_name',
                         'label' => 'LBL_LIST_NAME',

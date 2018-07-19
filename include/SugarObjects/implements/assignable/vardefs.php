@@ -40,7 +40,7 @@
 $vardefs = array(
 'fields'=> array(
 	'assigned_user_id' =>
-		array (
+		array(
 			'name' => 'assigned_user_id',
 			'rname' => 'user_name',
 			'id_name' => 'assigned_user_id',
@@ -57,7 +57,7 @@ $vardefs = array(
             'duplicate_merge'=>'disabled'           
 		),
 	 'assigned_user_name' => 
-	 array (
+	 array(
 		    'name' => 'assigned_user_name',
 		    'link'=>'assigned_user_link' ,
 		    'vname' => 'LBL_ASSIGNED_TO_NAME',
@@ -71,7 +71,7 @@ $vardefs = array(
 		    'duplicate_merge'=>'disabled' 
 	 ),
 		      'assigned_user_link' =>
-  array (
+  array(
         'name' => 'assigned_user_link',
     'type' => 'link',
     'relationship' => strtolower($module).'_assigned_user',

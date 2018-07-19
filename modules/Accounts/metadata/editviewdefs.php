@@ -38,108 +38,108 @@
  ********************************************************************************/
 
 $viewdefs ['Accounts'] = 
-array (
+array(
   'EditView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'SAVE',
           1 => 'CANCEL',
         ),
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'includes' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'file' => 'modules/Accounts/Account.js',
         ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'LBL_ACCOUNT_INFORMATION' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
         'LBL_PANEL_ADVANCED' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'lbl_account_information' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
             'label' => 'LBL_NAME',
             'displayParams' => 
-            array (
+            array(
               'required' => true,
             ),
           ),
           1 => 
-          array (
+          array(
             'name' => 'phone_office',
             'label' => 'LBL_PHONE_OFFICE',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'website',
             'type' => 'link',
             'label' => 'LBL_WEBSITE',
           ),
           1 => 
-          array (
+          array(
             'name' => 'phone_fax',
             'label' => 'LBL_FAX',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'email1',
             'studio' => 'false',
             'label' => 'LBL_EMAIL',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'billing_address_street',
             'hideLabel' => true,
             'type' => 'address',
             'displayParams' => 
-            array (
+            array(
               'key' => 'billing',
               'rows' => 2,
               'cols' => 30,
@@ -147,12 +147,12 @@ array (
             ),
           ),
           1 => 
-          array (
+          array(
             'name' => 'shipping_address_street',
             'hideLabel' => true,
             'type' => 'address',
             'displayParams' => 
-            array (
+            array(
               'key' => 'shipping',
               'copy' => 'billing',
               'rows' => 2,
@@ -162,40 +162,40 @@ array (
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
           ),
         ),
         5 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO',
           ),
         ),
       ),
       'LBL_PANEL_ADVANCED' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'account_type',
           1 => 'industry',
         ),
         1 => 
-        array (
+        array(
           0 => 'annual_revenue',
           1 => 'employees',
         ),
         2 => 
-        array (
+        array(
           0 => 'parent_name',
         ),
         3 => 
-        array (
+        array(
           0 => 'campaign_name',
         ),
       ),

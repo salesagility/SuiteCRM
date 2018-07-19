@@ -42,37 +42,37 @@
 
 $module_name = 'AOK_KnowledgeBase';
 $viewdefs [$module_name] = 
-array (
+array(
   'EditView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'includes' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'file' => 'include/javascript/tiny_mce/tiny_mce.js',
         ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
@@ -80,35 +80,35 @@ array (
       'syncDetailEditViews' => true,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'status',
             'studio' => 'visible',
             'label' => 'LBL_STATUS',
           ),
           1 => 
-          array (
+          array(
             'name' => 'revision',
             'label' => 'LBL_REVISION',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 'description',
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'additional_info',
             'comment' => 'Full text of the note',
             'studio' => 'visible',
@@ -116,18 +116,18 @@ array (
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'author',
             'studio' => 'visible',
             'label' => 'LBL_AUTHOR',
           ),
         ),
         5 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'approver',
             'studio' => 'visible',
             'label' => 'LBL_APPROVER',

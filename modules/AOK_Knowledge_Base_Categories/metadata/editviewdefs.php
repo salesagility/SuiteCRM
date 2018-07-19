@@ -39,30 +39,30 @@
 
 $module_name = 'AOK_Knowledge_Base_Categories';
 $viewdefs [$module_name] = 
-array (
+array(
   'EditView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
@@ -70,27 +70,27 @@ array (
       'syncDetailEditViews' => true,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => '',
         ),
         1 => 
-        array (
+        array(
           0 => 'description',
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'created_by_name',
             'label' => 'LBL_CREATED',
           ),
           1 => 
-          array (
+          array(
             'name' => 'date_entered',
             'comment' => 'Date record created',
             'label' => 'LBL_DATE_ENTERED',

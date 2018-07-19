@@ -48,7 +48,7 @@ if (isset($_REQUEST['module']) && isset($_REQUEST['action']) && isset($_REQUEST[
     $action = clean_string($_REQUEST['action']);
     $record = clean_string($_REQUEST['record']);
 } else {
-    die ("module, action, and record id all are required");
+    die("module, action, and record id all are required");
 }
 
 $entity = $GLOBALS['beanList'][$currentModule];

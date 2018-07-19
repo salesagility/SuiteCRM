@@ -561,7 +561,7 @@ class Scheduler extends SugarBean
     {
         global $mod_strings;
         /* [0]:min [1]:hour [2]:day of month [3]:month [4]:day of week */
-        $days = array (	1 => $mod_strings['LBL_MON'],
+        $days = array(	1 => $mod_strings['LBL_MON'],
 						2 => $mod_strings['LBL_TUE'],
 						3 => $mod_strings['LBL_WED'],
 						4 => $mod_strings['LBL_THU'],
@@ -726,7 +726,7 @@ class Scheduler extends SugarBean
         $hours = $rawValues[1].':::'.$rawValues[0];
         $months = $rawValues[3].':::'.$rawValues[2];
 
-        $intA = array (	'raw' => $rawProcessed,
+        $intA = array(	'raw' => $rawProcessed,
 						'hours' => $hours,
 						'months' => $months,
 						);

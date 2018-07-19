@@ -38,21 +38,21 @@
  ********************************************************************************/
 
 $viewdefs ['Campaigns'] =
-array (
+array(
   'EditView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -104,116 +104,116 @@ function ConvertItems(id)  {ldelim}
 </script>',
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'LBL_CAMPAIGN_INFORMATION' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
         'LBL_NAVIGATION_MENU_GEN2' =>
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'lbl_campaign_information' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
           ),
           1 => 
-          array (
+          array(
             'name' => 'status',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'start_date',
             'displayParams' => 
-            array (
+            array(
               'required' => false,
               'showFormats' => true,
             ),
           ),
           1 => 
-          array (
+          array(
             'name' => 'campaign_type',
             'displayParams' => 
-            array (
+            array(
               'javascript' => 'onchange="type_change();"',
             ),
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'end_date',
             'displayParams' => 
-            array (
+            array(
               'showFormats' => true,
             ),
           ),
           1 => 
-          array (
+          array(
             'name' => 'frequency',
             'customCode' => '<div style=\'none\' id=\'freq_field\'>{html_options name="frequency" options=$fields.frequency.options selected=$fields.frequency.value}</div></TD>',
             'customLabel' => '<div style=\'none\' id=\'freq_label\'>{$MOD.LBL_CAMPAIGN_FREQUENCY}</div>',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'content',
             'displayParams' => 
-            array (
+            array(
               'rows' => 8,
               'cols' => 80,
             ),
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO',
           ),
         ),
       ),
       'LBL_NAVIGATION_MENU_GEN2' =>
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'currency_id',
           1 => 'impressions',
         ),
         1 => 
-        array (
+        array(
           0 => 'budget',
           1 => 'expected_cost',
         ),
         2 => 
-        array (
+        array(
           0 => 'actual_cost',
           1 => 'expected_revenue',
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'objective',
             'displayParams' => 
-            array (
+            array(
               'rows' => 8,
               'cols' => 80,
             ),

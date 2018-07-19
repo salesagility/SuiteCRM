@@ -1,11 +1,11 @@
 <?php
 // created: 2014-05-30 00:06:35
-$dictionary["am_tasktemplates_am_projecttemplates"] = array (
+$dictionary["am_tasktemplates_am_projecttemplates"] = array(
   'true_relationship_type' => 'one-to-many',
   'relationships' => 
-  array (
+  array(
     'am_tasktemplates_am_projecttemplates' => 
-    array (
+    array(
       'lhs_module' => 'AM_ProjectTemplates',
       'lhs_table' => 'am_projecttemplates',
       'lhs_key' => 'id',
@@ -20,20 +20,20 @@ $dictionary["am_tasktemplates_am_projecttemplates"] = array (
   ),
   'table' => 'am_tasktemplates_am_projecttemplates_c',
   'fields' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
     1 => 
-    array (
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
     2 => 
-    array (
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
@@ -41,44 +41,44 @@ $dictionary["am_tasktemplates_am_projecttemplates"] = array (
       'required' => true,
     ),
     3 => 
-    array (
+    array(
       'name' => 'am_tasktemplates_am_projecttemplatesam_projecttemplates_ida',
       'type' => 'varchar',
       'len' => 36,
     ),
     4 => 
-    array (
+    array(
       'name' => 'am_tasktemplates_am_projecttemplatesam_tasktemplates_idb',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
   'indices' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'am_tasktemplates_am_projecttemplatesspk',
       'type' => 'primary',
       'fields' => 
-      array (
+      array(
         0 => 'id',
       ),
     ),
     1 => 
-    array (
+    array(
       'name' => 'am_tasktemplates_am_projecttemplates_ida1',
       'type' => 'index',
       'fields' => 
-      array (
+      array(
         0 => 'am_tasktemplates_am_projecttemplatesam_projecttemplates_ida',
       ),
     ),
     2 => 
-    array (
+    array(
       'name' => 'am_tasktemplates_am_projecttemplates_alt',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'am_tasktemplates_am_projecttemplatesam_tasktemplates_idb',
       ),
     ),

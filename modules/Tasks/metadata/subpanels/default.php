@@ -47,10 +47,10 @@ $subpanel_layout = array(
 	//the activities sub-panel.
 
 	'top_buttons' => array(
-        array (
+        array(
 	 		 'widget_class'=>'SubPanelTopCreateButton',
 				),
-			array (
+			array(
 	 		 'widget_class'=>'SubPanelTopSelectButton', 'popup_module' => 'Tasks'
 				),
 	),

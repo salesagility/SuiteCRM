@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['DocumentRevision'] = array ('column_fields' => array("id"
+$fields_array['DocumentRevision'] = array('column_fields' => array("id"
 		,"change_log"
 		,"document_id"
 		,"date_entered"

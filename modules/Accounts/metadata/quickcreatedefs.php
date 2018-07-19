@@ -49,102 +49,102 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $viewdefs ['Accounts'] =
-array (
+array(
   'QuickCreate' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'SAVE',
           1 => 'CANCEL',
         ),
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'includes' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'file' => 'modules/Accounts/Account.js',
         ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
             'displayParams' => 
-            array (
+            array(
               'required' => true,
             ),
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'website',
           ),
           1 => 
-          array (
+          array(
             'name' => 'phone_office',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'email1',
           ),
           1 => 
-          array (
+          array(
             'name' => 'phone_fax',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'industry',
           ),
           1 => 
-          array (
+          array(
             'name' => 'account_type',
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
           ),
         ),

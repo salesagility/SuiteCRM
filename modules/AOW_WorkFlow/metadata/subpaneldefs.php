@@ -29,7 +29,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $layout_defs['AOW_WorkFlow'] = array(
 	'subpanel_setup' => array(
 		'aow_processed' =>
- 		array (
+ 		array(
   			'order' => 100,
 			'module' => 'AOW_Processed',
 			'subpanel_name' => 'default',

@@ -235,7 +235,7 @@ class ViewConvertLead extends SugarView
             echo($this->getValidationJS($module, $focus, $vdef[$ev->view]));
         }
         echo "</div>";
-        echo ($qsd->getQSScriptsJSONAlreadyDefined());
+        echo($qsd->getQSScriptsJSONAlreadyDefined());
         // need to re-assign bean as it gets overridden by $ev->display
         $smarty->assign("bean", $this->focus);
         $smarty->display("modules/Leads/tpls/ConvertLeadFooter.tpl");
@@ -631,7 +631,7 @@ class ViewConvertLead extends SugarView
 
         // delete the old relationship to the old parent (lead)
         if ($rel = $this->findRelationship($activity, $lead)) {
-            $activity->load_relationship ($rel) ;
+            $activity->load_relationship($rel) ;
 
             if ($activity->parent_id && $activity->id) {
                 $activity->$rel->delete($activity->id, $activity->parent_id);
@@ -640,7 +640,7 @@ class ViewConvertLead extends SugarView
 
         // add the new relationship to the new parent (contact, account, etc)
         if ($rel = $this->findRelationship($activity, $bean)) {
-            $activity->load_relationship ($rel) ;
+            $activity->load_relationship($rel) ;
 
             $relObj = $activity->$rel->getRelationshipObject();
             if ($relObj->relationship_type=='one-to-one' || $relObj->relationship_type == 'one-to-many') {
@@ -725,7 +725,7 @@ class ViewConvertLead extends SugarView
                 $newActivity->$rel = '';
             }
 
-            $newActivity->load_relationship ($rel) ;
+            $newActivity->load_relationship($rel) ;
             $relObj = $newActivity->$rel->getRelationshipObject();
             if ($relObj->relationship_type=='one-to-one' || $relObj->relationship_type == 'one-to-many') {
                 $key = $relObj->rhs_key;
@@ -801,7 +801,7 @@ class ViewConvertLead extends SugarView
             if (!empty($contactRel)) {
                 $bean->id = create_guid();
                 $bean->new_with_id = true;
-                $contact->load_relationship ($contactRel) ;
+                $contact->load_relationship($contactRel) ;
                 $relObject = $contact->$contactRel->getRelationshipObject();
                 if ($relObject->relationship_type == "one-to-many" && $contact->$contactRel->getSide() == REL_LHS) {
                     $id_field = $relObject->rhs_key;
@@ -914,7 +914,7 @@ class ViewConvertLead extends SugarView
         $lead
         ) {
         if ($lead->status == "Converted") {
-            echo ("<span class='error'>" . translate('LBL_CONVERTLEAD_WARNING'));
+            echo("<span class='error'>" . translate('LBL_CONVERTLEAD_WARNING'));
             $dupes = array();
             $q = "SELECT id, first_name, last_name FROM contacts WHERE first_name LIKE '{$lead->first_name}' AND last_name LIKE '{$lead->last_name}' AND deleted = 0";
             $result = $lead->db->query($q);
@@ -925,7 +925,7 @@ class ViewConvertLead extends SugarView
             }
             if (!empty($dupes)) {
                 foreach ($dupes as $id => $name) {
-                    echo (translate('LBL_CONVERTLEAD_WARNING_INTO_RECORD') . "<a href='index.php?module=Contacts&action=DetailView&record=$id'>$name</a>");
+                    echo(translate('LBL_CONVERTLEAD_WARNING_INTO_RECORD') . "<a href='index.php?module=Contacts&action=DetailView&record=$id'>$name</a>");
                     break;
                 }
             }

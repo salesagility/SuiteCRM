@@ -59,7 +59,7 @@ global $app_strings, $app_list_strings, $current_language, $currentModule, $mod_
 echo getClassicModuleTitle('SavedSearch', array($mod_strings['LBL_MODULE_TITLE']), false);
 echo get_form_header($mod_strings['LBL_SEARCH_FORM_TITLE'], '', false);
 
-$search_form = new XTemplate ('modules/SavedSearch/SearchForm.html');
+$search_form = new XTemplate('modules/SavedSearch/SearchForm.html');
 $search_form->assign('MOD', $mod_strings);
 $search_form->assign('APP', $app_strings);
 $search_form->assign('JAVASCRIPT', get_clear_form_js());

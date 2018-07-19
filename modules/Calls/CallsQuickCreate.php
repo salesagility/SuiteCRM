@@ -81,7 +81,7 @@ class CallsQuickCreate extends QuickCreate
         if (is_null($focus->time_start)) {
             $focus->time_start = $timedate->asUserTime($timedate->getNow(), true);
         }
-        if (!isset ($focus->duration_hours)) {
+        if (!isset($focus->duration_hours)) {
             $focus->duration_hours = "1";
         }
 
@@ -103,7 +103,7 @@ class CallsQuickCreate extends QuickCreate
 
 
         // We default the to assume that the time preference is set to 11:00 (i.e. without meridiem)
-        $hours_arr = array ();
+        $hours_arr = array();
         $num_of_hours = 24;
         $start_at = 0;
 
@@ -138,8 +138,8 @@ class CallsQuickCreate extends QuickCreate
         $this->ss->assign("DURATION_HOURS", $focus->duration_hours);
         $this->ss->assign("DURATION_MINUTES_OPTIONS", get_select_options_with_id($focus->minutes_values, $focus->duration_minutes));
 
-        $focus->direction = (isset ($app_list_strings['call_direction_dom']['Outbound']) ? 'Outbound' : $focus->direction);
-        $focus->status = (isset ($app_list_strings['call_status_dom']['Planned']) ? 'Outbound' : $focus->status);
+        $focus->direction = (isset($app_list_strings['call_direction_dom']['Outbound']) ? 'Outbound' : $focus->direction);
+        $focus->status = (isset($app_list_strings['call_status_dom']['Planned']) ? 'Outbound' : $focus->status);
 
         $this->ss->assign("DIRECTION_OPTIONS", get_select_options_with_id($app_list_strings['call_direction_dom'], $focus->direction));
         $this->ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['call_status_dom'], $focus->status));

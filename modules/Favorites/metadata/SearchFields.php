@@ -42,6 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user;
 $module_name = "Favorites";
 
-$searchFields['Favorites'] = array (
+$searchFields['Favorites'] = array(
 
 );

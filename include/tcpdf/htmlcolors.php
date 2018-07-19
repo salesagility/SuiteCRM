@@ -75,7 +75,7 @@ r46451 - 2009-04-23 16:57:40 -0700 (Thu, 23 Apr 2009) - jenny - tcpdf initial ch
  * Array of WEB safe colors
  */
 global $webcolor;
-$webcolor = array (
+$webcolor = array(
 'aliceblue' => 'f0f8ff',
 'antiquewhite' => 'faebd7',
 'aqua' => '00ffff',

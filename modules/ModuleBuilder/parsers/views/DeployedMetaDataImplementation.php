@@ -80,7 +80,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
     public function __construct($view, $moduleName)
     {
         // BEGIN ASSERTIONS
-        if (!isset ($GLOBALS ['beanList'] [$moduleName])) {
+        if (!isset($GLOBALS ['beanList'] [$moduleName])) {
             sugar_die(get_class($this) . ': $moduleName '. $moduleName .' is not a Deployed Module');
         }
         // END ASSERTIONS
@@ -140,7 +140,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 
                     // Now change the array index
                     $temp = $loaded [GridLayoutMetaDataParser::$variableMap [MB_EDITVIEW]];
-                    unset ($loaded [GridLayoutMetaDataParser::$variableMap [MB_EDITVIEW]]);
+                    unset($loaded [GridLayoutMetaDataParser::$variableMap [MB_EDITVIEW]]);
                     $loaded [GridLayoutMetaDataParser::$variableMap [MB_QUICKCREATE]] = $temp;
                     // finally, save out our new definition so that we have a base record for the history to work from
                     $this->_sourceFilename = $this->getFileName(MB_QUICKCREATE, $this->_moduleName, null,
@@ -246,7 +246,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
         }
 
         $this->_fielddefs = $fieldDefinitions;
-        $this->_history = new History ($this->getFileName($view, $moduleName, null, MB_HISTORYMETADATALOCATION));
+        $this->_history = new History($this->getFileName($view, $moduleName, null, MB_HISTORYMETADATALOCATION));
     }
 
     /**
@@ -358,10 +358,10 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
         }
 
         // BEGIN ASSERTIONS
-        if (!isset ($pathMap [$type])) {
+        if (!isset($pathMap [$type])) {
             sugar_die("DeployedMetaDataImplementation->getFileName(): Type $type is not recognized");
         }
-        if (!isset ($filenames [$view])) {
+        if (!isset($filenames [$view])) {
             sugar_die("DeployedMetaDataImplementation->getFileName(): View $view is not recognized");
         }
         // END ASSERTIONS

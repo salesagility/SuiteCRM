@@ -45,7 +45,7 @@ function get_body(&$ss, $vardef)
 {
     $multi = false;
     $radio = false;
-    if (isset ($vardef['type']) && $vardef['type'] == 'multienum') {
+    if (isset($vardef['type']) && $vardef['type'] == 'multienum') {
         $multi = true;
     }
 

@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $listViewDefs['Documents'] = array(
   'DOCUMENT_NAME' => 
-  array (
+  array(
     'width' => '20%',
     'label' => 'LBL_NAME',
     'link' => true,
@@ -53,16 +53,16 @@ $listViewDefs['Documents'] = array(
     'bold' => true,
   ),
   'FILENAME' => 
-  array (
+  array(
     'width' => '20%',
     'label' => 'LBL_FILENAME',
     'link' => true,
     'default' => true,
     'bold' => false,
-    'displayParams' => array ( 'module' => 'Documents', ),
+    'displayParams' => array( 'module' => 'Documents', ),
     'sortable' => false,
     'related_fields' => 
-    array (
+    array(
         0 => 'document_revision_id',
         1 => 'doc_id', 
         2 => 'doc_type',
@@ -70,30 +70,30 @@ $listViewDefs['Documents'] = array(
     ),
   ),
   'CATEGORY_ID' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_LIST_CATEGORY',
     'default' => true,
   ),
   'SUBCATEGORY_ID' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_LIST_SUBCATEGORY',
     'default' => true,
   ),
   'LAST_REV_CREATE_DATE' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_LIST_LAST_REV_DATE',
     'default' => true,
     'sortable' => false,
     'related_fields' => 
-    array (
+    array(
       0 => 'document_revision_id',
     ),
   ),
   'EXP_DATE' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_LIST_EXP_DATE',
     'default' => true,
@@ -106,7 +106,7 @@ $listViewDefs['Documents'] = array(
     'id' => 'ASSIGNED_USER_ID',
     'default' => true),
   'MODIFIED_BY_NAME' =>
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_MODIFIED_USER',
     'module' => 'Users',
@@ -114,11 +114,11 @@ $listViewDefs['Documents'] = array(
     'default' => false,
     'sortable' => false,
     'related_fields' =>
-    array (
+    array(
       0 => 'modified_user_id',
     ),
     ),
-  'DATE_ENTERED' => array (
+  'DATE_ENTERED' => array(
     'width' => '10%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => true,

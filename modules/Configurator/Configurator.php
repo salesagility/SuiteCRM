@@ -46,8 +46,8 @@ class Configurator
 {
     public $config = '';
     public $override = '';
-    public $allow_undefined = array ('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu','enable_line_editing_list','enable_line_editing_detail', 'hide_subpanels');
-    public $errors = array ('main' => '');
+    public $allow_undefined = array('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu','enable_line_editing_list','enable_line_editing_detail', 'hide_subpanels');
+    public $errors = array('main' => '');
     public $logger = null;
     public $previous_sugar_override_config_array = array();
     public $useAuthenticationClass = false;
@@ -173,7 +173,7 @@ class Configurator
         global $sugar_config, $sugar_version;
         $currentConfigArray = $this->readOverride();
         foreach ($currentConfigArray as $key => $val) {
-            if (in_array($key, $this->allow_undefined) || isset ($sugar_config[$key])) {
+            if (in_array($key, $this->allow_undefined) || isset($sugar_config[$key])) {
                 if (empty($val)) {
                     if (!empty($this->previous_sugar_override_config_array['stack_trace_errors']) && $key == 'stack_trace_errors') {
                         require_once('include/TemplateHandler/TemplateHandler.php');

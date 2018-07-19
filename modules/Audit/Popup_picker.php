@@ -105,7 +105,7 @@ class Popup_Picker
 
         $auditObject = new Audit();
         $audit_list =  $auditObject->get_audit_list();
-        $xtpl=new XTemplate ('modules/Audit/Popup_picker.html');
+        $xtpl=new XTemplate('modules/Audit/Popup_picker.html');
 
         $xtpl->assign('MOD', $mod_strings);
         $xtpl->assign('APP', $app_strings);

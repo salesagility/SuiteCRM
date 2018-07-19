@@ -60,7 +60,7 @@ class ViewDropdown extends SugarView
         $smarty = $this->generateSmarty();
 		
         if (isset($_REQUEST['refreshTree'])) {
-            require_once ('modules/ModuleBuilder/Module/DropDownTree.php');
+            require_once('modules/ModuleBuilder/Module/DropDownTree.php');
             $mbt = new DropDownTree();
             $ajax->addSection('west', $mbt->getName(), $mbt->fetchNodes());
             $smarty->assign('refreshTree', true);
@@ -133,7 +133,7 @@ class ViewDropdown extends SugarView
             // handle the case where we've saved a dropdown in one language, and now attempt to edit it for another language. The $name exists, but $my_list_strings[$name] doesn't
             // for now, we just treat it as if it was new. A better approach might be to use the first language version as a template for future languages
             if (!isset($my_list_strings[$name])) {
-                $my_list_strings[$name] = array () ;
+                $my_list_strings[$name] = array() ;
             }
  
             $selected_dropdown = (!empty($vardef['options']) && !empty($my_list_strings[$vardef['options']])) ? $my_list_strings[$vardef['options']] : $my_list_strings[$name];

@@ -99,7 +99,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 
 
         global $sugar_config;
-        if (isset ($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit'] && !empty($record)) {
+        if (isset($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit'] && !empty($record)) {
             $div_id = "$module&$record&$name";
             $str = "<div id='$div_id'><a target='_blank' href=\"index.php?action=DetailView&module=$module&record=$record\">";
             $value = $this->displayListPlain($layout_def);

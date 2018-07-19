@@ -62,7 +62,7 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
         'comment' => 'User ID representing assigned-to user',
     ),
     'id' => 
-    array (
+    array(
         'name' => 'id',
         'vname' => 'LBL_ID',
         'type' => 'int',
@@ -183,7 +183,7 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
         'source'=>'non-db',
     ),
 
-), 'indices' => array (
+), 'indices' => array(
                     array('name' => 'emailmanpk', 'type' => 'primary', 'fields' => array('id')),
                     array('name' => 'idx_eman_list', 'type' => 'index', 'fields' => array('list_id','user_id','deleted')),
                     array('name' => 'idx_eman_campaign_id', 'type' => 'index', 'fields' => array('campaign_id')),

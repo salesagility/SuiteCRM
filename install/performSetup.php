@@ -221,7 +221,7 @@ $new_config         = 1;
 $new_report     = 1;
 
 // add non-module Beans to this array to keep the installer from erroring.
-$nonStandardModules = array (
+$nonStandardModules = array(
     //'Tracker',
 );
 

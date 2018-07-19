@@ -1,15 +1,15 @@
 <?php
 $module_name = 'jjwg_Areas';
 $viewdefs [$module_name] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
@@ -19,14 +19,14 @@ array (
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -34,72 +34,72 @@ array (
       'useTabs' => false,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
             'label' => 'LBL_NAME',
           ),
           1 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'city',
             'label' => 'LBL_CITY',
           ),
           1 => 
-          array (
+          array(
             'name' => 'state',
             'label' => 'LBL_STATE',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'country',
             'label' => 'LBL_COUNTRY',
           ),
           1 => '',
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'date_entered',
             'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
             'label' => 'LBL_DATE_ENTERED',
           ),
           1 => 
-          array (
+          array(
             'name' => 'date_modified',
             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
             'label' => 'LBL_DATE_MODIFIED',
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'description',
             'comment' => 'Full text of the note',
             'label' => 'LBL_DESCRIPTION',
           ),
         ),
         5 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'coordinates',
             'studio' => 'visible',
             'label' => 'LBL_COORDINATES',

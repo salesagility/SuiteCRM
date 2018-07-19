@@ -192,7 +192,7 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
      */
     public function handleSave($populate = true)
     {
-        if (empty ($this->_packageName)) {
+        if (empty($this->_packageName)) {
             foreach (array(MB_CUSTOMMETADATALOCATION, MB_BASEMETADATALOCATION) as $value) {
                 $file = $this->implementation->getFileName(MB_POPUPLIST, $this->_moduleName, null, $value);
                 if (file_exists($file)) {

@@ -121,11 +121,11 @@ class TemplateMultiEnum extends TemplateEnum
     public function get_field_def()
     {
         $def = parent::get_field_def();
-        if (!empty ($this->ext4)) {
+        if (!empty($this->ext4)) {
             // turn off error reporting in case we are unpacking a value that hasn't been packed...
             // this is kludgy, but unserialize doesn't throw exceptions correctly
             if ($this->ext4[0] == 'a' && $this->ext4[1] == ':') {
-                $unpacked = @unserialize ($this->ext4) ;
+                $unpacked = @unserialize($this->ext4) ;
             } else {
                 $unpacked = false;
             }
@@ -136,10 +136,10 @@ class TemplateMultiEnum extends TemplateEnum
                 $def [ 'default' ] = $this->ext4 ;
             } else {
                 // we have a packed representation containing one or both of default and dependency
-                if (isset ($unpacked [ 'default' ]) && !isset($this->no_default)) {
+                if (isset($unpacked [ 'default' ]) && !isset($this->no_default)) {
                     $def [ 'default' ] = $unpacked [ 'default' ] ;
                 }
-                if (isset ($unpacked [ 'dependency' ])) {
+                if (isset($unpacked [ 'dependency' ])) {
                     $def [ 'dependency' ] = $unpacked [ 'dependency' ] ;
                 }
             }
@@ -156,14 +156,14 @@ class TemplateMultiEnum extends TemplateEnum
 
     public function save($df)
     {
-        if (isset ($this->default)) {
-            if (is_array ($this->default)) {
+        if (isset($this->default)) {
+            if (is_array($this->default)) {
                 $this->default = encodeMultienumValue($this->default);
             }
-            $this->ext4 = (isset ($this->dependency)) ? serialize (array ( 'default' => $this->default , 'dependency' => html_entity_decode($this->dependency) ))  : $this->default ;
+            $this->ext4 = (isset($this->dependency)) ? serialize(array( 'default' => $this->default , 'dependency' => html_entity_decode($this->dependency) ))  : $this->default ;
         } else {
-            if (isset ($this->dependency)) {
-                $this->ext4 = serialize (array ( 'dependency' => html_entity_decode($this->dependency) )) ;
+            if (isset($this->dependency)) {
+                $this->ext4 = serialize(array( 'dependency' => html_entity_decode($this->dependency) )) ;
             }
         }
         parent::save($df);

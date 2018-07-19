@@ -44,8 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * for each moudule.
  */
 $dictionary['audit'] = 
-		array ( 'table' => 'audit',
-              	'fields' => array (
+		array( 'table' => 'audit',
+              	'fields' => array(
               	      'id'=> array('name' =>'id', 'type' =>'id', 'len'=>'36','required'=>true), 
               	      'parent_id'=>array('name' =>'parent_id', 'type' =>'id', 'len'=>'36','required'=>true),               	                   	
 				      'date_created'=>array('name' =>'date_created','type' => 'datetime'),
@@ -57,9 +57,9 @@ $dictionary['audit'] =
 					  'before_value_text'=>array('name' =>'before_value_text','type' => 'text'),
 					  'after_value_text'=>array('name' =>'after_value_text','type' => 'text'),
 				),
-				'indices' => array (
+				'indices' => array(
 				      //name will be re-constructed adding idx_ and table name as the prefix like 'idx_accounts_'
-				      array ('name' => 'pk', 'type' => 'primary', 'fields' => array('id')),
-				      array ('name' => 'parent_id', 'type' => 'index', 'fields' => array('parent_id'))
+				      array('name' => 'pk', 'type' => 'primary', 'fields' => array('id')),
+				      array('name' => 'parent_id', 'type' => 'index', 'fields' => array('parent_id'))
 				)
 		);

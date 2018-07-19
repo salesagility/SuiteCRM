@@ -100,8 +100,7 @@ class cssmin
                     $style_tmp = explode(":", $style);
                     $styles[$style_tmp[0]] = $style_tmp[1];
                 }
-                $r[] = array
-					(
+                $r[] = array(
 					"keys"		=> cssmin_array_clean($keys),
 					"styles"	=> cssmin_array_clean($styles)
 					);

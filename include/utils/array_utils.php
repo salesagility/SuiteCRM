@@ -194,7 +194,7 @@ function object_to_array_recursive($obj)
     {
         //if _ is at position zero, that is invalid.
         if (strrpos($key, "_")) {
-            list ($key, $remkey) = explode('_', $key, 2);
+            list($key, $remkey) = explode('_', $key, 2);
             if (!isset($array[$key]) || !is_array($array[$key])) {
                 $array[$key] = array();
             }

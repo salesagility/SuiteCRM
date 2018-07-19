@@ -41,13 +41,13 @@ class AOR_ReportsViewEdit extends ViewEdit
         readfile('modules/AOR_Reports/js/jqtree/jqtree.css');
         echo "</style>";
         if (!is_file('cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
-            require_once ('include/language/jsLanguage.php');
+            require_once('include/language/jsLanguage.php');
             jsLanguage::createModuleStringsCache('AOR_Fields', $GLOBALS['current_language']);
         }
         echo '<script src="cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
 
         if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
-            require_once ('include/language/jsLanguage.php');
+            require_once('include/language/jsLanguage.php');
             jsLanguage::createModuleStringsCache('AOR_Conditions', $GLOBALS['current_language']);
         }
         echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';

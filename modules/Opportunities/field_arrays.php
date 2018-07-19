@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Opportunity'] = array ('column_fields' => array("id"
+$fields_array['Opportunity'] = array('column_fields' => array("id"
 		, "name"
 		, "opportunity_type"
 		, "lead_source"

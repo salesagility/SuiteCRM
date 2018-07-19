@@ -50,26 +50,26 @@ $viewdefs['Cases']['QuickCreate'] = array(
                        ),
 'panels' =>
 
-array (
+array(
   
-  array (
-    array ('name'=>'name', 'displayParams'=>array('size'=>65, 'required'=>true)),
+  array(
+    array('name'=>'name', 'displayParams'=>array('size'=>65, 'required'=>true)),
     'priority'
   ),
   
-  array (
+  array(
     'status',
     array('name'=>'account_name'),
   ),
   
-  array (
+  array(
     'assigned_user_name',
   ),
   
-  array (
-    array (
+  array(
+    array(
       'name' => 'description',
-      'displayParams' => array ('rows' => '4','cols' => '60'),
+      'displayParams' => array('rows' => '4','cols' => '60'),
       'nl2br' => true,
     ),
   ),

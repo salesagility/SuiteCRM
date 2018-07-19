@@ -1,62 +1,62 @@
 <?php
-$popupMeta = array (
+$popupMeta = array(
     'moduleMain' => 'AOS_Products',
     'varName' => 'AOS_Products',
     'orderBy' => 'aos_products.name',
-    'whereClauses' => array (
+    'whereClauses' => array(
   'name' => 'aos_products.name',
   'part_number' => 'aos_products.part_number',
   'cost' => 'aos_products.cost',
   'price' => 'aos_products.price',
   'created_by' => 'aos_products.created_by',
 ),
-    'searchInputs' => array (
+    'searchInputs' => array(
   1 => 'name',
   4 => 'part_number',
   5 => 'cost',
   6 => 'price',
   7 => 'created_by',
 ),
-    'searchdefs' => array (
+    'searchdefs' => array(
   'name' => 
-  array (
+  array(
     'name' => 'name',
     'width' => '10%',
   ),
   'part_number' => 
-  array (
+  array(
     'name' => 'part_number',
     'width' => '10%',
   ),
   'cost' => 
-  array (
+  array(
     'name' => 'cost',
     'width' => '10%',
   ),
   'price' => 
-  array (
+  array(
     'name' => 'price',
     'width' => '10%',
   ),
   'created_by' => 
-  array (
+  array(
     'name' => 'created_by',
     'label' => 'LBL_CREATED',
     'type' => 'enum',
     'function' => 
-    array (
+    array(
       'name' => 'get_user_array',
       'params' => 
-      array (
+      array(
         0 => false,
       ),
     ),
     'width' => '10%',
   ),
 ),
-    'listviewdefs' => array (
+    'listviewdefs' => array(
   'NAME' => 
-  array (
+  array(
     'width' => '25%',
     'label' => 'LBL_NAME',
     'default' => true,
@@ -64,28 +64,28 @@ $popupMeta = array (
     'name' => 'name',
   ),
   'PART_NUMBER' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_PART_NUMBER',
     'default' => true,
     'name' => 'part_number',
   ),
   'COST' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_COST',
     'default' => true,
     'name' => 'cost',
   ),
   'PRICE' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_PRICE',
     'default' => true,
     'name' => 'price',
   ),
   'CURRENCY_ID' =>
-  array (
+  array(
     'type' => 'id',
     'studio' => 'visible',
     'label' => 'LBL_CURRENCY',

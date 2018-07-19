@@ -135,7 +135,7 @@ class EmailsController extends SugarController
         // For viewing the Compose as modal from other modules we need to load the Emails language strings
         if (isset($_REQUEST['in_popup']) && $_REQUEST['in_popup']) {
             if (!is_file('cache/jsLanguage/Emails/' . $GLOBALS['current_language'] . '.js')) {
-                require_once ('include/language/jsLanguage.php');
+                require_once('include/language/jsLanguage.php');
                 jsLanguage::createModuleStringsCache('Emails', $GLOBALS['current_language']);
             }
             echo '<script src="cache/jsLanguage/Emails/'. $GLOBALS['current_language'] . '.js"></script>';

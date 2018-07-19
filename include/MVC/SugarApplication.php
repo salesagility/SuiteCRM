@@ -284,7 +284,7 @@ class SugarApplication
                         $this->controller->action = 'InitialSync';
                     }
                 } else {
-                    require_once ('modules/Sync/file_config.php');
+                    require_once('modules/Sync/file_config.php');
                     if (isset($file_sync_info['is_first_sync']) && $file_sync_info['is_first_sync']) {
                         if ($_REQUEST['action'] != 'InitialSync' && $_REQUEST['action'] != 'Logout' &&
                                 ($_REQUEST['action'] != 'Popup' && $_REQUEST['module'] != 'Sync')) {

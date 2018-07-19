@@ -45,33 +45,33 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $current_user;
 
-$dashletData['MyAccountsDashlet']['searchFields'] = array (
+$dashletData['MyAccountsDashlet']['searchFields'] = array(
   'date_entered' => 
-  array (
+  array(
 	'default' => '',
   ),
   'account_type' => 
-  array (
+  array(
 	'default' => '',
   ),
   'industry' => 
-  array (
+  array(
 	'default' => '',
   ),
   'billing_address_country' => 
-  array (
+  array(
 	'default' => '',
   ),
   'assigned_user_id' => 
-  array (
+  array(
 	'type' => 'assigned_user_name',
 	'default' => $current_user->name,
 	'label' => 'LBL_ASSIGNED_TO',
   ),
 );
-$dashletData['MyAccountsDashlet']['columns'] =  array (
+$dashletData['MyAccountsDashlet']['columns'] =  array(
   'name' => 
-  array (
+  array(
     'width' => '40%',
     'label' => 'LBL_LIST_ACCOUNT_NAME',
     'link' => true,
@@ -79,7 +79,7 @@ $dashletData['MyAccountsDashlet']['columns'] =  array (
     'name' => 'name',
   ),
   'account_type' => 
-  array (
+  array(
     'type' => 'enum',
     'label' => 'LBL_TYPE',
     'width' => '10%',
@@ -87,112 +87,112 @@ $dashletData['MyAccountsDashlet']['columns'] =  array (
     'name' => 'account_type',
   ),
   'website' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_WEBSITE',
     'default' => true,
     'name' => 'website',
   ),
   'phone_office' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_LIST_PHONE',
     'default' => true,
     'name' => 'phone_office',
   ),
   'billing_address_country' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_BILLING_ADDRESS_COUNTRY',
     'default' => true,
     'name' => 'billing_address_country',
   ),
   'phone_fax' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_PHONE_FAX',
     'name' => 'phone_fax',
     'default' => false,
   ),
   'phone_alternate' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_OTHER_PHONE',
     'name' => 'phone_alternate',
     'default' => false,
   ),
   'billing_address_city' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_BILLING_ADDRESS_CITY',
     'name' => 'billing_address_city',
     'default' => false,
   ),
   'billing_address_street' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_BILLING_ADDRESS_STREET',
     'name' => 'billing_address_street',
     'default' => false,
   ),
   'billing_address_state' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_BILLING_ADDRESS_STATE',
     'name' => 'billing_address_state',
     'default' => false,
   ),
   'billing_address_postalcode' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_BILLING_ADDRESS_POSTALCODE',
     'name' => 'billing_address_postalcode',
     'default' => false,
   ),
   'shipping_address_city' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_SHIPPING_ADDRESS_CITY',
     'name' => 'shipping_address_city',
     'default' => false,
   ),
   'shipping_address_street' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_SHIPPING_ADDRESS_STREET',
     'name' => 'shipping_address_street',
     'default' => false,
   ),
   'shipping_address_state' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_SHIPPING_ADDRESS_STATE',
     'name' => 'shipping_address_state',
     'default' => false,
   ),
   'shipping_address_postalcode' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_SHIPPING_ADDRESS_POSTALCODE',
     'name' => 'shipping_address_postalcode',
     'default' => false,
   ),
   'shipping_address_country' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_SHIPPING_ADDRESS_COUNTRY',
     'name' => 'shipping_address_country',
     'default' => false,
   ),
   'email1' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_EMAIL_ADDRESS_PRIMARY',
     'name' => 'email1',
     'default' => false,
   ),
   'parent_name' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_MEMBER_OF',
     'sortable' => false,
@@ -200,28 +200,28 @@ $dashletData['MyAccountsDashlet']['columns'] =  array (
     'default' => false,
   ),
   'date_entered' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_DATE_ENTERED',
     'name' => 'date_entered',
     'default' => false,
   ),
   'date_modified' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_DATE_MODIFIED',
     'name' => 'date_modified',
     'default' => false,
   ),
   'created_by' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_CREATED',
     'name' => 'created_by',
     'default' => false,
   ),
   'assigned_user_name' => 
-  array (
+  array(
     'width' => '8%',
     'label' => 'LBL_LIST_ASSIGNED_USER',
     'name' => 'assigned_user_name',

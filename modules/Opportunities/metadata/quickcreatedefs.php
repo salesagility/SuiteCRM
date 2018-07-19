@@ -47,23 +47,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-$viewdefs = array (
+$viewdefs = array(
   'Opportunities' => 
-  array (
+  array(
     'QuickCreate' => 
-    array (
+    array(
       'templateMeta' => 
-      array (
+      array(
         'maxColumns' => '2',
         'widths' => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'label' => '10',
             'field' => '30',
           ),
           1 => 
-          array (
+          array(
             'label' => '10',
             'field' => '30',
           ),
@@ -71,40 +71,40 @@ $viewdefs = array (
         'javascript' => '{$PROBABILITY_SCRIPT}',
       ),
       'panels' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
-          array (
-            array (
+        array(
+          array(
+            array(
               'name' => 'name',
               'displayParams'=>array('required'=>true),
             ),
-            array (
+            array(
               'name' => 'account_name',
             ),
           ),
-          array (
-            array (
+          array(
+            array(
               'name' => 'currency_id',
             ),
-            array (
+            array(
               'name' => 'opportunity_type',
             ),            
           ),
-          array (
+          array(
             'amount',
             'date_closed'          
           ),
-          array (
+          array(
              'next_step',
              'sales_stage',
           ),
-          array (
+          array(
              'lead_source',
              'probability',
           ),
-        array (
-            array (
+        array(
+            array(
               'name' => 'assigned_user_name',
             ),
         ),

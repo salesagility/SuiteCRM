@@ -47,16 +47,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Reserved. Contributor(s): ______________________________________..
  *********************************************************************************/
 
-$dictionary['OutboundEmail'] = array ('table' => 'outbound_email',
-    'fields' => array (
-        'id' => array (
+$dictionary['OutboundEmail'] = array('table' => 'outbound_email',
+    'fields' => array(
+        'id' => array(
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
             'required' => true,
             'reportable' => false,
         ),
-        'name' => array (
+        'name' => array(
             'name' => 'name',
             'vname' => 'LBL_NAME',
             'type' => 'varchar',
@@ -64,7 +64,7 @@ $dictionary['OutboundEmail'] = array ('table' => 'outbound_email',
             'required' => true,
             'reportable' => false,
         ),
-        'type' => array (
+        'type' => array(
             'name' => 'type',
             'vname' => 'LBL_TYPE',
             'type' => 'varchar',
@@ -73,7 +73,7 @@ $dictionary['OutboundEmail'] = array ('table' => 'outbound_email',
             'default' => 'user',
             'reportable' => false,
         ),
-        'user_id' => array (
+        'user_id' => array(
             'name' => 'user_id',
             'vname' => 'LBL_USER_ID',
             'type' => 'id',

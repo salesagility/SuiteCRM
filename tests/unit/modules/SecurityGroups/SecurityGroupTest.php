@@ -319,7 +319,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -420,7 +420,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -449,7 +449,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -478,7 +478,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -499,7 +499,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -514,7 +514,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -529,7 +529,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -544,7 +544,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();

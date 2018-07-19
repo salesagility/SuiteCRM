@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Lead'] = array ('column_fields' => array("id"
+$fields_array['Lead'] = array('column_fields' => array("id"
 		,"refered_by"
 		,"date_entered"
 		,"date_modified"

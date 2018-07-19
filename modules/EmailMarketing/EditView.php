@@ -69,7 +69,7 @@ global $theme;
 
 
 $GLOBALS['log']->info("EmailMarketing Edit View");
-$xtpl=new XTemplate ('modules/EmailMarketing/EditView.html');
+$xtpl=new XTemplate('modules/EmailMarketing/EditView.html');
 if (!ACLController::checkAccess('EmailTemplates', 'edit', true)) {
     unset($mod_strings['LBL_CREATE_EMAIL_TEMPLATE']);
     unset($mod_strings['LBL_EDIT_EMAIL_TEMPLATE']);

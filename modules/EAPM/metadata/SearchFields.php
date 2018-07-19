@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'EAPM';
 $searchFields[$module_name] =
-	array (
+	array(
 		'type' => array( 'query_type'=>'default'),
 		'name' => array( 'query_type'=>'default'),
 		'application' => array( 'query_type'=>'application'),

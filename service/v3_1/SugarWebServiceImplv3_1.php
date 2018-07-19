@@ -803,13 +803,13 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
                 if ($beanName != "User"
                     && $beanName != "ProjectTask"
                 ) {
-                    $searchForm = new SearchForm ($seed, $name);
+                    $searchForm = new SearchForm($seed, $name);
 
                     $searchForm->setup(array($name => array()), $unifiedSearchFields, '',
                         'saved_views' /* hack to avoid setup doing further unwanted processing */);
                     $where_clauses = $searchForm->generateSearchWhere();
                     require_once 'include/SearchForm/SearchForm2.php';
-                    $searchForm = new SearchForm ($seed, $name);
+                    $searchForm = new SearchForm($seed, $name);
 
                     $searchForm->setup(array($name => array()), $unifiedSearchFields, '',
                         'saved_views' /* hack to avoid setup doing further unwanted processing */);

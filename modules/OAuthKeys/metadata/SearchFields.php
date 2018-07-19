@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'OAuthKeys';
 $searchFields[$module_name] =
-	array (
+	array(
 		'type' => array( 'query_type'=>'default'),
 		'name' => array( 'query_type'=>'default'),
 		'c_key' => array( 'query_type'=>'default'),

@@ -1,15 +1,15 @@
 <?php
 // created: 2014-12-23 12:41:34
-$subpanel_layout['list_fields'] = array (
+$subpanel_layout['list_fields'] = array(
   'name' => 
-  array (
+  array(
     'vname' => 'LBL_LIST_NAME',
     'widget_class' => 'SubPanelDetailViewLink',
     'width' => '35%',
     'default' => true,
   ),
   'assigned_user_name' => 
-  array (
+  array(
     'vname' => 'LBL_LIST_ASSIGNED_USER_ID',
     'widget_class' => 'SubPanelDetailViewLink',
     'module' => 'Users',
@@ -20,28 +20,28 @@ $subpanel_layout['list_fields'] = array (
     'default' => true,
   ),
   'estimated_start_date' => 
-  array (
+  array(
     'vname' => 'LBL_DATE_START',
     'width' => '25%',
     'sortable' => true,
     'default' => true,
   ),
   'status' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'vname' => 'LBL_STATUS',
     'width' => '10%',
   ),
   'estimated_end_date' => 
-  array (
+  array(
     'vname' => 'LBL_DATE_END',
     'width' => '25%',
     'sortable' => true,
     'default' => true,
   ),
   'edit_button' => 
-  array (
+  array(
     'vname' => 'LBL_EDIT_BUTTON',
     'widget_class' => 'SubPanelEditButton',
     'module' => 'Project',
@@ -49,7 +49,7 @@ $subpanel_layout['list_fields'] = array (
     'default' => true,
   ),
   'remove_button' => 
-  array (
+  array(
     'vname' => 'LBL_REMOVE',
     'widget_class' => 'SubPanelRemoveButton',
     'module' => 'Project',

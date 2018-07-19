@@ -23,16 +23,16 @@
  */
 
 $listViewDefs ['AOW_WorkFlow'] = 
-array (
+array(
   'NAME' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
   'FLOW_MODULE' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -40,7 +40,7 @@ array (
     'width' => '15%',
   ),
   'STATUS' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -48,7 +48,7 @@ array (
     'width' => '15%',
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'module' => 'Employees',
@@ -56,14 +56,14 @@ array (
     'default' => true,
   ),
   'DATE_ENTERED' =>
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '15%',
     'default' => true,
   ),
   'DATE_MODIFIED' =>
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',
     'width' => '10%',

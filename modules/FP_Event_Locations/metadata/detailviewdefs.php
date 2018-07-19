@@ -39,15 +39,15 @@
 
 $module_name = 'FP_Event_Locations';
 $viewdefs [$module_name] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
@@ -56,28 +56,28 @@ array (
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
         'LBL_EDITVIEW_PANEL1' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
@@ -85,66 +85,66 @@ array (
       'syncDetailEditViews' => true,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => 'date_entered',
         ),
         1 => 
-        array (
+        array(
           0 => 'description',
           1 => 
-          array (
+          array(
             'name' => 'capacity',
             'label' => 'LBL_CAPACITY',
           ),
         ),
       ),
       'lbl_editview_panel1' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'address',
             'label' => 'LBL_ADDRESS',
           ),
           1 => '',
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'address_city',
             'label' => 'LBL_ADDRESS_CITY',
           ),
           1 => '',
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'address_postalcode',
             'label' => 'LBL_ADDRESS_POSTALCODE',
           ),
           1 => '',
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'address_state',
             'label' => 'LBL_ADDRESS_STATE',
           ),
           1 => '',
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'address_country',
             'label' => 'LBL_ADDRESS_COUNTRY',
           ),

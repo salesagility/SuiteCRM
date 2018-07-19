@@ -38,37 +38,37 @@
  ********************************************************************************/
 
 $viewdefs ['Tasks'] = 
-array (
+array(
   'EditView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'hidden' => 
-        array (
+        array(
            '<input type="hidden" name="isSaveAndNew" value="false">',
         ),
         'buttons' => 
-        array (
+        array(
            'SAVE',
            'CANCEL',
            
-          array (
+          array(
             'customCode' => '{if $fields.status.value != "Completed"}<input title="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}" class="button" onclick="document.getElementById(\'status\').value=\'Completed\'; this.form.action.value=\'Save\'; this.form.return_module.value=\'Tasks\'; this.form.isDuplicate.value=true; this.form.isSaveAndNew.value=true; this.form.return_action.value=\'EditView\'; this.form.return_id.value=\'{$fields.id.value}\'; if(check_form(\'EditView\'))SUGAR.ajaxUI.submitForm(this.form);" type="button" name="button" value="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_LABEL}">{/if}',
           ),
         ),
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
          
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
          
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -76,80 +76,80 @@ array (
       'useTabs' => false,
     ),
     'panels' => 
-    array (
+    array(
       'lbl_task_information' => 
-      array (
+      array(
          
-        array (
+        array(
            
-          array (
+          array(
             'name' => 'name',
             'displayParams' => 
-            array (
+            array(
               'required' => true,
             ),
           ),
            
-          array (
+          array(
             'name' => 'status',
             'displayParams' => 
-            array (
+            array(
               'required' => true,
             ),
           ),
         ),
          
-        array (
+        array(
            
-          array (
+          array(
             'name' => 'date_start',
             'type' => 'datetimecombo',
             'displayParams' => 
-            array (
+            array(
               'showNoneCheckbox' => true,
               'showFormats' => true,
             ),
           ),
            
-          array (
+          array(
             'name' => 'parent_name',
             'label' => 'LBL_LIST_RELATED_TO',
           ),
         ),
          
-        array (
+        array(
            
-          array (
+          array(
             'name' => 'date_due',
             'type' => 'datetimecombo',
             'displayParams' => 
-            array (
+            array(
               'showNoneCheckbox' => true,
               'showFormats' => true,
             ),
           ),
            
-          array (
+          array(
             'name' => 'contact_name',
             'label' => 'LBL_CONTACT_NAME',
           ),
         ),
          
-        array (
+        array(
            
-          array (
+          array(
             'name' => 'priority',
             'displayParams' => 
-            array (
+            array(
               'required' => true,
             ),
           ),
            
         ),
          
-        array (
+        array(
            
-          array (
+          array(
             'name' => 'description',
           ),
         ),

@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 // array elements are regexp patterns, and must not contain '#' signs
-$disc_client_ignore = array (
+$disc_client_ignore = array(
     // dirs
     "\\./cache/.*",
     "\\./examples/.*",
@@ -57,5 +57,5 @@ $disc_client_ignore = array (
     
 );
 
-$disc_client_no_sync = array (
+$disc_client_no_sync = array(
 );

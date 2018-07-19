@@ -41,9 +41,9 @@ $dictionary['AOD_IndexEvent'] = array(
 	'table'=>'aod_indexevent',
 	'audited'=>true,
 		'duplicate_merge'=>true,
-		'fields'=>array (
+		'fields'=>array(
   'error' => 
-  array (
+  array(
     'required' => false,
     'name' => 'error',
     'vname' => 'LBL_ERROR',
@@ -63,7 +63,7 @@ $dictionary['AOD_IndexEvent'] = array(
     'size' => '20',
   ),
   'success' => 
-  array (
+  array(
     'required' => false,
     'name' => 'success',
     'vname' => 'LBL_SUCCESS',
@@ -82,13 +82,13 @@ $dictionary['AOD_IndexEvent'] = array(
     'merge_filter' => 'disabled',
     'size' => '20',
   ),
-  'record_id' => array (
+  'record_id' => array(
     'name' => 'record_id',
     'type' => 'id',
     'reportable' => false,
     'vname' => 'LBL_RECORD_ID',
   ),
-  'record_module' => array (
+  'record_module' => array(
     'required' => false,
     'name' => 'record_module',
     'vname' => 'LBL_RECORD_MODULE',
@@ -108,9 +108,9 @@ $dictionary['AOD_IndexEvent'] = array(
     'size' => '20',
   ),
 ),
-	'relationships'=>array (
+	'relationships'=>array(
 ),
-    'indices' => array (
+    'indices' => array(
         array('name' =>'idx_record_module' , 'type'=>'index' , 'fields'=>array('record_module')),
         array('name' =>'idx_record_id', 'type' =>'index', 'fields'=>array('record_id')),
     ),

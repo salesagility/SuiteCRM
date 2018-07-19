@@ -214,7 +214,7 @@ function getClassicModuleTitle($module, $params, $show_create=false, $index_url_
     }
     if (!empty($iconPath)) {
         $url = (!empty($index_url_override)) ? $index_url_override : "index.php?module={$module}&action=index";
-        array_unshift ($params, "<a href='{$url}'><img src='{$iconPath}' ". "alt='".$module."' title='".$module."' align='absmiddle'></a>");
+        array_unshift($params, "<a href='{$url}'><img src='{$iconPath}' ". "alt='".$module."' title='".$module."' align='absmiddle'></a>");
     }
 
     $new_params = array_pop($params);

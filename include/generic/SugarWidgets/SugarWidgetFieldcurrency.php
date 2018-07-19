@@ -126,7 +126,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
             $div_id = $module ."&$record&$field_name";
             $str = "<div id='$div_id'>".$display;
             global $sugar_config;
-            if (isset ($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit']) {
+            if (isset($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit']) {
                 $str .= "&nbsp;" .SugarThemeRegistry::current()->getImage("edit_inline", "border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(\"$div_id\",\"$value\",\"$module\",\"$record\",\"$field_name\",\"$field_type\",\"$currency_id\",\"$symbol\");'");
             }
             $str .= "</div>";

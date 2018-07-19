@@ -72,12 +72,12 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
 
         // TODO: history
         $this->historyPathname = 'custom/history/modulebuilder/packages/' . $packageName . '/modules/' . $moduleName . '/metadata/' . self::HISTORYFILENAME ;
-        $this->_history = new History ($this->historyPathname) ;
+        $this->_history = new History($this->historyPathname) ;
 
         //get the bean from ModuleBuilder
-        $mb = new ModuleBuilder () ;
-        $this->module = & $mb->getPackageModule ($packageName, $moduleName) ;
-        $this->module->mbvardefs->updateVardefs () ;
+        $mb = new ModuleBuilder() ;
+        $this->module = & $mb->getPackageModule($packageName, $moduleName) ;
+        $this->module->mbvardefs->updateVardefs() ;
         $this->_fielddefs = & $this->module->mbvardefs->vardefs [ 'fields' ] ;
 
         $templates = & $this->module->config['templates'];
@@ -95,7 +95,7 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
             }
         }
 
-        $subpanel_layout = $this->module->getAvailibleSubpanelDef ($this->_subpanelName) ;
+        $subpanel_layout = $this->module->getAvailibleSubpanelDef($this->_subpanelName) ;
         $this->_viewdefs = & $subpanel_layout [ 'list_fields' ] ;
         $this->_mergeFielddefs($this->_fielddefs, $this->_viewdefs);
         
@@ -104,7 +104,7 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
         if (isset($GLOBALS['current_language']) &&!empty($GLOBALS['current_language'])) {
             $selected_lang = $GLOBALS['current_language'];
         }
-        $GLOBALS [ 'mod_strings' ] = array_merge ($GLOBALS [ 'mod_strings' ], $this->module->getModStrings ($selected_lang)) ;
+        $GLOBALS [ 'mod_strings' ] = array_merge($GLOBALS [ 'mod_strings' ], $this->module->getModStrings($selected_lang)) ;
     }
 
     /**
@@ -121,17 +121,17 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
      */
     public function deploy($layoutDefinitions)
     {
-        $outputDefs = $this->module->getAvailibleSubpanelDef ($this->_subpanelName) ;
+        $outputDefs = $this->module->getAvailibleSubpanelDef($this->_subpanelName) ;
         // first sort out the historical record...
         // copy the definition to a temporary file then let the history object add it
-        write_array_to_file (self::HISTORYVARIABLENAME, $outputDefs, $this->historyPathname, 'w', '') ;
-        $this->_history->append ($this->historyPathname) ;
+        write_array_to_file(self::HISTORYVARIABLENAME, $outputDefs, $this->historyPathname, 'w', '') ;
+        $this->_history->append($this->historyPathname) ;
         // no need to unlink the temporary file as being handled by in history->append()
         //unlink ( $this->historyPathname ) ;
 
         $outputDefs [ 'list_fields' ] = $layoutDefinitions ;
         $this->_viewdefs = $layoutDefinitions ;
-        $this->module->saveAvailibleSubpanelDef ($this->_subpanelName, $outputDefs) ;
+        $this->module->saveAvailibleSubpanelDef($this->_subpanelName, $outputDefs) ;
     }
 
     public function getFileName($view, $moduleName, $packageName, $type = MB_CUSTOMMETADATALOCATION)

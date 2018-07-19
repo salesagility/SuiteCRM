@@ -1182,7 +1182,7 @@ class Zend_Http_Client
         $body = '';
 
         // If we have files to upload, force enctype to multipart/form-data
-        if (count ($this->files) > 0) {
+        if (count($this->files) > 0) {
             $this->setEncType(self::ENC_FORMDATA);
         }
 

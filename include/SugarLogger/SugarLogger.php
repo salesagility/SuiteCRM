@@ -207,7 +207,7 @@ class SugarLogger implements LoggerTemplate
 
         //if we haven't opened a file pointer yet let's do that
         if (! $this->fp) {
-            $this->fp = fopen ($this->full_log_file, 'a');
+            $this->fp = fopen($this->full_log_file, 'a');
         }
 
 
@@ -228,7 +228,7 @@ class SugarLogger implements LoggerTemplate
 
         //write out to the file including the time in the dateFormat the process id , the user id , and the log level as well as the message
         fwrite($this->fp,
-		    strftime($this->dateFormat) . ' [' . getmypid () . '][' . $userID . '][' . strtoupper($level) . '] ' . $message . "\n"
+		    strftime($this->dateFormat) . ' [' . getmypid() . '][' . $userID . '][' . strtoupper($level) . '] ' . $message . "\n"
 		    );
     }
 
@@ -252,10 +252,10 @@ class SugarLogger implements LoggerTemplate
             $rollAt = ( int ) $match[1] * $units[strtolower($match[2])];
         }
         //check if our log file is greater than that or if we are forcing the log to roll if and only if roll size assigned the value correctly
-        if ($force || ($rollAt && filesize ($this->full_log_file) >= $rollAt)) {
+        if ($force || ($rollAt && filesize($this->full_log_file) >= $rollAt)) {
             //now lets move the logs starting at the oldest and going to the newest
             for ($i = $this->maxLogs - 2; $i > 0; $i --) {
-                if (file_exists ($this->log_dir . $this->logfile . $this->date_suffix . '_'. $i . $this->ext)) {
+                if (file_exists($this->log_dir . $this->logfile . $this->date_suffix . '_'. $i . $this->ext)) {
                     $to = $i + 1;
                     $old_name = $this->log_dir . $this->logfile . $this->date_suffix . '_'. $i . $this->ext;
                     $new_name = $this->log_dir . $this->logfile . $this->date_suffix . '_'. $to . $this->ext;
@@ -267,7 +267,7 @@ class SugarLogger implements LoggerTemplate
                 }
             }
             //now lets move the current .log file
-            sugar_rename ($this->full_log_file, $this->log_dir . $this->logfile . $this->date_suffix . '_1' . $this->ext);
+            sugar_rename($this->full_log_file, $this->log_dir . $this->logfile . $this->date_suffix . '_1' . $this->ext);
         }
     }
 

@@ -61,18 +61,18 @@ function deleteAttachmentCallBack(text)
 </script>
 <script>toggle_portal_flag(); function toggle_portal_flag()  {literal} { {/literal} {$TOGGLE_JS} {literal} } {/literal} </script>',
 ),
-	'panels' =>array (
-  		'lbl_note_information' => array (
-  					array ('contact_name','parent_name'),
-	    			array (
+	'panels' =>array(
+  		'lbl_note_information' => array(
+  					array('contact_name','parent_name'),
+	    			array(
                         array('name'=>'name', 'displayParams'=>array('size'=>60)),''
                     ),
 
-					array ( 
+					array( 
 						'filename',
 
 	    			),
-	    			array (
+	    			array(
                         array('name' => 'description', 'label' => 'LBL_NOTE_STATUS'),
                     ),
 
@@ -81,7 +81,7 @@ function deleteAttachmentCallBack(text)
 
 	  'LBL_PANEL_ASSIGNMENT' => array(
 	    array(
-		    array ('name' => 'assigned_user_name','label' => 'LBL_ASSIGNED_TO'),
+		    array('name' => 'assigned_user_name','label' => 'LBL_ASSIGNED_TO'),
 	    ),
 	  ),
 	)

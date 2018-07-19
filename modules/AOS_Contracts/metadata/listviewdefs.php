@@ -28,16 +28,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 global $sugar_config;
 $listViewDefs ['AOS_Contracts'] =
-array (
+array(
   'NAME' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
   'STATUS' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -46,7 +46,7 @@ array (
     'width' => '10%',
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'width' => '10%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'default' => true,
@@ -55,7 +55,7 @@ array (
     'link' => true,
   ),
   'CONTRACT_ACCOUNT' => 
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_CONTRACT_ACCOUNT',
     'default' => true,
@@ -63,33 +63,33 @@ array (
     'id' => 'CONTRACT_ACCOUNT_ID',
     'link' => true,
       'related_fields' =>
-          array (
+          array(
               'contract_account_id',
           ),
   ),
   'TOTAL_CONTRACT_VALUE' => 
-  array (
+  array(
     'label' => 'LBL_TOTAL_CONTRACT_VALUE',
     'currency_format' => true,
     'width' => '10%',
     'default' => true,
   ),
   'START_DATE' => 
-  array (
+  array(
     'type' => 'date',
     'label' => 'LBL_START_DATE',
     'width' => '10%',
     'default' => true,
   ),
   'END_DATE' => 
-  array (
+  array(
     'type' => 'date',
     'label' => 'LBL_END_DATE',
     'width' => '10%',
     'default' => true,
   ),
   'DATE_ENTERED' => 
-  array (
+  array(
     'width' => '5%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => preg_match('/^6\.?[2-9]/', $sugar_config['sugar_version']),

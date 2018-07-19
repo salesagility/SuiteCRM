@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 //holds various filter arrays for displaying vardef dropdowns
 //You can add your own if you would like
 
-$vardef_meta_array = array (
+$vardef_meta_array = array(
 
 	'standard_display' => array(
 		'inclusion' =>	array(

@@ -63,7 +63,7 @@ if (isset($_REQUEST['module_name'])) {
 
 
 
-    $xtpl=new XTemplate ('modules/LabelEditor/EditView.html');
+    $xtpl=new XTemplate('modules/LabelEditor/EditView.html');
     $xtpl->assign("MOD", $mod_strings);
     $xtpl->assign("APP", $app_strings);
     $xtpl->assign("MODULE_NAME", $_REQUEST['module_name']);

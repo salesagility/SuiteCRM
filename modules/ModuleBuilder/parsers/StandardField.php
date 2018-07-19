@@ -1,6 +1,6 @@
 <?php
-if (! defined ('sugarEntry') || ! sugarEntry) {
-    die ('Not A Valid Entry Point') ;
+if (! defined('sugarEntry') || ! sugarEntry) {
+    die('Not A Valid Entry Point') ;
 }
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,7 +41,7 @@ if (! defined ('sugarEntry') || ! sugarEntry) {
  ********************************************************************************/
 
 
-require_once ('modules/DynamicFields/DynamicField.php') ;
+require_once('modules/DynamicFields/DynamicField.php') ;
 
 class StandardField extends DynamicField
 {
@@ -113,8 +113,8 @@ class StandardField extends DynamicField
         $this->loadBaseDef($field->name);
         $newDef = $field->get_field_def();
         
-        require_once ('modules/DynamicFields/FieldCases.php') ;
-        $this->baseField = get_widget ($field->type) ;
+        require_once('modules/DynamicFields/FieldCases.php') ;
+        $this->baseField = get_widget($field->type) ;
         foreach ($field->vardef_map as $property => $fmd_col) {
             if ($property == "action" || $property == "label_value" || $property == "label"
                 || ((substr($property, 0, 3) == 'ext' && strlen($property) == 4))

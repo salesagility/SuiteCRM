@@ -186,7 +186,7 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
             }
         }
     } elseif ($run == $mod_strings['LBL_UW_BTN_DELETE_PACKAGE']) {
-        if (!empty ($_REQUEST['install_file'])) {
+        if (!empty($_REQUEST['install_file'])) {
             die($mod_strings['ERR_UW_NO_UPLOAD_FILE']);
         }
 

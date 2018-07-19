@@ -38,71 +38,71 @@
  ********************************************************************************/
 
 $viewdefs ['Cases'] =
-array (
+array(
   'EditView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'includes' => 
-      array (
+      array(
           0 =>
-              array (
+              array(
                   'file' => 'include/javascript/bindWithDelay.js',
               ),
         1 =>
-        array (
+        array(
           'file' => 'modules/AOK_KnowledgeBase/AOK_KnowledgeBase_SuggestionBox.js',
         ),
           2 =>
-              array (
+              array(
                   'file' => 'include/javascript/qtip/jquery.qtip.min.js',
               ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'LBL_CASE_INFORMATION' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
       'form' => 
-      array (
+      array(
         'enctype' => 'multipart/form-data',
       ),
     ),
     'panels' => 
-    array (
+    array(
       'lbl_case_information' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'case_number',
             'type' => 'readonly',
           ),
           1 => 'priority',
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'state',
             'comment' => 'The state of the case (i.e. open/closed)',
             'label' => 'LBL_STATE',
@@ -110,68 +110,68 @@ array (
           1 => 'status',
         ),
         2 => 
-        array (
+        array(
           0 => 'type',
           1 => 'account_name',
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
             'displayParams' => 
-            array (
+            array(
               //'size' => 75,
             ),
           ),
             1 =>
-                array (
+                array(
                     'name' => 'suggestion_box',
                   //'studio' => 'visible',
                     'label' => 'LBL_SUGGESTION_BOX'
                 ),
         ),
         4 =>
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'description',
           ),
         ),
         5 =>
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'resolution',
             'nl2br' => true,
           ),
         ),
         6 =>
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'update_text',
             'studio' => 'visible',
             'label' => 'LBL_UPDATE_TEXT',
           ),
         ),
           7 => array(
-              0 => array (
+              0 => array(
                   'name' => 'internal',
                   'studio' => 'visible',
                   'label' => 'LBL_INTERNAL',
               ),
           ),
         8 =>
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'case_update_form',
             'studio' => 'visible',
           ),
         ),
         9 =>
-        array (
+        array(
           0 => 'assigned_user_name',
         ),
       ),

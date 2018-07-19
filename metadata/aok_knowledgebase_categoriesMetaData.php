@@ -37,12 +37,12 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary["aok_knowledgebase_categories"] = array (
+$dictionary["aok_knowledgebase_categories"] = array(
   'true_relationship_type' => 'many-to-many',
   'relationships' => 
-  array (
+  array(
     'aok_knowledgebase_categories' =>
-    array (
+    array(
       'lhs_module' => 'AOK_KnowledgeBase',
       'lhs_table' => 'aok_knowledgebase',
       'lhs_key' => 'id',
@@ -57,20 +57,20 @@ $dictionary["aok_knowledgebase_categories"] = array (
   ),
   'table' => 'aok_knowledgebase_categories',
   'fields' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
     1 => 
-    array (
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
     2 => 
-    array (
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
@@ -78,35 +78,35 @@ $dictionary["aok_knowledgebase_categories"] = array (
       'required' => true,
     ),
     3 => 
-    array (
+    array(
       'name' => 'aok_knowledgebase_id',
       'type' => 'varchar',
       'len' => 36,
     ),
     4 => 
-    array (
+    array(
       'name' => 'aok_knowledge_base_categories_id',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
   'indices' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'aok_knowledgebase_categoriesspk',
       'type' => 'primary',
       'fields' => 
-      array (
+      array(
         0 => 'id',
       ),
     ),
     1 => 
-    array (
+    array(
       'name' => 'aok_knowledgebase_categories_alt',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'aok_knowledgebase_id',
         1 => 'aok_knowledge_base_categories_id',
       ),

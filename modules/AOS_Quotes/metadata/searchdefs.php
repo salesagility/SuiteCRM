@@ -31,22 +31,22 @@
                            ),
                     'layout' => array(
 							    'basic_search' => 
-					    array (
+					    array(
 					      'name' => 
-					      array (
+					      array(
 					        'name' => 'name',
 					        'default' => true,
 					        'width' => '10%',
 					      ),
 					      'current_user_only' => 
-					      array (
+					      array(
 					        'name' => 'current_user_only',
 					        'label' => 'LBL_CURRENT_USER_FILTER',
 					        'type' => 'bool',
 					        'default' => true,
 					        'width' => '10%',
 					      ),
-                            'favorites_only' => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+                            'favorites_only' => array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
 
 					    ),
 						'advanced_search' => array(

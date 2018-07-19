@@ -38,12 +38,12 @@
  ********************************************************************************/
 
 
-$dictionary["documents_contacts"] = array (
+$dictionary["documents_contacts"] = array(
   'true_relationship_type' => 'many-to-many',
   'relationships' => 
-  array (
+  array(
     'documents_contacts' => 
-    array (
+    array(
       'lhs_module' => 'Documents',
       'lhs_table' => 'documents',
       'lhs_key' => 'id',
@@ -58,20 +58,20 @@ $dictionary["documents_contacts"] = array (
   ),
   'table' => 'documents_contacts',
   'fields' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
     1 => 
-    array (
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
     2 => 
-    array (
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
@@ -79,45 +79,45 @@ $dictionary["documents_contacts"] = array (
       'required' => true,
     ),
     3 => 
-    array (
+    array(
       'name' => 'document_id',
       'type' => 'varchar',
       'len' => 36,
     ),
     4 => 
-    array (
+    array(
       'name' => 'contact_id',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
   'indices' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'documents_contactsspk',
       'type' => 'primary',
       'fields' => 
-      array (
+      array(
         0 => 'id',
       ),
     ),
     1 => 
-    array (
+    array(
       'name' => 'documents_contacts_contact_id',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'contact_id',
         1 => 'document_id',
       ),
     ),
     2 => 
-    array (
+    array(
       'name' => 'documents_contacts_document_id',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'document_id',
         1 => 'contact_id',
       ),

@@ -307,7 +307,7 @@ class XMLSecurityKey
     private function encryptMcrypt($data)
     {
         $td = mcrypt_module_open($this->cryptParams['cipher'], '', $this->cryptParams['mode'], '');
-        $this->iv = mcrypt_create_iv (mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
+        $this->iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
         mcrypt_generic_init($td, $this->key, $this->iv);
         if ($this->cryptParams['mode'] == MCRYPT_MODE_CBC) {
             $bs = mcrypt_enc_get_block_size($td);
@@ -376,7 +376,7 @@ class XMLSecurityKey
         if (! empty($this->cryptParams['digest'])) {
             $algo = $this->cryptParams['digest'];
         }
-        if (! openssl_sign ($data, $signature, $this->key, $algo)) {
+        if (! openssl_sign($data, $signature, $this->key, $algo)) {
             throw new Exception('Failure Signing Data: ' . openssl_error_string() . ' - ' . $algo);
         }
         return $signature;
@@ -388,7 +388,7 @@ class XMLSecurityKey
         if (! empty($this->cryptParams['digest'])) {
             $algo = $this->cryptParams['digest'];
         }
-        return openssl_verify ($data, $signature, $this->key, $algo);
+        return openssl_verify($data, $signature, $this->key, $algo);
     }
 
     public function encryptData($data)
@@ -473,7 +473,7 @@ class XMLSecurityKey
         $sequenceEncoding = XMLSecurityKey:: makeAsnSegment(0x30, $modulusEncoding.$exponentEncoding);
         $bitstringEncoding = XMLSecurityKey::makeAsnSegment(0x03, $sequenceEncoding);
         $rsaAlgorithmIdentifier = pack("H*", "300D06092A864886F70D0101010500");
-        $publicKeyInfo = XMLSecurityKey::makeAsnSegment (0x30, $rsaAlgorithmIdentifier.$bitstringEncoding);
+        $publicKeyInfo = XMLSecurityKey::makeAsnSegment(0x30, $rsaAlgorithmIdentifier.$bitstringEncoding);
 
         /* encode the publicKeyInfo in base64 and add PEM brackets */
         $publicKeyInfoBase64 = base64_encode($publicKeyInfo);

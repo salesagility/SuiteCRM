@@ -1,110 +1,110 @@
 <?php
 $module_name = 'AOS_Products';
 $viewdefs [$module_name] = 
-array (
+array(
   'QuickCreate' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'form' => 
-      array (
+      array(
         'enctype' => 'multipart/form-data',
         'headerTpl' => 'modules/AOS_Products/tpls/EditViewHeader.tpl',
       ),
       'includes' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'file' => 'modules/AOS_Products/js/products.js',
         ),
       ),
       'useTabs' => false,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
             'label' => 'LBL_NAME',
           ),
           1 => 
-          array (
+          array(
             'name' => 'part_number',
             'label' => 'LBL_PART_NUMBER',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'url',
             'label' => 'LBL_URL',
           ),
           1 => 
-          array (
+          array(
             'name' => 'type',
             'label' => 'LBL_TYPE',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'cost',
             'label' => 'LBL_COST',
           ),
           1 => 
-          array (
+          array(
             'name' => 'price',
             'label' => 'LBL_PRICE',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'contact',
             'label' => 'LBL_CONTACT',
           ),
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
           ),
         ),
         5 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'product_image',
             'customCode' => '{$PRODUCT_IMAGE}',
           ),

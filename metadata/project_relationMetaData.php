@@ -78,7 +78,7 @@ $dictionary['project_relation'] = array(
 			'required' => true,
 			'default' => '0',
 		),
-	    'date_modified' => array (
+	    'date_modified' => array(
     		'name' => 'date_modified',
     		'vname' => 'LBL_DATE_MODIFIED',
     		'type' => 'datetime',
@@ -94,7 +94,7 @@ $dictionary['project_relation'] = array(
 	),
 
  	'relationships' => 
- 		array ('projects_accounts' => array('lhs_module'=> 'Accounts', 'lhs_table'=> 'accounts', 'lhs_key' => 'id',
+ 		array('projects_accounts' => array('lhs_module'=> 'Accounts', 'lhs_table'=> 'accounts', 'lhs_key' => 'id',
 		'rhs_module'=> 'Project', 'rhs_table'=> 'project', 'rhs_key' => 'id',
 		'relationship_type'=>'many-to-many',
 		'join_table'=> 'project_relation', 'join_key_lhs'=>'relation_id', 'join_key_rhs'=>'project_id',

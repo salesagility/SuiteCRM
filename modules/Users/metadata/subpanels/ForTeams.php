@@ -80,7 +80,7 @@ $subpanel_layout = array(
             'sortable'=>false,
             'sortable'=>false,
         ),
-        'phone_work'=>array (
+        'phone_work'=>array(
             'vname' => 'LBL_LIST_PHONE',
             'width' => '21%',
         ),

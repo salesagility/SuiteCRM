@@ -3,21 +3,21 @@
 $module_name = 'jjwg_Maps';
 
 $viewdefs[$module_name] = 
-array (
+array(
   'EditView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -25,55 +25,55 @@ array (
       'useTabs' => false,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'name',
             'label' => 'LBL_NAME',
           ),
           1 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'parent_name',
             'studio' => 'visible',
             'label' => 'LBL_FLEX_RELATE',
           ),
           1 => 
-          array (
+          array(
             'name' => 'unit_type',
             'studio' => 'visible',
             'label' => 'LBL_UNIT_TYPE',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'module_type',
             'studio' => 'visible',
             'label' => 'LBL_MODULE_TYPE',
           ),
           1 => 
-          array (
+          array(
             'name' => 'distance',
             'label' => 'LBL_DISTANCE',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'description',
             'comment' => 'Full text of the note',
             'label' => 'LBL_DESCRIPTION',

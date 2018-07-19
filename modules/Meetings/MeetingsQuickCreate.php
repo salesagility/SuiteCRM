@@ -84,7 +84,7 @@ class MeetingsQuickCreate extends QuickCreate
         if (is_null($focus->time_start)) {
             $focus->time_start = $timedate->to_display_time(TimeDate::getInstance()->nowDb(), true);
         }
-        if (!isset ($focus->duration_hours)) {
+        if (!isset($focus->duration_hours)) {
             $focus->duration_hours = "1";
         }
 
@@ -113,7 +113,7 @@ class MeetingsQuickCreate extends QuickCreate
         
         
         // We default the to assume that the time preference is set to 11:00 (i.e. without meridiem)
-        $hours_arr = array ();
+        $hours_arr = array();
         $num_of_hours = 24;
         $start_at = 0;
 

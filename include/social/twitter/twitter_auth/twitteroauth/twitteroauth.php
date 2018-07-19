@@ -251,7 +251,7 @@ class TwitterOAuth
         $this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);
         $this->http_info = array_merge($this->http_info, curl_getinfo($ci));
         $this->url = $url;
-        curl_close ($ci);
+        curl_close($ci);
         return $response;
     }
 

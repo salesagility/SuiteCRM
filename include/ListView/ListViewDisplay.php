@@ -81,7 +81,7 @@ class ListViewDisplay
     public function __construct()
     {
         $this->lvd = new ListViewData();
-        $this->searchColumns = array () ;
+        $this->searchColumns = array() ;
     }
 
     /**

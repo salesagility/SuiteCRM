@@ -1,15 +1,15 @@
 <?php
 $module_name = 'AOS_Product_Categories';
 $viewdefs [$module_name] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
@@ -18,55 +18,55 @@ array (
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => true,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => 'assigned_user_name',
         ),
         1 => 
-        array (
+        array(
           0 => 'date_entered',
           1 => 'date_modified',
         ),
         2 => 
-        array (
+        array(
           0 => 'description',
           1 => 
-          array (
+          array(
             'name' => 'parent_category_name',
             'label' => 'LBL_PRODUCT_CATEGORYS_NAME',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'is_parent',
             'label' => 'LBL_IS_PARENT',
           ),

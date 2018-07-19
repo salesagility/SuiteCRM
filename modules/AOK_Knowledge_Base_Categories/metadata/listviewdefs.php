@@ -39,16 +39,16 @@
 
 $module_name = 'AOK_Knowledge_Base_Categories';
 $listViewDefs [$module_name] = 
-array (
+array(
   'NAME' => 
-  array (
+  array(
     'width' => '32%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
   'CREATED_BY_NAME' => 
-  array (
+  array(
     'type' => 'relate',
     'link' => true,
     'label' => 'LBL_CREATED',
@@ -57,7 +57,7 @@ array (
     'default' => true,
   ),
   'MODIFIED_BY_NAME' => 
-  array (
+  array(
     'type' => 'relate',
     'link' => true,
     'label' => 'LBL_MODIFIED_NAME',
@@ -66,21 +66,21 @@ array (
     'default' => true,
   ),
   'DATE_ENTERED' => 
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
   ),
   'DATE_MODIFIED' => 
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',
     'width' => '10%',
     'default' => true,
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'width' => '9%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'module' => 'Employees',

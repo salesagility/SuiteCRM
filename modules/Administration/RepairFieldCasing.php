@@ -87,7 +87,7 @@ if (is_admin($current_user)) {
         $views = array('basic_search', 'advanced_search', 'detailview', 'editview', 'quickcreate');
         $class_names = array();
 
-        require_once ('include/TemplateHandler/TemplateHandler.php') ;
+        require_once('include/TemplateHandler/TemplateHandler.php') ;
         require_once('modules/ModuleBuilder/parsers/ParserFactory.php');
 
         foreach ($modules as $module) {

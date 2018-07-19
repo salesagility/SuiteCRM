@@ -325,7 +325,7 @@ class Importer
 
         // check to see that the indexes being entered are unique.
         if (isset($_REQUEST['enabled_dupes']) && $_REQUEST['enabled_dupes'] != "") {
-            $toDecode = html_entity_decode  ($_REQUEST['enabled_dupes'], ENT_QUOTES);
+            $toDecode = html_entity_decode($_REQUEST['enabled_dupes'], ENT_QUOTES);
             $enabled_dupes = json_decode($toDecode);
             $idc = new ImportDuplicateCheck($focus);
 
@@ -337,7 +337,7 @@ class Importer
         }
         //Allow fields to be passed in for dup check as well (used by external adapters)
         elseif (!empty($_REQUEST['enabled_dup_fields'])) {
-            $toDecode = html_entity_decode  ($_REQUEST['enabled_dup_fields'], ENT_QUOTES);
+            $toDecode = html_entity_decode($_REQUEST['enabled_dup_fields'], ENT_QUOTES);
             $enabled_dup_fields = json_decode($toDecode);
             $idc = new ImportDuplicateCheck($focus);
             if ($idc->isADuplicateRecordByFields($enabled_dup_fields)) {
@@ -359,9 +359,9 @@ class Importer
 
             $dbrow = $focus->db->fetchByAssoc($result);
 
-            if (isset ($dbrow['id']) && $dbrow['id'] != -1) {
+            if (isset($dbrow['id']) && $dbrow['id'] != -1) {
                 // if it exists but was deleted, just remove it
-                if (isset ($dbrow['deleted']) && $dbrow['deleted'] == 1 && $this->isUpdateOnly ==false) {
+                if (isset($dbrow['deleted']) && $dbrow['deleted'] == 1 && $this->isUpdateOnly ==false) {
                     $this->removeDeletedBean($focus);
                     $focus->new_with_id = true;
                 } else {
@@ -582,7 +582,7 @@ class Importer
         $mappingValsArr = $this->importColumns;
         $mapping_file = new ImportMap();
         if (isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on') {
-            $header_to_field = array ();
+            $header_to_field = array();
             foreach ($this->importColumns as $pos => $field_name) {
                 if (isset($firstrow[$pos]) && isset($field_name)) {
                     $header_to_field[$firstrow[$pos]] = $field_name;
@@ -773,7 +773,7 @@ class Importer
 
         //harvest the dupe index settings
         if (isset($_REQUEST['enabled_dupes'])) {
-            $toDecode = html_entity_decode  ($_REQUEST['enabled_dupes'], ENT_QUOTES);
+            $toDecode = html_entity_decode($_REQUEST['enabled_dupes'], ENT_QUOTES);
             $dupe_ind = json_decode($toDecode);
 
             foreach ($dupe_ind as $dupe) {

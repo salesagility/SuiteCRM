@@ -38,28 +38,28 @@
  ********************************************************************************/
 
 $searchdefs ['Calls'] =
-array (
+array(
   'layout' => 
-  array (
+  array(
     'basic_search' => 
-    array (
+    array(
       'name' => 
-      array (
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
       'current_user_only' => 
-      array (
+      array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
         'default' => true,
         'width' => '10%',
       ),
-        'favorites_only' => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+        'favorites_only' => array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
       0 =>
-      array (
+      array(
         'name' => 'open_only',
         'label' => 'LBL_OPEN_ITEMS',
         'type' => 'bool',
@@ -68,15 +68,15 @@ array (
       ),
     ),
     'advanced_search' => 
-    array (
+    array(
       'name' => 
-      array (
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
       'parent_name' => 
-      array (
+      array(
         'type' => 'parent',
         'label' => 'LBL_LIST_RELATED_TO',
         'width' => '10%',
@@ -84,7 +84,7 @@ array (
         'name' => 'parent_name',
       ),
       'current_user_only' => 
-      array (
+      array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
@@ -92,7 +92,7 @@ array (
         'width' => '10%',
       ),
       'direction' => 
-      array (
+      array(
         'type' => 'enum',
         'label' => 'LBL_DIRECTION',
         'width' => '10%',
@@ -100,13 +100,13 @@ array (
         'name' => 'direction',
       ),
       'status' => 
-      array (
+      array(
         'name' => 'status',
         'default' => true,
         'width' => '10%',
       ),
       'date_start' => 
-      array (
+      array(
         'type' => 'datetimecombo',
         'label' => 'LBL_DATE',
         'width' => '10%',
@@ -114,7 +114,7 @@ array (
         'name' => 'date_start',
       ),
       'date_end' => 
-      array (
+      array(
         'type' => 'datetimecombo',
         'label' => 'LBL_DATE_END',
         'width' => '10%',
@@ -122,15 +122,15 @@ array (
         'name' => 'date_end',
       ),
       'assigned_user_id' => 
-      array (
+      array(
         'name' => 'assigned_user_id',
         'type' => 'enum',
         'label' => 'LBL_ASSIGNED_TO',
         'function' => 
-        array (
+        array(
           'name' => 'get_user_array',
           'params' => 
-          array (
+          array(
             0 => false,
           ),
         ),
@@ -140,11 +140,11 @@ array (
     ),
   ),
   'templateMeta' => 
-  array (
+  array(
     'maxColumns' => '3',
     'maxColumnsBasic' => '4',
     'widths' => 
-    array (
+    array(
       'label' => '10',
       'field' => '30',
     ),

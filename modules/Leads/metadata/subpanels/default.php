@@ -95,7 +95,7 @@ $subpanel_layout = array(
 			'width' => '26%',
 			'sortable'=>false,
 		),
-		'assigned_user_name' => array (
+		'assigned_user_name' => array(
 			'name' => 'assigned_user_name',
 			'vname' => 'LBL_LIST_ASSIGNED_TO_NAME',
 			'widget_class' => 'SubPanelDetailViewLink',

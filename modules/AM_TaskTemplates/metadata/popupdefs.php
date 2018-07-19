@@ -1,20 +1,20 @@
 <?php
-$popupMeta = array (
+$popupMeta = array(
     'moduleMain' => 'AM_TaskTemplates',
     'varName' => 'AM_TaskTemplates',
     'orderBy' => 'am_tasktemplates.name',
-    'whereClauses' => array (
+    'whereClauses' => array(
   'name' => 'am_tasktemplates.name',
 ),
-    'searchInputs' => array (
+    'searchInputs' => array(
   0 => 'am_tasktemplates_number',
   1 => 'name',
   2 => 'priority',
   3 => 'status',
 ),
-    'listviewdefs' => array (
+    'listviewdefs' => array(
   'NAME' => 
-  array (
+  array(
     'type' => 'name',
     'link' => true,
     'label' => 'LBL_NAME',
@@ -22,7 +22,7 @@ $popupMeta = array (
     'default' => true,
   ),
   'STATUS' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -30,7 +30,7 @@ $popupMeta = array (
     'width' => '10%',
   ),
   'PRIORITY' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -38,21 +38,21 @@ $popupMeta = array (
     'width' => '10%',
   ),
   'MILESTONE_FLAG' => 
-  array (
+  array(
     'type' => 'bool',
     'default' => true,
     'label' => 'LBL_MILESTONE_FLAG',
     'width' => '10%',
   ),
   'ORDER_NUMBER' => 
-  array (
+  array(
     'type' => 'int',
     'label' => 'LBL_ORDER_NUMBER',
     'width' => '10%',
     'default' => true,
   ),
   'RELATIONSHIP_TYPE' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -60,7 +60,7 @@ $popupMeta = array (
     'width' => '10%',
   ),
   'DURATION' => 
-  array (
+  array(
     'type' => 'int',
     'label' => 'LBL_DURATION',
     'width' => '10%',

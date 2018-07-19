@@ -63,7 +63,7 @@ $subpanel_layout = array(
 	 		'vname' => 'LBL_LAST_RUN',
 	 		'width' => '25%',
 		),
-		'assigned_user_name' => array (
+		'assigned_user_name' => array(
 			'name' => 'assigned_user_name',
 			'vname' => 'LBL_ASSIGNED_USER',
 			'widget_class' => 'SubPanelDetailViewLink',

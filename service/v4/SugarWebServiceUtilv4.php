@@ -537,11 +537,11 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 
             case 'default':
             default:
-                if (file_exists ('modules/'.$module.'/metadata/subpaneldefs.php')) {
-                    require ('modules/'.$module.'/metadata/subpaneldefs.php');
+                if (file_exists('modules/'.$module.'/metadata/subpaneldefs.php')) {
+                    require('modules/'.$module.'/metadata/subpaneldefs.php');
                 }
                 if (file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php')) {
-                    require ('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
+                    require('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
                 }
         }
 

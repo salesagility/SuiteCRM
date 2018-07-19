@@ -40,8 +40,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$fields_array['InboundEmail'] = array (
-	'column_fields' => array (
+$fields_array['InboundEmail'] = array(
+	'column_fields' => array(
 		'id',
 		'deleted',
 		'date_entered',
@@ -60,14 +60,14 @@ $fields_array['InboundEmail'] = array (
 		'mailbox_type',
 		'template_id',
 	),
-	'list_fields' => array (
+	'list_fields' => array(
 		'id',
 		'name',
 		'server_url',
 		'status',
 		'mailbox_type_name',
 	),
-	'required_fields' => array (
+	'required_fields' => array(
 		'server_url' => 1,
 		'service' => 1,
 	),

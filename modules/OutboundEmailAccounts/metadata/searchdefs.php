@@ -1,19 +1,19 @@
 <?php
 $module_name = 'OutboundEmailAccounts';
 $searchdefs [$module_name] = 
-array (
+array(
   'layout' => 
-  array (
+  array(
     'basic_search' => 
-    array (
+    array(
       'name' => 
-      array (
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
       'mail_smtpuser' =>
-      array (
+      array(
         'type' => 'varchar',
         'label' => 'LBL_USERNAME',
         'width' => '10%',
@@ -21,7 +21,7 @@ array (
         'name' => 'mail_smtpuser',
       ),
       'mail_smtpserver' =>
-      array (
+      array(
         'type' => 'varchar',
         'label' => 'LBL_SMTP_SERVERNAME',
         'width' => '10%',
@@ -29,7 +29,7 @@ array (
         'name' => 'mail_smtpserver',
       ),
       'current_user_only' => 
-      array (
+      array(
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
@@ -38,15 +38,15 @@ array (
       ),
     ),
     'advanced_search' => 
-    array (
+    array(
       'name' => 
-      array (
+      array(
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
       'mail_smtpuser' =>
-      array (
+      array(
         'type' => 'varchar',
         'label' => 'LBL_USERNAME',
         'width' => '10%',
@@ -54,7 +54,7 @@ array (
         'name' => 'mail_smtpuser',
       ),
       'mail_smtpserver' =>
-      array (
+      array(
         'type' => 'varchar',
         'label' => 'LBL_SMTP_SERVERNAME',
         'width' => '10%',
@@ -71,15 +71,15 @@ array (
 //        'name' => 'description',
 //      ),
       'assigned_user_id' => 
-      array (
+      array(
         'name' => 'assigned_user_id',
         'label' => 'LBL_ASSIGNED_TO',
         'type' => 'enum',
         'function' => 
-        array (
+        array(
           'name' => 'get_user_array',
           'params' => 
-          array (
+          array(
             0 => false,
           ),
         ),
@@ -89,11 +89,11 @@ array (
     ),
   ),
   'templateMeta' => 
-  array (
+  array(
     'maxColumns' => '3',
     'maxColumnsBasic' => '4',
     'widths' => 
-    array (
+    array(
       'label' => '10',
       'field' => '30',
     ),

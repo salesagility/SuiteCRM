@@ -55,7 +55,7 @@ require_once 'modules/Campaigns/utils.php';
 
 global $mod_strings, $app_list_strings, $app_strings, $current_user, $import_bean_map,$import_file_name, $theme;
 
-$xtpl=new XTemplate ('modules/Campaigns/WebToLeadCreation.html');
+$xtpl=new XTemplate('modules/Campaigns/WebToLeadCreation.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 if (isset($_REQUEST['module'])) {

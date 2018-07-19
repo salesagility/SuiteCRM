@@ -50,14 +50,14 @@ $viewdefs['Project']['QuickCreate'] = array(
                        ),
 'panels' =>
 
-array (
+array(
   
-  array (
+  array(
     'name',
     'status'
   ),
   
-  array (
+  array(
     'estimated_start_date',
     'estimated_end_date'
   ),

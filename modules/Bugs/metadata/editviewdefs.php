@@ -49,53 +49,53 @@ $viewdefs['Bugs']['EditView'] = array(
                                             ),
 
 
- 'panels' =>array (
+ 'panels' =>array(
 	  'lbl_bug_information' =>
-		  array (
+		  array(
 
-		    array (
-		      array (
+		    array(
+		      array(
 		        'name' => 'bug_number',
 		        'type' => 'readonly',
 		      ),
 		    ),
 
-		    array (
+		    array(
 		      array('name'=>'name', 'displayParams'=>array('size'=>60, 'required'=>true)),
 		    ),
 
-		    array (
+		    array(
 		      'priority',
 		      'type',
 		    ),
 
-		    array (
+		    array(
 		      'source',
 		      'status',
 
 		    ),
 
-		    array (
+		    array(
 		      'product_category',
 		      'resolution',
 		    ),
 
 
-		    array (
+		    array(
 		      'found_in_release',
 		      'fixed_in_release'
 		    ),
 
-		    array (
-		      array (
+		    array(
+		      array(
 			      'name' => 'description',
 			      'nl2br' => true,
 		      ),
 		    ),
 
 
-		    array (
-		      array (
+		    array(
+		      array(
 			      'name' => 'work_log',
 			      'nl2br' => true,
 		      ),
@@ -104,9 +104,9 @@ $viewdefs['Bugs']['EditView'] = array(
 	  ),
 
       'LBL_PANEL_ASSIGNMENT' =>
-      array (
-        array (
-            array (
+      array(
+        array(
+            array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),

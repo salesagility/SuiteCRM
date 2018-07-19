@@ -29,7 +29,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $layout_defs['AOS_Quotes'] = array(
 	'subpanel_setup' => array(
 		'aos_quotes_aos_contracts' =>
- 		array (
+ 		array(
   			'order' => 100,
 			'module' => 'AOS_Contracts',
 			'subpanel_name' => 'default',
@@ -38,13 +38,13 @@ $layout_defs['AOS_Quotes'] = array(
 			'title_key' => 'AOS_Contracts',
 			'get_subpanel_data' => 'aos_quotes_aos_contracts',
 			'top_buttons' => 
-			array (
+			array(
 				0 => 
-				array (
+				array(
 					'widget_class' => 'SubPanelTopCreateButton',
 				),
     				1 => 
-    				array (
+    				array(
 					'widget_class' => 'SubPanelTopSelectButton',
 					'popup_module' => 'AOS_Contracts',
 					'mode' => 'MultiSelect',
@@ -53,7 +53,7 @@ $layout_defs['AOS_Quotes'] = array(
 		),		
 	
 	'aos_quotes_aos_invoices' => 
-	array (
+	array(
   		'order' => 100,
   		'module' => 'AOS_Invoices',
   		'subpanel_name' => 'default',
@@ -62,13 +62,13 @@ $layout_defs['AOS_Quotes'] = array(
   		'title_key' => 'AOS_Invoices',
   		'get_subpanel_data' => 'aos_quotes_aos_invoices',
   		'top_buttons' => 
-  		array (
+  		array(
     			0 => 
-   			 array (
+   			 array(
 				'widget_class' => 'SubPanelTopCreateButton',
 			),
 			1 => 
-			array (
+			array(
 				'widget_class' => 'SubPanelTopSelectButton',
 				'popup_module' => 'AOS_Invoices',
 				'mode' => 'MultiSelect',
@@ -77,7 +77,7 @@ $layout_defs['AOS_Quotes'] = array(
 	),
 	
 	'aos_quotes_project' => 
-	array (
+	array(
 		'order' => 100,
 		'module' => 'Project',
 		'subpanel_name' => 'default',
@@ -86,13 +86,13 @@ $layout_defs['AOS_Quotes'] = array(
 		'title_key' => 'Project',
 		'get_subpanel_data' => 'aos_quotes_project',
 		'top_buttons' => 
-		array (
+		array(
 			0 => 
-			array (
+			array(
 				'widget_class' => 'SubPanelTopCreateButton',
 			),
 			1 => 
-			array (
+			array(
 				'widget_class' => 'SubPanelTopSelectButton',
 				'popup_module' => 'Accounts',
 				'mode' => 'MultiSelect',

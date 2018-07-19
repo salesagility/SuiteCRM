@@ -251,11 +251,11 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         switch ($type) {
 	        case 'default':
 	        default:
-	            if (file_exists ('modules/'.$module.'/metadata/subpaneldefs.php')) {
-	                require ('modules/'.$module.'/metadata/subpaneldefs.php');
+	            if (file_exists('modules/'.$module.'/metadata/subpaneldefs.php')) {
+	                require('modules/'.$module.'/metadata/subpaneldefs.php');
 	            }
 	            if (file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php')) {
-	                require ('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
+	                require('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
 	            }
 	    }
 

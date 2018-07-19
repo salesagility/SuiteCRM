@@ -69,5 +69,5 @@ if (isset($_REQUEST['mode']) and $_REQUEST['mode']=='Test') {
 }
 
 $return_id=!empty($_REQUEST['return_id'])?$_REQUEST['return_id']:$focus->id;
-require_once ('include/formbase.php');
+require_once('include/formbase.php');
 handleRedirect($return_id, $_REQUEST['return_module']);

@@ -211,8 +211,8 @@ class SubPanelTiles
 
             if (!empty($usersLayout)) {
                 $availableTabs = $tabs ;
-                $tabs = array_intersect ($usersLayout, $availableTabs) ; // remove any tabs that have been removed since the user's layout was saved
-                foreach (array_diff ($availableTabs, $usersLayout) as $tab) {
+                $tabs = array_intersect($usersLayout, $availableTabs) ; // remove any tabs that have been removed since the user's layout was saved
+                foreach (array_diff($availableTabs, $usersLayout) as $tab) {
                     $tabs [] = $tab;
                 }
             }

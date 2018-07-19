@@ -53,7 +53,7 @@ $dictionary['Tracker'] = array(
             'auto_increment' => true,
             'reportable'=>true,
         ),
-	    'monitor_id'=>array (
+	    'monitor_id'=>array(
 		    'name' => 'monitor_id',
 		    'vname' => 'LBL_MONITOR_ID',
 		    'type' => 'id',
@@ -118,7 +118,7 @@ $dictionary['Tracker'] = array(
             'len' => '1',
             'default' => '0',
         ),
-	    'deleted' =>array (
+	    'deleted' =>array(
 		    'name' => 'deleted',
 		    'vname' => 'LBL_DELETED',
 		    'type' => 'bool',
@@ -126,7 +126,7 @@ $dictionary['Tracker'] = array(
 		    'reportable'=>false,
 		    'comment' => 'Record deletion indicator'
 		),
-		'assigned_user_link'=>array (
+		'assigned_user_link'=>array(
 		    'name' => 'assigned_user_link',
 		    'type' => 'link',
 		    'relationship' => 'tracker_user_id',
@@ -136,7 +136,7 @@ $dictionary['Tracker'] = array(
 		    'bean_name'=>'User',
 		    'source'=>'non-db',
 		),
-		'monitor_id_link'=>array (
+		'monitor_id_link'=>array(
 		    'name' => 'monitor_id_link',
 		    'type' => 'link',
 		    'relationship' => 'tracker_monitor_id',
@@ -201,7 +201,7 @@ $dictionary['Tracker'] = array(
     ),
 
     //relationships
- 	'relationships' => array (
+ 	'relationships' => array(
 	  'tracker_monitor_id' =>
 		   array(
 				'lhs_module'=> 'TrackerPerfs', 'lhs_table'=> 'tracker_perf', 'lhs_key' => 'monitor_id',

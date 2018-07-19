@@ -138,7 +138,7 @@ if (isset($_REQUEST['guid'])) {
 
 if ($redirect != '0') {
     header('location:index.php?action=Login&module=Users');
-    exit ();
+    exit();
 }
 
 ////	PASSWORD GENERATED LINK CHECK USING

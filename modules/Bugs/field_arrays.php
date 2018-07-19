@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Bug'] = array ('column_fields' => array("id"
+$fields_array['Bug'] = array('column_fields' => array("id"
 		, "name"
 		, "bug_number"
 		, "date_entered"

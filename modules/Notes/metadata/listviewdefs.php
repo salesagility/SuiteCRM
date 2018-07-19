@@ -38,16 +38,16 @@
  ********************************************************************************/
 
 $listViewDefs ['Notes'] = 
-array (
+array(
   'NAME' => 
-  array (
+  array(
     'width' => '40%',
     'label' => 'LBL_LIST_SUBJECT',
     'link' => true,
     'default' => true,
   ),
   'CONTACT_NAME' => 
-  array (
+  array(
     'width' => '20%',
     'label' => 'LBL_LIST_CONTACT',
     'link' => true,
@@ -56,12 +56,12 @@ array (
     'default' => true,
     'ACLTag' => 'CONTACT',
     'related_fields' => 
-    array (
+    array(
       0 => 'contact_id',
     ),
   ),
   'PARENT_NAME' => 
-  array (
+  array(
     'width' => '20%',
     'label' => 'LBL_LIST_RELATED_TO',
     'dynamic_module' => 'PARENT_TYPE',
@@ -71,20 +71,20 @@ array (
     'sortable' => false,
     'ACLTag' => 'PARENT',
     'related_fields' => 
-    array (
+    array(
       0 => 'parent_id',
       1 => 'parent_type',
     ),
   ),
   
   'FILENAME' => 
-  array (
+  array(
     'width' => '20%',
     'label' => 'LBL_LIST_FILENAME',
     'default' => true,
     'type' => 'file',
     'related_fields' => 
-    array (
+    array(
       0 => 'file_url',
       1 => 'id',
     ),
@@ -94,22 +94,22 @@ array (
     ),
   ),
   'CREATED_BY_NAME' => 
-  array (
+  array(
     'type' => 'relate',
     'label' => 'LBL_CREATED_BY',
     'width' => '10%',
     'default' => true,
-    'related_fields' =>  array ( 'created_by' ),
+    'related_fields' =>  array( 'created_by' ),
   ),
   'DATE_MODIFIED' => 
-  array (
+  array(
     'width' => '20%',
     'label' => 'LBL_DATE_MODIFIED',
     'link' => false,
     'default' => false,
   ),
   'DATE_ENTERED' => 
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',

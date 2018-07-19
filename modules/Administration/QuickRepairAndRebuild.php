@@ -164,7 +164,7 @@ class RepairAndClear
                     if (isset($beanFiles[$bean_name]) && file_exists($beanFiles[$bean_name])) {
                         require_once($beanFiles[$bean_name]);
                         $GLOBALS['reload_vardefs'] = true;
-                        $focus = new $bean_name ();
+                        $focus = new $bean_name();
                         #30273
                         if ($focus->disable_vardefs == false) {
                             include('modules/' . $focus->module_dir . '/vardefs.php');
@@ -183,10 +183,10 @@ class RepairAndClear
                 if ($this->show_output) {
                     echo "<script type=\"text/javascript\">document.getElementById('rdloading').style.display = \"none\";</script>";
                 }
-                if (isset ($sql) && !empty ($sql)) {
+                if (isset($sql) && !empty($sql)) {
                     $qry_str = "";
                     foreach (explode("\n", $sql) as $line) {
-                        if (!empty ($line) && substr($line, -2) != "*/") {
+                        if (!empty($line) && substr($line, -2) != "*/") {
                             $line .= ";";
                         }
 

@@ -5436,10 +5436,10 @@ class nusoap_server extends nusoap_base
                 $call_arg = "$this->methodname";	// straight assignment changes $this->methodname to lower case after call_user_func_array()
             } elseif ($delim == '..') {
                 $this->debug('in invoke_method, calling class method using call_user_func_array()');
-                $call_arg = array ($class, $method);
+                $call_arg = array($class, $method);
             } else {
                 $this->debug('in invoke_method, calling instance method using call_user_func_array()');
-                $instance = new $class ();
+                $instance = new $class();
                 $call_arg = array(&$instance, $method);
             }
             if (is_array($this->methodparams)) {
@@ -6769,7 +6769,7 @@ class wsdl extends nusoap_base
                     //$this->debug("bindings: " . $this->varDump($this->bindings[ $portData['binding'] ]));
                     // merge bindings
                     if (isset($this->bindings[ $portData['binding'] ]['operations'])) {
-                        $ops = array_merge ($ops, $this->bindings[ $portData['binding'] ]['operations']);
+                        $ops = array_merge($ops, $this->bindings[ $portData['binding'] ]['operations']);
                     }
                 }
             }

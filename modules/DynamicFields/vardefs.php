@@ -41,9 +41,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-$dictionary['FieldsMetaData'] = array (
+$dictionary['FieldsMetaData'] = array(
     'table' => 'fields_meta_data',
-    'fields' => array (
+    'fields' => array(
         'id'=>array('name' =>'id', 'type' =>'varchar', 'len'=>'255', 'reportable'=>false),
         'name'=>array('name' =>'name', 'vname'=>'COLUMN_TITLE_NAME', 'type' =>'varchar', 'len'=>'255'),
         'vname'=>array('name' =>'vname' ,'type' =>'varchar','vname'=>'COLUMN_TITLE_LABEL',  'len'=>'255'),
@@ -66,7 +66,7 @@ $dictionary['FieldsMetaData'] = array (
         'ext3'=>array('name' =>'ext3', 'type' =>'varchar', 'len'=>'255', 'default'=>''),
         'ext4'=>array('name' =>'ext4', 'type' =>'text'),
     ),
-    'indices' => array (
+    'indices' => array(
         array('name' =>'fields_meta_datapk', 'type' =>'primary', 'fields' => array('id')),
         array('name' =>'idx_meta_id_del', 'type' =>'index', 'fields'=>array('id','deleted')),
         array('name' => 'idx_meta_cm_del', 'type' => 'index', 'fields' => array('custom_module', 'deleted')),

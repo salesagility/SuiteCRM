@@ -48,8 +48,8 @@ foreach ($beanFiles as $classname => $filename) {
     if (file_exists($filename)) {
         // Rename the class and its constructor adding SugarCore at the beginning  (Ex: class SugarCoreCall)
         $handle = file_get_contents($filename);
-        $patterns = array ('/class '.$classname.'/','/function '.$classname.'/');
-        $replace = array ('class SugarCore'.$classname,'function SugarCore'.$classname);
+        $patterns = array('/class '.$classname.'/','/function '.$classname.'/');
+        $replace = array('class SugarCore'.$classname,'function SugarCore'.$classname);
         $data = preg_replace($patterns, $replace, $handle);
         sugar_file_put_contents($filename, $data);
         

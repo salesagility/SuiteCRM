@@ -196,15 +196,15 @@ class JsChart extends SugarChart
 
         $chartType = $xml->properties->type;
         if ($chartType == "pie chart") {
-            return array ("pieType" => "basic","tip" => "name","chartType" => "pieChart");
+            return array("pieType" => "basic","tip" => "name","chartType" => "pieChart");
         } elseif ($chartType == "line chart") {
-            return array ("lineType" => "basic","tip" => "name","chartType" => "lineChart");
+            return array("lineType" => "basic","tip" => "name","chartType" => "lineChart");
         } elseif ($chartType == "funnel chart 3D") {
-            return array ("funnelType" => "basic","tip" => "name","chartType" => "funnelChart");
+            return array("funnelType" => "basic","tip" => "name","chartType" => "funnelChart");
         } elseif ($chartType == "gauge chart") {
-            return array ("gaugeType" => "basic","tip" => "name","chartType" => "gaugeChart");
+            return array("gaugeType" => "basic","tip" => "name","chartType" => "gaugeChart");
         } elseif ($chartType == "stacked group by chart") {
-            return array ("orientation" => "vertical","barType" => "stacked","tip" => "name","chartType" => "barChart");
+            return array("orientation" => "vertical","barType" => "stacked","tip" => "name","chartType" => "barChart");
         } elseif ($chartType == "group by chart") {
             return array("orientation" => "vertical", "barType" => "grouped", "tip" => "title","chartType" => "barChart");
         } elseif ($chartType == "bar chart") {

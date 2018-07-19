@@ -1,53 +1,53 @@
 <?php
-$popupMeta = array (
+$popupMeta = array(
     'moduleMain' => 'jjwg_Adress_Cache',
     'varName' => 'jjwg_Adress_Cache',
     'orderBy' => 'jjwg_adress_cache.name',
-    'whereClauses' => array (
+    'whereClauses' => array(
   'name' => 'jjwg_adress_cache.name',
   'lat' => 'jjwg_adress_cache.lat',
   'lng' => 'jjwg_adress_cache.lng',
   'date_entered' => 'jjwg_adress_cache.date_entered',
   'assigned_user_name' => 'jjwg_adress_cache.assigned_user_name',
 ),
-    'searchInputs' => array (
+    'searchInputs' => array(
   1 => 'name',
   4 => 'lat',
   5 => 'lng',
   6 => 'date_entered',
   7 => 'assigned_user_name',
 ),
-    'searchdefs' => array (
+    'searchdefs' => array(
   'name' => 
-  array (
+  array(
     'type' => 'name',
     'label' => 'LBL_NAME',
     'width' => '10%',
     'name' => 'name',
   ),
   'lat' => 
-  array (
+  array(
     'type' => 'decimal',
     'label' => 'LBL_LAT',
     'width' => '10%',
     'name' => 'lat',
   ),
   'lng' => 
-  array (
+  array(
     'type' => 'decimal',
     'label' => 'LBL_LNG',
     'width' => '10%',
     'name' => 'lng',
   ),
   'date_entered' => 
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'name' => 'date_entered',
   ),
   'assigned_user_name' => 
-  array (
+  array(
     'link' => 'assigned_user_link',
     'type' => 'relate',
     'label' => 'LBL_ASSIGNED_TO_NAME',
@@ -55,37 +55,37 @@ $popupMeta = array (
     'name' => 'assigned_user_name',
   ),
 ),
-    'listviewdefs' => array (
+    'listviewdefs' => array(
   'NAME' => 
-  array (
+  array(
     'type' => 'name',
     'label' => 'LBL_NAME',
     'width' => '10%',
     'default' => true,
   ),
   'LAT' => 
-  array (
+  array(
     'type' => 'decimal',
     'label' => 'LBL_LAT',
     'width' => '10%',
     'default' => true,
   ),
   'LNG' => 
-  array (
+  array(
     'type' => 'decimal',
     'label' => 'LBL_LNG',
     'width' => '10%',
     'default' => true,
   ),
   'DATE_ENTERED' => 
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'link' => 'assigned_user_link',
     'type' => 'relate',
     'label' => 'LBL_ASSIGNED_TO_NAME',

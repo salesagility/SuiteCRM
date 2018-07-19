@@ -264,7 +264,7 @@ eoq;
     public function correctCurrenciesSymbolsSort($currenciesArray)
     {
         $baseCurrencyId = '-99';
-        $newCurrenciesArray = array ();
+        $newCurrenciesArray = array();
 
         $newCurrenciesArray[] = $currenciesArray[$baseCurrencyId]['symbol'];
         array_shift($currenciesArray);

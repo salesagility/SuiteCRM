@@ -58,7 +58,7 @@
                     	    'employee_status',
                     	    'title',
                     	    'phone' => 
-                              array (
+                              array(
                                 'name' => 'phone',
                                 'label' => 'LBL_ANY_PHONE',
                                 'type' => 'name',
@@ -67,7 +67,7 @@
                               ),
                     	    'department',
                     	    'email' => 
-                              array (
+                              array(
                                 'name' => 'email',
                                 'label' => 'LBL_ANY_EMAIL',
                                 'type' => 'name',
@@ -75,7 +75,7 @@
                                 'width' => '10%',
                               ),
                     	    'address_street' => 
-                              array (
+                              array(
                                 'name' => 'address_street',
                                 'label' => 'LBL_ANY_ADDRESS',
                                 'type' => 'name',
@@ -83,7 +83,7 @@
                                 'width' => '10%',
                               ),
                               'address_city' => 
-                              array (
+                              array(
                                 'name' => 'address_city',
                                 'label' => 'LBL_CITY',
                                 'type' => 'name',
@@ -91,7 +91,7 @@
                                 'width' => '10%',
                               ),
                     	    'address_state' => 
-                              array (
+                              array(
                                 'name' => 'address_state',
                                 'label' => 'LBL_STATE',
                                 'type' => 'name',
@@ -99,7 +99,7 @@
                                 'width' => '10%',
                               ),
                               'address_postalcode' => 
-                              array (
+                              array(
                                 'name' => 'address_postalcode',
                                 'label' => 'LBL_POSTAL_CODE',
                                 'type' => 'name',
@@ -108,7 +108,7 @@
                               ),
                              
                     	    'address_country' => 
-                              array (
+                              array(
                                 'name' => 'address_country',
                                 'label' => 'LBL_COUNTRY',
                                 'type' => 'name',

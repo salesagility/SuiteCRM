@@ -446,11 +446,11 @@ class Meeting extends SugarBean
 
         global $timedate;
         $this->time_meridiem = $timedate->AMPMMenu('', $this->time_start, 'onchange="SugarWidgetScheduler.update_time();"');
-        $hours_arr = array ();
+        $hours_arr = array();
         $num_of_hours = 13;
         $start_at = 1;
 
-        if (empty ($time_meridiem)) {
+        if (empty($time_meridiem)) {
             $num_of_hours = 24;
             $start_at = 0;
         } //if
@@ -532,7 +532,7 @@ class Meeting extends SugarBean
         }
         $this->email_reminder_checked = $this->email_reminder_time == -1 ? false : true;
 
-        if (isset ($_REQUEST['parent_type']) && empty($this->parent_type)) {
+        if (isset($_REQUEST['parent_type']) && empty($this->parent_type)) {
             $this->parent_type = $_REQUEST['parent_type'];
         } elseif (is_null($this->parent_type)) {
             $this->parent_type = $app_list_strings['record_type_default_key'];

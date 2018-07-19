@@ -73,7 +73,7 @@ global $theme;
 
 $GLOBALS['log']->info("Role Edit View");
 echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$focus->name), true);
-$xtpl=new XTemplate ('modules/Roles/EditView.html');
+$xtpl=new XTemplate('modules/Roles/EditView.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

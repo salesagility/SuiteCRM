@@ -49,39 +49,39 @@ $viewdefs['Documents']['QuickCreate'] = array(
                                             array('label' => '10', 'field' => '30')
                                             ),
                             'includes' => 
-                              array (
+                              array(
                                 array('file' => 'include/javascript/popup_parent_helper.js'),
                                 array('file' => 'cache/include/javascript/sugar_grp_jsolait.js'),
                                 array('file' => 'modules/Documents/documents.js'),
                               ),
 ),
- 'panels' =>array (
+ 'panels' =>array(
   'default' => 
-  array (
+  array(
     
-    array (
+    array(
       'status_id',
     ),
-    array (
+    array(
       array('name'=>'filename', 
             'displayParams'=>array('required'=>true, 'onchangeSetFileNameTo' => 'document_name'),
             ),
     ),
     
-    array (
+    array(
       'document_name',
        array('name'=>'revision',
             'customCode' => '<input name="revision" type="text" value="{$fields.revision.value}" {$DISABLED}>'
            ),
     ),    
     
-    array (
+    array(
        array('name'=>'active_date','displayParams'=>array('required'=>true)),
        'category_id',
     ),
     
 
-    array (
+    array(
       array('name'=>'description', 'displayParams'=>array('rows'=>10, 'cols'=>120)),
     ),
   ),

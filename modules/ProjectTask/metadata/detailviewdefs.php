@@ -1,35 +1,35 @@
 <?php
 $viewdefs ['ProjectTask'] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'includes' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'file' => 'modules/ProjectTask/ProjectTask.js',
         ),
       ),
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
@@ -38,14 +38,14 @@ array (
       ),
       'useTabs' => true,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
         'LBL_PANEL_TIMELINE' =>
-        array (
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
@@ -53,28 +53,28 @@ array (
       'syncDetailEditViews' => true,
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => 'status',
         ),
         1 => 
-        array (
+        array(
           0 => 'date_start',
           1 => 'date_finish',
         ),
         2 => 
-        array (
+        array(
           0 => 'priority',
           1 => 'percent_complete',
         ),
         3 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'project_name',
             'customCode' => '<a href="index.php?module=Project&action=DetailView&record={$fields.project_id.value}">{$fields.project_name.value}&nbsp;</a>',
             'label' => 'LBL_PARENT_ID',
@@ -82,69 +82,69 @@ array (
           1 => 'task_number',
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_USER_ID',
           ),
         ),
         5 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'description',
           ),
         ),
       ),
       'LBL_PANEL_TIMELINE' =>
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'estimated_effort',
           1 => 
-          array (
+          array(
             'name' => 'actual_effort',
             'label' => 'LBL_ACTUAL_EFFORT',
           ),
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'predecessors',
             'label' => 'LBL_PREDECESSORS',
           ),
           1 => 
-          array (
+          array(
             'name' => 'relationship_type',
             'studio' => 'visible',
             'label' => 'LBL_RELATIONSHIP_TYPE',
           ),
         ),
         2 => 
-        array (
+        array(
           0 => 'order_number',
           1 => 
-          array (
+          array(
             'name' => 'milestone_flag',
             'label' => 'LBL_MILESTONE_FLAG',
           ),
         ),
         3 => 
-        array (
+        array(
           0 => 'utilization',
           1 => '',
         ),
         4 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'duration',
             'label' => 'LBL_DURATION',
           ),
           1 => 
-          array (
+          array(
             'name' => 'duration_unit',
             'label' => 'LBL_DURATION_UNIT',
           ),

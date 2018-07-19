@@ -262,7 +262,7 @@ class SubPanel
         $reject_tabs = array('history'=>1, 'activities'=>1);
         foreach ($tabs as $key=>$tab) {
             foreach ($tab as $k=>$v) {
-                if (! isset ($reject_tabs [$k])) {
+                if (! isset($reject_tabs [$k])) {
                     $ret_tabs [$k] = $v;
                 }
             }
@@ -423,7 +423,7 @@ class SubPanel
 
         if (isset($subpanel_defs['searchdefs'])) {
             $searchdefs[$module]['layout']['basic_search'] = $subpanel_defs['searchdefs'];
-            $searchdefs[$module]['templateMeta'] = array ('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => array ( 'label' => 10, 'field' => 30 )) ;
+            $searchdefs[$module]['templateMeta'] = array('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => array( 'label' => 10, 'field' => 30 )) ;
             return $searchdefs;
         }
 

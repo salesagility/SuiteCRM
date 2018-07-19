@@ -41,6 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $searchFields['Schedulers'] = 
-	array (
+	array(
 		'name' => array( 'query_type'=>'default'),
 	);

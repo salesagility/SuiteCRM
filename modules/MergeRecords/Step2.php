@@ -161,7 +161,7 @@ $cancel_title=$app_strings['LBL_CANCEL_BUTTON_TITLE'];
 $cancel_key=$app_strings['LBL_CANCEL_BUTTON_KEY'];
 $cancel_label=$app_strings['LBL_CANCEL_BUTTON_LABEL'];
 
-echo ($ListView->display());
+echo($ListView->display());
 
 $error_select=$current_module_strings['LBL_SELECT_ERROR'];
 $form_top = <<<EOQ

@@ -1053,7 +1053,7 @@
          /* Derivative algorithm for overweighted lines, re-route to polygons primitives */
          if ($Weight != null) {
              $Angle        = $this->getAngle($X1, $Y1, $X2, $Y2);
-             $PolySettings = array ("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha,"BorderAlpha"=>$Alpha);
+             $PolySettings = array("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha,"BorderAlpha"=>$Alpha);
 
              if ($Ticks == null) {
                  $Points   = ""; 
@@ -2619,7 +2619,7 @@
                                      $Value = "";
                                  }
                              } else {
-                                 if (isset($Parameters["ScaleMin"]) && isset ($Parameters["RowHeight"])) {
+                                 if (isset($Parameters["ScaleMin"]) && isset($Parameters["RowHeight"])) {
                                      $Value = $this->scaleFormat($Parameters["ScaleMin"] + $Parameters["RowHeight"]*$i, $Data["XAxisDisplay"], $Data["XAxisFormat"], $Data["XAxisUnit"]);
                                  } else {
                                      $Value = $i;
@@ -2719,7 +2719,7 @@
                                      $Value = "";
                                  }
                              } else {
-                                 if (isset($Parameters["ScaleMin"]) && isset ($Parameters["RowHeight"])) {
+                                 if (isset($Parameters["ScaleMin"]) && isset($Parameters["RowHeight"])) {
                                      $Value = $this->scaleFormat($Parameters["ScaleMin"] + $Parameters["RowHeight"]*$i, $Data["XAxisDisplay"], $Data["XAxisFormat"], $Data["XAxisUnit"]);
                                  } else {
                                      $Value = $i;
@@ -2821,7 +2821,7 @@
                                      $Value = "";
                                  }
                              } else {
-                                 if (isset($Parameters["ScaleMin"]) && isset ($Parameters["RowHeight"])) {
+                                 if (isset($Parameters["ScaleMin"]) && isset($Parameters["RowHeight"])) {
                                      $Value = $this->scaleFormat($Parameters["ScaleMin"] + $Parameters["RowHeight"]*$i, $Data["XAxisDisplay"], $Data["XAxisFormat"], $Data["XAxisUnit"]);
                                  } else {
                                      $Value = $i;
@@ -2920,7 +2920,7 @@
                                      $Value = "";
                                  }
                              } else {
-                                 if (isset($Parameters["ScaleMin"]) && isset ($Parameters["RowHeight"])) {
+                                 if (isset($Parameters["ScaleMin"]) && isset($Parameters["RowHeight"])) {
                                      $Value = $this->scaleFormat($Parameters["ScaleMin"] + $Parameters["RowHeight"]*$i, $Data["XAxisDisplay"], $Data["XAxisFormat"], $Data["XAxisUnit"]);
                                  } else {
                                      $Value = $i;

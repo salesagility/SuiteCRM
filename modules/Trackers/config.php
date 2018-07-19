@@ -48,14 +48,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $tracker_config = 
-  array (
+  array(
     'tracker' => 
-    array (
+    array(
       'bean' => 'Tracker',
       'name' => 'Tracker',
       'metadata' => 'modules/Trackers/vardefs.php',
       'store' => 
-      array (
+      array(
         0 => 'DatabaseStore',
       ),
     ),

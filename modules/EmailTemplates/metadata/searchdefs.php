@@ -58,14 +58,14 @@
                                                         'type' => array('name' => 'type', 'type'=>'enum', 'function' => array('name' => 'EmailTemplate::getTypeOptionsForSearch')),
                                                         'subject','description',
                                 					    'assigned_user_id' => 
-                                					      array (
+                                					      array(
                                 					        'name' => 'assigned_user_id',
                                 					        'type' => 'enum',
                                 					        'label' => 'LBL_ASSIGNED_TO',
                                 					        'function' => 
-                                					         array (
+                                					         array(
                                     					          'name' => 'get_user_array',
-                                    					          'params' => array ( 0 => false,), ),
+                                    					          'params' => array( 0 => false,), ),
                                 					        'default' => true
                                 					      ),
 					    )

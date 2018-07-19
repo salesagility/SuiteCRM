@@ -52,19 +52,19 @@ $dictionary['UserSignature'] = array(
 			'type'		=> 'id',
 			'required'	=> true,
 		),
-		'date_entered' => array (
+		'date_entered' => array(
 			'name' => 'date_entered',
 			'vname' => 'LBL_DATE_ENTERED',
 			'type' => 'datetime',
 			'required'=>true,
 		),
-		'date_modified' => array (
+		'date_modified' => array(
 			'name' => 'date_modified',
 			'vname' => 'LBL_DATE_MODIFIED',
 			'type' => 'datetime',
 			'required'=>true,
 		),
-		'deleted' => array (
+		'deleted' => array(
 			'name' => 'deleted',
 			'vname' => 'LBL_DELETED',
 			'type' => 'bool',

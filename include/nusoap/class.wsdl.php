@@ -659,7 +659,7 @@ class wsdl extends nusoap_base
                     //$this->debug("bindings: " . $this->varDump($this->bindings[ $portData['binding'] ]));
                     // merge bindings
                     if (isset($this->bindings[ $portData['binding'] ]['operations'])) {
-                        $ops = array_merge ($ops, $this->bindings[ $portData['binding'] ]['operations']);
+                        $ops = array_merge($ops, $this->bindings[ $portData['binding'] ]['operations']);
                     }
                 }
             }

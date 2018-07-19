@@ -65,15 +65,15 @@ function toggle_domain_name(list_type)  {ldelim}
  {rdelim})
 </script>',
 ),
- 'panels' =>array (
+ 'panels' =>array(
   'default' => 
-  array (
+  array(
     
-    array (
+    array(
       array('name'=>'name', 'displayParams'=>array('required'=>true)),
       array('name'=>'list_type', 'displayParams'=>array('required'=>true, 'javascript'=>'onchange="toggle_domain_name(this);"')),
     ),
-    array (
+    array(
       array('name'=>'description'),
       array('name' => 'domain_name',
             'customLabel' => '<div id="domain_label_div">{$MOD.LBL_DOMAIN}</div>',
@@ -82,9 +82,9 @@ function toggle_domain_name(list_type)  {ldelim}
     
   ),
   'LBL_PANEL_ASSIGNMENT' => 
-      array (
-        array (
-          array (
+      array(
+        array(
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),

@@ -41,7 +41,7 @@ $dictionary['Alert'] = array(
 	'table'=>'alerts',
 	'audited'=> false,
 		'duplicate_merge'=>true,
-		'fields'=>array (
+		'fields'=>array(
             'is_read' =>
                 array(
                     'name'		=> 'is_read',
@@ -84,7 +84,7 @@ $dictionary['Alert'] = array(
                     'comment' => 'The id of the reminder that created this alert',
                 )
 ),
-	'relationships'=>array (
+	'relationships'=>array(
 ),
 	'optimistic_locking'=>true,
 		'unified_search'=>false,

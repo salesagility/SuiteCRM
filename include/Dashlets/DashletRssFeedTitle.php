@@ -96,7 +96,7 @@ class DashletRssFeedTitle
      */
     public function getTitle()
     {
-        $matches = array ();
+        $matches = array();
         preg_match("/<title>.*?<\/title>/i", $this->contents, $matches);
         if (isset($matches[0])) {
             $this->title = str_replace(array('<![CDATA[', '<title>', '</title>', ']]>'), '', $matches[0]);
@@ -112,7 +112,7 @@ class DashletRssFeedTitle
 
     private function _identifyXmlEncoding()
     {
-        $matches = array ();
+        $matches = array();
         preg_match('/encoding\=*\".*?\"/', $this->contents, $matches);
         if (isset($matches[0])) {
             $this->xmlEncoding = trim(str_replace('encoding="', '"', $matches[0]), '"');

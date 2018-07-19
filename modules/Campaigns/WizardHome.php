@@ -125,11 +125,11 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
         
     
     
-    $ss->assign("CAMPAIGN_TBL", create_campaign_summary ($focus));
-    $ss->assign("TARGETS_TBL", create_target_summary ($focus));
+    $ss->assign("CAMPAIGN_TBL", create_campaign_summary($focus));
+    $ss->assign("TARGETS_TBL", create_target_summary($focus));
     if ($focus->campaign_type =='NewsLetter' || $focus->campaign_type =='Email') {
-        $ss->assign("MARKETING_TBL", create_marketing_summary ($focus));
-        $ss->assign("TRACKERS_TBL", create_tracker_summary ($focus));
+        $ss->assign("MARKETING_TBL", create_marketing_summary($focus));
+        $ss->assign("TRACKERS_TBL", create_tracker_summary($focus));
     }
     
     $camp_url = "index.php?action=WizardNewsletter&module=Campaigns&return_module=Campaigns&return_action=WizardHome";

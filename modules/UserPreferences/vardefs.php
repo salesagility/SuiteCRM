@@ -42,9 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $GLOBALS['dictionary']['UserPreference'] = array('table' => 'user_preferences',
-'fields' => array (
+'fields' => array(
   'id' => 
-  array (
+  array(
     'name' => 'id',
     'vname' => 'LBL_NAME',
     'type' => 'id',
@@ -52,32 +52,32 @@ $GLOBALS['dictionary']['UserPreference'] = array('table' => 'user_preferences',
     'reportable'=>false,
   ),
   'category' => 
-  array (
+  array(
     'name' => 'category',
     'type' => 'varchar',
     'len' => 50,
   ),
   'deleted' => 
-  array (
+  array(
     'name' => 'deleted',
     'type' => 'bool',
     'default' => '0',
     'required'=>false,
   ),
   'date_entered' => 
-  array (
+  array(
     'name' => 'date_entered',
     'type' => 'datetime',
     'required' => true,
   ),
   'date_modified' => 
-  array (
+  array(
     'name' => 'date_modified',
     'type' => 'datetime',
     'required' => true,
   ),
   'assigned_user_id' => 
-  array (
+  array(
     'name' => 'assigned_user_id',
     'rname' => 'user_name',
     'id_name' => 'assigned_user_id',
@@ -87,7 +87,7 @@ $GLOBALS['dictionary']['UserPreference'] = array('table' => 'user_preferences',
     'dbType' => 'id',
   ),
   'assigned_user_name' => 
-  array (
+  array(
     'name' => 'assigned_user_name',
     'vname' => 'LBL_ASSIGNED_TO_NAME',
     'type' => 'varchar',
@@ -97,7 +97,7 @@ $GLOBALS['dictionary']['UserPreference'] = array('table' => 'user_preferences',
     'table' => 'users',
   ),
   'contents' => 
-  array (
+  array(
     'name' => 'contents',
     'type' => 'longtext',
     'vname' => 'LBL_DESCRIPTION',
@@ -106,7 +106,7 @@ $GLOBALS['dictionary']['UserPreference'] = array('table' => 'user_preferences',
 ),
  
 
-'indices' => array (
+'indices' => array(
        array('name' =>'userpreferencespk', 'type' =>'primary', 'fields'=>array('id')),
        array('name' =>'idx_userprefnamecat', 'type'=>'index', 'fields'=>array('assigned_user_id','category')),
       )

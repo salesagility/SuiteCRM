@@ -38,12 +38,12 @@
  ********************************************************************************/
 
 
-$dictionary["documents_cases"] = array (
+$dictionary["documents_cases"] = array(
   'true_relationship_type' => 'many-to-many',
   'relationships' => 
-  array (
+  array(
     'documents_cases' => 
-    array (
+    array(
       'lhs_module' => 'Documents',
       'lhs_table' => 'documents',
       'lhs_key' => 'id',
@@ -58,20 +58,20 @@ $dictionary["documents_cases"] = array (
   ),
   'table' => 'documents_cases',
   'fields' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
     1 => 
-    array (
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
     2 => 
-    array (
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
@@ -79,45 +79,45 @@ $dictionary["documents_cases"] = array (
       'required' => true,
     ),
     3 => 
-    array (
+    array(
       'name' => 'document_id',
       'type' => 'varchar',
       'len' => 36,
     ),
     4 => 
-    array (
+    array(
       'name' => 'case_id',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
   'indices' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'documents_casesspk',
       'type' => 'primary',
       'fields' => 
-      array (
+      array(
         0 => 'id',
       ),
     ),
     1 => 
-    array (
+    array(
       'name' => 'documents_cases_case_id',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'case_id',
         1 => 'document_id',
       ),
     ),
     2 => 
-    array (
+    array(
       'name' => 'documents_cases_document_id',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'document_id',
         1 => 'case_id',
       ),

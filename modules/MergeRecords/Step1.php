@@ -117,7 +117,7 @@ $params[] = $mod_strings['LBL_LBL_MERGE_RECORDS_STEP_1'];
 $params[] = $focus->merge_bean->name;
 echo getClassicModuleTitle($focus->merge_bean->module_dir, $params, true);
 
-$xtpl = new XTemplate ('modules/MergeRecords/Step1.html');
+$xtpl = new XTemplate('modules/MergeRecords/Step1.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $xtpl->assign("BEANDATA", $json->encode($bean_data));

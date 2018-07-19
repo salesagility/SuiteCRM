@@ -259,10 +259,10 @@ class SoapHelperWebServices
         $clientIP = query_client_ip();
         $classCheck = 0;
         // check to see if config entry is present, if not, verify client ip
-        if (!isset ($sugar_config['verify_client_ip']) || $sugar_config['verify_client_ip'] == true) {
+        if (!isset($sugar_config['verify_client_ip']) || $sugar_config['verify_client_ip'] == true) {
             // check to see if we've got a current ip address in $_SESSION
             // and check to see if the session has been hijacked by a foreign ip
-            if (isset ($_SESSION[$session_var])) {
+            if (isset($_SESSION[$session_var])) {
                 $session_parts = explode(".", $_SESSION[$session_var]);
                 $client_parts = explode(".", $clientIP);
                 if (count($session_parts) < 4) {
@@ -280,7 +280,7 @@ class SoapHelperWebServices
                     }
                 }
                 // we have a different IP address
-                if ($_SESSION[$session_var] != $clientIP && empty ($classCheck)) {
+                if ($_SESSION[$session_var] != $clientIP && empty($classCheck)) {
                     $GLOBALS['log']->fatal("IP Address mismatch: SESSION IP: {$_SESSION[$session_var]} CLIENT IP: {$clientIP}");
 
                     return false;

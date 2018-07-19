@@ -41,9 +41,9 @@ $dictionary['AOR_Report'] = array(
 	'table'=>'aor_reports',
 	'audited'=>true,
 	'duplicate_merge'=>true,
-	'fields'=>array (
+	'fields'=>array(
 	  'report_module' => 
-	  array (
+	  array(
 		'required' => true,
 		'name' => 'report_module',
 		'vname' => 'LBL_REPORT_MODULE',
@@ -68,7 +68,7 @@ $dictionary['AOR_Report'] = array(
 	  ),
 
 	'graphs_per_row' =>
-	array (
+	array(
 		'required' => true,
 		'name' => 'graphs_per_row',
 		'vname' => 'LBL_GRAPHS_PER_ROW',
@@ -79,7 +79,7 @@ $dictionary['AOR_Report'] = array(
 	),
 
     'field_lines' =>
-    array (
+    array(
         'required' => false,
         'name' => 'field_lines',
         'vname' => 'LBL_FIELD_LINES',
@@ -92,14 +92,14 @@ $dictionary['AOR_Report'] = array(
         'audited' => false,
         'reportable' => false,
         'function' =>
-        array (
+        array(
             'name' => 'display_field_lines',
             'returns' => 'html',
             'include' => 'modules/AOR_Fields/fieldLines.php'
         ),
     ),
     'condition_lines' =>
-    array (
+    array(
         'required' => false,
         'name' => 'condition_lines',
         'vname' => 'LBL_CONDITION_LINES',
@@ -112,14 +112,14 @@ $dictionary['AOR_Report'] = array(
         'audited' => false,
         'reportable' => false,
         'function' =>
-        array (
+        array(
             'name' => 'display_condition_lines',
             'returns' => 'html',
             'include' => 'modules/AOR_Conditions/conditionLines.php'
         ),
     ),
   'aor_fields' =>
-  array (
+  array(
     'name' => 'aor_fields',
     'type' => 'link',
     'relationship' => 'aor_reports_aor_fields',
@@ -129,7 +129,7 @@ $dictionary['AOR_Report'] = array(
     'id_name' => 'aor_report_id',
   ),
   'aor_conditions' =>
-  array (
+  array(
      'name' => 'aor_conditions',
      'type' => 'link',
      'relationship' => 'aor_reports_aor_conditions',
@@ -138,7 +138,7 @@ $dictionary['AOR_Report'] = array(
      'source'=>'non-db',
   ),
   'aor_charts' =>
-      array (
+      array(
         'name' => 'aor_charts',
         'type' => 'link',
         'relationship' => 'aor_charts_aor_reports',
@@ -147,7 +147,7 @@ $dictionary['AOR_Report'] = array(
         'vname' => 'LBL_AOR_CHARTS',
       ),
   'aor_scheduled_reports' =>
-    array (
+    array(
         'name' => 'aor_scheduled_reports',
         'type' => 'link',
         'relationship' => 'aor_scheduled_reports_aor_reports',
@@ -157,7 +157,7 @@ $dictionary['AOR_Report'] = array(
     ),
 
 ),
-'relationships'=>array (
+'relationships'=>array(
     'aor_reports_aor_fields' =>
     array(
         'lhs_module'=> 'AOR_Reports',
@@ -178,7 +178,7 @@ $dictionary['AOR_Report'] = array(
         'rhs_key' => 'aor_report_id',
         'relationship_type'=>'one-to-many',
     ),
-    "aor_scheduled_reports_aor_reports" => array (
+    "aor_scheduled_reports_aor_reports" => array(
         'lhs_module'=> 'AOR_Reports',
         'lhs_table'=> 'aor_reports',
         'lhs_key' => 'id',

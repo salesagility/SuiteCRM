@@ -38,15 +38,15 @@
  ********************************************************************************/
 
 $viewdefs ['Opportunities'] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
@@ -55,95 +55,95 @@ array (
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => true,
       'tabDefs' => 
-      array (
+      array(
         'DEFAULT' => 
-        array (
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
         'LBL_PANEL_ASSIGNMENT' => 
-        array (
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
     'panels' => 
-    array (
+    array(
       'default' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 'name',
           1 => 'account_name',
         ),
         1 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'amount',
             'label' => '{$MOD.LBL_AMOUNT} ({$CURRENCY})',
           ),
           1 => 'date_closed',
         ),
         2 => 
-        array (
+        array(
           0 => 'sales_stage',
           1 => 'opportunity_type',
         ),
         3 => 
-        array (
+        array(
           0 => 'probability',
           1 => 'lead_source',
         ),
         4 => 
-        array (
+        array(
           0 => 'next_step',
           1 => 'campaign_name',
         ),
         5 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'description',
             'nl2br' => true,
           ),
         ),
         6 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO',
           ),
         ),
       ),
       'LBL_PANEL_ASSIGNMENT' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'name' => 'date_modified',
             'label' => 'LBL_DATE_MODIFIED',
             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
           ),
           1 =>
-          array (
+          array(
             'name' => 'date_entered',
             'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
           ),

@@ -87,7 +87,7 @@ if ($_REQUEST['select_entire_list'] == '1') {
         array_push($uids, $val['id']);
     }
 } else {
-    $uids = explode (',', $_POST['uids']);
+    $uids = explode(',', $_POST['uids']);
 }
 
 // find the relationship to use

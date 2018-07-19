@@ -47,116 +47,116 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-$viewdefs = array (
+$viewdefs = array(
   'Prospects' => 
-  array (
+  array(
     'QuickCreate' => 
-    array (
+    array(
       'templateMeta' => 
-      array (
+      array(
         'maxColumns' => '2',
         'widths' => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             'label' => '10',
             'field' => '30',
           ),
           1 => 
-          array (
+          array(
             'label' => '10',
             'field' => '30',
           ),
         ),
       ),
       'panels' => 
-      array (
+      array(
         'LBL_PROSPECT_INFORMATION' => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'first_name',
             ),
             1 => 
-            array (
+            array(
               'name' => 'phone_work',
             ),
           ),
           1 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'last_name',
               'displayParams'=>array('required'=>true)
             ),
             1 => 
-            array (
+            array(
               'name' => 'phone_mobile',
             ),
           ),
           2 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'account_name',
             ),
             1 => 
-            array (
+            array(
               'name' => 'phone_fax',
             ),
           ),
           3 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'title',
             ),
             1 => 
-            array (
+            array(
               'name' => 'department',
             ),
           ),
           4 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'team_name',
             ),
             1 => 
-            array (
+            array(
               'name' => 'do_not_call',
             ),
           ),
           5 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'assigned_user_name',
             ),
           ),
         ),
         'lbl_email_addresses' => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'email1',
             ),
           ),
         ),
         'LBL_ADDRESS_INFORMATION' => 
-        array (
+        array(
           0 => 
-          array (
+          array(
             0 => 
-            array (
+            array(
               'name' => 'primary_address_street',
             ),
             1 => 
-            array (
+            array(
               'name' => 'alt_address_street',
             ),
           ),

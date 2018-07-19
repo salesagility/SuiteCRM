@@ -38,8 +38,8 @@
  ********************************************************************************/
 
 
-require_once ('include/externalAPI/Base/ExternalAPIPlugin.php');
-require_once ('include/externalAPI/Base/ExternalOAuthAPIPlugin.php');
+require_once('include/externalAPI/Base/ExternalAPIPlugin.php');
+require_once('include/externalAPI/Base/ExternalOAuthAPIPlugin.php');
 require_once('include/connectors/sources/SourceFactory.php');
 
 /**

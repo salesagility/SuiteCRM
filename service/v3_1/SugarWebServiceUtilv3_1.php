@@ -136,7 +136,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 
         $beanName = BeanFactory::getObjectName($moduleName);
 
-        $manager = new VardefManager ();
+        $manager = new VardefManager();
         $manager->loadVardef($moduleName, $beanName) ;
 
         // obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
@@ -163,7 +163,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
                 $field = 'phone' ;
             }
 
-            if (isset($def['unified_search']) && $def['unified_search'] && isset ($searchFields [ $moduleName ] [ $field ])) {
+            if (isset($def['unified_search']) && $def['unified_search'] && isset($searchFields [ $moduleName ] [ $field ])) {
                 $fields [ $field ] = $searchFields [ $moduleName ] [ $field ] ;
             }
         }

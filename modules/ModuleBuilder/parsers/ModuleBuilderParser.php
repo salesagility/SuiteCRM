@@ -87,7 +87,7 @@ class ModuleBuilderParser
             $this->_fatalError("ModuleBuilderParser: required viewdef file {$file} does not exist");
         }
         $GLOBALS['log']->info('ModuleBuilderParser->_loadFromFile(): file='.$file);
-        require ($file); // loads in a $viewdefs
+        require($file); // loads in a $viewdefs
 
         // Check to see if we have the module name set as a variable rather than embedded in the $viewdef array
         // If we do, then we have to preserve the module variable when we write the file back out
@@ -131,7 +131,7 @@ class ModuleBuilderParser
             unlink($file);
         }
 
-        mkdir_recursive (dirname ($file)) ;
+        mkdir_recursive(dirname($file)) ;
         $GLOBALS['log']->debug("ModuleBuilderParser->_writeFile(): file=".$file);
         $useVariables = (count($variables)>0);
         if ($fh = @sugar_fopen($file, 'w')) {

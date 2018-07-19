@@ -144,7 +144,7 @@ $time_from_hour = intval(substr($focus->time_from, 0, 2));
 $time_from_min = substr($focus->time_from, 3, 5);
 $time_to_hour = intval(substr($focus->time_to, 0, 2));
 $time_to_min = substr($focus->time_to, 3, 5);
-$hours_arr = array ();
+$hours_arr = array();
 $mins_arr = array();
 $num_of_hours = 13;
 $start_at = 1;
@@ -163,7 +163,7 @@ if (is_array($job_strings) && !empty($job_strings)) {
     }
 }
 
-if (empty ($time_meridiem_start)) {
+if (empty($time_meridiem_start)) {
     $num_of_hours = 24;
     $start_at = 0;
 }

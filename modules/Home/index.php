@@ -101,7 +101,7 @@ if (!$hasUserPreferences) {
         $current_user->setPreference('dashlets', $old_dashlets, 0, 'home');
     } else {
         // This is here to get Sugar dashlets added above the rest
-        $dashlets[create_guid()] = array ('className' => 'SugarFeedDashlet',
+        $dashlets[create_guid()] = array('className' => 'SugarFeedDashlet',
             'module' => 'SugarFeed',
             'forceColumn' => 1,
             'fileLocation' => $dashletsFiles['SugarFeedDashlet']['file'],

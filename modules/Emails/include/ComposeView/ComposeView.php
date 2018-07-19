@@ -38,7 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once ('include/EditView/EditView2.php');
+require_once('include/EditView/EditView2.php');
 class ComposeView extends EditView
 {
     /**

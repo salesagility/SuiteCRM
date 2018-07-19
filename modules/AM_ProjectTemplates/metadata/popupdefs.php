@@ -1,23 +1,23 @@
 <?php
-$popupMeta = array (
+$popupMeta = array(
     'moduleMain' => 'AM_ProjectTemplates',
     'varName' => 'AM_ProjectTemplates',
     'orderBy' => 'am_projecttemplates.name',
-    'whereClauses' => array (
+    'whereClauses' => array(
   'name' => 'am_projecttemplates.name',
   'status' => 'am_projecttemplates.status',
   'priority' => 'am_projecttemplates.priority',
   'assigned_user_name' => 'am_projecttemplates.assigned_user_name',
 ),
-    'searchInputs' => array (
+    'searchInputs' => array(
   1 => 'name',
   2 => 'priority',
   3 => 'status',
   4 => 'assigned_user_name',
 ),
-    'searchdefs' => array (
+    'searchdefs' => array(
   'name' => 
-  array (
+  array(
     'type' => 'name',
     'link' => true,
     'label' => 'LBL_NAME',
@@ -25,7 +25,7 @@ $popupMeta = array (
     'name' => 'name',
   ),
   'status' => 
-  array (
+  array(
     'type' => 'enum',
     'studio' => 'visible',
     'label' => 'LBL_STATUS',
@@ -33,7 +33,7 @@ $popupMeta = array (
     'name' => 'status',
   ),
   'priority' => 
-  array (
+  array(
     'type' => 'enum',
     'studio' => 'visible',
     'label' => 'LBL_PRIORITY',
@@ -41,7 +41,7 @@ $popupMeta = array (
     'name' => 'priority',
   ),
   'assigned_user_name' => 
-  array (
+  array(
     'link' => true,
     'type' => 'relate',
     'studio' => 'visible',
@@ -51,9 +51,9 @@ $popupMeta = array (
     'name' => 'assigned_user_name',
   ),
 ),
-    'listviewdefs' => array (
+    'listviewdefs' => array(
   'NAME' => 
-  array (
+  array(
     'type' => 'name',
     'link' => true,
     'label' => 'LBL_NAME',
@@ -61,7 +61,7 @@ $popupMeta = array (
     'default' => true,
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'link' => true,
     'type' => 'relate',
     'studio' => 'visible',
@@ -71,7 +71,7 @@ $popupMeta = array (
     'default' => true,
   ),
   'STATUS' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -79,7 +79,7 @@ $popupMeta = array (
     'width' => '10%',
   ),
   'PRIORITY' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',

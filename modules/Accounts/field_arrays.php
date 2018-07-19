@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Account'] = array ('column_fields' => array(
+$fields_array['Account'] = array('column_fields' => array(
 		"annual_revenue"
 		,"billing_address_street"
 		,"billing_address_city"

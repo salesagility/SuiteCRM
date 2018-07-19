@@ -43,15 +43,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $dictionary['EmailMarketing'] = array(
 	'table' => 'email_marketing',
-	'fields' => array (
+	'fields' => array(
  	'id' =>
-  	array (
+  	array(
 	    'name' => 'id',
 	    'vname' => 'LBL_NAME',
 	    'type' => 'id',
 	    'required'=>true,
   	),
-  	'deleted' => array (
+  	'deleted' => array(
 		'name' => 'deleted',
 		'vname' => 'LBL_CREATED_BY',
 		'type' => 'bool',
@@ -59,21 +59,21 @@ $dictionary['EmailMarketing'] = array(
 		'reportable'=>false,
 	),
 	'date_entered' =>
-  	array (
+  	array(
 		'name' => 'date_entered',
     	'vname' => 'LBL_DATE_ENTERED',
     	'type' => 'datetime',
     	'required'=>true,
   	),
   	'date_modified' =>
-  	array (
+  	array(
 	    'name' => 'date_modified',
 	    'vname' => 'LBL_DATE_MODIFIED',
 	    'type' => 'datetime',
      	'required'=>true,
   	),
   	'modified_user_id' =>
-  	array (
+  	array(
 	    'name' => 'modified_user_id',
 	    'rname' => 'user_name',
 	    'id_name' => 'modified_user_id',
@@ -84,7 +84,7 @@ $dictionary['EmailMarketing'] = array(
 	    'dbType' => 'id'
   	),
 	'created_by' =>
-  	array (
+  	array(
     	'name' => 'created_by',
     	'rname' => 'user_name',
     	'id_name' => 'modified_user_id',
@@ -95,7 +95,7 @@ $dictionary['EmailMarketing'] = array(
     	'dbType' => 'id'
   	),
   	'name' =>
-  	array (
+  	array(
 	    'name' => 'name',
 	    'vname' => 'LBL_NAME',
 	    'type' => 'varchar',
@@ -104,7 +104,7 @@ $dictionary['EmailMarketing'] = array(
   		'required' => true
   	),
   	'from_name' =>  //starting from 4.0 from_name is obsolete..replaced with inbound_email_id
-  	array (
+  	array(
 	    'name' => 'from_name',
 	    'vname' => 'LBL_FROM_NAME',
 	    'type' => 'varchar',
@@ -113,7 +113,7 @@ $dictionary['EmailMarketing'] = array(
   		'required' => true
   	),
   	'from_addr' =>
-  	array (
+  	array(
 	    'name' => 'from_addr',
     	'vname' => 'LBL_FROM_ADDR',
     	'type' => 'varchar',
@@ -122,28 +122,28 @@ $dictionary['EmailMarketing'] = array(
   		'required' => true
   	),
   	'reply_to_name' =>
-  	array (
+  	array(
 	    'name' => 'reply_to_name',
 	    'vname' => 'LBL_REPLY_NAME',
 	    'type' => 'varchar',
 	    'len' => '100',
   	),
   	'reply_to_addr' =>
-  	array (
+  	array(
 	    'name' => 'reply_to_addr',
     	'vname' => 'LBL_REPLY_ADDR',
     	'type' => 'varchar',
     	'len' => '100',
   	),
   	'inbound_email_id' =>
-  	array (
+  	array(
 	    'name' => 'inbound_email_id',
 	    'vname' => 'LBL_FROM_MAILBOX',
 	    'type' => 'varchar',
 	    'len' => '36',
   	),
   	'date_start' =>
-  	array (
+  	array(
 	    'name' => 'date_start',
     	'vname' => 'LBL_DATE_START',
     	'type' => 'datetime',
@@ -152,7 +152,7 @@ $dictionary['EmailMarketing'] = array(
     	),
 
   	'template_id' =>
-  	array (
+  	array(
 	    'name' => 'template_id',
 	    'vname' => 'LBL_TEMPLATE',
 	    'type' => 'id',
@@ -160,7 +160,7 @@ $dictionary['EmailMarketing'] = array(
 	    'importable' => 'required',
   	),
   	'status' =>
-  	array (
+  	array(
 	    'name' => 'status',
 	    'vname' => 'LBL_STATUS',
 	    'type' => 'enum',
@@ -170,7 +170,7 @@ $dictionary['EmailMarketing'] = array(
 		'importable' => 'required',
   	),
   	'campaign_id' =>
-  	array (
+  	array(
 	    'name' => 'campaign_id',
 	    'vname' => 'LBL_CAMPAIGN_ID',
 	    'type' => 'id',
@@ -178,7 +178,7 @@ $dictionary['EmailMarketing'] = array(
 	    'required'=>false,
   	),
 
-		'outbound_email_id'=> array (
+		'outbound_email_id'=> array(
 			'name' => 'outbound_email_id',
 			'vname' => 'LBL_OUTBOUND_EMAIL_ACOUNT_ID',
 			'type' => 'id',
@@ -186,7 +186,7 @@ $dictionary['EmailMarketing'] = array(
 			'required'=>false,
 		),
 
-  	'all_prospect_lists' => array (
+  	'all_prospect_lists' => array(
 		'name' => 'all_prospect_lists',
 		'vname' => 'LBL_ALL_PROSPECT_LISTS',
 		'type' => 'bool',
@@ -194,7 +194,7 @@ $dictionary['EmailMarketing'] = array(
 	),
 //no-db-fields.
 	'template_name' =>
-  	array (
+  	array(
 	    'name' => 'template_name',
 	    'rname' => 'name',
 	    'id_name' => 'template_id',
@@ -209,7 +209,7 @@ $dictionary['EmailMarketing'] = array(
    	 	'source'=>'non-db',
   	),
   	'prospect_list_name' =>
-  	array (
+  	array(
 	    'name' => 'prospect_list_name',
 	    'vname' => 'LBL_PROSPECT_LIST_NAME',
 	    'type' => 'varchar',
@@ -218,14 +218,14 @@ $dictionary['EmailMarketing'] = array(
   	),
 
 //related fields.
-	'prospectlists'=> array (
+	'prospectlists'=> array(
 		'name' => 'prospectlists',
 		'vname' => 'LBL_PROSPECT_LISTS',
     	'type' => 'link',
     	'relationship' => 'email_marketing_prospect_lists',
     	'source'=>'non-db',
   	),
-	'emailtemplate'=> array (
+	'emailtemplate'=> array(
 		'name' => 'emailtemplate',
 		'vname' => 'LBL_EMAIL_TEMPLATE',
     	'type' => 'link',
@@ -233,12 +233,12 @@ $dictionary['EmailMarketing'] = array(
     	'source'=>'non-db',
   	),
   ),
-  'indices' => array (
+  'indices' => array(
        array('name' =>'emmkpk', 'type' =>'primary', 'fields'=>array('id')),
        array('name' =>'idx_emmkt_name', 'type'=>'index', 'fields'=>array('name')),
        array('name' =>'idx_emmkit_del', 'type'=>'index', 'fields'=>array('deleted')),
   ),
-  'relationships' => array (
+  'relationships' => array(
 	'email_template_email_marketings' => array(
 		'lhs_module'=> 'EmailTemplates',
 		'lhs_table'=> 'email_templates',

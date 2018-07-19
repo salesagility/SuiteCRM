@@ -190,7 +190,7 @@ $help_url = get_help_button_url();
 //if this license print, then redirect and exit,
 if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'licensePrint') {
     include('install/licensePrint.php');
-    exit ();
+    exit();
 }
 
 if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
@@ -381,7 +381,7 @@ if (!isset($_SESSION['oc_install']) || $_SESSION['oc_install'] == false) {
     }
 } else {
     if (is_readable('config.php')) {
-        require_once ('config.php');
+        require_once('config.php');
     }
 }
 
@@ -692,7 +692,7 @@ EOQ;
                     //then try to convert again
                     if (isset($sugar_config['disc_client']) && $sugar_config['disc_client'] == true && isset($sugar_config['oc_converted']) && $sugar_config['oc_converted'] == false) {
                         header('Location: index.php?entryPoint=oc_convert&first_time=true');
-                        exit ();
+                        exit();
                     }
                 }
             }

@@ -45,30 +45,30 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'FP_Event_Locations';
 $listViewDefs [$module_name] = 
-array (
+array(
   'DATE_ENTERED' => 
-  array (
+  array(
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
   ),
   'NAME' => 
-  array (
+  array(
     'width' => '32%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
   'CAPACITY' => 
-  array (
+  array(
     'type' => 'varchar',
     'default' => true,
     'label' => 'LBL_CAPACITY',
     'width' => '10%',
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'width' => '9%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'module' => 'Employees',

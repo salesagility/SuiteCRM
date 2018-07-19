@@ -104,7 +104,7 @@ $subpanel_layout = array(
 			'vname' => 'LBL_LIST_DATE_ENTERED',
 			'width' => '10%',
 		),
-		'assigned_user_name' => array (
+		'assigned_user_name' => array(
 			'name' => 'assigned_user_name',
 			'vname' => 'LBL_LIST_ASSIGNED_TO_NAME',
 			'widget_class' => 'SubPanelDetailViewLink',
@@ -112,11 +112,11 @@ $subpanel_layout = array(
 			'target_module' => 'Employees',
 			'width' => '10%',			
 		),
-		'assigned_user_owner' => array (
+		'assigned_user_owner' => array(
 			 'force_exists'=>true, //this will create a fake field since this field is not defined
 			'usage'=>'query_only'
 		),
-		'assigned_user_mod' => array (
+		'assigned_user_mod' => array(
 			 'force_exists'=>true, //this will create a fake field since this field is not defined
 			'usage'=>'query_only'
 		),

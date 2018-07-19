@@ -1,23 +1,23 @@
 <?php
 $module_name = 'AM_TaskTemplates';
 $listViewDefs [$module_name] = 
-array (
+array(
   'NAME' => 
-  array (
+  array(
     'width' => '32%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
   'DURATION' => 
-  array (
+  array(
     'type' => 'int',
     'label' => 'LBL_DURATION',
     'width' => '10%',
     'default' => true,
   ),
   'STATUS' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -25,7 +25,7 @@ array (
     'width' => '10%',
   ),
   'PRIORITY' => 
-  array (
+  array(
     'type' => 'enum',
     'default' => true,
     'studio' => 'visible',
@@ -33,14 +33,14 @@ array (
     'width' => '10%',
   ),
   'MILESTONE_FLAG' => 
-  array (
+  array(
     'type' => 'bool',
     'default' => true,
     'label' => 'LBL_MILESTONE_FLAG',
     'width' => '10%',
   ),
   'ASSIGNED_USER_NAME' => 
-  array (
+  array(
     'width' => '9%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'module' => 'Employees',
@@ -48,7 +48,7 @@ array (
     'default' => true,
   ),
   'AM_TASKTEMPLATES_AM_PROJECTTEMPLATES_NAME' => 
-  array (
+  array(
     'type' => 'relate',
     'link' => true,
     'label' => 'LBL_AM_TASKTEMPLATES_AM_PROJECTTEMPLATES_FROM_AM_PROJECTTEMPLATES_TITLE',

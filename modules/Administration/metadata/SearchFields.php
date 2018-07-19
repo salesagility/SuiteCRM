@@ -38,7 +38,7 @@
  ********************************************************************************/
 
  $searchFields['Administration'] = 
-    array (
+    array(
         'user_name' => array(
             'query_type'=>'default',
 			'operator' => 'subquery',

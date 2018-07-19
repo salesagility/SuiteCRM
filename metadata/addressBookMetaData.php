@@ -47,16 +47,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Reserved. Contributor(s): ______________________________________..
  *********************************************************************************/
 
-$dictionary['AddressBook'] = array ('table' => 'address_book',
-	'fields' => array (
-		'assigned_user_id' => array (
+$dictionary['AddressBook'] = array('table' => 'address_book',
+	'fields' => array(
+		'assigned_user_id' => array(
 			'name' => 'assigned_user_id',
 			'vname' => 'LBL_USER_ID',
 			'type' => 'id',
 			'required' => true,
 			'reportable' => false,
 		),
-		'bean' => array (
+		'bean' => array(
 			'name' => 'bean',
 			'vname' => 'LBL_BEAN',
 			'type' => 'varchar',
@@ -64,7 +64,7 @@ $dictionary['AddressBook'] = array ('table' => 'address_book',
 			'required' => true,
 			'reportable' => false,
 		),
-		'bean_id' => array (
+		'bean_id' => array(
 			'name' => 'bean_id',
 			'vname' => 'LBL_BEAN_ID',
 			'type' => 'id',
@@ -72,7 +72,7 @@ $dictionary['AddressBook'] = array ('table' => 'address_book',
 			'reportable' => false,
 		),
 	),
-	'indices' => array (
+	'indices' => array(
 		array(
 			'name' => 'ab_user_bean_idx',
 			'type' =>'index',

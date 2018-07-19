@@ -40,16 +40,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['queues_queue'] = array ('table' => 'queues_queue',
-	'fields' => array (
-		'id' => array (
+$dictionary['queues_queue'] = array('table' => 'queues_queue',
+	'fields' => array(
+		'id' => array(
 			'name' => 'id',
 			'vname' => 'LBL_QUEUES_QUEUE_ID',
 			'type' => 'id',
 			'required' => true,
 			'reportable' => false,
 		),
-		'deleted' => array (
+		'deleted' => array(
 			'name' => 'deleted',
 			'vname' => 'LBL_DELETED',
 			'type' => 'bool',
@@ -57,26 +57,26 @@ $dictionary['queues_queue'] = array ('table' => 'queues_queue',
 			'default' => '0',
 			'reportable'=>false,
 		),
-		'date_entered' => array (
+		'date_entered' => array(
 			'name' => 'date_entered',
 			'vname' => 'LBL_DATE_ENTERED',
 			'type' => 'datetime',
 			'required' => true,
 		),
-		'date_modified' => array (
+		'date_modified' => array(
 			'name' => 'date_modified',
 			'vname' => 'LBL_DATE_MODIFIED',
 			'type' => 'datetime',
 			'required' => true,
 		),
-		'queue_id' => array (
+		'queue_id' => array(
 			'name' => 'queue_id',
 			'vname' => 'LBL_QUEUE_ID',
 			'type' => 'id',
 			'required' => true,
 			'reportable'=>false,
 		),
-		'parent_id' => array (
+		'parent_id' => array(
 			'name' => 'parent_id',
 			'vname' => 'LBL_PARENT_ID',
 			'type' => 'id',
@@ -84,7 +84,7 @@ $dictionary['queues_queue'] = array ('table' => 'queues_queue',
 			'reportable'=>false,
 		),
 	),
-	'indices' => array (
+	'indices' => array(
 		array(
 			'name' => 'queues_queuepk',
 			'type' =>'primary',
@@ -109,13 +109,13 @@ $dictionary['queues_queue'] = array ('table' => 'queues_queue',
 		array(
 		'name' => 'compidx_queue_id_parent_id',
 		'type' => 'alternate_key',
-		'fields' => array (
+		'fields' => array(
 			'queue_id',
 			'parent_id'
 			),
 		),
 	), /* end indices */
-	'relationships' => array (
+	'relationships' => array(
 		'child_queues_rel'	=> array(
 			'lhs_module'		=> 'Queues',
 			'lhs_table'			=> 'queues',

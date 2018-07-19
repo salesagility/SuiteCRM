@@ -3332,7 +3332,7 @@ class Email extends Basic
             $email_fields['TYPE_NAME'] = $this->type_name;
         }
 
-        $email_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $app_list_strings['email_category_dom'][$this->category_id];
+        $email_fields['CATEGORY_ID'] = empty($this->category_id) ? "" : $app_list_strings['email_category_dom'][$this->category_id];
 
         return $email_fields;
     }

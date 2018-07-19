@@ -405,7 +405,7 @@ class SyncInboundEmailAccountsSubActionHandler
         $imap_uids = imap_sort($ie->conn, SORTDATE, 0, SE_UID);
         $headers = array();
         foreach ($imap_uids as $imap_uid) {
-            $msgNo = imap_msgno ($ie->conn, (int)$imap_uid);
+            $msgNo = imap_msgno($ie->conn, (int)$imap_uid);
             $headers[$imap_uid] = imap_header($ie->conn, $msgNo);
             $headers[$imap_uid]->imap_uid = $imap_uid;
             $headers[$imap_uid]->imap_msgid_int = (int)$msgNo;
@@ -435,7 +435,7 @@ class SyncInboundEmailAccountsSubActionHandler
     protected function getCompoundMessageIdMD5(InboundEmail $ie, $uid, $msgNo = null)
     {
         if (empty($msgNo) and !empty($uid)) {
-            $msgNo = imap_msgno ($ie->conn, (int)$uid);
+            $msgNo = imap_msgno($ie->conn, (int)$uid);
         }
 
         $header = imap_headerinfo($ie->conn, $msgNo);

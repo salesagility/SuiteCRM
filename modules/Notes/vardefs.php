@@ -46,9 +46,9 @@ $dictionary['Note'] = array(
 	'unified_search' => true, 'full_text_search' => true, 'unified_search_default_enabled' => true,
 
 	'comment' => 'Notes and Attachments'
-                               ,'fields' => array (
+                               ,'fields' => array(
   'id' =>
-  array (
+  array(
     'name' => 'id',
     'vname' => 'LBL_ID',
     'type' => 'id',
@@ -57,7 +57,7 @@ $dictionary['Note'] = array(
     'comment' => 'Unique identifier'
   ),
    'date_entered' =>
-  array (
+  array(
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
@@ -66,7 +66,7 @@ $dictionary['Note'] = array(
     'options' => 'date_range_search_dom',
   ),
   'date_modified' =>
-  array (
+  array(
     'name' => 'date_modified',
     'vname' => 'LBL_DATE_MODIFIED',
     'type' => 'datetime',
@@ -74,7 +74,7 @@ $dictionary['Note'] = array(
     'enable_range_search' => true,
   ),
    'modified_user_id' =>
-	  array (
+	  array(
 	    'name' => 'modified_user_id',
 	    'rname' => 'user_name',
 	    'id_name' => 'modified_user_id',
@@ -88,7 +88,7 @@ $dictionary['Note'] = array(
 	    'comment' => 'User who last modified record',
 	  ),
 	  'modified_by_name' =>
-	  array (
+	  array(
 	    'name' => 'modified_by_name',
     'vname' => 'LBL_MODIFIED_BY',
 	    'type' => 'relate',
@@ -102,7 +102,7 @@ $dictionary['Note'] = array(
 	    'duplicate_merge'=>'disabled'
 	  ),
 	  'created_by' =>
-	  array (
+	  array(
 	    'name' => 'created_by',
 	    'rname' => 'user_name',
 	    'id_name' => 'modified_user_id',
@@ -114,7 +114,7 @@ $dictionary['Note'] = array(
     'comment' => 'User who created record'
 	  ),
 	  	'created_by_name' =>
-	  array (
+	  array(
 	    'name' => 'created_by_name',
 		'vname' => 'LBL_CREATED_BY',
 		'type' => 'relate',
@@ -129,7 +129,7 @@ $dictionary['Note'] = array(
         'importable' => 'false',
 	),
   'name' =>
-  array (
+  array(
     'name' => 'name',
     'vname' => 'LBL_NOTE_SUBJECT',
     'dbType' => 'varchar',
@@ -142,7 +142,7 @@ $dictionary['Note'] = array(
     'required' => true,
   ),
   'file_mime_type' =>
-  array (
+  array(
     'name' => 'file_mime_type',
     'vname' => 'LBL_FILE_MIME_TYPE',
     'type' => 'varchar',
@@ -164,7 +164,7 @@ $dictionary['Note'] = array(
     'importable' => false,
   	),
   'filename' =>
-  array (
+  array(
     'name' => 'filename',
     'vname' => 'LBL_FILENAME',
     'type' => 'file',
@@ -204,7 +204,7 @@ $dictionary['Note'] = array(
   	'comment' => 'Contact ID note is associated with'
   ),
   'portal_flag' =>
-  array (
+  array(
     'name' => 'portal_flag',
     'vname' => 'LBL_PORTAL_FLAG',
     'type' => 'bool',
@@ -212,7 +212,7 @@ $dictionary['Note'] = array(
 	'comment' => 'Portal flag indicator determines if note created via portal'
   ),
   'embed_flag' =>
-  array (
+  array(
     'name' => 'embed_flag',
     'vname' => 'LBL_EMBED_FLAG',
     'type' => 'bool',
@@ -220,7 +220,7 @@ $dictionary['Note'] = array(
 	'comment' => 'Embed flag indicator determines if note embedded in email'
   ),
   'description' =>
-  array (
+  array(
     'name' => 'description',
     'vname' => 'LBL_DESCRIPTION',
     'type' => 'text',
@@ -229,7 +229,7 @@ $dictionary['Note'] = array(
     'cols' => 90,
   ),
   'deleted' =>
-  array (
+  array(
     'name' => 'deleted',
     'vname' => 'LBL_DELETED',
     'type' => 'bool',
@@ -287,7 +287,7 @@ $dictionary['Note'] = array(
     ),
 
   'account_id' =>
-  array (
+  array(
     'name' => 'account_id',
     'vname' => 'LBL_ACCOUNT_ID',
     'type' => 'id',
@@ -295,7 +295,7 @@ $dictionary['Note'] = array(
 	'source'=>'non-db',
   ),
   'opportunity_id' =>
-  array (
+  array(
     'name' => 'opportunity_id',
     'vname' => 'LBL_OPPORTUNITY_ID',
     'type' => 'id',
@@ -303,7 +303,7 @@ $dictionary['Note'] = array(
 	'source'=>'non-db',
   ),
   'acase_id' =>
-  array (
+  array(
     'name' => 'acase_id',
     'vname' => 'LBL_CASE_ID',
     'type' => 'id',
@@ -311,7 +311,7 @@ $dictionary['Note'] = array(
 	'source'=>'non-db',
   ),
   'lead_id' =>
-  array (
+  array(
     'name' => 'lead_id',
     'vname' => 'LBL_LEAD_ID',
     'type' => 'id',
@@ -320,7 +320,7 @@ $dictionary['Note'] = array(
   ),
 
   'created_by_link' =>
-  array (
+  array(
         'name' => 'created_by_link',
     'type' => 'link',
     'relationship' => 'notes_created_by',
@@ -331,7 +331,7 @@ $dictionary['Note'] = array(
     'source'=>'non-db',
   ),
   'modified_user_link' =>
-  array (
+  array(
         'name' => 'modified_user_link',
     'type' => 'link',
     'relationship' => 'notes_modified_user',
@@ -343,7 +343,7 @@ $dictionary['Note'] = array(
   ),
 
   'contact' =>
-  array (
+  array(
     'name' => 'contact',
     'type' => 'link',
     'relationship' => 'contact_notes',
@@ -351,7 +351,7 @@ $dictionary['Note'] = array(
     'source'=>'non-db',
   ),
   'cases' =>
-  array (
+  array(
     'name' => 'cases',
     'type' => 'link',
     'relationship' => 'case_notes',
@@ -359,7 +359,7 @@ $dictionary['Note'] = array(
     'source'=>'non-db',
   ),
   'accounts' =>
-  array (
+  array(
     'name' => 'accounts',
     'type' => 'link',
     'relationship' => 'account_notes',
@@ -367,7 +367,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_ACCOUNTS',
   ),
   'opportunities' =>
-  array (
+  array(
     'name' => 'opportunities',
     'type' => 'link',
     'relationship' => 'opportunity_notes',
@@ -375,7 +375,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_OPPORTUNITIES',
   ),
   'leads' =>
-  array (
+  array(
     'name' => 'leads',
     'type' => 'link',
     'relationship' => 'lead_notes',
@@ -383,7 +383,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_LEADS',
   ),
   'bugs' =>
-  array (
+  array(
     'name' => 'bugs',
     'type' => 'link',
     'relationship' => 'bug_notes',
@@ -391,7 +391,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_BUGS',
   ),
   'aos_contracts' =>
-  array (
+  array(
 	'name' => 'aos_contracts',
 	'type' => 'link',
 	'relationship' => 'aos_contracts_notes',
@@ -407,7 +407,7 @@ $dictionary['Note'] = array(
     'source'=> 'non-db',
   ),
   'projects' =>
-  array (
+  array(
     'name' => 'projects',
     'type' => 'link',
     'relationship' => 'projects_notes',
@@ -415,7 +415,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_PROJECTS',
   ),
   'project_tasks' =>
-  array (
+  array(
     'name' => 'project_tasks',
     'type' => 'link',
     'relationship' => 'project_tasks_notes',
@@ -423,7 +423,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_PROJECT_TASKS',
   ),
   'meetings' =>
-  array (
+  array(
     'name' => 'meetings',
     'type' => 'link',
     'relationship' => 'meetings_notes',
@@ -431,7 +431,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_MEETINGS',
   ),
   'calls' =>
-  array (
+  array(
     'name' => 'calls',
     'type' => 'link',
     'relationship' => 'calls_notes',
@@ -439,7 +439,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_CALLS',
   ),
   'tasks' =>
-  array (
+  array(
     'name' => 'tasks',
     'type' => 'link',
     'relationship' => 'tasks_notes',
@@ -460,7 +460,7 @@ $dictionary['Note'] = array(
 
 
 )
-                                                      , 'indices' => array (
+                                                      , 'indices' => array(
        array('name' =>'notespk', 'type' =>'primary', 'fields'=>array('id')),
        array('name' =>'idx_note_name', 'type'=>'index', 'fields'=>array('name')),
        array('name' =>'idx_notes_parent', 'type'=>'index', 'fields'=>array('parent_id', 'parent_type')),

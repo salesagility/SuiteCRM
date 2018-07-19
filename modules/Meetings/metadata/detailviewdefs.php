@@ -38,23 +38,23 @@
  ********************************************************************************/
 
 $viewdefs ['Meetings'] = 
-array (
+array(
   'DetailView' => 
-  array (
+  array(
     'templateMeta' => 
-    array (
+    array(
         'includes' => array(
             array('file' => 'modules/Reminders/Reminders.js'),
         ),
       'form' => 
-      array (
+      array(
         'buttons' => 
-        array (
+        array(
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
           3 => 
-          array (
+          array(
             'customCode' => '{if $fields.status.value != "Held" && $bean->aclAccess("edit")} <input type="hidden" name="isSaveAndNew" value="false">  <input type="hidden" name="status" value="">  <input type="hidden" name="isSaveFromDetailView" value="true">  <input title="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}"   class="button"  onclick="this.form.status.value=\'Held\'; this.form.action.value=\'Save\';this.form.return_module.value=\'Meetings\';this.form.isDuplicate.value=true;this.form.isSaveAndNew.value=true;this.form.return_action.value=\'EditView\'; this.form.isDuplicate.value=true;this.form.return_id.value=\'{$fields.id.value}\';" id="close_create_button" name="button"  value="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}"  type="submit">{/if}',
               //Bug#51778: The custom code will be replaced with sugar_html. customCode will be deplicated.
               'sugar_html' => array(
@@ -72,7 +72,7 @@ array (
               ),
           ),
           4 => 
-          array (
+          array(
             'customCode' => '{if $fields.status.value != "Held" && $bean->aclAccess("edit")} <input type="hidden" name="isSave" value="false">  <input title="{$APP.LBL_CLOSE_BUTTON_TITLE}"  accesskey="{$APP.LBL_CLOSE_BUTTON_KEY}"  class="button"  onclick="this.form.status.value=\'Held\'; this.form.action.value=\'Save\';this.form.return_module.value=\'Meetings\';this.form.isSave.value=true;this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'"  id="close_button" name="button1"  value="{$APP.LBL_CLOSE_BUTTON_TITLE}"  type="submit">{/if}',
               //Bug#51778: The custom code will be replaced with sugar_html. customCode will be deplicated.
               'sugar_html' => array(
@@ -100,14 +100,14 @@ array (
       ),
       'maxColumns' => '2',
       'widths' => 
-      array (
+      array(
         0 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
         1 => 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -115,34 +115,34 @@ array (
       'useTabs' => false,
     ),
     'panels' => 
-    array (
+    array(
       'lbl_meeting_information' => 
-      array (
-        array (
-          array (
+      array(
+        array(
+          array(
             'name' => 'name',
             'label' => 'LBL_SUBJECT',
           ),
           'status',
         ),
-        array (
-          array (
+        array(
+          array(
             'name' => 'date_start',
             'label' => 'LBL_DATE_TIME',
           ),
         ),
-        array (
-          array (
+        array(
+          array(
             'name' => 'duration',
             'customCode' => '{$fields.duration_hours.value}{$MOD.LBL_HOURS_ABBREV} {$fields.duration_minutes.value}{$MOD.LBL_MINSS_ABBREV} ',
             'label' => 'LBL_DURATION',
           ),
-          array (
+          array(
             'name' => 'parent_name',
             'customLabel' => '{sugar_translate label=\'LBL_MODULE_NAME\' module=$fields.parent_type.value}',
           ),
         ),
-        array (
+        array(
 //          array(
 //            'name' => 'reminder_time',
 //            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
@@ -154,26 +154,26 @@ array (
             ),
           'location',
         ),
-        array (
+        array(
           'description',
         ),
       ),
       'LBL_PANEL_ASSIGNMENT' => 
-      array (
-        array (
-          array (
+      array(
+        array(
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO',
           ),
-          array (
+          array(
             'name' => 'date_modified',
             'label' => 'LBL_DATE_MODIFIED',
             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
           ),
 
         ),
-        array (
-          array (
+        array(
+          array(
             'name' => 'date_entered',
             'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
           ),

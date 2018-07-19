@@ -211,7 +211,7 @@ $layout_defs['Campaigns'] = array(
             'title_key' => 'LBL_OPPORTUNITY_SUBPANEL_TITLE',
             'top_buttons' => array(),
         ),
-        'surveyresponses_campaigns' => array (
+        'surveyresponses_campaigns' => array(
           'order' => 100,
           'module' => 'SurveyResponses',
           'subpanel_name' => 'default',
@@ -220,13 +220,13 @@ $layout_defs['Campaigns'] = array(
           'title_key' => 'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE',
           'get_subpanel_data' => 'surveyresponses_campaigns',
           'top_buttons' =>
-          array (
+          array(
             0 =>
-            array (
+            array(
               'widget_class' => 'SubPanelTopButtonQuickCreate',
             ),
             1 =>
-            array (
+            array(
               'widget_class' => 'SubPanelTopSelectButton',
               'mode' => 'MultiSelect',
             ),

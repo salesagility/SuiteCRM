@@ -85,7 +85,7 @@ $sqs_objects['opportunity_name']['populate_list'] = array('opportunity_name', 'o
 $quicksearch_js = '<script type="text/javascript" language="javascript">sqs_objects = ' . $json->encode($sqs_objects) . '</script>';
 echo $quicksearch_js;
 
-$xtpl=new XTemplate ('modules/Contacts/ContactOpportunityRelationshipEdit.html');
+$xtpl=new XTemplate('modules/Contacts/ContactOpportunityRelationshipEdit.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

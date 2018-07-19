@@ -38,12 +38,12 @@
  ********************************************************************************/
 
 
-$dictionary["documents_accounts"] = array (
+$dictionary["documents_accounts"] = array(
   'true_relationship_type' => 'many-to-many',
   'relationships' => 
-  array (
+  array(
     'documents_accounts' => 
-    array (
+    array(
       'lhs_module' => 'Documents',
       'lhs_table' => 'documents',
       'lhs_key' => 'id',
@@ -58,20 +58,20 @@ $dictionary["documents_accounts"] = array (
   ),
   'table' => 'documents_accounts',
   'fields' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
     1 => 
-    array (
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
     2 => 
-    array (
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
@@ -79,45 +79,45 @@ $dictionary["documents_accounts"] = array (
       'required' => true,
     ),
     3 => 
-    array (
+    array(
       'name' => 'document_id',
       'type' => 'varchar',
       'len' => 36,
     ),
     4 => 
-    array (
+    array(
       'name' => 'account_id',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
   'indices' => 
-  array (
+  array(
     0 => 
-    array (
+    array(
       'name' => 'documents_accountsspk',
       'type' => 'primary',
       'fields' => 
-      array (
+      array(
         0 => 'id',
       ),
     ),
     1 => 
-    array (
+    array(
       'name' => 'documents_accounts_account_id',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'account_id',
         1 => 'document_id',
       ),
     ),
     2 => 
-    array (
+    array(
       'name' => 'documents_accounts_document_id',
       'type' => 'alternate_key',
       'fields' => 
-      array (
+      array(
         0 => 'document_id',
         1 => 'account_id',
       ),

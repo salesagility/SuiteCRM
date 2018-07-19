@@ -219,7 +219,7 @@ class LayoutManager
 				'access_key'=>'LBL_SELECT_BUTTON_KEY',
 				'form_value'=>'LBL_SELECT_REPORTS_BUTTON_LABEL',
 				'ACL'=>'edit',
-				'add_to_passthru_data'=>array (
+				'add_to_passthru_data'=>array(
 					'return_type'=>'report',
 				)
 			),
@@ -238,7 +238,7 @@ class LayoutManager
 				'access_key'=>'LBL_ADD_TO_PROSPECT_LIST_BUTTON_KEY',
 				'form_value'=>'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL',
 				'ACL'=>'edit',
-				'add_to_passthru_data'=>array (
+				'add_to_passthru_data'=>array(
 					'return_type'=>'addtoprospectlist',
 					'parent_module'=>'ProspectLists',
 					'parent_type'=>'ProspectList',

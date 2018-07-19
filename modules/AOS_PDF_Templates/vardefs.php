@@ -45,9 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $dictionary['AOS_PDF_Templates'] = array(
 	'table'=>'aos_pdf_templates',
 	'audited'=>true,
-	'fields'=>array (
+	'fields'=>array(
   'active' =>
-  array (
+  array(
     'name' => 'active',
     'vname' => 'LBL_ACTIVE',
     'type' => 'bool',
@@ -63,7 +63,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'studio' => 'visible',
   ),
   'type' =>
-  array (
+  array(
     'required' => '1',
     'name' => 'type',
     'vname' => 'LBL_TYPE',
@@ -105,7 +105,7 @@ $dictionary['AOS_PDF_Templates'] = array(
                 'studio' => 'visible',
             ),
   'sample' => 
-  array (
+  array(
     'required' => '0',
     'name' => 'sample',
     'vname' => 'LBL_SAMPLE',
@@ -139,7 +139,7 @@ $dictionary['AOS_PDF_Templates'] = array(
       'reportable' => 0,
   ),
   'pdfheader' => 
-  array (
+  array(
     'required' => false,
     'name' => 'pdfheader',
     'vname' => 'LBL_HEADER',
@@ -158,7 +158,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'cols' => '20',
   ),
   'pdffooter' => 
-  array (
+  array(
     'required' => false,
     'name' => 'pdffooter',
     'vname' => 'LBL_FOOTER',
@@ -177,7 +177,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'cols' => '20',
   ),
   'margin_left' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_left',
     'vname' => 'LBL_MARGIN_LEFT',
@@ -197,7 +197,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
   'margin_right' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_right',
     'vname' => 'LBL_MARGIN_RIGHT',
@@ -217,7 +217,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
   'margin_top' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_top',
     'vname' => 'LBL_MARGIN_TOP',
@@ -237,7 +237,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
   'margin_bottom' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_bottom',
     'vname' => 'LBL_MARGIN_BOTTOM',
@@ -257,7 +257,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
   'margin_header' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_header',
     'vname' => 'LBL_MARGIN_HEADER',
@@ -277,7 +277,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
   'margin_footer' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_footer',
     'vname' => 'LBL_MARGIN_FOOTER',
@@ -297,7 +297,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
           'page_size' =>
-            array (
+            array(
                 'required' => '0',
                 'name' => 'page_size',
                 'vname' => 'LBL_PAGE_SIZE',
@@ -316,7 +316,7 @@ $dictionary['AOS_PDF_Templates'] = array(
                 'studio' => 'visible',
             ),
         'orientation' =>
-            array (
+            array(
                 'required' => '0',
                 'name' => 'orientation',
                 'vname' => 'LBL_ORIENTATION',
@@ -335,7 +335,7 @@ $dictionary['AOS_PDF_Templates'] = array(
                 'studio' => 'visible',
             ),
 ),
-	'relationships'=>array (
+	'relationships'=>array(
 ),
 	'optimistic_lock'=>true,
 );

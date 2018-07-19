@@ -41,20 +41,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 // created: 2005-11-04 15:39:46
-$acldefs['ProjectTask'] = array (
+$acldefs['ProjectTask'] = array(
   'forms' => 
-  array (
+  array(
     'by_name' => 
-    array (
+    array(
       'change_project' => 
-      array (
+      array(
         'display_option' => 'disabled',
         'action_option' => 'list',
         'app_action' => 'EditView',
         'module' => 'Project',
       ),
       'change_parent' => 
-      array (
+      array(
         'display_option' => 'disabled',
         'action_option' => 'list',
         'app_action' => 'EditView',
@@ -63,7 +63,7 @@ $acldefs['ProjectTask'] = array (
     ),
   ),
   'form_names' => 
-  array (
+  array(
     'by_id' => 'by_id',
     'by_name' => 'by_name',
     'DetailView' => 'DetailView',

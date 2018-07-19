@@ -40,34 +40,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['roles_modules'] = array ( 
+$dictionary['roles_modules'] = array( 
 
 	'table' => 'roles_modules',
 
-	'fields' => array (
-		array (
+	'fields' => array(
+		array(
 			'name' => 'id',
 			'type' => 'varchar',
 			'len' => '36',
 		),
-		array (
+		array(
 			'name' => 'role_id',
 			'type' => 'varchar',
 			'len' => '36',
 		),
-		array (
+		array(
 			'name' => 'module_id',
 			'type' => 'varchar',
 			'len' => '36',
 		),
-		array (
+		array(
 			'name' => 'allow',
 			'type' => 'bool',
 			'len' => '1',
 			'default' => '0',
 		)
-      , array ('name' => 'date_modified','type' => 'datetime'),
-		array (
+      , array('name' => 'date_modified','type' => 'datetime'),
+		array(
 			'name' => 'deleted',
 			'type' => 'bool',
 			'len' => '1',
@@ -75,21 +75,21 @@ $dictionary['roles_modules'] = array (
 		),
 	),
 	
-	'indices' => array (
-		array (
+	'indices' => array(
+		array(
 			'name' => 'roles_modulespk',
 			'type' => 'primary',
-			'fields' => array ( 'id' )
+			'fields' => array( 'id' )
 		),
-		array (
+		array(
 			'name' => 'idx_role_id',
 			'type' => 'index',
-			'fields' => array ('role_id')
+			'fields' => array('role_id')
 		),
-		array (
+		array(
 			'name' => 'idx_module_id',
 			'type' => 'index',
-			'fields' => array ('module_id')
+			'fields' => array('module_id')
 		),
 	),
 );
