@@ -679,7 +679,14 @@ class ElasticSearchIndexer extends AbstractIndexer
      */
     public static function isEnabled()
     {
-        return true;
+        global $sugar_config;
+
+        try {
+            return $sugar_config['MasterSearch']['ElasticSearch']['enabled'];
+        } catch (\Exception $e) {
+            \LoggerManager::getLogger()->fatal("Failed to retrieve ElasticSearch options");
+            return false;
+        }
     }
 
     /** Resets the counters to zero. */
@@ -689,5 +696,33 @@ class ElasticSearchIndexer extends AbstractIndexer
         $this->indexedRecordsCount = 0;
         $this->indexedFieldsCount = 0;
         $this->removedRecordsCount = 0;
+    }
+
+    /**
+     * Scheduler job method.
+     *
+     * @return bool
+     */
+    public static function schedulerJob()
+    {
+        if (self::isEnabled() === false) {
+            return true;
+        }
+
+        $i = new self();
+        $i->getLogger()->debug('Starting scheduled job');
+
+        try {
+            $i->setDifferentialIndexingEnabled(true);
+            $i->run();
+        } catch (\Exception $e) {
+            $i->getLogger()->error('An error has occurred while running a scheduled indexing');
+            $i->getLogger()->error($e);
+            return false;
+        }
+
+        $i->getLogger()->debug('Scheduler has finished');
+
+        return true;
     }
 }
