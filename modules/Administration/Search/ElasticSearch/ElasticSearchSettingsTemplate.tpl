@@ -67,13 +67,17 @@
                     <label>The following ElasticSearch schedulers were detected:</label>
                     <ul class="list-group">
                         {foreach from=$schedulers item=scheduler}
-                            <li class="list-group-item">
+                            <li class="list-group-item {if $scheduler->status eq 'Inactive'}list-group-item-warning{/if}">
                                 {sugar_link
                                 module=$scheduler->module_name
                                 record=$scheduler->id
                                 label=$scheduler->name
                                 action='DetailView'}
-                                &mdash; last run: {$scheduler->last_run}</li>
+                                &mdash;
+                                <b>{$scheduler->status}</b>
+                                &mdash; last run: {$scheduler->last_run}
+                                (<b>{diff_for_humans datetime=$scheduler->last_run}</b>)
+                            </li>
                             {foreachelse}
                             <p class="error">No schedulers found. Consider creating one.</p>
                         {/foreach}
