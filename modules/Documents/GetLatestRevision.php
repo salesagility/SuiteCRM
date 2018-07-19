@@ -54,4 +54,3 @@ if (!empty($_REQUEST['record'])) {
     }
 }
 handleRedirect();
-

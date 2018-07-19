@@ -89,4 +89,3 @@ $dashletData['MyContactsDashlet']['columns'] = array('name' => array('width'   =
                                                                                    'label'   => 'LBL_LIST_ASSIGNED_USER',
                                                                                    'default' => true),
                                                                              );
-

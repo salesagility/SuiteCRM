@@ -87,4 +87,3 @@ class Zend_Gdata_YouTube_Extension_Position extends Zend_Gdata_Extension
     }
 
 }
-

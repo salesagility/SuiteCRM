@@ -196,4 +196,3 @@ if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
 VardefManager::createVardef('AOR_Reports', 'AOR_Report', array('basic','assignable','security_groups'));
-

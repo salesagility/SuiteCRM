@@ -50,4 +50,3 @@ $dashletMeta['OutcomeByMonthDashlet'] = array('title'       => 'LBL_TITLE',
                                                     'icon'		  => 'icon_Charts_Vertical_32.gif',
                                                     'module'        => 'Opportunities',
                                                     'category'    => 'Charts');
-

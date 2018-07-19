@@ -124,4 +124,3 @@ $dictionary["documents_accounts"] = array(
     ),
   ),
 );
-

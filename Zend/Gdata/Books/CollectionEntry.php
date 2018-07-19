@@ -53,4 +53,3 @@ class Zend_Gdata_Books_CollectionEntry extends Zend_Gdata_Entry
 
 
 }
-

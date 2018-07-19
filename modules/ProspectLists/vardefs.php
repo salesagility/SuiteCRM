@@ -240,4 +240,3 @@ $dictionary['ProspectList'] = array(
 VardefManager::createVardef('ProspectLists', 'ProspectList', array(
     'assignable', 'security_groups',
 ));
-

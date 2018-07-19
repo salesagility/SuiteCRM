@@ -103,4 +103,3 @@ if (is_admin($current_user)
 $ListView->setHeaderTitle($current_module_strings['LBL_PROJECT_SUBPANEL_TITLE'] . $header_text);
 
 $ListView->processListView($focus_list, "main", "PROJECT");
-

@@ -61,4 +61,3 @@ $popupMeta = array('moduleMain' => 'Contact',
 								  ),
 						'templateForm' => 'modules/Contacts/Email_picker.html',
 						);
-

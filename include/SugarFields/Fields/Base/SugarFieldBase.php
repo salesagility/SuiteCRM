@@ -686,4 +686,3 @@ class SugarFieldBase
         return $parentFieldArray;
     }
 }
-

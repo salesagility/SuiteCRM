@@ -85,4 +85,3 @@ $searchFields['Opportunities'] =
        'end_range_amount' => array('query_type' => 'default', 'enable_range_search' => true),
 		//Range Search Support
 	);
-

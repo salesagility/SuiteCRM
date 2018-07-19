@@ -62,4 +62,3 @@ if (!empty($_REQUEST['merge_module']) && ($GLOBALS['action'] == 'Step1' || $GLOB
     }
     $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $GLOBALS['module']);
 }
-

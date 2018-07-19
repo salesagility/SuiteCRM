@@ -72,4 +72,3 @@ function get_body(&$ss, $vardef)
     
     return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/relate.tpl') ;
 }
-

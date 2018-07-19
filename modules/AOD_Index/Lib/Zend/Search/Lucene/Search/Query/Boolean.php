@@ -812,4 +812,3 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         return $query;
     }
 }
-

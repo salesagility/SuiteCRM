@@ -250,4 +250,3 @@ $dictionary['EmailMarketing'] = array(
 	),
   ),
 );
-

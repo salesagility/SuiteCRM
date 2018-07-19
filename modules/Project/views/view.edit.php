@@ -85,4 +85,3 @@ class ProjectViewEdit extends ViewEdit
         parent::display();
     }
 }
-

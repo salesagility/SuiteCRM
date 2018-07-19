@@ -54,4 +54,3 @@ class JQueryTree extends Tree
     public $tree_style = '';
     public $_header_files = array();
 }
-

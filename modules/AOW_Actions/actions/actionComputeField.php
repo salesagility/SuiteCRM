@@ -751,8 +751,3 @@ class actionComputeField extends actionBase
         return "";
     }
 }
-
-
-
-
-

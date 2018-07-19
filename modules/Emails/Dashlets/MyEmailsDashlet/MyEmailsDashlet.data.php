@@ -85,4 +85,3 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
         'label' => 'LBL_CATEGORY',
         'default' => true),
 );
-

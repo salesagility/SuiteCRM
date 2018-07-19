@@ -244,4 +244,3 @@ class UsersLastImport extends SugarBean
         return $returnarray;
     }
 }
-

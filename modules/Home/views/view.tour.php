@@ -63,4 +63,3 @@ class HomeViewTour extends SugarView
         $this->ss->display('modules/Home/tour.tpl');
     }
 }
-

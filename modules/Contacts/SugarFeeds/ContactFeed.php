@@ -60,4 +60,3 @@ class ContactFeed extends FeedLogicBase
         }
     }
 }
-

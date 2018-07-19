@@ -104,4 +104,3 @@ class ViewModulelabels extends SugarView
         echo $ajax->getJavascript();
     }
 }
-

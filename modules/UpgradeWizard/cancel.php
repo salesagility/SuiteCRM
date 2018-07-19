@@ -92,4 +92,3 @@ $stepBack		= $_REQUEST['step'] - 1;
 $stepNext		= $_REQUEST['step'] + 1;
 $stepCancel		= -1;
 $stepRecheck	= $_REQUEST['step'];
-

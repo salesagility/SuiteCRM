@@ -44,4 +44,3 @@
 
 require_once('include/entryPoint.php');
 include_once('modules/TableDictionary.php');
-

@@ -490,4 +490,3 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
              . (($this->getBoost() != 1)? '^' . round($this->getBoost(), 4) : '');
     }
 }
-

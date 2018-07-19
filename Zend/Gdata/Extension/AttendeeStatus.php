@@ -120,4 +120,3 @@ class Zend_Gdata_Extension_AttendeeStatus extends Zend_Gdata_Extension
     }
 
 }
-

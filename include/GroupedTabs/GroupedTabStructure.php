@@ -139,4 +139,3 @@ class GroupedTabStructure
         return $retStruct;
     }
 }
-

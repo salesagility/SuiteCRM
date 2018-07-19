@@ -180,4 +180,3 @@ class CampaignTracker extends SugarBean
         }
     }
 }
-

@@ -50,4 +50,3 @@ $dashletMeta['InvadersDashlet'] = array('title'       => 'LBL_TITLE', // array i
                                         'icon'        => 'invade',
                                         'category'    => 'Tools',
                                         );
-

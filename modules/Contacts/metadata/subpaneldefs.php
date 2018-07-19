@@ -352,4 +352,3 @@ $layout_defs['Contacts'] = array(
         ),
     ),
 );
-

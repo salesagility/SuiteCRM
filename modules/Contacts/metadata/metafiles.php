@@ -51,4 +51,3 @@
  	'popupdefs'	      =>    'modules/Contacts/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/Contacts/metadata/SearchFields.php',
  );
-

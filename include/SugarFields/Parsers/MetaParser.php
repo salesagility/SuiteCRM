@@ -852,4 +852,3 @@ class MetaParser
         return count($found) == 1 ? $found[0] : '';
     }
 }
-

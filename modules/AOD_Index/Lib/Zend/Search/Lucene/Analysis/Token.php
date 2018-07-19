@@ -163,4 +163,3 @@ class Zend_Search_Lucene_Analysis_Token
         return $this->_endOffset;
     }
 }
-

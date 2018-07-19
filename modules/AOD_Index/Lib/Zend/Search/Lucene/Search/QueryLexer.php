@@ -516,4 +516,3 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
         throw new Zend_Search_Lucene_Search_QueryParserException('Wrong number syntax.' . $this->_positionMsg());
     }
 }
-

@@ -102,4 +102,3 @@ if (!isset($_SESSION['isMobile'])) {
 if (empty($_REQUEST['inline'])) {
     insert_popup_footer();
 }
-

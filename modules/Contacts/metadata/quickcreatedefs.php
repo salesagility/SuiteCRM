@@ -151,4 +151,3 @@ $viewdefs = array(
     ),
   ),
 );
-

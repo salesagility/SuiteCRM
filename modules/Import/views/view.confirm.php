@@ -622,4 +622,3 @@ EOJAVASCRIPT;
         echo $ss->fetch('modules/Import/tpls/error.tpl');
     }
 }
-

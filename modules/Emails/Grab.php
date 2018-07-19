@@ -74,4 +74,3 @@ if (!empty($a2['id'])) {
 } else {
     header('Location: index.php?module=Emails&action=ListView&show_error=true&type=inbound&assigned_user_id='.$current_user->id);
 }
-

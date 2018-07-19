@@ -50,4 +50,3 @@ $dashletMeta['OpportunitiesByLeadSourceByOutcomeDashlet'] = array('title'       
                                                     'icon'		  => 'icon_Charts_Horizontal_32.gif',
                                                     'module'        => 'Opportunities',
                                                     'category'    => 'Charts');
-

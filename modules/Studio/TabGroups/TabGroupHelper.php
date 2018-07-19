@@ -137,4 +137,3 @@ class TabGroupHelper
         $GLOBALS['tabStructure'] = $tabGroups;
     }
 }
-

@@ -1111,4 +1111,3 @@ class Link
         return $role_field;
     }
 }
-

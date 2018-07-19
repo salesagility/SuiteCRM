@@ -77,4 +77,3 @@ if (file_exists('modules/'. $_REQUEST['target_module'] . '/EditView.php')) {
         $sqc  = new SubpanelQuickCreate($target_module, $view);
     }
 }
-

@@ -134,4 +134,3 @@ if (!defined('sugarEntry') || !sugarEntry) {
     {
         return (!isset($question) || trim($question)==='' || $question =='http://');
     }
-

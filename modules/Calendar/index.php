@@ -98,4 +98,3 @@ $display = new CalendarDisplay($cal, "", $views);
     $display->display_calendar_header();
     $display->display();
     $display->display_calendar_footer();
-

@@ -99,4 +99,3 @@ function additionalDetailsEmail($fields)
 				 'editLink' => $editLink,
 				 'viewLink' => $viewLink);
 }
-

@@ -60,4 +60,3 @@ class Zend_Gdata_Books_Extension_AnnotationLink extends
     }
 
 }
-

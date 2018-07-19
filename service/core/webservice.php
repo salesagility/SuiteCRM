@@ -67,6 +67,3 @@ global $service_object;
 $service_object = $service;
 
 $service->serve();
-
-
-        

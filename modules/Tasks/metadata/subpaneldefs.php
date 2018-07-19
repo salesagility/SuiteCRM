@@ -78,4 +78,3 @@ $layout_defs['Tasks'] = array(
         ),
     ),
 );
-

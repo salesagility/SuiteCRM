@@ -482,4 +482,3 @@ function cleanDirName($name)
 {
     return str_replace(array("\\", "/", "."), "", $name);
 }
-

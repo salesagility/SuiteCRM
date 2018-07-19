@@ -101,4 +101,3 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
         }
     }
 }
-

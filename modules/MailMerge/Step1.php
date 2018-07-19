@@ -248,4 +248,3 @@ AND is_template = 1 AND template_type = 'mailmerge' AND documents.deleted = 0 OR
     }
     return $list;
 }
-

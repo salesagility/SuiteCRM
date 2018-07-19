@@ -75,4 +75,3 @@ if (file_exists('modules/'. $_REQUEST['target_module'] . '/EditView.php')) {
         $sqc  = new SubpanelQuickEdit($target_module, $view);
     }
 }
-

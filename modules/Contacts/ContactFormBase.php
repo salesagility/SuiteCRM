@@ -686,4 +686,3 @@ EOQ;
         return new Contact();
     }
 }
-

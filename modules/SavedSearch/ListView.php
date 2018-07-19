@@ -92,4 +92,3 @@ if (file_exists('custom/modules/SavedSearch/metadata/listviewdefs.php')) {
 $lv->displayColumns = $listViewDefs['SavedSearch'];
 $lv->setup($savedSearch, 'include/ListView/ListViewGeneric.tpl', $where);
 $lv->display(true);
-

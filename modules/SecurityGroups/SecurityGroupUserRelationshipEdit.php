@@ -88,4 +88,3 @@ $javascript->setFormName('EditView');
 $javascript->setSugarBean($focus);
 $javascript->addToValidateBinaryDependency('user_name', 'alpha', $app_strings['ERR_SQS_NO_MATCH_FIELD'] . $mod_strings['LBL_USER_NAME'], 'false', '', 'user_id');
 echo $javascript->getScript();
-

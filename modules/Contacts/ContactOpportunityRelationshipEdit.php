@@ -115,4 +115,3 @@ $javascript->setFormName('EditView');
 $javascript->setSugarBean($focus);
 $javascript->addToValidateBinaryDependency('opportunity_name', 'alpha', $app_strings['ERR_SQS_NO_MATCH_FIELD'] . $mod_strings['LBL_OPP_NAME'], 'false', '', 'opportunity_id');
 echo $javascript->getScript();
-

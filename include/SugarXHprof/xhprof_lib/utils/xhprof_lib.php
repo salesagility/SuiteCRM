@@ -957,4 +957,3 @@ function xhprof_get_matching_functions($q, $xhprof_data)
 
     return ($res);
 }
-

@@ -2066,4 +2066,3 @@ EOREGEX
         }
     }
 } // END CLASS
-

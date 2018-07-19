@@ -257,5 +257,3 @@ BSOFR;
         return true;
     }
 }
-
-    

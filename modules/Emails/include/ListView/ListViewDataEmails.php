@@ -809,8 +809,3 @@ class ListViewDataEmails extends ListViewData
         return $this->generateURLS($queries);
     }
 }
-
-
-
-
-

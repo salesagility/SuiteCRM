@@ -95,4 +95,3 @@ if (isset($_POST['return_id']) && $_POST['return_id'] != "") {
 
     $GLOBALS['log']->debug("Saved record with id of ".$return_id);
     header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
-

@@ -530,4 +530,3 @@ class ProjectController extends SugarController
         return (!isset($question) || trim($question)==='');
     }
 }
-

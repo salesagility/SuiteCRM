@@ -557,4 +557,3 @@ function checkAccess($bean)
         return false;
     }
 }
-

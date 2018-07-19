@@ -123,4 +123,3 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num extends Zend_Search_Lu
         return $token;
     }
 }
-

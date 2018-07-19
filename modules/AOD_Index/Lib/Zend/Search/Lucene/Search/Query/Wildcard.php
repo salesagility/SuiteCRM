@@ -359,4 +359,3 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
         return $query;
     }
 }
-

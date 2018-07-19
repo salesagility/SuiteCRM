@@ -9,4 +9,3 @@ $xtpl=new XTemplate('modules/SecurityGroups/info.html');
 $xtpl->assign("sugar_version", $sugar_config['sugar_version']);
 $xtpl->parse("main");
 $xtpl->out("main");
-

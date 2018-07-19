@@ -632,4 +632,3 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
         $this->_context->addEntry($entry);
     }
 }
-

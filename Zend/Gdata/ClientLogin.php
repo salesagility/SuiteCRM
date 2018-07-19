@@ -179,4 +179,3 @@ class Zend_Gdata_ClientLogin
     }
 
 }
-

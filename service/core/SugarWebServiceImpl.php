@@ -1191,4 +1191,3 @@ LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) ";
 	);
     }
 } // clazz
-

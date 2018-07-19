@@ -68,4 +68,3 @@ if (!defined('sugarEntry') || !sugarEntry) {
          self::__construct($merge_module, $merge_id);
      }
  }
-

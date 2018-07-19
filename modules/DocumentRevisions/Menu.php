@@ -66,4 +66,3 @@ if (ACLController::checkAccess('Documents', 'detail', true)) {
         $module_menu[]=array("index.php?module=MailMerge&action=index&reset=true", $mod_strings['LNK_NEW_MAIL_MERGE'],"Documents");
     }
 }
-
