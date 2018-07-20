@@ -1474,9 +1474,11 @@ class SugarBean
                         $current_bean->id = null;
                     }
                     // APO Hide fields
-                    $hiddenfields = $current_bean->updateHiddenFields(false);
-                    foreach($hiddenfields as $field => $value){
-                        $current_bean->$field = "";
+                    if (!$current_bean instanceof stdClass){
+                        $hiddenfields = $current_bean->updateHiddenFields(false);
+                        foreach($hiddenfields as $field => $value){
+                            $current_bean->$field = "";
+                        }
                     }
                     $list[$current_bean->id] = $current_bean;
 
