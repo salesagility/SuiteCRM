@@ -903,7 +903,7 @@ class AOR_Report extends Basic
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
         $showTotal = false;
-        $html = '';
+        $html = '<table>';
         $html .= "<thead class='fc-head'>";
         $html .= "<tr>";
         foreach ($fields as $label => $field) {
@@ -940,7 +940,7 @@ class AOR_Report extends Basic
             return '';
         }
 
-        $html .= "</body><tr class='oddListRowS1'>";
+        $html .= "<tbody><tr class='oddListRowS1'>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
@@ -988,7 +988,7 @@ class AOR_Report extends Basic
             }
         }
         $html .= '</tr>';
-        $html .= '</body>';
+        $html .= '</tbody></table>';
 
         return $html;
     }
