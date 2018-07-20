@@ -2524,7 +2524,7 @@ class SugarBean
             );
         foreach($this->field_name_map as $field => $value)
         {
-            if ($value['calculated'] == 1 || $value['calculated'] == true)
+            if (isset($value['calculated']) && ($value['calculated'] == 1 || $value['calculated'] == true))
             {
                 switch($value['formula']['type']){
                     case 'function':
