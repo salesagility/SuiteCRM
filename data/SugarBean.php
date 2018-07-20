@@ -2497,7 +2497,7 @@ class SugarBean
         return $this->id;
     }
 
-    private function updateCalculatedFields()
+    public function updateCalculatedFields()
     {
         $request = 
             array(
