@@ -988,7 +988,7 @@ class AOR_Report extends Basic
             }
         }
         $html .= '</tr>';
-        $html .= '</body></table>';
+        $html .= '</tbody></table>';
 
         return $html;
     }
