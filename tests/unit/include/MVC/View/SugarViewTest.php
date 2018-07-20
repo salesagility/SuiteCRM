@@ -215,7 +215,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetJavascriptValidation()
     {
-        //check if it returns any text i-e JS code    	
+        //check if it returns any text i-e JS code
         $js = SugarView::getJavascriptValidation();
         $this->assertGreaterThan(0, strlen($js));
     }
@@ -285,11 +285,11 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     	try {
     		//check first with invalid value and test if it throws an exception
     		$menu = $SugarView->getMenu();
-    		
-    		 
+
+
     	} catch (Exception $e) {
     		$this->assertTrue(TRUE);
-    		
+
     	} */
 
         //check with valid value and check if it returns an array.
@@ -351,7 +351,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcheckPostMaxSizeError()
     {
         global $sugar_config;
-        $SugarView = new SugarView();        
+        $SugarView = new SugarView();
         $this->assertFalse($sugar_config['developerMode']);
         //execute the method. it should return False because Request parameters are not available.
         $postMaxSizeError = $SugarView->checkPostMaxSizeError();

@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Relationship'] = array ('column_fields' => array(
+$fields_array['Relationship'] = array('column_fields' => array(
         'id',
         'relationship_name',
         'lhs_module',

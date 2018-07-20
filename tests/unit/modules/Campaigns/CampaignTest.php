@@ -230,7 +230,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSaveAndMarkDeleted()
     {
         
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');

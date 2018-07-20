@@ -67,7 +67,7 @@ class ImportView extends SugarView
     public function preDisplay()
     {
         if (!is_file('cache/jsLanguage/Import/' . $GLOBALS['current_language'] . '.js')) {
-            require_once ('include/language/jsLanguage.php');
+            require_once('include/language/jsLanguage.php');
             jsLanguage::createModuleStringsCache('Import', $GLOBALS['current_language']);
         }
         echo '<script src="cache/jsLanguage/Import/'. $GLOBALS['current_language'] . '.js"></script>';
@@ -116,7 +116,7 @@ class ImportView extends SugarView
 
     /**
      * Send our output to the importer controller.
-     * 
+     *
      * @param string $html
      * @param string $submitContent
      * @param string $script
@@ -143,8 +143,8 @@ class ImportView extends SugarView
     }
 
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings, $app_list_strings;

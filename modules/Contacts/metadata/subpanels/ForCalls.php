@@ -53,7 +53,7 @@ $subpanel_layout = array(
     
 
     'list_fields' => array(
-        'accept_status_name'=>array (
+        'accept_status_name'=>array(
             'vname' => 'LBL_LIST_ACCEPT_STATUS',
             'width' => '11%',
             'sortable'=>false
@@ -63,7 +63,7 @@ $subpanel_layout = array(
         ),
         'accept_status_id'=>array(
             'usage' => 'query_only',
-        ),		
+        ),
         'first_name'=>array(
             'name'=>'first_name',
             'usage' => 'query_only',
@@ -77,7 +77,7 @@ $subpanel_layout = array(
             'usage' => 'query_only',
         ),
         'name'=>array(
-            'name'=>'name',		
+            'name'=>'name',
             'vname' => 'LBL_LIST_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'module' => 'Contacts',
@@ -98,14 +98,14 @@ $subpanel_layout = array(
             
         ),
         'email1'=>array(
-            'name'=>'email1',		
+            'name'=>'email1',
             'vname' => 'LBL_LIST_EMAIL',
             'widget_class' => 'SubPanelEmailLink',
             'width' => '30%',
             'sortable' => false,
         ),
-        'phone_work'=>array (
-            'name'=>'phone_work',		
+        'phone_work'=>array(
+            'name'=>'phone_work',
             'vname' => 'LBL_LIST_PHONE',
             'width' => '15%',
         ),
@@ -122,4 +122,4 @@ $subpanel_layout = array(
             'width' => '5%',
         ),
     ),
-);		
+);

@@ -8,7 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -32,79 +32,79 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $current_user;
 
-$dashletData['AOS_ContractsDashlet']['searchFields'] = 
+$dashletData['AOS_ContractsDashlet']['searchFields'] =
 array(
-'status' => 
+'status' =>
     array(
         'default' => ''
         ),
-'end_date' => 
+'end_date' =>
     array(
         'default' => ''
         ),
-'assigned_user_id' => 
+'assigned_user_id' =>
     array(
-        'type' => 'assigned_user_name', 
+        'type' => 'assigned_user_name',
         'default' => $current_user->name
         )
     );
     
-$dashletData['AOS_ContractsDashlet']['columns'] =  
-array(   
-'name' => 
+$dashletData['AOS_ContractsDashlet']['columns'] =
+array(
+'name' =>
     array(
-        'width'   => '25', 
+        'width'   => '25',
         'label'   => 'LBL_LIST_NAME',
         'link'    => true,
         'default' => true
-        ),     
-'status' =>   
+        ),
+'status' =>
     array(
-        'width'   => '12', 
+        'width'   => '12',
         'label'   => 'LBL_STATUS',
         'default' => true
-        ), 
-'total_contract_value'=> 
+        ),
+'total_contract_value'=>
     array(
-        'width'   => '12', 
+        'width'   => '12',
         'label'   => 'LBL_TOTAL_CONTRACT_VALUE',
         'currency_format' => true,
         'default' => true
         ),
-'start_date' => 
+'start_date' =>
     array(
-        'width'   => '12', 
+        'width'   => '12',
         'label'   => 'LBL_START_DATE'
         ),
 'end_date' =>
     array(
-        'width'   => '12', 
+        'width'   => '12',
         'label'   => 'LBL_END_DATE',
         'default' => true
         ),
 'renewal_reminder_date'=>
     array(
-        'width'   => '15', 
+        'width'   => '15',
         'label'   => 'LBL_RENEWAL_REMINDER_DATE'
-        ),   
+        ),
 'assigned_user_name' =>
     array(
-        'width'   => '12', 
+        'width'   => '12',
         'label'   => 'LBL_ASSIGNED_TO_NAME'
         ),
-'created_by' => 
+'created_by' =>
     array(
-        'width'   => '8', 
+        'width'   => '8',
         'label'   => 'LBL_CREATED'
-        ),        
-'date_entered' => 
+        ),
+'date_entered' =>
     array(
-        'width'   => '15', 
+        'width'   => '15',
         'label'   => 'LBL_DATE_ENTERED'
         ),
-'date_modified' => 
+'date_modified' =>
     array(
-        'width'   => '15', 
+        'width'   => '15',
         'label'   => 'LBL_DATE_MODIFIED'
         ),
     );

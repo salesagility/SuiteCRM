@@ -557,4 +557,3 @@ if (array_key_exists('do_not_redirect', $_REQUEST) && $_REQUEST['do_not_redirect
 } else {
     header("Location: {$redirect}");
 }
-

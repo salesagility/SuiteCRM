@@ -334,4 +334,3 @@ $dictionary['Prospect'] = array(
 );
 VardefManager::createVardef('Prospects', 'Prospect', array('default', 'assignable', 'security_groups',
     'person'));
-

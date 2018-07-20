@@ -78,7 +78,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aod_index = new AOD_Index();
         $result = $aod_index->getIndex();
 
-        //execute the method and verify it returns a different instance of samme type 
+        //execute the method and verify it returns a different instance of samme type
         $this->assertInstanceOf('AOD_Index', $result);
         $this->assertNotSame($aod_index, $result);
     }

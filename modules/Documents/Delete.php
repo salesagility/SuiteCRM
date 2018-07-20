@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /*********************************************************************************
 
- * Description:  Deletes an Account record and then redirects the browser to the 
+ * Description:  Deletes an Account record and then redirects the browser to the
  * defined return URL.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
@@ -73,4 +73,3 @@ if (isset($_REQUEST['object']) && $_REQUEST['object']="documentrevision") {
 
 $focus->mark_deleted($_REQUEST['record']);
 header("Location: index.php?module=".$_REQUEST['return_module']."&action=".$_REQUEST['return_action']."&record=".$_REQUEST['return_id']);
-

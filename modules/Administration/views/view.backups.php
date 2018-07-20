@@ -44,21 +44,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class ViewBackups extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   "<a href='index.php?module=Administration&action=index'>".$mod_strings['LBL_MODULE_NAME']."</a>",
-    	   $mod_strings['LBL_BACKUPS_TITLE']
-    	   );
+           "<a href='index.php?module=Administration&action=index'>".$mod_strings['LBL_MODULE_NAME']."</a>",
+           $mod_strings['LBL_BACKUPS_TITLE']
+           );
     }
     
     /**
-	 * @see SugarView::preDisplay()
-	 */
+     * @see SugarView::preDisplay()
+     */
     public function preDisplay()
     {
         global $current_user;
@@ -72,8 +72,8 @@ class ViewBackups extends SugarView
     }
     
     /**
-	 * @see SugarView::display()
-	 */
+     * @see SugarView::display()
+     */
     public function display()
     {
         require_once('include/utils/zip_utils.php');

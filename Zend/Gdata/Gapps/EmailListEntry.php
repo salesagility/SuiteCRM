@@ -58,7 +58,6 @@ require_once 'Zend/Gdata/Gapps/Extension/EmailList.php';
  */
 class Zend_Gdata_Gapps_EmailListEntry extends Zend_Gdata_Entry
 {
-
     protected $_entryClassName = 'Zend_Gdata_Gapps_EmailListEntry';
 
     /**
@@ -210,5 +209,4 @@ class Zend_Gdata_Gapps_EmailListEntry extends Zend_Gdata_Entry
         $this->_feedLink = $value;
         return $this;
     }
-
 }

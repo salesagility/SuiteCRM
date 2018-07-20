@@ -13,7 +13,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -390,7 +390,7 @@ class soap_transport_http extends nusoap_base
                 // recent versions of cURL turn on peer/host checking by default,
                 // while PHP binaries are not compiled with a default location for the
                 // CA cert bundle, so disable peer/host checking.
-                //$this->setCurlOption(CURLOPT_CAINFO, 'f:\php-4.3.2-win32\extensions\curl-ca-bundle.crt');		
+                //$this->setCurlOption(CURLOPT_CAINFO, 'f:\php-4.3.2-win32\extensions\curl-ca-bundle.crt');
                 $this->setCurlOption(CURLOPT_SSL_VERIFYPEER, 0);
                 $this->setCurlOption(CURLOPT_SSL_VERIFYHOST, 0);
     
@@ -503,7 +503,7 @@ class soap_transport_http extends nusoap_base
             } else {
                 $this->setError("Too many tries to get an OK response ($this->response_status_line)");
             }
-        }		
+        }
         $this->debug('end of send()');
         return $respdata;
     }
@@ -584,7 +584,7 @@ class soap_transport_http extends nusoap_base
     
                 $hashedDigest = md5($unhashedDigest);
     
-                $opaque = '';	
+                $opaque = '';
                 if (isset($digestRequest['opaque'])) {
                     $opaque = ', opaque="' . $digestRequest['opaque'] . '"';
                 }
@@ -1014,7 +1014,7 @@ class soap_transport_http extends nusoap_base
         
             // close filepointer
             if (
-            (isset($this->incoming_headers['connection']) && strtolower($this->incoming_headers['connection']) == 'close') || 
+            (isset($this->incoming_headers['connection']) && strtolower($this->incoming_headers['connection']) == 'close') ||
             (! $this->persistentConnection) || feof($this->fp)) {
                 fclose($this->fp);
                 $this->fp = false;
@@ -1332,7 +1332,7 @@ class soap_transport_http extends nusoap_base
                             'path' => $path,
                             'expires' => $expires,
                             'secure' => $secure
-                            );		
+                            );
             return $cookie;
         }
         return false;

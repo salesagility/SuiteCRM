@@ -55,7 +55,7 @@ class ViewNewsLetterList extends ViewList
             $this->searchForm->populateFromArray($this->storeQuery->query);
         } else {
             $this->searchForm->populateFromRequest();
-        }   
+        }
         $where_clauses = $this->searchForm->generateSearchWhere(true, $this->seed->module_dir);
         $where_clauses[] = "campaigns.campaign_type in ('NewsLetter')";
         if (count($where_clauses) > 0) {

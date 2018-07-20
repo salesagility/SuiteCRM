@@ -96,7 +96,7 @@ $button .= "<input type='hidden' name='action' value='SaveUserRelationship'>\n";
 $button .= "<input type='submit' name='button' class='button' title='".$current_module_strings['LBL_SELECT_CHECKED_BUTTON_TITLE']."' value='  ".$current_module_strings['LBL_SELECT_CHECKED_BUTTON_LABEL']."  ' />\n";
 $button .= "<input type='submit' name='button' class='button' title='".$app_strings['LBL_DONE_BUTTON_TITLE']."' onclick=\"window.close();\" value='  ".$app_strings['LBL_DONE_BUTTON_LABEL']."  ' />\n";
 
-$form =new XTemplate ('modules/Users/Popup_Users_picker.html');
+$form =new XTemplate('modules/Users/Popup_Users_picker.html');
 $GLOBALS['log']->debug("using file modules/Users/Popup_Users_picker.html");
 $form->assign("MOD", $mod_strings);
 $form->assign("APP", $app_strings);

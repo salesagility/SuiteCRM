@@ -41,12 +41,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-/* 
- * func: query_module_access 
+/*
+ * func: query_module_access
  * param: $moduleName
- * 
+ *
  * returns 1 if user has access to a module, else returns 0
- * 
+ *
  */
 
 $modules_exempt_from_availability_check['Activities']='Activities';
@@ -71,7 +71,7 @@ function query_module_access_list(&$user)
 {
     require_once('modules/MySettings/TabController.php');
     $controller = new TabController();
-    $tabArray = $controller->get_tabs($user); 
+    $tabArray = $controller->get_tabs($user);
 
     return $tabArray[0];
 }
@@ -133,4 +133,3 @@ function get_val_array($arr)
     }
     return $new;
 }
-

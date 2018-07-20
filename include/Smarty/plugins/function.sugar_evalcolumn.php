@@ -14,7 +14,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -61,7 +61,7 @@ r12955 - 2006-04-26 18:32:25 -0700 (Wed, 26 Apr 2006) - wayne - custom code in l
  * Type:     function<br>
  * Name:     sugar_evalcolumn<br>
  * Purpose:  evaluate a string by substituting values in the rowData parameter. Used for ListViews<br>
- * 
+ *
  * @author Wayne Pan {wayne at sugarcrm.com
  * @param array
  * @param Smarty
@@ -108,7 +108,7 @@ function smarty_function_sugar_evalcolumn($params, &$smarty)
             }
             $code = str_replace(array_keys($str_replace), array_values($str_replace), $code);
         }
-    	
+        
         // Add a string replace to swap out @@FIELD@@ for the actual field,
         // we can't do this through customCode directly because the sugar_field smarty function returns smarty code to run on the second pass
         if (!empty($code) && strpos($code, '@@FIELD@@') !== false) {

@@ -1,41 +1,41 @@
 <?php
-/** 
- * 
- * SugarCRM Community Edition is a customer relationship management program developed by 
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
- * 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
- * Copyright (C) 2011 - 2018 SalesAgility Ltd. 
- * 
- * This program is free software; you can redistribute it and/or modify it under 
- * the terms of the GNU Affero General Public License version 3 as published by the 
- * Free Software Foundation with the addition of the following permission added 
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
- * details. 
- * 
- * You should have received a copy of the GNU Affero General Public License along with 
- * this program; if not, see http://www.gnu.org/licenses or write to the Free 
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
- * 02110-1301 USA. 
- * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
- * 
- * The interactive user interfaces in modified source and object code versions 
- * of this program must display Appropriate Legal Notices, as required under 
- * Section 5 of the GNU Affero General Public License version 3. 
- * 
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
- * these Appropriate Legal Notices must retain the display of the "Powered by 
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -284,7 +284,7 @@ class SugarApplication
                         $this->controller->action = 'InitialSync';
                     }
                 } else {
-                    require_once ('modules/Sync/file_config.php');
+                    require_once('modules/Sync/file_config.php');
                     if (isset($file_sync_info['is_first_sync']) && $file_sync_info['is_first_sync']) {
                         if ($_REQUEST['action'] != 'InitialSync' && $_REQUEST['action'] != 'Logout' &&
                                 ($_REQUEST['action'] != 'Popup' && $_REQUEST['module'] != 'Sync')) {
@@ -391,7 +391,7 @@ class SugarApplication
         $db = DBManagerFactory::getInstance();
         if (empty($row_count)) {
             $version_query = "SELECT count(*) as the_count FROM config WHERE category='info' AND name='sugar_version' AND " .
-                    $db->convert('value', 'text2char') . " = " . 
+                    $db->convert('value', 'text2char') . " = " .
                     $db->quoted($sugarDbVersion);
 
             $result = $db->query($version_query);
@@ -682,7 +682,7 @@ class SugarApplication
     }
 
     /**
-     * classic redirect to another URL, but check first that URL start with "Location:"... 
+     * classic redirect to another URL, but check first that URL start with "Location:"...
      * @param $header_URL
      */
     public static function headerRedirect($header_URL)
@@ -771,7 +771,7 @@ class SugarApplication
     }
     
     /**
-     * 
+     *
      * @param string $type possible message types: ['user_error_message', 'user_success_message']
      * @throws Exception message type should be valid
      */
@@ -787,7 +787,13 @@ class SugarApplication
      * already been sent
      */
     public static function setCookie(
-    $name, $value, $expire = 0, $path = '/', $domain = null, $secure = false, $httponly = true
+    $name,
+        $value,
+        $expire = 0,
+        $path = '/',
+        $domain = null,
+        $secure = false,
+        $httponly = true
     ) {
         if (is_null($domain)) {
             if (isset($_SERVER["HTTP_HOST"])) {

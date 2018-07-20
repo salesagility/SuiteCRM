@@ -165,7 +165,7 @@ class DetailViewMetaParser extends MetaParser
                     } //if
                 } //foreach($tablecolumns as $tcols)
 
-   	   $metarow[] = array_reverse($metacolumns);
+       $metarow[] = array_reverse($metacolumns);
             } //foreach($tablerows as $trow)
 
 

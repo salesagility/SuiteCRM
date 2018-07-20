@@ -144,11 +144,12 @@
          * @see Zend_Oauth_Consumer::getAccessToken()
          * @return array
          */
-        public function getAccessToken($url,
+        public function getAccessToken(
+            $url,
                                        Zend_Oauth_Token_Request $token = null,
                                        $httpMethod = null,
-                                       Zend_Oauth_Http_AccessToken $request = null)
-        {
+                                       Zend_Oauth_Http_AccessToken $request = null
+        ) {
             $this->setAccessTokenUrl($url);
             $this->_last = $token = parent::getAccessToken($_REQUEST, $this->makeRequestToken());
             return array('oauth_token' => $token->getToken(), 'oauth_token_secret' => $token->getTokenSecret());
@@ -180,10 +181,10 @@
             $proxy_config = SugarModule::get('Administration')->loadBean();
             $proxy_config->retrieveSettings('proxy');
             
-            if (!empty($proxy_config) && 
+            if (!empty($proxy_config) &&
                 !empty($proxy_config->settings['proxy_on']) &&
                 $proxy_config->settings['proxy_on'] == 1) {
-                $proxy_settings = array();                
+                $proxy_settings = array();
                 $proxy_settings['proxy_host'] = $proxy_config->settings['proxy_host'];
                 $proxy_settings['proxy_port'] = $proxy_config->settings['proxy_port'];
     

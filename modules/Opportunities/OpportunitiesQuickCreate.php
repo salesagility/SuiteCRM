@@ -65,7 +65,7 @@ class OpportunitiesQuickCreate extends QuickCreate
   
         $this->ss->assign("SALES_STAGE_OPTIONS", get_select_options_with_id($app_list_strings['sales_stage_dom'], ''));
         $this->ss->assign("LEAD_SOURCE_OPTIONS", get_select_options_with_id($app_list_strings['lead_source_dom'], ''));
-        $this->ss->assign('prob_array', $json->encode($app_list_strings['sales_probability_dom']));        
+        $this->ss->assign('prob_array', $json->encode($app_list_strings['sales_probability_dom']));
         
         if ($this->viaAJAX) { // override for ajax call
             $this->ss->assign('saveOnclick', "onclick='if(check_form(\"opportunitiesQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"opportunities\"); else return false;'");

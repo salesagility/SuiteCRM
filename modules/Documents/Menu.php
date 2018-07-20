@@ -1,7 +1,7 @@
 <?php
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
-} 
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -66,4 +66,3 @@ if (ACLController::checkAccess('Documents', 'edit', true)) {
         $module_menu[]=array("index.php?module=MailMerge&action=index&reset=true", $mod_strings['LNK_NEW_MAIL_MERGE'],"Documents");
     }
 }
-

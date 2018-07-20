@@ -48,7 +48,7 @@ function additionalDetailsContact($fields)
         global $current_language;
         $mod_strings = return_module_language($current_language, 'Contacts');
     }
-	 
+     
     $overlib_string = '';
     if (!empty($fields['ID'])) {
         $overlib_string .= '<input type="hidden" value="'. $fields['ID'];
@@ -58,8 +58,8 @@ function additionalDetailsContact($fields)
     $overlib_string .= '<h2><img src="index.php?entryPoint=getImage&themeName=' . SugarThemeRegistry::current()->name .'&imageName=Contacts.gif"/> '.$mod_strings['LBL_CONTACT'].'</h2>';
 
     if (!empty($fields['PRIMARY_ADDRESS_STREET']) || !empty($fields['PRIMARY_ADDRESS_CITY']) ||
-		!empty($fields['PRIMARY_ADDRESS_STATE']) || !empty($fields['PRIMARY_ADDRESS_POSTALCODE']) ||
-		!empty($fields['PRIMARY_ADDRESS_COUNTRY'])) {
+        !empty($fields['PRIMARY_ADDRESS_STATE']) || !empty($fields['PRIMARY_ADDRESS_POSTALCODE']) ||
+        !empty($fields['PRIMARY_ADDRESS_COUNTRY'])) {
         $overlib_string .= '<b>' . $mod_strings['LBL_PRIMARY_ADDRESS'] . '</b><br>';
     }
     if (!empty($fields['PRIMARY_ADDRESS_STREET'])) {
@@ -85,7 +85,7 @@ function additionalDetailsContact($fields)
     }
     if (strlen($overlib_string) > 0 && !(strrpos($overlib_string, '<br>') == strlen($overlib_string) - 4)) {
         $overlib_string .= '<br>';
-    }  
+    }
     if (!empty($fields['PHONE_MOBILE'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_MOBILE_PHONE'] . '</b> <span class="phone">' . $fields['PHONE_MOBILE'] . '</span><br>';
     }
@@ -99,16 +99,16 @@ function additionalDetailsContact($fields)
     if (!empty($fields['DATE_MODIFIED'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_DATE_MODIFIED'] . '</b> ' . $fields['DATE_MODIFIED'] . '<br>';
     }
-	
+    
     if (!empty($fields['DESCRIPTION'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_DESCRIPTION'] . '</b> ' . substr($fields['DESCRIPTION'], 0, 300);
         if (strlen($fields['DESCRIPTION']) > 300) {
             $overlib_string .= '...';
         }
-    }	
-	
-    return array('fieldToAddTo' => 'NAME', 
-				 'string' => $overlib_string, 
-				 'editLink' => "index.php?action=EditView&module=Contacts&return_module=Contacts&record={$fields['ID']}", 
-				 'viewLink' => "index.php?action=DetailView&module=Contacts&return_module=Contacts&record={$fields['ID']}");
+    }
+    
+    return array('fieldToAddTo' => 'NAME',
+                 'string' => $overlib_string,
+                 'editLink' => "index.php?action=EditView&module=Contacts&return_module=Contacts&record={$fields['ID']}",
+                 'viewLink' => "index.php?action=DetailView&module=Contacts&return_module=Contacts&record={$fields['ID']}");
 }

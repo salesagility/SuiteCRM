@@ -290,8 +290,10 @@ class OAuthRequest
             // It's a POST request of the proper content-type, so parse POST
             // parameters and add those overriding any duplicates from GET
             if ($http_method == "POST"
-                && @strstr($request_headers["Content-Type"],
-                    "application/x-www-form-urlencoded")
+                && @strstr(
+                    $request_headers["Content-Type"],
+                    "application/x-www-form-urlencoded"
+                )
             ) {
                 $post_data = OAuthUtil::parse_parameters(
                     file_get_contents(self::$POST_INPUT)
@@ -635,8 +637,10 @@ class OAuthServer
             throw new OAuthException('No signature method parameter. This parameter is required');
         }
 
-        if (!in_array($signature_method,
-            array_keys($this->signature_methods))
+        if (!in_array(
+            $signature_method,
+            array_keys($this->signature_methods)
+        )
         ) {
             throw new OAuthException(
                 "Signature method '$signature_method' not supported " .
@@ -672,7 +676,9 @@ class OAuthServer
     {
         $token_field = @$request->get_parameter('oauth_token');
         $token = $this->data_store->lookup_token(
-            $consumer, $token_type, $token_field
+            $consumer,
+            $token_type,
+            $token_field
         );
         if (!$token) {
             throw new OAuthException("Invalid $token_type token: $token_field");

@@ -75,4 +75,3 @@ if ($email_type == 'archived') {
 }
 
 header($loc);
-

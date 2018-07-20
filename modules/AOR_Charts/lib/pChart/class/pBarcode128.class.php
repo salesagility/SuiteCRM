@@ -180,11 +180,11 @@
      public function left($value, $NbChar)
      {
          return substr($value, 0, $NbChar);
-     }  
+     }
      public function right($value, $NbChar)
      {
          return substr($value, strlen($value)-$NbChar, $NbChar);
-     }  
+     }
      public function mid($value, $Depart, $NbChar)
      {
          return substr($value, $Depart-1, $NbChar);

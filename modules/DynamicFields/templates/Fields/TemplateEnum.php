@@ -55,12 +55,12 @@ class TemplateEnum extends TemplateText
     public function __construct()
     {
         // ensure that the field dependency information is read in from any _REQUEST
-        $this->localVardefMap = array (
-    		'trigger' => 'trigger',
-    		'action' => 'action' ,
+        $this->localVardefMap = array(
+            'trigger' => 'trigger',
+            'action' => 'action' ,
             'visibility_grid' => 'visibility_grid',
         ) ;
-        $this->vardef_map = array_merge ($this->vardef_map, $this->localVardefMap) ;
+        $this->vardef_map = array_merge($this->vardef_map, $this->localVardefMap) ;
     }
 
     public function populateFromPost()
@@ -77,25 +77,25 @@ class TemplateEnum extends TemplateText
         // check first if we have the component parts of a dependency
         $dependencyPresent = true ;
         foreach ($this->localVardefMap as $def) {
-            $dependencyPresent &= isset ($this->$def) ;
+            $dependencyPresent &= isset($this->$def) ;
         }
 
         if ($dependencyPresent) {
-            $dependencies = array () ;
+            $dependencies = array() ;
 
-            if (is_array ($this->trigger) && is_array ($this->action)) {
-                for ($i = 0 ; $i < count ($this->action) ; $i++) {
+            if (is_array($this->trigger) && is_array($this->action)) {
+                for ($i = 0 ; $i < count($this->action) ; $i++) {
                     $dependencies [ $this->trigger [ $i ] ] = $this->action [ $i ] ;
                 }
                 $this->dependency = $dependencies ;
             } else {
-                if (! is_array ($this->trigger) && ! is_array ($this->action)) {
-                    $this->dependency = array ( $this->trigger => $this->action ) ;
+                if (! is_array($this->trigger) && ! is_array($this->action)) {
+                    $this->dependency = array( $this->trigger => $this->action ) ;
                 }
             }
             // tidy up
-            unset ($this->trigger) ;
-            unset ($this->action) ;
+            unset($this->trigger) ;
+            unset($this->action) ;
         }
     }
     public function get_xtpl_edit()

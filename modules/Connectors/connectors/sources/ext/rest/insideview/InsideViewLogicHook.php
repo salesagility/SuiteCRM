@@ -85,10 +85,10 @@ class InsideViewLogicHook
         $fieldMap = array('crm_account_name'=>'name',
                           'crm_account_id'=>'id',
                           'crm_account_website'=>'website',
-                          'crm_account_ticker'=>'ticker_symbol', 
-                          'crm_account_city'=>array('primary_address_city', 'secondary_address_city', 'billing_address_city', 'shipping_address_city'), 
-                          'crm_account_state'=>array('primary_address_state', 'secondary_address_state', 'billing_address_state', 'shipping_address_state'), 
-                          'crm_account_country'=>array('primary_address_country', 'secondary_address_country', 'billing_address_country', 'shipping_address_country'), 
+                          'crm_account_ticker'=>'ticker_symbol',
+                          'crm_account_city'=>array('primary_address_city', 'secondary_address_city', 'billing_address_city', 'shipping_address_city'),
+                          'crm_account_state'=>array('primary_address_state', 'secondary_address_state', 'billing_address_state', 'shipping_address_state'),
+                          'crm_account_country'=>array('primary_address_country', 'secondary_address_country', 'billing_address_country', 'shipping_address_country'),
                           'crm_account_postalcode'=>array('primary_address_postalcode', 'secondary_address_postalcode', 'billing_address_postalcode', 'shipping_address_postalcode')
         );
         

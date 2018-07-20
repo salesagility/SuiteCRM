@@ -350,8 +350,8 @@ function format_number($amount, $round = null, $decimals = null, $params = array
 
     // only create a currency object if we need it
     if ((!empty($params['currency_symbol']) && $params['currency_symbol']) ||
-	  (!empty($params['convert']) && $params['convert']) ||
-	  (!empty($params['currency_id']))) {
+      (!empty($params['convert']) && $params['convert']) ||
+      (!empty($params['currency_id']))) {
         // if we have an override currency_id
         if (!empty($params['currency_id'])) {
             if ($override_currency_id != $params['currency_id']) {
@@ -707,4 +707,3 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
         return $currency->name;
     }
 }
-

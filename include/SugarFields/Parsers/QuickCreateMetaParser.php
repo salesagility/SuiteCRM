@@ -235,7 +235,7 @@ class QuickCreateMetaParser extends MetaParser
                 } //if($sugarAttrValue)
             } //foreach
 
-	   // One last final check.  If $emptyCount does not equal Array $col count, don't add
+       // One last final check.  If $emptyCount does not equal Array $col count, don't add
             if ($emptyCount != count($col)) {
                 $metarow[] = $col;
             } //if

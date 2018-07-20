@@ -40,16 +40,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['InboundEmail_autoreply'] = array ('table' => 'inbound_email_autoreply',
-    'fields' => array (
-        'id' => array (
+$dictionary['InboundEmail_autoreply'] = array('table' => 'inbound_email_autoreply',
+    'fields' => array(
+        'id' => array(
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
             'required' => true,
             'reportable' => false,
         ),
-        'deleted' => array (
+        'deleted' => array(
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
@@ -57,19 +57,19 @@ $dictionary['InboundEmail_autoreply'] = array ('table' => 'inbound_email_autorep
             'default' => '0',
             'reportable'=>false,
         ),
-        'date_entered' => array (
+        'date_entered' => array(
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
         ),
-        'date_modified' => array (
+        'date_modified' => array(
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
         ),
-        'autoreplied_to' => array (
+        'autoreplied_to' => array(
             'name' => 'autoreplied_to',
             'vname' => 'LBL_AUTOREPLIED_TO',
             'type' => 'varchar',
@@ -87,7 +87,7 @@ $dictionary['InboundEmail_autoreply'] = array ('table' => 'inbound_email_autorep
             'reportable' => false,
         ),
     ),
-    'indices' => array (
+    'indices' => array(
         array(
             'name' => 'ie_autopk',
             'type' =>'primary',
@@ -103,6 +103,6 @@ $dictionary['InboundEmail_autoreply'] = array ('table' => 'inbound_email_autorep
             )
         ),
     ), /* end indices */
-    'relationships' => array (
+    'relationships' => array(
     ), /* end relationships */
 );

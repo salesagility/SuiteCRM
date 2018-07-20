@@ -8,7 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -30,8 +30,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $layout_defs['AOS_Invoices'] = array(
     'subpanel_setup' => array(
-        'aos_quotes_aos_invoices' => 
-        array (
+        'aos_quotes_aos_invoices' =>
+        array(
             'order' => 100,
             'module' => 'AOS_Quotes',
             'subpanel_name' => 'default',
@@ -39,14 +39,14 @@ $layout_defs['AOS_Invoices'] = array(
             'sort_by' => 'id',
             'title_key' => 'AOS_Quotes',
             'get_subpanel_data' => 'aos_quotes_aos_invoices',
-            'top_buttons' => 
-            array (
-                    0 => 
-                    array (
+            'top_buttons' =>
+            array(
+                    0 =>
+                    array(
                           'widget_class' => 'SubPanelTopCreateButton',
                     ),
-                    1 => 
-                    array (
+                    1 =>
+                    array(
                           'widget_class' => 'SubPanelTopSelectButton',
                           'popup_module' => 'AOS_Quotes',
                           'mode' => 'MultiSelect',

@@ -115,9 +115,9 @@ class OAuthToken extends SugarBean
     }
 
     /**
-	 * Generate random token
-	 * @return string
-	 */
+     * Generate random token
+     * @return string
+     */
     protected static function randomValue()
     {
         return bin2hex(Zend_Oauth_Provider::generateToken(6));
@@ -147,7 +147,7 @@ class OAuthToken extends SugarBean
     /**
      * Load token by ID
      * @param string $token
-	 * @return OAuthToken
+     * @return OAuthToken
      */
     public static function load($token)
     {

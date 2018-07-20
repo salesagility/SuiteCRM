@@ -42,22 +42,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $viewdefs['Project']['QuickCreate'] = array(
-                    'templateMeta' => array('maxColumns' => '2', 
+                    'templateMeta' => array('maxColumns' => '2',
                         'widths' => array(
-                                        array('label' => '10', 'field' => '30'), 
+                                        array('label' => '10', 'field' => '30'),
                                         array('label' => '10', 'field' => '30')
                                         ),
                        ),
 'panels' =>
 
-array (
+array(
   
-  array (
+  array(
     'name',
     'status'
   ),
   
-  array (
+  array(
     'estimated_start_date',
     'estimated_end_date'
   ),

@@ -76,7 +76,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
              }
          }
      }
-		
+        
      public function handleUpdate()
      {
          global $current_user;
@@ -91,7 +91,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                  if ($size != sizeof($names)|| $size != sizeof($isos) || $size != sizeof($symbols) || $size != sizeof($rates)) {
                      return;
                  }
-			
+            
                  $temp = new Currency();
                  for ($i = 0; $i < $size; $i++) {
                      $temp->id = $ids[$i];
@@ -104,10 +104,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
              }
          }
      }
-	
+    
      public function getJavascript()
      {
-         // wp: DO NOT add formatting and unformatting numbers in here, add them prior to calling these to avoid double calling 
+         // wp: DO NOT add formatting and unformatting numbers in here, add them prior to calling these to avoid double calling
          // of unformat number
          return $this->javascript . <<<EOQ
 					function get_rate(id){
@@ -161,12 +161,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 				</script>
 EOQ;
      }
-	
-	
+    
+    
      public function getSelectOptions($id = '')
      {
          global $current_user;
-         $this->javascript .="var ConversionRates = new Array(); \n";		
+         $this->javascript .="var ConversionRates = new Array(); \n";
          $this->javascript .="var CurrencySymbols = new Array(); \n";
          $options = '';
          $this->lookupCurrencies();
@@ -181,7 +181,7 @@ EOQ;
                      } else {
                          $options .= '<option value="'. $data->id . '">'	;
                      }
-                     $options .= $data->name . ' : ' . $data->symbol; 
+                     $options .= $data->name . ' : ' . $data->symbol;
                      $this->javascript .=" ConversionRates['".$data->id."'] = '".$data->conversion_rate."';\n";
                      $this->javascript .=" CurrencySymbols['".$data->id."'] = '".$data->symbol."';\n";
                  }
@@ -202,7 +202,7 @@ EOQ;
          $add = translate('LBL_ADD');
          $delete = translate('LBL_DELETE');
          $update = translate('LBL_UPDATE');
-		
+        
          $form = $html = "<br><table cellpadding='0' cellspacing='0' border='0'  class='tabForm'><tr><td><tableborder='0' cellspacing='0' cellpadding='0'>";
          $form .= <<<EOQ
 					<form name='DeleteCurrency' action='index.php' method='post'><input type='hidden' name='action' value='{$_REQUEST['action']}'>
@@ -229,7 +229,7 @@ EOQ;
 EOQ;
          return $form;
      }
-	
+    
      public function setCurrencyFields($fields)
      {
          $json = getJSONobj();

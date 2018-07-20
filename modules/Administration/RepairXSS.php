@@ -87,7 +87,7 @@ if (isset($runSilent) && $runSilent == true) {
     echo getClassicModuleTitle('Administration', array($mod_strings['LBL_REPAIRXSS_TITLE']), false);
     echo "<script>var done = '{$mod_strings['LBL_DONE']}';</script>";
     
-    $smarty = new Sugar_Smarty(); 
+    $smarty = new Sugar_Smarty();
     $smarty->assign("mod", $mod_strings);
     $smarty->assign("beanDropDown", $beanDropDown);
     $smarty->display("modules/Administration/templates/RepairXSS.tpl");

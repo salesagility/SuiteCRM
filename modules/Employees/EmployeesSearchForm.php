@@ -61,7 +61,8 @@ class EmployeesSearchForm extends SearchForm
             // $displayView
             $oldSearchForm->displayView,
             // listViewDefs
-            $oldSearchForm->listViewDefs);
+            $oldSearchForm->listViewDefs
+        );
         
         $this->lv = $oldSearchForm->lv;
     }

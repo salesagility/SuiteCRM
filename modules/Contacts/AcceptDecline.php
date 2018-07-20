@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $sugar_config, $dbconfig, $beanList, $beanFiles, $app_strings, $app_list_strings, $current_user;
 
-global $currentModule, $focus; 
+global $currentModule, $focus;
 
 if (!empty($_REQUEST['user_id'])) {
     $current_user = new User();
@@ -95,4 +95,3 @@ print "<BR><BR>";
 print "<a href='?module=$currentModule&action=DetailView&record=$focus->id'>".$app_strings['LBL_MEETING_GO_BACK']."</a><br>";
 sugar_cleanup();
 exit;
-

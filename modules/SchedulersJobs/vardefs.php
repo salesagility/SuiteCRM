@@ -43,8 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $dictionary['SchedulersJob'] = array('table' => 'job_queue',
     'comment' => 'Job queue keeps the list of the jobs executed by this instance',
-    'fields' => array (
-        'id' => array (
+    'fields' => array(
+        'id' => array(
             'name' => 'id',
             'vname' => 'LBL_NAME',
             'type' => 'id',
@@ -62,7 +62,7 @@ $dictionary['SchedulersJob'] = array('table' => 'job_queue',
             'len'=>255,
             'required'=>true,
         ),
-        'deleted' => array (
+        'deleted' => array(
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
@@ -70,32 +70,32 @@ $dictionary['SchedulersJob'] = array('table' => 'job_queue',
             'default' => '0',
             'reportable'=>false,
         ),
-        'date_entered' => array (
+        'date_entered' => array(
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
         ),
-        'date_modified' => array (
+        'date_modified' => array(
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
         ),
-        'scheduler_id' => array (
+        'scheduler_id' => array(
             'name' => 'scheduler_id',
             'vname' => 'LBL_SCHEDULER',
             'type' => 'id',
             'required' => false,
             'reportable' => false,
         ),
-        'execute_time' => array (
+        'execute_time' => array(
             'name' => 'execute_time',
             'vname' => 'LBL_EXECUTE_TIME',
             'type' => 'datetime',
             'required' => true,
         ),
-        'status' => array (
+        'status' => array(
             'name' => 'status',
             'vname' => 'LBL_STATUS',
             'type' => 'enum',
@@ -105,7 +105,7 @@ $dictionary['SchedulersJob'] = array('table' => 'job_queue',
             'reportable' => true,
             'readonly' => true,
         ),
-        'resolution' => array (
+        'resolution' => array(
             'name' => 'resolution',
             'vname' => 'LBL_RESOLUTION',
             'type' => 'enum',
@@ -115,14 +115,14 @@ $dictionary['SchedulersJob'] = array('table' => 'job_queue',
             'reportable' => true,
             'readonly' => true,
         ),
-        'message' => array (
+        'message' => array(
             'name' => 'message',
             'vname' => 'LBL_MESSAGE',
             'type' => 'text',
             'required' => false,
             'reportable' => false,
         ),
-        'target' => array (
+        'target' => array(
             'name' => 'target',
             'vname' => 'LBL_TARGET',
             'type' => 'varchar',
@@ -130,14 +130,14 @@ $dictionary['SchedulersJob'] = array('table' => 'job_queue',
             'required' => true,
             'reportable' => true,
         ),
-        'data' => array (
+        'data' => array(
             'name' => 'data',
             'vname' => 'LBL_DATA',
             'type' => 'text',
             'required' => false,
             'reportable' => true,
         ),
-        'requeue' => array (
+        'requeue' => array(
             'name' => 'requeue',
             'vname' => 'LBL_REQUEUE',
             'type' => 'bool',
@@ -145,14 +145,14 @@ $dictionary['SchedulersJob'] = array('table' => 'job_queue',
             'required' => false,
             'reportable' => true,
         ),
-        'retry_count' => array (
+        'retry_count' => array(
             'name' => 'retry_count',
             'vname' => 'LBL_RETRY_COUNT',
             'type' => 'tinyint',
             'required' => false,
             'reportable' => true,
         ),
-        'failure_count' => array (
+        'failure_count' => array(
             'name' => 'failure_count',
             'vname' => 'LBL_FAIL_COUNT',
             'type' => 'tinyint',
@@ -160,14 +160,14 @@ $dictionary['SchedulersJob'] = array('table' => 'job_queue',
             'reportable' => true,
             'readonly' => true,
         ),
-        'job_delay' => array (
+        'job_delay' => array(
             'name' => 'job_delay',
             'vname' => 'LBL_INTERVAL',
             'type' => 'int',
             'required' => false,
             'reportable' => false,
         ),
-        'client' => array (
+        'client' => array(
             'name' => 'client',
             'vname' => 'LBL_CLIENT',
             'type' => 'varchar',
@@ -175,13 +175,13 @@ $dictionary['SchedulersJob'] = array('table' => 'job_queue',
             'required' => true,
             'reportable' => true,
         ),
-        'percent_complete' => array (
+        'percent_complete' => array(
             'name' => 'percent_complete',
             'vname' => 'LBL_PERCENT',
             'type' => 'int',
             'required' => false,
             ),
-        'schedulers' => array (
+        'schedulers' => array(
             'name'            => 'schedulers',
             'vname'            => 'LBL_SCHEDULER_ID',
             'type'            => 'link',
@@ -190,7 +190,7 @@ $dictionary['SchedulersJob'] = array('table' => 'job_queue',
             'link_type' => 'one',
        ),
         ),
-    'indices' => array (
+    'indices' => array(
         array(
             'name' =>'job_queuepk',
             'type' =>'primary',

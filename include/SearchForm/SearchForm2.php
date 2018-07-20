@@ -199,8 +199,10 @@ class SearchForm
         if ($this->nbTabs > 1) {
             $this->th->ss->assign('TABS', $this->_displayTabs($this->module . '|' . $this->displayView));
         }
-        $this->th->ss->assign('searchTableColumnCount',
-            ((isset($this->searchdefs['templateMeta']['maxColumns']) ? $this->searchdefs['templateMeta']['maxColumns'] : 2) * 2) - 1);
+        $this->th->ss->assign(
+            'searchTableColumnCount',
+            ((isset($this->searchdefs['templateMeta']['maxColumns']) ? $this->searchdefs['templateMeta']['maxColumns'] : 2) * 2) - 1
+        );
         $this->th->ss->assign('fields', $this->fieldDefs);
         $this->th->ss->assign('customFields', $this->customFieldDefs);
         $this->th->ss->assign('formData', $this->formData);

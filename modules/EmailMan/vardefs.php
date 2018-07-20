@@ -40,7 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['EmailMan'] = 
+$dictionary['EmailMan'] =
 array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => array(
     'date_entered' => array(
         'name' => 'date_entered',
@@ -61,15 +61,15 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
         'reportable' =>false,
         'comment' => 'User ID representing assigned-to user',
     ),
-    'id' => 
-    array (
+    'id' =>
+    array(
         'name' => 'id',
         'vname' => 'LBL_ID',
         'type' => 'int',
         'len' => '11',
         'auto_increment'=>true,
         'comment' => 'Unique identifier',
-    ),	
+    ),
     'campaign_id' => array(
         'name' => 'campaign_id',
         'vname' => 'LBL_CAMPAIGN_ID',
@@ -183,11 +183,10 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
         'source'=>'non-db',
     ),
 
-), 'indices' => array (
+), 'indices' => array(
                     array('name' => 'emailmanpk', 'type' => 'primary', 'fields' => array('id')),
                     array('name' => 'idx_eman_list', 'type' => 'index', 'fields' => array('list_id','user_id','deleted')),
                     array('name' => 'idx_eman_campaign_id', 'type' => 'index', 'fields' => array('campaign_id')),
                     array('name' => 'idx_eman_relid_reltype_id', 'type' => 'index', 'fields'=> array('related_id', 'related_type', 'campaign_id')),
                     )
 );
-

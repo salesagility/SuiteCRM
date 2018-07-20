@@ -1158,4 +1158,3 @@ function filterFieldsFromBeans($beans)
     }
     return $formattedBeans;
 }
-

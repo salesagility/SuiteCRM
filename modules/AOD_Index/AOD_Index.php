@@ -175,16 +175,16 @@ class AOD_Index extends AOD_Index_sugar
         foreach ($GLOBALS['dictionary'][$bean->getObjectName()]['fields'] as $key => $field) {
             switch ($field['type']) {
                 case "enum":
-                	if (property_exists($bean, $key)) {
-                	    $document["document"]->addField(Zend_Search_Lucene_Field::Keyword($key, strtolower($bean->$key), 'UTF-8'));
-                	}
+                    if (property_exists($bean, $key)) {
+                        $document["document"]->addField(Zend_Search_Lucene_Field::Keyword($key, strtolower($bean->$key), 'UTF-8'));
+                    }
                     break;
 
                 case "multienum":
-                	if (property_exists($bean, $key)) {
-                	    $vals = unencodeMultienum($bean->$key);
-                	    $document["document"]->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(" ", $vals)), 'UTF-8'));
-                	}
+                    if (property_exists($bean, $key)) {
+                        $vals = unencodeMultienum($bean->$key);
+                        $document["document"]->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(" ", $vals)), 'UTF-8'));
+                    }
                     break;
                 case "name":
                 case "phone":

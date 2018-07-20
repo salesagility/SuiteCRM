@@ -54,17 +54,17 @@ define('DEFAULT_PORT', 389);
 class LDAPAuthenticateUser extends SugarAuthenticateUser
 {
 
-	/**
-	 * Does the actual authentication of the user and returns an id that will be used
-	 * to load the current user (loadUserOnSession)
-	 *
-	 * @param string $name
-	 * @param string $password
-	 * @param boolean $fallback
-	 * @return string id - used for loading the user
-	 *
-	 * Contributions by Erik Mitchell erikm@logicpd.com
-	 */
+    /**
+     * Does the actual authentication of the user and returns an id that will be used
+     * to load the current user (loadUserOnSession)
+     *
+     * @param string $name
+     * @param string $password
+     * @param boolean $fallback
+     * @return string id - used for loading the user
+     *
+     * Contributions by Erik Mitchell erikm@logicpd.com
+     */
     public function authenticateUser($name, $password, $fallback=false)
     {
         $server = $GLOBALS['ldap_config']->settings['ldap_hostname'];
@@ -90,7 +90,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         $GLOBALS['log']->debug("ldapauth.ldap_authenticate_user: ldap_rdn_lookup returned bind_user=" . $bind_user);
         if (!$bind_user) {
             $GLOBALS['log']->fatal("SECURITY: ldapauth: failed LDAP bind (login) by " .
-									$name . ", could not construct bind_user");
+                                    $name . ", could not construct bind_user");
             return '';
         }
 
@@ -193,7 +193,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
                 }
                 $GLOBALS['log']->debug("ldapauth: Searching for user: " . $user_search);
 
-                //user is not a member of the group if the count is zero get the logs and return no id so it fails login        
+                //user is not a member of the group if the count is zero get the logs and return no id so it fails login
                 if (!isset($user_uid)
                     || ldap_count_entries($ldapconn, ldap_search($ldapconn, $group_name, $user_search)) ==  0) {
                     $GLOBALS['log']->fatal("ldapauth: User ($name) is not a member of the LDAP group");

@@ -68,21 +68,21 @@ class ContactOpportunityRelationship extends SugarBean
     public $table_name = "opportunities_contacts";
     public $object_name = "ContactOpportunityRelationship";
     public $column_fields = array("id"
-		,"contact_id"
-		,"opportunity_id"
-		,"contact_role"
-		,'date_modified'
-		);
+        ,"contact_id"
+        ,"opportunity_id"
+        ,"contact_role"
+        ,'date_modified'
+        );
 
     public $new_schema = true;
 
     public $additional_column_fields = array();
-    public $field_defs = array (
+    public $field_defs = array(
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'contact_id'=>array('name' =>'contact_id', 'type' =>'char', 'len'=>'36', )
       , 'opportunity_id'=>array('name' =>'opportunity_id', 'type' =>'char', 'len'=>'36',)
       , 'contact_role'=>array('name' =>'contact_role', 'type' =>'char', 'len'=>'50')
-      , 'date_modified'=>array ('name' => 'date_modified','type' => 'datetime')
+      , 'date_modified'=>array('name' => 'date_modified','type' => 'datetime')
       , 'deleted'=>array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>true)
       );
     public function __construct()

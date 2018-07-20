@@ -1668,7 +1668,7 @@ eoq;
         return '';
     }
 
-    logThis ('is SugarConfig there '.file_exists(clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php")));
+    logThis('is SugarConfig there '.file_exists(clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php")));
     if (file_exists(clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php"))) {
         $file = clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php");
         $destFile = str_replace(clean_path($unzip_dir.'/'.$zip_from_dir), $cwd, $file);
@@ -2868,8 +2868,11 @@ function set_upgrade_vars()
             }
         }
         ksort($upgrade_config);
-        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
-                $upgrade_progress_file)) {
+        if (is_writable($upgrade_progress_file) && write_array_to_file(
+            "upgrade_config",
+            $upgrade_config,
+                $upgrade_progress_file
+        )) {
             //writing to the file
         }
     }
@@ -2960,8 +2963,11 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
             $upgrade_config[sizeof($upgrade_config)+1][$currStep]= $currState;
         }
 
-        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
-                $upgrade_progress_file)) {
+        if (is_writable($upgrade_progress_file) && write_array_to_file(
+            "upgrade_config",
+            $upgrade_config,
+                $upgrade_progress_file
+        )) {
             //writing to the file
         }
     }
@@ -3107,8 +3113,11 @@ function post_install_progress($progArray='', $action='')
                 $upgrade_config[sizeof($upgrade_config)]['commit']['post_install'][$key]=$val;
             }
         }
-        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
-                $upgrade_progress_file)) {
+        if (is_writable($upgrade_progress_file) && write_array_to_file(
+            "upgrade_config",
+            $upgrade_config,
+                $upgrade_progress_file
+        )) {
             //writing to the file
         }
     }
@@ -3125,14 +3134,14 @@ function repairDBForUpgrade($execute=false, $path='')
     VardefManager::clearVardef();
     require_once('include/ListView/ListView.php');
     foreach ($beanFiles as $bean => $file) {
-        require_once ($file);
-        $focus = new $bean ();
+        require_once($file);
+        $focus = new $bean();
         $sql .= $db->repairTable($focus, $execute);
     }
     //echo $sql;
     $olddictionary = $dictionary;
-    unset ($dictionary);
-    include ('modules/TableDictionary.php');
+    unset($dictionary);
+    include('modules/TableDictionary.php');
     foreach ($dictionary as $meta) {
         $tablename = $meta['table'];
         $fielddefs = $meta['fields'];
@@ -3141,7 +3150,7 @@ function repairDBForUpgrade($execute=false, $path='')
     }
     $qry_str = "";
     foreach (explode("\n", $sql) as $line) {
-        if (!empty ($line) && substr($line, -2) != "*/") {
+        if (!empty($line) && substr($line, -2) != "*/") {
             $line .= ";";
         }
         $qry_str .= $line . "\n";
@@ -4230,7 +4239,7 @@ function repair_long_relationship_names($path='')
     $GLOBALS['mi_remove_tables'] = false;
     $touched = array();
     foreach ($GLOBALS['moduleList'] as $module) {
-        $relationships = new DeployedRelationships ($module) ;
+        $relationships = new DeployedRelationships($module) ;
         foreach ($relationships->getRelationshipList() as $rel_name) {
             if (strlen($rel_name) > 27 && empty($touched[$rel_name])) {
                 logThis("Rebuilding relationship fields for $rel_name", $path);
@@ -4241,7 +4250,7 @@ function repair_long_relationship_names($path='')
                 $relationships->save();
                 $relationships->add($rel_obj);
                 $relationships->save();
-                $relationships->build () ;
+                $relationships->build() ;
             }
         }
     }
@@ -4492,18 +4501,18 @@ if (!function_exists("getValidDBName")) {
     function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
     {
         // first strip any invalid characters - all but alphanumerics and -
-        $name = preg_replace ('/[^\w-]+/i', '', $name) ;
-        $len = strlen ($name) ;
+        $name = preg_replace('/[^\w-]+/i', '', $name) ;
+        $len = strlen($name) ;
         $result = $name;
         if ($ensureUnique) {
             $md5str = md5($name);
-            $tail = substr ($name, -11) ;
+            $tail = substr($name, -11) ;
             $temp = substr($md5str, strlen($md5str)-4);
-            $result = substr ($name, 0, 10) . $temp . $tail ;
+            $result = substr($name, 0, 10) . $temp . $tail ;
         } elseif ($len > ($maxLen - 5)) {
-            $result = substr ($name, 0, 11) . substr ($name, 11 - $maxLen + 5);
+            $result = substr($name, 0, 11) . substr($name, 11 - $maxLen + 5);
         }
-        return strtolower ($result) ;
+        return strtolower($result) ;
     }
 }
 

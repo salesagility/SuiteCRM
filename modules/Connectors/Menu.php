@@ -1,7 +1,7 @@
 <?php
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
-} 
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings;
 global $current_user;
-$actions = array('ModifyProperties', 'ModifyDisplay', 
+$actions = array('ModifyProperties', 'ModifyDisplay',
 'ModifyMapping', 'ConnectorSettings');
 if (in_array($GLOBALS['action'], $actions)) {
     $module_menu[]=array("index.php?module=Connectors&action=ConnectorSettings", $mod_strings['LBL_ADMINISTRATION_MAIN'],"icon_Connectors");
@@ -62,4 +62,3 @@ if (!empty($_REQUEST['merge_module']) && ($GLOBALS['action'] == 'Step1' || $GLOB
     }
     $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $GLOBALS['module']);
 }
-

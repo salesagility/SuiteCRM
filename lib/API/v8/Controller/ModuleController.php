@@ -286,7 +286,8 @@ class ModuleController extends ApiController
                 if ($datetime === false) {
                     throw new ApiException(
                         '[ModulesController] [Unable to convert datetime field to ISO 8601] "date_modified"',
-                        ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
+                        ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
+                    );
                 }
 
                 $payload['included'][] = array(
@@ -451,7 +452,9 @@ class ModuleController extends ApiController
 
                 if ($bean instanceof SugarBean) {
                     throw new IdAlreadyExistsException(sprintf(
-                    'Bean id %s already exists in %s module', $beanID, $moduleName
+                    'Bean id %s already exists in %s module',
+                        $beanID,
+                        $moduleName
                 ), ExceptionCode::API_ID_ALREADY_EXISTS);
                 }
             }
@@ -504,13 +507,15 @@ class ModuleController extends ApiController
         try {
             if (isset($query['include'])) {
                 throw new BadRequestException(
-                    '[ModuleController] [include query param is not implemented]', ExceptionCode::API_NOT_IMPLEMENTED
+                    '[ModuleController] [include query param is not implemented]',
+                    ExceptionCode::API_NOT_IMPLEMENTED
                 );
             }
 
             if (isset($query['filter'])) {
                 throw new BadRequestException(
-                    '[ModuleController] [filter query param is not implemented]', ExceptionCode::API_NOT_IMPLEMENTED
+                    '[ModuleController] [filter query param is not implemented]',
+                    ExceptionCode::API_NOT_IMPLEMENTED
                 );
             }
 
@@ -1074,7 +1079,8 @@ class ModuleController extends ApiController
                         $data['links'] = $links
                             ->withHref(
                                 $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
-                                $relatedDefinition['lhs_module'].'/'.$id)
+                                $relatedDefinition['lhs_module'].'/'.$id
+                            )
                             ->toJsonApiResponse();
 
                         $payload['data'] = $data;
@@ -1115,7 +1121,8 @@ class ModuleController extends ApiController
                         $data['links'] = $links
                             ->withHref(
                                 $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
-                                $args['module'] . '/' . $row['id'])
+                                $args['module'] . '/' . $row['id']
+                            )
                             ->toJsonApiResponse();
 
                         $data['meta'] = $meta;
@@ -1136,7 +1143,8 @@ class ModuleController extends ApiController
             $payload['links'] = $links
                 ->withSelf(
                     $config['site_url'] . '/api/v'. self::VERSION_MAJOR . '/modules/'.
-                    $args['module'].'/'.$args['id'].'/relationships/'.$args['link'])
+                    $args['module'].'/'.$args['id'].'/relationships/'.$args['link']
+                )
                 ->toJsonApiResponse();
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($req, $e, isset($payload) ? $payload : []);

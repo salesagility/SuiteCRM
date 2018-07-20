@@ -64,4 +64,3 @@ class ImportMapTab extends ImportMapOther
      */
     public $enclosure;
 }
-

@@ -29,7 +29,7 @@ r53409 - 2010-01-03 19:31:15 -0800 (Sun, 03 Jan 2010) - roger - merge -r50376:HE
  * Type:     function<br>
  * Name:     sugar_currency_format<br>
  * Purpose:  formats a number
- * 
+ *
  * @author Wayne Pan {wayne at sugarcrm.com}
  * @param array
  * @param Smarty
@@ -40,7 +40,7 @@ function smarty_function_sugar_number_format($params, &$smarty)
     
     if (!isset($params['var']) || $params['var'] === '') {
         return '';
-    } 
+    }
 
     if (!isset($params['precision'])) {
         $params['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits');

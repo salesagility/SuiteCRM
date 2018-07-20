@@ -704,7 +704,7 @@
                      $LastX = $X;
                      $LastY = $Y;
                  }
-                 $SplineSettings["Forces"] = $Forces; 
+                 $SplineSettings["Forces"] = $Forces;
                  $this->pChartObject->drawSpline($WayPoints, $SplineSettings);
              }
          }
@@ -885,7 +885,7 @@
                      $Picture = $Series["Picture"];
                      list($PicWidth, $PicHeight) = $this->pChartObject->getPicInfo($Picture);
                      $PicX = $X+$IconAreaWidth/2;
-                     $PicY = $Y+$IconAreaHeight/2; 
+                     $PicY = $Y+$IconAreaHeight/2;
 
                      $this->pChartObject->drawFromPNG($PicX-$PicWidth/2, $PicY-$PicHeight/2, $Picture);
                  } else {

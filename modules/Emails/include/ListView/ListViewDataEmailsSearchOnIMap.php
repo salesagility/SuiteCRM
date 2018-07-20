@@ -76,8 +76,8 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         $limitPerPage,
         $params,
         $pageData,
-        $filter_fields)
-    {
+        $filter_fields
+    ) {
 
 
         // Create the data structure which are required to view a list view.

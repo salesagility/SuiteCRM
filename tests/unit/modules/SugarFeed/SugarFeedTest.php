@@ -128,7 +128,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testpushFeed2()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -181,7 +181,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test fetchReplies method
         $this->fetchReplies();
 
-        //mark the record as deleted 
+        //mark the record as deleted
         $sugarFeed->mark_deleted($sugarFeed->id);
         
         // clean up

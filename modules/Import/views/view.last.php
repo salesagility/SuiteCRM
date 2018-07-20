@@ -80,7 +80,7 @@ class ImportViewLast extends ImportView
         $updatedCount = 0;
         $fp = sugar_fopen(ImportCacheFiles::getStatusFileName(), 'r');
         
-        // Read the data if we successfully opened file 
+        // Read the data if we successfully opened file
         if ($fp !== false) {
             // Read rows 1 by 1 and add the info
             while ($row = fgetcsv($fp, 8192)) {

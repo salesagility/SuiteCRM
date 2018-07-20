@@ -174,7 +174,7 @@ class ImportFile extends ImportDataSource
     }
 
     /**
-	 * This is needed to prevent unserialize vulnerability
+     * This is needed to prevent unserialize vulnerability
      */
     public function __wakeup()
     {
@@ -344,7 +344,7 @@ class ImportFile extends ImportDataSource
             }
         }
         
-        // If we couldn't detect the charset, set it to default export/import charset 
+        // If we couldn't detect the charset, set it to default export/import charset
         if (empty($charset_for_import)) {
             $charset_for_import = $locale->getExportCharset();
         }

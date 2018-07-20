@@ -269,7 +269,7 @@ function export($type, $records = null, $members = false, $sample=false)
 
                     // Bug 32463 - Properly have multienum field translated into something useful for the client
                     case 'multienum':
-			$valueArray = unencodeMultiEnum($value);
+            $valueArray = unencodeMultiEnum($value);
 
                         if (isset($focus->field_name_map[$fields_array[$key]]['options']) && isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']])) {
                             foreach ($valueArray as $multikey => $multivalue) {
@@ -278,19 +278,19 @@ function export($type, $records = null, $members = false, $sample=false)
                                 }
                             }
                         }
-			$value = implode(",", $valueArray);
+            $value = implode(",", $valueArray);
 
                         break;
 
-		case 'enum':
-			if (isset($focus->field_name_map[$fields_array[$key]]['options']) &&
-				isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) &&
-				isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value])
-			) {
-			    $value = $app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value];
-			}
+        case 'enum':
+            if (isset($focus->field_name_map[$fields_array[$key]]['options']) &&
+                isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) &&
+                isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value])
+            ) {
+                $value = $app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value];
+            }
 
-			break;
+            break;
                 }
                 }
 
@@ -476,7 +476,7 @@ function generateSearchWhere($module, $query)
         } elseif (!empty($_SESSION['export_where'])) { //bug 26026, sometimes some module doesn't have a metadata/SearchFields.php, the searchfrom is generated in the ListView.php.
             // Currently, massupdate will not generate the where sql. It will use the sql stored in the SESSION. But this will cause bug 24722, and it cannot be avoided now.
             $where = $_SESSION['export_where'];
-            $whereArr = explode (" ", trim($where));
+            $whereArr = explode(" ", trim($where));
             if ($whereArr[0] == trim('where')) {
                 $whereClean = array_shift($whereArr);
             }
@@ -549,7 +549,7 @@ function generateSearchWhere($module, $query)
          $content = export($type, null, false, true);
 
          // Add a new row and add details on removing the sample data
-         // Our Importer will stop after he gets to the new row, ignoring the text below 
+         // Our Importer will stop after he gets to the new row, ignoring the text below
          return $content . "\n" . $app_strings['LBL_IMPORT_SAMPLE_FILE_TEXT'];
      }
  //this function will take in the bean and field mapping and return a proper value
@@ -900,7 +900,7 @@ function get_field_order_mapping($name='', $reorderArr = '', $exclude = true)
         if (!empty($field_order_array[$lname])) {
             foreach ($field_order_array[$lname] as $fk=> $fv) {
 
-	            //if the value exists as a key in the passed in array, add to temp array and remove from reorder array.
+                //if the value exists as a key in the passed in array, add to temp array and remove from reorder array.
                 //Do not force into the temp array as we don't want to violate acl's
                 if (array_key_exists($fk, $newReorder)) {
                     $temp_result_arr[$fk] = $newReorder[$fk];

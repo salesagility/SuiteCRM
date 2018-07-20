@@ -664,7 +664,7 @@ class ModulesCest
         $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -687,7 +687,7 @@ class ModulesCest
         $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' => self::$PRODUCT_RECORD_TYPE,
@@ -769,7 +769,7 @@ class ModulesCest
         // Create AOS_Product_Categories
         $this->fakeData->seed(rand(0, 2148));
         $payloadProductCategory = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -791,7 +791,7 @@ class ModulesCest
 
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
                     'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -845,7 +845,7 @@ class ModulesCest
         $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -867,7 +867,7 @@ class ModulesCest
 
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
                     'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -920,7 +920,7 @@ class ModulesCest
         $I->sendJsonApiContentNegotiation();
         // Clear AOS_Product_Categories relationship
         $payload = json_encode(
-            array (
+            array(
                 'data' => array()
             )
         );
@@ -965,7 +965,7 @@ class ModulesCest
         $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -987,7 +987,7 @@ class ModulesCest
 
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
                     'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -1042,7 +1042,7 @@ class ModulesCest
         // Create AOS_Product #1
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct1 = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_RECORD_TYPE,
@@ -1067,7 +1067,7 @@ class ModulesCest
         // Create AOS_Product #2
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct2 = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_RECORD_TYPE,
@@ -1093,7 +1093,7 @@ class ModulesCest
         // Create AOS_Product_Categories Parent
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -1116,7 +1116,7 @@ class ModulesCest
 
         // Relate to Parent AOS_Product_Categories with child AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     array(
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],
@@ -1199,7 +1199,7 @@ class ModulesCest
         // Replace the relationships with just one of the related items
         // We should only see the the item we have posted in the responses
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     array(
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1],
@@ -1262,7 +1262,7 @@ class ModulesCest
         // Replace the relationships with just one of the related items
         // We should only see the the item we have posted in the responses
         $payload = json_encode(
-            array (
+            array(
                 'data' => array()
             )
         );
@@ -1312,7 +1312,7 @@ class ModulesCest
         // Create AOS_Product #1
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct1 = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_RECORD_TYPE,
@@ -1337,7 +1337,7 @@ class ModulesCest
         // Create AOS_Product #2
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct2 = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_RECORD_TYPE,
@@ -1363,7 +1363,7 @@ class ModulesCest
         // Create AOS_Product_Categories Parent
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -1386,7 +1386,7 @@ class ModulesCest
 
         // Relate to Parent AOS_Product_Categories with child AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     array(
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],
@@ -1417,7 +1417,7 @@ class ModulesCest
 
         // Delete first product
         $payloadDelete = json_encode(
-            array (
+            array(
                 'data' => array(
                     array(
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],

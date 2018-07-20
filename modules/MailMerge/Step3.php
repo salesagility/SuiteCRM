@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-require_once ('include/JSON.php');
+require_once('include/JSON.php');
 require_once('modules/MailMerge/modules_array.php');
 require_once('modules/MailMerge/merge_query.php');
 
@@ -89,7 +89,7 @@ parse_str(html_entity_decode($selObjs, ENT_QUOTES), $sel_obj);
 $step_num = 3;
 $xtpl->assign("PREV_STEP", '2');
 $xtpl->assign("STEP_NUM", "Step 3:");
-$popup_request_data = array ('call_back_function' => 'set_return', 'form_name' => 'EditView', 'field_to_name_array' => array ('id' => 'rel_id', 'name' => 'rel_name',),);
+$popup_request_data = array('call_back_function' => 'set_return', 'form_name' => 'EditView', 'field_to_name_array' => array('id' => 'rel_id', 'name' => 'rel_name',),);
     $json = getJSONobj();
 
     // must urlencode to put into the filter request string
@@ -128,7 +128,7 @@ foreach ($sel_obj as $key => $value) {
     $value = str_replace("##", "&", $value);
     $value = stripslashes($value);
     $code = md5($key);
-    $popup_request_data = array ('call_back_function' => 'set_return', 'form_name' => 'EditView', 'field_to_name_array' => array ('id' => 'rel_id_'.$code, 'name' => 'rel_name_'.$code,),);
+    $popup_request_data = array('call_back_function' => 'set_return', 'form_name' => 'EditView', 'field_to_name_array' => array('id' => 'rel_id_'.$code, 'name' => 'rel_name_'.$code,),);
     $encoded_popup_request_data = urlencode($json->encode($popup_request_data));
 
     $fullQuery = get_merge_query($seed, $_SESSION['MAILMERGE_MODULE'], $key);

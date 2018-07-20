@@ -88,7 +88,7 @@ $subpanel_layout = array(
             'name' => 'category_id',
             'vname' => 'LBL_LIST_CATEGORY',
             'width' => '20%',
-        ),		
+        ),
        'status_id'=>array(
             'name' => 'status_id',
             'vname' => 'LBL_LIST_STATUS',

@@ -211,8 +211,8 @@ class SubPanelTiles
 
             if (!empty($usersLayout)) {
                 $availableTabs = $tabs ;
-                $tabs = array_intersect ($usersLayout, $availableTabs) ; // remove any tabs that have been removed since the user's layout was saved
-                foreach (array_diff ($availableTabs, $usersLayout) as $tab) {
+                $tabs = array_intersect($usersLayout, $availableTabs) ; // remove any tabs that have been removed since the user's layout was saved
+                foreach (array_diff($availableTabs, $usersLayout) as $tab) {
                     $tabs [] = $tab;
                 }
             }
@@ -347,7 +347,9 @@ class SubPanelTiles
                 $arr = array();
                 // TODO: Remove x-template:
                 $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView(
-                    'include/SubPanel/tpls/SubPanelDynamic.tpl', $arr);
+                    'include/SubPanel/tpls/SubPanelDynamic.tpl',
+                    $arr
+                );
 
                 // Get subpanel buttons
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel, $subpanel_object->subpanel_query);

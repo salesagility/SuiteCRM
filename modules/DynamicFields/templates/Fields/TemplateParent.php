@@ -66,7 +66,7 @@ class TemplateParent extends TemplateEnum
         //currency id
         $parent_type = new TemplateText();
         $parent_type->name = 'parent_type';
-        $parent_type->delete($df);  
+        $parent_type->delete($df);
         
         $parent_id = new TemplateId();
         $parent_id->name = 'parent_id';
@@ -105,7 +105,7 @@ class TemplateParent extends TemplateEnum
     }
     /**
      * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
-     */ 
+     */
     public function get_db_modify_alter_table($table)
     {
         return '';

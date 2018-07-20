@@ -87,14 +87,14 @@ class MyBugsDashlet extends DashletGeneric
 
         if (!empty($this->searchFields['fixed_in_release'])) {
             $this->currentSearchFields['fixed_in_release']['input'] = '<select multiple="true" size="3" name="fixed_in_release[]">'
-	                                                                  . get_select_options_with_id($seedRelease->get_releases(false, "Active"), (empty($this->filters['fixed_in_release']) ? '' : $this->filters['fixed_in_release']))
-	                                                                  . '</select>';
+                                                                      . get_select_options_with_id($seedRelease->get_releases(false, "Active"), (empty($this->filters['fixed_in_release']) ? '' : $this->filters['fixed_in_release']))
+                                                                      . '</select>';
         }
 
         if (!empty($this->searchFields['found_in_release'])) {
             $this->currentSearchFields['found_in_release']['input'] = '<select multiple="true" size="3" name="found_in_release[]">'
-	                                                                  . get_select_options_with_id($seedRelease->get_releases(false, "Active"), (empty($this->filters['found_in_release']) ? '' : $this->filters['found_in_release']))
-	                                                                  . '</select>';
+                                                                      . get_select_options_with_id($seedRelease->get_releases(false, "Active"), (empty($this->filters['found_in_release']) ? '' : $this->filters['found_in_release']))
+                                                                      . '</select>';
         }
         $this->configureSS->assign('searchFields', $this->currentSearchFields);
         return $this->configureSS->fetch($this->configureTpl);

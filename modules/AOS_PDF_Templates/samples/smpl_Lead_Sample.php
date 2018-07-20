@@ -8,7 +8,7 @@ class smpl_Lead_Sample
     {
         return 'Leads';
     }
-		
+        
     public function getBody()
     {
         global $locale;

@@ -99,7 +99,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 
 
         global $sugar_config;
-        if (isset ($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit'] && !empty($record)) {
+        if (isset($sugar_config['enable_inline_reports_edit']) && $sugar_config['enable_inline_reports_edit'] && !empty($record)) {
             $div_id = "$module&$record&$name";
             $str = "<div id='$div_id'><a target='_blank' href=\"index.php?action=DetailView&module=$module&record=$record\">";
             $value = $this->displayListPlain($layout_def);
@@ -199,7 +199,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         }
 
         return SugarWidgetFieldid::_get_column_select($layout_def)."="
-			.$this->reporter->db->quoted($input_name0)."\n";
+            .$this->reporter->db->quoted($input_name0)."\n";
     }
 
     public function queryFilteris_not($layout_def)
@@ -217,7 +217,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         }
 
         return SugarWidgetFieldid::_get_column_select($layout_def)."<>"
-			.$this->reporter->db->quoted($input_name0)."\n";
+            .$this->reporter->db->quoted($input_name0)."\n";
     }
 
     // $rename_columns, if true then you're coming from reports

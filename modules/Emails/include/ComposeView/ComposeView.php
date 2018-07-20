@@ -38,7 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once ('include/EditView/EditView2.php');
+require_once('include/EditView/EditView2.php');
 class ComposeView extends EditView
 {
     /**
@@ -52,7 +52,8 @@ class ComposeView extends EditView
     /**
      * @inheritdoc
      */
-    public function setup($module,
+    public function setup(
+        $module,
         $focus = null,
         $metadataFile = null,
         $tpl = 'modules/Emails/include/ComposeView/ComposeView.tpl',
@@ -62,4 +63,3 @@ class ComposeView extends EditView
         parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
     }
 }
-

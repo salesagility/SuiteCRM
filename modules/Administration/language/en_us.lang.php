@@ -913,4 +913,3 @@ $mod_strings = array(
     'LBL_PWDSEC_CHARS' => 'Characters',
 
 );
-

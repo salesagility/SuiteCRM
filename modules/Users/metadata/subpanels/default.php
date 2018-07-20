@@ -73,7 +73,7 @@ $subpanel_layout = array(
             'vname' => 'LBL_LIST_EMAIL',
             'width' => '25%',
         ),
-        'phone_work'=>array (
+        'phone_work'=>array(
             'vname' => 'LBL_LIST_PHONE',
             'width' => '21%',
         ),

@@ -54,7 +54,7 @@ class ConfiguratorViewFontManager extends SugarView
     {
         parent::__construct();
     }
-    /** 
+    /**
      * display the form
      */
     public function display()
@@ -69,7 +69,8 @@ class ConfiguratorViewFontManager extends SugarView
             $error = implode("<br>", $fontManager->errors);
         }
 
-        $this->ss->assign("MODULE_TITLE",
+        $this->ss->assign(
+            "MODULE_TITLE",
             getClassicModuleTitle(
                 $mod_strings['LBL_MODULE_ID'],
                 array($mod_strings['LBL_FONTMANAGER_TITLE']),
@@ -257,5 +258,3 @@ BSOFR;
         return true;
     }
 }
-
-    

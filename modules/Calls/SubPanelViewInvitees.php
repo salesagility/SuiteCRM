@@ -85,7 +85,7 @@ $button .= "</tr></form></table>\n";
 
 // Stick the form header out there.
 echo get_form_header($mod_strings['LBL_INVITEES'], $button, false);
-$xtpl=new XTemplate ('modules/Calls/SubPanelViewInvitees.html');
+$xtpl=new XTemplate('modules/Calls/SubPanelViewInvitees.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

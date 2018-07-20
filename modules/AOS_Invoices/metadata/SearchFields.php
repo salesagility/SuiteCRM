@@ -15,7 +15,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -33,8 +33,8 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-$searchFields['AOS_Invoices'] = 
-    array (
+$searchFields['AOS_Invoices'] =
+    array(
         'name' => array( 'query_type'=>'default'),
         'account_type'=> array('query_type'=>'default', 'options' => 'account_type_dom', 'template_var' => 'ACCOUNT_TYPE_OPTIONS'),
         'industry'=> array('query_type'=>'default', 'options' => 'industry_dom', 'template_var' => 'INDUSTRY_OPTIONS'),
@@ -63,11 +63,11 @@ $searchFields['AOS_Invoices'] =
 			                        and favorites.assigned_user_id = '{1}'",
             'db_field'=>array('id')),
         //Range Search Support
-        'range_total_amount' => array ('query_type' => 'default', 'enable_range_search' => true),
-        'start_range_total_amount' => array ('query_type' => 'default',  'enable_range_search' => true),
-        'end_range_total_amount' => array ('query_type' => 'default', 'enable_range_search' => true),
-        'range_due_date' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-        'start_range_due_date' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
-        'end_range_due_date' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+        'range_total_amount' => array('query_type' => 'default', 'enable_range_search' => true),
+        'start_range_total_amount' => array('query_type' => 'default',  'enable_range_search' => true),
+        'end_range_total_amount' => array('query_type' => 'default', 'enable_range_search' => true),
+        'range_due_date' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+        'start_range_due_date' => array('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
+        'end_range_due_date' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
 
     );

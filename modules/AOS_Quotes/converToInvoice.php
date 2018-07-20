@@ -76,7 +76,7 @@
     if (!empty($key)) {
         $quote->load_relationship($key);
         $quote->$key->add($invoice->id);
-    } 
+    }
     
     //Setting Group Line Items
     $sql = "SELECT * FROM aos_line_item_groups WHERE parent_type = 'AOS_Quotes' AND parent_id = '".$quote->id."' AND deleted = 0";

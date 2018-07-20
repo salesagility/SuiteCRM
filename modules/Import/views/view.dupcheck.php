@@ -369,4 +369,3 @@ enableQS(false);
 EOJAVASCRIPT;
     }
 }
-

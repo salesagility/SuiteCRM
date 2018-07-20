@@ -128,7 +128,7 @@ class ImportMap extends SugarBean
     public function setMapping(
         $mapping_arr
         ) {
-        $output = array ();
+        $output = array();
         foreach ($mapping_arr as $key => $item) {
             $output[] = "$key=$item";
         }
@@ -162,7 +162,7 @@ class ImportMap extends SugarBean
     public function setDefaultValues(
         $defa_arr
         ) {
-        $output = array ();
+        $output = array();
         foreach ($defa_arr as $key => $item) {
             $output[] = "$key=$item";
         }

@@ -946,6 +946,3 @@ class RenameModules
         return $this->renamedModules;
     }
 }
-
-
-

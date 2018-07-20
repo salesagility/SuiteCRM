@@ -42,9 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $listViewDefs ['Schedulers'] =
-array (
+array(
   'NAME' =>
-  array (
+  array(
     'width' => '35%',
     'label' => 'LBL_LIST_NAME',
     'link' => true,
@@ -52,22 +52,22 @@ array (
     'default' => true,
   ),
   'JOB_INTERVAL' =>
-  array (
+  array(
     'width' => '20%',
     'label' => 'LBL_LIST_JOB_INTERVAL',
     'default' => true,
-  	'sortable' => false,
+    'sortable' => false,
   ),
   'DATE_TIME_START' =>
-  array (
+  array(
     'width' => '25%',
     'label' => 'LBL_LIST_RANGE',
-  	'customCode' => '{$DATE_TIME_START} - {$DATE_TIME_END}',
+    'customCode' => '{$DATE_TIME_START} - {$DATE_TIME_END}',
     'default' => true,
-  	'related_fields' => array('date_time_end'),
+    'related_fields' => array('date_time_end'),
   ),
   'STATUS' =>
-  array (
+  array(
     'width' => '15%',
     'label' => 'LBL_LIST_STATUS',
     'default' => true,

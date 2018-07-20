@@ -63,7 +63,7 @@ $subpanel_layout = array(
         ),
         'accept_status_id'=>array(
             'usage' => 'query_only',
-        ),				
+        ),
         'first_name'=>array(
             'usage' => 'query_only',
         ),
@@ -86,7 +86,7 @@ $subpanel_layout = array(
             'width' => '25%',
             'widget_class' => 'SubPanelEmailLink',
         ),
-        'phone_work'=>array (
+        'phone_work'=>array(
             'vname' => 'LBL_LIST_PHONE',
             'width' => '21%',
         ),

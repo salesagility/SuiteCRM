@@ -1927,7 +1927,8 @@ class HTML5TreeConstructer
                 $token['type'] === HTML5::CHARACTR && in_array(
                     end($this->stack)->nodeName,
                     array('title', 'style', 'script')
-                ))
+                )
+                )
         ) {
             /* Append the character to the current node. */
             $this->insertText($token['data']);

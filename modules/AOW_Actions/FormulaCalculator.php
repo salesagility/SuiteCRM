@@ -245,8 +245,12 @@ class FormulaCalculator
                 $pos = strpos($evaluatedValue, $childItem['value']);
                 if ($pos !== false) {
                     $this->log("Going to replace child value '" . $childItem['value'] . "' in expression: " . $evaluatedValue);
-                    $evaluatedValue = substr_replace($evaluatedValue, $childItem['evaluatedValue'], $pos,
-                        strlen($childItem['value']));
+                    $evaluatedValue = substr_replace(
+                        $evaluatedValue,
+                        $childItem['evaluatedValue'],
+                        $pos,
+                        strlen($childItem['value'])
+                    );
                     $this->log("Replaced child value '" . $childItem['evaluatedValue'] . "'. New expression: " . $evaluatedValue);
                 }
             }

@@ -159,7 +159,8 @@ class iFrameDashlet extends Dashlet
         $out_url = str_replace(
             array('@@LANG@@','@@VER@@','@@EDITION@@'),
             array($GLOBALS['current_language'],$GLOBALS['sugar_config']['sugar_version'],$sugar_edition),
-            $this->url);
+            $this->url
+        );
         $title = $this->title;
         if (empty($title)) {
             $title = 'empty';

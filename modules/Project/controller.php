@@ -135,7 +135,7 @@ class ProjectController extends SugarController
                 $bh = $bh[0];
                 if ($bh->open) {
                     $open_h = $bh ? $bh->opening_hours : 9;
-                    $close_h = $bh ? $bh->closing_hours : 17;							
+                    $close_h = $bh ? $bh->closing_hours : 17;
                     
                     $start_time = DateTime::createFromFormat($dateformat, $_POST['start']);
                     $start_time = $start_time->modify('+'.$open_h.' Hours');
@@ -160,7 +160,7 @@ class ProjectController extends SugarController
 
         //default business hours array
         if ($override_business_hours != 1 || empty($bhours)) {
-            $bhours = array ('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
+            $bhours = array('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
         }
         //---------------------------
         
@@ -171,15 +171,15 @@ class ProjectController extends SugarController
     
         $enddate = $startdate;
 
-        $h = 0;		
+        $h = 0;
         $d = 0;
         if ($duration_unit == 'Hours') {
             while ($duration > $h) {
                 $day = $enddate->format('l');
 
-                $h += $bhours[$day];	
+                $h += $bhours[$day];
                 $enddate = $enddate->modify('+1 Days');
-            } 
+            }
             
             $enddate = $enddate->format('Y-m-d');
         } else {
@@ -190,7 +190,7 @@ class ProjectController extends SugarController
                     $d += 1;
                 }
                 $enddate = $enddate->modify('+1 Days');
-            } 
+            }
             $enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
             $enddate = $enddate->format('Y-m-d');
         }
@@ -483,14 +483,14 @@ class ProjectController extends SugarController
         global $mod_strings;
 
         $start_date = $_REQUEST['start_date'];
-        $end_date = $_REQUEST['end_date']; 
+        $end_date = $_REQUEST['end_date'];
         $resource_id = $_REQUEST['resource_id'];
 
         $projects = explode(",", $_REQUEST['projects']);
         $project_where = "";
         if (count($projects) > 1 || $projects[0] != '') {
             $project_where = " AND project_id IN( '" . implode("','", $projects) . "' )";
-        }	    
+        }
 
         $Task = BeanFactory::getBean('ProjectTask');
         
@@ -530,4 +530,3 @@ class ProjectController extends SugarController
         return (!isset($question) || trim($question)==='');
     }
 }
-

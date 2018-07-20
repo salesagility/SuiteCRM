@@ -46,29 +46,29 @@
  */
 function get_merge_query($seed, $merge_module, $key)
 {
-    $selQuery = array (
+    $selQuery = array(
 'Contacts'=>array(
-	'Accounts' => 'SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts LEFT JOIN accounts_contacts ON contacts.id=accounts_contacts.contact_id AND (accounts_contacts.deleted is NULL or accounts_contacts.deleted=0)',
-	'Opportunities' => 'SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts LEFT JOIN opportunities_contacts ON contacts.id=opportunities_contacts.contact_id AND (opportunities_contacts.deleted is NULL or opportunities_contacts.deleted=0)',
-	'Cases' => 'SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts LEFT JOIN contacts_cases ON contacts.id=contacts_cases.contact_id AND (contacts_cases.deleted is NULL or contacts_cases.deleted=0)',
-	'Bugs' => 'SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts LEFT JOIN contacts_bugs ON contacts.id=contacts_bugs.contact_id AND (contacts_bugs.deleted is NULL or contacts_bugs.deleted=0)',
-	'Quotes' => 'SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts LEFT JOIN quotes_contacts ON contacts.id=quotes_contacts.contact_id AND (quotes_contacts.deleted is NULL or quotes_contacts.deleted=0)'
+    'Accounts' => 'SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts LEFT JOIN accounts_contacts ON contacts.id=accounts_contacts.contact_id AND (accounts_contacts.deleted is NULL or accounts_contacts.deleted=0)',
+    'Opportunities' => 'SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts LEFT JOIN opportunities_contacts ON contacts.id=opportunities_contacts.contact_id AND (opportunities_contacts.deleted is NULL or opportunities_contacts.deleted=0)',
+    'Cases' => 'SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts LEFT JOIN contacts_cases ON contacts.id=contacts_cases.contact_id AND (contacts_cases.deleted is NULL or contacts_cases.deleted=0)',
+    'Bugs' => 'SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts LEFT JOIN contacts_bugs ON contacts.id=contacts_bugs.contact_id AND (contacts_bugs.deleted is NULL or contacts_bugs.deleted=0)',
+    'Quotes' => 'SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts LEFT JOIN quotes_contacts ON contacts.id=quotes_contacts.contact_id AND (quotes_contacts.deleted is NULL or quotes_contacts.deleted=0)'
 ),
 'Opportunities'=>array(
-	"Accounts"=>'SELECT opportunities.id, opportunities.name FROM opportunities LEFT JOIN accounts_opportunities ON opportunities.id = accounts_opportunities.opportunity_id AND (accounts_opportunities.deleted is NULL or accounts_opportunities.deleted=0)'
+    "Accounts"=>'SELECT opportunities.id, opportunities.name FROM opportunities LEFT JOIN accounts_opportunities ON opportunities.id = accounts_opportunities.opportunity_id AND (accounts_opportunities.deleted is NULL or accounts_opportunities.deleted=0)'
 ),
 'Accounts'=>array(
-	"Opportunities"=>'SELECT accounts.id, accounts.name FROM accounts LEFT JOIN accounts_opportunities ON accounts.id = accounts_opportunities.account_id AND (accounts_opportunities.deleted is NULL or accounts_opportunities.deleted=0)'
+    "Opportunities"=>'SELECT accounts.id, accounts.name FROM accounts LEFT JOIN accounts_opportunities ON accounts.id = accounts_opportunities.account_id AND (accounts_opportunities.deleted is NULL or accounts_opportunities.deleted=0)'
 ),
 );
 
     $whereQuery = array(
 'Contacts' =>
     array('Accounts' => 'accounts_contacts.contact_id = contacts.id AND accounts_contacts.account_id = ',
-	'Opportunities' => 'opportunities_contacts.contact_id = contacts.id AND opportunities_contacts.opportunity_id = ',
-	'Cases' => 'contacts_cases.contact_id = contacts.id AND contacts_cases.case_id = ',
-	'Bugs' => 'contacts_bugs.contact_id = contacts.id AND contacts_bugs.bug_id = ',
-	'Quotes' => 'quotes_contacts.contact_id = contacts.id AND quotes_contacts.quote_id = '
+    'Opportunities' => 'opportunities_contacts.contact_id = contacts.id AND opportunities_contacts.opportunity_id = ',
+    'Cases' => 'contacts_cases.contact_id = contacts.id AND contacts_cases.case_id = ',
+    'Bugs' => 'contacts_bugs.contact_id = contacts.id AND contacts_bugs.bug_id = ',
+    'Quotes' => 'quotes_contacts.contact_id = contacts.id AND quotes_contacts.quote_id = '
     ),
 'Opportunities'=>array('Accounts'=>'accounts_opportunities.opportunity_id = opportunities.id AND accounts_opportunities.account_id = '),
 'Accounts'=>array('Opportunities'=>'accounts_opportunities.account_id = accounts.id  AND accounts_opportunities.opportunity_id = '),

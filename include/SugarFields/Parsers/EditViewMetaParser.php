@@ -315,7 +315,7 @@ class EditViewMetaParser extends MetaParser
                } //if($sugarAttValue)
            } //foreach
 
-		   // One last final check.  If $emptyCount does not equal Array $col count, don't add
+           // One last final check.  If $emptyCount does not equal Array $col count, don't add
            if ($emptyCount != count($col)) {
                if ($hasRequiredLabel) {
                    if (is_array($col)) {
@@ -333,7 +333,7 @@ class EditViewMetaParser extends MetaParser
            } //if
        } //foreach
 
-	   $panels[$id] = $metarow;
+       $panels[$id] = $metarow;
    } //foreach
 
         $this->mCustomPanels = $panels;

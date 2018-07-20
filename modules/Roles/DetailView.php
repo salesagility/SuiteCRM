@@ -82,7 +82,7 @@ echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['
 
 $GLOBALS['log']->info("Role detail view");
 
-$xtpl=new XTemplate ('modules/Roles/DetailView.html');
+$xtpl=new XTemplate('modules/Roles/DetailView.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $xtpl->assign("GRIDLINE", $gridline);
@@ -126,7 +126,7 @@ if (isset($_REQUEST['record'])) {
         $chooser->args['values_array'][1][$key] = $app_list_strings['moduleList'][$key];
     }
 }
-	
+    
 $chooser->args['left_name'] = 'display_tabs';
 $chooser->args['right_name'] = 'hide_tabs';
 $chooser->args['left_label'] =  $mod_strings['LBL_ALLOWED_MODULES'];

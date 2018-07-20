@@ -82,7 +82,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSaveAndMarkdeletedAndSetAcceptStatus()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -212,7 +212,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_list_view_data()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();

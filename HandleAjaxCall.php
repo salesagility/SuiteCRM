@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  require_once('ModuleInstall/PackageManager/PackageController.php');
 if (!is_admin($GLOBALS['current_user'])) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
-}	
+}
     $requestedMethod = $_REQUEST['method'];
     $pmc = new PackageController();
   

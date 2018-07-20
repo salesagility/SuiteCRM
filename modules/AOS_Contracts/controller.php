@@ -5,7 +5,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -49,12 +49,12 @@ class AOS_ContractsController extends SugarController
             if (isset($row['billing_contact_id'])) {
                 $_REQUEST['contact_id'] = $row['billing_contact_id'];
             }
-        		
+                
             if (isset($row['opportunity_id'])) {
                 $_REQUEST['opportunity_id'] = $row['opportunity_id'];
             }
         }
-        	
+            
         if (isset($_REQUEST['account_id'])) {
             $query = "SELECT id,name FROM accounts WHERE id = '{$_REQUEST['account_id']}'";
             $result = $this->bean->db->query($query, true);
@@ -69,7 +69,7 @@ class AOS_ContractsController extends SugarController
             $this->bean->contact = $contact->name;
             $this->bean->contact_id = $contact->id;
         }
-		
+        
         if (isset($_REQUEST['opportunity_id'])) {
             $query = "SELECT id,name FROM opportunities WHERE id = '{$_REQUEST['opportunity_id']}'";
             $result = $this->bean->db->query($query, true);

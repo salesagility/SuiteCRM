@@ -54,4 +54,3 @@ $dashletStrings['CalendarDashlet'] = array(
     'LBL_VIEW_MONTH' => 'Month',
 
 );
-

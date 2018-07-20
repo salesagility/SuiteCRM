@@ -14,7 +14,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testContact()
     {
 
-		//execute the contructor and check for the Object type and  attributes
+        //execute the contructor and check for the Object type and  attributes
         $contact = new Contact();
         $this->assertInstanceOf('Contact', $contact);
         $this->assertInstanceOf('Person', $contact);
@@ -35,7 +35,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         $this->markTestIncomplete('Breaks on php 7.1');
-		
+        
 
         $contact = new Contact();
 
@@ -52,7 +52,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $query = preg_replace('/\s+/', '', $query);
         $expected =preg_replace('/\s+/', '', $expected);
         $this->assertSame($expected, $query);
-		
+        
         //test with valid string
         $query = "";
         $expected = "\n	            LEFT JOIN accounts_contacts\n	            ON contacts.id=accounts_contacts.contact_id\n	            LEFT JOIN accounts\n	            ON accounts_contacts.account_id=accounts.id\n	                 LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ";
@@ -91,19 +91,19 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_new_list_query()
     {
         /*
-		$contact = new Contact();
+        $contact = new Contact();
 
-		//test without request action parameter
-		$expected =" SELECT  contacts.* , '                                                                                                                                                                                                                                                              ' opportunity_role_fields , '                                    '  opportunity_id , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' e_invite_status_fields , '                                    '  fp_events_contactsfp_events_ida , '                                                                                                                                                                                                                                                              ' e_accept_status_fields , LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),' ',IFNULL(contacts.last_name,'')))) as name , jt4.user_name modified_by_name , jt4.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt5.user_name created_by_name , jt5.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt6.user_name assigned_user_name , jt6.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod, LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),' ',IFNULL(contacts.last_name,'')))) as full_name, '                                                                                                                                                                                                                                                              ' account_name , '                                    '  account_id  , jt8.last_name report_to_name , jt8.assigned_user_id report_to_name_owner  , 'Contacts' report_to_name_mod , jt9.name campaign_name , jt9.assigned_user_id campaign_name_owner  , 'Campaigns' campaign_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM contacts   LEFT JOIN  users jt4 ON contacts.modified_user_id=jt4.id AND jt4.deleted=0\n\n AND jt4.deleted=0  LEFT JOIN  users jt5 ON contacts.created_by=jt5.id AND jt5.deleted=0\n\n AND jt5.deleted=0  LEFT JOIN  users jt6 ON contacts.assigned_user_id=jt6.id AND jt6.deleted=0\n\n AND jt6.deleted=0  LEFT JOIN  contacts jt8 ON contacts.reports_to_id=jt8.id AND jt8.deleted=0\n\n AND jt8.deleted=0  LEFT JOIN  campaigns jt9 ON contacts.campaign_id=jt9.id AND jt9.deleted=0\n\n AND jt9.deleted=0 where (account.name is null) AND contacts.deleted=0";
-		$actual = $contact->create_new_list_query("account.name","account.name is null");
-		$this->assertSame($expected,$actual);
+        //test without request action parameter
+        $expected =" SELECT  contacts.* , '                                                                                                                                                                                                                                                              ' opportunity_role_fields , '                                    '  opportunity_id , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' e_invite_status_fields , '                                    '  fp_events_contactsfp_events_ida , '                                                                                                                                                                                                                                                              ' e_accept_status_fields , LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),' ',IFNULL(contacts.last_name,'')))) as name , jt4.user_name modified_by_name , jt4.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt5.user_name created_by_name , jt5.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt6.user_name assigned_user_name , jt6.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod, LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),' ',IFNULL(contacts.last_name,'')))) as full_name, '                                                                                                                                                                                                                                                              ' account_name , '                                    '  account_id  , jt8.last_name report_to_name , jt8.assigned_user_id report_to_name_owner  , 'Contacts' report_to_name_mod , jt9.name campaign_name , jt9.assigned_user_id campaign_name_owner  , 'Campaigns' campaign_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM contacts   LEFT JOIN  users jt4 ON contacts.modified_user_id=jt4.id AND jt4.deleted=0\n\n AND jt4.deleted=0  LEFT JOIN  users jt5 ON contacts.created_by=jt5.id AND jt5.deleted=0\n\n AND jt5.deleted=0  LEFT JOIN  users jt6 ON contacts.assigned_user_id=jt6.id AND jt6.deleted=0\n\n AND jt6.deleted=0  LEFT JOIN  contacts jt8 ON contacts.reports_to_id=jt8.id AND jt8.deleted=0\n\n AND jt8.deleted=0  LEFT JOIN  campaigns jt9 ON contacts.campaign_id=jt9.id AND jt9.deleted=0\n\n AND jt9.deleted=0 where (account.name is null) AND contacts.deleted=0";
+        $actual = $contact->create_new_list_query("account.name","account.name is null");
+        $this->assertSame($expected,$actual);
 
-		//test with request action parameter = ContactAddressPopup
-		$_REQUEST['action'] = 'ContactAddressPopup';
-		$expected = "SELECT LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'',IFNULL(contacts.last_name,'')))) name, \n				contacts.*,\n                accounts.name as account_name,\n                accounts.id as account_id,\n                accounts.assigned_user_id account_id_owner,\n                users.user_name as assigned_user_name \n                FROM contacts LEFT JOIN users\n	                    ON contacts.assigned_user_id=users.id\n	                    LEFT JOIN accounts_contacts\n	                    ON contacts.id=accounts_contacts.contact_id  and accounts_contacts.deleted = 0\n	                    LEFT JOIN accounts\n	                    ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = contacts.id AND eabl.bean_module = 'Contacts' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) where (account.name is null) AND  contacts.deleted=0 ";
-		$actual = $contact->create_new_list_query("account.name","account.name is null");
-		$this->assertSame($expected,$actual);
-		*/
+        //test with request action parameter = ContactAddressPopup
+        $_REQUEST['action'] = 'ContactAddressPopup';
+        $expected = "SELECT LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'',IFNULL(contacts.last_name,'')))) name, \n				contacts.*,\n                accounts.name as account_name,\n                accounts.id as account_id,\n                accounts.assigned_user_id account_id_owner,\n                users.user_name as assigned_user_name \n                FROM contacts LEFT JOIN users\n	                    ON contacts.assigned_user_id=users.id\n	                    LEFT JOIN accounts_contacts\n	                    ON contacts.id=accounts_contacts.contact_id  and accounts_contacts.deleted = 0\n	                    LEFT JOIN accounts\n	                    ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = contacts.id AND eabl.bean_module = 'Contacts' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) where (account.name is null) AND  contacts.deleted=0 ";
+        $actual = $contact->create_new_list_query("account.name","account.name is null");
+        $this->assertSame($expected,$actual);
+        */
         $this->assertTrue(true, "NEEDS FIXING!");
     }
 
@@ -187,7 +187,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_list_view_data()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
@@ -201,22 +201,22 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $contact->first_name = "first";
         $contact->last_name = "last";
 
-        $expected = array (
-					  'NAME' => 'first last',
-					  'DELETED' => 0,
-					  'FIRST_NAME' => 'first',
-					  'LAST_NAME' => 'last',
-					  'FULL_NAME' => 'first last',
-					  'DO_NOT_CALL' => '0',
-					  'PORTAL_USER_TYPE' => 'Single user',
-					  'ENCODED_NAME' => 'first last',
-					  'EMAIL1' => '',
-					  'EMAIL1_LINK' => '<a href=\'javascript:void(0);\' onclick=\'SUGAR.quickCompose.init({"fullComposeUrl":"contact_id=\\u0026parent_type=Contacts\\u0026parent_id=\\u0026parent_name=first+last\\u0026to_addrs_ids=\\u0026to_addrs_names=first+last\\u0026to_addrs_emails=\\u0026to_email_addrs=first+last%26nbsp%3B%26lt%3B%26gt%3B\\u0026return_module=Contacts\\u0026return_action=ListView\\u0026return_id=","composePackage":{"contact_id":"","parent_type":"Contacts","parent_id":"","parent_name":"first last","to_addrs_ids":"","to_addrs_names":"first last","to_addrs_emails":"","to_email_addrs":"first last \\u003C\\u003E","return_module":"Contacts","return_action":"ListView","return_id":""}});\' class=\'\'></a>',
-					  'EMAIL_AND_NAME1' => 'first last &lt;&gt;',
-					);
+        $expected = array(
+                      'NAME' => 'first last',
+                      'DELETED' => 0,
+                      'FIRST_NAME' => 'first',
+                      'LAST_NAME' => 'last',
+                      'FULL_NAME' => 'first last',
+                      'DO_NOT_CALL' => '0',
+                      'PORTAL_USER_TYPE' => 'Single user',
+                      'ENCODED_NAME' => 'first last',
+                      'EMAIL1' => '',
+                      'EMAIL1_LINK' => '<a href=\'javascript:void(0);\' onclick=\'SUGAR.quickCompose.init({"fullComposeUrl":"contact_id=\\u0026parent_type=Contacts\\u0026parent_id=\\u0026parent_name=first+last\\u0026to_addrs_ids=\\u0026to_addrs_names=first+last\\u0026to_addrs_emails=\\u0026to_email_addrs=first+last%26nbsp%3B%26lt%3B%26gt%3B\\u0026return_module=Contacts\\u0026return_action=ListView\\u0026return_id=","composePackage":{"contact_id":"","parent_type":"Contacts","parent_id":"","parent_name":"first last","to_addrs_ids":"","to_addrs_names":"first last","to_addrs_emails":"","to_email_addrs":"first last \\u003C\\u003E","return_module":"Contacts","return_action":"ListView","return_id":""}});\' class=\'\'></a>',
+                      'EMAIL_AND_NAME1' => 'first last &lt;&gt;',
+                    );
 
         $actual = $contact->get_list_view_data();
-		
+        
         $this->assertEquals($expected['NAME'], $actual['NAME']);
         $this->assertEquals($expected['FIRST_NAME'], $actual['FIRST_NAME']);
         $this->assertEquals($expected['LAST_NAME'], $actual['LAST_NAME']);
@@ -272,8 +272,8 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
 
 
-		
-		
+        
+        
 
         $this->markTestSkipped('Invalid Columns(email1,email2) in Query ');
     }
@@ -304,8 +304,8 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $contact = new Contact();
         $this->assertEquals(false, $contact->bean_implements('')); //test with blank value
-		$this->assertEquals(false, $contact->bean_implements('test')); //test with invalid value
-		$this->assertEquals(true, $contact->bean_implements('ACL')); //test with valid value
+        $this->assertEquals(false, $contact->bean_implements('test')); //test with invalid value
+        $this->assertEquals(true, $contact->bean_implements('ACL')); //test with valid value
     }
 
     public function testget_unlinked_email_query()

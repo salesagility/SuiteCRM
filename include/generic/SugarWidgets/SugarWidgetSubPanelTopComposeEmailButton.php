@@ -108,7 +108,6 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             . $bean->id . '" data-module-name="'
             . $bean->name .'" data-email-address="'
             . $bean->email1 .'">';
-
         }
         return $button;
     }

@@ -34,7 +34,7 @@ r54369 - 2010-02-08 16:33:57 -0800 (Mon, 08 Feb 2010) - rob - Bug 35453: Add sup
  * Type:     function
  * Name:     sugar_run_helper
  * Purpose:  Runs helper functions as defined in the vardef for specific fields
- * 
+ *
  * @author Rob Aagaard {rob at sugarcrm.com}
  * @param array
  * @param Smarty

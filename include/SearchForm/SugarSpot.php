@@ -386,8 +386,8 @@ class SugarSpot
             }
 
 
-            $searchForm = new SearchForm ($seed, $moduleName) ;
-            $searchForm->setup (array ( $moduleName => array() ), $searchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+            $searchForm = new SearchForm($seed, $moduleName) ;
+            $searchForm->setup(array( $moduleName => array() ), $searchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
             $where_clauses = $searchForm->generateSearchWhere() ;
 
             if (empty($where_clauses)) {
@@ -508,7 +508,7 @@ class SugarSpot
      * filterSearchType
      *
      * This is a private function to determine if the search type field should be filtered out based on the query string value
-     * 
+     *
      * @param String $type The string value of the field type (e.g. phone, date, datetime, int, etc.)
      * @param String $query The search string value sent from the global search
      * @return boolean True if the search type fits the query string value; false otherwise

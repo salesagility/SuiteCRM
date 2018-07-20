@@ -117,8 +117,8 @@ class Bug extends SugarBean
     public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'case_id', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
 
     public $relationship_fields = array('case_id'=>'cases', 'account_id' => 'accounts', 'contact_id'=>'contacts',
-									'task_id'=>'tasks', 'note_id'=>'notes', 'meeting_id'=>'meetings',
-									'call_id'=>'calls', 'email_id'=>'emails');
+                                    'task_id'=>'tasks', 'note_id'=>'notes', 'meeting_id'=>'meetings',
+                                    'call_id'=>'calls', 'email_id'=>'emails');
 
     public function __construct()
     {
@@ -240,7 +240,7 @@ class Bug extends SugarBean
     {
         parent::fill_in_additional_list_fields();
         // Fill in the assigned_user_name
-		//$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
+        //$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
 
 //	   $this->set_fixed_in_release();
     }
@@ -248,9 +248,9 @@ class Bug extends SugarBean
     public function fill_in_additional_detail_fields()
     {
 
-	    /*
-		// Fill in the assigned_user_name
-		$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
+        /*
+        // Fill in the assigned_user_name
+        $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
         */
         parent::fill_in_additional_detail_fields();
         //$this->created_by_name = get_assigned_user_name($this->created_by);
@@ -386,8 +386,8 @@ class Bug extends SugarBean
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
 

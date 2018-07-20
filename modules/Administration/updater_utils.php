@@ -339,7 +339,7 @@ function shouldCheckSugar()
     global $license, $timedate;
     if (
 
-	get_CheckUpdates_config_setting() == 'automatic') {
+    get_CheckUpdates_config_setting() == 'automatic') {
         return true;
     }
 
@@ -365,7 +365,7 @@ function loginLicense()
         $current_date_time=time();
         $time_period=3*23*3600 ;
         if (($current_date_time - $last_check_date) > $time_period
-		) {
+        ) {
             $version = check_now(get_sugarbeat());
 
             unset($_SESSION['license_seats_needed']);

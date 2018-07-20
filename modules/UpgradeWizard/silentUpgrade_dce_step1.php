@@ -3,31 +3,31 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo. If the display of the logo is not reasonably feasible for
@@ -83,7 +83,7 @@ function clearCacheSU($thedir, $extension)
      }
      global $sugar_config;
      if (!isset($sugar_config['default_permissions'])) {
-         $sugar_config['default_permissions'] = array (
+         $sugar_config['default_permissions'] = array(
                      'dir_mode' => 02770,
                      'file_mode' => 0660,
                      'user' => '',
@@ -102,10 +102,10 @@ function checkLoggerSettings()
     }
     global $sugar_config;
     if (!isset($sugar_config['logger'])) {
-        $sugar_config['logger'] =array (
+        $sugar_config['logger'] =array(
             'level'=>'fatal',
             'file' =>
-             array (
+             array(
               'ext' => '.log',
               'name' => 'sugarcrm',
               'dateFormat' => '%c',
@@ -129,10 +129,10 @@ function checkResourceSettings()
     global $sugar_config;
     if (!isset($sugar_config['resource_management'])) {
         $sugar_config['resource_management'] =
-          array (
+          array(
             'special_query_limit' => 50000,
             'special_query_modules' =>
-            array (
+            array(
               0 => 'Reports',
               1 => 'Export',
               2 => 'Import',
@@ -209,7 +209,7 @@ function createMissingRels()
 function merge_passwordsetting($sugar_config, $sugar_version)
 {
     $passwordsetting_defaults = array(
-    'passwordsetting' => array (
+    'passwordsetting' => array(
         'SystemGeneratedPasswordON' => '',
         'generatepasswordtmpl' => '',
         'lostpasswordtmpl' => '',
@@ -482,7 +482,7 @@ $errors = array();
 if ($upgradeType == constant('DCE_INSTANCE')) {
     //$instanceUpgradePath = "{$argv[1]}/DCEUpgrade/{$zip_from_dir}";
     //$instanceUpgradePath = "{$argv[1]}";
-    include ("ini_setup.php");
+    include("ini_setup.php");
 
     //get new template path for use in later processing
     $dceupgrade_pos = strpos($argv[1], '/DCEUpgrade');

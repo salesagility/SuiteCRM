@@ -83,4 +83,3 @@ abstract class FormBase
         return empty($_POST['return_module']) && empty($_POST['return_action']);
     }
 }
- 

@@ -101,7 +101,7 @@ class SugarAuthenticate
      * @param string $password
      * @return boolean
      */
-    public function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array ())
+    public function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array())
     {
         global $mod_strings;
         unset($_SESSION['login_error']);
@@ -159,7 +159,7 @@ class SugarAuthenticate
     public function postLoginAuthenticate()
     {
         global $reset_language_on_default_user, $sugar_config;
-		
+        
         //just do a little house cleaning here
         unset($_SESSION['login_password']);
         unset($_SESSION['login_error']);
@@ -167,15 +167,15 @@ class SugarAuthenticate
         unset($_SESSION['ACL']);
 
         //set the server unique key
-        if (isset ($sugar_config['unique_key'])) {
+        if (isset($sugar_config['unique_key'])) {
             $_SESSION['unique_key'] = $sugar_config['unique_key'];
         }
 
         //set user language
-        if (isset ($reset_language_on_default_user) && $reset_language_on_default_user && $GLOBALS['current_user']->user_name == $sugar_config['default_user_name']) {
+        if (isset($reset_language_on_default_user) && $reset_language_on_default_user && $GLOBALS['current_user']->user_name == $sugar_config['default_user_name']) {
             $authenticated_user_language = $sugar_config['default_language'];
         } else {
-            $authenticated_user_language = isset($_REQUEST['login_language']) ? $_REQUEST['login_language'] : (isset ($_REQUEST['ck_login_language_20']) ? $_REQUEST['ck_login_language_20'] : $sugar_config['default_language']);
+            $authenticated_user_language = isset($_REQUEST['login_language']) ? $_REQUEST['login_language'] : (isset($_REQUEST['ck_login_language_20']) ? $_REQUEST['ck_login_language_20'] : $sugar_config['default_language']);
         }
 
         $_SESSION['authenticated_user_language'] = $authenticated_user_language;
@@ -201,12 +201,12 @@ class SugarAuthenticate
     {
         global $module, $action, $allowed_actions;
         $authenticated = false;
-        $allowed_actions = array ("Authenticate", "Login"); // these are actions where the user/server keys aren't compared
-        if (isset ($_SESSION['authenticated_user_id'])) {
+        $allowed_actions = array("Authenticate", "Login"); // these are actions where the user/server keys aren't compared
+        if (isset($_SESSION['authenticated_user_id'])) {
             $GLOBALS['log']->debug("We have an authenticated user id: ".$_SESSION["authenticated_user_id"]);
 
             $authenticated = $this->postSessionAuthenticate();
-        } elseif (isset ($action) && isset ($module) && $action == "Authenticate" && $module == "Users") {
+        } elseif (isset($action) && isset($module) && $action == "Authenticate" && $module == "Users") {
             $GLOBALS['log']->debug("We are authenticating user now");
         } else {
             $GLOBALS['log']->debug("The current user does not have a session.  Going to the login page");
@@ -215,7 +215,7 @@ class SugarAuthenticate
             $_REQUEST['action'] = $action;
             $_REQUEST['module'] = $module;
         }
-        if (empty ($GLOBALS['current_user']->id) && !in_array($action, $allowed_actions)) {
+        if (empty($GLOBALS['current_user']->id) && !in_array($action, $allowed_actions)) {
             $GLOBALS['log']->debug("The current user is not logged in going to login page");
             $action = "Login";
             $module = "Users";
@@ -378,10 +378,10 @@ class SugarAuthenticate
         $clientIP = query_client_ip();
         $classCheck = 0;
         // check to see if config entry is present, if not, verify client ip
-        if (!isset ($sugar_config['verify_client_ip']) || $sugar_config['verify_client_ip'] == true) {
+        if (!isset($sugar_config['verify_client_ip']) || $sugar_config['verify_client_ip'] == true) {
             // check to see if we've got a current ip address in $_SESSION
             // and check to see if the session has been hijacked by a foreign ip
-            if (isset ($_SESSION["ipaddress"])) {
+            if (isset($_SESSION["ipaddress"])) {
                 $session_parts = explode(".", $_SESSION["ipaddress"]);
                 $client_parts = explode(".", $clientIP);
                 if (count($session_parts) < 4) {
@@ -399,7 +399,7 @@ class SugarAuthenticate
                     }
                 }
                 // we have a different IP address
-                if ($_SESSION["ipaddress"] != $clientIP && empty ($classCheck)) {
+                if ($_SESSION["ipaddress"] != $clientIP && empty($classCheck)) {
                     $GLOBALS['log']->fatal("IP Address mismatch: SESSION IP: {$_SESSION['ipaddress']} CLIENT IP: {$clientIP}");
                     session_destroy();
                     die($mod_strings['ERR_IP_CHANGE'] . "<a href=\"{$sugar_config['site_url']}\">" + $mod_strings['ERR_RETURN'] + "</a>");

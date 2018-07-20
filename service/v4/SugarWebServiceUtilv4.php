@@ -104,8 +104,17 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
             $params['favorites'] = true;
         }
 
-        $query = $seed->create_new_list_query($order_by, $where, array(), $params, $show_deleted, '', false, null,
-            $single_select);
+        $query = $seed->create_new_list_query(
+            $order_by,
+            $where,
+            array(),
+            $params,
+            $show_deleted,
+            '',
+            false,
+            null,
+            $single_select
+        );
 
         return $seed->process_list_query($query, $row_offset, $limit, $max, $where);
     }
@@ -537,11 +546,11 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 
             case 'default':
             default:
-                if (file_exists ('modules/'.$module.'/metadata/subpaneldefs.php')) {
-                    require ('modules/'.$module.'/metadata/subpaneldefs.php');
+                if (file_exists('modules/'.$module.'/metadata/subpaneldefs.php')) {
+                    require('modules/'.$module.'/metadata/subpaneldefs.php');
                 }
                 if (file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php')) {
-                    require ('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
+                    require('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
                 }
         }
 

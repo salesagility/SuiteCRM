@@ -55,8 +55,8 @@ class SugarSprites
         $this->dirs['default'] = true;
         $this->loadMetaHelper('default', 'sprites');
         // load repeatable sprites
-		//$this->dirs['Repeatable'] = true;
-		//$this->loadMetaHelper('Repeatable','sprites');
+        //$this->dirs['Repeatable'] = true;
+        //$this->loadMetaHelper('Repeatable','sprites');
     }
 
     public static function getInstance()

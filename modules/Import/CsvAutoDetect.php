@@ -382,4 +382,3 @@ class CsvAutoDetect
         return $format;
     }
 }
-

@@ -191,8 +191,8 @@ function commitAjaxRunSql($persistence)
     // This flag is determined by the preflight check in the installer
     if ($persistence['schema_change'] == 'sugar') {
         if (isset($persistence['sql_to_run'])
-			&& count($persistence['sql_to_run']) > 0
-			&& !empty($persistence['sql_to_run'])) {
+            && count($persistence['sql_to_run']) > 0
+            && !empty($persistence['sql_to_run'])) {
             $sql = array_shift($persistence['sql_to_run']);
             $sql = trim($sql);
 
@@ -785,9 +785,9 @@ function systemCheckJsonGetFiles($persistence)
 
     // add directories here that should be skipped when doing file permissions checks (cache/upload is the nasty one)
     $skipDirs = array(
-		$sugar_config['upload_dir'],
-		'themes',
-	);
+        $sugar_config['upload_dir'],
+        'themes',
+    );
 
     if (!isset($persistence['dirs_checked'])) {
         $the_array = array();
@@ -879,11 +879,11 @@ function systemCheckJsonCheckFiles($persistence)
                 $filesNotWritable[$i] = $file;
                 $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
                 $filesOut .= "<tr>".
-								"<td valign='top'><span class='error'>{$file}</span></td>".
-								"<td valign='top'>{$filesNWPerms[$i]}</td>".
-								"<td valign='top'>".$mod_strings['ERR_UW_CANNOT_DETERMINE_USER']."</td>".
-								"<td valign='top'>".$mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP']."</td>".
-							  "</tr>";
+                                "<td valign='top'><span class='error'>{$file}</span></td>".
+                                "<td valign='top'>{$filesNWPerms[$i]}</td>".
+                                "<td valign='top'>".$mod_strings['ERR_UW_CANNOT_DETERMINE_USER']."</td>".
+                                "<td valign='top'>".$mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP']."</td>".
+                              "</tr>";
             }
         } else {
             if (!is_writable($file)) {
@@ -894,11 +894,11 @@ function systemCheckJsonCheckFiles($persistence)
                 $owner = posix_getpwuid(fileowner($file));
                 $group = posix_getgrgid(filegroup($file));
                 $filesOut .= "<tr>".
-								"<td valign='top'><span class='error'>{$file}</span></td>".
-								"<td valign='top'>{$filesNWPerms[$i]}</td>".
-								"<td valign='top'>".$owner['name']."</td>".
-								"<td valign='top'>".$group['name']."</td>".
-							  "</tr>";
+                                "<td valign='top'><span class='error'>{$file}</span></td>".
+                                "<td valign='top'>{$filesNWPerms[$i]}</td>".
+                                "<td valign='top'>".$owner['name']."</td>".
+                                "<td valign='top'>".$group['name']."</td>".
+                              "</tr>";
             }
         }
         $i++;

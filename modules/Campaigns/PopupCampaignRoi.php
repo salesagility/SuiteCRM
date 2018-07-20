@@ -67,7 +67,7 @@ global $theme;
 
 $GLOBALS['log']->info("Campaign detail view");
 
-$xtpl=new XTemplate ('modules/Campaigns/PopupCampaignRoi.html');
+$xtpl=new XTemplate('modules/Campaigns/PopupCampaignRoi.html');
 
 //_pp($_REQUEST['id']);
 $campaign_id=$_REQUEST['id'];

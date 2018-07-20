@@ -258,11 +258,20 @@ class SugarFeed extends Basic
      */
     public static function pushFeed2($text, $bean, $link_type=false, $link_url=false)
     {
-        self::pushFeed($text, $bean->module_dir, $bean->id, $bean->assigned_user_id, $link_type, $link_url
+        self::pushFeed(
+            $text,
+            $bean->module_dir,
+            $bean->id,
+            $bean->assigned_user_id,
+            $link_type,
+            $link_url
         );
     }
 
-    public static function pushFeed($text, $module, $id,
+    public static function pushFeed(
+        $text,
+        $module,
+        $id,
         $record_assigned_user_id=false,
         $link_type=false,
         $link_url=false

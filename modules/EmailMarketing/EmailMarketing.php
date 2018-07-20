@@ -157,7 +157,7 @@ class EmailMarketing extends SugarBean
         } else {
             $template_id = $temp_array['TEMPLATE_ID'];
         }
-		
+        
 
         //mode is set by schedule.php from campaigns module.
         if (!isset($this->mode) or empty($this->mode) or $this->mode!='test') {
@@ -224,8 +224,8 @@ class EmailMarketing extends SugarBean
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
 

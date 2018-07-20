@@ -160,7 +160,7 @@ class UnifiedSearchAdvanced
      *
      * Search function run when user goes to Show All and runs a search again.  This outputs the search results
      * calling upon the various listview display functions for each module searched on.
-     * 
+     *
      * Todo: Sync this up with SugarSpot.php search method.
      *
      *
@@ -181,7 +181,7 @@ class UnifiedSearchAdvanced
         if (!empty($_REQUEST['advanced']) && $_REQUEST['advanced'] != 'false') {
             $modules_to_search = array();
             if (!empty($_REQUEST['search_modules'])) {
-                foreach (explode (',', $_REQUEST['search_modules']) as $key) {
+                foreach (explode(',', $_REQUEST['search_modules']) as $key) {
                     if (isset($unified_search_modules_display[$key]) && !empty($unified_search_modules_display[$key]['visible'])) {
                         $modules_to_search[$key] = $beanList[$key];
                     }
@@ -244,7 +244,7 @@ class UnifiedSearchAdvanced
                     continue;
                 }
 
-                $unifiedSearchFields = array () ;
+                $unifiedSearchFields = array() ;
                 $innerJoins = array();
                 foreach ($unified_search_modules[ $moduleName ]['fields'] as $field=>$def) {
                     $listViewCheckField = strtoupper($field);
@@ -286,9 +286,9 @@ class UnifiedSearchAdvanced
                 $seed = new $beanName();
                 
                 require_once $this->searchFormPath;
-                $searchForm = new $this->searchFormClass ($seed, $moduleName) ;
+                $searchForm = new $this->searchFormClass($seed, $moduleName) ;
 
-                $searchForm->setup (array ( $moduleName => array() ), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                $searchForm->setup(array( $moduleName => array() ), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                 $where_clauses = $searchForm->generateSearchWhere() ;
                 //add inner joins back into the where clause
                 $params = array('custom_select' => "");
@@ -372,7 +372,7 @@ class UnifiedSearchAdvanced
             }
 
             $beanName = BeanFactory::getObjectName($moduleName);
-            $manager = new VardefManager ();
+            $manager = new VardefManager();
             $manager->loadVardef($moduleName, $beanName) ;
 
             // obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
@@ -392,7 +392,7 @@ class UnifiedSearchAdvanced
             //Load custom SearchFields.php if it exists
             if (file_exists("custom/modules/{$moduleName}/metadata/SearchFields.php")) {
                 require "custom/modules/{$moduleName}/metadata/SearchFields.php" ;
-            }				
+            }
 
             //If there are $searchFields are empty, just continue, there are no search fields defined for the module
             if (empty($searchFields[$moduleName])) {
@@ -418,7 +418,7 @@ class UnifiedSearchAdvanced
                         $field = 'phone' ;
                     }
 
-                    if (!empty($def['unified_search']) && isset ($searchFields [ $moduleName ] [ $field ])) {
+                    if (!empty($def['unified_search']) && isset($searchFields [ $moduleName ] [ $field ])) {
                         $fields [ $field ] = $searchFields [ $moduleName ] [ $field ] ;
                     }
                 }
@@ -505,7 +505,7 @@ class UnifiedSearchAdvanced
 
             $new_unified_search_modules_display = array();
 
-            foreach (explode (',', $_REQUEST['enabled_modules']) as $module) {
+            foreach (explode(',', $_REQUEST['enabled_modules']) as $module) {
                 $new_unified_search_modules_display[$module]['visible'] = true;
             }
 

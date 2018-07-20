@@ -40,7 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$searchFields['Schedulers'] = 
-	array (
-		'name' => array( 'query_type'=>'default'),
-	);
+$searchFields['Schedulers'] =
+    array(
+        'name' => array( 'query_type'=>'default'),
+    );

@@ -131,15 +131,15 @@ EOF;
     }
 
     /**
-	 * override
-	 */
+     * override
+     */
     protected function buildActionsLink($id = 'actions_link', $location = 'top')
     {
         $ret = parent::buildActionsLink($id, $location);
 
         $replaces = array(
-			6 => 7,
-		);
+            6 => 7,
+        );
 
         foreach ($replaces as $i => $j) {
             $tmp = $ret['buttons'][$j];
@@ -149,7 +149,7 @@ EOF;
 
         return $ret;
     }
-	
+    
     public function buildExportLink($id = 'export_link')
     {
         global $app_strings;

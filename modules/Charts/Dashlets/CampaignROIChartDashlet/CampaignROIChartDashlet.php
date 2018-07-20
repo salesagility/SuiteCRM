@@ -81,7 +81,13 @@ class CampaignROIChartDashlet extends DashletGenericChart
         $rawData = $this->constructQuery(
             $GLOBALS['app_list_strings']['roi_type_dom'],
             $GLOBALS['app_list_strings']['roi_type_dom'],
-            $this->campaign_id[0], null, true, true, true, $this->id);
+            $this->campaign_id[0],
+            null,
+            true,
+            true,
+            true,
+            $this->id
+        );
 
         $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
         if ($GLOBALS['current_user']->getPreference('currency')) {

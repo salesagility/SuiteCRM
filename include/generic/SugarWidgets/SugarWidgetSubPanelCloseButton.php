@@ -59,12 +59,12 @@ class SugarWidgetSubPanelCloseButton extends SugarWidgetField
 
         // calls and meetings are held.
         $new_status = 'Held';
-		
+        
         switch ($module_name) {
-			case 'Tasks':
-				$new_status = 'Completed';
-				break;
-		}
+            case 'Tasks':
+                $new_status = 'Completed';
+                break;
+        }
         
         if ($layout_def['EditView']) {
             $html = "<a id=\"$unique_id\" onclick='SUGAR.util.closeActivityPanel.show(\"$module_name\",\"$record_id\",\"$new_status\",\"subpanel\",\"{$layout_def['subpanel_id']}\");' >".$app_strings['LNK_CLOSE']."</a>";

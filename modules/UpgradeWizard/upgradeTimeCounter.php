@@ -66,7 +66,7 @@ $json = getJSONobj();
 /*
 $upgradeStepTime = $json->decode(html_entity_decode($_REQUEST['upgradeStepTime']));
 if(isset($tagdata['jsonObject']) && $tagdata['jsonObject'] != null){
-	$upgradeStepTime = $upgradeStepTime['jsonObject'];
+    $upgradeStepTime = $upgradeStepTime['jsonObject'];
  }
 
  if(!isset($_SESSION['totalUpgradeTime'])){

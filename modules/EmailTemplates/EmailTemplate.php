@@ -958,4 +958,3 @@ class EmailTemplate extends SugarBean
         return BeanFactory::getBean('Notes')->get_full_list('', "parent_id = '" . $this->id . "'");
     }
 }
-

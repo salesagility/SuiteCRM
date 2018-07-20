@@ -40,33 +40,33 @@
 $viewdefs['DocumentRevisions']['EditView'] = array(
     'templateMeta' => array('form' => array('enctype'=>'multipart/form-data',
                                             'hidden'=>array('<input type="hidden" name="return_id" value="{$smarty.request.return_id}">'),
-                                ),       
-                            'maxColumns' => '2', 
+                                ),
+                            'maxColumns' => '2',
                             'widths' => array(
-                                array('label' => '10', 'field' => '30'), 
+                                array('label' => '10', 'field' => '30'),
                                 array('label' => '10', 'field' => '30')
                                 ),
                             'javascript' => '{sugar_getscript file="include/javascript/popup_parent_helper.js"}
 {sugar_getscript file="cache/include/javascript/sugar_grp_jsolait.js"}
 {sugar_getscript file="modules/Documents/documents.js"}',
         ),
-    'panels' =>array (
-        '' => 
-        array (
-            array (
-                array ( 'name' => 'document_name', 'type' => 'readonly' ),
-                array ( 'name' => 'latest_revision', 'type' => 'readonly' ),
+    'panels' =>array(
+        '' =>
+        array(
+            array(
+                array( 'name' => 'document_name', 'type' => 'readonly' ),
+                array( 'name' => 'latest_revision', 'type' => 'readonly' ),
             ),
-            array (
+            array(
                 'revision',
             ),
             
-            array (
+            array(
                 'filename',
             ),
             
-            array (
-                array ( 'name' => 'change_log', 'size' => '126', 'maxlength' => '255' ),
+            array(
+                array( 'name' => 'change_log', 'size' => '126', 'maxlength' => '255' ),
             ),
 
         ),

@@ -268,7 +268,7 @@ class SugarTheme
         'imageCache'    => 0,
         'jsCache'       => 0,
         'templateCache' => 0,
-		'spriteCache'	=> 0,
+        'spriteCache'	=> 0,
         );
 
     /**
@@ -348,12 +348,12 @@ class SugarTheme
             'cssCache'      => count($this->_cssCache),
             'imageCache'    => count($this->_imageCache),
             'templateCache' => count($this->_templateCache),
-			'spriteCache' 	=> count($this->_spriteCache),
+            'spriteCache' 	=> count($this->_spriteCache),
             );
     }
 
     /**
-	 * This is needed to prevent unserialize vulnerability
+     * This is needed to prevent unserialize vulnerability
      */
     public function __wakeup()
     {
@@ -416,9 +416,9 @@ class SugarTheme
             }
             if (count($this->_spriteCache) != $this->_initialCacheSize['spriteCache']) {
                 sugar_file_put_contents(
-					"$cachedir/spriteCache.php",
-					serialize($this->_spriteCache)
-				);
+                    "$cachedir/spriteCache.php",
+                    serialize($this->_spriteCache)
+                );
             }
         }
     }
@@ -611,7 +611,7 @@ class SugarTheme
         // sprites
         if (!empty($GLOBALS['sugar_config']['use_sprites']) && $GLOBALS['sugar_config']['use_sprites']) {
 
-			// system wide sprites
+            // system wide sprites
             if (file_exists("cache/sprites/default/sprites.css")) {
                 $html .= '<link rel="stylesheet" type="text/css" href="'.getJSPath('cache/sprites/default/sprites.css').'" />';
             }
@@ -713,9 +713,9 @@ EOHTML;
      *
      * @param  string $image image name
      * @param  string $other_attributes optional, other attributes to add to the image tag, not cached
-	 * @param  string $width optional, defaults to the actual image's width
-	 * @param  string $height optional, defaults to the actual image's height
-	 * @param  string $ext optional, image extension (TODO can we deprecate this one ?)
+     * @param  string $width optional, defaults to the actual image's width
+     * @param  string $height optional, defaults to the actual image's height
+     * @param  string $ext optional, image extension (TODO can we deprecate this one ?)
      * @param  string $alt optional, only used when image contains something useful, i.e. "Sally's profile pic"
      * @param  string $imageJSONEncode optional, some of template javascript need the exact image-html-string to build HTML contents so this parameter make a json_encode call on the return SVG or image source
      * @param  string $forceExt optional, force image extension
@@ -761,7 +761,7 @@ EOHTML;
             if ($sp = $this->getSpriteMeta($imageName)) {
                 // requested size should match
                 if ((!is_null($width) && $sp['width'] == $width) || (is_null($width)) &&
-					(!is_null($height) && $sp['height'] == $height) || (is_null($height))) {
+                    (!is_null($height) && $sp['height'] == $height) || (is_null($height))) {
                     $other_attributes .= ' data-orig="'.$imageName.'"';
 
                     if ($sprite = $this->getSprite($sp['class'], $other_attributes, $alt)) {
@@ -803,7 +803,7 @@ EOHTML;
     public function getSpriteMeta($imageName)
     {
 
-		// return from cache
+        // return from cache
         if (isset($this->_spriteCache[$imageName])) {
             return $this->_spriteCache[$imageName];
         }
@@ -829,7 +829,7 @@ EOHTML;
         if (isset($meta->sprites[$imageURL])) {
             $this->_spriteCache[$imageName] = $meta->sprites[$imageURL];
         // add imageURL to cache
-			//$this->_spriteCache[$imageName]['imageURL'] = $imageURL;
+            //$this->_spriteCache[$imageName]['imageURL'] = $imageURL;
         } else {
             $this->_spriteCache[$imageName] = false;
             $GLOBALS['log']->debug("Sprites: miss for $imageURL");
@@ -848,7 +848,7 @@ EOHTML;
     public function getSprite($class, $attr, $title)
     {
 
-		// handle multiple class tags
+        // handle multiple class tags
         $class_regex = '/class=["\']([^\'"]+)["\']/i';
         preg_match($class_regex, $attr, $match);
         if (isset($match[1])) {
@@ -872,15 +872,15 @@ EOHTML;
      * Returns a link HTML tag with or without an embedded image
      */
     public function getLink(
-		$url,
-		$title,
-		$other_attributes = '',
+        $url,
+        $title,
+        $other_attributes = '',
         $img_name = '',
         $img_other_attributes = '',
-		$img_width = null,
-		$img_height = null,
-		$img_alt = '',
-		$img_placement = 'imageonly'
+        $img_width = null,
+        $img_height = null,
+        $img_alt = '',
+        $img_placement = 'imageonly'
     ) {
         if ($img_name) {
             $img = $this->getImage($img_name, $img_other_attributes, $img_width, $img_height, null, $img_alt);
@@ -889,10 +889,10 @@ EOHTML;
                 $img = 'unknown';
             }
             switch ($img_placement) {
-				case 'left': 	$inner_html = $img."<span class='title'>".$title."</span>"; break;
-				case 'right':	$inner_html = "<span class='title'>".$title."</span>".$img; break;
-				default:		$inner_html = $img; break;
-			}
+                case 'left': 	$inner_html = $img."<span class='title'>".$title."</span>"; break;
+                case 'right':	$inner_html = "<span class='title'>".$title."</span>".$img; break;
+                default:		$inner_html = $img; break;
+            }
         } else {
             $inner_html = $title;
         }
@@ -1028,9 +1028,11 @@ EOHTML;
         }
 
         // fix any image references that may be defined in css files
-        $cssFileContents = str_ireplace("entryPoint=getImage&",
+        $cssFileContents = str_ireplace(
+            "entryPoint=getImage&",
             "entryPoint=getImage&themeName={$this->dirName}&",
-            $cssFileContents);
+            $cssFileContents
+        );
 
         // create the cached file location
         $cssFilePath = create_cache_directory($fullFileName);

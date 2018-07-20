@@ -68,7 +68,7 @@ class AuthenticationController
 
     /**
      * Get auth controller object
-     * @param string $type 
+     * @param string $type
      * @return SugarAuthenticate
      */
     protected function getAuthController($type)
@@ -92,11 +92,11 @@ class AuthenticationController
             $type = 'SugarAuthenticate';
         }
 
-        if (!empty($_REQUEST['no_saml']) 
+        if (!empty($_REQUEST['no_saml'])
             && (
-				(is_subclass_of($type, 'SAMLAuthenticate') || 'SAMLAuthenticate' == $type) ||
-				(is_subclass_of($type, 'SAML2Authenticate') || 'SAML2Authenticate' == $type)
-			)) {
+                (is_subclass_of($type, 'SAMLAuthenticate') || 'SAMLAuthenticate' == $type) ||
+                (is_subclass_of($type, 'SAML2Authenticate') || 'SAML2Authenticate' == $type)
+            )) {
             $type = 'SugarAuthenticate';
         }
 
@@ -186,7 +186,7 @@ class AuthenticationController
             LogicHook::initialize();
             $GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
             $GLOBALS['log']->fatal(
-			    'FAILED LOGIN:attempts[' . $_SESSION['loginAttempts'] . '], ' .
+                'FAILED LOGIN:attempts[' . $_SESSION['loginAttempts'] . '], ' .
                 'ip[' . query_client_ip() . '], username[' . $username . ']'
             );
         }

@@ -142,5 +142,3 @@ class HtmlSanitizer
         return $isEncoded ? to_html($dirtyHtml) : $dirtyHtml;
     }
 }
-
-

@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /*********************************************************************************
 
- * Description:  
+ * Description:
  ********************************************************************************/
 global $current_user;
 if (!is_admin($current_user)) {
@@ -144,7 +144,7 @@ $time_from_hour = intval(substr($focus->time_from, 0, 2));
 $time_from_min = substr($focus->time_from, 3, 5);
 $time_to_hour = intval(substr($focus->time_to, 0, 2));
 $time_to_min = substr($focus->time_to, 3, 5);
-$hours_arr = array ();
+$hours_arr = array();
 $mins_arr = array();
 $num_of_hours = 13;
 $start_at = 1;
@@ -153,7 +153,7 @@ $start_at = 1;
 include_once('modules/Schedulers/_AddJobsHere.php');
 
 if (is_array($job_strings) && !empty($job_strings)) {
-    $job_function = "<option value=''>--</option>"; 
+    $job_function = "<option value=''>--</option>";
     foreach ($job_strings as $k => $function) {
         $job_function .= "<option value='function::".$function."'";
         if ($focus->job === "function::".$function) {
@@ -163,7 +163,7 @@ if (is_array($job_strings) && !empty($job_strings)) {
     }
 }
 
-if (empty ($time_meridiem_start)) {
+if (empty($time_meridiem_start)) {
     $num_of_hours = 24;
     $start_at = 0;
 }
@@ -186,7 +186,7 @@ $mins_arr_unreq = $mins_arr;
 $hours_arr_unreq[''] = '--';
 $mins_arr_unreq[''] = '--';
 
-// explode crontab notation 
+// explode crontab notation
 if (!empty($focus->job_interval)) {
     $exInterval = explode("::", $focus->job_interval);
 } else {
@@ -203,12 +203,12 @@ $xtpl = new XTemplate('modules/Schedulers/EditView.html');
 // Days of the week
 $xtpl->assign('USE_ADV_BOOL', 'false');
 $xtDays = array(1 => 'MON',
-				2 => 'TUE',
-				3 => 'WED',
-				4 => 'THU',
-				5 => 'FRI',
-				6 => 'SAT',
-				0 => 'SUN');
+                2 => 'TUE',
+                3 => 'WED',
+                4 => 'THU',
+                5 => 'FRI',
+                6 => 'SAT',
+                0 => 'SUN');
 
 if ($exInterval[4] == '*') {
     $xtpl->assign('ALL', "CHECKED");
@@ -329,7 +329,7 @@ if (strstr($focus->job, 'url::')) {
 } else {
     $job_url = 'http://';
 }
-	
+    
 $xtpl->assign('JOB_FUNCTION', $job_function);
 $xtpl->assign('JOB_URL', $job_url);
 $xtpl->assign('JOB_INTERVAL', $focus->job_interval);

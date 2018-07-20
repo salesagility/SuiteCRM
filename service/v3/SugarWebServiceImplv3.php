@@ -288,13 +288,13 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
         $modules = array();
         $availModules = array_keys($_SESSION['avail_modules']); //ACL check already performed.
         switch ($filter) {
-    	    case 'default':
-    	        $modules = self::$helperObject->get_visible_modules($availModules);
-    	       break;
-    	    case 'all':
-    	    default:
-    	        $modules = $availModules;
-    	}
+            case 'default':
+                $modules = self::$helperObject->get_visible_modules($availModules);
+               break;
+            case 'all':
+            default:
+                $modules = $availModules;
+        }
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_available_modules');
         return array('modules'=> $modules);
@@ -420,7 +420,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
             $search_string = trim(DBManagerFactory::getInstance()->quote(securexss(from_html(clean_string($search_string, 'UNIFIED_SEARCH')))));
             foreach ($modules_to_search as $name => $beanName) {
                 $where_clauses_array = array();
-                $unifiedSearchFields = array () ;
+                $unifiedSearchFields = array() ;
                 foreach ($unified_search_modules[$name]['fields'] as $field=>$def) {
                     $unifiedSearchFields[$name] [ $field ] = $def ;
                     $unifiedSearchFields[$name] [ $field ]['value'] = $search_string;
@@ -430,8 +430,8 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                 $seed = new $beanName();
                 require_once 'include/SearchForm/SearchForm2.php' ;
                 if ($beanName == "User"
-    			    || $beanName == "ProjectTask"
-    			    ) {
+                    || $beanName == "ProjectTask"
+                    ) {
                     if (!self::$helperObject->check_modules_access($current_user, $seed->module_dir, 'read')) {
                         continue;
                     } // if
@@ -441,16 +441,16 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                 }
 
                 if ($beanName != "User"
-    			    && $beanName != "ProjectTask"
-    			    ) {
-                    $searchForm = new SearchForm ($seed, $name) ;
+                    && $beanName != "ProjectTask"
+                    ) {
+                    $searchForm = new SearchForm($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
-                    $searchForm = new SearchForm ($seed, $name) ;
+                    $searchForm = new SearchForm($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     $emailQuery = false;
 
@@ -531,7 +531,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                     } // if
                 } // else
 
-    			$GLOBALS['log']->info('SugarWebServiceImpl->search_by_module - query = ' . $main_query);
+                $GLOBALS['log']->info('SugarWebServiceImpl->search_by_module - query = ' . $main_query);
                 if ($max_results < -1) {
                     $result = $seed->db->query($main_query);
                 } else {
@@ -555,7 +555,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                             $nameValueArray[$field] = self::$helperObject->get_name_value($field, $row[$field]);
                         } // if
                     } // foreach
-    				$rowArray[] = $nameValueArray;
+                    $rowArray[] = $nameValueArray;
                 } // while
                 $output_list[] = array('name' => $name, 'records' => $rowArray);
             } // foreach

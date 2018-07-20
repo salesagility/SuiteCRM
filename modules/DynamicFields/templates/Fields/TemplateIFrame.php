@@ -44,18 +44,18 @@ require_once('modules/DynamicFields/templates/Fields/TemplateURL.php');
 class TemplateIFrame extends TemplateURL
 {
     public $type='iframe';
-	
+    
     public function get_html_edit()
     {
         $this->prepare();
         return "<input type='text' name='". $this->name. "' id='".$this->name."' size='".$this->size."' title='{" . strtoupper($this->name) ."_HELP}' value='{". strtoupper($this->name). "}'>";
     }
-	
+    
     public function get_html_label()
     {
         return "LALALALA";
     }
-	
+    
     public function get_xtpl_detail()
     {
         $value = parent::get_xtpl_detail();

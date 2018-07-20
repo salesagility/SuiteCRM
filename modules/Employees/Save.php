@@ -62,7 +62,7 @@ parse_str($tabs_def, $DISPLAY_ARR);
 if (isset($_POST['record']) && !is_admin($GLOBALS['current_user']) && !$GLOBALS['current_user']->isAdminForModule('Employees') && ($_POST['record'] != $GLOBALS['current_user']->id)) {
     sugar_die("Unauthorized access to administration.");
 } elseif (!isset($_POST['record']) && !is_admin($GLOBALS['current_user']) && !$GLOBALS['current_user']->isAdminForModule('Employees')) {
-    sugar_die ("Unauthorized access to user administration.");
+    sugar_die("Unauthorized access to user administration.");
 }
 
 $focus = new Employee();

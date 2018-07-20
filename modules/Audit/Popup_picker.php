@@ -105,7 +105,7 @@ class Popup_Picker
 
         $auditObject = new Audit();
         $audit_list =  $auditObject->get_audit_list();
-        $xtpl=new XTemplate ('modules/Audit/Popup_picker.html');
+        $xtpl=new XTemplate('modules/Audit/Popup_picker.html');
 
         $xtpl->assign('MOD', $mod_strings);
         $xtpl->assign('APP', $app_strings);
@@ -116,7 +116,7 @@ class Popup_Picker
                 
                 
         if (!isset($focus->module_dir)) {
-            LoggerManager::getLogger()->fatal("Popup picker needs module dir from focus bean but global focus is none.");    
+            LoggerManager::getLogger()->fatal("Popup picker needs module dir from focus bean but global focus is none.");
             throw new Exception('There is not selected focus bean for popup picker process page.');
         }
                 

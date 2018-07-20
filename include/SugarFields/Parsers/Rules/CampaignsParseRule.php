@@ -84,7 +84,7 @@ class CampaignsParseRule extends BaseRule
                 } //foreach
             } //foreach
 
-		//If all the row/columns were taken up, then add frequency as a last row
+        //If all the row/columns were taken up, then add frequency as a last row
             if (!$frequencyAdded) {
                 $panels['default'][][] = 'frequency';
             }

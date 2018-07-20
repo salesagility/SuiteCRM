@@ -128,7 +128,7 @@ class QuickSearchDefaults
         }
 
         $qsParent = array(
-					'form' => $this->form_name,
+                    'form' => $this->form_name,
                     'method' => 'query',
                     'modules' => array('Accounts'),
                     'group' => 'or',
@@ -158,7 +158,7 @@ class QuickSearchDefaults
         global $app_strings, $locale;
 
         $qsContact = array('form' => $this->form_name,
-        				   'method'=>'get_contact_array',
+                           'method'=>'get_contact_array',
                            'modules'=>array('Contacts'),
                            'field_list' => array('salutation', 'first_name', 'last_name', 'id'),
                            'populate_list' => array($name, $idName, $idName, $idName),
@@ -179,7 +179,7 @@ class QuickSearchDefaults
         global $app_strings;
 
         $qsUser = array('form' => $this->form_name,
-        				'method' => 'get_user_array', // special method
+                        'method' => 'get_user_array', // special method
                         'field_list' => array('user_name', 'id'),
                         'populate_list' => array($p_name, $p_id),
                         'required_list' => array($p_id),
@@ -192,7 +192,7 @@ class QuickSearchDefaults
         global $app_strings;
 
         $qsCampaign = array('form' => $this->form_name,
-        					'method' => 'query',
+                            'method' => 'query',
                             'modules'=> array('Campaigns'),
                             'group' => 'or',
                             'field_list' => array('name', 'id'),

@@ -208,4 +208,3 @@ class ImportFileSplitter
         return "{$this->_sourceFile}-{$filenumber}";
     }
 }
-

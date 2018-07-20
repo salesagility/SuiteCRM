@@ -194,7 +194,8 @@ class UsersLastImport extends SugarBean
             "SELECT email_address_id
                 FROM email_addr_bean_rel
                 WHERE email_addr_bean_rel.bean_id='{$bean_id}'
-                    AND email_addr_bean_rel.bean_module='{$focus->module_dir}'");
+                    AND email_addr_bean_rel.bean_module='{$focus->module_dir}'"
+        );
         $this->db->query(
             "DELETE FROM email_addr_bean_rel
                 WHERE email_addr_bean_rel.bean_id='{$bean_id}'
@@ -205,17 +206,20 @@ class UsersLastImport extends SugarBean
             if (!$this->db->getOne(
                     "SELECT email_address_id
                         FROM email_addr_bean_rel
-                        WHERE email_address_id = '{$row2['email_address_id']}'")) {
+                        WHERE email_address_id = '{$row2['email_address_id']}'"
+            )) {
                 $this->db->query(
                     "DELETE FROM email_addresses
-                        WHERE id = '{$row2['email_address_id']}'");
+                        WHERE id = '{$row2['email_address_id']}'"
+                );
             }
         }
 
         if ($focus->hasCustomFields()) {
             $this->db->query(
                 "DELETE FROM {$focus->table_name}_cstm
-                    WHERE id_c = '{$bean_id}'");
+                    WHERE id_c = '{$bean_id}'"
+            );
         }
     }
 
@@ -244,4 +248,3 @@ class UsersLastImport extends SugarBean
         return $returnarray;
     }
 }
-

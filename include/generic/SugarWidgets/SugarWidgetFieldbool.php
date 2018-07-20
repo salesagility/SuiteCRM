@@ -69,7 +69,7 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
                 $value = $app_list_strings['dom_switch_bool']['off'];
             } else {
                 $value = $app_list_strings['dom_switch_bool']['on'];
-            } 
+            }
             return $value;
         }
 
@@ -84,7 +84,7 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
     public function queryFilterStarts_With(&$layout_def)
     {
         return $this->queryFilterEquals($layout_def);
-    }    
+    }
  
     public function displayInput($layout_def)
     {

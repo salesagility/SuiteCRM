@@ -1,7 +1,7 @@
 <?php
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
-} 
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -61,6 +61,5 @@ if (empty($_REQUEST['record'])) {
 if (is_admin($current_user)) {
     $module_menu[] = array("index.php?module=Employees&action=EditView&return_module=Employees&return_action=DetailView", $mod_strings['LNK_NEW_EMPLOYEE'],"Create");
 }
-	
+    
 $module_menu[] = array("index.php?module=Employees&action=index&return_module=Employees&return_action=DetailView", $mod_strings['LNK_EMPLOYEE_LIST'],"List");
-

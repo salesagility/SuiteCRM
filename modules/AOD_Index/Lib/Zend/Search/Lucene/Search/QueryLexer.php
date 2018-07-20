@@ -96,7 +96,8 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
 
     public function __construct()
     {
-        parent::__construct(array(self::ST_WHITE_SPACE,
+        parent::__construct(
+            array(self::ST_WHITE_SPACE,
                                    self::ST_SYNT_LEXEME,
                                    self::ST_LEXEME,
                                    self::ST_QUOTED_LEXEME,
@@ -114,7 +115,8 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
                                    self::IN_QUOTE,
                                    self::IN_DECIMAL_POINT,
                                    self::IN_ASCII_DIGIT,
-                                   self::IN_CHAR));
+                                   self::IN_CHAR)
+        );
 
 
         $lexemeModifierErrorAction    = new Zend_Search_Lucene_FSMAction($this, 'lexModifierErrException');
@@ -411,7 +413,8 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
         $token = new Zend_Search_Lucene_Search_QueryToken(
                                 Zend_Search_Lucene_Search_QueryToken::TC_SYNTAX_ELEMENT,
                                 $lexeme,
-                                $this->_queryStringPosition);
+                                $this->_queryStringPosition
+        );
 
         // Skip this lexeme if it's a field indicator ':' and treat previous as 'field' instead of 'word'
         if ($token->type == Zend_Search_Lucene_Search_QueryToken::TT_FIELD_INDICATOR) {
@@ -435,7 +438,8 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
         $this->_lexemes[] = new Zend_Search_Lucene_Search_QueryToken(
                                     Zend_Search_Lucene_Search_QueryToken::TC_SYNTAX_ELEMENT,
                                     $this->_queryString[$this->_queryStringPosition],
-                                    $this->_queryStringPosition);
+                                    $this->_queryStringPosition
+        );
     }
 
 
@@ -447,7 +451,8 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
         $this->_lexemes[] = new Zend_Search_Lucene_Search_QueryToken(
                                     Zend_Search_Lucene_Search_QueryToken::TC_WORD,
                                     $this->_currentLexeme,
-                                    $this->_queryStringPosition - 1);
+                                    $this->_queryStringPosition - 1
+        );
 
         $this->_currentLexeme = '';
     }
@@ -460,7 +465,8 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
         $this->_lexemes[] = new Zend_Search_Lucene_Search_QueryToken(
                                     Zend_Search_Lucene_Search_QueryToken::TC_PHRASE,
                                     $this->_currentLexeme,
-                                    $this->_queryStringPosition);
+                                    $this->_queryStringPosition
+        );
 
         $this->_currentLexeme = '';
     }
@@ -473,7 +479,8 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
         $this->_lexemes[] = new Zend_Search_Lucene_Search_QueryToken(
                                     Zend_Search_Lucene_Search_QueryToken::TC_NUMBER,
                                     $this->_currentLexeme,
-                                    $this->_queryStringPosition - 1);
+                                    $this->_queryStringPosition - 1
+        );
         $this->_currentLexeme = '';
     }
 
@@ -516,4 +523,3 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
         throw new Zend_Search_Lucene_Search_QueryParserException('Wrong number syntax.' . $this->_positionMsg());
     }
 }
-

@@ -201,7 +201,15 @@ class campaign_charts
      * @param bool $is_dashlet
      * @param string $dashlet_id
      * @return string
-     */public function campaign_response_roi($datay= array(), $targets=array(), $campaign_id= null, $cache_file_name='a_file', $refresh=false, $marketing_id='', $is_dashlet=false, $dashlet_id=''
+     */public function campaign_response_roi(
+        $datay= array(),
+        $targets=array(),
+        $campaign_id= null,
+        $cache_file_name='a_file',
+        $refresh=false,
+        $marketing_id='',
+        $is_dashlet=false,
+        $dashlet_id=''
         ) {
         global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
 

@@ -42,7 +42,6 @@ require_once 'Zend/Gdata/Spreadsheets/Extension/Cell.php';
  */
 class Zend_Gdata_Spreadsheets_CellEntry extends Zend_Gdata_Entry
 {
-
     protected $_entryClassName = 'Zend_Gdata_Spreadsheets_CellEntry';
     protected $_cell;
 
@@ -99,5 +98,4 @@ class Zend_Gdata_Spreadsheets_CellEntry extends Zend_Gdata_Entry
         $this->_cell = $cell;
         return $this;
     }
-
 }

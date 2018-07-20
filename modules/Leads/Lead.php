@@ -639,4 +639,3 @@ class Lead extends Person implements EmailInterface
         return $return_array;
     }
 }
-

@@ -42,18 +42,18 @@ require_once('service/v4/SugarWebServiceUtilv4.php');
 class SugarWebServiceUtilv4_1 extends SugarWebServiceUtilv4
 {
     /**
-   	 * Validate the provided session information is correct and current.  Load the session.
-   	 *
-   	 * @param String $session_id -- The session ID that was returned by a call to login.
-   	 * @return true -- If the session is valid and loaded.
-   	 * @return false -- if the session is not valid.
-   	 */
+     * Validate the provided session information is correct and current.  Load the session.
+     *
+     * @param String $session_id -- The session ID that was returned by a call to login.
+     * @return true -- If the session is valid and loaded.
+     * @return false -- if the session is not valid.
+     */
     public function validate_authenticated($session_id)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->validate_authenticated');
         if (!empty($session_id)) {
 
-   			// only initialize session once in case this method is called multiple times
+            // only initialize session once in case this method is called multiple times
             if (!session_id()) {
                 session_id($session_id);
                 session_start();

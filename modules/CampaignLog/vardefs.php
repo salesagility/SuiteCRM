@@ -40,12 +40,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['CampaignLog'] = array ('audited'=>false,
+$dictionary['CampaignLog'] = array('audited'=>false,
     'comment' => 'Tracks items of interest that occurred after you send an email campaign',
     'table' => 'campaign_log',
 
-    'fields' => array (
-        'id' => array (
+    'fields' => array(
+        'id' => array(
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
@@ -53,14 +53,14 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'reportable'=>true,
             'comment' => 'Unique identifier'
             ),
-        'campaign_id' => array (
+        'campaign_id' => array(
             'name' => 'campaign_id',
             'vname' => 'LBL_CAMPAIGN_ID',
             'type' => 'id',
             'comment' => 'Campaign identifier',
             'reportable' => false,
             ),
-        'target_tracker_key' => array (
+        'target_tracker_key' => array(
             'name' => 'target_tracker_key',
             'vname' => 'LBL_TARGET_TRACKER_KEY',
             'type' => 'varchar',
@@ -68,7 +68,7 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'comment' => 'Identifier of Tracker URL',
             'reportable' => false,
             ),
-        'target_id' => array (
+        'target_id' => array(
             'name' => 'target_id',
             'vname' => 'LBL_TARGET_ID',
             'type' => 'varchar',
@@ -76,14 +76,14 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'comment' => 'Identifier of target record',
             'reportable' => false,
             ),
-        'target_type' => array (
+        'target_type' => array(
             'name' => 'target_type',
             'vname' => 'LBL_TARGET_TYPE',
             'type' => 'varchar',
             'len' => 100,
             'comment' => 'Descriptor of the target record type (e.g., Contact, Lead)'
             ),
-        'activity_type' => array (
+        'activity_type' => array(
             'name' => 'activity_type',
             'vname' => 'LBL_ACTIVITY_TYPE',
             'type' => 'enum',
@@ -91,26 +91,26 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'len' => 100,
             'comment' => 'The activity that occurred (e.g., Viewed Message, Bounced, Opted out)'
             ),
-        'activity_date' => array (
+        'activity_date' => array(
             'name' => 'activity_date',
             'vname' => 'LBL_ACTIVITY_DATE',
             'type' => 'datetime',
             'comment' => 'The date the activity occurred'
             ),
-        'related_id' => array (
+        'related_id' => array(
             'name' => 'related_id',
             'vname' => 'LBL_RELATED_ID',
             'type' => 'varchar',
             'len' => '36',
             'reportable' => false,
             ),
-        'related_type' => array (
+        'related_type' => array(
             'name' => 'related_type',
             'vname' => 'LBL_RELATED_TYPE',
             'type' => 'varchar',
             'len' => 100,
             ),
-        'archived' => array (
+        'archived' => array(
             'name' => 'archived',
             'vname' => 'LBL_ARCHIVED',
             'type' => 'bool',
@@ -118,7 +118,7 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'default'=>'0',
             'comment' => 'Indicates if item has been archived'
         ),
-        'hits' => array (
+        'hits' => array(
             'name' => 'hits',
             'vname' => 'LBL_HITS',
             'type' => 'int',
@@ -134,7 +134,7 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'len' => '36',
             'comment' => 'The target list from which item originated'
         ),
-        'deleted' => array (
+        'deleted' => array(
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
@@ -157,9 +157,9 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'name' => 'marketing_name',
             'type' => 'varchar',
             'len' => '255',
-            'source'=>'non-db',		
+            'source'=>'non-db',
         ),
-          'campaign_name1' => array (
+          'campaign_name1' => array(
             'name' => 'campaign_name1',
             'rname' => 'name',
             'id_name' => 'campaign_id',
@@ -191,14 +191,14 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'len' => '255',
             'source'=>'non-db',
         ),
-        'campaign'=> array (
+        'campaign'=> array(
             'name' => 'campaign',
             'type' => 'link',
             'relationship' => 'campaign_campaignlog',
             'source'=>'non-db',
             'vname'=> 'LBL_CAMPAIGNS',
         ),
-        'related_name'=>array (
+        'related_name'=>array(
             'source'=>'function',
             'function_name'=>'get_related_name',
             'function_class'=>'CampaignLog',
@@ -209,7 +209,7 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'name'=>'related_name',
             'reportable'=>false,
         ),
-        'date_modified' => array (
+        'date_modified' => array(
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
@@ -227,21 +227,21 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'reportable' =>false,
             'comment' => 'ID of marketing email this entry is associated with',
         ),
-        'created_contact'=> array (
+        'created_contact'=> array(
             'name' => 'created_contact',
             'vname' => 'LBL_CREATED_CONTACT',
             'type' => 'link',
             'relationship' => 'campaignlog_contact',
             'source'=>'non-db',
         ),
-        'created_lead'=> array (
+        'created_lead'=> array(
             'name' => 'created_lead',
             'vname' => 'LBL_CREATED_LEAD',
             'type' => 'link',
             'relationship' => 'campaignlog_lead',
             'source'=>'non-db',
         ),
-        'created_opportunities'=> array (
+        'created_opportunities'=> array(
             'name'         => 'created_opportunities',
             'vname'        => 'LBL_CREATED_OPPORTUNITY',
             'type'         => 'link',
@@ -263,40 +263,40 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
             'source'       => 'non-db',
         ),
     ),
-    'indices' => array (
-        array (
+    'indices' => array(
+        array(
             'name' =>'campaign_log_pk',
 
             'type' =>'primary',
             'fields'=>array('id')
         ),
-        array (
+        array(
             'name' =>'idx_camp_tracker',
 
             'type' =>'index',
             'fields'=>array('target_tracker_key')
         ),
 
-        array (
+        array(
             'name' =>'idx_camp_campaign_id',
 
             'type' =>'index',
             'fields'=>array('campaign_id')
         ),
 
-        array (
+        array(
             'name' =>'idx_camp_more_info',
 
             'type' =>'index',
             'fields'=>array('more_information')
         ),
-        array (
+        array(
             'name' =>'idx_target_id',
 
             'type' =>'index',
             'fields'=>array('target_id')
         ),
-        array (
+        array(
             'name' =>'idx_target_id_deleted',
 
             'type' =>'index',
@@ -305,7 +305,7 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
 
 
     ),
-    'relationships' => array (
+    'relationships' => array(
         'campaignlog_contact' => array( 'lhs_module'=> 'CampaignLog',
                                         'lhs_table'=> 'campaign_log',
                                         'lhs_key' => 'related_id',

@@ -9,4 +9,3 @@ function smarty_function_log($params, &$smarty)
     $level = isset($params['level']) ? $params['level'] : ErrorMessage::DEFAULT_LOG_LEVEL;
     ErrorMessage::log($message, $level);
 }
-

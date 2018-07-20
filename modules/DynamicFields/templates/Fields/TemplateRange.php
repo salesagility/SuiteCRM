@@ -44,12 +44,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class TemplateRange extends TemplateText
 {
 
-	/**
-	 * __construct
-	 *
-	 * Constructor for class.  This constructor ensures that TemplateRanage instances have the
-	 * enable_range_search vardef value.
-	 */
+    /**
+     * __construct
+     *
+     * Constructor for class.  This constructor ensures that TemplateRanage instances have the
+     * enable_range_search vardef value.
+     */
     public function __construct()
     {
         $this->vardef_map['enable_range_search'] = 'enable_range_search';
@@ -80,7 +80,7 @@ class TemplateRange extends TemplateText
                 
                 if (file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
                     require('custom/modules/'.$module.'/metadata/SearchFields.php');
-                }                
+                }
                 
                 $field_name = $this->get_field_name($module, $_REQUEST['name']);
 
@@ -131,7 +131,7 @@ class TemplateRange extends TemplateText
                 
                 if (file_exists('custom/modules/'.$module.'/metadata/SearchFields.php')) {
                     require('custom/modules/'.$module.'/metadata/SearchFields.php');
-                }                
+                }
 
                 $field_name = $this->get_field_name($module, $_REQUEST['name']);
 

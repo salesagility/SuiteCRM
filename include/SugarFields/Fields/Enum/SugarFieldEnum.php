@@ -107,7 +107,7 @@ class SugarFieldEnum extends SugarFieldBase
         // Bug 27467 - Trim the value given
         $value = trim($value);
         
-        if (isset($app_list_strings[$vardef['options']]) 
+        if (isset($app_list_strings[$vardef['options']])
                 && !isset($app_list_strings[$vardef['options']][$value])) {
             // Bug 23485/23198 - Check to see if the value passed matches the display value
             if (in_array($value, $app_list_strings[$vardef['options']])) {

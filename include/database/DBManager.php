@@ -1957,8 +1957,13 @@ abstract class DBManager
     public function insertSQL(SugarBean $bean)
     {
         // get column names and values
-        $sql = $this->insertParams($bean->getTableName(), $bean->getFieldDefinitions(), get_object_vars($bean),
-            isset($bean->field_name_map) ? $bean->field_name_map : null, false);
+        $sql = $this->insertParams(
+            $bean->getTableName(),
+            $bean->getFieldDefinitions(),
+            get_object_vars($bean),
+            isset($bean->field_name_map) ? $bean->field_name_map : null,
+            false
+        );
 
         return $sql;
     }
@@ -3007,8 +3012,10 @@ abstract class DBManager
                     $before_value = $this->fromConvert($before_value, $field_type);
                 }
                 //if the type and values match, do nothing.
-                if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue($after_value,
-                        $field_type))
+                if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue(
+                    $after_value,
+                        $field_type
+                ))
                 ) {
                     $change = false;
                     if (trim($before_value) !== trim($after_value)) {

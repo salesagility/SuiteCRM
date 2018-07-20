@@ -362,4 +362,3 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
         return $this->_fileHandlers[$filename];
     }
 }
-

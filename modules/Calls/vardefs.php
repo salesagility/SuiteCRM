@@ -332,7 +332,7 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
                 'vname' => 'LBL_CONTACTS',
             ),
         'aos_contracts' =>
-            array (
+            array(
                 'name' => 'aos_contracts',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_calls',

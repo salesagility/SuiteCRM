@@ -1074,7 +1074,7 @@ class Link
             // custom metadata is found in custom/metadata (naturally) and the naming follows the convention $relationship_name_c, and $relationship_name = $table_name$locations = array( 'metadata/' , 'custom/metadata/' ) ;
             $relationshipName = preg_replace('/_c$/', '', $table_name) ;
 
-            $locations = array ( 'metadata/' , 'custom/metadata/' ) ;
+            $locations = array( 'metadata/' , 'custom/metadata/' ) ;
 
             foreach ($locations as $basepath) {
                 $path = $basepath . $relationshipName . 'MetaData.php' ;
@@ -1111,4 +1111,3 @@ class Link
         return $role_field;
     }
 }
-

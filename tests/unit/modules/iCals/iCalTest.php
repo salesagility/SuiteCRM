@@ -34,10 +34,10 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
 
-//        
+//
 //	// test
-//        
-//        
+//
+//
 
 //
 
@@ -52,7 +52,7 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        //match the leading and trailing string parts to verify it returns expected results
 
 
-//        
+//
 //        // clean up
 //
 }

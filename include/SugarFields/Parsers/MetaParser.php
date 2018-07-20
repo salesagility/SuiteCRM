@@ -362,7 +362,7 @@ class MetaParser
                 } //if
             } //foreach
 
-	$javascript = str_replace(array_keys($replace), array_values($replace), $javascript);
+    $javascript = str_replace(array_keys($replace), array_values($replace), $javascript);
         } //if
 
         if (!$addLiterals) {
@@ -598,9 +598,9 @@ class MetaParser
 
         /*
         $contents = file_get_contents($htmlFilePath);
-        
+
         $javascript = $this->getJavascript($contents, true);
-        
+
         if(!empty($javascript)) {
         	$javascript = str_replace("'", "\\'", $javascript);
         	$header .= "\n 'javascript' => '" . $javascript . "',\n";
@@ -666,7 +666,7 @@ class MetaParser
                     } //foreach
                 } //foreach
 
-	   	       	  // Now check against the $masterCopy
+                     // Now check against the $masterCopy
                 foreach ($masterpanel as $rowKey=>$row) {
                     $addRow = array();
 
@@ -683,7 +683,7 @@ class MetaParser
                             // 1) if it is a required field (as defined in metadata)
                             // 2) or if it has a customLabel and customCode (a very deep customization)
                             if ((is_array($column) && !empty($column['displayParams']['required'])) ||
-	   	       	  	 	      (is_array($column) && !empty($column['customCode']) && !empty($column['customLabel']))) {
+                                 (is_array($column) && !empty($column['customCode']) && !empty($column['customLabel']))) {
                                 $addRow[] = $column;
                             }
                         } else {
@@ -852,4 +852,3 @@ class MetaParser
         return count($found) == 1 ? $found[0] : '';
     }
 }
-

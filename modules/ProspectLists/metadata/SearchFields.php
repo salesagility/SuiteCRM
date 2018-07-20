@@ -40,10 +40,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$searchFields['ProspectLists'] = 
-    array (
+$searchFields['ProspectLists'] =
+    array(
         'name' => array( 'query_type'=>'default'),
         'list_type' => array( 'query_type'=>'default'),
         'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
     );
-

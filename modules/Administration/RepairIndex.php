@@ -123,7 +123,7 @@ $drop_index=array();
 $change_index=array();
 
 global $current_user, $beanFiles, $dictionary, $sugar_config, $mod_strings;;
-include_once ('include/database/DBManager.php');
+include_once('include/database/DBManager.php');
 
 $db = &DBManagerFactory::getInstance();
 $processed_tables=array();

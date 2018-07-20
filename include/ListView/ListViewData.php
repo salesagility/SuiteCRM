@@ -465,9 +465,11 @@ class ListViewData
                             $additionalDetailsFile = 'custom/modules/' . $this->seed->module_dir . '/metadata/additionalDetails.php';
                         }
                         require_once($additionalDetailsFile);
-                        $ar = $this->getAdditionalDetails($data[$dataIndex],
+                        $ar = $this->getAdditionalDetails(
+                            $data[$dataIndex],
                                     (empty($this->additionalDetailsFunction) ? 'additionalDetails' : $this->additionalDetailsFunction) . $this->seed->object_name,
-                                    $additionalDetailsEdit);
+                                    $additionalDetailsEdit
+                        );
                     }
                     $pageData['additionalDetails'][$dataIndex] = $ar['string'];
                     $pageData['additionalDetails']['fieldToAddTo'] = $ar['fieldToAddTo'];

@@ -255,9 +255,14 @@ class TemplateHandler
             }
 
             $validatedFields = array();
-            $javascript->addToValidateBinaryDependency('assigned_user_name', 'alpha',
+            $javascript->addToValidateBinaryDependency(
+                'assigned_user_name',
+                'alpha',
                 $javascript->buildStringToTranslateInSmarty('ERR_SQS_NO_MATCH_FIELD') . ': ' . $javascript->buildStringToTranslateInSmarty('LBL_ASSIGNED_TO'),
-                'false', '', 'assigned_user_id');
+                'false',
+                '',
+                'assigned_user_id'
+            );
             $validatedFields[] = 'assigned_user_name';
             //Add remaining validation dependency for related fields
             //1) a relate type as defined in vardefs
@@ -280,9 +285,14 @@ class TemplateHandler
                     } else {
                         $vname = "undefined";
                     }
-                    $javascript->addToValidateBinaryDependency($name, 'alpha',
+                    $javascript->addToValidateBinaryDependency(
+                        $name,
+                        'alpha',
                         $javascript->buildStringToTranslateInSmarty('ERR_SQS_NO_MATCH_FIELD') . ': ' . $javascript->buildStringToTranslateInSmarty($vname),
-                        (!empty($def['required']) ? 'true' : 'false'), '', $def['id_name']);
+                        (!empty($def['required']) ? 'true' : 'false'),
+                        '',
+                        $def['id_name']
+                    );
                     $validatedFields[] = $name;
                 }
             } //foreach
@@ -441,20 +451,32 @@ class TemplateHandler
                 ) {
                     if (preg_match('/^(Campaigns|Teams|Users|Contacts|Accounts)$/si', $field['module'], $matches)) {
                         if ($matches[0] === 'Campaigns') {
-                            $sqs_objects[$name . '_' . $parsedView] = $qsd->loadQSObject('Campaigns', 'Campaign',
-                                $field['name'], $field['id_name'], $field['id_name']);
+                            $sqs_objects[$name . '_' . $parsedView] = $qsd->loadQSObject(
+                                'Campaigns',
+                                'Campaign',
+                                $field['name'],
+                                $field['id_name'],
+                                $field['id_name']
+                            );
                         } else {
                             if ($matches[0] === 'Users') {
                                 if (!empty($f['name']) && !empty($f['id_name'])) {
-                                    $sqs_objects[$name . '_' . $parsedView] = $qsd->getQSUser($f['name'],
-                                        $f['id_name']);
+                                    $sqs_objects[$name . '_' . $parsedView] = $qsd->getQSUser(
+                                        $f['name'],
+                                        $f['id_name']
+                                    );
                                 } else {
                                     $sqs_objects[$name . '_' . $parsedView] = $qsd->getQSUser();
                                 }
                             } else {
                                 if ($matches[0] === 'Campaigns') {
-                                    $sqs_objects[$name . '_' . $parsedView] = $qsd->loadQSObject('Campaigns',
-                                        'Campaign', $field['name'], $field['id_name'], $field['id_name']);
+                                    $sqs_objects[$name . '_' . $parsedView] = $qsd->loadQSObject(
+                                        'Campaigns',
+                                        'Campaign',
+                                        $field['name'],
+                                        $field['id_name'],
+                                        $field['id_name']
+                                    );
                                 } else {
                                     if ($matches[0] === 'Accounts') {
                                         $nameKey = $name;
@@ -468,12 +490,19 @@ class TemplateHandler
                                         $billingKey = isset($f['displayParams']['billingKey']) ? $f['displayParams']['billingKey'] : null;
                                         $shippingKey = isset($f['displayParams']['shippingKey']) ? $f['displayParams']['shippingKey'] : null;
                                         $additionalFields = isset($f['displayParams']['additionalFields']) ? $f['displayParams']['additionalFields'] : null;
-                                        $sqs_objects[$name . '_' . $parsedView] = $qsd->getQSAccount($nameKey, $idKey,
-                                            $billingKey, $shippingKey, $additionalFields);
+                                        $sqs_objects[$name . '_' . $parsedView] = $qsd->getQSAccount(
+                                            $nameKey,
+                                            $idKey,
+                                            $billingKey,
+                                            $shippingKey,
+                                            $additionalFields
+                                        );
                                     } else {
                                         if ($matches[0] === 'Contacts') {
-                                            $sqs_objects[$name . '_' . $parsedView] = $qsd->getQSContact($field['name'],
-                                                $field['id_name']);
+                                            $sqs_objects[$name . '_' . $parsedView] = $qsd->getQSContact(
+                                                $field['name'],
+                                                $field['id_name']
+                                            );
                                         }
                                     }
                                 }
@@ -534,16 +563,23 @@ class TemplateHandler
                 $name = $qsd->form_name . '_' . $field['name'];
 
 
-                if ($field['type'] === 'relate' && isset($field['module']) && (preg_match('/_name$|_c$/si',
-                            $name) || !empty($field['quicksearch']))
+                if ($field['type'] === 'relate' && isset($field['module']) && (preg_match(
+                    '/_name$|_c$/si',
+                            $name
+                ) || !empty($field['quicksearch']))
                 ) {
                     if (!preg_match('/_c$/si', $name)
                         && (!isset($field['id_name']) || !preg_match('/_c$/si', $field['id_name']))
                         && preg_match('/^(Campaigns|Teams|Users|Contacts|Accounts)$/si', $field['module'], $matches)
                     ) {
                         if ($matches[0] === 'Campaigns') {
-                            $sqs_objects[$name] = $qsd->loadQSObject('Campaigns', 'Campaign', $field['name'],
-                                $field['id_name'], $field['id_name']);
+                            $sqs_objects[$name] = $qsd->loadQSObject(
+                                'Campaigns',
+                                'Campaign',
+                                $field['name'],
+                                $field['id_name'],
+                                $field['id_name']
+                            );
                         } else {
                             if ($matches[0] === 'Users') {
                                 if ($field['name'] === 'reports_to_name') {
@@ -556,8 +592,13 @@ class TemplateHandler
                                 }
                             } else {
                                 if ($matches[0] === 'Campaigns') {
-                                    $sqs_objects[$name] = $qsd->loadQSObject('Campaigns', 'Campaign', $field['name'],
-                                        $field['id_name'], $field['id_name']);
+                                    $sqs_objects[$name] = $qsd->loadQSObject(
+                                        'Campaigns',
+                                        'Campaign',
+                                        $field['name'],
+                                        $field['id_name'],
+                                        $field['id_name']
+                                    );
                                 } else {
                                     if ($matches[0] === 'Accounts') {
                                         $nameKey = $name;
@@ -571,8 +612,13 @@ class TemplateHandler
                                         $billingKey = SugarArray::staticGet($f, 'displayParams.billingKey');
                                         $shippingKey = SugarArray::staticGet($f, 'displayParams.shippingKey');
                                         $additionalFields = SugarArray::staticGet($f, 'displayParams.additionalFields');
-                                        $sqs_objects[$name] = $qsd->getQSAccount($nameKey, $idKey, $billingKey,
-                                            $shippingKey, $additionalFields);
+                                        $sqs_objects[$name] = $qsd->getQSAccount(
+                                            $nameKey,
+                                            $idKey,
+                                            $billingKey,
+                                            $shippingKey,
+                                            $additionalFields
+                                        );
                                     } else {
                                         if ($matches[0] === 'Contacts') {
                                             $sqs_objects[$name] = $qsd->getQSContact($field['name'], $field['id_name']);

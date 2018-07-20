@@ -425,7 +425,8 @@ class Popup_Picker
         $charset = isset($app_strings['LBL_CHARSET']) ? $app_strings['LBL_CHARSET'] : $sugar_config['default_charset'];
         $template->assign('charset', $charset);
 
-        $title = getClassicModuleTitle($focus->module_dir,
+        $title = getClassicModuleTitle(
+            $focus->module_dir,
             array(translate('LBL_MODULE_NAME', $focus->module_dir), $focus->name),
             false
         );

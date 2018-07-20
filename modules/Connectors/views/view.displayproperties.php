@@ -48,8 +48,8 @@ require_once('include/connectors/sources/SourceFactory.php');
 class ViewDisplayProperties extends ViewList
 {
     /**
-	 * @see SugarView::process()
-	 */
+     * @see SugarView::process()
+     */
     public function process()
     {
         $this->options['show_all'] = false;
@@ -60,8 +60,8 @@ class ViewDisplayProperties extends ViewList
     }
 
     /**
-	 * @see SugarView::display()
-	 */
+     * @see SugarView::display()
+     */
     public function display()
     {
         require_once('include/connectors/utils/ConnectorUtils.php');

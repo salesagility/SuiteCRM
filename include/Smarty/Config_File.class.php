@@ -19,7 +19,7 @@
  *
  * For questions, help, comments, discussion, etc., please join the
  * Smarty mailing list. Send a blank e-mail to
- * smarty-discussion-subscribe@googlegroups.com 
+ * smarty-discussion-subscribe@googlegroups.com
  *
  * @link http://www.smarty.net/
  * @version 2.6.25-dev

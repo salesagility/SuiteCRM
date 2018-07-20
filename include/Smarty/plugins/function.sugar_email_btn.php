@@ -43,7 +43,7 @@
  * smarty_function_sugar_email_btn
  * This is the constructor for the Smarty plugin.
  * This function exists so that the proper email button based on user prefs is loaded into the quotes module.
- * 
+ *
  * @param $params The runtime Smarty key/value arguments
  * @param $smarty The reference to the Smarty object used in this invocation
  */

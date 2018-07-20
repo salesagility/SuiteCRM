@@ -41,12 +41,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 if (is_admin($current_user)) {
-    global $mod_strings; 
+    global $mod_strings;
 
     
     //echo out warning message and msgDiv
     echo '<br>'.$mod_strings['LBL_REPAIR_JS_FILES_PROCESSING'];
-    echo'<div id="msgDiv"></div>';        
+    echo'<div id="msgDiv"></div>';
 
     //echo out script that will make an ajax call to process the files via callJSRepair.php
     echo "<script>

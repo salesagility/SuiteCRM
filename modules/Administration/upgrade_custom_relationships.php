@@ -39,7 +39,7 @@
 
 
 /**
- * Searches through the installed relationships to find broken self referencing one-to-many relationships 
+ * Searches through the installed relationships to find broken self referencing one-to-many relationships
  * (wrong field used in the subpanel, and the left link not marked as left)
  */
 function upgrade_custom_relationships($modules = array())
@@ -47,7 +47,7 @@ function upgrade_custom_relationships($modules = array())
     global $current_user, $moduleList;
     if (!is_admin($current_user)) {
         sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
-    } 
+    }
     
     require_once("modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php");
     require_once("modules/ModuleBuilder/parsers/relationships/OneToManyRelationship.php");

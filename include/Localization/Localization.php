@@ -47,36 +47,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class Localization
 {
     public $availableCharsets = array(
-		'BIG-5',        //Taiwan and Hong Kong
-		/*'CP866'			  // ms-dos Cyrillic */
-		/*'CP949'			  //Microsoft Korean */
-		'CP1251',       //MS Cyrillic
-		'CP1252',       //MS Western European & US
-		'EUC-CN',       //Simplified Chinese GB2312
-		'EUC-JP',       //Unix Japanese
-		'EUC-KR',       //Korean
-		'EUC-TW',       //Taiwanese
-		'ISO-2022-JP',  //Japanese
-		'ISO-2022-KR',  //Korean
-		'ISO-8859-1',   //Western European and US
-		'ISO-8859-2',   //Central and Eastern European
-		'ISO-8859-3',   //Latin 3
-		'ISO-8859-4',   //Latin 4
-		'ISO-8859-5',   //Cyrillic
-		'ISO-8859-6',   //Arabic
-		'ISO-8859-7',   //Greek
-		'ISO-8859-8',   //Hebrew
-		'ISO-8859-9',   //Latin 5
-		'ISO-8859-10',  //Latin 6
-		'ISO-8859-13',  //Latin 7
-		'ISO-8859-14',  //Latin 8
-		'ISO-8859-15',  //Latin 9
-		'KOI8-R',       //Cyrillic Russian
-		'KOI8-U',       //Cyrillic Ukranian
-		'SJIS',         //MS Japanese
-		'UTF-8',        //UTF-8
-		'UTF-16LE',     //UTF-16LE
-		);
+        'BIG-5',        //Taiwan and Hong Kong
+        /*'CP866'			  // ms-dos Cyrillic */
+        /*'CP949'			  //Microsoft Korean */
+        'CP1251',       //MS Cyrillic
+        'CP1252',       //MS Western European & US
+        'EUC-CN',       //Simplified Chinese GB2312
+        'EUC-JP',       //Unix Japanese
+        'EUC-KR',       //Korean
+        'EUC-TW',       //Taiwanese
+        'ISO-2022-JP',  //Japanese
+        'ISO-2022-KR',  //Korean
+        'ISO-8859-1',   //Western European and US
+        'ISO-8859-2',   //Central and Eastern European
+        'ISO-8859-3',   //Latin 3
+        'ISO-8859-4',   //Latin 4
+        'ISO-8859-5',   //Cyrillic
+        'ISO-8859-6',   //Arabic
+        'ISO-8859-7',   //Greek
+        'ISO-8859-8',   //Hebrew
+        'ISO-8859-9',   //Latin 5
+        'ISO-8859-10',  //Latin 6
+        'ISO-8859-13',  //Latin 7
+        'ISO-8859-14',  //Latin 8
+        'ISO-8859-15',  //Latin 9
+        'KOI8-R',       //Cyrillic Russian
+        'KOI8-U',       //Cyrillic Ukranian
+        'SJIS',         //MS Japanese
+        'UTF-8',        //UTF-8
+        'UTF-16LE',     //UTF-16LE
+        );
     public $localeNameFormat;
     public $localeNameFormatDefault;
     public $default_export_charset = 'UTF-8';
@@ -121,20 +121,20 @@ class Localization
     public function getLocaleConfigDefaults()
     {
         $coreDefaults = array(
-			'currency'								=> '',
-			'datef'									=> 'm/d/Y',
-			'timef'									=> 'H:i',
-			'default_currency_significant_digits'	=> 2,
-			'default_currency_symbol'				=> '$',
-			'default_export_charset'				=> $this->default_export_charset,
-			'default_locale_name_format'			=> 's f l',
+            'currency'								=> '',
+            'datef'									=> 'm/d/Y',
+            'timef'									=> 'H:i',
+            'default_currency_significant_digits'	=> 2,
+            'default_currency_symbol'				=> '$',
+            'default_export_charset'				=> $this->default_export_charset,
+            'default_locale_name_format'			=> 's f l',
             'name_formats'                          => array('s f l' => 's f l', 'f l' => 'f l', 's l' => 's l', 'l, s f' => 'l, s f',
                                                             'l, f' => 'l, f', 's l, f' => 's l, f', 'l s f' => 'l s f', 'l f s' => 'l f s'),
-			'default_number_grouping_seperator'		=> ',',
-			'default_decimal_seperator'				=> '.',
-			'export_delimiter'						=> ',',
-			'default_email_charset'					=> $this->default_email_charset,
-		);
+            'default_number_grouping_seperator'		=> ',',
+            'default_decimal_seperator'				=> '.',
+            'export_delimiter'						=> ',',
+            'default_email_charset'					=> $this->default_email_charset,
+        );
 
         return $coreDefaults;
     }
@@ -204,10 +204,10 @@ class Localization
         if (!is_array($load)) {
             // load default from config.php
             $this->currencies['-99'] = array(
-				'name'		=> $sugar_config['default_currency_name'],
-				'symbol'	=> $sugar_config['default_currency_symbol'],
-				'conversion_rate' => 1
-				);
+                'name'		=> $sugar_config['default_currency_name'],
+                'symbol'	=> $sugar_config['default_currency_symbol'],
+                'conversion_rate' => 1
+                );
 
             $q = "SELECT id, name, symbol, conversion_rate FROM currencies WHERE status = 'Active' and deleted = 0";
             $r = $db->query($q);
@@ -242,52 +242,52 @@ class Localization
     public function getDefaultCurrencies()
     {
         $ret = array(
-			'AUD' => array(	'name'		=> 'Australian Dollars',
-							'iso4217'	=> 'AUD',
-							'symbol'	=> '$'),
-			'BRL' => array(	'name'		=> 'Brazilian Reais',
-							'iso4217'	=> 'BRL',
-							'symbol'	=> 'R$'),
-			'GBP' => array(	'name'		=> 'British Pounds',
-							'iso4217'	=> 'GBP',
-							'symbol'	=> '£'),
-			'CAD' => array(	'name'		=> 'Canadian Dollars',
-							'iso4217'	=> 'CAD',
-							'symbol'	=> '$'),
-			'CNY' => array(	'name'		=> 'Chinese Yuan',
-							'iso4217'	=> 'CNY',
-							'symbol'	=> '￥'),
-			'EUR' => array(	'name'		=> 'Euro',
-							'iso4217'	=> 'EUR',
-							'symbol'	=> '€'),
-			'HKD' => array(	'name'		=> 'Hong Kong Dollars',
-							'iso4217'	=> 'HKD',
-							'symbol'	=> '$'),
-			'INR' => array(	'name'		=> 'Indian Rupees',
-							'iso4217'	=> 'INR',
-							'symbol'	=> '₨'),
-			'KRW' => array(	'name'		=> 'Korean Won',
-							'iso4217'	=> 'KRW',
-							'symbol'	=> '₩'),
-			'YEN' => array(	'name'		=> 'Japanese Yen',
-							'iso4217'	=> 'JPY',
-							'symbol'	=> '¥'),
-			'MXN' => array(	'name'		=> 'Mexican Pesos',
-							'iso4217'	=> 'MXN',
-							'symbol'	=> '$'),
-			'SGD' => array(	'name'		=> 'Singaporean Dollars',
-							'iso4217'	=> 'SGD',
-							'symbol'	=> '$'),
-			'CHF' => array(	'name'		=> 'Swiss Franc',
-							'iso4217'	=> 'CHF',
-							'symbol'	=> 'SFr.'),
-			'THB' => array(	'name'		=> 'Thai Baht',
-							'iso4217'	=> 'THB',
-							'symbol'	=> '฿'),
-			'USD' => array(	'name'		=> 'US Dollars',
-							'iso4217'	=> 'USD',
-							'symbol'	=> '$'),
-		);
+            'AUD' => array(	'name'		=> 'Australian Dollars',
+                            'iso4217'	=> 'AUD',
+                            'symbol'	=> '$'),
+            'BRL' => array(	'name'		=> 'Brazilian Reais',
+                            'iso4217'	=> 'BRL',
+                            'symbol'	=> 'R$'),
+            'GBP' => array(	'name'		=> 'British Pounds',
+                            'iso4217'	=> 'GBP',
+                            'symbol'	=> '£'),
+            'CAD' => array(	'name'		=> 'Canadian Dollars',
+                            'iso4217'	=> 'CAD',
+                            'symbol'	=> '$'),
+            'CNY' => array(	'name'		=> 'Chinese Yuan',
+                            'iso4217'	=> 'CNY',
+                            'symbol'	=> '￥'),
+            'EUR' => array(	'name'		=> 'Euro',
+                            'iso4217'	=> 'EUR',
+                            'symbol'	=> '€'),
+            'HKD' => array(	'name'		=> 'Hong Kong Dollars',
+                            'iso4217'	=> 'HKD',
+                            'symbol'	=> '$'),
+            'INR' => array(	'name'		=> 'Indian Rupees',
+                            'iso4217'	=> 'INR',
+                            'symbol'	=> '₨'),
+            'KRW' => array(	'name'		=> 'Korean Won',
+                            'iso4217'	=> 'KRW',
+                            'symbol'	=> '₩'),
+            'YEN' => array(	'name'		=> 'Japanese Yen',
+                            'iso4217'	=> 'JPY',
+                            'symbol'	=> '¥'),
+            'MXN' => array(	'name'		=> 'Mexican Pesos',
+                            'iso4217'	=> 'MXN',
+                            'symbol'	=> '$'),
+            'SGD' => array(	'name'		=> 'Singaporean Dollars',
+                            'iso4217'	=> 'SGD',
+                            'symbol'	=> '$'),
+            'CHF' => array(	'name'		=> 'Swiss Franc',
+                            'iso4217'	=> 'CHF',
+                            'symbol'	=> 'SFr.'),
+            'THB' => array(	'name'		=> 'Thai Baht',
+                            'iso4217'	=> 'THB',
+                            'symbol'	=> '฿'),
+            'USD' => array(	'name'		=> 'US Dollars',
+                            'iso4217'	=> 'USD',
+                            'symbol'	=> '$'),
+        );
 
         return $ret;
     }
@@ -529,10 +529,10 @@ class Localization
         }
 
         // handle decimals
-		if ($precision > 0) { // we toss the minor digits otherwise
-			if (is_array($exNum) && isset($exNum[1])) {
-			}
-		}
+        if ($precision > 0) { // we toss the minor digits otherwise
+            if (is_array($exNum) && isset($exNum[1])) {
+            }
+        }
 
 
         if ($is_currency) {

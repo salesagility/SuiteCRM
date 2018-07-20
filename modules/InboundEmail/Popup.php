@@ -47,9 +47,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 // cn: bug 6078: zlib breaks test-settings
 $iniError = '';
 if (ini_get('zlib.output_compression') == 1) { // ini_get() returns 1/0, not value
-	if (!ini_set('zlib.output_compression', 'Off')) { // returns False on failure
-		$iniError = $mod_strings['ERR_INI_ZLIB'];
-	}
+    if (!ini_set('zlib.output_compression', 'Off')) { // returns False on failure
+        $iniError = $mod_strings['ERR_INI_ZLIB'];
+    }
 }
 
 // hack to allow "&", "%" and "+" through a $_GET var
@@ -130,19 +130,19 @@ if ($popupBoolean) {
 ////	COMMON CODE
 echo /*'
 <HTML>
-	<HEAD>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>SugarCRM - Commercial Open Source CRM</title>
-		'.SugarThemeRegistry::current()->getCSS().'
-		<script type="text/javascript">
-				function setMailbox(box) {
-					var mb = opener.document.getElementById("mailbox");
-					mb.value = box;
-				}
-		</script>
+    <HEAD>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>SugarCRM - Commercial Open Source CRM</title>
+        '.SugarThemeRegistry::current()->getCSS().'
+        <script type="text/javascript">
+                function setMailbox(box) {
+                    var mb = opener.document.getElementById("mailbox");
+                    mb.value = box;
+                }
+        </script>
 
-	</HEAD>
-	<body style="margin: 10px">*/'
+    </HEAD>
+    <body style="margin: 10px">*/'
 	<p>
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 			<tr>

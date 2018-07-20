@@ -79,24 +79,64 @@ class ACLController
 
         //calendar is a special case since it has 3 modules in it (calls, meetings, tasks)
         if ($category === 'Calendar') {
-            return ACLAction::userHasAccess($current_user->id, 'Calls', $action, $type, $is_owner,
+            return ACLAction::userHasAccess(
+                $current_user->id,
+                'Calls',
+                $action,
+                $type,
+                $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Meetings', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Meetings',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Tasks', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Tasks',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
                 );
         }
         if ($category === 'Activities') {
-            return ACLAction::userHasAccess($current_user->id, 'Calls', $action, $type, $is_owner,
+            return ACLAction::userHasAccess(
+                $current_user->id,
+                'Calls',
+                $action,
+                $type,
+                $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Meetings', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Meetings',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Tasks', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Tasks',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Emails', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Emails',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Notes', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Notes',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
                 );
         }

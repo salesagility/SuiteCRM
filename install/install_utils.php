@@ -852,7 +852,7 @@ function handleSugarConfig()
     /*nsingh(bug 22402): Consolidate logger settings under $config['logger'] as liked by the new logger! If log4pphp exists,
         these settings will be overwritten by those in log4php.properties when the user access admin->system settings.*/
     $sugar_config['logger']	=
-        array ('level'=>$setup_site_log_level,
+        array('level'=>$setup_site_log_level,
             'file' => array(
                 'ext' => '.log',
                 'name' => 'suitecrm',
@@ -1543,7 +1543,7 @@ function pullSilentInstallVarsIntoSession()
         die($mod_strings['ERR_SI_NO_CONFIG']);
     }
 
-    $config_subset = array (
+    $config_subset = array(
         'setup_site_url'                => isset($sugar_config['site_url']) ? $sugar_config['site_url'] : '',
         'setup_db_host_name'            => isset($sugar_config['dbconfig']['db_host_name']) ? $sugar_config['dbconfig']['db_host_name'] : '',
         'setup_db_host_instance'        => isset($sugar_config['dbconfig']['db_host_instance']) ? $sugar_config['dbconfig']['db_host_instance'] : '',
@@ -1555,7 +1555,7 @@ function pullSilentInstallVarsIntoSession()
         'setup_db_options'              => !empty($sugar_config['dbconfigoptions']) ? $sugar_config['dbconfigoptions'] : array(),
     );
     // third array of values derived from above values
-    $derived = array (
+    $derived = array(
         'setup_site_admin_password_retype'      => $sugar_config_si['setup_site_admin_password'],
         'setup_db_sugarsales_password_retype'   => $config_subset['setup_db_sugarsales_password'],
     );
@@ -1612,7 +1612,7 @@ function langPackFinalMove($file)
     //."upgrades/langpack/"
     $destination = $sugar_config['upload_dir'].$file->stored_file_name;
     if (!move_uploaded_file($_FILES[$file->field_name]['tmp_name'], $destination)) {
-        die ("ERROR: can't move_uploaded_file to $destination. You should try making the directory writable by the webserver");
+        die("ERROR: can't move_uploaded_file to $destination. You should try making the directory writable by the webserver");
     }
     return true;
 }
@@ -2123,7 +2123,7 @@ function create_db_user_creds($numChars=10)
     srand((double)microtime()*1000000);
     $password="";
     for ($i=0;$i<$numChars;$i++) {  // loop and create password
-        $password = $password . substr ($charBKT, rand() % strlen($charBKT), 1);
+        $password = $password . substr($charBKT, rand() % strlen($charBKT), 1);
     }
 
     return $password;

@@ -56,4 +56,3 @@ if (!empty($_REQUEST['target_module']) && !empty($_REQUEST['target_id'])) {
 } else {
     echo 0;
 }
-

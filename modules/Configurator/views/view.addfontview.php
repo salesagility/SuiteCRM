@@ -53,7 +53,7 @@ class ConfiguratorViewAddFontView extends SugarView
     {
         parent::__construct();
     }
-    /** 
+    /**
      * display the form
      */
     public function display()
@@ -62,7 +62,8 @@ class ConfiguratorViewAddFontView extends SugarView
         if (!is_admin($current_user)) {
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
-        $this->ss->assign("MODULE_TITLE",
+        $this->ss->assign(
+            "MODULE_TITLE",
             getClassicModuleTitle(
                 $mod_strings['LBL_MODULE_ID'],
                 array($mod_strings['LBL_ADDFONT_TITLE']),
@@ -91,4 +92,3 @@ class ConfiguratorViewAddFontView extends SugarView
         $this->ss->display('modules/Configurator/tpls/addFontView.tpl');
     }
 }
-    

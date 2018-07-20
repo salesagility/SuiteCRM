@@ -48,8 +48,8 @@ require_once('include/connectors/sources/SourceFactory.php');
 class ViewSearchProperties extends ViewList
 {
     /**
-	 * @see SugarView::process()
-	 */
+     * @see SugarView::process()
+     */
     public function process()
     {
         $this->options['show_all'] = false;
@@ -58,10 +58,10 @@ class ViewSearchProperties extends ViewList
         $this->options['show_header'] = false;
         parent::process();
     }
- 	
+    
     /**
-	 * @see SugarView::display()
-	 */
+     * @see SugarView::display()
+     */
     public function display()
     {
         require_once('include/connectors/utils/ConnectorUtils.php');
@@ -76,20 +76,20 @@ class ViewSearchProperties extends ViewList
         if ($is_enabled) {
             $searchDefs = ConnectorUtils::getSearchDefs();
             $searchDefs = !empty($searchDefs[$_REQUEST['source_id']]) ? $searchDefs[$_REQUEST['source_id']] : array();
-	                
+                    
             $source = SourceFactory::getSource($_REQUEST['source_id']);
             $field_defs = $source->getFieldDefs();
-	       
+           
 
             //Create the Javascript code to dynamically add the tables
             $json = getJSONobj();
             foreach ($searchDefs as $module=>$fields) {
                 $disabled = array();
                 $enabled = array();
-	 		
+            
                 $enabled_fields = array_flip($fields);
                 $field_keys = array_keys($field_defs);
-	
+    
                 foreach ($field_keys as $index=>$key) {
                     if (!empty($field_defs[$key]['hidden']) || empty($field_defs[$key]['search'])) {
                         continue;
@@ -101,7 +101,7 @@ class ViewSearchProperties extends ViewList
                         $enabled[$key] = !empty($connector_strings[$field_defs[$key]['vname']]) ? $connector_strings[$field_defs[$key]['vname']] : $key;
                     }
                 }
-	
+    
                 $modules_sources[$module] = array_merge($enabled, $disabled);
 
                 asort($disabled);
@@ -110,9 +110,9 @@ class ViewSearchProperties extends ViewList
             }
         }
         
-        $this->ss->assign('no_searchdefs_defined', !$is_enabled);	
+        $this->ss->assign('no_searchdefs_defined', !$is_enabled);
         $this->ss->assign('display_data', $display_data);
-        $this->ss->assign('modules_sources', $modules_sources);    	
+        $this->ss->assign('modules_sources', $modules_sources);
         $this->ss->assign('sources', $sources);
         $this->ss->assign('mod', $GLOBALS['mod_strings']);
         $this->ss->assign('APP', $GLOBALS['app_strings']);
