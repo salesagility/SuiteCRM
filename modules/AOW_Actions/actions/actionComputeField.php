@@ -154,6 +154,11 @@ class actionComputeField extends actionBase
                 } else {
                     if ($dataType == 'multienum') {
                         $resolvedParameters[$i] = $this->getMultiEnumTranslated($bean, $parameters[$i]);
+                    } else {
+                        if ($dataType == 'dynamicenum') {
+                            $resolvedParameters[$i] =
+                                $GLOBALS['app_list_strings'][$bean->field_defs[$parameters[$i]]['options']][$bean->{$parameters[$i]}];
+                        }
                     }
                 }
             } else {
@@ -260,6 +265,11 @@ class actionComputeField extends actionBase
                     if ($dataType == 'multienum') {
                         $resolvedRelationParameters[$i] =
                             $this->getMultiEnumTranslated($entity, $relationParameterFields[$i]);
+                    } else {
+                        if ($dataType == 'dynamicenum') {
+                            $resolvedRelationParameters[$i] =
+                                $GLOBALS['app_list_strings'][$entity->field_defs[$relationParameterFields[$i]]['options']][$entity->{$relationParameterFields[$i]}];
+                        }
                     }
                 }
             } else {
@@ -447,7 +457,7 @@ class actionComputeField extends actionBase
 					
 					function onFieldChange$line(dropdown, valueDropdown) {
 						var value = $(dropdown).find('option:selected').attr('dataType');						
-						if (value == 'enum' || value == 'multienum') {
+						if (value == 'enum' || value == 'multienum' || value == 'dynamicenum') {
 							$(valueDropdown).show();
 						} else {
 							$(valueDropdown).hide();

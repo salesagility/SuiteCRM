@@ -565,6 +565,10 @@ eoq;
                             $even = !$even;
                             $newhtml .= $this->addDate($displayname, $field["name"]);
                             break;
+                        case "timeslot":
+                            $even = !$even;
+                            $newhtml .= $this->addTimeslot($displayname, $field["name"], $field["help"], $field["help_minute"]);
+                            break;
                         default:
                             $newhtml .= $this->addDefault($displayname, $field, $even);
                             break;
@@ -1242,6 +1246,47 @@ EOQ;
 
         $html = '<td scope="row" width="15%">' . $displayname . '</td>
 			 <td>' . implode("\n", $_html_result) . '</td>';
+
+        return $html;
+    }
+
+    /**
+     * Add Timeslotselection popup window HTML code
+     * @param displayname Name to display in the popup window
+     * @param varname name of the variable
+     */
+    function addTimeslot($displayname, $varname, $helphour, $helpminute)
+    {
+        global $app_strings;
+        global $timedate;
+
+        $userformat = '(' . $timedate->get_user_date_format() . ')';
+        $dtscript = getVersionedScript('include/SugarFields/Fields/Timeslot/Timeslot.js');
+        $html = <<<EOQ
+                <td scope="row" width="20%">$displayname</td>
+                <td class='dataTimeslot' width="30%"><span id="{$varname}_time"></span>
+                  <input type="hidden" id="{$varname}" name="{$varname}" value="">
+                  <input type="hidden" id="val_{$varname}" name="val_{$varname}" value="ok">
+                </td>
+                $dtscript
+                <script type="text/javascript">
+                  var combo_{$varname} = new Timeslot(" ", "$varname", "$userformat", 1, "$helphour","$helpminute");
+                  text = combo_{$varname}.html('');
+                  document.getElementById('{$varname}_time').innerHTML = text;
+                  function update_{$varname}_available() {
+                    YAHOO.util.Event.onAvailable("{$varname}_time_minutes", this.handleOnAvailable, this);
+                  }
+                  update_{$varname}_available.prototype.handleOnAvailable = function(me) {
+                    combo_{$varname}.update(false);
+                  }
+                  var obj_{$varname} = new update_{$varname}_available();
+                </script>
+                <script> 
+                  addToValidateComposeField('MassUpdate', 'val_{$varname}', 'timeslot', false, '$displayname');
+                  addRequireFieldToComposeField('MassUpdate', 'val_{$varname}', '{$varname}_hours', 'timeslot', "{$app_strings['LBL_HOURS']}");
+                  addRequireFieldToComposeField('MassUpdate', 'val_{$varname}', '{$varname}_minutes', 'timeslot', "{$app_strings['LBL_MINUTES']}");
+                </script>
+EOQ;
 
         return $html;
     }

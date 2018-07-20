@@ -74,6 +74,7 @@
             $(document).ready(function () {
               $('#updateParametersButton').click(function () {
                 //Update the Detail view form to have the parameter info and reload the page
+
                 var _form = $('#formDetailView');
                 _form.find('input[name=action]').val('DetailView');
                 //Add each parameter to the form in turn
@@ -87,6 +88,15 @@
                   var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
                   _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
                   var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+
+                  // timeslot combo fields
+                  if (typeof fieldInput === 'undefined'
+                    && $("[name='aor_conditions_value\\["+ln+"\\]']").hasClass('TimeSlot')){
+                    fieldInput = $("[name='aor_conditions_value\\["+ln+"\\]']").val();
+                    if (fieldInput == "" ){
+                      fieldInput = "0";
+                    }
+                  }
 
                         // datetime combo fields
                         if (typeof fieldInput === 'undefined'

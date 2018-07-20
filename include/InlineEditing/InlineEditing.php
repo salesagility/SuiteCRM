@@ -444,6 +444,20 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
     }
 
+    //If field is of type timeslot
+    if ($vardef['type'] == "timeslot" ) {
+        if ($value != ""){
+            if ($value == 86400){
+                $value = "23:59";
+            } else {
+                $mins = $value % 3600;
+                $hrs = ($value - $mins) / 3600;
+                $mins = $mins / 60;
+                $value = str_pad( $hrs, 2, "0", STR_PAD_LEFT ) . ":" . str_pad( $mins, 2, "0", STR_PAD_LEFT );
+            }
+        }
+    }
+
     //If field is of type bool, checkbox.
     if ($vardef['type'] == "bool") {
 

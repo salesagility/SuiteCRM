@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 include_once("include/InlineEditing/InlineEditing.php");
+require_once "data/BeanDuplicateCheckRules.php";
 
 class HomeController extends SugarController{
 
@@ -83,6 +84,69 @@ class HomeController extends SugarController{
 
     }
 
+    public function action_checkUniqueRules()
+    {
+        global $app_strings;
+        $arules = json_decode(html_entity_decode($_REQUEST['rules']));
+        if(isset($arules->rules) && !empty($arules->rules) && $_REQUEST['current_module']){
+            if($_REQUEST['id']){
+                $bean = BeanFactory::getBean($_REQUEST['current_module'],$_REQUEST['id']);
+            } else {
+                $bean = new $_REQUEST['current_module'];
+            }
+            if (!$bean->has_duplicate_check){
+                $return_json["iserror"] = true;
+                $return_json["error"] = 
+                array(
+                    array(
+                        "type" => "system",
+                        "msg" => $app_strings["LBL_ERROR_UNIQUE_CHECK"],
+                    ),
+                );
+            } else {
+                $return_json["iserror"] = false;
+                $return_json["error"] = array();
+                foreach($arules as $rules ){
+                    foreach($rules as $rule ){
+                        $result = $bean->duplicate_check->checkForDuplicateCheckRule( $rule, $bean, $_REQUEST['current_module'] ); 
+                        switch($result["return"]){
+                            case "rulenotfound":
+                                $return_json["iserror"] = true;
+                                array_push( $return_json["error"], array(
+                                                                       "type" => "system",
+                                                                       "msg" => $app_strings["LBL_ERROR_UNIQUE_CHECK_NORULES"],
+                                                                   ));
+                                break;
+                            case "missingfields":
+                                $return_json["iserror"] = true;
+                                array_push( $return_json["error"], array(
+                                                                       "type" => "system",
+                                                                       "msg" => $app_strings["LBL_ERROR_UNIQUE_CHECK_MISSING"],
+                                                                   ));
+                                break;
+                            case "duplicated":
+                                $return_json["iserror"] = true;
+                                array_push( $return_json["error"], array(
+                                                                       "type" => "field",
+                                                                       "msg" => $result["msgError"],
+                                                                       "field" => $rule->field,
+                                                                   ));
+                                break;
+                        }
+                    }
+                }
+            }
+        } else {
+            $return_json["iserror"] = false;
+            $return_json["error"] = 
+            array(
+                "type" => "system",
+                "msg" => $app_strings["LBL_ERROR_UNIQUE_CHECK_NORULES"],
+            );
+        }
+        echo json_encode($return_json);
+    }
+
     public function action_getValidationRules(){
         global $app_strings, $mod_strings;
 
@@ -113,13 +177,155 @@ class HomeController extends SugarController{
                         }
                     }
                 }
-                $validate_array = array('type' => $fielddef['type'], 'required' => $fielddef['required'],'label' => $fielddef['label']);
+                switch ($fielddef['type']){
+                    case 'timeslot':
+                        $validate_array = 
+                        array( "rules" => 
+                            array( 
+                                array(
+                                    'validation' => 'default',
+                                    'type' => $fielddef['type'], 
+                                    'required' => $fielddef['required'],
+                                    'label' => $fielddef['label']
+                                ),
+                                array( 
+                                    'validation' => 'composefield', 
+                                    'type' => $fielddef['type'], 
+                                    'required' => $fielddef['required'],
+                                    'label' => $fielddef['label'],
+                                    'field' => "val_".$fielddef['name']
+                                ),
+                                array( 
+                                    'validation' => 'addtocomposefield', 
+                                    'type' => $fielddef['type'], 
+                                    'required' => true,
+                                    'label' => $app_strings["LBL_HOURS"],
+                                    'field' => $fielddef['name']."_hours",
+                                    'parent' => "val_".$fielddef['name']
+                                ),
+                                array( 
+                                    'validation' => 'addtocomposefield', 
+                                    'type' => $fielddef['type'], 
+                                    'required' => true,
+                                    'label' => $app_strings["LBL_MINUTES"],
+                                    'field' => $fielddef['name']."_minutes",
+                                    'parent' => "val_".$fielddef['name']
+                                ),
+                            )
+                        );
+                        break;
+                    default:
+                        $validate_array =
+                        array( "rules" =>
+                            array(
+                                array(
+                                    'validation' => 'default',
+                                    'type' => $fielddef['type'], 
+                                    'required' => $fielddef['required'],
+                                    'label' => $fielddef['label']
+                                ),
+                            )
+                        );
+                        break;
+                }
+                if (isset($fielddef['validation']['type'])){
+                    switch ($fielddef['validation']['type']){
+                        case 'callback':
+                            $newRule = 
+                            array(
+                                'validation' => $fielddef['validation']['type'],
+                                'type' => $fielddef['type'],
+                                'required' => $fielddef['required'],
+                                'function' => $fielddef['validation']['callback'],
+                                'label' => $fielddef['label']
+                            ); 
+                            array_push( $validate_array['rules'], $newRule );
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if ($bean->has_duplicate_check) {
+                    $rules = $bean->duplicate_check->isFieldOfDuplicateCheckRule($_REQUEST['field']);
+                    foreach( $rules as $rule ){
+                        $tmpRule = $rule->getRuleInformation();
+                        $newRule = 
+                        array(
+                            'validation' => 'duplicate_check',
+                            'name' => $tmpRule['nameRule'],
+                            'fields' => $tmpRule['fields'],
+                            'errorMessages' => $tmpRule['errorMessages'],
+                            'label' => $fielddef['label']
+                        ); 
+                        array_push( $validate_array['rules'], $newRule );
+                    }
+                }
+                if (isset($bean->formandvis['beep']) && ($bean->formandvis['beep'] === true || $bean->formandvis['beep']=="1")){
+                    $beep = "true";
+                } else {
+                    $beep = "false";
+                }
+                $validate_array['formconfig'] = 
+                    array( 
+                        "hasformulas" => false, 
+                        "view" => "InlineEditView", 
+                        "getbean" => "false", 
+                        "beep" => $beep,
+                        "onloadform" => "true");
+                $validate_array['formulas'] = array();
+                $validate_array['visibility'] = array();
+                $validate_array['panelvisibility'] = array();
+                $validate_array['tabvisibility'] = array();
 
+                foreach($bean->field_name_map as $field => $value)
+                {
+                    if (isset($value['calculated']) && ($value['calculated'] == 1 || $value['calculated'] == true))
+                    {
+                        if (isset($value['formula']['fielddeps']))
+                        {
+                            $fielddeps = implode( "','", $value['formula']['fielddeps']);
+                            array_push($validate_array['formulas'], array( "name" => $value['name'], "fielddeps" => "['" . $fielddeps . "']" ));
+                        }
+                    }
+                    if (isset($value['visibility']) && ($value['visibility'] == 1 || $value['visibility'] == true))
+                    {
+                        if (isset($value['visformula']['fielddeps']))
+                        {
+                            $fielddeps = implode( "','", $value['visformula']['fielddeps']);
+                            array_push($validate_array['visibility'], array( "name" => $value['name'], "fielddeps" => "['" . $fielddeps . "']" ));
+                        }
+                    }
+                    if (isset($validate_array['formulas']))
+                    {
+                        $validate_array['formconfig']['hasformulas'] = true;
+                    }
+                }
+                foreach( $bean->visibility as $key => $object )
+                {
+                    if (!isset($object['objecttype'])){
+                        continue;
+                    }
+                    switch($object['objecttype']){
+                        case 'tab':
+                            if (isset($object['fielddeps']))
+                            {
+                              $fielddeps = implode( "','", $object['fielddeps']);
+                              array_push($validate_array['tabvisibility'], array( "name" => $key, "tab" => $object['tab'], "fielddeps" => "['" . $fielddeps . "']" ));
+                            }
+                            break;
+                        case 'panel':
+                        default:
+                            if (isset($object['fielddeps']))
+                            {
+                              $fielddeps = implode( "','", $object['fielddeps']);
+                              array_push($validate_array['panelvisibility'], array( "name" => $key, "fielddeps" => "['" . $fielddeps . "']" ));
+                            }
+                            break;
+                    }
+                }
                 echo json_encode($validate_array);
             }
-
         }
-
     }
     
     public function action_getRelateFieldJS(){
@@ -148,6 +354,234 @@ class HomeController extends SugarController{
 
         echo $quicksearch_js;
 
+    }
+
+    private function getModuleRelatedFormulaFields( $fielddef, $name )
+    {
+        $fields = array();
+        foreach( $fielddef as $field ){
+            if (isset($field['calculated']) && ($field['calculated'] == 1 || $field['calculated'] == 'true') && ( $field['name'] != $name)){
+                if ( isset($field['formula']['fielddeps']) && in_array( $name, $field['formula']['fielddeps'] )){
+                    array_push( $fields, $field['name'] );
+                }
+            }
+        }
+        return $fields;
+    }
+
+    private function getModuleRelatedVisibilityFields( $fielddef, $name )
+    {
+        $fields = array();
+        foreach( $fielddef as $field ){
+            if (isset($field['visibility']) && ($field['visibility'] == 1 || $field['visibility'] == 'true') && ( $field['name'] != $name)){
+                if ( isset($field['visformula']['fielddeps']) && in_array( $name, $field['visformula']['fielddeps'] )){
+                    array_push( $fields, $field['name'] );
+                }
+            }
+        }
+        return $fields;
+    }
+
+    private function getModuleFormulasInt( $fieldsret, $fielddef, $name, $type )
+    {
+        if (isset($fieldsret['formula'][$name])){
+            return $fieldsret;
+        }
+        switch ($type){
+            case 'calculated':
+                if (isset($fielddef[$name]['calculated']) && ($fielddef[$name]['calculated'] == 1 || $fielddef[$name]['calculated'] == 'true')){
+                    $fieldsret['formula'][$name] = $fielddef[$name];
+                    $relateddeps = $this->getModuleRelatedFormulaFields( $fielddef, $name );
+                    foreach( $relateddeps as $relatedfield ){
+                        $fieldsret = $this->getModuleFormulasInt( $fieldsret, $fielddef, $relatedfield, $type );
+                    }
+                }
+                break;
+        }
+        return $fieldsret;
+    }
+    
+    private function getModuleVisibilityInt( $fieldsret, $fielddef, $name, $type )
+    {
+        if (isset($fieldsret['visibility'][$name])){
+            return $fieldsret;
+        }
+        switch ($type){
+            case 'visibility':
+                if (isset($fielddef[$name]['visibility']) && ($fielddef[$name]['visibility'] == 1 || $fielddef[$name]['visibility'] == 'true')){
+                    $fieldsret['visibility'][$name] = $fielddef[$name];
+                    $relateddeps = $this->getModuleRelatedVisibilityFields( $fielddef, $name );
+                    foreach( $relateddeps as $relatedfield ){
+                        $fieldsret = $this->getModuleVisibilityInt( $fieldsret, $fielddef, $relatedfield, $type );
+                    }
+                }
+                break;
+        }
+        return $fieldsret;
+    }
+
+    private function getPanelVisibility( $fieldsret, $visdef, $name )
+    {
+        if (isset($visdef[$name])){
+            $fieldsret['panelvisibility'][$name] = $visdef[$name];
+        }
+        return $fieldsret;
+    }
+    
+    private function getTabVisibility( $fieldsret, $visdef, $name )
+    {
+        if (isset($visdef[$name])){
+            $fieldsret['tabvisibility'][$name] = $visdef[$name];
+        }
+        return $fieldsret;
+    }
+    
+    private function isNecessaryLoadBean( $fielddeps, $inlinetd, $event )
+    {
+        $fields = array();
+        foreach( $fielddeps as $field => $val ){
+            if (is_null($val) || $val == '__$NULL$__' || ($inlinetd && $field != $event['name'])){
+                array_push( $fields, $field );
+            }
+        }
+        return $fields;
+    }
+    
+    public function getModuleFormulas( $module, $fields, $panels, $tabs, $id = '', $getbean = false )
+    {
+        global $beanFiles, $beanList;
+
+        require_once($beanFiles[$beanList[$module]]);
+
+        if ($getbean == true && !empty( $id )){
+            $focus = BeanFactory::getBean( $module, $id );
+        } else {
+            $focus = new $beanList[$module];
+        }
+        $fieldsret = 
+            array( 
+                "formula" => array(), 
+                "visibility" => array(),
+                "panelvisibility" => array(),
+                "tabvisibility" => array(),
+                "bean" => 
+                    array( 
+                        "isset" => false, 
+                        "fetchbean" => array(),
+                    )
+            );
+        if (is_object($focus)){
+            $fielddef = $focus->field_defs;
+            $visdef = $focus->visibility;
+            if ( !empty( $focus->id )){
+                $fieldsret["bean"] = 
+                    array( 
+                        "isset" => true,
+                        "fetchbean" => $focus,
+                    );
+            }
+            foreach( $fields as $field => $val ){
+                $fieldsret = $this->getModuleFormulasInt( $fieldsret, $fielddef, $field, "calculated" );
+                $fieldsret = $this->getModuleVisibilityInt( $fieldsret, $fielddef, $field, "visibility" );
+            }
+            foreach( $panels as $panel => $val ){
+                $fieldsret = $this->getPanelVisibility( $fieldsret, $visdef, $panel );
+            }
+            foreach( $tabs as $tab => $val ){
+                $fieldsret = $this->getTabVisibility( $fieldsret, $visdef, $tab );
+            }
+        }
+        return $fieldsret;
+    }
+
+    public function action_getFormula()
+    {
+        if (!isset($_REQUEST['panels'])){
+            $_REQUEST['panels'] = array();
+        }
+        if (!isset($_REQUEST['tabs'])){
+            $_REQUEST['tabs'] = array();
+        }
+        if (!isset($_REQUEST['fieldsdeps'])){
+            $_REQUEST['fieldsdeps'] = array();
+        }
+        if (!isset($_REQUEST['fields'])){
+            $_REQUEST['fields'] = array();
+        }
+        $getbean = ($_REQUEST['getbean'] == 'true' || $_REQUEST['inlinetd'] == 'true' );
+        $nullfields = $this->isNecessaryLoadBean( $_REQUEST['fieldsdeps'], $_REQUEST['inlinetd'] == 'true' , $_REQUEST['event'] );
+        if (!empty($nullfields)){
+            $getbean = true;
+        }
+        $fields = $this->getModuleFormulas( $_REQUEST['current_module'], $_REQUEST['fields'], $_REQUEST['panels'], $_REQUEST['tabs'], $_REQUEST['id'], $getbean );
+        if ($fields['bean']['isset'] == 1 && isset($fields['bean']['fetchbean'])){
+            foreach( $nullfields as $nullfield ){
+                $_REQUEST['fieldsdeps'][$nullfield] = $fields['bean']['fetchbean']->$nullfield;
+            }
+        }
+        if ($_REQUEST['inlinetd'] == 'true'){
+            if ($_REQUEST['event']['type'] == 'change'){
+                $_REQUEST['fieldsdeps'][$_REQUEST['event']['name']] = $_REQUEST['event']['value'];
+            }
+        }
+
+        $ret = array( "formulas" => array(), "visibility" => array(), "panelvisibility" => array(), "tabvisibility" => array());
+
+        foreach($fields['formula'] as $key => $field){
+            switch($field['formula']['type']){
+                case 'function':
+                    require_once( $field['formula']['function']['include'] );
+                    $value = $field['formula']['function']['name']( $fields["bean"], $_REQUEST );
+                    $_REQUEST['fieldsdeps'][$key] = $value;
+                    $field = array( "name" => $key, "value" => $value );
+                    array_push( $ret['formulas'], $field );
+                    break;
+            }
+        }
+
+        foreach($fields['visibility'] as $key => $field){
+            switch($field['visformula']['type']){
+                case 'function':
+                    require_once( $field['visformula']['function']['include'] );
+                    $value = $field['visformula']['function']['name']( $fields["bean"], $_REQUEST );
+                    $field = array( "name" => $key, "value" => $value, "required" => $field['required'] );
+                    array_push( $ret['visibility'], $field );
+                    break;
+            }
+        }
+
+        foreach($fields['panelvisibility'] as $key => $object){
+            switch($object['type']){
+                case 'function':
+                    require_once( $object['function']['include'] );
+                    $value = $object['function']['name']( $fields["bean"], $_REQUEST );
+                    $field = array( "name" => $key, "value" => $value );
+                    array_push( $ret['panelvisibility'], $field );
+                    break;
+            }
+        }
+
+        foreach($fields['tabvisibility'] as $key => $object){
+            switch($object['type']){
+                case 'function':
+                    require_once( $object['function']['include'] );
+                    $value = $object['function']['name']( $fields["bean"], $_REQUEST );
+                    $focus = '-1';
+                    if ($value){
+                        if (isset($object['focustabonvisible'])){
+                            $focus = $object['focustabonvisible'];
+                        }
+                    } else {
+                        if (isset($object['focustabonhidden'])){
+                            $focus = $object['focustabonhidden'];
+                        }
+                    }
+                    $field = array( "name" => $key, "value" => $value, "tab" => $object['tab'], "focustab" => $focus );
+                    array_push( $ret['tabvisibility'], $field );
+                    break;
+            }
+        }
+        echo json_encode( $ret );
     }
 
 }

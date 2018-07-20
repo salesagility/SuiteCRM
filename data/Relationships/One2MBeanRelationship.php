@@ -393,9 +393,10 @@ class One2MBeanRelationship extends One2MRelationship
 
     public function getRelationshipTable()
     {
-        if (isset($this->def['table']))
+        if (!empty($this->def['table']))
             return $this->def['table'];
-        else
+        else if(!empty($this->def['rhs_table']))
             return $this->def['rhs_table'];
+        return false;
     }
 }

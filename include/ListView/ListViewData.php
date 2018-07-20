@@ -435,6 +435,8 @@ class ListViewData {
 				}else{
 				    $pageData['tag'][$dataIndex] = $pageData['tag'][$idIndex[$row[$id_field]][0]];
 				}
+                                // Update Hidden Fields
+                                $pageData['hiddenfields'][$dataIndex] = $temp->updateHiddenFields();
 				$data[$dataIndex] = $temp->get_list_view_data($filter_fields);
                 $detailViewAccess = $temp->ACLAccess('DetailView');
                 $editViewAccess = $temp->ACLAccess('EditView');

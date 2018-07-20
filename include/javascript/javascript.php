@@ -193,10 +193,30 @@ class javascript{
 
 	}
 
-	function addFieldGeneric($field, $type,$displayName, $required, $prefix=''){
-		$this->script .= "addToValidate('".$this->formname."', '".$prefix.$field."', '".$type . "', {$this->getRequiredString($required)},'"
-                       . $this->stripEndColon(translate($displayName,$this->sugarbean->module_dir)) . "' );\n";
+	function addFieldGeneric($field, $type,$displayName, $required, $prefix='')
+        {
+            switch($type){
+                case 'timeslot':
+                    $this->addTimeslotField($field, $type, $displayName, $required, $prefix );
+                    break;
+                default:
+		    $this->script .= "addToValidate('".$this->formname."', '".$prefix.$field."', '".$type . "', {$this->getRequiredString($required)},'"
+                           . $this->stripEndColon(translate($displayName,$this->sugarbean->module_dir)) . "' );\n";
+                    break;
+            }
 	}
+
+        private function addTimeslotField($field, $type,$displayName, $required, $prefix='')
+        {
+            $this->script .= "addToValidate('".$this->formname."', '".$prefix.$field."', '".$type . "', {$this->getRequiredString($required)},'"
+                   . $this->stripEndColon(translate($displayName,$this->sugarbean->module_dir)) . "' );\n";
+            $this->script .= "addToValidateComposeField('".$this->formname."', 'val_".$prefix.$field."', '".$type . "', {$this->getRequiredString($required)},'"
+                   . $this->stripEndColon(translate($displayName,$this->sugarbean->module_dir)) . "' );\n";
+            $this->script .= "addRequireFieldToComposeField('".$this->formname."', 'val_".$prefix.$field."', '".$prefix.$field."_hours', '".$type . "','"
+                   . $this->stripEndColon(translate('LBL_HOURS',$this->sugarbean->module_dir)) . "' );\n";
+            $this->script .= "addRequireFieldToComposeField('".$this->formname."', 'val_".$prefix.$field."', '".$prefix.$field."_minutes', '".$type . "','"
+                   . $this->stripEndColon(translate('LBL_MINUTES',$this->sugarbean->module_dir)) . "' );\n";
+        }
 
     // Bug #47961 Generator of callback validator
     function addFieldCallback($field, $type, $displayName, $required, $prefix, $callback)
@@ -263,29 +283,153 @@ class javascript{
 		$this->script .= "addToValidateIsInArray('{$this->formname}', '{$name}', '{$type}', {$req}, '".$this->stripEndColon(translate($displayName,$this->sugarbean->module_dir))."', '{$arr}', '{$operator}');\n";
     }
 
-	function addAllFields($prefix,$skip_fields=null, $translate = false){
-		if (!isset($skip_fields))
-		{
-			$skip_fields = array();
-		}
-		foreach($this->sugarbean->field_name_map as $field=>$value){
-			if (!isset($skip_fields[$field]))
-			{
-			    if(isset($value['type']) && ($value['type'] == 'datetimecombo' || $value['type'] == 'datetime')) {
-			    	$isRequired = (isset($value['required']) && $value['required']) ? 'true' : 'false';
-			        $this->addSpecialField($value['name'] . '_date', $value['name'], 'datetime', $isRequired);
-                    if ($value['type'] != 'link'  && isset($this->sugarbean->field_name_map[$field]['validation'])) {
+    function addAllFields($prefix,$skip_fields=null, $translate = false)
+    {
+        if (!isset($skip_fields))
+        {
+            $skip_fields = array();
+        }
+        $rules = "";
+        foreach($this->sugarbean->field_name_map as $field=>$value)
+        {
+            if (!isset($skip_fields[$field]))
+            {
+                if (isset($value['type']) && ($value['type'] == 'datetimecombo' || $value['type'] == 'datetime'))
+                {
+                    $isRequired = (isset($value['required']) && $value['required']) ? 'true' : 'false';
+                    $this->addSpecialField($value['name'] . '_date', $value['name'], 'datetime', $isRequired);
+                    if ($value['type'] != 'link'  && isset($this->sugarbean->field_name_map[$field]['validation']))
+                    {
                         //datetime should also support the isbefore or other type of validate
                         $this->addField($field, '', $prefix,'',$translate);
                     }
-			    } else if (isset($value['type'])) {
-					if ($value['type'] != 'link') {
-			  			$this->addField($field, '', $prefix,'',$translate);
-					}
-				}
-			}
-		}
-	}
+                } else {
+                    if (isset($value['type']))
+                    {
+                        if ($value['type'] != 'link')
+                        {
+                            $this->addField($field, '', $prefix,'',$translate);
+                        }
+                    }
+                }
+                if ($this->sugarbean->has_duplicate_check)
+                {
+                    $dcrules = $this->sugarbean->duplicate_check->isFieldOfDuplicateCheckRule( $value['name'] );
+                    foreach ( $dcrules as $dcrule ){
+                       $this->script .= $dcrule->getValidateFunction( $this->formname, $value['name'] ) . "\n";
+                    }
+                }
+            }
+            if (isset($value['calculated']) && ($value['calculated'] == 1 || $value['calculated'] == true))
+            {
+                if (isset($value['formula']['fielddeps']))
+                {
+                    $rules .= "apv.addFormula('" . $value['name'] . "',[";
+                    $i = 0;
+                    foreach($value['formula']['fielddeps'] as $fdeps)
+                    {
+                        if ($i == 1){
+                            $rules .= ",";
+                        } else {
+                            $i = 1 ;
+                        }
+                        $rules .= "'{$fdeps}'";
+                    }
+                    $rules .= "]);\n";
+                }
+            }
+            if (isset($value['visibility']) && ($value['visibility'] == 1 || $value['visibility'] == true))
+            {
+                if (isset($value['visformula']['fielddeps']))
+                {
+                    $rules .= "apv.addVisibility('" . $value['name'] . "',[";
+                    $i = 0;
+                    foreach($value['visformula']['fielddeps'] as $fdeps)
+                    {
+                        if ($i == 1){
+                            $rules .= ",";
+                        } else {
+                            $i = 1 ;
+                        }
+                        $rules .= "'{$fdeps}'";
+                    }
+                    $rules .= "]);\n";
+                }
+            }
+        }
+        if (isset($this->sugarbean->visibility)){
+            foreach( $this->sugarbean->visibility as $key => $object )
+            {
+                if (!isset($object['objecttype'])){
+                    continue;
+                }
+                switch($object['objecttype']){
+                    case 'tab':
+                        if (isset($object['fielddeps']))
+                        {
+                            $rules .= "apv.addTabVisibility('" . $key . "'," . $object['tab'] . ",[";
+                            $i = 0;
+                            foreach($object['fielddeps'] as $fdeps)
+                            {
+                                if ($i == 1){
+                                    $rules .= ",";
+                                } else {
+                                    $i = 1 ;
+                                }
+                                $rules .= "'{$fdeps}'";
+                            }
+                            $rules .= "]);\n";
+                        }
+                        break;
+                    case 'panel':
+                    default:
+                        if (isset($object['fielddeps']))
+                        {
+                            $rules .= "apv.addPanelVisibility('" . $key . "',[";
+                            $i = 0;
+                            foreach($object['fielddeps'] as $fdeps)
+                            {
+                                if ($i == 1){
+                                    $rules .= ",";
+                                } else {
+                                    $i = 1 ;
+                                }
+                                $rules .= "'{$fdeps}'";
+                            }
+                            $rules .= "]);\n";
+                        }
+                        break;
+                }
+            }
+        }
+        if ($rules != "" )
+        {
+            $loadbean = "false";
+            $triggeronload = "true";
+            $beep = "false";
+            if (isset($this->sugarbean->formandvis))
+            {
+                if (isset($this->sugarbean->formandvis['loadbean']) && 
+                   ($this->sugarbean->formandvis['loadbean'] || $this->sugarbean->formandvis['loadbean'] == 1))
+                {
+                    $loadbean = "true";
+                }
+                if (isset($this->sugarbean->formandvis['triggeronload']) && 
+                   (!$this->sugarbean->formandvis['triggeronload'] || $this->sugarbean->formandvis['triggeronload'] == 0))
+                {
+                    $triggeronload = "false";
+                }
+                if (isset($this->sugarbean->formandvis['beep']) && 
+                   ($this->sugarbean->formandvis['beep'] || $this->sugarbean->formandvis['beep'] == 1))
+                {
+                    $beep = "true";
+                }
+            } 
+            $rules = "var apv = new APO.forms('{$this->formname}',{$loadbean}, {$beep});\n" .$rules;
+            $rules.= "apv.addTriggers( {$triggeronload} );\n";
+            $this->script .= $rules;
+        }
+    }
 
     function addActionMenu() {
         $this->script .= "$(document).ready(SUGAR.themes.actionMenu);";

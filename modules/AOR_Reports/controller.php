@@ -347,6 +347,7 @@ class AOR_ReportsController extends SugarController
                     'Less_Than_or_Equal_To'
                 );
                 break;
+            case 'timeslot':
             case 'date':
             case 'datetime':
             case 'datetimecombo':
@@ -429,6 +430,7 @@ class AOR_ReportsController extends SugarController
             case 'short':
             case 'tinyint':
             case 'int':
+            case 'timeslot':
                 $valid_opp = array('Value', 'Field');
                 break;
             case 'date':
@@ -512,6 +514,7 @@ class AOR_ReportsController extends SugarController
             case 'short':
             case 'tinyint':
             case 'int':
+            case 'timeslot':
                 $valid_opp = array('Value', 'Field');
                 break;
             case 'date':

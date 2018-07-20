@@ -257,7 +257,7 @@
                         {* skip panel as it has been converted to a tab*}
                         {{else}}
                         {* display panels as they have always been displayed *}
-                        <div class="panel panel-default">
+                        <div class="panel panel-default" id="detailpanel-{{$panelId}}">
                             <div class="panel-heading {{$panelHeadingCollapse}}">
                                 <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
                                     <div class="col-xs-10 col-sm-11 col-md-11">
@@ -275,7 +275,7 @@
                         {{/if}}
                     {else}
                     {* display panels as they have always been displayed *}
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" id="detailpanel-{{$panelId}}">
                         <div class="panel-heading {{$panelHeadingCollapse}}">
                             <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
                                 <div class="col-xs-10 col-sm-11 col-md-11">
