@@ -297,7 +297,7 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
         $expected = array(
                 'data/Relationships/EmailAddressRelationship.php' => '2f04780ddd15f7b65a35c75c303ed5d7',
                 'data/Relationships/M2MRelationship.php' => 'b9bfd3c44abe19429fc9eff422df8ef7',
-                'data/Relationships/One2MBeanRelationship.php' => '4c3cb4510b4ae737103f7f10e1e21009',
+                'data/Relationships/One2MBeanRelationship.php' => '9ab648e5c78c6c042abe2f6125de6f66',
                 'data/Relationships/One2MRelationship.php' => '8a2fbfed8d6b74faf2851eb0a6c6bad3',
                 'data/Relationships/One2OneBeanRelationship.php' => '765b8785d5ca576a8530db99bdf4d411',
                 'data/Relationships/One2OneRelationship.php' => '0385f7577687a402d9603ef26984257e',
