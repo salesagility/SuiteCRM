@@ -118,10 +118,10 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Term extends Zend_Search_Luc
                 if ($hasInsignificantSubqueries) {
                     require_once 'Zend/Search/Lucene/Search/Query/Insignificant.php';
                     return new Zend_Search_Lucene_Search_Query_Insignificant();
-                } else {
+                }  
                     require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
                     return new Zend_Search_Lucene_Search_Query_Empty();
-                }
+                
             }
 
             $this->_matches = $query->getQueryTerms();

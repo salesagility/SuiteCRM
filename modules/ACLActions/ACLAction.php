@@ -250,7 +250,7 @@ class ACLAction extends SugarBean
         if (!$refresh && !empty($_SESSION['ACL'][$user_id])) {
             if (empty($category) && empty($action)) {
                 return $_SESSION['ACL'][$user_id];
-            } else {
+            }  
                 if (!empty($category) && isset($_SESSION['ACL'][$user_id][$category])) {
                     if (empty($action)) {
                         if (empty($type)) {
@@ -261,7 +261,7 @@ class ACLAction extends SugarBean
                         return $_SESSION['ACL'][$user_id][$category][$type][$action];
                     }
                 }
-            }
+            
         }
         //if we don't have it loaded then lets check against the db
         $additional_where = '';

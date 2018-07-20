@@ -247,11 +247,11 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
             } else {
                 if (is_string($def['studio'])) {
                     return $def['studio'] != 'false' && $def['studio'] != 'hidden';
-                } else {
+                }  
                     if (is_bool($def['studio'])) {
                         return $def['studio'];
                     }
-                }
+                
             }
         }
 

@@ -558,7 +558,7 @@ eoq;
                                     translate($field["options"])
                                 );
                                 break;
-                            } else {
+                            }  
                                 if (!empty($field['options'])) {
                                     $even = !$even;
                                     $newhtml .= $this->addStatus(
@@ -567,15 +567,15 @@ eoq;
                                         translate($field["options"])
                                     );
                                     break;
-                                } else {
+                                }  
                                     if (!empty($field['function'])) {
                                         $functionValue = $this->getFunctionValue($this->sugarbean, $field);
                                         $even = !$even;
                                         $newhtml .= $this->addStatus($displayname, $field["name"], $functionValue);
                                         break;
                                     }
-                                }
-                            }
+                                
+                            
                             break;
                         case "radioenum":
                             $even = !$even;
@@ -679,7 +679,7 @@ EOJS;
 
         if ($field_count > 0) {
             return $html;
-        } else {
+        }  
             //If no fields are found, render either a form that still permits Mass Update deletes or just display a message that no fields are available
             $html = "<div id='massupdate_form' style='display:none;'><table width='100%' cellpadding='0' cellspacing='0' border='0' class='formHeader h3Row'><tr><td nowrap><h3><span>" . $app_strings['LBL_MASS_UPDATE'] . "</h3></td></tr></table>";
             if ($this->sugarbean->ACLAccess('Delete', true) && !$hideDeleteIfNoFieldsAvailable) {
@@ -689,7 +689,7 @@ EOJS;
             }
 
             return $html;
-        }
+        
     }
 
     public function getFunctionValue($focus, $vardef)
@@ -706,9 +706,9 @@ EOJS;
             }
 
             return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
-        } else {
+        }  
             return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
-        }
+        
     }
 
     /**

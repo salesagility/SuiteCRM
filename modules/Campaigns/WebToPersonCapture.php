@@ -231,9 +231,9 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                         if (in_array($optInEmailField, $optedOut)) {
                             $sea->resetOptIn();
                             continue;
-                        } else {
+                        }  
                             $sea->optIn();
-                        }
+                        
 
                         $configurator = new Configurator();
                         if ($configurator->isConfirmOptInEnabled()) {
@@ -351,9 +351,9 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         sugar_cleanup();
         // die to keep code from running into redirect case below
         die();
-    } else {
+    }  
         echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
-    }
+    
 }
 
 if (!empty($_POST['redirect'])) {

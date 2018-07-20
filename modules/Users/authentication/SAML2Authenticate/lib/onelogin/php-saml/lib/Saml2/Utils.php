@@ -90,9 +90,9 @@ class OneLogin_Saml2_Utils
 
         if (!$res) {
             return false;
-        } else {
+        }  
             return $dom;
-        }
+        
     }
 
     /**
@@ -863,9 +863,9 @@ class OneLogin_Saml2_Utils
     {
         if (version_compare(phpversion(), '5.4.0', '>=')) {
             return session_status() === PHP_SESSION_ACTIVE ? true : false;
-        } else {
+        }  
             return session_id() === '' ? false : true;
-        }
+        
     }
 
     /**
@@ -992,9 +992,9 @@ class OneLogin_Saml2_Utils
             $encryptedID->appendChild($encryptedID->ownerDocument->importNode($encryptedData, true));
 
             return $newdoc->saveXML($encryptedID);
-        } else {
+        }  
             return $doc->saveXML($nameId);
-        }
+        
     }
 
 

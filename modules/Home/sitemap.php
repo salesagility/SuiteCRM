@@ -113,7 +113,7 @@ function sm_build_array()
     foreach ($modListHeader as $key=>$val) {
         if (!empty($exclusion_array) && in_array($val, $exclude)) {
             continue;
-        } else {
+        }  
             if (file_exists('modules/'.$val.'/Menu.php')) {
                 $mod_strings = return_module_language($current_language, $val);
                 $module_menu = array();
@@ -127,7 +127,7 @@ function sm_build_array()
                 }
                 $mstr_array[$val] = $tmp_menu_items;
             }
-        }
+        
     }
 
     //reset the modstrings to current module

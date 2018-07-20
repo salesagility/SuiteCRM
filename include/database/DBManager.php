@@ -838,12 +838,12 @@ abstract class DBManager
             if (isset($value['name']) == false || $value['name'] == false) {
                 $sql .= "/* NAME IS MISSING IN VARDEF $tablename::$name */\n";
                 continue;
-            } else {
+            }  
                 if (isset($value['type']) == false || $value['type'] == false) {
                     $sql .= "/* TYPE IS MISSING IN VARDEF $tablename::$name */\n";
                     continue;
                 }
-            }
+            
 
             $name = strtolower($value['name']);
             // add or fix the field defs per what the DB is expected to give us back
@@ -1200,9 +1200,9 @@ abstract class DBManager
         }
         if (!empty($sqls)) {
             return join(";\n", $sqls) . ";";
-        } else {
+        }  
             return '';
-        }
+        
     }
 
     /**
@@ -1912,9 +1912,9 @@ abstract class DBManager
                 }//switch
             }//foreach
             return $this->query($query);
-        } else {
+        }  
             return false;
-        }
+        
     }
 
     /**
@@ -2204,9 +2204,9 @@ abstract class DBManager
                 }
 
                 return $this->emptyValue($type);
-            } else {
+            }  
                 return "NULL";
-            }
+            
         }
         if ($type == "datetimecombo") {
             $type = "datetime";
@@ -2304,17 +2304,17 @@ abstract class DBManager
         }
         if (stripos($string, " as ") !== false) { //"as" used for an alias
             return trim(substr($string, strripos($string, " as ") + 4));
-        } else {
+        }  
             if (strrpos($string, " ") != 0) { //Space used as a delimiter for an alias
                 return trim(substr($string, strrpos($string, " ")));
-            } else {
+            }  
                 if (strpos($string, ".") !== false) { //No alias, but a table.field format was used
                     return substr($string, strpos($string, ".") + 1);
-                } else { //Give up and assume the whole thing is the field name
+                }   //Give up and assume the whole thing is the field name
                     return $string;
-                }
-            }
-        }
+                
+            
+        
     }
 
     /**
@@ -2527,9 +2527,9 @@ abstract class DBManager
             }
 
             return $return;
-        } else {
+        }  
             return false;
-        }
+        
     }
 
     /**
@@ -2630,9 +2630,9 @@ abstract class DBManager
                 'auto_increment' => $auto_increment,
                 'full' => "$name $colType $default $required $auto_increment",
             );
-        } else {
+        }  
             return "$name $colType $default $required $auto_increment";
-        }
+        
     }
 
     /**
@@ -2830,7 +2830,7 @@ abstract class DBManager
             }
 
             return $result;
-        } else {
+        }  
             if (strchr($name, ".")) {
                 // this is a compound name with dots, handle separately
                 $parts = explode(".", $name);
@@ -2859,7 +2859,7 @@ abstract class DBManager
             }
 
             return strtolower($result);
-        }
+        
     }
 
     /**
@@ -3487,9 +3487,9 @@ abstract class DBManager
                     $table = $this->extractTableName($query);
                     if (!in_array($table, $skipTables)) {
                         return call_user_func(array($this, $check), $table, $query);
-                    } else {
+                    }  
                         $this->log->debug("Skipping table $table as blacklisted");
-                    }
+                    
                 } else {
                     $this->log->debug("No verification for $qstart on {$this->dbType}");
                 }
@@ -3578,9 +3578,9 @@ abstract class DBManager
         $row = $this->fetchRow($result);
         if (!empty($row) && $encode && $this->encode) {
             return array_map('to_html', $row);
-        } else {
+        }  
             return $row;
-        }
+        
     }
 
     /**

@@ -407,7 +407,7 @@ if (!$focus->is_group && !$focus->portal_only) {
 if (!$focus->verify_data()) {
     header("Location: index.php?action=Error&module=Users&error_string=" . urlencode($focus->error_string));
     exit;
-} else {
+}  
     $GLOBALS['sugar_config']['disable_team_access_check'] = true;
     $focus->save();
     $GLOBALS['sugar_config']['disable_team_access_check'] = false;
@@ -507,7 +507,7 @@ if (!$focus->verify_data()) {
         $focus->setPreference('signature_default', isset($_REQUEST['signature_id']) ? $_REQUEST['signature_id'] : null);
         $focus->setPreference('signature_prepend', (isset($_REQUEST['signature_prepend'])) ? true : false);
     }
-}
+
 
 
 //handle navigation from user wizard
@@ -524,9 +524,9 @@ if (isset($_REQUEST['whatnext'])) {
     } elseif ($_REQUEST['whatnext'] == 'studio') {
         header("Location:index.php?module=ModuleBuilder&action=index&type=studio");
         return;
-    } else {
+    }  
         //do nothing, let the navigation continue as normal using code below
-    }
+    
 }
 
 if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "") {

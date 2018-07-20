@@ -238,7 +238,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             $returnLink = rtrim($returnLink, '&');
 
             return $returnLink;
-        } else {
+        }  
             $form = 'form' . $relationship_name;
             $button = '<form action="index.php" method="post" name="form" id="' . $form . "\">\n";
             foreach ($formValues as $key => $value) {
@@ -255,7 +255,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
 
 
             return $button;
-        }
+        
     }
 
     /** This default function is used to create the HTML for a simple button */

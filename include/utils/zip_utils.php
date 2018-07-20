@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 if (class_exists("ZipArchive")) {
     require_once 'include/utils/php_zip_utils.php';
     return;
-} else {
+}  
     require_once('include/pclzip/pclzip.lib.php');
     if (isset($GLOBALS['log']) && class_implements($GLOBALS['log'], 'LoggerTemplate')) {
         $GLOBALS['log']->deprecated('Use of PCLZip has been deprecated. Please enable the zip extension in your PHP install ( see http://www.php.net/manual/en/zip.installation.php for more details ).');
@@ -147,4 +147,4 @@ if (class_exists("ZipArchive")) {
         }
         return true;
     }
-} // if (ZipArchive exists)
+ // if (ZipArchive exists)

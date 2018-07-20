@@ -173,9 +173,9 @@ function xhprof_build_parent_child_key($parent, $child)
 {
     if ($parent) {
         return $parent . "==>" . $child;
-    } else {
+    }  
         return $child;
-    }
+    
 }
 
 

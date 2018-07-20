@@ -164,7 +164,7 @@ class SearchMerge extends ListViewMerge
         $this->log('custom file:'  . $custom_file);
         if (empty($custom_file) && $save) {
             return true;
-        } else {
+        }  
             $this->loadData($module, $original_file, $new_file, $custom_file);
                         
             if (!isset($this->originalData[$module])) {
@@ -177,7 +177,7 @@ class SearchMerge extends ListViewMerge
                 copy($custom_file, $custom_file . '.suback.php');
                 return $this->save($custom_file);
             }
-        }
+        
         if (!$save) {
             return true;
         }

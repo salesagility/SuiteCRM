@@ -491,9 +491,9 @@ class HTML5
         if ($s + $l < $this->EOF) {
             if ($l === 0) {
                 return $this->data[$s];
-            } else {
+            }  
                 return substr($this->data, $s, $l);
-            }
+            
         }
     }
 
@@ -1392,9 +1392,9 @@ class HTML5
             $this->emitToken($this->token);
             $this->char--;
             $this->state = 'data';
-        } else {
+        }  
             // Stay in the bogus DOCTYPE state.
-        }
+        
     }
 
     private function entity()
@@ -2008,9 +2008,9 @@ class HTML5TreeConstructer
                 array_pop($this->stack);
 
             /* Otherwise, this is a parse error. */
-            } else {
+            }  
                 // k
-            }
+            
 
             /* Change the insertion mode to "after head". */
             $this->mode = self::AFTER_HEAD;
@@ -3359,7 +3359,7 @@ class HTML5TreeConstructer
                 return false;
 
             /* Otherwise: */
-            } else {
+            }  
                 /* Generate implied end tags. */
                 $this->generateImpliedEndTags();
 
@@ -3380,7 +3380,7 @@ class HTML5TreeConstructer
 
                 /* Reset the insertion mode appropriately. */
                 $this->resetInsertionMode();
-            }
+            
 
             /* An end tag whose tag name is one of: "body", "caption", "col",
             "colgroup", "html", "tbody", "td", "tfoot", "th", "thead", "tr" */
@@ -4118,9 +4118,9 @@ class HTML5TreeConstructer
             }
 
             /* Anything else */
-        } else {
+        }  
             /* Parse error. Ignore the token. */
-        }
+        
     }
 
     private function afterBody($token)
@@ -4227,9 +4227,9 @@ class HTML5TreeConstructer
             $this->inBody($token);
 
         /* Anything else */
-        } else {
+        }  
             /* Parse error. Ignore the token. */
-        }
+        
     }
 
     private function afterFrameset($token)
@@ -4266,9 +4266,9 @@ class HTML5TreeConstructer
             $this->inBody($token);
 
         /* Anything else */
-        } else {
+        }  
             /* Parse error. Ignore the token. */
-        }
+        
     }
 
     private function trailingEndPhase($token)
@@ -4560,9 +4560,9 @@ class HTML5TreeConstructer
             return self::SCOPING;
         } elseif (in_array($name, $this->formatting)) {
             return self::FORMATTING;
-        } else {
+        }  
             return self::PHRASING;
-        }
+        
     }
 
     private function clearStackToTableContext($elements)
@@ -4577,9 +4577,9 @@ class HTML5TreeConstructer
 
             if (in_array($node, $elements)) {
                 break;
-            } else {
+            }  
                 array_pop($this->stack);
-            }
+            
         }
     }
 

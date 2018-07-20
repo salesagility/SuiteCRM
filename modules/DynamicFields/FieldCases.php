@@ -144,10 +144,10 @@ function get_widget($type)
                                 $local_temp = new $class();
                             }
                             break;
-                        } else {
+                        }  
                             $local_temp = new TemplateText();
                             break;
-                        }
+                        
     }
 
     return $local_temp;

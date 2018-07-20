@@ -128,10 +128,10 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
             }
             $GLOBALS['log']->info('End: SoapHelperWebServices->getRelationshipResults');
             return array('rows' => $list, 'fields_set_on_rows' => $filterFields);
-        } else {
+        }  
             $GLOBALS['log']->info('End: SoapHelperWebServices->getRelationshipResults - ' . $link_field_name . ' relationship does not exists');
             return false;
-        } // else
+         // else
     } // fn
 
     public function get_field_list($value, $fields, $translate=true)

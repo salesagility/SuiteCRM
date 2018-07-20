@@ -232,9 +232,9 @@ class Audit extends SugarBean
                         $returnVal .= $row[$col]." ";
                     }
                     return $returnVal;
-                } else {
+                }  
                     return $row[$field_arr['select_field_name']];
-                }
+                
             }
         }
     }

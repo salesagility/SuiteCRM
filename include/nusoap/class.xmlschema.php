@@ -143,12 +143,12 @@ class nusoap_xmlschema extends nusoap_base
                 $this->setError($msg);
                 $this->debug($msg);
                 return false;
-            } else {
+            }  
                 $this->debug("parsing $xml");
                 $this->parseString($xmlStr, $type);
                 $this->debug("done parsing $xml");
                 return true;
-            }
+            
         }
         return false;
     }

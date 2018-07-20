@@ -216,7 +216,7 @@ class One2MBeanRelationship extends One2MRelationship
 
         if ($link->getSide() == REL_RHS) {
             return false;
-        } else {
+        }  
             $lhsKey = $this->def['lhs_key'];
             $rhsTable = $this->def['rhs_table'];
             $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
@@ -266,15 +266,15 @@ class One2MBeanRelationship extends One2MRelationship
                     $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
                 }
                 return $query;
-            } else {
+            }  
                 return array(
                     'select' => "SELECT {$this->def['rhs_table']}.id",
                     'from' => "FROM {$this->def['rhs_table']}",
                     'where' => $where,
                     'order_by' => $order_by
                 );
-            }
-        }
+            
+        
     }
 
     public function getJoin($link, $params = array(), $return_array = false)
@@ -398,8 +398,8 @@ class One2MBeanRelationship extends One2MRelationship
     {
         if (isset($this->def['table'])) {
             return $this->def['table'];
-        } else {
+        }  
             return $this->def['rhs_table'];
-        }
+        
     }
 }

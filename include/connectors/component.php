@@ -354,14 +354,14 @@ class component
                 return $field_defs[$source_field];
             } elseif (!empty($field_defs[$field])) {
                 return $field_defs[$field];
-            } else {
+            }  
                 return $field;
-            }
+            
         } elseif (!empty($field_defs[$field])) {
             return $field_defs[$field];
-        } else {
+        }  
             return $field;
-        }
+        
     }
 
     public function getSource()

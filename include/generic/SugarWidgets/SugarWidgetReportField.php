@@ -86,9 +86,9 @@ class SugarWidgetReportField extends SugarWidgetField
                 $layout_def['widget_class'] = 'Field'.$layout_def['type'];
             }
             return $this->layout_manager->getClassFromWidgetDef($layout_def);
-        } else {
+        }  
             return $this;
-        }
+        
     }
 
 
@@ -102,9 +102,9 @@ class SugarWidgetReportField extends SugarWidgetField
 
         if (! empty($context) && method_exists($obj, $func_name)) {
             return  $obj->$func_name($layout_def);
-        } else {
+        }  
             return 'display not found:'.$func_name;
-        }
+        
     }
 
     public function _get_column_select_special($layout_def)
@@ -221,9 +221,9 @@ class SugarWidgetReportField extends SugarWidgetField
 
         if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
             return $order_by." ASC";
-        } else {
+        }  
             return $order_by." DESC";
-        }
+        
     }
 
 
@@ -289,9 +289,9 @@ class SugarWidgetReportField extends SugarWidgetField
 
         if (! empty($context) && method_exists($obj, $func_name)) {
             return  $obj->$func_name($layout_def);
-        } else {
+        }  
             return '';
-        }
+        
     }
 
     public function _get_column_alias($layout_def)
@@ -336,11 +336,11 @@ class SugarWidgetReportField extends SugarWidgetField
             return $short_alias;
         } elseif (! empty($alias_map[$alias])) {
             return $alias_map[$alias];
-        } else {
+        }  
             $alias_map[$alias] = $short_alias.'_'.$used_aliases[$short_alias];
             $used_aliases[$short_alias]++;
             return $alias_map[$alias];
-        }
+        
     }
 
     public function queryFilterEmpty($layout_def)

@@ -201,12 +201,12 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                     // Matching is required, but is actually empty
                     require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
                     return new Zend_Search_Lucene_Search_Query_Empty();
-                } else {
+                }  
                     // Matching is optional or prohibited, but is empty
                     // Remove it from subqueries and signs list
                     unset($subqueries[$id]);
                     unset($signs[$id]);
-                }
+                
             }
         }
 
@@ -756,12 +756,12 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         if (isset($this->_resVector[$docId])) {
             if ($this->_signs === null) {
                 return $this->_conjunctionScore($docId, $reader);
-            } else {
+            }  
                 return $this->_nonConjunctionScore($docId, $reader);
-            }
-        } else {
+            
+        }  
             return 0;
-        }
+        
     }
 
     /**

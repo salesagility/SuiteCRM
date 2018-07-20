@@ -354,8 +354,8 @@ EOD;
     {
         if (strlen($label) < $this->maxLabelSizeBeforeTotal) {
             return $label;
-        } else {
+        }  
             return substr($label, 0, $this->maxLabelSizeBeforeTotal).$this->labelReplacementString;
-        }
+        
     }
 }

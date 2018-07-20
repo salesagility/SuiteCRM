@@ -445,7 +445,7 @@ class nusoap_client extends nusoap_base
         if ($errstr = $this->getError()) {
             $this->debug('Error: '.$errstr);
             return false;
-        } else {
+        }  
             $this->return = $return;
             $this->debug('sent message successfully and got a(n) '.gettype($return));
             $this->appendDebug('return=' . $this->varDump($return));
@@ -464,7 +464,7 @@ class nusoap_client extends nusoap_base
                 // NOTE: if the response is defined to have multiple parts (i.e. unwrapped),
                 // we are only going to return the first part here...sorry about that
                 return $return;
-            } else {
+            }  
                 // array of return values
                 if (is_array($return)) {
                     // multiple 'out' parameters, which we return wrapped up
@@ -478,11 +478,11 @@ class nusoap_client extends nusoap_base
                     $this->appendDebug($this->varDump($return));
                     return $return;
                 // nothing returned (ie, echoVoid)
-                } else {
+                }  
                     return "";
-                }
-            }
-        }
+                
+            
+        
     }
 
     /**
@@ -629,10 +629,10 @@ class nusoap_client extends nusoap_base
                     return false;
                 } elseif ($this->getError()) {
                     return false;
-                } else {
+                }  
                     $this->debug('got response, length='. strlen($this->responseData).' type='.$http->incoming_headers['content-type']);
                     return $this->parseResponse($http->incoming_headers, $this->responseData);
-                }
+                
             break;
             default:
                 $this->setError('no transport found, or selected transport is not yet supported!');
@@ -683,7 +683,7 @@ class nusoap_client extends nusoap_base
             // destroy the parser object
             unset($parser);
             return false;
-        } else {
+        }  
             // get SOAP headers
             $this->responseHeaders = $parser->getHeaders();
             // get SOAP headers
@@ -696,7 +696,7 @@ class nusoap_client extends nusoap_base
             unset($parser);
             // return decode message
             return $return;
-        }
+        
     }
 
     /**

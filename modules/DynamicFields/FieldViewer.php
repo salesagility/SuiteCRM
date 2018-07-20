@@ -133,9 +133,9 @@ class FieldViewer
                 if (!empty($file)) {
                     require_once($file);
                     return get_body($this->ss, $vardef);
-                } else {
+                }  
                     return $this->ss->fetch('modules/DynamicFields/templates/Fields/Forms/varchar.tpl');
-                }
+                
         }
     }
 }

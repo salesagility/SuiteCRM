@@ -127,9 +127,9 @@ class BreadCrumbStack
     {
         if (!empty($this->stackMap)) {
             return array_key_exists($item_id, $this->stackMap);
-        } else {
+        }  
             return false;
-        }
+        
     }
 
     /**

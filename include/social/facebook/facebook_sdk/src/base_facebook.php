@@ -710,9 +710,9 @@ abstract class BaseFacebook
         $args = func_get_args();
         if (is_array($args[0])) {
             return $this->_restserver($args[0]);
-        } else {
+        }  
             return call_user_func_array(array($this, '_graph'), $args);
-        }
+        
     }
 
     /**
@@ -1131,10 +1131,10 @@ abstract class BaseFacebook
 
         if ($result == 0) {
             return $data;
-        } else {
+        }  
             self::errorLog('Bad Signed JSON signature!');
             return null;
-        }
+        
     }
 
     /**

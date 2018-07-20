@@ -716,7 +716,7 @@ class nusoap_base
                 $xml = "<$name$xmlns$atts/>";
                 $this->debug("serialize_val returning $xml");
                 return $xml;
-            } else {
+            }  
                 if (isset($type) && isset($type_prefix)) {
                     $type_str = " xsi:type=\"$type_prefix:$type\"";
                 } else {
@@ -725,7 +725,7 @@ class nusoap_base
                 $xml = "<$name$xmlns$type_str$atts xsi:nil=\"true\"/>";
                 $this->debug("serialize_val returning $xml");
                 return $xml;
-            }
+            
         }
         // serialize if an xsd built-in primitive type
         if ($type != '' && isset($this->typemap[$this->XMLSchemaVersion][$type])) {
@@ -743,11 +743,11 @@ class nusoap_base
                 $xml = "<$name$xmlns$atts>$val</$name>";
                 $this->debug("serialize_val returning $xml");
                 return $xml;
-            } else {
+            }  
                 $xml = "<$name$xmlns xsi:type=\"xsd:$type\"$atts>$val</$name>";
                 $this->debug("serialize_val returning $xml");
                 return $xml;
-            }
+            
         }
         // detect type and serialize
         $xml = '';
@@ -1015,9 +1015,9 @@ class nusoap_base
                 return $p . ':' . $name;
             }
             return $qname;
-        } else {
+        }  
             return $qname;
-        }
+        
     }
 
     /**
@@ -1037,12 +1037,12 @@ class nusoap_base
             $prefix = substr($qname, 0, strpos($qname, ':'));
             if (isset($this->namespaces[$prefix])) {
                 return $this->namespaces[$prefix].':'.$name;
-            } else {
+            }  
                 return $qname;
-            }
-        } else {
+            
+        }  
             return $qname;
-        }
+        
     }
 
     /**
@@ -1058,9 +1058,9 @@ class nusoap_base
         if ($sstr = strrchr($str, ':')) {
             // get unqualified name
             return substr($sstr, 1);
-        } else {
+        }  
             return $str;
-        }
+        
     }
 
     /**
@@ -1205,9 +1205,9 @@ function timestamp_to_iso8601($timestamp, $utc=true)
             return sprintf('%04d-%02d-%02dT%02d:%02d:%02dZ', $regs[1], $regs[2], $regs[3], $regs[4], $regs[5], $regs[6]);
         }
         return false;
-    } else {
+    }  
         return $datestr;
-    }
+    
 }
 
 /**
@@ -1245,9 +1245,9 @@ function iso8601_to_timestamp($datestr)
         }
         return gmmktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
     //		return strtotime("$regs[1]-$regs[2]-$regs[3] $regs[4]:$regs[5]:$regs[6]Z");
-    } else {
+    }  
         return false;
-    }
+    
 }
 
 /**
@@ -1857,12 +1857,12 @@ class nusoap_xmlschema extends nusoap_base
                 $this->setError($msg);
                 $this->debug($msg);
                 return false;
-            } else {
+            }  
                 $this->debug("parsing $xml");
                 $this->parseString($xmlStr, $type);
                 $this->debug("done parsing $xml");
                 return true;
-            }
+            
         }
         return false;
     }
@@ -3674,11 +3674,11 @@ class soap_transport_http extends nusoap_base
             }
             $this->debug('cURL connection set up');
             return true;
-        } else {
+        }  
             $this->setError('Unknown scheme ' . $this->scheme);
             $this->debug('Unknown scheme ' . $this->scheme);
             return false;
-        }
+        
     }
 
     /**
@@ -4065,8 +4065,8 @@ class soap_transport_http extends nusoap_base
                 $this->setCurlOption(CURLOPT_POST, 1);
                 $this->setCurlOption(CURLOPT_POSTFIELDS, $data);
                 $this->debug('set cURL POST data');
-            } else {
-            }
+            }  
+            
             // insert custom user-set cURL options
             foreach ($this->ch_options as $key => $val) {
                 $this->setCurlOption($key, $val);
@@ -4266,11 +4266,11 @@ class soap_transport_http extends nusoap_base
                 $this->setError($err);
                 curl_close($this->ch);
                 return false;
-            } else {
+            }  
                 //echo '<pre>';
             //var_dump(curl_getinfo($this->ch));
             //echo '</pre>';
-            }
+            
             // close curl
             $this->debug('No cURL error, closing cURL');
             curl_close($this->ch);
@@ -7603,13 +7603,13 @@ class wsdl extends nusoap_base
             $this->setError("$type ($uqType) is not a supported type.");
             $this->debug("in serializeType: $type ($uqType) is not a supported type.");
             return false;
-        } else {
+        }  
             $this->debug("in serializeType: found typeDef");
             $this->appendDebug('typeDef=' . $this->varDump($typeDef));
             if (substr($uqType, -1) == '^') {
                 $uqType = substr($uqType, 0, -1);
             }
-        }
+        
         if (!isset($typeDef['phpType'])) {
             $this->setError("$type ($uqType) has no phpType.");
             $this->debug("in serializeType: $type ($uqType) has no phpType.");
@@ -8932,7 +8932,7 @@ class nusoap_parser extends nusoap_base
             $this->debug('in buildVal, return:');
             $this->appendDebug($this->varDump($ret));
             return $ret;
-        } else {
+        }  
             $this->debug('in buildVal, no children, building scalar');
             $cdata = isset($this->message[$pos]['cdata']) ? $this->message[$pos]['cdata'] : '';
             if (isset($this->message[$pos]['type'])) {
@@ -8949,7 +8949,7 @@ class nusoap_parser extends nusoap_base
             $ret = $this->message[$pos]['cdata'];
             $this->debug("in buildVal, return: $ret");
             return $ret;
-        }
+        
     }
 }
 
@@ -9482,7 +9482,7 @@ class nusoap_client extends nusoap_base
         if ($errstr = $this->getError()) {
             $this->debug('Error: '.$errstr);
             return false;
-        } else {
+        }  
             $this->return = $return;
             $this->debug('sent message successfully and got a(n) '.gettype($return));
             $this->appendDebug('return=' . $this->varDump($return));
@@ -9502,7 +9502,7 @@ class nusoap_client extends nusoap_base
                 // NOTE: if the response is defined to have multiple parts (i.e. unwrapped),
                 // we are only going to return the first part here...sorry about that
                 return $return;
-            } else {
+            }  
                 // array of return values
                 if (is_array($return)) {
                     // multiple 'out' parameters, which we return wrapped up
@@ -9516,11 +9516,11 @@ class nusoap_client extends nusoap_base
                     $this->appendDebug($this->varDump($return));
                     return $return;
                 // nothing returned (ie, echoVoid)
-                } else {
+                }  
                     return "";
-                }
-            }
-        }
+                
+            
+        
     }
 
     /**
@@ -9667,10 +9667,10 @@ class nusoap_client extends nusoap_base
                     return false;
                 } elseif ($this->getError()) {
                     return false;
-                } else {
+                }  
                     $this->debug('got response, length='. strlen($this->responseData).' type='.$http->incoming_headers['content-type']);
                     return $this->parseResponse($http->incoming_headers, $this->responseData);
-                }
+                
             break;
             default:
                 $this->setError('no transport found, or selected transport is not yet supported!');
@@ -9721,7 +9721,7 @@ class nusoap_client extends nusoap_base
             // destroy the parser object
             unset($parser);
             return false;
-        } else {
+        }  
             // get SOAP headers
             $this->responseHeaders = $parser->getHeaders();
             // get SOAP headers
@@ -9734,7 +9734,7 @@ class nusoap_client extends nusoap_base
             unset($parser);
             // return decode message
             return $return;
-        }
+        
     }
 
     /**

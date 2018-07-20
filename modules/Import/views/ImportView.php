@@ -109,9 +109,9 @@ class ImportView extends SugarView
         // Default anonymous pages to be under Home
         elseif (!isset($app_list_strings['moduleList'][$this->importModule])) {
             return 'Home';
-        } else {
+        }  
             return $this->importModule;
-        }
+        
     }
 
     /**

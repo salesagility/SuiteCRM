@@ -419,12 +419,12 @@ class TimeDate
 
         if (!empty($cachedValue)) {
             return $cachedValue;
-        } else {
+        }  
             $value = $this->merge_date_time($this->get_date_format($user), $this->get_time_format($user));
             sugar_cache_put($cacheKey, $value, 0);
 
             return $value;
-        }
+        
     }
 
     /**
@@ -1574,9 +1574,9 @@ class TimeDate
     {
         if ($a[0] == $b[0]) {
             return strcmp($a[1], $b[1]);
-        } else {
+        }  
             return $a[0] < $b[0] ? -1 : 1;
-        }
+        
     }
 
     /**
@@ -1626,7 +1626,7 @@ class TimeDate
             return $this->fromTimestamp($time['ts']);
         } elseif (isset($time['date_str'])) {
             return $this->fromDb($time['date_str']);
-        } else {
+        }  
             $hour = 0;
             $min = 0;
             $sec = 0;
@@ -1654,7 +1654,7 @@ class TimeDate
             }
 
             return $now->setDate($year, $month, $day)->setTime($hour, $min, $sec)->setTimeZone(self::$gmtTimezone);
-        }
+        
 
         return null;
     }
@@ -1757,9 +1757,9 @@ class TimeDate
         }
         if ($daystart) {
             return $now->get_day_begin();
-        } else {
+        }  
             return $now->get_day_end();
-        }
+        
     }
 
     /**

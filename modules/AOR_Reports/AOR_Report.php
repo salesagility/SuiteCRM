@@ -327,7 +327,7 @@ class AOR_Report extends Basic
                 }
 
                 return $this->buildMultiGroupReport($offset, $links, $level + 1, $path);
-            } else {
+            }  
                 if (!$rows) {
                     if ($path) {
                         $html = '';
@@ -350,13 +350,13 @@ class AOR_Report extends Basic
                         }
 
                         return $html;
-                    } else {
+                    }  
                         return $this->build_group_report($offset, $links, array());
-                    }
-                } else {
+                    
+                }  
                     throw new Exception('incorrect results');
-                }
-            }
+                
+            
         }
         throw new Exception('incorrect state');
     }

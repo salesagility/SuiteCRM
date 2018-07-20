@@ -1458,11 +1458,11 @@ class HTTP_WebDAV_Server
             return array("ns"   => $args[0],
                          "name" => $args[1],
                          "val"  => $args[2]);
-        } else {
+        }  
             return array("ns"   => "DAV:",
                          "name" => $args[0],
                          "val"  => $args[1]);
-        }
+        
     }
 
     // {{{ _check_auth
@@ -1489,10 +1489,10 @@ class HTTP_WebDAV_Server
                                      @$_SERVER["PHP_AUTH_USER"],
                                      @$_SERVER["PHP_AUTH_PW"]
             );
-        } else {
+        }  
             // no method found -> no authentication required
             return true;
-        }
+        
     }
 
     // }}}

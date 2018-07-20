@@ -290,12 +290,12 @@ class EditViewMerge
             }
             //otherwise both are not arrays so we can return a comparison between them
             return $val1 == $val2;
-        } else {
+        }  
             //if val1 is an array and val2 isn't then it isn't a match
             if (!is_array($val2)) {
                 return false;
             }
-        }
+        
         foreach ($val1 as $k=>$v) {
             if (!isset($val2[$k])) {
                 return false;
@@ -381,11 +381,11 @@ class EditViewMerge
                 $new = $this->arrayMerge($custom, $new);
                 $this->log($new);
                 return $new;
-            } else {
+            }  
                 //otherwise we know that new is not an array and custom has been 'customized' so let's keep those customizations.
                 $this->log($custom);
                 return $custom;
-            }
+            
         }
         //default to returning the New version of the field
         $this->log($new);
@@ -767,7 +767,7 @@ class EditViewMerge
         $this->log('custom file:'  . $custom_file);
         if (empty($custom_file) && $save) {
             return true;
-        } else {
+        }  
             $this->loadData($module, $original_file, $new_file, $custom_file);
             $this->mergeMetaData();
             if ($save && !empty($this->newData) && !empty($custom_file)) {
@@ -775,7 +775,7 @@ class EditViewMerge
                 copy($custom_file, $custom_file . '.suback.php');
                 return $this->save($custom_file);
             }
-        }
+        
         if (!$save) {
             return true;
         }

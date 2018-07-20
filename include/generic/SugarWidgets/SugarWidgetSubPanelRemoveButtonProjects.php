@@ -118,8 +118,8 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
             . ' class="listViewTdToolsS1"'
             . " onclick=\"return confirm('$remove_confirmation_text');\""
             . ">$icon_remove_html&nbsp;$icon_remove_text</a>";
-        } else {
+        }  
             return '';
-        }
+        
     }
 }

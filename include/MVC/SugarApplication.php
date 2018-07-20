@@ -765,9 +765,9 @@ class SugarApplication
             $msgs = $_SESSION[$type];
             unset($_SESSION[$type]);
             return $msgs;
-        } else {
+        }  
             return array();
-        }
+        
     }
     
     /**
@@ -877,8 +877,8 @@ class SugarApplication
         }
         if (empty($vars)) {
             return "index.php?module=Home&action=index";
-        } else {
+        }  
             return "index.php?" . http_build_query($vars);
-        }
+        
     }
 }

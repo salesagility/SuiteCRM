@@ -582,12 +582,12 @@ class DynamicField
                 }
 
                 return false;
-            } else {
+            }  
                 return !empty($vardefs[$name]) && ($vardefs[$name]['type'] == $type);
-            }
-        } else {
+            
+        }  
             return false;
-        }
+        
     }
 
     /**
@@ -768,9 +768,9 @@ class DynamicField
             fclose($fh);
 
             return true;
-        } else {
+        }  
             return false;
-        }
+        
     }
 
     /**

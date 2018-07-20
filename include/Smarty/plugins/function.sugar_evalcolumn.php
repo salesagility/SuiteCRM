@@ -89,7 +89,7 @@ function smarty_function_sugar_evalcolumn($params, &$smarty)
 
     if (!empty($params['var']['assign'])) {
         return '{$' . $params['colData']['field']['name'] . '}';
-    } else {
+    }  
         $code = $params['var']['customCode'];
         if (isset($params['tabindex']) && preg_match_all("'(<[ ]*?)(textarea|input|select)([^>]*?)(>)'si", $code, $matches, PREG_PATTERN_ORDER)) {
             $str_replace = array();
@@ -134,5 +134,5 @@ function smarty_function_sugar_evalcolumn($params, &$smarty)
             $code .= '&nbsp;' . ConnectorUtils::getConnectorButtonScript($params['var']['displayParams'], $smarty);
         }
         return $code;
-    }
+    
 }

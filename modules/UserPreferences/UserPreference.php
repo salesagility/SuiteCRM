@@ -238,10 +238,10 @@ class UserPreference extends SugarBean
             $_SESSION[$user->user_name . '_PREFERENCES'][$category] = unserialize(base64_decode($row['contents']));
             $user->user_preferences[$category] = unserialize(base64_decode($row['contents']));
             return true;
-        } else {
+        }  
             $_SESSION[$user->user_name . '_PREFERENCES'][$category] = array();
             $user->user_preferences[$category] = array();
-        }
+        
         return false;
     }
 
@@ -280,7 +280,7 @@ class UserPreference extends SugarBean
             $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($user);
 
             return $prefDate;
-        } else {
+        }  
             $prefDate['date'] = $timedate->get_date_format();
             $prefDate['time'] = $timedate->get_time_format();
 
@@ -300,7 +300,7 @@ class UserPreference extends SugarBean
             }
 
             return $prefDate;
-        }
+        
     }
 
     /**

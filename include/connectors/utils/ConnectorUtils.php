@@ -419,9 +419,9 @@ class ConnectorUtils
                 $sources[$id] = self::getConnector($id);
             }
             return $sources;
-        } else {
+        }  
             return array();
-        }
+        
     }
 
     /**
@@ -516,9 +516,9 @@ class ConnectorUtils
                     if (!file_exists($metadata_file)) {
                         $GLOBALS['log']->info("Unable to update metadata file for module: {$module}");
                         continue;
-                    } else {
+                    }  
                         require($metadata_file);
-                    }
+                    
 
                     $insertConnectorButton = true;
 
@@ -763,10 +763,10 @@ class ConnectorUtils
         } elseif (file_exists("modules/Connectors/connectors/sources/{$dir}/language/{$lang}")) {
             require("modules/Connectors/connectors/sources/{$dir}/language/{$lang}");
             return !empty($connector_strings) ? $connector_strings : array();
-        } else {
+        }  
             $GLOBALS['log']->error("Unable to locate language string file for source {$source_id}");
             return array();
-        }
+        
     }
 
     /**

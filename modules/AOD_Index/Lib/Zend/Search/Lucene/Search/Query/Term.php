@@ -78,7 +78,7 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     {
         if ($this->_term->field != null) {
             return $this;
-        } else {
+        }  
             require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
             $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
             $query->setBoost($this->getBoost());
@@ -91,7 +91,7 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
             }
 
             return $query->rewrite($index);
-        }
+        
     }
 
     /**
@@ -167,9 +167,9 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
                    $this->_weight->getValue() *
                    $reader->norm($docId, $this->_term->field) *
                    $this->getBoost();
-        } else {
+        }  
             return 0;
-        }
+        
     }
 
     /**

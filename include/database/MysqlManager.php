@@ -643,14 +643,14 @@ class MysqlManager extends DBManager
             case 'date_format':
                 if (empty($additional_parameters)) {
                     return "DATE_FORMAT($string,'%Y-%m-%d')";
-                } else {
+                }  
                     $format = $additional_parameters[0];
                     if ($format[0] != "'") {
                         $format = $this->quoted($format);
                     }
 
                     return "DATE_FORMAT($string,$format)";
-                }
+                
                 // no break
             case 'ifnull':
                 if (empty($additional_parameters) && !strstr($all_strings, ",")) {
@@ -822,9 +822,9 @@ class MysqlManager extends DBManager
 
         if ($return_as_array) {
             return $ref;
-        } else {
+        }  
             return "{$ref['name']} {$ref['colType']} {$ref['default']} {$ref['required']} {$ref['auto_increment']}";
-        }
+        
     }
 
     /**

@@ -293,7 +293,7 @@ class OneLogin_Saml2_Response
                     $subjectConfirmationDataNodes = $scn->getElementsByTagName('SubjectConfirmationData');
                     if ($subjectConfirmationDataNodes->length == 0) {
                         continue;
-                    } else {
+                    }  
                         $scnData = $subjectConfirmationDataNodes->item(0);
                         if ($scnData->hasAttribute('InResponseTo')) {
                             $inResponseTo = $scnData->getAttribute('InResponseTo');
@@ -326,7 +326,7 @@ class OneLogin_Saml2_Response
                         }
                         $anySubjectConfirmation = true;
                         break;
-                    }
+                    
                 }
 
                 if (!$anySubjectConfirmation) {
@@ -367,7 +367,7 @@ class OneLogin_Saml2_Response
                     'No Signature found. SAML Response rejected',
                     OneLogin_Saml2_ValidationError::NO_SIGNATURE_FOUND
                 );
-            } else {
+            }  
                 $cert = $idpData['x509cert'];
                 $fingerprint = $idpData['certFingerprint'];
                 $fingerprintalg = $idpData['certFingerprintAlgorithm'];
@@ -395,7 +395,7 @@ class OneLogin_Saml2_Response
                         OneLogin_Saml2_ValidationError::INVALID_SIGNATURE
                     );
                 }
-            }
+            
             return true;
         } catch (Exception $e) {
             $this->_error = $e->getMessage();
@@ -479,9 +479,9 @@ class OneLogin_Saml2_Response
         $entries = $this->_queryAssertion("/saml:Conditions");
         if ($entries->length == 1) {
             return true;
-        } else {
+        }  
             return false;
-        }
+        
     }
 
     /**
@@ -494,9 +494,9 @@ class OneLogin_Saml2_Response
         $entries = $this->_queryAssertion("/saml:AuthnStatement");
         if ($entries->length == 1) {
             return true;
-        } else {
+        }  
             return false;
-        }
+        
     }
 
     /**
@@ -1000,9 +1000,9 @@ class OneLogin_Saml2_Response
     {
         if ($this->encrypted) {
             return OneLogin_Saml2_Utils::query($this->decryptedDocument, $query);
-        } else {
+        }  
             return OneLogin_Saml2_Utils::query($this->document, $query);
-        }
+        
     }
 
     /**
@@ -1063,7 +1063,7 @@ class OneLogin_Saml2_Response
 
         if ($decrypted instanceof DOMDocument) {
             return $decrypted;
-        } else {
+        }  
             $encryptedAssertion = $decrypted->parentNode;
             $container = $encryptedAssertion->parentNode;
 
@@ -1088,7 +1088,7 @@ class OneLogin_Saml2_Response
             $container->replaceChild($decrypted, $encryptedAssertion);
 
             return $decrypted->ownerDocument;
-        }
+        
     }
 
     /* After execute a validation process, if fails this method returns the cause
@@ -1109,8 +1109,8 @@ class OneLogin_Saml2_Response
     {
         if ($this->encrypted) {
             return $this->decryptedDocument;
-        } else {
+        }  
             return $this->document;
-        }
+        
     }
 }

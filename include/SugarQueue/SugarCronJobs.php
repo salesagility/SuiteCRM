@@ -133,7 +133,7 @@ class SugarCronJobs
         if (!file_exists($this->lockfile)) {
             $this->markLastRun();
             return true;
-        } else {
+        }  
             $ts = file_get_contents($this->lockfile);
             $this->markLastRun();
             $now = time();
@@ -141,7 +141,7 @@ class SugarCronJobs
                 // run too frequently
                 return false;
             }
-        }
+        
         return true;
     }
 

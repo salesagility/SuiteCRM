@@ -128,9 +128,9 @@ class SugarOAuthServer
                 $provider->token_secret = $token->secret;
                 $this->token = $token;
                 return Zend_Oauth_Provider::OK;
-            } else {
+            }  
                 return Zend_Oauth_Provider::TOKEN_USED;
-            }
+            
         }
         if ($token->tstate == OAuthToken::ACCESS) {
             $provider->token_secret = $token->secret;

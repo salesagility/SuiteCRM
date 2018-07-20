@@ -42,12 +42,12 @@ function smarty_modifier_truncate(
         }
         if (!$middle) {
             return substr($string, 0, $length) . $etc;
-        } else {
+        }  
             return substr($string, 0, $length/2) . $etc . substr($string, -$length/2);
-        }
-    } else {
+        
+    }  
         return $string;
-    }
+    
 }
 
 /* vim: set expandtab: */

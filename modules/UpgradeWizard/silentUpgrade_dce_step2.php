@@ -211,9 +211,9 @@ function merge_passwordsetting($sugar_config, $sugar_version)
 
     if (write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         return true;
-    } else {
+    }  
         return false;
-    }
+    
 }
 
 function addDefaultModuleRoles($defaultRoles = array())

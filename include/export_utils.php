@@ -931,7 +931,7 @@ function get_field_order_mapping($name='', $reorderArr = '', $exclude = true)
     //if no array was passed in, pass back either the list of ordered columns by module, or the entireorder array
     if (empty($name)) {
         return $field_order_array;
-    } else {
+    }  
         return $field_order_array[strtolower($name)];
-    }
+    
 }

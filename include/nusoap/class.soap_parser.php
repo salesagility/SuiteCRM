@@ -676,7 +676,7 @@ class nusoap_parser extends nusoap_base
             $this->debug('in buildVal, return:');
             $this->appendDebug($this->varDump($ret));
             return $ret;
-        } else {
+        }  
             $this->debug('in buildVal, no children, building scalar');
             $cdata = isset($this->message[$pos]['cdata']) ? $this->message[$pos]['cdata'] : '';
             if (isset($this->message[$pos]['type'])) {
@@ -693,7 +693,7 @@ class nusoap_parser extends nusoap_base
             $ret = $this->message[$pos]['cdata'];
             $this->debug("in buildVal, return: $ret");
             return $ret;
-        }
+        
     }
 }
 

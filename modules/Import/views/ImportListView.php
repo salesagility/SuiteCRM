@@ -102,9 +102,9 @@ class ImportListView
 
         if (!isset($params['offset'])) {
             throw new Exception("Missing required parameter offset for ImportListView");
-        } else {
+        }  
             $this->dataSource->setCurrentOffset($params['offset']);
-        }
+        
 
         $this->recordsPerPage = isset($params['totalRecords']) ? $params['totalRecords'] : ($sugar_config['list_max_entries_per_page'] + 0);
         $this->data = $this->dataSource->loadDataSet($this->recordsPerPage)->getDataSet();
@@ -136,9 +136,9 @@ class ImportListView
         $contents = $this->ss->fetch('modules/Import/tpls/listview.tpl');
         if ($return) {
             return $contents;
-        } else {
+        }  
             echo $contents;
-        }
+        
     }
 
     /**

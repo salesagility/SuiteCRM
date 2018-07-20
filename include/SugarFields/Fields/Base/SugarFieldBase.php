@@ -382,12 +382,12 @@ class SugarFieldBase
                     $parentFieldArray[strtoupper($vardef['name'])],
                     $displayType
                 );
-            } else {
+            }  
                 $displayTypeFunc = 'get' . $displayType . 'Smarty';
 
                 return $this->$displayTypeFunc($parentFieldArray, $vardef, $displayParams, $tabindex);
-            }
-        } else {
+            
+        }  
             if (!empty($displayParams['idName'])) {
                 $fieldName = $displayParams['idName'];
             } else {
@@ -402,10 +402,10 @@ class SugarFieldBase
                 }
 
                 return "<span id='{$vardef['name']}_span'>" . $this->fetch($tpl) . '</span>';
-            } else {
+            }  
                 return '{sugar_run_helper include="' . $includeFile . '" func="' . $funcName . '" bean=$bean field="' . $fieldName . '" value=$fields.' . $fieldName . '.value displayType="' . $displayType . '"}';
-            }
-        }
+            
+        
     }
 
     public function getEditView()

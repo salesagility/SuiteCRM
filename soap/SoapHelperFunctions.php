@@ -606,9 +606,9 @@ function getRelationshipResults($bean, $link_field_name, $link_module_fields)
         }
 
         return array('rows' => $list, 'fields_set_on_rows' => $filterFields);
-    } else {
+    }  
         return false;
-    } // else
+     // else
 } // fn
 
 function get_return_value_for_link_fields($bean, $module, $link_name_to_value_fields_array)
@@ -692,9 +692,9 @@ function new_handle_set_relationship($module_name, $module_id, $link_field_name,
         $mod->$link_field_name->add($related_ids);
 
         return true;
-    } else {
+    }  
         return false;
-    }
+    
 }
 
 function new_handle_set_entries($module_name, $name_value_lists, $select_fields = false)
@@ -817,11 +817,11 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
         return array(
             'name_value_lists' => $ret_values,
         );
-    } else {
+    }  
         return array(
             'ids' => $ids,
         );
-    }
+    
 }
 
 function get_return_value($value, $module, $returnDomValue = false)
@@ -1043,7 +1043,7 @@ function check_for_duplicate_contacts($seed)
         $contacts = array_merge($contacts, $contacts2);
         if (count($contacts) == 0) {
             return null;
-        } else {
+        }  
             foreach ($contacts as $contact) {
                 if (!empty($trimmed_last) && strcmp($trimmed_last, $contact->last_name) == 0) {
                     if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp(
@@ -1071,8 +1071,8 @@ function check_for_duplicate_contacts($seed)
             }
 
             return null;
-        }
-    } else {
+        
+    }  
         //This section of code is executed if no emails are supplied in the $seed instance
 
         //This query is looking for the id of Contact records that do not have a primary email address based on the matching
@@ -1086,7 +1086,7 @@ WHERE c.first_name = '{$trimmed_first}' AND c.last_name = '{$trimmed_last}' AND 
         $result = DBManagerFactory::getInstance()->getOne($query);
 
         return !empty($result) ? $result : null;
-    }
+    
 }
 
 /*
@@ -1111,9 +1111,9 @@ function is_server_version_greater($left, $right)
         return is_server_version_greater($left, $right);
     } elseif ($left[0] < $right[0]) {
         return true;
-    } else {
+    }  
         return false;
-    }
+    
 }
 
 function getFile($zip_file, $file_in_zip)
@@ -1170,9 +1170,9 @@ if (!function_exists("get_encoded")) {
             $iv = "password";
 
             return openssl_decrypt($buffer, OPENSSL_CIPHER_3DES, $key, OPENSSL_ZERO_PADDING, $iv);
-        } else {
+        }  
             return $string;
-        }
+        
     }
 }
 

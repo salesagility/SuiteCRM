@@ -159,10 +159,10 @@ class Scheduler extends SugarBean
         if (is_array($validTimes) && in_array($now, $validTimes)) {
             $GLOBALS['log']->debug('----->Scheduler found valid job ('.$this->name.') for time GMT('.$now.')');
             return true;
-        } else {
+        }  
             $GLOBALS['log']->debug('----->Scheduler did NOT find valid job ('.$this->name.') for time GMT('.$now.')');
             return false;
-        }
+        
     }
 
     /**
@@ -514,19 +514,19 @@ class Scheduler extends SugarBean
                             if ($tsGmt <= $timeEndTs) { // this is taken care of by the initial query - start is less than the date spec'd by admin
                                 if ($tsGmt <= $timeToTs) { // start is less than the time_to
                                     $validJobTime[] = $dateobj->asDb();
-                                } else {
+                                }  
                                     //_pp('Job Time is NOT smaller that TimeTO: '.$tsGmt .'<='. $timeToTs);
-                                }
-                            } else {
+                                
+                            }  
                                 //_pp('Job Time is NOT smaller that DateTimeEnd: '.date('Y-m-d H:i:s',$tsGmt) .'<='. $dateTimeEnd); //_pp( $tsGmt .'<='. $timeEndTs );
-                            }
+                            
                         }
-                    } else {
+                    }  
                         //_pp('Job Time is NOT bigger that TimeFrom: '.$tsGmt .'>='. $timeFromTs);
-                    }
-                } else {
+                    
+                }  
                     //_pp('Job Time is NOT Bigger than DateTimeStart: '.date('Y-m-d H:i',$tsGmt) .'>='. $dateTimeStart);
-                }
+                
             }
         }
         //_ppd($validJobTime);
@@ -585,9 +585,9 @@ class Scheduler extends SugarBean
                     return $value.$mod_strings['LBL_MINUTES'];
                 } elseif (!preg_match('[^0-9]', $value)) {
                     return $mod_strings['LBL_ON_THE'].$value.$mod_strings['LBL_MIN_MARK'];
-                } else {
+                }  
                     return $value;
-                }
+                
                 // no break
             case 1: // hours
                 global $current_user;
@@ -596,17 +596,17 @@ class Scheduler extends SugarBean
                     return $value.$mod_strings['LBL_HOUR'];
                 } elseif (preg_match('/[^0-9]/', $mins)) { // got a range, or multiple of mins, so we return an 'Hours' label
                     return $value;
-                } else {	// got a "minutes" setting, so it will be at some o'clock.
+                }  	// got a "minutes" setting, so it will be at some o'clock.
                     $datef = $current_user->getUserDateTimePreferences();
                     return date($datef['time'], strtotime($value.':'.str_pad($mins, 2, '0', STR_PAD_LEFT)));
-                }
+                
                 // no break
             case 2: // day of month
                 if (preg_match('/\*/', $value)) {
                     return $value;
-                } else {
+                }  
                     return date('jS', strtotime('December '.$value));
-                }
+                
 
                 // no break
             case 3: // months

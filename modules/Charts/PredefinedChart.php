@@ -510,8 +510,8 @@ class PredefinedChart
         if (file_exists('custom/Charts/' . $chart . '.php')) {
             require_once('custom/Charts/' . $chart . '.php');
             return customChartQuery();
-        } else {
+        }  
             return false;
-        }
+        
     }
 }

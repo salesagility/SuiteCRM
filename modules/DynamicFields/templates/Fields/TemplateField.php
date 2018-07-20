@@ -263,12 +263,12 @@ class TemplateField
             if (!is_null($this->default_value)) { // add a default value if it is not null - we want to set a default even if default_value is '0', which is not null, but which is empty()
                 if (null == trim($this->default_value)) {
                     return " DEFAULT NULL";
-                } else {
+                }  
                     return " DEFAULT '$this->default_value'";
-                }
-            } else {
+                
+            }  
                 return '';
-            }
+            
         }
     }
 
@@ -395,9 +395,9 @@ class TemplateField
             return  true;
         } elseif ($value === 'false' || $value === '0' || $value === 0) {
             return  false;
-        } else {
+        }  
             return $value;
-        }
+        
     }
 
 

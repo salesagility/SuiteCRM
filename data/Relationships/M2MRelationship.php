@@ -88,9 +88,9 @@ class M2MRelationship extends SugarRelationship
         elseif (is_array($results)) {
             $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
             return $this->getMostAppropriateLinkedDefinition($results);
-        } else {
+        }  
             return false;
-        }
+        
     }
 
     /**
@@ -472,14 +472,14 @@ class M2MRelationship extends SugarRelationship
                 $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
             }
             return $query;
-        } else {
+        }  
             return array(
                 'select' => "SELECT $targetKey id",
                 'from' => "FROM $from",
                 'where' => "WHERE $where AND $rel_table.deleted=$deleted",
                 'order_by' => $order_by
             );
-        }
+        
     }
 
     public function getJoin($link, $params = array(), $return_array = false)

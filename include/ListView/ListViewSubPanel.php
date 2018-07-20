@@ -304,9 +304,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $fields = $aItem->get_list_view_data();
                 if (isset($processed_ids[$aItem->id])) {
                     continue;
-                } else {
+                }  
                     $processed_ids[$aItem->id] = 1;
-                }
+                
 
 
                 //ADD OFFSET TO ARRAY
@@ -855,8 +855,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 $this->smartyTemplate->assign("ORDER_BY", $sort_URL_base);
 
                 return $sort_URL_base;
-            } else {
+            }  
                 return '';
-            }
+            
         }
     }

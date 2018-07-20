@@ -735,10 +735,10 @@
 
              if (count($Result) == 1) {
                  return($Result[0]);
-             } else {
+             }  
                  return($Result);
-             }
-         } else {
+             
+         }  
              $Height      = ($this->pChartObject->GraphAreaY2 - $this->pChartObject->GraphAreaY1) - $Data["Axis"][$AxisID]["Margin"]*2;
              $ScaleHeight = $Data["Axis"][$AxisID]["ScaleMax"] - $Data["Axis"][$AxisID]["ScaleMin"];
              $Step        = $Height / $ScaleHeight;
@@ -754,10 +754,10 @@
 
              if (count($Result) == 1) {
                  return($Result[0]);
-             } else {
+             }  
                  return($Result);
-             }
-         }
+             
+         
      }
 
      /* Draw the legend of the active series */

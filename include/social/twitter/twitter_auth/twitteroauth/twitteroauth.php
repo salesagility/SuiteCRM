@@ -114,9 +114,9 @@ class TwitterOAuth
         }
         if (empty($sign_in_with_twitter)) {
             return $this->authorizeURL() . "?oauth_token={$token}";
-        } else {
+        }  
             return $this->authenticateURL() . "?oauth_token={$token}";
-        }
+        
     }
 
     /**

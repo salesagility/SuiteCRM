@@ -108,9 +108,9 @@ class ParserLabel
             //we are in Module builder
 
             return self::addLabels($language, $labels, $this->moduleName, "custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/language");
-        } else {
+        }  
             return self::addLabels($language, $labels, $this->moduleName);
-        }
+        
     }
 
     /**

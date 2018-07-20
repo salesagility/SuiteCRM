@@ -78,7 +78,7 @@ function smarty_modifier_to_url($string)
 {
     if (preg_match('/^[^:\/]*:\/\/.*/', $string)) {
         return $string;
-    } else {
+    }  
         return 'http://' . $string;
-    }
+    
 }

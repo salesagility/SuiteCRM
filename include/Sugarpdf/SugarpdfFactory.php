@@ -162,8 +162,8 @@ class SugarpdfFactory
         //$sugarpdf->init($bean, $sugarpdf_object_map);
         if ($sugarpdf instanceof Sugarpdf) {
             return $sugarpdf;
-        } else {
+        }  
             return new Sugarpdf($bean, $sugarpdf_object_map);
-        }
+        
     }
 }

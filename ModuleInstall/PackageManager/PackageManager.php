@@ -91,9 +91,9 @@ class PackageManager
         if (!empty($name_value_list)) {
             $name_value_list = PackageManager::fromNameValueList($name_value_list);
             return $name_value_list['description'];
-        } else {
+        }  
             return '';
-        }
+        
     }
 
     /**
@@ -243,9 +243,9 @@ class PackageManager
         $result = PackageManagerComm::login($terms_checked);
         if (is_array($result)) {
             return $result;
-        } else {
+        }  
             return true;
-        }
+        
     }
 
     public function setCredentials($username, $password, $systemname)
@@ -297,9 +297,9 @@ class PackageManager
         if (!empty($release_id) || !empty($package_id)) {
             $documents = PackageManagerComm::getDocumentation($package_id, $release_id);
             return $documents;
-        } else {
+        }  
             return null;
-        }
+        
     }
 
     /**
@@ -792,9 +792,9 @@ class PackageManager
         if (is_file($license_file)) {
             $contents = file_get_contents($license_file);
             return $contents;
-        } else {
+        }  
             return null;
-        }
+        
     }
 
     /**

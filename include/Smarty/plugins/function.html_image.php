@@ -102,10 +102,10 @@ function smarty_function_html_image($params, &$smarty)
             } elseif (!is_readable($_image_path)) {
                 $smarty->trigger_error("html_image: unable to read '$_image_path'", E_USER_NOTICE);
                 return;
-            } else {
+            }  
                 $smarty->trigger_error("html_image: '$_image_path' is not a valid image file", E_USER_NOTICE);
                 return;
-            }
+            
         }
         if ($smarty->security &&
             ($_params = array('resource_type' => 'file', 'resource_name' => $_image_path)) &&

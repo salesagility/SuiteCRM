@@ -179,7 +179,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
 
         if ($allQualified) {
             return $this;
-        } else {
+        }  
             /** transform multiterm query to boolean and apply rewrite() method to subqueries. */
             require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
             $query = new Zend_Search_Lucene_Search_Query_Boolean();
@@ -196,7 +196,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             }
 
             return $query;
-        }
+        
     }
 
     /**
@@ -216,12 +216,12 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
                     // Term is required
                     require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
                     return new Zend_Search_Lucene_Search_Query_Empty();
-                } else {
+                }  
                     // Term is optional or prohibited
                     // Remove it from terms and signs list
                     unset($terms[$id]);
                     unset($signs[$id]);
-                }
+                
             }
         }
 
@@ -593,12 +593,12 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         if (isset($this->_resVector[$docId])) {
             if ($this->_signs === null) {
                 return $this->_conjunctionScore($docId, $reader);
-            } else {
+            }  
                 return $this->_nonConjunctionScore($docId, $reader);
-            }
-        } else {
+            
+        }  
             return 0;
-        }
+        
     }
 
     /**

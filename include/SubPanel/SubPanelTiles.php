@@ -138,7 +138,7 @@ class SubPanelTiles
             $tabs = $objSubPanelTilesTabs->getTabs($tabs, $showTabs, $selectedGroup);
             unset($objSubPanelTilesTabs);
             return $tabs;
-        } else {
+        }  
             // see if user current user has custom subpanel layout
             $objSubPanelTilesTabs = new SubPanelTilesTabs($this->focus);
             $tabs = $objSubPanelTilesTabs->applyUserCustomLayoutToTabs($tabs);
@@ -164,7 +164,7 @@ class SubPanelTiles
                 $sugarTab->setup(array(), array(), $displayTabs);
                 $sugarTab->display();
             }
-        }
+        
         return $tabs;
     }
     public function display($showContainer = true, $forceTabless = false)

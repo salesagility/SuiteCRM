@@ -269,7 +269,7 @@ function validate_user($user_name, $password)
         login_success();
 
         return true;
-    } else {
+    }  
         if (function_exists('openssl_decrypt')) {
             $password = decrypt_string($password);
             if ($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])) {
@@ -285,7 +285,7 @@ function validate_user($user_name, $password)
 
             return false;
         }
-    }
+    
 }
 
 /**

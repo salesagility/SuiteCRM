@@ -914,9 +914,9 @@ EOHTML;
         if (isset($this->_imageCache[$imageName])) {
             if ($addJSPath) {
                 return getJSPath($this->_imageCache[$imageName]);
-            } else {
+            }  
                 return $this->_imageCache[$imageName];
-            }
+            
         }
         $imagePath = '';
         if (($filename = $this->_getImageFileName('custom/'.$this->getImagePath().'/'.$imageName)) != '') {
@@ -996,9 +996,9 @@ EOHTML;
         if (isset($this->_cssCache[$cssFileName]) && is_file(sugar_cached($this->_cssCache[$cssFileName]))) {
             if ($returnURL) {
                 return getJSPath("cache/".$this->_cssCache[$cssFileName]);
-            } else {
+            }  
                 return sugar_cached($this->_cssCache[$cssFileName]);
-            }
+            
         }
 
         $cssFileContents = '';
@@ -1077,9 +1077,9 @@ EOHTML;
         if (isset($this->_jsCache[$jsFileName]) && is_file(sugar_cached($this->_jsCache[$jsFileName]))) {
             if ($returnURL) {
                 return getJSPath("cache/".$this->_jsCache[$jsFileName]);
-            } else {
+            }  
                 return sugar_cached($this->_jsCache[$jsFileName]);
-            }
+            
         }
 
         $jsFileContents = '';

@@ -1492,13 +1492,13 @@ class wsdl extends nusoap_base
             $this->setError("$type ($uqType) is not a supported type.");
             $this->debug("in serializeType: $type ($uqType) is not a supported type.");
             return false;
-        } else {
+        }  
             $this->debug("in serializeType: found typeDef");
             $this->appendDebug('typeDef=' . $this->varDump($typeDef));
             if (substr($uqType, -1) == '^') {
                 $uqType = substr($uqType, 0, -1);
             }
-        }
+        
         if (!isset($typeDef['phpType'])) {
             $this->setError("$type ($uqType) has no phpType.");
             $this->debug("in serializeType: $type ($uqType) has no phpType.");

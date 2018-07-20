@@ -374,9 +374,9 @@ class ModuleInstaller
     {
         if ($module == 'application') {
             return "custom/Extension/application/Ext";
-        } else {
+        }  
             return "custom/Extension/modules/$module/Ext";
-        }
+        
     }
 
     /**
@@ -2011,11 +2011,11 @@ class ModuleInstaller
                         sugar_touch($dest, filemtime($source));
                     }
                     return(unlink($source));
-                } else {
+                }  
                     $GLOBALS['log']->debug("Can't restore file: " . $source);
                     return true;
-                }
-            } else {
+                
+            }  
                 if (file_exists($dest)) {
                     $rest = clean_path($backup_path."/$dest");
                     if (!is_dir(dirname($rest))) {
@@ -2032,18 +2032,18 @@ class ModuleInstaller
                     }
                 }
                 return(copy($source, $dest));
-            }
+            
         } elseif (!is_dir($source)) {
             if ($uninstall) {
                 if (is_file($dest)) {
                     return(unlink($dest));
-                } else {
+                }  
                     //don't do anything we already cleaned up the files using uninstall_new_files
                     return true;
-                }
-            } else {
+                
+            }  
                 return false;
-            }
+            
         }
 
         if (!is_dir($dest) && !$uninstall) {
@@ -2142,9 +2142,9 @@ class ModuleInstaller
             $errors = $_SESSION['MODULEINSTALLER_ERRORS'];
             unset($_SESSION['MODULEINSTALLER_ERRORS']);
             return $errors;
-        } else {
+        }  
             return null;
-        }
+        
     }
 
     /*

@@ -521,9 +521,9 @@ class ViewConvertLead extends SugarView
             $bean->load_relationship($meetingsRel);
             $bean->$meetingsRel->add($current_user->id);
             return $bean;
-        } else {
+        }  
             return false;
-        }
+        
     }
     protected function displaySaveResults(
         $beans

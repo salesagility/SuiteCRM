@@ -798,7 +798,7 @@ class SugarView
 
         if ($retModTabs) {
             return $ss->fetch($themeObject->getTemplate('_headerModuleList.tpl'));
-        } else {
+        }  
             $ss->display($headerTpl);
 
             $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
@@ -816,7 +816,7 @@ class SugarView
                     echo '<p class="success">' . $message . '</p>';
                 }
             }
-        }
+        
     }
 
     public function getModuleMenuHTML()
@@ -1212,9 +1212,9 @@ EOHTML;
             return $this->options['show_all'];
         } elseif (!empty($this->options) && isset($this->options[$option])) {
             return $this->options[$option];
-        } else {
+        }  
             return $default;
-        }
+        
     }
 
     /**
@@ -1460,9 +1460,9 @@ EOHTML;
             return $defaultTab;
         } elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == "ajaxui") {
             return $defaultTab;
-        } else {
+        }  
             return $this->module;
-        }
+        
     }
 
     /**
@@ -1641,19 +1641,19 @@ EOHTML;
                 if (SugarThemeRegistry::current()->directionality == "ltr") {
                     return $app_strings['LBL_SEARCH_ALT'] . "&nbsp;"
                         . "$firstParam";
-                } else {
+                }  
                     return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
-                }
-            } else {
+                
+            }  
                 return $firstParam;
-            }
-        } else {
+            
+        }  
             if (!empty($iconPath) && !$browserTitle) {
                 //return "<a href='index.php?module={$this->module}&action=index'>$this->module</a>";
             } else {
                 return $firstParam;
             }
-        }
+        
     }
 
     /**
@@ -1706,9 +1706,9 @@ EOHTML;
     {
         if (SugarThemeRegistry::current()->directionality == "ltr") {
             return "<span class='pointer'>&raquo;</span>";
-        } else {
+        }  
             return "<span class='pointer'>&laquo;</span>";
-        }
+        
     }
 
     /**

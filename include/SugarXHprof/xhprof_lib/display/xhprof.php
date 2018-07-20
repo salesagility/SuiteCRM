@@ -104,9 +104,9 @@ function xhprof_count_format($num)
     $num = round($num, 3);
     if (round($num) == $num) {
         return number_format($num);
-    } else {
+    }  
         return number_format($num, 3);
-    }
+    
 }
 
 function xhprof_percent_format($s, $precision = 1)
@@ -410,7 +410,7 @@ function sort_cbk($a, $b)
             return 0;
         }
         return ($left < $right) ? -1 : 1;
-    } else {
+    }  
 
     // descending sort for all others
         $left = $a[$sort_col];
@@ -426,7 +426,7 @@ function sort_cbk($a, $b)
             return 0;
         }
         return ($left > $right) ? -1 : 1;
-    }
+    
 }
 
 /**
@@ -444,9 +444,9 @@ function stat_description($stat)
 
     if ($diff_mode) {
         return $diff_descriptions[$stat];
-    } else {
+    }  
         return $descriptions[$stat];
-    }
+    
 }
 
 
@@ -632,10 +632,10 @@ function pct($a, $b)
 {
     if ($b == 0) {
         return "N/A";
-    } else {
+    }  
         $res = (round(($a * 1000 / $b)) / 10);
         return $res;
-    }
+    
 }
 
 /**

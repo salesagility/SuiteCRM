@@ -306,9 +306,9 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
                     ord($str[5]) << 16  |
                     ord($str[6]) << 8   |
                     ord($str[7]);
-        } else {
+        }  
             return $this->readLong32Bit();
-        }
+        
     }
 
     /**
@@ -360,10 +360,10 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
             // It's a negative value since the highest bit is set
             if ($wordHigh == (int)0xFFFFFFFF  &&  ($wordLow & (int)0x80000000)) {
                 return $wordLow;
-            } else {
+            }  
                 require_once 'Zend/Search/Lucene/Exception.php';
                 throw new Zend_Search_Lucene_Exception('Long integers lower than -2147483648 (0x80000000) are not supported on 32-bit platforms.');
-            }
+            
         }
 
         if ($wordLow < 0) {
@@ -462,7 +462,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
         $strlen = $this->readVInt();
         if ($strlen == 0) {
             return '';
-        } else {
+        }  
             /**
              * This implementation supports only Basic Multilingual Plane
              * (BMP) characters (from 0x0000 to 0xFFFF) and doesn't support
@@ -507,7 +507,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
             }
 
             return $str_val;
-        }
+        
     }
 
     /**

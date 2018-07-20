@@ -139,9 +139,9 @@ foreach ($possible_feeds as $module) {
         // Fake module, need to handle specially
         $userFeedEnabled = $currModule['enabled'];
         continue;
-    } else {
+    }  
         $currModule['label'] = $GLOBALS['app_list_strings']['moduleList'][$module];
-    }
+    
 
     $module_list[] = $currModule;
 }

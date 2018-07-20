@@ -98,9 +98,9 @@ function smarty_function_fetch($params, &$smarty)
                                 if (!preg_match('![\w\d-]+: .+!', $param_value)) {
                                     $smarty->_trigger_fatal_error("[plugin] invalid header format '".$param_value."'");
                                     return;
-                                } else {
+                                }  
                                     $extra_headers[] = $param_value;
-                                }
+                                
                             }
                             break;
                         case "proxy_host":
@@ -149,7 +149,7 @@ function smarty_function_fetch($params, &$smarty)
                 if (!$fp) {
                     $smarty->_trigger_fatal_error("[plugin] unable to fetch: $errstr ($errno)");
                     return;
-                } else {
+                }  
                     if ($_is_proxy) {
                         fputs($fp, 'GET ' . $params['file'] . " HTTP/1.0\r\n");
                     } else {
@@ -188,7 +188,7 @@ function smarty_function_fetch($params, &$smarty)
                     if (!empty($params['assign_headers'])) {
                         $smarty->assign($params['assign_headers'], preg_split("!\r\n!", $csplit[0]));
                     }
-                }
+                
             } else {
                 $smarty->_trigger_fatal_error("[plugin] unable to parse URL, check syntax");
                 return;

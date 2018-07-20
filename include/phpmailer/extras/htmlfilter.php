@@ -198,10 +198,10 @@ function tln_getnxtag($body, $offset)
                     $gt += 2;
                 }
                 return array(false, false, false, $lt, $gt);
-            } else {
+            }  
                 $gt = tln_findnxstr($body, $pos, '>');
                 return array(false, false, false, $lt, $gt);
-            }
+            
         break;
     default:
         /**
@@ -452,9 +452,9 @@ function tln_deent(&$attvalue, $regex, $hex = false)
         }
         $attvalue = strtr($attvalue, $repl);
         return true;
-    } else {
+    }  
         return false;
-    }
+    
 }
 
 /**
@@ -693,9 +693,9 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
                          $newpos = $i + 1;
                          $bSucces = true;
                          break 2;
-                     } else {
+                     }  
                          $content .= $sToken;
-                     }
+                     
                      $bEndTag = false;
                  } else {
                      $content .= $char;

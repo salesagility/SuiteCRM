@@ -193,10 +193,10 @@ class Link2
     {
         if (is_object($this->relationship) && method_exists($this->relationship, 'load')) {
             return $this->relationship->load($this, $params);
-        } else {
+        }  
             $GLOBALS['log']->fatal('load() function is not implemented in a relationship');
             return null;
-        }
+        
     }
 
     /**
@@ -223,9 +223,9 @@ class Link2
 
         if ($this->getSide() == REL_LHS) {
             return $this->relationship->getRHSModule();
-        } else {
+        }  
             return $this->relationship->getLHSModule();
-        }
+        
     }
 
     /**
@@ -239,9 +239,9 @@ class Link2
 
         if ($this->getSide() == REL_LHS) {
             return $this->relationship->getRHSLink();
-        } else {
+        }  
             return $this->relationship->getLHSLink();
-        }
+        
     }
 
     /**
@@ -287,9 +287,9 @@ class Link2
     {
         if (!empty($this->relationship_fields) && !empty($this->relationship_fields[$name])) {
             return $this->relationship_fields[$name];
-        } else {
+        }  
             return null;
-        } //For now return null. Later try the relationship object directly.
+         //For now return null. Later try the relationship object directly.
     }
     
     /**
@@ -338,9 +338,9 @@ class Link2
                     || $this->name != $this->relationship->def['join_key_lhs'])
             ) {
                 return REL_LHS;
-            } else {
+            }  
                 return REL_RHS;
-            }
+            
         } elseif (!empty($this->def['id_name'])) {
             //Next try using the id_name and relationship join keys
             if (isset($this->relationship->def['join_key_lhs'])
@@ -619,12 +619,12 @@ class Link2
             }
             if ($this->getSide() == REL_LHS) {
                 return $this->relationship->remove($this->focus, $related_id);
-            } else {
+            }  
                 return $this->relationship->remove($related_id, $this->focus);
-            }
-        } else {
+            
+        }  
             return $this->relationship->removeAll($this);
-        }
+        
     }
 
     /**

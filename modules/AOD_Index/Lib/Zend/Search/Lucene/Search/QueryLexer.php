@@ -326,9 +326,9 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
             return self::IN_DECIMAL_POINT;
         } elseif ($char === '\\') {
             return self::IN_ESCAPE_CHAR;
-        } else {
+        }  
             return self::IN_CHAR;
-        }
+        
     }
 
 

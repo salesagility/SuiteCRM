@@ -202,9 +202,9 @@ class Link
 
         if ($bean_is_lhs) {
             return $this->_relationship->rhs_table;
-        } else {
+        }  
             return $this->_relationship->lhs_table;
-        }
+        
     }
 
     public function getRelatedModuleName()
@@ -217,9 +217,9 @@ class Link
 
         if ($bean_is_lhs) {
             return $this->_relationship->rhs_module;
-        } else {
+        }  
             return $this->_relationship->lhs_module;
-        }
+        
     }
 
 
@@ -385,9 +385,9 @@ class Link
         }
         if ($deleted==1) {
             return $add_and.$prefix.'deleted=1';
-        } else {
+        }  
             return '';
-        }
+        
     }
 
     public function _add_optional_where_clause($optional_array, $add_and='', $prefix='')
@@ -598,11 +598,11 @@ class Link
                 $query_as_array['join_tables'] = $join_tables;
             }
             return $query_as_array;
-        } else {
+        }  
             $query = $select.' '.$from.' '.$where;
             $GLOBALS['log']->debug("Link Query=".$query);
             return $query;
-        }
+        
     }
 
     public function getBeans($template, $sort_array = array(), $begin_index = 0, $end_index = -1, $deleted=0, $optional_where="")
@@ -897,12 +897,12 @@ class Link
                 if (!empty($related_id)) {
                     $query.=" AND ".$_relationship->rhs_table.".id='".$related_id."'";
                 }
-            } else {
+            }  
                 //do nothing because the row that stores the relationship keys is being deleted.
                 //todo log an error message here.
                 //if this is the case and related_id is passed then log a message asking the user
                 //to clear the relationship using the bean.
-            }
+            
         }
 
         if ($_relationship->relationship_type=='many-to-one') {
@@ -1021,10 +1021,10 @@ class Link
 
         if ($row == null) {
             return false;
-        } else {
+        }  
             $this->_duplicate_key=$row['id'];
             return true;
-        }
+        
     }
 
     /* returns array of keys for duplicate checking, first check for an index of type alternate_key, if not found searches for
@@ -1067,7 +1067,7 @@ class Link
         // first check to see if already loaded - assumes hasn't changed in the meantime
         if (isset($dictionary[$table_name][$def_name])) {
             return $dictionary[$table_name][$def_name];
-        } else {
+        }  
             if (isset($dictionary[$this->_relationship_name][$def_name])) {
                 return ($dictionary[$this->_relationship_name][$def_name]);
             }
@@ -1090,7 +1090,7 @@ class Link
             $GLOBALS['log']->debug('Error fetching field defs for join table '.$table_name);
 
             return null;
-        }
+        
     }
     /*
      * Return the name of the role field for the passed many to many table.

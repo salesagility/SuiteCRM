@@ -224,7 +224,7 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
         } elseif (count($this->_matches) == 1) {
             require_once 'Zend/Search/Lucene/Search/Query/Term.php';
             return new Zend_Search_Lucene_Search_Query_Term(reset($this->_matches));
-        } else {
+        }  
             require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
             $rewrittenQuery = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
@@ -233,7 +233,7 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
             }
 
             return $rewrittenQuery;
-        }
+        
     }
 
     /**

@@ -76,8 +76,8 @@ class ResourceObserver
     {
         if ($this->dieOnError) {
             die($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
-        } else {
+        }  
             echo($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
-        }
+        
     }
 }

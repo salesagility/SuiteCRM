@@ -855,7 +855,7 @@ class MssqlManager extends DBManager
             $GLOBALS['log']->debug("No match was found for order by, pass string back untouched as: $orig_order_match");
 
             return $orig_order_match;
-        } else {
+        }  
             //if found, then parse and return
             //grab string up to the aliased column
             $GLOBALS['log']->debug('order by found, process sql string');
@@ -895,7 +895,7 @@ class MssqlManager extends DBManager
             $GLOBALS['log']->debug('order by being returned is ' . $col_name);
 
             return $col_name;
-        }
+        
     }
 
     /**
@@ -1137,9 +1137,9 @@ class MssqlManager extends DBManager
                     $len = $this->date_formats[$additional_parameters[0]];
 
                     return "LEFT(CONVERT(varchar($len)," . $string . ",120),$len)";
-                } else {
+                }  
                     return 'LEFT(CONVERT(varchar(10),' . $string . ',120),10)';
-                }
+                
                 // no break
             case 'ifnull':
                 if (empty($additional_parameters_string)) {
@@ -1757,9 +1757,9 @@ EOQ;
 
         if ($return_as_array) {
             return $ref;
-        } else {
+        }  
             return "{$ref['name']} {$ref['colType']} {$ref['default']} {$ref['required']} {$ref['auto_increment']}";
-        }
+        
     }
 
     /**
@@ -1829,7 +1829,7 @@ EOQ;
         $sqlpos3 = strpos($sqlmsg, 'Checking identity information:');
         if ($sqlpos !== false || $sqlpos2 !== false || $sqlpos3 !== false) {
             return false;
-        } else {
+        }  
             global $app_strings;
             //ERR_MSSQL_DB_CONTEXT: localized version of 'Changed database context to' message
             if (empty($app_strings) || !isset($app_strings['ERR_MSSQL_DB_CONTEXT'])) {
@@ -1838,13 +1838,13 @@ EOQ;
                 $GLOBALS['log']->debug('Ignoring this database message: ' . $sqlmsg);
 
                 return false;
-            } else {
+            }  
                 $sqlpos = strpos($sqlmsg, $app_strings['ERR_MSSQL_DB_CONTEXT']);
                 if ($sqlpos !== false) {
                     return false;
                 }
-            }
-        }
+            
+        
 
         if (strlen($sqlmsg) > 2) {
             return 'SQL Server error: ' . $sqlmsg;

@@ -770,9 +770,9 @@ class SugarEmailAddress extends SugarBean
         }
         if (count($returnArray) > 0) {
             return $returnArray;
-        } else {
+        }  
             return false;
-        }
+        
     }
 
     /**
@@ -1182,7 +1182,7 @@ class SugarEmailAddress extends SugarBean
 
         if (!empty($a) && !empty($a['id'])) {
             return $a['id'];
-        } else {
+        }  
             $guid = '';
             if (!empty($address)) {
                 $guid = create_guid();
@@ -1193,7 +1193,7 @@ class SugarEmailAddress extends SugarBean
             }
 
             return $guid;
-        }
+        
     }
 
     /**
@@ -1324,7 +1324,7 @@ class SugarEmailAddress extends SugarBean
             $this->auditBean(true);
 
             return $duplicate_email['id'];
-        } else {
+        }  
             // no case-insensitive address match - it's new, or undeleted.
             $guid = '';
             $isUpdate = true;
@@ -1339,7 +1339,7 @@ class SugarEmailAddress extends SugarBean
 
             $this->auditBean($isUpdate);
             return $guid;
-        }
+        
     }
 
     /**
@@ -2156,9 +2156,9 @@ class SugarEmailAddress extends SugarBean
                 return false;
             } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
                 return true;
-            } else {
+            }  
                 throw new Exception('its impossible email sending state');
-            }
+            
         } catch (RuntimeException $e) {
             if (!empty($this->confirm_opt_in_fail_date)) {
                 throw $e;
@@ -2183,9 +2183,9 @@ class SugarEmailAddress extends SugarBean
                 return true;
             } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
                 return false;
-            } else {
+            }  
                 throw new Exception('its impossible email sending state');
-            }
+            
         } catch (RuntimeException $e) {
             if (!empty($this->confirm_opt_in_sent_date)) {
                 throw $e;

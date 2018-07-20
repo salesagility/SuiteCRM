@@ -92,7 +92,7 @@ function build_related_list_by_user_id($bean, $user_id, $where)
         }
 
         return $list;
-    } else {
+    }  
         $select = "SELECT {$bean->table_name}.* from {$bean->table_name} ";
 
         $auto_where = ' WHERE ';
@@ -139,5 +139,5 @@ function build_related_list_by_user_id($bean, $user_id, $where)
         }
 
         return $list;
-    }
+    
 }

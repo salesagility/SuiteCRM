@@ -436,7 +436,7 @@ function recursive_empty_or_remove_directory($directory, $exclude_dirs=null, $ex
         return false;
 
     // ... else if the path is readable
-    } else {
+    }  
 
         // we open the directory
         $handle = opendir($directory);
@@ -481,7 +481,7 @@ function recursive_empty_or_remove_directory($directory, $exclude_dirs=null, $ex
         }
         // return success
         return true;
-    }
+    
 }
 // ------------------------------------------------------------
 
@@ -719,9 +719,9 @@ function upgradeUWFiles($file)
     if (!file_exists("$cacheUploadUpgradesTemp/manifest.php")) {
         logThis("*** ERROR: no manifest file detected while bootstraping upgrade wizard files!");
         return;
-    } else {
+    }  
         include("$cacheUploadUpgradesTemp/manifest.php");
-    }
+    
 
     $allFiles = array();
     $from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
@@ -1050,9 +1050,9 @@ function updateVersions($version)
         if (!copy($_SESSION['sugar_version_file'], clean_path(getcwd().'/sugar_version.php'))) {
             logThis('*** ERROR: sugar_version.php could not be copied to destination! Cannot complete upgrade', $path);
             return false;
-        } else {
+        }  
             logThis('sugar_version.php successfully updated!', $path);
-        }
+        
     } else {
         logThis('*** ERROR: no sugar_version.php file location found! - cannot complete upgrade...', $path);
         return false;
@@ -2467,8 +2467,8 @@ function testThis()
         if ($relativePath == $priorPath) { // same dir, new file
             $out .= "<tr><td>".basename($relativeFile)."</td></tr>";
             $priorPath = $relativePath;
-        } else { // new dir
-        }
+        }   // new dir
+        
     }
 
     $out .= "</table>";
@@ -2708,11 +2708,11 @@ function handleExecuteSqlKeys($db, $tableName, $disable)
     if (is_callable(array($db, "supports"))) {
         // new API
         return $disable?$db->disableKeys($tableName):$db->enableKeys($tableName);
-    } else {
+    }  
         // old api
         $op = $disable?"DISABLE":"ENABLE";
         return $db->query("ALTER TABLE $tableName $op KEYS");
-    }
+    
 }
 
 function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='')
@@ -2813,9 +2813,9 @@ function getAlterTable($query)
         $sqlArray = explode(" ", $query);
         $key = array_search('table', $sqlArray);
         return $sqlArray[($key+1)];
-    } else {
+    }  
         return '';
-    }
+    
 }
 
 function set_upgrade_vars()
@@ -4016,7 +4016,7 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
             logThis('config.php file at (' . $config_location . ') could not be found.  Skip merging.', $path);
         }
         return false;
-    } else {
+    }  
         if ($write_to_upgrade_log) {
             logThis('Loading config.php file at (' . $config_location . ') for merging.', $path);
         }
@@ -4028,7 +4028,7 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
             }
             return false;
         }
-    }
+    
 
     if (!empty($config_si_location) && !file_exists($config_si_location)) {
         if ($write_to_upgrade_log) {
@@ -4050,7 +4050,7 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
             logThis('config_si.php file at (' . $config_si_location . ') could not be found.  Skip merging.', $path);
         }
         return false;
-    } else {
+    }  
         if ($write_to_upgrade_log) {
             logThis('Loading config_si.php file at (' . $config_si_location . ') for merging.', $path);
         }
@@ -4062,7 +4062,7 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
             }
             return false;
         }
-    }
+    
 
     //Now perform the merge operation
     $modified = false;
@@ -4340,9 +4340,9 @@ function getSilentUpgradeVar($var)
 
     if (!isset($silent_upgrade_vars_loaded['vars'][$var])) {
         return null;
-    } else {
+    }  
         return $silent_upgrade_vars_loaded['vars'][$var];
-    }
+    
 }
 
 
@@ -4372,9 +4372,9 @@ function upgradeSugarCache($file)
     if (!file_exists(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"))) {
         logThis("*** ERROR: no manifest file detected while bootstraping upgrade wizard files!");
         return;
-    } else {
+    }  
         include(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"));
-    }
+    
 
     $from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
     $allFiles = array();
@@ -4526,12 +4526,12 @@ function getUWDirs()
         // we're still running the old code
         global $sugar_config;
         return array($sugar_config['upload_dir'] . "/upgrades", $sugar_config['cache_dir'] . "upload/upgrades/temp");
-    } else {
+    }  
         if (!in_array("upload", stream_get_wrappers())) {
             UploadStream::register(); // just in case file was copied, but not run
         }
         return array("upload://upgrades", sugar_cached("upgrades/temp"));
-    }
+    
 }
 
 /**

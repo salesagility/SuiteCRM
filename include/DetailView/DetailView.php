@@ -437,9 +437,9 @@ class DetailView extends ListView
         $varList = $this->getLocalSessionVariable($html_varName, "FROM_LIST_VIEW");
         if (isset($_GET['stamp']) && isset($varList) && $varList == $_GET['stamp']) {
             return true;
-        } else {
+        }  
             return false;
-        }
+        
     }
 
     /**
@@ -452,8 +452,8 @@ class DetailView extends ListView
     {
         if (isset($_SESSION[$name."2_".$value])) {
             return $_SESSION[$name."2_".$value];
-        } else {
+        }  
             return "";
-        }
+        
     }
 }

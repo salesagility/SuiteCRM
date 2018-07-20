@@ -89,7 +89,7 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
             $_SESSION['login_error'] = 'Please Enter Your User Name and Emailed Session Token';
             $this->sendEmailPassword($user_id, $_SESSION['emailAuthToken']);
             return false;
-        } else {
+        }  
             if (strcmp($name, $_SESSION['lastUserName']) == 0 && strcmp($password, $_SESSION['emailAuthToken']) == 0) {
                 $this->loadUserOnSession($_SESSION['lastUserId']);
                 unset($_SESSION['lastUserId']);
@@ -97,7 +97,7 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
                 unset($_SESSION['emailAuthToken']);
                 return true;
             }
-        }
+        
 
         $_SESSION['login_error'] = 'Please Enter Your User Name and Emailed Session Token';
         return false;

@@ -129,9 +129,9 @@
      {
          if (isset($this->Data["Series"][$Serie]["Data"])) {
              return(sizeof($this->Data["Series"][$Serie]["Data"]));
-         } else {
+         }  
              return(0);
-         }
+         
      }
 
      /* Remove a serie from the pData object */
@@ -152,9 +152,9 @@
      {
          if (isset($this->Data["Series"][$Serie]["Data"][$Index])) {
              return($this->Data["Series"][$Serie]["Data"][$Index]);
-         } else {
+         }  
              return(null);
-         }
+         
      }
 
      /* Return the values array */
@@ -162,9 +162,9 @@
      {
          if (isset($this->Data["Series"][$Serie]["Data"])) {
              return($this->Data["Series"][$Serie]["Data"]);
-         } else {
+         }  
              return(null);
-         }
+         
      }
 
      /* Reverse the values in the given serie */
@@ -185,9 +185,9 @@
      {
          if (isset($this->Data["Series"][$Serie])) {
              return(array_sum($this->Data["Series"][$Serie]["Data"]));
-         } else {
+         }  
              return(null);
-         }
+         
      }
 
      /* Return the max value of a given serie */
@@ -195,9 +195,9 @@
      {
          if (isset($this->Data["Series"][$Serie]["Max"])) {
              return($this->Data["Series"][$Serie]["Max"]);
-         } else {
+         }  
              return(null);
-         }
+         
      }
 
      /* Return the min value of a given serie */
@@ -205,9 +205,9 @@
      {
          if (isset($this->Data["Series"][$Serie]["Min"])) {
              return($this->Data["Series"][$Serie]["Min"]);
-         } else {
+         }  
              return(null);
-         }
+         
      }
 
      /* Set the description of a given serie */
@@ -412,9 +412,9 @@
          if (isset($this->Data["Series"][$Serie])) {
              $SerieData = $this->stripVOID($this->Data["Series"][$Serie]["Data"]);
              return(array_sum($SerieData)/sizeof($SerieData));
-         } else {
+         }  
              return(null);
-         }
+         
      }
 
      /* Return the geometric mean of the given serie */
@@ -427,9 +427,9 @@
                  $Seriesum = $Seriesum * $Value;
              }
              return(pow($Seriesum, 1/sizeof($SerieData)));
-         } else {
+         }  
              return(null);
-         }
+         
      }
 
      /* Return the harmonic mean of the given serie */
@@ -442,9 +442,9 @@
                  $Seriesum = $Seriesum + 1/$Value;
              }
              return(sizeof($SerieData)/$Seriesum);
-         } else {
+         }  
              return(null);
-         }
+         
      }
 
      /* Return the standard deviation of the given serie */
@@ -462,9 +462,9 @@
              $Deviation = sqrt($DeviationSum/count($SerieData));
 
              return($Deviation);
-         } else {
+         }  
              return(null);
-         }
+         
      }
 
      /* Return the Coefficient of variation of the given serie */
@@ -476,12 +476,12 @@
 
              if ($StandardDeviation != 0) {
                  return($StandardDeviation/$Average);
-             } else {
+             }  
                  return(null);
-             }
-         } else {
+             
+         }  
              return(null);
-         }
+         
      }
 
      /* Return the median value of the given serie */
@@ -494,12 +494,12 @@
 
              if (isset($SerieData[$SerieCenter])) {
                  return($SerieData[$SerieCenter]);
-             } else {
+             }  
                  return(null);
-             }
-         } else {
+             
+         }  
              return(null);
-         }
+         
      }
 
      /* Return the x th percentil of the given serie */
@@ -520,9 +520,9 @@
 
          if (is_numeric($SortedValues[$PercentilID])) {
              return($SortedValues[$PercentilID]);
-         } else {
+         }  
              return(null);
-         }
+         
      }
 
      /* Add random values to a given serie */

@@ -53,10 +53,10 @@ function smarty_modifier_multienum_to_ac($value='', $field_options=array())
     if (count($expl) == 1) {
         if (array_key_exists($value, $field_options)) {
             return $field_options[$value] . ", ";
-        } else {
+        }  
             return '';
-        }
-    } else {
+        
+    }  
         $final_array = array();
         foreach ($expl as $key_val) {
             if (array_key_exists($key_val, $field_options)) {
@@ -64,7 +64,7 @@ function smarty_modifier_multienum_to_ac($value='', $field_options=array())
             }
         }
         return implode(", ", $final_array) . ", ";
-    }
+    
     
     return '';
 }

@@ -105,7 +105,7 @@ class SpotsDashlet extends Dashlet
 
         if (is_null($this->spotId) || $this->spotId === '') {
             return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_NO_SPOTS_SELECTED'].'</span><br />'; // return parent::display for title and such
-        } else {
+        }  
             if ($this->checkIfSpotHasBeenDeleted($this->spotId)) {
                 return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_SPOTS_POINTED_DELETED'].'</span><br />'; // return parent::display for title and such
             }
@@ -123,7 +123,7 @@ class SpotsDashlet extends Dashlet
             $str = $ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashlet.tpl');
 
             return parent::display().$str.'<br />'; // return parent::display for title and such
-        }
+        
     }
 
     /**

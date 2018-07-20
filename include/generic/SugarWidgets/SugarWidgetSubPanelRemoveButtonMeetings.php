@@ -113,8 +113,8 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
         if ($layout_def['ListView']) {
             return "<a href=\"javascript:sub_p_rem('$subpanel', '$linked_field'" .", '$record', $refresh_page);\""
                     . ' class="listViewTdToolsS1"' . " onclick=\"return sp_rem_conf();\"" . ">$icon_remove_text</a>";
-        } else {
+        }  
             return '';
-        }
+        
     }
 }

@@ -194,7 +194,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
             return new Zend_Search_Lucene_Search_Query_Empty();
         } elseif ($this->_terms[0]->field !== null) {
             return $this;
-        } else {
+        }  
             require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
             $query = new Zend_Search_Lucene_Search_Query_Boolean();
             $query->setBoost($this->getBoost());
@@ -214,7 +214,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
             }
 
             return $query;
-        }
+        
     }
 
     /**
@@ -513,9 +513,9 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
 
             // Included in result, but culculated freq is zero
             return 0;
-        } else {
+        }  
             return 0;
-        }
+        
     }
 
     /**

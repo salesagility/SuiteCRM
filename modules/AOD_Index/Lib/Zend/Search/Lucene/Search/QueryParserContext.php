@@ -394,8 +394,8 @@ class Zend_Search_Lucene_Search_QueryParserContext
     {
         if ($this->_mode === self::GM_BOOLEAN) {
             return $this->_booleanExpressionQuery();
-        } else {
+        }  
             return $this->_signStyleExpressionQuery();
-        }
+        
     }
 }
