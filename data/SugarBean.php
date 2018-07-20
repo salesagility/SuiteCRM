@@ -2524,6 +2524,9 @@ class SugarBean
                 "isset" => true,
                 "fetchbean" => $this,
             );
+        if (!isset($this->field_name_map)){
+            return;
+        }
         foreach($this->field_name_map as $field => $value)
         {
             if (isset($value['calculated']) && ($value['calculated'] == 1 || $value['calculated'] == true))
