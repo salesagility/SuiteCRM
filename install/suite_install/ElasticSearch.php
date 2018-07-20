@@ -48,7 +48,7 @@ function install_es()
 
     global $sugar_config;
 
-    $sugar_config['MasterSearch']['ElasticSearch']['enable'] = false;
+    $sugar_config['MasterSearch']['ElasticSearch']['enabled'] = false;
     $sugar_config['MasterSearch']['ElasticSearch']['host'] = 'localhost';
     $sugar_config['MasterSearch']['ElasticSearch']['user'] = '';
     $sugar_config['MasterSearch']['ElasticSearch']['pass'] = '';

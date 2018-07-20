@@ -102,4 +102,21 @@ class ElasticSearchInstallTest extends SearchTestAbstract
 
         self::assertArrayHasKey('function::runElasticSearchIndexerScheduler', $jobs);
     }
+
+    /**
+     * Asserts that the configuration for the ElasticSearch are present in the global config array.
+     */
+    public function testConfigPresent()
+    {
+        global $sugar_config;
+
+        self::assertArrayHasKey('MasterSearch', $sugar_config, "MasterSearch config not present");
+
+        self::assertArrayHasKey('ElasticSearch', $sugar_config['MasterSearch']);
+
+        self::assertArrayHasKey('enabled', $sugar_config['MasterSearch']['ElasticSearch']);
+        self::assertArrayHasKey('host', $sugar_config['MasterSearch']['ElasticSearch']);
+        self::assertArrayHasKey('user', $sugar_config['MasterSearch']['ElasticSearch']);
+        self::assertArrayHasKey('pass', $sugar_config['MasterSearch']['ElasticSearch']);
+    }
 }
