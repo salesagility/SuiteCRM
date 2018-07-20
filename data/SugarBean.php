@@ -5811,7 +5811,7 @@ class SugarBean
             );
         foreach ($this->field_defs as $field => $value) {
             if (isset($this->$field)) {
-                if ($value['visibility'] == 1 || $value['visibility'] == true) {
+                if (isset($value['visibility']) && ($value['visibility'] == 1 || $value['visibility'] == true)) {
                     switch($value['visformula']['type']){
                         case 'function':
                             require_once( $value['visformula']['function']['include'] );
