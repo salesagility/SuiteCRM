@@ -204,14 +204,14 @@ class SharedSecurityGroupsCest {
         
         // now we are going to login with the tester user (use the following code if it is the first login)
         // 
-//        $I->waitForElementVisible('#next_tab_personalinfo', self::WAITING_DELAY);
-//        $I->click('#next_tab_personalinfo'); // next..
-//        $I->waitForElementVisible('#next_tab_locale', self::WAITING_DELAY);
-//        $I->click('#next_tab_locale'); // next..
-//        $I->waitForElementVisible('#next_tab_finish', self::WAITING_DELAY);
-//        $I->click('#next_tab_finish'); // next..
-//        $I->waitForElementVisible('#finish > div:nth-child(2) > input:nth-child(2)', self::WAITING_DELAY);
-//        $I->click('#finish > div:nth-child(2) > input:nth-child(2)'); // finish..
+        $I->waitForElementVisible('#next_tab_personalinfo', self::WAITING_DELAY);
+        $I->click('#next_tab_personalinfo'); // next..
+        $I->waitForElementVisible('#next_tab_locale', self::WAITING_DELAY);
+        $I->click('#next_tab_locale'); // next..
+        $I->waitForElementVisible('#next_tab_finish', self::WAITING_DELAY);
+        $I->click('#next_tab_finish'); // next..
+        $I->waitForElementVisible('#finish > div:nth-child(2) > input:nth-child(2)', self::WAITING_DELAY);
+        $I->click('#finish > div:nth-child(2) > input:nth-child(2)'); // finish..
         
     }
 
