@@ -37,7 +37,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$viewdefs ['Documents'] = 
+$viewdefs ['Documents'] =
 array(
   'DetailView' =>
   array(
@@ -157,7 +157,7 @@ array(
         ),
         7 =>
         array(
-          0 => 
+          0 =>
           array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
