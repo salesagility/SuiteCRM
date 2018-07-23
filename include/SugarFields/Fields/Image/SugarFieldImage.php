@@ -48,17 +48,15 @@ class SugarFieldImage extends SugarFieldFile
 {
     public function getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col)
     {
-
-        if(isset($displayParams['module']) && !empty($displayParams['module'])){
+        if (isset($displayParams['module']) && !empty($displayParams['module'])) {
             $this->ss->assign("module", $displayParams['module']);
-        }else{
+        } else {
             $this->ss->assign("module", $_REQUEST['module']);
         }
         return parent::getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col);
     }
     public function save(&$bean, $params, $field, $vardef, $prefix = '')
     {
-
         $fakeDisplayParams = array();
         $this->fillInOptions($vardef, $fakeDisplayParams);
 
@@ -72,17 +70,16 @@ class SugarFieldImage extends SugarFieldFile
 
         $move = false;
         if (isset($_FILES[$prefix . $field . '_file']) && $upload_file->confirm_upload()) {
-            if($this->verify_image($upload_file)) {
+            if ($this->verify_image($upload_file)) {
                 $bean->$field = $upload_file->get_stored_file_name();
                 $move = true;
-            }else{
+            } else {
                 //not valid image.
                 $GLOBALS['log']->fatal("Image Field : Not a Valid Image.");
                 $temp = $vardef['vname'];
                 $temp = translate($temp, $bean->module_name);
                 SugarApplication::appendErrorMessage($temp . " Field :  Not a valid image format.");
             }
-
         }
 
         if (empty($bean->id)) {
@@ -125,29 +122,30 @@ class SugarFieldImage extends SugarFieldFile
                 }
             }
         }
-
     }
 
-    public function verify_image($upload_file){
+    public function verify_image($upload_file)
+    {
         global $sugar_config;
 
         $valid_ext = isset($sugar_config['image_ext']) ? $sugar_config['image_ext'] : array("image/jpeg","image/png");
 
         $img_size = getimagesize($upload_file->temp_file_location);
         $filetype = $img_size['mime'];
-        if( in_array($filetype, array_values($valid_ext)) ) {
+        if (in_array($filetype, array_values($valid_ext))) {
             return true;
         }
-}
-    private function fillInOptions(&$vardef,&$displayParams) {
-        if ( isset($vardef['allowEapm']) && $vardef['allowEapm'] == true ) {
-            if ( empty($vardef['docType']) ) {
+    }
+    private function fillInOptions(&$vardef, &$displayParams)
+    {
+        if (isset($vardef['allowEapm']) && $vardef['allowEapm'] == true) {
+            if (empty($vardef['docType'])) {
                 $vardef['docType'] = 'doc_type';
             }
-            if ( empty($vardef['docId']) ) {
+            if (empty($vardef['docId'])) {
                 $vardef['docId'] = 'doc_id';
             }
-            if ( empty($vardef['docUrl']) ) {
+            if (empty($vardef['docUrl'])) {
                 $vardef['docUrl'] = 'doc_url';
             }
         } else {
@@ -155,15 +153,15 @@ class SugarFieldImage extends SugarFieldFile
         }
 
         // Override the default module
-        if ( isset($vardef['linkModuleOverride']) ) {
+        if (isset($vardef['linkModuleOverride'])) {
             $vardef['linkModule'] = $vardef['linkModuleOverride'];
         } else {
             $vardef['linkModule'] = '{$module}';
         }
 
         // This is needed because these aren't always filled out in the edit/detailview defs
-        if ( !isset($vardef['fileId']) ) {
-            if ( isset($displayParams['id']) ) {
+        if (!isset($vardef['fileId'])) {
+            if (isset($displayParams['id'])) {
                 $vardef['fileId'] = $displayParams['id'];
             } else {
                 $vardef['fileId'] = 'id';

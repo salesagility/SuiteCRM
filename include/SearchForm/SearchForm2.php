@@ -50,36 +50,36 @@ require_once('include/EditView/EditView2.php');
 
 class SearchForm
 {
-    var $seed = null;
-    var $module = '';
-    var $action = 'index';
-    var $searchdefs = array();
-    var $listViewDefs = array();
-    var $lv;
-    var $th;
-    var $tpl;
-    var $view = 'SearchForm';
-    var $displayView = 'basic_search';
-    var $formData;
-    var $fieldDefs;
-    var $customFieldDefs;
-    var $tabs;
-    var $parsedView = 'basic';
+    public $seed = null;
+    public $module = '';
+    public $action = 'index';
+    public $searchdefs = array();
+    public $listViewDefs = array();
+    public $lv;
+    public $th;
+    public $tpl;
+    public $view = 'SearchForm';
+    public $displayView = 'basic_search';
+    public $formData;
+    public $fieldDefs;
+    public $customFieldDefs;
+    public $tabs;
+    public $parsedView = 'basic';
     //may remove
-    var $searchFields;
-    var $displaySavedSearch = true;
+    public $searchFields;
+    public $displaySavedSearch = true;
     //show the advanced tab
-    var $showAdvanced = true;
+    public $showAdvanced = true;
     //show the basic tab
-    var $showBasic = true;
+    public $showBasic = true;
     //array of custom tab to show declare in searchdefs (no custom tab if false)
-    var $showCustom = false;
+    public $showCustom = false;
     // nb of tab to show
-    var $nbTabs = 0;
+    public $nbTabs = 0;
     // hide saved searches drop and down near the search button
-    var $showSavedSearchesOptions = true;
+    public $showSavedSearchesOptions = true;
 
-    var $displayType = 'searchView';
+    public $displayType = 'searchView';
 
     /**
      * @var array
@@ -124,7 +124,7 @@ class SearchForm
         return $this->savedSearchData;
     }
 
-    function setup($searchdefs, $searchFields = array(), $tpl = 'SubpanelSearchFormGeneric.tpl', $displayView = 'basic_search', $listViewDefs = array())
+    public function setup($searchdefs, $searchFields = array(), $tpl = 'SubpanelSearchFormGeneric.tpl', $displayView = 'basic_search', $listViewDefs = array())
     {
         $this->searchdefs = isset($searchdefs[$this->module]) ? $searchdefs[$this->module] : null;
         $this->tpl = $tpl;
@@ -170,7 +170,7 @@ class SearchForm
         }
     }
 
-    function display($header = true)
+    public function display($header = true)
     {
         global $theme, $timedate, $current_user, $sugar_config;
         $header_txt = '';
@@ -199,8 +199,10 @@ class SearchForm
         if ($this->nbTabs > 1) {
             $this->th->ss->assign('TABS', $this->_displayTabs($this->module . '|' . $this->displayView));
         }
-        $this->th->ss->assign('searchTableColumnCount',
-            ((isset($this->searchdefs['templateMeta']['maxColumns']) ? $this->searchdefs['templateMeta']['maxColumns'] : 2) * 2) - 1);
+        $this->th->ss->assign(
+            'searchTableColumnCount',
+            ((isset($this->searchdefs['templateMeta']['maxColumns']) ? $this->searchdefs['templateMeta']['maxColumns'] : 2) * 2) - 1
+        );
         $this->th->ss->assign('fields', $this->fieldDefs);
         $this->th->ss->assign('customFields', $this->customFieldDefs);
         $this->th->ss->assign('formData', $this->formData);
@@ -249,7 +251,6 @@ class SearchForm
             } else {
                 $this->tabs[$tabkey]['displayDiv'] = 'display:none';
             }
-
         }
 
         $this->th->ss->assign('TAB_ARRAY', $this->tabs);
@@ -292,7 +293,7 @@ class SearchForm
         $searchFormInPopup = !in_array($this->module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
         $this->th->ss->assign('searchFormInPopup', $searchFormInPopup);
 
-        if(!isset($this->seed)) {
+        if (!isset($this->seed)) {
             LoggerManager::getLogger()->warn('Undefined seed for display search form while trying to get module_dir');
             $this->seed = new stdClass();
             $this->seed->module_dir = null;
@@ -490,7 +491,7 @@ class SearchForm
         return false;
     }
 
-    function displaySavedSearch($orderBySelectOnly = false)
+    public function displaySavedSearch($orderBySelectOnly = false)
     {
         $savedSearch = new SavedSearch($this->listViewDefs[$this->module], $this->lv->data['pageData']['ordering']['orderBy'], $this->lv->data['pageData']['ordering']['sortOrder']);
         $ret = $savedSearch->getForm($this->module, false, $orderBySelectOnly);
@@ -500,11 +501,11 @@ class SearchForm
     }
 
 
-    function displaySavedSearchSelect()
+    public function displaySavedSearchSelect()
     {
         $savedSearch = new SavedSearch(
-            $this->listViewDefs[$this->module], 
-            isset($this->lv->data['pageData']['ordering']['orderBy']) ? $this->lv->data['pageData']['ordering']['orderBy'] : null, 
+            $this->listViewDefs[$this->module],
+            isset($this->lv->data['pageData']['ordering']['orderBy']) ? $this->lv->data['pageData']['ordering']['orderBy'] : null,
             isset($this->lv->data['pageData']['ordering']['sortOrder']) ? $this->lv->data['pageData']['ordering']['sortOrder'] : null
         );
         $savedSearchSelect = $savedSearch->getSelect($this->module, $savedSearchData);
@@ -521,7 +522,7 @@ class SearchForm
      *
      * @return string html
      */
-    function _displayTabs($currentKey)
+    public function _displayTabs($currentKey)
     {
         if (isset($_REQUEST['saved_search_select']) && $_REQUEST['saved_search_select'] != '_none') {
             $saved_search = loadBean('SavedSearch');
@@ -529,22 +530,26 @@ class SearchForm
         }
 
         $str = '<script>';
-        if (!empty($_REQUEST['displayColumns']))
+        if (!empty($_REQUEST['displayColumns'])) {
             $str .= 'SUGAR.savedViews.displayColumns = "' . $_REQUEST['displayColumns'] . '";';
-        elseif (isset($saved_search->contents['displayColumns']) && !empty($saved_search->contents['displayColumns']))
+        } elseif (isset($saved_search->contents['displayColumns']) && !empty($saved_search->contents['displayColumns'])) {
             $str .= 'SUGAR.savedViews.displayColumns = "' . $saved_search->contents['displayColumns'] . '";';
-        if (!empty($_REQUEST['hideTabs']))
+        }
+        if (!empty($_REQUEST['hideTabs'])) {
             $str .= 'SUGAR.savedViews.hideTabs = "' . $_REQUEST['hideTabs'] . '";';
-        elseif (isset($saved_search->contents['hideTabs']) && !empty($saved_search->contents['hideTabs']))
+        } elseif (isset($saved_search->contents['hideTabs']) && !empty($saved_search->contents['hideTabs'])) {
             $str .= 'SUGAR.savedViews.hideTabs = "' . $saved_search->contents['hideTabs'] . '";';
-        if (!empty($_REQUEST['orderBy']))
+        }
+        if (!empty($_REQUEST['orderBy'])) {
             $str .= 'SUGAR.savedViews.selectedOrderBy = "' . $_REQUEST['orderBy'] . '";';
-        elseif (isset($saved_search->contents['orderBy']) && !empty($saved_search->contents['orderBy']))
+        } elseif (isset($saved_search->contents['orderBy']) && !empty($saved_search->contents['orderBy'])) {
             $str .= 'SUGAR.savedViews.selectedOrderBy = "' . $saved_search->contents['orderBy'] . '";';
-        if (!empty($_REQUEST['sortOrder']))
+        }
+        if (!empty($_REQUEST['sortOrder'])) {
             $str .= 'SUGAR.savedViews.selectedSortOrder = "' . $_REQUEST['sortOrder'] . '";';
-        elseif (isset($saved_search->contents['sortOrder']) && !empty($saved_search->contents['sortOrder']))
+        } elseif (isset($saved_search->contents['sortOrder']) && !empty($saved_search->contents['sortOrder'])) {
             $str .= 'SUGAR.savedViews.selectedSortOrder = "' . $saved_search->contents['sortOrder'] . '";';
+        }
 
         $str .= '</script>';
 
@@ -554,15 +559,16 @@ class SearchForm
     /*
     * Generate the data
     */
-    function _build_field_defs()
+    public function _build_field_defs()
     {
         $this->formData = array();
         $this->fieldDefs = array();
         foreach ((array)$this->searchdefs['layout'][$this->displayView] as $data) {
             if (is_array($data)) {
                 //Fields may be listed but disabled so that when they are enabled, they have the correct custom display data.
-                if (isset($data['enabled']) && $data['enabled'] == false)
+                if (isset($data['enabled']) && $data['enabled'] == false) {
                     continue;
+                }
                 $data['name'] = $data['name'] . '_' . $this->parsedView;
                 $this->formData[] = array('field' => $data);
                 $this->fieldDefs[$data['name']] = $data;
@@ -583,9 +589,9 @@ class SearchForm
 
             foreach ($this->seed->toArray() as $name => $value) {
                 $fvName = $name . '_' . $this->parsedView;
-                if (!empty($this->fieldDefs[$fvName]))
+                if (!empty($this->fieldDefs[$fvName])) {
                     $this->fieldDefs[$fvName] = array_merge($this->seed->field_defs[$name], $this->fieldDefs[$fvName]);
-                else {
+                } else {
                     $this->fieldDefs[$fvName] = $this->seed->field_defs[$name];
                     $this->fieldDefs[$fvName]['name'] = (isset($this->fieldDefs[$fvName]['name']) ? $this->fieldDefs[$fvName]['name'] : null) . '_' . $this->parsedView;
                 }
@@ -610,7 +616,6 @@ class SearchForm
                 }
 
                 if (isset($this->fieldDefs[$fvName]['function'])) {
-
                     $this->fieldDefs[$fvName]['type'] = 'multienum';
 
                     if (is_array($this->fieldDefs[$fvName]['function'])) {
@@ -655,12 +660,8 @@ class SearchForm
                     $value = $_REQUEST[$fvName];
                     $this->fieldDefs[$fvName]['value'] = $value;
                 }
-
             } //foreach
-
-
         }
-
     }
 
     /**
@@ -670,13 +671,14 @@ class SearchForm
      * @param string $switchVar variable to use in switch statement
      * @param bool $addAllBeanFields true to process at all bean fields
      */
-    function populateFromArray(&$array, $switchVar = null, $addAllBeanFields = true)
+    public function populateFromArray(&$array, $switchVar = null, $addAllBeanFields = true)
     {
-
         if ((!empty($array['searchFormTab']) || !empty($switchVar)) && !empty($this->searchFields)) {
             $arrayKeys = array_keys($array);
             $searchFieldsKeys = array_keys($this->searchFields);
-            if (empty($switchVar)) $switchVar = $array['searchFormTab'];
+            if (empty($switchVar)) {
+                $switchVar = $array['searchFormTab'];
+            }
             //name of  the search tab
             $SearchName = str_replace('_search', '', $switchVar);
             if ($switchVar == 'saved_views') {
@@ -684,7 +686,9 @@ class SearchForm
                     foreach ($this->tabs as $tabName) {
                         if (!empty($array[$name . '_' . $tabName['name']])) {
                             $this->searchFields[$name]['value'] = $array[$name . '_' . $tabName['name']];
-                            if (empty($this->fieldDefs[$name . '_' . $tabName['name']]['value'])) $this->fieldDefs[$name . '_' . $tabName['name']]['value'] = $array[$name . '_' . $tabName['name']];
+                            if (empty($this->fieldDefs[$name . '_' . $tabName['name']]['value'])) {
+                                $this->fieldDefs[$name . '_' . $tabName['name']]['value'] = $array[$name . '_' . $tabName['name']];
+                            }
                         }
                     }
                 }
@@ -701,7 +705,6 @@ class SearchForm
                     }
                 }
             } else {
-
                 $fromMergeRecords = isset($array['merge_module']);
 
                 foreach ($this->searchFields as $name => $params) {
@@ -712,8 +715,7 @@ class SearchForm
                         if (empty($this->fieldDefs[$long_name]['value'])) {
                             $this->fieldDefs[$long_name]['value'] = $array[$long_name];
                         }
-                    } elseif (!empty($array[$name]) && !$fromMergeRecords) // basic
-                    {
+                    } elseif (!empty($array[$name]) && !$fromMergeRecords) { // basic
                         $this->searchFields[$name]['value'] = $array[$name];
                         if (empty($this->fieldDefs[$long_name]['value'])) {
                             $this->fieldDefs[$long_name]['value'] = $array[$name];
@@ -771,7 +773,6 @@ class SearchForm
                 }
             }
         }
-
     }
 
     /**
@@ -780,7 +781,7 @@ class SearchForm
      * @param string $switchVar variable to use in switch statement
      * @param bool $addAllBeanFields true to process at all bean fields
      */
-    function populateFromRequest($switchVar = null, $addAllBeanFields = true)
+    public function populateFromRequest($switchVar = null, $addAllBeanFields = true)
     {
         $this->populateFromArray($_REQUEST, $switchVar, $addAllBeanFields);
     }
@@ -802,7 +803,9 @@ class SearchForm
             $adjForTZ = true;
         }
         $dates = TimeDate::getInstance()->parseDateRange($operator, null, $adjForTZ);
-        if (empty($dates)) return '';
+        if (empty($dates)) {
+            return '';
+        }
         $start = $this->seed->db->convert($this->seed->db->quoted($dates[0]->asDb()), $type);
         $end = $this->seed->db->convert($this->seed->db->quoted($dates[1]->asDb()), $type);
 
@@ -914,7 +917,6 @@ class SearchForm
 
 
             if (isset($parms['value']) && $parms['value'] != "") {
-
                 $operator = $db->isNumericType($type) ? '=' : 'like';
                 if (!empty($parms['operator'])) {
                     $operator = strtolower($parms['operator']);
@@ -937,8 +939,9 @@ class SearchForm
                             $db_field = $this->seed->field_name_map[$field]['name'];
                         } else {
                             $table_name = $this->seed->table_name;
-                            if ($customField)
+                            if ($customField) {
                                 $table_name .= "_cstm";
+                            }
                             $db_field = $table_name . "." . $field;
                         }
 
@@ -953,7 +956,6 @@ class SearchForm
                                 $field_value .= '(' . $db_field . ' IS NULL or ' . $db_field . "='^^' or " . $db_field . "='')";
                             }
                         }
-
                     } else {
                         $operator = $operator != 'subquery' ? 'in' : $operator;
                         foreach ($parms['value'] as $val) {
@@ -977,7 +979,6 @@ class SearchForm
                             }
                         }
                     }
-
                 } else {
                     $field_value = $parms['value'];
                 }
@@ -1015,7 +1016,6 @@ class SearchForm
                 $itr = 0;
 
                 if ($field_value != '' || $operator == 'isnull') {
-
                     $this->searchColumns [strtoupper($field)] = $field;
 
                     foreach ($parms['db_field'] as $db_field) {
@@ -1032,8 +1032,6 @@ class SearchForm
                                     //Best Guess for table name
                                     $db_field = strtolower($link['module']) . '.' . $db_field;
                                 }
-
-
                             } elseif ($type == 'parent') {
                                 if (!empty($this->searchFields['parent_type'])) {
                                     $parentType = $this->searchFields['parent_type'];
@@ -1049,18 +1047,20 @@ class SearchForm
                             elseif ($type == 'relate' && $customField && !empty($this->seed->field_name_map[$field]['module'])) {
                                 $db_field = !empty($this->seed->field_name_map[$field]['name']) ? $this->seed->field_name_map[$field]['name'] : 'name';
                             } elseif (!$customField) {
-                                if (!empty($this->seed->field_name_map[$field]['db_concat_fields']))
+                                if (!empty($this->seed->field_name_map[$field]['db_concat_fields'])) {
                                     $db_field = $db->concat($this->seed->table_name, $this->seed->field_name_map[$db_field]['db_concat_fields']);
+                                }
                                 // Relationship fields get the name directly from the field_name_map
-                                elseif (!(isset($this->seed->field_name_map[$db_field]) && isset($this->seed->field_name_map[$db_field]['source']) && $this->seed->field_name_map[$db_field]['source'] == 'non-db'))
+                                elseif (!(isset($this->seed->field_name_map[$db_field]) && isset($this->seed->field_name_map[$db_field]['source']) && $this->seed->field_name_map[$db_field]['source'] == 'non-db')) {
                                     $db_field = $this->seed->table_name . "." . $db_field;
+                                }
                             } else {
-                                if (!empty($this->seed->field_name_map[$field]['db_concat_fields']))
+                                if (!empty($this->seed->field_name_map[$field]['db_concat_fields'])) {
                                     $db_field = $db->concat($this->seed->table_name . "_cstm.", $this->seed->field_name_map[$db_field]['db_concat_fields']);
-                                else
+                                } else {
                                     $db_field = $this->seed->table_name . "_cstm." . $db_field;
+                                }
                             }
-
                         }
 
                         if ($type == 'date') {
@@ -1190,7 +1190,9 @@ class SearchForm
                                     }
                                     $first = true;
                                     foreach ($sq as $q) {
-                                        if (empty($q) || strlen($q) < 2) continue;
+                                        if (empty($q) || strlen($q) < 2) {
+                                            continue;
+                                        }
                                         if (!$first) {
                                             $where .= $and_or;
                                         }
@@ -1339,8 +1341,9 @@ class SearchForm
                                 break;
                             case 'isnull':
                                 $where .= "($db_field IS NULL OR $db_field = '')";
-                                if ($field_value != '')
+                                if ($field_value != '') {
                                     $where .= ' OR ' . $db_field . " in (" . $field_value . ')';
+                                }
                                 break;
                         }
                     }

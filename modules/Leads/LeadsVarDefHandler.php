@@ -38,20 +38,23 @@
  ********************************************************************************/
 
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 require_once('include/VarDefHandler/VarDefHandler.php');
 
 class LeadsVarDefHandler extends VarDefHandler
 {
     /**
-     * Overriden to filter legacy pre-5.1 calls and meetings 
+     * Overriden to filter legacy pre-5.1 calls and meetings
      * @see VarDefHandler::get_vardef_array()
      */
     public function get_vardef_array($use_singular=false, $remove_dups = false, $use_field_name = false, $use_field_label = false)
     {
         $options_array = parent::get_vardef_array($use_singular, $remove_dups, $use_field_name, $use_field_label);
-        if ($this->meta_array_name == 'rel_filter')
+        if ($this->meta_array_name == 'rel_filter') {
             unset($options_array['oldcalls'], $options_array['oldmeetings']);
+        }
         return $options_array;
     }
 }

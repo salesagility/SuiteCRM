@@ -57,6 +57,5 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('aos_quotes');
-        
     }
 }

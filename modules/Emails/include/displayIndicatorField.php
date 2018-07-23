@@ -55,26 +55,26 @@ function displayIndicatorField($focus, $field, $value, $view)
     $result = '';
     $bean = array();
 
-    if(empty($view)) {
+    if (empty($view)) {
         return $result;
     }
 
-    if(strtolower($field) !== 'indicator') {
+    if (strtolower($field) !== 'indicator') {
         return $result;
     }
 
-    if(is_object($focus)) {
+    if (is_object($focus)) {
         $focus = get_object_vars($focus);
-    } elseif(is_array($focus)) {
+    } elseif (is_array($focus)) {
         $focus = array_change_key_case($focus, CASE_LOWER);
     }
 
-    if(!empty($focus['id'])) {
+    if (!empty($focus['id'])) {
         $bean = BeanFactory::getBean('Emails', $focus['id']);
         if (is_object($bean)) {
             $bean = get_object_vars($bean);
         }
-    } else{
+    } else {
         $bean = $focus;
     }
 

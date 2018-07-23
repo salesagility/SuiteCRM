@@ -44,7 +44,6 @@ require_once('Zend/Gdata/Query.php');
  */
 class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
 {
-
     const SPREADSHEETS_FEED_URI = 'http://spreadsheets.google.com/feeds';
 
     protected $_defaultFeedUri = self::SPREADSHEETS_FEED_URI;
@@ -284,5 +283,4 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
     {
         return parent::getQueryString();
     }
-
 }

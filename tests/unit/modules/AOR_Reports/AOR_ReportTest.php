@@ -3,7 +3,6 @@
 
 class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-
     public function testAOR_Report()
     {
         $state = new SuiteCRM\StateSaver();
@@ -25,8 +24,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'importable', $aor_Report);
         
         // clean up
-        
-        
     }
 
     public function testbean_implements()
@@ -148,8 +145,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetReportFields()
@@ -344,8 +339,14 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test with type custom and verify that it retunrs expected results
         $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `accounts_contacts` ON `accounts`.id = `contacts`.id_c '));
-        $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(),
-            'custom', array());
+        $actual = $aor_Report->build_report_query_join(
+            'contacts',
+            'accounts_contacts',
+            'accounts',
+            new Account(),
+            'custom',
+            array()
+        );
         $this->assertSame($expected, $actual);
 
         //test with type relationship and verify that it retunrs expected results
@@ -354,8 +355,14 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'id_select' => array('accounts_contacts' => '`accounts_contacts`.id AS \'accounts_contacts_id\''),
             'id_select_group' => array('accounts_contacts' => '`accounts_contacts`.id')
         );
-        $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(),
-            'relationship', array());
+        $actual = $aor_Report->build_report_query_join(
+            'contacts',
+            'accounts_contacts',
+            'accounts',
+            new Account(),
+            'relationship',
+            array()
+        );
         $this->assertSame($expected, $actual);
     }
 

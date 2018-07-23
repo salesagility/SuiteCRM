@@ -40,10 +40,11 @@
 
 class OAuthKeysController extends SugarController
 {
-	public function process() {
-		if(!is_admin($GLOBALS['current_user'])) {
-			$this->hasAccess = false;
-		}
-		parent::process();
-	}
+    public function process()
+    {
+        if (!is_admin($GLOBALS['current_user'])) {
+            $this->hasAccess = false;
+        }
+        parent::process();
+    }
 }

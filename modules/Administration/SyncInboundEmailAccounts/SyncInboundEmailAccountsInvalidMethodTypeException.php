@@ -43,4 +43,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 class SyncInboundEmailAccountsInvalidMethodTypeException extends Exception
-{}
+{
+}

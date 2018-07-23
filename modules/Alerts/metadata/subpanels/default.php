@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,19 +43,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $module_name='Alerts';
 $subpanel_layout = array(
-	'top_buttons' => array(
+    'top_buttons' => array(
 //		array('widget_class' => 'SubPanelTopCreateButton'),
 //		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
-	),
+    ),
 
-	'where' => '',
+    'where' => '',
 
-	'list_fields' => array(
-		'name'=>array(
-	 		'vname' => 'LBL_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '45%',
-		),
+    'list_fields' => array(
+        'name'=>array(
+            'vname' => 'LBL_NAME',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '45%',
+        ),
 //		'date_modified'=>array(
 //	 		'vname' => 'LBL_DATE_MODIFIED',
 //	 		'width' => '45%',
@@ -70,5 +72,5 @@ $subpanel_layout = array(
 //		 	'module' => $module_name,
 //			'width' => '5%',
 //		),
-	),
+    ),
 );

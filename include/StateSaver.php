@@ -90,7 +90,6 @@ class StateSaver
     public function __destruct()
     {
         if (!empty($this->stack)) {
-            
             $info = "\nNeeds to restore:\n";
             
             $namespaces = array_keys($this->stack);
@@ -355,7 +354,7 @@ class StateSaver
         
         DBManagerFactory::getInstance()->query("TRUNCATE TABLE " . DBManagerFactory::getInstance()->quote($table));
         
-        if(!is_array($rows)) {
+        if (!is_array($rows)) {
             throw new StateSaverException('Table information is not an array. Are you sure you pushed this table "' . $table . '" previously?');
         }
         foreach ($rows as $row) {
@@ -445,7 +444,7 @@ class StateSaver
     /**
      * Getter for PHP Configuration Options
      * @see more at StateCheckerConfig::$phpConfigOptionKeys
-     * 
+     *
      * @return array
      */
     public static function getPHPConfigOptions()
@@ -462,7 +461,7 @@ class StateSaver
     /**
      * Setter for PHP Configuration Options
      * @see more at StateCheckerConfig::$phpConfigOptionKeys
-     * 
+     *
      * @param array $configOptions
      * @throws StateSaverException
      */
@@ -479,7 +478,7 @@ class StateSaver
     /**
      * Store PHP Configuration Options
      * @see more at StateCheckerConfig::$phpConfigOptionKeys
-     * 
+     *
      * @param string $key
      * @param string $namespace
      */
@@ -492,7 +491,7 @@ class StateSaver
     /**
      * Restore PHP Configuration Options
      * @see more at StateCheckerConfig::$phpConfigOptionKeys
-     * 
+     *
      * @param string $key
      * @param string $namespace
      */

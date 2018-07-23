@@ -58,7 +58,6 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('tracker');
-        
     }
 
     public function getByKey($key)

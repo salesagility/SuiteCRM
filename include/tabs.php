@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,12 +47,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
      */
 class SugarWidgetTabs
 {
+    public $tabs;
+    public $current_key;
 
-    var $tabs;
-    var $current_key;
-
-    function __construct(&$tabs, $current_key, $jscallback) {
-
+    public function __construct(&$tabs, $current_key, $jscallback)
+    {
         $this->tabs = $tabs;
         $this->current_key = $current_key;
         $this->jscallback = $jscallback;
@@ -59,21 +60,20 @@ class SugarWidgetTabs
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetTabs(&$tabs, $current_key, $jscallback) {
-
+    public function SugarWidgetTabs(&$tabs, $current_key, $jscallback)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($tabs, $current_key, $jscallback);
     }
 
 
-    function display() {
-
+    public function display()
+    {
         $template = new Sugar_Smarty();
         $template->assign('subpanel_tabs', $this->tabs);
         $template->assign('subpanel_tabs_count', count($this->tabs));

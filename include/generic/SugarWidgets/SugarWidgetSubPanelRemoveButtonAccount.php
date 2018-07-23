@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,10 +52,11 @@ class SugarWidgetSubPanelRemoveButtonAccount extends SugarWidgetSubPanelRemoveBu
      * @param $layout_def
      * @return bool|string
      */
-	function displayList(&$layout_def) {
-		if (!$layout_def['EditView']) {
-			return false;
-		}
-		return parent::displayList($layout_def);
-	}
+    public function displayList(&$layout_def)
+    {
+        if (!$layout_def['EditView']) {
+            return false;
+        }
+        return parent::displayList($layout_def);
+    }
 }

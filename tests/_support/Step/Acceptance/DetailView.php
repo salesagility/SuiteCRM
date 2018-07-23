@@ -33,5 +33,4 @@ class DetailView extends Tester
         $I = $this;
         $I->waitForElementVisible('.detail-view', 120);
     }
-
 }

@@ -58,7 +58,7 @@ class updatePortal
             global $sugar_config;
             $aop_config = $sugar_config['aop'];
 
-            $template = BeanFactory::getBean('EmailTemplates',$aop_config['joomla_account_creation_email_template_id']);
+            $template = BeanFactory::getBean('EmailTemplates', $aop_config['joomla_account_creation_email_template_id']);
 
             $search = array("\$joomla_pass", "\$portal_address");
             $replace = array($bean->joomla_account_access, $aop_config['joomla_url']);
@@ -111,7 +111,7 @@ class updatePortal
             $emailObj->description = $mail->AltBody;
             $emailObj->description_html = $mail->Body;
             $emailObj->from_addr_name = $mail->From;
-            if ($relatedBean instanceOf SugarBean && !empty($relatedBean->id)) {
+            if ($relatedBean instanceof SugarBean && !empty($relatedBean->id)) {
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;
             }

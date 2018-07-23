@@ -72,7 +72,7 @@ class FieldValidator implements ValidatorInterface
      */
     public function isValid($fieldKey)
     {
-        if(!is_string($fieldKey)) {
+        if (!is_string($fieldKey)) {
             throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Validators][FieldValidator][isValid][expected type to be string] $fieldKey'
             );

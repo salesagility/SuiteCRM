@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -52,109 +54,109 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class FieldsMetaData extends SugarBean
 {
-	// database table columns
-	var $id;
-	var $name;
-	var $vname;
-  	var $custom_module;
-  	var $type;
-  	var $len;
-  	var $required;
-  	var $default_value;
-  	var $deleted;
-  	var $ext1;
-  	var $ext2;
-  	var $ext3;
-	var $audited;
-	var $inline_edit;
-    var $duplicate_merge;
-    var $reportable;
-	var $required_fields =  array("name"=>1, "date_start"=>2, "time_start"=>3,);
+    // database table columns
+    public $id;
+    public $name;
+    public $vname;
+    public $custom_module;
+    public $type;
+    public $len;
+    public $required;
+    public $default_value;
+    public $deleted;
+    public $ext1;
+    public $ext2;
+    public $ext3;
+    public $audited;
+    public $inline_edit;
+    public $duplicate_merge;
+    public $reportable;
+    public $required_fields =  array("name"=>1, "date_start"=>2, "time_start"=>3,);
 
-	var $table_name = 'fields_meta_data';
-	var $object_name = 'FieldsMetaData';
-	var $module_dir = 'DynamicFields';
-	var $column_fields = array(
-		'id',
-		'name',
-		'vname',
-		'custom_module',
-		'type',
-		'len',
-		'required',
-		'default_value',
-		'deleted',
-		'ext1',
-		'ext2',
-		'ext3',
-		'audited',
-		'inline_edit',
-		'massupdate',
-        'duplicate_merge',
-        'reportable',
-	);
-
-	var $list_fields = array(
-		'id',
-		'name',
-		'vname',
-		'type',
-		'len',
-		'required',
-		'default_value',
-		'audited',
+    public $table_name = 'fields_meta_data';
+    public $object_name = 'FieldsMetaData';
+    public $module_dir = 'DynamicFields';
+    public $column_fields = array(
+        'id',
+        'name',
+        'vname',
+        'custom_module',
+        'type',
+        'len',
+        'required',
+        'default_value',
+        'deleted',
+        'ext1',
+        'ext2',
+        'ext3',
+        'audited',
         'inline_edit',
-		'massupdate',
+        'massupdate',
         'duplicate_merge',
         'reportable',
-	);
+    );
 
-	var $field_name_map;
-	var $new_schema = true;
+    public $list_fields = array(
+        'id',
+        'name',
+        'vname',
+        'type',
+        'len',
+        'required',
+        'default_value',
+        'audited',
+        'inline_edit',
+        'massupdate',
+        'duplicate_merge',
+        'reportable',
+    );
 
-	//////////////////////////////////////////////////////////////////
-	// METHODS
-	//////////////////////////////////////////////////////////////////
+    public $field_name_map;
+    public $new_schema = true;
+
+    //////////////////////////////////////////////////////////////////
+    // METHODS
+    //////////////////////////////////////////////////////////////////
 
     public function __construct()
-	{
-		parent::__construct();
-		$this->disable_row_level_security = true;
-	}
+    {
+        parent::__construct();
+        $this->disable_row_level_security = true;
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function FieldsMetaData(){
+    public function FieldsMetaData()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-	function mark_deleted($id)
-	{
-		$query = "DELETE FROM $this->table_name WHERE  id='$id'";
-		$this->db->query($query, true,"Error deleting record: ");
-		$this->mark_relationships_deleted($id);
+    public function mark_deleted($id)
+    {
+        $query = "DELETE FROM $this->table_name WHERE  id='$id'";
+        $this->db->query($query, true, "Error deleting record: ");
+        $this->mark_relationships_deleted($id);
+    }
 
-	}
+    public function get_list_view_data()
+    {
+        $data = parent::get_list_view_data();
+        $data['VNAME'] = translate($this->vname, $this->custom_module);
+        $data['NAMELINK'] = '<input class="checkbox" type="checkbox" name="remove[]" value="' . $this->id . '">&nbsp;&nbsp;<a href="index.php?module=Studio&action=wizard&wizard=EditCustomFieldsWizard&option=EditCustomField&record=' . $this->id . '" >';
+        return $data;
+    }
 
-	function get_list_view_data(){
-	    $data = parent::get_list_view_data();
-	    $data['VNAME'] = translate($this->vname, $this->custom_module);
-	    $data['NAMELINK'] = '<input class="checkbox" type="checkbox" name="remove[]" value="' . $this->id . '">&nbsp;&nbsp;<a href="index.php?module=Studio&action=wizard&wizard=EditCustomFieldsWizard&option=EditCustomField&record=' . $this->id . '" >';
-	    return $data;
-	}
 
-
-	function get_summary_text()
-	{
-		return $this->name;
-	}
+    public function get_summary_text()
+    {
+        return $this->name;
+    }
 }

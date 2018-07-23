@@ -53,9 +53,8 @@ global $beanList, $beanFiles, $currentModule, $focus, $action, $app_strings, $ap
 
 
 if (!isset($_REQUEST['module_name'])) {
-    LoggerManager::getLogger()->warn("Popup picker needs requested module name but \$_REQUEST[module_name] is not set.");    
+    LoggerManager::getLogger()->warn("Popup picker needs requested module name but \$_REQUEST[module_name] is not set.");
 } else {
-
     $bean = $beanList[$_REQUEST['module_name']];
     require_once($beanFiles[$bean]);
     $focus = new $bean;
@@ -65,75 +64,74 @@ class Popup_Picker
 {
 
 
-	/*
-	 *
-	 */
-	function __construct()
-	{
-
-	}
+    /*
+     *
+     */
+    public function __construct()
+    {
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Popup_Picker(){
+    public function Popup_Picker()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-	/**
-	 *
-	 */
-	function process_page()
-	{
-		global $theme;
-		global $focus;
-		global $mod_strings;
-		global $app_strings;
-		global $app_list_strings;
-		global $currentModule;
-		global $odd_bg;
- 		global $even_bg;
+    /**
+     *
+     */
+    public function process_page()
+    {
+        global $theme;
+        global $focus;
+        global $mod_strings;
+        global $app_strings;
+        global $app_list_strings;
+        global $currentModule;
+        global $odd_bg;
+        global $even_bg;
 
         global $audit;
         global $current_language;
 
         $auditObject = new Audit();
         $audit_list =  $auditObject->get_audit_list();
-        $xtpl=new XTemplate ('modules/Audit/Popup_picker.html');
+        $xtpl=new XTemplate('modules/Audit/Popup_picker.html');
 
-		$xtpl->assign('MOD', $mod_strings);
-		$xtpl->assign('APP', $app_strings);
-		insert_popup_header($theme);
+        $xtpl->assign('MOD', $mod_strings);
+        $xtpl->assign('APP', $app_strings);
+        insert_popup_header($theme);
 
-		//output header
-		echo "<table width='100%' cellpadding='0' cellspacing='0'><tr><td>";
+        //output header
+        echo "<table width='100%' cellpadding='0' cellspacing='0'><tr><td>";
                 
                 
-                if (!isset($focus->module_dir)) {
-                    LoggerManager::getLogger()->fatal("Popup picker needs module dir from focus bean but global focus is none.");    
-                    throw new Exception('There is not selected focus bean for popup picker process page.');
-                }
+        if (!isset($focus->module_dir)) {
+            LoggerManager::getLogger()->fatal("Popup picker needs module dir from focus bean but global focus is none.");
+            throw new Exception('There is not selected focus bean for popup picker process page.');
+        }
                 
-                $mod_strings = return_module_language($current_language, $focus->module_dir);
+        $mod_strings = return_module_language($current_language, $focus->module_dir);
 
-		$printImageURL = SugarThemeRegistry::current()->getImageURL('print.gif');
+        $printImageURL = SugarThemeRegistry::current()->getImageURL('print.gif');
                 
-                $requestString = '';
-                if (!isset($GLOBALS['request_string'])) {
-                    LoggerManager::getLogger()->warn("Popup picker needs focus bean but \$GLOBALS['request_string'] is not set.");    
-                } else {
-                    $requestString = $GLOBALS['request_string'];
-                }
+        $requestString = '';
+        if (!isset($GLOBALS['request_string'])) {
+            LoggerManager::getLogger()->warn("Popup picker needs focus bean but \$GLOBALS['request_string'] is not set.");
+        } else {
+            $requestString = $GLOBALS['request_string'];
+        }
                 
-		$titleExtra = <<<EOHTML
+        $titleExtra = <<<EOHTML
 <a href="javascript:void window.open('index.php?{$requestString}','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class='utilsLink'>
 <!--not_in_theme!--><img src="{$printImageURL}" alt="{$GLOBALS['app_strings']['LNK_PRINT']}"></a>
 <a href="javascript:void window.open('index.php?{$requestString}','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class='utilsLink'>
@@ -141,60 +139,53 @@ class Popup_Picker
 </a>
 EOHTML;
 
-		$params = array();
-		$params[] = translate('LBL_MODULE_NAME', $focus->module_dir);
-		$params[] = $focus->get_summary_text();
-		$params[] = translate('LBL_CHANGE_LOG', 'Audit');
-		echo str_replace('</div>',"<span class='utils'>$titleExtra</span></div>",getClassicModuleTitle($focus->module_dir, $params, false));
+        $params = array();
+        $params[] = translate('LBL_MODULE_NAME', $focus->module_dir);
+        $params[] = $focus->get_summary_text();
+        $params[] = translate('LBL_CHANGE_LOG', 'Audit');
+        echo str_replace('</div>', "<span class='utils'>$titleExtra</span></div>", getClassicModuleTitle($focus->module_dir, $params, false));
 
-		$oddRow = true;
-		$audited_fields = $focus->getAuditEnabledFieldDefinitions();
-		asort($audited_fields);
-		$fields = '';
-		$field_count = count($audited_fields);
-		$start_tag = "<table><tr><td >";
-		$end_tag = "</td></tr></table>";
+        $oddRow = true;
+        $audited_fields = $focus->getAuditEnabledFieldDefinitions();
+        asort($audited_fields);
+        $fields = '';
+        $field_count = count($audited_fields);
+        $start_tag = "<table><tr><td >";
+        $end_tag = "</td></tr></table>";
 
-		if($field_count > 0)
-		{
-			$index = 0;
-    		foreach($audited_fields as $key=>$value)
-			{
-				$index++;
-				$vname = '';
-				if(isset($value['vname']))
-					$vname = $value['vname'];
-				elseif(isset($value['label']))
-					$vname = $value['label'];
-				$fields .= str_replace(':', '', translate($vname, $focus->module_dir));
+        if ($field_count > 0) {
+            $index = 0;
+            foreach ($audited_fields as $key=>$value) {
+                $index++;
+                $vname = '';
+                if (isset($value['vname'])) {
+                    $vname = $value['vname'];
+                } elseif (isset($value['label'])) {
+                    $vname = $value['label'];
+                }
+                $fields .= str_replace(':', '', translate($vname, $focus->module_dir));
 
-    			if($index < $field_count)
-    			{
-    				$fields .= ", ";
-    			}
-    		}
-
-    		echo $start_tag.translate('LBL_AUDITED_FIELDS', 'Audit').$fields.$end_tag;
-    	}
-    	else
-    	{
-    		echo $start_tag.translate('LBL_AUDITED_FIELDS', 'Audit').$end_tag;
-    	}
-
-		foreach($audit_list as $audit)
-		{
-			if(empty($audit['before_value_string']) && empty($audit['after_value_string']))
-			{
-				$before_value = $audit['before_value_text'];
-				$after_value = $audit['after_value_text'];
+                if ($index < $field_count) {
+                    $fields .= ", ";
+                }
             }
-            else {
-				$before_value = $audit['before_value_string'];
-				$after_value = $audit['after_value_string'];
-			}
+
+            echo $start_tag.translate('LBL_AUDITED_FIELDS', 'Audit').$fields.$end_tag;
+        } else {
+            echo $start_tag.translate('LBL_AUDITED_FIELDS', 'Audit').$end_tag;
+        }
+
+        foreach ($audit_list as $audit) {
+            if (empty($audit['before_value_string']) && empty($audit['after_value_string'])) {
+                $before_value = $audit['before_value_text'];
+                $after_value = $audit['after_value_text'];
+            } else {
+                $before_value = $audit['before_value_string'];
+                $after_value = $audit['after_value_string'];
+            }
 
             // Let's run the audit data through the sugar field system
-            if(isset($audit['data_type'])){
+            if (isset($audit['data_type'])) {
                 require_once('include/SugarFields/SugarFieldHandler.php');
                 $vardef = array('name'=>'audit_field','type'=>$audit['data_type']);
                 $field = SugarFieldHandler::getSugarField($audit['data_type']);
@@ -204,35 +195,32 @@ EOHTML;
 
             $activity_fields = array(
                 'ID' => $audit['id'],
-			    'NAME' => $audit['field_name'],
+                'NAME' => $audit['field_name'],
                 'BEFORE_VALUE' => $before_value,
                 'AFTER_VALUE' => $after_value,
                 'CREATED_BY' => $audit['created_by'],
                 'DATE_CREATED' => $audit['date_created'],
-			);
+            );
 
-			$xtpl->assign("ACTIVITY", $activity_fields);
+            $xtpl->assign("ACTIVITY", $activity_fields);
 
-			if($oddRow)
-   			{
-        		//todo move to themes
-				$xtpl->assign("ROW_COLOR", 'oddListRow');
-				$xtpl->assign("BG_COLOR", $odd_bg);
-    		}
-    		else
-    		{
-        		//todo move to themes
-				$xtpl->assign("ROW_COLOR", 'evenListRow');
-				$xtpl->assign("BG_COLOR", $even_bg);
-    		}
-   			$oddRow = !$oddRow;
+            if ($oddRow) {
+                //todo move to themes
+                $xtpl->assign("ROW_COLOR", 'oddListRow');
+                $xtpl->assign("BG_COLOR", $odd_bg);
+            } else {
+                //todo move to themes
+                $xtpl->assign("ROW_COLOR", 'evenListRow');
+                $xtpl->assign("BG_COLOR", $even_bg);
+            }
+            $oddRow = !$oddRow;
 
-			$xtpl->parse("audit.row");
-		// Put the rows in.
+            $xtpl->parse("audit.row");
+            // Put the rows in.
         }//end foreach
 
-		$xtpl->parse("audit");
-		$xtpl->out("audit");
-		insert_popup_footer();
+        $xtpl->parse("audit");
+        $xtpl->out("audit");
+        insert_popup_footer();
     }
 } // end of class Popup_Picker

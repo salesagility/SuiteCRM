@@ -21,5 +21,4 @@ class EditView extends Tester
         $I->executeJS('window.scrollTo(0,0); return true;');
         $I->click('Save');
     }
-
 }

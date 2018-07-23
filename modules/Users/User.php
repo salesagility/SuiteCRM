@@ -232,7 +232,11 @@ class User extends Person implements EmailInterface
      * @throws \RuntimeException
      */
     public function getSignatures(
-    $live = false, $defaultSig = '', $forSettings = false, $elementId = 'signature_id', $useRequestedRecord = false
+    $live = false,
+        $defaultSig = '',
+        $forSettings = false,
+        $elementId = 'signature_id',
+        $useRequestedRecord = false
     ) {
         $sig = $this->getSignaturesArray($useRequestedRecord);
         $sigs = array();
@@ -264,7 +268,11 @@ class User extends Person implements EmailInterface
      * @throws \RuntimeException
      */
     public function getEmailAccountSignatures(
-    $live = false, $defaultSig = '', $forSettings = false, $elementId = 'account_signature_id', $useRequestedRecord = false
+    $live = false,
+        $defaultSig = '',
+        $forSettings = false,
+        $elementId = 'account_signature_id',
+        $useRequestedRecord = false
     ) {
         $sig = $this->getSignaturesArray($useRequestedRecord);
         $sigs = array();
@@ -367,7 +375,10 @@ class User extends Person implements EmailInterface
      * @param string $category Name of the category to retrieve
      */
     public function setPreference(
-    $name, $value, $nosession = 0, $category = 'global'
+    $name,
+        $value,
+        $nosession = 0,
+        $category = 'global'
     ) {
         // for BC
         if (func_num_args() > 4) {
@@ -503,7 +514,8 @@ class User extends Person implements EmailInterface
      * @internal param bool $useRequestedRecord
      */
     public function getPreference(
-    $name, $category = 'global'
+    $name,
+        $category = 'global'
     ) {
         // for BC
         if (func_num_args() > 2) {
@@ -588,7 +600,7 @@ class User extends Person implements EmailInterface
             if ($smtp_error) {
                 $msg .= 'SMTP server settings required first.';
                 $GLOBALS['log']->warn($msg);
-                if(isset($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED'])) {
+                if (isset($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED'])) {
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
                 }
             } else {
@@ -598,7 +610,7 @@ class User extends Person implements EmailInterface
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
                 }
             }
-            if($tmpUser) {
+            if ($tmpUser) {
                 $this->factor_auth = $tmpUser->factor_auth;
                 $this->factor_auth_interface = $tmpUser->factor_auth_interface;
             }
@@ -644,7 +656,7 @@ class User extends Person implements EmailInterface
         parent::save($check_notify);
 
         // User Profile specific save for Email addresses
-        if(!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
+        if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
             $GLOBALS['log']->error('Email address save error');
             return false;
         }
@@ -1192,7 +1204,7 @@ EOQ;
         $user_fields = parent::get_list_view_data();
 
         if ($this->is_admin) {
-            if(!isset($mod_strings['LBL_CHECKMARK'])) {
+            if (!isset($mod_strings['LBL_CHECKMARK'])) {
                 LoggerManager::getLogger()->warn('A language label not found: LBL_CHECKMARK');
             }
             $checkmark = isset($mod_strings['LBL_CHECKMARK']) ? $mod_strings['LBL_CHECKMARK'] : null;
@@ -1414,7 +1426,7 @@ EOQ;
         return array('email' => $prefAddr, 'name' => $this->name);
     }
 
-// fn
+    // fn
 
     public function getSystemDefaultNameAndEmail()
     {
@@ -1426,7 +1438,7 @@ EOQ;
         return array('email' => $prefAddr, 'name' => $fullName);
     }
 
-// fn
+    // fn
 
     /**
      * sets User email default in config.php if not already set by install - i.
@@ -1497,7 +1509,13 @@ EOQ;
      * @param class
      */
     public function getEmailLink2(
-    $emailAddress, &$focus, $contact_id = '', $ret_module = '', $ret_action = 'DetailView', $ret_id = '', $class = ''
+    $emailAddress,
+        &$focus,
+        $contact_id = '',
+        $ret_module = '',
+        $ret_action = 'DetailView',
+        $ret_id = '',
+        $class = ''
     ) {
         $emailLink = '';
         global $sugar_config;
@@ -1547,7 +1565,13 @@ EOQ;
      * @param class
      */
     public function getEmailLink(
-    $attribute, &$focus, $contact_id = '', $ret_module = '', $ret_action = 'DetailView', $ret_id = '', $class = ''
+    $attribute,
+        &$focus,
+        $contact_id = '',
+        $ret_module = '',
+        $ret_action = 'DetailView',
+        $ret_id = '',
+        $class = ''
     ) {
         require_once('modules/Emails/EmailUI.php');
         $emailLink = '';
@@ -1820,7 +1844,16 @@ EOQ;
     }
 
     public function create_new_list_query(
-    $order_by, $where, $filter = array(), $params = array(), $show_deleted = 0, $join_type = '', $return_array = false, $parentbean = null, $singleSelect = false, $ifListForExport = false
+    $order_by,
+        $where,
+        $filter = array(),
+        $params = array(),
+        $show_deleted = 0,
+        $join_type = '',
+        $return_array = false,
+        $parentbean = null,
+        $singleSelect = false,
+        $ifListForExport = false
     ) {    //call parent method, specifying for array to be returned
         $ret_array = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, true, $parentbean, $singleSelect, $ifListForExport);
 
@@ -2079,19 +2112,20 @@ EOQ;
         return $editorType;
     }
 
-    public function getSubThemes() {
+    public function getSubThemes()
+    {
         $sugarTheme = new SugarTheme(array());
         $subThemes = $sugarTheme->getSubThemes();
         return $subThemes;
     }
 
-    public function getSubTheme() {
+    public function getSubTheme()
+    {
         $subTheme = $this->getPreference('subtheme');
-        if(!$subTheme) {
+        if (!$subTheme) {
             $sugarTheme = new SugarTheme(array());
             $subTheme = $sugarTheme->getSubThemeDefault();
         }
         return $subTheme;
     }
-
 }

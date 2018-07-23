@@ -74,7 +74,6 @@ require_once 'Zend/Gdata/Extension/Where.php';
  */
 class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
 {
-
     protected $_color = null;
     protected $_accessLevel = null;
     protected $_hidden = null;
@@ -242,5 +241,4 @@ class Zend_Gdata_Calendar_ListEntry extends Zend_Gdata_Entry
         $this->_where = $value;
         return $this;
     }
-
 }

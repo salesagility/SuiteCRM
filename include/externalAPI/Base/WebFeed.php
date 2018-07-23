@@ -44,5 +44,5 @@
  */
 interface WebFeed
 {
-	public function getLatestUpdates($maxTime, $maxEntries);
+    public function getLatestUpdates($maxTime, $maxEntries);
 }

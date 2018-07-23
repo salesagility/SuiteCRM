@@ -162,7 +162,8 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
      * @param Zend_Search_Lucene_Index_Term $term
      * @param integer $position
      */
-    public function addTerm(Zend_Search_Lucene_Index_Term $term, $position = null) {
+    public function addTerm(Zend_Search_Lucene_Index_Term $term, $position = null)
+    {
         if ((count($this->_terms) != 0)&&(end($this->_terms)->field != $term->field)) {
             require_once 'Zend/Search/Lucene/Exception.php';
             throw new Zend_Search_Lucene_Exception('All phrase terms must be in the same field: ' .
@@ -304,9 +305,9 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
         foreach ($this->_terms as $termId => $term) {
             if ($lowCardTermId === null ||
                 count($this->_termsPositions[$termId][$docId]) <
-                count($this->_termsPositions[$lowCardTermId][$docId]) ) {
-                    $lowCardTermId = $termId;
-                }
+                count($this->_termsPositions[$lowCardTermId][$docId])) {
+                $lowCardTermId = $termId;
+            }
         }
 
         // Walk through positions of the term with lowest cardinality
@@ -354,7 +355,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
 
             // Walk through the term positions.
             // Each term position produces a set of phrases.
-            foreach ($this->_termsPositions[$termId][$docId] as $termPosition ) {
+            foreach ($this->_termsPositions[$termId][$docId] as $termPosition) {
                 if ($firstPass) {
                     for ($count = 0; $count < $queueSize; $count++) {
                         $phraseQueue[$count][$termId] = $termPosition;
@@ -362,7 +363,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
                 } else {
                     for ($count = 0; $count < $queueSize; $count++) {
                         if ($lastTerm !== null &&
-                            abs( $termPosition - $phraseQueue[$count][$lastTerm] -
+                            abs($termPosition - $phraseQueue[$count][$lastTerm] -
                                  ($this->_offsets[$termId] - $this->_offsets[$lastTerm])) > $this->_slop) {
                             continue;
                         }
@@ -371,7 +372,6 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
                         $phraseQueue[$newPhraseId]          = $phraseQueue[$count];
                         $phraseQueue[$newPhraseId][$termId] = $termPosition;
                     }
-
                 }
 
                 $firstPass = false;
@@ -390,7 +390,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
                 foreach ($this->_terms as $termId => $term) {
                     $distance += abs($phrasePos[$termId] - $this->_offsets[$termId] - $start);
 
-                    if($distance > $this->_slop) {
+                    if ($distance > $this->_slop) {
                         break;
                     }
                 }
@@ -434,12 +434,18 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
             $this->_termsPositions[$termId] = $reader->termPositions($term);
         }
         // sort resvectors in order of subquery cardinality increasing
-        array_multisort($resVectorsSizes, SORT_ASC, SORT_NUMERIC,
-                        $resVectorsIds,   SORT_ASC, SORT_NUMERIC,
-                        $resVectors);
+        array_multisort(
+            $resVectorsSizes,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $resVectorsIds,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $resVectors
+        );
 
         foreach ($resVectors as $nextResVector) {
-            if($this->_resVector === null) {
+            if ($this->_resVector === null) {
                 $this->_resVector = $nextResVector;
             } else {
                 //$this->_resVector = array_intersect_key($this->_resVector, $nextResVector);
@@ -573,4 +579,3 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
         return $query;
     }
 }
-

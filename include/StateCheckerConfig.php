@@ -46,16 +46,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * StateCheckerConfig
- * 
- * Configuration of SuiteCRM\StateChecker and StateChecker Tests classes such as 
- * 
- *  - SuiteCRM\StateCheckerPHPUnitTestCaseAbstract, 
- *  - SuiteCRM\StateCheckerUnitAbstract, 
- *  - SuiteCRM\StateCheckerCestAbstract. 
- * 
- * SuiteCRM\StateCheckerConfig configuration options have default values 
+ *
+ * Configuration of SuiteCRM\StateChecker and StateChecker Tests classes such as
+ *
+ *  - SuiteCRM\StateCheckerPHPUnitTestCaseAbstract,
+ *  - SuiteCRM\StateCheckerUnitAbstract,
+ *  - SuiteCRM\StateCheckerCestAbstract.
+ *
+ * SuiteCRM\StateCheckerConfig configuration options have default values
  * and each available in $sugar_config['state_checker'][$key].
- * 
+ *
  * Each configuration value available with a getter method: SuiteCRM\StateCheckerConfig::get($key)
  *
  * @author SalesAgility
@@ -89,7 +89,7 @@ class StateCheckerConfig
     /**
      * Tests won't checking hash at these files so won't failing
      *
-     * @var array 
+     * @var array
      */
     protected static $fileExludeRegexes = [
         '/\/\.git\//',
@@ -111,30 +111,30 @@ class StateCheckerConfig
      * Automatically run state collection in StateChecker constructor
      * (DO NOT CHANGE!)
      *
-     * @var boolean 
+     * @var boolean
      */
     protected static $autoRun = true;
     
     /**
      * Save trace info on state-hash mismatch
      * (Slow working but give more information about the error location, use in development only)
-     * @var boolean 
+     * @var boolean
      */
     protected static $saveTraces = false;
     
     /**
      * Redefine memory limit
      * (For more memory expensive task, for e.g collection stack trace information when $saveTraces is ON, use in development only)
-     * @var boolean 
+     * @var boolean
      */
     protected static $redefineMemoryLimit = false;
     
     /**
-     * Store more information about hash-mismatch, 
+     * Store more information about hash-mismatch,
      * which part having state of globals/filesys/database.
      * (Slow working but give more information about the error location, use in development only)
-     * 
-     * @var boolean 
+     *
+     * @var boolean
      */
     protected static $storeDetails = true;
     
@@ -144,10 +144,10 @@ class StateCheckerConfig
      * RUN_NEVER: State check and save never run.
      * RUN_PER_TEST: State check runs after each test methods.
      * RUN_PER_CLASSES: State check runs after each test class.
-     * 
+     *
      * Note: Mode RUN_PER_CLASSES affects only PHPUnit Test Cases
      * Note: developer mode overrides this value
-     * 
+     *
      * @var integer
      */
     protected static $testStateCheckMode = self::RUN_PER_CLASSES;
@@ -172,7 +172,7 @@ class StateCheckerConfig
     /**
      * Tests won't checking hash at these keys so won't failing
      * (It should be empty)
-     * 
+     *
      * @var array
      */
     protected static $testsFailureExcludeKeys = [];
@@ -188,13 +188,13 @@ class StateCheckerConfig
     
     /**
      *
-     * @var boolean 
+     * @var boolean
      */
     protected static $retrieved = false;
     
     /**
      * Retrieve from sugar_config
-     * 
+     *
      * @global array $sugar_config
      */
     protected static function retrieve()

@@ -1,6 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry)
-	die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,8 +52,9 @@ logThis('Upgrade Wizard At Layout Commits');
 
 global $mod_strings;
 $curr_lang = 'en_us';
-if(isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null))
-	$curr_lang = $GLOBALS['current_language'];
+if (isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)) {
+    $curr_lang = $GLOBALS['current_language'];
+}
 
 return_module_language($curr_lang, 'UpgradeWizard');
 
@@ -62,35 +64,30 @@ $state->pushPHPConfigOptions();
 
 error_reporting(E_ERROR);
 set_time_limit(0);
-set_upgrade_progress('layouts','in_progress');
+set_upgrade_progress('layouts', 'in_progress');
 
-//If the user has seleceted which modules they want to merge, perform the filtering and 
+//If the user has seleceted which modules they want to merge, perform the filtering and
 //execute the merge.
-if( isset($_POST['layoutSelectedModules']) )
-{
+if (isset($_POST['layoutSelectedModules'])) {
     logThis('Layout Commits examining modules to revert');
     
     $mergedModules = $_SESSION['sugarMergeRunResults'];
-    $selectedModules  = explode("^,^",$_POST['layoutSelectedModules']);
-    logThis('Layout Commits, selected modules by user: ' . print_r($selectedModules, TRUE));
+    $selectedModules  = explode("^,^", $_POST['layoutSelectedModules']);
+    logThis('Layout Commits, selected modules by user: ' . print_r($selectedModules, true));
     $rollBackList = array();
     $actualMergedList = array();
     
-    foreach ( $mergedModules as $moduleKey => $layouts)
-    {
-        if( ! in_array($moduleKey , $selectedModules) )
-        {
+    foreach ($mergedModules as $moduleKey => $layouts) {
+        if (! in_array($moduleKey, $selectedModules)) {
             logThis("Adding $moduleKey module to rollback list.");
             $rollBackList[$moduleKey] = $layouts;
-        }
-        else 
-        {
+        } else {
             $actualMergedList[$moduleKey] = $layouts;
         }
     }
     
-    logThis('Layout Commits will rollback the following modules: ' . print_r($rollBackList, TRUE));
-    logThis('Layout Commits merged the following modules: ' . print_r($actualMergedList, TRUE));
+    logThis('Layout Commits will rollback the following modules: ' . print_r($rollBackList, true));
+    logThis('Layout Commits merged the following modules: ' . print_r($actualMergedList, true));
     
     $layoutMergeData = $actualMergedList;
     
@@ -105,18 +102,16 @@ if( isset($_POST['layoutSelectedModules']) )
     logThis('Layout Commits completed successfully');
     $smarty->assign("CONFIRM_LAYOUT_HEADER", $mod_strings['LBL_UW_CONFIRM_LAYOUT_RESULTS']);
     $smarty->assign("CONFIRM_LAYOUT_DESC", $mod_strings['LBL_UW_CONFIRM_LAYOUT_RESULTS_DESC']);
-    $showCheckBoxes = FALSE;
+    $showCheckBoxes = false;
     $GLOBALS['top_message'] = "<b>{$mod_strings['LBL_LAYOUT_MERGE_TITLE2']}</b>";
-}
-else 
-{
+} else {
     //Fist visit to the commit layout page.  Display the selection table to the user.
     logThis('Layout Commits about to show selection table');
     $smarty->assign("CONFIRM_LAYOUT_HEADER", $mod_strings['LBL_UW_CONFIRM_LAYOUTS']);
     $smarty->assign("CONFIRM_LAYOUT_DESC", $mod_strings['LBL_LAYOUT_MERGE_DESC']);
     $layoutMergeData = cleanMergeData($_SESSION['sugarMergeRunResults']);
     $stepNext = $_REQUEST['step'];
-    $showCheckBoxes = TRUE;
+    $showCheckBoxes = true;
     $GLOBALS['top_message'] = "<b>{$mod_strings['LBL_LAYOUT_MERGE_TITLE']}</b>";
 }
 
@@ -128,18 +123,18 @@ $layoutMergeData = formatLayoutMergeDataForDisplay($layoutMergeData);
 $smarty->assign("METADATA_DATA", $layoutMergeData);
 $uwMain = $smarty->fetch('modules/UpgradeWizard/tpls/layoutsMerge.tpl');
     
-$showBack = FALSE;
-$showCancel = FALSE;
-$showRecheck = FALSE;
-$showNext = TRUE;
+$showBack = false;
+$showCancel = false;
+$showRecheck = false;
+$showNext = true;
 
-set_upgrade_progress('layouts','done');
+set_upgrade_progress('layouts', 'done');
 
 $state->popErrorLevel();
 $state->popPHPConfigOptions();
 
 /**
- * Clean the merge data results, removing any emptys or blanks that should not be displayed 
+ * Clean the merge data results, removing any emptys or blanks that should not be displayed
  * to the user on the confirm layout screen.
  *
  * @param array $data
@@ -148,10 +143,8 @@ $state->popPHPConfigOptions();
 function cleanMergeData($data)
 {
     $results = array();
-    foreach ($data as $m => $layouts)
-    {
-        if(count($layouts) > 0)
-        {
+    foreach ($data as $m => $layouts) {
+        if (count($layouts) > 0) {
             $results[$m] = $layouts;
         }
     }
@@ -167,37 +160,27 @@ function rollBackMergedModules($data)
 {
     logThis('Layout Commits, starting rollback');
     $backupFileSufix = '.suback.php';
-    foreach ($data as $moduleName => $layouts)
-    {
+    foreach ($data as $moduleName => $layouts) {
         logThis('Layout Commits, iterating over module:' . $moduleName);
-        foreach ($layouts as $fileName => $wasMerged)
-        {
-            if($wasMerged)
-            {
+        foreach ($layouts as $fileName => $wasMerged) {
+            if ($wasMerged) {
                 $srcFile = 'custom' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR . 'metadata'. DIRECTORY_SEPARATOR . $fileName;
                 $srcBackupFile = $srcFile . $backupFileSufix;
                 logThis('Layout Commits, rollBackMergedModules source file: ' . $srcDirectory);
                 logThis('Layout Commits, rollBackMergedModules backup file: ' . $srcBackupFile);
-                if( file_exists($srcBackupFile) )
-                {
-                    if( file_exists($srcFile) )
-                    {
+                if (file_exists($srcBackupFile)) {
+                    if (file_exists($srcFile)) {
                         logThis('Layout Commits, rollBackMergedModules is removing file: ' . $srcFile);
                         @unlink($srcFile);
                     }
                     $copyResult = @copy($srcBackupFile, $srcFile);
-                    if($copyResult === TRUE)
-                    {
+                    if ($copyResult === true) {
                         @unlink($srcBackupFile);
                         logThis("Layout Commits, rollBackMergedModules successfully reverted file $srcFile");
-                    }
-                    else 
-                    {
+                    } else {
                         logThis("Layout Commits, rollBackMergedModules was unable to copy file: $srcBackupFile, to $srcFile.");
                     }
-                }
-                else 
-                {
+                } else {
                     logThis("Layout Commits, rollBackMergedModules is unable to find backup file $srcBackupFile , nothing to do.");
                 }
             }
@@ -216,35 +199,35 @@ function formatLayoutMergeDataForDisplay($layoutMergeData)
     global $mod_strings,$app_list_strings;
     
     $curr_lang = 'en_us';
-    if(isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null))
-    	$curr_lang = $GLOBALS['current_language'];
+    if (isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)) {
+        $curr_lang = $GLOBALS['current_language'];
+    }
 
     $module_builder_language = return_module_language($curr_lang, 'ModuleBuilder');
 
     $results = array();
-    foreach ($layoutMergeData as $k => $v)
-    {
+    foreach ($layoutMergeData as $k => $v) {
         $layouts = array();
-        foreach ($v as $layoutPath => $isMerge)
-        {
-            if( preg_match('/listviewdefs.php/i', $layoutPath) )
+        foreach ($v as $layoutPath => $isMerge) {
+            if (preg_match('/listviewdefs.php/i', $layoutPath)) {
                 $label = $module_builder_language['LBL_LISTVIEW'];
-            elseif( preg_match('/detailviewdefs.php/i', $layoutPath) )
+            } elseif (preg_match('/detailviewdefs.php/i', $layoutPath)) {
                 $label = $module_builder_language['LBL_DETAILVIEW'];
-            elseif( preg_match('/editviewdefs.php/i', $layoutPath) )
+            } elseif (preg_match('/editviewdefs.php/i', $layoutPath)) {
                 $label = $module_builder_language['LBL_EDITVIEW'];
-            elseif( preg_match('/quickcreatedefs.php/i', $layoutPath) )
+            } elseif (preg_match('/quickcreatedefs.php/i', $layoutPath)) {
                 $label = $module_builder_language['LBL_QUICKCREATE'];
-            elseif( preg_match('/searchdefs.php/i', $layoutPath) )
+            } elseif (preg_match('/searchdefs.php/i', $layoutPath)) {
                 $label = $module_builder_language['LBL_SEARCH_BUTTON'];
-            else 
+            } else {
                 continue;
+            }
 
             $layouts[] = array('path' => $layoutPath, 'label' => $label);
         }
 
-        $results[$k]['layouts'] = $layouts; 
-        $results[$k]['moduleName'] = $app_list_strings['moduleList'][$k]; 
+        $results[$k]['layouts'] = $layouts;
+        $results[$k]['moduleName'] = $app_list_strings['moduleList'][$k];
     }
 
     return $results;

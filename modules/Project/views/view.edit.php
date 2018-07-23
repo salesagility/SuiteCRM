@@ -42,48 +42,46 @@ require_once('include/json_config.php');
 
 class ProjectViewEdit extends ViewEdit
 {
-
- 	function __construct(){
- 		parent::__construct();
- 	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ProjectViewEdit(){
+    public function ProjectViewEdit()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
- 	function display() {
-
-	 	global $json;
-		
-		$this->bean->is_template = 0;
+    public function display()
+    {
+        global $json;
+        
+        $this->bean->is_template = 0;
         $this->ev->ss->assign("is_template", 0);
- 		
+        
         $json = getJSONobj();
         $json_config = new json_config();
-		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
-			$javascript = $json_config->get_static_json_server(false, true, 'Project', $this->bean->json_id);
-		} else {
-			$this->bean->json_id = $this->bean->id;
-			$javascript = $json_config->get_static_json_server(false, true, 'Project', $this->bean->id);
-		}
- 		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
- 		if($this->ev->isDuplicate){
-	        $this->bean->status = $this->bean->getDefaultStatus();
- 		} //if
+        if (isset($this->bean->json_id) && !empty($this->bean->json_id)) {
+            $javascript = $json_config->get_static_json_server(false, true, 'Project', $this->bean->json_id);
+        } else {
+            $this->bean->json_id = $this->bean->id;
+            $javascript = $json_config->get_static_json_server(false, true, 'Project', $this->bean->id);
+        }
+        $this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
+        if ($this->ev->isDuplicate) {
+            $this->bean->status = $this->bean->getDefaultStatus();
+        } //if
 
- 		parent::display();
-
- 	}
+        parent::display();
+    }
 }
-

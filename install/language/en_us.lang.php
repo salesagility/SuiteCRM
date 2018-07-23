@@ -547,13 +547,13 @@ $contact_user_link_guid',
     'ERR_ADMIN_EMAIL' => 'Administrator Email Address is incorrect.',
     'ERR_SITE_URL' => 'Site URL is required.',
 
-	'STAT_CONFIGURATION' => 'Configuration relationships...',
-	'STAT_CREATE_DB' => 'Create database...',
+    'STAT_CONFIGURATION' => 'Configuration relationships...',
+    'STAT_CREATE_DB' => 'Create database...',
 
-	'STAT_CREATE_DEFAULT_SETTINGS' => 'Create default settings...',
-	'STAT_INSTALL_FINISH' => 'Install finish...',
-	'STAT_INSTALL_FINISH_LOGIN' => 'Installation process finished, <a href="%s">please log in...</a>',
-	'LBL_LICENCE_TOOLTIP' => 'Please accept license first',
+    'STAT_CREATE_DEFAULT_SETTINGS' => 'Create default settings...',
+    'STAT_INSTALL_FINISH' => 'Install finish...',
+    'STAT_INSTALL_FINISH_LOGIN' => 'Installation process finished, <a href="%s">please log in...</a>',
+    'LBL_LICENCE_TOOLTIP' => 'Please accept license first',
 
     'LBL_MORE_OPTIONS_TITLE' => 'More options',
     'LBL_START' => '',
@@ -570,4 +570,3 @@ $contact_user_link_guid',
     'LBL_DBCONFIG_B_MSG1_LABEL' => '',
     'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.'
 );
-

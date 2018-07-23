@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -330,7 +332,7 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
                 'vname' => 'LBL_CONTACTS',
             ),
         'aos_contracts' =>
-            array (
+            array(
                 'name' => 'aos_contracts',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_calls',

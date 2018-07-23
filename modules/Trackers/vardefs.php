@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -51,17 +53,17 @@ $dictionary['Tracker'] = array(
             'auto_increment' => true,
             'reportable'=>true,
         ),
-	    'monitor_id'=>array (
-		    'name' => 'monitor_id',
-		    'vname' => 'LBL_MONITOR_ID',
-		    'type' => 'id',
-		    'required'=>true,
-		    'reportable'=>false,
-	    ),
+        'monitor_id'=>array(
+            'name' => 'monitor_id',
+            'vname' => 'LBL_MONITOR_ID',
+            'type' => 'id',
+            'required'=>true,
+            'reportable'=>false,
+        ),
         'user_id'=>array(
             'name' => 'user_id',
             'vname' => 'LBL_USER_ID',
-			'type' => 'varchar',
+            'type' => 'varchar',
             'len' => '36',
             'isnull' => 'false',
         ),
@@ -116,34 +118,34 @@ $dictionary['Tracker'] = array(
             'len' => '1',
             'default' => '0',
         ),
-	    'deleted' =>array (
-		    'name' => 'deleted',
-		    'vname' => 'LBL_DELETED',
-		    'type' => 'bool',
-		    'default' => '0',
-		    'reportable'=>false,
-		    'comment' => 'Record deletion indicator'
-		),
-		'assigned_user_link'=>array (
-		    'name' => 'assigned_user_link',
-		    'type' => 'link',
-		    'relationship' => 'tracker_user_id',
-		    'vname' => 'LBL_ASSIGNED_TO_USER',
-		    'link_type' => 'one',
-		    'module'=>'Users',
-		    'bean_name'=>'User',
-		    'source'=>'non-db',
-		),
-		'monitor_id_link'=>array (
-		    'name' => 'monitor_id_link',
-		    'type' => 'link',
-		    'relationship' => 'tracker_monitor_id',
-		    'vname' => 'LBL_MONITOR_ID',
-		    'link_type' => 'one',
-		    'module'=>'TrackerPerfs',
-		    'bean_name'=>'TrackerPerf',
-		    'source'=>'non-db',
-		),
+        'deleted' =>array(
+            'name' => 'deleted',
+            'vname' => 'LBL_DELETED',
+            'type' => 'bool',
+            'default' => '0',
+            'reportable'=>false,
+            'comment' => 'Record deletion indicator'
+        ),
+        'assigned_user_link'=>array(
+            'name' => 'assigned_user_link',
+            'type' => 'link',
+            'relationship' => 'tracker_user_id',
+            'vname' => 'LBL_ASSIGNED_TO_USER',
+            'link_type' => 'one',
+            'module'=>'Users',
+            'bean_name'=>'User',
+            'source'=>'non-db',
+        ),
+        'monitor_id_link'=>array(
+            'name' => 'monitor_id_link',
+            'type' => 'link',
+            'relationship' => 'tracker_monitor_id',
+            'vname' => 'LBL_MONITOR_ID',
+            'link_type' => 'one',
+            'module'=>'TrackerPerfs',
+            'bean_name'=>'TrackerPerf',
+            'source'=>'non-db',
+        ),
     ) ,
 
     //indices
@@ -173,7 +175,7 @@ $dictionary['Tracker'] = array(
             ),
         ),
         array(
-        	// shortened name to comply with Oracle length restriction
+            // shortened name to comply with Oracle length restriction
             'name' => 'idx_tracker_userid_itemid_vis',
             'type' => 'index',
             'fields' => array(
@@ -199,12 +201,12 @@ $dictionary['Tracker'] = array(
     ),
 
     //relationships
- 	'relationships' => array (
-	  'tracker_monitor_id' =>
-		   array(
-				'lhs_module'=> 'TrackerPerfs', 'lhs_table'=> 'tracker_perf', 'lhs_key' => 'monitor_id',
-		   		'rhs_module'=> 'Trackers', 'rhs_table'=> 'tracker', 'rhs_key' => 'monitor_id',
-		   		'relationship_type'=>'one-to-one'
-		   )
-   	),
+    'relationships' => array(
+      'tracker_monitor_id' =>
+           array(
+                'lhs_module'=> 'TrackerPerfs', 'lhs_table'=> 'tracker_perf', 'lhs_key' => 'monitor_id',
+                'rhs_module'=> 'Trackers', 'rhs_table'=> 'tracker', 'rhs_key' => 'monitor_id',
+                'relationship_type'=>'one-to-one'
+           )
+    ),
 );

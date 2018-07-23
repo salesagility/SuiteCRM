@@ -42,7 +42,6 @@
  */
 class CaseEventsHook
 {
-
     private static $diffFields = array(
         array('field' => 'priority', 'display_field' => 'priority', 'display_name' => 'Priority'),
         array('field' => 'status', 'display_field' => 'status', 'display_name' => 'Status'),

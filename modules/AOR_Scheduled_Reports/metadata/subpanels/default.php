@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,45 +42,45 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $subpanel_layout = array(
-	'top_buttons' => array(
-		array('widget_class' => 'SubPanelTopCreateButton'),
-		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'AOR_Scheduled_Reports'),
-	),
+    'top_buttons' => array(
+        array('widget_class' => 'SubPanelTopCreateButton'),
+        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'AOR_Scheduled_Reports'),
+    ),
 
-	'where' => '',
+    'where' => '',
 
-	'list_fields' => array(
-		'name'=>array(
-	 		'vname' => 'LBL_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '25%',
-		),
-		'status'=>array(
-	 		'vname' => 'LBL_STATUS',
-	 		'width' => '25%',
-		),
-		'last_run'=>array(
-	 		'vname' => 'LBL_LAST_RUN',
-	 		'width' => '25%',
-		),
-		'assigned_user_name' => array (
-			'name' => 'assigned_user_name',
-			'vname' => 'LBL_ASSIGNED_USER',
-			'widget_class' => 'SubPanelDetailViewLink',
-		 	'target_record_key' => 'assigned_user_id',
-			'target_module' => 'Employees',
-		),
-		'edit_button'=>array(
+    'list_fields' => array(
+        'name'=>array(
+            'vname' => 'LBL_NAME',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '25%',
+        ),
+        'status'=>array(
+            'vname' => 'LBL_STATUS',
+            'width' => '25%',
+        ),
+        'last_run'=>array(
+            'vname' => 'LBL_LAST_RUN',
+            'width' => '25%',
+        ),
+        'assigned_user_name' => array(
+            'name' => 'assigned_user_name',
+            'vname' => 'LBL_ASSIGNED_USER',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'target_record_key' => 'assigned_user_id',
+            'target_module' => 'Employees',
+        ),
+        'edit_button'=>array(
              'vname' => 'LBL_EDIT_BUTTON',
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'AOR_Scheduled_Reports',
-	 		'width' => '4%',
-		),
-		'remove_button'=>array(
+            'widget_class' => 'SubPanelEditButton',
+            'module' => 'AOR_Scheduled_Reports',
+            'width' => '4%',
+        ),
+        'remove_button'=>array(
             'vname' => 'LBL_REMOVE',
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'AOR_Scheduled_Reports',
-			'width' => '5%',
-		),
-	),
+            'widget_class' => 'SubPanelRemoveButton',
+            'module' => 'AOR_Scheduled_Reports',
+            'width' => '5%',
+        ),
+    ),
 );

@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
@@ -25,12 +27,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class delete_project_tasks
 {
-    function delete_tasks(&$bean, $event, $arguments){
+    public function delete_tasks(&$bean, $event, $arguments)
+    {
         $db = DBManagerFactory::getInstance();
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("order_number", "project_task.project_id = '".$bean->id."'");
 
-        foreach($tasks as $task){
+        foreach ($tasks as $task) {
             $query = "UPDATE project_task SET deleted ='1' WHERE id ='".$task->id."'";
             $update = $db->query($query);
         }

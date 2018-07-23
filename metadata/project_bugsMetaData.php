@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,22 +41,22 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 // adding project-to-bugs relationship
-$dictionary['projects_bugs'] = array (
+$dictionary['projects_bugs'] = array(
     'table' => 'projects_bugs',
-    'fields' => array (
+    'fields' => array(
         array('name' => 'id', 'type' => 'varchar', 'len' => '36'),
         array('name' => 'bug_id', 'type' => 'varchar', 'len' => '36'),
         array('name' => 'project_id', 'type' => 'varchar', 'len' => '36'),
         array('name' => 'date_modified', 'type' => 'datetime'),
         array('name' => 'deleted', 'type' => 'bool', 'len' => '1', 'default' => '0', 'required' => false),
     ),
-    'indices' => array (
+    'indices' => array(
         array('name' => 'projects_bugs_pk', 'type' =>'primary', 'fields'=>array('id')),
         array('name' => 'idx_proj_bug_proj', 'type' =>'index', 'fields'=>array('project_id')),
         array('name' => 'idx_proj_bug_bug', 'type' =>'index', 'fields'=>array('bug_id')),
         array('name' => 'projects_bugs_alt', 'type'=>'alternate_key', 'fields'=>array('project_id','bug_id')),
     ),
-    'relationships' => array (
+    'relationships' => array(
         'projects_bugs' => array(
             'lhs_module' => 'Project',
             'lhs_table' => 'project',

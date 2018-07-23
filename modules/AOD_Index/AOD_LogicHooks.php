@@ -24,50 +24,51 @@
  */
 class AOD_LogicHooks
 {
-
-    function saveModuleChanges(SugarBean $bean, $event, $arguments){
-        if($bean->module_name == 'AOD_Index'){
+    public function saveModuleChanges(SugarBean $bean, $event, $arguments)
+    {
+        if ($bean->module_name == 'AOD_Index') {
             return;
         }
-        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
+        if (defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')) {
             return;
         }
-        try{
+        try {
             $index = BeanFactory::getBean("AOD_Index")->getIndex();
-            $index->index($bean->module_name,$bean->id);
-        }catch(Exception $ex){
+            $index->index($bean->module_name, $bean->id);
+        } catch (Exception $ex) {
             $GLOBALS['log']->error($ex->getMessage());
         }
     }
 
-    function saveModuleDelete(SugarBean $bean, $event, $arguments){
-        if($bean->module_name == 'AOD_Index'){
+    public function saveModuleDelete(SugarBean $bean, $event, $arguments)
+    {
+        if ($bean->module_name == 'AOD_Index') {
             return;
         }
-        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
+        if (defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')) {
             return;
         }
-        try{
+        try {
             $index = BeanFactory::getBean("AOD_Index")->getIndex();
-            $index->remove($bean->module_name,$bean->id);
-        }catch(Exception $ex){
+            $index->remove($bean->module_name, $bean->id);
+        } catch (Exception $ex) {
             $GLOBALS['log']->error($ex->getMessage());
         }
     }
 
-    function saveModuleRestore(SugarBean $bean, $event, $arguments){
-        if($bean->module_name == 'AOD_Index'){
+    public function saveModuleRestore(SugarBean $bean, $event, $arguments)
+    {
+        if ($bean->module_name == 'AOD_Index') {
             return;
         }
-        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
+        if (defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')) {
             return;
         }
-        try{
+        try {
             $index = BeanFactory::getBean("AOD_Index")->getIndex();
-            $index->index($bean->module_name,$bean->id);
-        }catch(Exception $ex){
+            $index->index($bean->module_name, $bean->id);
+        } catch (Exception $ex) {
             $GLOBALS['log']->error($ex->getMessage());
         }
     }
-
 }

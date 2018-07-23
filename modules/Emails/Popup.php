@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,12 +41,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'show_raw') {
-	$email = new Email();
-	$email->retrieve($_REQUEST['metadata']);
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'show_raw') {
+    $email = new Email();
+    $email->retrieve($_REQUEST['metadata']);
     echo nl2br($email->raw_source);
 } else {
-	require_once('include/Popups/Popup_picker.php');
-	$popup = new Popup_Picker();
-	echo $popup->process_page();
+    require_once('include/Popups/Popup_picker.php');
+    $popup = new Popup_Picker();
+    echo $popup->process_page();
 }

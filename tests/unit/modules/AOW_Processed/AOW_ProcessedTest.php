@@ -41,7 +41,5 @@ class AOW_ProcessedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $aowProcessed->bean_implements('ACL')); //test with valid value
         
         // clean up
-        
-        
     }
 }

@@ -42,7 +42,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 /* bootstrap sugarcrm */
 chdir('../');
-define('sugarEntry',TRUE);
+define('sugarEntry', true);
 global $sugar_config, $db;
 require_once 'include/utils.php';
 require_once 'include/modules.php';

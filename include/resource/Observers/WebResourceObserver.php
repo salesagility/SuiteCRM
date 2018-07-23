@@ -47,20 +47,20 @@ require_once('include/resource/Observers/ResourceObserver.php');
  */
 class WebResourceObserver extends ResourceObserver
 {
+    public function __construct($module)
+    {
+        parent::__construct($module);
+    }
 
-public function __construct($module) {
-   parent::__construct($module);
-}
-
-/**
- * notify
- * Web implementation to notify the browser
- * @param msg String message to possibly display
- *
- */
-public function notify($msg = '') {
-   echo $msg;
-   sugar_cleanup(true);
-}
-
+    /**
+     * notify
+     * Web implementation to notify the browser
+     * @param msg String message to possibly display
+     *
+     */
+    public function notify($msg = '')
+    {
+        echo $msg;
+        sugar_cleanup(true);
+    }
 }

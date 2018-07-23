@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,33 +49,32 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/Import/views/ImportView.php');
         
-class ImportViewUndo extends ImportView 
-{	
-
+class ImportViewUndo extends ImportView
+{
     protected $pageTitleKey = 'LBL_UNDO_LAST_IMPORT';
     
- 	/** 
+    /**
      * @see SugarView::display()
      */
- 	public function display()
+    public function display()
     {
         global $mod_strings, $current_user, $current_language;
         
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
         // lookup this module's $mod_strings to get the correct module name
         $old_mod_strings = $mod_strings;
-        $module_mod_strings = 
+        $module_mod_strings =
             return_module_language($current_language, $_REQUEST['import_module']);
-        $this->ss->assign("MODULENAME",$module_mod_strings['LBL_MODULE_NAME']);
+        $this->ss->assign("MODULENAME", $module_mod_strings['LBL_MODULE_NAME']);
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false), ENT_NOQUOTES);
         // reset old ones afterwards
         $mod_strings = $old_mod_strings;
         
         $last_import = new UsersLastImport();
-        $this->ss->assign('UNDO_SUCCESS',$last_import->undo($_REQUEST['import_module']));
+        $this->ss->assign('UNDO_SUCCESS', $last_import->undo($_REQUEST['import_module']));
         $this->ss->assign("JAVASCRIPT", $this->_getJS());
         $content = $this->ss->fetch('modules/Import/tpls/undo.tpl');
-        $this->ss->assign("CONTENT",$content);
+        $this->ss->assign("CONTENT", $content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
     }
     

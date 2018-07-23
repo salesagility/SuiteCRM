@@ -37,7 +37,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieve()
     {
-        
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
         $mergeRecord = new MergeRecord();
@@ -56,7 +55,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testload_merge_bean()
     {
-        
         self::markTestIncomplete('Test failing since commit a5acea613 applied php7fix patch');
 
 
@@ -81,7 +79,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testload_merge_bean2()
     {
-
         $mergeRecord = new MergeRecord();
 
         //test without merge_id
@@ -125,8 +122,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -153,8 +148,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testget_summary_text()
@@ -279,8 +272,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $result);
         
         // clean up
-        
-        
     }
 
     public function testemail_addresses_query()
@@ -302,7 +293,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testrelease_name_query()
     {
-
         $mergeRecord = new MergeRecord();
 
         //test with type = like
@@ -323,7 +313,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
@@ -352,7 +342,5 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $mergeRecord->generate_where_statement($clauses);
 
         $this->assertSame($expected, $actual);
-
-        
     }
 }

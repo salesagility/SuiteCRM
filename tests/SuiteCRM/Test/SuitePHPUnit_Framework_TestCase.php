@@ -38,7 +38,7 @@ abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHP
         parent::setUpBeforeClass();
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
     }
 
@@ -54,7 +54,6 @@ abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHP
         try {
             $current_user = @\BeanFactory::getBean('Users'); //new User();
         } catch (Exception $e) {
-            
         }
         get_sugar_config_defaults();
 
@@ -98,5 +97,4 @@ abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHP
         
         parent::tearDown();
     }
-
 }

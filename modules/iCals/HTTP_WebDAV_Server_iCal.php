@@ -52,9 +52,9 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
  */
 class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
 {
-    var $cal_encoding = "";
-    var $cal_charset = "";
-    var $http_spec = "";
+    public $cal_encoding = "";
+    public $cal_charset = "";
+    public $http_spec = "";
 
     /**
      * Constructor for the WebDAV srver
@@ -192,7 +192,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
     }
 
 
-    function GET()
+    public function GET()
     {
         return true;
     }
@@ -218,8 +218,10 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
                 ) {
                     $this->http_status("200 OK");
                     header('Content-Type: text/calendar; charset="' . $this->cal_charset . '"');
-                    $result = mb_convert_encoding(html_entity_decode($this->vcal_focus->getVcalIcal($this->user_focus,
-                        $_REQUEST['num_months']), ENT_QUOTES, $this->cal_charset), $this->cal_encoding);
+                    $result = mb_convert_encoding(html_entity_decode($this->vcal_focus->getVcalIcal(
+                        $this->user_focus,
+                        $_REQUEST['num_months']
+                    ), ENT_QUOTES, $this->cal_charset), $this->cal_encoding);
                     ob_end_clean();
                     echo $result;
 
@@ -256,5 +258,4 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
         header("HTTP/$this->http_spec $status");
         header("X-WebDAV-Status: $status", true);
     }
-
-    }
+}

@@ -57,14 +57,13 @@ $admin_option_defs['Administration']['configphp_settings']= array('Administratio
 $admin_option_defs['Administration']['import']= array('Import','LBL_IMPORT_WIZARD','LBL_IMPORT_WIZARD_DESC','./index.php?module=Import&action=step1&import_module=Administration', 'import');
 $admin_option_defs['Administration']['locale']= array('Currencies','LBL_MANAGE_LOCALE','LBL_LOCALE','./index.php?module=Administration&action=Locale&view=default', 'locale');
 
-if(!defined('TEMPLATE_URL')){
-	$admin_option_defs['Administration']['upgrade_wizard']= array('Upgrade','LBL_UPGRADE_WIZARD_TITLE','LBL_UPGRADE_WIZARD','./index.php?module=UpgradeWizard&action=index', 'upgrade-wizard');
+if (!defined('TEMPLATE_URL')) {
+    $admin_option_defs['Administration']['upgrade_wizard']= array('Upgrade','LBL_UPGRADE_WIZARD_TITLE','LBL_UPGRADE_WIZARD','./index.php?module=UpgradeWizard&action=index', 'upgrade-wizard');
 }
 
 $admin_option_defs['Administration']['currencies_management']= array('Currencies','LBL_MANAGE_CURRENCIES','LBL_CURRENCY','./index.php?module=Currencies&action=index', 'currencies');
 
-if (!isset($GLOBALS['sugar_config']['hide_admin_backup']) || !$GLOBALS['sugar_config']['hide_admin_backup'])
-{
+if (!isset($GLOBALS['sugar_config']['hide_admin_backup']) || !$GLOBALS['sugar_config']['hide_admin_backup']) {
     $admin_option_defs['Administration']['backup_management']= array('Backups','LBL_BACKUPS_TITLE','LBL_BACKUPS','./index.php?module=Administration&action=Backups', 'backups');
 }
 
@@ -74,8 +73,7 @@ $admin_option_defs['Administration']['repair']= array('Repair','LBL_UPGRADE_TITL
 
 $admin_option_defs['Administration']['global_search']=array('icon_SearchForm','LBL_GLOBAL_SEARCH_SETTINGS','LBL_GLOBAL_SEARCH_SETTINGS_DESC','./index.php?module=Administration&action=GlobalSearchSettings', 'global-search');
 
-if (!isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) || !$GLOBALS['sugar_config']['hide_admin_diagnostics'])
-{
+if (!isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) || !$GLOBALS['sugar_config']['hide_admin_diagnostics']) {
     $admin_option_defs['Administration']['diagnostic']= array('Diagnostic','LBL_DIAGNOSTIC_TITLE','LBL_DIAGNOSTIC_DESC','./index.php?module=Administration&action=Diagnostic', 'diagnostic');
 }
 
@@ -95,7 +93,7 @@ $admin_option_defs['Administration']['feed_settings']=array('icon_SugarFeed','LB
 
 
 require_once 'include/SugarOAuthServer.php';
-if(SugarOAuthServer::enabled()) {
+if (SugarOAuthServer::enabled()) {
     $admin_option_defs['Administration']['oauth_keys']= array('Password','LBL_OAUTH_TITLE','LBL_OAUTH','./index.php?module=OAuthKeys&action=index');
 }
 $admin_option_defs['Administration']['oauth2_clients']= array('Password','LBL_OAUTH2_CLIENTS_TITLE','LBL_OAUTH2_CLIENTS','./index.php?module=OAuth2Clients&action=index');
@@ -122,8 +120,8 @@ $admin_group_header[]= array('LBL_EMAIL_TITLE','',false,$admin_option_defs, 'LBL
 //studio.
 $admin_option_defs=array();
 $admin_option_defs['studio']['studio']= array('Studio','LBL_STUDIO','LBL_STUDIO_DESC','./index.php?module=ModuleBuilder&action=index&type=studio', 'studio');
-if(isset($GLOBALS['beanFiles']['iFrame'])) {
-	$admin_option_defs['Administration']['portal']= array('iFrames','LBL_IFRAME','DESC_IFRAME','./index.php?module=iFrames&action=index');
+if (isset($GLOBALS['beanFiles']['iFrame'])) {
+    $admin_option_defs['Administration']['portal']= array('iFrames','LBL_IFRAME','DESC_IFRAME','./index.php?module=iFrames&action=index');
 }
 $admin_option_defs['Administration']['rename_tabs']= array('RenameTabs','LBL_RENAME_TABS','LBL_CHANGE_NAME_MODULES',"./index.php?action=wizard&module=Studio&wizard=StudioWizard&option=RenameTabs", 'rename-modules');
 $admin_option_defs['Administration']['moduleBuilder']= array('ModuleBuilder','LBL_MODULEBUILDER','LBL_MODULEBUILDER_DESC','./index.php?module=ModuleBuilder&action=index&type=mb', 'module-builder');
@@ -246,52 +244,50 @@ $admin_option_defs['Bugs']['bug_tracker']= array('Releases','LBL_MANAGE_RELEASES
 $admin_group_header[]= array('LBL_BUG_TITLE','',false,$admin_option_defs, 'LBL_BUG_DESC');
 
 
-if(file_exists('custom/modules/Administration/Ext/Administration/administration.ext.php')){
-	include('custom/modules/Administration/Ext/Administration/administration.ext.php');
+if (file_exists('custom/modules/Administration/Ext/Administration/administration.ext.php')) {
+    include('custom/modules/Administration/Ext/Administration/administration.ext.php');
 }
 
 //For users with MLA access we need to find which entries need to be shown.
 //lets process the $admin_group_header and apply all the access control rules.
 $access = $current_user->getDeveloperModules();
 foreach ($admin_group_header as $key=>$values) {
-	$module_index = array_keys($values[3]);  //get the actual links..
-	foreach ($module_index as $mod_key=>$mod_val) {
-		if (is_admin($current_user) ||
-			in_array($mod_val, $access) ||
-		    $mod_val=='studio'||
-		    ($mod_val=='Forecasts' && in_array('ForecastSchedule', $access)) ||
-		    ($mod_val =='any')
-		   ) {
-		   	    if(!is_admin($current_user)&& isset($values[3]['Administration'])){
-                    unset($values[3]['Administration']);
-                }
-                if(displayStudioForCurrentUser() == false) {
-                    unset($values[3]['studio']);
-                }
+    $module_index = array_keys($values[3]);  //get the actual links..
+    foreach ($module_index as $mod_key=>$mod_val) {
+        if (is_admin($current_user) ||
+            in_array($mod_val, $access) ||
+            $mod_val=='studio'||
+            ($mod_val=='Forecasts' && in_array('ForecastSchedule', $access)) ||
+            ($mod_val =='any')
+           ) {
+            if (!is_admin($current_user)&& isset($values[3]['Administration'])) {
+                unset($values[3]['Administration']);
+            }
+            if (displayStudioForCurrentUser() == false) {
+                unset($values[3]['studio']);
+            }
 
-                if(displayWorkflowForCurrentUser() == false) {
-                    unset($values[3]['any']['workflow_management']);
-                }
+            if (displayWorkflowForCurrentUser() == false) {
+                unset($values[3]['any']['workflow_management']);
+            }
 
-                // Need this check because Quotes and Products share the header group
-                if(!in_array('Quotes', $access)&& isset($values[3]['Quotes'])){
-                    unset($values[3]['Quotes']);
-                }
-                if(!in_array('Products', $access)&& isset($values[3]['Products'])){
-                    unset($values[3]['Products']);
-                }
+            // Need this check because Quotes and Products share the header group
+            if (!in_array('Quotes', $access)&& isset($values[3]['Quotes'])) {
+                unset($values[3]['Quotes']);
+            }
+            if (!in_array('Products', $access)&& isset($values[3]['Products'])) {
+                unset($values[3]['Products']);
+            }
 
-                // Need this check because Emails and Campaigns share the header group
-                if(!in_array('Campaigns', $access)&& isset($values[3]['Campaigns'])){
-                    unset($values[3]['Campaigns']);
-                }
+            // Need this check because Emails and Campaigns share the header group
+            if (!in_array('Campaigns', $access)&& isset($values[3]['Campaigns'])) {
+                unset($values[3]['Campaigns']);
+            }
 
-                //////////////////
-
+            //////////////////
         } else {
-        	//hide the link
-        	unset($admin_group_header[$key][3][$mod_val]);
+            //hide the link
+            unset($admin_group_header[$key][3][$mod_val]);
         }
-
-	}
+    }
 }

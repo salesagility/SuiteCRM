@@ -14,25 +14,24 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testViewSugarpdf()
     {
-        
-        if(isset($_REQUEST)) {
+        if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
         
         
 
-         //execute the method without request parameters and test if it works. it should output some headers and throw headers output exception.
-         try {
-             $view = new ViewSugarpdf();
-             $this->assertEmpty("", $view);
-         } catch (Exception $e) {
-             $msg = $e->getMessage();
-             $this->assertStringStartsWith('Cannot modify header information', $msg, 'Cannot modify header information? : ' . $msg . "\nTrace\n" . $e->getTraceAsString());
-         }
+        //execute the method without request parameters and test if it works. it should output some headers and throw headers output exception.
+        try {
+            $view = new ViewSugarpdf();
+            $this->assertEmpty("", $view);
+        } catch (Exception $e) {
+            $msg = $e->getMessage();
+            $this->assertStringStartsWith('Cannot modify header information', $msg, 'Cannot modify header information? : ' . $msg . "\nTrace\n" . $e->getTraceAsString());
+        }
 
 
-         //execute the method with request parameters and test if it works.
-         $_REQUEST['sugarpdf'] = 'someValue';
+        //execute the method with request parameters and test if it works.
+        $_REQUEST['sugarpdf'] = 'someValue';
         $view = new ViewSugarpdf();
         $view->module = 'Users';
         $this->assertInstanceOf('ViewSugarpdf', $view);
@@ -43,7 +42,7 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // clean up
         
-        if(isset($_request)) {
+        if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
             unset($_REQUEST);

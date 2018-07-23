@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  *  Compability with the old PHP Toolkit
  */
