@@ -297,7 +297,7 @@ class MssqlManager extends DBManager
 
         $sql = $this->_appendN($sql);
 
-        $GLOBALS['log']->info('Query:' . $sql);
+        $GLOBALS['log']->info('Query:' . $this->removeLineBreaks($sql));
         $this->checkConnection();
         $this->countQuery($sql);
         $this->query_time = microtime(true);
