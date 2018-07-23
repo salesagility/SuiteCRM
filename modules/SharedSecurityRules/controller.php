@@ -380,7 +380,6 @@ class SharedSecurityRulesController extends SugarController
         
         if (!isset($request['aow_module'])) {
             LoggerManager::getLogger()->warn('aow_module is not defined in request for SharedSecurityRulesController::action_getModuleOperatorField()');
-            return $this->protectedDie();
         }
 
         if (isset($request['rel_field']) && $request['rel_field'] != '') {
