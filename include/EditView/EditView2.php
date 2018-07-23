@@ -762,7 +762,8 @@ class EditView
             }
         }
 
-        $this->th->ss->assign('id', $this->fieldDefs['id']['value']);
+        $fieldDefsIdValue = isset($this->fieldDefs['id']['value']) ? $this->fieldDefs['id']['value'] : null;
+        $this->th->ss->assign('id', $fieldDefsIdValue);
         $this->th->ss->assign('offset', $this->offset + 1);
         $this->th->ss->assign('APP', $app_strings);
         $this->th->ss->assign('MOD', $mod_strings);

@@ -339,7 +339,11 @@ var $selectedCategories = array();
             $resortQueue[] = $normalMessage;
         }
 
-        usort($resortQueue,create_function('$a,$b','return $a["sort_key"]<$b["sort_key"];'));
+        $function = function ($a, $b) {
+            return $a["sort_key"] < $b["sort_key"];
+        };
+
+        usort($resortQueue,$function);
 
         // Trim it down to the necessary number of records
         $numRecords = count($resortQueue);
@@ -482,12 +486,19 @@ enableQS(false);
 	function display(){
 
 		$listview = parent::display();
-		$GLOBALS['current_sugarfeed'] = $this;
-		$listview = preg_replace_callback('/\{([^\^ }]+)\.([^\}]+)\}/', create_function(
-            '$matches',
-            'if($matches[1] == "this"){$var = $matches[2]; return $GLOBALS[\'current_sugarfeed\']->$var;}else{return translate($matches[2], $matches[1]);}'
-        ),$listview);
 
+		$class = $this;
+		$function = function($matches) use ($class) {
+            if ($matches[1] == "this") {
+                $var = $matches[2];
+                return $class->$var;
+            } else {
+                return translate($matches[2], $matches[1]);
+            }
+        };
+
+		$listview = preg_replace_callback('/\{([^\^ }]+)\.([^\}]+)\}/', $function, $listview);
+                
 
         //grab each token and store the module for later processing
         preg_match_all('/\[(\w+)\:/', $listview, $alt_modules);
@@ -500,7 +511,15 @@ enableQS(false);
         $altStrings = array();
         foreach($alt_modules[1] as $alt){
             //create the alt string and replace the alt token
-            $altString = 'alt="'.translate('LBL_VIEW','SugarFeed').' '.$GLOBALS['app_list_strings']['moduleListSingular'][$alt].'"';
+            
+            $moduleListSingularAlt = null;
+            if (isset($GLOBALS['app_list_strings']['moduleListSingular'][$alt])) {
+                $moduleListSingularAlt = $GLOBALS['app_list_strings']['moduleListSingular'][$alt];
+            } else {
+                LoggerManager::getLogger()->warn('SugarFeedDashlet::display error: $GLOBALS[app_list_strings][moduleListSingular][$alt] is undefined');
+            }
+            
+            $altString = 'alt="'.translate('LBL_VIEW','SugarFeed').' '.$moduleListSingularAlt.'"';
             $listview = preg_replace('/REPLACE_ALT/', $altString, $listview,1);
         }
 
@@ -594,7 +613,7 @@ enableQS(false);
     }
 
     function check_enabled($type){
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $query = "SELECT * FROM config where name = 'module_" .$type . "' and value =  1;";
         $results = $db->query($query);
 

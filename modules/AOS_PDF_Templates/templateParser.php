@@ -89,8 +89,14 @@ class templateParser
                     if(!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
                         $secureLink = $sugar_config['site_url'] . '/'. $file_location;
                     }
-                    $link = $secureLink;
-                    $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
+                    
+                    if(empty($focus->$fieldName)){
+                        $repl_arr[$key . "_" . $fieldName] = ""; 
+                    }
+                    else{
+                        $link = $secureLink;
+                        $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
+                    }
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
                 }
@@ -106,15 +112,13 @@ class templateParser
                     if ($repl_arr['aos_products_quotes_discount'] == 'Percentage') {
                         $sep = get_number_seperators();
                         $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);//.$app_strings['LBL_PERCENTAGE_SYMBOL'];
-                    } else {
-                        $value = currency_format_number($value, $params = array('currency_symbol' => false));
                     }
                 } else {
                     $value = '';
                 }
             }
             if ($name === 'aos_products_product_image' && !empty($value)) {
-                $value = '<img src="' . $value . '"width="50" height="50"/>';
+                $value = '<img src="' . $value . '" class="img-responsive"/>';
             }
             if ($name === 'aos_products_quotes_product_qty') {
                 $sep = get_number_seperators();

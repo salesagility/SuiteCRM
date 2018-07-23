@@ -608,7 +608,7 @@ if($campaign_type == 'general'){
     $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'campaign',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','hidden');
 
-}elseif($campaign_type == 'email' || $campaign_type = 'survey'){
+}elseif($campaign_type == 'email' || $campaign_type == 'survey'){
     $steps = create_email_steps();
     if($focus->id) {
         $summ_url = "index.php?action=WizardHome&module=Campaigns&return_id=" . $focus->id . "&record=" . $focus->id;

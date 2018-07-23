@@ -62,8 +62,11 @@ class ViewSugarpdf extends SugarView{
          parent::__construct();
          if (isset($_REQUEST["sugarpdf"]))
          	$this->sugarpdf = $_REQUEST["sugarpdf"];
-         else
-        	header('Location:index.php?module='.$_REQUEST['module'].'&action=DetailView&record='.$_REQUEST['record']);
+         else {
+             $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+             $record = isset($_REQUEST['record']) ? $_REQUEST['record'] : null;
+        	header('Location:index.php?module='.$module.'&action=DetailView&record='.$record);
+         }
      }
 
     /**

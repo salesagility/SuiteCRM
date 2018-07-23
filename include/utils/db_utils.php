@@ -45,7 +45,7 @@
  */
 function db_convert($string, $type, $additional_parameters=array(),$additional_parameters_oracle_only=array())
 	{
-    return $GLOBALS['db']->convert($string, $type, $additional_parameters, $additional_parameters_oracle_only);
+    return DBManagerFactory::getInstance()->convert($string, $type, $additional_parameters, $additional_parameters_oracle_only);
             }
 
 /**
@@ -53,7 +53,8 @@ function db_convert($string, $type, $additional_parameters=array(),$additional_p
  */
 function db_concat($table, $fields)
 	{
-    return $GLOBALS['db']->concat($table, $fields);
+    $db = DBManagerFactory::getInstance();
+    return $db->concat($table, $fields);
 }
 
 /**
@@ -61,7 +62,7 @@ function db_concat($table, $fields)
  */
 function from_db_convert($string, $type)
 	{
-    return $GLOBALS['db']->fromConvert($string, $type);
+    return DBManagerFactory::getInstance()->fromConvert($string, $type);
 	}
 
 $toHTML = array(

@@ -1,9 +1,11 @@
 <?php
 
-class TaskTest extends PHPUnit_Framework_TestCase
+class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -28,7 +30,15 @@ class TaskTest extends PHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushTable('aod_index');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('tasks');
+        $state->pushTable('tracker');
+        $state->pushGlobals();
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $task = new Task();
 
@@ -47,6 +57,15 @@ class TaskTest extends PHPUnit_Framework_TestCase
         $task->mark_deleted($task->id);
         $result = $task->retrieve($task->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('tasks');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
+        
     }
 
     public function testget_summary_text()
@@ -78,6 +97,12 @@ class TaskTest extends PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $task = new Task();
 
         //execute the method and test if it works and does not throws an exception.
@@ -85,14 +110,24 @@ class TaskTest extends PHPUnit_Framework_TestCase
             $task->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $task = new Task();
         $task->contact_id = 1;
 
@@ -101,12 +136,22 @@ class TaskTest extends PHPUnit_Framework_TestCase
             $task->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_parent_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $task = new Task();
         $task->parent_type = 'Accounts';
         $task->parent_id = '1';
@@ -116,8 +161,12 @@ class TaskTest extends PHPUnit_Framework_TestCase
             $task->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testget_list_view_data()
@@ -187,11 +236,23 @@ class TaskTest extends PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+        // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         $task = new Task();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $task->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testgetDefaultStatus()

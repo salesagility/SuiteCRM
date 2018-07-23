@@ -368,12 +368,15 @@ class SugarApplication {
      */
     function checkDatabaseVersion($dieOnFailure = true) {
         $row_count = sugar_cache_retrieve('checkDatabaseVersion_row_count');
+        $sugarDbVersion = $GLOBALS['sugar_db_version'];
+        $db = DBManagerFactory::getInstance();
         if (empty($row_count)) {
             $version_query = "SELECT count(*) as the_count FROM config WHERE category='info' AND name='sugar_version' AND " .
-                    $GLOBALS['db']->convert('value', 'text2char') . " = " . $GLOBALS['db']->quoted($GLOBALS['sugar_db_version']);
+                    $db->convert('value', 'text2char') . " = " . 
+                    $db->quoted($sugarDbVersion);
 
-            $result = $GLOBALS['db']->query($version_query);
-            $row = $GLOBALS['db']->fetchByAssoc($result);
+            $result = $db->query($version_query);
+            $row = $db->fetchByAssoc($result);
             $row_count = $row['the_count'];
             sugar_cache_put('checkDatabaseVersion_row_count', $row_count);
         }

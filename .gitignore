@@ -78,9 +78,6 @@ SuiteCRM.kdev4
 vendor/
 public/
 
-#Ingore composer files
-composer.lock
-
 #Ignore bower_components
 bower_components/
 node_modules/
@@ -101,3 +98,6 @@ cache/
 custom/**/
 .sass-cache/
 .php_cs.cache
+
+# Ignore testing environment
+build/tmp/

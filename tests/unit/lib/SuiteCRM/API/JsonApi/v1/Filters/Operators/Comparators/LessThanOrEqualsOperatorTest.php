@@ -1,7 +1,7 @@
 <?php
 
 
-class LessThanOrEqualsOperatorTest extends \Codeception\Test\Unit
+class LessThanOrEqualsOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -9,16 +9,15 @@ class LessThanOrEqualsOperatorTest extends \Codeception\Test\Unit
     protected $tester;
 
     private static $operator;
-
-    protected function _before()
+    
+    public function _before()
     {
+        parent::_before();
         $containers = $this->tester->getContainerInterface();
         self::$operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Comparators\LessThanOrEqualsOperator($containers);
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testIsValidTagWithInvalidType()
     {

@@ -112,6 +112,9 @@ form
 		<tr>
 			<td colspan="2" width="100%" style="font-size: 12px; padding-bottom: 5px; font-weight: normal;">{$INSTRUCTION}</td>
 		</tr>
+		<tr>
+			<td colspan="2" width="100%" style="font-size: 12px; padding-bottom: 5px; font-weight: normal; color: red;">{$ERRORS}</td>
+		</tr>
 			<input type="hidden" name="entryPoint" value="{$ENTRY_POINT}" />
 			<input type='hidden' name='action' value="{$ACTION}" />
 			<input type='hidden' name='module' value="{$MODULE}" />
@@ -142,11 +145,13 @@ form
 		</tr>
 		<tr>
 			<td scope="row">{$MOD.LBL_NEW_PASSWORD}:</td>
-			<td width="30%"><input type="password" size="26" tabindex="2" id="new_password" name="new_password" value="" onkeyup="password_confirmation();newrules('{$PWDSETTINGS.minpwdlength}','{$PWDSETTINGS.maxpwdlength}','{$REGEX}');" /></td>
+			<td width="30%">
+				<input type="password" size="26" tabindex="2" id="new_password" name="new_password" value="" onkeyup="password_confirmation();newrules('{$PWDSETTINGS.minpwdlength}','{$PWDSETTINGS.maxpwdlength}','{$REGEX}');" /></td>
 		</tr>
 		<tr>
 			<td scope="row">{$MOD.LBL_NEW_PASSWORD2}:</td>
-			<td width="30%"><input type="password" size="26" tabindex="2" id="confirm_pwd" name="confirm_pwd" value="" onkeyup="password_confirmation();" /> <div id="comfirm_pwd_match" class="error" style="display: none;">{$MOD.LBL_PASSWORD_MIS_MATCH}</div></td>
+			<td width="30%">
+				<input type="password" size="26" tabindex="2" id="confirm_pwd" name="confirm_pwd" value="" onkeyup="password_confirmation();" /> <div id="comfirm_pwd_match" class="error" style="display: none;">{$MOD.LBL_PASSWORD_MIS_MATCH}</div></td>
 		</tr>
 		<tr>
 			<td>{$CAPTCHA}</td>

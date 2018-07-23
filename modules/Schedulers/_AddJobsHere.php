@@ -432,7 +432,7 @@ function removeDocumentsFromFS()
      * @var DBManager $db
      * @var SugarBean $bean
      */
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     // temp table to store id of files without memory leak
     $tableName = 'cron_remove_documents';

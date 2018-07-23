@@ -64,7 +64,7 @@
     <div id="loginform">
         
         <form class="form-signin" role="form" action="index.php" method="post" name="DetailView" id="form"
-              onsubmit="return document.getElementById('cant_login').value == ''">
+              onsubmit="return document.getElementById('cant_login').value == ''" autocomplete="off">
             <div class="companylogo">{$LOGIN_IMAGE}</div>
         <span class="error" id="browser_warning" style="display:none">
             {sugar_translate label="WARN_BROWSER_VERSION_WARNING"}
@@ -98,13 +98,13 @@
             <div class="input-group">
                 <input type="text" class="form-control"
                        placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}" required autofocus
-                       tabindex="1" id="user_name" name="user_name" value='{$LOGIN_USER_NAME}'/>
+                       tabindex="1" id="user_name" name="user_name" value='{$LOGIN_USER_NAME}' autocomplete="off">
             </div>
             <br>
             <div class="input-group">
                 <input type="password" class="form-control"
                        placeholder="{sugar_translate module="Users" label="LBL_PASSWORD"}" tabindex="2"
-                       id="username_password" name="username_password" value='{$LOGIN_PASSWORD}'/>
+                       id="username_password" name="username_password" value='{$LOGIN_PASSWORD}' autocomplete="off">
             </div>
             <br>
             <input id="bigbutton" class="btn btn-lg btn-primary btn-block" type="submit"
@@ -116,8 +116,7 @@
             </div>
         </form>
         
-        <form class="form-signin passform" role="form" action="index.php" method="post" name="DetailView" id="form"
-              name="fp_form" id="fp_form">
+        <form class="form-signin passform" role="form" action="index.php" method="post" name="DetailView" id="form" name="fp_form" id="fp_form" autocomplete="off">
             <div id="forgot_password_dialog" style="display:none">
                 <input type="hidden" name="entryPoint" value="GeneratePassword">
                 <div id="generate_success" class='error' style="display:inline;"></div>
@@ -126,13 +125,13 @@
                     {*<span class="input-group-addon logininput glyphicon glyphicon-user"></span>*}
                     <input type="text" class="form-control" size='26' id="fp_user_name" name="fp_user_name"
                            value='{$LOGIN_USER_NAME}'
-                           placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}"/>
+                           placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}" autocomplete="off">
                 </div>
                 <br>
                 <div class="input-group">
                     {*<span class="input-group-addon logininput glyphicon glyphicon-envelope"></span>*}
                     <input type="text" class="form-control" size='26' id="fp_user_mail" name="fp_user_mail" value=''
-                           placeholder="{sugar_translate module="Users" label="LBL_EMAIL"}">
+                           placeholder="{sugar_translate module="Users" label="LBL_EMAIL"}" autocomplete="off">
                 </div>
                 <br>
                 {$CAPTCHA}
@@ -140,7 +139,7 @@
                 <input title="Email Temp Password" class="button  btn-block" type="button" style="display:inline"
                        onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''"
                        id="generate_pwd_button" name="fp_login"
-                       value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}">
+                       value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}" autocomplete="off">
             </div>
         </form>
         

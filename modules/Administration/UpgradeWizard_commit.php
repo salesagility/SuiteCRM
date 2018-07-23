@@ -44,7 +44,7 @@ require_once('modules/Administration/UpgradeWizardCommon.php');
 require_once('modules/Configurator/Configurator.php');
 function UWrebuild() {
 	global $log;
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	$log->info('Deleting Relationship Cache. Relationships will automatically refresh.');
 
 	echo "
