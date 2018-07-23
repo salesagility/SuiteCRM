@@ -147,5 +147,4 @@ if (!class_exists("ZipArchive")) {
     }
 } else {
     require_once('include/utils/php_zip_utils.php');
-    return;
 }
