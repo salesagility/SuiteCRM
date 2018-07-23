@@ -49,7 +49,9 @@ if($("#inline_edit_icon").length) {
 
 var view = action_sugar_grp1;
 var currentModule = module_sugar_grp1;
-
+var apvi = {};
+var apvi_oldvalue = null;
+var apvi_element = null;
 
 var clicks = 0;
 timer = null;
@@ -109,6 +111,10 @@ function buildEditField(){
 
     var onInlineEditDblClick = function(elem, e) {
         var _this = elem;
+        if (!$(elem).hasClass('inlineEdit')){
+          return;
+        }
+
         e.preventDefault();
         // depending on what view you are using will find the id,module,type of field, and field name from the view
 
@@ -135,6 +141,7 @@ function buildEditField(){
 
         //If we find all the required variables to do inline editing.
         if(field && id && module){
+            apvi_element = elem;
 
             //Do ajax call to retrieve the validation for the field.
             var validation = getValidationRules(field,module,id);
@@ -164,6 +171,11 @@ function buildEditField(){
 
                 //Put the cursor in the field if possible.
                 $("#" + field).focus();
+                if (apvi instanceof APO.forms){
+                  apvi_oldvalue = apvi.getFieldValuebyName(field);
+                } else {
+                  apvi_oldvalue = $("#" + field).val();
+                }
                 if(type == "name" || type == "text") {
                     // move focus to end of text (multiply by 2 to make absolute certain its end as some browsers count carriage return as more than 1 character)
                     var strLength = $("#" + field).val().length * 2;
@@ -220,6 +232,7 @@ function validateFormAndSave(field,id,module,type){
     $("#inlineEditSaveButton").on('click', function () {
         var valid_form = check_form("EditView");
         if(valid_form){
+            $(apvi_element.parentElement.children).filter('.hiddenInlineEdit').each( function(){apvi.setFieldValue(this.firstChild,"")});
             handleSave(field, id, module, type)
             clickListenerActive = false;
         }else{
@@ -316,6 +329,9 @@ $(document).on('click', function (e) {
                 var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + message_field);
                 if (r == true) {
                     var output = setValueClose(output_value);
+                    if (apvi instanceof APO.forms){
+                      apvi.OnInlineCancelFireTrigger(field,apvi_oldvalue);
+                    }
                     clickListenerActive = false;
                 } else {
                     $("#" + field).focus();
@@ -450,7 +466,7 @@ function setValueClose(value){
         $(".inlineEditActive").html(value + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');
         $(".inlineEditActive").removeClass("inlineEditActive");
     });
-
+    uniquecheck = new Array();
     buildEditField();
 }
 
@@ -582,8 +598,45 @@ function getValidationRules(field,module,id){
         alert(SUGAR.language.translate('app_strings', 'LBL_LOADING_ERROR_INLINE_EDITING'));
         return false;
     }
-
-    return "<script type='text/javascript'>addToValidate('EditView', \"" + field + "\", \"" + validation['type'] + "\", " + validation['required'] + ",\"" + validation['label'] + "\");</script>";
+    var script = "<script type='text/javascript'>\n";
+    for (var j = 0; j < validation['rules'].length; j++) {
+       var rule=validation['rules'][j];
+       switch(rule['validation']){
+         case 'composefield':
+             script += "addToValidateComposeField('EditView', \"" + rule['field'] + "\", \"" + rule['type'] + "\", " + rule['required'] + ",\"" + rule['label'] + "\");\n";
+             break;
+         case 'addtocomposefield':
+             script += "addRequireFieldToComposeField('EditView', \"" + rule['parent'] + "\", \"" + rule['field'] + "\", \"" + rule['type'] + "\", \"" + rule['label'] + "\");\n";
+             break;
+         case 'callback':
+             script += "addToValidateCallback('EditView', \"" + field + "\", \"" + rule['type'] + "\", " + rule['required'] + ",\"" + rule['label'] + "\","+ rule['function'] + ");\n";
+             break;
+         case 'duplicate_check':
+             script += "addToCheckUnique('EditView', '" + rule['name'] + "', '" + field + "', " + rule['fields'] + ", " + rule['errorMessages'] + ");\n";
+             break;
+         default:
+             script += "addToValidate('EditView', \"" + field + "\", \"" + rule['type'] + "\", " + rule['required'] + ",\"" + rule['label'] + "\");\n";
+             break;
+       }
+    }
+    if (validation['formconfig']['hasformulas']){
+      script += "apvi = new APO.forms('" + validation['formconfig']['view'] + "'," + validation['formconfig']['getbean']  + "," + validation['formconfig']['beep'] + ");\n";
+      for (var j = 0; j < validation['formulas'].length; j++) {
+        script += "apvi.addFormula('" + validation['formulas'][j]['name'] + "'," + validation['formulas'][j]['fielddeps'] + ");\n"; 
+      }
+      for (var j = 0; j < validation['visibility'].length; j++) {
+        script += "apvi.addVisibility('" + validation['visibility'][j]['name'] + "'," + validation['visibility'][j]['fielddeps'] + ");\n"; 
+      }
+      for (var j = 0; j < validation['panelvisibility'].length; j++) {
+        script += "apvi.addPanelVisibility('" + validation['panelvisibility'][j]['name'] + "'," + validation['panelvisibility'][j]['fielddeps'] + ");\n"; 
+      }
+      for (var j = 0; j < validation['tabvisibility'].length; j++) {
+        script += "apvi.addTabVisibility('" + validation['tabvisibility'][j]['name'] + "'," + validation['tabvisibility'][j]['tab'] + "," + validation['tabvisibility'][j]['fielddeps'] + ");\n"; 
+      }
+      script += "apvi.addTriggers('" + validation['formconfig']['onloadform'] + "');\n";
+    }
+    script += "</script>\n";
+    return script;
 }
 
 /**

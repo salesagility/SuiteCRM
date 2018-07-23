@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once 'modules/DynamicFields/DynamicField.php';
 require_once "data/Relationships/RelationshipFactory.php";
+require_once "data/BeanDuplicateCheckRules.php";
 
 
 /**
@@ -414,6 +415,27 @@ class SugarBean
      */
     public $old_modified_by_name;
 
+    /**
+     * duplicate check
+     */
+    public $duplicate_check;
+
+     /**
+     * Has duplicate check enabled
+     *
+     * @var bool
+     */
+    public $has_duplicate_check;
+
+    /**
+     * 
+     */
+    public $visibility = array();
+
+    /**
+     * 
+     */
+    public $formandvis = array();
 
     /**
      * SugarBean constructor.
@@ -455,6 +477,14 @@ class SugarBean
             ) {
                 $this->setupCustomFields($this->module_dir);
             }
+             
+            if (isset($dictionary[$this->object_name]['fields'])){
+                foreach( $dictionary[$this->object_name]['fields'] as $key => $value_array) {
+                    if (isset($value_array['calculated']) && ($value_array['calculated'] == 1 || $value_array['calculated'] )){
+                        $dictionary[$this->object_name]['fields'][$key]['inline_edit'] = 0;
+                    }
+                }
+            }
 
             if (isset($GLOBALS['dictionary'][$this->object_name]) && !$this->disable_vardefs) {
                 $this->field_name_map = isset($dictionary[$this->object_name]['fields']) ? $dictionary[$this->object_name]['fields'] : null;
@@ -470,6 +500,22 @@ class SugarBean
                     $this->optimistic_lock = true;
                 }
             }
+
+            if (!empty($dictionary[$this->object_name]['visibility'])) {
+                $this->visibility = $dictionary[$this->object_name]['visibility']; 
+            }
+            if (!empty($dictionary[$this->object_name]['formandvis'])) {
+                $this->formandvis = $dictionary[$this->object_name]['formandvis']; 
+            }
+
+            if (!empty($dictionary[$this->object_name]['duplicate_check'])) {
+                $this->has_duplicate_check = true;
+                $this->duplicate_check = new BeanDuplicateCheckRules($dictionary[$this->object_name]['duplicate_check'], $this->field_defs);
+            } else {
+                $this->has_duplicate_check = false;
+                $this->duplicate_check = null;
+            }
+
             $loaded_definitions[$this->object_name]['column_fields'] =& $this->column_fields;
             $loaded_definitions[$this->object_name]['list_fields'] =& $this->list_fields;
             $loaded_definitions[$this->object_name]['required_fields'] =& $this->required_fields;
@@ -1430,6 +1476,13 @@ class SugarBean
                     if (!isset($current_bean->id)) {
                         $current_bean->id = null;
                     }
+                    // APO Hide fields
+                    if (!$current_bean instanceof stdClass){
+                        $hiddenfields = $current_bean->updateHiddenFields(false);
+                        foreach($hiddenfields as $field => $value){
+                            $current_bean->$field = "";
+                        }
+                    }
                     $list[$current_bean->id] = $current_bean;
 
                 }
@@ -2373,6 +2426,11 @@ class SugarBean
             $this->save_relationship_changes($isUpdate);
             $GLOBALS['saving_relationships'] = false;
         }
+        //
+        // APO Update Calculated Fields before call custom logic "before_save"
+        //
+        $this->updateCalculatedFields();
+
         if ($isUpdate && !$this->update_date_entered) {
             unset($this->date_entered);
         }
@@ -2442,6 +2500,49 @@ class SugarBean
         $this->new_with_id = false;
         $this->in_save = false;
         return $this->id;
+    }
+
+    public function updateCalculatedFields()
+    {
+        $request = 
+            array(
+                "module" => $this->module_name,
+                "action" => "updateCalculatedFields",
+                "view" => "",
+                "current_module" => $this->module_name,
+                "id" => $this->id,
+                "getbean" => false,
+                "fieldsdeps" => (array) $this,
+                "fields" => (array) $this,
+                "panels" => array(),
+                "event" =>
+                    array(
+                        "name" => "",
+                        "value" => "",
+                        "type" => "updateCalculatedFields",
+                    ),
+            );
+        $rbean = 
+            array(
+                "isset" => true,
+                "fetchbean" => $this,
+            );
+        if (!isset($this->field_name_map)){
+            return;
+        }
+        foreach($this->field_name_map as $field => $value)
+        {
+            if (isset($value['calculated']) && ($value['calculated'] == 1 || $value['calculated'] == true))
+            {
+                switch($value['formula']['type']){
+                    case 'function':
+                        require_once( $value['formula']['function']['include'] );
+                        $value = $value['formula']['function']['name']( $rbean, $request );
+                        $this->$field = $value;
+                        break;
+                }
+            }
+        }
     }
 
     /**
@@ -5700,6 +5801,57 @@ class SugarBean
     public function get_list_view_data()
     {
         return $this->get_list_view_array();
+    }
+
+    public function updateHiddenFields( $toupper = true )
+    {
+        $ret = array();
+        $request = 
+            array(
+                "module" => $this->module_name,
+                "action" => "updateHiddenFields",
+                "view" => "",
+                "current_module" => $this->module_name,
+                "id" => $this->id,
+                "getbean" => false,
+                "fieldsdeps" => (array) $this,
+                "fields" => (array) $this,
+                "panels" => array(),
+                "event" =>
+                    array(
+                        "name" => "",
+                        "value" => "",
+                        "type" => "updateHiddenFields",
+                    ),
+            );
+        $rbean = 
+            array(
+                "isset" => true,
+                "fetchbean" => $this,
+            );
+        foreach ($this->field_defs as $field => $value) {
+            if (isset($this->$field)) {
+                if (isset($value['visibility']) && ($value['visibility'] == 1 || $value['visibility'] == true)) {
+                    switch($value['visformula']['type']){
+                        case 'function':
+                            require_once( $value['visformula']['function']['include'] );
+                            $value = $value['visformula']['function']['name']( $rbean, $request );
+                            if ($value === true ){
+                                unset($this->field_defs[$field]['hidden']);
+                            } else {
+                                $this->field_defs[$field]['hidden'] = true;
+                                if ($toupper){
+                                    $ret[strtoupper($field)]=true;
+                                } else {
+                                    $ret[$field]=true;
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+        return $ret;
     }
 
     /**

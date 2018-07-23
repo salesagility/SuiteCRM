@@ -74,6 +74,7 @@
             $(document).ready(function () {
               $('#updateParametersButton').click(function () {
                 //Update the Detail view form to have the parameter info and reload the page
+
                 var _form = $('#formDetailView');
                 _form.find('input[name=action]').val('DetailView');
                 //Add each parameter to the form in turn

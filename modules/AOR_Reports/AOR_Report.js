@@ -47,7 +47,6 @@ $(document).ready(function () {
   $('#updateParametersButton').click(function(){
 
     var _form = addParametersToForm('DetailView');
-
     _form.submit();
   });
 });
@@ -62,6 +61,14 @@ function updateTimeDateFields(fieldInput, ln) {
     var date = datetime.substr(0, 10);
     var formatDate = $.datepicker.formatDate('yy-mm-dd', new Date(date));
     fieldInput = datetime.replace(date, formatDate) + ':00';
+  }
+  // timeslot combo fields
+  if (typeof fieldInput === 'undefined'
+    && $("[name='aor_conditions_value\\[" + ln + "\\]']").hasClass('TimeSlot')){
+    fieldInput = $("[name='aor_conditions_value\\["+ln+"\\]']").val();
+    if (fieldInput == "" ){
+      fieldInput = "0";
+    }
   }
   return fieldInput;
 }

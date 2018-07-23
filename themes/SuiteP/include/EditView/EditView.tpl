@@ -161,7 +161,7 @@
             {{assign var='panelHeadingCollapse' value=""}}
             {{/if}}
 
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="detailpanel-top-panel-{{$panelCount}}">
                 <div class="panel-heading {{$panelHeadingCollapse}}">
                     <a class="{{$collapsed}}" role="button" data-toggle="collapse-edit" aria-expanded="false">
                         <div class="col-xs-10 col-sm-11 col-md-11">

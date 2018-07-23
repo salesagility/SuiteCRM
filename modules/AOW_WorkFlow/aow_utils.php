@@ -283,6 +283,7 @@ function getValidFieldsTypes($module, $field){
         case 'short':
         case 'tinyint':
         case 'int':
+        case 'timeslot':
             $valid_type = array('uint','ulong','long','short','tinyint','int');
             break;
         case 'date':
@@ -370,7 +371,6 @@ function getModuleField(
             $vardef = $focus->getFieldDefinition($fieldname);
         }
 
-
         //$displayParams['formName'] = 'EditView';
 
         // if this is the id relation field, then don't have a pop-up selector.
@@ -391,6 +391,13 @@ function getModuleField(
             $displayParams['idName'] = createBracketVariableAlias($aow_field);
         }
 
+        if( $vardef['type'] == 'timeslot') {
+            $displayParams['originalFieldName'] = $aow_field;
+            // Replace the square brackets by a deliberately complex alias to avoid JS conflicts
+            $displayParams['idName'] = createBracketVariableAlias($aow_field);
+            $displayParams['addValidate'] = "yes";
+            $displayParams['label']= trim( translate($vardef['vname'],$module->module_dir));
+        }
         // trim down textbox display
         if( $vardef['type'] == 'text' ) {
             $vardef['rows'] = 2;
@@ -594,13 +601,22 @@ function getModuleField(
         $displayValue = $timedate->to_display_date_time($value);
         $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $displayValue;
         $fieldlist[$fieldname]['name'] = $aow_field;
+    } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'timeslot')){
+        $value = $focus->convertField($value, $fieldlist[$fieldname]);
+        $displayValue = $value;
+        $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $displayValue;
+        $fieldlist[$fieldname]['name'] = $aow_field;
     } else {
         $fieldlist[$fieldname]['value'] = $value;
         $fieldlist[$fieldname]['name'] = $aow_field;
-
     }
 
     if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' ) {
+        $fieldlist[$aow_field]['aliasId'] = createBracketVariableAlias($aow_field);
+        $fieldlist[$aow_field]['originalId'] = $aow_field;
+    }
+
+    if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'timeslot' ) {
         $fieldlist[$aow_field]['aliasId'] = createBracketVariableAlias($aow_field);
         $fieldlist[$aow_field]['originalId'] = $aow_field;
     }
@@ -638,10 +654,10 @@ function getModuleField(
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
     $ss->assign("module", $module);
+
     if (isset($params['record_id']) && $params['record_id']) {
         $ss->assign("record_id", $params['record_id']);
     }
-
     return $ss->fetch($file);
 }
 

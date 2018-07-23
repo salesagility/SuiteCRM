@@ -85,6 +85,7 @@ $mod_strings = array(
     'LBL_ERROR_INVALID_RELATE' => 'Invalid relational field',
     'LBL_ERROR_INVALID_CURRENCY' => 'Invalid currency value',
     'LBL_ERROR_INVALID_FLOAT' => 'Invalid floating point number',
+    'LBL_ERROR_INVALID_TIMESLOT' => 'Invalid timeslot value',
     'LBL_ERROR_NOT_IN_ENUM' => 'Value not in dropDown list. Allowed values are: ',
     'LBL_IMPORT_MODULE_ERROR_NO_UPLOAD' => 'File was not uploaded successfully. It may be that the \'upload_max_filesize\' setting in your php.ini file is set to a small number',
     'LBL_MODULE_NAME' => 'Import',
