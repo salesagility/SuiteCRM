@@ -220,7 +220,6 @@ $beanFiles['AOBH_BusinessHours'] = 'modules/AOBH_BusinessHours/AOBH_BusinessHour
 // SharedSecurityRules
 $beanList['SharedSecurityRulesConditions'] = 'SharedSecurityRulesConditions';
 $beanFiles['SharedSecurityRulesConditions'] = 'modules/SharedSecurityRulesConditions/SharedSecurityRulesConditions.php';
-//$moduleList[] = 'SharedSecurityRulesConditions';
 $beanList['SharedSecurityRules'] = 'SharedSecurityRules';
 $beanFiles['SharedSecurityRules'] = 'modules/SharedSecurityRules/SharedSecurityRules.php';
 $moduleList[] = 'SharedSecurityRules';
