@@ -81,10 +81,10 @@ class SharedSecurityRulesController extends SugarController
         $request = $_REQUEST;
         
         $requestAOWAction = null;
-        if (!isset($request['aow_index'])) {
+        if (!isset($request['aow_action'])) {
             LoggerManager::getLogger()->warn('aow_action is not defined in request for SharedSecurityRulesController::action_getAction()');
         } else {
-            $requestAOWAction = $request['aow_index'];
+            $requestAOWAction = $request['aow_action'];
         }
         
         $requestLine = null;
