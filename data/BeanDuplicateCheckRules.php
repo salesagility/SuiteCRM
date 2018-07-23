@@ -147,7 +147,7 @@ class CheckDuplicateRule
                 $i++;
             }
             $this->values = $rule->values;
-            $beant = new $module;
+            $beant = BeanFactory::getBean($module);
             $beant->retrieve_by_string_fields($retrievearray);
             if(!isset($beant->id) || ($bean->id == $beant->id)){
                 $this->retchecked = "notduplicated";
@@ -175,7 +175,7 @@ class CheckDuplicateRule
         return array( "nameRule" => $this->nameRule, "fields" => json_encode($this->fields), "errorMessages" => json_encode($this->errmsg) );
     }
 
-    private function parseErrorMessage( $string )
+    protected function parseErrorMessage( $string )
     {
         global $app_list_strings, $app_strings;
 
@@ -263,8 +263,11 @@ class BeanDuplicateCheckRules
                     $ruleObj = new CheckDuplicateRule($rule['name'], $rule['fields'], $rule['errormessages'], $this->field_defs);
                 } else {
                     $ruleObj = new $rule['name']($rule['name'], $rule['fields'], $rule['errormessages'], $this->field_defs);
+                    if(!$ruleObj instanceof CheckDuplicateRule){
+                        $GLOBALS['log']->fatal("Error {$rule['name']} is not an instance of CheckDuplicateRule. This rule was disabled.");
+                        return false;
+                    }
                 }
-//instanceof
                 $this->rules[$rule['name']] = $ruleObj;
             }
         }

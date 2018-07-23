@@ -92,7 +92,7 @@ class HomeController extends SugarController{
             if($_REQUEST['id']){
                 $bean = BeanFactory::getBean($_REQUEST['current_module'],$_REQUEST['id']);
             } else {
-                $bean = new $_REQUEST['current_module'];
+                $bean = BeanFactory::getBean($_REQUEST['current_module']);
             }
             if (!$bean->has_duplicate_check){
                 $return_json["iserror"] = true;
