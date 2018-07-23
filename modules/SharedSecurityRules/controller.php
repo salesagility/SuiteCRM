@@ -378,14 +378,17 @@ class SharedSecurityRulesController extends SugarController
         global $app_list_strings, $beanFiles, $beanList;
         $request = $_REQUEST;
         
-        if (!isset($request['aow_module'])) {
-            LoggerManager::getLogger()->warn('aow_module is not defined in request for SharedSecurityRulesController::action_getModuleOperatorField()');
+        $requestedAORModule = null;
+        if (!isset($request['aor_module'])) {
+            LoggerManager::getLogger()->warn('aor_module is not defined in request for SharedSecurityRulesController::action_getModuleOperatorField()');
+        } else {
+            $requestedAORModule = $request['aor_module'];
         }
 
         if (isset($request['rel_field']) && $request['rel_field'] != '') {
-            $module = getRelatedModule($request['aor_module'], $request['rel_field']);
+            $module = getRelatedModule($requestedAORModule, $request['rel_field']);
         } else {
-            $module = $request['aor_module'];
+            $module = $requestedAORModule;
         }
         $fieldname = $request['aor_fieldname'];
         $aor_field = $request['aor_newfieldname'];
