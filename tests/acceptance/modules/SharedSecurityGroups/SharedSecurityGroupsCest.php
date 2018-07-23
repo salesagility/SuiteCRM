@@ -152,6 +152,7 @@ class SharedSecurityGroupsCest {
         $I->waitForElementVisible('#EditView_tabs > div.panel-content', self::WAITING_DELAY); // waiting fo create page
         $I->fillField('#name', 'test ssg1');
         $I->selectOption('#flow_module', 'Accounts');
+        $I->wait(1);
         $I->click('#fieldTreeLeafs > ul > li:nth-child(23) > div > span'); // it should be the Name field of Account module
         $I->selectOption('#aor_conditions_operator\5b 0\5d', 'Contains');
         $I->fillField('#aor_conditions_value\5b 0\5d', 'foo');
