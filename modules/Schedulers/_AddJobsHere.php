@@ -77,7 +77,7 @@ $job_strings = array(
     12 => 'sendEmailReminders',
     14 => 'cleanJobQueue',
     15 => 'removeDocumentsFromFS',
-    16 => 'trimSuiteFeeds',
+    16 => 'trimSugarFeeds',
 
 );
 
