@@ -523,7 +523,14 @@ class AOW_WorkFlowController extends SugarController {
         else $value = '';
 
         switch($_REQUEST['aow_type']) {
-            case 'Record Email';
+            case 'Record Field':
+                if($view == 'EditView'){
+                    echo "<select type='text'  name='$aow_field' id='$aow_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value, array('varchar')) ."</select>";
+                }else{
+                    echo getModuleFields($module, $view, $value);
+                }
+                break;
+            case 'Record Email':
                 echo '';
                 break;
             case 'Related Field':

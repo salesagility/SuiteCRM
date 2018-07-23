@@ -269,6 +269,16 @@ class actionSendEmail extends actionBase {
                             }
                         }
                         break;
+                    case 'Record Field':
+                        $field = $params['email'][$key];
+                        $recordEmail = $bean->$field;
+                        $temp_emails = str_replace( array(";",",","|"), ",", $recordEmail );
+                        $emails_addresses = array_map( 'trim', explode("," , $temp_emails));
+                        foreach($emails_addresses as $recordEmail){
+                            if(trim($recordEmail) != '')
+                                $emails[$params['email_to_type'][$key]][] = $recordEmail;
+                        }
+                        break;
                     case 'Record Email':
                         $recordEmail = $bean->emailAddress->getPrimaryAddress($bean);
                         if($recordEmail == '' && isset($bean->email1)) $recordEmail = $bean->email1;
@@ -413,14 +423,23 @@ class actionSendEmail extends actionBase {
 
         $url =  $cleanUrl."/index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}";
 
+        foreach($object_arr as $obj => $val){
+            $urls[$obj] = $cleanUrl."/index.php?module={$obj}&action=DetailView&record={$val}";
+        }
         $template->subject = str_replace("\$contact_user","\$user",$template->subject);
         $template->body_html = str_replace("\$contact_user","\$user",$template->body_html);
         $template->body = str_replace("\$contact_user","\$user",$template->body);
         $template->subject = aowTemplateParser::parse_template($template->subject, $object_arr);
         $template->body_html = aowTemplateParser::parse_template($template->body_html, $object_arr);
+        foreach($urls as $urlo => $val){
+            $template->body_html = str_replace("\$url_".strtolower($urlo), $val, $template->body_html);
+        }
         $template->body_html = str_replace("\$url",$url,$template->body_html);
         $template->body_html = str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html);
         $template->body = aowTemplateParser::parse_template($template->body, $object_arr);
+        foreach($urls as $urlo => $val){
+            $template->body = str_replace("\$url_".strtolower($urlo), $val, $template->body);
+        }
         $template->body = str_replace("\$url",$url,$template->body);
         $template->body = str_replace('$sugarurl', $sugar_config['site_url'], $template->body);
     }

@@ -64,7 +64,9 @@
                 'include/javascript/phpjs/get_html_translation_table.js' => 'include/javascript/sugar_grp1.js',
                 'include/javascript/phpjs/html_entity_decode.js' => 'include/javascript/sugar_grp1.js',
                 'include/javascript/phpjs/htmlentities.js' => 'include/javascript/sugar_grp1.js',
-               'include/EditView/Panels.js'   => 'include/javascript/sugar_grp1.js',
+                'include/EditView/Panels.js'   => 'include/javascript/sugar_grp1.js',
+                //APO
+                'include/javascript/apo_formandvis.js' => 'include/javascript/sugar_grp1.js',
             ),
 			//jquery libraries
 			$sugar_grp_jquery = array(
@@ -97,6 +99,7 @@
            $sugar_field_grp = array(
                'include/SugarFields/Fields/Collection/SugarFieldCollection.js' => 'include/javascript/sugar_field_grp.js',
                'include/SugarFields/Fields/Datetimecombo/Datetimecombo.js' => 'include/javascript/sugar_field_grp.js',
+               'include/SugarFields/Fields/Timeslot/Timeslot.js' => 'include/javascript/sugar_field_grp.js',
            ),
 
            $sugar_grp1_yui = array(

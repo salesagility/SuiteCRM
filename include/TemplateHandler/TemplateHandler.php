@@ -182,6 +182,42 @@ class TemplateHandler
             array('CANCEL', 'DELETE', 'DUPLICATE', 'EDIT', 'FIND_DUPLICATES', 'SAVE', 'CONNECTOR')
         );
         $contents = $this->ss->fetch($tpl);
+
+        if ($view === 'DetailView'){
+            global $dictionary, $beanList;
+            $mod = $beanList[$module];
+
+            if ($mod === 'aCase') {
+                $mod = 'Case';
+            }
+            $defs = $dictionary[$mod]['fields'];
+            //Create a base class with field_name_map property
+            $sugarBean = new SugarBean();
+            $sugarBean->field_name_map = $defs;
+            $sugarBean->module_dir = $module;
+
+            if (!empty($dictionary[$module]['visibility'])) {
+                $sugarBean->visibility = $dictionary[$module]['visibility'];
+            }
+            if (!empty($dictionary[$module]['formandvis'])) {
+                $sugarBean->formandvis = $dictionary[$module]['formandvis'];
+            }
+            $skipFiles = array();
+            foreach( $defs as $def )
+            {
+                $skipFiles[$def['name']] = true;
+            }
+
+            $javascript = new javascript();
+            $javascript->setFormName($view);
+
+            $javascript->setSugarBean($sugarBean);
+            $javascript->addAllFields('', $skipFiles, true);
+            $contents .= "{literal}\n";
+            $contents .= $javascript->getScript();
+            $contents .= "{/literal}\n";
+        }        
+
         // Insert validation and quick search stuff here
         if ($view === 'EditView' || $ajaxSave || $view === 'ConvertLead' || strpos($view, 'QuickCreate')) {
 
@@ -245,6 +281,18 @@ class TemplateHandler
             $sugarBean = BeanFactory::getBean($module); // $sugarBean = new SugarBean();
             $sugarBean->field_name_map = $defs;
             $sugarBean->module_dir = $module;
+
+            if (!empty($dictionary[$module]['duplicate_check'])) {
+                $sugarBean->has_duplicate_check = true;
+                $sugarBean->duplicate_check = new BeanDuplicateCheckRules($dictionary[$module]['duplicate_check'], $defs);
+            }
+
+            if (!empty($dictionary[$module]['visibility'])) {
+                $sugarBean->visibility = $dictionary[$module]['visibility'];
+            }
+            if (!empty($dictionary[$module]['formandvis'])) {
+                $sugarBean->formandvis = $dictionary[$module]['formandvis'];
+            }
 
             $javascript = new javascript();
             $view = $view === 'QuickCreate' ? "QuickCreate_{$module}" : $view;
