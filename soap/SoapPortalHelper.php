@@ -183,7 +183,7 @@ function get_notes_in_module($in, $module, $orderBy = '')
                       inner join kbdocument_revisions kr on kr.document_revision_id = dr.id AND kr.kbdocument_id IN ($in)
                       AND dr.file_mime_type is not null";
         } else {
-            $query = "SELECT id from $rel->table_name where parent_id IN $in AND parent_type='".$GLOBALS['db']->quote($module)."' AND deleted=0 AND portal_flag = 1";
+            $query = "SELECT id from $rel->table_name where parent_id IN $in AND parent_type='".DBManagerFactory::getInstance()->quote($module)."' AND deleted=0 AND portal_flag = 1";
         }
 
         if(!empty($orderBy)){
@@ -226,7 +226,7 @@ function get_notes_in_module($in, $module, $orderBy = '')
 function get_accounts_from_contact($contact_id, $orderBy = '')
     {
                 // First, get the list of IDs.
-        $query = "SELECT account_id as id from accounts_contacts where contact_id='".$GLOBALS['db']->quote($contact_id)."' AND deleted=0";
+        $query = "SELECT account_id as id from accounts_contacts where contact_id='".DBManagerFactory::getInstance()->quote($contact_id)."' AND deleted=0";
         if(!empty($orderBy)){
             $query .= ' ORDER BY ' . $orderBy;
         }
@@ -237,7 +237,7 @@ function get_accounts_from_contact($contact_id, $orderBy = '')
 function get_contacts_from_account($account_id, $orderBy = '')
     {
         // First, get the list of IDs.
-        $query = "SELECT contact_id as id from accounts_contacts where account_id='".$GLOBALS['db']->quote($account_id)."' AND deleted=0";
+        $query = "SELECT contact_id as id from accounts_contacts where account_id='".DBManagerFactory::getInstance()->quote($account_id)."' AND deleted=0";
         if(!empty($orderBy)){
             $query .= ' ORDER BY ' . $orderBy;
         }
@@ -277,7 +277,7 @@ function build_relationship_tree($contact){
 
     get_accounts_from_contact($contact->id);
 
-    set_module_in(array('list'=>array($contact->id), 'in'=> "('".$GLOBALS['db']->quote($contact->id)."')"), 'Contacts');
+    set_module_in(array('list'=>array($contact->id), 'in'=> "('".DBManagerFactory::getInstance()->quote($contact->id)."')"), 'Contacts');
 
     $accounts = $_SESSION['viewable']['Accounts'];
     foreach($accounts as $id){
@@ -303,7 +303,7 @@ function get_module_in($module_name){
     $module_name_in = array_keys($_SESSION['viewable'][$module_name]);
     $module_name_list = array();
     foreach ( $module_name_in as $name ) {
-        $module_name_list[] = $GLOBALS['db']->quote($name);
+        $module_name_list[] = DBManagerFactory::getInstance()->quote($name);
     }
 
     $mod_in = "('" . join("','", $module_name_list) . "')";
@@ -329,12 +329,12 @@ function set_module_in($arrayList, $module_name){
                 $newList = array();
                 if ( is_array($_SESSION['viewable'][strtolower($module_name).'_in']) ) {
                     foreach($_SESSION['viewable'][strtolower($module_name).'_in'] as $name ) {
-                        $newList[] = $GLOBALS['db']->quote($name);
+                        $newList[] = DBManagerFactory::getInstance()->quote($name);
                     }
                 }
                 if ( is_array($arrayList['list']) ) {
                     foreach ( $arrayList['list'] as $name ) {
-                        $newList[] = $GLOBALS['db']->quote($name);
+                        $newList[] = DBManagerFactory::getInstance()->quote($name);
                     }
                 }
                 $_SESSION['viewable'][strtolower($module_name).'_in'] = "('" . implode("', '", $newList) . "')";

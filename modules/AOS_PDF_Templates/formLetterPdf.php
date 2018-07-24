@@ -59,9 +59,9 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
     $mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_post']);
     $ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
     $query = $bean->create_export_query($order_by, $ret_array['where'], $ret_array['join']);
-    $result = $GLOBALS['db']->query($query, true);
+    $result = DBManagerFactory::getInstance()->query($query, true);
     $uids = array();
-    while ($val = $GLOBALS['db']->fetchByAssoc($result, false)) {
+    while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result, false)) {
         array_push($recordIds, $val['id']);
     }
 } else {

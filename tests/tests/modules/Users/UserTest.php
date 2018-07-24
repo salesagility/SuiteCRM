@@ -1,7 +1,7 @@
 <?php
 
 
-class UserTest extends PHPUnit_Framework_TestCase {
+class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 
 	public function testUser() {
@@ -28,7 +28,7 @@ class UserTest extends PHPUnit_Framework_TestCase {
     public function testgetSystemUser()
     {
     	//unset and reconnect Db to resolve mysqli fetch exeception
-    	global $db;
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -44,8 +44,16 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 	public function testgetDefaultSignature()
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -56,6 +64,10 @@ class UserTest extends PHPUnit_Framework_TestCase {
 		$result = $user->getDefaultSignature();
 		$this->assertTrue(is_array($result));
 
+        
+        // clean up
+        
+        $state->popGlobals();
 	}
 
 
@@ -137,8 +149,16 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 	public function testgetUserPrivGuid()
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -150,13 +170,25 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(isset($result));
 		$this->assertEquals(36, strlen($result));
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
 	public function testsetUserPrivGuid()
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -171,13 +203,25 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(isset($result));
 		$this->assertEquals(36, strlen($result));
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
 	public function testSetAndGetAndResetPreference( )
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('user_preferences');
+        $state->pushGlobals();
+        
+        // test
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -200,6 +244,11 @@ class UserTest extends PHPUnit_Framework_TestCase {
 		$user->resetPreferences();
 		$result = $user->getPreference('userPrivGuid', 'global', $user);
 		$this->assertFalse(isset($result));
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('user_preferences');
 
 	}
 
@@ -209,7 +258,7 @@ class UserTest extends PHPUnit_Framework_TestCase {
 	public function testsavePreferencesToDB()
 	{
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -223,7 +272,7 @@ class UserTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue(true);
 		}
 		catch (Exception $e) {
-			$this->fail();
+			$this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
 		}
 
 	}
@@ -231,8 +280,15 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 	public function testreloadPreferences()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -242,14 +298,25 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 		$result = $user->reloadPreferences();
 		$this->assertEquals(true, $result);
+                
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
 
 	public function testgetUserDateTimePreferences()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -265,13 +332,24 @@ class UserTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue(isset($result['userGmt']));
 		$this->assertTrue(isset($result['userGmtOffset']));
 
+                
+        // clean up
+        
+        $state->popGlobals();
 	}
 
 
 	public function testloadPreferences( )
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -281,14 +359,25 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 		$result = $user->loadPreferences();
 		$this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
 
     public function testGetETagSeedAndIncrementETag(){
 
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	//unset and reconnect Db to resolve mysqli fetch exeception
-    	global $db;
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -308,6 +397,10 @@ class UserTest extends PHPUnit_Framework_TestCase {
     	//execute getETagSeed method again, get Etag final value and  compare final and initial values
     	$ETagFinal = $user->getETagSeed('test');
     	$this->assertGreaterThan($ETagInitial, $ETagFinal);
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
@@ -344,31 +437,21 @@ class UserTest extends PHPUnit_Framework_TestCase {
 	}
 
 
-	public function testcheck_role_membership()
-	{
-		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
-		unset ($db->database);
-		$db->checkConnection();
-
-		$user = new User();
-
-		$result = $user->check_role_membership("test", '');
-		$this->assertEquals(false, $result);
-
-
-		$result = $user->check_role_membership("test", '1');
-		$this->assertEquals(false, $result);
-
-	}
-
-
 	public function testsaveAndOthers()
 	{
-		error_reporting(E_ERROR | E_PARSE);
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addr_bean_rel');
+        $state->pushTable('user_preferences');
+        $state->pushTable('users');
+        $state->pushTable('email_addresses');
+        $state->pushGlobals();
+        
+        // test
 
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -431,6 +514,13 @@ class UserTest extends PHPUnit_Framework_TestCase {
 		$user->save();
 		$user->mark_deleted($user->id);
 
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('email_addresses');
+        $state->popTable('users');
+        $state->popTable('user_preferences');
+        $state->popTable('email_addr_bean_rel');
 	}
 
 	public function retrieve($id)
@@ -582,13 +672,13 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 	public function testgetPasswordHash()
 	{
+		$this->markTestIncomplete('Error: crypt(): No salt parameter was specified. You must use a randomly generated salt and a strong hash function to produce a secure hash.');
+
 
 		$result= User::getPasswordHash("test");
 
 		$this->assertTrue(isset($result));
 		$this->assertGreaterThan(0,strlen($result));
-
-		$this->markTestIncomplete('Error: crypt(): No salt parameter was specified. You must use a randomly generated salt and a strong hash function to produce a secure hash.');
 
 	}
 
@@ -716,6 +806,13 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 	public function testget_list_view_data()
 	{
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		global $mod_strings;
 		$mod_strings['LBL_CHECKMARK'] = "";
 
@@ -725,6 +822,10 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 		$result = $user->get_list_view_data();
 		$this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
@@ -781,19 +882,20 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 	public function testget_calls() {
 
+		$this->markTestIncomplete('Error:Only variables should be passed by reference');
+                
 		$user = new User();
 
 		//$result = $user->get_calls();
 		//$this->assertTrue(is_array($result));
 
-		$this->markTestIncomplete('Error:Only variables should be passed by reference');
 	}
 
 
 	public function testdisplayEmailCounts() {
 
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -830,6 +932,14 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
 	public function testsetDefaultsInConfig()
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushFile('config.php');
+        
+        // test
+
 		$user = new User();
 
 		$result = $user->setDefaultsInConfig();
@@ -837,12 +947,24 @@ class UserTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue(is_array($result));
 		$this->assertEquals('sugar', $result['email_default_client']);
 		$this->assertEquals('html', $result['email_default_editor']);
+        
+        // clean up
+        
+        $state->popFile('config.php');
 
 	}
 
 
 	public function testgetEmailLink2()
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		$user = new User();
 
 		$user->retrieve(1);
@@ -864,12 +986,23 @@ class UserTest extends PHPUnit_Framework_TestCase {
 		$expected = "<a href='javascript:void(0);' onclick='SUGAR.quickCompose.init({\"fullComposeUrl\":\"contact_id=\u0026parent_type=Contacts\u0026parent_id=\u0026parent_name=+\u0026to_addrs_ids=\u0026to_addrs_names=+\u0026to_addrs_emails=\u0026to_email_addrs=+%26nbsp%3B%26lt%3Babc%40email.com%26gt%3B\u0026return_module=Contacts\u0026return_action=DetailView\u0026return_id=\",\"composePackage\":{\"contact_id\":\"\",\"parent_type\":\"Contacts\",\"parent_id\":\"\",\"parent_name\":\" \",\"to_addrs_ids\":\"\",\"to_addrs_names\":\" \",\"to_addrs_emails\":\"\",\"to_email_addrs\":\"  \u003Cabc@email.com\u003E\",\"return_module\":\"Contacts\",\"return_action\":\"DetailView\",\"return_id\":\"\"}});' class=''>";
 		$actual = $user->getEmailLink2("abc@email.com", $contact);
 		$this->assertSame($expected,$actual);
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
 
 	public function testgetEmailLink()
 	{
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
 		$user = new User();
 
@@ -892,6 +1025,11 @@ class UserTest extends PHPUnit_Framework_TestCase {
 		$expected = "<a href='javascript:void(0);' onclick='SUGAR.quickCompose.init({\"fullComposeUrl\":\"contact_id=\u0026parent_type=Contacts\u0026parent_id=\u0026parent_name=+\u0026to_addrs_ids=\u0026to_addrs_names=+\u0026to_addrs_emails=\u0026to_email_addrs=+%26nbsp%3B%26lt%3Btest%26gt%3B\u0026return_module=Contacts\u0026return_action=DetailView\u0026return_id=\",\"composePackage\":{\"contact_id\":\"\",\"parent_type\":\"Contacts\",\"parent_id\":\"\",\"parent_name\":\" \",\"to_addrs_ids\":\"\",\"to_addrs_names\":\" \",\"to_addrs_emails\":\"\",\"to_email_addrs\":\"  \u003Ctest\u003E\",\"return_module\":\"Contacts\",\"return_action\":\"DetailView\",\"return_id\":\"\"}});' class=''>";
 		$actual = $user->getEmailLink("name", $contact);
 		$this->assertSame($expected,$actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+        
 
 	}
 
@@ -939,8 +1077,15 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
     public function testgetDeveloperModules()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	//unset and reconnect Db to resolve mysqli fetch exeception
-    	global $db;
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -950,12 +1095,23 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
     	$result = $user->getDeveloperModules();
     	$this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
     public function testisDeveloperForModule()
     {
-    	global $db;
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -975,13 +1131,24 @@ class UserTest extends PHPUnit_Framework_TestCase {
     	$user->is_admin = 1;
     	$this->assertEquals(true, $user->isDeveloperForModule("Accounts"));
 
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
     public function testgetAdminModules()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
-    	global $db;
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -991,12 +1158,23 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
     	$result = $user->getAdminModules();
     	$this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
     public function testisAdminForModule()
     {
-    	global $db;
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -1016,16 +1194,31 @@ class UserTest extends PHPUnit_Framework_TestCase {
     	$user->is_admin = 1;
     	$this->assertEquals(true, $user->isAdminForModule("Accounts"));
 
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
 	public function testshowLastNameFirst()
 	{
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		$user = new User();
 
 		$result = $user->showLastNameFirst();
 		$this->assertEquals(false, $result);
 
+        
+        // clean up
+        
+        $state->popGlobals();
 	}
 
     /**
@@ -1054,16 +1247,34 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
     public function testget_first_day_of_week()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	$user = new User();
 
     	$result = $user->get_first_day_of_week();
     	$this->assertTrue(is_numeric($result));
 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
 
     public function testgeneratePassword()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	//generate apsswords and verify they are not same
 
     	$password1 = User::generatePassword();
@@ -1074,11 +1285,22 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
     	$this->assertNotEquals($password1, $password2);
 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
 
     public function testsendEmailForPassword()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
     	$user = new User();
 
@@ -1087,12 +1309,22 @@ class UserTest extends PHPUnit_Framework_TestCase {
     	//expected result is a array with template not found message.
     	$this->assertTrue(is_array($result));
 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
 
     public function testafterImportSave()
     {
-    	error_reporting(E_ALL);
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
     	$user = new User();
 
@@ -1105,11 +1337,22 @@ class UserTest extends PHPUnit_Framework_TestCase {
     		$this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
     	}
 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
 
     public function testisPrimaryEmail()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	$user = new User();
 
     	//test without user email
@@ -1125,6 +1368,10 @@ class UserTest extends PHPUnit_Framework_TestCase {
     	$user->email1 = "abc@abc.com";
     	$this->assertEquals(true, $user->isPrimaryEmail("abc@abc.com"));
 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
 }

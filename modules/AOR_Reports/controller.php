@@ -138,7 +138,7 @@ class AOR_ReportsController extends SugarController
 
         $module = new $beanList[$this->bean->report_module]();
 
-        $key = Relationship::retrieve_by_modules($this->bean->report_module, 'ProspectLists', $GLOBALS['db']);
+        $key = Relationship::retrieve_by_modules($this->bean->report_module, 'ProspectLists', DBManagerFactory::getInstance());
         if (!empty($key)) {
 
             $sql = $this->bean->build_report_query();
@@ -187,8 +187,16 @@ class AOR_ReportsController extends SugarController
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
         }
+        
+        $level = error_reporting();
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
         error_reporting(0);
         require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
+        $state->popErrorLevel();
+        if ($level !== error_reporting()) {
+            throw new Exception('Incorrect error reporting level');
+        }
 
         $d_image = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $graphs = $_POST["graphsForPDF"];

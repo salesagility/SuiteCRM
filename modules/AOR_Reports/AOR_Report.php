@@ -170,6 +170,17 @@ class AOR_Report extends Basic
             $fields[] = $field;
         }
         usort($fields, function ($a, $b) {
+            
+            if (!is_numeric($a->field_order)) {
+                LoggerManager::getLogger()->warn('A non-numeric value encountered at field order (a)');
+                $a->field_order = 0;
+            }
+            
+            if (!is_numeric($b->field_order)) {
+                LoggerManager::getLogger()->warn('A non-numeric value encountered at field order (b)');
+                $b->field_order = 0;
+            }
+            
             return $a->field_order - $b->field_order;
         });
 
@@ -656,6 +667,12 @@ class AOR_Report extends Basic
                         <img src='" . SugarThemeRegistry::current()->getImageURL('end.gif') . "' alt='End' align='absmiddle' border='0'>
                     </button>";
             } else {
+                
+                if (!isset($dashletPaginationButtons)) {
+                    LoggerManager::getLogger()->warn('AOR Report dashlet pagination buttons are not set');
+                    $dashletPaginationButtons = null;
+                }
+                
                 $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button'  disabled='disabled'>
                         <img src='" . SugarThemeRegistry::current()->getImageURL('next_off.gif') . "' alt='Next' align='absmiddle' border='0'>
                     </button>
@@ -871,7 +888,15 @@ class AOR_Report extends Basic
                 continue;
             }
             if ($field['total']) {
-                $totalLabel = $field['label'] . " " . $app_list_strings['aor_total_options'][$field['total']];
+                
+                $totalOptions = null;
+                if (isset($app_list_strings['aor_total_options'][$field['total']])) {
+                    $totalOptions = $app_list_strings['aor_total_options'][$field['total']];
+                } else {
+                    LoggerManager::getLogger()->warn('AOR Report get total HTML error: lang file doesnt contains total field, $app_list_strings[aor_total_options] is incorrect');
+                }
+                
+                $totalLabel = $field['label'] . " " . $totalOptions;
                 $html .= "<th>{$totalLabel}</th>";
             } else {
                 $html .= "<th></th>";
@@ -887,29 +912,51 @@ class AOR_Report extends Basic
                 $type = $field['total'];
                 $total = $this->calculateTotal($type, $totals[$label]);
                 // Customise display based on the field type
-                $moduleBean = BeanFactory::newBean($field['module']);
-                $fieldDefinition = $moduleBean->field_defs[$field['field']];
-                $fieldDefinitionType = $fieldDefinition['type'];
-                switch ($fieldDefinitionType) {
-                    case "currency":
-                        // Customise based on type of function
-                        switch ($type) {
-                            case 'SUM':
-                            case 'AVG':
-                                if ($currency->id == -99) {
-                                    $total = $currency->symbol . format_number($total, null, null);
-                                } else {
-                                    $total = $currency->symbol . format_number($total, null, null,
-                                            array('convert' => true));
-                                }
-                                break;
-                            case 'COUNT':
-                            default:
-                                break;
-                        }
-                        break;
-                    default:
-                        break;
+                
+                $fieldModule = null;
+                if (isset($field['module'])) {
+                    $fieldModule = $field['module'];
+                } else {
+                    LoggerManager::getLogger()->error('field module is not set for AOR Report get total HTML');
+                }
+                
+                $moduleBean = BeanFactory::newBean($fieldModule);
+                
+                if (!is_object($moduleBean)) {
+                    LoggerManager::getLogger()->error('Module not found for AOR Report');
+                } else {
+
+                    
+                    $fieldField = null;
+                    if (isset($field['field'])) {
+                        $fieldField = $field['field'];
+                    } else {
+                        LoggerManager::getLogger()->error('field field is not set for AOR Report get total HTML');
+                    }
+
+                    $fieldDefinition = $moduleBean->field_defs[$fieldField];
+                    $fieldDefinitionType = $fieldDefinition['type'];
+                    switch ($fieldDefinitionType) {
+                        case "currency":
+                            // Customise based on type of function
+                            switch ($type) {
+                                case 'SUM':
+                                case 'AVG':
+                                    if ($currency->id == -99) {
+                                        $total = $currency->symbol . format_number($total, null, null);
+                                    } else {
+                                        $total = $currency->symbol . format_number($total, null, null,
+                                                array('convert' => true));
+                                    }
+                                    break;
+                                case 'COUNT':
+                                default:
+                                    break;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 $html .= "<td>" . $total . "</td>";
             } else {
@@ -1008,8 +1055,21 @@ class AOR_Report extends Basic
                     if ($att['function'] != '' || $att['params'] != '') {
                         $csv .= $this->encloseForCSV($row[$name]);
                     } else {
-                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'],
-                            $att['field'], 'DetailView', $row[$name], '', $currency_id))));
+                        $csv .= $this->encloseForCSV(
+                            trim(
+                                strip_tags(
+                                    getModuleField(
+                                        $att['module'],
+                                        $att['field'],
+                                        $att['field'],
+                                        'DetailView',
+                                        html_entity_decode_utf8($row[$name]),
+                                        '',
+                                        $currency_id
+                                    )
+                                )
+                            )
+                        );
                     }
                     $csv .= $delimiter;
                 }
@@ -1058,7 +1118,14 @@ class AOR_Report extends Basic
         }
         $query_array = $this->build_report_query_where($query_array);
 
-        foreach ($query_array['select'] as $select) {
+        $qaSelect = null;
+        if (isset($query_array['select'])) {
+            $qaSelect = $query_array['select'];
+        } else {
+            LoggerManager::getLogger()->warn('AOR Report query array select is not set');
+        }
+        
+        foreach ((array)$qaSelect as $select) {
             $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
         }
 

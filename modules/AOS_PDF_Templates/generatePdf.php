@@ -41,11 +41,19 @@
 if (!isset($_REQUEST['uid']) || empty($_REQUEST['uid']) || !isset($_REQUEST['templateID']) || empty($_REQUEST['templateID'])) {
     die('Error retrieving record. This record may be deleted or you may not be authorized to view it.');
 }
+
+$level = error_reporting();
+$state = new SuiteCRM\StateSaver();
+$state->pushErrorLevel();
 error_reporting(0);
 require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
 require_once('modules/AOS_PDF_Templates/templateParser.php');
 require_once('modules/AOS_PDF_Templates/sendEmail.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
+$state->popErrorLevel();
+if ($level !== error_reporting()) {
+    throw new Exception('Incorrect error reporting level');
+}
 
 global $mod_strings, $sugar_config;
 

@@ -42,8 +42,15 @@ class hooks{
 
     function load_js($event, $arguments){
         $mapping = '';
+        
+        $action = null;
+        if (isset($_REQUEST['action'])) {
+            $action = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined action in request');
+        }
 
-        if($_REQUEST['action'] == 'DetailView'){
+        if($action == 'DetailView'){
 	    include("modules/Connectors/connectors/sources/ext/rest/facebook/mapping.php");
 	    if (file_exists("custom/modules/Connectors/connectors/sources/ext/rest/facebook/mapping.php")) {
 	        include("custom/modules/Connectors/connectors/sources/ext/rest/facebook/mapping.php");
