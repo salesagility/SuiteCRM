@@ -102,8 +102,8 @@ class SharedSecurityGroupsCest {
         $I->waitForElementVisible($allMenu, self::WAITING_DELAY);
         $I->click('Accounts', $allMenu);  
         // go to detail view        
-        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a', self::WAITING_DELAY);
-        $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
+        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
+        $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
         // delete it
         $I->click('ACTIONS', '#tab-actions');
         $I->waitForElementVisible('#tab-actions > .dropdown-menu', self::WAITING_DELAY);
@@ -111,8 +111,8 @@ class SharedSecurityGroupsCest {
         $I->acceptPopup(); 
         // repeat...
         // go to detail view
-        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a', self::WAITING_DELAY);
-        $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
+        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
+        $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
         // delete it
         $I->click('ACTIONS', '#tab-actions');
         $I->waitForElementVisible('#tab-actions > .dropdown-menu', self::WAITING_DELAY);
@@ -241,8 +241,8 @@ class SharedSecurityGroupsCest {
         $this->firstLoginWithMrTester($I, $a, $w);
         // tester is going to the account module page
         $this->goToAccountsPage($I, $a);
-        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
-        $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
+        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
+        $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
         $I->waitForElementVisible('#content');
         $I->canSee('test acc2');
         $this->doLogout($I);
@@ -257,8 +257,8 @@ class SharedSecurityGroupsCest {
         $this->doLogin($I, $w, 'chris', 'chris');
         // tester is going to the account module page
         $this->goToAccountsPage($I, $a);
-        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
-        $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
+        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
+        $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
         $I->waitForElementVisible('#content');
         $I->canSee('foo acc1');
         $I->wait(self::WAITING_DELAY);
