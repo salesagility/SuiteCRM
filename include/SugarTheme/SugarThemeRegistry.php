@@ -65,7 +65,9 @@ class SugarThemeRegistry
     /**
      * Disable the constructor since this will be a singleton
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * Adds a new theme to the registry
@@ -74,8 +76,7 @@ class SugarThemeRegistry
      */
     public static function add(
         array $themedef
-        )
-    {
+        ) {
         // make sure the we know the sugar version
         global $suitecrm_version;
         if (empty($suitecrm_version)) {
@@ -89,24 +90,25 @@ class SugarThemeRegistry
         // Check to see if theme is valid for this version of Sugar; return false if not
 
         $versionOk = false;
-        if( isset($themedef['version']['exact_matches']) ){
+        if (isset($themedef['version']['exact_matches'])) {
             $matches_empty = false;
-            foreach( $themedef['version']['exact_matches'] as $match ){
-                if( $match == $GLOBALS['suitecrm_version'] ){
+            foreach ($themedef['version']['exact_matches'] as $match) {
+                if ($match == $GLOBALS['suitecrm_version']) {
                     $versionOk = true;
                 }
             }
         }
-        if( !$versionOk && isset($themedef['version']['regex_matches']) ){
+        if (!$versionOk && isset($themedef['version']['regex_matches'])) {
             $matches_empty = false;
-            foreach( $themedef['version']['regex_matches'] as $match ){
-                if( preg_match( "/$match/", $GLOBALS['suitecrm_version'] ) ){
+            foreach ($themedef['version']['regex_matches'] as $match) {
+                if (preg_match("/$match/", $GLOBALS['suitecrm_version'])) {
                     $versionOk = true;
                 }
             }
         }
-        if (!$versionOk)
+        if (!$versionOk) {
             return false;
+        }
 
         $theme = new SugarTheme($themedef);
         self::$_themes[$theme->dirName] = $theme;
@@ -119,10 +121,10 @@ class SugarThemeRegistry
      */
     public static function remove(
         $themeName
-        )
-    {
-        if ( self::exists($themeName) )
+        ) {
+        if (self::exists($themeName)) {
             unset(self::$_themes[$themeName]);
+        }
     }
 
     /**
@@ -132,10 +134,10 @@ class SugarThemeRegistry
      */
     public static function get(
         $themeName
-        )
-    {
-        if ( isset(self::$_themes[$themeName]) )
+        ) {
+        if (isset(self::$_themes[$themeName])) {
             return self::$_themes[$themeName];
+        }
     }
 
     /**
@@ -145,7 +147,7 @@ class SugarThemeRegistry
      */
     public static function current()
     {
-        if ( !isset(static::$_currentTheme) ) {
+        if (!isset(static::$_currentTheme)) {
             self::buildRegistry();
         }
 
@@ -165,10 +167,11 @@ class SugarThemeRegistry
      */
     public static function getDefault()
     {
-        if ( !isset(self::$_currentTheme) )
+        if (!isset(self::$_currentTheme)) {
             self::buildRegistry();
+        }
 
-        if ( isset($GLOBALS['sugar_config']['default_theme']) && self::exists($GLOBALS['sugar_config']['default_theme']) ) {
+        if (isset($GLOBALS['sugar_config']['default_theme']) && self::exists($GLOBALS['sugar_config']['default_theme'])) {
             return self::get($GLOBALS['sugar_config']['default_theme']);
         }
         $array_keys = array_keys(self::availableThemes());
@@ -183,8 +186,7 @@ class SugarThemeRegistry
      */
     public static function exists(
         $themeName
-        )
-    {
+        ) {
         return (self::get($themeName) !== null);
     }
 
@@ -195,10 +197,10 @@ class SugarThemeRegistry
      */
     public static function set(
         $themeName
-        )
-    {
-        if ( !self::exists($themeName) )
+        ) {
+        if (!self::exists($themeName)) {
             return false;
+        }
 
         self::$_currentTheme = $themeName;
 
@@ -218,13 +220,13 @@ class SugarThemeRegistry
 
         // check for a default themedef file
         $themedefDefault = array();
-        if ( is_file("custom/themes/default/themedef.php") ) {
+        if (is_file("custom/themes/default/themedef.php")) {
             $themedef = array();
             require("custom/themes/default/themedef.php");
             $themedefDefault = $themedef;
         }
 
-        foreach ($dirs as $dirPath ) {
+        foreach ($dirs as $dirPath) {
             if (is_dir('./'.$dirPath) && is_readable('./'.$dirPath) && $dir = opendir('./'.$dirPath)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
@@ -235,22 +237,25 @@ class SugarThemeRegistry
                             || $file == "default"
                             || !is_dir("./$dirPath".$file)
                             || !is_file("./{$dirPath}{$file}/themedef.php")
-                            )
+                            ) {
                         continue;
+                    }
                     $themedef = array();
                     require("./{$dirPath}{$file}/themedef.php");
-                    $themedef = array_merge($themedef,$themedefDefault);
+                    $themedef = array_merge($themedef, $themedefDefault);
                     $themedef['dirName'] = $file;
                     // check for theme already existing in the registry
                     // if so, then it will override the current one
-                    if ( self::exists($themedef['dirName']) ) {
+                    if (self::exists($themedef['dirName'])) {
                         $existingTheme = self::get($themedef['dirName']);
-                        foreach ( SugarTheme::getThemeDefFields() as $field )
-                            if ( !isset($themedef[$field]) )
+                        foreach (SugarTheme::getThemeDefFields() as $field) {
+                            if (!isset($themedef[$field])) {
                                 $themedef[$field] = $existingTheme->$field;
+                            }
+                        }
                         self::remove($themedef['dirName']);
                     }
-                    if ( isset($themedef['name']) ) {
+                    if (isset($themedef['name'])) {
                         self::add($themedef);
                     }
                 }
@@ -258,9 +263,8 @@ class SugarThemeRegistry
             }
         }
         // default to setting the default theme as the current theme
-        if ( !isset($GLOBALS['sugar_config']['default_theme']) || !self::set($GLOBALS['sugar_config']['default_theme']) ) {
-            if ( count(self::availableThemes()) == 0 )
-            {
+        if (!isset($GLOBALS['sugar_config']['default_theme']) || !self::set($GLOBALS['sugar_config']['default_theme'])) {
+            if (count(self::availableThemes()) == 0) {
                 sugar_die('No valid themes are found on this instance');
             } else {
                 self::set(self::getDefaultThemeKey());
@@ -281,10 +285,8 @@ class SugarThemeRegistry
     private static function getDefaultThemeKey()
     {
         $availableThemes = self::availableThemes();
-        foreach($availableThemes as $key=>$theme)
-        {
-            if(strtolower($key) == 'sugar')
-            {
+        foreach ($availableThemes as $key=>$theme) {
+            if (strtolower($key) == 'sugar') {
                 return $key;
             }
         }
@@ -302,17 +304,19 @@ class SugarThemeRegistry
     {
         $themelist = array();
         $disabledThemes = array();
-        if ( isset($GLOBALS['sugar_config']['disabled_themes']) )
-            $disabledThemes = explode(',',$GLOBALS['sugar_config']['disabled_themes']);
+        if (isset($GLOBALS['sugar_config']['disabled_themes'])) {
+            $disabledThemes = explode(',', $GLOBALS['sugar_config']['disabled_themes']);
+        }
 
-        foreach ( self::$_themes as $themename => $themeobject ) {
-            if ( in_array($themename,$disabledThemes) )
+        foreach (self::$_themes as $themename => $themeobject) {
+            if (in_array($themename, $disabledThemes)) {
                 continue;
+            }
             $themelist[$themeobject->dirName] = $themeobject->name;
         }
         asort($themelist, SORT_STRING);
         if (count($themelist)==0) {
-     		$GLOBALS['log']->fatal('availableThemes() is returning an empty array! Check disabled_themes in config.php and config_override.php');
+            $GLOBALS['log']->fatal('availableThemes() is returning an empty array! Check disabled_themes in config.php and config_override.php');
         }
         return $themelist;
     }
@@ -326,12 +330,14 @@ class SugarThemeRegistry
     {
         $themelist = array();
         $disabledThemes = array();
-        if ( isset($GLOBALS['sugar_config']['disabled_themes']) )
-            $disabledThemes = explode(',',$GLOBALS['sugar_config']['disabled_themes']);
+        if (isset($GLOBALS['sugar_config']['disabled_themes'])) {
+            $disabledThemes = explode(',', $GLOBALS['sugar_config']['disabled_themes']);
+        }
 
-        foreach ( self::$_themes as $themename => $themeobject ) {
-            if ( in_array($themename,$disabledThemes) )
+        foreach (self::$_themes as $themename => $themeobject) {
+            if (in_array($themename, $disabledThemes)) {
                 $themelist[$themeobject->dirName] = $themeobject->name;
+            }
         }
 
         return $themelist;
@@ -346,8 +352,9 @@ class SugarThemeRegistry
     {
         $themelist = array();
 
-        foreach ( self::$_themes as $themename => $themeobject )
+        foreach (self::$_themes as $themename => $themeobject) {
             $themelist[$themeobject->dirName] = $themeobject->name;
+        }
 
         return $themelist;
     }
@@ -361,8 +368,9 @@ class SugarThemeRegistry
     {
         $themelist = array();
         $disabledThemes = array();
-        if (isset($GLOBALS['sugar_config']['disabled_themes']))
+        if (isset($GLOBALS['sugar_config']['disabled_themes'])) {
             $disabledThemes = explode(',', $GLOBALS['sugar_config']['disabled_themes']);
+        }
 
         foreach (self::$_themes as $themename => $themeobject) {
             $themearray['name'] = $themeobject->name;
@@ -383,26 +391,25 @@ class SugarThemeRegistry
     {
         global $sugar_config;
 
-        if ( !self::exists($themeName) )
+        if (!self::exists($themeName)) {
             return false;
+        }
 
         $config = array();
 
-        foreach(self::$_themes[$themeName]->config_options as $name => $def){
+        foreach (self::$_themes[$themeName]->config_options as $name => $def) {
             $config[$name] = $def;
 
             $value = '';
-            if(isset($sugar_config['theme_settings'][$themeName][$name])){
+            if (isset($sugar_config['theme_settings'][$themeName][$name])) {
                 $value = $sugar_config['theme_settings'][$themeName][$name];
-            } else if(isset($def['default'])){
+            } elseif (isset($def['default'])) {
                 $value = $def['default'];
             }
             $config[$name]['value'] = $value;
-
         }
 
         return $config;
-
     }
 
     /**
@@ -410,7 +417,7 @@ class SugarThemeRegistry
      */
     public static function clearAllCaches()
     {
-        foreach ( self::$_themes as $themeobject ) {
+        foreach (self::$_themes as $themeobject) {
             $themeobject->clearCache();
         }
     }
@@ -429,12 +436,11 @@ class SugarThemeRegistry
         return $subThemes;
     }
 
-    public static function getSubThemeDefault() {
+    public static function getSubThemeDefault()
+    {
         $current = self::current();
         $themeConfig = self::getThemeConfig($current->dirName);
         $subThemes = isset($themeConfig['sub_themes']['value']) ? $themeConfig['sub_themes']['value'] : null;
         return $subThemes;
     }
-    
 }
-

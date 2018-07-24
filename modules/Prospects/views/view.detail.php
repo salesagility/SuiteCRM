@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -42,35 +44,37 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class ProspectsViewDetail extends ViewDetail {
-
- 	function __construct(){
- 		parent::__construct();
- 	}
+class ProspectsViewDetail extends ViewDetail
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ProspectsViewDetail(){
+    public function ProspectsViewDetail()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
- 	function display() {
-		if(isset($this->bean->lead_id) && !empty($this->bean->lead_id)){
+    public function display()
+    {
+        if (isset($this->bean->lead_id) && !empty($this->bean->lead_id)) {
 
-			//get lead name
-			$lead = new Lead();
-			$lead->retrieve($this->bean->lead_id);
-			$this->ss->assign('lead', $lead);
-		}
- 		parent::display();
- 	}
+            //get lead name
+            $lead = new Lead();
+            $lead->retrieve($this->bean->lead_id);
+            $this->ss->assign('lead', $lead);
+        }
+        parent::display();
+    }
 }

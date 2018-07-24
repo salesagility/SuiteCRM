@@ -52,7 +52,8 @@ class FilterParserMock extends FilterParser
      * @param string $fieldKey
      * @return array
      */
-    public function parseFieldKeyAdapter($fieldKey) {
+    public function parseFieldKeyAdapter($fieldKey)
+    {
         return $this->parseFieldKey($fieldKey);
     }
 
@@ -60,9 +61,10 @@ class FilterParserMock extends FilterParser
      * tests FilterParser::parseFieldKey
      * @param string $fieldKey
      * @return array
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      */
-    public function splitFieldKeysAdapter($fieldKey) {
+    public function splitFieldKeysAdapter($fieldKey)
+    {
         return $this->splitFieldKeys($fieldKey);
     }
 
@@ -72,7 +74,8 @@ class FilterParserMock extends FilterParser
      * @return array
      * @throws Exception
      */
-    public function splitValuesAdapter($fieldKey, $delimiter = ',') {
+    public function splitValuesAdapter($fieldKey, $delimiter = ',')
+    {
         return $this->splitValues($fieldKey, $delimiter);
     }
 

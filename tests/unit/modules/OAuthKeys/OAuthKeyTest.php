@@ -1,10 +1,12 @@
 <?php
 
 
-class OAuthKeyTest extends PHPUnit_Framework_TestCase
+class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -29,7 +31,11 @@ class OAuthKeyTest extends PHPUnit_Framework_TestCase
 
     public function testMain()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushTable('tracker');
+        
+        
 
         $oauthKey = new OAuthKey();
 
@@ -48,6 +54,10 @@ class OAuthKeyTest extends PHPUnit_Framework_TestCase
 
         //test mark_deleted method
         $this->mark_deleted($oauthKey->id);
+        
+        // clean up
+        
+        $state->popTable('tracker');
     }
 
     public function getByKey($key)

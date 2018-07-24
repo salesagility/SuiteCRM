@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  *  SP Metadata Endpoint
  */

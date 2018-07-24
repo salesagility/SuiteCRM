@@ -4,7 +4,7 @@ use org\bovigo\vfs\vfsStream;
 
 require_once 'include/utils/logic_utils.php';
 
-class logic_utilsTest extends PHPUnit_Framework_TestCase
+class logic_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testget_hook_array()
     {
@@ -90,7 +90,7 @@ class logic_utilsTest extends PHPUnit_Framework_TestCase
 
     public function check_existing_elementProvider()
     {
-        //provide test cases dataset to validate 
+        //provide test cases dataset to validate
 
         $hook_array = $this->getTestHook();
 
@@ -121,7 +121,7 @@ class logic_utilsTest extends PHPUnit_Framework_TestCase
 
     public function testwrite_logic_file()
     {
-        //execute the method and test if it returns expected values, 
+        //execute the method and test if it returns expected values,
         //check if file is created and contains expected contents
 
         $vfs = vfsStream::setup('custom/modules/TEST_Test');

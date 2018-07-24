@@ -68,7 +68,6 @@ class ACLController
      */
     public static function checkAccess($category, $action, $is_owner = false, $type = 'module', $in_group = false)
     {
-
         global $current_user;
         if (is_admin($current_user)) {
             return true;
@@ -80,24 +79,64 @@ class ACLController
 
         //calendar is a special case since it has 3 modules in it (calls, meetings, tasks)
         if ($category === 'Calendar') {
-            return ACLAction::userHasAccess($current_user->id, 'Calls', $action, $type, $is_owner,
+            return ACLAction::userHasAccess(
+                $current_user->id,
+                'Calls',
+                $action,
+                $type,
+                $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Meetings', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Meetings',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Tasks', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Tasks',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
                 );
         }
         if ($category === 'Activities') {
-            return ACLAction::userHasAccess($current_user->id, 'Calls', $action, $type, $is_owner,
+            return ACLAction::userHasAccess(
+                $current_user->id,
+                'Calls',
+                $action,
+                $type,
+                $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Meetings', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Meetings',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Tasks', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Tasks',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Emails', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Emails',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
-                ) || ACLAction::userHasAccess($current_user->id, 'Notes', $action, 'module', $is_owner,
+                ) || ACLAction::userHasAccess(
+                    $current_user->id,
+                    'Notes',
+                    $action,
+                    'module',
+                    $is_owner,
                     $in_group
                 );
         }
@@ -155,7 +194,6 @@ class ACLController
      */
     public static function filterModuleList(&$moduleList, $by_value = true)
     {
-
         global $aclModuleList, $current_user;
         if (is_admin($current_user)) {
             return;
@@ -171,7 +209,6 @@ class ACLController
             $compList =& $moduleList;
         }
         foreach ($actions as $action_name => $action) {
-
             if (!empty($action['module'])) {
                 $aclModuleList[$action_name] = $action_name;
                 if (isset($compList[$action_name])) {
@@ -205,7 +242,6 @@ class ACLController
                 }
             }
         }
-
     }
 
     /**
@@ -255,7 +291,6 @@ class ACLController
         }
 
         foreach ($actions as $action_name => $action) {
-
             if (!empty($action['module'])) {
                 $aclModuleList[$action_name] = $action_name;
                 if (isset($compList[$action_name])) {
@@ -297,7 +332,6 @@ class ACLController
 
 
         return $disabled;
-
     }
 
 
@@ -322,7 +356,6 @@ class ACLController
         }
         if (!isset($beanList[$module])) {
             $checkModules[$module] = false;
-
         } else {
             $class = $beanList[$module];
             require_once($beanFiles[$class]);
@@ -335,7 +368,6 @@ class ACLController
         }
 
         return $checkModules[$module];
-
     }
 
 
@@ -357,5 +389,4 @@ class ACLController
                 ) . '<script> function redirect_countdown(left){document.getElementById("seconds_left").innerHTML = left; if(left == 0){document.location.href = "index.php";}else{left--; setTimeout("redirect_countdown("+ left+")", 1000)}};setTimeout("redirect_countdown(3)", 1000)</script>';
         }
     }
-
 }

@@ -38,10 +38,10 @@
  ********************************************************************************/
 
 $dictionary['Alert'] = array(
-	'table'=>'alerts',
-	'audited'=> false,
-		'duplicate_merge'=>true,
-		'fields'=>array (
+    'table'=>'alerts',
+    'audited'=> false,
+        'duplicate_merge'=>true,
+        'fields'=>array(
             'is_read' =>
                 array(
                     'name'		=> 'is_read',
@@ -73,14 +73,23 @@ $dictionary['Alert'] = array(
                     'type'		=> 'varchar',
                     'massupdate' => false,
                     'studio'=> 'false',
+                ),
+            'reminder_id' =>
+                array(
+                    'name'		=> 'reminder_id',
+                    'type' => 'id',
+                    'required' => false,
+                    'reportable' => false,
+                    'studio'=> 'false',
+                    'comment' => 'The id of the reminder that created this alert',
                 )
 ),
-	'relationships'=>array (
+    'relationships'=>array(
 ),
-	'optimistic_locking'=>true,
-		'unified_search'=>false,
-	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+    'optimistic_locking'=>true,
+        'unified_search'=>false,
+    );
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('Alerts','Alert', array('basic','assignable'));
+VardefManager::createVardef('Alerts', 'Alert', array('basic','assignable'));

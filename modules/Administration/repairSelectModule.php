@@ -1,6 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry)
-	die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,42 +40,42 @@ if (!defined('sugarEntry') || !sugarEntry)
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-		
-		global $mod_strings;
-		global $current_language;
-		$smarty = new Sugar_Smarty();
-			$temp_bean_list = $beanList;
-			asort($temp_bean_list);
-			$values= array_values($temp_bean_list);
-			$output= array_keys($temp_bean_list);  
-			$output_local = array();
-			if($current_language != 'en_us') {
-				foreach($output as $temp_out) {
-					$output_local[] = translate($temp_out);
-				}
-			} else {
-				$output_local = $output;
-			}
-			//sort($output);
-			//sort($values);
-			$values=array_merge(array($mod_strings['LBL_ALL_MODULES']), $values);
-			$output= array_merge(array($mod_strings['LBL_ALL_MODULES']),$output_local);
-			$checkbox_values=array(
-									 'clearTpls',
-									 'clearJsFiles',
-									 'clearVardefs', 
-									 'clearJsLangFiles',
-									 'clearDashlets',
-									 'clearSugarFeedCache',
-									 'clearThemeCache',
-									 'rebuildAuditTables',
-									 'rebuildExtensions',
-									 'clearLangFiles',
+        
+        global $mod_strings;
+        global $current_language;
+        $smarty = new Sugar_Smarty();
+            $temp_bean_list = $beanList;
+            asort($temp_bean_list);
+            $values= array_values($temp_bean_list);
+            $output= array_keys($temp_bean_list);
+            $output_local = array();
+            if ($current_language != 'en_us') {
+                foreach ($output as $temp_out) {
+                    $output_local[] = translate($temp_out);
+                }
+            } else {
+                $output_local = $output;
+            }
+            //sort($output);
+            //sort($values);
+            $values=array_merge(array($mod_strings['LBL_ALL_MODULES']), $values);
+            $output= array_merge(array($mod_strings['LBL_ALL_MODULES']), $output_local);
+            $checkbox_values=array(
+                                     'clearTpls',
+                                     'clearJsFiles',
+                                     'clearVardefs',
+                                     'clearJsLangFiles',
+                                     'clearDashlets',
+                                     'clearSugarFeedCache',
+                                     'clearThemeCache',
+                                     'rebuildAuditTables',
+                                     'rebuildExtensions',
+                                     'clearLangFiles',
                                      'clearSearchCache',
-			                         'clearPDFFontCache',
-			                         //'repairDatabase'
-									 );
-			$checkbox_output = array(   $mod_strings['LBL_QR_CBOX_CLEARTPL'], 
+                                     'clearPDFFontCache',
+                                     //'repairDatabase'
+                                     );
+            $checkbox_output = array(   $mod_strings['LBL_QR_CBOX_CLEARTPL'],
                                         $mod_strings['LBL_QR_CBOX_CLEARJS'],
                                         $mod_strings['LBL_QR_CBOX_CLEARVARDEFS'],
                                         $mod_strings['LBL_QR_CBOX_CLEARJSLANG'],
@@ -87,11 +88,11 @@ if (!defined('sugarEntry') || !sugarEntry)
                                         $mod_strings['LBL_QR_CBOX_CLEARSEARCH'],
                                         $mod_strings['LBL_QR_CBOX_CLEARPDFFONT'],
                                         //$mod_strings['LBL_QR_CBOX_DATAB'],
-									 );
-			$smarty->assign('checkbox_values', $checkbox_values);
-			$smarty->assign('values', $values);
-			$smarty->assign('output', $output);
-			$smarty->assign('MOD', $mod_strings);
-			$smarty->assign('checkbox_output', $checkbox_output);
-			$smarty->assign('checkbox_values', $checkbox_values);
-			$smarty->display("modules/Administration/templates/QuickRepairAndRebuild.tpl");
+                                     );
+            $smarty->assign('checkbox_values', $checkbox_values);
+            $smarty->assign('values', $values);
+            $smarty->assign('output', $output);
+            $smarty->assign('MOD', $mod_strings);
+            $smarty->assign('checkbox_output', $checkbox_output);
+            $smarty->assign('checkbox_values', $checkbox_values);
+            $smarty->display("modules/Administration/templates/QuickRepairAndRebuild.tpl");

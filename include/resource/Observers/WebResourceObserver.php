@@ -45,21 +45,22 @@ require_once('include/resource/Observers/ResourceObserver.php');
  * This is a subclass of ResourceObserver to provide notification handling
  * for web clients.
  */
-class WebResourceObserver extends ResourceObserver {
+class WebResourceObserver extends ResourceObserver
+{
+    public function __construct($module)
+    {
+        parent::__construct($module);
+    }
 
-public function __construct($module) {
-   parent::__construct($module);
-}
-
-/**
- * notify
- * Web implementation to notify the browser
- * @param msg String message to possibly display
- *
- */
-public function notify($msg = '') {
-   echo $msg;
-   sugar_cleanup(true);
-}
-
+    /**
+     * notify
+     * Web implementation to notify the browser
+     * @param msg String message to possibly display
+     *
+     */
+    public function notify($msg = '')
+    {
+        echo $msg;
+        sugar_cleanup(true);
+    }
 }

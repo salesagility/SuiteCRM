@@ -680,7 +680,7 @@ function get_assigned_user_name($assigned_user_id, $is_group = '')
  */
 function get_user_name($id)
 {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
@@ -1188,14 +1188,16 @@ function return_module_language($language, $module, $refresh = false)
     // cn: bug 6048 - merge en_us with requested language
     if ($language != $sugar_config['default_language']) {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh), $loaded_mod_strings
+                LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh),
+            $loaded_mod_strings
         );
     }
 
     // Load in en_us strings by default
     if ($language != 'en_us' && $sugar_config['default_language'] != 'en_us') {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, 'en_us', $refresh), $loaded_mod_strings
+                LanguageManager::loadModuleLanguage($module, 'en_us', $refresh),
+            $loaded_mod_strings
         );
     }
 
@@ -1359,7 +1361,7 @@ function append_where_clause(&$where_clauses, $variable_name, $SQL_name = null)
     }
 
     if (isset($_REQUEST[$variable_name]) && $_REQUEST[$variable_name] != '') {
-        array_push($where_clauses, "$SQL_name like '" . $GLOBALS['db']->quote($_REQUEST[$variable_name]) . "%'");
+        array_push($where_clauses, "$SQL_name like '" . DBManagerFactory::getInstance()->quote($_REQUEST[$variable_name]) . "%'");
     }
 }
 
@@ -1768,8 +1770,7 @@ function sugar_die($error_message, $exit_code = 1)
 {
     global $focus;
     sugar_cleanup();
-    //echo $error_message;
-    //die($exit_code);
+    echo $error_message;
     throw new \Exception($error_message, $exit_code);
 }
 
@@ -2090,7 +2091,9 @@ function clean_xss($str, $cleanImg = true)
     $matches = array_merge($matches, xss_check_pattern($javascript_regex, $str));
 
     if ($cleanImg) {
-        $matches = array_merge($matches, xss_check_pattern($imgsrc_regex, $str)
+        $matches = array_merge(
+            $matches,
+            xss_check_pattern($imgsrc_regex, $str)
         );
     }
 
@@ -2457,11 +2460,20 @@ function clear_register_value($category, $name)
 // this function cleans id's when being imported
 function convert_id($string)
 {
-    return preg_replace_callback('|[^A-Za-z0-9\-]|', create_function(
-                    // single quotes are essential here,
-                    // or alternative escape all $ as \$
-                    '$matches', 'return ord($matches[0]);'
-            ), $string);
+    $stateSaver = new SuiteCRM\StateSaver();
+    $stateSaver->pushErrorLevel();
+
+    $function = function ($matches) {
+        return ord($matches[0]);
+    };
+
+    if ($function === false) {
+        LoggerManager::getLogger()->warn('Function not created');
+    }
+
+    $stateSaver->popErrorLevel();
+
+    return preg_replace_callback('|[^A-Za-z0-9\-]|', $function, $string);
 }
 
 /**
@@ -2982,7 +2994,7 @@ function skype_formatted($number)
     } else {
         return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 3) == '011';
     }
-//	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
+    //	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
 }
 
 function format_skype($number)
@@ -3482,57 +3494,70 @@ function display_stack_trace($textOnly = false)
     }
 
     echo $out;
+    return $out;
 }
 
 function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext)
 {
     $error_msg = " $errstr occurred in <b>$errfile</b> on line $errline [" . date('Y-m-d H:i:s') . ']';
-    $halt_script = true;
-    switch ($errno) {
-        case 2048:
-            return; //depricated we have lots of these ignore them
-        case E_USER_NOTICE:
-        case E_NOTICE:
-            if (error_reporting() & E_NOTICE) {
-                $halt_script = false;
-                $type = 'Notice';
-            } else {
-                return;
-            }
-            break;
-        case E_USER_WARNING:
-        case E_COMPILE_WARNING:
-        case E_CORE_WARNING:
-        case E_WARNING:
 
+    switch ($errno) {
+//        case 2048:
+//            return; //depricated we have lots of these ignore them
+        case E_USER_NOTICE:
+            $type = 'User notice';
+            // no break
+        case E_NOTICE:
+            $type = 'Notice';
             $halt_script = false;
+            break;
+
+
+        case E_USER_WARNING:
+            $type = 'User warning';
+            // no break
+        case E_COMPILE_WARNING:
+            $type = 'Compile warning';
+            // no break
+        case E_CORE_WARNING:
+            $type = 'Core warning';
+            // no break
+        case E_WARNING:
             $type = 'Warning';
+            $halt_script = false;
             break;
 
         case E_USER_ERROR:
+            $type = 'User error';
+            // no break
         case E_COMPILE_ERROR:
+            $type = 'Compile error';
+            // no break
         case E_CORE_ERROR:
+            $type = 'Core error';
+            // no break
         case E_ERROR:
-
-            $type = 'Fatal Error';
+            $type = 'Error';
+            $halt_script = true;
             break;
 
         case E_PARSE:
-
             $type = 'Parse Error';
+            $halt_script = true;
             break;
 
         default:
             //don't know what it is might not be so bad
-            $halt_script = false;
             $type = "Unknown Error ($errno)";
+            $halt_script = false;
             break;
     }
-    $error_msg = '<b>' . $type . '</b>:' . $error_msg;
+    $error_msg = '<b>[' . $type . ']</b> ' . $error_msg;
     echo $error_msg;
-    display_stack_trace();
+    $trace = display_stack_trace();
+    \SuiteCRM\ErrorMessage::log("Catch an error: $error_msg \nTrace info:\n" . $trace);
     if ($halt_script) {
-        exit - 1;
+        exit(1);
     }
 }
 
@@ -3584,13 +3609,15 @@ function return_bytes($val)
 {
     $val = trim($val);
     $last = strtolower($val{strlen($val) - 1});
-    $val = (int)$val;
+    $val = preg_replace("/[^0-9,.]/", "", $val);
 
     switch ($last) {
         case 'g':
             $val *= 1024;
+            // no break
         case 'm':
             $val *= 1024;
+            // no break
         case 'k':
             $val *= 1024;
     }
@@ -3813,30 +3840,13 @@ function search_filter_rel_info(&$focus, $tar_rel_module, $relationship_name)
     //end function search_filter_rel_info
 }
 
+/**
+ * @param $module_name
+ * @return mixed
+ */
 function get_module_info($module_name)
 {
-    global $beanList;
-    global $dictionary;
-
-    //Get dictionary and focus data for module
-    $vardef_name = $beanList[$module_name];
-
-    if ($vardef_name == 'aCase') {
-        $class_name = 'Case';
-    } else {
-        $class_name = $vardef_name;
-    }
-
-    if (!file_exists('modules/' . $module_name . '/' . $class_name . '.php')) {
-        return;
-    }
-
-    include_once 'modules/' . $module_name . '/' . $class_name . '.php';
-
-    $module_bean = new $vardef_name();
-
-    return $module_bean;
-    //end function get_module_table
+    return BeanFactory::getBean($module_name);
 }
 
 /**
@@ -4270,11 +4280,11 @@ function generate_search_where(
                         if (!empty($field_value)) {
                             $field_value .= ',';
                         }
-                        $field_value .= "'" . $GLOBALS['db']->quote($val) . "'";
+                        $field_value .= "'" . DBManagerFactory::getInstance()->quote($val) . "'";
                     }
                 }
             } else {
-                $field_value = $GLOBALS['db']->quote($values[$field]);
+                $field_value = DBManagerFactory::getInstance()->quote($values[$field]);
             }
             //set db_fields array.
             if (!isset($parms['db_field'])) {
@@ -4282,7 +4292,7 @@ function generate_search_where(
             }
             if (isset($parms['my_items']) and $parms['my_items'] == true) {
                 global $current_user;
-                $field_value = $GLOBALS['db']->quote($current_user->id);
+                $field_value = DBManagerFactory::getInstance()->quote($current_user->id);
                 $operator = '=';
             }
 
@@ -4293,7 +4303,7 @@ function generate_search_where(
                     if (strstr($db_field, '.') === false) {
                         $db_field = $bean->table_name . '.' . $db_field;
                     }
-                    if ($GLOBALS['db']->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
+                    if (DBManagerFactory::getInstance()->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
                         $db_field = 'upper(' . $db_field . ')';
                         $field_value = strtoupper($field_value);
                     }
@@ -4644,7 +4654,8 @@ function ajaxInit()
  * @return string
  */
 function getAbsolutePath(
-$path, $currentServer = false
+$path,
+    $currentServer = false
 ) {
     $path = trim($path);
 
@@ -5541,8 +5552,24 @@ function isValidId($id)
     return $valid;
 }
 
+function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error')
+{
+    if ($orEmpty && !$email) {
+        return true;
+    }
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return true;
+    }
+    if ($logInvalid) {
+        $trace = debug_backtrace();
+        $where = "Called at {$trace[1]['file']}:{$trace[1]['line']} from function {$trace[1]['function']}.";
+        \SuiteCRM\ErrorMessage::log("$message: [$email] $where", $logInvalid);
+    }
+    return false;
+}
+
 function displayAdminError($errorString)
 {
     $output = '<p class="error">' . $errorString . '</p>';
-    echo $output;
+    SugarApplication::appendErrorMessage($output);
 }

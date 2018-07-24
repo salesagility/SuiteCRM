@@ -4,7 +4,7 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 
-class ExceptionTest extends \Codeception\Test\Unit
+class ExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -16,16 +16,15 @@ class ExceptionTest extends \Codeception\Test\Unit
      */
     private static $exception;
 
-    protected function _before()
+    public function _before()
     {
-        if(self::$exception === null) {
+        parent::_before();
+        if (self::$exception === null) {
             self::$exception = new Exception();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetDetail()
     {

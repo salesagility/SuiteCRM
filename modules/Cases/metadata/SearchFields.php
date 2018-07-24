@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,62 +39,62 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-$searchFields['Cases'] = array (
-  'name' => 
-  array (
+$searchFields['Cases'] = array(
+  'name' =>
+  array(
     'query_type' => 'default',
   ),
-  'account_name' => 
-  array (
+  'account_name' =>
+  array(
     'query_type' => 'default',
-    'db_field' => 
-    array (
+    'db_field' =>
+    array(
       0 => 'accounts.name',
     ),
   ),
-  'status' => 
-  array (
+  'status' =>
+  array(
     'query_type' => 'default',
     'options' => 'case_status_dom',
     'template_var' => 'STATUS_OPTIONS',
   ),
-  'priority' => 
-  array (
+  'priority' =>
+  array(
     'query_type' => 'default',
     'options' => 'case_priority_dom',
     'template_var' => 'PRIORITY_OPTIONS',
     'options_add_blank' => true,
   ),
-  'case_number' => 
-  array (
+  'case_number' =>
+  array(
     'query_type' => 'default',
     'operator' => 'in',
   ),
-  'current_user_only' => 
-  array (
+  'current_user_only' =>
+  array(
     'query_type' => 'default',
-    'db_field' => 
-    array (
+    'db_field' =>
+    array(
       0 => 'assigned_user_id',
     ),
     'my_items' => true,
     'vname' => 'LBL_CURRENT_USER_FILTER',
     'type' => 'bool',
   ),
-  'assigned_user_id' => 
-  array (
+  'assigned_user_id' =>
+  array(
     'query_type' => 'default',
   ),
-  'open_only' => 
-  array (
+  'open_only' =>
+  array(
     'query_type' => 'default',
-    'db_field' => 
-    array (
+    'db_field' =>
+    array(
       0 => 'status',
     ),
     'operator' => 'not in',
-    'closed_values' => 
-    array (
+    'closed_values' =>
+    array(
       0 => 'Closed',
       1 => 'Rejected',
       2 => 'Duplicate',
@@ -102,44 +104,44 @@ $searchFields['Cases'] = array (
     ),
     'type' => 'bool',
   ),
-  'range_date_entered' => 
-  array (
+  'range_date_entered' =>
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'start_range_date_entered' => 
-  array (
+  'start_range_date_entered' =>
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'end_range_date_entered' => 
-  array (
+  'end_range_date_entered' =>
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'range_date_modified' => 
-  array (
+  'range_date_modified' =>
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'start_range_date_modified' => 
-  array (
+  'start_range_date_modified' =>
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'end_range_date_modified' => 
-  array (
+  'end_range_date_modified' =>
+  array(
     'query_type' => 'default',
     'enable_range_search' => true,
     'is_date_field' => true,
   ),
-  'state' => 
-  array (
+  'state' =>
+  array(
     'query_type' => 'default',
   ),
     'favorites_only' => array(

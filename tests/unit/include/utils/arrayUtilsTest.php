@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/utils/array_utils.php';
-class array_utilsTest extends PHPUnit_Framework_TestCase
+class array_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testvar_export_helper()
     {
@@ -35,7 +35,7 @@ class array_utilsTest extends PHPUnit_Framework_TestCase
         $actual = add_blank_option($tempArray);
         $this->assertSame($actual, $expected);
 
-        //execute the method with array having a blank key value pair. function will return the same array back without any change.		
+        //execute the method with array having a blank key value pair. function will return the same array back without any change.
         $tempArray = array('' => '', 'Key1' => 'value1', 'Key2' => 'value2');
         $expected = array('' => '', 'Key1' => 'value1', 'Key2' => 'value2');
 
@@ -59,7 +59,7 @@ class array_utilsTest extends PHPUnit_Framework_TestCase
         $tempArray['Key1']['Key2'] = array('Key3' => 'value', 'Key4' => 'value');
         $expected = "\$tempArray['key1']['key2']=array (\n  'Key1' => \n  array (\n    'Key2' => \n    array (\n      'Key3' => 'value',\n      'Key4' => 'value',\n    ),\n  ),\n);";
         $actual = override_value_to_string_recursive(array('key1', 'key2'), 'tempArray', $tempArray);
-        //var_dump( nl2br($actual));
+        
         $this->assertSame($actual, $expected);
     }
 
@@ -180,7 +180,7 @@ class array_utilsTest extends PHPUnit_Framework_TestCase
         $tempArray = array();
         $expected = array('key1' => array('key2' => array('key3' => 'value3')));
         setDeepArrayValue($tempArray, 'key1_key2_key3', 'value3');
-        //var_dump($tempArray);
+        
         $this->assertSame($tempArray, $expected);
     }
 
@@ -192,14 +192,14 @@ class array_utilsTest extends PHPUnit_Framework_TestCase
         //try with two different length arrays
         $tempArray1 = array('v1', 'v2', 'v3');
         $tempArray2 = array('v4', 'v5');
-        $actual = array_merge_values($tempArray1,  $tempArray2);
+        $actual = array_merge_values($tempArray1, $tempArray2);
         $this->assertFalse($actual);
 
         //try with same length arrays.
         $tempArray1 = array('v1', 'v2', 'v3');
         $tempArray2 = array('v4', 'v5', 'v6');
         $expected = array('v1v4', 'v2v5', 'v3v6');
-        $actual = array_merge_values($tempArray1,  $tempArray2);
+        $actual = array_merge_values($tempArray1, $tempArray2);
         $this->assertSame($expected, $actual);
     }
 
@@ -221,8 +221,6 @@ class array_utilsTest extends PHPUnit_Framework_TestCase
         $tempArray = array('Key1' => 'value1', 'Key2' => 'value2', 'Key3' => 'value3', 'key4' => 'value4');
         $actual = array_search_insensitive('value4', $tempArray);
         $this->assertTrue($actual);
-
-        //var_dump($actual);
     }
 
     public function testget()

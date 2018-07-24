@@ -1,10 +1,12 @@
 <?php
 
 require_once 'modules/Audit/Audit.php';
-class AuditTest extends PHPUnit_Framework_TestCase
+class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -12,7 +14,10 @@ class AuditTest extends PHPUnit_Framework_TestCase
 
     public function testAudit()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         //execute the contructor and check for the Object type and  attributes
         $audit = new Audit();
@@ -20,6 +25,8 @@ class AuditTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SugarBean', $audit);
         $this->assertAttributeEquals('Audit', 'module_dir', $audit);
         $this->assertAttributeEquals('Audit', 'object_name', $audit);
+        
+        // clean up
     }
 
     public function testget_summary_text()
@@ -36,6 +43,12 @@ class AuditTest extends PHPUnit_Framework_TestCase
 
     public function testcreate_export_query()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $audit = new Audit();
 
         //execute the method and test if it works and does not throws an exception.
@@ -43,80 +56,122 @@ class AuditTest extends PHPUnit_Framework_TestCase
             $audit->create_export_query('', '');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
     }
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
             $audit->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
             $audit->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
     }
 
     public function testfill_in_additional_parent_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
             $audit->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
     }
 
     public function testget_list_view_data()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
             $audit->get_list_view_data();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
     }
 
     public function testget_audit_link()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
         try {
             $audit->get_audit_link();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
     }
 
     public function testget_audit_list()

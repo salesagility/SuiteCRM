@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,43 +43,41 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class LeadsParseRule extends BaseRule {
-
-function __construct() {
-
-}
+class LeadsParseRule extends BaseRule
+{
+    public function __construct()
+    {
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function LeadsParseRule(){
+    public function LeadsParseRule()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-function preParse($panels, $view) {
+    public function preParse($panels, $view)
+    {
+        if ($view == 'DetailView') {
+            foreach ($panels as $name=>$panel) {
+                foreach ($panel as $rowCount=>$row) {
+                    foreach ($row as $key=>$column) {
+                        if ($this->matches($column, '/^lead_view_c$/')) {
+                            $panels[$name][$rowCount][$key] = 'full_name';
+                        }
+                    } //foreach
+                } //foreach
+            } //foreach
+        }
 
-	if($view == 'DetailView') {
-		foreach($panels as $name=>$panel) {
-		   	  foreach($panel as $rowCount=>$row) {
-		   	  	 foreach($row as $key=>$column) {
-		   	  	 	if($this->matches($column, '/^lead_view_c$/')) {
-		   	  	 	   $panels[$name][$rowCount][$key] = 'full_name';
-		   	  	 	}
-				} //foreach
-		   	} //foreach
-	    } //foreach
-	}
-
-	return $panels;
-
-}
-
+        return $panels;
+    }
 }

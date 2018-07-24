@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,42 +43,42 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/Rules/ActivitiesParseRule.php');
 
-class MeetingsParseRule extends ActivitiesParseRule {
-
-function __construct() {
-
-}
+class MeetingsParseRule extends ActivitiesParseRule
+{
+    public function __construct()
+    {
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MeetingsParseRule(){
+    public function MeetingsParseRule()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-function preParse($panels, $view) {
-	$panels = parent::preParse($panels, $view);
-	if($view == 'DetailView') {
-		foreach($panels as $name=>$panel) {
-		   	  foreach($panel as $rowCount=>$row) {
-		   	  	 foreach($row as $key=>$column) {
-		   	  	 	//Fix issue of not having parent_name in Meetings vardefs.php in pre 5.x versions
-		   	  	 	if($this->matches($column, '/^tag.parent$/') || $this->matches($column, '/^parent_id$/')) {
-		   	  	 	   $panels[$name][$rowCount][$key] = 'parent_name';
-		   	  	 	}
-				} //foreach
-		   	} //foreach
-	    } //foreach
-	}
-	return $panels;
-}
-
+    public function preParse($panels, $view)
+    {
+        $panels = parent::preParse($panels, $view);
+        if ($view == 'DetailView') {
+            foreach ($panels as $name=>$panel) {
+                foreach ($panel as $rowCount=>$row) {
+                    foreach ($row as $key=>$column) {
+                        //Fix issue of not having parent_name in Meetings vardefs.php in pre 5.x versions
+                        if ($this->matches($column, '/^tag.parent$/') || $this->matches($column, '/^parent_id$/')) {
+                            $panels[$name][$rowCount][$key] = 'parent_name';
+                        }
+                    } //foreach
+                } //foreach
+            } //foreach
+        }
+        return $panels;
+    }
 }

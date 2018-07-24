@@ -139,7 +139,7 @@ $listViewDefs['Emails'] = array(
     'HAS_ATTACHMENT' => array(
         'width' => '32',
         'label' => 'LBL_HAS_ATTACHMENT_INDICATOR',
-        'default' => true,
+        'default' => false,
         'sortable' => false,
         'hide_header_label' => true,
     ),
@@ -161,7 +161,7 @@ $listViewDefs['Emails'] = array(
         'default' => false,
     ),
     'CATEGORY_ID' =>
-        array (
+        array(
             'width' => '10%',
             'label' => 'LBL_LIST_CATEGORY',
             'default' => true,

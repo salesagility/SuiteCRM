@@ -1,10 +1,12 @@
 <?php
 
 
-class CampaignLogTest extends PHPUnit_Framework_TestCase
+class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -26,7 +28,10 @@ class CampaignLogTest extends PHPUnit_Framework_TestCase
 
     public function testget_list_view_data()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $campaignLog = new CampaignLog();
 
@@ -34,6 +39,8 @@ class CampaignLogTest extends PHPUnit_Framework_TestCase
         $actual = $campaignLog->get_list_view_data();
         $this->assertTrue(is_array($actual));
         $this->assertSame(array(), $actual);
+        
+        // clean up
     }
 
     public function testretrieve_email_address()

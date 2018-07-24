@@ -62,11 +62,13 @@ class SugarCacheFile extends SugarCacheAbstract
      */
     public function useBackend()
     {
-        if ( !parent::useBackend() )
+        if (!parent::useBackend()) {
             return false;
+        }
 
-        if ( !empty($GLOBALS['sugar_config']['external_cache_enabled_file']) )
+        if (!empty($GLOBALS['sugar_config']['external_cache_enabled_file'])) {
             return true;
+        }
 
         return false;
     }
@@ -81,8 +83,9 @@ class SugarCacheFile extends SugarCacheAbstract
     {
         parent::__construct();
 
-        if ( isset($GLOBALS['sugar_config']['external_cache_filename']) )
+        if (isset($GLOBALS['sugar_config']['external_cache_filename'])) {
             $this->_cacheFileName = $GLOBALS['sugar_config']['external_cache_filename'];
+        }
     }
 
     /**
@@ -94,17 +97,18 @@ class SugarCacheFile extends SugarCacheAbstract
     {
         parent::__destruct();
 
-        if ( $this->_cacheChanged )
+        if ($this->_cacheChanged) {
             sugar_file_put_contents(sugar_cached($this->_cacheFileName), serialize($this->_localStore));
+        }
     }
 
     /**
-	 * This is needed to prevent unserialize vulnerability
+     * This is needed to prevent unserialize vulnerability
      */
     public function __wakeup()
     {
         // clean all properties
-        foreach(get_object_vars($this) as $k => $v) {
+        foreach (get_object_vars($this) as $k => $v) {
             $this->$k = null;
         }
         throw new Exception("Not a serializable object");
@@ -118,8 +122,7 @@ class SugarCacheFile extends SugarCacheAbstract
     protected function _setExternal(
         $key,
         $value
-        )
-    {
+        ) {
         $this->_cacheChanged = true;
     }
 
@@ -128,14 +131,15 @@ class SugarCacheFile extends SugarCacheAbstract
      */
     protected function _getExternal(
         $key
-        )
-    {
+        ) {
         // load up the external cache file
-        if ( is_file($cachedfile = sugar_cached($this->_cacheFileName)))
+        if (is_file($cachedfile = sugar_cached($this->_cacheFileName))) {
             $this->localCache = unserialize(file_get_contents($cachedfile));
+        }
 
-        if ( isset($this->_localStore[$key]) )
+        if (isset($this->_localStore[$key])) {
             return $this->_localStore[$key];
+        }
 
         return null;
     }
@@ -147,8 +151,7 @@ class SugarCacheFile extends SugarCacheAbstract
      */
     protected function _clearExternal(
         $key
-        )
-    {
+        ) {
         $this->_cacheChanged = true;
     }
 

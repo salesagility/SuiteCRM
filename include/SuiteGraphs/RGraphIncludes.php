@@ -143,7 +143,9 @@ $chart = <<<EOD
                 var searchFormTab = $(divHolder).find(".searchFormTab").val();
 
                 var labels = bar["object"]["properties"]["chart.labels"];
-                var clicked = encodeURI(labels[bar[5]]);
+
+                var keys = window["chartHBarKeys"+graphId];
+                var clicked = encodeURI(keys[bar[5]]);
 
                 window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&lead_source='+clicked,'_self');
             }

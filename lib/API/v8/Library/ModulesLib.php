@@ -49,9 +49,9 @@ use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\SuiteInterpreter;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Repositories\FilterRepository;
 use SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource;
-use SuiteCRM\API\v8\Exception\BadRequest;
-use SuiteCRM\API\v8\Exception\ModuleNotFound;
-use SuiteCRM\API\v8\Exception\NotAllowed;
+use SuiteCRM\API\v8\Exception\BadRequestException;
+use SuiteCRM\API\v8\Exception\ModuleNotFoundException;
+use SuiteCRM\API\v8\Exception\NotAllowedException;
 
 /**
  * Class ModulesLib
@@ -79,11 +79,11 @@ class ModulesLib
      * @param Response $res
      * @param array $args
      * @return array list => SugarBean[], current_offset => 0, row_count => 0
-     * @throws ModuleNotFound
+     * @throws ModuleNotFoundException
      * @throws \InvalidArgumentException
      * @throws NotAllowed
      */
-    public function generatePaginatedModuleRecords(Request $req, Response $res, $args)
+    public function generatePaginatedModuleRecords(Request $req, Response $res, array $args = array())
     {
         /** @var array $response */
         $response = array();
@@ -92,14 +92,14 @@ class ModulesLib
         $module = \BeanFactory::newBean($args['module']);
 
         if ($module === false) {
-            throw new ModuleNotFound('"' . $args['module'] . '"');
+            throw new ModuleNotFoundException('"' . $args['module'] . '"');
         }
 
         if (!$module->ACLAccess('list')) {
             throw new NotAllowed();
         }
 
-        $moduleList = $this->getModuleList($req, $module);
+        $moduleList = $this->getModuleList($req, $module, $args);
 
         $fields = array('fields' => array());
         $selectFields = $req->getParam('fields');
@@ -233,7 +233,6 @@ class ModulesLib
         if (!empty($req->getParam('sort'))) {
             $sortField = explode(',', $req->getParam('sort'));
             foreach ($sortField as $sortKey => $sortValue) {
-
                 if ($sortValue[0] === '-') {
                     $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' DESC';
                 } else {
@@ -253,11 +252,12 @@ class ModulesLib
     /**
      * @param Request $req
      * @param \SugarBean $module
+     * @param array route arguments
      * @return array
      * @throws \SuiteCRM\Exception\Exception
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      */
-    protected function getModuleList(Request $req, \SugarBean $module)
+    protected function getModuleList(Request $req, \SugarBean $module, array $args = array())
     {
         /** @var array $page */
         $page = $req->getParam('page');
@@ -283,14 +283,14 @@ class ModulesLib
         // Filtering (where clause in SQL)
         /** @var FilterRepository $filterRepository */
         $filterRepository = $this->containers->get('FilterRepository');
-        $filterStructure = $filterRepository->fromRequest($req);
+        $filterStructure = $filterRepository->fromRequest($req, $args);
         /** @var FilterInterpreter $filterInterpreter */
         $filterInterpreter = $this->containers->get('FilterInterpreter');
         if (empty($filterStructure)) {
             // Do not perform a filter
             $where = '';
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
-        } elseif($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
+        } elseif ($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
             $where = $filterInterpreter->getFilterByPreMadeName($filterStructure);
             /** @var array $moduleList */
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
@@ -299,12 +299,12 @@ class ModulesLib
             /** @var array $moduleList */
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
         } elseif ($filterInterpreter->isFilterByAttributes($filterStructure)) {
-            $where = $filterInterpreter->getFilterByAttributes($filterStructure);
+            $where = $filterInterpreter->getFilterByAttributes($filterStructure, $args);
 
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
         }
 
-        throw new BadRequest('[ModulesLib][getModuleList][Unknown filter strategy]');
+        throw new BadRequestException('[ModulesLib][getModuleList][Unknown filter strategy]');
     }
 
     /**

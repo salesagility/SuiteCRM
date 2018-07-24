@@ -38,21 +38,21 @@
  ********************************************************************************/
 
 $viewdefs ['Campaigns'] =
-array (
-  'EditView' => 
-  array (
-    'templateMeta' => 
-    array (
+array(
+  'EditView' =>
+  array(
+    'templateMeta' =>
+    array(
       'maxColumns' => '2',
-      'widths' => 
-      array (
-        0 => 
-        array (
+      'widths' =>
+      array(
+        0 =>
+        array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
-        array (
+        1 =>
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -103,117 +103,117 @@ function ConvertItems(id)  {ldelim}
  {rdelim}
 </script>',
       'useTabs' => false,
-      'tabDefs' => 
-      array (
-        'LBL_CAMPAIGN_INFORMATION' => 
-        array (
+      'tabDefs' =>
+      array(
+        'LBL_CAMPAIGN_INFORMATION' =>
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
         'LBL_NAVIGATION_MENU_GEN2' =>
-        array (
+        array(
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
-    'panels' => 
-    array (
-      'lbl_campaign_information' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
+    'panels' =>
+    array(
+      'lbl_campaign_information' =>
+      array(
+        0 =>
+        array(
+          0 =>
+          array(
             'name' => 'name',
           ),
-          1 => 
-          array (
+          1 =>
+          array(
             'name' => 'status',
           ),
         ),
-        1 => 
-        array (
-          0 => 
-          array (
+        1 =>
+        array(
+          0 =>
+          array(
             'name' => 'start_date',
-            'displayParams' => 
-            array (
+            'displayParams' =>
+            array(
               'required' => false,
               'showFormats' => true,
             ),
           ),
-          1 => 
-          array (
+          1 =>
+          array(
             'name' => 'campaign_type',
-            'displayParams' => 
-            array (
+            'displayParams' =>
+            array(
               'javascript' => 'onchange="type_change();"',
             ),
           ),
         ),
-        2 => 
-        array (
-          0 => 
-          array (
+        2 =>
+        array(
+          0 =>
+          array(
             'name' => 'end_date',
-            'displayParams' => 
-            array (
+            'displayParams' =>
+            array(
               'showFormats' => true,
             ),
           ),
-          1 => 
-          array (
+          1 =>
+          array(
             'name' => 'frequency',
             'customCode' => '<div style=\'none\' id=\'freq_field\'>{html_options name="frequency" options=$fields.frequency.options selected=$fields.frequency.value}</div></TD>',
             'customLabel' => '<div style=\'none\' id=\'freq_label\'>{$MOD.LBL_CAMPAIGN_FREQUENCY}</div>',
           ),
         ),
-        3 => 
-        array (
-          0 => 
-          array (
+        3 =>
+        array(
+          0 =>
+          array(
             'name' => 'content',
-            'displayParams' => 
-            array (
+            'displayParams' =>
+            array(
               'rows' => 8,
               'cols' => 80,
             ),
           ),
         ),
-        4 => 
-        array (
-          0 => 
-          array (
+        4 =>
+        array(
+          0 =>
+          array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO',
           ),
         ),
       ),
       'LBL_NAVIGATION_MENU_GEN2' =>
-      array (
-        0 => 
-        array (
+      array(
+        0 =>
+        array(
           0 => 'currency_id',
           1 => 'impressions',
         ),
-        1 => 
-        array (
+        1 =>
+        array(
           0 => 'budget',
           1 => 'expected_cost',
         ),
-        2 => 
-        array (
+        2 =>
+        array(
           0 => 'actual_cost',
           1 => 'expected_revenue',
         ),
-        3 => 
-        array (
-          0 => 
-          array (
+        3 =>
+        array(
+          0 =>
+          array(
             'name' => 'objective',
-            'displayParams' => 
-            array (
+            'displayParams' =>
+            array(
               'rows' => 8,
               'cols' => 80,
             ),

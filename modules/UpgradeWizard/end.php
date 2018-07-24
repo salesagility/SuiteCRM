@@ -80,10 +80,10 @@ foreach ($beanFiles as $bean => $file) {
     if (file_exists($file)) {
         require_once $file;
         unset($GLOBALS['dictionary'][$bean]);
-        $focus = new $bean ();
+        $focus = new $bean();
         if (($focus instanceof SugarBean)) {
             if (!isset($repairedTables[$focus->table_name])) {
-                $sql = $GLOBALS['db']->repairTable($focus, true);
+                $sql = DBManagerFactory::getInstance()->repairTable($focus, true);
                 if (trim($sql) != '') {
                     logThis('Running sql:'.$sql, $path);
                 }
@@ -116,7 +116,7 @@ foreach ($dictionary as $meta) {
     }
     $fielddefs = $meta['fields'];
     $indices = $meta['indices'];
-    $sql = $GLOBALS['db']->repairTableParams($tablename, $fielddefs, $indices, true);
+    $sql = DBManagerFactory::getInstance()->repairTableParams($tablename, $fielddefs, $indices, true);
     if (trim($sql) != '') {
         logThis('Running sql:'.$sql, $path);
     }
