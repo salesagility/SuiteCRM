@@ -100,7 +100,7 @@ class SharedSecurityGroupsCest {
         $I->click('All', $allMenuButton);
         $allMenu = $allMenuButton . ' > span.notCurrentTab > ul.dropdown-menu';
         $I->waitForElementVisible($allMenu, self::WAITING_DELAY);
-        $I->click('Accounts', $allMenu);  
+        $I->click('#moduleTab_9_Accounts');  
         // go to detail view        
         $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
         $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
