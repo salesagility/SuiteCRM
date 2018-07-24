@@ -70,9 +70,10 @@ class SharedSecurityGroupsCest {
     }
     
     protected function doLogout(AcceptanceTester $I) {
+        $I->waitForElementVisible('#with-label > span:nth-child(2)');
         $I->click('#with-label > span:nth-child(2)');
-        $I->waitForElementVisible('#logout_link');
-        $I->click('#logout_link');
+        $I->waitForElementVisible('.desktop-bar #logout_link');
+        $I->click('.desktop-bar #logout_link');
         $I->waitForElementVisible('#bigbutton', self::WAITING_DELAY);
     }
     
