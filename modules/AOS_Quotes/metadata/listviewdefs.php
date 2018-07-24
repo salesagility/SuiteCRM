@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * Advanced OpenSales, Advanced, robust set of sales modules.
  * @package Advanced OpenSales for SugarCRM
@@ -25,28 +27,28 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $sugar_config;
 $listViewDefs ['AOS_Quotes'] =
-array (
-  'NUMBER' => 
-  array (
+array(
+  'NUMBER' =>
+  array(
     'width' => '5%',
     'label' => 'LBL_LIST_NUM',
     'default' => true,
   ),
-  'NAME' => 
-  array (
+  'NAME' =>
+  array(
     'width' => '15%',
     'label' => 'LBL_ACCOUNT_NAME',
     'link' => true,
     'default' => true,
   ),
-  'STAGE' => 
-  array (
+  'STAGE' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_STAGE',
     'default' => true,
   ),
-  'BILLING_CONTACT' => 
-  array (
+  'BILLING_CONTACT' =>
+  array(
     'width' => '11%',
     'label' => 'LBL_BILLING_CONTACT',
     'default' => true,
@@ -54,12 +56,12 @@ array (
     'id' => 'BILLING_CONTACT_ID',
     'link' => true,
       'related_fields' =>
-          array (
+          array(
               'billing_contact_id',
           ),
   ),
-  'BILLING_ACCOUNT' => 
-  array (
+  'BILLING_ACCOUNT' =>
+  array(
     'width' => '15%',
     'label' => 'LBL_BILLING_ACCOUNT',
     'default' => true,
@@ -67,25 +69,25 @@ array (
     'id' => 'BILLING_ACCOUNT_ID',
     'link' => true,
       'related_fields' =>
-          array (
+          array(
               'billing_account_id',
           ),
   ),
-  'TOTAL_AMOUNT' => 
-  array (
+  'TOTAL_AMOUNT' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_GRAND_TOTAL',
     'default' => true,
     'currency_format' => true,
   ),
-  'EXPIRATION' => 
-  array (
+  'EXPIRATION' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_EXPIRATION',
     'default' => true,
   ),
-  'ASSIGNED_USER_NAME' => 
-  array (
+  'ASSIGNED_USER_NAME' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_ASSIGNED_USER',
     'default' => true,
@@ -93,104 +95,104 @@ array (
     'id' => 'ASSIGNED_USER_ID',
     'link' => true,
   ),
-  'AOS_QUOTES_TYPE' => 
-  array (
+  'AOS_QUOTES_TYPE' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_TYPE',
     'default' => false,
   ),
-  'BILLING_ADDRESS_STREET' => 
-  array (
+  'BILLING_ADDRESS_STREET' =>
+  array(
     'width' => '15%',
     'label' => 'LBL_BILLING_ADDRESS_STREET',
     'default' => false,
   ),
-  'BILLING_ADDRESS_CITY' => 
-  array (
+  'BILLING_ADDRESS_CITY' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_CITY',
     'default' => false,
   ),
-  'BILLING_ADDRESS_STATE' => 
-  array (
+  'BILLING_ADDRESS_STATE' =>
+  array(
     'width' => '7%',
     'label' => 'LBL_BILLING_ADDRESS_STATE',
     'default' => false,
   ),
-  'BILLING_ADDRESS_POSTALCODE' => 
-  array (
+  'BILLING_ADDRESS_POSTALCODE' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_BILLING_ADDRESS_POSTALCODE',
     'default' => false,
   ),
-  'BILLING_ADDRESS_COUNTRY' => 
-  array (
+  'BILLING_ADDRESS_COUNTRY' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_BILLING_ADDRESS_COUNTRY',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_STREET' => 
-  array (
+  'SHIPPING_ADDRESS_STREET' =>
+  array(
     'width' => '15%',
     'label' => 'LBL_SHIPPING_ADDRESS_STREET',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_CITY' => 
-  array (
+  'SHIPPING_ADDRESS_CITY' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_SHIPPING_ADDRESS_CITY',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_STATE' => 
-  array (
+  'SHIPPING_ADDRESS_STATE' =>
+  array(
     'width' => '7%',
     'label' => 'LBL_SHIPPING_ADDRESS_STATE',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_POSTALCODE' => 
-  array (
+  'SHIPPING_ADDRESS_POSTALCODE' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_SHIPPING_ADDRESS_POSTALCODE',
     'default' => false,
   ),
-  'SHIPPING_ADDRESS_COUNTRY' => 
-  array (
+  'SHIPPING_ADDRESS_COUNTRY' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_SHIPPING_ADDRESS_COUNTRY',
     'default' => false,
   ),
-  'PHONE_ALTERNATE' => 
-  array (
+  'PHONE_ALTERNATE' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_PHONE_ALT',
     'default' => false,
   ),
-  'WEBSITE' => 
-  array (
+  'WEBSITE' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_WEBSITE',
     'default' => false,
   ),
-  'OWNERSHIP' => 
-  array (
+  'OWNERSHIP' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_OWNERSHIP',
     'default' => false,
   ),
-  'EMPLOYEES' => 
-  array (
+  'EMPLOYEES' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_EMPLOYEES',
     'default' => false,
   ),
-  'TICKER_SYMBOL' => 
-  array (
+  'TICKER_SYMBOL' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_TICKER_SYMBOL',
     'default' => false,
   ),
-  'DATE_ENTERED' => 
-  array (
+  'DATE_ENTERED' =>
+  array(
     'width' => '5%',
     'label' => 'LBL_DATE_ENTERED',
     'default' => preg_match('/^6\.?[2-9]/', $sugar_config['sugar_version']),

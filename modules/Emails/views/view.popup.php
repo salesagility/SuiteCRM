@@ -50,5 +50,4 @@ class EmailsViewPopup extends ViewPopup
      * @var Email $bean
      */
     public $bean;
-
 }

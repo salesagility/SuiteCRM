@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,9 +45,9 @@ require_once('include/MVC/View/views/view.list.php');
 
 class RolesViewList extends ViewList
 {
- 	public function preDisplay()
- 	{
- 		$this->lv = new ListViewSmarty();
- 		$this->lv->showMassupdateFields = false;
- 	}
+    public function preDisplay()
+    {
+        $this->lv = new ListViewSmarty();
+        $this->lv->showMassupdateFields = false;
+    }
 }

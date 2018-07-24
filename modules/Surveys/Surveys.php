@@ -122,7 +122,7 @@ class Surveys extends Basic
     /**
      * Surveys constructor.
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -131,7 +131,7 @@ class Surveys extends Basic
      * @param string $interface
      * @return bool
      */
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':
@@ -199,22 +199,6 @@ class Surveys extends Basic
             $optionBean->sort_order = $key;
             $optionBean->save();
         }
-    }
-
-    /**
-     * @param Contact $contact
-     * @param bool $targetTracker
-     * @return string
-     */
-    public function getCampaignSurveyLink(Contact $contact, $targetTracker = false)
-    {
-        global $sugar_config;
-        $url = $sugar_config['site_url'] . '/index.php?entryPoint=survey&id=' . $this->id . '&contact=' . $contact->id;
-        if (!empty($targetTracker)) {
-            $url .= '&tracker=' . $targetTracker;
-        }
-
-        return $url;
     }
 
     /**

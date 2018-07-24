@@ -26,15 +26,15 @@ class UnitTester extends \Codeception\Actor
     public function getContainerInterface()
     {
         // load PSR 11 interface
-        if(isset($GLOBALS['container']) === false) {
+        if (isset($GLOBALS['container']) === false) {
             $paths = new \SuiteCRM\Utility\Paths();
             /** @noinspection PhpIncludeInspection */
-            require $paths->getContainersPath();
+            require $paths->getContainersFilePath();
         }
 
         return $GLOBALS['container'];
     }
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
 }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -57,25 +59,25 @@ $genericAssocFieldsArray = array('assigned_user_id' =>
                                   array('table_name' => 'accounts',
                                     'select_field_name' => 'name',
                                     'select_field_join'  => 'id',
-                                  ), 
+                                  ),
                                   'contact_id' =>
                                   array('table_name' => 'contacts',
-                                    'select_field_name' => 
-                                    		array('first_name',
-                                    			  'last_name',
-                                    		),
+                                    'select_field_name' =>
+                                            array('first_name',
+                                                  'last_name',
+                                            ),
                                     'select_field_join'  => 'id',
                                   ),
                                   'fixed_in_release' =>
                                   array('table_name' => 'releases',
                                     'select_field_name' => 'name',
                                     'select_field_join'  => 'id',
-                                  ), 
+                                  ),
                                   'found_in_release' =>
                                   array('table_name' => 'releases',
                                     'select_field_name' => 'name',
                                     'select_field_join'  => 'id',
-                                  ),                                   
+                                  ),
                             );
 $moduleAssocFieldsArray = array('Account' =>
                                 array('parent_id' =>

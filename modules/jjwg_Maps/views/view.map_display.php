@@ -1,39 +1,41 @@
 <?php
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-class Jjwg_MapsViewMap_Display extends SugarView {
-
-  function __construct() {
-    parent::__construct();
-  }
+class Jjwg_MapsViewMap_Display extends SugarView
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Jjwg_MapsViewMap_Display(){
+    public function Jjwg_MapsViewMap_Display()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-  function display() {
-    // Limit URI query string parameters. Used to avoid URL length errors.
-    $valid_names = array('action', 'module', 'entryPoint', 'submit', 'cron', 'geocoding_process', 'process_trigger', 'distance', 'unit_type', 'record', 'related_id', 'related_module', 'quick_address', 'display_module', 'list_id', 'uid', 'current_post');
-    $url = $GLOBALS['sugar_config']['site_url'] . '/index.php?module=' . $GLOBALS['currentModule'] . '&action=map_markers';
-    foreach (array_keys($_REQUEST) as $key) {
-      if (in_array($key, $valid_names) && !in_array($key, array('action', 'module', 'entryPoint'))) {
-        $url .= '&'.$key.'='.urlencode($_REQUEST[$key]);
-      }
-    }
-
-?>
+    public function display()
+    {
+        // Limit URI query string parameters. Used to avoid URL length errors.
+        $valid_names = array('action', 'module', 'entryPoint', 'submit', 'cron', 'geocoding_process', 'process_trigger', 'distance', 'unit_type', 'record', 'related_id', 'related_module', 'quick_address', 'display_module', 'list_id', 'uid', 'current_post');
+        $url = $GLOBALS['sugar_config']['site_url'] . '/index.php?module=' . $GLOBALS['currentModule'] . '&action=map_markers';
+        foreach (array_keys($_REQUEST) as $key) {
+            if (in_array($key, $valid_names) && !in_array($key, array('action', 'module', 'entryPoint'))) {
+                $url .= '&'.$key.'='.urlencode($_REQUEST[$key]);
+            }
+        } ?>
 <script type="text/javascript" src="modules/jjwg_Maps/javascript/jquery.iframe-auto-height.plugin.1.9.3.min.js"></script>
 <script>
 
@@ -79,17 +81,15 @@ class Jjwg_MapsViewMap_Display extends SugarView {
 
 <?php
     if (empty($_REQUEST['uid']) && empty($_REQUEST['current_post'])) {
-?>
+        ?>
 <p>IFrame:
     <a href="<?php echo htmlspecialchars($url); ?>"><?php echo $GLOBALS['mod_strings']['LBL_MAP']; ?> URL</a>
     <a href="#" id="resizeMapDisplayIframe" style="display: none;">.</a>
 </p>
 <?php
-    }
-?>
+    } ?>
 
 
 <?php
-
-  }
+    }
 }

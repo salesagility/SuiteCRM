@@ -97,6 +97,12 @@
                 <td colspan="4">
                     <div id="smtp_settings">
                         <table width="100%" cellpadding="0" cellspacing="1">
+                            <tr>
+                                <td width="20%" scope="row" nowrap="nowrap"><span>{sugar_translate module='EmailMan' label='LBL_NOTIFY_FROMNAME'}:</span><span class="required" id="required_smtp_from_name">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
+                                <td width="30%" ><input type="text" name="smtp_from_name" id="smtp_from_name" size="30" value="" title=""></td>
+                                <td width="20%" scope="row" nowrap="nowrap"><span>{sugar_translate module='EmailMan' label='LBL_NOTIFY_FROMADDRESS'}:</span><span class="required" id="required_smtp_from_addr">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
+                                <td width="30%" ><input type="text" name="smtp_from_addr" id="smtp_from_addr" size="30" value="" title=""></td>
+                            </tr>
                             <tr id="mailsettings1">
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpserver_label">{sugar_translate module='Emails' label='LBL_MAIL_SMTPSERVER'}</span> <span class="required" id="required_mail_smtpserver">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
                                 <td width="30%" ><slot><input type="text" id="mail_smtpserver" name="mail_smtpserver" tabindex="1" size="25" maxlength="255"></slot></td>

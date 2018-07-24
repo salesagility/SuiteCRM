@@ -153,8 +153,8 @@ class SugarView
     ) {
         $this->bean = $bean;
         $this->view_object_map = $view_object_map;
-        $this->action = $GLOBALS['action'];
-        $this->module = $GLOBALS['module'];
+        $this->action = isset($GLOBALS['action']) ? $GLOBALS['action'] : null;
+        $this->module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
         $this->_initSmarty();
     }
 
@@ -229,7 +229,6 @@ class SugarView
                 $_SESSION['alerts_output_timestamp'] = date('U');
                 echo $jsAlertsOutput;
             }
-
         }
 
         if ($this->_getOption('show_subpanels') && !empty($_REQUEST['record'])) {
@@ -644,14 +643,12 @@ class SugarView
 
                 $ss->assign('currentGroupTab', $currentGroupTab);
                 $usingGroupTabs = true;
-
             } else {
                 // Setup the default group tab.
                 $ss->assign('currentGroupTab', $app_strings['LBL_TABGROUP_ALL']);
 
                 $usingGroupTabs = false;
                 $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules'] = $fullModuleList;
-
             }
 
             $topTabList = array();
@@ -659,6 +656,21 @@ class SugarView
             // Now time to go through each of the tab sets and fix them up.
             foreach ($groupTabs as $tabIdx => $tabData) {
                 $topTabs = $tabData['modules'];
+
+                // Sort the list of modules alphabetically
+                if ($current_user->getPreference('sort_modules_by_name')) {
+                    asort($topTabs);
+                }
+
+                // put the current module at the top of the list
+                if (!empty($moduleTab) && isset($tabData['modules'][$moduleTab])) {
+                    unset($topTabs[$moduleTab]);
+                    $topTabs = array_merge(
+                        array($moduleTab => $tabData['modules'][$moduleTab]),
+                        $topTabs
+                    );
+                }
+
                 if (!is_array($topTabs)) {
                     $topTabs = array();
                 }
@@ -698,10 +710,12 @@ class SugarView
                 $groupTabs[$tabIdx]['extra'] = $extraTabs;
             }
 
-            // Ensure the current active module link is displayed at the bottom of any tab group list
-            // even when the module list is greater than the max tabs limit.
-            foreach($groupTabs as $key => $tabGroup) {
-                if (count($topTabs) >= $max_tabs - 1 && $key !== 'All' && in_array($tabGroup['modules'][$moduleTab], $tabGroup['extra'])) {
+            foreach ($groupTabs as $key => $tabGroup) {
+                if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array(
+                    $tabGroup['modules'][$moduleTab],
+                        $tabGroup['extra']
+                )
+                ) {
                     unset($groupTabs[$key]['modules'][$moduleTab]);
                 }
             }
@@ -740,7 +754,6 @@ class SugarView
             // This is here for backwards compatibility, someday, somewhere, it will be able to be removed
             $ss->assign("moduleTopMenu", $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules']);
             $ss->assign("moduleExtraMenu", $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['extra']);
-
         }
 
         if (isset($extraTabs) && is_array($extraTabs)) {
@@ -796,7 +809,7 @@ class SugarView
                     echo '<p class="error">' . $message . '</p>';
                 }
             }
-            
+
             $messages = SugarApplication::getSuccessMessages();
             if (!empty($messages)) {
                 foreach ($messages as $message) {
@@ -804,12 +817,10 @@ class SugarView
                 }
             }
         }
-
     }
 
     public function getModuleMenuHTML()
     {
-
     }
 
     /**
@@ -857,9 +868,6 @@ class SugarView
         $template->assign('SUGAR_GRP1', getVersionedPath('cache/include/javascript/sugar_grp1.js'));
         $template->assign('CALENDAR', getVersionedPath('include/javascript/calendar.js'));
 
-        if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
-            $template->assign('HEADERSYNC', getVersionedPath('modules/Sync/headersync.js'));
-        }
         echo $template->fetch('include/MVC/View/tpls/displayLoginJS.tpl');
     }
 
@@ -886,7 +894,7 @@ class SugarView
 
         // Add in the number formatting styles here as well, we have been handling this with individual modules.
         require_once('modules/Currencies/Currency.php');
-        list ($num_grp_sep, $dec_sep) = get_number_seperators();
+        list($num_grp_sep, $dec_sep) = get_number_seperators();
 
         $the_script =
             "<script type=\"text/javascript\">\n" .
@@ -977,10 +985,6 @@ EOHTML;
             );
 
             echo $this->_getModLanguageJS();
-
-            if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
-                echo getVersionedScript('modules/Sync/headersync.js');
-            }
 
             //echo out the $js_vars variables as javascript variables
             echo "<script type='text/javascript'>\n";
@@ -1140,7 +1144,7 @@ EOHTML;
                 '&help_action=' .
                 $this->action .
                 '&key=' .
-                $GLOBALS['server_unique_key'] .
+                (isset($GLOBALS['server_unique_key']) ? $GLOBALS['server_unique_key'] : null) .
                 '\'))';
             $label =
                 (isset($GLOBALS['app_list_strings']['moduleList'][$this->module]) ?
@@ -1228,7 +1232,6 @@ EOHTML;
 
         $trackerManager = TrackerManager::getInstance();
         $trackerManager->save();
-
     }
 
     /**
@@ -1256,7 +1259,7 @@ EOHTML;
     private function _calculateFooterMetrics()
     {
         $endTime = microtime(true);
-        $deltaTime = $endTime - $GLOBALS['startTime'];
+        $deltaTime = $endTime - (isset($GLOBALS['startTime']) ? $GLOBALS['startTime'] : null);
         $this->responseTime = number_format(round($deltaTime, 2), 2);
         // Print out the resources used in constructing the page.
         $this->fileResources = count(get_included_files());
@@ -1268,7 +1271,7 @@ EOHTML;
     private function _getStatistics()
     {
         $endTime = microtime(true);
-        $deltaTime = $endTime - $GLOBALS['startTime'];
+        $deltaTime = $endTime - (isset($GLOBALS['startTime']) ? $GLOBALS['startTime'] : null);
         $response_time_string =
             $GLOBALS['app_strings']['LBL_SERVER_RESPONSE_TIME'] .
             ' ' .
@@ -1638,7 +1641,6 @@ EOHTML;
                 if (SugarThemeRegistry::current()->directionality == "ltr") {
                     return $app_strings['LBL_SEARCH_ALT'] . "&nbsp;"
                         . "$firstParam";
-
                 } else {
                     return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
                 }
@@ -1913,5 +1915,4 @@ EOHTML;
 
         return false;
     }
-
 }

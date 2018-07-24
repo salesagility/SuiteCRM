@@ -48,7 +48,6 @@ require_once(get_custom_file_if_exists('modules/AOW_Actions/actions/actionBase.p
  */
 class actionComputeField extends actionBase
 {
-
     const RAW_VALUE = "raw";
     const FORMATTED_VALUE = "formatted";
 
@@ -94,7 +93,10 @@ class actionComputeField extends actionBase
             }
 
             $calculator = new FormulaCalculator(
-                $resolvedParameters, $resolvedRelationParameters, $bean->module_name, $bean->created_by
+                $resolvedParameters,
+                $resolvedRelationParameters,
+                $bean->module_name,
+                $bean->created_by
             );
 
             $relateFields = $this->getAllRelatedFields($bean);
@@ -752,8 +754,3 @@ class actionComputeField extends actionBase
         return "";
     }
 }
-
-
-
-
-

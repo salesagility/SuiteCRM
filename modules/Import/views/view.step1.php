@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,7 +53,6 @@ require_once('modules/Import/Importer.php');
 
 class ImportViewStep1 extends ImportView
 {
-
     protected $pageTitleKey = 'LBL_STEP_1_TITLE';
 
     public function __construct($bean = null, $view_object_map = array())
@@ -59,60 +60,55 @@ class ImportViewStep1 extends ImportView
         parent::__construct($bean, $view_object_map);
         $this->currentStep = isset($_REQUEST['current_step']) ? ($_REQUEST['current_step'] + 1) : 1;
         $this->importModule = isset($_REQUEST['import_module']) ? $_REQUEST['import_module'] : '';
-        if( isset($_REQUEST['from_admin_wizard']) &&  $_REQUEST['from_admin_wizard'] )
-        {
+        if (isset($_REQUEST['from_admin_wizard']) &&  $_REQUEST['from_admin_wizard']) {
             $this->importModule = 'Administration';
         }
- 	}
- 	
- 	/**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
-	protected function _getModuleTitleParams($browserTitle = false)
-	{
-	    global $mod_strings, $app_list_strings;
-	    
-	    $iconPath = $this->getModuleTitleIconPath($this->module);
-	    $returnArray = array();
-	    if (!empty($iconPath) && !$browserTitle) {
-	        $returnArray[] = "<a href='index.php?module={$_REQUEST['import_module']}&action=index'><!--not_in_theme!--><img src='{$iconPath}' alt='{$app_list_strings['moduleList'][$_REQUEST['import_module']]}' title='{$app_list_strings['moduleList'][$_REQUEST['import_module']]}' align='absmiddle'></a>";
-    	}
-    	else {
-    	    $returnArray[] = $app_list_strings['moduleList'][$_REQUEST['import_module']];
-    	}
-	    $returnArray[] = "<a href='index.php?module=Import&action=Step1&import_module={$_REQUEST['import_module']}'>".$mod_strings['LBL_MODULE_NAME']."</a>";
-	    $returnArray[] = $mod_strings['LBL_STEP_1_TITLE'];
-    	
-	    return $returnArray;
+    }
+    
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings, $app_list_strings;
+        
+        $iconPath = $this->getModuleTitleIconPath($this->module);
+        $returnArray = array();
+        if (!empty($iconPath) && !$browserTitle) {
+            $returnArray[] = "<a href='index.php?module={$_REQUEST['import_module']}&action=index'><!--not_in_theme!--><img src='{$iconPath}' alt='{$app_list_strings['moduleList'][$_REQUEST['import_module']]}' title='{$app_list_strings['moduleList'][$_REQUEST['import_module']]}' align='absmiddle'></a>";
+        } else {
+            $returnArray[] = $app_list_strings['moduleList'][$_REQUEST['import_module']];
+        }
+        $returnArray[] = "<a href='index.php?module=Import&action=Step1&import_module={$_REQUEST['import_module']}'>".$mod_strings['LBL_MODULE_NAME']."</a>";
+        $returnArray[] = $mod_strings['LBL_STEP_1_TITLE'];
+        
+        return $returnArray;
     }
 
- 	/** 
+    /**
      * @see SugarView::display()
      */
- 	public function display()
+    public function display()
     {
         global $mod_strings, $app_strings, $current_user;
         global $sugar_config;
 
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
-        $this->ss->assign("DELETE_INLINE_PNG",  SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_DELETE']));
-        $this->ss->assign("PUBLISH_INLINE_PNG",  SugarThemeRegistry::current()->getImage('publish_inline','align="absmiddle" border="0"', null,null,'.gif',$mod_strings['LBL_PUBLISH']));
-        $this->ss->assign("UNPUBLISH_INLINE_PNG",  SugarThemeRegistry::current()->getImage('unpublish_inline','align="absmiddle" border="0"', null,null,'.gif',$mod_strings['LBL_UNPUBLISH']));
+        $this->ss->assign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_DELETE']));
+        $this->ss->assign("PUBLISH_INLINE_PNG", SugarThemeRegistry::current()->getImage('publish_inline', 'align="absmiddle" border="0"', null, null, '.gif', $mod_strings['LBL_PUBLISH']));
+        $this->ss->assign("UNPUBLISH_INLINE_PNG", SugarThemeRegistry::current()->getImage('unpublish_inline', 'align="absmiddle" border="0"', null, null, '.gif', $mod_strings['LBL_UNPUBLISH']));
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
 
         $showModuleSelection = ($this->importModule == 'Administration');
         $importableModulesOptions = array();
         $importablePersonModules = array();
         //If we are coming from the admin link, get the module list.
-        if($showModuleSelection)
-        {
+        if ($showModuleSelection) {
             $tmpImportable = Importer::getImportableModules();
             $importableModulesOptions = get_select_options_with_id($tmpImportable, '');
             $importablePersonModules = $this->getImportablePersonModulesJS();
             $this->ss->assign("IMPORT_MODULE", key($tmpImportable));
-        }
-        else
-        {
+        } else {
             $this->instruction = 'LBL_SELECT_DS_INSTRUCTION';
             $this->ss->assign('INSTRUCTION', $this->getInstruction());
         }
@@ -122,7 +118,7 @@ class ImportViewStep1 extends ImportView
         $this->ss->assign("IMPORTABLE_MODULES_OPTIONS", $importableModulesOptions);
 
         $this->ss->assign("EXTERNAL_SOURCES", $this->getAllImportableExternalEAPMs());
-        $this->ss->assign("EXTERNAL_AUTHENTICATED_SOURCES", json_encode($this->getAuthenticatedImportableExternalEAPMs()) );
+        $this->ss->assign("EXTERNAL_AUTHENTICATED_SOURCES", json_encode($this->getAuthenticatedImportableExternalEAPMs()));
         $selectExternal = !empty($_REQUEST['application']) ? $_REQUEST['application'] : '';
         $this->ss->assign("selectExternalSource", $selectExternal);
 
@@ -132,23 +128,21 @@ class ImportViewStep1 extends ImportView
         $submitContent .= "<input title=\"".$mod_strings['LBL_IMPORT_COMPLETE']."\" onclick=\"SUGAR.importWizard.closeDialog();\" class=\"button\" type=\"submit\" name=\"finished\" value=\"  ".$mod_strings['LBL_IMPORT_COMPLETE']."  \" id=\"finished\">";
         $submitContent .= "<input title=\"".$mod_strings['LBL_NEXT']."\" class=\"button primary\" type=\"submit\" name=\"button\" value=\"  ".$mod_strings['LBL_NEXT']."  \"  id=\"gonext\"></td></tr></table>";
 
-        $this->ss->assign("JAVASCRIPT",$this->_getJS() );
-        $this->ss->assign("CONTENT",$content);
+        $this->ss->assign("JAVASCRIPT", $this->_getJS());
+        $this->ss->assign("CONTENT", $content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
-
     }
 
     private function getImportablePersonModulesJS()
     {
         global $beanList;
         $results = array();
-        foreach ($beanList as $moduleName => $beanName)
-        {
-            if( class_exists($beanName) )
-            {
+        foreach ($beanList as $moduleName => $beanName) {
+            if (class_exists($beanName)) {
                 $tmp = new $beanName();
-                if( isset($tmp->importable) && $tmp->importable && ($tmp instanceof Person))
+                if (isset($tmp->importable) && $tmp->importable && ($tmp instanceof Person)) {
                     $results[$moduleName] = $moduleName;
+                }
             }
         }
 
@@ -158,12 +152,12 @@ class ImportViewStep1 extends ImportView
     private function getAllImportableExternalEAPMs()
     {
         ExternalAPIFactory::clearCache();
-        return ExternalAPIFactory::getModuleDropDown('Import', TRUE, FALSE);
+        return ExternalAPIFactory::getModuleDropDown('Import', true, false);
     }
 
     private function getAuthenticatedImportableExternalEAPMs()
     {
-        return ExternalAPIFactory::getModuleDropDown('Import', FALSE, FALSE);
+        return ExternalAPIFactory::getModuleDropDown('Import', false, false);
     }
     /**
      * Returns JS used in this view
@@ -178,9 +172,8 @@ class ImportViewStep1 extends ImportView
         $importableModulesOptions = array();
         $importablePersonModules = array();
         //If we are coming from the admin link, get the module list.
-        if($showModuleSelection)
-        {
-		    $importablePersonModules = $this->getImportablePersonModulesJS();
+        if ($showModuleSelection) {
+            $importablePersonModules = $this->getImportablePersonModulesJS();
         }
 
 

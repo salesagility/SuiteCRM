@@ -1,9 +1,11 @@
 <?php
 
-class AOS_QuotesTest extends PHPUnit_Framework_TestCase
+class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -29,7 +31,11 @@ class AOS_QuotesTest extends PHPUnit_Framework_TestCase
 
     public function testSaveAndMark_deleted()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushTable('aos_quotes');
+        
+        
 
         $aosQuotes = new AOS_Quotes();
 
@@ -47,5 +53,9 @@ class AOS_QuotesTest extends PHPUnit_Framework_TestCase
         $aosQuotes->mark_deleted($aosQuotes->id);
         $result = $aosQuotes->retrieve($aosQuotes->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('aos_quotes');
     }
 }

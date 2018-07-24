@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -56,31 +58,31 @@ global $app_strings;
 
 //-----------begin replacing text input tags that have been marked with text area tags
 //get array of text areas strings to process
-$bodyHTML = html_entity_decode($_REQUEST['body_html'],ENT_QUOTES);
+$bodyHTML = html_entity_decode($_REQUEST['body_html'], ENT_QUOTES);
 
-while (strpos($bodyHTML, "ta_replace") !== false){
+while (strpos($bodyHTML, "ta_replace") !== false) {
 
-	//define the marker edges of the sub string to process (opening and closing tag brackets)
-	$marker = strpos($bodyHTML, "ta_replace");
-	$start_border = strpos($bodyHTML, "input", $marker) - 1;// to account for opening '<' char;
-	$end_border = strpos($bodyHTML, '>', $start_border); //get the closing tag after marker ">";
+    //define the marker edges of the sub string to process (opening and closing tag brackets)
+    $marker = strpos($bodyHTML, "ta_replace");
+    $start_border = strpos($bodyHTML, "input", $marker) - 1;// to account for opening '<' char;
+    $end_border = strpos($bodyHTML, '>', $start_border); //get the closing tag after marker ">";
 
-	//extract the input tag string
-	$working_str = substr($bodyHTML, $marker-3, $end_border-($marker-3) );
+    //extract the input tag string
+    $working_str = substr($bodyHTML, $marker-3, $end_border-($marker-3));
 
-	//replace input markup with text areas markups
-	$new_str = str_replace('input','textarea',$working_str);
-	$new_str = str_replace("type=\"text\"", ' ', $new_str);
-	$new_str = $new_str . '> </textarea';
+    //replace input markup with text areas markups
+    $new_str = str_replace('input', 'textarea', $working_str);
+    $new_str = str_replace("type=\"text\"", ' ', $new_str);
+    $new_str = $new_str . '> </textarea';
 
-	//replace the marker with generic term
-	$new_str = str_replace('ta_replace', 'sugarslot', $new_str);
+    //replace the marker with generic term
+    $new_str = str_replace('ta_replace', 'sugarslot', $new_str);
 
-	// NET-enabling start-tag requires SHORTTAG YES
-	$new_str = str_replace('/> </textarea>', '> </textarea>', $new_str);
+    // NET-enabling start-tag requires SHORTTAG YES
+    $new_str = str_replace('/> </textarea>', '> </textarea>', $new_str);
 
-	//merge the processed string back into bodyhtml string
-	$bodyHTML = str_replace($working_str , $new_str, $bodyHTML);
+    //merge the processed string back into bodyhtml string
+    $bodyHTML = str_replace($working_str, $new_str, $bodyHTML);
 }
 //<<<----------end replacing marked text inputs with text area tags
 
@@ -103,12 +105,12 @@ $html = str_replace('Â', ' ', $html);
 file_put_contents($form_file, $html);
 $html = htmlspecialchars($html, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
-$xtpl=new XTemplate ('modules/Campaigns/WebToLeadDownloadForm.html');
+$xtpl=new XTemplate('modules/Campaigns/WebToLeadDownloadForm.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $webformlink = "<b>$mod_strings[LBL_DOWNLOAD_TEXT_WEB_TO_LEAD_FORM]</b><br/>";
 $webformlink .= "<a href=\"index.php?entryPoint=download&id={$guid}&isTempFile=1&tempName=WebToLeadForm.html&type=temp\">$mod_strings[LBL_DOWNLOAD_WEB_TO_LEAD_FORM]</a>";
-$xtpl->assign("LINK_TO_WEB_FORM",$webformlink);
+$xtpl->assign("LINK_TO_WEB_FORM", $webformlink);
 $xtpl->assign("RAW_SOURCE", $html);
 $xtpl->parse("main.copy_source");
 $xtpl->parse("main");

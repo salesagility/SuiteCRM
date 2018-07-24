@@ -1,6 +1,6 @@
 <?php
 
-class ViewJsonTest extends PHPUnit_Framework_TestCase
+class ViewJsonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewJson()
     {
@@ -17,7 +17,7 @@ class ViewJsonTest extends PHPUnit_Framework_TestCase
     {
 
         /*
-        setup required paramerers and execute the method. 
+        setup required paramerers and execute the method.
         it uses die/exit which stops the execution of PHP unit as well so this method cannot be tested.
         */
 

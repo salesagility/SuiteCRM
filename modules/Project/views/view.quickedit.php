@@ -1,6 +1,8 @@
 <?php
 //FILE SUGARCRM flav=pro || flav=sales
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -72,10 +74,9 @@ class ProjectViewQuickedit extends ViewQuickEdit
 
     public function preDisplay()
     {
-
-        if(!empty($_REQUEST['record'])) {
+        if (!empty($_REQUEST['record'])) {
             $this->bean->retrieve($_REQUEST['record']);
-            if($this->bean->is_template == 1){
+            if ($this->bean->is_template == 1) {
                 $this->footerTpl = 'modules/Project/tpls/QuickEditFooter.tpl';
                 $this->headerTpl = 'modules/Project/tpls/QuickEditHeader.tpl';
                 $this->defaultButtons = array('DCMENUCANCEL');
@@ -83,5 +84,4 @@ class ProjectViewQuickedit extends ViewQuickEdit
         }
         return parent::preDisplay();
     }
-
 }

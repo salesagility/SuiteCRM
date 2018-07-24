@@ -1,9 +1,11 @@
 <?php
 
-class EmployeeTest extends PHPUnit_Framework_TestCase
+class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -27,7 +29,10 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $employee = new Employee();
 
@@ -37,11 +42,19 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
         //test with name set
         $employee->retrieve(1);
         $this->assertEquals('Administrator', $employee->get_summary_text());
+        
+        // clean up
     }
 
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $employee = new Employee();
 
         //execute the method and test if it works and does not throws an exception.
@@ -49,8 +62,10 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
             $employee->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
@@ -72,7 +87,7 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
     public function testretrieve_employee_id()
     {
         $employee = new Employee();
-        //$this->assertEquals('1' ,$employee->retrieve_employee_id('admin'));
+        
 
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
     }
@@ -80,12 +95,34 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
 
     public function testverify_data()
     {
+
+    // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+
+        // test
+        
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
+
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
     }
 
     public function testget_list_view_data()
     {
+
+    // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('email_addresses');
+        $state->pushTable('tracker');
+        
+        
         $employee = new Employee();
 
         $expected = array(
@@ -101,7 +138,7 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
             'ENCODED_NAME' => ' ',
             'EMAIL1' => '',
             'EMAIL1_LINK' =>
-                '<a class="email-link" href="javascript:void(0);"'
+                '<a class="email-link"'
                 . ' onclick="$(document).openComposeViewModal(this);'
                 . '" data-module="Employees" data-record-id="" data-module-name=" " data-email-address=""></a>',
             'MESSENGER_TYPE' => '',
@@ -110,19 +147,34 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
 
         $actual = $employee->get_list_view_data();
         $this->assertSame($expected, $actual);
+
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('email_addresses');
+        $state->popTable('aod_index');
     }
 
     public function testlist_view_parse_additional_sections()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $employee = new Employee();
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $employee->list_view_parse_additional_sections(new Sugar_Smarty(), $xTemplateSection);
+            $ss = new Sugar_Smarty();
+            $employee->list_view_parse_additional_sections($ss, null);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
 
@@ -144,6 +196,12 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
 
     public function testpreprocess_fields_on_save()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $employee = new Employee();
 
         //execute the method and test if it works and does not throws an exception.
@@ -151,8 +209,10 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
             $employee->preprocess_fields_on_save();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     /**
@@ -174,14 +234,27 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
     	$actual = $employee->create_new_list_query('users.id','users.user_name=""');
     	$this->assertSame($expected,$actual);
     	*/
-        $this->assertTrue(true, "NEEDS FIXING!");
+        self::markTestIncomplete();
     }
 
 
     public function testhasCustomFields()
     {
+        // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+
+        // test
+        
+        
         $employee = new Employee();
         $result = $employee->hasCustomFields();
         $this->assertEquals(false, $result);
+        
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
     }
 }

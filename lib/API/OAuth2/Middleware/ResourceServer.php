@@ -44,7 +44,7 @@ use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\ResourceServer as OAuthResourceServer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use SuiteCRM\API\v8\Exception\NotAllowed;
+use SuiteCRM\API\v8\Exception\NotAllowedException;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
@@ -113,7 +113,7 @@ class ResourceServer
      * Suite needs a current_user global for roles, security groups etc.
      *
      * @param ServerRequestInterface $request
-     * @throws NotAllowed
+     * @throws NotAllowedException
      */
     private function setCurrentUserGlobal(ServerRequestInterface $request)
     {
@@ -122,8 +122,8 @@ class ResourceServer
         $user = $this->getUserFromRequest($request);
 
         // validate user is still active
-        if($user->status === 'Inactive') {
-            throw new NotAllowed('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
+        if ($user->status === 'Inactive') {
+            throw new NotAllowedException('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
         }
 
         $current_user = $user;
@@ -133,7 +133,7 @@ class ResourceServer
      * @param ServerRequestInterface $request
      * @return \User
      *
-     * @throws NotAllowed
+     * @throws NotAllowedException
      */
     private function getUserFromRequest(ServerRequestInterface $request)
     {
@@ -155,6 +155,6 @@ class ResourceServer
             return $user;
         }
 
-        throw new NotAllowed('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
+        throw new NotAllowedException('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
     }
 }

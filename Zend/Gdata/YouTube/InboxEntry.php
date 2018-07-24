@@ -58,7 +58,6 @@ require_once 'Zend/Gdata/YouTube/Extension/Description.php';
  */
 class Zend_Gdata_YouTube_InboxEntry extends Zend_Gdata_Media_Entry
 {
-
     protected $_entryClassName = 'Zend_Gdata_YouTube_InboxEntry';
 
     /**
@@ -117,19 +116,23 @@ class Zend_Gdata_YouTube_InboxEntry extends Zend_Gdata_Media_Entry
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_description != null) {
             $element->appendChild(
-                $this->_description->getDOM($element->ownerDocument));
+                $this->_description->getDOM($element->ownerDocument)
+            );
         }
         if ($this->_rating != null) {
             $element->appendChild(
-                $this->_rating->getDOM($element->ownerDocument));
+                $this->_rating->getDOM($element->ownerDocument)
+            );
         }
         if ($this->_statistics != null) {
             $element->appendChild(
-                $this->_statistics->getDOM($element->ownerDocument));
+                $this->_statistics->getDOM($element->ownerDocument)
+            );
         }
         if ($this->_comments != null) {
             $element->appendChild(
-                $this->_comments->getDOM($element->ownerDocument));
+                $this->_comments->getDOM($element->ownerDocument)
+            );
         }
         return $element;
     }
@@ -276,6 +279,4 @@ class Zend_Gdata_YouTube_InboxEntry extends Zend_Gdata_Media_Entry
         $this->_statistics = $statistics;
         return $this;
     }
-
-
 }

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/utils/encryption_utils.php';
-class encryption_utilsTest extends PHPUnit_Framework_TestCase
+class encryption_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testsugarEncode()
     {
@@ -55,7 +55,7 @@ class encryption_utilsTest extends PHPUnit_Framework_TestCase
         //test key
         $actual = blowfishGetKey('test');
         $this->assertGreaterThanOrEqual(36, strlen($actual));
-        //var_dump($actual);
+        
 
         //default key
         $actual = blowfishGetKey('rapelcg_svryq');

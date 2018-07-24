@@ -25,9 +25,11 @@
 .suitepicon-module- {
     @extend .suitepicon-module-default;
 }
-
 .suitepicon-action- {
     @extend .suitepicon-action-empty-action;
+}
+.suitepicon-admin- {
+    @extend .suitepicon-admin-password;
 }
 
 /**

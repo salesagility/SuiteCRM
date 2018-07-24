@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,16 +41,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 global $mod_strings;
-if(empty($_REQUEST['record'])) {
-	sugar_die($mod_strings['LBL_DELETE_ERROR']);
+if (empty($_REQUEST['record'])) {
+    sugar_die($mod_strings['LBL_DELETE_ERROR']);
 } else {
-	
-	$focus = new InboundEmail();
+    $focus = new InboundEmail();
 
-	// retrieve the focus in order to populate it with ID. otherwise this
-	// instance will be marked as deleted and than replaced by another instance,
-	// which will be saved and tracked (bug #47552)
-	$focus->retrieve($_REQUEST['record']);
-	$focus->mark_deleted($_REQUEST['record']);
-	header("Location: index.php?module=".$_REQUEST['return_module']."&action=".$_REQUEST['return_action']."&record=".$_REQUEST['return_id']);
+    // retrieve the focus in order to populate it with ID. otherwise this
+    // instance will be marked as deleted and than replaced by another instance,
+    // which will be saved and tracked (bug #47552)
+    $focus->retrieve($_REQUEST['record']);
+    $focus->mark_deleted($_REQUEST['record']);
+    header("Location: index.php?module=".$_REQUEST['return_module']."&action=".$_REQUEST['return_action']."&record=".$_REQUEST['return_id']);
 }

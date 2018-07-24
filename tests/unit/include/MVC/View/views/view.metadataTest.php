@@ -1,6 +1,6 @@
 <?php
 
-class ViewMetadataTest extends PHPUnit_Framework_TestCase
+class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testdisplayCheckBoxes()
     {
@@ -79,7 +79,15 @@ class ViewMetadataTest extends PHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        if (isset($_REQUEST)) {
+            $request = $_REQUEST;
+        }
+        
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
 
         $view = new ViewMetadata();
 
@@ -97,6 +105,17 @@ class ViewMetadataTest extends PHPUnit_Framework_TestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
+        
+        
+        // clean up
+        
+        
+        
+        if (isset($request)) {
+            $_REQUEST = $request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 
     public function testgetModules()

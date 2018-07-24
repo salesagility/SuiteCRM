@@ -1,7 +1,7 @@
 <?php
 
 
-class InOperatorTest extends \Codeception\Test\Unit
+class InOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -10,21 +10,19 @@ class InOperatorTest extends \Codeception\Test\Unit
 
     private static $operator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         $containers = $this->tester->getContainerInterface();
         self::$operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Comparators\InOperator($containers);
     }
 
-    protected function _after()
-    {
-    }
 
     public function testIsValidTagWithInvalidType()
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][Comparators][InOperator][isValid][expected type to be string] $operator'),
-            function() {
+            function () {
                 self::$operator->isValid(array());
             }
         );

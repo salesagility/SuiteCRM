@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,24 +43,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/Trackers/monitor/Monitor.php');
 
-class tracker_monitor extends Monitor {
+class tracker_monitor extends Monitor
+{
 
     /**
      * Monitor constructor
      */
-    public function __construct($name='', $monitorId='', $metadata='', $store='') {
+    public function __construct($name='', $monitorId='', $metadata='', $store='')
+    {
         parent::__construct($name, $monitorId, $metadata, $store);
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function tracker_monitor($name='', $monitorId='', $metadata='', $store=''){
+    public function tracker_monitor($name='', $monitorId='', $metadata='', $store='')
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($name, $monitorId, $metadata, $store);
@@ -72,21 +76,23 @@ class tracker_monitor extends Monitor {
      * the flush method passing with the montior ($this) instance.
      * @param $flush boolean parameter indicating whether or not to flush the instance data to store or possibly cache
      */
-    public function save($flush=true) {
-    	//if the monitor does not have values set no need to do the work saving.
-    	if(!$this->dirty)return false;
+    public function save($flush=true)
+    {
+        //if the monitor does not have values set no need to do the work saving.
+        if (!$this->dirty) {
+            return false;
+        }
 
-    	if(!$this->isEnabled() && (isset($this->visible) && !$this->getValue('visible'))) {
-    		return false;
-    	}
+        if (!$this->isEnabled() && (isset($this->visible) && !$this->getValue('visible'))) {
+            return false;
+        }
 
-    	if(empty($GLOBALS['tracker_' . $this->table_name])) {
-    	    foreach($this->stores as $s) {
-	    		$store = $this->getStore($s);
-	    		$store->flush($this);
-    		}
-    	}
-    	$this->clear();
+        if (empty($GLOBALS['tracker_' . $this->table_name])) {
+            foreach ($this->stores as $s) {
+                $store = $this->getStore($s);
+                $store->flush($this);
+            }
+        }
+        $this->clear();
     }
-
 }

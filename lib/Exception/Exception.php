@@ -40,7 +40,6 @@
 
 namespace SuiteCRM\Exception;
 
-
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;
@@ -64,7 +63,6 @@ class Exception extends \Exception
 
     /**
      * Gives addition details to what caused the exception
-     * @see ApiController::generateJsonApiExceptionResponse()
      * @return string
      */
     public function getDetail()

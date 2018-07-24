@@ -42,7 +42,6 @@ require_once 'Zend/Gdata/Exif.php';
  */
 class Zend_Gdata_Exif_Extension_ImageUniqueId extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'exif';
     protected $_rootElement = 'imageUniqueID';
 
@@ -57,5 +56,4 @@ class Zend_Gdata_Exif_Extension_ImageUniqueId extends Zend_Gdata_Extension
         parent::__construct();
         $this->setText($text);
     }
-
 }
