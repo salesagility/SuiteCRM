@@ -167,7 +167,7 @@ $mod_strings = array(
     'LBL_BACKUP_FILE_STORED' => 'Backup successfully stored as',
     'LBL_BACKUP_FILENAME_ERROR' => 'Backup filename must be specified.',
     'LBL_BACKUP_FILENAME' => 'Filename:',
-    'LBL_BACKUP_INSTRUCTIONS_1' => 'The purpose of this tool is to assist in creating backups of the SuiteCRM application files. (Database backups should also be performed regularly. Please refer to your database vendor\'s documentation for information on how to backup your database.)',
+    'LBL_BACKUP_INSTRUCTIONS_1' => "The purpose of this tool is to assist in creating backups of the SuiteCRM application files. (Database backups should also be performed regularly. Please refer to your database vendor's documentation for information on how to backup your database.)",
     'LBL_BACKUP_INSTRUCTIONS_2' => 'To backup your SuiteCRM application files in a .zip file, enter the following information:',
     'LBL_BACKUP_RUN_BACKUP' => 'Run Backup',
     'LBL_BACKUP_TITLE' => 'Online Backups',
@@ -1219,7 +1219,7 @@ $mod_strings = array(
     'LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE' => 'Joomla Support Portal Account Creation Template',
 
     'LBL_AOP_BUSINESS_HOURS_SETTINGS' => 'Business Hours',
-    'LBL_AOP_BUSINESS_HOURS_DESC' => 'Restrict \'Only In The Scheduler\' Workflows to launch only in certain days and times',
+    'LBL_AOP_BUSINESS_HOURS_DESC' => "Restrict 'Only In The Scheduler' Workflows to launch only in certain days and times",
     'LBL_AOP_OPENING_DAYS' => 'Opening Days',
     'LBL_AOP_OPENING_HOURS' => 'Opening Hours',
     'LBL_AOP_CLOSING_HOURS' => 'Closing Hours',
