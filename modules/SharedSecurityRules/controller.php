@@ -390,8 +390,24 @@ class SharedSecurityRulesController extends SugarController
         } else {
             $module = $requestedAORModule;
         }
-        $fieldname = $request['aor_fieldname'];
-        $aor_field = $request['aor_newfieldname'];
+        
+        $requestAorFieldName = null;
+        if (!isset($request['aor_fieldname'])) {
+            LoggerManager::getLogger()->warn('No request[aor_fieldname]');
+        } else {
+            $requestAorFieldName = $request['aor_fieldname'];
+        }
+        
+        $fieldname = $requestAorFieldName;
+        
+        $requestAorNewFieldName = null;
+        if (!isset($request['aor_newfieldname'])) {
+            LoggerManager::getLogger()->warn('No request[aor_newfieldname]');
+        } else {
+            $requestAorNewFieldName = $request['aor_newfieldname'];
+        }
+        
+        $aor_field = $requestAorNewFieldName;
 
         if (isset($request['view'])) {
             $view = $request['view'];
