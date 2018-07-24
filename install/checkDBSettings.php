@@ -88,8 +88,8 @@ function checkDBSettings($silent=false)
     if (count($errors) > 0) {
         installLog("Basic form info is INVALID, exit Process.");
         return printErrors($errors);
-    }  
-        installLog("Basic form info is valid, continuing Process.");
+    }
+    installLog("Basic form info is valid, continuing Process.");
     
 
     $dbconfig = array(
@@ -210,8 +210,8 @@ function checkDBSettings($silent=false)
 
     if ($silent) {
         return $errors;
-    }  
-        printErrors($errors);
+    }
+    printErrors($errors);
     
     installLog("End DB Check Process *************");
 }

@@ -269,23 +269,22 @@ function validate_user($user_name, $password)
         login_success();
 
         return true;
-    }  
-        if (function_exists('openssl_decrypt')) {
-            $password = decrypt_string($password);
-            if ($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])) {
-                $user->retrieve($_SESSION['authenticated_user_id']);
-                $current_user = $user;
-                login_success();
+    }
+    if (function_exists('openssl_decrypt')) {
+        $password = decrypt_string($password);
+        if ($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])) {
+            $user->retrieve($_SESSION['authenticated_user_id']);
+            $current_user = $user;
+            login_success();
 
-                return true;
-            }
-        } else {
-            $GLOBALS['log']->fatal("SECURITY: failed attempted login for $user_name using SOAP api");
-            $server->setError("Invalid username and/or password");
-
-            return false;
+            return true;
         }
-    
+    } else {
+        $GLOBALS['log']->fatal("SECURITY: failed attempted login for $user_name using SOAP api");
+        $server->setError("Invalid username and/or password");
+
+        return false;
+    }
 }
 
 /**

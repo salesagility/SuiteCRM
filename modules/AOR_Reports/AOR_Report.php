@@ -327,36 +327,33 @@ class AOR_Report extends Basic
                 }
 
                 return $this->buildMultiGroupReport($offset, $links, $level + 1, $path);
-            }  
-                if (!$rows) {
-                    if ($path) {
-                        $html = '';
-                        foreach ($path as $pth) {
-                            $_fieldIdName = $this->db->quoteIdentifier($pth['field_id_name']);
-                            $query = "SELECT $_fieldIdName FROM " . $this->db->quoteIdentifier($pth['module_path'][0]) . " GROUP BY $_fieldIdName;";
-                            $values = $this->dbSelect($query);
+            }
+            if (!$rows) {
+                if ($path) {
+                    $html = '';
+                    foreach ($path as $pth) {
+                        $_fieldIdName = $this->db->quoteIdentifier($pth['field_id_name']);
+                        $query = "SELECT $_fieldIdName FROM " . $this->db->quoteIdentifier($pth['module_path'][0]) . " GROUP BY $_fieldIdName;";
+                        $values = $this->dbSelect($query);
 
-                            foreach ($values as $value) {
-                                $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue(
+                        foreach ($values as $value) {
+                            $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue(
                                     $beanList,
                                     $value[$pth['field_id_name']]
                                 );
-                                $moduleFieldByGroupValue = $this->addDataIdValueToInnertext($moduleFieldByGroupValue);
-                                $html .= $this->getMultiGroupFrameHTML(
+                            $moduleFieldByGroupValue = $this->addDataIdValueToInnertext($moduleFieldByGroupValue);
+                            $html .= $this->getMultiGroupFrameHTML(
                                     $moduleFieldByGroupValue,
                                     $this->build_group_report($offset, $links)
                                 );
-                            }
                         }
+                    }
 
-                        return $html;
-                    }  
-                        return $this->build_group_report($offset, $links, array());
-                    
-                }  
-                    throw new Exception('incorrect results');
-                
-            
+                    return $html;
+                }
+                return $this->build_group_report($offset, $links, array());
+            }
+            throw new Exception('incorrect results');
         }
         throw new Exception('incorrect state');
     }

@@ -242,9 +242,8 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
     {
         if (!empty($this->_viewdefs) && isset($this->_viewdefs ['templateMeta'] ['maxColumns'])) {
             return $this->_viewdefs ['templateMeta'] ['maxColumns'];
-        }  
-            return 2;
-        
+        }
+        return 2;
     }
 
     /**
@@ -606,10 +605,10 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                     if (is_array($fieldname)) {
                         $newRow [$colID - $offset] = $fieldname;
                         continue;
-                    }  
-                        if (!isset($fieldDefinitions[$fieldname])) {
-                            continue;
-                        }
+                    }
+                    if (!isset($fieldDefinitions[$fieldname])) {
+                        continue;
+                    }
                     
 
                     //Replace (filler) with the empty string
@@ -794,11 +793,10 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
             if (is_array($fieldDefinitions['studio'])) {
                 if (!empty($fieldDefinitions['studio'][$this->_view]) && $fieldDefinitions['studio'][$this->_view] == "required") {
                     return true;
-                }  
-                    if (!empty($fieldDefinitions['studio']['required']) && $fieldDefinitions['studio']['required'] == true) {
-                        return true;
-                    }
-                
+                }
+                if (!empty($fieldDefinitions['studio']['required']) && $fieldDefinitions['studio']['required'] == true) {
+                    return true;
+                }
             } else {
                 if ($fieldDefinitions['studio'] == "required") {
                     return true;

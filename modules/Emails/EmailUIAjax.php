@@ -560,7 +560,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])
             ) {
                 $email->et->markEmails("deleted", $_REQUEST['ieId'], $_REQUEST['folder'], $_REQUEST['uids']);
-            }  
+            }
             
             break;
         case "markEmail":
@@ -605,7 +605,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 }
                 $out = trim($json->encode($ret, false));
                 echo $out;
-            }  
+            }
             
             break;
 
@@ -1314,7 +1314,7 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            }  
+            }
                 echo "NOOP";
             
             break;
@@ -1576,7 +1576,7 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            }  
+            }
                 echo "NOOP: no search criteria found";
             
             break;

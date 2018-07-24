@@ -23,7 +23,7 @@ if (!empty($_REQUEST['cron'])) {
     $controller->action_geocode_addresses();
   
     exit;
-}  
+}
   
   /*
    * This script is also used to pass selected records from
@@ -66,4 +66,3 @@ if (!empty($_REQUEST['cron'])) {
     echo '</body></html>';
   
     exit;
-

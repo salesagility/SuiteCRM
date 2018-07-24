@@ -931,9 +931,8 @@ class RenameModules
         $tmp = new $className();
         if (property_exists($tmp, 'object_name')) {
             return $tmp->object_name;
-        }  
-            return $moduleName;
-        
+        }
+        return $moduleName;
     }
 
     /**

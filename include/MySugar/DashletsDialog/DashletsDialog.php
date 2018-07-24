@@ -117,9 +117,8 @@ class DashletsDialog
                         if ((!in_array($dashletMeta[$files['class']]['module'], $GLOBALS['moduleList']) && !in_array($dashletMeta[$files['class']]['module'], $GLOBALS['modInvisList'])) && (!in_array('Activities', $GLOBALS['moduleList']))) {
                             unset($dashletMeta[$files['class']]);
                             continue;
-                        }  
-                            $icon = get_dashlets_dialog_icon($dashletMeta[$files['class']]['module']);
-                        
+                        }
+                        $icon = get_dashlets_dialog_icon($dashletMeta[$files['class']]['module']);
                     }
                 }
 

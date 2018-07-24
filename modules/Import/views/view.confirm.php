@@ -245,9 +245,8 @@ class ImportViewConfirm extends ImportView
     {
         if (empty($importSource) || $importSource == 'csv') {
             return true;
-        }  
-            return false;
-        
+        }
+        return false;
     }
 
     private function getImportMap($importSource)

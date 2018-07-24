@@ -448,9 +448,8 @@ class Dashlet
         $dashletDefs = $current_user->getPreference('dashlets', 'Home'); // load user's dashlets config
         if (isset($dashletDefs[$this->id]['options'])) {
             return $dashletDefs[$this->id]['options'];
-        }  
-            return array();
-        
+        }
+        return array();
     }
 
     /**

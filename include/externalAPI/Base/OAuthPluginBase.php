@@ -120,18 +120,16 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
 
         if (!empty($this->oauth_token) && !empty($this->oauth_secret)) {
             return array('success'=>true);
-        }  
-            return array('success'=>false,'errorMessage'=>translate('LBL_ERR_NO_TOKEN', 'EAPM'));
-        
+        }
+        return array('success'=>false,'errorMessage'=>translate('LBL_ERR_NO_TOKEN', 'EAPM'));
     }
 
     protected function checkOauthLogin()
     {
         if (empty($this->oauth_token) || empty($this->oauth_secret)) {
             return $this->oauthLogin();
-        }  
-            return false;
-        
+        }
+        return false;
     }
 
     public function getOauthParams()
@@ -192,13 +190,12 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
 
             if (empty($request_token_info['oauth_token_secret']) || empty($request_token_info['oauth_token'])) {
                 return false;
-            }  
-                // FIXME: error checking here
-                $_SESSION['eapm_oauth_secret'] = $request_token_info['oauth_token_secret'];
-                $_SESSION['eapm_oauth_token'] = $request_token_info['oauth_token'];
-                $authReq = $this->getOauthAuthURL();
-                SugarApplication::redirect("{$authReq}?oauth_token={$request_token_info['oauth_token']}");
-            
+            }
+            // FIXME: error checking here
+            $_SESSION['eapm_oauth_secret'] = $request_token_info['oauth_token_secret'];
+            $_SESSION['eapm_oauth_token'] = $request_token_info['oauth_token'];
+            $authReq = $this->getOauthAuthURL();
+            SugarApplication::redirect("{$authReq}?oauth_token={$request_token_info['oauth_token']}");
         } else {
             $accReq = $this->getOauthAccessURL();
             $oauth->setToken($_SESSION['eapm_oauth_token'], $_SESSION['eapm_oauth_secret']);

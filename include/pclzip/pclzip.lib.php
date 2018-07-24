@@ -928,10 +928,9 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    }
                    if (!isset($v_options[PCLZIP_OPT_EXTRACT_AS_STRING])) {
                        $v_options[PCLZIP_OPT_EXTRACT_AS_STRING] = false;
-                   //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Option PCLZIP_OPT_EXTRACT_AS_STRING not set.");
-                   }  
-                       //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Option PCLZIP_OPT_EXTRACT_AS_STRING set.");
-                   
+                       //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Option PCLZIP_OPT_EXTRACT_AS_STRING not set.");
+                   }
+                   //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Option PCLZIP_OPT_EXTRACT_AS_STRING set.");
                }
 
                // ----- Look for 2 args
@@ -1294,9 +1293,8 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        {
            if (PCLZIP_ERROR_EXTERNAL == 1) {
                return(PclErrorCode());
-           }  
-               return($this->error_code);
-           
+           }
+           return($this->error_code);
        }
        // --------------------------------------------------------------------------------
 
@@ -1335,9 +1333,8 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 
            if ($p_with_code) {
                return($v_value.' ('.$this->error_code.')');
-           }  
-               return($v_value);
-           
+           }
+           return($v_value);
        }
        // --------------------------------------------------------------------------------
 
@@ -1350,13 +1347,11 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        {
            if (PCLZIP_ERROR_EXTERNAL == 1) {
                return(PclErrorString());
-           }  
-               if ($p_full) {
-                   return($this->errorName(true)." : ".$this->error_string);
-               }  
-                   return($this->error_string." [code ".$this->error_code."]");
-               
-           
+           }
+           if ($p_full) {
+               return($this->errorName(true)." : ".$this->error_string);
+           }
+           return($this->error_string." [code ".$this->error_code."]");
        }
        // --------------------------------------------------------------------------------
 
@@ -2260,7 +2255,6 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                            // ----- Unsupported file types
                             
                                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Unsupported file type");
-                           
                        }
                        @closedir($p_hdir);
                    }
@@ -3406,9 +3400,8 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                                return PclZip::errorCode();
                            }
                        }
-                   }  
-                       //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Existing file '".$p_entry['filename']."' is older than the extrated one - will be replaced by the extracted one (".date("l dS of F Y h:i:s A", filemtime($p_entry['filename'])).") than the extracted file (".date("l dS of F Y h:i:s A", $p_entry['mtime']).")");
-                   
+                   }
+                   //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Existing file '".$p_entry['filename']."' is older than the extrated one - will be replaced by the extracted one (".date("l dS of F Y h:i:s A", filemtime($p_entry['filename'])).") than the extracted file (".date("l dS of F Y h:i:s A", $p_entry['mtime']).")");
                }
 
                // ----- Check the directory availability and create it if necessary
@@ -3758,8 +3751,8 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 
                // ----- Trace
       //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Extraction done");
-           }  
-               // TBC : error : can not extract a folder in a string
+           }
+           // TBC : error : can not extract a folder in a string
            
 
            // ----- Return
@@ -5113,7 +5106,6 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    
                       // ----- Ignore only the double '//' in path,
             // but not the first and last '/'
-                  
               } else {
                   // ----- Look for item to skip
                   if ($v_skip > 0) {

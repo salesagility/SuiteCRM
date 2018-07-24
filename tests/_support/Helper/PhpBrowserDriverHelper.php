@@ -195,11 +195,9 @@ class PhpBrowserDriverHelper extends \Codeception\Module
             if (empty($config[$upperCase])) {
                 // return default
                 return $default;
-            }  
-                return $config[$lowerCase];
-            
-        }  
-            return $env;
-        
+            }
+            return $config[$lowerCase];
+        }
+        return $env;
     }
 }

@@ -199,9 +199,8 @@ abstract class Zend_Search_Lucene_Storage_File
                     ord($str[5]) << 16  |
                     ord($str[6]) << 8   |
                     ord($str[7]);
-        }  
-            return $this->readLong32Bit();
-        
+        }
+        return $this->readLong32Bit();
     }
 
     /**
@@ -248,10 +247,9 @@ abstract class Zend_Search_Lucene_Storage_File
             // It's a negative value since the highest bit is set
             if ($wordHigh == (int)0xFFFFFFFF  &&  ($wordLow & (int)0x80000000)) {
                 return $wordLow;
-            }  
-                require_once 'Zend/Search/Lucene/Exception.php';
-                throw new Zend_Search_Lucene_Exception('Long integers lower than -2147483648 (0x80000000) are not supported on 32-bit platforms.');
-            
+            }
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('Long integers lower than -2147483648 (0x80000000) are not supported on 32-bit platforms.');
         }
 
         if ($wordLow < 0) {
@@ -346,50 +344,49 @@ abstract class Zend_Search_Lucene_Storage_File
         $strlen = $this->readVInt();
         if ($strlen == 0) {
             return '';
-        }  
-            /**
-             * This implementation supports only Basic Multilingual Plane
-             * (BMP) characters (from 0x0000 to 0xFFFF) and doesn't support
-             * "supplementary characters" (characters whose code points are
-             * greater than 0xFFFF)
-             * Java 2 represents these characters as a pair of char (16-bit)
-             * values, the first from the high-surrogates range (0xD800-0xDBFF),
-             * the second from the low-surrogates range (0xDC00-0xDFFF). Then
-             * they are encoded as usual UTF-8 characters in six bytes.
-             * Standard UTF-8 representation uses four bytes for supplementary
-             * characters.
-             */
+        }
+        /**
+         * This implementation supports only Basic Multilingual Plane
+         * (BMP) characters (from 0x0000 to 0xFFFF) and doesn't support
+         * "supplementary characters" (characters whose code points are
+         * greater than 0xFFFF)
+         * Java 2 represents these characters as a pair of char (16-bit)
+         * values, the first from the high-surrogates range (0xD800-0xDBFF),
+         * the second from the low-surrogates range (0xDC00-0xDFFF). Then
+         * they are encoded as usual UTF-8 characters in six bytes.
+         * Standard UTF-8 representation uses four bytes for supplementary
+         * characters.
+         */
 
-            $str_val = $this->_fread($strlen);
+        $str_val = $this->_fread($strlen);
 
-            for ($count = 0; $count < $strlen; $count++) {
-                if ((ord($str_val[$count]) & 0xC0) == 0xC0) {
-                    $addBytes = 1;
-                    if (ord($str_val[$count]) & 0x20) {
+        for ($count = 0; $count < $strlen; $count++) {
+            if ((ord($str_val[$count]) & 0xC0) == 0xC0) {
+                $addBytes = 1;
+                if (ord($str_val[$count]) & 0x20) {
+                    $addBytes++;
+
+                    // Never used. Java2 doesn't encode strings in four bytes
+                    if (ord($str_val[$count]) & 0x10) {
                         $addBytes++;
-
-                        // Never used. Java2 doesn't encode strings in four bytes
-                        if (ord($str_val[$count]) & 0x10) {
-                            $addBytes++;
-                        }
                     }
-                    $str_val .= $this->_fread($addBytes);
-                    $strlen += $addBytes;
-
-                    // Check for null character. Java2 encodes null character
-                    // in two bytes.
-                    if (ord($str_val[$count])   == 0xC0 &&
-                        ord($str_val[$count+1]) == 0x80) {
-                        $str_val[$count] = 0;
-                        $str_val = substr($str_val, 0, $count+1)
-                                 . substr($str_val, $count+2);
-                    }
-                    $count += $addBytes;
                 }
-            }
+                $str_val .= $this->_fread($addBytes);
+                $strlen += $addBytes;
 
-            return $str_val;
-        
+                // Check for null character. Java2 encodes null character
+                // in two bytes.
+                if (ord($str_val[$count])   == 0xC0 &&
+                        ord($str_val[$count+1]) == 0x80) {
+                    $str_val[$count] = 0;
+                    $str_val = substr($str_val, 0, $count+1)
+                                 . substr($str_val, $count+2);
+                }
+                $count += $addBytes;
+            }
+        }
+
+        return $str_val;
     }
 
     /**

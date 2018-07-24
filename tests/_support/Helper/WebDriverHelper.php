@@ -34,12 +34,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config['url'])) {
                 // return default
                 return 'http://localhost/';
-            }  
-                return $config['url'];
-            
-        }  
-            return $envInstanceURL;
-        
+            }
+            return $config['url'];
+        }
+        return $envInstanceURL;
     }
 
     /**
@@ -56,12 +54,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config['database_driver'])) {
                 // return default
                 return DatabaseDriver::MYSQL;
-            }  
-                return $config['database_driver'];
-            
-        }  
-            return $envDatabaseDriver;
-        
+            }
+            return $config['database_driver'];
+        }
+        return $envDatabaseDriver;
     }
 
     /**
@@ -77,12 +73,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config['database_name'])) {
                 // return default
                 return 'automated_tests';
-            }  
-                return $config['database_name'];
-            
-        }  
-            return $envDatabaseName;
-        
+            }
+            return $config['database_name'];
+        }
+        return $envDatabaseName;
     }
 
 
@@ -99,12 +93,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config['database_host'])) {
                 // return default
                 return 'localhost';
-            }  
-                return $config['database_host'];
-            
-        }  
-            return $envDatabaseHost;
-        
+            }
+            return $config['database_host'];
+        }
+        return $envDatabaseHost;
     }
 
     /**
@@ -120,12 +112,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config['database_user'])) {
                 // return default
                 return 'automated_tests';
-            }  
-                return $config['database_user'];
-            
-        }  
-            return $envDatabaseUser;
-        
+            }
+            return $config['database_user'];
+        }
+        return $envDatabaseUser;
     }
 
     /**
@@ -141,12 +131,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config['database_password'])) {
                 // return default
                 return 'automated_tests';
-            }  
-                return $config['database_password'];
-            
-        }  
-            return $envDatabasePassword;
-        
+            }
+            return $config['database_password'];
+        }
+        return $envDatabasePassword;
     }
 
 
@@ -163,12 +151,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config['INSTANCE_ADMIN_USER'])) {
                 // return default
                 return 'admin';
-            }  
-                return $config['instance_admin_user'];
-            
-        }  
-            return $envDatabasePassword;
-        
+            }
+            return $config['instance_admin_user'];
+        }
+        return $envDatabasePassword;
     }
 
     /**
@@ -184,12 +170,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config['INSTANCE_ADMIN_PASSWORD'])) {
                 // return default
                 return 'admin';
-            }  
-                return $config['instance_admin_password'];
-            
-        }  
-            return $envDatabasePassword;
-        
+            }
+            return $config['instance_admin_password'];
+        }
+        return $envDatabasePassword;
     }
 
     /**
@@ -206,12 +190,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config["capabilities"]["browserstack.user"])) {
                 // return default
                 return '';
-            }  
-                return $config["capabilities"]["browserstack.user"];
-            
-        }  
-            return $envBrowserStackUsername;
-        
+            }
+            return $config["capabilities"]["browserstack.user"];
+        }
+        return $envBrowserStackUsername;
     }
 
     /**
@@ -228,12 +210,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config["capabilities"]["browserstack.key"])) {
                 // return default
                 return '';
-            }  
-                return $config["capabilities"]["browserstack.key"];
-            
-        }  
-            return $envBrowserStackAccessKey;
-        
+            }
+            return $config["capabilities"]["browserstack.key"];
+        }
+        return $envBrowserStackAccessKey;
     }
 
     /**
@@ -250,12 +230,10 @@ class WebDriverHelper extends \Codeception\Module
             if (empty($config["capabilities"]["browserstack.localfolderurl"])) {
                 // return default
                 return '';
-            }  
-                return $config["capabilities"]["browserstack.localfolderurl"];
-            
-        }  
-            return $envBrowserStackAccessKey;
-        
+            }
+            return $config["capabilities"]["browserstack.localfolderurl"];
+        }
+        return $envBrowserStackAccessKey;
     }
 
     // Add other methods to get environmental variables here...

@@ -56,9 +56,8 @@ class TabController
         $administration->retrieveSettings('MySettings');
         if (isset($administration->settings) && isset($administration->settings['MySettings_tab'])) {
             return true;
-        }  
-            return false;
-        
+        }
+        return false;
     }
 
     public function get_system_tabs()
@@ -188,13 +187,11 @@ class TabController
                 $tabs['Home'] =  'Home';
             }
             return $tabs;
-        }  
-            if ($type == 'display') {
-                return $system_tabs;
-            }  
-                return array();
-            
-        
+        }
+        if ($type == 'display') {
+            return $system_tabs;
+        }
+        return array();
     }
 
     public function get_unset_tabs($user)
@@ -223,9 +220,8 @@ class TabController
                 }
             }
             return $tabs;
-        }  
-            return $system_tabs;
-        
+        }
+        return $system_tabs;
     }
 
     public function get_old_tabs($user)

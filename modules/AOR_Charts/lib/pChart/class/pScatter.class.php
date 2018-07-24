@@ -735,29 +735,26 @@
 
              if (count($Result) == 1) {
                  return($Result[0]);
-             }  
-                 return($Result);
-             
-         }  
-             $Height      = ($this->pChartObject->GraphAreaY2 - $this->pChartObject->GraphAreaY1) - $Data["Axis"][$AxisID]["Margin"]*2;
-             $ScaleHeight = $Data["Axis"][$AxisID]["ScaleMax"] - $Data["Axis"][$AxisID]["ScaleMin"];
-             $Step        = $Height / $ScaleHeight;
-
-             $Result = "";
-             foreach ($Values as $Key => $Value) {
-                 if ($Value == VOID) {
-                     $Result[] = VOID;
-                 } else {
-                     $Result[] = $this->pChartObject->GraphAreaY2 - $Data["Axis"][$AxisID]["Margin"] - ($Step * ($Value-$Data["Axis"][$AxisID]["ScaleMin"]));
-                 }
              }
+             return($Result);
+         }
+         $Height      = ($this->pChartObject->GraphAreaY2 - $this->pChartObject->GraphAreaY1) - $Data["Axis"][$AxisID]["Margin"]*2;
+         $ScaleHeight = $Data["Axis"][$AxisID]["ScaleMax"] - $Data["Axis"][$AxisID]["ScaleMin"];
+         $Step        = $Height / $ScaleHeight;
 
-             if (count($Result) == 1) {
-                 return($Result[0]);
-             }  
-                 return($Result);
-             
-         
+         $Result = "";
+         foreach ($Values as $Key => $Value) {
+             if ($Value == VOID) {
+                 $Result[] = VOID;
+             } else {
+                 $Result[] = $this->pChartObject->GraphAreaY2 - $Data["Axis"][$AxisID]["Margin"] - ($Step * ($Value-$Data["Axis"][$AxisID]["ScaleMin"]));
+             }
+         }
+
+         if (count($Result) == 1) {
+             return($Result[0]);
+         }
+         return($Result);
      }
 
      /* Draw the legend of the active series */

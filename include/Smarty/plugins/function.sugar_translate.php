@@ -85,7 +85,6 @@ function smarty_function_sugar_translate($params, &$smarty)
         return $value;
     } elseif ($params['label'] == '0') {
         return translate("DEFAULT", $module);
-    }  
-        return preg_replace("/([:]|\xEF\xBC\x9A)[\\s]*$/", "", $value);
-    
+    }
+    return preg_replace("/([:]|\xEF\xBC\x9A)[\\s]*$/", "", $value);
 }

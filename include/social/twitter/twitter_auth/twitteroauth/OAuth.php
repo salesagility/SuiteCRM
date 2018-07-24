@@ -801,9 +801,8 @@ class OAuthUtil
                 ' ',
                 str_replace('%7E', '~', rawurlencode($input))
             );
-        }  
-            return '';
-        
+        }
+        return '';
     }
 
 

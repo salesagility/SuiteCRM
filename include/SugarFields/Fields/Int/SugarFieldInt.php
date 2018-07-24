@@ -91,9 +91,8 @@ class SugarFieldInt extends SugarFieldBase
                     }
                 }
                 return $newVal;
-            }  
-                return -1;
-            
+            }
+            return -1;
         }
         return $newVal;
     }

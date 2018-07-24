@@ -91,9 +91,8 @@ class ImportViewDupcheck extends ImportView
             $import_map_seed->retrieve($_REQUEST['source_id'], false);
 
             return $import_map_seed->getMapping();
-        }  
-            return array();
-        
+        }
+        return array();
     }
 
     /**

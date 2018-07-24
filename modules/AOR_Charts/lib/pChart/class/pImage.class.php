@@ -204,9 +204,8 @@
          $Angle = rad2deg(atan2($Opposite, $Adjacent));
          if ($Angle > 0) {
              return($Angle);
-         }  
-             return(360-abs($Angle));
-         
+         }
+         return(360-abs($Angle));
      }
 
      /* Return the surrounding box of text area */
@@ -307,9 +306,8 @@
          $Values = preg_split("/\./", $Value);
          if (isset($Values[1])) {
              return(substr($Values[1], 0, 1));
-         }  
-             return(0);
-         
+         }
+         return(0);
      }
 
      /* Attach a dataset to your pChart Object */

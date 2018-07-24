@@ -234,9 +234,8 @@ class AOR_Chart extends Basic
         $img = ob_get_clean();
         if ($asDataURI) {
             return 'data:image/png;base64,'.base64_encode($img);
-        }  
-            return $img;
-        
+        }
+        return $img;
     }
 
     public function buildChartHTML(array $reportData, array $fields, $index = 0, $chartType = AOR_Report::CHART_TYPE_PCHART, AOR_Field $mainGroupField = null)
@@ -639,9 +638,8 @@ EOF;
     {
         if (strlen($label) > $maxLabelSize) {
             return substr($label, 0, $maxLabelSize).'...';
-        }  
-            return $label;
-        
+        }
+        return $label;
     }
 
 

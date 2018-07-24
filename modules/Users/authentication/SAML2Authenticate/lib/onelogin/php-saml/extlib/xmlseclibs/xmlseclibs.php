@@ -1184,9 +1184,8 @@ class XMLSecurityDSig
 
         if ($beforeNode == null) {
             return $node->insertBefore($signatureElement);
-        }  
-            return $node->insertBefore($signatureElement, $beforeNode);
-        
+        }
+        return $node->insertBefore($signatureElement, $beforeNode);
     }
 
     public function appendSignature($parentNode, $insertBefore = false)
@@ -1227,9 +1226,8 @@ class XMLSecurityDSig
                 }
             }
             return $certlist;
-        }  
-            return array($certs);
-        
+        }
+        return array($certs);
     }
 
     public static function staticAdd509Cert($parentRef, $cert, $isPEMFormat=true, $isURL=false, $xpath=null, $options=null)

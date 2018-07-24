@@ -138,32 +138,32 @@ class SubPanelTiles
             $tabs = $objSubPanelTilesTabs->getTabs($tabs, $showTabs, $selectedGroup);
             unset($objSubPanelTilesTabs);
             return $tabs;
-        }  
-            // see if user current user has custom subpanel layout
-            $objSubPanelTilesTabs = new SubPanelTilesTabs($this->focus);
-            $tabs = $objSubPanelTilesTabs->applyUserCustomLayoutToTabs($tabs);
+        }
+        // see if user current user has custom subpanel layout
+        $objSubPanelTilesTabs = new SubPanelTilesTabs($this->focus);
+        $tabs = $objSubPanelTilesTabs->applyUserCustomLayoutToTabs($tabs);
 
-            /* Check if the preference is set now,
-             * because there's no point in executing this code if
-             * we aren't going to render anything.
-             */
-            $subpanelLinksPref = $current_user->getPreference('subpanel_links');
-            if (!isset($subpanelLinksPref)) {
-                $subpanelLinksPref = $GLOBALS['sugar_config']['default_subpanel_links'];
+        /* Check if the preference is set now,
+         * because there's no point in executing this code if
+         * we aren't going to render anything.
+         */
+        $subpanelLinksPref = $current_user->getPreference('subpanel_links');
+        if (!isset($subpanelLinksPref)) {
+            $subpanelLinksPref = $GLOBALS['sugar_config']['default_subpanel_links'];
+        }
+
+        if ($showTabs && $subpanelLinksPref) {
+            require_once('include/SubPanel/SugarTab.php');
+            $sugarTab = new SugarTab();
+
+            $displayTabs = array();
+
+            foreach ($tabs as $tab) {
+                $displayTabs []= array('key'=>$tab, 'label'=>translate($this->subpanel_definitions->layout_defs['subpanel_setup'][$tab]['title_key']));
             }
-
-            if ($showTabs && $subpanelLinksPref) {
-                require_once('include/SubPanel/SugarTab.php');
-                $sugarTab = new SugarTab();
-
-                $displayTabs = array();
-
-                foreach ($tabs as $tab) {
-                    $displayTabs []= array('key'=>$tab, 'label'=>translate($this->subpanel_definitions->layout_defs['subpanel_setup'][$tab]['title_key']));
-                }
-                $sugarTab->setup(array(), array(), $displayTabs);
-                $sugarTab->display();
-            }
+            $sugarTab->setup(array(), array(), $displayTabs);
+            $sugarTab->display();
+        }
         
         return $tabs;
     }

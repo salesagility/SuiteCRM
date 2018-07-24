@@ -177,9 +177,8 @@ class User extends Person implements EmailInterface
     {
         if ($defaultId = $this->getPreference('signature_default')) {
             return $this->getSignature($defaultId);
-        }  
-            return array();
-        
+        }
+        return array();
     }
 
     /**
@@ -344,17 +343,15 @@ class User extends Person implements EmailInterface
         $userPrivGuid = $this->getPreference('userPrivGuid', 'global', $this);
         if ($userPrivGuid) {
             return $userPrivGuid;
-        }  
-            $this->setUserPrivGuid();
-            if (!isset($_SESSION['setPrivGuid'])) {
-                $_SESSION['setPrivGuid'] = true;
-                $userPrivGuid = $this->getUserPrivGuid();
+        }
+        $this->setUserPrivGuid();
+        if (!isset($_SESSION['setPrivGuid'])) {
+            $_SESSION['setPrivGuid'] = true;
+            $userPrivGuid = $this->getUserPrivGuid();
 
-                return $userPrivGuid;
-            }  
-                sugar_die("Breaking Infinite Loop Condition: Could not setUserPrivGuid.");
-            
-        
+            return $userPrivGuid;
+        }
+        sugar_die("Breaking Infinite Loop Condition: Could not setUserPrivGuid.");
     }
 
     public function setUserPrivGuid()
@@ -720,9 +717,8 @@ class User extends Person implements EmailInterface
         // If the role doesn't exist in the list of the user's roles
         if (!empty($role_array) && in_array($role_name, $role_array)) {
             return true;
-        }  
-            return false;
-        
+        }
+        return false;
     }
 
     public function get_summary_text()
@@ -758,11 +754,10 @@ class User extends Person implements EmailInterface
         $row = self::findUserPassword($this->user_name, $password);
         if (empty($row)) {
             return false;
-        }  
-            $this->id = $row['id'];
+        }
+        $this->id = $row['id'];
 
-            return true;
-        
+        return true;
     }
 
     /**
@@ -1838,9 +1833,8 @@ EOQ;
         $localeFormat = $locale->getLocaleFormatMacro($this);
         if (strpos($localeFormat, 'l') > strpos($localeFormat, 'f')) {
             return false;
-        }  
-            return true;
-        
+        }
+        return true;
     }
 
     public function create_new_list_query(
@@ -2096,9 +2090,8 @@ EOQ;
     {
         if (!empty($this->email1) && !empty($email) && strcasecmp($this->email1, $email) == 0) {
             return true;
-        }  
-            return false;
-        
+        }
+        return false;
     }
 
     public function getEditorType()

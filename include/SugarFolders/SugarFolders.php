@@ -136,9 +136,9 @@ class SugarFolder
         $a = $this->db->fetchByAssoc($r);
         if ($a['c'] > 0) {
             return true;
-        }  
-            return false;
-         // else
+        }
+        return false;
+        // else
     }
 
     /**

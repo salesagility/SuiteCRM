@@ -3992,9 +3992,8 @@
 
          if (count($Result) == 1) {
              return($Result[0]);
-         }  
-             return($Result);
-         
+         }
+         return($Result);
      }
 
      /* Format the axis values */

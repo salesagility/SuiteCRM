@@ -201,24 +201,19 @@ function campaign_process_bounced_emails(&$email, &$email_header)
                     if (empty($row_log)) {
                         $return_id = createBouncedCampaignLogEntry($row, $email, $email_description);
                         return true;
-                    }  
-                        $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier $identifier");
-                        return false;
-                    
-                }  
-                    $GLOBALS['log']->info("Warning: skipping bounced email with this tracker_key(identifier) in the message body: ".$identifier);
+                    }
+                    $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier $identifier");
                     return false;
-                
-            }  
-                $GLOBALS['log']->info("Warning: Empty identifier for campaign log.");
+                }
+                $GLOBALS['log']->info("Warning: skipping bounced email with this tracker_key(identifier) in the message body: ".$identifier);
                 return false;
-            
-        }  
-            $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");
+            }
+            $GLOBALS['log']->info("Warning: Empty identifier for campaign log.");
             return false;
-        
-    }  
-        $GLOBALS['log']->info("Warning: skipping bounced email because the sender is not MAILER-DAEMON.");
+        }
+        $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");
         return false;
-    
+    }
+    $GLOBALS['log']->info("Warning: skipping bounced email because the sender is not MAILER-DAEMON.");
+    return false;
 }

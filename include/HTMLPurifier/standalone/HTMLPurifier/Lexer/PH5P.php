@@ -491,9 +491,8 @@ class HTML5
         if ($s + $l < $this->EOF) {
             if ($l === 0) {
                 return $this->data[$s];
-            }  
-                return substr($this->data, $s, $l);
-            
+            }
+            return substr($this->data, $s, $l);
         }
     }
 
@@ -1392,9 +1391,8 @@ class HTML5
             $this->emitToken($this->token);
             $this->char--;
             $this->state = 'data';
-        }  
-            // Stay in the bogus DOCTYPE state.
-        
+        }
+        // Stay in the bogus DOCTYPE state.
     }
 
     private function entity()
@@ -2007,9 +2005,9 @@ class HTML5TreeConstructer
             if ($this->head_pointer->isSameNode(end($this->stack))) {
                 array_pop($this->stack);
 
-            /* Otherwise, this is a parse error. */
-            }  
-                // k
+                /* Otherwise, this is a parse error. */
+            }
+            // k
             
 
             /* Change the insertion mode to "after head". */
@@ -3358,32 +3356,32 @@ class HTML5TreeConstructer
             if (!$this->elementInScope($token['name'], true)) {
                 return false;
 
-            /* Otherwise: */
-            }  
-                /* Generate implied end tags. */
-                $this->generateImpliedEndTags();
+                /* Otherwise: */
+            }
+            /* Generate implied end tags. */
+            $this->generateImpliedEndTags();
 
-                /* Now, if the current node is not a table element, then this
-                is a parse error. */
-                // w/e
+            /* Now, if the current node is not a table element, then this
+            is a parse error. */
+            // w/e
 
-                /* Pop elements from this stack until a table element has been
-                popped from the stack. */
-                while (true) {
-                    $current = end($this->stack)->nodeName;
-                    array_pop($this->stack);
+            /* Pop elements from this stack until a table element has been
+            popped from the stack. */
+            while (true) {
+                $current = end($this->stack)->nodeName;
+                array_pop($this->stack);
 
-                    if ($current === 'table') {
-                        break;
-                    }
+                if ($current === 'table') {
+                    break;
                 }
+            }
 
-                /* Reset the insertion mode appropriately. */
-                $this->resetInsertionMode();
+            /* Reset the insertion mode appropriately. */
+            $this->resetInsertionMode();
             
 
-            /* An end tag whose tag name is one of: "body", "caption", "col",
-            "colgroup", "html", "tbody", "td", "tfoot", "th", "thead", "tr" */
+        /* An end tag whose tag name is one of: "body", "caption", "col",
+        "colgroup", "html", "tbody", "td", "tfoot", "th", "thead", "tr" */
         } elseif ($token['type'] === HTML5::ENDTAG && in_array(
                 $token['name'],
                 array(
@@ -4118,9 +4116,8 @@ class HTML5TreeConstructer
             }
 
             /* Anything else */
-        }  
-            /* Parse error. Ignore the token. */
-        
+        }
+        /* Parse error. Ignore the token. */
     }
 
     private function afterBody($token)
@@ -4226,10 +4223,9 @@ class HTML5TreeConstructer
             /* Process the token as if the insertion mode had been "in body". */
             $this->inBody($token);
 
-        /* Anything else */
-        }  
-            /* Parse error. Ignore the token. */
-        
+            /* Anything else */
+        }
+        /* Parse error. Ignore the token. */
     }
 
     private function afterFrameset($token)
@@ -4265,10 +4261,9 @@ class HTML5TreeConstructer
             /* Process the token as if the insertion mode had been "in body". */
             $this->inBody($token);
 
-        /* Anything else */
-        }  
-            /* Parse error. Ignore the token. */
-        
+            /* Anything else */
+        }
+        /* Parse error. Ignore the token. */
     }
 
     private function trailingEndPhase($token)
@@ -4560,9 +4555,8 @@ class HTML5TreeConstructer
             return self::SCOPING;
         } elseif (in_array($name, $this->formatting)) {
             return self::FORMATTING;
-        }  
-            return self::PHRASING;
-        
+        }
+        return self::PHRASING;
     }
 
     private function clearStackToTableContext($elements)
@@ -4577,9 +4571,8 @@ class HTML5TreeConstructer
 
             if (in_array($node, $elements)) {
                 break;
-            }  
-                array_pop($this->stack);
-            
+            }
+            array_pop($this->stack);
         }
     }
 

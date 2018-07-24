@@ -138,9 +138,8 @@ class FontManager
             return array("bold");
         } elseif (preg_match("/i.php$/i", $this->filename)) {
             return array("italic");
-        }  
-            return array("regular");
-        
+        }
+        return array("regular");
     }
     /**
      * This method calculate the font size of $this->filename in KB
@@ -256,9 +255,8 @@ class FontManager
         ksort($this->fontList);
         if (count($this->fontList)>0) {
             return true;
-        }  
-            return false;
-        
+        }
+        return false;
     }
     /**
      * This method fill the fontList with all the fonts available
@@ -270,12 +268,12 @@ class FontManager
             require $cachedfile;
             $this->fontList=$cachedFontList;
             return true;
-        }  
-            if ($this->parseFolder()) {
-                $cacheDir = create_cache_directory('Sugarpdf/');
-                write_array_to_file('cachedFontList', $this->fontList, $cacheDir . 'cachedFontList.php');
-                return true;
-            }
+        }
+        if ($this->parseFolder()) {
+            $cacheDir = create_cache_directory('Sugarpdf/');
+            write_array_to_file('cachedFontList', $this->fontList, $cacheDir . 'cachedFontList.php');
+            return true;
+        }
         
         return false;
     }
@@ -331,9 +329,8 @@ class FontManager
                 }
                 $this->clearCachedFile();
                 return true;
-            }  
-                array_push($this->errors, $this->fontPath.$this->filename . " " . translate("ERR_FONT_NOT_WRITABLE", "Configurator"));
-            
+            }
+            array_push($this->errors, $this->fontPath.$this->filename . " " . translate("ERR_FONT_NOT_WRITABLE", "Configurator"));
         } else {
             array_push($this->errors, $this->fontPath . " " . translate("ERR_FONT_FILE_DO_NOT_EXIST", "Configurator"));
         }

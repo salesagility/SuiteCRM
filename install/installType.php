@@ -57,7 +57,7 @@ if (!isset($_SESSION['licenseKey_submitted']) || !$_SESSION['licenseKey_submitte
     $_SESSION['setup_license_key_expire_date']  = "";
     $_SESSION['setup_license_key']              = "";
     $_SESSION['setup_num_lic_oc']              = 0;
-}  
+}
 
 
 //php version suggestion
@@ -101,7 +101,7 @@ $custom_checked ='';
 if (isset($_SESSION['install_type']) && $_SESSION['install_type']=='custom') {
     $typical_checked ='';
     $custom_checked ='checked';
-}  
+}
     //do nothing because defaults handle this condition
 
 

@@ -168,11 +168,10 @@ class SurveyResponses extends Basic
             $GLOBALS['log']->info("SurveyResponse: Could not send email:  " . $mailer->ErrorInfo);
 
             return false;
-        }  
-            $this->logEmail($email, $mailer, $contact->id);
+        }
+        $this->logEmail($email, $mailer, $contact->id);
 
-            return true;
-        
+        return true;
     }
 
     private function populateTemplate(EmailTemplate $template, $contact, $case)

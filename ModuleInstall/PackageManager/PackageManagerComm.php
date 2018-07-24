@@ -133,9 +133,8 @@ class PackageManagerComm
             }
             $GLOBALS['log']->debug("End SugarDepot Login");
             return $result;
-        }  
-            return $_SESSION['SugarDepotSessionID'];
-        
+        }
+        return $_SESSION['SugarDepotSessionID'];
     }
 
     /**
@@ -325,9 +324,8 @@ class PackageManagerComm
         $status = $GLOBALS['SugarDepot']->call('sugarPing', array());
         if (empty($status) || $GLOBALS['SugarDepot']->getError() || $status != ACTIVE_STATUS) {
             return false;
-        }  
-            return true;
-        
+        }
+        return true;
     }
     ////////// END: Base Functions for Communicating with the depot
      ////////////////////////////////////////////////////////

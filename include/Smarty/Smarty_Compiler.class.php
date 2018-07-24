@@ -531,11 +531,10 @@ class Smarty_Compiler extends Smarty
                 $_open_tag = $this->_pop_tag('section');
                 if ($_open_tag == 'sectionelse') {
                     return "<?php endif; ?>";
-                }  
+                }
                     return "<?php endfor; endif; ?>";
                 
 
-                // no break
             case 'foreach':
                 $this->_push_tag('foreach');
                 return $this->_compile_foreach_start($tag_args);
@@ -549,7 +548,7 @@ class Smarty_Compiler extends Smarty
                 $_open_tag = $this->_pop_tag('foreach');
                 if ($_open_tag == 'foreachelse') {
                     return "<?php endif; unset(\$_from); ?>";
-                }  
+                }
                     return "<?php endforeach; endif; unset(\$_from); ?>";
                 
                 break;
@@ -603,7 +602,7 @@ class Smarty_Compiler extends Smarty
                     return $output;
                 } elseif ($this->_compile_custom_tag($tag_command, $tag_args, $tag_modifier, $output)) {
                     return $output;
-                }  
+                }
                     $this->_syntax_error("unrecognized tag '$tag_command'", E_USER_ERROR, __FILE__, __LINE__);
                 
 
@@ -673,9 +672,8 @@ class Smarty_Compiler extends Smarty
                 $this->_syntax_error($message, E_USER_WARNING, __FILE__, __LINE__);
             }
             return true;
-        }  
-            return false;
-        
+        }
+        return false;
     }
 
 
@@ -1448,9 +1446,8 @@ class Smarty_Compiler extends Smarty
 
         if ($elseif) {
             return '<?php elseif ('.implode(' ', $tokens).'): ?>';
-        }  
-            return '<?php if ('.implode(' ', $tokens).'): ?>';
-        
+        }
+        return '<?php if ('.implode(' ', $tokens).'): ?>';
     }
 
 
@@ -2179,7 +2176,7 @@ class Smarty_Compiler extends Smarty
                 if ($this->request_use_auto_globals) {
                     $compiled_ref = "\$_REQUEST";
                     break;
-                }  
+                }
                     $this->_init_smarty_vars = true;
                 
                 return null;
@@ -2262,14 +2259,12 @@ class Smarty_Compiler extends Smarty
                         "\$this->_plugins['$type']['$name'][0][0]->"    /* method callback */
                         : (string)($this->_plugins[$type][$name][0][0]).'::'    /* class callback */
                        ). $this->_plugins[$type][$name][0][1];
-            }  
-                /* function callback */
-                return $this->_plugins[$type][$name][0];
-            
-        }  
-            /* plugin not loaded -> auto-loadable-plugin */
-            return 'smarty_'.$type.'_'.$name;
-        
+            }
+            /* function callback */
+            return $this->_plugins[$type][$name][0];
+        }
+        /* plugin not loaded -> auto-loadable-plugin */
+        return 'smarty_'.$type.'_'.$name;
     }
 
     /**

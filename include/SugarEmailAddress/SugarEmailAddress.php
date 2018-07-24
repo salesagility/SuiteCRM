@@ -770,9 +770,8 @@ class SugarEmailAddress extends SugarBean
         }
         if (count($returnArray) > 0) {
             return $returnArray;
-        }  
-            return false;
-        
+        }
+        return false;
     }
 
     /**
@@ -1182,18 +1181,17 @@ class SugarEmailAddress extends SugarBean
 
         if (!empty($a) && !empty($a['id'])) {
             return $a['id'];
-        }  
-            $guid = '';
-            if (!empty($address)) {
-                $guid = create_guid();
-                $now = TimeDate::getInstance()->nowDb();
-                $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted)
+        }
+        $guid = '';
+        if (!empty($address)) {
+            $guid = create_guid();
+            $now = TimeDate::getInstance()->nowDb();
+            $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted)
                         VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0)";
-                $ra = $this->db->query($qa);
-            }
+            $ra = $this->db->query($qa);
+        }
 
-            return $guid;
-        
+        return $guid;
     }
 
     /**
@@ -1324,22 +1322,21 @@ class SugarEmailAddress extends SugarBean
             $this->auditBean(true);
 
             return $duplicate_email['id'];
-        }  
-            // no case-insensitive address match - it's new, or undeleted.
-            $guid = '';
-            $isUpdate = true;
-            if (!empty($address)) {
-                $guid = create_guid();
-                $now = TimeDate::getInstance()->nowDb();
-                $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : '') . ")
+        }
+        // no case-insensitive address match - it's new, or undeleted.
+        $guid = '';
+        $isUpdate = true;
+        if (!empty($address)) {
+            $guid = create_guid();
+            $now = TimeDate::getInstance()->nowDb();
+            $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : '') . ")
                         VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out" . (!is_null($optInFlag) ? ", '" . $this->db->quote($new_confirmed_opt_in) ."'" : '') . ")";
-                $this->db->query($qa);
-                $isUpdate = false;
-            }
+            $this->db->query($qa);
+            $isUpdate = false;
+        }
 
-            $this->auditBean($isUpdate);
-            return $guid;
-        
+        $this->auditBean($isUpdate);
+        return $guid;
     }
 
     /**
@@ -2156,9 +2153,8 @@ class SugarEmailAddress extends SugarBean
                 return false;
             } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
                 return true;
-            }  
-                throw new Exception('its impossible email sending state');
-            
+            }
+            throw new Exception('its impossible email sending state');
         } catch (RuntimeException $e) {
             if (!empty($this->confirm_opt_in_fail_date)) {
                 throw $e;
@@ -2183,9 +2179,8 @@ class SugarEmailAddress extends SugarBean
                 return true;
             } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
                 return false;
-            }  
-                throw new Exception('its impossible email sending state');
-            
+            }
+            throw new Exception('its impossible email sending state');
         } catch (RuntimeException $e) {
             if (!empty($this->confirm_opt_in_sent_date)) {
                 throw $e;

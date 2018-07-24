@@ -46,7 +46,7 @@ $db = DBManagerFactory::getInstance();
 
 if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUEST['type']) || !isset($_SESSION['authenticated_user_id'])) {
     die("Not a Valid Entry Point");
-}  
+}
     require_once("data/BeanFactory.php");
     $file_type = ''; // bug 45896
     require_once("data/BeanFactory.php");
@@ -143,10 +143,9 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             set_time_limit(0);
             readfile('include/SugarFields/Fields/Image/no_image.png');
             die();
-        }  
-            die($app_strings['ERR_INVALID_FILE_REFERENCE']);
-        
-    }  
+        }
+        die($app_strings['ERR_INVALID_FILE_REFERENCE']);
+    }
         $doQuery = true;
 
         if ($file_type == 'documents') {
@@ -257,5 +256,3 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         }
 
         readfile($download_location);
-    
-

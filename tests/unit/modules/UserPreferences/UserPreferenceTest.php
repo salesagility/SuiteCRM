@@ -67,8 +67,8 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             
             self::markTestIncomplete('environment dependency: This test needs session');
             return;
-        }  
-            $result = $_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'];
+        }
+        $result = $_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'];
         
         
         $this->assertEquals('test val', $result);

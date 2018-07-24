@@ -394,7 +394,7 @@ if ($pl_count==0) {
     //disable the send email options
     $ss->assign("PL_DISABLED", 'disabled');
     $ss->assign("PL_DISABLED_TEST", $pl_diabled_test_too ? 'disabled' : false);
-}  
+}
     //show inputs and assign type to be radio
 
 

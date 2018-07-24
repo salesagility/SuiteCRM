@@ -198,7 +198,7 @@ function tln_getnxtag($body, $offset)
                     $gt += 2;
                 }
                 return array(false, false, false, $lt, $gt);
-            }  
+            }
                 $gt = tln_findnxstr($body, $pos, '>');
                 return array(false, false, false, $lt, $gt);
             
@@ -452,9 +452,8 @@ function tln_deent(&$attvalue, $regex, $hex = false)
         }
         $attvalue = strtr($attvalue, $repl);
         return true;
-    }  
-        return false;
-    
+    }
+    return false;
 }
 
 /**
@@ -693,8 +692,8 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
                          $newpos = $i + 1;
                          $bSucces = true;
                          break 2;
-                     }  
-                         $content .= $sToken;
+                     }
+                     $content .= $sToken;
                      
                      $bEndTag = false;
                  } else {

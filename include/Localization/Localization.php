@@ -395,9 +395,9 @@ class Localization
                 $GLOBALS['log']->debug("Localization: iconv using charset {$newToCharset} instead of {$toCharset}");
             }
             return iconv($newFromCharset, $newToCharset, $string);
-        }  
-            return $string;
-         // end else clause
+        }
+        return $string;
+        // end else clause
     }
 
     /**

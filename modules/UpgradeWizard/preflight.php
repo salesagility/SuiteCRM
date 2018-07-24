@@ -206,9 +206,8 @@ eoq;
         foreach ($errors as $error) {
             if (is_array($error)) { // manual diff files
                 continue;
-            }  
-                $out .= "{$error}<br />";
-            
+            }
+            $out .= "{$error}<br />";
         }
         $out .= "</span><br />";
     }

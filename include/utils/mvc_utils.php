@@ -134,7 +134,6 @@ function ajaxLink($url)
     //Don't modify javascript calls.
     elseif (isset($javascriptMatch[0])) {
         return $url;
-    }  
-        return "?action=ajaxui#ajaxUILoc=" . urlencode($url);
-    
+    }
+    return "?action=ajaxui#ajaxUILoc=" . urlencode($url);
 }

@@ -375,10 +375,9 @@ function login_user($portal_auth)
         $bean->retrieve($user['id']);
         $current_user = $bean;
         return 'success';
-    }  
-        $GLOBALS['log']->fatal('SECURITY: User authentication for '. $portal_auth['user_name']. ' failed');
-        return 'fail';
-    
+    }
+    $GLOBALS['log']->fatal('SECURITY: User authentication for '. $portal_auth['user_name']. ' failed');
+    return 'fail';
 }
 
 

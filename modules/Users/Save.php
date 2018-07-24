@@ -407,7 +407,7 @@ if (!$focus->is_group && !$focus->portal_only) {
 if (!$focus->verify_data()) {
     header("Location: index.php?action=Error&module=Users&error_string=" . urlencode($focus->error_string));
     exit;
-}  
+}
     $GLOBALS['sugar_config']['disable_team_access_check'] = true;
     $focus->save();
     $GLOBALS['sugar_config']['disable_team_access_check'] = false;
@@ -524,9 +524,8 @@ if (isset($_REQUEST['whatnext'])) {
     } elseif ($_REQUEST['whatnext'] == 'studio') {
         header("Location:index.php?module=ModuleBuilder&action=index&type=studio");
         return;
-    }  
-        //do nothing, let the navigation continue as normal using code below
-    
+    }
+    //do nothing, let the navigation continue as normal using code below
 }
 
 if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "") {

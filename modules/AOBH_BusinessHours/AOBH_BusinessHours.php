@@ -118,9 +118,8 @@ class AOBH_BusinessHours extends Basic
         $bhList = $this->getBusinessHoursForDay($day);
         if ($bhList) {
             return $bhList[0];
-        }  
-            return BeanFactory::newBean('AOBH_BusinessHours');
-        
+        }
+        return BeanFactory::newBean('AOBH_BusinessHours');
     }
 
     /**

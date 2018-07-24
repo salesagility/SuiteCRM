@@ -397,11 +397,10 @@ function runCheck($install_script, $mod_strings = array())
     </div>
 EOQ;
         return $out;
-    }  
-        installLog("Outputting HTML for System check");
-        installLog("No Errors were found *************");
-        return 'passed';
-    
+    }
+    installLog("Outputting HTML for System check");
+    installLog("No Errors were found *************");
+    return 'passed';
 }
 ////    END PAGEOUTPUT
 ///////////////////////////////////////////////////////////////////////////////

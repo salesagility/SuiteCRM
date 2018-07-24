@@ -992,22 +992,20 @@ class SearchForm
                 if (!empty($parms['my_items'])) {
                     if ($parms['value'] == false) {
                         continue;
-                    }  
-                        //my items is checked.
-                        global $current_user;
-                        $field_value = $db->quote($current_user->id);
-                        $operator = '=';
-                    
+                    }
+                    //my items is checked.
+                    global $current_user;
+                    $field_value = $db->quote($current_user->id);
+                    $operator = '=';
                 } elseif (!empty($parms['closed_values']) && is_array($parms['closed_values'])) {
                     if ($parms['value'] == false) {
                         continue;
-                    }  
-                        $field_value = '';
-                        foreach ($parms['closed_values'] as $closed_value) {
-                            $field_value .= "," . $db->quoted($closed_value);
-                        }
-                        $field_value = substr($field_value, 1);
-                    
+                    }
+                    $field_value = '';
+                    foreach ($parms['closed_values'] as $closed_value) {
+                        $field_value .= "," . $db->quoted($closed_value);
+                    }
+                    $field_value = substr($field_value, 1);
                 } elseif (!empty($parms['checked_only']) && $parms['value'] == false) {
                     continue;
                 }

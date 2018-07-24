@@ -82,7 +82,7 @@ if (isset($_REQUEST['form'])) {
     // we are doing the save from a popup window
     echo '<script>opener.window.location.reload();self.close();</script>';
     die();
-}  
+}
     // need to refresh the page properly
 
     $return_module = empty($_REQUEST['return_module']) ? 'ProjectTask'
@@ -99,4 +99,3 @@ if (isset($_REQUEST['form'])) {
         $return_id ='';
     }
     header("Location: index.php?module=$return_module&action=$return_action&record=$return_id");
-

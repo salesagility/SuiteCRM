@@ -376,10 +376,9 @@ class Importer
                         $this->importSource->writeError($mod_strings['LBL_RECORD_CANNOT_BE_UPDATED'], 'ID', $focus->id);
                         $this->_undoCreatedBeans(ImportFieldSanitize::$createdBeans);
                         return;
-                    }  
-                        $focus = $clonedBean;
-                        $newRecord = false;
-                    
+                    }
+                    $focus = $clonedBean;
+                    $newRecord = false;
                 }
             } else {
                 $focus->new_with_id = true;
@@ -463,16 +462,15 @@ class Importer
         $existing_focus = clone $this->bean;
         if (!($existing_focus->retrieve($focus->id) instanceof SugarBean)) {
             return false;
-        }  
-            $newData = $focus->toArray();
-            foreach ($newData as $focus_key => $focus_value) {
-                if (in_array($focus_key, $this->importColumns)) {
-                    $existing_focus->$focus_key = $focus_value;
-                }
+        }
+        $newData = $focus->toArray();
+        foreach ($newData as $focus_key => $focus_value) {
+            if (in_array($focus_key, $this->importColumns)) {
+                $existing_focus->$focus_key = $focus_value;
             }
+        }
 
-            return $existing_focus;
-        
+        return $existing_focus;
     }
 
     protected function removeDeletedBean($focus)

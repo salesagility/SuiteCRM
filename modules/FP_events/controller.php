@@ -592,8 +592,7 @@ class FP_eventsController extends SugarController
             $emailObj->save();
 
             return true;
-        }  
-            return false;
-        
+        }
+        return false;
     }
 }

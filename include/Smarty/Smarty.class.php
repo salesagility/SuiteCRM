@@ -957,14 +957,13 @@ class Smarty
                 $this->cache_handler_func,
                                   array('clear', &$this, &$dummy, $tpl_file, $cache_id, $compile_id, $exp_time)
             );
-        }  
-            $_params = array('auto_base' => $this->cache_dir,
+        }
+        $_params = array('auto_base' => $this->cache_dir,
                             'auto_source' => $tpl_file,
                             'auto_id' => $_auto_id,
                             'exp_time' => $exp_time);
-            require_once(SMARTY_CORE_DIR . 'core.rm_auto.php');
-            return smarty_core_rm_auto($_params, $this);
-        
+        require_once(SMARTY_CORE_DIR . 'core.rm_auto.php');
+        return smarty_core_rm_auto($_params, $this);
     }
 
 
@@ -1066,11 +1065,10 @@ class Smarty
             return $this->_tpl_vars;
         } elseif (isset($this->_tpl_vars[$name])) {
             return $this->_tpl_vars[$name];
-        }  
-            // var non-existant, return valid reference
-            $_tmp = null;
-            return $_tmp;
-        
+        }
+        // var non-existant, return valid reference
+        $_tmp = null;
+        return $_tmp;
     }
 
     /**
@@ -1086,11 +1084,10 @@ class Smarty
             return $this->_config[0]['vars'];
         } elseif (isset($this->_config[0]['vars'][$name])) {
             return $this->_config[0]['vars'][$name];
-        }  
-            // var non-existant, return valid reference
-            $_tmp = null;
-            return $_tmp;
-        
+        }
+        // var non-existant, return valid reference
+        $_tmp = null;
+        return $_tmp;
     }
 
     /**
@@ -1231,18 +1228,16 @@ class Smarty
                     // restore initial cache_info
                     $this->_cache_info = array_pop($_cache_info);
                     return true;
-                }  
-                    error_reporting($_smarty_old_error_level);
-                    // restore initial cache_info
-                    $this->_cache_info = array_pop($_cache_info);
-                    return $_smarty_results;
-                
-            }  
-                $this->_cache_info['template'][$resource_name] = true;
-                if ($this->cache_modified_check && $display) {
-                    header('Last-Modified: '.gmdate('D, d M Y H:i:s', time()).' GMT');
                 }
-            
+                error_reporting($_smarty_old_error_level);
+                // restore initial cache_info
+                $this->_cache_info = array_pop($_cache_info);
+                return $_smarty_results;
+            }
+            $this->_cache_info['template'][$resource_name] = true;
+            if ($this->cache_modified_check && $display) {
+                header('Last-Modified: '.gmdate('D, d M Y H:i:s', time()).' GMT');
+            }
         }
 
         // load filters that are marked as autoload
@@ -1312,12 +1307,11 @@ class Smarty
             }
             error_reporting($_smarty_old_error_level);
             return;
-        }  
-            error_reporting($_smarty_old_error_level);
-            if (isset($_smarty_results)) {
-                return $_smarty_results;
-            }
-        
+        }
+        error_reporting($_smarty_old_error_level);
+        if (isset($_smarty_results)) {
+            return $_smarty_results;
+        }
     }
 
     /**
@@ -1395,24 +1389,21 @@ class Smarty
             if (!$this->compile_check) {
                 // no need to check compiled file
                 return true;
-            }  
-                // get file source and timestamp
-                $_params = array('resource_name' => $resource_name, 'get_source'=>false);
-                if (!$this->_fetch_resource_info($_params)) {
-                    return false;
-                }
-                if ($_params['resource_timestamp'] <= filemtime($compile_path)) {
-                    // template not expired, no recompile
-                    return true;
-                }  
-                    // compile template
-                    return false;
-                
-            
-        }  
-            // compiled template does not exist, or forced compile
+            }
+            // get file source and timestamp
+            $_params = array('resource_name' => $resource_name, 'get_source'=>false);
+            if (!$this->_fetch_resource_info($_params)) {
+                return false;
+            }
+            if ($_params['resource_timestamp'] <= filemtime($compile_path)) {
+                // template not expired, no recompile
+                return true;
+            }
+            // compile template
             return false;
-        
+        }
+        // compiled template does not exist, or forced compile
+        return false;
     }
 
     /**
@@ -1444,9 +1435,8 @@ class Smarty
             smarty_core_write_compiled_resource($_params, $this);
 
             return true;
-        }  
-            return false;
-        
+        }
+        return false;
     }
 
     /**
@@ -1676,10 +1666,9 @@ class Smarty
                     }
                 }
                 return false;
-            }  
-                /* absolute path */
-                return file_exists($params['resource_name']);
-            
+            }
+            /* absolute path */
+            return file_exists($params['resource_name']);
         } elseif (empty($this->_plugins['resource'][$params['resource_type']])) {
             $_params = array('type' => $params['resource_type']);
             require_once(SMARTY_CORE_DIR . 'core.load_resource_plugin.php');
@@ -1723,9 +1712,8 @@ class Smarty
         if ((substr($string, 0, 1) == "'" || substr($string, 0, 1) == '"') &&
             substr($string, -1) == substr($string, 0, 1)) {
             return substr($string, 1, -1);
-        }  
-            return $string;
-        
+        }
+        return $string;
     }
 
 
@@ -1744,9 +1732,8 @@ class Smarty
             }
             fclose($fd);
             return $contents;
-        }  
-            return false;
-        
+        }
+        return false;
     }
 
     /**
@@ -1815,9 +1802,8 @@ class Smarty
             return (isset($compile_id)) ? $cache_id . '|' . $compile_id  : $cache_id;
         } elseif (isset($compile_id)) {
             return $compile_id;
-        }  
-            return null;
-        
+        }
+        return null;
     }
 
     /**
@@ -1933,11 +1919,10 @@ class Smarty
             $_return = current($_cache_attrs);
             next($_cache_attrs);
             return $_return;
-        }  
-            /* add a reference to a new set of cache_attrs */
-            $_cache_attrs[] = array();
-            return $_cache_attrs[count($_cache_attrs)-1];
-        
+        }
+        /* add a reference to a new set of cache_attrs */
+        $_cache_attrs[] = array();
+        return $_cache_attrs[count($_cache_attrs)-1];
     }
 
 
@@ -1949,9 +1934,8 @@ class Smarty
     {
         if ($once) {
             return include_once($filename);
-        }  
-            return include($filename);
-        
+        }
+        return include($filename);
     }
 
 
@@ -1976,9 +1960,8 @@ class Smarty
             $_class_name = (is_object($function[0]) ?
                 get_class($function[0]) : $function[0]);
             return $_class_name . '_' . $function[1];
-        }  
-            return $function;
-        
+        }
+        return $function;
     }
 
     /**#@-*/

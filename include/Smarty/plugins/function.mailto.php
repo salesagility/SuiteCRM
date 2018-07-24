@@ -54,8 +54,8 @@ function smarty_function_mailto($params, &$smarty)
     if (empty($params['address'])) {
         $smarty->trigger_error("mailto: missing 'address' parameter");
         return;
-    }  
-        $address = $params['address'];
+    }
+    $address = $params['address'];
     
 
     $text = $address;
@@ -149,10 +149,9 @@ function smarty_function_mailto($params, &$smarty)
 
         $mailto = "&#109;&#97;&#105;&#108;&#116;&#111;&#58;";
         return '<a href="'.$mailto.$address_encode.'" '.$extra.'>'.$text_encode.'</a>';
-    }  
-        // no encoding
-        return '<a href="mailto:'.$address.'" '.$extra.'>'.$text.'</a>';
-    
+    }
+    // no encoding
+    return '<a href="mailto:'.$address.'" '.$extra.'>'.$text.'</a>';
 }
 
 /* vim: set expandtab: */

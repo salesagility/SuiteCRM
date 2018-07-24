@@ -312,8 +312,8 @@ class ListView
             $fields = $aItem->get_list_view_data();
             if (isset($processed_ids[$aItem->id])) {
                 continue;
-            }  
-                $processed_ids[$aItem->id] = 1;
+            }
+            $processed_ids[$aItem->id] = 1;
             
 
 
@@ -1573,9 +1573,8 @@ class ListView
         if ($sort_URL_base !== "") {
             $this->xTemplate->assign("ORDER_BY", $sort_URL_base);
             return $sort_URL_base;
-        }  
-            return '';
-        
+        }
+        return '';
     }
 
 
@@ -1933,9 +1932,8 @@ class ListView
             return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
         } elseif (($upDown === '_up')) {
             return '<span class="suitepicon suitepicon-action-sorting-descending"></span>';
-        }  
-            return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
-        
+        }
+        return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
     }
 
     /**
@@ -2081,9 +2079,8 @@ class ListView
     {
         if (isset($_SESSION[$localVarName."_".$varName])) {
             return $_SESSION[$localVarName."_".$varName];
-        }  
-            return "";
-        
+        }
+        return "";
     }
 
     /* Set to true if you want Additional Details to appear in the listview

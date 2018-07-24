@@ -238,9 +238,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         sugar_cleanup();
         // die to keep code from running into redirect case below
         die();
-    }  
-        echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
-    
+    }
+    echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
 }
 
 if (!empty($_POST['redirect'])) {

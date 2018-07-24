@@ -366,9 +366,8 @@ function saveField($field, $id, $module, $value)
         }
         $bean->retrieve();
         return getDisplayValue($bean, $field);
-    }  
-        return false;
-    
+    }
+    return false;
 }
 
 function getDisplayValue($bean, $field, $method = "save")
@@ -553,7 +552,6 @@ function checkAccess($bean)
 {
     if ($bean->ACLAccess('EditView')) {
         return true;
-    }  
-        return false;
-    
+    }
+    return false;
 }

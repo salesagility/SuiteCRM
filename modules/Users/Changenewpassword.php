@@ -62,9 +62,8 @@ if (getRecaptchaChallengeField() !== false) {
     if ($response === 'Success') {
         echo $response;
         return;
-    }  
-        die($response);
-    
+    }
+    die($response);
 }
 ////	RECAPTCHA CHECK ONLY
 ///////////////////////////////////////////////////////////////////////////////

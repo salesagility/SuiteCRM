@@ -72,12 +72,10 @@ class ModuleBuilderController extends SugarController
                 return $mod_strings['LBL_DROPDOWNEDITOR'];
             } elseif ($_REQUEST['type'] == 'home') {
                 return $mod_strings['LBL_HOME'];
-            }  
-                return $mod_strings['LBL_DEVELOPER_TOOLS'];
-            
-        }  
+            }
             return $mod_strings['LBL_DEVELOPER_TOOLS'];
-        
+        }
+        return $mod_strings['LBL_DEVELOPER_TOOLS'];
     }
 
     public function fromModuleBuilder()
@@ -518,8 +516,8 @@ class ModuleBuilderController extends SugarController
                     $parser->handleSaveRelationshipLabels($metadata, $selected_lang) ;
                 }
             }
-        }  
-            //TODO FOR MB
+        }
+        //TODO FOR MB
         
         $this->view = 'relationships' ;
     }

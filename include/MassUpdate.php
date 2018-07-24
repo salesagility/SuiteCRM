@@ -558,7 +558,7 @@ eoq;
                                     translate($field["options"])
                                 );
                                 break;
-                            }  
+                            }
                                 if (!empty($field['options'])) {
                                     $even = !$even;
                                     $newhtml .= $this->addStatus(
@@ -567,7 +567,7 @@ eoq;
                                         translate($field["options"])
                                     );
                                     break;
-                                }  
+                                }
                                     if (!empty($field['function'])) {
                                         $functionValue = $this->getFunctionValue($this->sugarbean, $field);
                                         $even = !$even;
@@ -679,17 +679,16 @@ EOJS;
 
         if ($field_count > 0) {
             return $html;
-        }  
-            //If no fields are found, render either a form that still permits Mass Update deletes or just display a message that no fields are available
-            $html = "<div id='massupdate_form' style='display:none;'><table width='100%' cellpadding='0' cellspacing='0' border='0' class='formHeader h3Row'><tr><td nowrap><h3><span>" . $app_strings['LBL_MASS_UPDATE'] . "</h3></td></tr></table>";
-            if ($this->sugarbean->ACLAccess('Delete', true) && !$hideDeleteIfNoFieldsAvailable) {
-                $html .= "<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td><input type='submit' name='Delete' value='$lang_delete' onclick=\"return confirm('{$lang_confirm}')\" class='button'></td></tr></table></div>";
-            } else {
-                $html .= $app_strings['LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE'] . "</div>";
-            }
+        }
+        //If no fields are found, render either a form that still permits Mass Update deletes or just display a message that no fields are available
+        $html = "<div id='massupdate_form' style='display:none;'><table width='100%' cellpadding='0' cellspacing='0' border='0' class='formHeader h3Row'><tr><td nowrap><h3><span>" . $app_strings['LBL_MASS_UPDATE'] . "</h3></td></tr></table>";
+        if ($this->sugarbean->ACLAccess('Delete', true) && !$hideDeleteIfNoFieldsAvailable) {
+            $html .= "<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td><input type='submit' name='Delete' value='$lang_delete' onclick=\"return confirm('{$lang_confirm}')\" class='button'></td></tr></table></div>";
+        } else {
+            $html .= $app_strings['LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE'] . "</div>";
+        }
 
-            return $html;
-        
+        return $html;
     }
 
     public function getFunctionValue($focus, $vardef)
@@ -706,9 +705,8 @@ EOJS;
             }
 
             return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
-        }  
-            return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
-        
+        }
+        return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
     }
 
     /**

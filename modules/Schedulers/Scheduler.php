@@ -159,10 +159,9 @@ class Scheduler extends SugarBean
         if (is_array($validTimes) && in_array($now, $validTimes)) {
             $GLOBALS['log']->debug('----->Scheduler found valid job ('.$this->name.') for time GMT('.$now.')');
             return true;
-        }  
-            $GLOBALS['log']->debug('----->Scheduler did NOT find valid job ('.$this->name.') for time GMT('.$now.')');
-            return false;
-        
+        }
+        $GLOBALS['log']->debug('----->Scheduler did NOT find valid job ('.$this->name.') for time GMT('.$now.')');
+        return false;
     }
 
     /**
@@ -514,19 +513,15 @@ class Scheduler extends SugarBean
                             if ($tsGmt <= $timeEndTs) { // this is taken care of by the initial query - start is less than the date spec'd by admin
                                 if ($tsGmt <= $timeToTs) { // start is less than the time_to
                                     $validJobTime[] = $dateobj->asDb();
-                                }  
-                                    //_pp('Job Time is NOT smaller that TimeTO: '.$tsGmt .'<='. $timeToTs);
-                                
-                            }  
-                                //_pp('Job Time is NOT smaller that DateTimeEnd: '.date('Y-m-d H:i:s',$tsGmt) .'<='. $dateTimeEnd); //_pp( $tsGmt .'<='. $timeEndTs );
-                            
+                                }
+                                //_pp('Job Time is NOT smaller that TimeTO: '.$tsGmt .'<='. $timeToTs);
+                            }
+                            //_pp('Job Time is NOT smaller that DateTimeEnd: '.date('Y-m-d H:i:s',$tsGmt) .'<='. $dateTimeEnd); //_pp( $tsGmt .'<='. $timeEndTs );
                         }
-                    }  
-                        //_pp('Job Time is NOT bigger that TimeFrom: '.$tsGmt .'>='. $timeFromTs);
-                    
-                }  
-                    //_pp('Job Time is NOT Bigger than DateTimeStart: '.date('Y-m-d H:i',$tsGmt) .'>='. $dateTimeStart);
-                
+                    }
+                    //_pp('Job Time is NOT bigger that TimeFrom: '.$tsGmt .'>='. $timeFromTs);
+                }
+                //_pp('Job Time is NOT Bigger than DateTimeStart: '.date('Y-m-d H:i',$tsGmt) .'>='. $dateTimeStart);
             }
         }
         //_ppd($validJobTime);
@@ -585,10 +580,9 @@ class Scheduler extends SugarBean
                     return $value.$mod_strings['LBL_MINUTES'];
                 } elseif (!preg_match('[^0-9]', $value)) {
                     return $mod_strings['LBL_ON_THE'].$value.$mod_strings['LBL_MIN_MARK'];
-                }  
+                }
                     return $value;
                 
-                // no break
             case 1: // hours
                 global $current_user;
                 if (preg_match('/\*\//', $value)) { // every [SOME INTERVAL] hours
@@ -600,15 +594,13 @@ class Scheduler extends SugarBean
                     $datef = $current_user->getUserDateTimePreferences();
                     return date($datef['time'], strtotime($value.':'.str_pad($mins, 2, '0', STR_PAD_LEFT)));
                 
-                // no break
             case 2: // day of month
                 if (preg_match('/\*/', $value)) {
                     return $value;
-                }  
+                }
                     return date('jS', strtotime('December '.$value));
                 
 
-                // no break
             case 3: // months
                 return date('F', strtotime('2005-'.$value.'-01'));
             case 4: // days of week

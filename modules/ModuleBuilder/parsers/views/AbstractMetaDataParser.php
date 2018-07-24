@@ -211,10 +211,9 @@ abstract class AbstractMetaDataParser
             $str = strtolower($val);
 
             return ($str !== '0' && $str !== 'false' && $str !== '');
-        }  
-            // For non-string types, juse use PHP's normal boolean conversion
-            return ($val === true);
-        
+        }
+        // For non-string types, juse use PHP's normal boolean conversion
+        return ($val === true);
     }
 
     /**

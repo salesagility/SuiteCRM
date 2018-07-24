@@ -433,8 +433,7 @@ EOJS;
             $current_user->setPreference('pages', $pages, 0, $this->type);
 
             return '1';
-        }  
-            return '0';
-        
+        }
+        return '0';
     }
 }

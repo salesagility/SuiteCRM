@@ -484,9 +484,8 @@ FRA;
                 }
 
                 return $quicksearch_js .= '</script>';
-            }  
-                return $sqs_objects;
-            
+            }
+            return $sqs_objects;
         }
         return '';
     }

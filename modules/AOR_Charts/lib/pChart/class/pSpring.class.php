@@ -959,9 +959,8 @@
          $Angle = rad2deg(atan2($Opposite, $Adjacent));
          if ($Angle > 0) {
              return($Angle);
-         }  
-             return(360-abs($Angle));
-         
+         }
+         return(360-abs($Angle));
      }
 
      public function intersect($X1, $Y1, $X2, $Y2, $X3, $Y3, $X4, $Y4)

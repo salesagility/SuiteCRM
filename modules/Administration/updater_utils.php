@@ -292,9 +292,8 @@ function get_last_check_version_config_setting()
     $admin=$admin->retrieveSettings('Update');
     if (empty($admin->settings) or empty($admin->settings['Update_last_check_version'])) {
         return null;
-    }  
-        return $admin->settings['Update_last_check_version'];
-    
+    }
+    return $admin->settings['Update_last_check_version'];
 }
 
 
@@ -309,9 +308,8 @@ function get_last_check_date_config_setting()
     $admin=$admin->retrieveSettings('Update');
     if (empty($admin->settings) or empty($admin->settings['Update_last_check_date'])) {
         return 0;
-    }  
-        return $admin->settings['Update_last_check_date'];
-    
+    }
+    return $admin->settings['Update_last_check_date'];
 }
 
 function set_sugarbeat($value)

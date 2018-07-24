@@ -297,9 +297,8 @@ class SqlsrvManager extends MssqlManager
     {
         if ($type == 'datetime') { // see http://msdn.microsoft.com/en-us/library/ms187928.aspx for details
             return "CONVERT(datetime,$string,120)";
-        }  
-            return parent::convert($string, $type, $additional_parameters);
-        
+        }
+        return parent::convert($string, $type, $additional_parameters);
     }
 
     /**

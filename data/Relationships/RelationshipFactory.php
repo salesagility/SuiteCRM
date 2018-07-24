@@ -123,7 +123,7 @@ class SugarRelationshipFactory
                 //If a relationship has no table or join keys, it must be bean based
                 if (empty($def['true_relationship_type']) || (empty($def['table']) && empty($def['join_table'])) || empty($def['join_key_rhs'])) {
                     return new One2MBeanRelationship($def);
-                }  
+                }
                     return new One2MRelationship($def);
                 
                 break;
@@ -132,7 +132,7 @@ class SugarRelationshipFactory
                     require_once 'data/Relationships/One2OneBeanRelationship.php';
 
                     return new One2OneBeanRelationship($def);
-                }  
+                }
                     require_once 'data/Relationships/One2OneRelationship.php';
 
                     return new One2OneRelationship($def);

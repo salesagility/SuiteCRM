@@ -66,9 +66,8 @@ class PHPSQLParser
                         $skip_until = 'ALL';
                         $union = 'UNION ALL';
                         continue ;
-                    }  
-                        break;
-                    
+                    }
+                    break;
                 }
 
                 $queries[$union][] = $out;
@@ -108,10 +107,9 @@ class PHPSQLParser
                         if (preg_match('/^\\(\\s*select\\s*/i', $tok)) {
                             $queries[$union_type][$i] = $this->parse(substr($tok, 1, -1));
                             break;
-                        }  
-                            $queries[$union_type][$i] = $this->process_sql($queries[$union_type][$i]);
-                            break;
-                        
+                        }
+                        $queries[$union_type][$i] = $this->process_sql($queries[$union_type][$i]);
+                        break;
                     }
                 }
             }
@@ -865,10 +863,10 @@ EOREGEX
                 $token_count++;
                 $skip_next = false;
                 continue;
-            }  
-                if ($skip_next) {
-                    continue;
-                }
+            }
+            if ($skip_next) {
+                continue;
+            }
             
 
             if (preg_match("/^\\s*\\(\\s*select/i", $token)) {

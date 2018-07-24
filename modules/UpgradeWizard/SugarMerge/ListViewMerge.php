@@ -261,11 +261,10 @@ class ListViewMerge extends EditViewMerge
                 $this->log($new);
                 $new['default'] = $custom['default'];
                 return $new;
-            }  
-                //otherwise we know that new is not an array and custom has been 'customized' so let's keep those customizations.
-                $this->log($custom);
-                return $custom;
-            
+            }
+            //otherwise we know that new is not an array and custom has been 'customized' so let's keep those customizations.
+            $this->log($custom);
+            return $custom;
         }
         
         //default to returning the New version of the field

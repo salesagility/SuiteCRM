@@ -144,7 +144,7 @@ function get_widget($type)
                                 $local_temp = new $class();
                             }
                             break;
-                        }  
+                        }
                             $local_temp = new TemplateText();
                             break;
                         

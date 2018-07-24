@@ -219,7 +219,7 @@ class Minifier
                                 echo $this->a;
                                 $this->saveString();
                                 break;
-                            }  
+                            }
                                 if (self::isAlphaNumeric($this->a)) {
                                     echo $this->a;
                                     $this->saveString();

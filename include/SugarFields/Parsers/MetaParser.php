@@ -756,12 +756,12 @@ class MetaParser
         foreach ($panels as $panel) {
             if (!empty($panel) && !is_array($panel)) {
                 return false;
-            }  
-                foreach ($panel as $row) {
-                    if (!empty($row) && !is_array($row)) {
-                        return false;
-                    } //if
-                } //foreach
+            }
+            foreach ($panel as $row) {
+                if (!empty($row) && !is_array($row)) {
+                    return false;
+                } //if
+            } //foreach
              //if-else
         } //foreach
 

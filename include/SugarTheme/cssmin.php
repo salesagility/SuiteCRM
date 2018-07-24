@@ -164,10 +164,9 @@ function cssmin_array_is_assoc($array)
 {
     if (!is_array($array)) {
         return false;
-    }  
-        krsort($array, SORT_STRING);
-        return !is_numeric(key($array));
-    
+    }
+    krsort($array, SORT_STRING);
+    return !is_numeric(key($array));
 }
 /**
  * Encodes a url() expression.

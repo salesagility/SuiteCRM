@@ -156,8 +156,8 @@ class nusoap_wsdlcache
             }
             $this->releaseMutex($filename);
             return (!is_null($s)) ? unserialize($s) : null;
-        }  
-            $this->debug("Unable to obtain mutex for $filename in get");
+        }
+        $this->debug("Unable to obtain mutex for $filename in get");
         
         return null;
     }
@@ -179,9 +179,8 @@ class nusoap_wsdlcache
         $this->fplock[md5($filename)] = fopen($filename.".lock", "w");
         if ($mode == "r") {
             return flock($this->fplock[md5($filename)], LOCK_SH);
-        }  
-            return flock($this->fplock[md5($filename)], LOCK_EX);
-        
+        }
+        return flock($this->fplock[md5($filename)], LOCK_EX);
     }
 
     /**
@@ -207,8 +206,8 @@ class nusoap_wsdlcache
             $this->debug("Put $wsdl_instance->wsdl ($filename) in cache");
             $this->releaseMutex($filename);
             return true;
-        }  
-            $this->debug("Unable to obtain mutex for $filename in put");
+        }
+        $this->debug("Unable to obtain mutex for $filename in put");
         
         return false;
     }

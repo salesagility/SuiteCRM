@@ -216,65 +216,63 @@ class One2MBeanRelationship extends One2MRelationship
 
         if ($link->getSide() == REL_RHS) {
             return false;
-        }  
-            $lhsKey = $this->def['lhs_key'];
-            $rhsTable = $this->def['rhs_table'];
-            $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
-            $relatedSeed = BeanFactory::getBean($this->getRHSModule());
-            $deleted = !empty($params['deleted']) ? 1 : 0;
+        }
+        $lhsKey = $this->def['lhs_key'];
+        $rhsTable = $this->def['rhs_table'];
+        $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
+        $relatedSeed = BeanFactory::getBean($this->getRHSModule());
+        $deleted = !empty($params['deleted']) ? 1 : 0;
             
-            if (!isset($link->getFocus()->$lhsKey)) {
-                LoggerManager::getLogger()->warn('One2MBeanRelationship getQuery: Trying to get property of non-object');
-                $linkFocusLhsKey = null;
-            } else {
-                $linkFocusLhsKey = $link->getFocus()->$lhsKey;
-            }
+        if (!isset($link->getFocus()->$lhsKey)) {
+            LoggerManager::getLogger()->warn('One2MBeanRelationship getQuery: Trying to get property of non-object');
+            $linkFocusLhsKey = null;
+        } else {
+            $linkFocusLhsKey = $link->getFocus()->$lhsKey;
+        }
             
-            $where = "WHERE $rhsTableKey = '{$linkFocusLhsKey}' AND {$rhsTable}.deleted=$deleted";
-            $order_by = '';
+        $where = "WHERE $rhsTableKey = '{$linkFocusLhsKey}' AND {$rhsTable}.deleted=$deleted";
+        $order_by = '';
 
-            //Check for role column
-            if (!empty($this->def["relationship_role_column"]) && !empty($this->def["relationship_role_column_value"])) {
-                $roleField = $this->def["relationship_role_column"];
-                $roleValue = $this->def["relationship_role_column_value"];
-                $where .= " AND $rhsTable.$roleField = '$roleValue'";
+        //Check for role column
+        if (!empty($this->def["relationship_role_column"]) && !empty($this->def["relationship_role_column_value"])) {
+            $roleField = $this->def["relationship_role_column"];
+            $roleValue = $this->def["relationship_role_column_value"];
+            $where .= " AND $rhsTable.$roleField = '$roleValue'";
+        }
+
+        //Add any optional where clause
+        if (!empty($params['where'])) {
+            $add_where = is_string($params['where']) ? $params['where'] : "$rhsTable." . $this->getOptionalWhereClause($params['where']);
+            if (!empty($add_where)) {
+                $where .= " AND $add_where";
             }
+        }
 
-            //Add any optional where clause
-            if (!empty($params['where'])) {
-                $add_where = is_string($params['where']) ? $params['where'] : "$rhsTable." . $this->getOptionalWhereClause($params['where']);
-                if (!empty($add_where)) {
-                    $where .= " AND $add_where";
-                }
+        //Add any optional order clauses
+        if (!empty($params['order_by'])) {
+            $order_by = $relatedSeed->process_order_by($params['order_by']);
+        }
+
+        $from = $this->def['rhs_table'];
+
+        if (empty($params['return_as_array'])) {
+            //Limit is not compatible with return_as_array
+            $query = "SELECT id FROM $from $where";
+            if (!empty($order_by)) {
+                $query .= ' ORDER BY '.$order_by;
             }
-
-            //Add any optional order clauses
-            if (!empty($params['order_by'])) {
-                $order_by = $relatedSeed->process_order_by($params['order_by']);
+            if (!empty($params['limit']) && $params['limit'] > 0) {
+                $offset = isset($params['offset']) ? $params['offset'] : 0;
+                $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
             }
-
-            $from = $this->def['rhs_table'];
-
-            if (empty($params['return_as_array'])) {
-                //Limit is not compatible with return_as_array
-                $query = "SELECT id FROM $from $where";
-                if (!empty($order_by)) {
-                    $query .= ' ORDER BY '.$order_by;
-                }
-                if (!empty($params['limit']) && $params['limit'] > 0) {
-                    $offset = isset($params['offset']) ? $params['offset'] : 0;
-                    $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
-                }
-                return $query;
-            }  
-                return array(
+            return $query;
+        }
+        return array(
                     'select' => "SELECT {$this->def['rhs_table']}.id",
                     'from' => "FROM {$this->def['rhs_table']}",
                     'where' => $where,
                     'order_by' => $order_by
                 );
-            
-        
     }
 
     public function getJoin($link, $params = array(), $return_array = false)
@@ -398,8 +396,7 @@ class One2MBeanRelationship extends One2MRelationship
     {
         if (isset($this->def['table'])) {
             return $this->def['table'];
-        }  
-            return $this->def['rhs_table'];
-        
+        }
+        return $this->def['rhs_table'];
     }
 }

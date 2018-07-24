@@ -459,12 +459,11 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
             return array(
                 'name_value_lists' => $ret_values,
             );
-        }  
-            $GLOBALS['log']->info('End: SoapHelperWebServices->new_handle_set_entries');
-            return array(
+        }
+        $GLOBALS['log']->info('End: SoapHelperWebServices->new_handle_set_entries');
+        return array(
                 'ids' => $ids,
             );
-        
     }
 
 

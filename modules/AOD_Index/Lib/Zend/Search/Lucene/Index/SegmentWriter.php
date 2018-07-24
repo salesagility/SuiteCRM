@@ -175,12 +175,11 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
                                 );
 
             return $fieldNumber;
-        }  
-            $this->_fields[$field->name]->isIndexed       |= $field->isIndexed;
-            $this->_fields[$field->name]->storeTermVector |= $field->storeTermVector;
+        }
+        $this->_fields[$field->name]->isIndexed       |= $field->isIndexed;
+        $this->_fields[$field->name]->storeTermVector |= $field->storeTermVector;
 
-            return $this->_fields[$field->name]->number;
-        
+        return $this->_fields[$field->name]->number;
     }
 
     /**
@@ -204,12 +203,11 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
                                 );
 
             return $fieldNumber;
-        }  
-            $this->_fields[$fieldInfo->name]->isIndexed       |= $fieldInfo->isIndexed;
-            $this->_fields[$fieldInfo->name]->storeTermVector |= $fieldInfo->storeTermVector;
+        }
+        $this->_fields[$fieldInfo->name]->isIndexed       |= $fieldInfo->isIndexed;
+        $this->_fields[$fieldInfo->name]->storeTermVector |= $fieldInfo->storeTermVector;
 
-            return $this->_fields[$fieldInfo->name]->number;
-        
+        return $this->_fields[$fieldInfo->name]->number;
     }
 
     /**
