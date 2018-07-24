@@ -101,7 +101,8 @@ class SharedSecurityGroupsCest {
         $allMenu = $allMenuButton . ' > span.notCurrentTab > ul.dropdown-menu';
         $I->waitForElementVisible($allMenu, self::WAITING_DELAY);
         $I->click('Accounts', $allMenu);  
-        // go to detail view
+        // go to detail view        
+        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a', self::WAITING_DELAY);
         $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
         // delete it
         $I->click('ACTIONS', '#tab-actions');
@@ -110,6 +111,7 @@ class SharedSecurityGroupsCest {
         $I->acceptPopup(); 
         // repeat...
         // go to detail view
+        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a', self::WAITING_DELAY);
         $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
         // delete it
         $I->click('ACTIONS', '#tab-actions');
@@ -239,6 +241,7 @@ class SharedSecurityGroupsCest {
         $this->firstLoginWithMrTester($I, $a, $w);
         // tester is going to the account module page
         $this->goToAccountsPage($I, $a);
+        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
         $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
         $I->waitForElementVisible('#content');
         $I->canSee('test acc2');
@@ -254,6 +257,7 @@ class SharedSecurityGroupsCest {
         $this->doLogin($I, $w, 'chris', 'chris');
         // tester is going to the account module page
         $this->goToAccountsPage($I, $a);
+        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
         $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td:nth-child(3) > b > a');
         $I->waitForElementVisible('#content');
         $I->canSee('foo acc1');
