@@ -421,7 +421,16 @@ class SharedSecurityRulesController extends SugarController
             $value = '';
         }
 
-
+        if (!isset($module) || !isset($beanList[$module]) && !isset($beanFiles[$beanList[$module]])) {
+            LoggerManager::getLogger()->error('Bean module is not defined in beanlist');
+            return $this->protectedDie();
+        }
+                
+        if (!file_exists($beanFiles[$beanList[$module]])) {
+            LoggerManager::getLogger()->error('Bean file not found: ' . $beanFiles[$beanList[$module]]);
+            return $this->protectedDie();
+        }
+        
         require_once($beanFiles[$beanList[$module]]);
         $focus = new $beanList[$module];
         $vardef = $focus->getFieldDefinition($fieldname);
