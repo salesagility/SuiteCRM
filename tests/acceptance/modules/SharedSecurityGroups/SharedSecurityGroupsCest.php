@@ -224,10 +224,12 @@ class SharedSecurityGroupsCest {
         WebDriverHelper $w
     ) {
         
+        $I->amOnUrl($w->getInstanceURL());
+        
         // (only for tessting: apply the following lines to run only this one test)
         // we are going to login as admin and test ssg
-        // $I->amOnUrl($w->getInstanceURL());
         // $this->doLogin($I, $w, $I->getAdminUser(), $I->getAdminPassword());
+        
         $this->createTestAccounts($I, $a);
         $this->doLogout($I);
         
