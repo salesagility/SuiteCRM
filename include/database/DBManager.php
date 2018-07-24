@@ -4056,4 +4056,15 @@ abstract class DBManager
      * @return string
      */
     abstract public function getGuidSQL();
+
+
+    /**
+     * Returns a string without line breaks.
+     * @param string $sql A SQL statement
+     * @return string
+     */
+    public function removeLineBreaks($sql)
+    {
+        return trim(str_replace(array("\r", "\n"), " ", $sql));
+    }
 }
