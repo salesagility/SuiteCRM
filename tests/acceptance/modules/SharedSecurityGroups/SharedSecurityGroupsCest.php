@@ -268,7 +268,7 @@ class SharedSecurityGroupsCest {
         // we are going to login as admin and clean up everything after the test
         $I->amOnUrl($w->getInstanceURL());
         $this->doLogin($I, $w, $I->getAdminUser(), $I->getAdminPassword());
-        //$this->cleanUpAfterTestedSharedSecurityGroups($I, $a);
+        $this->cleanUpAfterTestedSharedSecurityGroups($I, $a);
         
     }
     
