@@ -82,13 +82,13 @@ class GoogleSync
     public function __construct()
     {
         if (isset($_SERVER['GSYNC_LOGLEVEL'])) {
-            $GLOBALS['log']->setLevel($_SERVER['GSYNC_LOGLEVEL']);
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Log Level Set to: ' . $_SERVER['GSYNC_LOGLEVEL']);
+            LoggerManager::getLogger()->setLevel($_SERVER['GSYNC_LOGLEVEL']);
+            LoggerManager::getLogger()->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Log Level Set to: ' . $_SERVER['GSYNC_LOGLEVEL']);
         }
         $this->timezone = date_default_timezone_get(); // This defaults to the server timezone. Overridden later.
         $this->authJson = $this->getAuthJson();
         $this->db = DBManagerFactory::getInstance();
-        $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . '__construct');
+        LoggerManager::getLogger()->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . '__construct');
     }
 
     /**
@@ -99,18 +99,17 @@ class GoogleSync
     public function getAuthJson()
     {
         global $sugar_config;
-        if (!$authJson_local = json_decode(base64_decode($sugar_config['google_auth_json']), true)) {
+        $authJson_local = json_decode(base64_decode($sugar_config['google_auth_json']), true);
+        if (!$authJson_local) {
         // The authconfig json string is invalid json
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid AuthConfig JSON');
             return false;
-        } else {
-            if (!array_key_exists('web', $authJson_local)) {
+        } elseif (!array_key_exists('web', $authJson_local)) {
             // The authconfig is valid json, but the 'web' key is missing. This is not a valid authconfig.
-                $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid AuthConfig JSON');
-                return false;
-            } else {
-                return $authJson_local;
-            }
+            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid AuthConfig JSON');
+            return false;
+        } else {
+            return $authJson_local;
         }
     }
 
