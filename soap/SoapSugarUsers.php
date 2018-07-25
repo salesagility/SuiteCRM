@@ -55,7 +55,8 @@ $server->register(
     'is_user_admin',
     array('session' => 'xsd:string'),
     array('return' => 'xsd:int'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Return if the user is an admin or not
@@ -69,7 +70,6 @@ function is_user_admin($session)
         global $current_user;
 
         return is_admin($current_user);
-
     } else {
         return 0;
     }
@@ -80,7 +80,8 @@ $server->register(
     'login',
     array('user_auth' => 'tns:user_auth', 'application_name' => 'xsd:string'),
     array('return' => 'tns:set_entry_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Log the user into the application
@@ -104,8 +105,11 @@ function login($user_auth, $application)
     $system_config->retrieveSettings('system');
     $authController = new AuthenticationController();
     //rrs
-    $isLoginSuccess = $authController->login($user_auth['user_name'], $user_auth['password'],
-        array('passwordEncrypted' => true));
+    $isLoginSuccess = $authController->login(
+        $user_auth['user_name'],
+        $user_auth['password'],
+        array('passwordEncrypted' => true)
+    );
     $usr_id = $user->retrieve_user_id($user_auth['user_name']);
     if ($usr_id) {
         $user->retrieve($usr_id);
@@ -137,8 +141,10 @@ function login($user_auth, $application)
             if (function_exists('openssl_decrypt')) {
                 $password = decrypt_string($user_auth['password']);
                 $authController = new AuthenticationController();
-                if ($authController->login($user_auth['user_name'],
-                        $password) && isset($_SESSION['authenticated_user_id'])
+                if ($authController->login(
+                    $user_auth['user_name'],
+                        $password
+                ) && isset($_SESSION['authenticated_user_id'])
                 ) {
                     $success = true;
                 } // if
@@ -170,7 +176,6 @@ function login($user_auth, $application)
     $GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
 
     return array('id' => -1, 'error' => $error);
-
 }
 
 //checks if the soap server and client are running on the same machine
@@ -178,7 +183,8 @@ $server->register(
     'is_loopback',
     array(),
     array('return' => 'xsd:int'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Check to see if the soap server and client are on the same machine.
@@ -210,7 +216,6 @@ function validate_authenticated($session_id)
         session_start();
 
         if (!empty($_SESSION['is_valid_session']) && is_valid_ip_address('ip_address') && $_SESSION['type'] == 'user') {
-
             global $current_user;
 
             $current_user = new User();
@@ -242,10 +247,10 @@ function is_valid_ip_address($session_var)
     $clientIP = query_client_ip();
     $classCheck = 0;
     // check to see if config entry is present, if not, verify client ip
-    if (!isset ($sugar_config['verify_client_ip']) || $sugar_config['verify_client_ip'] == true) {
+    if (!isset($sugar_config['verify_client_ip']) || $sugar_config['verify_client_ip'] == true) {
         // check to see if we've got a current ip address in $_SESSION
         // and check to see if the session has been hijacked by a foreign ip
-        if (isset ($_SESSION[$session_var])) {
+        if (isset($_SESSION[$session_var])) {
             $session_parts = explode(".", $_SESSION[$session_var]);
             $client_parts = explode(".", $clientIP);
             if (count($session_parts) < 4) {
@@ -263,7 +268,7 @@ function is_valid_ip_address($session_var)
                 }
             }
             // we have a different IP address
-            if ($_SESSION[$session_var] != $clientIP && empty ($classCheck)) {
+            if ($_SESSION[$session_var] != $clientIP && empty($classCheck)) {
                 $GLOBALS['log']->fatal("IP Address mismatch: SESSION IP: {$_SESSION[$session_var]} CLIENT IP: {$clientIP}");
 
                 return false;
@@ -280,7 +285,8 @@ $server->register(
     'seamless_login',
     array('session' => 'xsd:string'),
     array('return' => 'xsd:int'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Perform a seamless login.  This is used internally during the sync process.
@@ -311,7 +317,8 @@ $server->register(
         'deleted' => 'xsd:int'
     ),
     array('return' => 'tns:get_entry_list_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Retrieve a list of beans.  This is the primary method for getting list of SugarBeans from Sugar using the SOAP API.
@@ -485,7 +492,8 @@ $server->register(
         'select_fields' => 'tns:select_fields'
     ),
     array('return' => 'tns:get_entry_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Retrieve a single SugarBean based on ID.
@@ -510,7 +518,8 @@ $server->register(
         'select_fields' => 'tns:select_fields'
     ),
     array('return' => 'tns:get_entry_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Retrieve a list of SugarBean's based on provided IDs.
@@ -576,7 +585,7 @@ function get_entries($session, $module_name, $ids, $select_fields)
                 'value' => 'Access to this object is denied since it has been deleted or does not exist'
             );
             $list[] = array('name' => 'deleted', 'value' => '1');
-            $output_list[] = Array(
+            $output_list[] = array(
                 'id' => $id,
                 'module_name' => $module_name,
                 'name_value_list' => $list,
@@ -592,7 +601,6 @@ function get_entries($session, $module_name, $ids, $select_fields)
 
         if (empty($field_list)) {
             $field_list = get_field_list($seed);
-
         }
     }
 
@@ -606,7 +614,8 @@ $server->register(
     'set_entry',
     array('session' => 'xsd:string', 'module_name' => 'xsd:string', 'name_value_list' => 'tns:name_value_list'),
     array('return' => 'tns:set_entry_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Update or create a single SugarBean.
@@ -654,7 +663,6 @@ function set_entry($session, $module_name, $name_value_list)
             } else {
                 break;
             }
-
         }
     }
     foreach ($name_value_list as $value) {
@@ -672,14 +680,14 @@ function set_entry($session, $module_name, $name_value_list)
     }
 
     return array('id' => $seed->id, 'error' => $error->get_soap_array());
-
 }
 
 $server->register(
     'set_entries',
     array('session' => 'xsd:string', 'module_name' => 'xsd:string', 'name_value_lists' => 'tns:name_value_lists'),
     array('return' => 'tns:set_entries_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Update or create a list of SugarBeans
@@ -713,7 +721,8 @@ $server->register(
     'set_note_attachment',
     array('session' => 'xsd:string', 'note' => 'tns:note_attachment'),
     array('return' => 'tns:set_entry_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Add or replace the attachment on a Note.
@@ -725,7 +734,6 @@ $server->register(
  */
 function set_note_attachment($session, $note)
 {
-
     $error = new SoapError();
     if (!validate_authenticated($session)) {
         $error->set_error('invalid_login');
@@ -737,14 +745,14 @@ function set_note_attachment($session, $note)
     $ns = new NoteSoap();
 
     return array('id' => $ns->saveFile($note), 'error' => $error->get_soap_array());
-
 }
 
 $server->register(
     'get_note_attachment',
     array('session' => 'xsd:string', 'id' => 'xsd:string'),
     array('return' => 'tns:return_note_attachment'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Retrieve an attachment from a note
@@ -792,7 +800,6 @@ function get_note_attachment($session, $id)
         'note_attachment' => array('id' => $id, 'filename' => $note->filename, 'file' => $file),
         'error' => $error->get_soap_array()
     );
-
 }
 
 $server->register(
@@ -804,7 +811,8 @@ $server->register(
         'module_id' => 'xsd:string'
     ),
     array('return' => 'tns:error_value'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Attach a note to another bean.  Once you have created a note to store an
@@ -849,17 +857,13 @@ function relate_note_to_module($session, $note_id, $module_name, $module_id)
     if ($module_name != 'Contacts') {
         $seed->parent_type = $module_name;
         $seed->parent_id = $module_id;
-
     } else {
-
         $seed->contact_id = $module_id;
-
     }
 
     $seed->save();
 
     return $error->get_soap_array();
-
 }
 
 $server->register(
@@ -871,7 +875,8 @@ $server->register(
         'select_fields' => 'tns:select_fields'
     ),
     array('return' => 'tns:get_entry_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Retrieve the collection of notes that are related to a bean.
@@ -918,8 +923,8 @@ function get_related_notes($session, $module_name, $module_id, $select_fields)
     }
     $list = $seed->get_linked_beans('notes', 'Note', array(), 0, -1, 0);
 
-    $output_list = Array();
-    $field_list = Array();
+    $output_list = array();
+    $field_list = array();
     foreach ($list as $value) {
         $output_list[] = get_return_value($value, 'Notes');
         if (empty($field_list)) {
@@ -942,7 +947,8 @@ $server->register(
     'logout',
     array('session' => 'xsd:string'),
     array('return' => 'tns:error_value'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Log out of the session.  This will destroy the session and prevent other's from using it.
@@ -973,7 +979,8 @@ $server->register(
     'get_module_fields',
     array('session' => 'xsd:string', 'module_name' => 'xsd:string'),
     array('return' => 'tns:module_fields'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Retrieve vardef information on the fields of the specified bean.
@@ -1014,8 +1021,10 @@ function get_module_fields($session, $module_name)
 
     require_once($beanFiles[$class_name]);
     $seed = new $class_name();
-    if ($seed->ACLAccess('ListView', true) || $seed->ACLAccess('DetailView', true) || $seed->ACLAccess('EditView',
-            true)
+    if ($seed->ACLAccess('ListView', true) || $seed->ACLAccess('DetailView', true) || $seed->ACLAccess(
+        'EditView',
+            true
+    )
     ) {
         return get_return_module_fields($seed, $module_name, $error);
     } else {
@@ -1029,7 +1038,8 @@ $server->register(
     'get_available_modules',
     array('session' => 'xsd:string'),
     array('return' => 'tns:module_list'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Retrieve the list of available modules on the system available to the currently logged in user.
@@ -1057,7 +1067,8 @@ $server->register(
     'update_portal_user',
     array('session' => 'xsd:string', 'portal_name' => 'xsd:string', 'name_value_list' => 'tns:name_value_list'),
     array('return' => 'tns:error_value'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Update the properties of a contact that is portal user.  Add the portal user name to the user's properties.
@@ -1107,7 +1118,8 @@ $server->register(
     'get_user_id',
     array('session' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Return the user_id of the user that is logged into the current session.
@@ -1122,7 +1134,6 @@ function get_user_id($session)
         global $current_user;
 
         return $current_user->id;
-
     } else {
         return '-1';
     }
@@ -1132,7 +1143,8 @@ $server->register(
     'get_user_team_id',
     array('session' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Return the ID of the default team for the user that is logged into the current session.
@@ -1155,7 +1167,8 @@ $server->register(
     'get_user_team_set_id',
     array('session' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Return the Team Set ID for the user that is logged into the current session.
@@ -1178,7 +1191,8 @@ $server->register(
     'get_server_time',
     array(),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Return the current time on the server in the format 'Y-m-d H:i:s'.  This time is in the server's default timezone.
@@ -1194,7 +1208,8 @@ $server->register(
     'get_gmt_time',
     array(),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Return the current time on the server in the format 'Y-m-d H:i:s'.  This time is in GMT.
@@ -1210,7 +1225,8 @@ $server->register(
     'get_sugar_flavor',
     array(),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Retrieve the specific flavor of sugar.
@@ -1231,7 +1247,8 @@ $server->register(
     'get_server_version',
     array(),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Retrieve the version number of Sugar that the server is running.
@@ -1241,7 +1258,6 @@ $server->register(
  */
 function get_server_version()
 {
-
     $admin = new Administration();
     $admin->retrieveSettings('info');
     if (isset($admin->settings['info_sugar_version'])) {
@@ -1249,7 +1265,6 @@ function get_server_version()
     } else {
         return '1.0';
     }
-
 }
 
 $server->register(
@@ -1263,7 +1278,8 @@ $server->register(
         'deleted' => 'xsd:int'
     ),
     array('return' => 'tns:get_relationships_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Retrieve a collection of beans tha are related to the specified bean.
@@ -1375,7 +1391,8 @@ $server->register(
     'set_relationship',
     array('session' => 'xsd:string', 'set_relationship_value' => 'tns:set_relationship_value'),
     array('return' => 'tns:error_value'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Set a single relationship between two beans.  The items are related by module name and id.
@@ -1404,7 +1421,8 @@ $server->register(
     'set_relationships',
     array('session' => 'xsd:string', 'set_relationship_list' => 'tns:set_relationship_list'),
     array('return' => 'tns:set_relationship_list_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Setup several relationships between pairs of beans.  The items are related by module name and id.
@@ -1493,8 +1511,11 @@ function handle_set_relationship($set_relationship_value, $session = '')
 
                 // Check if this relationship already exists
                 $query = "SELECT count(*) AS count FROM product_bundle_quote WHERE quote_id = '{$module1_id}' AND bundle_id = '{$module2_id}' AND deleted = '0'";
-                $result = DBManagerFactory::getInstance()->query($query, true,
-                    "Error checking for previously existing relationship between quote and product_bundle");
+                $result = DBManagerFactory::getInstance()->query(
+                    $query,
+                    true,
+                    "Error checking for previously existing relationship between quote and product_bundle"
+                );
                 $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
                 if (isset($row['count']) && $row['count'] > 0) {
                     return $error->get_soap_array();
@@ -1515,7 +1536,6 @@ function handle_set_relationship($set_relationship_value, $session = '')
                 $pb->save();
 
                 return $error->get_soap_array();
-
             } elseif ($module1 == "ProductBundles" && $module2 == "Products") {
                 // And, well, similar things apply in this case
                 $pb_cls = $beanList[$module1];
@@ -1524,8 +1544,11 @@ function handle_set_relationship($set_relationship_value, $session = '')
 
                 // Check if this relationship already exists
                 $query = "SELECT count(*) AS count FROM product_bundle_product WHERE bundle_id = '{$module1_id}' AND product_id = '{$module2_id}' AND deleted = '0'";
-                $result = DBManagerFactory::getInstance()->query($query, true,
-                    "Error checking for previously existing relationship between quote and product_bundle");
+                $result = DBManagerFactory::getInstance()->query(
+                    $query,
+                    true,
+                    "Error checking for previously existing relationship between quote and product_bundle"
+                );
                 $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
                 if (isset($row['count']) && $row['count'] > 0) {
                     return $error->get_soap_array();
@@ -1599,7 +1622,8 @@ $server->register(
     'set_document_revision',
     array('session' => 'xsd:string', 'note' => 'tns:document_revision'),
     array('return' => 'tns:set_entry_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Enter description here...
@@ -1610,7 +1634,6 @@ $server->register(
  */
 function set_document_revision($session, $document_revision)
 {
-
     $error = new SoapError();
     if (!validate_authenticated($session)) {
         $error->set_error('invalid_login');
@@ -1622,7 +1645,6 @@ function set_document_revision($session, $document_revision)
     $dr = new DocumentSoap();
 
     return array('id' => $dr->saveFile($document_revision), 'error' => $error->get_soap_array());
-
 }
 
 $server->register(
@@ -1636,7 +1658,8 @@ $server->register(
         'max_results' => 'xsd:int'
     ),
     array('return' => 'tns:get_entry_list_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Given a list of modules to search and a search string, return the id, module_name, along with the fields
@@ -1866,7 +1889,6 @@ function search_by_module($user_name, $password, $search_string, $modules, $offs
         'entry_list' => $output_list,
         'error' => $error->get_soap_array()
     );
-
 }//end function
 
 
@@ -1874,7 +1896,8 @@ $server->register(
     'get_mailmerge_document',
     array('session' => 'xsd:string', 'file_name' => 'xsd:string', 'fields' => 'tns:select_fields'),
     array('return' => 'tns:get_sync_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Get MailMerge document
@@ -1999,7 +2022,8 @@ $server->register(
     'get_mailmerge_document2',
     array('session' => 'xsd:string', 'file_name' => 'xsd:string', 'fields' => 'tns:select_fields'),
     array('return' => 'tns:get_mailmerge_document_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Enter description here...
@@ -2084,7 +2108,6 @@ function get_mailmerge_document2($session, $file_name, $fields)
             $pSeed = $seed1;
         }
         foreach ($ids as $key => $value) {
-
             if ($is_prospect_merge) {
                 $seed1 = $pSeed->retrieveTarget($key);
             } else {
@@ -2098,22 +2121,20 @@ function get_mailmerge_document2($session, $file_name, $fields)
                         //pull in the translated dom
                         $html .= '<td>' . $app_list_strings[$seed1->field_name_map[$master_field]['options']][$seed1->$master_field] . '</td>';
                     } elseif ($seed1->field_name_map[$master_field]['type'] == 'multienum') {
-
                         if (isset($app_list_strings[$seed1->field_name_map[$master_field]['options']])) {
                             $items = unencodeMultienum($seed1->$master_field);
                             $output = array();
                             foreach ($items as $item) {
                                 if (!empty($app_list_strings[$seed1->field_name_map[$master_field]['options']][$item])) {
-                                    array_push($output,
-                                        $app_list_strings[$seed1->field_name_map[$master_field]['options']][$item]);
-
+                                    array_push(
+                                        $output,
+                                        $app_list_strings[$seed1->field_name_map[$master_field]['options']][$item]
+                                    );
                                 }
-
                             } // foreach
 
                             $encoded_output = encodeMultienumValue($output);
                             $html .= "<td>$encoded_output</td>";
-
                         }
                     } elseif ($seed1->field_name_map[$master_field]['type'] == 'currency') {
                         $amount_field = $seed1->$master_field;
@@ -2161,7 +2182,8 @@ $server->register(
     'get_document_revision',
     array('session' => 'xsd:string', 'i' => 'xsd:string'),
     array('return' => 'tns:return_document_revision'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * This method is used as a result of the .htaccess lock down on the cache directory. It will allow a
@@ -2204,14 +2226,14 @@ function get_document_revision($session, $id)
 
         return array('id' => -1, 'error' => $error->get_soap_array());
     }
-
 }
 
 $server->register(
     'set_campaign_merge',
     array('session' => 'xsd:string', 'targets' => 'tns:select_fields', 'campaign_id' => 'xsd:string'),
     array('return' => 'tns:error_value'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 /**
  *   Once we have successfuly done a mail merge on a campaign, we need to notify Sugar of the targets
  *   and the campaign_id for tracking purposes
@@ -2244,7 +2266,8 @@ $server->register(
     'get_entries_count',
     array('session' => 'xsd:string', 'module_name' => 'xsd:string', 'query' => 'xsd:string', 'deleted' => 'xsd:int'),
     array('return' => 'tns:get_entries_count_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  *   Retrieve number of records in a given module
@@ -2351,7 +2374,8 @@ $server->register(
         'select_fields' => 'tns:select_fields'
     ),
     array('return' => 'tns:set_entries_detail_result'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 /**
  * Update or create a list of SugarBeans, returning details about the records created/updated
@@ -2431,9 +2455,7 @@ function handle_set_entries($module_name, $name_value_lists, $select_fields = fa
                         $val = array_search($val, $app_list_strings[$vardef['options']]);
                     }
                 }
-
             } elseif ($seed->field_name_map[$value['name']]['type'] == 'multienum') {
-
                 $vardef = $seed->field_name_map[$value['name']];
 
                 if (isset($app_list_strings[$vardef['options']]) && !isset($app_list_strings[$vardef['options']][$value])) {
@@ -2497,7 +2519,6 @@ function handle_set_entries($module_name, $name_value_lists, $select_fields = fa
                     $ids[] = $duplicate_id;//we have a conflict
                 }
             }
-
         } elseif ($module_name == 'Meetings' || $module_name == 'Calls') {
             //we are going to check if we have a meeting in the system
             //with the same outlook_id. If we do find one then we will grab that
@@ -2598,4 +2619,3 @@ function handle_set_entries($module_name, $name_value_lists, $select_fields = fa
         );
     }
 }
-

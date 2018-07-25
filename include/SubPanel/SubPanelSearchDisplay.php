@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,20 +40,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-ini_set('display_errors',1);
+ini_set('display_errors', 1);
 
 global $beanList;
 global $beanFiles;
 
 
-if(empty($_REQUEST['module']))
-{
-	die("'module' was not defined");
+if (empty($_REQUEST['module'])) {
+    die("'module' was not defined");
 }
 
-if(!isset($beanList[$_REQUEST['module']]))
-{
-	die("'".$_REQUEST['module']."' is not defined in \$beanList");
+if (!isset($beanList[$_REQUEST['module']])) {
+    die("'".$_REQUEST['module']."' is not defined in \$beanList");
 }
 
 if (!isset($_REQUEST['subpanel'])) {
@@ -66,11 +66,10 @@ $collection = array();
 
 include('include/SubPanel/SubPanel.php');
 $layout_def_key = '';
-if(!empty($_REQUEST['layout_def_key'])){
-	$layout_def_key = $_REQUEST['layout_def_key'];
+if (!empty($_REQUEST['layout_def_key'])) {
+    $layout_def_key = $_REQUEST['layout_def_key'];
 }
 
-$subpanel_object = new SubPanel($module, $record, $subpanel,null, $layout_def_key, $collection);
+$subpanel_object = new SubPanel($module, $record, $subpanel, null, $layout_def_key, $collection);
 
 echo $subpanel_object->getSearchForm();
-

@@ -126,7 +126,7 @@ class AccountsCest
         // Inline edit
         $accounts->gotoAccounts();
         $listView->waitForListViewVisible();
-        $I->doubleClick('.inlineEdit');
+        $I->doubleClick('.inlineEditIcon');
         $I->fillField('#name', 'InlineAccountNameEdit');
         $I->clickWithLeftButton('.suitepicon-action-confirm');
         $I->see('InlineAccountNameEdit');

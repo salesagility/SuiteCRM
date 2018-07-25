@@ -40,36 +40,36 @@
  */
 class AOR_Condition extends Basic
 {
-    var $new_schema = true;
-    var $module_dir = 'AOR_Conditions';
-    var $object_name = 'AOR_Condition';
-    var $table_name = 'aor_conditions';
-    var $tracker_visibility = false;
-    var $importable = true;
-    var $disable_row_level_security = true;
+    public $new_schema = true;
+    public $module_dir = 'AOR_Conditions';
+    public $object_name = 'AOR_Condition';
+    public $table_name = 'aor_conditions';
+    public $tracker_visibility = false;
+    public $importable = true;
+    public $disable_row_level_security = true;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $aor_report_id;
-    var $condition_order;
-    var $field;
-    var $logic_op;
-    var $parenthesis;
-    var $operator;
-    var $value;
-    var $value_type;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $aor_report_id;
+    public $condition_order;
+    public $field;
+    public $logic_op;
+    public $parenthesis;
+    public $operator;
+    public $value;
+    public $value_type;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -77,29 +77,27 @@ class AOR_Condition extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Condition(){
+    public function AOR_Condition()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function save_lines($post_data, $parent, $key = '')
+    public function save_lines($post_data, $parent, $key = '')
     {
-
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         $j = 0;
-        if(!isset($post_data[$key . 'field']) || !is_array($post_data[$key . 'field'])){
+        if (!isset($post_data[$key . 'field']) || !is_array($post_data[$key . 'field'])) {
             return;
         }
         foreach ($post_data[$key . 'field'] as $i => $field) {
-
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
@@ -108,7 +106,6 @@ class AOR_Condition extends Basic
                     $field_name = $field_def['name'];
                     if (isset($post_data[$key . $field_name][$i])) {
                         if (is_array($post_data[$key . $field_name][$i])) {
-
                             switch ($condition->value_type) {
                                 case 'Date':
                                     $post_data[$key . $field_name][$i] = base64_encode(serialize($post_data[$key . $field_name][$i]));
@@ -116,11 +113,11 @@ class AOR_Condition extends Basic
                                 default:
                                     $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
                             }
-                        } else if ($field_name == 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
+                        } elseif ($field_name == 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
                             $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['report_module'], $condition->field, $post_data[$key . $field_name][$i]);
-                        } else if ($field_name == 'parameter') {
+                        } elseif ($field_name == 'parameter') {
                             $post_data[$key . $field_name][$i] = isset($post_data[$key . $field_name][$i]);
-                        } else if ($field_name == 'module_path') {
+                        } elseif ($field_name == 'module_path') {
                             $post_data[$key . $field_name][$i] = base64_encode(serialize(explode(":", $post_data[$key . $field_name][$i])));
                         }
                         if ($field_name == 'parenthesis' && $post_data[$key . $field_name][$i] == 'END') {
@@ -131,10 +128,9 @@ class AOR_Condition extends Basic
                         } else {
                             $condition->$field_name = $post_data[$key . $field_name][$i];
                         }
-                    } else if ($field_name == 'parameter') {
+                    } elseif ($field_name == 'parameter') {
                         $condition->$field_name = 0;
                     }
-
                 }
                 // Period must be saved as a string instead of a base64 encoded datetime.
                 // Overwriting value
@@ -156,5 +152,4 @@ class AOR_Condition extends Basic
             }
         }
     }
-
 }

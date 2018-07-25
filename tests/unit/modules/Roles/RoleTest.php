@@ -33,7 +33,7 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $role = new Role();
 
@@ -45,8 +45,6 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('test', $role->get_summary_text());
         
         // clean up
-        
-        
     }
 
     public function testcreate_export_query()
@@ -71,7 +69,7 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $role->id = 1;
         $mod_ids = array('Accounts', 'Leads');
 
-        //test set_module_relationship. 
+        //test set_module_relationship.
         //creates related records
         $role->set_module_relationship($role->id, $mod_ids, 1);
 
@@ -79,7 +77,7 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $role->query_modules();
         $this->assertGreaterThanOrEqual(2, count((array)$result));
 
-        //test clear_module_relationship method 
+        //test clear_module_relationship method
         $this->clear_module_relationship($role->id);
     }
 
@@ -98,12 +96,12 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSet_user_relationshipAndCheck_user_role_count()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-	// test
+        // test
         
         $role = new Role();
 
@@ -131,7 +129,6 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('email_addresses');
-
     }
 
     public function get_users($id)

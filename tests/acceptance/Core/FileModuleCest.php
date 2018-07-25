@@ -195,7 +195,6 @@ class FileModuleCest
         $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
         $detailView->waitForDetailViewVisible();
         $this->lastView = 'DetailView';
-
     }
 
     /**

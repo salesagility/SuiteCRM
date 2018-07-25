@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -31,7 +31,6 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        
         self::markTestIncomplete('environment dependency');
         
         $state = new SuiteCRM\StateSaver();
@@ -41,7 +40,7 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aop_case_updates');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aopCaseUpdates = new AOP_Case_Updates();
         $aopCaseUpdates->name = 'test name';
@@ -54,7 +53,7 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test for record ID to verify that record is saved
         $this->assertEquals(36, strlen($aopCaseUpdates->id));
 
-        //mark the record as deleted for cleanup 
+        //mark the record as deleted for cleanup
         $aopCaseUpdates->mark_deleted($aopCaseUpdates->id);
         
         // clean up

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -74,42 +76,42 @@ $regex = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\$/";
 //_ppd($web_required_symbol);
 
 $moduleDir = '';
-if(!empty($_REQUEST['moduleDir'])){
+if (!empty($_REQUEST['moduleDir'])) {
     $moduleDir= $_REQUEST['moduleDir'];
 }
 
-if(!empty($_REQUEST['web_header'])){
+if (!empty($_REQUEST['web_header'])) {
     $web_form_header= $_REQUEST['web_header'];
 }
-if(!empty($_REQUEST['web_description'])){
+if (!empty($_REQUEST['web_description'])) {
     $web_form_description= $_REQUEST['web_description'];
 }
-if(!empty($_REQUEST['web_submit'])){
+if (!empty($_REQUEST['web_submit'])) {
     $web_form_submit_label=to_html($_REQUEST['web_submit']);
 }
-if(!empty($_REQUEST['post_url'])){
+if (!empty($_REQUEST['post_url'])) {
     $web_post_url= $_REQUEST['post_url'];
 }
-if(!empty($_REQUEST['redirect_url']) && $_REQUEST['redirect_url'] !="http://"){
+if (!empty($_REQUEST['redirect_url']) && $_REQUEST['redirect_url'] !="http://") {
     $web_redirect_url= $_REQUEST['redirect_url'];
 }
-if(!empty($_REQUEST['notify_campaign'])){
+if (!empty($_REQUEST['notify_campaign'])) {
     $web_notify_campaign = $_REQUEST['notify_campaign'];
 }
-if(!empty($_REQUEST['web_footer'])){
+if (!empty($_REQUEST['web_footer'])) {
     $web_form_footer= $_REQUEST['web_footer'];
 }
-if(!empty($_REQUEST['campaign_id'])){
+if (!empty($_REQUEST['campaign_id'])) {
     $web_form_campaign= $_REQUEST['campaign_id'];
 }
-if(!empty($_REQUEST['assigned_user_id'])){
+if (!empty($_REQUEST['assigned_user_id'])) {
     $web_assigned_user = $_REQUEST['assigned_user_id'];
 }
 
 $typeOfPerson = !empty($_REQUEST['typeOfPerson']) ? $_REQUEST['typeOfPerson'] : 'Lead';
  $person = new $typeOfPerson();
  $fieldsMetaData = new FieldsMetaData();
- $xtpl=new XTemplate ('modules/Campaigns/WebToLeadForm.html');
+ $xtpl=new XTemplate('modules/Campaigns/WebToLeadForm.html');
  $xtpl->assign("MOD", $mod_strings);
  $xtpl->assign("APP", $app_strings);
 
@@ -155,12 +157,13 @@ $xtpl->parse("main.variable_button");
 $xtpl->parse("main");
 $xtpl->out("main");
 
-function ifRadioButton($customFieldName){
+function ifRadioButton($customFieldName)
+{
     $custRow = null;
     $query="select id,type from fields_meta_data where deleted = 0 and name = '$customFieldName'";
     $result=DBManagerFactory::getInstance()->query($query);
     $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
-    if($row != null && $row['type'] == 'radioenum'){
+    if ($row != null && $row['type'] == 'radioenum') {
         return $custRow = $row;
     }
     return $custRow;

@@ -8,7 +8,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -21,8 +21,6 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         }
         
         // clean up
-        
-        
     }
 
     public function testdisplay_flow_bar()
@@ -30,7 +28,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -45,8 +43,6 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         }
         
         // clean up
-        
-        
     }
 
     public function teststart_flow_bar()
@@ -54,7 +50,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -69,8 +65,6 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         }
         
         // clean up
-        
-        
     }
 
     public function testdestroy_flow_bar()
@@ -78,7 +72,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -93,8 +87,6 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         }
         
         // clean up
-        
-        
     }
 
     public function testdisplay_progress_bar()
@@ -102,7 +94,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -117,8 +109,6 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         }
         
         // clean up
-        
-        
     }
 
     public function testupdate_progress_bar()
@@ -126,7 +116,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throw an exception.
@@ -141,7 +131,5 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         }
         
         // clean up
-        
-        
     }
 }

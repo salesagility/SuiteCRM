@@ -43,7 +43,6 @@ use SuiteCRM\Utility\OperatingSystem;
 use SuiteCRM\Robo\Traits\RoboTrait;
 use Robo\Task\Base\loadTasks;
 use SuiteCRM\Utility\Paths;
-use Symfony\Component\Yaml\Yaml;
 
 class CodeCoverageCommands extends \Robo\Tasks
 {

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,20 +44,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $layout_defs['Roles'] = array(
-	// list of what Subpanels to show in the DetailView 
-	'subpanel_setup' => array(
+    // list of what Subpanels to show in the DetailView
+    'subpanel_setup' => array(
          'users' => array(
          'top_buttons' => array(
-			array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Users'),
-	),
-			'order' => 10,
-			'module' => 'Users',
-			'sort_by' => 'user_name',
-			'sort_order' => 'asc',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'users',
-			'add_subpanel_data' => 'user_id',
-			'title_key' => 'LBL_USERS_SUBPANEL_TITLE',
-		),
-	),
+            array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Users'),
+    ),
+            'order' => 10,
+            'module' => 'Users',
+            'sort_by' => 'user_name',
+            'sort_order' => 'asc',
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'users',
+            'add_subpanel_data' => 'user_id',
+            'title_key' => 'LBL_USERS_SUBPANEL_TITLE',
+        ),
+    ),
 );

@@ -42,7 +42,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $scheduler = new Scheduler();
 
@@ -59,8 +59,6 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $result);
         
         // clean up
-        
-        
     }
 
     public function testcreateJob()
@@ -79,7 +77,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $scheduler = new Scheduler();
@@ -97,32 +95,28 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('tracker');
         $state->popTable('aod_index');
         $state->popTable('job_queue');
-        
     }
 
     public function testderiveDBDateTimes()
     {
         $this->markTestIncomplete('Need to implement!');
 
-//        $scheduler = new Scheduler();
+
 //
-//        $scheduler->id = 1;
-//        $scheduler->date_time_start = '2016-01-01 10:30:01';
+
+
 //
 //        //execute the method with different job intervals
 //
-//        $scheduler->job_interval = '0::3::3::*::*';
-//        $result = $scheduler->deriveDBDateTimes($scheduler);
-//        $this->assertEquals(false, (bool)$result);
+
+
+
 //
 //        // NOTE: add this valid test case:
-//        //$scheduler->job_interval = '*::*::*::*::3';
-//        //$result = $scheduler->deriveDBDateTimes($scheduler);
-//        //$this->assertEquals(false, (bool)$result);
+
+
+
 //
-//        $scheduler->job_interval = '0::*::3::*::*';
-//        $result = $scheduler->deriveDBDateTimes($scheduler);
-//        $this->assertEquals(false, (bool)$result);
     }
 
     public function testhandleIntervalType()
@@ -194,7 +188,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $scheduler = new Scheduler();
@@ -208,22 +202,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testdisplayCronInstructions()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $scheduler = new Scheduler();
 
-        //execute the method and capture the echo output 
+        //execute the method and capture the echo output
         ob_start();
 
         $scheduler->displayCronInstructions();
@@ -236,7 +228,6 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-
     }
 
     public function testrebuildDefaultSchedulers()
@@ -249,7 +240,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $scheduler = new Scheduler();
@@ -267,19 +258,18 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('tracker');
         $state->popTable('aod_index');
         $state->popTable('schedulers');
-        
     }
 
     public function testcreate_export_query()
     {
         self::markTestIncomplete('environment dependency');
 
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
 
-	// test
+        // test
         
         $scheduler = new Scheduler();
 
@@ -305,7 +295,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $scheduler = new Scheduler();
@@ -328,7 +318,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $scheduler = new Scheduler();
@@ -344,20 +334,18 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testget_list_view_data()
     {
         self::markTestIncomplete('environment dependency');
 
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
 
-	// test
+        // test
         
         $scheduler = new Scheduler();
 
@@ -389,14 +377,14 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     public function testget_summary_text()
-    {        
+    {
         self::markTestIncomplete('environment dependency');
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
 
-	// test
+        // test
         
         $scheduler = new Scheduler();
 
@@ -416,12 +404,12 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
 
-	// test
+        // test
         
         $result = Scheduler::getJobsList();
         $this->assertTrue(is_array($result));

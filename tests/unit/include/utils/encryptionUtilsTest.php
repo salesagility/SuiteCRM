@@ -55,7 +55,7 @@ class encryption_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test key
         $actual = blowfishGetKey('test');
         $this->assertGreaterThanOrEqual(36, strlen($actual));
-        //var_dump($actual);
+        
 
         //default key
         $actual = blowfishGetKey('rapelcg_svryq');

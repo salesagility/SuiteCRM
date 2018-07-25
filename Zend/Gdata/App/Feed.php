@@ -40,8 +40,7 @@ require_once 'Zend/Gdata/App/FeedSourceParent.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
-        implements Iterator, ArrayAccess
+class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent implements Iterator, ArrayAccess
 {
 
     /**
@@ -270,13 +269,13 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
         return (array_key_exists($key, $this->_entry));
     }
 
-   /**
-     * Retrieve the next set of results from this feed.
-     *
-     * @throws Zend_Gdata_App_Exception
-     * @return mixed|null Returns the next set of results as a feed of the same
-     *          class as this feed, or null if no results exist.
-     */
+    /**
+      * Retrieve the next set of results from this feed.
+      *
+      * @throws Zend_Gdata_App_Exception
+      * @return mixed|null Returns the next set of results as a feed of the same
+      *          class as this feed, or null if no results exist.
+      */
     public function getNextFeed()
     {
         $nextLink = $this->getNextLink();
@@ -291,13 +290,13 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
         return $service->getFeed($nextLinkHref, get_class($this));
     }
 
-   /**
-     * Retrieve the previous set of results from this feed.
-     *
-     * @throws Zend_Gdata_App_Exception
-     * @return mixed|null Returns the previous set of results as a feed of
-     *          the same class as this feed, or null if no results exist.
-     */
+    /**
+      * Retrieve the previous set of results from this feed.
+      *
+      * @throws Zend_Gdata_App_Exception
+      * @return mixed|null Returns the previous set of results as a feed of
+      *          the same class as this feed, or null if no results exist.
+      */
     public function getPreviousFeed()
     {
         $previousLink = $this->getPreviousLink();
@@ -348,5 +347,4 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
             $entry->setMinorProtocolVersion($value);
         }
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,14 +44,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 
 
-class MyNotesDashlet extends DashletGeneric {
-    function __construct($id, $def = null) {
+class MyNotesDashlet extends DashletGeneric
+{
+    public function __construct($id, $def = null)
+    {
         global $current_user, $app_strings, $dashletData;
-		require('modules/Notes/Dashlets/MyNotesDashlet/MyNotesDashlet.data.php');
+        require('modules/Notes/Dashlets/MyNotesDashlet/MyNotesDashlet.data.php');
 
         parent::__construct($id, $def);
 
-        if(empty($def['title'])) $this->title = translate('LBL_MY_NOTES_DASHLETNAME', 'Notes');
+        if (empty($def['title'])) {
+            $this->title = translate('LBL_MY_NOTES_DASHLETNAME', 'Notes');
+        }
 
         $this->searchFields = $dashletData['MyNotesDashlet']['searchFields'];
         $this->columns = $dashletData['MyNotesDashlet']['columns'];
@@ -60,15 +66,14 @@ class MyNotesDashlet extends DashletGeneric {
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyNotesDashlet($id, $def = null){
+    public function MyNotesDashlet($id, $def = null)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
     }
-
 }

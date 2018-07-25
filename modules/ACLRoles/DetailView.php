@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,18 +50,20 @@ $sugar_smarty->assign('APP', $app_strings);
 //nsingh bug: 21669. Messes up localization
 /*foreach($modInvisList as $modinvisname){
     if(empty($app_list_strings['moduleList'][$modinvisname])){
-	   $app_list_strings['moduleList'][$modinvisname] = $modinvisname;
+       $app_list_strings['moduleList'][$modinvisname] = $modinvisname;
     }
 }*/
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
 /*foreach($modInvisList as $modinvisname){
-	unset($app_list_strings['moduleList'][$modinvisname]);
+    unset($app_list_strings['moduleList'][$modinvisname]);
 }*/
 $role = new ACLRole();
 $role->retrieve($_REQUEST['record']);
 $categories = ACLRole::getRoleActions($_REQUEST['record']);
 $names = ACLAction::setupCategoriesMatrix($categories);
-if(!empty($names))$tdwidth = 100 / sizeof($names);
+if (!empty($names)) {
+    $tdwidth = 100 / sizeof($names);
+}
 $sugar_smarty->assign('ROLE', $role->toArray());
 $sugar_smarty->assign('CATEGORIES', $categories);
 $sugar_smarty->assign('TDWIDTH', $tdwidth);

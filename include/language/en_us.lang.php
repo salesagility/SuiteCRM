@@ -1088,6 +1088,8 @@ $app_strings = array(
     'LBL_EMAIL_REMOVE_SMTP_WARNING' => 'Warning! The outbound account you are trying to delete is associated to an existing inbound account. Are you sure you want to continue?',
     'LBL_EMAIL_ADDRESSES' => 'Email',
     'LBL_EMAIL_ADDRESS_PRIMARY' => 'Email Address',
+    'LBL_EMAIL_ADDRESS_OPT_IN' => 'You have confirmed that your email address has been opted in: ',
+    'LBL_EMAIL_ADDRESS_OPT_IN_ERR' => 'Unable to confirm email address',
     'LBL_EMAIL_ARCHIVE_TO_SUGAR' => 'Import to SuiteCRM',
     'LBL_EMAIL_ASSIGNMENT' => 'Assignment',
     'LBL_EMAIL_ATTACH_FILE_TO_EMAIL' => 'Attach',
@@ -1166,11 +1168,21 @@ $app_strings = array(
     'LBL_EMAIL_ERROR_VIEW_RAW_SOURCE' => 'This information is not available',
     'LBL_EMAIL_ERROR_NO_OUTBOUND' => 'No outgoing mail server specified.',
     'LBL_EMAIL_ERROR_SENDING' => 'Error Sending Email. Please contact your administrator for assistance.',
-    'LBL_EMAIL_FOLDERS' => SugarThemeRegistry::current()->getImage('icon_email_folder', 'align=absmiddle border=0',
-            null, null, '.gif', ''
+    'LBL_EMAIL_FOLDERS' => SugarThemeRegistry::current()->getImage(
+        'icon_email_folder',
+        'align=absmiddle border=0',
+            null,
+        null,
+        '.gif',
+        ''
         ) . 'Folders',
-    'LBL_EMAIL_FOLDERS_SHORT' => SugarThemeRegistry::current()->getImage('icon_email_folder',
-        'align=absmiddle border=0', null, null, '.gif', ''
+    'LBL_EMAIL_FOLDERS_SHORT' => SugarThemeRegistry::current()->getImage(
+        'icon_email_folder',
+        'align=absmiddle border=0',
+        null,
+        null,
+        '.gif',
+        ''
     ),
     'LBL_EMAIL_FOLDERS_ADD' => 'Add',
     'LBL_EMAIL_FOLDERS_ADD_DIALOG_TITLE' => 'Add New Folder',
@@ -1277,11 +1289,21 @@ $app_strings = array(
     'LBL_EMAIL_SAVE_DRAFT' => 'Save Draft',
     'LBL_EMAIL_DRAFT_SAVED' => 'Draft has been saved',
 
-    'LBL_EMAIL_SEARCH' => SugarThemeRegistry::current()->getImage('Search', 'align=absmiddle border=0', null, null,
-        '.gif', ''
+    'LBL_EMAIL_SEARCH' => SugarThemeRegistry::current()->getImage(
+        'Search',
+        'align=absmiddle border=0',
+        null,
+        null,
+        '.gif',
+        ''
     ),
-    'LBL_EMAIL_SEARCH_SHORT' => SugarThemeRegistry::current()->getImage('Search', 'align=absmiddle border=0', null,
-        null, '.gif', ''
+    'LBL_EMAIL_SEARCH_SHORT' => SugarThemeRegistry::current()->getImage(
+        'Search',
+        'align=absmiddle border=0',
+        null,
+        null,
+        '.gif',
+        ''
     ),
     'LBL_EMAIL_SEARCH_DATE_FROM' => 'Date From',
     'LBL_EMAIL_SEARCH_DATE_UNTIL' => 'Date Until',
