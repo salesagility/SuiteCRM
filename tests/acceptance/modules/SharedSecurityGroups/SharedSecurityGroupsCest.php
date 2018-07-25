@@ -59,6 +59,12 @@ class SharedSecurityGroupsCest {
     
     // ---- common parts of all jobs
     
+    protected function clearSearch(AcceptanceTester $I) {
+        // delete the search settings, if other test DID NOT DOING THIS???!!!
+        $I->waitForElementVisible('#MassUpdate > div.list.view.listViewEmpty > div > ul.searchAppliedAlert.clickMenu.selectmenu.searchAppliedAlertLink.SugarActionMenu.listViewLinkButton.listViewLinkButton_ > li.sugar_action_button.desktopOnly > a.glyphicon.glyphicon-remove');
+        $I->click('#MassUpdate > div.list.view.listViewEmpty > div > ul.searchAppliedAlert.clickMenu.selectmenu.searchAppliedAlertLink.SugarActionMenu.listViewLinkButton.listViewLinkButton_ > li.sugar_action_button.desktopOnly > a.glyphicon.glyphicon-remove');
+    }
+    
     protected function goToAccountsPage(AcceptanceTester $I) {
         $allMenuButton = '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav.all';
         $I->waitForElementVisible($allMenuButton, self::WAITING_DELAY);
@@ -67,10 +73,6 @@ class SharedSecurityGroupsCest {
         $I->waitForElementVisible($allMenu, self::WAITING_DELAY);
         $I->click('Accounts', $allMenu);
         $I->waitForElementVisible('#pagecontent', self::WAITING_DELAY);
-        
-        // delete the search settings, if other test DID NOT DOING THIS???!!!
-        $I->waitForElementVisible('#MassUpdate > div.list.view.listViewEmpty > div > ul.searchAppliedAlert.clickMenu.selectmenu.searchAppliedAlertLink.SugarActionMenu.listViewLinkButton.listViewLinkButton_ > li.sugar_action_button.desktopOnly > a.glyphicon.glyphicon-remove');
-        $I->click('#MassUpdate > div.list.view.listViewEmpty > div > ul.searchAppliedAlert.clickMenu.selectmenu.searchAppliedAlertLink.SugarActionMenu.listViewLinkButton.listViewLinkButton_ > li.sugar_action_button.desktopOnly > a.glyphicon.glyphicon-remove');
     }
     
     protected function doLogout(AcceptanceTester $I) {
@@ -100,6 +102,7 @@ class SharedSecurityGroupsCest {
         
         // go to accounts
         $this->goToAccountsPage($I); 
+        $this->clearSearch($I);
         // go to detail view        
         $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
         $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
