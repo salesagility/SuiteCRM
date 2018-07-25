@@ -136,7 +136,7 @@ class SharedSecurityGroupsCest {
     protected function cleanUpAfterTestedSharedSecurityGroups(AcceptanceTester $I, Administration $a) {
         
         $this->cleanUpSharedRule($I, $a);
-        $this->cleanUpAccounts($I);
+        //$this->cleanUpAccounts($I);
         
     }
     
