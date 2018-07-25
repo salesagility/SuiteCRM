@@ -24,7 +24,7 @@
 
 require_once(get_custom_file_if_exists('modules/AOW_Actions/actions/actionCreateRecord.php'));
 
-      class actionModifyRecord extends actionCreateRecord
+class actionModifyRecord extends actionCreateRecord
 {
     public function __construct($id = '')
     {
