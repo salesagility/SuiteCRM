@@ -59,7 +59,7 @@ class SharedSecurityGroupsCest {
     
     // ---- common parts of all jobs
     
-    protected function goToAccountsPage(AcceptanceTester $I, Administration $a) {
+    protected function goToAccountsPage(AcceptanceTester $I) {
         $allMenuButton = '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav.all';
         $I->waitForElementVisible($allMenuButton, self::WAITING_DELAY);
         $I->click('All', $allMenuButton);
@@ -95,12 +95,7 @@ class SharedSecurityGroupsCest {
         // we are going to accounts module and clean up
         
         // go to accounts
-        $allMenuButton = '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav.all';
-        $I->waitForElementVisible($allMenuButton, self::WAITING_DELAY);
-        $I->click('All', $allMenuButton);
-        $allMenu = $allMenuButton . ' > span.notCurrentTab > ul.dropdown-menu';
-        $I->waitForElementVisible($allMenu, self::WAITING_DELAY);
-        $I->click('#moduleTab_9_Accounts');  
+        $this->goToAccountsPage($I); 
         // go to detail view        
         $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
         $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
@@ -177,7 +172,7 @@ class SharedSecurityGroupsCest {
         
         // we are going to create an account with name contains 'foo'
         
-        $this->goToAccountsPage($I, $a);
+        $this->goToAccountsPage($I);
         
         $I->click('#actionMenuSidebar > ul > li:nth-child(2) > a > div.actionmenulink'); // create
         $I->waitForElementVisible('#EditView_tabs > div.panel-content', self::WAITING_DELAY);
@@ -240,7 +235,7 @@ class SharedSecurityGroupsCest {
         $this->doLogin($I, $w, 'chris', 'chris');
         $this->firstLoginWithMrTester($I, $a, $w);
         // tester is going to the account module page
-        $this->goToAccountsPage($I, $a);
+        $this->goToAccountsPage($I);
         $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
         $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
         $I->waitForElementVisible('#content');
@@ -256,7 +251,7 @@ class SharedSecurityGroupsCest {
         
         $this->doLogin($I, $w, 'chris', 'chris');
         // tester is going to the account module page
-        $this->goToAccountsPage($I, $a);
+        $this->goToAccountsPage($I);
         $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
         $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
         $I->waitForElementVisible('#content');
