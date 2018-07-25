@@ -237,9 +237,9 @@ class actionCreateRecord extends actionBase
                         }
                         switch ($params['value'][$key][3]) {
                             case 'business_hours':
-                                if(file_exists(get_custom_file_if_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php'))) {
+                                if (file_exists(get_custom_file_if_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php'))) {
                                     require_once(get_custom_file_if_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php'));
-                                }  
+                                }
 
                                 $businessHours = new AOBH_BusinessHours();
 
@@ -281,12 +281,12 @@ class actionCreateRecord extends actionBase
                                 break;
                         }
                         break;
-                    Case 'Round_Robin':
-                    Case 'Least_Busy':
-                    Case 'Random':
+                    case 'Round_Robin':
+                    case 'Least_Busy':
+                    case 'Random':
                         switch ($params['value'][$key][0]) {
-                            Case 'security_group':
-                                if(file_exists(get_custom_file_if_exists('modules/SecurityGroups/SecurityGroup.php'))) {
+                            case 'security_group':
+                                if (file_exists(get_custom_file_if_exists('modules/SecurityGroups/SecurityGroup.php'))) {
                                     require_once(get_custom_file_if_exists('modules/SecurityGroups/SecurityGroup.php'));
                                 }  
                                 $security_group = new SecurityGroup();
