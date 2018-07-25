@@ -67,6 +67,10 @@ class SharedSecurityGroupsCest {
         $I->waitForElementVisible($allMenu, self::WAITING_DELAY);
         $I->click('Accounts', $allMenu);
         $I->waitForElementVisible('#pagecontent', self::WAITING_DELAY);
+        
+        // delete the search settings, if other test DID NOT DOING THIS???!!!
+        $I->waitForElementVisible('#MassUpdate > div.list.view.listViewEmpty > div > ul.searchAppliedAlert.clickMenu.selectmenu.searchAppliedAlertLink.SugarActionMenu.listViewLinkButton.listViewLinkButton_ > li.sugar_action_button.desktopOnly > a.glyphicon.glyphicon-remove');
+        $I->click('#MassUpdate > div.list.view.listViewEmpty > div > ul.searchAppliedAlert.clickMenu.selectmenu.searchAppliedAlertLink.SugarActionMenu.listViewLinkButton.listViewLinkButton_ > li.sugar_action_button.desktopOnly > a.glyphicon.glyphicon-remove');
     }
     
     protected function doLogout(AcceptanceTester $I) {
@@ -136,7 +140,7 @@ class SharedSecurityGroupsCest {
     protected function cleanUpAfterTestedSharedSecurityGroups(AcceptanceTester $I, Administration $a) {
         
         $this->cleanUpSharedRule($I, $a);
-        //$this->cleanUpAccounts($I);
+        $this->cleanUpAccounts($I);
         
     }
     
