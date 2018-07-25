@@ -61,8 +61,8 @@ class SharedSecurityGroupsCest {
     
     protected function clearSearch(AcceptanceTester $I) {
         // delete the search settings, if other test DID NOT DOING THIS???!!!
-        $I->waitForElementVisible('#MassUpdate > div.list.view.listViewEmpty > div > ul.searchAppliedAlert.clickMenu.selectmenu.searchAppliedAlertLink.SugarActionMenu.listViewLinkButton.listViewLinkButton_ > li.sugar_action_button.desktopOnly > a.glyphicon.glyphicon-remove');
-        $I->click('#MassUpdate > div.list.view.listViewEmpty > div > ul.searchAppliedAlert.clickMenu.selectmenu.searchAppliedAlertLink.SugarActionMenu.listViewLinkButton.listViewLinkButton_ > li.sugar_action_button.desktopOnly > a.glyphicon.glyphicon-remove');
+        $I->waitForElementVisible('#MassUpdate a.glyphicon.glyphicon-remove');
+        $I->click('#MassUpdate a.glyphicon.glyphicon-remove');
     }
     
     protected function goToAccountsPage(AcceptanceTester $I) {
