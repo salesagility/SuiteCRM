@@ -1,8 +1,10 @@
 <?php
 
-class SugarWebServiceUtilv4Test extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
+class SugarWebServiceUtilv4Test extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+{
 
-    public function testGet_field_list_parentenum() {
+    public function testGetFieldListParentenum()
+    {
         require_once('service/v4_1/SugarWebServiceUtilv4_1.php');
         $helperObject = new SugarWebServiceUtilv4_1();
         require_once('modules/Cases/Case.php');
