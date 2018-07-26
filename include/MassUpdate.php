@@ -185,9 +185,9 @@ eoq;
                         $_POST[$post] = 0;
                     }
                     if (!empty($this->sugarbean->field_defs[$post]['dbType']) && strcmp(
-                        $this->sugarbean->field_defs[$post]['dbType'],
+                            $this->sugarbean->field_defs[$post]['dbType'],
                             'varchar'
-                    ) == 0
+                        ) == 0
                     ) {
                         if (strcmp($value, '1') == 0) {
                             $_POST[$post] = 'on';
@@ -435,10 +435,10 @@ eoq;
         $sugar_config = $configurator->config;
 
         if ($this->sugarbean->bean_implements('ACL') && (!ACLController::checkAccess(
-            $this->sugarbean->module_dir,
+                    $this->sugarbean->module_dir,
                     'edit',
-            true
-        ) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
+                    true
+                ) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
         ) {
             return '';
         }
@@ -558,24 +558,24 @@ eoq;
                                     translate($field["options"])
                                 );
                                 break;
-                            } else {
-                                if (!empty($field['options'])) {
-                                    $even = !$even;
-                                    $newhtml .= $this->addStatus(
-                                        $displayname,
-                                        $field["name"],
-                                        translate($field["options"])
-                                    );
-                                    break;
-                                } else {
-                                    if (!empty($field['function'])) {
-                                        $functionValue = $this->getFunctionValue($this->sugarbean, $field);
-                                        $even = !$even;
-                                        $newhtml .= $this->addStatus($displayname, $field["name"], $functionValue);
-                                        break;
-                                    }
-                                }
                             }
+                            if (!empty($field['options'])) {
+                                $even = !$even;
+                                $newhtml .= $this->addStatus(
+                                    $displayname,
+                                    $field["name"],
+                                    translate($field["options"])
+                                );
+                                break;
+                            }
+                            if (!empty($field['function'])) {
+                                $functionValue = $this->getFunctionValue($this->sugarbean, $field);
+                                $even = !$even;
+                                $newhtml .= $this->addStatus($displayname, $field["name"], $functionValue);
+                                break;
+                            }
+
+
                             break;
                         case "radioenum":
                             $even = !$even;
@@ -679,17 +679,16 @@ EOJS;
 
         if ($field_count > 0) {
             return $html;
-        } else {
-            //If no fields are found, render either a form that still permits Mass Update deletes or just display a message that no fields are available
-            $html = "<div id='massupdate_form' style='display:none;'><table width='100%' cellpadding='0' cellspacing='0' border='0' class='formHeader h3Row'><tr><td nowrap><h3><span>" . $app_strings['LBL_MASS_UPDATE'] . "</h3></td></tr></table>";
-            if ($this->sugarbean->ACLAccess('Delete', true) && !$hideDeleteIfNoFieldsAvailable) {
-                $html .= "<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td><input type='submit' name='Delete' value='$lang_delete' onclick=\"return confirm('{$lang_confirm}')\" class='button'></td></tr></table></div>";
-            } else {
-                $html .= $app_strings['LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE'] . "</div>";
-            }
-
-            return $html;
         }
+        //If no fields are found, render either a form that still permits Mass Update deletes or just display a message that no fields are available
+        $html = "<div id='massupdate_form' style='display:none;'><table width='100%' cellpadding='0' cellspacing='0' border='0' class='formHeader h3Row'><tr><td nowrap><h3><span>" . $app_strings['LBL_MASS_UPDATE'] . "</h3></td></tr></table>";
+        if ($this->sugarbean->ACLAccess('Delete', true) && !$hideDeleteIfNoFieldsAvailable) {
+            $html .= "<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td><input type='submit' name='Delete' value='$lang_delete' onclick=\"return confirm('{$lang_confirm}')\" class='button'></td></tr></table></div>";
+        } else {
+            $html .= $app_strings['LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE'] . "</div>";
+        }
+
+        return $html;
     }
 
     public function getFunctionValue($focus, $vardef)
@@ -706,9 +705,9 @@ EOJS;
             }
 
             return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
-        } else {
-            return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
         }
+
+        return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
     }
 
     /**
@@ -1205,8 +1204,7 @@ EOQ;
             }
             $options = $new_options;
         }
-        $options = get_select_options_with_id_separate_key($options, $options, '', true);
-        ;
+        $options = get_select_options_with_id_separate_key($options, $options, '', true);;
 
         // cn: added "mass_" to the id tag to differentiate from the status id in StoreQuery
         $html = '<td scope="row" width="15%">' . $displayname . '</td>

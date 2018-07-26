@@ -101,8 +101,7 @@ class updateDependencies
         $difference = $d1->diff($d2);
         if ($difference->invert == 1) {
             return '+'.$difference->d.' days'; //returns positive days
-        } else {
-            return -$difference->d.' days';//returns negative days
         }
+        return -$difference->d.' days';//returns negative days
     }
 }

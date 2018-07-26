@@ -470,9 +470,8 @@ function unformat_number($string)
     $out_number = trim($string[0]);
     if ($out_number == '') {
         return '';
-    } else {
-        return (float)$out_number;
     }
+    return (float)$out_number;
 }
 
 // deprecated use format_number() above
@@ -484,14 +483,12 @@ function format_money($amount, $for_display = true)
     if (isset($amount)) {
         if ($for_display) {
             return sprintf("%0.02f", $amount);
-        } else {
-            // If it's an editable field, don't use a thousand seperator.
-            // Or perhaps we will want to, but it doesn't matter right now.
-            return sprintf("%0.02f", $amount);
         }
-    } else {
-        return;
+        // If it's an editable field, don't use a thousand seperator.
+        // Or perhaps we will want to, but it doesn't matter right now.
+        return sprintf("%0.02f", $amount);
     }
+    return;
 }
 
 /**
@@ -609,11 +606,10 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
             $html .= $currency->getJavascript();
         }
         return $html;
-    } else {
-        $currency = new Currency();
-        $currency->retrieve($value);
-        return $currency->name;
     }
+    $currency = new Currency();
+    $currency->retrieve($value);
+    return $currency->name;
 }
 
 function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $view='DetailView')
@@ -650,16 +646,15 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
         }
         return '<select name="'.$field.'" id="'.$field.'" />'.
             get_select_options_with_id($listitems, $value).'</select>';
-    } else {
-        $currency = new Currency();
-        if (isset($focus->currency_id)) {
-            $currency_id = $focus->currency_id;
-        } else {
-            $currency_id = -99;
-        }
-        $currency->retrieve($currency_id);
-        return $currency->name;
     }
+    $currency = new Currency();
+    if (isset($focus->currency_id)) {
+        $currency_id = $focus->currency_id;
+    } else {
+        $currency_id = -99;
+    }
+    $currency->retrieve($currency_id);
+    return $currency->name;
 }
 
 function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $view='DetailView')
@@ -696,14 +691,13 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
         }
         return '<select name="'.$field.'" id="'.$field.'" />'.
             get_select_options_with_id($listitems, $value).'</select>';
-    } else {
-        $currency = new Currency();
-        if (isset($focus->currency_id)) {
-            $currency_id = $focus->currency_id;
-        } else {
-            $currency_id = -99;
-        }
-        $currency->retrieve($currency_id);
-        return $currency->name;
     }
+    $currency = new Currency();
+    if (isset($focus->currency_id)) {
+        $currency_id = $focus->currency_id;
+    } else {
+        $currency_id = -99;
+    }
+    $currency->retrieve($currency_id);
+    return $currency->name;
 }

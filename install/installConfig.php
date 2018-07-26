@@ -297,8 +297,8 @@ EOQ2;
                 if (!empty($value)) {
                     if (!empty($value['required'])) {
                         $form .= "<span class=\"required\">*</span>";
-                    } else {
                     }
+                    
                     if (!empty($_SESSION[$name])) {
                         $sessval = $_SESSION[$name];
                     } else {

@@ -435,9 +435,8 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         $functionName = "metdataAclParser" . ucfirst($view_type) . ucfirst($view);
         if (method_exists($this, $functionName)) {
             return $this->$functionName($module_name, $metadata);
-        } else {
-            return $metadata;
         }
+        return $metadata;
     }
 
 

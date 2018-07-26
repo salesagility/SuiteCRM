@@ -114,7 +114,6 @@ function smarty_function_sugar_phone($params, &$smarty)
         && isset($params['value']) && skype_formatted($params['value'])) {
         $GLOBALS['log']->debug($params['value']);
         return '<a href="tel:'.format_skype($params['value']).'">'.$params['value'].'</a>';
-    } else {
-        return $params['value'];
     }
+    return $params['value'];
 }

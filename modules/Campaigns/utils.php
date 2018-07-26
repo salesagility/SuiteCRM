@@ -495,9 +495,8 @@ function get_subscription_lists($focus, $descriptions = false)
                         unset($unsubs_arr[$news_list['name']]);
                     }
                 }
-            } else {
-                //do nothing, there is no match
             }
+            //do nothing, there is no match
         }
         //if this newsletter id never matched a user subscription..
         //..then add to available(unsubscribed) NewsLetters if list is not of type exempt
@@ -560,9 +559,8 @@ function get_subscription_lists_keyed($focus)
                         $match = 'true';
                     }
                 }
-            } else {
-                //do nothing, there is no match
             }
+            //do nothing, there is no match
         }
         //if this newsletter id never matched a user subscription..
         //..then add to available(unsubscribed) NewsLetters if list is not of type exempt
@@ -841,9 +839,9 @@ function process_subscriptions($subscription_string_to_parse)
             $email_health =$email_health +1;
             $msg .= "<tr><td ><font color='red'><b> ".$mod_strings['LBL_MAILBOX_CHECK2_BAD']." </b></font></td></tr>";
             $errors['mailbox2'] = $mod_strings['LBL_MAILBOX_CHECK2_BAD'];
-        } else {
-            //do nothing, address has been changed
         }
+        //do nothing, address has been changed
+        
         //if health counter is above 1, then show admin link
         if ($email_health>0) {
             if (is_admin($current_user)) {

@@ -274,8 +274,7 @@ class ViewFactory
         $view->init($bean, $view_object_map);
         if ($view instanceof SugarView) {
             return $view;
-        } else {
-            return new SugarView($bean, $view_object_map);
         }
+        return new SugarView($bean, $view_object_map);
     }
 }

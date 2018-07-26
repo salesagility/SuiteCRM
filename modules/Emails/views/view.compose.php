@@ -164,12 +164,11 @@ class EmailsViewCompose extends ViewEdit
             $email->description .= $emailSignatures['signature'];
             $email->description_html .= html_entity_decode($emailSignatures['signature_html']);
             return $email;
-        } else {
-            $GLOBALS['log']->warn(
+        }
+        $GLOBALS['log']->warn(
                 'EmailsController::composeSignature() was unable to get the signature id for user: '.
                 $user->name
             );
-            return false;
-        }
+        return false;
     }
 }

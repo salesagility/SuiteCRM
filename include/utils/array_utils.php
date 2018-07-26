@@ -105,10 +105,9 @@ function override_recursive_helper($key_names, $array_name, $value)
 {
     if (empty($key_names)) {
         return "=".var_export_helper($value, true).";";
-    } else {
-        $key = array_shift($key_names);
-        return "[".var_export($key, true)."]". override_recursive_helper($key_names, $array_name, $value);
     }
+    $key = array_shift($key_names);
+    return "[".var_export($key, true)."]". override_recursive_helper($key_names, $array_name, $value);
 }
 
 function override_value_to_string_recursive2($array_name, $value_name, $value, $save_empty = true)
@@ -121,13 +120,11 @@ function override_value_to_string_recursive2($array_name, $value_name, $value, $
             $str.= override_value_to_string_recursive2($newArrayName, $key, $val, $save_empty);
         }
         return $str;
-    } else {
-        if (!$save_empty && empty($value)) {
-            return;
-        } else {
-            return "\$$array_name" . "[$quoted_vname] = " . var_export($value, true) . ";\n";
-        }
     }
+    if (!$save_empty && empty($value)) {
+        return;
+    }
+    return "\$$array_name" . "[$quoted_vname] = " . var_export($value, true) . ";\n";
 }
 
 /**
@@ -303,11 +300,10 @@ class SugarArray extends ArrayObject
             return $default;
         } elseif (count($children) == 0) {
             return $raw_config;
-        } else {
-            $next_key = array_shift($children);
-            return isset($raw_config[$next_key]) ?
+        }
+        $next_key = array_shift($children);
+        return isset($raw_config[$next_key]) ?
                 $this->_getRecursive($raw_config[$next_key], $children, $default) :
                 $default;
-        }
     }
 }

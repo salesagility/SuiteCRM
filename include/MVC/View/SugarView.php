@@ -798,23 +798,22 @@ class SugarView
 
         if ($retModTabs) {
             return $ss->fetch($themeObject->getTemplate('_headerModuleList.tpl'));
-        } else {
-            $ss->display($headerTpl);
+        }
+        $ss->display($headerTpl);
 
-            $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
+        $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
 
-            $messages = SugarApplication::getErrorMessages();
-            if (!empty($messages)) {
-                foreach ($messages as $message) {
-                    echo '<p class="error">' . $message . '</p>';
-                }
+        $messages = SugarApplication::getErrorMessages();
+        if (!empty($messages)) {
+            foreach ($messages as $message) {
+                echo '<p class="error">' . $message . '</p>';
             }
+        }
 
-            $messages = SugarApplication::getSuccessMessages();
-            if (!empty($messages)) {
-                foreach ($messages as $message) {
-                    echo '<p class="success">' . $message . '</p>';
-                }
+        $messages = SugarApplication::getSuccessMessages();
+        if (!empty($messages)) {
+            foreach ($messages as $message) {
+                echo '<p class="success">' . $message . '</p>';
             }
         }
     }
@@ -1212,9 +1211,8 @@ EOHTML;
             return $this->options['show_all'];
         } elseif (!empty($this->options) && isset($this->options[$option])) {
             return $this->options[$option];
-        } else {
-            return $default;
         }
+        return $default;
     }
 
     /**
@@ -1460,9 +1458,8 @@ EOHTML;
             return $defaultTab;
         } elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == "ajaxui") {
             return $defaultTab;
-        } else {
-            return $this->module;
         }
+        return $this->module;
     }
 
     /**
@@ -1641,18 +1638,15 @@ EOHTML;
                 if (SugarThemeRegistry::current()->directionality == "ltr") {
                     return $app_strings['LBL_SEARCH_ALT'] . "&nbsp;"
                         . "$firstParam";
-                } else {
-                    return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
                 }
-            } else {
-                return $firstParam;
+                return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
             }
+            return $firstParam;
+        }
+        if (!empty($iconPath) && !$browserTitle) {
+            //return "<a href='index.php?module={$this->module}&action=index'>$this->module</a>";
         } else {
-            if (!empty($iconPath) && !$browserTitle) {
-                //return "<a href='index.php?module={$this->module}&action=index'>$this->module</a>";
-            } else {
-                return $firstParam;
-            }
+            return $firstParam;
         }
     }
 
@@ -1706,9 +1700,8 @@ EOHTML;
     {
         if (SugarThemeRegistry::current()->directionality == "ltr") {
             return "<span class='pointer'>&raquo;</span>";
-        } else {
-            return "<span class='pointer'>&laquo;</span>";
         }
+        return "<span class='pointer'>&laquo;</span>";
     }
 
     /**

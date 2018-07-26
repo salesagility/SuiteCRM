@@ -1112,9 +1112,8 @@ class jjwg_MapsController extends SugarController
             $marker['html'] = preg_replace('/\n\r/', ' ', $marker['html']);
             //var_dump($marker['html']);
             return $marker;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -1160,9 +1159,8 @@ class jjwg_MapsController extends SugarController
             $marker['html'] = preg_replace('/\n\r/', ' ', $marker['html']);
             //var_dump($marker['html']);
             return $marker;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -1198,9 +1196,8 @@ class jjwg_MapsController extends SugarController
             $area['html'] = preg_replace('/\n\r/', ' ', $area['html']);
             //var_dump($marker['html']);
             return $area;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

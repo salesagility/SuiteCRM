@@ -196,12 +196,10 @@ class MBModule
                     }
                 }
                 return false ;
-            } else {
-                return (! empty($vardefs [ 'fields' ] [ $name ]) && ($vardefs [ 'fields' ] [ $name ] [ 'type' ] == $type)) ;
             }
-        } else {
-            return false ;
+            return (! empty($vardefs [ 'fields' ] [ $name ]) && ($vardefs [ 'fields' ] [ $name ] [ 'type' ] == $type)) ;
         }
+        return false ;
     }
 
     public function getModStrings($language = 'en_us')

@@ -118,9 +118,8 @@ class DBManagerFactory
 
         if (class_exists($my_db_manager)) {
             return new $my_db_manager();
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**

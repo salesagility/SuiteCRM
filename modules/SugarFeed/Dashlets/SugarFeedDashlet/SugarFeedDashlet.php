@@ -525,9 +525,8 @@ enableQS(false);
             if ($matches[1] == "this") {
                 $var = $matches[2];
                 return $class->$var;
-            } else {
-                return translate($matches[2], $matches[1]);
             }
+            return translate($matches[2], $matches[1]);
         };
 
         $listview = preg_replace_callback('/\{([^\^ }]+)\.([^\}]+)\}/', $function, $listview);
@@ -584,9 +583,8 @@ enableQS(false);
         if (! $this->shouldDisplay()) {
             // The Sugar Feeds are disabled, populate the warning message
             return translate('LBL_DASHLET_DISABLED', 'SugarFeed');
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**
@@ -642,9 +640,8 @@ enableQS(false);
 
         if (!isset($admin->settings['sugarfeed_enabled']) || $admin->settings['sugarfeed_enabled'] != '1') {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     public function check_enabled($type)

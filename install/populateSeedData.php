@@ -434,7 +434,6 @@ for ($i=0; $i<$number_leads; $i++) {
         if (mt_rand(0, 100) < 90) {
             $assigned_team = $team_demo_data->get_random_team();
             $lead->assigned_user_name = $assigned_team;
-        } else {
         }
     }
     $lead->primary_address_postalcode = mt_rand(10000, 99999);

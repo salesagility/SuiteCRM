@@ -121,9 +121,8 @@ function getModuleFields(
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
-    } else {
-        return $fields[$value];
     }
+    return $fields[$value];
 }
 
 function getRelModuleFields($module, $rel_field, $view='EditView', $value = '')
@@ -261,9 +260,8 @@ function getModuleRelationships($module, $view='EditView', $value = '')
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
-    } else {
-        return $fields[$value];
     }
+    return $fields[$value];
 }
 
 function getValidFieldsTypes($module, $field)
@@ -741,9 +739,8 @@ function getDateFields($module, $view='EditView', $value = '', $field_option = t
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
-    } else {
-        return $fields[$value];
     }
+    return $fields[$value];
 }
 
 function getAssignField($aow_field, $view, $value)

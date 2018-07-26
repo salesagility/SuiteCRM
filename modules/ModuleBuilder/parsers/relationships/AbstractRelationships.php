@@ -563,8 +563,7 @@ class AbstractRelationships
         
         if (! empty($packageName)) {
             return array( 'moduleName' => $moduleName , 'packageName' => $packageName ) ;
-        } else {
-            return array( 'moduleName' => $deployedName ) ;
         }
+        return array( 'moduleName' => $deployedName ) ;
     }
 }

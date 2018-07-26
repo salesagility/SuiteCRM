@@ -62,9 +62,9 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
         }
         if (empty($layout_def['fields'][$key])) {
             return "";
-        } else {
-            $value = $layout_def['fields'][$key];
         }
+        $value = $layout_def['fields'][$key];
+        
 
 
         if (empty($layout_def['target_record_key'])) {
@@ -122,8 +122,7 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
                 $link = "index.php?module=$module&action=$action&record={$record}{$parent}";
             }
             return '<a href="' . $link . '" >'."$value</a>";
-        } else {
-            return $value;
         }
+        return $value;
     }
 }

@@ -123,10 +123,9 @@ abstract class PHP5Soap extends SugarSoapService
             $_SERVER['QUERY_STRING'] = $oldqs;
             file_put_contents($wsdlCacheFile, ob_get_contents());
             return $wsdlCacheFile;
-        //ob_clean();
-        } else {
-            return $wsdlCacheFile;
+            //ob_clean();
         }
+        return $wsdlCacheFile;
     } // fn
 
     public function getNameSpace()

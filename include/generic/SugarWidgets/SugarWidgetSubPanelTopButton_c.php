@@ -238,24 +238,23 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             $returnLink = rtrim($returnLink, '&');
 
             return $returnLink;
-        } else {
-            $form = 'form' . $relationship_name;
-            $button = '<form action="index.php" method="post" name="form" id="' . $form . "\">\n";
-            foreach ($formValues as $key => $value) {
-                if (empty($value->defs)) {
-                    $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
-                }
-            }
-            // fill in additional form fields for all but action
-            foreach ($additionalFormFields as $key => $value) {
-                if ($key != 'action') {
-                    $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
-                }
-            }
-
-
-            return $button;
         }
+        $form = 'form' . $relationship_name;
+        $button = '<form action="index.php" method="post" name="form" id="' . $form . "\">\n";
+        foreach ($formValues as $key => $value) {
+            if (empty($value->defs)) {
+                $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
+            }
+        }
+        // fill in additional form fields for all but action
+        foreach ($additionalFormFields as $key => $value) {
+            if ($key != 'action') {
+                $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
+            }
+        }
+
+
+        return $button;
     }
 
     /** This default function is used to create the HTML for a simple button */

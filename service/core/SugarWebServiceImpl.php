@@ -881,11 +881,10 @@ class SugarWebServiceImpl
             $contents = base64_encode($contents);
             $GLOBALS['log']->info('End: SugarWebServiceImpl->get_document_revision');
             return array('document_revision'=>array('id' => $dr->id, 'document_name' => $dr->document_name, 'revision' => $dr->revision, 'filename' => $dr->filename, 'file' => $contents));
-        } else {
-            $error->set_error('no_records');
-            self::$helperObject->setFaultObject($error);
-            $GLOBALS['log']->info('End: SugarWebServiceImpl->get_document_revision');
         }
+        $error->set_error('no_records');
+        self::$helperObject->setFaultObject($error);
+        $GLOBALS['log']->info('End: SugarWebServiceImpl->get_document_revision');
     }
 
     /**
@@ -1121,10 +1120,10 @@ LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) ";
             $GLOBALS['log']->debug('set_campaign_merge: Merge action status will not be updated, because, campaign_id is null or no targets were selected.');
             $GLOBALS['log']->info('End: SugarWebServiceImpl->set_campaign_merge');
             return;
-        } else {
-            require_once('modules/Campaigns/utils.php');
-            campaign_log_mail_merge($campaign_id, $targets);
-        } // else
+        }
+        require_once('modules/Campaigns/utils.php');
+        campaign_log_mail_merge($campaign_id, $targets);
+        // else
     } // fn
 /**
 *   Retrieve number of records in a given module

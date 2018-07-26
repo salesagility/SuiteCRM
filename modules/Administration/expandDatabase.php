@@ -131,10 +131,9 @@ if (is_admin($current_user) || isset($from_sync_client)) {
                 header("Content-Length: ".strlen($theAlterQueries));
                 echo $theAlterQueries;
                 die();
-            } else {
-                if (empty($_REQUEST['repair_silent'])) {
-                    echo nl2br($theAlterQueries);
-                }
+            }
+            if (empty($_REQUEST['repair_silent'])) {
+                echo nl2br($theAlterQueries);
             }
         } //if-else
     } // end do_action

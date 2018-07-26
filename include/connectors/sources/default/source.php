@@ -342,9 +342,8 @@ abstract class source
                 $this->initConfig();
             }
             return $this->_config['properties'][$name];
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**

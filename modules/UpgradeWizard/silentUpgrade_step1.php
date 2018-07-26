@@ -276,9 +276,8 @@ function merge_passwordsetting($sugar_config, $sugar_version)
 
     if (write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 function addDefaultModuleRoles($defaultRoles = array())
@@ -599,15 +598,14 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         if (!isset($manifest)) {
             fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
             exit(1);
-        } else {
-            copy("$unzip_dir/manifest.php", $sugar_config['upload_dir']."/upgrades/patch/{$zip_from_dir}-manifest.php");
+        }
+        copy("$unzip_dir/manifest.php", $sugar_config['upload_dir']."/upgrades/patch/{$zip_from_dir}-manifest.php");
 
-            $error = validate_manifest($manifest);
-            if (!empty($error)) {
-                $error = strip_tags(br2nl($error));
-                fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
-                exit(1);
-            }
+        $error = validate_manifest($manifest);
+        if (!empty($error)) {
+            $error = strip_tags(br2nl($error));
+            fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
+            exit(1);
         }
     } else {
         fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");

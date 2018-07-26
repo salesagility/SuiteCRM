@@ -82,9 +82,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
          $email_errors.="<br>-".$mod_strings['ERR_RECIPIENT_EMAIL'];
          $email_errors.="<br>-".$mod_strings['ERR_SERVER_STATUS'];
          return $email_errors;
-     } else {
-         return $mod_strings['LBL_EMAIL_NOT_SENT'];
      }
+     return $mod_strings['LBL_EMAIL_NOT_SENT'];
  }
 
 function hasPasswordExpired($username)
@@ -119,10 +118,10 @@ function hasPasswordExpired($username)
 
                 if ($timedate->getNow()->ts < $expiretime) {
                     return false;
-                } else {
+                }
                     $_SESSION['expiration_type']= $mod_strings['LBL_PASSWORD_EXPIRATION_TIME'];
                     return true;
-                }
+                
                 break;
 
 
@@ -133,9 +132,9 @@ function hasPasswordExpired($username)
                 if ($login+1 >= $res[$type.'expirationlogin']) {
                     $_SESSION['expiration_type']= $mod_strings['LBL_PASSWORD_EXPIRATION_LOGIN'];
                     return true;
-                } else {
-                    return false;
                 }
+                    return false;
+                
                 break;
 
             case '0':

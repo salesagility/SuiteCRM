@@ -303,11 +303,11 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
         } elseif (count($this->_matches) == 1) {
             require_once 'Zend/Search/Lucene/Search/Query/Term.php';
             return new Zend_Search_Lucene_Search_Query_Term(reset($this->_matches));
-        } else {
-            require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
-            $rewrittenQuery = new Zend_Search_Lucene_Search_Query_Boolean();
+        }
+        require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
+        $rewrittenQuery = new Zend_Search_Lucene_Search_Query_Boolean();
 
-            array_multisort(
+        array_multisort(
                 $this->_scores,
                 SORT_DESC,
                 SORT_NUMERIC,
@@ -317,22 +317,21 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
                             $this->_matches
             );
 
-            $termCount = 0;
-            require_once 'Zend/Search/Lucene/Search/Query/Term.php';
-            foreach ($this->_matches as $id => $matchedTerm) {
-                $subquery = new Zend_Search_Lucene_Search_Query_Term($matchedTerm);
-                $subquery->setBoost($this->_scores[$id]);
+        $termCount = 0;
+        require_once 'Zend/Search/Lucene/Search/Query/Term.php';
+        foreach ($this->_matches as $id => $matchedTerm) {
+            $subquery = new Zend_Search_Lucene_Search_Query_Term($matchedTerm);
+            $subquery->setBoost($this->_scores[$id]);
 
-                $rewrittenQuery->addSubquery($subquery);
+            $rewrittenQuery->addSubquery($subquery);
 
-                $termCount++;
-                if ($termCount >= self::MAX_CLAUSE_COUNT) {
-                    break;
-                }
+            $termCount++;
+            if ($termCount >= self::MAX_CLAUSE_COUNT) {
+                break;
             }
-
-            return $rewrittenQuery;
         }
+
+        return $rewrittenQuery;
     }
 
     /**

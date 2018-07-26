@@ -93,9 +93,8 @@ class LayoutManager
     {
         if (isset($this->defs[$key])) {
             return $this->defs[$key];
-        } else {
-            return null;
         }
+        return null;
     }
 
     // Take the class name from the widget definition and use the class to look it up

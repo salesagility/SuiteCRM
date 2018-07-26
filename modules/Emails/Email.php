@@ -522,11 +522,10 @@ class Email extends Basic
                 'name' => DBManagerFactory::getInstance()->quote($fileName),
                 'nameForDisplay' => $fileName
             );
-        } else {
-            $GLOBALS['log']->debug("Email Attachment [$fileName] could not be moved to upload dir");
-
-            return array();
         }
+        $GLOBALS['log']->debug("Email Attachment [$fileName] could not be moved to upload dir");
+
+        return array();
     }
 
     /**
@@ -1618,11 +1617,11 @@ class Email extends Basic
 
         if (!empty($a1) && !empty($a1['id'])) {
             return $a1['id'];
-        } else {
-            $guid = create_guid();
-            $q2 = "INSERT INTO emails_email_addr_rel VALUES('{$guid}', '{$this->id}', '{$type}', '{$id}', 0)";
-            $r2 = $this->db->query($q2);
         }
+        $guid = create_guid();
+        $q2 = "INSERT INTO emails_email_addr_rel VALUES('{$guid}', '{$this->id}', '{$type}', '{$id}', 0)";
+        $r2 = $this->db->query($q2);
+        
 
         return $guid;
     }
@@ -2596,9 +2595,8 @@ class Email extends Basic
             return true;
         } elseif (!empty($plainSig) && false !== strpos($plain, $plainSig)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -2641,9 +2639,8 @@ class Email extends Basic
             }
 
             return $start;
-        } else {
-            return array();
         }
+        return array();
     }
 
     /**
@@ -3709,9 +3706,8 @@ class Email extends Basic
             $exStr = explode(';', $str);
 
             return $exStr[0] . '...';
-        } else {
-            return $str;
         }
+        return $str;
     }
 
     /**

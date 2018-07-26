@@ -250,16 +250,15 @@ class ACLAction extends SugarBean
         if (!$refresh && !empty($_SESSION['ACL'][$user_id])) {
             if (empty($category) && empty($action)) {
                 return $_SESSION['ACL'][$user_id];
-            } else {
-                if (!empty($category) && isset($_SESSION['ACL'][$user_id][$category])) {
-                    if (empty($action)) {
-                        if (empty($type)) {
-                            return $_SESSION['ACL'][$user_id][$category];
-                        }
-                        return isset($_SESSION['ACL'][$user_id][$category][$type]) ? $_SESSION['ACL'][$user_id][$category][$type] : null;
-                    } elseif (!empty($type) && isset($_SESSION['ACL'][$user_id][$category][$type][$action])) {
-                        return $_SESSION['ACL'][$user_id][$category][$type][$action];
+            }
+            if (!empty($category) && isset($_SESSION['ACL'][$user_id][$category])) {
+                if (empty($action)) {
+                    if (empty($type)) {
+                        return $_SESSION['ACL'][$user_id][$category];
                     }
+                    return isset($_SESSION['ACL'][$user_id][$category][$type]) ? $_SESSION['ACL'][$user_id][$category][$type] : null;
+                } elseif (!empty($type) && isset($_SESSION['ACL'][$user_id][$category][$type][$action])) {
+                    return $_SESSION['ACL'][$user_id][$category][$type][$action];
                 }
             }
         }

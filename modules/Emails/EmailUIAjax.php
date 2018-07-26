@@ -560,8 +560,8 @@ if (isset($_REQUEST['emailUIAction'])) {
                 isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])
             ) {
                 $email->et->markEmails("deleted", $_REQUEST['ieId'], $_REQUEST['folder'], $_REQUEST['uids']);
-            } else {
             }
+            
             break;
         case "markEmail":
             global $app_strings;
@@ -605,8 +605,8 @@ if (isset($_REQUEST['emailUIAction'])) {
                 }
                 $out = trim($json->encode($ret, false));
                 echo $out;
-            } else {
             }
+            
             break;
 
         case "checkEmail2":
@@ -1314,9 +1314,9 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            } else {
-                echo "NOOP";
             }
+                echo "NOOP";
+            
             break;
 
         case "saveOutbound":
@@ -1576,9 +1576,9 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            } else {
-                echo "NOOP: no search criteria found";
             }
+                echo "NOOP: no search criteria found";
+            
             break;
 
         case "searchAdvanced":

@@ -742,9 +742,8 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
         $GLOBALS['log']->info('End: SugarWebServiceImpl->job_queue_run');
         if ($result === true) {
             return array("results" => true);
-        } else {
-            return array("results" => false, "message" => $result);
         }
+        return array("results" => false, "message" => $result);
     }
 }
 

@@ -131,9 +131,8 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
             }
             $str .= "</div>";
             return $str;
-        } else {
-            return $display;
         }
+        return $display;
     }
 
     public function displayListPlain($layout_def)
@@ -178,9 +177,8 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
     {
         if (strpos($layout_def['name'], '_usdoll') === false) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     public function querySelect(&$layout_def)

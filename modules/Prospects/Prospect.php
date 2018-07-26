@@ -264,9 +264,8 @@ class Prospect extends Person implements EmailInterface
             require_once($beanFiles[$class_name]);
             $seed = new $class_name();
             return $seed->retrieve($row['related_id']);
-        } else {
-            return null;
         }
+        return null;
     }
 
 

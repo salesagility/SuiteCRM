@@ -113,20 +113,19 @@ function sm_build_array()
     foreach ($modListHeader as $key=>$val) {
         if (!empty($exclusion_array) && in_array($val, $exclude)) {
             continue;
-        } else {
-            if (file_exists('modules/'.$val.'/Menu.php')) {
-                $mod_strings = return_module_language($current_language, $val);
-                $module_menu = array();
-                include('modules/'.$val.'/Menu.php');
+        }
+        if (file_exists('modules/'.$val.'/Menu.php')) {
+            $mod_strings = return_module_language($current_language, $val);
+            $module_menu = array();
+            include('modules/'.$val.'/Menu.php');
 
-                $tmp_menu_items = array();
-                foreach ($module_menu as $menu) {
-                    if (isset($menu[0]) && !empty($menu[0]) && isset($menu[1]) && !empty($menu[1]) && trim($menu[0]) !='#') {
-                        $tmp_menu_items[$menu[1]] =$menu[0];
-                    }
+            $tmp_menu_items = array();
+            foreach ($module_menu as $menu) {
+                if (isset($menu[0]) && !empty($menu[0]) && isset($menu[1]) && !empty($menu[1]) && trim($menu[0]) !='#') {
+                    $tmp_menu_items[$menu[1]] =$menu[0];
                 }
-                $mstr_array[$val] = $tmp_menu_items;
             }
+            $mstr_array[$val] = $tmp_menu_items;
         }
     }
 

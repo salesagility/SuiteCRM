@@ -235,9 +235,8 @@ function merge_passwordsetting($sugar_config, $sugar_version)
 
     if (write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 function addDefaultModuleRoles($defaultRoles = array())
@@ -543,13 +542,12 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
         if (!isset($manifest)) {
             fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
             exit(1);
-        } else {
-            $error = validate_manifest($manifest);
-            if (!empty($error)) {
-                $error = strip_tags(br2nl($error));
-                fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
-                exit(1);
-            }
+        }
+        $error = validate_manifest($manifest);
+        if (!empty($error)) {
+            $error = strip_tags(br2nl($error));
+            fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
+            exit(1);
         }
     } else {
         fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
@@ -603,9 +601,8 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
                 echo 'Stop and Exit Upgrade. There are customized files. Take a look in the upgrade log';
                 logThis("Stop and Exit Upgrade. There are customized files. Take a look in the upgrade log", $path);
                 exit(1);
-            } else {
-                upgradeDCEFiles($argv, $instanceUpgradePath);
             }
+            upgradeDCEFiles($argv, $instanceUpgradePath);
         } else {
             //copy and update following files from upgrade package
             upgradeDCEFiles($argv, $instanceUpgradePath);

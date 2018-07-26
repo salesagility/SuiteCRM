@@ -384,9 +384,8 @@ FROM prospect_lists_prospects plp
 
         if ($row) {
             return $row['num'];
-        } else {
-            return 0;
         }
+        return 0;
     }
 
 

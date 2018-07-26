@@ -200,9 +200,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
          }
          if ($return) {
              return $output;
-         } else {
-             echo $output;
          }
+         echo $output;
      }
 
      public function setTitle($title = '')

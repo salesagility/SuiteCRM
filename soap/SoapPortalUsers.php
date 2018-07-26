@@ -99,22 +99,22 @@ function portal_login($portal_auth, $user_name, $application_name)
         $GLOBALS['log']->debug("Saving new session");
         login_success();
         return array('id'=>session_id(), 'error'=>$error->get_soap_array());
-    } else {
-        $contact = $contact->retrieve_by_string_fields(array('portal_name'=>$user_name, 'portal_active'=>'1', 'deleted'=>0));
-        if ($contact != null) {
-            session_start();
-            $_SESSION['is_valid_session']= true;
-            $_SESSION['ip_address'] = query_client_ip();
-            $_SESSION['user_id'] = $contact->id;
-            $_SESSION['portal_id'] = $current_user->id;
-
-            $_SESSION['type'] = 'contact';
-            $_SESSION['assigned_user_id'] = $contact->assigned_user_id;
-            login_success();
-            build_relationship_tree($contact);
-            return array('id'=>session_id(), 'error'=>$error->get_soap_array());
-        }
     }
+    $contact = $contact->retrieve_by_string_fields(array('portal_name'=>$user_name, 'portal_active'=>'1', 'deleted'=>0));
+    if ($contact != null) {
+        session_start();
+        $_SESSION['is_valid_session']= true;
+        $_SESSION['ip_address'] = query_client_ip();
+        $_SESSION['user_id'] = $contact->id;
+        $_SESSION['portal_id'] = $current_user->id;
+
+        $_SESSION['type'] = 'contact';
+        $_SESSION['assigned_user_id'] = $contact->assigned_user_id;
+        login_success();
+        build_relationship_tree($contact);
+        return array('id'=>session_id(), 'error'=>$error->get_soap_array());
+    }
+    
     $error->set_error('invalid_login');
     return array('id'=>-1, 'error'=>$error->get_soap_array());
 }
@@ -293,10 +293,9 @@ function portal_get_entry_list_filter($session, $module_name, $order_by, $select
             }
         }
         return portal_get_entry_list_limited($session, $module_name, $where, $order_by, $select_fields, $row_offset, $limit);
-    } else {
-        $error->set_error('no_module_support');
-        return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
+    $error->set_error('no_module_support');
+    return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
 }
 
 

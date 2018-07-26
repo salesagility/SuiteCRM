@@ -775,10 +775,9 @@ class AOW_WorkFlow extends Basic
                         }
                     }
                     return false;
-                } else {
-                    return in_array($var1, $var2);
                 }
-                // no break
+                    return in_array($var1, $var2);
+                
             case "Not_One_of":
                 if (is_array($var1)) {
                     foreach ($var1 as $var) {
@@ -787,10 +786,9 @@ class AOW_WorkFlow extends Basic
                         }
                     }
                     return true;
-                } else {
-                    return !in_array($var1, $var2);
                 }
-                // no break
+                    return !in_array($var1, $var2);
+                
             case "Equal_To":
             default: return $var1 == $var2;
         }

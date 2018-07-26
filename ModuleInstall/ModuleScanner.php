@@ -626,13 +626,12 @@ class ModuleScanner
                                     if ($this->methodsBlackList[$token[1]] == '*') {
                                         $issues[]= translate('ML_INVALID_METHOD') . ' ' .$token[1].  '()';
                                         break;
-                                    } else {
-                                        if ($lastToken[0] == T_DOUBLE_COLON && $index > 2 && $tokens[$index-2][0] == T_STRING) {
-                                            $classname = strtolower($tokens[$index-2][1]);
-                                            if (in_array($classname, $this->methodsBlackList[$token[1]])) {
-                                                $issues[]= translate('ML_INVALID_METHOD') . ' ' .$classname . '::' . $token[1]. '()';
-                                                break;
-                                            }
+                                    }
+                                    if ($lastToken[0] == T_DOUBLE_COLON && $index > 2 && $tokens[$index-2][0] == T_STRING) {
+                                        $classname = strtolower($tokens[$index-2][1]);
+                                        if (in_array($classname, $this->methodsBlackList[$token[1]])) {
+                                            $issues[]= translate('ML_INVALID_METHOD') . ' ' .$classname . '::' . $token[1]. '()';
+                                            break;
                                         }
                                     }
                                 }
