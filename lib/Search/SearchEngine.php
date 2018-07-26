@@ -52,7 +52,7 @@ abstract class SearchEngine
      * ]
      * </code>
      *
-     * @param SearchQuery
+     * @param SearchQuery $query
      * @return array[] ids
      */
     public abstract function search($query);

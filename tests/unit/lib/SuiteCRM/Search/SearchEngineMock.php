@@ -51,15 +51,17 @@ class SearchEngineMock extends SearchEngine
 
     public function searchAndView($query)
     {
-        if ($query->query['searchstring'] == 'foo')
-            return 'bar';
-
-        if ($query->query['searchstring'] == 'fooz')
-            return 'barz';
     }
 
     public function search($query)
     {
+        if ($query->getSearchString() == 'foo')
+            return 'bar';
+
+        if ($query->getSearchString() == 'fooz')
+            return 'barz';
+
+        return false;
     }
 
 

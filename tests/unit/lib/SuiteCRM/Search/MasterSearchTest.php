@@ -46,11 +46,11 @@ class MasterSearchTest extends SearchTestAbstract
     {
         MasterSearch::addEngine('SearchEngineMock', 'tests/unit/lib/SuiteCRM/Search/SearchEngineMock.php');
 
-        $result = MasterSearch::searchAndView('SearchEngineMock', new SearchQuery(['searchstring' => 'foo']));
+        $result = MasterSearch::search('SearchEngineMock', SearchQuery::fromString('foo'));
 
         self::assertEquals('bar', $result, "Wrong mocked search result!");
 
-        $result = MasterSearch::searchAndView('SearchEngineMock', new SearchQuery(['searchstring' => 'fooz']));
+        $result = MasterSearch::search('SearchEngineMock', SearchQuery::fromString('fooz'));
 
         self::assertEquals('barz', $result, "Wrong mocked search result!");
     }
