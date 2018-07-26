@@ -46,10 +46,10 @@ class SearchQuery
      */
     private function __construct($searchString, $engine = null, $size = 10, $from = 0, array $options = [])
     {
-        $this->query = $searchString;
-        $this->size = $size;
-        $this->from = $from;
-        $this->engine = $engine;
+        $this->query = strval($searchString);
+        $this->size = intval($size);
+        $this->from = intval($from);
+        $this->engine = strval($engine);
         $this->options = $options;
     }
 
@@ -71,6 +71,27 @@ class SearchQuery
     public function getSize()
     {
         return $this->size;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getEngine()
+    {
+        return $this->engine;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    public function isEmpty()
+    {
+        return empty($this->query);
     }
 
     /**
@@ -149,5 +170,52 @@ class SearchQuery
     public static function fromString($searchString, $size = 50, $from = 0)
     {
         return new self($searchString, null, $size, $from);
+    }
+
+    /**
+     * Makes a query from an array containing data.
+     * Fields are:
+     * - search-query-string
+     * - search-engine
+     * - search-query-size
+     * - search-query-from
+     *
+     * @param array $request
+     * @return SearchQuery
+     */
+    public static function fromRequestArray(array $request)
+    {
+        $searchQuery = filter_var($request['search-query-string'], FILTER_SANITIZE_STRING);
+        $searchSize = filter_var($request['search-query-size'], FILTER_SANITIZE_NUMBER_INT);
+        $searchFrom = filter_var($request['search-query-from'], FILTER_SANITIZE_NUMBER_INT);
+        $searchEngine = filter_var($request['search-engine'], FILTER_SANITIZE_STRING);
+
+        if (empty($searchQuery)) {
+            $searchQuery = filter_var($request['query_string'], FILTER_SANITIZE_STRING);
+        }
+
+        if (empty($searchSize)) {
+            $searchSize = 10;
+        }
+
+        unset(
+            $request['search-query-string'],
+            $request['query_string'],
+            $request['search-query-size'],
+            $request['search-engine']
+        );
+
+        return new self($searchQuery, $searchEngine, $searchSize, $searchFrom, $request);
+    }
+
+    /**
+     * Makes a Query from a GET request.
+     *
+     * @see fromRequestArray
+     * @return SearchQuery
+     */
+    public static function fromGetRequest()
+    {
+        return self::fromRequestArray($_GET);
     }
 }

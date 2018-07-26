@@ -55,7 +55,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class MasterSearchView
 {
-    const FILE = __DIR__ . '/templates/search.main.tpl';
+    protected $file = __DIR__ . '/templates/search.main.tpl';
     public $ss;
 
     public function __construct()
@@ -76,7 +76,7 @@ class MasterSearchView
         $this->ss->assign('sizeOptions', $sizes);
         $this->ss->assign('engineOptions', $engines);
 
-        $this->ss->display(self::FILE);
+        $this->ss->display($this->file);
     }
 
 }

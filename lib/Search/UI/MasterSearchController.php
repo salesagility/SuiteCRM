@@ -72,25 +72,12 @@ class MasterSearchController
 
     protected function parseRequest()
     {
-        $searchQuery = filter_input(INPUT_GET, 'search-query-string', FILTER_SANITIZE_STRING);
-        if (empty($searchQuery)) {
-            $searchQuery = filter_input(INPUT_GET, 'query_string', FILTER_SANITIZE_STRING);
-        }
-        $searchQuerySize = intval(filter_input(INPUT_GET, 'search-query-size', FILTER_SANITIZE_NUMBER_INT));
+        $query = SearchQuery::fromGetRequest();
 
-        if (empty($searchQuery)) {
-            return;
-        }
-
-        if (!$searchQuerySize) {
-            $searchQuerySize = 10;
-        }
-
-        $this->view->ss->assign('searchQueryString', $searchQuery);
-        $this->view->ss->assign('searchQuerySize', $searchQuerySize);
+        $this->view->ss->assign('searchQueryString', $query->getSearchString());
+        $this->view->ss->assign('searchQuerySize', $query->getSize());
 
         try {
-            $query = SearchQuery::fromString($searchQuery, $searchQuerySize);
             $hits = MasterSearch::search('ElasticSearchEngine', $query);
             $hits = $this->parseHits($hits);
             $this->view->ss->assign('hits', $hits);
