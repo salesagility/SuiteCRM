@@ -52,7 +52,7 @@
         <p class="error">No results matching your search criteria. Try broadening your search.</p>
     {/foreach}
     {if isset($time)}
-        <p class="text-muted text-right" style="margin-top: 20px">
+        <p class="text-muted text-right" id="search-time">
             Search performed in {$time|string_format:"%.2f"} ms
         </p>
     {/if}
