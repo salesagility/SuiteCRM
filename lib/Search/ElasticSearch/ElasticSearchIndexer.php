@@ -46,6 +46,10 @@
 
 namespace SuiteCRM\Search\ElasticSearch;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 use BeanFactory;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;

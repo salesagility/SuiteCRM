@@ -39,6 +39,10 @@
 
 namespace SuiteCRM\Search;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * Class MasterSearch performs a unified search using one of the available search engines.
  *

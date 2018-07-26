@@ -43,6 +43,13 @@
  * Date: 18/07/18
  * Time: 15:04
  */
+
+/** @noinspection PhpIllegalStringOffsetInspection */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 class ElasticSearchSettingsView
 {
     /** @var Sugar_Smarty */

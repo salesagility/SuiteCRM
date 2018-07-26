@@ -39,6 +39,10 @@
 
 namespace SuiteCRM\Search\ElasticSearch;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 use Elasticsearch\ClientBuilder;
 
 /**

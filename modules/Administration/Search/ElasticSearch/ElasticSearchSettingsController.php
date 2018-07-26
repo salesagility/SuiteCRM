@@ -1,5 +1,4 @@
-<?php /** @noinspection PhpIllegalStringOffsetInspection */
-
+<?php
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,12 +37,18 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+/** @noinspection PhpIllegalStringOffsetInspection */
+
 /**
  * Created by PhpStorm.
  * User: viocolano
  * Date: 18/07/18
  * Time: 15:04
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once __DIR__ . '/ElasticSearchSettingsView.php';
 require_once __DIR__ . '/../../../Configurator/Configurator.php';

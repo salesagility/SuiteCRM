@@ -8,6 +8,10 @@
 
 namespace SuiteCRM\Search;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * Class SearchQuery
  *

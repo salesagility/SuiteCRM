@@ -46,6 +46,10 @@
 
 namespace SuiteCRM\SugarLogger;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 use LoggerManager;
 use Monolog\Handler\AbstractProcessingHandler;
 
