@@ -61,8 +61,10 @@ class SharedSecurityGroupsCest {
     
     protected function clearSearch(AcceptanceTester $I) {
         // delete the search settings, if other test DID NOT DOING THIS???!!!
-        $I->waitForElementVisible('#MassUpdate a.glyphicon.glyphicon-remove');
-        $I->click('#MassUpdate a.glyphicon.glyphicon-remove');
+        if (!version_compare(PHP_VERSION, '7.2', '>=')) {
+            $I->waitForElementVisible('#MassUpdate a.glyphicon.glyphicon-remove');
+            $I->click('#MassUpdate a.glyphicon.glyphicon-remove');
+        }
     }
     
     protected function goToAccountsPage(AcceptanceTester $I) {
