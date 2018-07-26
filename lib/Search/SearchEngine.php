@@ -8,6 +8,9 @@
 
 namespace SuiteCRM\Search;
 
+use SuiteCRM\Search\UI\MasterSearchFormController;
+use SuiteCRM\Search\UI\MasterSearchResultsController;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -18,28 +21,44 @@ if (!defined('sugarEntry') || !sugarEntry) {
 abstract class SearchEngine
 {
     /**
-     * Performs a search using the given query and returns a view to be displayed.
+     * Performs a search using the given query and shows a search view.
+     *
+     * The search view contains both a search bar and search results (if any).
      *
      * @param $query SearchQuery
-     * @return \SugarView
      */
-    public function searchAndView($query)
+    public function searchAndView(SearchQuery $query)
     {
         $this->validateQuery($query);
-        $results = $this->search($query);
-        return $this->makeView($results);
+        $this->displayForm($query);
+
+        if (!$query->isEmpty()) {
+            $results = $this->search($query);
+            $this->displayResults($query, $results);
+        }
     }
 
     /**
-     * Makes a default result view given a set of results.
+     * Shows the default search form (search bar and options) for a given search query.
      *
-     * @param $results array
-     * @return \SugarView
+     * @param $query SearchQuery
      */
-    public function makeView($results)
+    public function displayForm(SearchQuery $query)
     {
-        // TODO
-        return new \SugarView();
+        $controller = new MasterSearchFormController($query);
+        $controller->display();
+    }
+
+    /**
+     * Shows the default search results for the given search query and results.
+     *
+     * @param SearchQuery $query
+     * @param array $results
+     */
+    public function displayResults(SearchQuery $query, array $results)
+    {
+        $controller = new MasterSearchResultsController($query, $results);
+        $controller->display();
     }
 
     /**
@@ -55,7 +74,7 @@ abstract class SearchEngine
      * @param SearchQuery $query
      * @return array[] ids
      */
-    public abstract function search($query);
+    public abstract function search(SearchQuery $query);
 
     /**
      * This method should be extend to sanitize and standardise the request to fill all the values as they are expected
@@ -66,5 +85,5 @@ abstract class SearchEngine
      * @param $query SearchQuery the query to validate
      * @throws \SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException if the query is not valid
      */
-    protected abstract function validateQuery(&$query);
+    protected abstract function validateQuery(SearchQuery &$query);
 }

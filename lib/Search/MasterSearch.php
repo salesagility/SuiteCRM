@@ -63,15 +63,13 @@ class MasterSearch
     /**
      * Perform a search with the given query and engine.
      *
-     * @param $engine string|SearchEngine
      * @param $query SearchQuery
-     * @return \SugarView
      */
-    public static function searchAndView($engine, $query)
+    public static function searchAndView(SearchQuery $query)
     {
-        $engine = self::fetchEngine($engine);
+        $engine = self::fetchEngine($query->getEngine());
 
-        return $engine->searchAndView($query);
+        $engine->searchAndView($query);
     }
 
     /**
@@ -115,7 +113,7 @@ class MasterSearch
      * @param $query SearchQuery
      * @return array[] ids
      */
-    public static function search($engine, $query)
+    public static function search($engine, SearchQuery $query)
     {
         $engine = self::fetchEngine($engine);
 

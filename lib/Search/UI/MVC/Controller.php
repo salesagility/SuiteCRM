@@ -40,29 +40,23 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 22/06/18
- * Time: 09:50
+ * Date: 26/07/18
+ * Time: 15:23
  */
 
-use SuiteCRM\Search\SearchEngine;
-use SuiteCRM\Search\SearchQuery;
+namespace SuiteCRM\Search\UI\MVC;
 
-class SearchEngineMock extends SearchEngine
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+abstract class Controller
 {
+    /** @var View */
+    protected $view;
 
-    public function search(SearchQuery $query)
+    public function display()
     {
-        if ($query->getSearchString() == 'foo')
-            return 'bar';
-
-        if ($query->getSearchString() == 'fooz')
-            return 'barz';
-
-        return false;
-    }
-
-
-    protected function validateQuery(SearchQuery &$query)
-    {
+        $this->view->display();
     }
 }

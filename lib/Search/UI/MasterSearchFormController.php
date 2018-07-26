@@ -50,54 +50,30 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use BeanFactory;
-use Exception;
-use SuiteCRM\Search\MasterSearch;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\UI\MVC\Controller;
 
-class MasterSearchController
+class MasterSearchFormController extends Controller
 {
-    private $view;
+    private $query;
 
-    public function __construct()
+    /**
+     * MasterSearchFormController constructor.
+     * @param SearchQuery $query
+     */
+    public function __construct($query)
     {
-        $this->view = new MasterSearchView();
+        $this->view = new MasterSearchFormView();
+        $this->query = $query;
     }
 
     public function display()
     {
-        $this->parseRequest();
-        $this->view->display();
-    }
+        $this->view->getTemplate()->assign('searchQueryString', $this->query->getSearchString());
+        $this->view->getTemplate()->assign('searchQuerySize', $this->query->getSize());
+        $this->view->getTemplate()->assign('searchQueryEngine', $this->query->getEngine());
 
-    protected function parseRequest()
-    {
-        $query = SearchQuery::fromGetRequest();
-
-        $this->view->ss->assign('searchQueryString', $query->getSearchString());
-        $this->view->ss->assign('searchQuerySize', $query->getSize());
-
-        try {
-            $hits = MasterSearch::search('ElasticSearchEngine', $query);
-            $hits = $this->parseHits($hits);
-            $this->view->ss->assign('hits', $hits);
-            $this->view->ss->assign('time', MasterSearch::getSearchTime() * 1000);
-        } catch (Exception $e) {
-            $this->view->ss->assign('error', true);
-        }
-    }
-
-    protected function parseHits($hits)
-    {
-        $parsed = [];
-
-        foreach ($hits as $module => $beans) {
-            foreach ($beans as $bean) {
-                $parsed[$module][] = BeanFactory::getBean($module, $bean);
-            }
-        }
-
-        return $parsed;
+        parent::display();
     }
 }
 

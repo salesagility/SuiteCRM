@@ -40,29 +40,41 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 22/06/18
- * Time: 09:50
+ * Date: 26/07/18
+ * Time: 12:01
  */
 
-use SuiteCRM\Search\SearchEngine;
-use SuiteCRM\Search\SearchQuery;
+namespace SuiteCRM\Search\UI;
 
-class SearchEngineMock extends SearchEngine
+use SuiteCRM\Search\MasterSearch;
+use SuiteCRM\Search\UI\MVC\View;
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+class MasterSearchFormView extends View
 {
 
-    public function search(SearchQuery $query)
+    public function __construct()
     {
-        if ($query->getSearchString() == 'foo')
-            return 'bar';
-
-        if ($query->getSearchString() == 'fooz')
-            return 'barz';
-
-        return false;
+        parent::__construct(__DIR__ . '/templates/search.form.tpl');
     }
 
-
-    protected function validateQuery(SearchQuery &$query)
+    public function display()
     {
+        $sizes = [10 => 10, 20 => 20, 30 => 30, 40 => 40, 50 => 50];
+        $engines = [];
+
+        foreach (MasterSearch::getEngines() as $engine) {
+            // TODO retrieve translations
+            $engines[$engine] = $engine;
+        }
+
+        $this->smarty->assign('sizeOptions', $sizes);
+        $this->smarty->assign('engineOptions', $engines);
+
+        parent::display();
     }
+
 }

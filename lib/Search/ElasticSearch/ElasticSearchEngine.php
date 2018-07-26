@@ -78,7 +78,7 @@ class ElasticSearchEngine extends SearchEngine
      * @param $query SearchQuery
      * @return array[] ids
      */
-    public function search($query)
+    public function search(SearchQuery $query)
     {
         $this->validateQuery($query);
         $params = $this->createSearchParams($query);
@@ -91,7 +91,7 @@ class ElasticSearchEngine extends SearchEngine
     /**
      * @param $query SearchQuery
      */
-    protected function validateQuery(&$query)
+    protected function validateQuery(SearchQuery &$query)
     {
         $query->trim();
         $query->replace('-', ' ');

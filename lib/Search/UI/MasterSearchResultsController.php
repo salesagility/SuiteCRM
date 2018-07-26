@@ -40,29 +40,57 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 22/06/18
- * Time: 09:50
+ * Date: 26/07/18
+ * Time: 15:05
  */
 
-use SuiteCRM\Search\SearchEngine;
+namespace SuiteCRM\Search\UI;
+
+use BeanFactory;
+use SuiteCRM\Search\MasterSearch;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\UI\MVC\Controller;
 
-class SearchEngineMock extends SearchEngine
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+class MasterSearchResultsController extends Controller
 {
+    private $query;
+    private $results;
 
-    public function search(SearchQuery $query)
+    /**
+     * MasterSearchResultsController constructor.
+     * @param SearchQuery $query
+     * @param array $results
+     */
+    public function __construct(SearchQuery $query, array $results)
     {
-        if ($query->getSearchString() == 'foo')
-            return 'bar';
-
-        if ($query->getSearchString() == 'fooz')
-            return 'barz';
-
-        return false;
+        $this->view = new MasterSearchResultsView();
+        $this->query = $query;
+        $this->results = $results;
     }
 
-
-    protected function validateQuery(SearchQuery &$query)
+    public function display()
     {
+        $this->results = $this->parseHits($this->results);
+        $this->view->getTemplate()->assign('hits', $this->results);
+        $this->view->getTemplate()->assign('time', MasterSearch::getSearchTime() * 1000);
+
+        parent::display();
+    }
+
+    protected function parseHits(array $hits)
+    {
+        $parsed = [];
+
+        foreach ($hits as $module => $beans) {
+            foreach ($beans as $bean) {
+                $parsed[$module][] = BeanFactory::getBean($module, $bean);
+            }
+        }
+
+        return $parsed;
     }
 }

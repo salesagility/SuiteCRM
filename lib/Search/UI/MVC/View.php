@@ -40,29 +40,45 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 22/06/18
- * Time: 09:50
+ * Date: 26/07/18
+ * Time: 15:23
  */
 
-use SuiteCRM\Search\SearchEngine;
-use SuiteCRM\Search\SearchQuery;
+namespace SuiteCRM\Search\UI\MVC;
 
-class SearchEngineMock extends SearchEngine
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+use Sugar_Smarty;
+
+abstract class View
 {
+    /** @var Sugar_Smarty */
+    protected $smarty;
+    /** @var string */
+    protected $file;
 
-    public function search(SearchQuery $query)
+    /**
+     * View constructor.
+     * @param $file
+     */
+    public function __construct($file)
     {
-        if ($query->getSearchString() == 'foo')
-            return 'bar';
-
-        if ($query->getSearchString() == 'fooz')
-            return 'barz';
-
-        return false;
+        $this->smarty = new Sugar_Smarty();
+        $this->file = $file;
     }
 
-
-    protected function validateQuery(SearchQuery &$query)
+    /**
+     * @return Sugar_Smarty
+     */
+    public function getTemplate()
     {
+        return $this->smarty;
+    }
+
+    public function display()
+    {
+        $this->smarty->display($this->file);
     }
 }

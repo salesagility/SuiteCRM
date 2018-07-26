@@ -37,12 +37,13 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Search\UI\MasterSearchController;
+use SuiteCRM\Search\MasterSearch;
+use SuiteCRM\Search\SearchQuery;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$controller = new MasterSearchController();
+$query = SearchQuery::fromGetRequest();
 
-$controller->display();
+MasterSearch::searchAndView($query);
