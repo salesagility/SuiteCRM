@@ -124,7 +124,8 @@ class SugarRelationshipFactory
                 if (empty($def['true_relationship_type']) || (empty($def['table']) && empty($def['join_table'])) || empty($def['join_key_rhs'])) {
                     return new One2MBeanRelationship($def);
                 }
-                    return new One2MRelationship($def);
+
+                return new One2MRelationship($def);
                 
                 break;
             case 'one-to-one':

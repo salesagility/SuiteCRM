@@ -560,49 +560,57 @@ class Scheduler extends SugarBean
     {
         global $mod_strings;
         /* [0]:min [1]:hour [2]:day of month [3]:month [4]:day of week */
-        $days = array(	1 => $mod_strings['LBL_MON'],
-                        2 => $mod_strings['LBL_TUE'],
-                        3 => $mod_strings['LBL_WED'],
-                        4 => $mod_strings['LBL_THU'],
-                        5 => $mod_strings['LBL_FRI'],
-                        6 => $mod_strings['LBL_SAT'],
-                        0 => $mod_strings['LBL_SUN'],
-                        '*' => $mod_strings['LBL_ALL']);
+        $days = array(
+            1 => $mod_strings['LBL_MON'],
+            2 => $mod_strings['LBL_TUE'],
+            3 => $mod_strings['LBL_WED'],
+            4 => $mod_strings['LBL_THU'],
+            5 => $mod_strings['LBL_FRI'],
+            6 => $mod_strings['LBL_SAT'],
+            0 => $mod_strings['LBL_SUN'],
+            '*' => $mod_strings['LBL_ALL']
+        );
         switch ($type) {
             case 0: // minutes
                 if ($value == '0') {
                     //return;
-                    return trim($mod_strings['LBL_ON_THE']).$mod_strings['LBL_HOUR_SING'];
+                    return trim($mod_strings['LBL_ON_THE']) . $mod_strings['LBL_HOUR_SING'];
                 } elseif (!preg_match('/[^0-9]/', $hours) && !preg_match('/[^0-9]/', $value)) {
                     return;
                 } elseif (preg_match('/\*\//', $value)) {
                     $value = str_replace('*/', '', $value);
-                    return $value.$mod_strings['LBL_MINUTES'];
+
+                    return $value . $mod_strings['LBL_MINUTES'];
                 } elseif (!preg_match('[^0-9]', $value)) {
-                    return $mod_strings['LBL_ON_THE'].$value.$mod_strings['LBL_MIN_MARK'];
+                    return $mod_strings['LBL_ON_THE'] . $value . $mod_strings['LBL_MIN_MARK'];
                 }
-                    return $value;
-                
+
+                return $value;
+
             case 1: // hours
                 global $current_user;
                 if (preg_match('/\*\//', $value)) { // every [SOME INTERVAL] hours
                     $value = str_replace('*/', '', $value);
-                    return $value.$mod_strings['LBL_HOUR'];
-                } elseif (preg_match('/[^0-9]/', $mins)) { // got a range, or multiple of mins, so we return an 'Hours' label
+
+                    return $value . $mod_strings['LBL_HOUR'];
+                } elseif (preg_match('/[^0-9]/',
+                    $mins)) { // got a range, or multiple of mins, so we return an 'Hours' label
                     return $value;
-                }  	// got a "minutes" setting, so it will be at some o'clock.
-                    $datef = $current_user->getUserDateTimePreferences();
-                    return date($datef['time'], strtotime($value.':'.str_pad($mins, 2, '0', STR_PAD_LEFT)));
-                
+                }    // got a "minutes" setting, so it will be at some o'clock.
+                $datef = $current_user->getUserDateTimePreferences();
+
+                return date($datef['time'], strtotime($value . ':' . str_pad($mins, 2, '0', STR_PAD_LEFT)));
+
             case 2: // day of month
                 if (preg_match('/\*/', $value)) {
                     return $value;
                 }
-                    return date('jS', strtotime('December '.$value));
-                
+
+                return date('jS', strtotime('December ' . $value));
+
 
             case 3: // months
-                return date('F', strtotime('2005-'.$value.'-01'));
+                return date('F', strtotime('2005-' . $value . '-01'));
             case 4: // days of week
                 return $days[$value];
             default:

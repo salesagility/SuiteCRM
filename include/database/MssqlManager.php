@@ -1137,8 +1137,9 @@ class MssqlManager extends DBManager
 
                     return "LEFT(CONVERT(varchar($len)," . $string . ",120),$len)";
                 }
-                    return 'LEFT(CONVERT(varchar(10),' . $string . ',120),10)';
-                
+
+                return 'LEFT(CONVERT(varchar(10),' . $string . ',120),10)';
+
             case 'ifnull':
                 if (empty($additional_parameters_string)) {
                     $additional_parameters_string = ",''";
@@ -1840,8 +1841,8 @@ EOQ;
         if ($sqlpos !== false) {
             return false;
         }
-            
-        
+
+
 
         if (strlen($sqlmsg) > 2) {
             return 'SQL Server error: ' . $sqlmsg;

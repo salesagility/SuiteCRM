@@ -185,9 +185,9 @@ eoq;
                         $_POST[$post] = 0;
                     }
                     if (!empty($this->sugarbean->field_defs[$post]['dbType']) && strcmp(
-                        $this->sugarbean->field_defs[$post]['dbType'],
+                            $this->sugarbean->field_defs[$post]['dbType'],
                             'varchar'
-                    ) == 0
+                        ) == 0
                     ) {
                         if (strcmp($value, '1') == 0) {
                             $_POST[$post] = 'on';
@@ -435,10 +435,10 @@ eoq;
         $sugar_config = $configurator->config;
 
         if ($this->sugarbean->bean_implements('ACL') && (!ACLController::checkAccess(
-            $this->sugarbean->module_dir,
+                    $this->sugarbean->module_dir,
                     'edit',
-            true
-        ) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
+                    true
+                ) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
         ) {
             return '';
         }
@@ -559,23 +559,23 @@ eoq;
                                 );
                                 break;
                             }
-                                if (!empty($field['options'])) {
-                                    $even = !$even;
-                                    $newhtml .= $this->addStatus(
-                                        $displayname,
-                                        $field["name"],
-                                        translate($field["options"])
-                                    );
-                                    break;
-                                }
-                                    if (!empty($field['function'])) {
-                                        $functionValue = $this->getFunctionValue($this->sugarbean, $field);
-                                        $even = !$even;
-                                        $newhtml .= $this->addStatus($displayname, $field["name"], $functionValue);
-                                        break;
-                                    }
-                                
-                            
+                            if (!empty($field['options'])) {
+                                $even = !$even;
+                                $newhtml .= $this->addStatus(
+                                    $displayname,
+                                    $field["name"],
+                                    translate($field["options"])
+                                );
+                                break;
+                            }
+                            if (!empty($field['function'])) {
+                                $functionValue = $this->getFunctionValue($this->sugarbean, $field);
+                                $even = !$even;
+                                $newhtml .= $this->addStatus($displayname, $field["name"], $functionValue);
+                                break;
+                            }
+
+
                             break;
                         case "radioenum":
                             $even = !$even;
@@ -706,6 +706,7 @@ EOJS;
 
             return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
         }
+
         return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
     }
 
@@ -1203,8 +1204,7 @@ EOQ;
             }
             $options = $new_options;
         }
-        $options = get_select_options_with_id_separate_key($options, $options, '', true);
-        ;
+        $options = get_select_options_with_id_separate_key($options, $options, '', true);;
 
         // cn: added "mass_" to the id tag to differentiate from the status id in StoreQuery
         $html = '<td scope="row" width="15%">' . $displayname . '</td>

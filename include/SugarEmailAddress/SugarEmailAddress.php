@@ -1186,9 +1186,9 @@ class SugarEmailAddress extends SugarBean
         if (!empty($address)) {
             $guid = create_guid();
             $now = TimeDate::getInstance()->nowDb();
-            $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted)
+            $query = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted)
                         VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0)";
-            $ra = $this->db->query($qa);
+            $this->db->query($query);
         }
 
         return $guid;

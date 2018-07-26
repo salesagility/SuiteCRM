@@ -81,6 +81,7 @@ if (!class_exists("ZipArchive")) {
             if (!defined('SUITE_PHPUNIT_RUNNER')) {
                 die("Specified directory '$to_dir' for zip file '$zip_archive' extraction does not exist.");
             }
+
             return false;
         }
 
@@ -92,10 +93,12 @@ if (!class_exists("ZipArchive")) {
                     PCLZIP_OPT_PATH,
                     $to_dir,
                     PCLZIP_OPT_REPLACE_NEWER
-                ) == 0) {
+                ) == 0
+            ) {
                 if (!defined('SUITE_PHPUNIT_RUNNER')) {
                     die("Error: " . $archive->errorInfo(true));
                 }
+
                 return false;
             }
         } else {
@@ -104,10 +107,12 @@ if (!class_exists("ZipArchive")) {
                     $archive_file,
                     PCLZIP_OPT_PATH,
                     $to_dir
-                ) == 0) {
+                ) == 0
+            ) {
                 if (!defined('SUITE_PHPUNIT_RUNNER')) {
                     die("Error: " . $archive->errorInfo(true));
                 }
+
                 return false;
             }
         }
