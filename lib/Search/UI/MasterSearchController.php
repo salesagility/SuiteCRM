@@ -37,12 +37,80 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Search\UI\MasterSearchController;
+/**
+ * Created by PhpStorm.
+ * User: viocolano
+ * Date: 26/07/18
+ * Time: 12:00
+ */
+
+/** @noinspection PhpUndefinedClassInspection */
+
+namespace SuiteCRM\Search\UI;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$controller = new MasterSearchController();
+use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\MasterSearch;
 
-$controller->display();
+class MasterSearchController
+{
+    private $view;
+
+    public function __construct()
+    {
+        $this->view = new MasterSearchView();
+    }
+
+    public function display()
+    {
+        $this->parseRequest();
+        $this->view->display();
+    }
+
+    protected function parseRequest()
+    {
+        $searchQuery = filter_input(INPUT_GET, 'search-query-string', FILTER_SANITIZE_STRING);
+        if (empty($searchQuery)) {
+            $searchQuery = filter_input(INPUT_GET, 'query_string', FILTER_SANITIZE_STRING);
+        }
+        $searchQuerySize = intval(filter_input(INPUT_GET, 'search-query-size', FILTER_SANITIZE_NUMBER_INT));
+
+        if (empty($searchQuery)) {
+            return;
+        }
+
+        if (!$searchQuerySize) {
+            $searchQuerySize = 10;
+        }
+
+        $this->view->ss->assign('searchQueryString', $searchQuery);
+        $this->view->ss->assign('searchQuerySize', $searchQuerySize);
+
+        try {
+            $query = SearchQuery::fromString($searchQuery, $searchQuerySize);
+            $hits = MasterSearch::search('ElasticSearchEngine', $query);
+            $hits = $this->parseHits($hits);
+            $this->view->ss->assign('hits', $hits);
+            $this->view->ss->assign('time', MasterSearch::getSearchTime() * 1000);
+        } catch (Exception $e) {
+            $this->view->ss->assign('error', true);
+        }
+    }
+
+    protected function parseHits($hits)
+    {
+        $parsed = [];
+
+        foreach ($hits as $module => $beans) {
+            foreach ($beans as $bean) {
+                $parsed[$module][] = BeanFactory::getBean($module, $bean);
+            }
+        }
+
+        return $parsed;
+    }
+}
+
