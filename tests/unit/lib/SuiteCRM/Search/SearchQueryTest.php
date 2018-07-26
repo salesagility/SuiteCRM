@@ -113,4 +113,15 @@ class SearchQueryTest extends SearchTestAbstract
 
         self::assertEquals($expected, $query->getSearchString());
     }
+
+    public function testConvertEncoding()
+    {
+        $string = 'Foo &#xA9; bar &#x1D306; baz &#x2603; qux';
+        $expected = 'Foo © bar 𝌆 baz ☃ qux';
+
+        $query = SearchQuery::fromString($string);
+        $query->convertEncoding();
+
+        self::assertEquals($expected, $query->getSearchString());
+    }
 }

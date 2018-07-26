@@ -1,5 +1,6 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,73 +38,54 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 17/07/18
- * Time: 14:54
- */
-
-namespace SuiteCRM\SugarLogger;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use LoggerManager;
-use Monolog\Handler\AbstractProcessingHandler;
-
-/**
- * Integrates Monolog with the LoggerManager.
- */
-class SugarLoggerMonologHandler extends AbstractProcessingHandler
+function install_es()
 {
+    require_once('modules/Administration/Administration.php');
 
-    /**
-     * Writes the record down to the log of the implementing handler
-     *
-     * @param  array $record
-     * @return void
-     */
-    protected function write(array $record)
-    {
-        $logger = LoggerManager::getLogger();
+    global $sugar_config;
 
-        $message = $record['message'];
-        $level = $record['level'];
-        $channel = $record['channel'];
+    $sugar_config['MasterSearch']['ElasticSearch']['enabled'] = false;
+    $sugar_config['MasterSearch']['ElasticSearch']['host'] = 'localhost';
+    $sugar_config['MasterSearch']['ElasticSearch']['user'] = '';
+    $sugar_config['MasterSearch']['ElasticSearch']['pass'] = '';
 
-        $level = $this->monologLevelToSugarLoggerLevel($level);
+    ksort($sugar_config);
+    write_array_to_file('sugar_config', $sugar_config, 'config.php');
 
-        $logger->$level("[$channel] $message");
+    installESHooks();
+}
+
+function installESHooks()
+{
+    require_once('ModuleInstall/ModuleInstaller.php');
+
+    $hooks = array(
+        array(
+            'module' => '',
+            'hook' => 'after_save',
+            'order' => 1,
+            'description' => 'ElasticSearch Index Changes',
+            'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
+            'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
+            'function' => 'beanSaved',
+        ),
+        array(
+            'module' => '',
+            'hook' => 'after_delete',
+            'order' => 1,
+            'description' => 'ElasticSearch Index Changes',
+            'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
+            'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
+            'function' => 'beanDeleted',
+        ),
+    );
+
+    foreach ($hooks as $hook) {
+        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
     }
 
-    /**
-     * Converts a Monolog logging level to the corresponding level string as specified in the LoggerManager class.
-     *
-     * @param int $level
-     * @return string
-     */
-    protected function monologLevelToSugarLoggerLevel($level)
-    {
-        $level = intval($level);
-
-        switch ($level) {
-            case 100:
-                return 'debug';
-            case 200:
-                return 'info';
-            case 300:
-                return 'warn';
-            case 400:
-                return 'error';
-            case 500:
-                return 'fatal';
-            case 600:
-            case 550:
-                return 'security';
-            default:
-                return 'debug';
-        }
-    }
 }

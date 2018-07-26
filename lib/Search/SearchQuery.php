@@ -8,6 +8,10 @@
 
 namespace SuiteCRM\Search;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * Class SearchQuery
  *
@@ -111,6 +115,14 @@ class SearchQuery
     public function escapeRegex()
     {
         $this->query['query'] = preg_quote($this->query['query'], '/');
+    }
+
+    /**
+     * Removes HTML entities and converts them in UTF-8 characters.
+     */
+    public function convertEncoding()
+    {
+        $this->query['query'] = mb_convert_encoding($this->query['query'], 'UTF-8', 'HTML-ENTITIES');
     }
 
     /**

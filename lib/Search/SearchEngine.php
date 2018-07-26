@@ -8,6 +8,10 @@
 
 namespace SuiteCRM\Search;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * This abstract class offers the interface and utilities for other classes to be used as search engines.
  */

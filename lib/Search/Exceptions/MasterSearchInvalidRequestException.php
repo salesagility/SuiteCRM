@@ -46,6 +46,10 @@
 
 namespace SuiteCRM\Search\Exceptions;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * This exception is thrown when an invalid request is sent to a component of the Master Search.
  */

@@ -40,70 +40,75 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 17/07/18
- * Time: 14:54
+ * Date: 18/07/18
+ * Time: 15:04
  */
 
-namespace SuiteCRM\SugarLogger;
+/** @noinspection PhpIllegalStringOffsetInspection */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use LoggerManager;
-use Monolog\Handler\AbstractProcessingHandler;
-
-/**
- * Integrates Monolog with the LoggerManager.
- */
-class SugarLoggerMonologHandler extends AbstractProcessingHandler
+class ElasticSearchSettingsView
 {
+    /** @var Sugar_Smarty */
+    public $ss;
+    /** @var array Associative array with the configuration as loaded from the configuration file */
+    private $elasticSearchConfig;
 
     /**
-     * Writes the record down to the log of the implementing handler
-     *
-     * @param  array $record
-     * @return void
+     * ElasticSearchSettingsView constructor.
+     * @param $elasticSearchConfig
      */
-    protected function write(array $record)
+    public function __construct($elasticSearchConfig)
     {
-        $logger = LoggerManager::getLogger();
+        $this->elasticSearchConfig = $elasticSearchConfig;
+        $this->ss = new Sugar_Smarty();
+    }
 
-        $message = $record['message'];
-        $level = $record['level'];
-        $channel = $record['channel'];
+    public function display()
+    {
+        global $mod_strings;
+        global $app_list_strings;
+        global $app_strings;
 
-        $level = $this->monologLevelToSugarLoggerLevel($level);
+        $errors = array();
+        $buttons = $this->getButtons($app_strings, $mod_strings);
+        $this->ss->assign('MOD', $mod_strings);
+        $this->ss->assign('APP', $app_strings);
+        $this->ss->assign('APP_LIST', $app_list_strings);
+        $this->ss->assign('LANGUAGES', get_languages());
+        $this->ss->assign("JAVASCRIPT", get_set_focus_js());
+        $this->ss->assign('config', $this->elasticSearchConfig);
+        $this->ss->assign('error', $errors);
+        $this->ss->assign("BUTTONS", $buttons);
 
-        $logger->$level("[$channel] $message");
+        $this->ss->display('modules/Administration/Search/ElasticSearch/ElasticSearchSettingsTemplate.tpl');
     }
 
     /**
-     * Converts a Monolog logging level to the corresponding level string as specified in the LoggerManager class.
-     *
-     * @param int $level
+     * @param $app_strings
+     * @param $mod_strings
      * @return string
      */
-    protected function monologLevelToSugarLoggerLevel($level)
+    private function getButtons($app_strings, $mod_strings)
     {
-        $level = intval($level);
-
-        switch ($level) {
-            case 100:
-                return 'debug';
-            case 200:
-                return 'info';
-            case 300:
-                return 'warn';
-            case 400:
-                return 'error';
-            case 500:
-                return 'fatal';
-            case 600:
-            case 550:
-                return 'security';
-            default:
-                return 'debug';
-        }
+        return <<<EOQ
+    <input title="{$app_strings['LBL_SAVE_BUTTON_TITLE']}"
+        accessKey="{$app_strings['LBL_SAVE_BUTTON_KEY']}"
+        class="button primary"
+        type="submit"
+        name="save"
+        onclick="return check_form('ConfigureSettings');"
+        value="{$app_strings['LBL_SAVE_BUTTON_LABEL']}" >&nbsp;
+    <input title="{$mod_strings['LBL_CANCEL_BUTTON_TITLE']}" 
+        onclick="document.location.href='index.php?module=Administration&action=index'"
+        class="button"
+        type="button"
+        name="cancel"
+        value="{$app_strings['LBL_CANCEL_BUTTON_LABEL']}" >
+EOQ;
     }
+
 }

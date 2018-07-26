@@ -37,73 +37,19 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 17/07/18
- * Time: 14:54
- */
-
-namespace SuiteCRM\SugarLogger;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use LoggerManager;
-use Monolog\Handler\AbstractProcessingHandler;
+global $current_user;
+if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
 
-/**
- * Integrates Monolog with the LoggerManager.
- */
-class SugarLoggerMonologHandler extends AbstractProcessingHandler
-{
+require_once __DIR__ . '/Search/ElasticSearch/ElasticSearchSettingsController.php';
 
-    /**
-     * Writes the record down to the log of the implementing handler
-     *
-     * @param  array $record
-     * @return void
-     */
-    protected function write(array $record)
-    {
-        $logger = LoggerManager::getLogger();
+$controller = new ElasticSearchSettingsController();
 
-        $message = $record['message'];
-        $level = $record['level'];
-        $channel = $record['channel'];
-
-        $level = $this->monologLevelToSugarLoggerLevel($level);
-
-        $logger->$level("[$channel] $message");
-    }
-
-    /**
-     * Converts a Monolog logging level to the corresponding level string as specified in the LoggerManager class.
-     *
-     * @param int $level
-     * @return string
-     */
-    protected function monologLevelToSugarLoggerLevel($level)
-    {
-        $level = intval($level);
-
-        switch ($level) {
-            case 100:
-                return 'debug';
-            case 200:
-                return 'info';
-            case 300:
-                return 'warn';
-            case 400:
-                return 'error';
-            case 500:
-                return 'fatal';
-            case 600:
-            case 550:
-                return 'security';
-            default:
-                return 'debug';
-        }
-    }
+if ($controller->isSaveRequest()) {
+    $controller->saveConfig();
+} else {
+    $controller->display();
 }

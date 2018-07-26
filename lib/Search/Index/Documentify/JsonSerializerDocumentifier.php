@@ -46,6 +46,10 @@
 
 namespace SuiteCRM\Search\Index\Documentify;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 use SuiteCRM\Utility\BeanJsonSerializer;
 
 /**

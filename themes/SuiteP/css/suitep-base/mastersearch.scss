@@ -1,0 +1,45 @@
+#mastersearch-form {
+  $border-radius: 20px;
+  $margin: 60px;
+
+  margin-top: $margin;
+  margin-bottom: $margin;
+
+  label {
+    position: absolute;
+    top: -17px;
+    left: 12px;
+  }
+
+  .msfcol {
+    position: relative;
+    margin: -3px;
+  }
+
+  & input, & select {
+    width: 100%;
+    height: 40px;
+    border-radius: 0;
+    background: $color-44;
+    border: 1px solid $color-34;
+  }
+
+  input[type="submit"] {
+    background: $color-50;
+    border: none;
+    border-radius: 0 $border-radius $border-radius 0;
+  }
+
+  label[for="search-query-string"] {
+    left: 23px;
+  }
+
+  #search-query-string {
+    border-radius: $border-radius 0 0 $border-radius !important;
+    padding-left: $border-radius;
+  }
+}
+
+#search-time {
+  margin-top: 20px
+}

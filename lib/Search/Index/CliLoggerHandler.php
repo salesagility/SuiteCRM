@@ -46,6 +46,10 @@
 
 namespace SuiteCRM\Search\Index;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;

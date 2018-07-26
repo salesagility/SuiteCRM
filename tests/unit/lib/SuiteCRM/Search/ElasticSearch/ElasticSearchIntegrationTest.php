@@ -75,6 +75,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         $this->saveState();
 
+        $GLOBALS['sugar_config']['MasterSearch']['ElasticSearch']['enabled'] = true;
         $this->searchEngine->setIndex('test');
         $this->indexer->setIndex('test');
         $this->indexer->setDifferentialIndexingEnabled(false);
