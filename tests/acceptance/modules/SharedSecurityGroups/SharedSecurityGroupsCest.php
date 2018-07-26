@@ -64,7 +64,9 @@ class SharedSecurityGroupsCest {
         if (!version_compare(PHP_VERSION, '7.2', '>=')) {
             $I->waitForElementVisible('#MassUpdate a.glyphicon.glyphicon-remove');
             $I->click('#MassUpdate a.glyphicon.glyphicon-remove');
+            return true;
         }
+        return false;
     }
     
     protected function goToAccountsPage(AcceptanceTester $I) {
@@ -104,25 +106,26 @@ class SharedSecurityGroupsCest {
         
         // go to accounts
         $this->goToAccountsPage($I); 
-        $this->clearSearch($I);
-        // go to detail view        
-        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
-        $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
-        // delete it
-        $I->click('ACTIONS', '#tab-actions');
-        $I->waitForElementVisible('#tab-actions > .dropdown-menu', self::WAITING_DELAY);
-        $I->click('#delete_button');
-        $I->acceptPopup(); 
-        // repeat...
-        // go to detail view
-        $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
-        $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
-        // delete it
-        $I->click('ACTIONS', '#tab-actions');
-        $I->waitForElementVisible('#tab-actions > .dropdown-menu', self::WAITING_DELAY);
-        $I->click('#delete_button');
-        $I->acceptPopup();
-        $I->wait(self::WAITING_DELAY);
+        if ($this->clearSearch($I)) {
+            // go to detail view        
+            $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
+            $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
+            // delete it
+            $I->click('ACTIONS', '#tab-actions');
+            $I->waitForElementVisible('#tab-actions > .dropdown-menu', self::WAITING_DELAY);
+            $I->click('#delete_button');
+            $I->acceptPopup(); 
+            // repeat...
+            // go to detail view
+            $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
+            $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
+            // delete it
+            $I->click('ACTIONS', '#tab-actions');
+            $I->waitForElementVisible('#tab-actions > .dropdown-menu', self::WAITING_DELAY);
+            $I->click('#delete_button');
+            $I->acceptPopup();
+            $I->wait(self::WAITING_DELAY);
+        }
     }
     
     protected function cleanUpSharedRule(AcceptanceTester $I, Administration $a) {
