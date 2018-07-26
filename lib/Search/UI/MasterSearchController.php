@@ -44,16 +44,16 @@
  * Time: 12:00
  */
 
-/** @noinspection PhpUndefinedClassInspection */
-
 namespace SuiteCRM\Search\UI;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use SuiteCRM\Search\SearchQuery;
+use BeanFactory;
+use Exception;
 use SuiteCRM\Search\MasterSearch;
+use SuiteCRM\Search\SearchQuery;
 
 class MasterSearchController
 {
