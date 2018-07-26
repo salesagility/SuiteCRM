@@ -19,12 +19,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * ```php
  * [
+ *  'query' => 'search this',
  *  'from' => 0,
  *  'size' => 100,
- *  'query' => 'search this',
  *  'options' => [...]
  * ]
  * ```
+ *
+ * Use one of the static `from*()` methods to initialize.
+ *
+ * @see fromString()
+ * @see fromArray()
  */
 class SearchQuery
 {
@@ -165,11 +170,13 @@ class SearchQuery
      * @param $searchString string a search string, as it would appear on a search bar
      * @param int $size the number of results
      * @param int $from
+     * @param string|null $engine Name of the search engine to use. Use default if `null`
+     * @param array|null $options
      * @return SearchQuery a fully built query
      */
-    public static function fromString($searchString, $size = 50, $from = 0)
+    public static function fromString($searchString, $size = 50, $from = 0, $engine = null, array $options = [])
     {
-        return new self($searchString, null, $size, $from);
+        return new self($searchString, $engine, $size, $from, $options);
     }
 
     /**
