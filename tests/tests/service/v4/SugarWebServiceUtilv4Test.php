@@ -1,8 +1,9 @@
 <?php
 
-class SugarWebServiceUtilv4Test extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
-{
+namespace SuiteCRM;
 
+class SugarWebServiceUtilv4Test extends StateCheckerPHPUnitTestCaseAbstract
+{
     public function testGetFieldListParentenum()
     {
         require_once('service/v4_1/SugarWebServiceUtilv4_1.php');
@@ -14,5 +15,4 @@ class SugarWebServiceUtilv4Test extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         $return = $helperObject->get_return_module_fields($seed, $module_name, $fields);
         $this->assertEquals($return['module_fields']['status']['parentenum'], 'state');
     }
-
 }
