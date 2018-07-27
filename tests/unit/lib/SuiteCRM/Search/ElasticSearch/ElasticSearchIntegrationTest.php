@@ -162,7 +162,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         // Attempt to search the newly added bean by full name
         $results = MasterSearch::search(
             $this->searchEngine,
-            SearchQuery::fromString("$firstName $lastName", 1));
+            SearchQuery::fromString("$firstName $lastName", 1))->getHits();
 
         self::assertArrayHasKey(
             'Contacts',
@@ -183,7 +183,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $results = MasterSearch::search(
             $this->searchEngine,
             $query
-        );
+        )->getHits();
 
         self::assertArrayHasKey(
             'Contacts',
@@ -211,7 +211,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $results = MasterSearch::search(
             $this->searchEngine,
             SearchQuery::fromString($full_name_update, 1)
-        );
+        )->getHits();
 
         self::assertArrayHasKey(
             'Contacts',
@@ -234,7 +234,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
             SearchQuery::fromString($full_name_update, 1)
         );
 
-        self::assertEmpty($results, "The deleted bean should not have been found!");
+        self::assertEmpty($results->getHits(), "The deleted bean should not have been found!");
     }
 
     /**
@@ -305,7 +305,10 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         // Perform a search to see if the new record can be found
         // As usual, wait for Elasticsearch to do its magic
         $this->waitForIndexing();
-        $results = MasterSearch::search($this->searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
+        $results = MasterSearch::search(
+            $this->searchEngine,
+            SearchQuery::fromString("$firstName AND $lastName", 1)
+        )->getHits();
 
         self::assertArrayHasKey($module, $results, "No results found");
         self::assertContains($id, $results[$module], "Records not found");
@@ -338,12 +341,16 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         self::assertEquals(1, $actual, 'Wrong count for un-indexed beans');
 
         $this->waitForIndexing();
-        $results = MasterSearch::search($this->searchEngine, SearchQuery::fromString("$firstName2 AND $lastName", 1));
+        $results = MasterSearch::search(
+            $this->searchEngine,
+            SearchQuery::fromString("$firstName2 AND $lastName", 1)
+        )->getHits();
+
         self::assertArrayHasKey($module, $results, 'Wrong count of indexed beans');
         self::assertContains($id2, $results[$module], 'Wrong ID found');
 
         $results = MasterSearch::search($this->searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
-        self::assertEmpty($results, 'There should be no search results, as the record was deleted');
+        self::assertEmpty($results->getHits(), 'There should be no search results, as the record was deleted');
     }
 
     private function populateContactsTable()

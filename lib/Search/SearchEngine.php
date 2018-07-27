@@ -8,6 +8,7 @@
 
 namespace SuiteCRM\Search;
 
+use SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException;
 use SuiteCRM\Search\UI\MasterSearchFormController;
 use SuiteCRM\Search\UI\MasterSearchResultsController;
 
@@ -53,26 +54,19 @@ abstract class SearchEngine
      * Shows the default search results for the given search query and results.
      *
      * @param SearchQuery $query
-     * @param array $results
+     * @param SearchResults $results
      */
-    public function displayResults(SearchQuery $query, array $results)
+    public function displayResults(SearchQuery $query, SearchResults $results)
     {
         $controller = new MasterSearchResultsController($query, $results);
         $controller->display();
     }
 
     /**
-     * Performs a search using the search engine and returns a list of ids in the following format:
-     *
-     * <code>
-     * [
-     *  'module1' => ['id1', 'id2', 'id3'],
-     *  'module2' => ['id4', 'id5', 'id5'],
-     * ]
-     * </code>
+     * Performs a search using the search engine and returns a list SearchResults instance.
      *
      * @param SearchQuery $query
-     * @return array[] ids
+     * @return SearchResults
      */
     public abstract function search(SearchQuery $query);
 
@@ -83,7 +77,7 @@ abstract class SearchEngine
      * If it is impossible to validate the query a `MasterSearchInvalidRequestException` should be thrown.
      *
      * @param $query SearchQuery the query to validate
-     * @throws \SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException if the query is not valid
+     * @throws MasterSearchInvalidRequestException if the query is not valid
      */
     protected abstract function validateQuery(SearchQuery &$query);
 }

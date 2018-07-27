@@ -46,9 +46,8 @@
 
 namespace SuiteCRM\Search\UI;
 
-use BeanFactory;
-use SuiteCRM\Search\MasterSearch;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\SearchResults;
 use SuiteCRM\Search\UI\MVC\Controller;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -63,9 +62,9 @@ class MasterSearchResultsController extends Controller
     /**
      * MasterSearchResultsController constructor.
      * @param SearchQuery $query
-     * @param array $results
+     * @param SearchResults $results
      */
-    public function __construct(SearchQuery $query, array $results)
+    public function __construct(SearchQuery $query, SearchResults $results)
     {
         $this->view = new MasterSearchResultsView();
         $this->query = $query;
@@ -74,23 +73,8 @@ class MasterSearchResultsController extends Controller
 
     public function display()
     {
-        $this->results = $this->parseHits($this->results);
-        $this->view->getTemplate()->assign('hits', $this->results);
-        $this->view->getTemplate()->assign('time', MasterSearch::getSearchTime() * 1000);
+        $this->view->getTemplate()->assign('results', $this->results);
 
         parent::display();
-    }
-
-    protected function parseHits(array $hits)
-    {
-        $parsed = [];
-
-        foreach ($hits as $module => $beans) {
-            foreach ($beans as $bean) {
-                $parsed[$module][] = BeanFactory::getBean($module, $bean);
-            }
-        }
-
-        return $parsed;
     }
 }

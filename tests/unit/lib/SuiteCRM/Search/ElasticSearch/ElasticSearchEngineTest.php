@@ -295,6 +295,6 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
         $results = $engine->search($query);
 
-        self::assertEquals($expectedResults, $results);
+        self::assertEquals($expectedResults, $results->getHits());
     }
 }

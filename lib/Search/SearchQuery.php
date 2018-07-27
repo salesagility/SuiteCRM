@@ -30,6 +30,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @see fromString()
  * @see fromArray()
+ * @author Vittorio Iocolano
  */
 class SearchQuery
 {

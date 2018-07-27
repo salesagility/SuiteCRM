@@ -39,6 +39,9 @@
 
 namespace SuiteCRM\Search;
 
+use InvalidArgumentException;
+use RuntimeException;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -95,7 +98,7 @@ class MasterSearch
         if (is_subclass_of($engineName, SearchEngine::class, false)) {
             return $engineName;
         } elseif (!is_string($engineName)) {
-            throw new \InvalidArgumentException('$engineName should either be a string or a SearchEngine');
+            throw new InvalidArgumentException('$engineName should either be a string or a SearchEngine');
         }
 
         if (isset(self::$engines[$engineName])) {
@@ -107,14 +110,14 @@ class MasterSearch
         }
 
         if (!file_exists($filename)) {
-            throw new \RuntimeException("Unable to find search file '$filename'' for engine '$engineName''.");
+            throw new RuntimeException("Unable to find search file '$filename'' for engine '$engineName''.");
         }
 
         /** @noinspection PhpIncludeInspection */
         require_once $filename;
 
         if (!is_subclass_of($engineName, SearchEngine::class)) {
-            throw new \RuntimeException("The provided class '$engineName' is not an instance of SearchEngine");
+            throw new RuntimeException("The provided class '$engineName' is not an instance of SearchEngine");
         }
 
         /** @var SearchEngine $engineName */
@@ -130,17 +133,12 @@ class MasterSearch
      *
      * @param $engine string|SearchEngine
      * @param $query SearchQuery
-     * @return array[] ids
+     * @return SearchResults
      */
     public static function search($engine, SearchQuery $query)
     {
         $engine = self::fetchEngine($engine);
-
-        $start = microtime(true);
         $results = $engine->search($query);
-        $end = microtime(true);
-        self::$searchTime = ($end - $start);
-
         return $results;
     }
 

@@ -53,6 +53,7 @@ use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
 use SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException;
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\SearchResults;
 
 class ElasticSearchEngine extends SearchEngine
 {
@@ -75,17 +76,18 @@ class ElasticSearchEngine extends SearchEngine
     }
 
     /**
-     * @param $query SearchQuery
-     * @return array[] ids
+     * @inheritdoc
      */
     public function search(SearchQuery $query)
     {
         $this->validateQuery($query);
         $params = $this->createSearchParams($query);
+        $start = microtime(true);
         $hits = $this->runElasticSearch($params);
         $results = $this->parseHits($hits);
-
-        return $results;
+        $end = microtime(true);
+        $searchTime = ($end - $start);
+        return new SearchResults($results, true, $searchTime);
     }
 
     /**
