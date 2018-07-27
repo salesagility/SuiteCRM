@@ -55,7 +55,8 @@ $license_management = false;
         'icon_SugarFeed',
         'LBL_SHAREDRULES_SETTINGS',
         'LBL_SHAREDRULES_SETTINGS_DESC',
-        './index.php?module=SharedSecurityRules&action=index'
+        './index.php?module=SharedSecurityRules&action=index',
+        'security'
     );
     if (isset($admin_group_header[0])) {
         $admin_option_defs =
