@@ -2981,7 +2981,7 @@ abstract class DBManager
             $field_defs = array_intersect_key($field_defs, (array)$bean);
 
             foreach ($field_defs as $field => $properties) {
-                $before_value = $fetched_row[$field];
+                $before_value = from_html($fetched_row[$field]);
                 $after_value = $bean->$field;
                 if (isset($properties['type'])) {
                     $field_type = $properties['type'];
