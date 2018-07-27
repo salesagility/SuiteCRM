@@ -64,10 +64,10 @@ class SugarWidgetSubPanelLoadSignedButton extends SugarWidgetField
             . '&return_action=' . 'DetailView'
             . '&return_id=' . $_REQUEST['record']
             . '&load_signed_id=' . $layout_def['fields']['LINKED_ID']
-            . '&parent_id=' . $_REQUEST['record']			
-            . '&parent_name=' . $layout_def['fields']['CONTRACT_NAME']			
-            . '&parent_type=' . $_REQUEST['module']			
-            . '&selected_revision_id=' . $layout_def['fields']['SELECTED_REVISION_ID']	
+            . '&parent_id=' . $_REQUEST['record']
+            . '&parent_name=' . $layout_def['fields']['CONTRACT_NAME']
+            . '&parent_type=' . $_REQUEST['module']
+            . '&selected_revision_id=' . $layout_def['fields']['SELECTED_REVISION_ID']
             ;
 
         $edit_icon_html = SugarThemeRegistry::current()->getImage('loadSignedDocument', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_LOAD_SIGNED']);

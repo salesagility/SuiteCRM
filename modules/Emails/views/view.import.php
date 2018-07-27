@@ -40,7 +40,7 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
 
@@ -76,6 +76,9 @@ class EmailsViewImport extends ViewEdit
         $metadataFile = $this->getMetaDataFile();
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
+
+        // Set a distinct view name to avoid cache conflicts with regular edit view
+        $this->ev->formName = 'EditNonImported';
 
         if (!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
             $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');

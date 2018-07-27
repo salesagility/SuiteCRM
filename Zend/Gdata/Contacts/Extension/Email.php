@@ -43,7 +43,6 @@ require_once 'Zend/Gdata/Extension.php';
 
 class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'gd';
     protected $_rootElement = 'email';
     protected $_isPrimary = false;
@@ -62,8 +61,7 @@ class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
-        switch ($absoluteNodeName)
-        {
+        switch ($absoluteNodeName) {
             default:
                 parent::takeChildFromDOM($child);
                 break;
@@ -78,13 +76,13 @@ class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
      */
     protected function takeAttributeFromDOM($attribute)
     {
-        switch ($attribute->localName)
-        {
+        switch ($attribute->localName) {
             case 'primary':
-                if(strtolower($attribute->nodeValue) == 'true')
+                if (strtolower($attribute->nodeValue) == 'true') {
                     $this->_isPrimary = true;
-                else
+                } else {
                     $this->_isPrimary = false;
+                }
             break;
             
             case 'rel':
@@ -103,10 +101,11 @@ class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
 
     public function getEmailType()
     {
-        if($this->_emailType == null)
+        if ($this->_emailType == null) {
             return '';
-        else
+        } else {
             return str_replace($this->lookupNamespace('gd') . '#', '', $this->_emailType);
+        }
     }
     
     public function getEmail()
@@ -119,4 +118,3 @@ class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
         return $this->_isPrimary;
     }
 }
- 

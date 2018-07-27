@@ -46,12 +46,14 @@ $db = DBManagerFactory::getInstance();
 
 if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUEST['type']) || !isset($_SESSION['authenticated_user_id'])) {
     die("Not a Valid Entry Point");
-} else {
+}
     require_once("data/BeanFactory.php");
     $file_type = ''; // bug 45896
     require_once("data/BeanFactory.php");
-    ini_set('zlib.output_compression',
-        'Off');//bug 27089, if use gzip here, the Content-Length in header may be incorrect.
+    ini_set(
+        'zlib.output_compression',
+        'Off'
+    );//bug 27089, if use gzip here, the Content-Length in header may be incorrect.
     // cn: bug 8753: current_user's preferred export charset not being honored
     $GLOBALS['current_user']->retrieve($_SESSION['authenticated_user_id']);
     $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
@@ -141,10 +143,9 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             set_time_limit(0);
             readfile('include/SugarFields/Fields/Image/no_image.png');
             die();
-        } else {
-            die($app_strings['ERR_INVALID_FILE_REFERENCE']);
         }
-    } else {
+        die($app_strings['ERR_INVALID_FILE_REFERENCE']);
+    }
         $doQuery = true;
 
         if ($file_type == 'documents') {
@@ -255,5 +256,3 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         }
 
         readfile($download_location);
-    }
-}

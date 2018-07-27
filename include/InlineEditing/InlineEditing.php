@@ -366,9 +366,8 @@ function saveField($field, $id, $module, $value)
         }
         $bean->retrieve();
         return getDisplayValue($bean, $field);
-    } else {
-        return false;
     }
+    return false;
 }
 
 function getDisplayValue($bean, $field, $method = "save")
@@ -420,7 +419,6 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
     //If field is of type date time, datetimecombo or date
     if ($vardef['type'] == "datetimecombo" || $vardef['type'] == "datetime" || $vardef['type'] == "date") {
-
         if ($method != "close") {
             if ($method != "save") {
                 $value = convertDateUserToDB($value);
@@ -516,8 +514,9 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     if ($vardef['type'] == "currency") {
         if ($_REQUEST['view'] != "DetailView") {
             $value = currency_format_number($value);
-        } else
+        } else {
             $value = format_number($value);
+        }
     }
     if ($vardef['type'] == "date" && $method == "save") {
         $value = substr($value, 0, strlen($value) - 6);
@@ -553,8 +552,6 @@ function checkAccess($bean)
 {
     if ($bean->ACLAccess('EditView')) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
-

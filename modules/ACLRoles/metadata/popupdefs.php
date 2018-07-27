@@ -48,5 +48,5 @@ $popupMeta = array('moduleMain' => 'ACLRole',
     'orderBy' => 'name',
     'whereClauses' => array('name' => 'acl_roles.name'),
     'searchInputs' => array('name'),
-    'searchdefs'   => array('name' => array('name' => 'name', 'label' => 'LBL_NAME',),)		
+    'searchdefs'   => array('name' => array('name' => 'name', 'label' => 'LBL_NAME',),)
 );

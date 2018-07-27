@@ -126,7 +126,7 @@ class Zend_Search_Lucene_Analysis_Token
     
     /**
      * Sets the Token's term text.
-     * 
+     *
      * @param string $text
      * @return this
      */
@@ -163,4 +163,3 @@ class Zend_Search_Lucene_Analysis_Token
         return $this->_endOffset;
     }
 }
-

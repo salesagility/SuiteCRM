@@ -66,7 +66,6 @@ require_once 'Zend/Gdata/Gapps/Extension/Quota.php';
  */
 class Zend_Gdata_Gapps_UserEntry extends Zend_Gdata_Entry
 {
-
     protected $_entryClassName = 'Zend_Gdata_Gapps_UserEntry';
 
     /**
@@ -291,5 +290,4 @@ class Zend_Gdata_Gapps_UserEntry extends Zend_Gdata_Entry
         $this->_feedLink = $value;
         return $this;
     }
-
 }

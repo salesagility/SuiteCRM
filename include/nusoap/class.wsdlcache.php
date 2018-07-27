@@ -13,7 +13,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -53,11 +53,11 @@ nusoap-general@lists.sourceforge.net
 
 /**
 * caches instances of the wsdl class
-* 
+*
 * @author   Scott Nichol <snichol@users.sourceforge.net>
 * @author	Ingo Fischer <ingo@apollon.de>
 
-* @access public 
+* @access public
 */
 class nusoap_wsdlcache
 {
@@ -156,9 +156,9 @@ class nusoap_wsdlcache
             }
             $this->releaseMutex($filename);
             return (!is_null($s)) ? unserialize($s) : null;
-        } else {
-            $this->debug("Unable to obtain mutex for $filename in get");
         }
+        $this->debug("Unable to obtain mutex for $filename in get");
+        
         return null;
     }
 
@@ -179,9 +179,8 @@ class nusoap_wsdlcache
         $this->fplock[md5($filename)] = fopen($filename.".lock", "w");
         if ($mode == "r") {
             return flock($this->fplock[md5($filename)], LOCK_SH);
-        } else {
-            return flock($this->fplock[md5($filename)], LOCK_EX);
         }
+        return flock($this->fplock[md5($filename)], LOCK_EX);
     }
 
     /**
@@ -207,9 +206,9 @@ class nusoap_wsdlcache
             $this->debug("Put $wsdl_instance->wsdl ($filename) in cache");
             $this->releaseMutex($filename);
             return true;
-        } else {
-            $this->debug("Unable to obtain mutex for $filename in put");
         }
+        $this->debug("Unable to obtain mutex for $filename in put");
+        
         return false;
     }
 

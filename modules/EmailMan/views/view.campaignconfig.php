@@ -54,34 +54,34 @@ require_once('modules/EmailMan/Forms.php');
 class ViewCampaignconfig extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
-    	   translate('LBL_CAMPAIGN_CONFIG_TITLE', 'Administration'),
-    	   );
+           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
+           translate('LBL_CAMPAIGN_CONFIG_TITLE', 'Administration'),
+           );
     }
     
     /**
-	 * @see SugarView::preDisplay()
-	 */
+     * @see SugarView::preDisplay()
+     */
     public function preDisplay()
     {
         global $current_user;
- 	    
+        
         if (!is_admin($current_user)
- 	            && !is_admin_for_module($GLOBALS['current_user'], 'Campaigns')) {
+                && !is_admin_for_module($GLOBALS['current_user'], 'Campaigns')) {
             sugar_die("Unauthorized access to administration.");
         }
     }
     
     /**
-	 * @see SugarView::display()
-	 */
+     * @see SugarView::display()
+     */
     public function display()
     {
         global $mod_strings;

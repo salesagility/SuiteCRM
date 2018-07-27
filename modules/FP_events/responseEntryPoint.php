@@ -8,7 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     $even_id = $_GET['event'];
     $delegate_id = $_GET['delegate'];
     $type = $_GET['type'];
-    $response = $_GET['response'];	
+    $response = $_GET['response'];
 
     //get event
     $event = new FP_events();
@@ -134,4 +134,3 @@ if (!defined('sugarEntry') || !sugarEntry) {
     {
         return (!isset($question) || trim($question)==='' || $question =='http://');
     }
-

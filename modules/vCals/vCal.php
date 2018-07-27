@@ -278,7 +278,10 @@
             $remainingchars = substr($iCalValue, self::CHARSPERLINE);
             $end = self::EOL . self::TAB;
 
-            $remainingchars = substr(chunk_split($end . $remainingchars, self::CHARSPERLINE + strlen(self::EOL), $end), 0, -strlen($end) // exclude last EOL and TAB chars
+            $remainingchars = substr(
+                chunk_split($end . $remainingchars, self::CHARSPERLINE + strlen(self::EOL), $end),
+                0,
+                -strlen($end) // exclude last EOL and TAB chars
             );
 
             return $firstchars . $remainingchars;

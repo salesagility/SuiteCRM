@@ -66,11 +66,10 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
 
         // set the ID in the seed user.  This can be used for retrieving the full user record later
         //if it's falling back on Sugar Authentication after the login failed on an external authentication return empty if the user has external_auth_disabled for them
-        if (empty ($row) || !empty($row['external_auth_only'])) {
+        if (empty($row) || !empty($row['external_auth_only'])) {
             return '';
-        } else {
-            return $row['id'];
         }
+        return $row['id'];
     }
 
     /**

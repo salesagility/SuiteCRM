@@ -69,8 +69,8 @@ $viewdefs['Schedulers']['DetailView'] = array(
                     'name' => 'last_run',
                     'customCode' => '{$fields.last_run.value|default:$MOD.LBL_NEVER}'),
                 array(
-                	'name' => 'job_interval',
-                	'customCode' => '{$JOB_INTERVAL}'),
+                    'name' => 'job_interval',
+                    'customCode' => '{$JOB_INTERVAL}'),
                 ),
             array('catch_up', 'job'),
             array(

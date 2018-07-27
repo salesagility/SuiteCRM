@@ -136,9 +136,9 @@ class SugarFolder
         $a = $this->db->fetchByAssoc($r);
         if ($a['c'] > 0) {
             return true;
-        } else {
-            return false;
-        } // else
+        }
+        return false;
+        // else
     }
 
     /**
@@ -576,7 +576,7 @@ class SugarFolder
         $found = array();
         while ($a = $this->db->fetchByAssoc($r)) {
             if (!empty($a['folder_type']) &&
-                $a['folder_type'] !== $myArchiveTypeString 
+                $a['folder_type'] !== $myArchiveTypeString
             ) {
                 if (!isset($found[$a['id']])) {
                     $found[$a['id']] = true;

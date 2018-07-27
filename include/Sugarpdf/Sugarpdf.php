@@ -490,9 +490,8 @@ class Sugarpdf extends TCPDF
         $html=$this->wrap("table", $html, $options);
         if ($returnHtml) {
             return $html;
-        } else {
-            $this->writeHTML($html);
         }
+        $this->writeHTML($html);
     }
 
     /**
@@ -686,13 +685,12 @@ class Sugarpdf extends TCPDF
                                     $lines += ceil($this->GetStringWidth($wordBlock) / $wmax);
                                 }
                                 continue;
-                            } else {
-                                $first = true;
-                                $lines += ceil($this->GetStringWidth(substr($wordBlock, 0, (strlen($wordBlock) - strlen(" ".$words[$i])))) / $wmax);
-                                $i--;
-                                $lastNum = 0;
-                                $run = false;
                             }
+                            $first = true;
+                            $lines += ceil($this->GetStringWidth(substr($wordBlock, 0, (strlen($wordBlock) - strlen(" ".$words[$i])))) / $wmax);
+                            $i--;
+                            $lastNum = 0;
+                            $run = false;
                         }
                     } else {
                         $first = false;
@@ -723,4 +721,3 @@ class Sugarpdf extends TCPDF
         return parent::Output($name, $dest);
     }
 }
-

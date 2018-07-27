@@ -40,9 +40,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$searchFields['EmailTemplates'] = 
-	array (
-		'name' => array( 'query_type'=>'default'),
-		'description'=> array('query_type'=>'default'),
-	);
-
+$searchFields['EmailTemplates'] =
+    array(
+        'name' => array( 'query_type'=>'default'),
+        'description'=> array('query_type'=>'default'),
+    );

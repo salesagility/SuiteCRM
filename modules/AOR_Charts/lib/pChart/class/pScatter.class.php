@@ -704,7 +704,7 @@
                      $LastX = $X;
                      $LastY = $Y;
                  }
-                 $SplineSettings["Forces"] = $Forces; 
+                 $SplineSettings["Forces"] = $Forces;
                  $this->pChartObject->drawSpline($WayPoints, $SplineSettings);
              }
          }
@@ -735,29 +735,26 @@
 
              if (count($Result) == 1) {
                  return($Result[0]);
-             } else {
-                 return($Result);
              }
-         } else {
-             $Height      = ($this->pChartObject->GraphAreaY2 - $this->pChartObject->GraphAreaY1) - $Data["Axis"][$AxisID]["Margin"]*2;
-             $ScaleHeight = $Data["Axis"][$AxisID]["ScaleMax"] - $Data["Axis"][$AxisID]["ScaleMin"];
-             $Step        = $Height / $ScaleHeight;
+             return($Result);
+         }
+         $Height      = ($this->pChartObject->GraphAreaY2 - $this->pChartObject->GraphAreaY1) - $Data["Axis"][$AxisID]["Margin"]*2;
+         $ScaleHeight = $Data["Axis"][$AxisID]["ScaleMax"] - $Data["Axis"][$AxisID]["ScaleMin"];
+         $Step        = $Height / $ScaleHeight;
 
-             $Result = "";
-             foreach ($Values as $Key => $Value) {
-                 if ($Value == VOID) {
-                     $Result[] = VOID;
-                 } else {
-                     $Result[] = $this->pChartObject->GraphAreaY2 - $Data["Axis"][$AxisID]["Margin"] - ($Step * ($Value-$Data["Axis"][$AxisID]["ScaleMin"]));
-                 }
-             }
-
-             if (count($Result) == 1) {
-                 return($Result[0]);
+         $Result = "";
+         foreach ($Values as $Key => $Value) {
+             if ($Value == VOID) {
+                 $Result[] = VOID;
              } else {
-                 return($Result);
+                 $Result[] = $this->pChartObject->GraphAreaY2 - $Data["Axis"][$AxisID]["Margin"] - ($Step * ($Value-$Data["Axis"][$AxisID]["ScaleMin"]));
              }
          }
+
+         if (count($Result) == 1) {
+             return($Result[0]);
+         }
+         return($Result);
      }
 
      /* Draw the legend of the active series */
@@ -885,7 +882,7 @@
                      $Picture = $Series["Picture"];
                      list($PicWidth, $PicHeight) = $this->pChartObject->getPicInfo($Picture);
                      $PicX = $X+$IconAreaWidth/2;
-                     $PicY = $Y+$IconAreaHeight/2; 
+                     $PicY = $Y+$IconAreaHeight/2;
 
                      $this->pChartObject->drawFromPNG($PicX-$PicWidth/2, $PicY-$PicHeight/2, $Picture);
                  } else {

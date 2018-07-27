@@ -25,7 +25,7 @@ require_once 'Zend/Search/Lucene/Interface.php';
 
 /**
  * Import Zend_Search_Lucene_Interface_MultiSearcher for BC (see ZF-12067)
- * @see Zend_Search_Lucene_Interface_MultiSearcher 
+ * @see Zend_Search_Lucene_Interface_MultiSearcher
  */
 require_once 'Zend/Search/Lucene/Interface/MultiSearcher.php';
 

@@ -67,7 +67,8 @@ class UsersController extends SugarController
 
     protected function action_delete()
     {
-        if ($_REQUEST['record'] != $GLOBALS['current_user']->id && ($GLOBALS['current_user']->isAdminForModule('Users')
+        if ($_REQUEST['record'] != $GLOBALS['current_user']->id && (
+            $GLOBALS['current_user']->isAdminForModule('Users')
             )
         ) {
             $u = new User();
@@ -145,5 +146,4 @@ class UsersController extends SugarController
             SugarApplication::redirect("index.php?module=Home&action=index");
         }
     }
-}	
-
+}

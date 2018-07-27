@@ -103,7 +103,7 @@ class ViewWizard extends SugarView
         $this->ss->assign('ADDRESS_COUNTRY', $current_user->address_country);
         $configurator = new Configurator();
         if ($configurator->config['passwordsetting']['SystemGeneratedPasswordON']
-		        || $configurator->config['passwordsetting']['forgotpasswordON']) {
+                || $configurator->config['passwordsetting']['forgotpasswordON']) {
             $this->ss->assign('REQUIRED_EMAIL_ADDRESS', '1');
         } else {
             $this->ss->assign('REQUIRED_EMAIL_ADDRESS', '0');
@@ -264,7 +264,7 @@ eoq;
     public function correctCurrenciesSymbolsSort($currenciesArray)
     {
         $baseCurrencyId = '-99';
-        $newCurrenciesArray = array ();
+        $newCurrenciesArray = array();
 
         $newCurrenciesArray[] = $currenciesArray[$baseCurrencyId]['symbol'];
         array_shift($currenciesArray);
@@ -291,4 +291,3 @@ eoq;
         return $return;
     }
 }
-

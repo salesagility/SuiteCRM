@@ -76,9 +76,8 @@ class Favorites extends Basic
             $favorite_record->save();
 
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -142,7 +141,7 @@ class Favorites extends Basic
     /**
      * @parm string $module
      * @return array Representing an array of \SuiteCRM\API\JsonApi\Resource\Resource
-     */ 
+     */
     public function getCurrentUserFavoritesForModule($module)
     {
         $db = DBManagerFactory::getInstance();

@@ -90,8 +90,8 @@ function getControl(
         }
         
         // remove the special text entry field function 'getEmailAddressWidget'
-        if (isset($vardef['function']) 
-                && ($vardef['function'] == 'getEmailAddressWidget' 
+        if (isset($vardef['function'])
+                && ($vardef['function'] == 'getEmailAddressWidget'
                     || $vardef['function']['name'] == 'getEmailAddressWidget')) {
             unset($vardef['function']);
         }
@@ -105,7 +105,7 @@ function getControl(
         }
         
         $displayParams = array();
-        $displayParams['formName'] = 'importstep3';  
+        $displayParams['formName'] = 'importstep3';
 
         $contents = $sfh->displaySmarty('fields', $vardef, 'ImportView', $displayParams);
         
@@ -113,8 +113,8 @@ function getControl(
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
         
         // hack to disable one of the js calls in this control
-        if (isset($vardef['function']) 
-                && ($vardef['function'] == 'getCurrencyDropDown' 
+        if (isset($vardef['function'])
+                && ($vardef['function'] == 'getCurrencyDropDown'
                     || $vardef['function']['name'] == 'getCurrencyDropDown')) {
             $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
         }

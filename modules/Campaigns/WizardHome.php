@@ -92,7 +92,7 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
 
-    //if this page has been refreshed as a result of sending emails, then display status 
+    //if this page has been refreshed as a result of sending emails, then display status
     if (isset($_REQUEST['from'])) {
         $mess = $mod_strings['LBL_TEST_EMAILS_SENT'];
         if ($_REQUEST['from']=='send') {
@@ -102,7 +102,7 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
         $confirm_msg .= "window.setTimeout(\"ajaxWizStatus.showStatus('".$mess."')\",1000); ";
         $confirm_msg .= "window.setTimeout('ajaxWizStatus.hideStatus()', 1500); ";
         $confirm_msg .= "window.setTimeout(\"ajaxWizStatus.showStatus('".$mess."')\",2000); ";
-        $confirm_msg .= "window.setTimeout('ajaxWizStatus.hideStatus()', 5000); ";        
+        $confirm_msg .= "window.setTimeout('ajaxWizStatus.hideStatus()', 5000); ";
         $ss->assign("MSG_SCRIPT", $confirm_msg);
     }
     
@@ -117,7 +117,7 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
     }
     if (isset($_REQUEST['record'])) {
         $ss->assign("ID", $_REQUEST['record']);
-    }    
+    }
     // handle Create $module then Cancel
     if (empty($_REQUEST['return_id'])) {
         $ss->assign("RETURN_ACTION", 'index');
@@ -125,11 +125,11 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
         
     
     
-    $ss->assign("CAMPAIGN_TBL", create_campaign_summary ($focus));
-    $ss->assign("TARGETS_TBL", create_target_summary ($focus));
+    $ss->assign("CAMPAIGN_TBL", create_campaign_summary($focus));
+    $ss->assign("TARGETS_TBL", create_target_summary($focus));
     if ($focus->campaign_type =='NewsLetter' || $focus->campaign_type =='Email') {
-        $ss->assign("MARKETING_TBL", create_marketing_summary ($focus));
-        $ss->assign("TRACKERS_TBL", create_tracker_summary ($focus));
+        $ss->assign("MARKETING_TBL", create_marketing_summary($focus));
+        $ss->assign("TRACKERS_TBL", create_tracker_summary($focus));
     }
     
     $camp_url = "index.php?action=WizardNewsletter&module=Campaigns&return_module=Campaigns&return_action=WizardHome";
@@ -151,7 +151,7 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
 
     $summ_url = "<a  href='index.php?action=WizardHome&module=Campaigns";
     $summ_url .= "&return_id=".$focus->id."&record=".$focus->id;
-    $summ_url .= "'> ". $mod_strings['LBL_NAVIGATION_MENU_SUMMARY']."</a>";    
+    $summ_url .= "'> ". $mod_strings['LBL_NAVIGATION_MENU_SUMMARY']."</a>";
 
 
     //Create the html to fill in the wizard steps
@@ -163,7 +163,7 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
         $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
     } else {
         $ss->assign('NAV_ITEMS', create_wiz_menu_items('general', $mrkt_string, $camp_url, $summ_url));
-    }    
+    }
     
             
     /********** FINAL END OF PAGE UI Stuff ********/
@@ -207,7 +207,7 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
     //there is no record to retrieve, so ask which type of campaign wizard to launch
     /*    $header_URL = "Location: index.php?module=Campaigns&action=index";
         $GLOBALS['log']->debug("about to post header URL of: $header_URL");
-        header($header_URL);            
+        header($header_URL);
     */
     global $mod_strings;
     global $app_list_strings;
@@ -248,44 +248,44 @@ function create_campaign_summary($focus)
     $fields[] = 'expected_revenue';
     $fields[] = 'expected_cost';
     $fields[] = 'impressions';
-    $fields[] = 'objective';  
+    $fields[] = 'objective';
     
     //create edit view status and input buttons
     $cmp_input = '';
 
     //create edit campaign button
-    $cmp_input =  "<input id='wiz_next_button' name='SUBMIT'  ";  
+    $cmp_input =  "<input id='wiz_next_button' name='SUBMIT'  ";
     $cmp_input.= "onclick=\"this.form.return_module.value='Campaigns';";
     $cmp_input.= "this.form.module.value='Campaigns';";
     $cmp_input.= "this.form.action.value='WizardNewsletter';";
     $cmp_input.= "this.form.return_action.value='WizardHome';";
     $cmp_input.= "this.form.direct_step.value='1';";
     $cmp_input.= "this.form.record.value='".$focus->id."';";
-    $cmp_input.= "this.form.return_id.value='".$focus->id."';\" "; 
+    $cmp_input.= "this.form.return_id.value='".$focus->id."';\" ";
     $cmp_input.= "class='button' value='".$mod_strings['LBL_EDIT_EXISTING']."' type='submit'> ";
           
-    //create view status button      
+    //create view status button
     if (($focus->campaign_type == 'NewsLetter') || ($focus->campaign_type == 'Email')) {
-        $cmp_input .=  " <input id='wiz_status_button' name='SUBMIT'  ";  
+        $cmp_input .=  " <input id='wiz_status_button' name='SUBMIT'  ";
         $cmp_input.= "onclick=\"this.form.return_module.value='Campaigns';";
         $cmp_input.= "this.form.module.value='Campaigns';";
         $cmp_input.= "this.form.action.value='TrackDetailView';";
         $cmp_input.= "this.form.return_action.value='WizardHome';";
         $cmp_input.= "this.form.record.value='".$focus->id."';";
-        $cmp_input.= "this.form.return_id.value='".$focus->id."';\" "; 
+        $cmp_input.= "this.form.return_id.value='".$focus->id."';\" ";
         $cmp_input.= "class='button' value='".$mod_strings['LBL_TRACK_BUTTON_TITLE']."' type='submit'>";
     }
     //create view roi button
-    $cmp_input .=  " <input id='wiz_status_button' name='SUBMIT'  ";  
+    $cmp_input .=  " <input id='wiz_status_button' name='SUBMIT'  ";
     $cmp_input.= "onclick=\"this.form.return_module.value='Campaigns';";
     $cmp_input.= "this.form.module.value='Campaigns';";
     $cmp_input.= "this.form.action.value='RoiDetailView';";
     $cmp_input.= "this.form.return_action.value='WizardHome';";
     $cmp_input.= "this.form.record.value='".$focus->id."';";
-    $cmp_input.= "this.form.return_id.value='".$focus->id."';\" "; 
+    $cmp_input.= "this.form.return_id.value='".$focus->id."';\" ";
     $cmp_input.= "class='button' value='".$mod_strings['LBL_TRACK_ROI_BUTTON_LABEL']."' type='submit'>";
           
-    //Create Campaign Header    
+    //Create Campaign Header
     $cmpgn_tbl = "<p><table class='edit view' width='100%' border='0' cellspacing='0' cellpadding='0'>";
     $cmpgn_tbl .= "<tr><td class='dataField' align='left'><h4 class='dataLabel'> ".$mod_strings['LBL_LIST_CAMPAIGN_NAME'].'  '. $mod_strings['LBL_WIZ_NEWSLETTER_TITLE_SUMMARY']." </h4></td>";
     $cmpgn_tbl .= "<td align='right'>$cmp_input</td></tr>";
@@ -312,17 +312,17 @@ function create_marketing_summary($focus)
     $colorclass = '';
     
     //create new marketing button input
-    $new_mrkt_input =  "<input id='wiz_new_mrkt_button' name='SUBMIT' ";  
+    $new_mrkt_input =  "<input id='wiz_new_mrkt_button' name='SUBMIT' ";
     $new_mrkt_input .= "onclick=\"this.form.return_module.value='Campaigns';";
     $new_mrkt_input .= "this.form.module.value='Campaigns';";
     $new_mrkt_input .= "this.form.record.value='';";
-    $new_mrkt_input .= "this.form.return_module.value='Campaigns';";    
+    $new_mrkt_input .= "this.form.return_module.value='Campaigns';";
     $new_mrkt_input .= "this.form.action.value='WizardMarketing';";
     $new_mrkt_input .= "this.form.return_action.value='WizardHome';";
     $new_mrkt_input .= "this.form.direct_step.value='1';";
     $new_mrkt_input .= "this.form.campaign_id.value='".$focus->id."';";
-    $new_mrkt_input .= "this.form.return_id.value='".$focus->id."';\" "; 
-    $new_mrkt_input .= "class='button' value='".$mod_strings['LBL_CREATE_NEW_MARKETING_EMAIL']."' type='submit'>";        
+    $new_mrkt_input .= "this.form.return_id.value='".$focus->id."';\" ";
+    $new_mrkt_input .= "class='button' value='".$mod_strings['LBL_CREATE_NEW_MARKETING_EMAIL']."' type='submit'>";
        
     //create marketing email table
     $mrkt_tbl='';
@@ -339,37 +339,37 @@ function create_marketing_summary($focus)
     if (count($mrkt_lists)>0) {
         $mrkt_focus = new EmailMarketing();
         foreach ($mrkt_lists as $mrkt_id) {
-            $mrkt_focus->retrieve($mrkt_id);    
+            $mrkt_focus->retrieve($mrkt_id);
     
             //create send test marketing button input
-            $test_mrkt_input =  "<input id='wiz_new_mrkt_button' name='SUBMIT'  ";  
+            $test_mrkt_input =  "<input id='wiz_new_mrkt_button' name='SUBMIT'  ";
             $test_mrkt_input .= "onclick=\"this.form.return_module.value='Campaigns'; ";
             $test_mrkt_input .= "this.form.module.value='Campaigns'; ";
             $test_mrkt_input .= "this.form.record.value='';";
-            $test_mrkt_input .= "this.form.return_module.value='Campaigns'; ";    
+            $test_mrkt_input .= "this.form.return_module.value='Campaigns'; ";
             $test_mrkt_input .= "this.form.action.value='QueueCampaign'; ";
             $test_mrkt_input .= "this.form.return_action.value='WizardHome'; ";
             $test_mrkt_input .= "this.form.wiz_mass.value='".$mrkt_focus->id."'; ";
-            $test_mrkt_input .= "this.form.mode.value='test'; ";    
+            $test_mrkt_input .= "this.form.mode.value='test'; ";
             $test_mrkt_input .= "this.form.direct_step.value='1'; ";
             $test_mrkt_input .= "this.form.record.value='".$focus->id."'; ";
-            $test_mrkt_input .= "this.form.return_id.value='".$focus->id."';\" "; 
-            $test_mrkt_input .= "class='button' value='".$mod_strings['LBL_TEST_BUTTON_LABEL']."' type='submit'>";        
+            $test_mrkt_input .= "this.form.return_id.value='".$focus->id."';\" ";
+            $test_mrkt_input .= "class='button' value='".$mod_strings['LBL_TEST_BUTTON_LABEL']."' type='submit'>";
             
             //create send marketing button input
-            $send_mrkt_input =  "<input id='wiz_new_mrkt_button' name='SUBMIT'  ";  
+            $send_mrkt_input =  "<input id='wiz_new_mrkt_button' name='SUBMIT'  ";
             $send_mrkt_input .= "onclick=\"this.form.return_module.value='Campaigns'; ";
             $send_mrkt_input .= "this.form.module.value='Campaigns'; ";
             $send_mrkt_input .= "this.form.record.value='';";
-            $send_mrkt_input .= "this.form.return_module.value='Campaigns'; ";    
+            $send_mrkt_input .= "this.form.return_module.value='Campaigns'; ";
             $send_mrkt_input .= "this.form.action.value='QueueCampaign'; ";
             $send_mrkt_input .= "this.form.return_action.value='WizardHome'; ";
             $send_mrkt_input .= "this.form.wiz_mass.value='".$mrkt_focus->id."'; ";
-            $send_mrkt_input .= "this.form.mode.value='send'; ";    
+            $send_mrkt_input .= "this.form.mode.value='send'; ";
             $send_mrkt_input .= "this.form.direct_step.value='1'; ";
             $send_mrkt_input .= "this.form.record.value='".$focus->id."'; ";
-            $send_mrkt_input .= "this.form.return_id.value='".$focus->id."';\" "; 
-            $send_mrkt_input .= "class='button' value='".$mod_strings['LBL_SEND_EMAIL']."' type='submit'>";        
+            $send_mrkt_input .= "this.form.return_id.value='".$focus->id."';\" ";
+            $send_mrkt_input .= "class='button' value='".$mod_strings['LBL_SEND_EMAIL']."' type='submit'>";
             
     
     
@@ -377,7 +377,7 @@ function create_marketing_summary($focus)
                 $colorclass= "class='oddListRowS1'";
             } else {
                 $colorclass= "class='evenListRowS1'";
-            }        
+            }
     
             if (isset($mrkt_focus->name) && !empty($mrkt_focus->name)) {
                 $mrkt_tbl  .= "<tr $colorclass>";
@@ -428,11 +428,11 @@ function create_target_summary($focus)
                 $colorclass= "class='oddListRowS1'";
             } else {
                 $colorclass= "class='evenListRowS1'";
-            }         
+            }
                                     
             $pl_focus->retrieve($pl_id);
             //set the list type if this is a newsletter
-            $type=$pl_focus->list_type;    
+            $type=$pl_focus->list_type;
             if ($camp_type=='NewsLetter') {
                 if (($pl_focus->list_type == 'default') || ($pl_focus->list_type == 'seed')) {
                     $type = $mod_strings['LBL_SUBSCRIPTION_TYPE_NAME'];
@@ -487,7 +487,7 @@ function create_tracker_summary($focus)
                 $colorclass= "class='oddListRowS1'";
             } else {
                 $colorclass= "class='evenListRowS1'";
-            }        
+            }
             
             
             $ct_focus = new CampaignTracker();
@@ -530,7 +530,7 @@ function create_wiz_menu_items($type, $mrkt_string, $camp_url, $summ_url)
         $steps[$mod_strings['LBL_NAVIGATION_MENU_SUBSCRIPTIONS']] = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTargetList.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTargetList.tpl' : 'modules/Campaigns/tpls/WizardCampaignTargetList.tpl';
     } else {
         $steps[$mod_strings['LBL_TARGET_LISTS']]                  = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl' : 'modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl';
-    }    
+    }
 
     $nav_html = '<table border="0" cellspacing="0" cellpadding="0" width="100%" >';
     if (isset($steps)  && !empty($steps)) {

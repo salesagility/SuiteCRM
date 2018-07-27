@@ -47,64 +47,64 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-$viewdefs = array (
-  'Opportunities' => 
-  array (
-    'QuickCreate' => 
-    array (
-      'templateMeta' => 
-      array (
+$viewdefs = array(
+  'Opportunities' =>
+  array(
+    'QuickCreate' =>
+    array(
+      'templateMeta' =>
+      array(
         'maxColumns' => '2',
-        'widths' => 
-        array (
-          0 => 
-          array (
+        'widths' =>
+        array(
+          0 =>
+          array(
             'label' => '10',
             'field' => '30',
           ),
-          1 => 
-          array (
+          1 =>
+          array(
             'label' => '10',
             'field' => '30',
           ),
         ),
         'javascript' => '{$PROBABILITY_SCRIPT}',
       ),
-      'panels' => 
-      array (
-        'DEFAULT' => 
-        array (
-          array (
-            array (
+      'panels' =>
+      array(
+        'DEFAULT' =>
+        array(
+          array(
+            array(
               'name' => 'name',
               'displayParams'=>array('required'=>true),
             ),
-            array (
+            array(
               'name' => 'account_name',
             ),
           ),
-          array (
-            array (
+          array(
+            array(
               'name' => 'currency_id',
             ),
-            array (
+            array(
               'name' => 'opportunity_type',
-            ),            
+            ),
           ),
-          array (
+          array(
             'amount',
-            'date_closed'          
+            'date_closed'
           ),
-          array (
+          array(
              'next_step',
              'sales_stage',
           ),
-          array (
+          array(
              'lead_source',
              'probability',
           ),
-        array (
-            array (
+        array(
+            array(
               'name' => 'assigned_user_name',
             ),
         ),

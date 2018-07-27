@@ -107,4 +107,3 @@ class TemplateDate extends TemplateRange
         return $def;
     }
 }
-

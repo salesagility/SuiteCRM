@@ -191,15 +191,26 @@ class XML_HTMLSax3_OpeningTagState
                     $context->unscanCharacter();
                 }
                 $context->handler_object_element->
-                    {$context->handler_method_opening}($context->htmlsax, $tag,
-                    $Attributes, true);
+                    {$context->handler_method_opening}(
+                        $context->htmlsax,
+                        $tag,
+                    $Attributes,
+                        true
+                    );
                 $context->handler_object_element->
-                    {$context->handler_method_closing}($context->htmlsax, $tag,
-                    true);
+                    {$context->handler_method_closing}(
+                        $context->htmlsax,
+                        $tag,
+                    true
+                    );
             } else {
                 $context->handler_object_element->
-                    {$context->handler_method_opening}($context->htmlsax, $tag,
-                    $Attributes, false);
+                    {$context->handler_method_opening}(
+                        $context->htmlsax,
+                        $tag,
+                    $Attributes,
+                        false
+                    );
             }
         }
         return XML_HTMLSAX3_STATE_START;

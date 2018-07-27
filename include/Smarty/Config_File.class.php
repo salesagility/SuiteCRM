@@ -19,7 +19,7 @@
  *
  * For questions, help, comments, discussion, etc., please join the
  * Smarty mailing list. Send a blank e-mail to
- * smarty-discussion-subscribe@googlegroups.com 
+ * smarty-discussion-subscribe@googlegroups.com
  *
  * @link http://www.smarty.net/
  * @version 2.6.25-dev
@@ -116,34 +116,29 @@ class Config_File
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
             return;
-        } else {
-            $file_name = $this->_config_path . $file_name;
-            if (!isset($this->_config_data[$file_name])) {
-                $this->load_file($file_name, false);
-            }
         }
+        $file_name = $this->_config_path . $file_name;
+        if (!isset($this->_config_data[$file_name])) {
+            $this->load_file($file_name, false);
+        }
+        
 
         if (!empty($var_name)) {
             if (empty($section_name)) {
                 return $this->_config_data[$file_name]["vars"][$var_name];
-            } else {
-                if (isset($this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name])) {
-                    return $this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name];
-                } else {
-                    return array();
-                }
             }
-        } else {
-            if (empty($section_name)) {
-                return (array)$this->_config_data[$file_name]["vars"];
-            } else {
-                if (isset($this->_config_data[$file_name]["sections"][$section_name]["vars"])) {
-                    return (array)$this->_config_data[$file_name]["sections"][$section_name]["vars"];
-                } else {
-                    return array();
-                }
+            if (isset($this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name])) {
+                return $this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name];
             }
+            return array();
         }
+        if (empty($section_name)) {
+            return (array)$this->_config_data[$file_name]["vars"];
+        }
+        if (isset($this->_config_data[$file_name]["sections"][$section_name]["vars"])) {
+            return (array)$this->_config_data[$file_name]["sections"][$section_name]["vars"];
+        }
+        return array();
     }
 
 
@@ -209,9 +204,8 @@ class Config_File
 
         if (empty($section)) {
             return array_keys($this->_config_data[$file_name]["vars"]);
-        } else {
-            return array_keys($this->_config_data[$file_name]["sections"][$section]["vars"]);
         }
+        return array_keys($this->_config_data[$file_name]["sections"][$section]["vars"]);
     }
 
 
@@ -362,9 +356,8 @@ class Config_File
         if (substr($var_name, 0, 1) == '.') {
             if (!$this->read_hidden) {
                 return;
-            } else {
-                $var_name = substr($var_name, 1);
             }
+            $var_name = substr($var_name, 1);
         }
 
         if (!preg_match("/^[a-zA-Z_]\w*$/", $var_name)) {

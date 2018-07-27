@@ -101,26 +101,26 @@ $lastMatch = false;
 $doaction =(!empty($_REQUEST['doaction']))?$_REQUEST['doaction']:'';
 
 switch ($doaction) {
-	case 'mark':
-		echo "<h3>{$mod_strings['LBL_MARKING_WHERE_START_LOGGING']}</h3><br>";
-		$_SESSION['log_file_size'] = filesize($logFile);
-		break;
-	case 'next':
-		if (!empty($_SESSION['last_log_file_size'])) {
-		    $_SESSION['log_file_size'] = $_SESSION['last_log_file_size'];
-		} else {
-		    $_SESSION['log_file_size'] = 0;
-		}
-		$_REQUEST['display'] = true;
-		break;
-	case 'all':
-		$_SESSION['log_file_size'] = 0;
-		$_REQUEST['display'] = true;
-		break;
+    case 'mark':
+        echo "<h3>{$mod_strings['LBL_MARKING_WHERE_START_LOGGING']}</h3><br>";
+        $_SESSION['log_file_size'] = filesize($logFile);
+        break;
+    case 'next':
+        if (!empty($_SESSION['last_log_file_size'])) {
+            $_SESSION['log_file_size'] = $_SESSION['last_log_file_size'];
+        } else {
+            $_SESSION['log_file_size'] = 0;
+        }
+        $_REQUEST['display'] = true;
+        break;
+    case 'all':
+        $_SESSION['log_file_size'] = 0;
+        $_REQUEST['display'] = true;
+        break;
 }
 
 
-if (!empty ($_REQUEST['display'])) {
+if (!empty($_REQUEST['display'])) {
     echo "<h3>{$mod_strings['LBL_DISPLAYING_LOG']}</h3>";
     $process_id =  getmypid();
 
@@ -129,7 +129,7 @@ if (!empty ($_REQUEST['display'])) {
     if ($ignore_self) {
         echo $mod_strings['LBL_IT_WILL_BE_IGNORED'];
     }
-    if (empty ($_SESSION['log_file_size'])) {
+    if (empty($_SESSION['log_file_size'])) {
         $_SESSION['log_file_size'] = 0;
     }
     $cur_size = filesize($logFile);

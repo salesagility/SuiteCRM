@@ -208,7 +208,7 @@ class Chart_pipeline_by_sales_stage
         echo '<span onmouseover="this.style.cursor=\'move\'" id="chart_handle_' . $this->order . '">' . get_form_header($current_module_strings['LBL_SALES_STAGE_FORM_TITLE'], $tools, false) . '</span>'; ?>
 
 <?php
-	$cal_lang = "en";
+    $cal_lang = "en";
         $cal_dateformat = $timedate->get_cal_date_format();
         if (empty($_SESSION['pbss_sales_stages'])) {
             $_SESSION['pbss_sales_stages'] = "";

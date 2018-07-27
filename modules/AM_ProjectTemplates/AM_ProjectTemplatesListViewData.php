@@ -51,12 +51,12 @@ class AM_ProjectTemplatesListViewData extends ListViewData
 {
 
 
-	/**
-	 * generates the additional details span to be retrieved via ajax
-	 *
-	 * @param GUID id id of the record
-	 * @return array string to attach to field
-	 */
+    /**
+     * generates the additional details span to be retrieved via ajax
+     *
+     * @param GUID id id of the record
+     * @return array string to attach to field
+     */
     public function getAdditionalDetailsAjax($id)
     {
         global $app_strings;
@@ -66,7 +66,7 @@ class AM_ProjectTemplatesListViewData extends ListViewData
 
         $extra = "<span id='aadspan_" . $id . "' "
                 . "onclick=\"location.href='index.php?module=AM_ProjectTemplates&action=DetailView&record=". $id ."'\" "
-				. "><!--not_in_theme!-->".$app_strings['LBL_ADDITIONAL_DETAILS']."'</span>";
+                . "><!--not_in_theme!-->".$app_strings['LBL_ADDITIONAL_DETAILS']."'</span>";
 
         //return array('fieldToAddTo' => $this->additionalDetailsFieldToAdd, 'string' => $extra);
     }

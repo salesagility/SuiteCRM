@@ -57,11 +57,11 @@ while ($a = $focus->db->fetchByAssoc($r)) {
 $groupIds = substr($groupIds, 0, (strlen($groupIds) - 2));
 
 $query = 'SELECT emails.id AS id FROM emails';
-$query .= " WHERE emails.deleted = 0 AND emails.status = 'unread' AND emails.assigned_user_id IN ({$groupIds})";  
+$query .= " WHERE emails.deleted = 0 AND emails.status = 'unread' AND emails.assigned_user_id IN ({$groupIds})";
 //$query .= ' LIMIT 1';
 
 //_ppd($query);
-$r2 = $focus->db->query($query); 
+$r2 = $focus->db->query($query);
 $count = 0;
 $a2 = $focus->db->fetchByAssoc($r2);
 
@@ -74,4 +74,3 @@ if (!empty($a2['id'])) {
 } else {
     header('Location: index.php?module=Emails&action=ListView&show_error=true&type=inbound&assigned_user_id='.$current_user->id);
 }
-

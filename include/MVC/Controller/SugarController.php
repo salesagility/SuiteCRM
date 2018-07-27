@@ -417,8 +417,13 @@ class SugarController
         if (!isset($this->view_object_map['remap_action']) && isset($this->action_view_map[strtolower($this->action)])) {
             $this->view_object_map['remap_action'] = $this->action_view_map[strtolower($this->action)];
         }
-        $view = ViewFactory::loadView($this->view, $this->module, $this->bean, $this->view_object_map,
-            $this->target_module);
+        $view = ViewFactory::loadView(
+            $this->view,
+            $this->module,
+            $this->bean,
+            $this->view_object_map,
+            $this->target_module
+        );
         $GLOBALS['current_view'] = $view;
         if (!empty($this->bean) && !$this->bean->ACLAccess($view->type) && $view->type != 'list') {
             ACLController::displayNoAccess(true);
@@ -857,8 +862,10 @@ class SugarController
             if (!empty($dashletDefs[$id])) {
                 require_once($dashletDefs[$id]['fileLocation']);
 
-                $dashlet = new $dashletDefs[$id]['className']($id,
-                    (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : array()));
+                $dashlet = new $dashletDefs[$id]['className'](
+                    $id,
+                    (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : array())
+                );
 
                 if (method_exists($dashlet, $requestedMethod) || method_exists($dashlet, '__call')) {
                     echo $dashlet->$requestedMethod();
@@ -881,8 +888,10 @@ class SugarController
             $dashletDefs = $current_user->getPreference('dashlets', $_REQUEST['module']); // load user's dashlets config
             require_once($dashletDefs[$id]['fileLocation']);
 
-            $dashlet = new $dashletDefs[$id]['className']($id,
-                (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : array()));
+            $dashlet = new $dashletDefs[$id]['className'](
+                $id,
+                (isset($dashletDefs[$id]['options']) ? $dashletDefs[$id]['options'] : array())
+            );
             if (!empty($_REQUEST['configure']) && $_REQUEST['configure']) { // save settings
                 $dashletDefs[$id]['options'] = $dashlet->saveOptions($_REQUEST);
                 $current_user->setPreference('dashlets', $dashletDefs, 0, $_REQUEST['module']);
@@ -962,8 +971,10 @@ class SugarController
                 $GLOBALS['admin_access_control_links'] = $this->file_access_control_map['modules'][$module]['links'];
             }
 
-            if (!empty($this->file_access_control_map['modules'][$module]['actions']) && (in_array($action,
-                        $this->file_access_control_map['modules'][$module]['actions']) || !empty($this->file_access_control_map['modules'][$module]['actions'][$action]))
+            if (!empty($this->file_access_control_map['modules'][$module]['actions']) && (in_array(
+                $action,
+                        $this->file_access_control_map['modules'][$module]['actions']
+            ) || !empty($this->file_access_control_map['modules'][$module]['actions'][$action]))
             ) {
                 //check params
                 if (!empty($this->file_access_control_map['modules'][$module]['actions'][$action]['params'])) {
@@ -1099,7 +1110,7 @@ class SugarController
         
     /**
      * action: Send Confirm Opt In Email to Contact/Lead/Account/Prospect
-     * 
+     *
      * @global array $app_strings using for user messages about error/success status of action
      */
     public function action_sendConfirmOptInEmail()

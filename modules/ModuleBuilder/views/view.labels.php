@@ -89,7 +89,7 @@ class ViewLabels extends ViewModulefields
         $vnames = array();
         //jchi 24557 . We should list all the lables in viewdefs(list,detail,edit,quickcreate) that the user can edit them.
         require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php' ;
-        $parser = new ListLayoutMetaDataParser (MB_LISTVIEW, $editModule) ;
+        $parser = new ListLayoutMetaDataParser(MB_LISTVIEW, $editModule) ;
         foreach ($parser->getLayout() as $key => $def) {
             if (isset($def['label'])) {
                 $vnames[$def['label']] = $def['label'];
@@ -99,11 +99,11 @@ class ViewLabels extends ViewModulefields
         require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
         $variableMap = $this->getVariableMap($editModule);
         foreach ($variableMap as $key => $value) {
-            $gridLayoutMetaDataParserTemp = new GridLayoutMetaDataParser ($value, $editModule) ;
+            $gridLayoutMetaDataParserTemp = new GridLayoutMetaDataParser($value, $editModule) ;
             foreach ($gridLayoutMetaDataParserTemp->getLayout() as $panel) {
                 foreach ($panel as $row) {
                     foreach ($row as $fieldArray) { // fieldArray is an array('name'=>name,'label'=>label)
-                        if (isset ($fieldArray [ 'label' ])) {
+                        if (isset($fieldArray [ 'label' ])) {
                             $vnames[$fieldArray [ 'label' ] ] = $fieldArray [ 'label' ] ;
                         }
                     }
@@ -113,8 +113,8 @@ class ViewLabels extends ViewModulefields
         //end
 
         //Get Subpanel Labels:
-        require_once ('include/SubPanel/SubPanel.php') ;
-        $subList =  SubPanel::getModuleSubpanels ($editModule);
+        require_once('include/SubPanel/SubPanel.php') ;
+        $subList =  SubPanel::getModuleSubpanels($editModule);
         foreach ($subList as $subpanel => $titleLabel) {
             $vnames[$titleLabel] = $titleLabel;
         }
@@ -173,8 +173,8 @@ class ViewLabels extends ViewModulefields
     // fixing bug #39749: Quick Create in Studio
     public function getVariableMap($module)
     {
-        $variableMap = array(MB_EDITVIEW => 'EditView', 
-                             MB_DETAILVIEW => 'DetailView', 
+        $variableMap = array(MB_EDITVIEW => 'EditView',
+                             MB_DETAILVIEW => 'DetailView',
                              MB_QUICKCREATE => 'QuickCreate');
         
         $hideQuickCreateForModules = array('KBDocuments',

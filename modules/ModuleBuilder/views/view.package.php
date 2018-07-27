@@ -77,7 +77,7 @@ class Viewpackage extends SugarView
             $name = (!empty($_REQUEST['package']))?$_REQUEST['package']:'';
             $mb->getPackage($name);
             
-            require_once ('modules/ModuleBuilder/MB/MBPackageTree.php') ;
+            require_once('modules/ModuleBuilder/MB/MBPackageTree.php') ;
             $mbt = new MBPackageTree();
             $nodes = $mbt->fetchNodes();
             
@@ -91,7 +91,7 @@ class Viewpackage extends SugarView
             }
             
             $json = getJSONobj();
-            $smarty->assign('package_labels', $json->encode($package_labels));            	
+            $smarty->assign('package_labels', $json->encode($package_labels));
             
             $this->package =& $mb->packages[$name];
             $this->loadModuleTypes();

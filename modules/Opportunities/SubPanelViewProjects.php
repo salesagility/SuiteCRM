@@ -73,12 +73,12 @@ global $action;
 /// SETUP PARENT POPUP
 
 $popup_request_data = array(
-	'call_back_function' => 'set_return_and_save',
-	'form_name' => 'DetailView',
-	'field_to_name_array' => array(
-		'id' => 'opportunity_id',
-		),
-	);
+    'call_back_function' => 'set_return_and_save',
+    'form_name' => 'DetailView',
+    'field_to_name_array' => array(
+        'id' => 'opportunity_id',
+        ),
+    );
 
 $json = getJSONobj();
 $encoded_popup_request_data = $json->encode($popup_request_data);
@@ -96,10 +96,10 @@ $button .= "<input type='hidden' name='return_action' value='".$action."'>\n";
 $button .= "<input type='hidden' name='return_id' value='".$focus->id."'>\n";
 $button .= "<input type='hidden' name='action'>\n";
 $button .= "<input title='".$app_strings['LBL_SELECT_BUTTON_TITLE']
-	."' accessyKey='".$app_strings['LBL_SELECT_BUTTON_KEY']
-	."' type='button' class='button' value='  "
-	.$app_strings['LBL_SELECT_BUTTON_LABEL']
-	."  ' name='button' onclick='open_popup(\"Opportunities\", 600, 400, \"\", false, true, {$encoded_popup_request_data});'>\n";
+    ."' accessyKey='".$app_strings['LBL_SELECT_BUTTON_KEY']
+    ."' type='button' class='button' value='  "
+    .$app_strings['LBL_SELECT_BUTTON_LABEL']
+    ."  ' name='button' onclick='open_popup(\"Opportunities\", 600, 400, \"\", false, true, {$encoded_popup_request_data});'>\n";
 $button .= "</form>\n";
 $header_text = '';
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {

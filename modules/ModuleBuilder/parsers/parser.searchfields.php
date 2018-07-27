@@ -1,6 +1,6 @@
 <?php
-if (! defined ('sugarEntry') || ! sugarEntry) {
-    die ('Not A Valid Entry Point') ;
+if (! defined('sugarEntry') || ! sugarEntry) {
+    die('Not A Valid Entry Point') ;
 }
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,8 +40,8 @@ if (! defined ('sugarEntry') || ! sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
-require_once ('modules/ModuleBuilder/MB/MBPackage.php');
+require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
+require_once('modules/ModuleBuilder/MB/MBPackage.php');
 
 class ParserSearchFields extends ModuleBuilderParser
 {

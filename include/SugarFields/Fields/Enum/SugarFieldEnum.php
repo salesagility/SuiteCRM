@@ -46,9 +46,8 @@ class SugarFieldEnum extends SugarFieldBase
         if (!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             return "<span id='{$vardef['name']}'>" . $this->fetch($this->findTemplate('DetailViewFunction')) . "</span>";
-        } else {
-            return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
         }
+        return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     
     public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
@@ -60,9 +59,8 @@ class SugarFieldEnum extends SugarFieldBase
         if (isset($vardef['function']) && !empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             return $this->fetch($this->findTemplate('EditViewFunction'));
-        } else {
-            return parent::getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
         }
+        return parent::getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     
     
@@ -76,10 +74,9 @@ class SugarFieldEnum extends SugarFieldBase
         if (!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             return $this->fetch($this->findTemplate('EditViewFunction'));
-        } else {
-            $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
-            return $this->fetch($this->findTemplate('SearchView'));
         }
+        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+        return $this->fetch($this->findTemplate('SearchView'));
     }
     
 
@@ -107,7 +104,7 @@ class SugarFieldEnum extends SugarFieldBase
         // Bug 27467 - Trim the value given
         $value = trim($value);
         
-        if (isset($app_list_strings[$vardef['options']]) 
+        if (isset($app_list_strings[$vardef['options']])
                 && !isset($app_list_strings[$vardef['options']][$value])) {
             // Bug 23485/23198 - Check to see if the value passed matches the display value
             if (in_array($value, $app_list_strings[$vardef['options']])) {
@@ -145,11 +142,9 @@ class SugarFieldEnum extends SugarFieldBase
             
             if (!empty($app_list_strings[$option_array_name][$rawField])) {
                 return $app_list_strings[$option_array_name][$rawField];
-            } else {
-                return $rawField;
             }
-        } else {
             return $rawField;
         }
+        return $rawField;
     }
 }

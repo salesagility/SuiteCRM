@@ -176,7 +176,7 @@ if (!empty($focus->stored_options)) {
         $leaveMessagesOnMailServer = 0;
     } // else
 } else { // initialize empty vars for template
-	$from_name = $current_user->name;
+    $from_name = $current_user->name;
     $from_addr = $current_user->email1;
     isValidEmailAddress($from_addr);
     $reply_to_name = '';

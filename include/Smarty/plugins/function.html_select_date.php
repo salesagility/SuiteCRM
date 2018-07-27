@@ -209,11 +209,13 @@ function smarty_function_html_select_date($params, &$smarty)
         }
         $month_result .= $extra_attrs . '>'."\n";
 
-        $month_result .= smarty_function_html_options(array('output'     => $month_names,
+        $month_result .= smarty_function_html_options(
+            array('output'     => $month_names,
                                                             'values'     => $month_values,
                                                             'selected'   => (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
                                                             'print_result' => false),
-                                                      $smarty);
+                                                      $smarty
+        );
         $month_result .= '</select>';
     }
 
@@ -245,11 +247,13 @@ function smarty_function_html_select_date($params, &$smarty)
             $day_result .= ' ' . $day_extra;
         }
         $day_result .= $extra_attrs . '>'."\n";
-        $day_result .= smarty_function_html_options(array('output'     => $days,
+        $day_result .= smarty_function_html_options(
+            array('output'     => $days,
                                                           'values'     => $day_values,
                                                           'selected'   => $time[2],
                                                           'print_result' => false),
-                                                    $smarty);
+                                                    $smarty
+        );
         $day_result .= '</select>';
     }
 
@@ -292,11 +296,13 @@ function smarty_function_html_select_date($params, &$smarty)
                 $year_result .= ' ' . $year_extra;
             }
             $year_result .= $extra_attrs . '>'."\n";
-            $year_result .= smarty_function_html_options(array('output' => $years,
+            $year_result .= smarty_function_html_options(
+                array('output' => $years,
                                                                'values' => $yearvals,
                                                                'selected'   => $time[0],
                                                                'print_result' => false),
-                                                         $smarty);
+                                                         $smarty
+            );
             $year_result .= '</select>';
         }
     }

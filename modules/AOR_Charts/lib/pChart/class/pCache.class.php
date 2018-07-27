@@ -217,9 +217,8 @@
 
                      if ($Verbose) {
                          return(array("DBPos"=>$DBPos,"PicSize"=>$PicSize,"GeneratedTS"=>$GeneratedTS,"Hits"=>$Hits));
-                     } else {
-                         return(true);
                      }
+                     return(true);
                  }
              }
          }
@@ -287,7 +286,7 @@
              return(null);
          }
 
-         /* Get the database extended information */     
+         /* Get the database extended information */
          $DBPos   = $CacheInfo["DBPos"];
          $PicSize = $CacheInfo["PicSize"];
 

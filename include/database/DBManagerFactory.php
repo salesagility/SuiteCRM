@@ -82,15 +82,15 @@ class DBManagerFactory
                     }
                     break;
                 case "mssql":
-                  	if (function_exists('sqlsrv_connect')
+                      if (function_exists('sqlsrv_connect')
                                 && (empty($config['db_mssql_force_driver']) || $config['db_mssql_force_driver'] == 'sqlsrv')) {
-                  	    $my_db_manager = 'SqlsrvManager';
-                  	} elseif (self::isFreeTDS()
+                          $my_db_manager = 'SqlsrvManager';
+                      } elseif (self::isFreeTDS()
                                 && (empty($config['db_mssql_force_driver']) || $config['db_mssql_force_driver'] == 'freetds')) {
-                  	    $my_db_manager = 'FreeTDSManager';
-                  	} else {
-                  	    $my_db_manager = 'MssqlManager';
-                  	}
+                          $my_db_manager = 'FreeTDSManager';
+                      } else {
+                          $my_db_manager = 'MssqlManager';
+                      }
                     break;
                 default:
                     $my_db_manager = self::getManagerByType($type, false);
@@ -118,13 +118,12 @@ class DBManagerFactory
 
         if (class_exists($my_db_manager)) {
             return new $my_db_manager();
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
-	 * Returns a reference to the DB object for instance $instanceName, or the default
+     * Returns a reference to the DB object for instance $instanceName, or the default
      * instance if one is not specified
      *
      * @param  string $instanceName optional, name of the instance
@@ -261,7 +260,7 @@ class DBManagerFactory
     /**
      * Check if we have freeTDS driver installed
      * Invoked when connected to mssql. checks if we have freetds version of mssql library.
-	 * the response is put into a global variable.
+     * the response is put into a global variable.
      * @return bool
      */
     public static function isFreeTDS()

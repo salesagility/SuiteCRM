@@ -41,7 +41,7 @@ if (!defined('sugarEntry')) {
  ********************************************************************************/
 
 
-/* 
+/*
  * First step in removing getimage and getYUIComboFile -- at least this bypasses most of the app,
  * making assets load faster.
  */

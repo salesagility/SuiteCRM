@@ -172,7 +172,8 @@ class ImportViewStep3 extends ImportView
         $this->ss->assign('INSTRUCTION', $this->getInstruction());
 
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
-        $this->ss->assign("STEP4_TITLE",
+        $this->ss->assign(
+            "STEP4_TITLE",
             strip_tags(str_replace("\n", "", getClassicModuleTitle(
                 $mod_strings['LBL_MODULE_NAME'],
                 array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_STEP_4_TITLE']),
@@ -223,7 +224,7 @@ class ImportViewStep3 extends ImportView
                 // get field name
                 if (!empty($moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)])) {
                     $displayname = str_replace(":", "", $moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)]);
-                } elseif (!empty ($properties['vname'])) {
+                } elseif (!empty($properties['vname'])) {
                     $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
                 } else {
                     $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
@@ -316,7 +317,7 @@ class ImportViewStep3 extends ImportView
                 $defaultField = '';
                 foreach ($fields as $fieldname => $properties) {
                     // get field name
-                    if (!empty ($properties['vname'])) {
+                    if (!empty($properties['vname'])) {
                         $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
                     } else {
                         $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
@@ -331,8 +332,8 @@ class ImportViewStep3 extends ImportView
                     // see if we have a match
                     $selected = '';
                     if (strtolower($fieldname) == strtolower($field_name)
-							&& !in_array($fieldname, $mappedFields)
-							&& !in_array($fieldname, $ignored_fields)) {
+                            && !in_array($fieldname, $mappedFields)
+                            && !in_array($fieldname, $ignored_fields)) {
                         $selected = ' selected="selected" ';
                         $defaultField = $fieldname;
                         $mappedFields[] = $fieldname;
@@ -401,7 +402,7 @@ class ImportViewStep3 extends ImportView
         $required = array();
         foreach (array_keys($this->bean->get_import_required_fields()) as $name) {
             $properties = $this->bean->getFieldDefinition($name);
-            if (!empty ($properties['vname'])) {
+            if (!empty($properties['vname'])) {
                 $required[$name] = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
             } else {
                 $required[$name] = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
@@ -479,7 +480,7 @@ class ImportViewStep3 extends ImportView
             case '\t':
                 $delimiter = "\t";
                 break;
-        }       
+        }
         return $delimiter;
     }
 

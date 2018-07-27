@@ -246,8 +246,11 @@ class Note extends File
     {
         parent::fill_in_additional_detail_fields();
         //TODO:  Seems odd we need to clear out these values so that list views don't show the previous rows value if current value is blank
-        $this->getRelatedFields('Contacts', $this->contact_id,
-            array('name' => 'contact_name', 'phone_work' => 'contact_phone'));
+        $this->getRelatedFields(
+            'Contacts',
+            $this->contact_id,
+            array('name' => 'contact_name', 'phone_work' => 'contact_phone')
+        );
         if (!empty($this->contact_name)) {
             $emailAddress = new SugarEmailAddress();
             $this->contact_email = $emailAddress->getPrimaryAddress(false, $this->contact_id, 'Contacts');
@@ -327,8 +330,13 @@ class Note extends File
         /**
          * if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner)) {
          */
-        if (!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type,
-                'view', $is_owner, 'module', $in_group)
+        if (!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess(
+            $this->parent_type,
+                'view',
+            $is_owner,
+            'module',
+            $in_group
+        )
         ) {
             /* END - SECURITY GROUPS */
             $array_assign['PARENT'] = 'a';

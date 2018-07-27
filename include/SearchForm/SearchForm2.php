@@ -199,8 +199,10 @@ class SearchForm
         if ($this->nbTabs > 1) {
             $this->th->ss->assign('TABS', $this->_displayTabs($this->module . '|' . $this->displayView));
         }
-        $this->th->ss->assign('searchTableColumnCount',
-            ((isset($this->searchdefs['templateMeta']['maxColumns']) ? $this->searchdefs['templateMeta']['maxColumns'] : 2) * 2) - 1);
+        $this->th->ss->assign(
+            'searchTableColumnCount',
+            ((isset($this->searchdefs['templateMeta']['maxColumns']) ? $this->searchdefs['templateMeta']['maxColumns'] : 2) * 2) - 1
+        );
         $this->th->ss->assign('fields', $this->fieldDefs);
         $this->th->ss->assign('customFields', $this->customFieldDefs);
         $this->th->ss->assign('formData', $this->formData);
@@ -990,22 +992,20 @@ class SearchForm
                 if (!empty($parms['my_items'])) {
                     if ($parms['value'] == false) {
                         continue;
-                    } else {
-                        //my items is checked.
-                        global $current_user;
-                        $field_value = $db->quote($current_user->id);
-                        $operator = '=';
                     }
+                    //my items is checked.
+                    global $current_user;
+                    $field_value = $db->quote($current_user->id);
+                    $operator = '=';
                 } elseif (!empty($parms['closed_values']) && is_array($parms['closed_values'])) {
                     if ($parms['value'] == false) {
                         continue;
-                    } else {
-                        $field_value = '';
-                        foreach ($parms['closed_values'] as $closed_value) {
-                            $field_value .= "," . $db->quoted($closed_value);
-                        }
-                        $field_value = substr($field_value, 1);
                     }
+                    $field_value = '';
+                    foreach ($parms['closed_values'] as $closed_value) {
+                        $field_value .= "," . $db->quoted($closed_value);
+                    }
+                    $field_value = substr($field_value, 1);
                 } elseif (!empty($parms['checked_only']) && $parms['value'] == false) {
                     continue;
                 }

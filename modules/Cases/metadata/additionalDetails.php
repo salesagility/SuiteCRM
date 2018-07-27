@@ -51,9 +51,9 @@ function additionalDetailsaCase($fields)
         global $current_language;
         $mod_strings = return_module_language($current_language, 'Cases');
     }
-		
+        
     $overlib_string = '';
-		
+        
     if (!empty($fields['DESCRIPTION'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_DESCRIPTION'] . '</b> ' . substr($fields['DESCRIPTION'], 0, 300);
         if (strlen($fields['DESCRIPTION']) > 300) {
@@ -66,11 +66,11 @@ function additionalDetailsaCase($fields)
         if (strlen($fields['RESOLUTION']) > 300) {
             $overlib_string .= '...';
         }
-    }		
-	
-    return array('fieldToAddTo' => 'NAME', 
-				 'string' => $overlib_string, 
-				 'width' => '400',
-				 'editLink' => "index.php?action=EditView&module=Cases&return_module=Cases&record={$fields['ID']}", 
-				 'viewLink' => "index.php?action=DetailView&module=Cases&return_module=Cases&record={$fields['ID']}");
+    }
+    
+    return array('fieldToAddTo' => 'NAME',
+                 'string' => $overlib_string,
+                 'width' => '400',
+                 'editLink' => "index.php?action=EditView&module=Cases&return_module=Cases&record={$fields['ID']}",
+                 'viewLink' => "index.php?action=DetailView&module=Cases&return_module=Cases&record={$fields['ID']}");
 }

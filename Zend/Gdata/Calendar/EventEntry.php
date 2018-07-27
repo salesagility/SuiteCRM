@@ -62,7 +62,6 @@ require_once 'Zend/Gdata/Calendar/Extension/QuickAdd.php';
  */
 class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
 {
-
     protected $_entryClassName = 'Zend_Gdata_Calendar_EventEntry';
     protected $_sendEventNotifications = null;
     protected $_timezone = null;
@@ -160,5 +159,4 @@ class Zend_Gdata_Calendar_EventEntry extends Zend_Gdata_Kind_EventEntry
         $this->_quickadd = $value;
         return $this;
     }
-
 }

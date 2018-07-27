@@ -319,7 +319,8 @@ class SugarHtml
         $clauses = array_slice(
             //split into each clause
             preg_split("/[\{\}]/i", $smarty_string),
-            1, -1 //slice out the first and last items, which is empty.
+            1,
+            -1 //slice out the first and last items, which is empty.
         );
         $smarty_template = array(
             'template' => '',

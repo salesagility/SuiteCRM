@@ -325,7 +325,7 @@ class Importer
 
         // check to see that the indexes being entered are unique.
         if (isset($_REQUEST['enabled_dupes']) && $_REQUEST['enabled_dupes'] != "") {
-            $toDecode = html_entity_decode  ($_REQUEST['enabled_dupes'], ENT_QUOTES);
+            $toDecode = html_entity_decode($_REQUEST['enabled_dupes'], ENT_QUOTES);
             $enabled_dupes = json_decode($toDecode);
             $idc = new ImportDuplicateCheck($focus);
 
@@ -337,7 +337,7 @@ class Importer
         }
         //Allow fields to be passed in for dup check as well (used by external adapters)
         elseif (!empty($_REQUEST['enabled_dup_fields'])) {
-            $toDecode = html_entity_decode  ($_REQUEST['enabled_dup_fields'], ENT_QUOTES);
+            $toDecode = html_entity_decode($_REQUEST['enabled_dup_fields'], ENT_QUOTES);
             $enabled_dup_fields = json_decode($toDecode);
             $idc = new ImportDuplicateCheck($focus);
             if ($idc->isADuplicateRecordByFields($enabled_dup_fields)) {
@@ -359,9 +359,9 @@ class Importer
 
             $dbrow = $focus->db->fetchByAssoc($result);
 
-            if (isset ($dbrow['id']) && $dbrow['id'] != -1) {
+            if (isset($dbrow['id']) && $dbrow['id'] != -1) {
                 // if it exists but was deleted, just remove it
-                if (isset ($dbrow['deleted']) && $dbrow['deleted'] == 1 && $this->isUpdateOnly ==false) {
+                if (isset($dbrow['deleted']) && $dbrow['deleted'] == 1 && $this->isUpdateOnly ==false) {
                     $this->removeDeletedBean($focus);
                     $focus->new_with_id = true;
                 } else {
@@ -376,10 +376,9 @@ class Importer
                         $this->importSource->writeError($mod_strings['LBL_RECORD_CANNOT_BE_UPDATED'], 'ID', $focus->id);
                         $this->_undoCreatedBeans(ImportFieldSanitize::$createdBeans);
                         return;
-                    } else {
-                        $focus = $clonedBean;
-                        $newRecord = false;
                     }
+                    $focus = $clonedBean;
+                    $newRecord = false;
                 }
             } else {
                 $focus->new_with_id = true;
@@ -463,16 +462,15 @@ class Importer
         $existing_focus = clone $this->bean;
         if (!($existing_focus->retrieve($focus->id) instanceof SugarBean)) {
             return false;
-        } else {
-            $newData = $focus->toArray();
-            foreach ($newData as $focus_key => $focus_value) {
-                if (in_array($focus_key, $this->importColumns)) {
-                    $existing_focus->$focus_key = $focus_value;
-                }
-            }
-
-            return $existing_focus;
         }
+        $newData = $focus->toArray();
+        foreach ($newData as $focus_key => $focus_value) {
+            if (in_array($focus_key, $this->importColumns)) {
+                $existing_focus->$focus_key = $focus_value;
+            }
+        }
+
+        return $existing_focus;
     }
 
     protected function removeDeletedBean($focus)
@@ -527,7 +525,7 @@ class Importer
                     $focus->$key = $focus->parent_id;
                 }
             }
-        }					
+        }
         //bug# 40260 setting it true as the module in focus is involved in an import
         $focus->in_import=true;
         // call any logic needed for the module preSave
@@ -582,7 +580,7 @@ class Importer
         $mappingValsArr = $this->importColumns;
         $mapping_file = new ImportMap();
         if (isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on') {
-            $header_to_field = array ();
+            $header_to_field = array();
             foreach ($this->importColumns as $pos => $field_name) {
                 if (isset($firstrow[$pos]) && isset($field_name)) {
                     $header_to_field[$firstrow[$pos]] = $field_name;
@@ -642,8 +640,14 @@ class Importer
             }
         }
         $mapping_file->setDefaultValues($defaultValues);
-        $result = $mapping_file->save($current_user->id, $_REQUEST['save_map_as'], $_REQUEST['import_module'], $_REQUEST['source'],
-            (isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on'), $_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES)
+        $result = $mapping_file->save(
+            $current_user->id,
+            $_REQUEST['save_map_as'],
+            $_REQUEST['import_module'],
+            $_REQUEST['source'],
+            (isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on'),
+            $_REQUEST['custom_delimiter'],
+            html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES)
         );
     }
 
@@ -764,7 +768,8 @@ class Importer
         return preg_replace_callback(
             '|[^A-Za-z0-9\-\_]|',
             $function,
-            $string);
+            $string
+        );
     }
 
     public function retrieveAdvancedMapping()
@@ -773,7 +778,7 @@ class Importer
 
         //harvest the dupe index settings
         if (isset($_REQUEST['enabled_dupes'])) {
-            $toDecode = html_entity_decode  ($_REQUEST['enabled_dupes'], ENT_QUOTES);
+            $toDecode = html_entity_decode($_REQUEST['enabled_dupes'], ENT_QUOTES);
             $dupe_ind = json_decode($toDecode);
 
             foreach ($dupe_ind as $dupe) {
@@ -867,10 +872,10 @@ class Importer
 
 
     /**
-	 * upon bean save, the relationships are saved by SugarBean->save_relationship_changes() method, but those values depend on
+     * upon bean save, the relationships are saved by SugarBean->save_relationship_changes() method, but those values depend on
      * the request object and is not reliable during import.  This function makes sure any defined related or parent id's are processed
-	 * and their relationship saved.
-	 */
+     * and their relationship saved.
+     */
     public function checkRelatedIDsAfterSave($focus)
     {
         if (empty($focus)) {

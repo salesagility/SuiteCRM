@@ -438,9 +438,8 @@ abstract class Zend_Search_Lucene_Search_Similarity
         if ($highIndex != 255 &&
             $f - self::$_normTable[$highIndex] > self::$_normTable[$highIndex+1] - $f) {
             return $highIndex + 1;
-        } else {
-            return $highIndex;
         }
+        return $highIndex;
     }
 
 
@@ -500,13 +499,12 @@ abstract class Zend_Search_Lucene_Search_Similarity
     {
         if (!is_array($input)) {
             return $this->idfFreq($reader->docFreq($input), $reader->count());
-        } else {
-            $idf = 0.0;
-            foreach ($input as $term) {
-                $idf += $this->idfFreq($reader->docFreq($term), $reader->count());
-            }
-            return $idf;
         }
+        $idf = 0.0;
+        foreach ($input as $term) {
+            $idf += $this->idfFreq($reader->docFreq($term), $reader->count());
+        }
+        return $idf;
     }
 
     /**
@@ -548,4 +546,3 @@ abstract class Zend_Search_Lucene_Search_Similarity
      */
     abstract public function coord($overlap, $maxOverlap);
 }
-

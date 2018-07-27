@@ -78,7 +78,8 @@ function getModuleFields(
             foreach ($mod->field_defs as $name => $arr) {
                 if (ACLController::checkAccess($mod->module_dir, 'list', true)) {
                     if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
-                        if (in_array($arr['name'],
+                        if (in_array(
+                            $arr['name'],
                                 $blockedModuleFields[$mod->module_dir]
                             ) && !$current_user->isAdmin()
                         ) {
@@ -120,9 +121,8 @@ function getModuleFields(
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
-    } else {
-        return $fields[$value];
     }
+    return $fields[$value];
 }
 
 function getRelModuleFields($module, $rel_field, $view='EditView', $value = '')
@@ -260,9 +260,8 @@ function getModuleRelationships($module, $view='EditView', $value = '')
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
-    } else {
-        return $fields[$value];
     }
+    return $fields[$value];
 }
 
 function getValidFieldsTypes($module, $field)
@@ -446,10 +445,16 @@ function getModuleField(
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
 
         if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
-            $contents = str_replace('"' . $vardef['id_name'] . '"',
-                '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}', $contents);
-            $contents = str_replace('"' . $vardef['name'] . '"',
-                '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
+            $contents = str_replace(
+                '"' . $vardef['id_name'] . '"',
+                '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}',
+                $contents
+            );
+            $contents = str_replace(
+                '"' . $vardef['name'] . '"',
+                '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}',
+                $contents
+            );
         }
         if ($view == 'DetailView' && $vardef['type'] == 'image') {
             // Because TCPDF could not read image from download entryPoint, we need change entryPoint link to image path to resolved issue Image is not showing in PDF report
@@ -734,9 +739,8 @@ function getDateFields($module, $view='EditView', $value = '', $field_option = t
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
-    } else {
-        return $fields[$value];
     }
+    return $fields[$value];
 }
 
 function getAssignField($aow_field, $view, $value)

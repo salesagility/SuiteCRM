@@ -48,10 +48,9 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
         $bool_val = $layout_def['input_name0'][0];
         if ($bool_val == 'yes' || $bool_val == '1') {
             return "(".$this->_get_column_select($layout_def)." LIKE 'on' OR ".$this->_get_column_select($layout_def)."='1')\n";
-        } else {
-            //return "(".$this->_get_column_select($layout_def)." is null OR ".$this->_get_column_select($layout_def)."='0' OR ".$this->_get_column_select($layout_def)."='off')\n";
-            return "(".$this->_get_column_select($layout_def)." is null OR ". $this->_get_column_select($layout_def)."='0')\n";
         }
+        //return "(".$this->_get_column_select($layout_def)." is null OR ".$this->_get_column_select($layout_def)."='0' OR ".$this->_get_column_select($layout_def)."='off')\n";
+        return "(".$this->_get_column_select($layout_def)." is null OR ". $this->_get_column_select($layout_def)."='0')\n";
     }
 
     public function displayListPlain($layout_def)
@@ -69,7 +68,7 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
                 $value = $app_list_strings['dom_switch_bool']['off'];
             } else {
                 $value = $app_list_strings['dom_switch_bool']['on'];
-            } 
+            }
             return $value;
         }
 
@@ -84,7 +83,7 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
     public function queryFilterStarts_With(&$layout_def)
     {
         return $this->queryFilterEquals($layout_def);
-    }    
+    }
  
     public function displayInput($layout_def)
     {

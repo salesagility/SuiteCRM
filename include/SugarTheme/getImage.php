@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 // Bug 57062 ///////////////////////////////
-if ((!empty($_REQUEST['spriteNamespace']) && substr_count($_REQUEST['spriteNamespace'], '..') > 0) || 
-	(!empty($_REQUEST['imageName']) && substr_count($_REQUEST['imageName'], '..') > 0)) {
+if ((!empty($_REQUEST['spriteNamespace']) && substr_count($_REQUEST['spriteNamespace'], '..') > 0) ||
+    (!empty($_REQUEST['imageName']) && substr_count($_REQUEST['imageName'], '..') > 0)) {
     die();
 }
 // End Bug 57062 ///////////////////////////////

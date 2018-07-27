@@ -107,4 +107,3 @@ class ViewSourceProperties extends ViewList
         echo $this->ss->fetch($this->getCustomFilePathIfExists('modules/Connectors/tpls/source_properties.tpl'));
     }
 }
-

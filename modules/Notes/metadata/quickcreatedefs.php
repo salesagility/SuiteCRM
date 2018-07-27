@@ -38,25 +38,25 @@
  ********************************************************************************/
 
 $viewdefs ['Notes'] =
-array (
+array(
   'QuickCreate' =>
-  array (
+  array(
     'templateMeta' =>
-    array (
+    array(
       'form' =>
-      array (
+      array(
         'enctype' => 'multipart/form-data',
       ),
       'maxColumns' => '2',
       'widths' =>
-      array (
+      array(
 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -65,21 +65,21 @@ array (
 <script>toggle_portal_flag(); function toggle_portal_flag()  {literal} { {/literal} {$TOGGLE_JS} {literal} } {/literal} </script>',
     ),
     'panels' =>
-    array (
+    array(
       'default' =>
-      array (
+      array(
 
-        array (
+        array(
            'contact_name',
            'parent_name',
         ),
-        array (
+        array(
 
-          array (
+          array(
             'name' => 'name',
             'label' => 'LBL_SUBJECT',
             'displayParams' =>
-            array (
+            array(
               'size' => 50,
               'required' => true,
             ),
@@ -89,27 +89,26 @@ array (
           ),
         ),
 
-        array (
+        array(
            'filename',
         ),
 
-        array (
+        array(
 
-          array (
+          array(
             'name' => 'description',
             'label' => 'LBL_NOTE_STATUS',
             'displayParams' =>
-            array (
+            array(
               'rows' => 6,
               'cols' => 75,
             ),
           ),
         ),
-         array (
+         array(
            
         ),
       ),
     ),
   ),
 );
-

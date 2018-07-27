@@ -187,8 +187,8 @@ class Prospect extends Person implements EmailInterface
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
 
@@ -264,9 +264,8 @@ class Prospect extends Person implements EmailInterface
             require_once($beanFiles[$class_name]);
             $seed = new $class_name();
             return $seed->retrieve($row['related_id']);
-        } else {
-            return null;
         }
+        return null;
     }
 
 

@@ -34,4 +34,3 @@ class FP_eventsViewDetail extends ViewDetail
         parent::display();
     }
 }
-

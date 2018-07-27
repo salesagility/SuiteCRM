@@ -99,7 +99,7 @@ class DetailView2 extends EditView
         } else {
             //If file doesn't exist we create a best guess
             if (!file_exists("modules/$this->module/metadata/$metadataFileName.php") &&
-        	    file_exists("modules/$this->module/DetailView.html")) {
+                file_exists("modules/$this->module/DetailView.html")) {
                 global $dictionary;
                 $htmlFile = "modules/" . $this->module . "/DetailView.html";
                 $parser = new DetailViewMetaParser();

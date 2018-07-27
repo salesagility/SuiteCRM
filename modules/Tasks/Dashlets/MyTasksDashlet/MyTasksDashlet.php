@@ -80,4 +80,3 @@ class MyTasksDashlet extends DashletGeneric
         self::__construct($id, $def);
     }
 }
-

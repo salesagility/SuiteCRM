@@ -31,4 +31,5 @@ require_once 'Zend/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Oauth_Exception extends Zend_Exception
-{}
+{
+}

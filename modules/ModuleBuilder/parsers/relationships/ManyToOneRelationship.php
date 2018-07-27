@@ -61,7 +61,7 @@ class ManyToOneRelationship extends AbstractRelationship
      */
     public function __construct($definition)
     {
-        parent::__construct ($definition) ;
+        parent::__construct($definition) ;
         $onetomanyDef = array_merge($definition, array(
             'rhs_label'    => isset($definition['lhs_label'])    ? $definition['lhs_label']    : null,
             'lhs_label'    => isset($definition['rhs_label'])    ? $definition['rhs_label']    : null,
@@ -115,7 +115,7 @@ class ManyToOneRelationship extends AbstractRelationship
     public function buildFieldsToLayouts()
     {
         if ($this->relationship_only) {
-            return array () ;
+            return array() ;
         }
  
         return array( $this->lhs_module => $this->getValidDBName($this->relationship_name . "_name") ) ; // this must match the name of the relate field from buildVardefs

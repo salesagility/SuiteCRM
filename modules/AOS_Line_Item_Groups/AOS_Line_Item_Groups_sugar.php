@@ -64,8 +64,8 @@ class AOS_Line_Item_Groups_sugar extends Basic
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL': return false;
-		}
+            case 'ACL': return false;
+        }
         return false;
     }
 }

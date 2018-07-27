@@ -218,8 +218,10 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
                 ) {
                     $this->http_status("200 OK");
                     header('Content-Type: text/calendar; charset="' . $this->cal_charset . '"');
-                    $result = mb_convert_encoding(html_entity_decode($this->vcal_focus->getVcalIcal($this->user_focus,
-                        $_REQUEST['num_months']), ENT_QUOTES, $this->cal_charset), $this->cal_encoding);
+                    $result = mb_convert_encoding(html_entity_decode($this->vcal_focus->getVcalIcal(
+                        $this->user_focus,
+                        $_REQUEST['num_months']
+                    ), ENT_QUOTES, $this->cal_charset), $this->cal_encoding);
                     ob_end_clean();
                     echo $result;
 

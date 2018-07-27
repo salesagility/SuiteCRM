@@ -325,9 +325,8 @@ abstract class SugarRelationship
         $row = $db->fetchByAssoc($result);
         if (!empty($row)) {
             return $row;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

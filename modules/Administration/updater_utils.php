@@ -292,9 +292,8 @@ function get_last_check_version_config_setting()
     $admin=$admin->retrieveSettings('Update');
     if (empty($admin->settings) or empty($admin->settings['Update_last_check_version'])) {
         return null;
-    } else {
-        return $admin->settings['Update_last_check_version'];
     }
+    return $admin->settings['Update_last_check_version'];
 }
 
 
@@ -309,9 +308,8 @@ function get_last_check_date_config_setting()
     $admin=$admin->retrieveSettings('Update');
     if (empty($admin->settings) or empty($admin->settings['Update_last_check_date'])) {
         return 0;
-    } else {
-        return $admin->settings['Update_last_check_date'];
     }
+    return $admin->settings['Update_last_check_date'];
 }
 
 function set_sugarbeat($value)
@@ -339,7 +337,7 @@ function shouldCheckSugar()
     global $license, $timedate;
     if (
 
-	get_CheckUpdates_config_setting() == 'automatic') {
+    get_CheckUpdates_config_setting() == 'automatic') {
         return true;
     }
 
@@ -365,7 +363,7 @@ function loginLicense()
         $current_date_time=time();
         $time_period=3*23*3600 ;
         if (($current_date_time - $last_check_date) > $time_period
-		) {
+        ) {
             $version = check_now(get_sugarbeat());
 
             unset($_SESSION['license_seats_needed']);

@@ -111,7 +111,7 @@ if (!empty($_REQUEST['assigned_user_id'])) {
 $typeOfPerson = !empty($_REQUEST['typeOfPerson']) ? $_REQUEST['typeOfPerson'] : 'Lead';
  $person = new $typeOfPerson();
  $fieldsMetaData = new FieldsMetaData();
- $xtpl=new XTemplate ('modules/Campaigns/WebToLeadForm.html');
+ $xtpl=new XTemplate('modules/Campaigns/WebToLeadForm.html');
  $xtpl->assign("MOD", $mod_strings);
  $xtpl->assign("APP", $app_strings);
 

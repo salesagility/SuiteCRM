@@ -53,7 +53,7 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test for record ID to verify that record is saved
         $this->assertEquals(36, strlen($aopCaseUpdates->id));
 
-        //mark the record as deleted for cleanup 
+        //mark the record as deleted for cleanup
         $aopCaseUpdates->mark_deleted($aopCaseUpdates->id);
         
         // clean up

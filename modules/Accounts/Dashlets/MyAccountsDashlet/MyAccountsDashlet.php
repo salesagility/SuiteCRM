@@ -94,8 +94,8 @@ class MyAccountsDashlet extends DashletGeneric
         if (isset($this->displayColumns) && array_search('email1', $this->displayColumns) !== false) {
             $lvsParams['custom_select'] = ', email_address as email1';
             $lvsParams['custom_from'] = ' LEFT JOIN email_addr_bean_rel eabr ON eabr.deleted = 0 AND bean_module = \'Accounts\''
-	    							  . ' AND eabr.bean_id = accounts.id AND primary_address = 1'
-	    							  . ' LEFT JOIN email_addresses ea ON ea.deleted = 0 AND ea.id = eabr.email_address_id';
+                                      . ' AND eabr.bean_id = accounts.id AND primary_address = 1'
+                                      . ' LEFT JOIN email_addresses ea ON ea.deleted = 0 AND ea.id = eabr.email_address_id';
         }
 
         if (isset($this->displayColumns) && array_search('parent_name', $this->displayColumns) !== false) {

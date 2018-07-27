@@ -84,7 +84,7 @@ class MeetingsQuickCreate extends QuickCreate
         if (is_null($focus->time_start)) {
             $focus->time_start = $timedate->to_display_time(TimeDate::getInstance()->nowDb(), true);
         }
-        if (!isset ($focus->duration_hours)) {
+        if (!isset($focus->duration_hours)) {
             $focus->duration_hours = "1";
         }
 
@@ -113,7 +113,7 @@ class MeetingsQuickCreate extends QuickCreate
         
         
         // We default the to assume that the time preference is set to 11:00 (i.e. without meridiem)
-        $hours_arr = array ();
+        $hours_arr = array();
         $num_of_hours = 24;
         $start_at = 0;
 
@@ -121,7 +121,7 @@ class MeetingsQuickCreate extends QuickCreate
         if (strpos($time_pref, 'a') || strpos($time_pref, 'A')) {
             $num_of_hours = 13;
             $start_at = 1;
-        } 
+        }
         
         /*
         // Seems to be problematic... $time_meridiem is always empty
@@ -143,12 +143,12 @@ class MeetingsQuickCreate extends QuickCreate
         $this->ss->assign("TIME_START_MINUTE_OPTIONS", get_select_options_with_id($focus->minutes_values, $time_start_minutes));
         $this->ss->assign("DURATION_HOURS", $focus->duration_hours);
         $this->ss->assign("DURATION_MINUTES_OPTIONS", get_select_options_with_id($focus->minutes_values, $focus->duration_minutes));
-        // Test to see if time format is 11:00am; otherwise it's 11:00AM 
+        // Test to see if time format is 11:00am; otherwise it's 11:00AM
         if ($num_of_hours == 13) {
             if (strpos($time_pref, 'a')) {
                 if (!isset($focus->meridiem_am_values)) {
                     $focus->meridiem_am_values = array('am'=>'am', 'pm'=>'pm');
-                } 		
+                }
                
                 $this->ss->assign("TIME_MERIDIEM", get_select_options_with_id($focus->meridiem_am_values, $time_start_hour < 12 ? 'am' : 'pm'));
             } else {
@@ -163,4 +163,3 @@ class MeetingsQuickCreate extends QuickCreate
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
     }
 }
-

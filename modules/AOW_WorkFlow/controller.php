@@ -201,7 +201,7 @@ class AOW_WorkFlowController extends SugarController
                 $valid_opp = array('Value','Field','Any_Change','Date');
                 break;
             case 'enum':
-            case 'dynamicenum':    
+            case 'dynamicenum':
             case 'multienum':
                 $valid_opp = array('Value','Field','Any_Change', 'Multi');
                 break;

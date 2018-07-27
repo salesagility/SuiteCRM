@@ -90,10 +90,10 @@ $response = '';
 //$GLOBALS['log']->fatal('file size loaded '.filesize($file_name));
 /*
 if($allModFiles != null){
-	foreach($allModFiles as $f){
-		$GLOBALS['log']->fatal('file name '.$f);
-		$response .= $f;
-	}
+    foreach($allModFiles as $f){
+        $GLOBALS['log']->fatal('file name '.$f);
+        $response .= $f;
+    }
 }
 */
 if (!empty($response)) {

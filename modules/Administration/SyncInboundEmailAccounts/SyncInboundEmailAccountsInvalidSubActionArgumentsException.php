@@ -73,7 +73,9 @@ class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Excepti
         parent::__construct(
             ($message ? $message . " - " : "") .
             "An action called with wrong parameters, incorrectly called action was: " .
-            $this->getCallerMethod(), $code, $previous
+            $this->getCallerMethod(),
+            $code,
+            $previous
         );
     }
 

@@ -61,11 +61,10 @@ class SugarWidgetFieldTime extends SugarWidgetFieldDateTime
                 
         $content = $this->displayListPlain($layout_def);
                 
-        if (!empty($date)) { // able to get the date context of the time            	
+        if (!empty($date)) { // able to get the date context of the time
             $td = explode(' ', $timedate->to_display_date_time($date . ' ' . $content));
             return $td[1];
-        } else { // assume there is no time context
-            return $timedate->to_display_time($content);
-        }
+        }   // assume there is no time context
+        return $timedate->to_display_time($content);
     }
 }

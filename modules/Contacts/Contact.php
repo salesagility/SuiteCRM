@@ -211,8 +211,11 @@ class Contact extends Person implements EmailInterface
         $is_owner = false;
         //MFH BUG 18281; JChi #15255
         $is_owner = !empty($this->assigned_user_id) && $this->assigned_user_id == $GLOBALS['current_user']->id;
-        if (!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess('Accounts', 'view',
-                $is_owner)
+        if (!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess(
+            'Accounts',
+            'view',
+                $is_owner
+        )
         ) {
             $array_assign['ACCOUNT'] = 'a';
         } else {
@@ -236,19 +239,38 @@ class Contact extends Person implements EmailInterface
     ) {
         //if this is from "contact address popup" action, then process popup list query
         if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'ContactAddressPopup') {
-            return $this->address_popup_create_new_list_query($order_by, $where, $filter, $params, $show_deleted,
-                $join_type, $return_array, $parentbean, $singleSelect, $ifListForExport);
-        } else {
-            //any other action goes to parent function in sugarbean
-            if (strpos($order_by, 'sync_contact') !== false) {
-                //we have found that the user is ordering by the sync_contact field, it would be troublesome to sort by this field
-                //and perhaps a performance issue, so just remove it
-                $order_by = '';
-            }
-
-            return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
-                $return_array, $parentbean, $singleSelect, $ifListForExport);
+            return $this->address_popup_create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect,
+                $ifListForExport
+            );
         }
+        //any other action goes to parent function in sugarbean
+        if (strpos($order_by, 'sync_contact') !== false) {
+            //we have found that the user is ordering by the sync_contact field, it would be troublesome to sort by this field
+            //and perhaps a performance issue, so just remove it
+            $order_by = '';
+        }
+
+        return parent::create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect,
+                $ifListForExport
+            );
     }
 
 
@@ -265,8 +287,17 @@ class Contact extends Person implements EmailInterface
     ) {
         //if this is any action that is not the contact address popup, then go to parent function in sugarbean
         if (isset($_REQUEST['action']) && $_REQUEST['action'] !== 'ContactAddressPopup') {
-            return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
-                $return_array, $parentbean, $singleSelect);
+            return parent::create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect
+            );
         }
 
         $custom_join = $this->getCustomJoin();
@@ -423,8 +454,15 @@ class Contact extends Person implements EmailInterface
             if (null === $locale || !is_object($locale) || !method_exists($locale, 'getLocaleFormattedName')) {
                 $GLOBALS['log']->fatal('Call to a member function getLocaleFormattedName() on ' . gettype($locale));
             } else {
-                $this->report_to_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name'], '', '',
-                    '', null, true);
+                $this->report_to_name = $locale->getLocaleFormattedName(
+                    $row['first_name'],
+                    $row['last_name'],
+                    '',
+                    '',
+                    '',
+                    null,
+                    true
+                );
             }
         } else {
             $this->account_name = '';

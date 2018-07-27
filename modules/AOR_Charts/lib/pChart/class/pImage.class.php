@@ -204,9 +204,8 @@
          $Angle = rad2deg(atan2($Opposite, $Adjacent));
          if ($Angle > 0) {
              return($Angle);
-         } else {
-             return(360-abs($Angle));
          }
+         return(360-abs($Angle));
      }
 
      /* Return the surrounding box of text area */
@@ -307,9 +306,8 @@
          $Values = preg_split("/\./", $Value);
          if (isset($Values[1])) {
              return(substr($Values[1], 0, 1));
-         } else {
-             return(0);
          }
+         return(0);
      }
 
      /* Attach a dataset to your pChart Object */
@@ -462,7 +460,7 @@
          }
 
          $Values = $this->removeVOIDFromArray($Title, $Values);
-         $ID = 0; 
+         $ID = 0;
          if ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION) {
              if (!isset($_SESSION)) {
                  return(-1);

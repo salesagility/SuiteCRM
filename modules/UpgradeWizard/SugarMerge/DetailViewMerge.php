@@ -91,7 +91,7 @@ class DetailViewMerge extends EditViewMerge
             unset($this->customFields[$original_index]);
         }
         
-        $this->customPanelIds = $this->getPanelIds($this->customData[$this->module][$this->viewDefs][$this->panelName]);		
+        $this->customPanelIds = $this->getPanelIds($this->customData[$this->module][$this->viewDefs][$this->panelName]);
         $this->newFields = $this->getFields($this->newData[$this->module][$this->viewDefs][$this->panelName]);
         //echo var_export($this->newFields, true);
         $this->newPanelIds = $this->getPanelIds($this->newData[$this->module][$this->viewDefs][$this->panelName]);

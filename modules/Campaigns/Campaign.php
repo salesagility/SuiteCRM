@@ -88,8 +88,8 @@ class Campaign extends SugarBean
 
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array(
-				'assigned_user_name', 'assigned_user_id',
-	);
+                'assigned_user_name', 'assigned_user_id',
+    );
 
     public $relationship_fields = array('prospect_list_id'=>'prospect_lists');
 
@@ -123,8 +123,8 @@ class Campaign extends SugarBean
             if (is_array($user)) {
                 $fullName = $locale->getLocaleFormattedName($user['first_name'], $user['last_name']);
             } else /*if(is_object($user))*/ {
-				$fullName = $locale->getLocaleFormattedName($user->first_name, $user->last_name);
-			}
+                $fullName = $locale->getLocaleFormattedName($user->first_name, $user->last_name);
+            }
             $listTmpl->assign('ASSIGNED_USER_NAME', $fullName);
         }
     }
@@ -195,11 +195,11 @@ class Campaign extends SugarBean
         parent::fill_in_additional_detail_fields();
         //format numbers.
 
-		//don't need additional formatting here.
-		//$this->budget=format_number($this->budget);
-		//$this->expected_cost=format_number($this->expected_cost);
-		//$this->actual_cost=format_number($this->actual_cost);
-		//$this->expected_revenue=format_number($this->expected_revenue);
+        //don't need additional formatting here.
+        //$this->budget=format_number($this->budget);
+        //$this->expected_cost=format_number($this->expected_cost);
+        //$this->actual_cost=format_number($this->actual_cost);
+        //$this->expected_revenue=format_number($this->expected_revenue);
     }
 
 
@@ -248,7 +248,7 @@ class Campaign extends SugarBean
     public function save($check_notify = false)
     {
 
-			//US DOLLAR
+            //US DOLLAR
         if (isset($this->amount) && !empty($this->amount)) {
             $currency = new Currency();
             $currency->retrieve($this->currency_id);
@@ -260,7 +260,7 @@ class Campaign extends SugarBean
         if ($this->campaign_type != 'NewsLetter') {
             $this->frequency = '';
         }
-		
+        
         return parent::save($check_notify);
     }
 
@@ -412,8 +412,8 @@ class Campaign extends SugarBean
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
 

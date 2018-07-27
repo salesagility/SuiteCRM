@@ -16,24 +16,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
@@ -48,8 +48,8 @@ require_once('include/MVC/Controller/SugarController.php');
 class ConnectorsController extends SugarController
 {
     public $admin_actions = array('ConnectorSettings', 'DisplayProperties', 'MappingProperties', 'ModifyMapping', 'ModifyDisplay', 'ModifyProperties',
-	                           'ModifySearch', 'SearchProperties', 'SourceProperties',
-	                           'SavedModifyDisplay', 'SaveModifyProperties', 'SaveModifySearch', 'RunTest');
+                               'ModifySearch', 'SearchProperties', 'SourceProperties',
+                               'SavedModifyDisplay', 'SaveModifyProperties', 'SaveModifySearch', 'RunTest');
 
 
     public function process()
@@ -193,7 +193,7 @@ class ConnectorsController extends SugarController
                 }//foreach
             }//fi
 
-			$ss->assign('mod', $GLOBALS['mod_strings']);
+            $ss->assign('mod', $GLOBALS['mod_strings']);
             $ss->assign('search_fields', $_trueFields);
             $ss->assign('source_id', $source);
             $ss->assign('fields', $seed->field_defs);
@@ -537,7 +537,7 @@ class ConnectorsController extends SugarController
         } //foreach
 
 
-		//Now update the field mapping entries
+        //Now update the field mapping entries
         foreach ($sources_modules as $id => $modules) {
             $source = SourceFactory::getSource($id);
             $mapping = $source->getMapping();
@@ -753,21 +753,21 @@ class ConnectorsController extends SugarController
     public function add_social_field($module, $field_name)
     {
         $field = array(
-				array(
-						'name' => $field_name,
-						'label' => 'LBL_' . strtoupper($field_name),
-						'type' => 'varchar',
-						'module' => $module,
-						'ext1' => 'LIST',
-						'default_value' => '',
-						'mass_update' => false,
-						'required' => false,
-						'reportable' => false,
-						'audited' => false,
-						'importable' => 'false',
-						'duplicate_merge' => false,
-				)
-		);
+                array(
+                        'name' => $field_name,
+                        'label' => 'LBL_' . strtoupper($field_name),
+                        'type' => 'varchar',
+                        'module' => $module,
+                        'ext1' => 'LIST',
+                        'default_value' => '',
+                        'mass_update' => false,
+                        'required' => false,
+                        'reportable' => false,
+                        'audited' => false,
+                        'importable' => 'false',
+                        'duplicate_merge' => false,
+                )
+        );
 
         $layout[$module] = $field_name;
 

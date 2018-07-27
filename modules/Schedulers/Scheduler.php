@@ -159,10 +159,9 @@ class Scheduler extends SugarBean
         if (is_array($validTimes) && in_array($now, $validTimes)) {
             $GLOBALS['log']->debug('----->Scheduler found valid job ('.$this->name.') for time GMT('.$now.')');
             return true;
-        } else {
-            $GLOBALS['log']->debug('----->Scheduler did NOT find valid job ('.$this->name.') for time GMT('.$now.')');
-            return false;
         }
+        $GLOBALS['log']->debug('----->Scheduler did NOT find valid job ('.$this->name.') for time GMT('.$now.')');
+        return false;
     }
 
     /**
@@ -482,9 +481,13 @@ class Scheduler extends SugarBean
         /*_pp('hours:'); _pp($hrName);_pp('mins:'); _pp($minName);*/
         $dateobj = $timedate->getNow();
         $nowTs = $dateobj->ts;
-        $GLOBALS['log']->debug(sprintf("Constraints: start: %s from: %s end: %s to: %s now: %s",
-            gmdate('Y-m-d H:i:s', $timeStartTs), gmdate('Y-m-d H:i:s', $timeFromTs), gmdate('Y-m-d H:i:s', $timeEndTs),
-            gmdate('Y-m-d H:i:s', $timeToTs), $timedate->nowDb()
+        $GLOBALS['log']->debug(sprintf(
+            "Constraints: start: %s from: %s end: %s to: %s now: %s",
+            gmdate('Y-m-d H:i:s', $timeStartTs),
+            gmdate('Y-m-d H:i:s', $timeFromTs),
+            gmdate('Y-m-d H:i:s', $timeEndTs),
+            gmdate('Y-m-d H:i:s', $timeToTs),
+            $timedate->nowDb()
             ));
         //		_pp('currentHour: '. $currentHour);
         //		_pp('timeStartTs: '.date('r',$timeStartTs));
@@ -505,24 +508,20 @@ class Scheduler extends SugarBean
                 $tsGmt = $dateobj->ts;
 
                 if ($tsGmt >= $timeStartTs) { // start is greater than the date specified by admin
-					if ($tsGmt >= $timeFromTs) { // start is greater than the time_to spec'd by admin
+                    if ($tsGmt >= $timeFromTs) { // start is greater than the time_to spec'd by admin
                         if ($tsGmt > $lastRunTs) { // start from last run, last run should not be included
                             if ($tsGmt <= $timeEndTs) { // this is taken care of by the initial query - start is less than the date spec'd by admin
                                 if ($tsGmt <= $timeToTs) { // start is less than the time_to
                                     $validJobTime[] = $dateobj->asDb();
-                                } else {
-                                    //_pp('Job Time is NOT smaller that TimeTO: '.$tsGmt .'<='. $timeToTs);
                                 }
-                            } else {
-                                //_pp('Job Time is NOT smaller that DateTimeEnd: '.date('Y-m-d H:i:s',$tsGmt) .'<='. $dateTimeEnd); //_pp( $tsGmt .'<='. $timeEndTs );
+                                //_pp('Job Time is NOT smaller that TimeTO: '.$tsGmt .'<='. $timeToTs);
                             }
+                            //_pp('Job Time is NOT smaller that DateTimeEnd: '.date('Y-m-d H:i:s',$tsGmt) .'<='. $dateTimeEnd); //_pp( $tsGmt .'<='. $timeEndTs );
                         }
-					} else {
-					    //_pp('Job Time is NOT bigger that TimeFrom: '.$tsGmt .'>='. $timeFromTs);
-					}
-                } else {
-                    //_pp('Job Time is NOT Bigger than DateTimeStart: '.date('Y-m-d H:i',$tsGmt) .'>='. $dateTimeStart);
+                    }
+                    //_pp('Job Time is NOT bigger that TimeFrom: '.$tsGmt .'>='. $timeFromTs);
                 }
+                //_pp('Job Time is NOT Bigger than DateTimeStart: '.date('Y-m-d H:i',$tsGmt) .'>='. $dateTimeStart);
             }
         }
         //_ppd($validJobTime);
@@ -561,57 +560,62 @@ class Scheduler extends SugarBean
     {
         global $mod_strings;
         /* [0]:min [1]:hour [2]:day of month [3]:month [4]:day of week */
-        $days = array (	1 => $mod_strings['LBL_MON'],
-						2 => $mod_strings['LBL_TUE'],
-						3 => $mod_strings['LBL_WED'],
-						4 => $mod_strings['LBL_THU'],
-						5 => $mod_strings['LBL_FRI'],
-						6 => $mod_strings['LBL_SAT'],
-						0 => $mod_strings['LBL_SUN'],
-						'*' => $mod_strings['LBL_ALL']);
+        $days = array(
+            1 => $mod_strings['LBL_MON'],
+            2 => $mod_strings['LBL_TUE'],
+            3 => $mod_strings['LBL_WED'],
+            4 => $mod_strings['LBL_THU'],
+            5 => $mod_strings['LBL_FRI'],
+            6 => $mod_strings['LBL_SAT'],
+            0 => $mod_strings['LBL_SUN'],
+            '*' => $mod_strings['LBL_ALL']
+        );
         switch ($type) {
-			case 0: // minutes
-				if ($value == '0') {
-				    //return;
-				    return trim($mod_strings['LBL_ON_THE']).$mod_strings['LBL_HOUR_SING'];
-				} elseif (!preg_match('/[^0-9]/', $hours) && !preg_match('/[^0-9]/', $value)) {
-				    return;
-				} elseif (preg_match('/\*\//', $value)) {
-				    $value = str_replace('*/', '', $value);
-				    return $value.$mod_strings['LBL_MINUTES'];
-				} elseif (!preg_match('[^0-9]', $value)) {
-				    return $mod_strings['LBL_ON_THE'].$value.$mod_strings['LBL_MIN_MARK'];
-				} else {
-				    return $value;
-				}
-				// no break
-			case 1: // hours
-				global $current_user;
-				if (preg_match('/\*\//', $value)) { // every [SOME INTERVAL] hours
-				    $value = str_replace('*/', '', $value);
-				    return $value.$mod_strings['LBL_HOUR'];
-				} elseif (preg_match('/[^0-9]/', $mins)) { // got a range, or multiple of mins, so we return an 'Hours' label
-				    return $value;
-				} else {	// got a "minutes" setting, so it will be at some o'clock.
-				    $datef = $current_user->getUserDateTimePreferences();
-				    return date($datef['time'], strtotime($value.':'.str_pad($mins, 2, '0', STR_PAD_LEFT)));
-				}
-				// no break
-			case 2: // day of month
-				if (preg_match('/\*/', $value)) {
-				    return $value;
-				} else {
-				    return date('jS', strtotime('December '.$value));
-				}
+            case 0: // minutes
+                if ($value == '0') {
+                    //return;
+                    return trim($mod_strings['LBL_ON_THE']) . $mod_strings['LBL_HOUR_SING'];
+                } elseif (!preg_match('/[^0-9]/', $hours) && !preg_match('/[^0-9]/', $value)) {
+                    return;
+                } elseif (preg_match('/\*\//', $value)) {
+                    $value = str_replace('*/', '', $value);
 
-				// no break
-			case 3: // months
-				return date('F', strtotime('2005-'.$value.'-01'));
-			case 4: // days of week
-				return $days[$value];
-			default:
-				return 'bad'; // no condition to touch this branch
-		}
+                    return $value . $mod_strings['LBL_MINUTES'];
+                } elseif (!preg_match('[^0-9]', $value)) {
+                    return $mod_strings['LBL_ON_THE'] . $value . $mod_strings['LBL_MIN_MARK'];
+                }
+
+                return $value;
+
+            case 1: // hours
+                global $current_user;
+                if (preg_match('/\*\//', $value)) { // every [SOME INTERVAL] hours
+                    $value = str_replace('*/', '', $value);
+
+                    return $value . $mod_strings['LBL_HOUR'];
+                } elseif (preg_match('/[^0-9]/',
+                    $mins)) { // got a range, or multiple of mins, so we return an 'Hours' label
+                    return $value;
+                }    // got a "minutes" setting, so it will be at some o'clock.
+                $datef = $current_user->getUserDateTimePreferences();
+
+                return date($datef['time'], strtotime($value . ':' . str_pad($mins, 2, '0', STR_PAD_LEFT)));
+
+            case 2: // day of month
+                if (preg_match('/\*/', $value)) {
+                    return $value;
+                }
+
+                return date('jS', strtotime('December ' . $value));
+
+
+            case 3: // months
+                return date('F', strtotime('2005-' . $value . '-01'));
+            case 4: // days of week
+                return $days[$value];
+            default:
+                return 'bad'; // no condition to touch this branch
+        }
     }
 
     public function setIntervalHumanReadable()
@@ -726,10 +730,10 @@ class Scheduler extends SugarBean
         $hours = $rawValues[1].':::'.$rawValues[0];
         $months = $rawValues[3].':::'.$rawValues[2];
 
-        $intA = array (	'raw' => $rawProcessed,
-						'hours' => $hours,
-						'months' => $months,
-						);
+        $intA = array(	'raw' => $rawProcessed,
+                        'hours' => $hours,
+                        'months' => $months,
+                        );
 
         $this->intervalParsed = $intA;
     }

@@ -100,11 +100,13 @@ function smarty_function_html_select_time($params, &$smarty)
             $html_result .= ' ' . $all_extra;
         }
         $html_result .= '>'."\n";
-        $html_result .= smarty_function_html_options(array('output'          => $hours,
+        $html_result .= smarty_function_html_options(
+            array('output'          => $hours,
                                                            'values'          => $hours,
                                                            'selected'      => strftime($hour_fmt, $time),
                                                            'print_result' => false),
-                                                     $smarty);
+                                                     $smarty
+        );
         $html_result .= "</select>\n";
     }
 
@@ -128,11 +130,13 @@ function smarty_function_html_select_time($params, &$smarty)
         }
         $html_result .= '>'."\n";
         
-        $html_result .= smarty_function_html_options(array('output'          => $minutes,
+        $html_result .= smarty_function_html_options(
+            array('output'          => $minutes,
                                                            'values'          => $minutes,
                                                            'selected'      => $selected,
                                                            'print_result' => false),
-                                                     $smarty);
+                                                     $smarty
+        );
         $html_result .= "</select>\n";
     }
 
@@ -157,11 +161,13 @@ function smarty_function_html_select_time($params, &$smarty)
         }
         $html_result .= '>'."\n";
         
-        $html_result .= smarty_function_html_options(array('output'          => $seconds,
+        $html_result .= smarty_function_html_options(
+            array('output'          => $seconds,
                                                            'values'          => $seconds,
                                                            'selected'      => $selected,
                                                            'print_result' => false),
-                                                     $smarty);
+                                                     $smarty
+        );
         $html_result .= "</select>\n";
     }
 
@@ -181,11 +187,13 @@ function smarty_function_html_select_time($params, &$smarty)
         }
         $html_result .= '>'."\n";
         
-        $html_result .= smarty_function_html_options(array('output'          => array('AM', 'PM'),
+        $html_result .= smarty_function_html_options(
+            array('output'          => array('AM', 'PM'),
                                                            'values'          => array('am', 'pm'),
                                                            'selected'      => strtolower(strftime('%p', $time)),
                                                            'print_result' => false),
-                                                     $smarty);
+                                                     $smarty
+        );
         $html_result .= "</select>\n";
     }
 

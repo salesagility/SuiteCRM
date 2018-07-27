@@ -126,8 +126,8 @@ foreach ($config_params as $group => $gdata) {
         if (!empty($value)) {
             if (!empty($value['required'])) {
                 $form .= "<span class=\"required\">*</span>";
-            } else {
             }
+            
             if (!empty($_SESSION[$name])) {
                 $sessval = $_SESSION[$name];
             } else {
@@ -451,4 +451,3 @@ echo $out3;
 echo $out4;
 echo $out_dd;
 echo $out5;
-

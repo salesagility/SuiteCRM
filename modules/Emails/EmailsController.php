@@ -135,7 +135,7 @@ class EmailsController extends SugarController
         // For viewing the Compose as modal from other modules we need to load the Emails language strings
         if (isset($_REQUEST['in_popup']) && $_REQUEST['in_popup']) {
             if (!is_file('cache/jsLanguage/Emails/' . $GLOBALS['current_language'] . '.js')) {
-                require_once ('include/language/jsLanguage.php');
+                require_once('include/language/jsLanguage.php');
                 jsLanguage::createModuleStringsCache('Emails', $GLOBALS['current_language']);
             }
             echo '<script src="cache/jsLanguage/Emails/'. $GLOBALS['current_language'] . '.js"></script>';
@@ -530,8 +530,12 @@ class EmailsController extends SugarController
         $folderOpenState = empty($folderOpenState) ? '' : $folderOpenState;
 
         try {
-            $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user,
-                true);
+            $ret = $email->et->folder->getUserFolders(
+                $rootNode,
+                sugar_unserialize($folderOpenState),
+                $current_user,
+                true
+            );
             $out = json_encode(array('response' => $ret));
         } catch (SugarFolderEmptyException $e) {
             $GLOBALS['log']->warn($e->getMessage());
@@ -738,7 +742,8 @@ class EmailsController extends SugarController
         if (!$accounts) {
             $url = 'index.php?module=Users&action=EditView&record=' . $current_user->id . "&showEmailSettingsPopup=1";
             SugarApplication::appendErrorMessage(
-                    "You don't have any valid email account settings yet. <a href=\"$url\">Click here to set your email accounts.</a>");
+                    "You don't have any valid email account settings yet. <a href=\"$url\">Click here to set your email accounts.</a>"
+            );
         }
         
         

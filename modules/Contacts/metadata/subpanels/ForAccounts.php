@@ -66,31 +66,31 @@ $subpanel_layout = array(
             'usage' => 'query_only',
         ),
         'name'=>array(
-            'name'=>'name',		
+            'name'=>'name',
             'vname' => 'LBL_LIST_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'module' => 'Contacts',
             'width' => '43%',
         ),
         'primary_address_city'=>array(
-            'name'=>'primary_address_city',		
+            'name'=>'primary_address_city',
             'vname' => 'LBL_LIST_CITY',
             'width' => '20%',
         ),
         'primary_address_state'=>array(
-            'name'=>'primary_address_state',		
+            'name'=>'primary_address_state',
             'vname' => 'LBL_LIST_STATE',
             'width' => '10%',
         ),
         'email1'=>array(
-            'name'=>'email1',		
+            'name'=>'email1',
             'vname' => 'LBL_LIST_EMAIL',
             'widget_class' => 'SubPanelEmailLink',
             'width' => '30%',
             'sortable' => false,
         ),
-        'phone_work'=>array (
-            'name'=>'phone_work',		
+        'phone_work'=>array(
+            'name'=>'phone_work',
             'vname' => 'LBL_LIST_PHONE',
             'width' => '15%',
         ),
@@ -107,5 +107,4 @@ $subpanel_layout = array(
             'width' => '5%',
         ),
     ),
-);		
-
+);

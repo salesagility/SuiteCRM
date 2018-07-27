@@ -143,9 +143,11 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Phrase extends Zend_Search_L
             }
 
             foreach ($searchFields as $fieldName) {
-                $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Phrase($this->_phrase,
+                $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Phrase(
+                    $this->_phrase,
                                                                                      $this->_phraseEncoding,
-                                                                                     $fieldName);
+                                                                                     $fieldName
+                );
                 $subquery->setSlop($this->getSlop());
 
                 $query->addSubquery($subquery->rewrite($index));

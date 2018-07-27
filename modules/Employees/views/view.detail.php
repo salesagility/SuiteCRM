@@ -144,4 +144,3 @@ EOHTML;
         parent::display();
     }
 }
-

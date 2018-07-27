@@ -85,8 +85,8 @@ $sel_fields=array();
 $temp_field_array = $focus->merge_bean->field_defs;
 $bean_data=array();
 foreach ($temp_field_array as $field_array) {
-    if (isset($field_array['merge_filter']) 
-	) {
+    if (isset($field_array['merge_filter'])
+    ) {
         if (strtolower($field_array['merge_filter'])=='enabled' or strtolower($field_array['merge_filter'])=='selected') {
             $col_name = $field_array['name'];
 
@@ -96,13 +96,13 @@ foreach ($temp_field_array as $field_array) {
             } else {
                 $col_label = str_replace(':', '', $focus->merge_bean_strings[$field_array['vname']]);
             }
-			
+            
             if (strtolower($field_array['merge_filter'])=='selected') {
                 $sel_fields[$col_name]=$col_label;
             } else {
                 $avail_fields[$col_name] = $col_label;
             }
-			
+            
             $bean_data[$col_name]=$focus->merge_bean->$col_name;
         }
     }
@@ -117,7 +117,7 @@ $params[] = $mod_strings['LBL_LBL_MERGE_RECORDS_STEP_1'];
 $params[] = $focus->merge_bean->name;
 echo getClassicModuleTitle($focus->merge_bean->module_dir, $params, true);
 
-$xtpl = new XTemplate ('modules/MergeRecords/Step1.html');
+$xtpl = new XTemplate('modules/MergeRecords/Step1.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $xtpl->assign("BEANDATA", $json->encode($bean_data));

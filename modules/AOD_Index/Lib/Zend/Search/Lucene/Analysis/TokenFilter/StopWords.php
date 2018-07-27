@@ -64,9 +64,8 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
     {
         if (array_key_exists($srcToken->getTermText(), $this->_stopSet)) {
             return null;
-        } else {
-            return $srcToken;
         }
+        return $srcToken;
     }
 
     /**
@@ -89,7 +88,7 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
             require_once 'Zend/Search/Lucene/Exception.php';
             throw new Zend_Search_Lucene_Exception('Cannot open file ' . $filepath);
         }
-        while (!feof ($fd)) {
+        while (!feof($fd)) {
             $buffer = trim(fgets($fd));
             if (strlen($buffer) > 0 && $buffer[0] != '#') {
                 $this->_stopSet[$buffer] = 1;
@@ -101,4 +100,3 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
         }
     }
 }
-

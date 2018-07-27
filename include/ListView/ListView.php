@@ -312,9 +312,9 @@ class ListView
             $fields = $aItem->get_list_view_data();
             if (isset($processed_ids[$aItem->id])) {
                 continue;
-            } else {
-                $processed_ids[$aItem->id] = 1;
             }
+            $processed_ids[$aItem->id] = 1;
+            
 
 
             //ADD OFFSET TO ARRAY
@@ -1040,8 +1040,14 @@ class ListView
             $response = $seed->get_list($this->query_orderby, $this->query_where, $current_offset, $this->query_limit);
         } else {
             $related_field_name = $this->related_field_name;
-            $response = $seed->get_related_list($this->child_focus,$related_field_name, $this->query_orderby,
-            $this->query_where, $current_offset, $this->query_limit);
+            $response = $seed->get_related_list(
+                $this->child_focus,
+                $related_field_name,
+                $this->query_orderby,
+            $this->query_where,
+                $current_offset,
+                $this->query_limit
+            );
         }
 
         $list = $response['list'];
@@ -1114,7 +1120,7 @@ class ListView
 
         // Bug 8139 - Correct Subpanel sorting on 'name', when subpanel sorting default is 'last_name, first_name'
         if (($this->sortby == 'name' || $this->sortby == 'last_name') &&
-			str_replace(' ', '', trim($subpanel_def->_instance_properties['sort_by'])) == 'last_name,first_name') {
+            str_replace(' ', '', trim($subpanel_def->_instance_properties['sort_by'])) == 'last_name,first_name') {
             $this->sortby = 'last_name '.$this->sort_order.', first_name ';
         }
 
@@ -1454,7 +1460,8 @@ class ListView
                         || (ACLController::moduleSupportsACL($_REQUEST['module'])
                             && ACLAction::getUserAccessLevel($current_user->id, $_REQUEST['module'], 'access') == ACL_ALLOW_ENABLED
                             && (ACLAction::getUserAccessLevel($current_user->id, $_REQUEST['module'], 'admin') == ACL_ALLOW_ADMIN ||
-                                ACLAction::getUserAccessLevel($current_user->id, $_REQUEST['module'], 'admin') == ACL_ALLOW_ADMIN_DEV))))) {
+                                ACLAction::getUserAccessLevel($current_user->id, $_REQUEST['module'], 'admin') == ACL_ALLOW_ADMIN_DEV))
+                ))) {
                 if ($_REQUEST['module'] != 'InboundEmail' && $_REQUEST['module'] != 'EmailMan' && $_REQUEST['module'] != 'iFrames') {
                     $selected_objects_span = '';
                 }
@@ -1566,9 +1573,8 @@ class ListView
         if ($sort_URL_base !== "") {
             $this->xTemplate->assign("ORDER_BY", $sort_URL_base);
             return $sort_URL_base;
-        } else {
-            return '';
         }
+        return '';
     }
 
 
@@ -1926,9 +1932,8 @@ class ListView
             return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
         } elseif (($upDown === '_up')) {
             return '<span class="suitepicon suitepicon-action-sorting-descending"></span>';
-        } else {
-            return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
         }
+        return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
     }
 
     /**
@@ -2074,9 +2079,8 @@ class ListView
     {
         if (isset($_SESSION[$localVarName."_".$varName])) {
             return $_SESSION[$localVarName."_".$varName];
-        } else {
-            return "";
         }
+        return "";
     }
 
     /* Set to true if you want Additional Details to appear in the listview

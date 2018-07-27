@@ -587,7 +587,7 @@
          $this->pChartObject->drawLine($Plots[2], $Plots[3], $Plots[2], $Plots[3]- $SliceHeight, array("R"=>$Settings["R"],"G"=>$Settings["G"],"B"=>$Settings["B"]));
          $Border = "";
          $Border[] = $Plots[0]; $Border[] = $Plots[1]; $Border[] = $Plots[0]; $Border[] = $Plots[1] - $SliceHeight;
-         $Border[] = $Plots[2]; $Border[] = $Plots[3] - $SliceHeight; $Border[] = $Plots[2]; $Border[] = $Plots[3]; 
+         $Border[] = $Plots[2]; $Border[] = $Plots[3] - $SliceHeight; $Border[] = $Plots[2]; $Border[] = $Plots[3];
          $this->pChartObject->drawPolygon($Border, $Settings);
         }
          }
@@ -611,7 +611,7 @@
                  $Border[] = $Plots[count($Plots)-2];
                  $Border[] = $Plots[count($Plots)-1] - $SliceHeight;
                  $Border[] = $Plots[count($Plots)-2];
-                 $Border[] = $Plots[count($Plots)-1]; 
+                 $Border[] = $Plots[count($Plots)-1];
                  $this->pChartObject->drawPolygon($Border, $Settings);
              }
          }

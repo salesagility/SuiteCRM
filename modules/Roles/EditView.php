@@ -73,7 +73,7 @@ global $theme;
 
 $GLOBALS['log']->info("Role Edit View");
 echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$focus->name), true);
-$xtpl=new XTemplate ('modules/Roles/EditView.html');
+$xtpl=new XTemplate('modules/Roles/EditView.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 
@@ -125,7 +125,7 @@ if (isset($_REQUEST['record'])) {
         $chooser->args['values_array'][1][$key] = $app_list_strings['moduleList'][$key];
     }
 }
-	
+    
 $chooser->args['left_name'] = 'display_tabs';
 $chooser->args['right_name'] = 'hide_tabs';
 $chooser->args['left_label'] =  $mod_strings['LBL_ALLOWED_MODULES'];

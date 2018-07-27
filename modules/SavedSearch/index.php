@@ -63,10 +63,10 @@ if (!empty($_REQUEST['saved_search_action'])) {
             break;
         case 'delete': // delete here
             $ss->handleDelete($_REQUEST['saved_search_select']);
-            break;			
+            break;
     }
 } elseif (!empty($_REQUEST['saved_search_select'])) { // requesting a search here.
-    if (!empty($_REQUEST['searchFormTab'])) { // where is the request from  
+    if (!empty($_REQUEST['searchFormTab'])) { // where is the request from
         $searchFormTab = $_REQUEST['searchFormTab'];
     } else {
         $searchFormTab = 'saved_views';
@@ -78,14 +78,13 @@ if (!empty($_REQUEST['saved_search_action'])) {
         $ajaxLoad = empty($_REQUEST['ajax_load']) ? "" : "&ajax_load=" . $_REQUEST['ajax_load'];
         header("Location: index.php?action=index&module={$_REQUEST['search_module']}&searchFormTab={$searchFormTab}&query=true&clear_query=true$ajaxLoad");
         die();
-    } else {
-        $ss = new SavedSearch();
-        $show='no';
-        if (isset($_REQUEST['showSSDIV'])) {
-            $show = $_REQUEST['showSSDIV'];
-        }
-        $ss->returnSavedSearch($_REQUEST['saved_search_select'], $searchFormTab, $show);
     }
+    $ss = new SavedSearch();
+    $show='no';
+    if (isset($_REQUEST['showSSDIV'])) {
+        $show = $_REQUEST['showSSDIV'];
+    }
+    $ss->returnSavedSearch($_REQUEST['saved_search_select'], $searchFormTab, $show);
 } else {
     include('modules/SavedSearch/ListView.php');
 }

@@ -46,7 +46,7 @@ $quicksearch_js = $qsd->getQSScripts();
 $quicksearch_js .= '<script type="text/javascript" language="javascript">sqs_objects = ' . $json->encode($sqs_objects) . '</script>';
 echo $quicksearch_js;
 
-$xtpl=new XTemplate ('modules/SecurityGroups/SecurityGroupUserRelationshipEdit.html');
+$xtpl=new XTemplate('modules/SecurityGroups/SecurityGroupUserRelationshipEdit.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 
@@ -68,14 +68,14 @@ echo "\n</p>\n";
 $noninheritable = '';
 if (isset($focus->noninheritable) && $focus->noninheritable == true) {
     $noninheritable = 'CHECKED';
-} 
+}
 $xtpl->assign('noninheritable', $noninheritable);
 
 // primary_group
 $primary_group = '';
 if (isset($focus->primary_group) && $focus->primary_group == true) {
     $primary_group = 'CHECKED';
-} 
+}
 $xtpl->assign('primary_group', $primary_group);
 
 $xtpl->parse("main");
@@ -88,4 +88,3 @@ $javascript->setFormName('EditView');
 $javascript->setSugarBean($focus);
 $javascript->addToValidateBinaryDependency('user_name', 'alpha', $app_strings['ERR_SQS_NO_MATCH_FIELD'] . $mod_strings['LBL_USER_NAME'], 'false', '', 'user_id');
 echo $javascript->getScript();
-

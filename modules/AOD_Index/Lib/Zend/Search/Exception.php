@@ -35,4 +35,3 @@
 class Zend_Search_Exception extends Exception
 {
 }
-

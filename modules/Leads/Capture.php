@@ -53,7 +53,7 @@ $app_list_strings['record_type_module'] = array('Contact'=>'Contacts', 'Account'
  * To make your changes upgrade safe create a file called leadCapture_override.php and place the changes there
  */
 $users = array(
-	'PUT A RANDOM KEY FROM THE WEBSITE HERE' => array('name'=>'PUT THE USER_NAME HERE', 'pass'=>'PUT THE USER_HASH FOR THE RESPECTIVE USER HERE'),
+    'PUT A RANDOM KEY FROM THE WEBSITE HERE' => array('name'=>'PUT THE USER_NAME HERE', 'pass'=>'PUT THE USER_HASH FOR THE RESPECTIVE USER HERE'),
 );
 if (file_exists('leadCapture_override.php')) {
     include('leadCapture_override.php');
@@ -90,7 +90,7 @@ if (!empty($_POST['user']) && !empty($users[$_POST['user']])) {
 
         if (isset($_POST['redirect']) && !empty($_POST['redirect'])) {
 
-			//header("Location: ".$_POST['redirect']);
+            //header("Location: ".$_POST['redirect']);
             echo '<html ' . get_language_header() .'><head><title>SugarCRM</title></head><body>';
             echo '<form name="redirect" action="' .$_POST['redirect']. '" method="POST">';
 

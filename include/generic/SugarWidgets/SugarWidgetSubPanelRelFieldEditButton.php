@@ -62,8 +62,10 @@ class SugarWidgetSubPanelRelFieldEditButton extends SugarWidgetField
 
         global $app_strings;
 
-        $edit_icon_html = SugarThemeRegistry::current()->getImage('edit_inline',
-            'align="absmiddle" alt="' . $app_strings['LNK_EDIT'] . '" border="0"');
+        $edit_icon_html = SugarThemeRegistry::current()->getImage(
+            'edit_inline',
+            'align="absmiddle" alt="' . $app_strings['LNK_EDIT'] . '" border="0"'
+        );
 
         $script = "
         function editRel(name, id, module) {

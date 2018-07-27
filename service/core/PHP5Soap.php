@@ -111,23 +111,22 @@ abstract class PHP5Soap extends SugarSoapService
         } // if
     } // fn
 
-	public function getWSDLPath($generateWSDL)
-	{
-	    $wsdlURL = $this->getSoapURL().'?wsdl';
-	    $wsdlCacheFile = 'upload://wsdlcache-' . md5($wsdlURL);
+    public function getWSDLPath($generateWSDL)
+    {
+        $wsdlURL = $this->getSoapURL().'?wsdl';
+        $wsdlCacheFile = 'upload://wsdlcache-' . md5($wsdlURL);
 
-	    if ($generateWSDL) {
-	        $oldqs = $_SERVER['QUERY_STRING'];
-	        $_SERVER['QUERY_STRING'] = "wsdl";
-	        $this->nusoap_server->service($wsdlURL);
-	        $_SERVER['QUERY_STRING'] = $oldqs;
-	        file_put_contents($wsdlCacheFile, ob_get_contents());
-	        return $wsdlCacheFile;
-	    //ob_clean();
-	    } else {
-	        return $wsdlCacheFile;
-	    }
-	} // fn
+        if ($generateWSDL) {
+            $oldqs = $_SERVER['QUERY_STRING'];
+            $_SERVER['QUERY_STRING'] = "wsdl";
+            $this->nusoap_server->service($wsdlURL);
+            $_SERVER['QUERY_STRING'] = $oldqs;
+            file_put_contents($wsdlCacheFile, ob_get_contents());
+            return $wsdlCacheFile;
+            //ob_clean();
+        }
+        return $wsdlCacheFile;
+    } // fn
 
     public function getNameSpace()
     {

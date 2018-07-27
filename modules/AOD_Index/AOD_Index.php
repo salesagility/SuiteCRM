@@ -94,15 +94,14 @@ class AOD_Index extends AOD_Index_sugar
         $index = BeanFactory::getBean('AOD_Index', 1);
         if (!empty($index) && !empty($index->id)) {
             return $index;
-        } else {
-            $index = new AOD_Index();
-            $index->id = 1;
-            $index->new_with_id = true;
-            $index->name = "Index";
-            $index->location = "modules/AOD_Index/Index/Index";
-            $index->save();
-            return $index;
         }
+        $index = new AOD_Index();
+        $index->id = 1;
+        $index->new_with_id = true;
+        $index->name = "Index";
+        $index->location = "modules/AOD_Index/Index/Index";
+        $index->save();
+        return $index;
     }
 
     /**
@@ -175,16 +174,16 @@ class AOD_Index extends AOD_Index_sugar
         foreach ($GLOBALS['dictionary'][$bean->getObjectName()]['fields'] as $key => $field) {
             switch ($field['type']) {
                 case "enum":
-                	if (property_exists($bean, $key)) {
-                	    $document["document"]->addField(Zend_Search_Lucene_Field::Keyword($key, strtolower($bean->$key), 'UTF-8'));
-                	}
+                    if (property_exists($bean, $key)) {
+                        $document["document"]->addField(Zend_Search_Lucene_Field::Keyword($key, strtolower($bean->$key), 'UTF-8'));
+                    }
                     break;
 
                 case "multienum":
-                	if (property_exists($bean, $key)) {
-                	    $vals = unencodeMultienum($bean->$key);
-                	    $document["document"]->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(" ", $vals)), 'UTF-8'));
-                	}
+                    if (property_exists($bean, $key)) {
+                        $vals = unencodeMultienum($bean->$key);
+                        $document["document"]->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(" ", $vals)), 'UTF-8'));
+                    }
                     break;
                 case "name":
                 case "phone":

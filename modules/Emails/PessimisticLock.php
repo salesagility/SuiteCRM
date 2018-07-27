@@ -68,9 +68,9 @@ if (isset($_REQUEST['next_free']) && $_REQUEST['next_free'] == true) {
         }
         $in = substr($in, 0, (strlen($in) - 2));
         $in .= ') ';
-		
+        
         $team = '';
-		
+        
         $qE = 'SELECT count(id) AS c FROM emails WHERE deleted = 0 AND assigned_user_id'.$in.$team.'LIMIT 1';
         $rE = $next->db->query($qE);
         $aE = $next->db->fetchByAssoc($rE);
@@ -82,7 +82,7 @@ if (isset($_REQUEST['next_free']) && $_REQUEST['next_free'] == true) {
             $next->retrieve($aE['id']);
             $next->assigned_user_id = $current_user->id;
             $next->save();
-			
+            
             header('Location: index.php?module=Emails&action=DetailView&record='.$next->id);
         } else {
             // no free items

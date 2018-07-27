@@ -45,4 +45,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Description:
  ********************************************************************************/
 
-include ("modules/Releases/index.php");
+include("modules/Releases/index.php");

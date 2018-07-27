@@ -90,8 +90,10 @@ class actionSendEmail extends actionBase
 
         $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='send-email'>";
         $html .= "<tr>";
-        $html .= '<td id="relate_label" scope="row" valign="top"><label>' . translate("LBL_INDIVIDUAL_EMAILS",
-                "AOW_Actions") . ':</label>';
+        $html .= '<td id="relate_label" scope="row" valign="top"><label>' . translate(
+            "LBL_INDIVIDUAL_EMAILS",
+                "AOW_Actions"
+        ) . ':</label>';
         $html .= '</td>';
         $html .= "<td valign='top'>";
         $html .= "<input type='hidden' name='aow_actions_param[".$line."][individual_email]' value='0' >";
@@ -106,8 +108,10 @@ class actionSendEmail extends actionBase
             $hidden = "";
         }
 
-        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_EMAIL_TEMPLATE",
-                "AOW_Actions") . ':<span class="required">*</span></label></td>';
+        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate(
+            "LBL_EMAIL_TEMPLATE",
+                "AOW_Actions"
+        ) . ':<span class="required">*</span></label></td>';
         $html .= "<td valign='top'>";
         $html .= "<select name='aow_actions_param[".$line."][email_template]' id='aow_actions_param_email_template".$line."' onchange='show_edit_template_link(this,".$line.");' >".get_select_options_with_id($email_templates_arr, $params['email_template'])."</select>";
 
@@ -116,8 +120,10 @@ class actionSendEmail extends actionBase
         $html .= "</td>";
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_EMAIL",
-                "AOW_Actions") . ':<span class="required">*</span></label></td>';
+        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate(
+            "LBL_EMAIL",
+                "AOW_Actions"
+        ) . ':<span class="required">*</span></label></td>';
         $html .= '<td valign="top" scope="row">';
 
         $html .='<button type="button" onclick="add_emailLine('.$line.')"><img src="'.SugarThemeRegistry::current()->getImageURL('id-ff-add.png').'"></button>';
@@ -301,9 +307,9 @@ class actionSendEmail extends actionBase
 
     /**
      * Return true on success otherwise false.
-     * Use actionSendEmail::getLastEmailsSuccess() and actionSendEmail::getLastEmailsFailed() 
+     * Use actionSendEmail::getLastEmailsSuccess() and actionSendEmail::getLastEmailsFailed()
      * methods to get last email sending status
-     * 
+     *
      * @param SugarBean $bean
      * @param array $params
      * @param bool $in_save

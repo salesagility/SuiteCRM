@@ -105,7 +105,7 @@ $html = str_replace('Â', ' ', $html);
 file_put_contents($form_file, $html);
 $html = htmlspecialchars($html, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
-$xtpl=new XTemplate ('modules/Campaigns/WebToLeadDownloadForm.html');
+$xtpl=new XTemplate('modules/Campaigns/WebToLeadDownloadForm.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $webformlink = "<b>$mod_strings[LBL_DOWNLOAD_TEXT_WEB_TO_LEAD_FORM]</b><br/>";

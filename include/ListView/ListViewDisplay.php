@@ -81,7 +81,7 @@ class ListViewDisplay
     public function __construct()
     {
         $this->lvd = new ListViewData();
-        $this->searchColumns = array () ;
+        $this->searchColumns = array() ;
     }
 
     /**
@@ -108,10 +108,10 @@ class ListViewDisplay
         }
         if (!empty($GLOBALS['sugar_config']['save_query']) && $GLOBALS['sugar_config']['save_query'] == 'populate_only') {
             if (empty($GLOBALS['displayListView'])
-		            && (!empty($_REQUEST['clear_query'])
-		                || $_REQUEST['module'] == $moduleDir
-		                    && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI')
-		                        && (!$searching)))) {
+                    && (!empty($_REQUEST['clear_query'])
+                        || $_REQUEST['module'] == $moduleDir
+                            && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI')
+                                && (!$searching)))) {
                 $_SESSION['last_search_mod'] = $_REQUEST['module'] ;
                 $this->should_process = false;
                 return false;
@@ -297,8 +297,14 @@ class ListViewDisplay
         global $app_strings;
         global $mod_strings;
 
-        $closeText = SugarThemeRegistry::current()->getImage('close_inline', 'border=0', null, null, ".gif",
-            $app_strings['LBL_CLOSEINLINE']);
+        $closeText = SugarThemeRegistry::current()->getImage(
+            'close_inline',
+            'border=0',
+            null,
+            null,
+            ".gif",
+            $app_strings['LBL_CLOSEINLINE']
+        );
         $moreDetailImage = SugarThemeRegistry::current()->getImageURL('MoreDetail.png');
         $menuItems = array();
 
@@ -518,12 +524,12 @@ class ListViewDisplay
         return $selectedObjectSpan;
     }
     /**
-	 * Builds the mail merge link
-	 * The link can be disabled by setting module level duplicate_merge property to false
-	 * in the moudle's vardef file.
-	 *
-	 * @return string HTML
-	 */
+     * Builds the mail merge link
+     * The link can be disabled by setting module level duplicate_merge property to false
+     * in the moudle's vardef file.
+     *
+     * @return string HTML
+     */
     protected function buildMergeDuplicatesLink($loc = 'top')
     {
         global $app_strings, $dictionary;
@@ -547,10 +553,10 @@ class ListViewDisplay
         return "";
     }
     /**
-	 * Builds the mail merge link
-	 *
-	 * @return string HTML
-	 */
+     * Builds the mail merge link
+     *
+     * @return string HTML
+     */
     protected function buildMergeLink(array $modules_array = null, $loc = 'top')
     {
         if (empty($modules_array)) {
@@ -567,8 +573,8 @@ class ListViewDisplay
         if ($user_merge == 'on' && isset($admin->settings['system_mailmerge_on']) && $admin->settings['system_mailmerge_on'] && !empty($modules_array[$module_dir])) {
             return "<a href='javascript:void(0)'  " .
                     "id='merge_listview_". $loc ."'"  .
-					'onclick="if (document.MassUpdate.select_entire_list.value==1){document.location.href=\'index.php?action=index&module=MailMerge&entire=true\'} else {return sListView.send_form(true, \'MailMerge\',\'index.php\',\''.$app_strings['LBL_LISTVIEW_NO_SELECTED'].'\');}">' .
-					$app_strings['LBL_MAILMERGE'].'</a>';
+                    'onclick="if (document.MassUpdate.select_entire_list.value==1){document.location.href=\'index.php?action=index&module=MailMerge&entire=true\'} else {return sListView.send_form(true, \'MailMerge\',\'index.php\',\''.$app_strings['LBL_LISTVIEW_NO_SELECTED'].'\');}">' .
+                    $app_strings['LBL_MAILMERGE'].'</a>';
         }
         return $str;
     }
@@ -682,9 +688,9 @@ EOF;
         $select_entire_list = ($massUpdateRun) ? 0 : (isset($_POST['select_entire_list']) ? $_POST['select_entire_list'] : (isset($_REQUEST['select_entire_list']) ? $_REQUEST['select_entire_list'] : 0));
 
         $str .= "<textarea style='display: none' name='uid'>{$uids}</textarea>\n" .
-				"<input type='hidden' name='select_entire_list' value='{$select_entire_list}'>\n".
-				"<input type='hidden' name='{$this->moduleString}' value='0'>\n".
-		        "<input type='hidden' name='show_plus' value='{$this->show_plus}'>\n";
+                "<input type='hidden' name='select_entire_list' value='{$select_entire_list}'>\n".
+                "<input type='hidden' name='{$this->moduleString}' value='0'>\n".
+                "<input type='hidden' name='show_plus' value='{$this->show_plus}'>\n";
         return $str;
     }
 

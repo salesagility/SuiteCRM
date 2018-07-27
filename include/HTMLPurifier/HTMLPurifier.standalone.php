@@ -956,9 +956,9 @@ class HTMLPurifier_AttrValidator
 
                 // simple substitution
                 $attr[$attr_key] = $result;
-            } else {
-                // nothing happens
             }
+            // nothing happens
+            
 
             // we'd also want slightly more complicated substitution
             // involving an array as the return value,
@@ -2207,13 +2207,12 @@ class HTMLPurifier_Config
                 // check if the definition is setup
                 if ($def->setup) {
                     return $def;
-                } else {
-                    $def->setup($this);
-                    if ($def->optimized) {
-                        $cache->add($def, $this);
-                    }
-                    return $def;
                 }
+                $def->setup($this);
+                if ($def->optimized) {
+                    $cache->add($def, $this);
+                }
+                return $def;
             }
             // check if definition is in cache
             $def = $cache->get($this);
@@ -2232,77 +2231,76 @@ class HTMLPurifier_Config
             $cache->add($def, $this);
             // return it
             return $def;
-        } else {
-            // raw definition
-            // --------------
-            // check preconditions
-            $def = null;
-            if ($optimized) {
-                if (is_null($this->get($type . '.DefinitionID'))) {
-                    // fatally error out if definition ID not set
-                    throw new HTMLPurifier_Exception(
+        }
+        // raw definition
+        // --------------
+        // check preconditions
+        $def = null;
+        if ($optimized) {
+            if (is_null($this->get($type . '.DefinitionID'))) {
+                // fatally error out if definition ID not set
+                throw new HTMLPurifier_Exception(
                         "Cannot retrieve raw version without specifying %$type.DefinitionID"
                     );
-                }
             }
-            if (!empty($this->definitions[$type])) {
-                $def = $this->definitions[$type];
-                if ($def->setup && !$optimized) {
-                    $extra = $this->chatty ?
+        }
+        if (!empty($this->definitions[$type])) {
+            $def = $this->definitions[$type];
+            if ($def->setup && !$optimized) {
+                $extra = $this->chatty ?
                         " (try moving this code block earlier in your initialization)" :
                         "";
-                    throw new HTMLPurifier_Exception(
+                throw new HTMLPurifier_Exception(
                         "Cannot retrieve raw definition after it has already been setup" .
                         $extra
                     );
-                }
-                if ($def->optimized === null) {
-                    $extra = $this->chatty ? " (try flushing your cache)" : "";
-                    throw new HTMLPurifier_Exception(
+            }
+            if ($def->optimized === null) {
+                $extra = $this->chatty ? " (try flushing your cache)" : "";
+                throw new HTMLPurifier_Exception(
                         "Optimization status of definition is unknown" . $extra
                     );
-                }
-                if ($def->optimized !== $optimized) {
-                    $msg = $optimized ? "optimized" : "unoptimized";
-                    $extra = $this->chatty ?
+            }
+            if ($def->optimized !== $optimized) {
+                $msg = $optimized ? "optimized" : "unoptimized";
+                $extra = $this->chatty ?
                         " (this backtrace is for the first inconsistent call, which was for a $msg raw definition)"
                         : "";
-                    throw new HTMLPurifier_Exception(
+                throw new HTMLPurifier_Exception(
                         "Inconsistent use of optimized and unoptimized raw definition retrievals" . $extra
                     );
-                }
             }
-            // check if definition was in memory
+        }
+        // check if definition was in memory
+        if ($def) {
+            if ($def->setup) {
+                // invariant: $optimized === true (checked above)
+                return null;
+            }
+            return $def;
+        }
+        // if optimized, check if definition was in cache
+        // (because we do the memory check first, this formulation
+        // is prone to cache slamming, but I think
+        // guaranteeing that either /all/ of the raw
+        // setup code or /none/ of it is run is more important.)
+        if ($optimized) {
+            // This code path only gets run once; once we put
+            // something in $definitions (which is guaranteed by the
+            // trailing code), we always short-circuit above.
+            $def = $cache->get($this);
             if ($def) {
-                if ($def->setup) {
-                    // invariant: $optimized === true (checked above)
-                    return null;
-                } else {
-                    return $def;
-                }
+                // save the full definition for later, but don't
+                // return it yet
+                $this->definitions[$type] = $def;
+                return null;
             }
-            // if optimized, check if definition was in cache
-            // (because we do the memory check first, this formulation
-            // is prone to cache slamming, but I think
-            // guaranteeing that either /all/ of the raw
-            // setup code or /none/ of it is run is more important.)
-            if ($optimized) {
-                // This code path only gets run once; once we put
-                // something in $definitions (which is guaranteed by the
-                // trailing code), we always short-circuit above.
-                $def = $cache->get($this);
-                if ($def) {
-                    // save the full definition for later, but don't
-                    // return it yet
-                    $this->definitions[$type] = $def;
-                    return null;
-                }
-            }
-            // check invariants for creation
-            if (!$optimized) {
-                if (!is_null($this->get($type . '.DefinitionID'))) {
-                    if ($this->chatty) {
-                        $this->triggerError(
+        }
+        // check invariants for creation
+        if (!$optimized) {
+            if (!is_null($this->get($type . '.DefinitionID'))) {
+                if ($this->chatty) {
+                    $this->triggerError(
                             'Due to a documentation error in previous version of HTML Purifier, your ' .
                             'definitions are not being cached.  If this is OK, you can remove the ' .
                             '%$type.DefinitionRev and %$type.DefinitionID declaration.  Otherwise, ' .
@@ -2313,19 +2311,19 @@ class HTMLPurifier_Config
                             'Customize</a> for more details',
                             E_USER_WARNING
                         );
-                    } else {
-                        $this->triggerError(
+                } else {
+                    $this->triggerError(
                             "Useless DefinitionID declaration",
                             E_USER_WARNING
                         );
-                    }
                 }
             }
-            // initialize it
-            $def = $this->initDefinition($type);
-            $def->optimized = $optimized;
-            return $def;
         }
+        // initialize it
+        $def = $this->initDefinition($type);
+        $def->optimized = $optimized;
+        return $def;
+        
         throw new HTMLPurifier_Exception("The impossible happened!");
     }
 
@@ -3827,12 +3825,10 @@ class HTMLPurifier_Encoder
                     $i += $chunk_size;
                 }
                 return $r;
-            } else {
-                return false;
             }
-        } else {
             return false;
         }
+        return false;
     }
 
     /**
@@ -4489,19 +4485,17 @@ class HTMLPurifier_EntityParser
                 return $entity;
             }
             return HTMLPurifier_Encoder::unichr($code);
-        } else {
-            if (isset($this->_special_ent2dec[$matches[3]])) {
-                return $entity;
-            }
-            if (!$this->_entity_lookup) {
-                $this->_entity_lookup = HTMLPurifier_EntityLookup::instance();
-            }
-            if (isset($this->_entity_lookup->table[$matches[3]])) {
-                return $this->_entity_lookup->table[$matches[3]];
-            } else {
-                return $entity;
-            }
         }
+        if (isset($this->_special_ent2dec[$matches[3]])) {
+            return $entity;
+        }
+        if (!$this->_entity_lookup) {
+            $this->_entity_lookup = HTMLPurifier_EntityLookup::instance();
+        }
+        if (isset($this->_entity_lookup->table[$matches[3]])) {
+            return $this->_entity_lookup->table[$matches[3]];
+        }
+        return $entity;
     }
 
     /**
@@ -4542,11 +4536,10 @@ class HTMLPurifier_EntityParser
             return isset($this->_special_dec2str[$int]) ?
                 $this->_special_dec2str[$int] :
                 $entity;
-        } else {
-            return isset($this->_special_ent2dec[$matches[3]]) ?
+        }
+        return isset($this->_special_ent2dec[$matches[3]]) ?
                 $this->_special_ent2dec[$matches[3]] :
                 $entity;
-        }
     }
 }
 
@@ -4751,9 +4744,8 @@ class HTMLPurifier_ErrorCollector
 
         if (empty($errors)) {
             return '<p>' . $this->locale->getMessage('ErrorCollector: No errors') . '</p>';
-        } else {
-            return '<ul><li>' . implode('</li><li>', $ret) . '</li></ul>';
         }
+        return '<ul><li>' . implode('</li><li>', $ret) . '</li></ul>';
     }
 
     private function _renderStruct(&$ret, $struct, $line = null, $col = null)
@@ -7724,9 +7716,8 @@ class HTMLPurifier_Lexer
         $result = preg_match('!<body[^>]*>(.*)</body>!is', $html, $matches);
         if ($result) {
             return $matches[1];
-        } else {
-            return $html;
         }
+        return $html;
     }
 }
 
@@ -7991,9 +7982,8 @@ class HTMLPurifier_PropertyList
         }
         if ($this->parent) {
             return $this->cache = array_merge($this->parent->squash($force), $this->data);
-        } else {
-            return $this->cache = $this->data;
         }
+        return $this->cache = $this->data;
     }
 
     /**
@@ -9170,7 +9160,14 @@ class HTMLPurifier_URIParser
         }
 
         return new HTMLPurifier_URI(
-            $scheme, $userinfo, $host, $port, $path, $query, $fragment);
+            $scheme,
+            $userinfo,
+            $host,
+            $port,
+            $path,
+            $query,
+            $fragment
+        );
     }
 }
 
@@ -9576,9 +9573,8 @@ class HTMLPurifier_UnitConverter
     {
         if ($this->bcmath) {
             return bcadd($s1, $s2, $scale);
-        } else {
-            return $this->scale((float)$s1 + (float)$s2, $scale);
         }
+        return $this->scale((float)$s1 + (float)$s2, $scale);
     }
 
     /**
@@ -9592,9 +9588,8 @@ class HTMLPurifier_UnitConverter
     {
         if ($this->bcmath) {
             return bcmul($s1, $s2, $scale);
-        } else {
-            return $this->scale((float)$s1 * (float)$s2, $scale);
         }
+        return $this->scale((float)$s1 * (float)$s2, $scale);
     }
 
     /**
@@ -9608,9 +9603,8 @@ class HTMLPurifier_UnitConverter
     {
         if ($this->bcmath) {
             return bcdiv($s1, $s2, $scale);
-        } else {
-            return $this->scale((float)$s1 / (float)$s2, $scale);
         }
+        return $this->scale((float)$s1 / (float)$s2, $scale);
     }
 
     /**
@@ -9636,9 +9630,8 @@ class HTMLPurifier_UnitConverter
                 $n = substr($n, 0, $sigfigs + strlen($neg)) . str_repeat('0', $new_log - $sigfigs + 1);
             }
             return $n;
-        } else {
-            return $this->scale(round($n, $sigfigs - $new_log - 1), $rp + 1);
         }
+        return $this->scale(round($n, $sigfigs - $new_log - 1), $rp + 1);
     }
 
     /**
@@ -9731,9 +9724,8 @@ class HTMLPurifier_VarParser
         if (is_string($type)) {
             if (!isset(HTMLPurifier_VarParser::$types[$type])) {
                 throw new HTMLPurifier_VarParserException("Invalid type '$type'");
-            } else {
-                $type = HTMLPurifier_VarParser::$types[$type];
             }
+            $type = HTMLPurifier_VarParser::$types[$type];
         }
         $var = $this->parseImplementation($var, $type, $allow_null);
         if ($allow_null && $var === null) {
@@ -10505,9 +10497,8 @@ class HTMLPurifier_AttrDef_Switch
         $token = $context->get('CurrentToken', true);
         if (!$token || $token->name !== $this->tag) {
             return $this->withoutTag->validate($string, $config, $context);
-        } else {
-            return $this->withTag->validate($string, $config, $context);
         }
+        return $this->withTag->validate($string, $config, $context);
     }
 }
 
@@ -11498,10 +11489,9 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
                                 if ($bits[$j] === '/') {
                                     if ($found_slash) {
                                         return false;
-                                    } else {
-                                        $found_slash = true;
-                                        continue;
                                     }
+                                    $found_slash = true;
+                                    continue;
                                 }
                                 $line_height = $bits[$j];
                                 break;
@@ -12005,9 +11995,9 @@ class HTMLPurifier_AttrDef_CSS_ListStyle extends HTMLPurifier_AttrDef
                 if ($r === 'none') {
                     if ($none) {
                         continue;
-                    } else {
-                        $none = true;
                     }
+                    $none = true;
+                    
                     if ($key == 'image') {
                         continue;
                     }
@@ -12438,9 +12428,8 @@ class HTMLPurifier_AttrDef_HTML_Class extends HTMLPurifier_AttrDef_HTML_Nmtokens
         $name = $config->getDefinition('HTML')->doctype->name;
         if ($name == "XHTML 1.1" || $name == "XHTML 2.0") {
             return parent::split($string, $config, $context);
-        } else {
-            return preg_split('/\s+/', $string);
         }
+        return preg_split('/\s+/', $string);
     }
 
     /**
@@ -14141,13 +14130,12 @@ class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
                 $config,
                 $context
             );
-        } else {
-            return $this->inline->validateChildren(
+        }
+        return $this->inline->validateChildren(
                 $children,
                 $config,
                 $context
             );
-        }
     }
 }
 
@@ -14537,9 +14525,8 @@ class HTMLPurifier_ChildDef_Optional extends HTMLPurifier_ChildDef_Required
                 return true;
             } elseif ($this->whitespace) {
                 return $children;
-            } else {
-                return array();
             }
+            return array();
         }
         return $result;
     }
@@ -17609,10 +17596,9 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                         //                 ------------
                         $token = array($this->_pStart());
                         $this->_splitText($text, $token);
-                    } else {
-                        // State 1.5: \n<hr />
-                        //            --
                     }
+                    // State 1.5: \n<hr />
+                        //            --
                 }
             } else {
                 // State 2:   <div>PAR1... (similar to 1.4)
@@ -17628,13 +17614,12 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                     // same routine, and found the double newline. One possible
                     // exception would be a comment.
                     $token = array($this->_pStart(), $token);
-                } else {
-                    // State 2.2.1: <div>PAR1<div>
+                }
+                // State 2.2.1: <div>PAR1<div>
                     //                   ----
 
                     // State 2.2.2: <div>PAR1<b>PAR1</b></div>
                     //                   ----
-                }
             }
             // Is the current parent a <p> tag?
         } elseif (!empty($this->currentNesting) &&
@@ -17646,14 +17631,13 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
             //                  ------------
             $token = array();
             $this->_splitText($text, $token);
-        // Abort!
-        } else {
-            // State 4.1: ...<b>PAR1
+            // Abort!
+        }
+        // State 4.1: ...<b>PAR1
             //                  ----
 
             // State 4.2: ...<b>PAR1\n\nPAR2
             //                  ------------
-        }
     }
 
     /**
@@ -17682,14 +17666,13 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                             //                                  ---
                             // Quite frankly, this should be handled by splitText
                             $token = array($this->_pStart(), $token);
-                        } else {
-                            // State 1.1.1: <div><p>PAR1</p><b>
+                        }
+                        // State 1.1.1: <div><p>PAR1</p><b>
                             //                              ---
                             // State 1.1.2: <div><br /><b>
                             //                         ---
                             // State 1.1.3: <div>PAR<b>
                             //                      ---
-                        }
                     } else {
                         // State 1.2.1: <div><b>
                         //                   ---
@@ -17698,18 +17681,16 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                             // State 1.3.1: <div><b>PAR1\n\nPAR2
                             //                   ---
                             $token = array($this->_pStart(), $token);
-                        } else {
-                            // State 1.3.2: <div><b>PAR1</b></div>
+                        }
+                        // State 1.3.2: <div><b>PAR1</b></div>
                             //                   ---
 
                             // State 1.3.3: <div><b>PAR1</b><div></div>\n\n</div>
                             //                   ---
-                        }
                     }
-                } else {
-                    // State 2.3: ...<div>
-                    //               -----
                 }
+                // State 2.3: ...<div>
+                    //               -----
             } else {
                 if ($this->_isInline($token)) {
                     // State 3.1: <b>
@@ -17717,10 +17698,10 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                     // This is where the {p} tag is inserted, not reflected in
                     // inputTokens yet, however.
                     $token = array($this->_pStart(), $token);
-                } else {
-                    // State 3.2: <div>
-                    //            -----
                 }
+                // State 3.2: <div>
+                //            -----
+                
 
                 $i = null;
                 if ($this->backward($i, $prev)) {
@@ -17733,22 +17714,20 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                             $token = array($token);
                         }
                         array_unshift($token, new HTMLPurifier_Token_Text("\n\n"));
-                    } else {
-                        // State 3.1.2: ...</p>\n\n{p}<b>
+                    }
+                    // State 3.1.2: ...</p>\n\n{p}<b>
                         //                            ---
                         // State 3.2.2: ...</p>\n\n<div>
                         //                         -----
                         // Note: PAR<ELEM> cannot occur because PAR would have been
                         // wrapped in <p> tags.
-                    }
                 }
             }
-        } else {
-            // State 2.2: <ul><li>
+        }
+        // State 2.2: <ul><li>
             //                ----
             // State 2.4: <p><b>
             //               ---
-        }
     }
 
     /**
@@ -17894,10 +17873,9 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                 // <div>PAR1<b>PAR1\n\nPAR2
                 //      ----
                 return true;
-            } else {
-                // <div>PAR1<b>PAR1...
-                //      ----
             }
+            // <div>PAR1<b>PAR1...
+                //      ----
         }
         return null;
     }
@@ -17938,9 +17916,8 @@ class HTMLPurifier_Injector_DisplayLinkURI extends HTMLPurifier_Injector
             $url = $token->start->attr['href'];
             unset($token->start->attr['href']);
             $token = array($token, new HTMLPurifier_Token_Text(" ($url)"));
-        } else {
-            // nothing to display
         }
+        // nothing to display
     }
 }
 
@@ -18536,9 +18513,8 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
                     $data = substr($new_data, 4);
                     if (substr($data, -3) === '-->') {
                         $data = substr($data, 0, -3);
-                    } else {
-                        // Highly suspicious! Not sure what to do...
                     }
+                    // Highly suspicious! Not sure what to do...
                 }
             }
             $tokens[] = $this->factory->createText($this->parseData($data));
@@ -18562,15 +18538,14 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
                 $tokens[] = $this->factory->createEmpty($node->tagName, $attr);
             }
             return false;
-        } else {
-            if ($collect) {
-                $tokens[] = $this->factory->createStart(
+        }
+        if ($collect) {
+            $tokens[] = $this->factory->createStart(
                     $tag_name = $node->tagName, // somehow, it get's dropped
                     $attr
                 );
-            }
-            return true;
         }
+        return true;
     }
 
     /**
@@ -18986,25 +18961,25 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 $cursor = $position_next_gt + 1;
                 $inside_tag = false;
                 continue;
-            } else {
-                // inside tag, but there's no ending > sign
-                if ($e) {
-                    $e->send(E_WARNING, 'Lexer: Missing gt');
-                }
-                $token = new
+            }
+            // inside tag, but there's no ending > sign
+            if ($e) {
+                $e->send(E_WARNING, 'Lexer: Missing gt');
+            }
+            $token = new
                 HTMLPurifier_Token_Text(
                     '<' .
                     $this->parseData(
                         substr($html, $cursor)
                     )
                 );
-                if ($maintain_line_numbers) {
-                    $token->rawPosition($current_line, $current_col);
-                }
-                // no cursor scroll? Hmm...
-                $array[] = $token;
-                break;
+            if ($maintain_line_numbers) {
+                $token->rawPosition($current_line, $current_col);
             }
+            // no cursor scroll? Hmm...
+            $array[] = $token;
+            break;
+            
             break;
         }
 
@@ -19030,9 +19005,8 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
         if ($oldVersion) {
             $haystack = substr($haystack, $offset, $length);
             return substr_count($haystack, $needle);
-        } else {
-            return substr_count($haystack, $needle, $offset, $length);
         }
+        return substr_count($haystack, $needle, $offset, $length);
     }
 
     /**
@@ -19300,12 +19274,11 @@ class HTMLPurifier_Node_Element extends HTMLPurifier_Node
         // XXX inefficiency here, normalization is not necessary
         if ($this->empty) {
             return array(new HTMLPurifier_Token_Empty($this->name, $this->attr, $this->line, $this->col, $this->armor), null);
-        } else {
-            $start = new HTMLPurifier_Token_Start($this->name, $this->attr, $this->line, $this->col, $this->armor);
-            $end = new HTMLPurifier_Token_End($this->name, array(), $this->endLine, $this->endCol, $this->endArmor);
-            //$end->start = $start;
-            return array($start, $end);
         }
+        $start = new HTMLPurifier_Token_Start($this->name, $this->attr, $this->line, $this->col, $this->armor);
+        $end = new HTMLPurifier_Token_End($this->name, array(), $this->endLine, $this->endCol, $this->endArmor);
+        //$end->start = $start;
+        return array($start, $end);
     }
 }
 
@@ -21832,9 +21805,8 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                             $new[$key] = true;
                         }
                         return $new;
-                    } else {
-                        break;
                     }
+                    break;
                 }
                 if ($type === self::ALIST) {
                     trigger_error("Array list did not have consecutive integer indexes", E_USER_WARNING);
@@ -21898,6 +21870,3 @@ class HTMLPurifier_VarParser_Native extends HTMLPurifier_VarParser
         return $var;
     }
 }
-
-
-

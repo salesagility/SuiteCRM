@@ -82,9 +82,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
          $email_errors.="<br>-".$mod_strings['ERR_RECIPIENT_EMAIL'];
          $email_errors.="<br>-".$mod_strings['ERR_SERVER_STATUS'];
          return $email_errors;
-     } else {
-         return $mod_strings['LBL_EMAIL_NOT_SENT'];
      }
+     return $mod_strings['LBL_EMAIL_NOT_SENT'];
  }
 
 function hasPasswordExpired($username)
@@ -100,48 +99,48 @@ function hasPasswordExpired($username)
         if ($type != '') {
             switch ($res[$type.'expiration']) {
 
-	        case '1':
-		    	global $timedate;
-		    	if ($current_user->pwd_last_changed == '') {
-		    	    $current_user->pwd_last_changed= $timedate->nowDb();
-		    	    $current_user->save();
-		    	}
+            case '1':
+                global $timedate;
+                if ($current_user->pwd_last_changed == '') {
+                    $current_user->pwd_last_changed= $timedate->nowDb();
+                    $current_user->save();
+                }
 
-		        $expireday = $res[$type.'expirationtype']*$res[$type.'expirationtime'];
+                $expireday = $res[$type.'expirationtype']*$res[$type.'expirationtime'];
 
-		    	$timeFromUser = $timedate->fromUser($current_user->pwd_last_changed);
+                $timeFromUser = $timedate->fromUser($current_user->pwd_last_changed);
 
-		    	if ($timeFromUser === null) {
-		    	    return false;
-		    	}
+                if ($timeFromUser === null) {
+                    return false;
+                }
 
-		        $expiretime = $timeFromUser->get("+{$expireday} days")->ts;
+                $expiretime = $timeFromUser->get("+{$expireday} days")->ts;
 
-			    if ($timedate->getNow()->ts < $expiretime) {
-			        return false;
-			    } else {
-			        $_SESSION['expiration_type']= $mod_strings['LBL_PASSWORD_EXPIRATION_TIME'];
-			        return true;
-			    }
-				break;
+                if ($timedate->getNow()->ts < $expiretime) {
+                    return false;
+                }
+                    $_SESSION['expiration_type']= $mod_strings['LBL_PASSWORD_EXPIRATION_TIME'];
+                    return true;
+                
+                break;
 
 
-		    case '2':
-		    	$login=$current_user->getPreference('loginexpiration');
-		    	$current_user->setPreference('loginexpiration', $login+1);
-		        $current_user->save();
-		        if ($login+1 >= $res[$type.'expirationlogin']) {
-		            $_SESSION['expiration_type']= $mod_strings['LBL_PASSWORD_EXPIRATION_LOGIN'];
-		            return true;
-		        } else {
-		            return false;
-		        }
-		    	break;
+            case '2':
+                $login=$current_user->getPreference('loginexpiration');
+                $current_user->setPreference('loginexpiration', $login+1);
+                $current_user->save();
+                if ($login+1 >= $res[$type.'expirationlogin']) {
+                    $_SESSION['expiration_type']= $mod_strings['LBL_PASSWORD_EXPIRATION_LOGIN'];
+                    return true;
+                }
+                    return false;
+                
+                break;
 
-		    case '0':
-		        return false;
-		   	 	break;
-		    }
+            case '0':
+                return false;
+                break;
+            }
         }
     }
 }

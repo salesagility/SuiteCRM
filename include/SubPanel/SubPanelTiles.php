@@ -138,33 +138,33 @@ class SubPanelTiles
             $tabs = $objSubPanelTilesTabs->getTabs($tabs, $showTabs, $selectedGroup);
             unset($objSubPanelTilesTabs);
             return $tabs;
-        } else {
-            // see if user current user has custom subpanel layout
-            $objSubPanelTilesTabs = new SubPanelTilesTabs($this->focus);
-            $tabs = $objSubPanelTilesTabs->applyUserCustomLayoutToTabs($tabs);
-
-            /* Check if the preference is set now,
-             * because there's no point in executing this code if
-             * we aren't going to render anything.
-             */
-            $subpanelLinksPref = $current_user->getPreference('subpanel_links');
-            if (!isset($subpanelLinksPref)) {
-                $subpanelLinksPref = $GLOBALS['sugar_config']['default_subpanel_links'];
-            }
-
-            if ($showTabs && $subpanelLinksPref) {
-                require_once('include/SubPanel/SugarTab.php');
-                $sugarTab = new SugarTab();
-
-                $displayTabs = array();
-
-                foreach ($tabs as $tab) {
-                    $displayTabs []= array('key'=>$tab, 'label'=>translate($this->subpanel_definitions->layout_defs['subpanel_setup'][$tab]['title_key']));
-                }
-                $sugarTab->setup(array(), array(), $displayTabs);
-                $sugarTab->display();
-            }
         }
+        // see if user current user has custom subpanel layout
+        $objSubPanelTilesTabs = new SubPanelTilesTabs($this->focus);
+        $tabs = $objSubPanelTilesTabs->applyUserCustomLayoutToTabs($tabs);
+
+        /* Check if the preference is set now,
+         * because there's no point in executing this code if
+         * we aren't going to render anything.
+         */
+        $subpanelLinksPref = $current_user->getPreference('subpanel_links');
+        if (!isset($subpanelLinksPref)) {
+            $subpanelLinksPref = $GLOBALS['sugar_config']['default_subpanel_links'];
+        }
+
+        if ($showTabs && $subpanelLinksPref) {
+            require_once('include/SubPanel/SugarTab.php');
+            $sugarTab = new SugarTab();
+
+            $displayTabs = array();
+
+            foreach ($tabs as $tab) {
+                $displayTabs []= array('key'=>$tab, 'label'=>translate($this->subpanel_definitions->layout_defs['subpanel_setup'][$tab]['title_key']));
+            }
+            $sugarTab->setup(array(), array(), $displayTabs);
+            $sugarTab->display();
+        }
+        
         return $tabs;
     }
     public function display($showContainer = true, $forceTabless = false)
@@ -211,8 +211,8 @@ class SubPanelTiles
 
             if (!empty($usersLayout)) {
                 $availableTabs = $tabs ;
-                $tabs = array_intersect ($usersLayout, $availableTabs) ; // remove any tabs that have been removed since the user's layout was saved
-                foreach (array_diff ($availableTabs, $usersLayout) as $tab) {
+                $tabs = array_intersect($usersLayout, $availableTabs) ; // remove any tabs that have been removed since the user's layout was saved
+                foreach (array_diff($availableTabs, $usersLayout) as $tab) {
                     $tabs [] = $tab;
                 }
             }
@@ -347,7 +347,9 @@ class SubPanelTiles
                 $arr = array();
                 // TODO: Remove x-template:
                 $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView(
-                    'include/SubPanel/tpls/SubPanelDynamic.tpl', $arr);
+                    'include/SubPanel/tpls/SubPanelDynamic.tpl',
+                    $arr
+                );
 
                 // Get subpanel buttons
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel, $subpanel_object->subpanel_query);

@@ -74,7 +74,8 @@ class ImportViewStep2 extends ImportView
             (!empty($_REQUEST['custom_enclosure']) && $_REQUEST['custom_enclosure'] != 'other'
                 ? $_REQUEST['custom_enclosure'] :
                 (!empty($_REQUEST['custom_enclosure_other'])
-                    ? $_REQUEST['custom_enclosure_other'] : ""))));
+                    ? $_REQUEST['custom_enclosure_other'] : ""))
+        ));
 
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
         $this->ss->assign("HEADER", $app_strings['LBL_IMPORT']." ". $mod_strings['LBL_MODULE_NAME']);
@@ -239,5 +240,3 @@ if(deselectEl)
 EOJAVASCRIPT;
     }
 }
-
-

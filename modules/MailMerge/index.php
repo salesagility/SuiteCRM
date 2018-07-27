@@ -56,4 +56,4 @@ if (isset($_REQUEST['step'])) {
 } else {
     $step = '1';
 }
-include ('modules/MailMerge/Step'. intval($step). '.php');
+include('modules/MailMerge/Step'. intval($step). '.php');

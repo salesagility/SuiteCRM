@@ -206,9 +206,8 @@ eoq;
         foreach ($errors as $error) {
             if (is_array($error)) { // manual diff files
                 continue;
-            } else {
-                $out .= "{$error}<br />";
             }
+            $out .= "{$error}<br />";
         }
         $out .= "</span><br />";
     }
@@ -234,36 +233,36 @@ eoq;
     $_SESSION['target_db_version']  = $manifest['version'];
     $_SESSION['upgrade_from_flavor']  = $manifest['name'];
     // aw: BUG 10161: check flavor conversion sql files
-	$sqlFile = ''; // cn: bug
-	if (version_compare($sugar_db_version, $manifest['version'], '=')) {
-	    $type = $db->getScriptName();
+    $sqlFile = ''; // cn: bug
+    if (version_compare($sugar_db_version, $manifest['version'], '=')) {
+        $type = $db->getScriptName();
 
-	    switch ($manifest['name']) {
-			case 'SugarCE to SugarPro':
-				$sqlFile = $origVersion . '_ce_to_pro_' . $type;
-				break;
-			case 'SugarCE to SugarEnt':
-				$sqlFile = $origVersion . '_ce_to_ent_' . $type;
-				break;
-			case 'SugarCE to SugarCorp':
-				$sqlFile = $origVersion . '_ce_to_corp_' . $db->dbType;
-				break;
-			case 'SugarCE to SugarUlt':
-				$sqlFile = $origVersion . '_ce_to_ult_' . $db->dbType;
-				break;
-			case 'SugarPro to SugarEnt':
-				$sqlFile = $origVersion . '_pro_to_ent_' . $type;
-				break;
-			default:
-				break;
-		}
-	} else {
-	    $type = $db->dbType;
-	    if ($type == 'oci8') {
-	        $type = 'oracle';
-	    }
-	    $sqlFile = $origVersion . '_to_' . $destVersion . '_' . $type;
-	}
+        switch ($manifest['name']) {
+            case 'SugarCE to SugarPro':
+                $sqlFile = $origVersion . '_ce_to_pro_' . $type;
+                break;
+            case 'SugarCE to SugarEnt':
+                $sqlFile = $origVersion . '_ce_to_ent_' . $type;
+                break;
+            case 'SugarCE to SugarCorp':
+                $sqlFile = $origVersion . '_ce_to_corp_' . $db->dbType;
+                break;
+            case 'SugarCE to SugarUlt':
+                $sqlFile = $origVersion . '_ce_to_ult_' . $db->dbType;
+                break;
+            case 'SugarPro to SugarEnt':
+                $sqlFile = $origVersion . '_pro_to_ent_' . $type;
+                break;
+            default:
+                break;
+        }
+    } else {
+        $type = $db->dbType;
+        if ($type == 'oci8') {
+            $type = 'oracle';
+        }
+        $sqlFile = $origVersion . '_to_' . $destVersion . '_' . $type;
+    }
 
     $newTables = array();
 

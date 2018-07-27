@@ -145,7 +145,7 @@
          $SkipX		= isset($Format["SkipX"]) ? $Format["SkipX"] : OUT_OF_SIGHT;
          $SkipY		= isset($Format["SkipY"]) ? $Format["SkipY"] : OUT_OF_SIGHT;
 
-         /* Calling the ImageFilledPolygon() function over the $Points array will round it */ 	
+         /* Calling the ImageFilledPolygon() function over the $Points array will round it */
          $Backup = $Points;
 
          if ($Surrounding != null) {
@@ -801,7 +801,7 @@
                  $AlphaA = $Alpha * (.5-($X2 - floor($X2)));
                  $Color = $this->allocateColor($this->Picture, $R, $G, $B, $AlphaA);
                  imageline($this->Picture, floor($X2)+1, ceil($Y1), floor($X2)+1, floor($Y2), $Color);
-             } 
+             }
 
              if ($Y2 > floor($Y2)) {
                  $AlphaA = $Alpha * (.5-($Y2 - floor($Y2)));
@@ -955,7 +955,7 @@
                  $Q[$ID]["Y"] = $Q[$ID]["Y"] + $P[$j]["Y"] * $C[$j];
              }
              $ID++;
-         }        
+         }
          $Q[$ID]["X"] = $X2;
          $Q[$ID]["Y"] = $Y2;
 
@@ -1045,7 +1045,7 @@
              return(0);
          }
 
-         $Distance = sqrt(($X2-$X1)*($X2-$X1)+($Y2-$Y1)*($Y2-$Y1));  
+         $Distance = sqrt(($X2-$X1)*($X2-$X1)+($Y2-$Y1)*($Y2-$Y1));
          if ($Distance == 0) {
              return(-1);
          }
@@ -1053,10 +1053,10 @@
          /* Derivative algorithm for overweighted lines, re-route to polygons primitives */
          if ($Weight != null) {
              $Angle        = $this->getAngle($X1, $Y1, $X2, $Y2);
-             $PolySettings = array ("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha,"BorderAlpha"=>$Alpha);
+             $PolySettings = array("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha,"BorderAlpha"=>$Alpha);
 
              if ($Ticks == null) {
-                 $Points   = ""; 
+                 $Points   = "";
                  $Points[] = cos(deg2rad($Angle-90)) * $Weight + $X1;
                  $Points[] = sin(deg2rad($Angle-90)) * $Weight + $Y1;
                  $Points[] = cos(deg2rad($Angle+90)) * $Weight + $X1;
@@ -1074,7 +1074,7 @@
                      $Xb = (($X2-$X1)/$Distance) * ($i+$Ticks) + $X1;
                      $Yb = (($Y2-$Y1)/$Distance) * ($i+$Ticks) + $Y1;
 
-                     $Points   = ""; 
+                     $Points   = "";
                      $Points[] = cos(deg2rad($Angle-90)) * $Weight + $Xa;
                      $Points[] = sin(deg2rad($Angle-90)) * $Weight + $Ya;
                      $Points[] = cos(deg2rad($Angle+90)) * $Weight + $Xa;
@@ -2222,7 +2222,7 @@
                      $Picture = $Serie["Picture"];
                      list($PicWidth, $PicHeight) = $this->getPicInfo($Picture);
                      $PicX = $X+$IconAreaWidth/2;
-                     $PicY = $Y+$IconAreaHeight/2; 
+                     $PicY = $Y+$IconAreaHeight/2;
 
                      $this->drawFromPNG($PicX-$PicWidth/2, $PicY-$PicHeight/2, $Picture);
                  } else {
@@ -2619,7 +2619,7 @@
                                      $Value = "";
                                  }
                              } else {
-                                 if (isset($Parameters["ScaleMin"]) && isset ($Parameters["RowHeight"])) {
+                                 if (isset($Parameters["ScaleMin"]) && isset($Parameters["RowHeight"])) {
                                      $Value = $this->scaleFormat($Parameters["ScaleMin"] + $Parameters["RowHeight"]*$i, $Data["XAxisDisplay"], $Data["XAxisFormat"], $Data["XAxisUnit"]);
                                  } else {
                                      $Value = $i;
@@ -2719,7 +2719,7 @@
                                      $Value = "";
                                  }
                              } else {
-                                 if (isset($Parameters["ScaleMin"]) && isset ($Parameters["RowHeight"])) {
+                                 if (isset($Parameters["ScaleMin"]) && isset($Parameters["RowHeight"])) {
                                      $Value = $this->scaleFormat($Parameters["ScaleMin"] + $Parameters["RowHeight"]*$i, $Data["XAxisDisplay"], $Data["XAxisFormat"], $Data["XAxisUnit"]);
                                  } else {
                                      $Value = $i;
@@ -2821,7 +2821,7 @@
                                      $Value = "";
                                  }
                              } else {
-                                 if (isset($Parameters["ScaleMin"]) && isset ($Parameters["RowHeight"])) {
+                                 if (isset($Parameters["ScaleMin"]) && isset($Parameters["RowHeight"])) {
                                      $Value = $this->scaleFormat($Parameters["ScaleMin"] + $Parameters["RowHeight"]*$i, $Data["XAxisDisplay"], $Data["XAxisFormat"], $Data["XAxisUnit"]);
                                  } else {
                                      $Value = $i;
@@ -2920,7 +2920,7 @@
                                      $Value = "";
                                  }
                              } else {
-                                 if (isset($Parameters["ScaleMin"]) && isset ($Parameters["RowHeight"])) {
+                                 if (isset($Parameters["ScaleMin"]) && isset($Parameters["RowHeight"])) {
                                      $Value = $this->scaleFormat($Parameters["ScaleMin"] + $Parameters["RowHeight"]*$i, $Data["XAxisDisplay"], $Data["XAxisFormat"], $Data["XAxisUnit"]);
                                  } else {
                                      $Value = $i;
@@ -3992,9 +3992,8 @@
 
          if (count($Result) == 1) {
              return($Result[0]);
-         } else {
-             return($Result);
          }
+         return($Result);
      }
 
      /* Format the axis values */
@@ -5634,7 +5633,7 @@
                      }
 
                      $Areas = "";
-                     $AreaID = 0; 
+                     $AreaID = 0;
                      $Areas[$AreaID][] = $this->GraphAreaX1 + $XMargin;
                      if ($AroundZero) {
                          $Areas[$AreaID][] = $YZero;
@@ -5717,7 +5716,7 @@
                                      $ShadowArea[$Key][] = $Value + $this->ShadowY;
                                  }
                              }
-                         }              
+                         }
 
                          foreach ($ShadowArea as $Key => $Points) {
                              $this->drawPolygonChart($Points, array("R"=>$this->ShadowR,"G"=>$this->ShadowG,"B"=>$this->ShadowB,"Alpha"=>$this->Shadowa));
@@ -5739,7 +5738,7 @@
                      }
 
                      $Areas = "";
-                     $AreaID = 0; 
+                     $AreaID = 0;
                      if ($AroundZero) {
                          $Areas[$AreaID][] = $YZero;
                      } else {
@@ -5824,7 +5823,7 @@
                                      $ShadowArea[$Key][] = $Value + $this->ShadowY;
                                  }
                              }
-                         }              
+                         }
 
                          foreach ($ShadowArea as $Key => $Points) {
                              $this->drawPolygonChart($Points, array("R"=>$this->ShadowR,"G"=>$this->ShadowG,"B"=>$this->ShadowB,"Alpha"=>$this->Shadowa));
@@ -7967,7 +7966,7 @@
 
          $MinY = floor($MinY);
          $MaxY = floor($MaxY);
-         $YStep = 1; 
+         $YStep = 1;
 
          if (!$NoFill) {
              //if ( $DebugLine ) { $MinY = $DebugLine; $MaxY = $DebugLine; }

@@ -54,17 +54,17 @@ define('DEFAULT_PORT', 389);
 class LDAPAuthenticateUser extends SugarAuthenticateUser
 {
 
-	/**
-	 * Does the actual authentication of the user and returns an id that will be used
-	 * to load the current user (loadUserOnSession)
-	 *
-	 * @param string $name
-	 * @param string $password
-	 * @param boolean $fallback
-	 * @return string id - used for loading the user
-	 *
-	 * Contributions by Erik Mitchell erikm@logicpd.com
-	 */
+    /**
+     * Does the actual authentication of the user and returns an id that will be used
+     * to load the current user (loadUserOnSession)
+     *
+     * @param string $name
+     * @param string $password
+     * @param boolean $fallback
+     * @return string id - used for loading the user
+     *
+     * Contributions by Erik Mitchell erikm@logicpd.com
+     */
     public function authenticateUser($name, $password, $fallback=false)
     {
         $server = $GLOBALS['ldap_config']->settings['ldap_hostname'];
@@ -90,7 +90,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         $GLOBALS['log']->debug("ldapauth.ldap_authenticate_user: ldap_rdn_lookup returned bind_user=" . $bind_user);
         if (!$bind_user) {
             $GLOBALS['log']->fatal("SECURITY: ldapauth: failed LDAP bind (login) by " .
-									$name . ", could not construct bind_user");
+                                    $name . ", could not construct bind_user");
             return '';
         }
 
@@ -170,14 +170,14 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
                     $GLOBALS['log']->fatal("ldapauth: $group_user_attr not found for user $name cannot authenticate against an LDAP group");
                     ldap_close($ldapconn);
                     return '';
-                } else {
-                    $user_uid = $info[0][$group_user_attr];
-                    if (is_array($user_uid)) {
-                        $user_uid = $user_uid[0];
-                    }
-                    // If user_uid contains special characters (for LDAP) we need to escape them !
-                    $user_uid = str_replace(array("(", ")"), array("\(", "\)"), $user_uid);
                 }
+                $user_uid = $info[0][$group_user_attr];
+                if (is_array($user_uid)) {
+                    $user_uid = $user_uid[0];
+                }
+                // If user_uid contains special characters (for LDAP) we need to escape them !
+                $user_uid = str_replace(array("(", ")"), array("\(", "\)"), $user_uid);
+                
 
                 // build search query and determine if we are searching for a bare id or the full dn path
                 $group_name = $GLOBALS['ldap_config']->settings['ldap_group_name'] . ","
@@ -193,7 +193,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
                 }
                 $GLOBALS['log']->debug("ldapauth: Searching for user: " . $user_search);
 
-                //user is not a member of the group if the count is zero get the logs and return no id so it fails login        
+                //user is not a member of the group if the count is zero get the logs and return no id so it fails login
                 if (!isset($user_uid)
                     || ldap_count_entries($ldapconn, ldap_search($ldapconn, $group_name, $user_search)) ==  0) {
                     $GLOBALS['log']->fatal("ldapauth: User ($name) is not a member of the LDAP group");
@@ -218,9 +218,8 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
             if ($row = DBManagerFactory::getInstance()->fetchByAssoc($dbresult)) {
                 if ($row['status'] != 'Inactive') {
                     return $row['id'];
-                } else {
-                    return '';
                 }
+                return '';
             }
 
             //create a new user and return the user
@@ -228,12 +227,11 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
                 return $this->createUser($name);
             }
             return '';
-        } else {
-            $GLOBALS['log']->fatal("SECURITY: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
-            $GLOBALS['log']->fatal("ldapauth: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
-            ldap_close($ldapconn);
-            return '';
         }
+        $GLOBALS['log']->fatal("SECURITY: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
+        $GLOBALS['log']->fatal("ldapauth: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
+        ldap_close($ldapconn);
+        return '';
     }
 
     /**
@@ -433,8 +431,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
             return $found_bind_user;
         } elseif ($user_attr == $bind_attr) {
             return $user_name;
-        } else {
-            return false;
         }
+        return false;
     }
 }

@@ -55,7 +55,7 @@ $subpanel_layout = array(
             'width' => '20%',
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'campaign_id',
-            'target_module' => 'Campaigns',			
+            'target_module' => 'Campaigns',
         ),
         'activity_type' => array(
             'vname' => 'LBL_ACTIVITY_TYPE',
@@ -68,12 +68,12 @@ $subpanel_layout = array(
         'related_name' => array(
             'widget_class' => 'SubPanelDetailViewLink',
             'target_record_key' => 'related_id',
-            'target_module_key' => 'related_type',	
+            'target_module_key' => 'related_type',
             'parent_id' =>'target_id',
-            'parent_module'=>'target_type',         
+            'parent_module'=>'target_type',
             'vname' => 'LBL_RELATED',
             'width' => '60%',
-            'sortable'=>false,			
+            'sortable'=>false,
         ),
         'related_id'=>array(
             'usage' =>'query_only',
@@ -86,6 +86,6 @@ $subpanel_layout = array(
         ),
         'target_type'=>array(
             'usage' =>'query_only',
-        ),		
+        ),
     ),
 );

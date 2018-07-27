@@ -66,5 +66,3 @@ if (!defined('sugarEntry') || !sugarEntry) {
 if (file_exists("custom/application/Ext/Extensions/extensions.ext.php")) {
     include("custom/application/Ext/Extensions/extensions.ext.php");
 }
-
-

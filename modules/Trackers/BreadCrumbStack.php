@@ -45,10 +45,10 @@ class BreadCrumbStack
 {
 
    /**
-	* Maintain an ordered list of items in the breadcrumbs
-	*
-	* @var unknown_type
-	*/
+    * Maintain an ordered list of items in the breadcrumbs
+    *
+    * @var unknown_type
+    */
     private $stack;
     /**
      * Maps an item_id to the position index in stack
@@ -127,9 +127,8 @@ class BreadCrumbStack
     {
         if (!empty($this->stackMap)) {
             return array_key_exists($item_id, $this->stackMap);
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

@@ -77,7 +77,7 @@ class ViewQuickcreate extends ViewAjax
     {
         if (!empty($_REQUEST['source_module']) && $_REQUEST['source_module'] != 'undefined' && !empty($_REQUEST['record'])) {
             $this->bean = loadBean($_REQUEST['source_module']);
-            if ($this->bean instanceof SugarBean 
+            if ($this->bean instanceof SugarBean
                     && !in_array($this->bean->object_name, array('EmailMan'))) {
                 $this->bean->retrieve($_REQUEST['record']);
                 if (!empty($this->bean->id)) {
@@ -96,7 +96,7 @@ class ViewQuickcreate extends ViewAjax
                     $_REQUEST['return_module'] = $this->bean->module_dir;
                 }
                 
-                //Now preload any related fields 
+                //Now preload any related fields
                 if (isset($_REQUEST['module'])) {
                     $target_bean = loadBean($_REQUEST['module']);
                     foreach ($target_bean->field_defs as $fields) {
@@ -114,7 +114,7 @@ class ViewQuickcreate extends ViewAjax
             }
             $this->_isDCForm = true;
         }
-    }    
+    }
     
     /**
      * @see SugarView::display()
@@ -159,7 +159,7 @@ class ViewQuickcreate extends ViewAjax
         loadParentView('edit');
 
         if (file_exists('modules/'.$module.'/views/view.edit.php')) {
-            include('modules/'.$module.'/views/view.edit.php'); 
+            include('modules/'.$module.'/views/view.edit.php');
 
             $c = $module . 'ViewEdit';
             

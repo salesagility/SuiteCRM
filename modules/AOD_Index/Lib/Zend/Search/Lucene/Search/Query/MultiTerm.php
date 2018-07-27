@@ -179,22 +179,23 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
 
         if ($allQualified) {
             return $this;
-        } else {
-            /** transform multiterm query to boolean and apply rewrite() method to subqueries. */
-            require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
-            $query = new Zend_Search_Lucene_Search_Query_Boolean();
-            $query->setBoost($this->getBoost());
-
-            require_once 'Zend/Search/Lucene/Search/Query/Term.php';
-            foreach ($this->_terms as $termId => $term) {
-                $subquery = new Zend_Search_Lucene_Search_Query_Term($term);
-
-                $query->addSubquery($subquery->rewrite($index),
-                                    ($this->_signs === null)?  true : $this->_signs[$termId]);
-            }
-
-            return $query;
         }
+        /** transform multiterm query to boolean and apply rewrite() method to subqueries. */
+        require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
+        $query = new Zend_Search_Lucene_Search_Query_Boolean();
+        $query->setBoost($this->getBoost());
+
+        require_once 'Zend/Search/Lucene/Search/Query/Term.php';
+        foreach ($this->_terms as $termId => $term) {
+            $subquery = new Zend_Search_Lucene_Search_Query_Term($term);
+
+            $query->addSubquery(
+                    $subquery->rewrite($index),
+                                    ($this->_signs === null)?  true : $this->_signs[$termId]
+                );
+        }
+
+        return $query;
     }
 
     /**
@@ -214,12 +215,11 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
                     // Term is required
                     require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
                     return new Zend_Search_Lucene_Search_Query_Empty();
-                } else {
-                    // Term is optional or prohibited
-                    // Remove it from terms and signs list
-                    unset($terms[$id]);
-                    unset($signs[$id]);
                 }
+                // Term is optional or prohibited
+                // Remove it from terms and signs list
+                unset($terms[$id]);
+                unset($signs[$id]);
             }
         }
 
@@ -336,9 +336,15 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             $docFreqs[] = $reader->docFreq($term);
             $ids[]      = $id; // Used to keep original order for terms with the same selectivity and omit terms comparison
         }
-        array_multisort($docFreqs, SORT_ASC, SORT_NUMERIC,
-                        $ids,      SORT_ASC, SORT_NUMERIC,
-                        $this->_terms);
+        array_multisort(
+            $docFreqs,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $ids,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $this->_terms
+        );
 
         require_once 'Zend/Search/Lucene/Index/DocsFilter.php';
         $docsFilter = new Zend_Search_Lucene_Index_DocsFilter();
@@ -395,9 +401,15 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         }
 
         // sort resvectors in order of subquery cardinality increasing
-        array_multisort($requiredVectorsSizes, SORT_ASC, SORT_NUMERIC,
-                        $requiredVectorsIds,   SORT_ASC, SORT_NUMERIC,
-                        $requiredVectors);
+        array_multisort(
+            $requiredVectorsSizes,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $requiredVectorsIds,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $requiredVectors
+        );
 
         $required = null;
         foreach ($requiredVectors as $nextResVector) {
@@ -467,8 +479,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
     public function _conjunctionScore($docId, Zend_Search_Lucene_Interface $reader)
     {
         if ($this->_coord === null) {
-            $this->_coord = $reader->getSimilarity()->coord(count($this->_terms),
-                                                            count($this->_terms));
+            $this->_coord = $reader->getSimilarity()->coord(
+                count($this->_terms),
+                                                            count($this->_terms)
+            );
         }
 
         $score = 0.0;
@@ -577,12 +591,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         if (isset($this->_resVector[$docId])) {
             if ($this->_signs === null) {
                 return $this->_conjunctionScore($docId, $reader);
-            } else {
-                return $this->_nonConjunctionScore($docId, $reader);
             }
-        } else {
-            return 0;
+            return $this->_nonConjunctionScore($docId, $reader);
         }
+        return 0;
     }
 
     /**
@@ -666,4 +678,3 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         return $query;
     }
 }
-

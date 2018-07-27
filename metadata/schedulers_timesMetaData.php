@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $dictionary['SchedulersTimes'] = array('table' => 'schedulers_times',
-    'fields' => array (
-        'id' => array (
+    'fields' => array(
+        'id' => array(
             'name' => 'id',
             'vname' => 'LBL_NAME',
             'type' => 'id',
@@ -51,7 +51,7 @@ $dictionary['SchedulersTimes'] = array('table' => 'schedulers_times',
             'required' => true,
             'reportable'=>false,
         ),
-        'deleted' => array (
+        'deleted' => array(
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
@@ -59,19 +59,19 @@ $dictionary['SchedulersTimes'] = array('table' => 'schedulers_times',
             'default' => '0',
             'reportable'=>false,
         ),
-        'date_entered' => array (
+        'date_entered' => array(
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
         ),
-        'date_modified' => array (
+        'date_modified' => array(
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
         ),
-        'scheduler_id' => array (
+        'scheduler_id' => array(
             'name' => 'scheduler_id',
             'vname' => 'LBL_SCHEDULER_ID',
             'type' => 'id',
@@ -80,14 +80,14 @@ $dictionary['SchedulersTimes'] = array('table' => 'schedulers_times',
             'required' => true,
             'reportable' => false,
         ),
-        'execute_time' => array (
+        'execute_time' => array(
             'name' => 'execute_time',
             'vname' => 'LBL_EXECUTE_TIME',
             'type' => 'datetime',
             'required' => true,
             'reportable' => true,
         ),
-        'status' => array (
+        'status' => array(
             'name' => 'status',
             'vname' => 'LBL_STATUS',
             'type' => 'varchar',
@@ -97,7 +97,7 @@ $dictionary['SchedulersTimes'] = array('table' => 'schedulers_times',
             'default' => 'ready',
         ),
     ),
-    'indices' => array (
+    'indices' => array(
         array(
             'name' =>'schedulers_timespk',
             'type' =>'primary',

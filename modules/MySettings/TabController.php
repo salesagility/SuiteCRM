@@ -56,9 +56,8 @@ class TabController
         $administration->retrieveSettings('MySettings');
         if (isset($administration->settings) && isset($administration->settings['MySettings_tab'])) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function get_system_tabs()
@@ -84,7 +83,7 @@ class TabController
                             unset($tabs[$id]);
                         }
                     }
-                    ACLController :: filterModuleList($tabs); 
+                    ACLController :: filterModuleList($tabs);
                     $tabs = $this->get_key_array($tabs);
                     $system_tabs_result = $tabs;
                 } else {
@@ -115,7 +114,7 @@ class TabController
             } elseif (isset($tabs['iFrames'])) {
                 unset($tabs['iFrames']);
             }
-        } 
+        }
 
         return array($tabs,$unsetTabs);
     }
@@ -188,13 +187,11 @@ class TabController
                 $tabs['Home'] =  'Home';
             }
             return $tabs;
-        } else {
-            if ($type == 'display') {
-                return $system_tabs;
-            } else {
-                return array();
-            }
         }
+        if ($type == 'display') {
+            return $system_tabs;
+        }
+        return array();
     }
 
     public function get_unset_tabs($user)
@@ -223,9 +220,8 @@ class TabController
                 }
             }
             return $tabs;
-        } else {
-            return $system_tabs;
         }
+        return $system_tabs;
     }
 
     public function get_old_tabs($user)

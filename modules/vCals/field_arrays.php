@@ -47,13 +47,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['vcal'] = array ('column_fields' =>array(
-		"id"
-		,"user_id"
-		,"date_modified"
-		,"type"
-		,"content"
-		,"source"
-		,"deleted"
-		),
+$fields_array['vcal'] = array('column_fields' =>array(
+        "id"
+        ,"user_id"
+        ,"date_modified"
+        ,"type"
+        ,"content"
+        ,"source"
+        ,"deleted"
+        ),
 );

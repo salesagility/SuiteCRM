@@ -143,14 +143,14 @@ while ($mbox_row = $focus->db->fetchByAssoc($mbox_res)) {
     $mbox[] = $mbox_row;
 }
 $mbox_msg = ' ';
-$need_mbox = '';  
+$need_mbox = '';
 
 $mboxTable = "<table class='list view' width='100%' border='0' cellspacing='1' cellpadding='1'>";
 if (isset($mbox) && count($mbox)>0) {
     $mboxTable .= "<tr><td colspan='5'><b>" .count($mbox) ." ". $mod_strings['LBL_MAILBOX_CHECK_WIZ_GOOD']." </b>.</td></tr>";
     $mboxTable .= "<tr class='listViewHRS1'><td width='20%'><b>".$mod_strings['LBL_MAILBOX_NAME']."</b></td>"
                    .  " <td width='20%'><b>".$mod_strings['LBL_LOGIN']."</b></td>"
-                   .  " <td width='20%'><b>".$mod_strings['LBL_MAILBOX']."</b></td>" 
+                   .  " <td width='20%'><b>".$mod_strings['LBL_MAILBOX']."</b></td>"
                    .  " <td width='20%'><b>".$mod_strings['LBL_SERVER_URL']."</b></td>"
                    .  " <td width='20%'><b>".$mod_strings['LBL_LIST_STATUS']."</b></td></tr>";
     $colorclass=' ';
@@ -159,7 +159,7 @@ if (isset($mbox) && count($mbox)>0) {
             $colorclass= "class='oddListRowS1'";
         } else {
             $colorclass= "class='evenListRowS1'";
-        }           
+        }
         
         $mboxTable .= "<tr $colorclass>";
         $mboxTable .= "<td>".$details['name']."</td>";
@@ -171,10 +171,10 @@ if (isset($mbox) && count($mbox)>0) {
 } else {
     $need_mbox = 'checked';
     $mboxTable .= "<tr><td colspan='5'><b>".$mod_strings['LBL_MAILBOX_CHECK_WIZ_BAD']." </b>.</td></tr>";
-}        
+}
 $mboxTable .= "</table>";
 $ss->assign("MAILBOXES_DETECTED_MESSAGE", $mboxTable);
-$ss->assign("MBOX_NEEDED", $need_mbox);          
+$ss->assign("MBOX_NEEDED", $need_mbox);
 $ss->assign('ROLLOVER', $email->rolloverStyle);
 if (!function_exists('imap_open')) {
     $ss->assign('IE_DISABLED', 'DISABLED');
@@ -183,7 +183,7 @@ if (!function_exists('imap_open')) {
 
 /**************************** WIZARD UI DIV Stuff *******************/
   
-//  this is the wizard control script that resides in page    
+//  this is the wizard control script that resides in page
  $divScript = <<<EOQ
  <script type="text/javascript" language="javascript">  
 

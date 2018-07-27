@@ -139,4 +139,3 @@ class TemplateRadioEnum extends TemplateEnum
         return '';
     }
 }
-

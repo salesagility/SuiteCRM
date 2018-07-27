@@ -215,7 +215,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $scheduler = new Scheduler();
 
-        //execute the method and capture the echo output 
+        //execute the method and capture the echo output
         ob_start();
 
         $scheduler->displayCronInstructions();

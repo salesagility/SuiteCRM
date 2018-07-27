@@ -54,8 +54,8 @@ class EAPMViewDetail extends ViewDetail
     }
 
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
@@ -95,8 +95,8 @@ class EAPMViewDetail extends ViewDetail
     }
 
     /**
-	 * @see SugarView::getModuleTitleIconPath()
-	 */
+     * @see SugarView::getModuleTitleIconPath()
+     */
     protected function getModuleTitleIconPath($module)
     {
         return parent::getModuleTitleIconPath('Users');

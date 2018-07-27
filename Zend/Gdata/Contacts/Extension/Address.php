@@ -44,7 +44,6 @@ require_once 'Zend/Gdata/Extension.php';
 
 class Zend_Gdata_Contacts_Extension_Address extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'gd';
     protected $_rootElement = 'structuredPostalAddress';
     protected $_isPrimary = false;
@@ -64,8 +63,7 @@ class Zend_Gdata_Contacts_Extension_Address extends Zend_Gdata_Extension
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
 
-        switch ($absoluteNodeName)
-        {
+        switch ($absoluteNodeName) {
             default:
                 parent::takeChildFromDOM($child);
                 break;
@@ -82,10 +80,11 @@ class Zend_Gdata_Contacts_Extension_Address extends Zend_Gdata_Extension
     {
         switch ($attribute->localName) {
         case 'primary':
-            if(strtolower($attribute->nodeValue) == 'true')
-                    $this->_isPrimary = true;
-                else
-                    $this->_isPrimary = false;
+            if (strtolower($attribute->nodeValue) == 'true') {
+                $this->_isPrimary = true;
+            } else {
+                $this->_isPrimary = false;
+            }
             break;
 
         case 'rel':
@@ -99,10 +98,11 @@ class Zend_Gdata_Contacts_Extension_Address extends Zend_Gdata_Extension
 
     protected function getAddressType()
     {
-        if($this->_addressType == null)
+        if ($this->_addressType == null) {
             return '';
-        else
+        } else {
             return str_replace($this->lookupNamespace('gd') . '#', '', $this->_addressType);
+        }
     }
 
     public function toArray()
@@ -111,10 +111,10 @@ class Zend_Gdata_Contacts_Extension_Address extends Zend_Gdata_Extension
 
         $keyPrefix= $this->_transformMapping[strtolower($this->getAddressType())];
 
-        foreach($this->_extensionElements as $elem)
-        {
-            if( $elem->_rootElement  == 'formattedAddress')
+        foreach ($this->_extensionElements as $elem) {
+            if ($elem->_rootElement  == 'formattedAddress') {
                 continue;
+            }
             $elemKey = $elem->_rootElement == 'region' ? 'state' : $elem->_rootElement;
             $elemKey = "$keyPrefix" . "_address_" . "$elemKey";
             $results[$elemKey] = $elem->getText();
@@ -122,7 +122,4 @@ class Zend_Gdata_Contacts_Extension_Address extends Zend_Gdata_Extension
 
         return $results;
     }
-
 }
-
-

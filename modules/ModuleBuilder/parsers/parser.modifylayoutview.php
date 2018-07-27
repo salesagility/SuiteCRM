@@ -41,7 +41,7 @@ if (! defined('sugarEntry') || ! sugarEntry) {
  ********************************************************************************/
 
 
-require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
+require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 
 class ParserModifyLayoutView extends ModuleBuilderParser
 {
@@ -97,7 +97,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
 
         // get the fieldDefs from the bean
         $class = $GLOBALS ['beanList'] [$module];
-        require_once ($GLOBALS ['beanFiles'] [$class]);
+        require_once($GLOBALS ['beanFiles'] [$class]);
         $bean = new $class();
         $this->_fieldDefs = & $bean->field_defs;
 
@@ -409,7 +409,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         $origFieldDefs = array();
         $GLOBALS['log']->debug("Original File = ".$this->_originalFile);
         if (file_exists($this->_originalFile)) {
-            include ($this->_originalFile);
+            include($this->_originalFile);
             $origdefs = $viewdefs [$this->_module] [$this->_sourceView] ['panels'];
 //          $GLOBALS['log']->debug($origdefs);
             // Fix for a flexibility in the format of the panel sections - if only one panel, then we don't have a panel level defined, it goes straight into rows

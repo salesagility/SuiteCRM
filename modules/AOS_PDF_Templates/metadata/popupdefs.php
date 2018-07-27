@@ -8,7 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -32,8 +32,8 @@ $_module_name = 'aos_pdf_templates';
 $popupMeta = array('moduleMain' => $module_name,
                         'varName' => $module_name,
                         'orderBy' => $_module_name.'.name',
-                        'whereClauses' => 
-                            array('name' => $_module_name . '.name', 
+                        'whereClauses' =>
+                            array('name' => $_module_name . '.name',
                                 ),
                             'searchInputs'=> array($_module_name. '_number', 'name', 'priority','status'),
                             

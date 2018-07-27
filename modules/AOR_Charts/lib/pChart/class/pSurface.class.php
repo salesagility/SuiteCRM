@@ -44,7 +44,7 @@
              for ($Y=0; $Y<=$YSize; $Y++) {
                  $this->Points[$X][$Y]=UNKNOWN;
              }
-         } 
+         }
 
          $this->GridSizeX = $XSize;
          $this->GridSizeY = $YSize;

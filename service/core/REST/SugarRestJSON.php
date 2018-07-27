@@ -50,12 +50,12 @@ require_once('service/core/REST/SugarRest.php');
 class SugarRestJSON extends SugarRest
 {
 
-	/**
-	 * It will json encode the input object and echo's it
-	 *
-	 * @param array $input - assoc array of input values: key = param name, value = param type
-	 * @return String - echos json encoded string of $input
-	 */
+    /**
+     * It will json encode the input object and echo's it
+     *
+     * @param array $input - assoc array of input values: key = param name, value = param type
+     * @return String - echos json encoded string of $input
+     */
     public function generateResponse($input)
     {
         $json = getJSONObj();
@@ -101,12 +101,12 @@ class SugarRestJSON extends SugarRest
         } // else
     } // fn
 
-	/**
-	 * This function sends response to client containing error object
-	 *
-	 * @param SoapError $errorObject - This is an object of type SoapError
-	 * @access public
-	 */
+    /**
+     * This function sends response to client containing error object
+     *
+     * @param SoapError $errorObject - This is an object of type SoapError
+     * @access public
+     */
     public function fault($errorObject)
     {
         $this->faultServer->faultObject = $errorObject;

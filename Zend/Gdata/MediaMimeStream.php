@@ -88,9 +88,11 @@ class Zend_Gdata_MediaMimeStream
      * @throws Zend_Gdata_App_IOException If the file cannot be read or does
      *         not exist. Also if mbstring.func_overload has been set > 1.
      */
-    public function __construct($xmlString = null, $filePath = null,
-        $fileContentType = null)
-    {
+    public function __construct(
+        $xmlString = null,
+        $filePath = null,
+        $fileContentType = null
+    ) {
         if (!file_exists($filePath) || !is_readable($filePath)) {
             require_once 'Zend/Gdata/App/IOException.php';
             throw new Zend_Gdata_App_IOException('File to be uploaded at ' .
@@ -107,7 +109,6 @@ class Zend_Gdata_MediaMimeStream
         $fileSize = filesize($filePath);
         $this->_totalSize = $entry->getSize() + $fileSize
           + $closingBoundary->getSize();
-
     }
 
     /**
@@ -135,20 +136,20 @@ class Zend_Gdata_MediaMimeStream
      */
     public function read($bytesRequested)
     {
-        if($this->_currentPart >= count($this->_parts)) {
-          return false;
+        if ($this->_currentPart >= count($this->_parts)) {
+            return false;
         }
 
         $activePart = $this->_parts[$this->_currentPart];
         $buffer = $activePart->read($bytesRequested);
 
-        while(strlen($buffer) < $bytesRequested) {
-          $this->_currentPart += 1;
-          $nextBuffer = $this->read($bytesRequested - strlen($buffer));
-          if($nextBuffer === false) {
-            break;
-          }
-          $buffer .= $nextBuffer;
+        while (strlen($buffer) < $bytesRequested) {
+            $this->_currentPart += 1;
+            $nextBuffer = $this->read($bytesRequested - strlen($buffer));
+            if ($nextBuffer === false) {
+                break;
+            }
+            $buffer .= $nextBuffer;
         }
 
         return $buffer;
@@ -186,5 +187,4 @@ class Zend_Gdata_MediaMimeStream
         return 'multipart/related;boundary="' .
             $this->_boundaryString . '"' . "\r\n";
     }
-
 }

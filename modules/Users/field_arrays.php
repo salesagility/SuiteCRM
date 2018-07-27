@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['User'] = array (
+$fields_array['User'] = array(
     'column_fields' => array(
         'id',
         'full_name',
@@ -85,18 +85,18 @@ $fields_array['User'] = array (
     ),
     'list_fields' => array(
         'full_name',
-        'id', 
-        'first_name', 
-        'last_name', 
-        'user_name', 
-        'status', 
-        'department', 
-        'is_admin', 
-        'email1', 
-        'phone_work', 
-        'title', 
-        'reports_to_name', 
-        'reports_to_id', 
+        'id',
+        'first_name',
+        'last_name',
+        'user_name',
+        'status',
+        'department',
+        'is_admin',
+        'email1',
+        'phone_work',
+        'title',
+        'reports_to_name',
+        'reports_to_id',
         'is_group'
 
     ),

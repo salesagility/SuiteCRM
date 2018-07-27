@@ -23,7 +23,7 @@ class TwitterOAuth
     /* Set timeout default. */
     public $timeout = 30;
     /* Set connect timeout. */
-    public $connecttimeout = 30; 
+    public $connecttimeout = 30;
     /* Verify SSL Cert. */
     public $ssl_verifypeer = false;
     /* Respons format. */
@@ -95,7 +95,7 @@ class TwitterOAuth
     public function getRequestToken($oauth_callback)
     {
         $parameters = array();
-        $parameters['oauth_callback'] = $oauth_callback; 
+        $parameters['oauth_callback'] = $oauth_callback;
         $request = $this->oAuthRequest($this->requestTokenURL(), 'GET', $parameters);
         $token = OAuthUtil::parse_parameters($request);
         $this->token = new OAuthConsumer($token['oauth_token'], $token['oauth_token_secret']);
@@ -114,9 +114,8 @@ class TwitterOAuth
         }
         if (empty($sign_in_with_twitter)) {
             return $this->authorizeURL() . "?oauth_token={$token}";
-        } else {
-            return $this->authenticateURL() . "?oauth_token={$token}";
         }
+        return $this->authenticateURL() . "?oauth_token={$token}";
     }
 
     /**
@@ -146,7 +145,7 @@ class TwitterOAuth
      *                "user_id" => "9436992",
      *                "screen_name" => "abraham",
      *                "x_auth_expires" => "0")
-     */  
+     */
     public function getXAuthToken($username, $password)
     {
         $parameters = array();
@@ -251,7 +250,7 @@ class TwitterOAuth
         $this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);
         $this->http_info = array_merge($this->http_info, curl_getinfo($ci));
         $this->url = $url;
-        curl_close ($ci);
+        curl_close($ci);
         return $response;
     }
 

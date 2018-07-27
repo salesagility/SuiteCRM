@@ -364,10 +364,10 @@ function smarty_function_sugar_button($params, &$smarty)
                     $view =  "form_SubpanelQuickCreate_{$module}";
                 }
 
-                /* BEGIN - SECURITY GROUPS - redirect a subpanel save to the detail view if select popup and user in more than 1 group*/ 
+                /* BEGIN - SECURITY GROUPS - redirect a subpanel save to the detail view if select popup and user in more than 1 group*/
                 /**
                 global $current_user, $sugar_config;
-                if(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true) {     
+                if(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true) {
                     require_once('modules/SecurityGroups/SecurityGroup.php');
                     $groupFocus = new SecurityGroup();
 
@@ -377,7 +377,7 @@ function smarty_function_sugar_button($params, &$smarty)
                 }
                 //if different here then change the group return right above
                 $output = '{if $bean->aclAccess("save")}<input title="{$APP.LBL_SAVE_BUTTON_TITLE}"  class="button" onclick="'.$js_form.' disableOnUnloadEditView(); _form.action.value=\'Save\';if(check_form(\''.$view.'\'))return SUGAR.subpanelUtils.inlineSave(_form.id, \'' . $params['module'] . '_subpanel_save_button\');return false;" type="submit" name="' . $params['module'] . '_subpanel_save_button" id="' . $params['module'] . '_subpanel_save_button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">{/if} ';
-                
+
                 */
                 $output = '{if $bean->aclAccess("save")}<input title="{$APP.LBL_SAVE_BUTTON_TITLE}"  class="button" onclick="'.$js_form.' disableOnUnloadEditView(); _form.action.value=\'Save\';if(check_form(\''.$view.'\'))return SUGAR.subpanelUtils.inlineSave(_form.id, \'' . $params['module'] . '_subpanel_save_button\');return false;" type="submit" name="' . $params['module'] . '_subpanel_save_button" id="' . $params['module'] . '_subpanel_save_button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">{/if} ';
                 /* END - SECURITY GROUPS */
@@ -572,5 +572,3 @@ function extractHiddenInputs(&$dom_tree = array())
         }
     }
 }
-
-

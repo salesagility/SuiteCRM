@@ -80,35 +80,35 @@ class TemplateField
     public $unified_search = 0;
     public $supports_unified_search = false;
     public $vardef_map = array(
-		'name'=>'name',
-		'label'=>'vname',
-	// bug 15801 - need to ALWAYS keep default and default_value consistent as some methods/classes use one, some use another...
-		'default_value'=>'default',
-		'default'=>'default_value',
-		'display_default'=>'default_value',
-	//		'default_value'=>'default_value',
-	//		'default'=>'default_value',
-		'len'=>'len',
-		'required'=>'required',
-		'type'=>'type',
-		'audited'=>'audited',
-		'inline_edit'=>'inline_edit',
-		'massupdate'=>'massupdate',
-		'options'=>'ext1',
-		'help'=>'help',
-	    'comments'=>'comment',
-	    'importable'=>'importable',
-		'duplicate_merge'=>'duplicate_merge',
-		'duplicate_merge_dom_value'=>'duplicate_merge_dom_value', //bug #14897
-		'merge_filter'=>'merge_filter',
-		'reportable' => 'reportable',
-		'ext2'=>'ext2',
-		'ext4'=>'ext4',
-	    'ext3'=>'ext3',
+        'name'=>'name',
+        'label'=>'vname',
+    // bug 15801 - need to ALWAYS keep default and default_value consistent as some methods/classes use one, some use another...
+        'default_value'=>'default',
+        'default'=>'default_value',
+        'display_default'=>'default_value',
+    //		'default_value'=>'default_value',
+    //		'default'=>'default_value',
+        'len'=>'len',
+        'required'=>'required',
+        'type'=>'type',
+        'audited'=>'audited',
+        'inline_edit'=>'inline_edit',
+        'massupdate'=>'massupdate',
+        'options'=>'ext1',
+        'help'=>'help',
+        'comments'=>'comment',
+        'importable'=>'importable',
+        'duplicate_merge'=>'duplicate_merge',
+        'duplicate_merge_dom_value'=>'duplicate_merge_dom_value', //bug #14897
+        'merge_filter'=>'merge_filter',
+        'reportable' => 'reportable',
+        'ext2'=>'ext2',
+        'ext4'=>'ext4',
+        'ext3'=>'ext3',
         'labelValue' => 'label_value',
-		'unified_search'=>'unified_search',
+        'unified_search'=>'unified_search',
         'full_text_search'=>'full_text_search',
-	);
+    );
     // Bug #48826
     // fields to decode from post request
     public $decode_from_request_fields_map = array('formula', 'dependency');
@@ -127,12 +127,12 @@ class TemplateField
             $view = 'detail';
         }
         switch ($view) {
-			case 'search':return $this->get_html_search();
-			case 'edit': return $this->get_html_edit();
-			case 'list': return $this->get_html_list();
-			case 'detail': return $this->get_html_detail();
+            case 'search':return $this->get_html_search();
+            case 'edit': return $this->get_html_edit();
+            case 'list': return $this->get_html_list();
+            case 'detail': return $this->get_html_detail();
 
-		}
+        }
     }
     public function set($values)
     {
@@ -201,12 +201,12 @@ class TemplateField
             $view = 'detail';
         }
         switch ($view) {
-			case 'search':return $this->get_xtpl_search();
-			case 'edit': return $this->get_xtpl_edit();
-			case 'list': return $this->get_xtpl_list();
-			case 'detail': return $this->get_xtpl_detail();
+            case 'search':return $this->get_xtpl_search();
+            case 'edit': return $this->get_xtpl_edit();
+            case 'list': return $this->get_xtpl_list();
+            case 'detail': return $this->get_xtpl_detail();
 
-		}
+        }
     }
 
     public function get_xtpl_edit()
@@ -263,12 +263,10 @@ class TemplateField
             if (!is_null($this->default_value)) { // add a default value if it is not null - we want to set a default even if default_value is '0', which is not null, but which is empty()
                 if (null == trim($this->default_value)) {
                     return " DEFAULT NULL";
-                } else {
-                    return " DEFAULT '$this->default_value'";
                 }
-            } else {
-                return '';
+                return " DEFAULT '$this->default_value'";
             }
+            return '';
         }
     }
 
@@ -334,9 +332,9 @@ class TemplateField
     public function get_db_delete_alter_table($table)
     {
         return DBManagerFactory::getInstance()->getHelper()->dropColumnSQL(
-		$table,
-		$this->get_field_def()
-		);
+        $table,
+        $this->get_field_def()
+        );
     }
 
     /**
@@ -355,25 +353,25 @@ class TemplateField
     public function get_field_def()
     {
         $array =  array(
-			'required'=>$this->convertBooleanValue($this->required),
-			'source'=>'custom_fields',
-			'name'=>$this->name,
-			'vname'=>$this->vname,
-			'type'=>$this->type,
-			'massupdate'=>$this->massupdate,
-			'default'=>$this->default,
+            'required'=>$this->convertBooleanValue($this->required),
+            'source'=>'custom_fields',
+            'name'=>$this->name,
+            'vname'=>$this->vname,
+            'type'=>$this->type,
+            'massupdate'=>$this->massupdate,
+            'default'=>$this->default,
             'no_default'=> !empty($this->no_default),
-			'comments'=> (isset($this->comments)) ? $this->comments : '',
-		    'help'=> (isset($this->help)) ?  $this->help : '',
-		    'importable'=>$this->importable,
-			'duplicate_merge'=>$this->duplicate_merge,
-			'duplicate_merge_dom_value'=> $this->getDupMergeDomValue(),
-			'audited'=>$this->convertBooleanValue($this->audited),
+            'comments'=> (isset($this->comments)) ? $this->comments : '',
+            'help'=> (isset($this->help)) ?  $this->help : '',
+            'importable'=>$this->importable,
+            'duplicate_merge'=>$this->duplicate_merge,
+            'duplicate_merge_dom_value'=> $this->getDupMergeDomValue(),
+            'audited'=>$this->convertBooleanValue($this->audited),
             'inline_edit'=>$this->convertBooleanValue($this->inline_edit),
             'reportable'=>$this->convertBooleanValue($this->reportable),
             'unified_search'=>$this->convertBooleanValue($this->unified_search),
             'merge_filter' => empty($this->merge_filter) ? "disabled" : $this->merge_filter
-		);
+        );
         if (isset($this->full_text_search)) {
             $array['full_text_search'] = $this->full_text_search;
         }
@@ -395,9 +393,8 @@ class TemplateField
             return  true;
         } elseif ($value === 'false' || $value === '0' || $value === 0) {
             return  false;
-        } else {
-            return $value;
         }
+        return $value;
     }
 
 
@@ -406,27 +403,27 @@ class TemplateField
     public function get_dup_merge_def(&$def)
     {
         switch ($def['duplicate_merge_dom_value']) {
-			case 0:
-				$def['duplicate_merge']='disabled';
+            case 0:
+                $def['duplicate_merge']='disabled';
                 $def['merge_filter']='disabled';
-				break;
-			case 1:
-				$def['duplicate_merge']='enabled';
+                break;
+            case 1:
+                $def['duplicate_merge']='enabled';
                 $def['merge_filter']='disabled';
-				break;
-			case 2:
-				$def['merge_filter']='enabled';
-				$def['duplicate_merge']='enabled';
-				break;
-			case 3:
-				$def['merge_filter']='selected';
-				$def['duplicate_merge']='enabled';
-				break;
-			case 4:
-				$def['merge_filter']='enabled';
-				$def['duplicate_merge']='disabled';
-				break;
-		}
+                break;
+            case 2:
+                $def['merge_filter']='enabled';
+                $def['duplicate_merge']='enabled';
+                break;
+            case 3:
+                $def['merge_filter']='selected';
+                $def['duplicate_merge']='enabled';
+                break;
+            case 4:
+                $def['merge_filter']='enabled';
+                $def['duplicate_merge']='disabled';
+                break;
+        }
     }
 
     /**
@@ -489,7 +486,7 @@ class TemplateField
     public function populateFromRow($row=array())
     {
         $fmd_to_dyn_map = array('comments' => 'comment', 'require_option' => 'required', 'label' => 'vname',
-							    'mass_update' => 'massupdate', 'max_size' => 'len', 'default_value' => 'default', 'id_name' => 'ext3');
+                                'mass_update' => 'massupdate', 'max_size' => 'len', 'default_value' => 'default', 'id_name' => 'ext3');
         if (!is_array($row)) {
             $GLOBALS['log']->error("Error: TemplateField->populateFromRow expecting Array");
         }

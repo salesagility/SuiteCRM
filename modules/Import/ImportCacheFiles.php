@@ -65,7 +65,7 @@ class ImportCacheFiles
 
     /**
      * List of all cache file names
-     * 
+     *
      * @var array
      */
     protected static $all_files = array(
@@ -120,7 +120,7 @@ class ImportCacheFiles
 
     /**
      * Ensure that all cache files are writable or can be created
-     * 
+     *
      * @return bool
      */
     public static function ensureWritable()

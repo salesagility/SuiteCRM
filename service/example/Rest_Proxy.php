@@ -70,7 +70,7 @@ if (!empty($_headers['accept-charset'])) {
 $ch = curl_init();
 // set URL and other appropriate options
 curl_setopt($ch, CURLOPT_URL, PROXY_SERVER);
-curl_setopt ($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, $curl_headers);
 curl_setopt($ch, CURLOPT_HEADER, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -89,7 +89,7 @@ if (!empty($_POST)) {
         $post_data .= "$k=" . $v;
     }
 }
-curl_setopt ($ch, CURLOPT_POSTFIELDS, $post_data);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 // grab URL and pass it to the browser
 fwrite($fp, 'client headers:' . var_export($headers, true) . "\n");
 fwrite($fp, 'starting curl request' . "\n");

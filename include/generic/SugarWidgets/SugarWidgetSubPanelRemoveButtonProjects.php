@@ -70,8 +70,8 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
         }
 
         $record = $layout_def['fields']['ID'];
-        $current_module=$layout_def['module'];	
-        $hideremove=false;			
+        $current_module=$layout_def['module'];
+        $hideremove=false;
         
         $return_module = $_REQUEST['module'];
         $return_action = 'SubPanelViewer';
@@ -118,8 +118,7 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
             . ' class="listViewTdToolsS1"'
             . " onclick=\"return confirm('$remove_confirmation_text');\""
             . ">$icon_remove_html&nbsp;$icon_remove_text</a>";
-        } else {
-            return '';
         }
+        return '';
     }
 }

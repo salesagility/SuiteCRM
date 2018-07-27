@@ -87,26 +87,41 @@ class actionCreateRecord extends actionBase
                  '_table" width="100%" class="lines"></table></td>';
         $html .= '</tr>';
         $html .= '<tr>';
-        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate('LBL_ADD_FIELD',
-                'AOW_Actions').'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
+        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate(
+            'LBL_ADD_FIELD',
+                'AOW_Actions'
+        ).'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
         $html .= '</tr>';
         $html .= '<tr>';
         $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%" class="relationship"></table></td>';
         $html .= '</tr>';
         $html .= '<tr>';
-        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate('LBL_ADD_RELATIONSHIP',
-                'AOW_Actions').'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
+        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate(
+            'LBL_ADD_RELATIONSHIP',
+                'AOW_Actions'
+        ).'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
         $html .= '</tr>';
 
 
         if (isset($params['record_type']) && $params['record_type'] != '') {
             require_once 'modules/AOW_WorkFlow/aow_utils.php';
             $html .= "<script id ='aow_script".$line."'>";
-            $html .= 'cr_fields[' . $line . '] = "' . trim(preg_replace('/\s+/', ' ',
-                    getModuleFields($params['record_type'], 'EditView', '', array(),
-                        array('email1', 'email2')))) . '";';
-            $html .= 'cr_relationships[' . $line . '] = "' . trim(preg_replace('/\s+/', ' ',
-                    getModuleRelationships($params['record_type']))) . '";';
+            $html .= 'cr_fields[' . $line . '] = "' . trim(preg_replace(
+                '/\s+/',
+                ' ',
+                    getModuleFields(
+                        $params['record_type'],
+                        'EditView',
+                        '',
+                        array(),
+                        array('email1', 'email2')
+                    )
+            )) . '";';
+            $html .= 'cr_relationships[' . $line . '] = "' . trim(preg_replace(
+                '/\s+/',
+                ' ',
+                    getModuleRelationships($params['record_type'])
+            )) . '";';
             $html .= 'cr_module[' .$line. '] = "' .$params['record_type']. '";';
             if (isset($params['field'])) {
                 foreach ($params['field'] as $key => $field) {

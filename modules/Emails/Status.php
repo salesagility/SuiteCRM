@@ -74,7 +74,7 @@ echo getClassicModuleTitle($mod_strings['LBL_SEND'], array($mod_strings['LBL_SEN
 
 $GLOBALS['log']->info("Email detail view");
 
-$xtpl=new XTemplate ('modules/Emails/Status.html');
+$xtpl=new XTemplate('modules/Emails/Status.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

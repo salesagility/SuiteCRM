@@ -58,7 +58,6 @@ require_once 'Zend/Gdata/Calendar/ListEntry.php';
  */
 class Zend_Gdata_Calendar extends Zend_Gdata
 {
-
     const CALENDAR_FEED_URI = 'http://www.google.com/calendar/feeds';
     const CALENDAR_EVENT_FEED_URI = 'http://www.google.com/calendar/feeds/default/private/full';
     const AUTH_SERVICE_NAME = 'cl';
@@ -117,7 +116,8 @@ class Zend_Gdata_Calendar extends Zend_Gdata
         if ($location == null) {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
-                    'Location must not be null');
+                    'Location must not be null'
+            );
         } elseif ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
@@ -148,7 +148,8 @@ class Zend_Gdata_Calendar extends Zend_Gdata
         if ($location == null) {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
-                    'Location must not be null');
+                    'Location must not be null'
+            );
         } elseif ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
@@ -165,5 +166,4 @@ class Zend_Gdata_Calendar extends Zend_Gdata
         $newEvent = $this->insertEntry($event, $uri, 'Zend_Gdata_Calendar_EventEntry');
         return $newEvent;
     }
-
 }

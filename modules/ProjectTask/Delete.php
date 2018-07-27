@@ -67,13 +67,13 @@ if (empty($_REQUEST['record'])) {
 // handle the return location variables
 
 $return_module = empty($_REQUEST['return_module']) ? 'ProjectTask'
-	: $_REQUEST['return_module'];
+    : $_REQUEST['return_module'];
 
 $return_action = empty($_REQUEST['return_action']) ? 'index'
-	: $_REQUEST['return_action'];
+    : $_REQUEST['return_action'];
 
 $return_id = empty($_REQUEST['return_id']) ? ''
-	: $_REQUEST['return_id'];
+    : $_REQUEST['return_id'];
 
 $return_location = "index.php?module=$return_module&action=$return_action";
 

@@ -43,46 +43,46 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $subpanel_layout = array(
-	'top_buttons' => array(
-		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Opportunities'),
-	),
+    'top_buttons' => array(
+        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Opportunities'),
+    ),
 
-	'where' => '',
-	
+    'where' => '',
+    
 
-	'list_fields' => array(
-		'name'=>array(
-	 		'name' => 'name',
-	 		'vname' => 'LBL_LIST_OPPORTUNITY_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-			'width' => '50%',
-		),
-		'account_name'=>array(
-	 		'vname' => 'LBL_LIST_ACCOUNT_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-	 		'module' => 'Accounts',
-			'width' => '31%',
-			'target_record_key' => 'account_id',
-			'target_module' => 'Accounts',
-		),
-		'sales_stage'=>array(
-			'name' => 'sales_stage',
-			'vname' => 'LBL_LIST_SALES_STAGE',
-			'width' => '15%',
-		),
-		'edit_button'=>array(
-			'vname' => 'LBL_EDIT_BUTTON',
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'Opportunities',
-			'width' => '4%',
-		),
-		'remove_button' => array(
-			'vname' => 'LBL_REMOVE',
-			'widget_class' => 'SubPanelRemoveButton',
-			'width' => '4%',
-		),				
-		'currency_id'=>array(
-			'usage'=>'query_only',
-		),
-	),
+    'list_fields' => array(
+        'name'=>array(
+            'name' => 'name',
+            'vname' => 'LBL_LIST_OPPORTUNITY_NAME',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '50%',
+        ),
+        'account_name'=>array(
+            'vname' => 'LBL_LIST_ACCOUNT_NAME',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'module' => 'Accounts',
+            'width' => '31%',
+            'target_record_key' => 'account_id',
+            'target_module' => 'Accounts',
+        ),
+        'sales_stage'=>array(
+            'name' => 'sales_stage',
+            'vname' => 'LBL_LIST_SALES_STAGE',
+            'width' => '15%',
+        ),
+        'edit_button'=>array(
+            'vname' => 'LBL_EDIT_BUTTON',
+            'widget_class' => 'SubPanelEditButton',
+            'module' => 'Opportunities',
+            'width' => '4%',
+        ),
+        'remove_button' => array(
+            'vname' => 'LBL_REMOVE',
+            'widget_class' => 'SubPanelRemoveButton',
+            'width' => '4%',
+        ),
+        'currency_id'=>array(
+            'usage'=>'query_only',
+        ),
+    ),
 );

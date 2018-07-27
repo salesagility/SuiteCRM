@@ -76,20 +76,20 @@ class PredefinedChart
     public function predefinedChartQuery($chart, $params=array())
     {
         switch ($chart) {
-			case 'pipeline_by_sales_stage':
-			case 'pipeline_by_sales_stage_funnel':
-				return $this->pipelineBySalesStageQuery();
-			case 'lead_source_by_outcome':
-				return $this->leadSourceByOutcomeQuery($params);
-			case 'outcome_by_month':
-				return $this->outcomeByMonthQuery();
-			case 'pipeline_by_lead_source':
-				return $this->pipelineByLeadSourceQuery($params);
-		    case 'my_modules_used_last_30_days':
-		        return $this->myModuleUsageLast30Days();
-			default:
-				return $this->customChartQuery($chart);
-		}
+            case 'pipeline_by_sales_stage':
+            case 'pipeline_by_sales_stage_funnel':
+                return $this->pipelineBySalesStageQuery();
+            case 'lead_source_by_outcome':
+                return $this->leadSourceByOutcomeQuery($params);
+            case 'outcome_by_month':
+                return $this->outcomeByMonthQuery();
+            case 'pipeline_by_lead_source':
+                return $this->pipelineByLeadSourceQuery($params);
+            case 'my_modules_used_last_30_days':
+                return $this->myModuleUsageLast30Days();
+            default:
+                return $this->customChartQuery($chart);
+        }
         return;
     }
 
@@ -510,8 +510,7 @@ class PredefinedChart
         if (file_exists('custom/Charts/' . $chart . '.php')) {
             require_once('custom/Charts/' . $chart . '.php');
             return customChartQuery();
-        } else {
-            return false;
         }
+        return false;
     }
 }

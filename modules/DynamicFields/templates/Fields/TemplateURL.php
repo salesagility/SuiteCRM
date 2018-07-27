@@ -50,7 +50,7 @@ class TemplateURL extends TemplateText
         $this->vardef_map['ext4'] = 'link_target';
         $this->vardef_map['link_target'] = 'ext4';
     }
-	
+    
     public $type='url';
     public function get_html_edit()
     {

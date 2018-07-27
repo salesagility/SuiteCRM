@@ -60,4 +60,3 @@ $dashletData['OutcomeByMonthDashlet']['searchFields'] = array(
                 'type'  => 'user_name',
             ),
         );
-

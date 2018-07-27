@@ -95,7 +95,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgAreas = new jjwg_Areas();
 
-        //test without pre settting attributes 
+        //test without pre settting attributes
         $result = $jjwgAreas->define_area_loc();
         $this->assertEquals('N/A', $result['name']);
         $this->assertTrue(is_numeric($result['lat']));
@@ -119,7 +119,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $jjwgAreas->define_centroid();
         $this->assertEquals(null, $result);
 
-        //test with coordinates setup 
+        //test with coordinates setup
         $jjwgAreas->coordinates = "100,80,10\r\n101,81,11\r\n102,82,12";
         $expected = array('lng' => 67.3333333333333285963817615993320941925048828125, 'lat' => 54.0, 'elv' => 0);
 
@@ -147,13 +147,13 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgAreas = new jjwg_Areas();
 
-        //test without pre settting attributes 
+        //test without pre settting attributes
         $result = $jjwgAreas->define_loc(array());
         $this->assertEquals('N/A', $result['name']);
         $this->assertTrue(is_numeric($result['lat']));
         $this->assertTrue(is_numeric($result['lng']));
 
-        //test with required attributes preset   	 
+        //test with required attributes preset
         $marker = array('name' => 'test', 'lat' => 50, 'lng' => 100);
         $result = $jjwgAreas->define_loc($marker);
         $this->assertSame($marker, $result);

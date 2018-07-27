@@ -8,4 +8,3 @@ $container['ApplicationLanguages'] = function ($container) {
     $applicationLanguage = new \SuiteCRM\Utility\ApplicationLanguage();
     return $applicationLanguage;
 };
-

@@ -131,12 +131,12 @@ class Account extends Company implements EmailInterface
     public $new_schema = true;
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'opportunity_id', 'bug_id', 'case_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id', 'parent_name', 'member_id'
-	);
+    );
     public $relationship_fields = array('opportunity_id'=>'opportunities', 'bug_id' => 'bugs', 'case_id'=>'cases',
-									'contact_id'=>'contacts', 'task_id'=>'tasks', 'note_id'=>'notes',
-									'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails','member_id'=>'members',
-									'project_id'=>'project',
-									);
+                                    'contact_id'=>'contacts', 'task_id'=>'tasks', 'note_id'=>'notes',
+                                    'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails','member_id'=>'members',
+                                    'project_id'=>'project',
+                                    );
 
     //Meta-Data Framework fields
     public $push_billing;
@@ -158,7 +158,7 @@ class Account extends Company implements EmailInterface
 
         //Email logic
         if (!empty($_REQUEST['parent_id']) && !empty($_REQUEST['parent_type']) && $_REQUEST['parent_type'] == 'Emails'
-        	&& !empty($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Emails') {
+            && !empty($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Emails') {
             $_REQUEST['parent_name'] = '';
             $_REQUEST['parent_id'] = '';
         }
@@ -205,21 +205,21 @@ class Account extends Company implements EmailInterface
     * This method is used to provide backward compatibility with old data that was prefixed with http://
     * We now automatically prefix http://
     * @deprecated.
- 	*/
+    */
     public function remove_redundant_http()
     {	/*
-		if(preg_match("@http://@", $this->website))
-		{
-			$this->website = substr($this->website, 7);
-		}
-		*/
+        if(preg_match("@http://@", $this->website))
+        {
+            $this->website = substr($this->website, 7);
+        }
+        */
     }
 
     public function fill_in_additional_list_fields()
     {
         parent::fill_in_additional_list_fields();
         // Fill in the assigned_user_name
-	//	$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
+    //	$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
     }
 
     public function fill_in_additional_detail_fields()
@@ -369,8 +369,8 @@ class Account extends Company implements EmailInterface
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
     public function get_unlinked_email_query($type=array())

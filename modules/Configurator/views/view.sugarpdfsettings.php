@@ -44,8 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class ConfiguratorViewSugarpdfsettings extends SugarView
 {
     /**
-	 * @see SugarView::preDisplay()
-	 */
+     * @see SugarView::preDisplay()
+     */
     public function preDisplay()
     {
         if (!is_admin($GLOBALS['current_user'])) {
@@ -54,16 +54,16 @@ class ConfiguratorViewSugarpdfsettings extends SugarView
     }
 
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
 
         return array(
-    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
-    	   $mod_strings['LBL_PDFMODULE_NAME']
-    	   );
+           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
+           $mod_strings['LBL_PDFMODULE_NAME']
+           );
     }
 
     /**

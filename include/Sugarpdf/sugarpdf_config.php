@@ -50,56 +50,56 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
     /*
      *  Installation path of TCPDF
      */
-    define ("K_PATH_MAIN", $sugarpdf_default["K_PATH_MAIN"]);
+    define("K_PATH_MAIN", $sugarpdf_default["K_PATH_MAIN"]);
     /**
      * URL path to tcpdf installation folder
      */
-    define ("K_PATH_URL", $sugarpdf_default["K_PATH_URL"]);
+    define("K_PATH_URL", $sugarpdf_default["K_PATH_URL"]);
     /**
      * custom path for PDF fonts (Use for non core added fonts)
      */
-    define ("K_PATH_CUSTOM_FONTS", $sugarpdf_default["K_PATH_CUSTOM_FONTS"]);
+    define("K_PATH_CUSTOM_FONTS", $sugarpdf_default["K_PATH_CUSTOM_FONTS"]);
     /**
     * path for PDF fonts
     */
-    define ("K_PATH_FONTS", $sugarpdf_default["K_PATH_FONTS"]);
+    define("K_PATH_FONTS", $sugarpdf_default["K_PATH_FONTS"]);
     /**
      * cache directory for temporary files (full path)
      */
-    define ("K_PATH_CACHE", $sugarpdf_default["K_PATH_CACHE"]);
+    define("K_PATH_CACHE", $sugarpdf_default["K_PATH_CACHE"]);
     /**
      * cache directory for temporary files (url path)
      */
-    define ("K_PATH_URL_CACHE", $sugarpdf_default["K_PATH_URL_CACHE"]);
+    define("K_PATH_URL_CACHE", $sugarpdf_default["K_PATH_URL_CACHE"]);
 
     /*
      * Custom path for images (use for loaded logos)
-     */ 
-    define ("K_PATH_CUSTOM_IMAGES", $sugarpdf_default["K_PATH_CUSTOM_IMAGES"]);
+     */
+    define("K_PATH_CUSTOM_IMAGES", $sugarpdf_default["K_PATH_CUSTOM_IMAGES"]);
     /*
      * Default path for images
-     */ 
-    define ("K_PATH_IMAGES", $sugarpdf_default["K_PATH_IMAGES"]);
+     */
+    define("K_PATH_IMAGES", $sugarpdf_default["K_PATH_IMAGES"]);
     /*
      * Blank image
      */
-    define ("K_BLANK_IMAGE", $sugarpdf_default["K_BLANK_IMAGE"]);
+    define("K_BLANK_IMAGE", $sugarpdf_default["K_BLANK_IMAGE"]);
     /*
      * The format used for pages.
      * It can be either one of the following values (case insensitive)
      * or a custom format in the form of a two-element array containing
      * the width and the height (expressed in the unit given by unit).
-     * 4A0, 2A0, A0, A1, A2, A3, A4 (default), A5, A6, A7, A8, A9, A10, 
-     * B0, B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, C0, C1, C2, C3, C4, 
-     * C5, C6, C7, C8, C9, C10, RA0, RA1, RA2, RA3, RA4, SRA0, SRA1, 
+     * 4A0, 2A0, A0, A1, A2, A3, A4 (default), A5, A6, A7, A8, A9, A10,
+     * B0, B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, C0, C1, C2, C3, C4,
+     * C5, C6, C7, C8, C9, C10, RA0, RA1, RA2, RA3, RA4, SRA0, SRA1,
      * SRA2, SRA3, SRA4, LETTER, LEGAL, EXECUTIVE, FOLIO.
      */
-    defineFromUserPreference ("PDF_PAGE_FORMAT", $sugarpdf_default["PDF_PAGE_FORMAT"]);
+    defineFromUserPreference("PDF_PAGE_FORMAT", $sugarpdf_default["PDF_PAGE_FORMAT"]);
     define("PDF_PAGE_FORMAT_LIST", $sugarpdf_default["PDF_PAGE_FORMAT_LIST"]);
     /*
      * page orientation. Possible values are (case insensitive):P or Portrait (default), L or Landscape.
      */
-    defineFromUserPreference ("PDF_PAGE_ORIENTATION", $sugarpdf_default["PDF_PAGE_ORIENTATION"]);
+    defineFromUserPreference("PDF_PAGE_ORIENTATION", $sugarpdf_default["PDF_PAGE_ORIENTATION"]);
     define("PDF_PAGE_ORIENTATION_LIST", $sugarpdf_default["PDF_PAGE_ORIENTATION_LIST"]);
     /*
      * Defines the creator of the document. This is typically the name of the application that generates the PDF.
@@ -142,51 +142,51 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
     /**
      * header margin
      */
-    defineFromUserPreference ('PDF_MARGIN_HEADER', $sugarpdf_default["PDF_MARGIN_HEADER"]);
+    defineFromUserPreference('PDF_MARGIN_HEADER', $sugarpdf_default["PDF_MARGIN_HEADER"]);
     
     /**
      * footer margin
      */
-    defineFromUserPreference ('PDF_MARGIN_FOOTER', $sugarpdf_default["PDF_MARGIN_FOOTER"]);
+    defineFromUserPreference('PDF_MARGIN_FOOTER', $sugarpdf_default["PDF_MARGIN_FOOTER"]);
     
     /**
      * top margin
      */
-    defineFromUserPreference ('PDF_MARGIN_TOP', $sugarpdf_default["PDF_MARGIN_TOP"]);
+    defineFromUserPreference('PDF_MARGIN_TOP', $sugarpdf_default["PDF_MARGIN_TOP"]);
     
     /**
      * bottom margin
      */
-    defineFromUserPreference ('PDF_MARGIN_BOTTOM', $sugarpdf_default["PDF_MARGIN_BOTTOM"]);
+    defineFromUserPreference('PDF_MARGIN_BOTTOM', $sugarpdf_default["PDF_MARGIN_BOTTOM"]);
     
     /**
      * left margin
      */
-    defineFromUserPreference ('PDF_MARGIN_LEFT', $sugarpdf_default["PDF_MARGIN_LEFT"]);
+    defineFromUserPreference('PDF_MARGIN_LEFT', $sugarpdf_default["PDF_MARGIN_LEFT"]);
     
     /**
      * right margin
      */
-    defineFromUserPreference ('PDF_MARGIN_RIGHT', $sugarpdf_default["PDF_MARGIN_RIGHT"]);
+    defineFromUserPreference('PDF_MARGIN_RIGHT', $sugarpdf_default["PDF_MARGIN_RIGHT"]);
     
     /**
      * main font name
      */
-    defineFromUserPreference ('PDF_FONT_NAME_MAIN', $sugarpdf_default["PDF_FONT_NAME_MAIN"]);
+    defineFromUserPreference('PDF_FONT_NAME_MAIN', $sugarpdf_default["PDF_FONT_NAME_MAIN"]);
     
     /**
      * main font size
      */
-    defineFromUserPreference ("PDF_FONT_SIZE_MAIN", $sugarpdf_default["PDF_FONT_SIZE_MAIN"]);
+    defineFromUserPreference("PDF_FONT_SIZE_MAIN", $sugarpdf_default["PDF_FONT_SIZE_MAIN"]);
     /**
      * data font name
      */
-    defineFromUserPreference ('PDF_FONT_NAME_DATA', $sugarpdf_default["PDF_FONT_NAME_DATA"]);
+    defineFromUserPreference('PDF_FONT_NAME_DATA', $sugarpdf_default["PDF_FONT_NAME_DATA"]);
     
     /**
      * data font size
      */
-    defineFromUserPreference ('PDF_FONT_SIZE_DATA', $sugarpdf_default["PDF_FONT_SIZE_DATA"]);
+    defineFromUserPreference('PDF_FONT_SIZE_DATA', $sugarpdf_default["PDF_FONT_SIZE_DATA"]);
     
     /**
      * Ratio used to scale the images
@@ -258,7 +258,7 @@ defineFromConfig("PDF_JPEG_QUALITY", $sugarpdf_default["PDF_JPEG_QUALITY"]);
 defineFromConfig("PDF_PDF_VERSION", $sugarpdf_default["PDF_PDF_VERSION"]);
 
 /**
- * Set document protection (available are: copy, print, modify, annot-forms. Seperate with a coma) 
+ * Set document protection (available are: copy, print, modify, annot-forms. Seperate with a coma)
  */
 defineFromConfig("PDF_PROTECTION", $sugarpdf_default["PDF_PROTECTION"]);
 
@@ -317,7 +317,7 @@ function defineFromConfig($value, $default)
  * use the default value.
  * SUGARPDF_USE_FOCUS is use to load the preference of the none current user. To use
  * this constant you have to define a global variable $focus_user.
- * 
+ *
  * @param $value    settings to search
  * @param $default  default value
  */

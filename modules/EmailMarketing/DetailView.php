@@ -74,7 +74,7 @@ global $theme;
 
 $GLOBALS['log']->info("EmailMarketing Edit View");
 
-$xtpl=new XTemplate ('modules/EmailMarketing/DetailView.html');
+$xtpl=new XTemplate('modules/EmailMarketing/DetailView.html');
 
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
@@ -88,7 +88,7 @@ if (isset($_REQUEST['return_action'])) {
     $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
 } else {
     $xtpl->assign("RETURN_ACTION", 'DetailView');
-}	
+}
 if (isset($_REQUEST['return_id'])) {
     $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
 } else {

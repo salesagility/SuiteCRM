@@ -86,12 +86,12 @@ class SugarSQLValidate
             return false;
         }
         // verify SELECT didn't change
-        if (count($parsed["SELECT"]) != 1 || $parsed["SELECT"][0] !== array ('expr_type' => 'colref','alias' => '`dummy`', 'base_expr' => 'dummy', 'sub_tree' => false)) {
+        if (count($parsed["SELECT"]) != 1 || $parsed["SELECT"][0] !== array('expr_type' => 'colref','alias' => '`dummy`', 'base_expr' => 'dummy', 'sub_tree' => false)) {
             $GLOBALS['log']->debug("validation failed SELECT");
             return false;
         }
         // verify FROM didn't change
-        if (count($parsed["FROM"]) != 1 || $parsed["FROM"][0] !== array ('table' => 'dummytable', 'alias' => 'dummytable', 'join_type' => 'JOIN', 'ref_type' => '', 'ref_clause' => '', 'base_expr' => false, 'sub_tree' => false)) {
+        if (count($parsed["FROM"]) != 1 || $parsed["FROM"][0] !== array('table' => 'dummytable', 'alias' => 'dummytable', 'join_type' => 'JOIN', 'ref_type' => '', 'ref_clause' => '', 'base_expr' => false, 'sub_tree' => false)) {
             $GLOBALS['log']->debug("validation failed FROM");
             return false;
         }
@@ -113,8 +113,8 @@ class SugarSQLValidate
      * @var array
      */
     protected $bad_functions = array("benchmark", "encode", "sleep",
-	"generate_series", "load_file", "sys_eval", "user_name",
-	"xp_cmdshell", "sys_exec", "sp_replwritetovarbin");
+    "generate_series", "load_file", "sys_eval", "user_name",
+    "xp_cmdshell", "sys_exec", "sp_replwritetovarbin");
 
     /**
      * Validate parsed SQL expression
@@ -171,13 +171,13 @@ class SugarSQLValidate
      * @var array
      */
     protected $subquery_allowed_tables = array(
-		'email_addr_bean_rel' => true,
-		'email_addresses' => true,
-		'emails' => true,
-		'emails_beans' => true,
-		'emails_text' => true,
-		'teams' => true,
-		'team_sets_teams' => true);
+        'email_addr_bean_rel' => true,
+        'email_addresses' => true,
+        'emails' => true,
+        'emails_beans' => true,
+        'emails_text' => true,
+        'teams' => true,
+        'team_sets_teams' => true);
 
     /**
      * Allow some subqueries to pass
@@ -238,9 +238,9 @@ class SugarSQLValidate
         if ($name == ",") {
             return true;
         } // sometimes , gets as column name
-	    $name = strtolower($name); // case does not matter
+        $name = strtolower($name); // case does not matter
 
-	    $parts = explode(".", $name);
+        $parts = explode(".", $name);
         if (count($parts) > 2) {
             // too many dots
             return false;

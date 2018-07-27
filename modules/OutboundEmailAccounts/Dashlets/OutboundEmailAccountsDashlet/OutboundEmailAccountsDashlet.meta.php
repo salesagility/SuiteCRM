@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $app_strings;
 
 $dashletMeta['OutboundEmailAccountsDashlet'] = array('module'		=> 'OutboundEmailAccounts',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'OutboundEmailAccounts'),
+                                          'title'       => translate('LBL_HOMEPAGE_TITLE', 'OutboundEmailAccounts'),
                                           'description' => 'A customizable view into OutboundEmailAccounts',
                                           'icon'        => 'icon_OutboundEmailAccounts_32.gif',
                                           'category'    => 'Module Views');

@@ -207,8 +207,10 @@ function new_get_field_list($value, $translate = true)
                 $link_fields[$var['name']] = $entry;
             } else {
                 if ($translate) {
-                    $entry['label'] = isset($var['vname']) ? translate($var['vname'],
-                        $value->module_dir) : $var['name'];
+                    $entry['label'] = isset($var['vname']) ? translate(
+                        $var['vname'],
+                        $value->module_dir
+                    ) : $var['name'];
                 } else {
                     $entry['label'] = isset($var['vname']) ? $var['vname'] : $var['name'];
                 }
@@ -262,8 +264,12 @@ function new_get_field_list($value, $translate = true)
 function setFaultObject($errorObject)
 {
     global $soap_server_object;
-    $soap_server_object->fault($errorObject->getFaultCode(), $errorObject->getName(), '',
-        $errorObject->getDescription());
+    $soap_server_object->fault(
+        $errorObject->getFaultCode(),
+        $errorObject->getName(),
+        '',
+        $errorObject->getDescription()
+    );
 } // fn
 
 function checkSessionAndModuleAccess(
@@ -371,8 +377,10 @@ function check_modules_access($user, $module_name, $action = 'write')
             }
 
             return false;
-        } elseif ($action == 'write' && strcmp(strtolower($module_name),
-                'users') == 0 && !$user->isAdminForModule($module_name)
+        } elseif ($action == 'write' && strcmp(
+            strtolower($module_name),
+                'users'
+        ) == 0 && !$user->isAdminForModule($module_name)
         ) {
             //rrs bug: 46000 - If the client is trying to write to the Users module and is not an admin then we need to stop them
             return false;
@@ -598,9 +606,9 @@ function getRelationshipResults($bean, $link_field_name, $link_module_fields)
         }
 
         return array('rows' => $list, 'fields_set_on_rows' => $filterFields);
-    } else {
-        return false;
-    } // else
+    }
+    return false;
+    // else
 } // fn
 
 function get_return_value_for_link_fields($bean, $module, $link_name_to_value_fields_array)
@@ -684,9 +692,8 @@ function new_handle_set_relationship($module_name, $module_id, $link_field_name,
         $mod->$link_field_name->add($related_ids);
 
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 function new_handle_set_entries($module_name, $name_value_lists, $select_fields = false)
@@ -809,11 +816,10 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
         return array(
             'name_value_lists' => $ret_values,
         );
-    } else {
-        return array(
+    }
+    return array(
             'ids' => $ids,
         );
-    }
 }
 
 function get_return_value($value, $module, $returnDomValue = false)
@@ -1035,44 +1041,48 @@ function check_for_duplicate_contacts($seed)
         $contacts = array_merge($contacts, $contacts2);
         if (count($contacts) == 0) {
             return null;
-        } else {
-            foreach ($contacts as $contact) {
-                if (!empty($trimmed_last) && strcmp($trimmed_last, $contact->last_name) == 0) {
-                    if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp($trimmed_email,
-                                $contact->email1) == 0 || strcmp($trimmed_email,
-                                $contact->email2) == 0 || strcmp($trimmed_email2,
-                                $contact->email) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
+        }
+        foreach ($contacts as $contact) {
+            if (!empty($trimmed_last) && strcmp($trimmed_last, $contact->last_name) == 0) {
+                if ((!empty($trimmed_email) || !empty($trimmed_email2)) && (strcmp(
+                        $trimmed_email,
+                                $contact->email1
+                    ) == 0 || strcmp(
+                                    $trimmed_email,
+                                $contact->email2
+                                ) == 0 || strcmp(
+                                    $trimmed_email2,
+                                $contact->email
+                                ) == 0 || strcmp($trimmed_email2, $contact->email2) == 0)
                     ) {
-                        //bug: 39234 - check if the account names are the same
-                        //if the incoming contact's account_name is empty OR it is not empty and is the same
-                        //as an existing contact's account name, then find the match.
-                        $contact->load_relationship('accounts');
-                        if (empty($seed->account_name) || strcmp($seed->account_name, $contact->account_name) == 0) {
-                            $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - duplicte found ' . $contact->id);
+                    //bug: 39234 - check if the account names are the same
+                    //if the incoming contact's account_name is empty OR it is not empty and is the same
+                    //as an existing contact's account name, then find the match.
+                    $contact->load_relationship('accounts');
+                    if (empty($seed->account_name) || strcmp($seed->account_name, $contact->account_name) == 0) {
+                        $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - duplicte found ' . $contact->id);
 
-                            return $contact->id;
-                        }
+                        return $contact->id;
                     }
                 }
             }
-
-            return null;
         }
-    } else {
-        //This section of code is executed if no emails are supplied in the $seed instance
 
-        //This query is looking for the id of Contact records that do not have a primary email address based on the matching
-        //first and last name and the record being not deleted.  If any such records are found we will take the first one and assume
-        //that it is the duplicate record
-        $query = "SELECT c.id as id FROM contacts c
+        return null;
+    }
+    //This section of code is executed if no emails are supplied in the $seed instance
+
+    //This query is looking for the id of Contact records that do not have a primary email address based on the matching
+    //first and last name and the record being not deleted.  If any such records are found we will take the first one and assume
+    //that it is the duplicate record
+    $query = "SELECT c.id as id FROM contacts c
 LEFT OUTER JOIN email_addr_bean_rel eabr ON eabr.bean_id = c.id
 WHERE c.first_name = '{$trimmed_first}' AND c.last_name = '{$trimmed_last}' AND c.deleted = 0 AND eabr.id IS NULL";
 
-        //Apply the limit query filter to this since we only need the first record
-        $result = DBManagerFactory::getInstance()->getOne($query);
+    //Apply the limit query filter to this since we only need the first record
+    $result = DBManagerFactory::getInstance()->getOne($query);
 
-        return !empty($result) ? $result : null;
-    }
+    return !empty($result) ? $result : null;
 }
 
 /*
@@ -1097,9 +1107,8 @@ function is_server_version_greater($left, $right)
         return is_server_version_greater($left, $right);
     } elseif ($left[0] < $right[0]) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 function getFile($zip_file, $file_in_zip)
@@ -1156,9 +1165,8 @@ if (!function_exists("get_encoded")) {
             $iv = "password";
 
             return openssl_decrypt($buffer, OPENSSL_CIPHER_3DES, $key, OPENSSL_ZERO_PADDING, $iv);
-        } else {
-            return $string;
         }
+        return $string;
     }
 }
 
@@ -1200,4 +1208,3 @@ function apply_values($seed, $dataValues, $firstSync)
 }
 
 /*END HELPER*/
-

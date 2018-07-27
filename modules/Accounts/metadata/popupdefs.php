@@ -40,11 +40,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$popupMeta = array (
+$popupMeta = array(
     'moduleMain' => 'Account',
     'varName' => 'ACCOUNT',
     'orderBy' => 'name',
-    'whereClauses' => array (
+    'whereClauses' => array(
   'name' => 'accounts.name',
   'billing_address_city' => 'accounts.billing_address_city',
   'account_type' => 'accounts.account_type',
@@ -54,7 +54,7 @@ $popupMeta = array (
   'email' => 'accounts.email',
   'assigned_user_id' => 'accounts.assigned_user_id',
 ),
-    'searchInputs' => array (
+    'searchInputs' => array(
   0 => 'name',
   1 => 'billing_address_city',
   3 => 'account_type',
@@ -64,113 +64,113 @@ $popupMeta = array (
   7 => 'email',
   8 => 'assigned_user_id',
 ),
-    'create' => array (
+    'create' => array(
   'formBase' => 'AccountFormBase.php',
   'formBaseClass' => 'AccountFormBase',
-  'getFormBodyParams' => 
-  array (
+  'getFormBodyParams' =>
+  array(
     0 => '',
     1 => '',
     2 => 'AccountSave',
   ),
   'createButton' => 'LNK_NEW_ACCOUNT',
 ),
-    'searchdefs' => array (
-  'name' => 
-  array (
+    'searchdefs' => array(
+  'name' =>
+  array(
     'name' => 'name',
     'width' => '10%',
   ),
-  'account_type' => 
-  array (
+  'account_type' =>
+  array(
     'type' => 'enum',
     'label' => 'LBL_TYPE',
     'width' => '10%',
     'name' => 'account_type',
   ),
-  'industry' => 
-  array (
+  'industry' =>
+  array(
     'type' => 'enum',
     'label' => 'LBL_INDUSTRY',
     'width' => '10%',
     'name' => 'industry',
   ),
-  'billing_address_city' => 
-  array (
+  'billing_address_city' =>
+  array(
     'name' => 'billing_address_city',
     'width' => '10%',
   ),
-  'billing_address_state' => 
-  array (
+  'billing_address_state' =>
+  array(
     'name' => 'billing_address_state',
     'width' => '10%',
   ),
-  'billing_address_country' => 
-  array (
+  'billing_address_country' =>
+  array(
     'name' => 'billing_address_country',
     'width' => '10%',
   ),
-  'email' => 
-  array (
+  'email' =>
+  array(
     'name' => 'email',
     'width' => '10%',
   ),
-  'assigned_user_id' => 
-  array (
+  'assigned_user_id' =>
+  array(
     'name' => 'assigned_user_id',
     'label' => 'LBL_ASSIGNED_TO',
     'type' => 'enum',
-    'function' => 
-    array (
+    'function' =>
+    array(
       'name' => 'get_user_array',
-      'params' => 
-      array (
+      'params' =>
+      array(
         0 => false,
       ),
     ),
     'width' => '10%',
   ),
 ),
-    'listviewdefs' => array (
-  'NAME' => 
-  array (
+    'listviewdefs' => array(
+  'NAME' =>
+  array(
     'width' => '40%',
     'label' => 'LBL_LIST_ACCOUNT_NAME',
     'link' => true,
     'default' => true,
     'name' => 'name',
   ),
-  'ACCOUNT_TYPE' => 
-  array (
+  'ACCOUNT_TYPE' =>
+  array(
     'type' => 'enum',
     'label' => 'LBL_TYPE',
     'width' => '10%',
     'default' => true,
     'name' => 'account_type',
   ),
-  'BILLING_ADDRESS_CITY' => 
-  array (
+  'BILLING_ADDRESS_CITY' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_LIST_CITY',
     'default' => true,
     'name' => 'billing_address_city',
   ),
-  'BILLING_ADDRESS_STATE' => 
-  array (
+  'BILLING_ADDRESS_STATE' =>
+  array(
     'width' => '7%',
     'label' => 'LBL_STATE',
     'default' => true,
     'name' => 'billing_address_state',
   ),
-  'BILLING_ADDRESS_COUNTRY' => 
-  array (
+  'BILLING_ADDRESS_COUNTRY' =>
+  array(
     'width' => '10%',
     'label' => 'LBL_COUNTRY',
     'default' => true,
     'name' => 'billing_address_country',
   ),
-  'ASSIGNED_USER_NAME' => 
-  array (
+  'ASSIGNED_USER_NAME' =>
+  array(
     'width' => '2%',
     'label' => 'LBL_LIST_ASSIGNED_USER',
     'default' => true,

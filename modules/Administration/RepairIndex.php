@@ -123,7 +123,7 @@ $drop_index=array();
 $change_index=array();
 
 global $current_user, $beanFiles, $dictionary, $sugar_config, $mod_strings;;
-include_once ('include/database/DBManager.php');
+include_once('include/database/DBManager.php');
 
 $db = &DBManagerFactory::getInstance();
 $processed_tables=array();
@@ -140,9 +140,9 @@ foreach ($beanFiles as $beanname=>$beanpath) {
     //skips beans based on same tables. user, employee and group are an example.
     if (empty($focus->table_name) || isset($processed_tables[$focus->table_name])) {
         continue;
-    } else {
-        $processed_tables[$focus->table_name]=$focus->table_name;
     }
+    $processed_tables[$focus->table_name]=$focus->table_name;
+    
 
     if (!empty($dictionary[$focus->object_name]['indices'])) {
         $indices=$dictionary[$focus->object_name]['indices'];

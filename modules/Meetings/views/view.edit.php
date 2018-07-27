@@ -69,7 +69,7 @@ class MeetingsViewEdit extends ViewEdit
         global $json;
         $json = getJSONobj();
         $json_config = new json_config();
-        if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
+        if (isset($this->bean->json_id) && !empty($this->bean->json_id)) {
             $javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->json_id);
         } else {
             $this->bean->json_id = $this->bean->id;

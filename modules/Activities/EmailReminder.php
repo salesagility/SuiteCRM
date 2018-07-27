@@ -50,7 +50,7 @@ require_once("modules/Leads/Lead.php");
 
 /**
  * Class for sending email reminders of meetings and call to invitees
- * 
+ *
  */
 class EmailReminder
 {
@@ -99,7 +99,7 @@ class EmailReminder
         foreach ($meetings as $id) {
             $recipients = $this->getRecipients($id, 'Meetings');
             $bean = new Meeting();
-            $bean->retrieve($id);			
+            $bean->retrieve($id);
             if ($this->sendReminders($bean, $admin, $recipients)) {
                 $bean->email_reminder_sent = 1;
                 $bean->save();
@@ -203,7 +203,7 @@ class EmailReminder
      * @param XTemplate $xtpl
      * @param SugarBean $bean
      * @param User $user
-     * @return XTemplate 
+     * @return XTemplate
     */
     protected function setReminderBody(XTemplate $xtpl, SugarBean $bean, User $user)
     {
@@ -314,7 +314,7 @@ class EmailReminder
                 );
                 $emails[] = $arr;
             }
-        }        
+        }
         // fetch contacts
         $query = "SELECT contact_id FROM {$field_part}s_contacts WHERE {$field_part}_id = '{$id}' AND accept_status != 'decline' AND deleted = 0";
         $re = $db->query($query);
@@ -329,7 +329,7 @@ class EmailReminder
                 );
                 $emails[] = $arr;
             }
-        }        
+        }
         // fetch leads
         $query = "SELECT lead_id FROM {$field_part}s_leads WHERE {$field_part}_id = '{$id}' AND accept_status != 'decline' AND deleted = 0";
         $re = $db->query($query);
@@ -348,4 +348,3 @@ class EmailReminder
         return $emails;
     }
 }
-

@@ -44,8 +44,8 @@
  * Type:     function
  * Name:     sugar_getimage
  * Purpose:  Returns HTML image or sprite
- * 
- * @author Aamir Mansoor (amansoor@sugarcrm.com) 
+ *
+ * @author Aamir Mansoor (amansoor@sugarcrm.com)
  * @author Cam McKinnon (cmckinnon@sugarcrm.com)
  * @param array
  * @param Smarty
@@ -54,7 +54,7 @@
 function smarty_function_sugar_getimage($params, &$smarty)
 {
 
-	// error checking for required parameters
+    // error checking for required parameters
     if (!isset($params['name'])) {
         $smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'name');
     }

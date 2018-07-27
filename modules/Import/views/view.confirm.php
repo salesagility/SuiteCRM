@@ -245,9 +245,8 @@ class ImportViewConfirm extends ImportView
     {
         if (empty($importSource) || $importSource == 'csv') {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     private function getImportMap($importSource)
@@ -622,4 +621,3 @@ EOJAVASCRIPT;
         echo $ss->fetch('modules/Import/tpls/error.tpl');
     }
 }
-

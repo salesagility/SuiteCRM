@@ -617,9 +617,8 @@ class Lead extends Person implements EmailInterface
     {
         if (isset($GLOBALS['app_list_strings']['lead_conv_activity_opt'])) {
             return $GLOBALS['app_list_strings']['lead_conv_activity_opt'];
-        } else {
-            return array();
         }
+        return array();
     }
 
     /**
@@ -639,4 +638,3 @@ class Lead extends Person implements EmailInterface
         return $return_array;
     }
 }
-

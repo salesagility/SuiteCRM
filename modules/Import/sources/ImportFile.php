@@ -174,7 +174,7 @@ class ImportFile extends ImportDataSource
     }
 
     /**
-	 * This is needed to prevent unserialize vulnerability
+     * This is needed to prevent unserialize vulnerability
      */
     public function __wakeup()
     {
@@ -292,9 +292,8 @@ class ImportFile extends ImportDataSource
             $this->_delimiter = $delimiter;
             $this->_enclosure = $enclosure;
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function getFieldDelimeter()
@@ -344,7 +343,7 @@ class ImportFile extends ImportDataSource
             }
         }
         
-        // If we couldn't detect the charset, set it to default export/import charset 
+        // If we couldn't detect the charset, set it to default export/import charset
         if (empty($charset_for_import)) {
             $charset_for_import = $locale->getExportCharset();
         }
@@ -474,8 +473,7 @@ class ImportFile extends ImportDataSource
         $this->rewind();
         if ($this->hasHeaderRow(false)) {
             return $this->_currentRow;
-        } else {
-            return false;
         }
+        return false;
     }
 }

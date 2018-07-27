@@ -92,7 +92,7 @@ class Controller extends SugarBean
     {
         if (!empty($this->type) && $this->type=="Save") {
 
-			//safety check
+            //safety check
             $wall_test = $this->check_wall($magnitude, $direction, $parent_id);
 
             if ($wall_test==false) {
@@ -336,7 +336,7 @@ class Controller extends SugarBean
     {
 
 
-	//Currently handles single axis motion only!!!!!!!!!
+    //Currently handles single axis motion only!!!!!!!!!
         //TODO: jgreen - Add dual axis motion
 
         //adjust along start_axis

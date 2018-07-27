@@ -88,9 +88,8 @@ class M2MRelationship extends SugarRelationship
         elseif (is_array($results)) {
             $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
             return $this->getMostAppropriateLinkedDefinition($results);
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -134,7 +133,7 @@ class M2MRelationship extends SugarRelationship
         //due to the way the module works. Plus it would remove the relative ease of adding custom module support
         
         if (get_class($rhs) != 'User' && get_class($rhs) != 'ACLRole' && get_class($lhs) == 'SecurityGroup') {
-            $rhs->$rhsLinkName->addBean($lhs);			
+            $rhs->$rhsLinkName->addBean($lhs);
             $this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
 
             $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
@@ -142,7 +141,7 @@ class M2MRelationship extends SugarRelationship
             $rhs->$rhsLinkName->addBean($lhs);
             $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
         } elseif (get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
-            $lhs->$lhsLinkName->addBean($rhs);			
+            $lhs->$lhsLinkName->addBean($rhs);
             $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
 
             $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
@@ -185,7 +184,7 @@ class M2MRelationship extends SugarRelationship
             $this->callAfterAdd($rhs, $lhs, $rhsLinkName);
 
             /* BEGIN - SECURITY GROUPS */
-        } //end normal 
+        } //end normal
         /* END - SECURITY GROUPS */
 
         return true;
@@ -290,7 +289,7 @@ class M2MRelationship extends SugarRelationship
                 }
             }
         } else {
-            /* END - SECURITY GROUPS */        
+            /* END - SECURITY GROUPS */
             if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
                 $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
                 return false;
@@ -335,7 +334,7 @@ class M2MRelationship extends SugarRelationship
                 }
             }
             /* BEGIN - SECURITY GROUPS */
-        } //end normal 
+        } //end normal
         /* END - SECURITY GROUPS */
 
         return true;
@@ -472,14 +471,13 @@ class M2MRelationship extends SugarRelationship
                 $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
             }
             return $query;
-        } else {
-            return array(
+        }
+        return array(
                 'select' => "SELECT $targetKey id",
                 'from' => "FROM $from",
                 'where' => "WHERE $where AND $rel_table.deleted=$deleted",
                 'order_by' => $order_by
             );
-        }
     }
 
     public function getJoin($link, $params = array(), $return_array = false)

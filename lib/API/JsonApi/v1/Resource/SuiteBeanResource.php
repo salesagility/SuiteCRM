@@ -133,7 +133,8 @@ class SuiteBeanResource extends Resource
                 if ($datetime === false) {
                     throw new ApiException(
                         '[Unable to convert datetime field to ISO 8601] "' . $fieldName . '"',
-                        ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
+                        ExceptionCode::API_DATE_CONVERTION_SUGARBEAN
+                    );
                 }
                 $this->attributes[$fieldName] = $datetimeISO8601;
             } elseif ($sugarBean instanceof \File && $definition['type'] === 'file') {
@@ -149,7 +150,8 @@ class SuiteBeanResource extends Resource
                     $links
                         ->withRelated(
                             $config['site_url'] . '/api/v' . $apiController->getVersionMajor().'/modules/' .
-                            $sugarBean->module_name . '/'.$this->id. '/relationships/'.$definition['name'])
+                            $sugarBean->module_name . '/'.$this->id. '/relationships/'.$definition['name']
+                        )
                         ->toJsonApiResponse();
                 // remove data element from relationship
                 if (isset($this->relationships[$definition['name']]['data'])) {

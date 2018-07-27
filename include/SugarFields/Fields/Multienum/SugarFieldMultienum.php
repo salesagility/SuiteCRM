@@ -54,10 +54,9 @@ class SugarFieldMultienum extends SugarFieldEnum
         if (!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
             return $this->fetch($this->findTemplate('EditViewFunction'));
-        } else {
-            $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
-            return $this->fetch($this->findTemplate('SearchView'));
         }
+        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+        return $this->fetch($this->findTemplate('SearchView'));
     }
 
     /**
@@ -121,9 +120,8 @@ class SugarFieldMultienum extends SugarFieldEnum
             $sanitizedValue = parent::importSanitize($enum_value, $vardef, $focus, $settings);
             if ($sanitizedValue  === false) {
                 return false;
-            } else {
-                $enum_list[$key] = $sanitizedValue;
             }
+            $enum_list[$key] = $sanitizedValue;
         }
         $value = encodeMultienumValue($enum_list);
 

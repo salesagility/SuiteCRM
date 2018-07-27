@@ -75,12 +75,12 @@ class SugarMerge
         $this->custom_path = empty($custom_path) || preg_match('/[\/]$/', $custom_path) ? $custom_path : $custom_path . '/';
 
         $this->mergeMapping = array(
-			'editviewdefs.php'=> new EditViewMerge(),
-			'detailviewdefs.php'=>new DetailViewMerge(),
-			'listviewdefs.php'=>new ListViewMerge(),
-			'searchdefs.php'=>new SearchMerge(),
-			'quickcreatedefs.php'=>new QuickCreateMerge(),
-		);
+            'editviewdefs.php'=> new EditViewMerge(),
+            'detailviewdefs.php'=>new DetailViewMerge(),
+            'listviewdefs.php'=>new ListViewMerge(),
+            'searchdefs.php'=>new SearchMerge(),
+            'quickcreatedefs.php'=>new QuickCreateMerge(),
+        );
     }
 
     /**
@@ -132,7 +132,7 @@ class SugarMerge
                         //lets make sure that the directory matches the case of the module before we pass it in
                         global $moduleList;
                         //lets populate an array with the available modules, and make the key's lowercase
-                        $checkModList =  array_combine ($moduleList, $moduleList);
+                        $checkModList =  array_combine($moduleList, $moduleList);
                         $checkModList = array_change_key_case($checkModList);
 
                         //now lets compare with the current directory.  This accounts for cases in which the directory was created in lowercase
@@ -219,13 +219,13 @@ class SugarMerge
     }
 
     /**
-	 * Create a history copy of the custom file that will be merged so that it can be access through
-	 * studio if admins wish to revert at a later date.
-	 *
-	 * @param STRING $module - name of the module
-	 * @param STRING $file - name of the file
-	 * @param STRING $customFile - Path to the custom file that will be merged
-	 */
+     * Create a history copy of the custom file that will be merged so that it can be access through
+     * studio if admins wish to revert at a later date.
+     *
+     * @param STRING $module - name of the module
+     * @param STRING $file - name of the file
+     * @param STRING $customFile - Path to the custom file that will be merged
+     */
     protected function createHistoryLog($module, $customFile, $file)
     {
         $historyPath = 'custom/' . MB_HISTORYMETADATALOCATION . "/modules/$module/metadata/$file";

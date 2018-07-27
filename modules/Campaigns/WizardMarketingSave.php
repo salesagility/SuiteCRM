@@ -168,7 +168,7 @@ if ($marketing->all_prospect_lists==1) {
 }
 
 //populate an array with marketing email id to use
-$mass[] = $marketing->id; 
+$mass[] = $marketing->id;
 //if sending an email was chosen, set all the needed variables for queuing campaign
 
 if ($master !='save') {
@@ -177,7 +177,7 @@ if ($master !='save') {
     $_REQUEST['record'] =$marketing->campaign_id;
     $_POST['record']=$marketing->campaign_id;
     $_REQUEST['mode'] = $master;
-    $_POST['mode'] = $master; 
+    $_POST['mode'] = $master;
     $_REQUEST['from_wiz']= 'true';
     require_once('modules/Campaigns/QueueCampaign.php');
 }

@@ -289,8 +289,10 @@ class XML_HTMLSax3_Entities_Parsed
 if (version_compare(phpversion(), '4.3', '<') && !function_exists('html_entity_decode')) {
     function html_entity_decode($str, $style=ENT_NOQUOTES)
     {
-        return strtr($str,
-            array_flip(get_html_translation_table(HTML_ENTITIES, $style)));
+        return strtr(
+            $str,
+            array_flip(get_html_translation_table(HTML_ENTITIES, $style))
+        );
     }
 }
 /**

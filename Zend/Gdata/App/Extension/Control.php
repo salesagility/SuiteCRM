@@ -42,7 +42,6 @@ require_once 'Zend/Gdata/App/Extension/Draft.php';
  */
 class Zend_Gdata_App_Extension_Control extends Zend_Gdata_App_Extension
 {
-
     protected $_rootNamespace = 'app';
     protected $_rootElement = 'control';
     protected $_draft = null;
@@ -94,5 +93,4 @@ class Zend_Gdata_App_Extension_Control extends Zend_Gdata_App_Extension
         $this->_draft = $value;
         return $this;
     }
-
 }

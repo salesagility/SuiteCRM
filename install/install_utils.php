@@ -70,15 +70,13 @@ function installerHook($function_name, $options = array())
 
     if ($GLOBALS['customInstallHooksExist'] === false) {
         return 'undefined';
-    } else {
-        if (function_exists($function_name)) {
-            installLog("installerHook: function {$function_name} found, calling and returning the return value");
-            return $function_name($options);
-        } else {
-            installLog("installerHook: function {$function_name} not found in custom install hooks file");
-            return 'undefined';
-        }
     }
+    if (function_exists($function_name)) {
+        installLog("installerHook: function {$function_name} found, calling and returning the return value");
+        return $function_name($options);
+    }
+    installLog("installerHook: function {$function_name} not found in custom install hooks file");
+    return 'undefined';
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -93,12 +91,12 @@ function parseAcceptLanguage()
     if (strpos($lang, ';')) {
         $exLang = explode(';', $lang);
         return strtolower(str_replace('-', '_', $exLang[0]));
-    } else {
-        $match = array();
-        if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
-            return strtolower(str_replace('-', '_', $match[0]));
-        }
     }
+    $match = array();
+    if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
+        return strtolower(str_replace('-', '_', $match[0]));
+    }
+    
     return '';
 }
 
@@ -852,7 +850,7 @@ function handleSugarConfig()
     /*nsingh(bug 22402): Consolidate logger settings under $config['logger'] as liked by the new logger! If log4pphp exists,
         these settings will be overwritten by those in log4php.properties when the user access admin->system settings.*/
     $sugar_config['logger']	=
-        array ('level'=>$setup_site_log_level,
+        array('level'=>$setup_site_log_level,
             'file' => array(
                 'ext' => '.log',
                 'name' => 'suitecrm',
@@ -1156,10 +1154,9 @@ function drop_table_install(&$focus)
         $focus->drop_tables();
         $GLOBALS['log']->info("Dropped old ".$focus->table_name." table.");
         return 1;
-    } else {
-        $GLOBALS['log']->info("Did not need to drop old ".$focus->table_name." table.  It doesn't exist.");
-        return 0;
     }
+    $GLOBALS['log']->info("Did not need to drop old ".$focus->table_name." table.  It doesn't exist.");
+    return 0;
 }
 
 // Creating new tables if they don't exist.
@@ -1399,9 +1396,8 @@ function get_boolean_from_request($field)
 
     if (($_REQUEST[$field] == 'on') || ($_REQUEST[$field] == 'yes')) {
         return(true);
-    } else {
-        return(false);
     }
+    return(false);
 }
 
 function stripslashes_checkstrings($value)
@@ -1543,7 +1539,7 @@ function pullSilentInstallVarsIntoSession()
         die($mod_strings['ERR_SI_NO_CONFIG']);
     }
 
-    $config_subset = array (
+    $config_subset = array(
         'setup_site_url'                => isset($sugar_config['site_url']) ? $sugar_config['site_url'] : '',
         'setup_db_host_name'            => isset($sugar_config['dbconfig']['db_host_name']) ? $sugar_config['dbconfig']['db_host_name'] : '',
         'setup_db_host_instance'        => isset($sugar_config['dbconfig']['db_host_instance']) ? $sugar_config['dbconfig']['db_host_instance'] : '',
@@ -1555,7 +1551,7 @@ function pullSilentInstallVarsIntoSession()
         'setup_db_options'              => !empty($sugar_config['dbconfigoptions']) ? $sugar_config['dbconfigoptions'] : array(),
     );
     // third array of values derived from above values
-    $derived = array (
+    $derived = array(
         'setup_site_admin_password_retype'      => $sugar_config_si['setup_site_admin_password'],
         'setup_db_sugarsales_password_retype'   => $config_subset['setup_db_sugarsales_password'],
     );
@@ -1612,7 +1608,7 @@ function langPackFinalMove($file)
     //."upgrades/langpack/"
     $destination = $sugar_config['upload_dir'].$file->stored_file_name;
     if (!move_uploaded_file($_FILES[$file->field_name]['tmp_name'], $destination)) {
-        die ("ERROR: can't move_uploaded_file to $destination. You should try making the directory writable by the webserver");
+        die("ERROR: can't move_uploaded_file to $destination. You should try making the directory writable by the webserver");
     }
     return true;
 }
@@ -1882,13 +1878,12 @@ function langPackUnpack($unpack_type, $full_file)
             copy($manifest_file, $target_manifest);
             unlink($full_file); // remove tempFile
             return "The file $base_filename has been uploaded.<br>\n";
-        } else {
-            unlinkTempFiles($manifest_file, $full_file);
-            return "There was an error uploading the file, please try again!<br>\n";
         }
-    } else {
-        die("The zip file is missing a manifest.php file.  Cannot proceed.");
+        unlinkTempFiles($manifest_file, $full_file);
+        return "There was an error uploading the file, please try again!<br>\n";
     }
+    die("The zip file is missing a manifest.php file.  Cannot proceed.");
+    
     unlinkTempFiles($manifest_file, '');
 }
 
@@ -2123,7 +2118,7 @@ function create_db_user_creds($numChars=10)
     srand((double)microtime()*1000000);
     $password="";
     for ($i=0;$i<$numChars;$i++) {  // loop and create password
-        $password = $password . substr ($charBKT, rand() % strlen($charBKT), 1);
+        $password = $password . substr($charBKT, rand() % strlen($charBKT), 1);
     }
 
     return $password;

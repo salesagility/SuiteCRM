@@ -91,15 +91,22 @@ class _parse_proppatch
 
         $xml_parser = xml_parser_create_ns("UTF-8", " ");
 
-        xml_set_element_handler($xml_parser,
+        xml_set_element_handler(
+            $xml_parser,
                                 array(&$this, "_startElement"),
-                                array(&$this, "_endElement"));
+                                array(&$this, "_endElement")
+        );
 
-        xml_set_character_data_handler($xml_parser,
-                                       array(&$this, "_data"));
+        xml_set_character_data_handler(
+            $xml_parser,
+                                       array(&$this, "_data")
+        );
 
-        xml_parser_set_option($xml_parser,
-                              XML_OPTION_CASE_FOLDING, false);
+        xml_parser_set_option(
+            $xml_parser,
+                              XML_OPTION_CASE_FOLDING,
+            false
+        );
 
         while ($this->success && !feof($f_in)) {
             $line = fgets($f_in);

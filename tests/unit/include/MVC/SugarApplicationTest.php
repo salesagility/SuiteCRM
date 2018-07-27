@@ -30,19 +30,19 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //cannot test this method as it uses die which stops execution of php unit as well
-        /*  
-        
-        
+        /*
+
+
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
-        
+
         try {
             $SugarApplication->loadUser();
-        } 
+        }
         catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-        
+
         $this->assertTrue(TRUE);
         */
         $this->markTestIncomplete('Can Not be implemented');
@@ -434,13 +434,13 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method and check if it works and doesn't throws an exception
         try {
             ob_start();
-        
+
             $SugarApplication->redirect();
-        
+
             $renderedContent = ob_get_contents();
             ob_end_clean();
             $this->assertGreaterThan(0,strlen($renderedContent));
-             
+
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
@@ -472,7 +472,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetErrorMessages()
     {
-        //execute the method and check if it returns a array. 
+        //execute the method and check if it returns a array.
         $errorMessages = SugarApplication::getErrorMessages();
         $this->assertTrue(is_array($errorMessages));
     }

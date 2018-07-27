@@ -50,12 +50,12 @@ $sugar_smarty->assign('APP', $app_strings);
 //nsingh bug: 21669. Messes up localization
 /*foreach($modInvisList as $modinvisname){
     if(empty($app_list_strings['moduleList'][$modinvisname])){
-	   $app_list_strings['moduleList'][$modinvisname] = $modinvisname;
+       $app_list_strings['moduleList'][$modinvisname] = $modinvisname;
     }
 }*/
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
 /*foreach($modInvisList as $modinvisname){
-	unset($app_list_strings['moduleList'][$modinvisname]);
+    unset($app_list_strings['moduleList'][$modinvisname]);
 }*/
 $role = new ACLRole();
 $role->retrieve($_REQUEST['record']);

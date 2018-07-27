@@ -48,7 +48,7 @@ class ContactsController extends SugarController
             $this->view = 'popup';
         }
     }
-	
+    
     public function action_ValidPortalUsername()
     {
         $this->view = 'validportalusername';

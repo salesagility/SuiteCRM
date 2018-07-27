@@ -107,14 +107,14 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 							<input type="text" name="task_name" id="task_name" class="text ui-widget-content ui-corner-all" />
 							<label for="Predecessor"><?php echo $mod_strings['LBL_PREDECESSORS']; ?></label>
 							<?php
-							echo '<select id="Predecessor" name="Predecessor" class="text ui-widget-content ui-corner-all" />';
+                            echo '<select id="Predecessor" name="Predecessor" class="text ui-widget-content ui-corner-all" />';
         foreach ($tasks as $task) {
             echo '<option rel="'.$task->id.'" value="'.$task->order_number.'">'.$task->name.'</opion>';
         }
         echo '</select>'; ?>
 							<label for="relation_type"><?php echo $mod_strings['LBL_RELATIONSHIP_TYPE']; ?></label>
 							<?php
-							echo '<select id="relation_type" name="relation_type" class="text ui-widget-content ui-corner-all">
+                            echo '<select id="relation_type" name="relation_type" class="text ui-widget-content ui-corner-all">
 									'.get_select_options_with_id($app_list_strings['relationship_type_list'], '').'
 							</select>'; ?>
 
@@ -129,7 +129,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 
 							<label for="Resources"><?php echo $mod_strings['LBL_ASSIGNED_USER_ID']; ?></label>
 							<?php
-							echo '<select id="Resources" name="Resources" class="text ui-widget-content ui-corner-all" />';
+                            echo '<select id="Resources" name="Resources" class="text ui-widget-content ui-corner-all" />';
         echo '<option value="0">'.$mod_strings['LBL_UNASSIGNED'].'</option>';
         foreach ($resource_array as $resource) {
             echo '<option rel="'.$resource->type.'" value="'.$resource->id.'">'.$resource->name.'</opion>';
@@ -268,10 +268,10 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
         <div id="wrapper" >
 
 			<?php
-				if (ACLController::checkAccess('AM_ProjectTemplates', 'edit', true)) {
-				    echo '<div style="clear:both;padding:10px;"><button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button></div>';
-				    echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
-				} ?>
+                if (ACLController::checkAccess('AM_ProjectTemplates', 'edit', true)) {
+                    echo '<div style="clear:both;padding:10px;"><button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button></div>';
+                    echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
+                } ?>
             <input id="record" type="hidden" name="record" value="<?php echo $_REQUEST["record"]; ?>" />
             <div id="project_wrapper">
 

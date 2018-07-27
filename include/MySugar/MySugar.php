@@ -73,8 +73,8 @@ class MySugar
     public function checkDashletDisplay()
     {
         if ((!in_array($this->type, $GLOBALS['moduleList'])
-				&& !in_array($this->type, $GLOBALS['modInvisList']))
-				&& (!in_array('Activities', $GLOBALS['moduleList']))) {
+                && !in_array($this->type, $GLOBALS['modInvisList']))
+                && (!in_array('Activities', $GLOBALS['moduleList']))) {
             $displayDashlet = false;
         } elseif (ACLController::moduleSupportsACL($this->type)) {
             $bean = SugarModule::get($this->type)->loadBean();
@@ -127,9 +127,9 @@ class MySugar
             }
 
             $dashlets[$guid] = array('className' => $dashletsFiles[$_REQUEST['id']]['class'],
-										 'module' => $dashlet_module,
-										 'options' => $options,
-			                             'fileLocation' => $dashletsFiles[$_REQUEST['id']]['file']);
+                                         'module' => $dashlet_module,
+                                         'options' => $options,
+                                         'fileLocation' => $dashletsFiles[$_REQUEST['id']]['file']);
 
 
             if (!array_key_exists('current_tab', $_SESSION)) {
@@ -301,19 +301,19 @@ EOJS;
         $DashletsDialog = new DashletsDialog();
 
         switch ($category) {
-			case 'module':
-				$DashletsDialog->getDashlets('module');
-				$dashletIndex = 'Module Views';
-				$searchCategoryString = $app_strings['LBL_SEARCH_MODULES'];
-				break;
-			case 'tools':
-				$DashletsDialog->getDashlets('tools');
-				$dashletIndex = 'Tools';
-				$searchCategoryString = $app_strings['LBL_SEARCH_TOOLS'];
-				// no break
-			default:
-				break;
-		}
+            case 'module':
+                $DashletsDialog->getDashlets('module');
+                $dashletIndex = 'Module Views';
+                $searchCategoryString = $app_strings['LBL_SEARCH_MODULES'];
+                break;
+            case 'tools':
+                $DashletsDialog->getDashlets('tools');
+                $dashletIndex = 'Tools';
+                $searchCategoryString = $app_strings['LBL_SEARCH_TOOLS'];
+                // no break
+            default:
+                break;
+        }
         $allDashlets = $DashletsDialog->dashlets;
 
         $searchResult = array();
@@ -402,7 +402,7 @@ EOJS;
             } else { // display options
                 $json = getJSONobj();
                 return 'result = ' . $json->encode((array('header' => $dashlet->title . ' : ' . $app_strings['LBL_OPTIONS'],
-		                                                 'body'  => $dashlet->displayOptions())));
+                                                         'body'  => $dashlet->displayOptions())));
             }
         } else {
             return '0';
@@ -433,8 +433,7 @@ EOJS;
             $current_user->setPreference('pages', $pages, 0, $this->type);
 
             return '1';
-        } else {
-            return '0';
         }
+        return '0';
     }
 }

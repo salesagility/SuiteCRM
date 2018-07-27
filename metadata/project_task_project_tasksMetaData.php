@@ -63,7 +63,7 @@ $dictionary['project_task_project_tasks'] = array(
             'vname' => 'LBL_PROJECT_TASK_ID',
             'required' => true,
             'type' => 'id',
-        ),        
+        ),
         'deleted' => array(
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
@@ -82,15 +82,15 @@ $dictionary['project_task_project_tasks'] = array(
 
     'relationships' => array(
         'project_task_project_tasks' => array(
-            'lhs_module'        => 'ProjectTasks2', 
-            'lhs_table'         => 'project_tasks', 
+            'lhs_module'        => 'ProjectTasks2',
+            'lhs_table'         => 'project_tasks',
             'lhs_key'           => 'id',
-            'rhs_module'        => 'ProjectTasks2', 
-            'rhs_table'         => 'project_tasks', 
+            'rhs_module'        => 'ProjectTasks2',
+            'rhs_table'         => 'project_tasks',
             'rhs_key'           => 'id',
             'relationship_type' => 'many-to-many',
-            'join_table'        => 'project_task_project_tasks', 
-            'join_key_lhs'      => 'project_task_id', 
+            'join_table'        => 'project_task_project_tasks',
+            'join_key_lhs'      => 'project_task_id',
             'join_key_rhs'      => 'predecessor_project_task_id',
         ),
     ),

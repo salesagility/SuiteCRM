@@ -94,9 +94,8 @@ class AOS_Products_sugar extends Basic
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL': return true;
-		}
+            case 'ACL': return true;
+        }
         return false;
     }
 }
-

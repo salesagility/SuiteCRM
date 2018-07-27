@@ -76,7 +76,7 @@ if (isset($_REQUEST['uid'])) {
     
     if (isset($_SESSION['export_where']) && !empty($_SESSION['export_where'])) { // bug 4679
         $where = $_SESSION['export_where'];
-        $whereArr = explode (" ", trim($where));
+        $whereArr = explode(" ", trim($where));
         if ($whereArr[0] == trim('where')) {
             $whereClean = array_shift($whereArr);
         }
@@ -92,7 +92,7 @@ if (isset($_REQUEST['uid'])) {
     
     /*
     $query = 'select * from '.$focus->table_name.' where deleted=0';
-    $result = $focus->db->query($query, true, "");   
+    $result = $focus->db->query($query, true, "");
     */
     $row = $focus->db->fetchByAssoc($result);
     

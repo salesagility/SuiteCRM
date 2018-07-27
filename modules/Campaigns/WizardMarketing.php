@@ -394,9 +394,9 @@ if ($pl_count==0) {
     //disable the send email options
     $ss->assign("PL_DISABLED", 'disabled');
     $ss->assign("PL_DISABLED_TEST", $pl_diabled_test_too ? 'disabled' : false);
-} else {
-    //show inputs and assign type to be radio
 }
+    //show inputs and assign type to be radio
+
 
 if (!$list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_focus->id}' AND template_id IS NOT NULL AND template_id != ''")) {
     $ss->assign('error_on_templates', $mod_strings['LBL_NO_TEMPLATE_SELECTED']);

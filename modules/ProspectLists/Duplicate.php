@@ -62,7 +62,7 @@ if (isset($_POST['isDuplicate']) && $_POST['isDuplicate'] == true) {
     $focus->name=$mod_strings['LBL_COPY_PREFIX'].' '.$focus->name;
     
     $focus->save();
-    $return_id=$focus->id; 
+    $return_id=$focus->id;
     //duplicate the linked items.
     $query  = "select * from prospect_lists_prospects where prospect_list_id = '".$_POST['record']."'";
     $result = $focus->db->query($query);

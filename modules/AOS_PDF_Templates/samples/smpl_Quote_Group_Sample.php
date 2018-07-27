@@ -8,7 +8,7 @@ class smpl_Quote_Group_Sample
     {
         return 'AOS_Quotes';
     }
-		
+        
     public function getBody()
     {
         global $locale;

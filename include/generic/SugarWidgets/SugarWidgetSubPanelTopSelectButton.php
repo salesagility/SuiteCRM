@@ -106,9 +106,9 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
         $focus = $widget_data['focus'];
         if (ACLController::moduleSupportsACL($widget_data['module']) && !ACLController::checkAccess($widget_data['module'], 'list', true)) {
             $button = ' <input type="button" name="' . $this->getWidgetId() . '" id="' . $this->getWidgetId() . '" class="button"' . "\n"
-			. ' title="' . $this->title . '"'
-			. ' value="' . $this->value . "\"\n"
-			.' disabled />';
+            . ' title="' . $this->title . '"'
+            . ' value="' . $this->value . "\"\n"
+            .' disabled />';
             return $button;
         }
 
@@ -156,17 +156,17 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
         $return_url = "index.php?module=$return_module&action=$return_action&subpanel=$subpanel_name&record=$return_id&sugar_body_only=1";
 
         $popup_request_data = array(
-			'call_back_function' => 'set_return_and_save_background',
-			'form_name' => 'DetailView',
-			'field_to_name_array' => $fton_array,
-			'passthru_data' => array(
-				'child_field' => $subpanel_name,
-				'return_url' => urlencode($return_url),
-				'link_field_name' => $link_field_name,
-				'module_name' => $subpanel_name,
-				'refresh_page'=>$refresh_page,
-			),
-		);
+            'call_back_function' => 'set_return_and_save_background',
+            'form_name' => 'DetailView',
+            'field_to_name_array' => $fton_array,
+            'passthru_data' => array(
+                'child_field' => $subpanel_name,
+                'return_url' => urlencode($return_url),
+                'link_field_name' => $link_field_name,
+                'module_name' => $subpanel_name,
+                'refresh_page'=>$refresh_page,
+            ),
+        );
 
         // bugfix #57850 add marketing_id to the request data to allow filtering based on it
         if (!empty($_REQUEST['mkt_id'])) {
@@ -186,9 +186,9 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
 
         $json_encoded_php_array = $this->_create_json_encoded_popup_request($popup_request_data);
         return ' <input type="button" name="' . $this->getWidgetId() . '" id="' . $this->getWidgetId() . '" class="button"' . "\n"
-				. ' title="' . $this->title . '"'
-			. ' value="' . $this->value . "\"\n"
-			. " onclick='open_popup(\"$this->module_name\",600,400,\"$initial_filter\",true,true,$json_encoded_php_array,\"$popup_mode\",$create);' />\n";
+                . ' title="' . $this->title . '"'
+            . ' value="' . $this->value . "\"\n"
+            . " onclick='open_popup(\"$this->module_name\",600,400,\"$initial_filter\",true,true,$json_encoded_php_array,\"$popup_mode\",$create);' />\n";
     }
 
     /**

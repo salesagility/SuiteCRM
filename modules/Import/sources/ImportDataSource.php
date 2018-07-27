@@ -106,7 +106,7 @@ abstract class ImportDataSource implements Iterator
 
     /**
      * Return a result set from the external source as an associative array with the key value equal to the
-     * external field name and the rvalue equal to the actual value.  
+     * external field name and the rvalue equal to the actual value.
      *
      * @abstract
      * @param  int $startIndex
@@ -345,4 +345,3 @@ abstract class ImportDataSource implements Iterator
         return null;
     }
 }
- 
