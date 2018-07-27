@@ -53,7 +53,6 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay_get_module_popup_picker_if_no_listviews_searchdefs()
     {
-        require_once('include/SugarLogger/LoggerManager.php');
 
         $view = new ViewPopup();
         $view->module = 'Audit'; // Confirms has no listview/searchdefs
