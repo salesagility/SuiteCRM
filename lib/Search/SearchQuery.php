@@ -55,8 +55,8 @@ class SearchQuery
         $this->query = strval($searchString);
         $this->size = intval($size);
         $this->from = intval($from);
-        $this->engine = strval($engine);
         $this->options = $options;
+        $this->engine = $engine !== null ? strval($engine) : null;
     }
 
     /**
@@ -85,6 +85,15 @@ class SearchQuery
     public function getEngine()
     {
         return $this->engine;
+    }
+
+    /**
+     * @param $key
+     * @return mixed value
+     */
+    public function getOption($key)
+    {
+        return $this->options[$key];
     }
 
     /**
@@ -193,10 +202,21 @@ class SearchQuery
      */
     public static function fromRequestArray(array $request)
     {
-        $searchQuery = filter_var($request['search-query-string'], FILTER_SANITIZE_STRING);
-        $searchSize = filter_var($request['search-query-size'], FILTER_SANITIZE_NUMBER_INT);
-        $searchFrom = filter_var($request['search-query-from'], FILTER_SANITIZE_NUMBER_INT);
-        $searchEngine = filter_var($request['search-engine'], FILTER_SANITIZE_STRING);
+        if (isset($request['search-query-string'])) {
+            $searchQuery = filter_var($request['search-query-string'], FILTER_SANITIZE_STRING);
+        }
+
+        if (isset($request['search-query-size'])) {
+            $searchSize = filter_var($request['search-query-size'], FILTER_SANITIZE_NUMBER_INT);
+        }
+
+        if (isset($request['search-query-from'])) {
+            $searchFrom = filter_var($request['search-query-from'], FILTER_SANITIZE_NUMBER_INT);
+        }
+
+        if (isset($request['search-engine'])) {
+            $searchEngine = filter_var($request['search-engine'], FILTER_SANITIZE_STRING);
+        }
 
         if (empty($searchQuery)) {
             $searchQuery = filter_var($request['query_string'], FILTER_SANITIZE_STRING);
@@ -206,10 +226,19 @@ class SearchQuery
             $searchSize = 10;
         }
 
+        if (empty($searchFrom)) {
+            $searchFrom = null;
+        }
+
+        if (empty($searchEngine)) {
+            $searchEngine = null;
+        }
+
         unset(
             $request['search-query-string'],
             $request['query_string'],
             $request['search-query-size'],
+            $request['search-query-from'],
             $request['search-engine']
         );
 

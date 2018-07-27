@@ -55,14 +55,27 @@ class SearchQueryTest extends SearchTestAbstract
         $searchString = 'hello test';
         $size = 20;
         $from = 50;
+        $engine = 'TestEngine';
+        $options = ['foo' => 'bar'];
 
-        $query = SearchQuery::fromString($searchString, $size, $from);
+        $query = SearchQuery::fromString($searchString, $size, $from, $engine, $options);
 
         self::assertEquals($searchString, $query->getSearchString());
         self::assertEquals($size, $query->getSize());
         self::assertEquals($from, $query->getFrom());
+        self::assertEquals($engine, $query->getEngine());
+        self::assertEquals($options, $query->getOptions());
+        self::assertEquals('bar', $query->getOption('foo'));
     }
 
+    public function testIsEmpty()
+    {
+        $nonEmptyQuery = SearchQuery::fromString('foo');
+        $emptyQuery = SearchQuery::fromString('');
+
+        self::assertFalse($nonEmptyQuery->isEmpty());
+        self::assertTrue($emptyQuery->isEmpty());
+    }
 
     public function testTrim()
     {
@@ -77,15 +90,18 @@ class SearchQueryTest extends SearchTestAbstract
     public function testToLowerCase()
     {
         $string = ' HelLo tEsT WorLD    ';
+        $expected = ' hello test world    ';
+
         $query = SearchQuery::fromString($string);
         $query->toLowerCase();
 
-        self::assertEquals(' hello test world    ', $query->getSearchString());
+        self::assertEquals($expected, $query->getSearchString());
     }
 
     public function testReplace(){
         $string = '-HELLO_WOR-LD-';
         $expString = 'HELLO_WORLD';
+
         $query = SearchQuery::fromString($string);
         $query->replace('-', '');
 
@@ -123,5 +139,72 @@ class SearchQueryTest extends SearchTestAbstract
         $query->convertEncoding();
 
         self::assertEquals($expected, $query->getSearchString());
+    }
+
+    public function testFromRequestArray()
+    {
+        $request = $this->getRequest();
+
+        $query = SearchQuery::fromRequestArray($request);
+
+        $this->assertRequest($query);
+    }
+
+    public function testFromRequestArray2()
+    {
+        $request = [
+            'query_string' => 'FOO',
+            'foo' => 'bar',
+        ];
+
+        $query = SearchQuery::fromRequestArray($request);
+
+        self::assertEquals($query->getSearchString(), 'FOO');
+        self::assertEquals($query->getSize(), 10);
+        self::assertEquals($query->getFrom(), 0);
+        self::assertNull($query->getEngine());
+        self::assertEquals($query->getOptions(), ['foo' => 'bar']);
+        self::assertEquals($query->getOption('foo'), 'bar');
+    }
+
+    public function testFromGetRequest()
+    {
+        $old = $_GET;
+
+        $_GET = $this->getRequest();
+
+        $query = SearchQuery::fromGetRequest();
+
+        $this->assertRequest($query);
+
+        $_GET = $old;
+    }
+
+    /**
+     * @return array
+     */
+    private function getRequest()
+    {
+        $request = [
+            'search-query-string' => 'FOO',
+            'search-query-size' => '123',
+            'search-query-from' => 3,
+            'search-engine' => 'TestEngine',
+            'foo' => 'bar',
+        ];
+        return $request;
+    }
+
+    /**
+     * @param SearchQuery $query
+     */
+    private function assertRequest(SearchQuery $query)
+    {
+        self::assertEquals($query->getSearchString(), 'FOO');
+        self::assertEquals($query->getSize(), 123);
+        self::assertEquals($query->getFrom(), 3);
+        self::assertEquals($query->getEngine(), 'TestEngine');
+        self::assertEquals($query->getOptions(), ['foo' => 'bar']);
+        self::assertEquals($query->getOption('foo'), 'bar');
     }
 }
