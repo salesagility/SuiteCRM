@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,6 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -1601,6 +1602,7 @@ $app_strings = array(
     'LBL_BILL_TO_CONTACT' => 'Bill to Contact',
     'LBL_BILLING_ADDRESS' => 'Billing Address',
     'LBL_QUICK_CREATE_TITLE' => 'Quick Create',
+    'LBL_QUICK_CREATE' => 'Create ',
     'LBL_BROWSER_TITLE' => 'SuiteCRM - Open Source CRM',
     'LBL_BUGS' => 'Bugs',
     'LBL_BY' => 'by',
@@ -2035,9 +2037,9 @@ $app_strings = array(
     'LBL_SUBSCRIBE' => 'Subscribe',
     'LBL_UNSUBSCRIBE' => 'Unsubscribe',
     // Ajax status strings
-    'LBL_LOADING' => 'Loading ...',
+    'LBL_LOADING' => 'Loading...',
     'LBL_SEARCHING' => 'Searching...',
-    'LBL_SAVING_LAYOUT' => 'Saving Layout ...',
+    'LBL_SAVING_LAYOUT' => 'Saving Layout...',
     'LBL_SAVED_LAYOUT' => 'Layout has been saved.',
     'LBL_SAVED' => 'Saved',
     'LBL_SAVING' => 'Saving',
@@ -2046,7 +2048,7 @@ $app_strings = array(
     'LBL_HIDE_COLUMNS' => 'Hide Columns',
     'LBL_SEARCH_CRITERIA' => 'Search Criteria',
     'LBL_SAVED_VIEWS' => 'Saved Views',
-    'LBL_PROCESSING_REQUEST' => 'Processing..',
+    'LBL_PROCESSING_REQUEST' => 'Processing...',
     'LBL_REQUEST_PROCESSED' => 'Done',
     'LBL_AJAX_FAILURE' => 'Ajax failure',
     'LBL_MERGE_DUPLICATES' => 'Merge',
@@ -2136,16 +2138,16 @@ $app_strings = array(
     'LBL_DASHLET_CONFIGURE_DISPLAY_ROWS' => 'Display Rows',
 
     // MySugar status strings
-    'LBL_CREATING_NEW_PAGE' => 'Creating New Page ...',
+    'LBL_CREATING_NEW_PAGE' => 'Creating New Page...',
     'LBL_NEW_PAGE_FEEDBACK' => 'You have created a new page. You may add new content with the Add Dashlets menu option.',
     'LBL_DELETE_PAGE_CONFIRM' => 'Are you sure you want to delete this page?',
-    'LBL_SAVING_PAGE_TITLE' => 'Saving Page Title ...',
-    'LBL_RETRIEVING_PAGE' => 'Retrieving Page ...',
+    'LBL_SAVING_PAGE_TITLE' => 'Saving Page Title...',
+    'LBL_RETRIEVING_PAGE' => 'Retrieving Page...',
     'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your adminstrator has set. Please remove a SuiteCRM Dashlet to add more.',
-    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet ...',
+    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet...',
     'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
     'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
-    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet ...',
+    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet...',
     'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
 
     // MySugar Menu Options
@@ -3360,7 +3362,6 @@ $app_list_strings['aor_chart_types']['bar'] = 'Bar chart';
 $app_list_strings['aor_chart_types']['line'] = 'Line chart';
 $app_list_strings['aor_chart_types']['pie'] = 'Pie chart';
 $app_list_strings['aor_chart_types']['radar'] = 'Radar chart';
-$app_list_strings['aor_chart_types']['polar'] = 'Polar chart';
 $app_list_strings['aor_chart_types']['stacked_bar'] = 'Stacked bar';
 $app_list_strings['aor_chart_types']['grouped_bar'] = 'Grouped bar';
 $app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'Monthly';
@@ -3652,23 +3653,6 @@ $app_list_strings['marker_image_list']['currency_exchange'] = 'Currency Exchange
 $app_list_strings['marker_image_list']['customs'] = 'Customs';
 $app_list_strings['marker_image_list']['cycling'] = 'Cycling';
 $app_list_strings['marker_image_list']['dam'] = 'Dam';
-$app_list_strings['marker_image_list']['days_dim'] = 'Days Dim';
-$app_list_strings['marker_image_list']['days_dom'] = 'Days Dom';
-$app_list_strings['marker_image_list']['days_jeu'] = 'Days Jeu';
-$app_list_strings['marker_image_list']['days_jue'] = 'Days Jue';
-$app_list_strings['marker_image_list']['days_lun'] = 'Days Lun';
-$app_list_strings['marker_image_list']['days_mar'] = 'Days Mar';
-$app_list_strings['marker_image_list']['days_mer'] = 'Days Mer';
-$app_list_strings['marker_image_list']['days_mie'] = 'Days Mie';
-$app_list_strings['marker_image_list']['days_qua'] = 'Days Qua';
-$app_list_strings['marker_image_list']['days_qui'] = 'Days Qui';
-$app_list_strings['marker_image_list']['days_sab'] = 'Days Sab';
-$app_list_strings['marker_image_list']['days_sam'] = 'Days Sam';
-$app_list_strings['marker_image_list']['days_seg'] = 'Days Seg';
-$app_list_strings['marker_image_list']['days_sex'] = 'Days Sex';
-$app_list_strings['marker_image_list']['days_ter'] = 'Days Ter';
-$app_list_strings['marker_image_list']['days_ven'] = 'Days Ven';
-$app_list_strings['marker_image_list']['days_vie'] = 'Days Vie';
 $app_list_strings['marker_image_list']['dentist'] = 'Dentist';
 $app_list_strings['marker_image_list']['deptartment_store'] = 'Deptartment Store';
 $app_list_strings['marker_image_list']['disability'] = 'Disability';
@@ -3871,7 +3855,7 @@ $app_strings['LBL_RESCHEDULE_HISTORY'] = 'Call attempt history';
 $app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
 
 //SecurityGroups
-$app_list_strings['moduleList']['SecurityGroups'] = 'Security Groups Management';
+$app_list_strings['moduleList']['SecurityGroups'] = 'Security Suite Management';
 $app_strings['LBL_LOGIN_AS'] = 'Login as ';
 $app_strings['LBL_LOGOUT_AS'] = 'Logout as ';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
@@ -3887,13 +3871,6 @@ $app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Social Feed Details';
 
 $app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Filter';
 
-$app_strings['LBL_QUICK_ACCOUNT'] = 'Create Account';
-$app_strings['LBL_QUICK_CONTACT'] = 'Create Contact';
-$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Create Opportunity';
-$app_strings['LBL_QUICK_LEAD'] = 'Create Lead';
-$app_strings['LBL_QUICK_DOCUMENT'] = 'Create Document';
-$app_strings['LBL_QUICK_CALL'] = 'Log Call';
-$app_strings['LBL_QUICK_TASK'] = 'Create Task';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
 
 $app_strings['LBL_ADD_TAB'] = 'Add Tab';

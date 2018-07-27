@@ -925,7 +925,7 @@ function search_by_module($session, $search_string, $modules, $offset, $max_resu
     $GLOBALS['log']->info('SugarWebServiceImpl->search_by_module - search string = ' . $search_string);
 
 	if(!empty($search_string) && isset($search_string)) {
-		$search_string = trim($GLOBALS['db']->quote(securexss(from_html(clean_string($search_string, 'UNIFIED_SEARCH')))));
+		$search_string = trim(DBManagerFactory::getInstance()->quote(securexss(from_html(clean_string($search_string, 'UNIFIED_SEARCH')))));
     	foreach($modules_to_search as $name => $beanName) {
     		$where_clauses_array = array();
 			$unifiedSearchFields = array () ;
@@ -1155,8 +1155,8 @@ function get_entries_count($session, $module_name, $query, $deleted) {
 		$sql .= ' WHERE ' . implode(' AND ', $where_clauses);
 	}
 
-	$res = $GLOBALS['db']->query($sql);
-	$row = $GLOBALS['db']->fetchByAssoc($res);
+	$res = DBManagerFactory::getInstance()->query($sql);
+	$row = DBManagerFactory::getInstance()->fetchByAssoc($res);
 
 	$GLOBALS['log']->info('End: SugarWebServiceImpl->get_entries_count');
 	return array(

@@ -88,7 +88,15 @@ class AOW_Action extends Basic
     function save_lines($post_data, $parent, $key = '')
     {
 
-        $line_count = count($post_data[$key . 'action']);
+        $field = $key . 'field';
+        $postedField = null;
+        if (isset($post_data[$field])) {
+            $postedField = $post_data[$field];
+        } else {
+            LoggerManager::getLogger()->warn('Posted field is undefined: ' . $field);
+        }
+        
+        $line_count = count((array)$postedField);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
 

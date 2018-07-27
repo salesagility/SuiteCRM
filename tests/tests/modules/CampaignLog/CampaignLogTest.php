@@ -1,7 +1,7 @@
 <?php
 
 
-class CampaignLogTest extends PHPUnit_Framework_TestCase
+class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testCampaignLog()
     {
@@ -19,7 +19,6 @@ class CampaignLogTest extends PHPUnit_Framework_TestCase
 
     public function testget_list_view_data()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $campaignLog = new CampaignLog();
 

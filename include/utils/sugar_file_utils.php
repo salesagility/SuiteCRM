@@ -77,7 +77,7 @@ function sugar_mkdir($pathname, $mode = null, $recursive = false, $context = nul
     }
 
     if ($result) {
-        if (!sugar_chmod($pathname, $mode)) {
+        if (!sugar_chmod($pathname, $mode)  && !is_writable($pathname)) {
             return false;
         }
         if (!empty($GLOBALS['sugar_config']['default_permissions']['user'])) {
@@ -153,7 +153,7 @@ function sugar_file_put_contents($filename, $data, $flags = null, $context = nul
     }
 
     if (!is_writable($filename)) {
-        $GLOBALS['log']->error("File $filename cannot be written to");
+        LoggerManager::getLogger()->error("File $filename cannot be written to");
 
         return false;
     }

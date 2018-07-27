@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -61,7 +61,6 @@ $mod_strings = array(
 	'ERR_ADMIN_PASS_BLANK'				=> 'Provide the password for the SuiteCRM admin user. ',
 
 	'ERR_CHECKSYS'                      => 'Errors have been detected during compatibility check. In order for your SuiteCRM Installation to function properly, please take the proper steps to address the issues listed below and either press the recheck button, or try installing again.',
-	'ERR_CHECKSYS_CALL_TIME'            => 'Allow Call Time Pass Reference is On (this should be set to Off in php.ini)',
 	'ERR_CHECKSYS_CURL'					=> 'Not found: SuiteCRM Scheduler will run with limited functionality.',
 	'ERR_CHECKSYS_IMAP'					=> 'Not found: InboundEmail and Campaigns (Email) require the IMAP libraries. Neither will be functional.',
 	'ERR_CHECKSYS_MSSQL_MQGPC'			=> 'Magic Quotes GPC cannot be turned "On" when using MS SQL Server.',
@@ -96,7 +95,7 @@ $mod_strings = array(
 	'ERR_DB_ADMIN'						=> 'The provided database administrator username and/or password is invalid, and a connection to the database could not be established. Please enter a valid user name and password. (Error: ',
 	'ERR_DB_ADMIN_MSSQL'                => 'The provided database administrator username and/or password is invalid, and a connection to the database could not be established. Please enter a valid user name and password.',
 	'ERR_DB_EXISTS_NOT'					=> 'The specified database does not exist.',
-	'ERR_DB_EXISTS_WITH_CONFIG'			=> 'Database already exists with config data. To run an install with the chosen database, please re-run the install and choose: "Drop and recreate existing SuiteCRM tables?"  To upgrade, use the Upgrade Wizard in the Admin Console. Please read the upgrade documentation located <a href="http://www.suitecrm.com" target="_new">here</a>.',
+	'ERR_DB_EXISTS_WITH_CONFIG'			=> 'Database already exists with config data. To run an install with the chosen database, please re-run the install and choose: "Drop and recreate existing SuiteCRM tables?"  To upgrade, use the Upgrade Wizard in the Admin Console. Please read the upgrade documentation located <a href="https://docs.suitecrm.com/admin/installation-guide/upgrading/" target="_new">here</a>.',
 	'ERR_DB_EXISTS'						=> 'The provided Database Name already exists -- cannot create another one with the same name.',
 	'ERR_DB_EXISTS_PROCEED'             => 'The provided Database Name already exists. You can<br>1. hit the back button and choose a new database name <br>2. click next and continue but all existing tables on this database will be dropped. <strong>This means your tables and data will be blown away.</strong>',
 	'ERR_DB_HOSTNAME'					=> 'Host name cannot be blank.',
@@ -256,7 +255,7 @@ $mod_strings = array(
 	'LBL_DISABLED_DESCRIPTION_2'		=> 'After this change has been made, you may click the "Start" button below to begin your installation. <i>After the installation is complete, you will want to change the value for \'installer_locked\' to \'true\'.</i>',
 	'LBL_DISABLED_DESCRIPTION'			=> 'The installer has already been run once. As a safety measure, it has been disabled from running a second time. If you are absolutely sure you want to run it again, please go to your config.php file and locate (or add) a variable called \'installer_locked\' and set it to \'false\'. The line should look like this:',
 	'LBL_DISABLED_HELP_1'				=> 'For installation help, please visit the SuiteCRM',
-	'LBL_DISABLED_HELP_LNK'             => 'http://www.suitecrm.com/forum/index',
+	'LBL_DISABLED_HELP_LNK'             => 'https://suitecrm.com/suitecrm/forum/suite-forum',
 	'LBL_DISABLED_HELP_2'				=> 'support forums',
 	'LBL_DISABLED_TITLE_2'				=> 'SuiteCRM Installation has been Disabled',
 	'LBL_DISABLED_TITLE'				=> 'SuiteCRM Installation Disabled',
@@ -371,7 +370,7 @@ $mod_strings = array(
 	'LBL_PERFORM_OUTRO_5'				=> 'Approximate memory used: ',
 	'LBL_PERFORM_OUTRO_6'				=> ' bytes.',
 	'LBL_PERFORM_OUTRO_7'				=> 'Your system is now installed and configured for use.',
-	'LBL_PERFORM_REL_META'				=> 'relationship meta ... ',
+	'LBL_PERFORM_REL_META'				=> 'relationship meta... ',
 	'LBL_PERFORM_SUCCESS'				=> 'Success!',
 	'LBL_PERFORM_TABLES'				=> 'Creating SuiteCRM application tables, audit tables and relationship metadata',
 	'LBL_PERFORM_TITLE'					=> 'Perform Setup',
@@ -652,7 +651,7 @@ $contact_user_link_guid',
 	'LBL_NUMBER_GROUPING_SEP' => '1000s separator:',
 	'LBL_DECIMAL_SEP' => 'Decimal symbol:',
 	'LBL_NAME_FORMAT' => 'Name Format:',
-	'UPLOAD_LOGO' => 'Please wait, logo uploading..',
+	'UPLOAD_LOGO' => 'Please wait, logo uploading...',
 	'ERR_UPLOAD_FILETYPE' => 'File type not allowed, please upload a jpeg or png.',
 	'ERR_LANG_UPLOAD_UNKNOWN' => 'Unknown file upload error occured.',
 	'ERR_UPLOAD_FILE_UPLOAD_ERR_INI_SIZE' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
@@ -671,7 +670,7 @@ $contact_user_link_guid',
 
 	'STAT_CONFIGURATION' => 'Configuration relationships...',
 	'STAT_CREATE_DB' => 'Create database...',
-	//'STAT_CREATE_DB_TABLE' => 'Create database... (table: %s)',
+
 	'STAT_CREATE_DEFAULT_SETTINGS' => 'Create default settings...',
 	'STAT_INSTALL_FINISH' => 'Install finish...',
 	'STAT_INSTALL_FINISH_LOGIN' => 'Installation process finished, <a href="%s">please log in...</a>',

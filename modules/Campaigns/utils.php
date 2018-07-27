@@ -193,14 +193,14 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
             $data['target_id'] = "'" . create_guid() . "'";
             $data['target_type'] = "'Prospects'";
             $data['id'] = "'" . create_guid() . "'";
-            $data['campaign_id'] = "'" . $row['campaign_id'] . "'";
-            $data['target_tracker_key'] = "'" . $identifier . "'";
-            $data['activity_type'] = "'" . $activity . "'";
+            $data['campaign_id'] = $db->quoted($row['campaign_id']);
+            $data['target_tracker_key'] = $db->quoted($identifier);
+            $data['activity_type'] = $db->quoted($activity);
             $data['activity_date'] = "'" . TimeDate::getInstance()->nowDb() . "'";
             $data['hits'] = 1;
             $data['deleted'] = 0;
             if (!empty($clicked_url_key)) {
-                $data['related_id'] = "'" . $clicked_url_key . "'";
+                $data['related_id'] = $db->quoted($clicked_url_key);
                 $data['related_type'] = "'" . 'CampaignTrackers' . "'";
             }
 
@@ -219,13 +219,7 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
 
             $insert_query = "INSERT into campaign_log (" . $dataArrayKeysQuotedImplode . ")";
 
-            // quote variable first
-            $dataArrayValues = array_values($data);
-            $dataArrayValuesQuoted = array();
-            foreach ($dataArrayValues as $dataArrayValue) {
-                $dataArrayValuesQuoted[] = $db->quote($dataArrayValue);
-            }
-            $dataArrayValuesQuotedImplode = implode(', ', $dataArrayValuesQuoted);
+            $dataArrayValuesQuotedImplode = implode(', ', array_values($data));
 
             $insert_query .= " VALUES  (" . $dataArrayValuesQuotedImplode . ")";
 
@@ -276,18 +270,18 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
             return $return_array;
         } elseif ($row) {
             $data['id'] = "'" . create_guid() . "'";
-            $data['campaign_id'] = "'" . $row['campaign_id'] . "'";
-            $data['target_tracker_key'] = "'" . $identifier . "'";
-            $data['target_id'] = "'" . $row['target_id'] . "'";
-            $data['target_type'] = "'" . $row['target_type'] . "'";
-            $data['activity_type'] = "'" . $activity . "'";
+            $data['campaign_id'] = $db->quoted($row['campaign_id']);
+            $data['target_tracker_key'] = $db->quoted($identifier);
+            $data['target_id'] = $db->quoted($row['target_id']);
+            $data['target_type'] = $db->quoted($row['target_type']);
+            $data['activity_type'] = $db->quoted($activity);
             $data['activity_date'] = "'" . TimeDate::getInstance()->nowDb() . "'";
-            $data['list_id'] = "'" . $row['list_id'] . "'";
-            $data['marketing_id'] = "'" . $row['marketing_id'] . "'";
+            $data['list_id'] = $db->quoted($row['list_id']);
+            $data['marketing_id'] = $db->quoted($row['marketing_id']);
             $data['hits'] = 1;
             $data['deleted'] = 0;
             if (!empty($clicked_url_key)) {
-                $data['related_id'] = "'" . $clicked_url_key . "'";
+                $data['related_id'] = $db->quoted($clicked_url_key);
                 $data['related_type'] = "'" . 'CampaignTrackers' . "'";
             }
             //values for return array..
@@ -304,13 +298,7 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
             
             $insert_query = "INSERT into campaign_log (" . $dataArrayKeysQuotedImplode . ")";
             
-            // quote variable first
-            $dataArrayValues = array_values($data);
-            $dataArrayValuesQuoted = array();
-            foreach ($dataArrayValues as $dataArrayValue) {
-                $dataArrayValuesQuoted[] = $db->quote($dataArrayValue);
-            }
-            $dataArrayValuesQuotedImplode = implode(', ', $dataArrayValuesQuoted);
+            $dataArrayValuesQuotedImplode = implode(', ', array_values($data));
             
             $insert_query .= " VALUES  (" . $dataArrayValuesQuotedImplode . ")";
             
@@ -933,9 +921,9 @@ function process_subscriptions($subscription_string_to_parse) {
         $GLOBALS['log']->debug('set_campaign_merge: Invalid campaign id'. $campaign_id);
     } else {
         foreach ($targets as $target_list_id) {
-            $pl_query = "select * from prospect_lists_prospects where id='".$GLOBALS['db']->quote($target_list_id)."'";
-            $result=$GLOBALS['db']->query($pl_query);
-            $row=$GLOBALS['db']->fetchByAssoc($result);
+            $pl_query = "select * from prospect_lists_prospects where id='".DBManagerFactory::getInstance()->quote($target_list_id)."'";
+            $result=DBManagerFactory::getInstance()->query($pl_query);
+            $row=DBManagerFactory::getInstance()->fetchByAssoc($result);
             if (!empty($row)) {
                 write_mail_merge_log_entry($campaign_id,$row);
             }
@@ -952,32 +940,32 @@ function process_subscriptions($subscription_string_to_parse) {
 function write_mail_merge_log_entry($campaign_id,$pl_row) {
 
     //Update the log entry if it exists.
-    $update="update campaign_log set hits=hits+1 where campaign_id='".$GLOBALS['db']->quote($campaign_id)."' and target_tracker_key='" . $GLOBALS['db']->quote($pl_row['id']) . "'";
-    $result=$GLOBALS['db']->query($update);
+    $update="update campaign_log set hits=hits+1 where campaign_id='".DBManagerFactory::getInstance()->quote($campaign_id)."' and target_tracker_key='" . DBManagerFactory::getInstance()->quote($pl_row['id']) . "'";
+    $result=DBManagerFactory::getInstance()->query($update);
 
     //get affected row count...
-    $count=$GLOBALS['db']->getAffectedRowCount();
+    $count=DBManagerFactory::getInstance()->getAffectedRowCount();
     if ($count==0) {
         $data=array();
 
         $data['id']="'" . create_guid() . "'";
-        $data['campaign_id']="'" . $GLOBALS['db']->quote($campaign_id) . "'";
-        $data['target_tracker_key']="'" . $GLOBALS['db']->quote($pl_row['id']) . "'";
-        $data['target_id']="'" .  $GLOBALS['db']->quote($pl_row['related_id']) . "'";
-        $data['target_type']="'" .  $GLOBALS['db']->quote($pl_row['related_type']) . "'";
+        $data['campaign_id']="'" . DBManagerFactory::getInstance()->quote($campaign_id) . "'";
+        $data['target_tracker_key']="'" . DBManagerFactory::getInstance()->quote($pl_row['id']) . "'";
+        $data['target_id']="'" .  DBManagerFactory::getInstance()->quote($pl_row['related_id']) . "'";
+        $data['target_type']="'" .  DBManagerFactory::getInstance()->quote($pl_row['related_type']) . "'";
         $data['activity_type']="'targeted'";
         $data['activity_date']="'" . TimeDate::getInstance()->nowDb() . "'";
-        $data['list_id']="'" .  $GLOBALS['db']->quote($pl_row['prospect_list_id']) . "'";
+        $data['list_id']="'" .  DBManagerFactory::getInstance()->quote($pl_row['prospect_list_id']) . "'";
         $data['hits']=1;
         $data['deleted']=0;
         $insert_query="INSERT into campaign_log (" . implode(",",array_keys($data)) . ")";
         $insert_query.=" VALUES  (" . implode(",",array_values($data)) . ")";
-        $GLOBALS['db']->query($insert_query);
+        DBManagerFactory::getInstance()->query($insert_query);
     }
 }
 
     function track_campaign_prospects($focus){
-        $campaign_id = $GLOBALS['db']->quote($focus->id);
+        $campaign_id = DBManagerFactory::getInstance()->quote($focus->id);
         $delete_query="delete from campaign_log where campaign_id='".$campaign_id."' and activity_type='targeted'";
         $focus->db->query($delete_query);
 
@@ -989,7 +977,7 @@ function write_mail_merge_log_entry($campaign_id,$pl_row) {
         $insert_query.="SELECT {$guidSQL}, $current_date, plc.campaign_id,{$guidSQL},plp.prospect_list_id, plp.related_id, plp.related_type,'targeted',0 ";
         $insert_query.="FROM prospect_lists INNER JOIN prospect_lists_prospects plp ON plp.prospect_list_id = prospect_lists.id";
         $insert_query.=" INNER JOIN prospect_list_campaigns plc ON plc.prospect_list_id = prospect_lists.id";
-        $insert_query.=" WHERE plc.campaign_id='".$GLOBALS['db']->quote($focus->id)."'";
+        $insert_query.=" WHERE plc.campaign_id='".DBManagerFactory::getInstance()->quote($focus->id)."'";
         $insert_query.=" AND prospect_lists.deleted=0";
         $insert_query.=" AND plc.deleted=0";
         $insert_query.=" AND plp.deleted=0";

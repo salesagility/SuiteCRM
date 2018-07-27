@@ -96,14 +96,24 @@ class ListViewSmarty extends ListViewDisplay
         $this->data = $data;
 
         $totalWidth = 0;
-        foreach($this->displayColumns as $name => $params) {
-            $totalWidth += $params['width'];
+        
+        if (!is_array($this->displayColumns)) {
+            LoggerManager::getLogger()->warn('displayColumns is not an array');
+        }
+        
+        foreach((array)$this->displayColumns as $name => $params) {
+            $totalWidth += trim($params['width'],'%');
         }
         $adjustment = $totalWidth / 100;
 
         $contextMenuObjectsTypes = array();
-        foreach($this->displayColumns as $name => $params) {
-            $this->displayColumns[$name]['width'] = floor($this->displayColumns[$name]['width'] / $adjustment);
+        
+        if (!is_array($this->displayColumns)) {
+            LoggerManager::getLogger()->warn('displayColumns is not an array');
+        }
+        
+        foreach((array)$this->displayColumns as $name => $params) {
+            $this->displayColumns[$name]['width'] = floor(trim($this->displayColumns[$name]['width'],'%') / $adjustment);
             // figure out which contextMenu objectsTypes are required
             if(!empty($params['contextMenu']['objectType']))
                 $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
@@ -123,7 +133,7 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('APP',$app_strings);
 
         $this->ss->assign('bgHilite', $hilite_bg);
-        $this->ss->assign('colCount', count($this->displayColumns) + 10);
+        $this->ss->assign('colCount', count((array)$this->displayColumns) + 10);
         $this->ss->assign('htmlVar', strtoupper($htmlVar));
         $this->ss->assign('moduleString', $this->moduleString);
         $this->ss->assign('editLinkString', $app_strings['LBL_EDIT_BUTTON']);
@@ -188,7 +198,14 @@ class ListViewSmarty extends ListViewDisplay
             $this->ss->assign('contextMenuScript', $script);
         }
 
-        $this->ss->assign('showFilterIcon', !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Undefined index: module');
+        }
+        
+        $this->ss->assign('showFilterIcon', !in_array($module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
 	}
 
     /**

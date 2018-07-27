@@ -1,6 +1,6 @@
 <?php
 
-class RelationshipTest extends PHPUnit_Framework_TestCase
+class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testRelationship()
     {
@@ -22,7 +22,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -59,7 +59,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -78,7 +78,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -87,7 +87,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
             Relationship::delete('test_test', $db);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -95,7 +95,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -114,7 +114,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -140,7 +140,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -163,7 +163,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -191,7 +191,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -205,7 +205,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -216,7 +216,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
             $relationship->build_relationship_cache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -240,7 +240,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
             Relationship::delete_cache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -248,7 +248,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 

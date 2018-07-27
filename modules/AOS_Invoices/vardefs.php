@@ -536,6 +536,7 @@ $dictionary['AOS_Invoices'] = array(
                     array(
                         'name' => 'getCurrencyDropDown',
                         'returns' => 'html',
+                        'onListView' => true,
                     ),
             ),
         'quote_number' =>

@@ -1052,7 +1052,7 @@ $($.fullCalendar).ready(function () {
           + '</div>';
         var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
-        if ($('#cal_module').val() != "Home") {
+        if ($('#cal_module').val() != "Home" && typeof(event.id) !== 'undefined') {
           element.qtip({
             content: {
               title: {

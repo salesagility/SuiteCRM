@@ -376,7 +376,7 @@ class CaseUpdatesHook
         $aop_config = $this->getAOPConfig();
         $emailTemplate->retrieve($aop_config['case_closure_email_template_id']);
 
-        if (!$emailTemplate) {
+        if (!$emailTemplate->id) {
             $GLOBALS['log']->warn('CaseUpdatesHook: sendClosureEmail template is empty');
 
             return false;
@@ -525,7 +525,7 @@ class CaseUpdatesHook
 
         $aop_config = $this->getAOPConfig();
         $emailTemplate->retrieve($aop_config['case_creation_email_template_id']);
-        if (!$emailTemplate || !$aop_config['case_creation_email_template_id']) {
+        if (!$emailTemplate->id) {
             $GLOBALS['log']->warn('CaseUpdatesHook: sendCreationEmail template is empty');
 
             return false;
@@ -602,14 +602,25 @@ class CaseUpdatesHook
     {
         global $current_user, $sugar_config;
         $email_template = new EmailTemplate();
-        if ($_REQUEST['module'] === 'Import') {
+        
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Requested module is not set for case update');
+        }
+        
+        if ($module === 'Import') {
             //Don't send email on import
+            LoggerManager::getLogger()->warn("Don't send email on import");
             return;
         }
         if (!isAOPEnabled()) {
+            LoggerManager::getLogger()->warn("Don't send email if AOP enabled");
             return;
         }
         if ($caseUpdate->internal) {
+            LoggerManager::getLogger()->warn("Don't send email if case update is internal");
             return;
         }
         $signature = array();
@@ -620,7 +631,7 @@ class CaseUpdatesHook
                 $email_template = $email_template->retrieve($aop_config['contact_email_template_id']);
                 $signature = $current_user->getDefaultSignature();
             }
-            if ($email_template) {
+            if ($email_template->id) {
                 foreach ($caseUpdate->getContacts() as $contact) {
                     $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
                     $emails = array();

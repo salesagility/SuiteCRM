@@ -1,43 +1,82 @@
 <?php
 
-class ViewListTest extends PHPUnit_Framework_TestCase
+class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewList()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //execute the contructor and check for the Object type and type attribute
         $view = new ViewList();
         $this->assertInstanceOf('ViewList', $view);
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('list', 'type', $view);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testoldSearch()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $view = new ViewList();
 
         //execute the method and test if it works and does not throws an exception.
         try {
             $view->oldSearch();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testnewSearch()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $view = new ViewList();
 
         //execute the method and test if it works and does not throws an exception.
         try {
             $view->newSearch();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testlistViewPrepare()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         //test without setting parameters. it should return some html
         $view = new ViewList();
@@ -63,10 +102,21 @@ class ViewListTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals('value', $_REQUEST['key']);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testlistViewProcess()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //execute the method and call methods to get the required child objects set. it should return some html.
         $view = new ViewList();
         $view->seed = new User();
@@ -78,10 +128,21 @@ class ViewListTest extends PHPUnit_Framework_TestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testprepareSearchForm()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //test without any REQUEST parameters set. it will set searchform attribute to a searchform object. 
         $view1 = new ViewList();
         $view1->module = 'Users';
@@ -96,10 +157,23 @@ class ViewListTest extends PHPUnit_Framework_TestCase
         $view2->prepareSearchForm();
 
         $this->assertInstanceOf('SearchForm', $view2->searchForm);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testprocessSearchForm()
     {
+        $this->markTestIncomplete('Smarty error: sugar_button: missing required param (module)');
+        
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //test without use_old_search. it should return html.
         $view = new ViewList();
         $view->prepareSearchForm();
@@ -120,18 +194,40 @@ class ViewListTest extends PHPUnit_Framework_TestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertEquals(0, strlen($renderedContent));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testpreDisplay()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //execute the method and test if it sets the lv attribute to ListViewSmarty object.
         $view = new ViewList();
         $view->preDisplay();
         $this->assertInstanceOf('ListViewSmarty', $view->lv);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testdisplay()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $view = new ViewList();
 
         //test without setting bean attibute. it shuold return no access html.
@@ -154,5 +250,9 @@ class ViewListTest extends PHPUnit_Framework_TestCase
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent2));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }

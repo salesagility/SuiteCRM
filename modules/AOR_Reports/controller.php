@@ -77,7 +77,7 @@ class AOR_ReportsController extends SugarController
     {
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         if (!empty($this->bean->id)) {
-            $this->bean->user_parameters = requestToUserParameters();
+            $this->bean->user_parameters = requestToUserParameters($this->bean);
             echo $this->bean->build_group_report($offset, true);
         }
 
@@ -138,7 +138,7 @@ class AOR_ReportsController extends SugarController
 
         $module = new $beanList[$this->bean->report_module]();
 
-        $key = Relationship::retrieve_by_modules($this->bean->report_module, 'ProspectLists', $GLOBALS['db']);
+        $key = Relationship::retrieve_by_modules($this->bean->report_module, 'ProspectLists', DBManagerFactory::getInstance());
         if (!empty($key)) {
 
             $sql = $this->bean->build_report_query();
@@ -175,7 +175,7 @@ class AOR_ReportsController extends SugarController
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
         }
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
         $this->bean->build_report_csv();
         die;
     }
@@ -187,8 +187,16 @@ class AOR_ReportsController extends SugarController
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
         }
+        
+        $level = error_reporting();
+        $state = new SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
         error_reporting(0);
         require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
+        $state->popErrorLevel();
+        if ($level !== error_reporting()) {
+            throw new Exception('Incorrect error reporting level');
+        }
 
         $d_image = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $graphs = $_POST["graphsForPDF"];
@@ -245,7 +253,7 @@ class AOR_ReportsController extends SugarController
                 </tbody>
                 </table><br />' . $graphHtml;
 
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
 
         $printable = $this->bean->build_group_report(-1, false);
         $stylesheet = file_get_contents(SugarThemeRegistry::current()->getCSSURL('style.css', false));

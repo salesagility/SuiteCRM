@@ -187,7 +187,14 @@ class One2MBeanRelationship extends One2MRelationship
         if ($link->getSide() == REL_RHS)
         {
             $rhsID = $this->def['rhs_key'];
-            $id = $link->getFocus()->$rhsID;
+            
+            $id = null;
+            if (isset($link->getFocus()->$rhsID)) {
+                $id = $link->getFocus()->$rhsID;
+            } else {
+                LoggerManager::getLogger()->warn('Incorrect linked relationship rhs ID: ' . get_class($link->getFocus()) . '::$' . $rhsID . ' is undefined');
+            }
+            
             if (!empty($id))
             {
                 $rows[$id] = array('id' => $id);
@@ -228,7 +235,15 @@ class One2MBeanRelationship extends One2MRelationship
             $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
             $relatedSeed = BeanFactory::getBean($this->getRHSModule());
             $deleted = !empty($params['deleted']) ? 1 : 0;
-            $where = "WHERE $rhsTableKey = '{$link->getFocus()->$lhsKey}' AND {$rhsTable}.deleted=$deleted";
+            
+            $linkFocusLhsKey = null;
+            if (isset($link->getFocus()->$lhsKey)) {
+                $linkFocusLhsKey = $link->getFocus()->$lhsKey;
+            } else {
+                LoggerManager::getLogger()->warn('Linked Focus lhs key is not defined for One2Many Bean Relationship.');
+            }
+            
+            $where = "WHERE $rhsTableKey = '{$linkFocusLhsKey}' AND {$rhsTable}.deleted=$deleted";
             $order_by = '';
 
             //Check for role column
@@ -324,7 +339,7 @@ class One2MBeanRelationship extends One2MRelationship
         $query = '';
 
         $alias = empty($params['join_table_alias']) ? "{$link->name}_rel": $params['join_table_alias'];
-        $alias = $GLOBALS['db']->getValidDBName($alias, false, 'alias');
+        $alias = DBManagerFactory::getInstance()->getValidDBName($alias, false, 'alias');
 
         $tableInRoleFilter = "";
         if (
