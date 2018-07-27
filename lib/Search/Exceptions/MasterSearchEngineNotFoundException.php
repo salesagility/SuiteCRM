@@ -40,33 +40,14 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 22/06/18
- * Time: 09:50
+ * Date: 27/07/18
+ * Time: 11:51
  */
 
-use SuiteCRM\Search\SearchEngine;
-use SuiteCRM\Search\SearchQuery;
+namespace SuiteCRM\Search\Exceptions;
 
-class SearchEngineMock extends SearchEngine
+
+class MasterSearchEngineNotFoundException extends MasterSearchException
 {
 
-    public function search(SearchQuery $query)
-    {
-        if ($query->getSearchString() == 'foo')
-            return 'bar';
-
-        if ($query->getSearchString() == 'fooz')
-            return 'barz';
-
-        return false;
-    }
-
-    public function searchAndView(SearchQuery $query)
-    {
-        echo $this->search($query);
-    }
-
-    protected function validateQuery(SearchQuery &$query)
-    {
-    }
 }

@@ -39,12 +39,11 @@
 
 namespace SuiteCRM\Search;
 
-use InvalidArgumentException;
-use RuntimeException;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
+use SuiteCRM\Search\Exceptions\MasterSearchEngineNotFoundException;
 
 /**
  * Class MasterSearch performs a unified search using one of the available search engines.
@@ -60,11 +59,8 @@ class MasterSearch
         'ElasticSearchEngine' => 'lib/Search/ElasticSearch/ElasticSearchEngine.php',
     ];
 
-    /** @var float|null the number of seconds it took to perform the previous search */
-    private static $searchTime = null;
-
     /** @var string Path to the folder where to load custom engines from */
-    const CUSTOM_ENGINES_PATH = __DIR__ . '/../../custom/Extension/SearchEngines/';
+    private static $CUSTOM_ENGINES_PATH = __DIR__ . '/../../custom/Extension/SearchEngines/';
 
     /**
      * Perform a search with the given query and engine.
@@ -91,6 +87,7 @@ class MasterSearch
      * then attempts to find a matching engine in the folder `self::CUSTOM_ENGINES_PATH`.
      *
      * @param $engineName string|SearchEngine
+     * @throws MasterSearchEngineNotFoundException
      * @return SearchEngine
      */
     private static function fetchEngine($engineName)
@@ -98,7 +95,7 @@ class MasterSearch
         if (is_subclass_of($engineName, SearchEngine::class, false)) {
             return $engineName;
         } elseif (!is_string($engineName)) {
-            throw new InvalidArgumentException('$engineName should either be a string or a SearchEngine');
+            throw new MasterSearchEngineNotFoundException('$engineName should either be a string or a SearchEngine');
         }
 
         if (isset(self::$engines[$engineName])) {
@@ -106,18 +103,18 @@ class MasterSearch
             $filename = self::$engines[$engineName];
         } else {
             // Then look in the extension folder
-            $filename = self::CUSTOM_ENGINES_PATH . $engineName . '.php';
+            $filename = self::$CUSTOM_ENGINES_PATH . $engineName . '.php';
         }
 
         if (!file_exists($filename)) {
-            throw new RuntimeException("Unable to find search file '$filename'' for engine '$engineName''.");
+            throw new MasterSearchEngineNotFoundException("Unable to find search file '$filename'' for engine '$engineName''.");
         }
 
         /** @noinspection PhpIncludeInspection */
         require_once $filename;
 
         if (!is_subclass_of($engineName, SearchEngine::class)) {
-            throw new RuntimeException("The provided class '$engineName' is not an instance of SearchEngine");
+            throw new MasterSearchEngineNotFoundException("The provided class '$engineName' is not a subclass of SearchEngine");
         }
 
         /** @var SearchEngine $engineName */
@@ -162,17 +159,10 @@ class MasterSearch
     {
         $default = array_keys(self::$engines);
         $custom = [];
-        foreach (glob(self::CUSTOM_ENGINES_PATH . '*.php') as $file) {
+        foreach (glob(self::$CUSTOM_ENGINES_PATH . '*.php') as $file) {
             $file = pathinfo($file);
             $custom[] = $file['filename'];
         }
         return array_merge($default, $custom);
     }
-
-    /*  @return float|null the number of seconds it took to perform the previous search */
-    public static function getSearchTime()
-    {
-        return self::$searchTime;
-    }
-
 }
