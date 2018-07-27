@@ -89,18 +89,20 @@ class ElasticSearchCommands extends \Robo\Tasks
     {
         $engine = new MasterSearch();
 
-        $results = $engine->search('ElasticSearchEngine', SearchQuery::fromString($query, $size));
+        $result = $engine->search('ElasticSearchEngine', SearchQuery::fromString($query, $size));
+        $hits = $result->getHits();
 
-        if (!empty($results)) {
-            foreach ($results as $key => $module) {
+        if (!empty($hits)) {
+            $this->io()->title("Results");
+            foreach ($hits as $key => $module) {
                 $this->printModuleResults($showJson, $key, $module);
             }
         } else {
-            echo 'No results matching your query. Try broadening your criteria.';
+           $this->io()->note('No results matching your query. Try broadening your criteria.');
         }
 
-        $time = round($engine->getSearchTime() * 1000);
-        echo PHP_EOL, "Search performed in $time ms", PHP_EOL, PHP_EOL;
+        $time = round($result->getSearchTime() * 1000);
+        $this->io()->success("Search performed in $time ms");
     }
 
     /**
@@ -112,15 +114,20 @@ class ElasticSearchCommands extends \Robo\Tasks
      */
     private function printModuleResults($showJson, $module, array $ids)
     {
-        echo "\n### $module ###\n";
+        $this->io()->section($module);
+
+        $results = [];
+
         foreach ($ids as $id) {
             $bean = BeanFactory::getBean($module, $id);
-            echo "  * ", mb_convert_encoding($bean->name, "UTF-8", "HTML-ENTITIES"), PHP_EOL;
+            $results[] = mb_convert_encoding($bean->name, "UTF-8", "HTML-ENTITIES");
 
             if ($showJson) {
-                echo BeanJsonSerializer::serialize($bean, true, true);
+                $results[] = BeanJsonSerializer::serialize($bean, true, true);
             }
         }
+
+        $this->io()->listing($results);
     }
 
     /**
