@@ -49,9 +49,7 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
     }
 
-    /** @test */
-
-    public function testdisplay_get_module_popup_picker_if_no_listviews_searchdefs()
+    public function testdisplayGetModulePopupPickerIfNoListviewsSearchDefs()
     {
 
         $view = new ViewPopup();
@@ -75,12 +73,11 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // @TODO set up vfsStream and test get_custom_file_if_exists
 
         $dirname = dirname($customPath);
-        if (!is_dir($dirname))
-        {
+        if (!is_dir($dirname)) {
             mkdir($dirname, 0755, true);
         }
 
-        file_put_contents($customPath, "");
+        file_put_contents($customPath, '');
 
         $this->assertFileExists($customPath);
 
@@ -91,17 +88,15 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // Cleanup
         unlink($customPath);
         rmdir($dirname);
-
     }
 
-    /** @test  */
-
-    public function testdisplay_get_custom_default_popup_picker_if_no_module_popup_picker(){
+    public function testdisplayGetCustomDefaultPopupPickerIdNoModulePopupPicker()
+    {
 
         $view = new ViewPopup();
         $view->module = 'Accounts'; // Confirms has no Popup_picker
 
-        $modulePath = 'modules/'.$view->module.'/Popup_picker.php';
+        $modulePath = 'modules/' . $view->module . '/Popup_picker.php';
         $customPath = 'custom/include/Popups/Popup_picker.php';
         $defaultPath = 'include/Popups/Popup_picker.php';
 
@@ -127,12 +122,11 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // @TODO set up vfsStream and test get_custom_file_if_exists
 
         $dirname = dirname($customPath);
-        if (!is_dir($dirname))
-        {
+        if (!is_dir($dirname)) {
             mkdir($dirname, 0755, true);
         }
 
-        file_put_contents($customPath, "");
+        file_put_contents($customPath, '');
 
         $this->assertFileExists($customPath);
 
@@ -143,8 +137,5 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // Cleanup
         unlink($customPath);
         rmdir($dirname);
-
-
     }
-
 }
