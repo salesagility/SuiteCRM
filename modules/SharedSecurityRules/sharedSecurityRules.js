@@ -217,7 +217,8 @@ $(document).ready(function(){
                         type: relData[field]['type'],
                         module: relData[field]['module'],
                         module_path: modulePath,
-                        module_path_display: modulePathDisplay};
+                        module_path_display: modulePathDisplay
+                    };
                     treeData.push(newNode);
                 }
             }
