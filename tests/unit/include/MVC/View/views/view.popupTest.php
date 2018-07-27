@@ -1,7 +1,5 @@
 <?php
 
-use org\bovigo\vfs\vfsStream;
-
 class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
