@@ -738,7 +738,7 @@ function aorRunScheduledReports()
         try {
             $shouldRun = $scheduledReport->shouldRun($date);
         } catch (Exception $ex) {
-            LoggerManager::getLogger('SugarCRM')->warn('aorRunScheduledReports: id: ' . $scheduledReport->id . ' got exception. code: ' . $ex->getCode() . ', message: ' . $ex->getMessage());
+            LoggerManager::getLogger()->warn('aorRunScheduledReports: id: ' . $scheduledReport->id . ' got exception. code: ' . $ex->getCode() . ', message: ' . $ex->getMessage());
             $shouldRun = false;
         }
         if ($shouldRun) {
