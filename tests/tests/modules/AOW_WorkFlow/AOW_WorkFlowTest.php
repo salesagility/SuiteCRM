@@ -250,8 +250,19 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $result);
 
         //test with type custom on custom field of related module
-        $expected = array('join' => array('assigned_user_link_cstm' => 'LEFT JOIN calls_cstm assigned_user_link_cstm ON assigned_user_link.id = assigned_user_link_cstm.id_c '));
-        $result = $aowWorkFlow->build_flow_custom_query_join('assigned_user_link', 'assigned_user_link_cstm', new Call(), array());
+        $expected = array(
+            'join' => array(
+                'assigned_user_link_cstm' =>
+                    'LEFT JOIN calls_cstm assigned_user_link_cstm '
+                    .'ON assigned_user_link.id = assigned_user_link_cstm.id_c '
+            )
+        );
+        $result = $aowWorkFlow->build_flow_custom_query_join(
+            'assigned_user_link',
+            'assigned_user_link_cstm',
+            new Call(),
+            array()
+        );
         $this->assertSame($expected, $result);
 
         //test with type relationship
