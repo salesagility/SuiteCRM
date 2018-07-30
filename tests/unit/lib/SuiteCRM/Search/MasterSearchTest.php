@@ -70,8 +70,9 @@ class MasterSearchTest extends SearchTestAbstract
     {
         $expected = [
             0 => 'ElasticSearchEngine',
-            1 => 'BadMockSearch',
-            2 => 'MockSearch',
+            1 => 'SimpleSqlSearchEngine',
+            2 => 'BadMockSearch',
+            3 => 'MockSearch'
         ];
         $actual = MasterSearch::getEngines();
 
