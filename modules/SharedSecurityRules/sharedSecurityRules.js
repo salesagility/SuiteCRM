@@ -89,7 +89,7 @@ $(document).ready(function(){
             }
             $('#module-name').html('(<span title="' + module_path_display + '">' + module_name + '</span>)');
             $('#fieldTreeLeafs').remove();
-            $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox aor_dragbox" title="{/literal}{$MOD.LBL_TOOLTIP_DRAG_DROP_ELEMS}{literal}"></div>');
+            $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox aor_dragbox"></div>');
 
 
             $('#fieldTreeLeafs').tree({
