@@ -57,6 +57,7 @@ class MasterSearch
      */
     private static $engines = [
         'ElasticSearchEngine' => 'lib/Search/ElasticSearch/ElasticSearchEngine.php',
+        'SimpleSqlSearchEngine' => 'lib/Search/SqlSearch/SimpleSqlSearchEngine.php',
     ];
 
     /** @var string Path to the folder where to load custom engines from */
