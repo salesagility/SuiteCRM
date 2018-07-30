@@ -65,8 +65,7 @@ if (empty($GLOBALS['installing']) && !file_exists('config.php')) {
     exit();
 }
 
-$BASE_DIR = realpath(dirname(__DIR__));
-$autoloader = $BASE_DIR.'/vendor/autoload.php';
+$autoloader = __DIR__ . '/vendor/autoload.php';
 if (file_exists($autoloader)) {
     require_once $autoloader;
 } else {
