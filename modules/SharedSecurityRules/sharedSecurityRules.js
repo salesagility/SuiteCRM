@@ -265,6 +265,7 @@ $(document).ready(function(){
         var clearTreeDataFields = function() {
             $('#module-name').html('');
             $('#fieldTreeLeafs').html('');
+            
         }
 
 
@@ -291,4 +292,29 @@ $(document).ready(function(){
             loadConditionLine(val);
         });
     });
+    
+    setInterval(function(){
+        $('.jqtree-title.jqtree_common').each(function(){
+            if (!$(this).hasClass('treebkcolorselection')) {
+                $(this).addClass('treebkcolorselection');
+                $(this).click(function(){
+                    $('.jqtree-title.jqtree_common').each(function(){
+                        $(this).parent().removeClass('treeselected');
+                    });
+                    $(this).parent().addClass('treeselected');
+                    lastSelected = $(this).innerHTML;
+                });
+            }
+        });
+        $('.jqtree_common.jqtree-toggler').each(function(){
+            if (!$(this).hasClass('jqtree-closed')) {
+                $(this).parent().addClass('treeselected');
+            } else {
+                $(this).parent().removeClass('treeselected');
+            }
+        });
+    }, 300);
+    
+    $('body').append('<style>.treeselected {background-color: #97BDD6; background: -webkit-gradient(linear, left top, left bottom, from(#BEE0F5), to(#89AFCA));}</style>');
+    
 });
