@@ -175,7 +175,7 @@ function add_emailLine(ln){
     x.id = 'emailLine'+ln+'_line' + emailln[ln];
 
     var a = x.insertCell(0);
-    a.innerHTML = "<button type='button' id='emailLine"+ln+"_delete" + emailln[ln]+"' class='button' value='Remove Line' tabindex='116' onclick='clear_emailLine(" + ln + ",this);'><img src='themes/default/images/id-ff-remove-nobg.png' alt='Remove Line'></button> ";
+    a.innerHTML = "<button type='button' id='emailLine"+ln+"_delete" + emailln[ln]+"' class='button' value='Remove Line' tabindex='116' onclick='clear_emailLine(" + ln + ",this);' style='padding: 6px 6px; font-size: 25px; height: 29px; line-height: 0;'>-</button> ";
 
     a.innerHTML += "<select tabindex='116' name='shared_rules_actions_param["+ln+"][accesslevel]["+emailln[ln]+"]' id='shared_rules_actions_param"+ln+"_accesslevel"+emailln[ln]+"'>" + sharedGroupRules + "</select> ";
 

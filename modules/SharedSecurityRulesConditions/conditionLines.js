@@ -144,9 +144,7 @@ var ParenthesisHandler = {
       '<tr class="parenthesis-line parenthesis-open" parenthesis-counter="' + (_condln ? _condln : condln) + '" data-condition-id="' + condition_id + '">' +
       '   <td>' +
       '       <input type="hidden" name="aor_conditions_parenthesis[' + ((_condln ? _condln : condln)) + ']" value="START">' +
-      '       <button type="button" class="button parenthesis-remove-btn" value="" onclick="ParenthesisHandler.deleteParenthesisPair(this, ' + ((_condln ? _condln : condln)) + ');">' +
-      '           <img src="themes/default/images/id-ff-remove-nobg.png" alt="">' +
-      '       </button>' +
+      '       <button type="button" class="button parenthesis-remove-btn" value="" onclick="ParenthesisHandler.deleteParenthesisPair(this, ' + ((_condln ? _condln : condln)) + ');" style="padding: 6px 6px; font-size: 25px; height: 29px; line-height: 0;">-</button>' +
       '       <input type="hidden" name="aor_conditions_deleted[' + (_condln ? _condln : condln) + ']" id="aor_conditions_deleted' + (_condln ? _condln : condln) + '" value="0" data-delete-id="' + condition_id + '">' +
       '       <input type="hidden" name="aor_conditions_id[' + (_condln ? _condln : condln) + ']" id="aor_conditions_id' + (_condln ? _condln : condln) + '" value="' + condition_id + '">' +
       '       <input type="hidden" name="aor_conditions_field[' + ((_condln ? _condln : condln)) + ']" value="">' +
@@ -515,7 +513,7 @@ function insertConditionLine(condition){
 
     var a = x.insertCell(nxtCell++);
     if(action_sugar_grp1 == 'EditView'){
-      a.innerHTML = "<button type='button' id='aor_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
+      a.innerHTML = "<button type='button' id='aor_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")' style='padding: 6px 6px; font-size: 25px; height: 29px; line-height: 0;'>-</button><br>";
       a.innerHTML += "<input type='hidden' name='aor_conditions_deleted[" + condln + "]' id='aor_conditions_deleted" + condln + "' value='0'><input type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
     } else{
       a.innerHTML = condln +1 + "<input class='aor_conditions_id' type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
