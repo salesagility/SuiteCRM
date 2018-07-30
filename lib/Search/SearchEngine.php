@@ -22,6 +22,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 abstract class SearchEngine
 {
     /**
+     * Performs a search using the search engine and returns a list SearchResults instance.
+     *
+     * @param SearchQuery $query
+     * @return SearchResults
+     */
+    public abstract function search(SearchQuery $query);
+
+    /**
      * Performs a search using the given query and shows a search view.
      *
      * The search view contains both a search bar and search results (if any).
@@ -63,21 +71,18 @@ abstract class SearchEngine
     }
 
     /**
-     * Performs a search using the search engine and returns a list SearchResults instance.
+     * This method should be extended to sanitize and standardise the request to fill all the values as they are
+     * expected to be by the `search()` method.
      *
-     * @param SearchQuery $query
-     * @return SearchResults
-     */
-    public abstract function search(SearchQuery $query);
-
-    /**
-     * This method should be extend to sanitize and standardise the request to fill all the values as they are expected
-     * to be by the `search()` method.
+     * By default the query gets white spaces trimmed.
      *
-     * If it is impossible to validate the query a `SearchInvalidRequestException` should be thrown.
+     * If it is impossible to validate or sanitize the query a `SearchInvalidRequestException` should be thrown.
      *
      * @param $query SearchQuery the query to validate
      * @throws SearchInvalidRequestException if the query is not valid
      */
-    protected abstract function validateQuery(SearchQuery &$query);
+    protected function validateQuery(SearchQuery &$query)
+    {
+        $query->trim();
+    }
 }

@@ -14,10 +14,4 @@ class MockSearch extends SearchEngine
     {
         echo $query->getSearchString();
     }
-
-    protected function validateQuery(SearchQuery &$query)
-    {
-    }
-
-
 }

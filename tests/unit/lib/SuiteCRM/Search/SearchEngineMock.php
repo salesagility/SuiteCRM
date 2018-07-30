@@ -65,8 +65,4 @@ class SearchEngineMock extends SearchEngine
     {
         echo $this->search($query);
     }
-
-    protected function validateQuery(SearchQuery &$query)
-    {
-    }
 }

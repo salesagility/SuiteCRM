@@ -204,10 +204,4 @@ class SimpleSqlSearchEngine extends SearchEngine
 
         return $fields;
     }
-
-    /** @inheritdoc */
-    protected function validateQuery(SearchQuery &$query)
-    {
-        $query->trim();
-    }
 }
