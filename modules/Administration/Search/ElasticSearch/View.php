@@ -46,11 +46,15 @@
 
 /** @noinspection PhpIllegalStringOffsetInspection */
 
+namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;
+
+use Sugar_Smarty;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class ElasticSearchSettingsView
+class View
 {
     /** @var Sugar_Smarty */
     public $ss;
@@ -84,7 +88,7 @@ class ElasticSearchSettingsView
         $this->ss->assign('error', $errors);
         $this->ss->assign("BUTTONS", $buttons);
 
-        $this->ss->display('modules/Administration/Search/ElasticSearch/ElasticSearchSettingsTemplate.tpl');
+        $this->ss->display('modules/Administration/Search/ElasticSearch/view.tpl');
     }
 
     /**

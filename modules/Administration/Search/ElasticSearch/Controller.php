@@ -46,20 +46,24 @@
  * Time: 15:04
  */
 
+namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;
+
+use BeanFactory;
+use Configurator;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/ElasticSearchSettingsView.php';
 require_once __DIR__ . '/../../../Configurator/Configurator.php';
 
-class ElasticSearchSettingsController
+class Controller
 {
     /** @var Configurator */
     private $cfg;
     /** @var array reference to the values stored in cfg regarding the ElasticSearch */
     private $elasticSearchConfig;
-    /** @var ElasticSearchSettingsView */
+    /** @var View */
     private $view;
 
     /**
@@ -69,7 +73,7 @@ class ElasticSearchSettingsController
     {
         $this->cfg = new Configurator();
         $this->elasticSearchConfig = &$this->cfg->config['search']['ElasticSearch'];
-        $this->view = new ElasticSearchSettingsView($this->elasticSearchConfig);
+        $this->view = new View($this->elasticSearchConfig);
     }
 
     /**
