@@ -1,10 +1,12 @@
 <?php
 
 
-class AlertTest extends PHPUnit_Framework_TestCase
+class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -29,12 +31,17 @@ class AlertTest extends PHPUnit_Framework_TestCase
 
     public function testbean_implements()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $alert = new Alert();
 
         $this->assertEquals(false, $alert->bean_implements('')); //test with empty value
         $this->assertEquals(false, $alert->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $alert->bean_implements('ACL')); //test with valid value
+        
+        // clean up
     }
 }

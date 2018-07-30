@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -53,7 +55,7 @@ $viewdefs['Schedulers']['EditView'] = array(
                            ),
 
     'panels' => array(
-    		'default'=>array(
+            'default'=>array(
                            array('name', 'status'),
                            array('job_function', "job_url"),
                            array('adv_interval'),
@@ -83,7 +85,7 @@ $viewdefs['Schedulers']['EditView'] = array(
 				</table>
 				</div>
 				')),
-				array(array('name'=>'job_interval', 'label' => 'LBL_INTERVAL','customCode'=>'
+                array(array('name'=>'job_interval', 'label' => 'LBL_INTERVAL','customCode'=>'
 				<div id="job_interval_basic">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tr>
@@ -132,9 +134,9 @@ $viewdefs['Schedulers']['EditView'] = array(
                            ),
             'lbl_adv_options'=>array(
                             array(array('name' => 'catch_up', 'prefix' => '{sugar_help text=$MOD.LBL_CATCH_UP_WARNING}')),
-                           	array('date_time_start','time_from'),
-                           	array('date_time_end','time_to'),
-                           	),
-	),
+                               array('date_time_start','time_from'),
+                               array('date_time_end','time_to'),
+                               ),
+    ),
 
 );

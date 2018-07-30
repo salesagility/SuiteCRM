@@ -102,13 +102,23 @@ $dictionary['Reminder'] = array(
             'massupdate' => false,
             'studio' => false,
         ),
-        'popup_viewed' => [
+        'date_willexecute' => array(
+            'name' => 'date_willexecute',
+            'vname' => 'LBL_DATE_WILLEXECUTE',
+            'type' => 'int',
+            'default' => -1,
+            'len' => 60,
+            'required' => false,
+            'massupdate' => false,
+            'studio' => false,
+        ),
+        'popup_viewed' => array(
             'name' => 'popup_viewed',
             'type' => 'bool',
             'default' => '0',
             'importable' => true,
             'duplicate_merge' => 'disabled',
-        ]
+        ),
     ),
     'indices' => array(
         array('name' => 'idx_reminder_name', 'type' => 'index', 'fields' => array('name')),
@@ -126,7 +136,7 @@ $dictionary['Reminder'] = array(
     )
 );
 
-if (!class_exists('VardefManager')){
+if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('Reminders','Reminder', array('basic','assignable'));
+VardefManager::createVardef('Reminders', 'Reminder', array('basic','assignable'));

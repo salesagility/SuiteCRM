@@ -1,7 +1,7 @@
 <?php
 
 
-class TodayTest extends \Codeception\Test\Unit
+class TodayTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -13,15 +13,12 @@ class TodayTest extends \Codeception\Test\Unit
      */
     private static $filter;
 
-    protected function _before()
+    public function _before()
     {
-        if(self::$filter === null) {
+        parent::_before();
+        if (self::$filter === null) {
             self::$filter = new \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByPreMadeFilters\Today();
         }
-    }
-
-    protected function _after()
-    {
     }
 
     public function testHasByPreMadeFilter()
@@ -32,7 +29,7 @@ class TodayTest extends \Codeception\Test\Unit
     public function testGetByPreMadeFilter()
     {
         $today = new \DateTime();
-        $today = $today->setTime(0,0,0);
+        $today = $today->setTime(0, 0, 0);
         $expected = 'date_entered >= "'. $today->format(DATE_ATOM) . '"';
         $actual = self::$filter->getByPreMadeFilter();
         $this->assertEquals(
@@ -40,5 +37,4 @@ class TodayTest extends \Codeception\Test\Unit
             $actual
         );
     }
-
 }

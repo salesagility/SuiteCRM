@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
+class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
+{
 
 
 
@@ -58,9 +59,25 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
      * @param string $folder
      * @param int $limit
      * @param string $limitPerPage
+     * @param array $params
      * @return array
      */
-    public function search($seed, &$request, $where, $id, $inboundEmail, $filter, $folderObj, $currentUser, $folder, $limit, $limitPerPage) {
+    public function search(
+        $seed,
+        &$request,
+        $where,
+        $id,
+        $inboundEmail,
+        $filter,
+        $folderObj,
+        $currentUser,
+        $folder,
+        $limit,
+        $limitPerPage,
+        $params,
+        $pageData,
+        $filter_fields
+    ) {
 
 
         // Create the data structure which are required to view a list view.
@@ -101,7 +118,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
         }
 
         // Get emails from email server
-        $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter);
+        $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter, $filter_fields);
 
         $total = $emailServerEmails['mailbox_info']['Nmsgs']; // + count($importedEmails['data']);
         if ($page === "end") {
@@ -113,10 +130,8 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
         $request['uids'] = array();
 
         foreach ($emailServerEmails['data'] as $h => $emailHeader) {
-
-
             $emailRecord = $this->lvde->getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder);
-            if($emailRecord === false) {
+            if ($emailRecord === false) {
                 continue;
             }
 
@@ -126,7 +141,6 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
             $pageData['tag'][$h]['MAIN'] = 'a';
         }
 
-
         // Filter imported emails based on the UID of the results from the IMap server
         $crmWhere = $where . " AND mailbox_id LIKE " . "'" . $inboundEmail->id . "'";
 
@@ -135,7 +149,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
             $ret_array['inner_join'] = ' ' . implode(' ', $this->lvde->seed->listview_inner_join) . ' ';
         }
 
-        if (!is_array($params)) {
+        if (!isset($params) || !is_array($params)) {
             $params = array();
         }
         if (!isset($params['custom_select'])) {
@@ -198,7 +212,6 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
         }
 
         foreach ($queries as $query) {
-
             if ($total < $limitPerPage || $nextOffset >= $total) {
                 if (isset($pageData['queries'][$query])) {
                     unset($pageData['queries'][$query]);
@@ -213,7 +226,6 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
                 $pageData['queries'][$query]['lvso'] = "DESC";
 
                 $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
-
             }
         }
 
@@ -233,8 +245,21 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
             }
         }
 
+        if (!isset($pageData['ordering'])) {
+            $pageData['ordering'] = array(
+                'orderBy' => 'date_entered',
+                'sortOrder'=> 'ASC'
+            );
+        }
+
         // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap
         $endOffset = floor(($total - 1) / $limit) * $limit;
+        
+        if (!isset($pageData['ordering']) || !isset($pageData['ordering']['sortOrder'])) {
+            LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: sort order is not set. Using null by default.');
+            $pageData['ordering']['sortOrder'] = null;
+        }
+        
         $pageData['queries'] = $this->lvde->callGenerateQueries(
             $pageData['ordering']['sortOrder'],
             $offset,
@@ -275,10 +300,10 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
         }
 
 
-        if ( $this->lvde->isRequestedSearchAdvanced($request) ) {
+        if ($this->lvde->isRequestedSearchAdvanced($request)) {
             $queryString = "-advanced_search";
         } else {
-            if ( $this->lvde->isRequestedSearchBasic($request) ) {
+            if ($this->lvde->isRequestedSearchBasic($request)) {
 
                 // SearchForm is a (SearchForm2)
                 $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
@@ -317,10 +342,13 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
 
         $request['email_uids'] = $this->lvde->getEmailUIds($data);
 
-
+        if (!isset($queryString)) {
+            $queryString = null;
+            LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: qurey string is not set');
+        }
+        
         $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
 
         return $ret;
     }
-
 }

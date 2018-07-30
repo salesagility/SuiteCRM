@@ -5,7 +5,7 @@ use User;
 use DBManagerFactory;
 
 /** @noinspection PhpUndefinedClassInspection */
-abstract class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
+abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
 
     /**
@@ -35,9 +35,10 @@ abstract class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCa
 
     public static function setUpBeforeClass()
     {
-        global $db;
+        parent::setUpBeforeClass();
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset ($db->database);
+        unset($db->database);
         $db->checkConnection();
     }
 
@@ -47,8 +48,13 @@ abstract class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCa
      */
     public function setUp()
     {
+        parent::setUp();
+
         global $current_user, $sugar_config;
-        $current_user = new User();
+        try {
+            $current_user = @\BeanFactory::getBean('Users'); //new User();
+        } catch (Exception $e) {
+        }
         get_sugar_config_defaults();
 
         $this->log = $GLOBALS['log'];
@@ -88,6 +94,7 @@ abstract class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCa
         $GLOBALS['log'] = $this->log;
 
         DBManagerFactory::$instances = $this->dbManagerFactoryInstances;
+        
+        parent::tearDown();
     }
-
 }

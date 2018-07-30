@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_Books_Extension_Embeddability extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'gbs';
     protected $_rootElement = 'embeddability';
     protected $_value = null;
@@ -117,6 +116,4 @@ class Zend_Gdata_Books_Extension_Embeddability extends Zend_Gdata_Extension
         $this->_value = $value;
         return $this;
     }
-
 }
-

@@ -1,9 +1,11 @@
-<?PHP
+<?php
 
-class AOS_Product_CategoriesTest extends PHPUnit_Framework_TestCase
+class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -28,7 +30,14 @@ class AOS_Product_CategoriesTest extends PHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aos_product_categories');
+        $state->pushTable('tracker');
+        $state->pushGlobals();
+        
+        
 
         $aosProductCategories = new AOS_Product_Categories();
         $aosProductCategories->name = 'test';
@@ -44,5 +53,13 @@ class AOS_Product_CategoriesTest extends PHPUnit_Framework_TestCase
         $aosProductCategories->mark_deleted($aosProductCategories->id);
         $result = $aosProductCategories->retrieve($aosProductCategories->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('aos_product_categories');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
     }
 }

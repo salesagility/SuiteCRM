@@ -44,7 +44,8 @@ require_once('include/externalAPI/Base/ExternalAPIBase.php');
  * External API based on OAuth
  * @api
  */
-class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin {
+class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
+{
     public $authMethod = 'oauth';
     protected $oauthParams = array();
     protected $oauth_keys_initialized = false;
@@ -58,16 +59,18 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin 
      */
     public function setupOauthKeys()
     {
-        if($this->oauth_keys_initialized) return;
+        if ($this->oauth_keys_initialized) {
+            return;
+        }
 
         $connector = $this->getConnector();
-        if(!empty($connector)) {
+        if (!empty($connector)) {
             $cons_key = $connector->getProperty('oauth_consumer_key');
-            if(!empty($cons_key)) {
+            if (!empty($cons_key)) {
                 $this->oauthParams['consumerKey'] = $cons_key;
             }
             $cons_secret = $connector->getProperty('oauth_consumer_secret');
-            if(!empty($cons_secret)) {
+            if (!empty($cons_secret)) {
                 $this->oauthParams['consumerSecret'] = $cons_secret;
             }
         }
@@ -80,7 +83,9 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin 
      */
     public function loadEAPM($eapmBean)
     {
-        if ( !parent::loadEAPM($eapmBean) ) { return false; }
+        if (!parent::loadEAPM($eapmBean)) {
+            return false;
+        }
 
         $this->oauth_token = $eapmBean->oauth_token;
         $this->oauth_secret = $eapmBean->oauth_secret;
@@ -96,11 +101,11 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin 
     public function checkLogin($eapmBean = null)
     {
         $reply = parent::checkLogin($eapmBean);
-        if ( !$reply['success'] ) {
+        if (!$reply['success']) {
             return $reply;
         }
 
-        if ( $this->checkOauthLogin() ) {
+        if ($this->checkOauthLogin()) {
             return array('success' => true);
         }
     }
@@ -109,24 +114,22 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin 
     {
         $reply = parent::quickCheckLogin();
 
-        if ( !$reply['success'] ) {
+        if (!$reply['success']) {
             return $reply;
         }
 
-        if ( !empty($this->oauth_token) && !empty($this->oauth_secret) ) {
+        if (!empty($this->oauth_token) && !empty($this->oauth_secret)) {
             return array('success'=>true);
-        } else {
-            return array('success'=>false,'errorMessage'=>translate('LBL_ERR_NO_TOKEN','EAPM'));
         }
+        return array('success'=>false,'errorMessage'=>translate('LBL_ERR_NO_TOKEN', 'EAPM'));
     }
 
     protected function checkOauthLogin()
     {
-        if ( empty($this->oauth_token) || empty($this->oauth_secret) ) {
+        if (empty($this->oauth_token) || empty($this->oauth_secret)) {
             return $this->oauthLogin();
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function getOauthParams()
@@ -158,23 +161,23 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin 
         $this->setupOauthKeys();
         $oauth = new SugarOAuth($this->oauthParams['consumerKey'], $this->oauthParams['consumerSecret'], $this->getOauthParams());
 
-        if ( isset($this->oauth_token) && !empty($this->oauth_token) ) {
+        if (isset($this->oauth_token) && !empty($this->oauth_token)) {
             $oauth->setToken($this->oauth_token, $this->oauth_secret);
         }
 
         return $oauth;
     }
 
-   public function oauthLogin()
-   {
+    public function oauthLogin()
+    {
         global $sugar_config;
         $oauth = $this->getOauth();
-        if(isset($_SESSION['eapm_oauth_secret']) && isset($_SESSION['eapm_oauth_token']) && isset($_REQUEST['oauth_token']) && isset($_REQUEST['oauth_verifier'])) {
+        if (isset($_SESSION['eapm_oauth_secret']) && isset($_SESSION['eapm_oauth_token']) && isset($_REQUEST['oauth_token']) && isset($_REQUEST['oauth_verifier'])) {
             $stage = 1;
         } else {
             $stage = 0;
         }
-        if($stage == 0) {
+        if ($stage == 0) {
             $oauthReq = $this->getOauthRequestURL();
             $callback_url = $sugar_config['site_url'].'/index.php?module=EAPM&action=oauth&record='.$this->eapmBean->id;
             $callback_url = $this->formatCallbackURL($callback_url);
@@ -185,18 +188,17 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin 
 
             $GLOBALS['log']->debug("OAuth token: ".var_export($request_token_info, true));
 
-            if(empty($request_token_info['oauth_token_secret']) || empty($request_token_info['oauth_token'])){
+            if (empty($request_token_info['oauth_token_secret']) || empty($request_token_info['oauth_token'])) {
                 return false;
-            }else{
-                // FIXME: error checking here
-                $_SESSION['eapm_oauth_secret'] = $request_token_info['oauth_token_secret'];
-                $_SESSION['eapm_oauth_token'] = $request_token_info['oauth_token'];
-                $authReq = $this->getOauthAuthURL();
-                SugarApplication::redirect("{$authReq}?oauth_token={$request_token_info['oauth_token']}");
             }
+            // FIXME: error checking here
+            $_SESSION['eapm_oauth_secret'] = $request_token_info['oauth_token_secret'];
+            $_SESSION['eapm_oauth_token'] = $request_token_info['oauth_token'];
+            $authReq = $this->getOauthAuthURL();
+            SugarApplication::redirect("{$authReq}?oauth_token={$request_token_info['oauth_token']}");
         } else {
             $accReq = $this->getOauthAccessURL();
-            $oauth->setToken($_SESSION['eapm_oauth_token'],$_SESSION['eapm_oauth_secret']);
+            $oauth->setToken($_SESSION['eapm_oauth_token'], $_SESSION['eapm_oauth_secret']);
             $GLOBALS['log']->debug("OAuth access token: {$accReq}");
             $access_token_info = $oauth->getAccessToken($accReq);
             $GLOBALS['log']->debug("OAuth token: ".var_export($access_token_info, true));
@@ -213,5 +215,5 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin 
             return true;
         }
         return false;
-	}
+    }
 }

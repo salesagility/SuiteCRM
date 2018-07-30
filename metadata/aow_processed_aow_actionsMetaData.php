@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,22 +37,22 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$dictionary['aow_processed_aow_actions'] = array ( 'table' => 'aow_processed_aow_actions'
-, 'fields' => array (
+$dictionary['aow_processed_aow_actions'] = array( 'table' => 'aow_processed_aow_actions'
+, 'fields' => array(
         array('name' =>'id', 'type' =>'varchar', 'len'=>'36')
     , array('name' =>'aow_processed_id', 'type' =>'varchar', 'len'=>'36')
     , array('name' =>'aow_action_id', 'type' =>'varchar', 'len'=>'36')
-    ,  array ('name' => 'status', 'type' => 'varchar', 'len'=>'36', 'default'=>'Pending')
-    , array ('name' => 'date_modified','type' => 'datetime')
+    ,  array('name' => 'status', 'type' => 'varchar', 'len'=>'36', 'default'=>'Pending')
+    , array('name' => 'date_modified','type' => 'datetime')
     , array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'required'=>false, 'default'=>'0')
-    )                                  , 'indices' => array (
+    )                                  , 'indices' => array(
         array('name' =>'aow_processed_aow_actionsspk', 'type' =>'primary', 'fields'=>array('id'))
     , array('name' => 'idx_aow_processed_aow_actions', 'type'=>'alternate_key', 'fields'=>array('aow_processed_id','aow_action_id'))
     , array('name' => 'idx_actid_del_freid', 'type' => 'index', 'fields'=> array('aow_action_id', 'deleted', 'aow_processed_id'))
 
     )
 
-, 'relationships' => array ('aow_processed_aow_actions' => array('lhs_module'=> 'AOW_Processed', 'lhs_table'=> 'aow_processed', 'lhs_key' => 'id',
+, 'relationships' => array('aow_processed_aow_actions' => array('lhs_module'=> 'AOW_Processed', 'lhs_table'=> 'aow_processed', 'lhs_key' => 'id',
         'rhs_module'=> 'AOW_Actions', 'rhs_table'=> 'aow_actions', 'rhs_key' => 'id',
         'relationship_type'=>'many-to-many',
         'join_table'=> 'aow_processed_aow_actions', 'join_key_lhs'=>'aow_processed_id', 'join_key_rhs'=>'aow_action_id'))

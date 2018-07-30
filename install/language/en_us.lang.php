@@ -133,7 +133,6 @@ $mod_strings = array(
     'LBL_UPLOAD_MAX_FILESIZE_TITLE' => 'Upload File Size',
     'ERR_URL_BLANK' => 'Provide the base URL for the SuiteCRM instance.',
     'ERR_UW_NO_UPDATE_RECORD' => 'Could not locate installation record of',
-    'ERROR_FLAVOR_INCOMPATIBLE' => 'The uploaded file is not compatible with this flavor of SuiteCRM: ',
     'ERROR_MANIFEST_TYPE' => 'Manifest file must specify the package type.',
     'ERROR_PACKAGE_TYPE' => 'Manifest file specifies an unrecognized package type',
     'ERROR_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
@@ -549,13 +548,13 @@ $contact_user_link_guid',
     'ERR_ADMIN_EMAIL' => 'Administrator Email Address is incorrect.',
     'ERR_SITE_URL' => 'Site URL is required.',
 
-	'STAT_CONFIGURATION' => 'Configuration relationships...',
-	'STAT_CREATE_DB' => 'Create database...',
+    'STAT_CONFIGURATION' => 'Configuration relationships...',
+    'STAT_CREATE_DB' => 'Create database...',
 
-	'STAT_CREATE_DEFAULT_SETTINGS' => 'Create default settings...',
-	'STAT_INSTALL_FINISH' => 'Install finish...',
-	'STAT_INSTALL_FINISH_LOGIN' => 'Installation process finished, <a href="%s">please log in...</a>',
-	'LBL_LICENCE_TOOLTIP' => 'Please accept license first',
+    'STAT_CREATE_DEFAULT_SETTINGS' => 'Create default settings...',
+    'STAT_INSTALL_FINISH' => 'Install finish...',
+    'STAT_INSTALL_FINISH_LOGIN' => 'Installation process finished, <a href="%s">please log in...</a>',
+    'LBL_LICENCE_TOOLTIP' => 'Please accept license first',
 
     'LBL_MORE_OPTIONS_TITLE' => 'More options',
     'LBL_START' => '',
@@ -572,4 +571,3 @@ $contact_user_link_guid',
     'LBL_DBCONFIG_B_MSG1_LABEL' => '',
     'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.'
 );
-

@@ -49,8 +49,8 @@ $viewdefs['Users']['QuickCreate'] = array(
                             ),
                             'javascript' => '<script type="text/javascript" src="modules/Users/UserEditView.js"></script>',
     ),
-    'panels' => array (
-        'LBL_USER_INFORMATION' => array (
+    'panels' => array(
+        'LBL_USER_INFORMATION' => array(
             array(
                 array(
                     'name'=>'user_name',

@@ -52,7 +52,8 @@ class RelationshipRepository
      * @param array $jsonApiRequest
      * @return string
      */
-    public function getRelationshipTypeFromDataArray(array $jsonApiRequest) {
+    public function getRelationshipTypeFromDataArray(array $jsonApiRequest)
+    {
         return isset($jsonApiRequest['data'][0]) === true ? RelationshipType::TO_MANY : RelationshipType::TO_ONE;
     }
 }

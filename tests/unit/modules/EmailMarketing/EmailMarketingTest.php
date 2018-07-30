@@ -1,7 +1,7 @@
 <?php
 
 
-class EmailMarketingTest extends PHPUnit_Framework_TestCase
+class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testEmailMarketing()
     {
@@ -21,12 +21,17 @@ class EmailMarketingTest extends PHPUnit_Framework_TestCase
 
     public function testretrieve()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $emailMarketing = new EmailMarketing();
 
         $result = $emailMarketing->retrieve();
         $this->assertInstanceOf('EmailMarketing', $result);
+        
+        // clean up
     }
 
     public function testget_summary_text()
@@ -43,6 +48,12 @@ class EmailMarketingTest extends PHPUnit_Framework_TestCase
 
     public function testcreate_export_query()
     {
+        // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        
         $emailMarketing = new EmailMarketing();
 
         //test with empty string params
@@ -54,6 +65,11 @@ class EmailMarketingTest extends PHPUnit_Framework_TestCase
         $expected = " SELECT  email_marketing.*  , jt0.name template_name , jt0.assigned_user_id template_name_owner  , 'EmailTemplates' template_name_mod FROM email_marketing   LEFT JOIN  email_templates jt0 ON email_marketing.template_id=jt0.id AND jt0.deleted=0\n\n AND jt0.deleted=0 where (email_marketing.name=\"\") AND email_marketing.deleted=0";
         $actual = $emailMarketing->create_export_query('email_marketing.id', 'email_marketing.name=""');
         $this->assertSame($expected, $actual);
+
+
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testget_list_view_data()

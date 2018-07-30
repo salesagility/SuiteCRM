@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -55,4 +57,4 @@ $return_id = $sugarbean->id;
 
 //customize default retrun view to make it to redirect to GanttChart view
 $_REQUEST['return_url'] = "index.php?module=AM_ProjectTemplates&action=view_GanttChart&record=" . $return_id;
-handleRedirect($return_id,'AM_ProjectTemplates');
+handleRedirect($return_id, 'AM_ProjectTemplates');

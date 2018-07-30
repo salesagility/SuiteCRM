@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,17 +51,17 @@ $groupUserQuery = 'SELECT name, group_id FROM inbound_email ie INNER JOIN users 
 _pp($groupUserQuery);
 $r = $focus->db->query($groupUserQuery);
 $groupIds = '';
-while($a = $focus->db->fetchByAssoc($r)) {
-	$groupIds .= "'".$a['group_id']."', ";
+while ($a = $focus->db->fetchByAssoc($r)) {
+    $groupIds .= "'".$a['group_id']."', ";
 }
 $groupIds = substr($groupIds, 0, (strlen($groupIds) - 2));
 
 $query = 'SELECT emails.id AS id FROM emails';
-$query .= " WHERE emails.deleted = 0 AND emails.status = 'unread' AND emails.assigned_user_id IN ({$groupIds})";  
+$query .= " WHERE emails.deleted = 0 AND emails.status = 'unread' AND emails.assigned_user_id IN ({$groupIds})";
 //$query .= ' LIMIT 1';
 
 //_ppd($query);
-$r2 = $focus->db->query($query); 
+$r2 = $focus->db->query($query);
 $count = 0;
 $a2 = $focus->db->fetchByAssoc($r2);
 
@@ -67,9 +69,8 @@ $focus->retrieve($a2['id']);
 $focus->assigned_user_id = $current_user->id;
 $focus->save();
 
-if(!empty($a2['id'])) {
-	header('Location: index.php?module=Emails&action=ListView&type=inbound&assigned_user_id='.$current_user->id);
+if (!empty($a2['id'])) {
+    header('Location: index.php?module=Emails&action=ListView&type=inbound&assigned_user_id='.$current_user->id);
 } else {
-	header('Location: index.php?module=Emails&action=ListView&show_error=true&type=inbound&assigned_user_id='.$current_user->id);
+    header('Location: index.php?module=Emails&action=ListView&show_error=true&type=inbound&assigned_user_id='.$current_user->id);
 }
-

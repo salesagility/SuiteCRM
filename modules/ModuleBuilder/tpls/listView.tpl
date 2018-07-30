@@ -129,7 +129,7 @@ studiotabs.reset();
 							{if ($view|substr:-6 != "search") }
 							+ '&id_width=subslot{$modCounter}width&name_width={$MOD.LBL_WIDTH|escape:'url'}&value_width=' + encodeURIComponent(value_width)
 							{/if}
-					);"
+					);return false;"
 				>
             </td>
             </tr>

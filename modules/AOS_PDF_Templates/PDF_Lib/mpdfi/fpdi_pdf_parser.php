@@ -18,7 +18,8 @@
 //
 
 
-class fpdi_pdf_parser extends pdf_parser {
+class fpdi_pdf_parser extends pdf_parser
+{
 
     /**
      * Pages
@@ -181,7 +182,7 @@ class fpdi_pdf_parser extends pdf_parser {
             } else {
                 $contents[] = $content;
             }
-        } else if ($content_ref[0] == PDF_TYPE_ARRAY) {
+        } elseif ($content_ref[0] == PDF_TYPE_ARRAY) {
             foreach ($content_ref[1] AS $tmp_content_ref) {
                 $contents = array_merge($contents,$this->_getPageContent($tmp_content_ref));
             }
@@ -205,7 +206,7 @@ class fpdi_pdf_parser extends pdf_parser {
 
             if ($_filter[0] == PDF_TYPE_TOKEN) {
                 $filters[] = $_filter;
-            } else if ($_filter[0] == PDF_TYPE_ARRAY) {
+            } elseif ($_filter[0] == PDF_TYPE_ARRAY) {
                 $filters = $_filter[1];
             }
         }
@@ -274,7 +275,7 @@ class fpdi_pdf_parser extends pdf_parser {
                          "y" => $b[1][1]/_MPDFK,
                          "w" => abs($b[0][1]-$b[2][1])/_MPDFK,
                          "h" => abs($b[1][1]-$b[3][1])/_MPDFK);	// mPDF 5.3.90
-        } else if (!isset ($page[1][1]['/Parent'])) {
+        } elseif (!isset ($page[1][1]['/Parent'])) {
             return false;
         } else {
             return $this->getPageBox($this->pdf_resolve_object($this->c, $page[1][1]['/Parent']), $box_index);

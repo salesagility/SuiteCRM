@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_YouTube_Extension_Duration extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'yt';
     protected $_rootElement = 'duration';
     protected $_seconds = null;
@@ -122,5 +121,4 @@ class Zend_Gdata_YouTube_Extension_Duration extends Zend_Gdata_Extension
     {
         return $this->_seconds;
     }
-
 }

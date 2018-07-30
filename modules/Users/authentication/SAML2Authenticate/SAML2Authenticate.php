@@ -42,16 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once dirname(dirname(__FILE__)).'/SAML2Authenticate/lib/onelogin/php-saml/_toolkit_loader.php';
 
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
 
 /**
  * Class SAML2Authenticate for SAML2 auth
  */
-class SAML2Authenticate extends SugarAuthenticate {
-    var $userAuthenticateClass = 'SAML2AuthenticateUser';
-    var $authenticationDir = 'SAML2Authenticate';
+class SAML2Authenticate extends SugarAuthenticate
+{
+    public $userAuthenticateClass = 'SAML2AuthenticateUser';
+    public $authenticationDir = 'SAML2Authenticate';
 
     /**
      * @var OneLogin_Saml2_Auth
@@ -74,7 +74,7 @@ class SAML2Authenticate extends SugarAuthenticate {
         require_once dirname(dirname(__FILE__)) . '/SAML2Authenticate/lib/onelogin/settings.php';
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 
-        if(isset($_REQUEST['SAMLResponse']) && $_REQUEST['SAMLResponse']) {
+        if (isset($_REQUEST['SAMLResponse']) && $_REQUEST['SAMLResponse']) {
             if (isset($_SESSION) && isset($_SESSION['AuthNRequestID'])) {
                 $requestID = $_SESSION['AuthNRequestID'];
             } else {
@@ -90,8 +90,7 @@ class SAML2Authenticate extends SugarAuthenticate {
             }
 
             if (!$auth->isAuthenticated()) {
-                echo "<p>Not authenticated</p>";
-                exit();
+                SugarApplication::redirect($auth->getSSOurl());
             }
 
             $_SESSION['samlUserdata'] = $auth->getAttributes();
@@ -99,14 +98,19 @@ class SAML2Authenticate extends SugarAuthenticate {
             $_SESSION['samlNameIdFormat'] = $auth->getNameIdFormat();
             $_SESSION['samlSessionIndex'] = $auth->getSessionIndex();
             unset($_SESSION['AuthNRequestID']);
-            if (isset($_POST['RelayState']) && OneLogin_Saml2_Utils::getSelfURL() != $_POST['RelayState']) {
-                $this->redirectToLogin($GLOBALS['app']);
+
+            if (isset($_POST['RelayState'])) {
+                $relayStateUrl = $_POST['RelayState'] . '?action=Login&module=Users';
+                $selfurl = OneLogin_Saml2_Utils::getSelfURL();
+                if ($selfurl === $relayStateUrl) {
+                    // Authenticate with suitecrm
+                    $this->redirectToLogin($GLOBALS['app']);
+                }
             }
         } else {
             $auth->login();
             exit;
         }
-
     }
 
     /**
@@ -114,15 +118,15 @@ class SAML2Authenticate extends SugarAuthenticate {
      * @param SugarApplication $app
      * @return bool
      */
-    public function redirectToLogin(SugarApplication $app) {
-        if(isset($_SESSION['samlNameId']) && !empty($_SESSION['samlNameId'])) {
-            if( $this->userAuthenticate->loadUserOnLogin($_SESSION['samlNameId'], null) ) {
+    public function redirectToLogin(SugarApplication $app)
+    {
+        if (isset($_SESSION['samlNameId']) && !empty($_SESSION['samlNameId'])) {
+            if ($this->userAuthenticate->loadUserOnLogin($_SESSION['samlNameId'], null)) {
                 global $authController;
                 $authController->login($_SESSION['samlNameId'], null);
             }
             SugarApplication::redirect('index.php');
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -152,7 +156,8 @@ class SAML2Authenticate extends SugarAuthenticate {
     /**
      * call before from user logout page clear the session, store logout information for SAML2 logout
      */
-    public function preLogout() {
+    public function preLogout()
+    {
         require_once dirname(dirname(__FILE__)) . '/SAML2Authenticate/lib/onelogin/settings.php';
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 
@@ -175,5 +180,4 @@ class SAML2Authenticate extends SugarAuthenticate {
         $this->samlLogoutAuth = $auth;
         $this->samlLogoutArgs = array('returnTo' => $returnTo, 'parameters' => $paramters, 'nameId' => $nameId, 'sessionIndex' => $sessionIndex, 'false' => false, 'nameIdFormat' => $nameIdFormat);
     }
-
 }

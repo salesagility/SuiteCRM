@@ -43,45 +43,45 @@ $viewdefs['Documents']['QuickCreate'] = array(
                                                             '<input type="hidden" name="parent_id" value="{$smarty.request.parent_id}">',
                                                             '<input type="hidden" name="parent_type" value="{$smarty.request.parent_type}">',)),
                                             
-                            'maxColumns' => '2', 
+                            'maxColumns' => '2',
                             'widths' => array(
-                                            array('label' => '10', 'field' => '30'), 
+                                            array('label' => '10', 'field' => '30'),
                                             array('label' => '10', 'field' => '30')
                                             ),
-                            'includes' => 
-                              array (
+                            'includes' =>
+                              array(
                                 array('file' => 'include/javascript/popup_parent_helper.js'),
                                 array('file' => 'cache/include/javascript/sugar_grp_jsolait.js'),
                                 array('file' => 'modules/Documents/documents.js'),
                               ),
 ),
- 'panels' =>array (
-  'default' => 
-  array (
+ 'panels' =>array(
+  'default' =>
+  array(
     
-    array (
+    array(
       'status_id',
     ),
-    array (
-      array('name'=>'filename', 
+    array(
+      array('name'=>'filename',
             'displayParams'=>array('required'=>true, 'onchangeSetFileNameTo' => 'document_name'),
             ),
     ),
     
-    array (
+    array(
       'document_name',
        array('name'=>'revision',
             'customCode' => '<input name="revision" type="text" value="{$fields.revision.value}" {$DISABLED}>'
            ),
-    ),    
+    ),
     
-    array (
+    array(
        array('name'=>'active_date','displayParams'=>array('required'=>true)),
        'category_id',
     ),
     
 
-    array (
+    array(
       array('name'=>'description', 'displayParams'=>array('rows'=>10, 'cols'=>120)),
     ),
   ),

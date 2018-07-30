@@ -1,6 +1,6 @@
 <?php
 
-class ReleaseTest extends PHPUnit_Framework_TestCase
+class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testRelease()
     {
@@ -20,7 +20,10 @@ class ReleaseTest extends PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $release = new Release();
 
@@ -30,6 +33,8 @@ class ReleaseTest extends PHPUnit_Framework_TestCase
         //test with name set
         $release->name = 'test';
         $this->assertEquals('test', $release->get_summary_text());
+        
+        // clean up
     }
 
     public function testget_releases()
@@ -47,6 +52,12 @@ class ReleaseTest extends PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $release = new Release();
 
         //execute the method and test if it works and does not throws an exception.
@@ -54,12 +65,20 @@ class ReleaseTest extends PHPUnit_Framework_TestCase
             $release->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $release = new Release();
 
         //execute the method and test if it works and does not throws an exception.
@@ -67,8 +86,10 @@ class ReleaseTest extends PHPUnit_Framework_TestCase
             $release->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testget_list_view_data()
@@ -100,7 +121,7 @@ class ReleaseTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "name like '%'";
+        $expected = "name like 'test%'";
         $actual = $release->build_generic_where_clause('test');
         $this->assertSame($expected, $actual);
     }

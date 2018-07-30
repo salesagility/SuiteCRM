@@ -51,7 +51,7 @@ class Paths
     /**
      * @return string
      */
-    public function getContainersPath()
+    public function getContainersFilePath()
     {
         return $this->getLibraryPath() .'/API/core/containers.php';
     }
@@ -62,6 +62,17 @@ class Paths
     public function getLibraryPath()
     {
         return realpath(dirname(__DIR__));
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomLibraryPath()
+    {
+        $projectPath = $this->getProjectPath();
+        $libPath = $this->getLibraryPath();
+        $customLibraryPath = str_replace($projectPath, $projectPath . DIRECTORY_SEPARATOR . 'custom', $libPath);
+        return realpath($customLibraryPath);
     }
 
     /**

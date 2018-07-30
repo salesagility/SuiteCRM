@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * Utils of OneLogin PHP Toolkit
  *
@@ -90,9 +90,8 @@ class OneLogin_Saml2_Utils
 
         if (!$res) {
             return false;
-        } else {
-            return $dom;
         }
+        return $dom;
     }
 
     /**
@@ -165,7 +164,6 @@ class OneLogin_Saml2_Utils
             if ($heads) {
                 $x509cert = "-----BEGIN CERTIFICATE-----\n".chunk_split($x509cert, 64, "\n")."-----END CERTIFICATE-----\n";
             }
-
         }
         return $x509cert;
     }
@@ -190,7 +188,7 @@ class OneLogin_Saml2_Utils
                 if ($heads) {
                     $key = "-----BEGIN PRIVATE KEY-----\n".chunk_split($key, 64, "\n")."-----END PRIVATE KEY-----\n";
                 }
-            } else if (strpos($key, '-----BEGIN RSA PRIVATE KEY-----') !== false) {
+            } elseif (strpos($key, '-----BEGIN RSA PRIVATE KEY-----') !== false) {
                 $key = OneLogin_Saml2_Utils::getStringBetween($key, '-----BEGIN RSA PRIVATE KEY-----', '-----END RSA PRIVATE KEY-----');
                 $key = str_replace(' ', '', $key);
 
@@ -271,7 +269,7 @@ class OneLogin_Saml2_Utils
         foreach ($parameters as $name => $value) {
             if ($value === null) {
                 $param = urlencode($name);
-            } else if (is_array($value)) {
+            } elseif (is_array($value)) {
                 $param = "";
                 foreach ($value as $val) {
                     $param .= urlencode($name) . "[]=" . urlencode($val). '&';
@@ -332,10 +330,10 @@ class OneLogin_Saml2_Utils
                 self::setBaseURLPath($baseurlpath);
             }
         } else {
-                self::$_host = null;
-                self::$_protocol = null;
-                self::$_port = null;
-                self::$_baseurlpath = null;
+            self::$_host = null;
+            self::$_protocol = null;
+            self::$_port = null;
+            self::$_baseurlpath = null;
         }
     }
 
@@ -397,7 +395,7 @@ class OneLogin_Saml2_Utils
     {
         if (empty($baseurlpath)) {
             self::$_baseurlpath = null;
-        } else if ($baseurlpath == '/') {
+        } elseif ($baseurlpath == '/') {
             self::$_baseurlpath = '/';
         } else {
             self::$_baseurlpath = '/' . trim($baseurlpath, '/') . '/';
@@ -494,9 +492,9 @@ class OneLogin_Saml2_Utils
         $portnumber = null;
         if (self::$_port) {
             $portnumber = self::$_port;
-        } else if (self::getProxyVars() && isset($_SERVER["HTTP_X_FORWARDED_PORT"])) {
+        } elseif (self::getProxyVars() && isset($_SERVER["HTTP_X_FORWARDED_PORT"])) {
             $portnumber = $_SERVER["HTTP_X_FORWARDED_PORT"];
-        } else if (isset($_SERVER["SERVER_PORT"])) {
+        } elseif (isset($_SERVER["SERVER_PORT"])) {
             $portnumber = $_SERVER["SERVER_PORT"];
         } else {
             $currentHost = self::getRawHost();
@@ -864,9 +862,8 @@ class OneLogin_Saml2_Utils
     {
         if (version_compare(phpversion(), '5.4.0', '>=')) {
             return session_status() === PHP_SESSION_ACTIVE ? true : false;
-        } else {
-            return session_id() === '' ? false : true;
         }
+        return session_id() === '' ? false : true;
     }
 
     /**
@@ -874,7 +871,6 @@ class OneLogin_Saml2_Utils
      */
     public static function deleteLocalSession()
     {
-
         if (OneLogin_Saml2_Utils::isSessionStarted()) {
             session_destroy();
         }
@@ -957,7 +953,6 @@ class OneLogin_Saml2_Utils
      */
     public static function generateNameId($value, $spnq, $format, $cert = null, $nq = null)
     {
-
         $doc = new DOMDocument();
 
         $nameId = $doc->createElement('saml:NameID');
@@ -995,9 +990,8 @@ class OneLogin_Saml2_Utils
             $encryptedID->appendChild($encryptedID->ownerDocument->importNode($encryptedData, true));
 
             return $newdoc->saveXML($encryptedID);
-        } else {
-            return $doc->saveXML($nameId);
         }
+        return $doc->saveXML($nameId);
     }
 
 
@@ -1039,7 +1033,7 @@ class OneLogin_Saml2_Utils
             if ($subCodeEntry->length == 1) {
                 $status['msg'] = $subCodeEntry->item(0)->getAttribute('Value');
             }
-        } else if ($messageEntry->length == 1) {
+        } elseif ($messageEntry->length == 1) {
             $msg = $messageEntry->item(0)->textContent;
             $status['msg'] = $msg;
         }
@@ -1059,7 +1053,6 @@ class OneLogin_Saml2_Utils
      */
     public static function decryptElement(DOMElement $encryptedData, XMLSecurityKey $inputKey)
     {
-
         $enc = new XMLSecEnc();
 
         $enc->setNode($encryptedData);
@@ -1163,17 +1156,17 @@ class OneLogin_Saml2_Utils
         return $decryptedElement;
     }
 
-     /**
-      * Converts a XMLSecurityKey to the correct algorithm.
-      *
-      * @param XMLSecurityKey $key The key.
-      * @param string $algorithm The desired algorithm.
-      * @param string $type Public or private key, defaults to public.
-      *
-      * @return XMLSecurityKey The new key.
-      *
-      * @throws Exception
-      */
+    /**
+     * Converts a XMLSecurityKey to the correct algorithm.
+     *
+     * @param XMLSecurityKey $key The key.
+     * @param string $algorithm The desired algorithm.
+     * @param string $type Public or private key, defaults to public.
+     *
+     * @return XMLSecurityKey The new key.
+     *
+     * @throws Exception
+     */
     public static function castKey(XMLSecurityKey $key, $algorithm, $type = 'public')
     {
         assert('is_string($algorithm)');
@@ -1278,7 +1271,7 @@ class OneLogin_Saml2_Utils
     {
         if ($xml instanceof DOMDocument) {
             $dom = clone $xml;
-        } else if ($xml instanceof DOMElement) {
+        } elseif ($xml instanceof DOMElement) {
             $dom = clone $xml->ownerDocument;
         } else {
             $dom = new DOMDocument();

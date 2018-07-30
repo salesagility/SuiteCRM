@@ -52,8 +52,15 @@ class EmailTemplateParser
 
     /**
      * Allowed keys as result
+     * @var array
      */
-    const ALLOWED_ATTRIBUTES = ['subject', 'body_html', 'body'];
+    private static $allowedAttributes = ['subject', 'body_html', 'body'];
+
+    /**
+     * Allowed Non-DB fields
+     * @var array
+     */
+    private static $allowedVariables = ['survey_url_display'];
 
     /**
      * @var EmailTemplate
@@ -66,25 +73,44 @@ class EmailTemplateParser
     private $campaign;
 
     /**
-     * @var User
+     * @var EmailInterface
      */
-    private $user;
+    private $module;
 
     /**
-     * @var Surveys
+     * @var string
      */
-    private $survey;
+    private $siteUrl;
+
+    /**
+     * @var string
+     */
+    private $trackerId;
+
+    /**
+     * @var null|Surveys
+     */
+    private $survey = null;
 
     /**
      * @param EmailTemplate $template
      * @param Campaign $campaign
-     * @param User $user
+     * @param EmailInterface $module
+     * @param string $siteUrl
+     * @param string $trackerId
      */
-    public function __construct(EmailTemplate $template, Campaign $campaign, User $user)
-    {
+    public function __construct(
+        EmailTemplate $template,
+        Campaign $campaign,
+        EmailInterface $module,
+        $siteUrl,
+        $trackerId
+    ) {
         $this->template = $template;
         $this->campaign = $campaign;
-        $this->user = $user;
+        $this->module = $module;
+        $this->siteUrl = $siteUrl;
+        $this->trackerId = $trackerId;
     }
 
     /**
@@ -94,7 +120,7 @@ class EmailTemplateParser
     {
         $templateData = [];
 
-        foreach (static::ALLOWED_ATTRIBUTES as $key) {
+        foreach (static::$allowedAttributes as $key) {
             if (property_exists($this->template, $key)) {
                 $templateData[$key] = $this->getParsedValue($this->template->$key);
             }
@@ -137,23 +163,34 @@ class EmailTemplateParser
 
         switch ($moduleName) {
             case 'surveys':
+                if ($this->campaign->survey_id === '') {
+                    $GLOBALS['log']->fatal(sprintf(
+                        'Variable %s could not be parsed, because Campaign has no Survey',
+                        $variable
+                    ));
+                    return $variable;
+                }
                 $reference = $this->getSurvey();
                 break;
             case 'contact':
-                $reference = $this->user;
+                $reference = $this->module;
                 break;
-            default:
-                $GLOBALS['log']->warn(sprintf('Invalid bean when parsing (%s)', $moduleName));
-                return $variable;
+        }
+
+        if (in_array($attribute, static::$allowedVariables, true)) {
+            return $this->getNonDBVariableValue($attribute);
         }
 
         if (isset($reference->$attribute)) {
             return $reference->$attribute;
         }
 
-        $GLOBALS['log']->warn(
-            sprintf('%s does not set in %s bean', $attribute, $moduleName)
-        );
+        $GLOBALS['log']->fatal(sprintf(
+            'Variable %s could not be parsed, because attribute %s does not set in %s bean',
+            $variable,
+            $attribute,
+            $moduleName
+        ));
 
         return $variable;
     }
@@ -164,9 +201,34 @@ class EmailTemplateParser
     public function getSurvey()
     {
         if ($this->survey === null) {
-            $this->survey = BeanFactory::getBean('Surveys', $this->campaign->survey_id);
+            $this->survey = \BeanFactory::getBean('Surveys', $this->campaign->survey_id);
         }
 
         return $this->survey;
+    }
+
+    /**
+     * This one will be removed once dynamic fields will be fixed
+     * @param string $attribute
+     *
+     * @return string
+     */
+    private function getNonDBVariableValue($attribute)
+    {
+        $value = '';
+
+        if ($attribute === 'survey_url_display' && $this->module instanceof Person) {
+            /** @var Contact $contact */
+            $contact = $this->module;
+            $value = sprintf(
+                '%s/index.php?entryPoint=survey&id=%s&contact=%s&tracker=%s',
+                $this->siteUrl,
+                $this->getSurvey()->id,
+                $contact->id,
+                $this->trackerId !== null ? $this->trackerId : ''
+            );
+        }
+
+        return $value;
     }
 }

@@ -1,4 +1,3 @@
-*
+*.
+!*.sql
 !.gitignore
-!AntiMalwareTestFile.txt
-!api_data.sql
