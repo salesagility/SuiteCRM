@@ -912,11 +912,11 @@ $mod_strings = array(
     'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contain special characters',
     'LBL_PWDSEC_CHARS' => 'Characters',
 
-    // MasterSearch
+    // SearchWrapper
     'LBL_SEARCH_HEADER' => 'Search',
     'LBL_SEARCH_HEADER_DESC' => 'Manage your search preferences.',
-    'LBL_MASTER_SEARCH' => 'Master Search',
-    'LBL_MASTER_SEARCH_DESC' => 'Configure master search preferences.',
+    'LBL_SEARCH_WRAPPER' => 'Search 2.0',
+    'LBL_SEARCH_WRAPPER_DESC' => 'Manager your search preferences.',
     'LBL_ELASTIC_SEARCH' => 'Elasticsearch',
     'LBL_ELASTIC_SEARCH_SETTINGS' => 'Elasticsearch',
     'LBL_ELASTIC_SEARCH_SETTINGS_DESC' => 'Configure Elasticsearch preferences.'

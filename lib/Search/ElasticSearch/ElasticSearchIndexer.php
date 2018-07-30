@@ -686,7 +686,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         global $sugar_config;
 
         try {
-            return $sugar_config['MasterSearch']['ElasticSearch']['enabled'];
+            return $sugar_config['search']['ElasticSearch']['enabled'];
         } catch (\Exception $e) {
             \LoggerManager::getLogger()->fatal("Failed to retrieve ElasticSearch options");
             return false;

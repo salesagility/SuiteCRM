@@ -45,7 +45,7 @@
  * Time: 09:22
  */
 
-use SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException;
+
 use SuiteCRM\Search\SearchQuery;
 
 /** @noinspection PhpIncludeInspection */
@@ -63,20 +63,6 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         $this->invokeMethod($engine, 'validateQuery', [&$query]);
 
         self::assertEquals($exp, $query->getSearchString());
-    }
-
-    public function testValidateQuery2()
-    {
-        $engine = new ElasticSearchEngine();
-        $query = SearchQuery::fromString("");
-
-        try {
-            $this->invokeMethod($engine, 'validateQuery', [&$query]);
-        } catch (MasterSearchInvalidRequestException $e) {
-            return; // all good!
-        }
-
-        $this->fail("An exception should have been thrown here. The string was null.");
     }
 
     public function testCreateSearchParams1()
@@ -295,6 +281,6 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
         $results = $engine->search($query);
 
-        self::assertEquals($expectedResults, $results);
+        self::assertEquals($expectedResults, $results->getHits());
     }
 }

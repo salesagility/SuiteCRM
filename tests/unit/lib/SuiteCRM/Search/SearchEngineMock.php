@@ -45,25 +45,24 @@
  */
 
 use SuiteCRM\Search\SearchEngine;
+use SuiteCRM\Search\SearchQuery;
 
 class SearchEngineMock extends SearchEngine
 {
 
-    public function searchAndView($query)
+    public function search(SearchQuery $query)
     {
-        if ($query->query['searchstring'] == 'foo')
+        if ($query->getSearchString() == 'foo')
             return 'bar';
 
-        if ($query->query['searchstring'] == 'fooz')
+        if ($query->getSearchString() == 'fooz')
             return 'barz';
+
+        return false;
     }
 
-    public function search($query)
+    public function searchAndView(SearchQuery $query)
     {
-    }
-
-
-    protected function validateQuery(&$query)
-    {
+        echo $this->search($query);
     }
 }

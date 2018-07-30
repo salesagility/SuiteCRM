@@ -8,6 +8,10 @@
 
 namespace SuiteCRM\Search;
 
+use SuiteCRM\Search\Exceptions\SearchInvalidRequestException;
+use SuiteCRM\Search\UI\SearchFormController;
+use SuiteCRM\Search\UI\SearchResultsController;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -18,53 +22,67 @@ if (!defined('sugarEntry') || !sugarEntry) {
 abstract class SearchEngine
 {
     /**
-     * Performs a search using the given query and returns a view to be displayed.
+     * Performs a search using the search engine and returns a list SearchResults instance.
+     *
+     * @param SearchQuery $query
+     * @return SearchResults
+     */
+    public abstract function search(SearchQuery $query);
+
+    /**
+     * Performs a search using the given query and shows a search view.
+     *
+     * The search view contains both a search bar and search results (if any).
      *
      * @param $query SearchQuery
-     * @return \SugarView
      */
-    public function searchAndView($query)
+    public function searchAndView(SearchQuery $query)
     {
         $this->validateQuery($query);
-        $results = $this->search($query);
-        return $this->makeView($results);
+        $this->displayForm($query);
+
+        if (!$query->isEmpty()) {
+            $results = $this->search($query);
+            $this->displayResults($query, $results);
+        }
     }
 
     /**
-     * Makes a default result view given a set of results.
+     * Shows the default search form (search bar and options) for a given search query.
      *
-     * @param $results array
-     * @return \SugarView
+     * @param $query SearchQuery
      */
-    public function makeView($results)
+    public function displayForm(SearchQuery $query)
     {
-        // TODO
-        return new \SugarView();
+        $controller = new SearchFormController($query);
+        $controller->display();
     }
 
     /**
-     * Performs a search using the search engine and returns a list of ids in the following format:
+     * Shows the default search results for the given search query and results.
      *
-     * <code>
-     * [
-     *  'module1' => ['id1', 'id2', 'id3'],
-     *  'module2' => ['id4', 'id5', 'id5'],
-     * ]
-     * </code>
-     *
-     * @param SearchQuery
-     * @return array[] ids
+     * @param SearchQuery $query
+     * @param SearchResults $results
      */
-    public abstract function search($query);
+    public function displayResults(SearchQuery $query, SearchResults $results)
+    {
+        $controller = new SearchResultsController($query, $results);
+        $controller->display();
+    }
 
     /**
-     * This method should be extend to sanitize and standardise the request to fill all the values as they are expected
-     * to be by the `search()` method.
+     * This method should be extended to sanitize and standardise the request to fill all the values as they are
+     * expected to be by the `search()` method.
      *
-     * If it is impossible to validate the query a `MasterSearchInvalidRequestException` should be thrown.
+     * By default the query gets white spaces trimmed.
+     *
+     * If it is impossible to validate or sanitize the query a `SearchInvalidRequestException` should be thrown.
      *
      * @param $query SearchQuery the query to validate
-     * @throws \SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException if the query is not valid
+     * @throws SearchInvalidRequestException if the query is not valid
      */
-    protected abstract function validateQuery(&$query);
+    protected function validateQuery(SearchQuery &$query)
+    {
+        $query->trim();
+    }
 }

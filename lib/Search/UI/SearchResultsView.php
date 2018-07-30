@@ -40,20 +40,25 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 25/06/18
- * Time: 16:40
+ * Date: 26/07/18
+ * Time: 15:07
  */
 
-namespace SuiteCRM\Search\Exceptions;
+namespace SuiteCRM\Search\UI;
+
+use SuiteCRM\Search\UI\MVC\View;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/**
- * This exception is thrown when an invalid request is sent to a component of the Master Search.
- */
-class MasterSearchInvalidRequestException extends MasterSearchException
+class SearchResultsView extends View
 {
-
+    /**
+     * SearchResultsView constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct(__DIR__ . '/templates/search.results.tpl');
+    }
 }

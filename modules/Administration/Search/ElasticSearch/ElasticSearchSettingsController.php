@@ -68,7 +68,7 @@ class ElasticSearchSettingsController
     public function __construct()
     {
         $this->cfg = new Configurator();
-        $this->elasticSearchConfig = &$this->cfg->config['MasterSearch']['ElasticSearch'];
+        $this->elasticSearchConfig = &$this->cfg->config['search']['ElasticSearch'];
         $this->view = new ElasticSearchSettingsView($this->elasticSearchConfig);
     }
 
@@ -103,10 +103,10 @@ class ElasticSearchSettingsController
 
         $enabled = boolval(intval($enabled));
 
-        $this->cfg->config['MasterSearch']['ElasticSearch']['enabled'] = $enabled;
-        $this->cfg->config['MasterSearch']['ElasticSearch']['host'] = $host;
-        $this->cfg->config['MasterSearch']['ElasticSearch']['user'] = $user;
-        $this->cfg->config['MasterSearch']['ElasticSearch']['pass'] = $pass;
+        $this->cfg->config['search']['ElasticSearch']['enabled'] = $enabled;
+        $this->cfg->config['search']['ElasticSearch']['host'] = $host;
+        $this->cfg->config['search']['ElasticSearch']['user'] = $user;
+        $this->cfg->config['search']['ElasticSearch']['pass'] = $pass;
 
         $this->cfg->saveConfig();
 

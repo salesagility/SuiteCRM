@@ -247,11 +247,11 @@ $admin_option_defs['Administration']['global_search'] = [
     'global-search'
 ];
 
-$admin_option_defs['Administration']['master_search'] = [
+$admin_option_defs['Administration']['search_wrapper'] = [
     'icon_SearchForm',
-    'LBL_MASTER_SEARCH',
-    'LBL_MASTER_SEARCH_DESC',
-    './index.php?module=Administration&action=MasterSearchSettings',
+    'LBL_SEARCH_WRAPPER',
+    'LBL_SEARCH_WRAPPER_DESC',
+    './index.php?module=Administration&action=SearchSettings',
     'global-search'
 ];
 
@@ -263,7 +263,7 @@ $admin_option_defs['Administration']['elastic_search'] = [
     'global-search'
 ];
 
-// MasterSearch
+// SearchWrapper
 $admin_group_header[] = [
     'LBL_SEARCH_HEADER',
     '',

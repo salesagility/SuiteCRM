@@ -37,13 +37,23 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Search\SearchWrapper;
-use SuiteCRM\Search\SearchQuery;
+/**
+ * Created by PhpStorm.
+ * User: viocolano
+ * Date: 17/07/18
+ * Time: 09:30
+ */
+
+namespace SuiteCRM\Search\Exceptions;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$query = SearchQuery::fromGetRequest();
+/**
+ * A generic Search exception that should be thrown when an error internal the SearchWrapper is detected.
+ */
+class SearchException extends \RuntimeException
+{
 
-SearchWrapper::searchAndView($query);
+}

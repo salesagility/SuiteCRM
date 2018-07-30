@@ -1,5 +1,4 @@
-<?php
-/**
+{*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -35,15 +34,33 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+ *}
+<h1 class="module-title-text">Search</h1>
 
-use SuiteCRM\Search\SearchWrapper;
-use SuiteCRM\Search\SearchQuery;
+<form id="search-wrapper-form">
+    {*hidden inputs to handle actions*}
+    <input name="action" value="Search" type="hidden">
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-$query = SearchQuery::fromGetRequest();
-
-SearchWrapper::searchAndView($query);
+    <div class="row">
+        <div class="col-md-6 msfcol">
+            <label for="search-query-string" class="text-muted">Search Query</label>
+            <input type="text"
+                   name="search-query-string"
+                   id="search-query-string"
+                   placeholder="Search..."
+                   value="{$searchQueryString}"
+                   autofocus/>
+        </div>
+        <div class="col-md-2 msfcol">
+            <label for="search-query-size" class="text-muted">Results per page</label>
+            {html_options options=$sizeOptions selected=$searchQuerySize id="search-query-size" name="search-query-size"}
+        </div>
+        <div class="col-md-2 msfcol">
+            <label for="search-query-size" class="text-muted">Engine</label>
+            {html_options options=$engineOptions selected=$searchQueryEngine id="search-engine" name="search-engine"}
+        </div>
+        <div class="col-md-2 msfcol">
+            <input type="submit" value="search"/>
+        </div>
+    </div>
+</form>

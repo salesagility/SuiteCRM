@@ -1,5 +1,4 @@
-<?php
-/**
+{*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -35,15 +34,26 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-
-use SuiteCRM\Search\SearchWrapper;
-use SuiteCRM\Search\SearchQuery;
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-$query = SearchQuery::fromGetRequest();
-
-SearchWrapper::searchAndView($query);
+ *}
+<h2 class="moduleTitle">Results</h2>
+{if isset($error)}
+    <p class="error">An error has occurred while performing the search. Your query syntax might not be valid.</p>
+{else}
+    {foreach from=$results->getHitsAsBeans() item=beans key=module}
+        <h3>{$module}</h3>
+        <ul>
+            {foreach from=$beans item=bean}
+                <li>
+                    <a href="/index.php?action=DetailView&module={$module}&record={$bean->id}&offset=1">{$bean->name}</a>
+                </li>
+            {/foreach}
+        </ul>
+        {foreachelse}
+        <p class="error">No results matching your search criteria. Try broadening your search.</p>
+    {/foreach}
+    {if !empty($results->getSearchTime())}
+        <p class="text-muted text-right" id="search-time">
+            Search performed in {$results->getSearchTime()*1000|string_format:"%.2f"} ms
+        </p>
+    {/if}
+{/if}

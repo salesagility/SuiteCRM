@@ -28,4 +28,20 @@ abstract class SearchTestAbstract extends \SuiteCRM\StateCheckerPHPUnitTestCaseA
 
         return $method->invokeArgs($object, $parameters);
     }
+
+    /**
+     * Sets the value of a private property.
+     *
+     * @param object $object Instantiated object to set the value of.
+     * @param string $property name of the property.
+     * @param mixed $value value of the property.
+     * @throws \ReflectionException
+     */
+    public function setValue(&$object, $property, $value)
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $property = $reflection->getProperty($property);
+        $property->setAccessible(true);
+        $property->setValue($object, $value);
+    }
 }

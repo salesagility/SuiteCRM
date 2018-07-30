@@ -17,25 +17,46 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * The current format is the following:
  *
- * <code>
+ * ```php
  * [
+ *  'query' => 'search this',
  *  'from' => 0,
  *  'size' => 100,
- *  'query' => 'search this'
+ *  'options' => [...]
  * ]
- * </code>
+ * ```
+ *
+ * Use one of the static `from*()` methods to initialize.
+ *
+ * @see fromString()
+ * @see fromArray()
+ * @author Vittorio Iocolano
  */
 class SearchQuery
 {
-    public $query = [];
+    private $query;
+    private $size;
+    private $from;
+    private $engine;
+    /** @var array Structure containing additional search parameters */
+    private $options = [];
 
     /**
      * SearchQuery constructor.
-     * @param array $query
+     *
+     * @param string $searchString Search query
+     * @param string|null $engine Name of the search engine to use. `null` will use the default as specified by the config
+     * @param int $size Number of results
+     * @param int $from Offset of the search. Used for pagination
+     * @param array $options [optional] used for additional options by SearchEngines.
      */
-    public function __construct($query)
+    private function __construct($searchString, $engine = null, $size = 10, $from = 0, array $options = [])
     {
-        $this->query = $query;
+        $this->query = strval($searchString);
+        $this->size = intval($size);
+        $this->from = intval($from);
+        $this->options = $options;
+        $this->engine = $engine !== null ? strval($engine) : null;
     }
 
     /**
@@ -45,7 +66,7 @@ class SearchQuery
      */
     public function getFrom()
     {
-        return $this->query['from'];
+        return $this->from;
     }
 
     /**
@@ -55,7 +76,37 @@ class SearchQuery
      */
     public function getSize()
     {
-        return $this->query['size'];
+        return $this->size;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getEngine()
+    {
+        return $this->engine;
+    }
+
+    /**
+     * @param $key
+     * @return mixed value
+     */
+    public function getOption($key)
+    {
+        return $this->options[$key];
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    public function isEmpty()
+    {
+        return empty($this->query);
     }
 
     /**
@@ -63,15 +114,11 @@ class SearchQuery
      *
      * If a query object is present `null` is returned.
      *
-     * @return string|null
+     * @return string
      */
     public function getSearchString()
     {
-        if (is_string($this->query['query'])) {
-            return $this->query['query'];
-        } else {
-            return null;
-        }
+        return $this->query;
     }
 
     /**
@@ -79,7 +126,7 @@ class SearchQuery
      */
     public function toLowerCase()
     {
-        $this->query['query'] = strtolower($this->query['query']);
+        $this->query = strtolower($this->query);
     }
 
     /**
@@ -87,7 +134,7 @@ class SearchQuery
      */
     public function trim()
     {
-        $this->query['query'] = trim($this->query['query']);
+        $this->query = trim($this->query);
     }
 
     /**
@@ -98,7 +145,7 @@ class SearchQuery
      */
     public function replace($what, $with)
     {
-        $this->query['query'] = str_replace($what, $with, $this->query['query']);
+        $this->query = str_replace($what, $with, $this->query);
     }
 
     /**
@@ -106,7 +153,7 @@ class SearchQuery
      */
     public function stripSlashes()
     {
-        $this->query['query'] = stripslashes($this->query['query']);
+        $this->query = stripslashes($this->query);
     }
 
     /**
@@ -114,7 +161,7 @@ class SearchQuery
      */
     public function escapeRegex()
     {
-        $this->query['query'] = preg_quote($this->query['query'], '/');
+        $this->query = preg_quote($this->query, '/');
     }
 
     /**
@@ -122,7 +169,7 @@ class SearchQuery
      */
     public function convertEncoding()
     {
-        $this->query['query'] = mb_convert_encoding($this->query['query'], 'UTF-8', 'HTML-ENTITIES');
+        $this->query = mb_convert_encoding($this->query, 'UTF-8', 'HTML-ENTITIES');
     }
 
     /**
@@ -133,16 +180,79 @@ class SearchQuery
      * @param $searchString string a search string, as it would appear on a search bar
      * @param int $size the number of results
      * @param int $from
+     * @param string|null $engine Name of the search engine to use. Use default if `null`
+     * @param array|null $options
      * @return SearchQuery a fully built query
      */
-    public static function fromString($searchString, $size = 50, $from = 0)
+    public static function fromString($searchString, $size = 50, $from = 0, $engine = null, array $options = [])
     {
-        $query = [
-            'from' => $from,
-            'size' => $size,
-            'query' => $searchString
-        ];
+        return new self($searchString, $engine, $size, $from, $options);
+    }
 
-        return new self($query);
+    /**
+     * Makes a query from an array containing data.
+     * Fields are:
+     * - search-query-string
+     * - search-engine
+     * - search-query-size
+     * - search-query-from
+     *
+     * @param array $request
+     * @return SearchQuery
+     */
+    public static function fromRequestArray(array $request)
+    {
+        if (isset($request['search-query-string'])) {
+            $searchQuery = filter_var($request['search-query-string'], FILTER_SANITIZE_STRING);
+        }
+
+        if (isset($request['search-query-size'])) {
+            $searchSize = filter_var($request['search-query-size'], FILTER_SANITIZE_NUMBER_INT);
+        }
+
+        if (isset($request['search-query-from'])) {
+            $searchFrom = filter_var($request['search-query-from'], FILTER_SANITIZE_NUMBER_INT);
+        }
+
+        if (isset($request['search-engine'])) {
+            $searchEngine = filter_var($request['search-engine'], FILTER_SANITIZE_STRING);
+        }
+
+        if (empty($searchQuery)) {
+            $searchQuery = filter_var($request['query_string'], FILTER_SANITIZE_STRING);
+        }
+
+        if (empty($searchSize)) {
+            $searchSize = 10;
+        }
+
+        if (empty($searchFrom)) {
+            $searchFrom = null;
+        }
+
+        if (empty($searchEngine)) {
+            $searchEngine = null;
+        }
+
+        unset(
+            $request['search-query-string'],
+            $request['query_string'],
+            $request['search-query-size'],
+            $request['search-query-from'],
+            $request['search-engine']
+        );
+
+        return new self($searchQuery, $searchEngine, $searchSize, $searchFrom, $request);
+    }
+
+    /**
+     * Makes a Query from a GET request.
+     *
+     * @see fromRequestArray
+     * @return SearchQuery
+     */
+    public static function fromGetRequest()
+    {
+        return self::fromRequestArray($_GET);
     }
 }

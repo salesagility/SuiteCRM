@@ -37,13 +37,48 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Search\SearchWrapper;
-use SuiteCRM\Search\SearchQuery;
+/**
+ * Created by PhpStorm.
+ * User: viocolano
+ * Date: 26/07/18
+ * Time: 15:23
+ */
+
+namespace SuiteCRM\Search\UI\MVC;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$query = SearchQuery::fromGetRequest();
+use Sugar_Smarty;
 
-SearchWrapper::searchAndView($query);
+abstract class View
+{
+    /** @var Sugar_Smarty */
+    protected $smarty;
+    /** @var string */
+    protected $file;
+
+    /**
+     * View constructor.
+     * @param $file
+     */
+    public function __construct($file)
+    {
+        $this->smarty = new Sugar_Smarty();
+        $this->file = $file;
+    }
+
+    /**
+     * @return Sugar_Smarty
+     */
+    public function getTemplate()
+    {
+        return $this->smarty;
+    }
+
+    public function display()
+    {
+        $this->smarty->display($this->file);
+    }
+}
