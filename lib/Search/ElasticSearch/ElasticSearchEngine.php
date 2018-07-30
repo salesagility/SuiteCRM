@@ -50,7 +50,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use Elasticsearch\Client;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
-use SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException;
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
@@ -98,12 +97,6 @@ class ElasticSearchEngine extends SearchEngine
         $query->trim();
         $query->replace('-', ' ');
         $query->convertEncoding();
-
-        $string = $query->getSearchString();
-
-        if (empty($string)) {
-            throw new MasterSearchInvalidRequestException("Search string not provided.");
-        }
     }
 
     /**
