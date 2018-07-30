@@ -6,7 +6,7 @@ namespace SuiteCRM\Search;
 
 use Mockery;
 use ReflectionException;
-use SuiteCRM\Search\Exceptions\MasterSearchEngineNotFoundException;
+use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
 
 /**
  * Created by PhpStorm.
@@ -14,11 +14,11 @@ use SuiteCRM\Search\Exceptions\MasterSearchEngineNotFoundException;
  * Date: 21/06/18
  * Time: 16:48
  */
-class MasterSearchTest extends SearchTestAbstract
+class SearchWrapperTest extends SearchTestAbstract
 {
     public function testFetchEngine()
     {
-        $search = new MasterSearch();
+        $search = new SearchWrapper();
 
         try {
             $SearchEngine = $this->invokeMethod($search, 'fetchEngine', ['ElasticSearchEngine']);
@@ -30,7 +30,7 @@ class MasterSearchTest extends SearchTestAbstract
 
     public function testFetchEngineNonExisting()
     {
-        $search = new MasterSearch();
+        $search = new SearchWrapper();
         $this->setValue($search, 'CUSTOM_ENGINES_PATH', __DIR__ . '/TestCustomEngines/');
 
         try {
@@ -38,14 +38,14 @@ class MasterSearchTest extends SearchTestAbstract
             $this->fail("Exception should be thrown here!");
         } catch (ReflectionException $e) {
             $this->fail("Failed to use reflection!");
-        } catch (MasterSearchEngineNotFoundException $e) {
+        } catch (SearchEngineNotFoundException $e) {
             // All good!
         }
     }
 
     public function testFetchEngineCustom()
     {
-        $search = new MasterSearch();
+        $search = new SearchWrapper();
         $this->setValue($search, 'CUSTOM_ENGINES_PATH', __DIR__ . '/TestCustomEngines/');
 
         $engine = $this->invokeMethod($search, 'fetchEngine', ['MockSearch']);
@@ -55,13 +55,13 @@ class MasterSearchTest extends SearchTestAbstract
 
     public function testFetchEngineCustomBad()
     {
-        $search = new MasterSearch();
+        $search = new SearchWrapper();
         $this->setValue($search, 'CUSTOM_ENGINES_PATH', __DIR__ . '/TestCustomEngines/');
 
         try {
             $this->invokeMethod($search, 'fetchEngine', ['BadMockSearch']);
             $this->fail("Exception should be thrown here!");
-        } catch (MasterSearchEngineNotFoundException $e) {
+        } catch (SearchEngineNotFoundException $e) {
             echo $e->getMessage();
         }
     }
@@ -74,14 +74,14 @@ class MasterSearchTest extends SearchTestAbstract
             2 => 'BadMockSearch',
             3 => 'MockSearch'
         ];
-        $actual = MasterSearch::getEngines();
+        $actual = SearchWrapper::getEngines();
 
         self::assertEquals($actual, $expected);
     }
 
     public function testSearchAndViewCustom()
     {
-        $search = new MasterSearch();
+        $search = new SearchWrapper();
         $this->setValue($search, 'CUSTOM_ENGINES_PATH', __DIR__ . '/TestCustomEngines/');
 
         $query = SearchQuery::fromString('bar', null, null, 'MockSearch');
@@ -95,12 +95,12 @@ class MasterSearchTest extends SearchTestAbstract
 
     public function testSearchAndViewBuiltIn()
     {
-        MasterSearch::addEngine('SearchEngineMock', 'tests/unit/lib/SuiteCRM/Search/SearchEngineMock.php');
+        SearchWrapper::addEngine('SearchEngineMock', 'tests/unit/lib/SuiteCRM/Search/SearchEngineMock.php');
 
         $query = SearchQuery::fromString('foo', null, null, 'SearchEngineMock');
 
         ob_start();
-        MasterSearch::searchAndView($query);
+        SearchWrapper::searchAndView($query);
         $output = ob_get_flush();
 
         self::assertEquals('bar', $output);
@@ -108,13 +108,13 @@ class MasterSearchTest extends SearchTestAbstract
 
     public function testFakeSearch()
     {
-        MasterSearch::addEngine('SearchEngineMock', 'tests/unit/lib/SuiteCRM/Search/SearchEngineMock.php');
+        SearchWrapper::addEngine('SearchEngineMock', 'tests/unit/lib/SuiteCRM/Search/SearchEngineMock.php');
 
-        $result = MasterSearch::search('SearchEngineMock', SearchQuery::fromString('foo'));
+        $result = SearchWrapper::search('SearchEngineMock', SearchQuery::fromString('foo'));
 
         self::assertEquals('bar', $result, "Wrong mocked search result!");
 
-        $result = MasterSearch::search('SearchEngineMock', SearchQuery::fromString('fooz'));
+        $result = SearchWrapper::search('SearchEngineMock', SearchQuery::fromString('fooz'));
 
         self::assertEquals('barz', $result, "Wrong mocked search result!");
     }
@@ -130,7 +130,7 @@ class MasterSearchTest extends SearchTestAbstract
             ->once()
             ->with($query);
 
-        MasterSearch::search($mockEngine, $query);
+        SearchWrapper::search($mockEngine, $query);
 
         Mockery::close();
     }
@@ -139,13 +139,13 @@ class MasterSearchTest extends SearchTestAbstract
     {
         // this time check if the validation works
 
-        $mockEngine = Mockery::mock(MasterSearch::class); // just an object that shouldn't be passed
+        $mockEngine = Mockery::mock(SearchWrapper::class); // just an object that shouldn't be passed
         $query = SearchQuery::fromString("Test");
 
         try {
-            MasterSearch::search($mockEngine, $query);
+            SearchWrapper::search($mockEngine, $query);
             self::fail("Exception should have been thrown!");
-        } catch (MasterSearchEngineNotFoundException $e) {
+        } catch (SearchEngineNotFoundException $e) {
             // All good!
         }
 

@@ -41,39 +41,40 @@
  * Created by PhpStorm.
  * User: viocolano
  * Date: 26/07/18
- * Time: 12:00
+ * Time: 12:01
  */
 
 namespace SuiteCRM\Search\UI;
+
+use SuiteCRM\Search\SearchWrapper;
+use SuiteCRM\Search\UI\MVC\View;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use SuiteCRM\Search\SearchQuery;
-use SuiteCRM\Search\UI\MVC\Controller;
-
-class MasterSearchFormController extends Controller
+class SearchFormView extends View
 {
-    private $query;
 
-    /**
-     * MasterSearchFormController constructor.
-     * @param SearchQuery $query
-     */
-    public function __construct($query)
+    public function __construct()
     {
-        $this->view = new MasterSearchFormView();
-        $this->query = $query;
+        parent::__construct(__DIR__ . '/templates/search.form.tpl');
     }
 
     public function display()
     {
-        $this->view->getTemplate()->assign('searchQueryString', $this->query->getSearchString());
-        $this->view->getTemplate()->assign('searchQuerySize', $this->query->getSize());
-        $this->view->getTemplate()->assign('searchQueryEngine', $this->query->getEngine());
+        $sizes = [10 => 10, 20 => 20, 30 => 30, 40 => 40, 50 => 50];
+        $engines = [];
+
+        foreach (SearchWrapper::getEngines() as $engine) {
+            // TODO retrieve translations
+            $engines[$engine] = $engine;
+        }
+
+        $this->smarty->assign('sizeOptions', $sizes);
+        $this->smarty->assign('engineOptions', $engines);
 
         parent::display();
     }
-}
 
+}

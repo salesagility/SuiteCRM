@@ -48,10 +48,10 @@ function install_es()
 
     global $sugar_config;
 
-    $sugar_config['MasterSearch']['ElasticSearch']['enabled'] = false;
-    $sugar_config['MasterSearch']['ElasticSearch']['host'] = 'localhost';
-    $sugar_config['MasterSearch']['ElasticSearch']['user'] = '';
-    $sugar_config['MasterSearch']['ElasticSearch']['pass'] = '';
+    $sugar_config['search']['ElasticSearch']['enabled'] = false;
+    $sugar_config['search']['ElasticSearch']['host'] = 'localhost';
+    $sugar_config['search']['ElasticSearch']['user'] = '';
+    $sugar_config['search']['ElasticSearch']['pass'] = '';
 
     ksort($sugar_config);
     write_array_to_file('sugar_config', $sugar_config, 'config.php');

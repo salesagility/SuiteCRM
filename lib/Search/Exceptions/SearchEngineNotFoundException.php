@@ -40,41 +40,14 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 26/07/18
- * Time: 12:01
+ * Date: 27/07/18
+ * Time: 11:51
  */
 
-namespace SuiteCRM\Search\UI;
+namespace SuiteCRM\Search\Exceptions;
 
-use SuiteCRM\Search\MasterSearch;
-use SuiteCRM\Search\UI\MVC\View;
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-class MasterSearchFormView extends View
+class SearchEngineNotFoundException extends SearchException
 {
-
-    public function __construct()
-    {
-        parent::__construct(__DIR__ . '/templates/search.form.tpl');
-    }
-
-    public function display()
-    {
-        $sizes = [10 => 10, 20 => 20, 30 => 30, 40 => 40, 50 => 50];
-        $engines = [];
-
-        foreach (MasterSearch::getEngines() as $engine) {
-            // TODO retrieve translations
-            $engines[$engine] = $engine;
-        }
-
-        $this->smarty->assign('sizeOptions', $sizes);
-        $this->smarty->assign('engineOptions', $engines);
-
-        parent::display();
-    }
 
 }

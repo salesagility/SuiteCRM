@@ -110,13 +110,13 @@ class ElasticSearchInstallTest extends SearchTestAbstract
     {
         global $sugar_config;
 
-        self::assertArrayHasKey('MasterSearch', $sugar_config, "MasterSearch config not present");
+        self::assertArrayHasKey('search', $sugar_config, "Search config not present");
 
-        self::assertArrayHasKey('ElasticSearch', $sugar_config['MasterSearch']);
+        self::assertArrayHasKey('ElasticSearch', $sugar_config['search']);
 
-        self::assertArrayHasKey('enabled', $sugar_config['MasterSearch']['ElasticSearch']);
-        self::assertArrayHasKey('host', $sugar_config['MasterSearch']['ElasticSearch']);
-        self::assertArrayHasKey('user', $sugar_config['MasterSearch']['ElasticSearch']);
-        self::assertArrayHasKey('pass', $sugar_config['MasterSearch']['ElasticSearch']);
+        self::assertArrayHasKey('enabled', $sugar_config['search']['ElasticSearch']);
+        self::assertArrayHasKey('host', $sugar_config['search']['ElasticSearch']);
+        self::assertArrayHasKey('user', $sugar_config['search']['ElasticSearch']);
+        self::assertArrayHasKey('pass', $sugar_config['search']['ElasticSearch']);
     }
 }

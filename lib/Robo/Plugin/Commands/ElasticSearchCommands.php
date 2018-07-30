@@ -53,7 +53,7 @@ use SuiteCRM\Robo\Traits\RoboTrait;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
-use SuiteCRM\Search\MasterSearch;
+use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Utility\BeanJsonSerializer;
 
@@ -87,7 +87,7 @@ class ElasticSearchCommands extends \Robo\Tasks
      */
     public function elasticSearch($query, $size = 20, $showJson = false)
     {
-        $engine = new MasterSearch();
+        $engine = new SearchWrapper();
 
         $result = $engine->search('ElasticSearchEngine', SearchQuery::fromString($query, $size));
         $hits = $result->getHits();

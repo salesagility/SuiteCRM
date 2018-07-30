@@ -40,8 +40,8 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 25/06/18
- * Time: 16:40
+ * Date: 17/07/18
+ * Time: 09:30
  */
 
 namespace SuiteCRM\Search\Exceptions;
@@ -51,9 +51,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * This exception is thrown when an invalid request is sent to a component of the Master Search.
+ * A generic Search exception that should be thrown when an error internal the SearchWrapper is detected.
  */
-class MasterSearchInvalidRequestException extends MasterSearchException
+class SearchException extends \RuntimeException
 {
 
 }

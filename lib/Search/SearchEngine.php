@@ -8,9 +8,9 @@
 
 namespace SuiteCRM\Search;
 
-use SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException;
-use SuiteCRM\Search\UI\MasterSearchFormController;
-use SuiteCRM\Search\UI\MasterSearchResultsController;
+use SuiteCRM\Search\Exceptions\SearchInvalidRequestException;
+use SuiteCRM\Search\UI\SearchFormController;
+use SuiteCRM\Search\UI\SearchResultsController;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -46,7 +46,7 @@ abstract class SearchEngine
      */
     public function displayForm(SearchQuery $query)
     {
-        $controller = new MasterSearchFormController($query);
+        $controller = new SearchFormController($query);
         $controller->display();
     }
 
@@ -58,7 +58,7 @@ abstract class SearchEngine
      */
     public function displayResults(SearchQuery $query, SearchResults $results)
     {
-        $controller = new MasterSearchResultsController($query, $results);
+        $controller = new SearchResultsController($query, $results);
         $controller->display();
     }
 
@@ -74,10 +74,10 @@ abstract class SearchEngine
      * This method should be extend to sanitize and standardise the request to fill all the values as they are expected
      * to be by the `search()` method.
      *
-     * If it is impossible to validate the query a `MasterSearchInvalidRequestException` should be thrown.
+     * If it is impossible to validate the query a `SearchInvalidRequestException` should be thrown.
      *
      * @param $query SearchQuery the query to validate
-     * @throws MasterSearchInvalidRequestException if the query is not valid
+     * @throws SearchInvalidRequestException if the query is not valid
      */
     protected abstract function validateQuery(SearchQuery &$query);
 }

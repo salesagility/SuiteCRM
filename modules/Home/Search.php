@@ -37,7 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Search\MasterSearch;
+use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Search\SearchQuery;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -46,4 +46,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $query = SearchQuery::fromGetRequest();
 
-MasterSearch::searchAndView($query);
+SearchWrapper::searchAndView($query);

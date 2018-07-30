@@ -43,14 +43,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use SuiteCRM\Search\Exceptions\MasterSearchEngineNotFoundException;
+use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
 
 /**
- * Class MasterSearch performs a unified search using one of the available search engines.
+ * Class SearchWrapper performs a unified search using one of the available search engines.
  *
  * @author Vittorio Iocolano
  */
-class MasterSearch
+class SearchWrapper
 {
     /**
      * @var array stores an associative array matching the search engine class name with the file it is stored in.
@@ -88,7 +88,7 @@ class MasterSearch
      * then attempts to find a matching engine in the folder `self::CUSTOM_ENGINES_PATH`.
      *
      * @param $engineName string|SearchEngine
-     * @throws MasterSearchEngineNotFoundException
+     * @throws SearchEngineNotFoundException
      * @return SearchEngine
      */
     private static function fetchEngine($engineName)
@@ -96,7 +96,7 @@ class MasterSearch
         if (is_subclass_of($engineName, SearchEngine::class, false)) {
             return $engineName;
         } elseif (!is_string($engineName)) {
-            throw new MasterSearchEngineNotFoundException('$engineName should either be a string or a SearchEngine');
+            throw new SearchEngineNotFoundException('$engineName should either be a string or a SearchEngine');
         }
 
         if (isset(self::$engines[$engineName])) {
@@ -108,14 +108,14 @@ class MasterSearch
         }
 
         if (!file_exists($filename)) {
-            throw new MasterSearchEngineNotFoundException("Unable to find search file '$filename'' for engine '$engineName''.");
+            throw new SearchEngineNotFoundException("Unable to find search file '$filename'' for engine '$engineName''.");
         }
 
         /** @noinspection PhpIncludeInspection */
         require_once $filename;
 
         if (!is_subclass_of($engineName, SearchEngine::class)) {
-            throw new MasterSearchEngineNotFoundException("The provided class '$engineName' is not a subclass of SearchEngine");
+            throw new SearchEngineNotFoundException("The provided class '$engineName' is not a subclass of SearchEngine");
         }
 
         /** @var SearchEngine $engineName */

@@ -37,7 +37,7 @@
  *}
 <h1 class="module-title-text">Search</h1>
 
-<form id="mastersearch-form">
+<form id="search-wrapper-form">
     {*hidden inputs to handle actions*}
     <input name="action" value="Search" type="hidden">
 

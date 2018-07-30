@@ -54,19 +54,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class MasterSearchResultsController extends Controller
+class SearchResultsController extends Controller
 {
     private $query;
     private $results;
 
     /**
-     * MasterSearchResultsController constructor.
+     * SearchResultsController constructor.
      * @param SearchQuery $query
      * @param SearchResults $results
      */
     public function __construct(SearchQuery $query, SearchResults $results)
     {
-        $this->view = new MasterSearchResultsView();
+        $this->view = new SearchResultsView();
         $this->query = $query;
         $this->results = $results;
     }

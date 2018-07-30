@@ -40,14 +40,40 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 27/07/18
- * Time: 11:51
+ * Date: 26/07/18
+ * Time: 12:00
  */
 
-namespace SuiteCRM\Search\Exceptions;
+namespace SuiteCRM\Search\UI;
 
-
-class MasterSearchEngineNotFoundException extends MasterSearchException
-{
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
+
+use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\UI\MVC\Controller;
+
+class SearchFormController extends Controller
+{
+    private $query;
+
+    /**
+     * SearchFormController constructor.
+     * @param SearchQuery $query
+     */
+    public function __construct($query)
+    {
+        $this->view = new SearchFormView();
+        $this->query = $query;
+    }
+
+    public function display()
+    {
+        $this->view->getTemplate()->assign('searchQueryString', $this->query->getSearchString());
+        $this->view->getTemplate()->assign('searchQuerySize', $this->query->getSize());
+        $this->view->getTemplate()->assign('searchQueryEngine', $this->query->getEngine());
+
+        parent::display();
+    }
+}
+

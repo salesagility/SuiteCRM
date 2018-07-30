@@ -41,7 +41,7 @@
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
-use SuiteCRM\Search\MasterSearch;
+use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\StateSaver;
 
@@ -75,7 +75,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         $this->saveState();
 
-        $GLOBALS['sugar_config']['MasterSearch']['ElasticSearch']['enabled'] = true;
+        $GLOBALS['sugar_config']['search']['ElasticSearch']['enabled'] = true;
         $this->searchEngine->setIndex('test');
         $this->indexer->setIndex('test');
         $this->indexer->setDifferentialIndexingEnabled(false);
@@ -160,7 +160,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->waitForIndexing();
 
         // Attempt to search the newly added bean by full name
-        $results = MasterSearch::search(
+        $results = SearchWrapper::search(
             $this->searchEngine,
             SearchQuery::fromString("$firstName $lastName", 1))->getHits();
 
@@ -180,7 +180,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $query = $this->indexer->getDocumentifierName() == "SearchDefsDocumentifier"
             ? SearchQuery::fromString("address_city.primary_address_city:$city", 1)
             : SearchQuery::fromString("address.primary.city:$city", 1);
-        $results = MasterSearch::search(
+        $results = SearchWrapper::search(
             $this->searchEngine,
             $query
         )->getHits();
@@ -208,7 +208,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         $this->waitForIndexing();
 
-        $results = MasterSearch::search(
+        $results = SearchWrapper::search(
             $this->searchEngine,
             SearchQuery::fromString($full_name_update, 1)
         )->getHits();
@@ -229,7 +229,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->waitForIndexing();
 
         // make a search query for the deleted bean
-        $results = MasterSearch::search(
+        $results = SearchWrapper::search(
             $this->searchEngine,
             SearchQuery::fromString($full_name_update, 1)
         );
@@ -305,7 +305,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         // Perform a search to see if the new record can be found
         // As usual, wait for Elasticsearch to do its magic
         $this->waitForIndexing();
-        $results = MasterSearch::search(
+        $results = SearchWrapper::search(
             $this->searchEngine,
             SearchQuery::fromString("$firstName AND $lastName", 1)
         )->getHits();
@@ -341,7 +341,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         self::assertEquals(1, $actual, 'Wrong count for un-indexed beans');
 
         $this->waitForIndexing();
-        $results = MasterSearch::search(
+        $results = SearchWrapper::search(
             $this->searchEngine,
             SearchQuery::fromString("$firstName2 AND $lastName", 1)
         )->getHits();
@@ -349,7 +349,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         self::assertArrayHasKey($module, $results, 'Wrong count of indexed beans');
         self::assertContains($id2, $results[$module], 'Wrong ID found');
 
-        $results = MasterSearch::search($this->searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
+        $results = SearchWrapper::search($this->searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
         self::assertEmpty($results->getHits(), 'There should be no search results, as the record was deleted');
     }
 
