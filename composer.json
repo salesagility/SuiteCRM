@@ -54,6 +54,9 @@
       ],
       "SuiteCRM\\Custom\\": [
         "custom/lib"
+      ],
+      "SuiteCRM\\Modules\\": [
+        "modules/"
       ]
     }
   },
