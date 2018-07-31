@@ -94,7 +94,9 @@ class Favorites extends Basic
         $moduleQuote = $db->quote($module);
         $currentUserIdQuote = $db->quote($current_user->id);
         
-        $query = "SELECT id FROM favorites WHERE parent_id= '" . $recordIdQuote . "' AND parent_type = '" . $moduleQuote . "' AND assigned_user_id = '" . $currentUserIdQuote . "' AND deleted = 0 ORDER BY date_entered DESC";
+        $query = "SELECT id FROM favorites WHERE parent_id= '" . $recordIdQuote . 
+                "' AND parent_type = '" . $moduleQuote . "' AND assigned_user_id = '" . 
+                $currentUserIdQuote . "' AND deleted = 0 ORDER BY date_entered DESC";
 
         return $db->getOne($query);
     }
@@ -113,9 +115,12 @@ class Favorites extends Basic
         $currentUserIdQuote = $db->quote($current_user->id);
         if ($id) {
             $idQuote = $db->quote($id);
-            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $currentUserIdQuote . "' AND parent_id = '" . $idQuote . "' AND deleted = 0 ORDER BY date_entered DESC";
+            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . 
+                    $currentUserIdQuote . "' AND parent_id = '" . $idQuote . 
+                    "' AND deleted = 0 ORDER BY date_entered DESC";
         } else {
-            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $currentUserIdQuote . "' AND deleted = 0 ORDER BY date_entered DESC";
+            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . 
+                    $currentUserIdQuote . "' AND deleted = 0 ORDER BY date_entered DESC";
         }
 
         $result = $db->query($query);
