@@ -108,7 +108,6 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -131,7 +130,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
             $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
-       return clone $this;
+        return clone $this;
     }
 
     /**
@@ -142,7 +141,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
     {
         $this->hasPagination = true;
 
-       return clone $this;
+        return clone $this;
     }
 
 
@@ -159,7 +158,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
             $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
-       return clone $this;
+        return clone $this;
     }
 
     /**
@@ -175,7 +174,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
             $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
-       return clone $this;
+        return clone $this;
     }
 
     /**
@@ -191,7 +190,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
             $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
-       return clone $this;
+        return clone $this;
     }
 
     /**
@@ -207,7 +206,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
             $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
-       return clone $this;
+        return clone $this;
     }
 
     /**
@@ -222,7 +221,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
             $this->meta = array_merge($this->meta, $meta);
         }
 
-       return clone $this;
+        return clone $this;
     }
 
 
@@ -234,7 +233,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
     {
         $this->href = $url;
 
-       return clone $this;
+        return clone $this;
     }
 
     /**
@@ -245,7 +244,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
     {
         $this->related = $related;
 
-       return clone $this;
+        return clone $this;
     }
 
     /**
@@ -267,19 +266,19 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         }
 
         if ($this->hasPagination()) {
-            if($this->first !== null) {
+            if ($this->first !== null) {
                 $response['first'] = $this->first;
             }
 
-            if($this->prev !== null) {
+            if ($this->prev !== null) {
                 $response['prev'] = $this->prev;
             }
 
-            if($this->next !== null) {
+            if ($this->next !== null) {
                 $response['next'] = $this->next;
             }
 
-            if($this->last !== null) {
+            if ($this->last !== null) {
                 $response['last'] = $this->last;
             }
         }

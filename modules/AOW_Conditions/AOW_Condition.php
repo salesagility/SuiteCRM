@@ -40,36 +40,36 @@
  */
 class AOW_Condition extends Basic
 {
-    var $new_schema = true;
-    var $module_dir = 'AOW_Conditions';
-    var $object_name = 'AOW_Condition';
-    var $table_name = 'aow_conditions';
-    var $tracker_visibility = false;
-    var $importable = false;
-    var $disable_row_level_security = true;
+    public $new_schema = true;
+    public $module_dir = 'AOW_Conditions';
+    public $object_name = 'AOW_Condition';
+    public $table_name = 'aow_conditions';
+    public $tracker_visibility = false;
+    public $importable = false;
+    public $disable_row_level_security = true;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $aow_workflow_id;
-    var $condition_order;
-    var $module_path;
-    var $field;
-    var $operator;
-    var $value;
-    var $value_type;
-    var $condition_operator;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $aow_workflow_id;
+    public $condition_order;
+    public $module_path;
+    public $field;
+    public $operator;
+    public $value;
+    public $value_type;
+    public $condition_operator;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -77,26 +77,25 @@ class AOW_Condition extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOW_Condition(){
+    public function AOW_Condition()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         return false;
     }
 
-    function save_lines($post_data, $parent, $key = '')
+    public function save_lines($post_data, $parent, $key = '')
     {
-
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         if (!isset($post_data[$key . 'field'])) {
@@ -109,7 +108,6 @@ class AOW_Condition extends Basic
         $line_count = count((array)$postDataAtKeyField);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
-
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
@@ -129,12 +127,11 @@ class AOW_Condition extends Basic
                                         $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
                                 }
                             }
-                        } else if ($field_name === 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
+                        } elseif ($field_name === 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
                             $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]);
                         }
                         $condition->$field_name = $post_data[$key . $field_name][$i];
                     }
-
                 }
                 if (trim($condition->field) != '') {
                     $condition->condition_order = ++$j;
@@ -144,6 +141,4 @@ class AOW_Condition extends Basic
             }
         }
     }
-
-
 }

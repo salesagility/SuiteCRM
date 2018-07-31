@@ -65,17 +65,17 @@ class Zend_Gdata_MimeBodyString
      */
     public function read($bytesRequested)
     {
-      $len = strlen($this->_sourceString);
-      if($this->_bytesRead == $len) {
-          return FALSE;
-      } else if($bytesRequested > $len - $this->_bytesRead) {
-          $bytesRequested = $len - $this->_bytesRead;
-      }
+        $len = strlen($this->_sourceString);
+        if ($this->_bytesRead == $len) {
+            return false;
+        } elseif ($bytesRequested > $len - $this->_bytesRead) {
+            $bytesRequested = $len - $this->_bytesRead;
+        }
 
-      $buffer = substr($this->_sourceString, $this->_bytesRead, $bytesRequested);
-      $this->_bytesRead += $bytesRequested;
+        $buffer = substr($this->_sourceString, $this->_bytesRead, $bytesRequested);
+        $this->_bytesRead += $bytesRequested;
 
-      return $buffer;
+        return $buffer;
     }
 
     /**
@@ -85,8 +85,6 @@ class Zend_Gdata_MimeBodyString
      */
     public function getSize()
     {
-      return strlen($this->_sourceString);
+        return strlen($this->_sourceString);
     }
-
-
 }

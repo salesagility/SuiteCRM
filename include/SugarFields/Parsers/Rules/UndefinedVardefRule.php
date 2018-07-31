@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,28 +52,27 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class UndefinedVardefRule extends BaseRule {
+class UndefinedVardefRule extends BaseRule
+{
+    public function __construct()
+    {
+    }
 
-function __construct() {
 
-}
-
-
-function parsePanels($panels, $view) {
-
-   foreach($panels as $name=>$panel) {
-   	  foreach($panel as $rowCount=>$row) {
-   	  	 foreach($row as $key=>$column) {
-   	  	 	if(is_array($column) && isset($column['name']) && empty($column['name'])) {
-	           $panels[$name][$rowCount][$key] = '';
-   	  	 	} else if(!is_array($column) && isset($column['name']) && empty($column['name'])) {
-   	  	 	   $panels[$name][$rowCount][$key] = '';
-   	  	 	}
-   	  	 } //foreach
-   	  } //foreach
-   } //foreach
+    public function parsePanels($panels, $view)
+    {
+        foreach ($panels as $name=>$panel) {
+            foreach ($panel as $rowCount=>$row) {
+                foreach ($row as $key=>$column) {
+                    if (is_array($column) && isset($column['name']) && empty($column['name'])) {
+                        $panels[$name][$rowCount][$key] = '';
+                    } elseif (!is_array($column) && isset($column['name']) && empty($column['name'])) {
+                        $panels[$name][$rowCount][$key] = '';
+                    }
+                } //foreach
+            } //foreach
+        } //foreach
 
    return $panels;
-}
-
+    }
 }

@@ -97,5 +97,4 @@ class Zend_Gdata_Gbase_ItemQuery extends Zend_Gdata_Gbase_Query
         }
         return $uri;
     }
-
 }

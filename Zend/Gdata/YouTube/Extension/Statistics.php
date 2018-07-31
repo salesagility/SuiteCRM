@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_YouTube_Extension_Statistics extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'yt';
     protected $_rootElement = 'statistics';
 
@@ -98,10 +97,13 @@ class Zend_Gdata_YouTube_Extension_Statistics extends Zend_Gdata_Extension
      * @param string $lastWebAccess(optional) The lastWebAccess value
      * @param string $favoriteCount(optional) The favoriteCount value
      */
-    public function __construct($viewCount = null, $videoWatchCount = null,
-        $subscriberCount = null, $lastWebAccess = null,
-        $favoriteCount = null)
-    {
+    public function __construct(
+        $viewCount = null,
+        $videoWatchCount = null,
+        $subscriberCount = null,
+        $lastWebAccess = null,
+        $favoriteCount = null
+    ) {
         $this->registerAllNamespaces(Zend_Gdata_YouTube::$namespaces);
         parent::__construct();
         $this->_viewCount = $viewCount;
@@ -131,16 +133,22 @@ class Zend_Gdata_YouTube_Extension_Statistics extends Zend_Gdata_Extension
             $element->setAttribute('viewCount', $this->_viewCount);
         }
         if ($this->_subscriberCount !== null) {
-            $element->setAttribute('subscriberCount',
-                $this->_subscriberCount);
+            $element->setAttribute(
+                'subscriberCount',
+                $this->_subscriberCount
+            );
         }
         if ($this->_lastWebAccess !== null) {
-            $element->setAttribute('lastWebAccess',
-                $this->_lastWebAccess);
+            $element->setAttribute(
+                'lastWebAccess',
+                $this->_lastWebAccess
+            );
         }
         if ($this->_favoriteCount !== null) {
-            $element->setAttribute('favoriteCount',
-                $this->_favoriteCount);
+            $element->setAttribute(
+                'favoriteCount',
+                $this->_favoriteCount
+            );
         }
         return $element;
     }
@@ -305,5 +313,4 @@ class Zend_Gdata_YouTube_Extension_Statistics extends Zend_Gdata_Extension
             ' LastWebAccess=' . $this->_lastWebAccess .
             ' FavoriteCount=' . $this->_favoriteCount;
     }
-
 }

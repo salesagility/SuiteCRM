@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,13 +40,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function get_validate_record_js () {
-global $mod_strings;
-global $app_strings;
+function get_validate_record_js()
+{
+    global $mod_strings;
+    global $app_strings;
 
-$err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
-$err_lbl_send_message= $mod_strings['LBL_MESSAGE_FOR'];
-$the_script  = <<<EOQ
+    $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
+    $err_lbl_send_message= $mod_strings['LBL_MESSAGE_FOR'];
+    $the_script  = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 function verify_data(form,formname) {
@@ -72,8 +75,7 @@ function verify_data(form,formname) {
 
 EOQ;
 
-return $the_script;
-
+    return $the_script;
 }
 
 /**
@@ -82,4 +84,3 @@ return $the_script;
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-

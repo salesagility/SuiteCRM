@@ -380,4 +380,3 @@ $mod_strings = array(
     'LBL_LIST_DATE_MODIFIED' => 'Last Modified',
     'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 );
-

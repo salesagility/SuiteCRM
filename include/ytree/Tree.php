@@ -161,9 +161,8 @@ class Tree
         $tree_data .= "treeinit(mytree,TREE_DATA,'{$this->_name}',param);\n";
         if ($scriptTags) {
             return '<script>' . $tree_data . '</script>';
-        } else {
-            return $tree_data;
         }
+        return $tree_data;
     }
 
     /**
@@ -220,4 +219,3 @@ class Tree
         return $return;
     }
 }
-

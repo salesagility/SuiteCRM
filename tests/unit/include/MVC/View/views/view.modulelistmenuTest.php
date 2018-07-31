@@ -15,13 +15,12 @@ class ViewModulelistmenuTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
 
     public function testdisplay()
     {
-        
-        if(isset($_SESSION)) {
+        if (isset($_SESSION)) {
             $session = $_SESSION;
         }
         
         
-        //execute the method with required child objects preset. it should return some html. 
+        //execute the method with required child objects preset. it should return some html.
         $view = new ViewModulelistmenu();
         $view->ss = new Sugar_Smarty();
 
@@ -33,7 +32,7 @@ class ViewModulelistmenuTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals(false, is_array($renderedContent));
         
-        if(isset($session)) {
+        if (isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);

@@ -24,12 +24,12 @@
 
 
 $dictionary['AOW_Action'] = array(
-	'table'=>'aow_actions',
-	'audited'=>false,
-	'duplicate_merge'=>true,
-	'fields'=>array (
-  'aow_workflow_id' => 
-  array (
+    'table'=>'aow_actions',
+    'audited'=>false,
+    'duplicate_merge'=>true,
+    'fields'=>array(
+  'aow_workflow_id' =>
+  array(
     'required' => false,
     'name' => 'aow_workflow_id',
     'vname' => 'LBL_WORKFLOW_ID',
@@ -47,8 +47,8 @@ $dictionary['AOW_Action'] = array(
     'len' => 36,
     'size' => '20',
   ),
-  'action_order' => 
-  array (
+  'action_order' =>
+  array(
     'required' => false,
     'name' => 'action_order',
     'vname' => 'LBL_ORDER',
@@ -68,8 +68,8 @@ $dictionary['AOW_Action'] = array(
     'enable_range_search' => false,
     'disable_num_format' => '',
   ),
-  'action' => 
-  array (
+  'action' =>
+  array(
     'required' => false,
     'name' => 'action',
     'vname' => 'LBL_ACTION',
@@ -91,14 +91,14 @@ $dictionary['AOW_Action'] = array(
     'dependency' => false,
   ),
   'parameters' =>
-  array (
+  array(
     'name' => 'parameters',
     'type' => 'longtext',
     'vname' => 'LBL_PARAMETERS',
     'isnull' => true,
   ),
   'aow_workflow' =>
-  array (
+  array(
     'name' => 'aow_workflow',
     'type' => 'link',
     'relationship' => 'aow_workflow_aow_actions',
@@ -107,7 +107,7 @@ $dictionary['AOW_Action'] = array(
     'source'=>'non-db',
    ),
   'aow_processed' =>
-  array (
+  array(
     'name' => 'aow_processed',
     'type' => 'link',
     'relationship' => 'aow_processed_aow_actions',
@@ -116,7 +116,7 @@ $dictionary['AOW_Action'] = array(
     'source'=>'non-db',
   ),
 ),
-	'relationships'=>array (
+    'relationships'=>array(
 ),
     'indices' => array(
         array(
@@ -125,10 +125,10 @@ $dictionary['AOW_Action'] = array(
             'fields' => array('aow_workflow_id'),
         ),
     ),
-	'optimistic_locking'=>true,
-		'unified_search'=>true,
-	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+    'optimistic_locking'=>true,
+        'unified_search'=>true,
+    );
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOW_Actions','AOW_Action', array('basic'));
+VardefManager::createVardef('AOW_Actions', 'AOW_Action', array('basic'));

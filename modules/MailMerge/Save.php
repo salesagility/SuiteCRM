@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,7 +50,7 @@ $document_id = $_POST['document_id'];
 $selObjs = urldecode($_POST['selected_objects_def']);
 
 $item_ids = array();
-parse_str($selObjs,$item_ids);
+parse_str($selObjs, $item_ids);
 
 $class_name = $beanList[$module];
 $includedir = $beanFiles[$class_name];
@@ -61,10 +63,9 @@ $document = new Document();
 $document->retrieve($document_id);
 
 $items = array();
-foreach($item_ids as $key=>$value)
-{
-	$seed->retrieve($key);
-	$items[] = $seed;
+foreach ($item_ids as $key=>$value) {
+    $seed->retrieve($key);
+    $items[] = $seed;
 }
 
 $state = new \SuiteCRM\StateSaver();

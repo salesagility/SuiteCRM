@@ -120,7 +120,7 @@ function GetLangOpts($llcc, $adobeCJK) {
 //				$unifonts = "sun-exta,sun-extb,hannoma,hannomb";
 //			}
 		}
-		else if ($country == "CN") { 
+		elseif ($country == "CN") { 
 			if ($adobeCJK) {
 				$unifonts = "gb,gbB,gbI,gbBI";  
 			}

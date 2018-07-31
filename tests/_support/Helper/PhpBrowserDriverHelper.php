@@ -189,17 +189,15 @@ class PhpBrowserDriverHelper extends \Codeception\Module
         $lowerCase = strtoupper($variable);
 
         $env = getenv($upperCase);
-        if($env === false) {
+        if ($env === false) {
             $webDriver = $this->moduleContainer->getModule('PhpBrowser');
             $config = $webDriver->_getConfig();
-            if(empty($config[$upperCase])) {
+            if (empty($config[$upperCase])) {
                 // return default
                 return $default;
-            } else {
-                return $config[$lowerCase];
             }
-        } else {
-            return $env;
+            return $config[$lowerCase];
         }
+        return $env;
     }
 }

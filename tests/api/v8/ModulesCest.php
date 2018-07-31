@@ -39,7 +39,7 @@ class ModulesCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -261,16 +261,16 @@ class ModulesCest
         $I->loginAsAdmin();
     }
 
-     /**
-      * Create a existing entry
-      * @param apiTester $I
-      * @see http://jsonapi.org/format/1.0/#crud-creating
-      *
-      * HTTP Verb: POST
-      * URL: /api/v8/modules/{module_name} (with id in $_POST)
-      * URL: /api/v8/modules/{module_name}/{id}
-      *
-      */
+    /**
+     * Create a existing entry
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-creating
+     *
+     * HTTP Verb: POST
+     * URL: /api/v8/modules/{module_name} (with id in $_POST)
+     * URL: /api/v8/modules/{module_name}/{id}
+     *
+     */
     public function TestScenarioCreateExisting(apiTester $I)
     {
         $faker = \Faker\Factory::create();
@@ -593,7 +593,7 @@ class ModulesCest
         $I->assertArrayHasKey('data', $response);
         $I->assertTrue(is_array($response['data']));
 
-        if(!empty($response['data'])) {
+        if (!empty($response['data'])) {
             $I->assertTrue(isset($response['data']['0']));
             $I->assertTrue(isset($response['data']['0']['id']));
             $I->assertTrue(isset($response['data']['0']['type']));
@@ -634,7 +634,7 @@ class ModulesCest
         $I->assertArrayHasKey('data', $response);
         $I->assertTrue(is_array($response['data']));
 
-        if(!empty($response['data'])) {
+        if (!empty($response['data'])) {
             $I->assertTrue(isset($response['data']['0']));
             $I->assertTrue(isset($response['data']['0']['id']));
             $I->assertTrue(isset($response['data']['0']['type']));
@@ -655,7 +655,7 @@ class ModulesCest
      * HTTP Verb: POST
      * URL: /api/v8/modules/{module_name}
      */
-    public function TestScenarioCreateProductWithAnOneToManyRelationship (apiTester $I)
+    public function TestScenarioCreateProductWithAnOneToManyRelationship(apiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -664,7 +664,7 @@ class ModulesCest
         $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -687,7 +687,7 @@ class ModulesCest
         $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' => self::$PRODUCT_RECORD_TYPE,
@@ -726,7 +726,7 @@ class ModulesCest
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioRetrieveOneToManyRelationship (apiTester $I)
+    public function TestScenarioRetrieveOneToManyRelationship(apiTester $I)
     {
         // Retrieve Product
         // Retrieve relationship
@@ -761,7 +761,7 @@ class ModulesCest
      * HTTP Verb: POST
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioCreateAnOneToManyRelationship (apiTester $I)
+    public function TestScenarioCreateAnOneToManyRelationship(apiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -769,7 +769,7 @@ class ModulesCest
         // Create AOS_Product_Categories
         $this->fakeData->seed(rand(0, 2148));
         $payloadProductCategory = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -791,7 +791,7 @@ class ModulesCest
 
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
                     'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -837,7 +837,7 @@ class ModulesCest
      * HTTP Verb: PATCH
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioUpdateOneToManyRelationship (apiTester $I)
+    public function TestScenarioUpdateOneToManyRelationship(apiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -845,7 +845,7 @@ class ModulesCest
         $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -867,7 +867,7 @@ class ModulesCest
 
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
                     'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -913,14 +913,14 @@ class ModulesCest
      * HTTP Verb: PATCH
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioClearOneToManyRelationshipUsingRelationshipLink (apiTester $I)
+    public function TestScenarioClearOneToManyRelationshipUsingRelationshipLink(apiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
         // Clear AOS_Product_Categories relationship
         $payload = json_encode(
-            array (
+            array(
                 'data' => array()
             )
         );
@@ -957,16 +957,15 @@ class ModulesCest
      * HTTP Verb: DELETE
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioDeleteOneToManyRelationship (apiTester $I)
+    public function TestScenarioDeleteOneToManyRelationship(apiTester $I)
     {
-
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
         $this->fakeData->seed(rand(0, 2148));
         // Create AOS_Product_Categories
         $payloadProductCategory = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -988,7 +987,7 @@ class ModulesCest
 
         // Create AOS_Products and Relate to AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => self::$PRODUCT_CATEGORY_RECORD_ID,
                     'type' => self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -1033,7 +1032,7 @@ class ModulesCest
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioCreateManyToManyRelationships (apiTester $I)
+    public function TestScenarioCreateManyToManyRelationships(apiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -1043,7 +1042,7 @@ class ModulesCest
         // Create AOS_Product #1
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct1 = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_RECORD_TYPE,
@@ -1068,7 +1067,7 @@ class ModulesCest
         // Create AOS_Product #2
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct2 = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_RECORD_TYPE,
@@ -1094,7 +1093,7 @@ class ModulesCest
         // Create AOS_Product_Categories Parent
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -1117,7 +1116,7 @@ class ModulesCest
 
         // Relate to Parent AOS_Product_Categories with child AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     array(
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],
@@ -1145,7 +1144,6 @@ class ModulesCest
         $I->seeResponseCodeIs(200);
         $I->assertArrayHasKey('data', $responseParentCategory);
         $I->assertNotEmpty($responseParentCategory['data']);
-
     }
 
     /**
@@ -1156,7 +1154,7 @@ class ModulesCest
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioRetrieveManyToManyRelationships (apiTester $I)
+    public function TestScenarioRetrieveManyToManyRelationships(apiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -1193,7 +1191,7 @@ class ModulesCest
      * HTTP Verb: PATCH
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioUpdateManyToManyRelationships (apiTester $I)
+    public function TestScenarioUpdateManyToManyRelationships(apiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -1201,7 +1199,7 @@ class ModulesCest
         // Replace the relationships with just one of the related items
         // We should only see the the item we have posted in the responses
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     array(
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[1],
@@ -1253,7 +1251,7 @@ class ModulesCest
      * HTTP Verb: PATCH
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioClearManyToManyRelationships (apiTester $I)
+    public function TestScenarioClearManyToManyRelationships(apiTester $I)
     {
         // PATCH {"data": []} to clear all relationships
 
@@ -1264,7 +1262,7 @@ class ModulesCest
         // Replace the relationships with just one of the related items
         // We should only see the the item we have posted in the responses
         $payload = json_encode(
-            array (
+            array(
                 'data' => array()
             )
         );
@@ -1303,7 +1301,7 @@ class ModulesCest
      * HTTP Verb: DELETE
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioDeleteManyToManyRelationships (apiTester $I)
+    public function TestScenarioDeleteManyToManyRelationships(apiTester $I)
     {
         // DELETE single resource
         $I->loginAsAdmin();
@@ -1314,7 +1312,7 @@ class ModulesCest
         // Create AOS_Product #1
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct1 = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_RECORD_TYPE,
@@ -1339,7 +1337,7 @@ class ModulesCest
         // Create AOS_Product #2
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct2 = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_RECORD_TYPE,
@@ -1365,7 +1363,7 @@ class ModulesCest
         // Create AOS_Product_Categories Parent
         $this->fakeData->seed(rand(0, 2148));
         $payloadProduct = json_encode(
-            array (
+            array(
                 'data' => array(
                     'id' => '',
                     'type' =>  self::$PRODUCT_CATEGORY_RECORD_TYPE,
@@ -1388,7 +1386,7 @@ class ModulesCest
 
         // Relate to Parent AOS_Product_Categories with child AOS_Product_Categories
         $payload = json_encode(
-            array (
+            array(
                 'data' => array(
                     array(
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],
@@ -1419,7 +1417,7 @@ class ModulesCest
 
         // Delete first product
         $payloadDelete = json_encode(
-            array (
+            array(
                 'data' => array(
                     array(
                         'id' => self::$PRODUCT_CATEGORY_RELATED_RECORD_IDS[0],

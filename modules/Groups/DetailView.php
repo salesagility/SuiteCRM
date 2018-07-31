@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,13 +53,13 @@ $focus->retrieve($_REQUEST['record']);
 $detailView = new DetailView();
 $offset=0;
 if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
-	$result = $detailView->processSugarBean("Group", $focus, $offset);
-	if($result == null) {
-	    sugar_die($app_strings['ERROR_NO_RECORD']);
-	}
-	$focus=$result;
+    $result = $detailView->processSugarBean("Group", $focus, $offset);
+    if ($result == null) {
+        sugar_die($app_strings['ERROR_NO_RECORD']);
+    }
+    $focus=$result;
 } else {
-	header("Location: index.php?module=Groups&action=index");
+    header("Location: index.php?module=Groups&action=index");
 }
 
 echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$focus->user_name), true);

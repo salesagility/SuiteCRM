@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,35 +44,35 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $listViewDefs['Prospects'] = array(
-	'FULL_NAME' => array(
-		'width' => '20', 
-		'label' => 'LBL_LIST_NAME', 
-		'link' => true,
+    'FULL_NAME' => array(
+        'width' => '20',
+        'label' => 'LBL_LIST_NAME',
+        'link' => true,
         'related_fields' => array('first_name', 'last_name'),
         'orderBy' => 'last_name',
         'default' => true),
     'TITLE' => array(
-        'width' => '20', 
-        'label' => 'LBL_LIST_TITLE', 
+        'width' => '20',
+        'label' => 'LBL_LIST_TITLE',
         'link' => false,
-        'default' => true),   
+        'default' => true),
     'EMAIL1' => array(
-        'width' => '20', 
+        'width' => '20',
         'label' => 'LBL_LIST_EMAIL_ADDRESS',
-        'sortable' => false, 
+        'sortable' => false,
         'link' => false,
         'default' => true,
         'customCode' => '{$EMAIL1_LINK}',
-    ),           
+    ),
     'PHONE_WORK' => array(
-        'width' => '10', 
-        'label' => 'LBL_LIST_PHONE', 
+        'width' => '10',
+        'label' => 'LBL_LIST_PHONE',
         'link' => false,
-        'default' => true), 
-	'DATE_ENTERED' => array (
-	    'type' => 'datetime',
-	    'label' => 'LBL_DATE_ENTERED',
-	    'width' => '10',
-	    'default' => true,
-	  ),  
+        'default' => true),
+    'DATE_ENTERED' => array(
+        'type' => 'datetime',
+        'label' => 'LBL_DATE_ENTERED',
+        'width' => '10',
+        'default' => true,
+      ),
 );

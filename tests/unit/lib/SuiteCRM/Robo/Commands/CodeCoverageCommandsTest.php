@@ -2,7 +2,7 @@
 
 use \SuiteCRM\Robo\Plugin\Commands\CodeCoverageCommands;
 
-class CodeCoverageCommandsTest extends \Codeception\Test\Unit
+class CodeCoverageCommandsTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -70,7 +70,7 @@ class CodeCoverageCommandsTest extends \Codeception\Test\Unit
         $this->assertTrue($actual);
 
         // restore config override
-        if(!empty($configOverrideData)) {
+        if (!empty($configOverrideData)) {
             \file_put_contents($configOverridePath, $configOverrideData);
         }
     }
