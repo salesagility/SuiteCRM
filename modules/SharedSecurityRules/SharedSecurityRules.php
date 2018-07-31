@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 include_once('SharedSecurityRulesHelper.php');
+include_once('SharedSecurityRulesChecker.php');
 
 class SharedSecurityRules extends Basic
 {
@@ -167,6 +168,7 @@ class SharedSecurityRules extends Basic
         global $current_user;
         
         $helper = new SharedSecurityRulesHelper($this->db);
+        $checker = new SharedSecurityRulesChecker();
 
         LoggerManager::getLogger()->info('SharedSecurityRules: In checkRules for module: ' . $module->name . ' and view: ' . $view);
 
@@ -212,29 +214,10 @@ class SharedSecurityRules extends Basic
                                 if (!isset($action['parameters']['email'][$key]['2'])) {
                                     LoggerManager::getLogger()->warn('action parameter email [2] is not set at key: ' . $key);
                                 } else {
-                                
-                                    $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
-                                    $users_roles_results = $module->db->query($users_roles_query);
-                                    $usertRoleResultsAssoc = $module->db->fetchByAssoc($users_roles_results);
+                                    $usertRoleResultsAssoc = $checker->getUsertRuleResultsAssoc($module, $action['parameters']['email'][$key]['2'], $current_user->id);
                                     if ($usertRoleResultsAssoc['user_id'] == $current_user->id) {
-                                        $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
-
-                                        if ($conditionResult) {
-                                            
-                                            if (!isset($action['parameters']['accesslevel'][$key])) {
-                                                LoggerManager::getLogger()->warn('Incorrect action parameter access level at key: ' . $key);
-                                            } else {
-                                            
-                                                if (!$helper->findAccess($view, $action['parameters']['accesslevel'][$key])) {
-                                                    $result = false;
-                                                } else {
-                                                    $result = true;
-                                                }
-                                            
-                                            }
-                                        }
+                                        $result = $checker->updateResultByCondition($result, $helper, $rule, $moduleBean, $view, $action, $key);
                                     }
-                                
                                 }
                                 
                             } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
@@ -250,45 +233,19 @@ class SharedSecurityRules extends Basic
                                 $sec_group_results = $module->db->query($sec_group_query);
                                 $secgroup = $module->db->fetchRow($sec_group_results);
                                 if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
-                                    $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
-                                    $users_roles_results = $module->db->query($users_roles_query);
-                                    $usertRoleResultsAssoc = $module->db->fetchByAssoc($users_roles_results);
+                                    $usertRoleResultsAssoc = $checker->getUsertRuleResultsAssoc($module, $action['parameters']['email'][$key]['2'], $current_user->id);
                                     if ($usertRoleResultsAssoc['user_id'] == $current_user->id) {
-                                        $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
-
-                                        if ($conditionResult) {
-                                            if (!$helper->findAccess($view, $action['parameters']['accesslevel'][$key])) {
-                                                $result = false;
-                                            } else {
-                                                $result = true;
-                                            }
-                                        }
+                                        $result = $checker->updateResultByCondition($result, $helper, $rule, $moduleBean, $view, $action, $key);
                                     }
                                 } else {
                                     if ($secgroup[0] == $current_user->id) {
-                                        $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
-
-                                        if ($conditionResult) {
-                                            if (!$helper->findAccess($view, $action['parameters']['accesslevel'][$key])) {
-                                                $result = false;
-                                            } else {
-                                                $result = true;
-                                            }
-                                        }
+                                        $result = $checker->updateResultByCondition($result, $helper, $rule, $moduleBean, $view, $action, $key);
                                     }
                                 }
                             } elseif (($targetType == "Specify User" && $current_user->id == $action['parameters']['email'][$key]) ||
                                     ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
                                 //we have found a possible record to check against.
-                                $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
-
-                                if ($conditionResult) {
-                                    if (!$helper->findAccess($view, $action['parameters']['accesslevel'][$key])) {
-                                        $result = false;
-                                    } else {
-                                        $result = true;
-                                    }
-                                }
+                                $result = $checker->updateResultByCondition($result, $helper, $rule, $moduleBean, $view, $action, $key);
                             }
                         }
                     }
