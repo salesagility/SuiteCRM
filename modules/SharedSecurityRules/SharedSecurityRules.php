@@ -142,7 +142,7 @@ class SharedSecurityRules extends Basic
 
         $id = parent::save($check_notify);
         
-        $helper = new SharedSecurityRulesHelper();
+        $helper = new SharedSecurityRulesHelper($this->db);
         $post = $helper->quote($_POST);
 
         require_once('modules/SharedSecurityRulesConditions/SharedSecurityRulesConditions.php');
@@ -166,7 +166,7 @@ class SharedSecurityRules extends Basic
     {
         global $current_user;
         
-        $helper = new SharedSecurityRulesHelper();
+        $helper = new SharedSecurityRulesHelper($this->db);
 
         LoggerManager::getLogger()->info('SharedSecurityRules: In checkRules for module: ' . $module->name . ' and view: ' . $view);
 
@@ -502,7 +502,7 @@ class SharedSecurityRules extends Basic
      */
     public function checkHistory(SugarBean $module, $field, $value)
     {
-        $db = DBManagerFactory::getInstance();
+        $db = $this->db;
         if (!isset($module->field_defs[$field]['audited'])) {
             LoggerManager::getLogger()->warn("$field field in not exists in given module field_defs for checking shared security rules history");
             return false;

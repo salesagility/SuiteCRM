@@ -45,18 +45,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SharedSecurityRulesHelper {
     
     /**
+     *
+     * @var DBManager 
+     */
+    protected $db;
+    
+    public function __construct(DBManager $db) {
+        $this->db = $db;
+    }
+    
+    /**
      * Quote all in post data
      * 
      * @param array $post
      * @return array
      */
     public function quote($post) {
-        $db = DBManagerFactory::getInstance();
         foreach ($post as $key => $value) {
             if (is_array($value) || is_object($value)) {
                 $post[$key] = $this->quote($value);
             } else {
-                $post[$key] = $db->quote($value);
+                $post[$key] = $this->db->quote($value);
             }
         }
         return $post;
