@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,21 +45,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $module_name = 'SugarFeed';
 $listViewDefs[$module_name] = array(
-	'NAME' => array(
-		'width' => '32', 
-		'label' => 'LBL_NAME', 
-		'default' => true,
-        'link' => false),     
-	'DESCRIPTION' => array(
-		'width' => '32', 
-		'label' => 'LBL_NAME', 
-		'default' => true,
-        'link' => false),     
-	'ASSIGNED_USER_NAME' => array(
-		'width' => '9', 
-		'label' => 'LBL_ASSIGNED_TO_NAME',
-		'module' => 'Employees',
+    'NAME' => array(
+        'width' => '32',
+        'label' => 'LBL_NAME',
+        'default' => true,
+        'link' => false),
+    'DESCRIPTION' => array(
+        'width' => '32',
+        'label' => 'LBL_NAME',
+        'default' => true,
+        'link' => false),
+    'ASSIGNED_USER_NAME' => array(
+        'width' => '9',
+        'label' => 'LBL_ASSIGNED_TO_NAME',
+        'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
         'default' => true),
-	
+    
 );

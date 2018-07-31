@@ -2,7 +2,6 @@
 
 namespace SuiteCRM\Enumerator;
 
-
 class DesignBreakPoint
 {
     const xs = 'xs';

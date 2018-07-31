@@ -72,10 +72,10 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucen
         $this->_bytePosition = 0;
 
         // convert input into UTF-8
-        if (strcasecmp($this->_encoding, 'utf8' ) != 0  &&
-            strcasecmp($this->_encoding, 'utf-8') != 0 ) {
-                $this->_input = iconv($this->_encoding, 'UTF-8', $this->_input);
-                $this->_encoding = 'UTF-8';
+        if (strcasecmp($this->_encoding, 'utf8') != 0  &&
+            strcasecmp($this->_encoding, 'utf-8') != 0) {
+            $this->_input = iconv($this->_encoding, 'UTF-8', $this->_input);
+            $this->_encoding = 'UTF-8';
         }
     }
 
@@ -107,10 +107,14 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucen
 
             // character position of the matched word in the input stream
             $startPos = $this->_position +
-                        iconv_strlen(substr($this->_input,
+                        iconv_strlen(
+                            substr(
+                            $this->_input,
                                             $this->_bytePosition,
-                                            $binStartPos - $this->_bytePosition),
-                                     'UTF-8');
+                                            $binStartPos - $this->_bytePosition
+                        ),
+                                     'UTF-8'
+                        );
             // character postion of the end of matched word in the input stream
             $endPos = $startPos + iconv_strlen($matchedWord, 'UTF-8');
 
@@ -123,4 +127,3 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8 extends Zend_Search_Lucen
         return $token;
     }
 }
-

@@ -60,5 +60,4 @@ class Zend_Gdata_Spreadsheets_ListFeed extends Zend_Gdata_Feed
         $this->registerAllNamespaces(Zend_Gdata_Spreadsheets::$namespaces);
         parent::__construct($element);
     }
-
 }

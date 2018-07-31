@@ -23,7 +23,7 @@
 
 /**
  * Modifications by SugarCRM
- * 
+ *
  * March 14, 2011 - asandberg: Changed DOCUMENTS_LIST_FEED_URI to work with v3 of Docs API.
  */
 
@@ -210,7 +210,8 @@ class Zend_Gdata_Docs_Query extends Zend_Gdata_Query
         } else {
             require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception(
-                'A visibility must be provided for cell queries.');
+                'A visibility must be provided for cell queries.'
+            );
         }
 
         if ($this->_projection !== null) {
@@ -218,11 +219,11 @@ class Zend_Gdata_Docs_Query extends Zend_Gdata_Query
         } else {
             require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception(
-                'A projection must be provided for cell queries.');
+                'A projection must be provided for cell queries.'
+            );
         }
 
         $uri .= $this->getQueryString();
         return $uri;
     }
-
 }

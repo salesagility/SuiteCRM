@@ -325,9 +325,8 @@ abstract class SugarRelationship
         $row = $db->fetchByAssoc($result);
         if (!empty($row)) {
             return $row;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -524,9 +523,9 @@ abstract class SugarRelationship
                 return $this->getLHSModule();
             case 'rhs_module':
                 return $this->getRHSModule();
-            case 'lhs_table' :
+            case 'lhs_table':
                 return isset($this->def['lhs_table']) ? $this->def['lhs_table'] : '';
-            case 'rhs_table' :
+            case 'rhs_table':
                 return isset($this->def['rhs_table']) ? $this->def['rhs_table'] : '';
             case 'list_fields':
                 return array('lhs_table', 'lhs_key', 'rhs_module', 'rhs_table', 'rhs_key', 'relationship_type');

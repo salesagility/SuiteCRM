@@ -34,7 +34,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $vcal = new vCal();
 
@@ -46,8 +46,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('', $vcal->get_summary_text());
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_list_fields()
@@ -55,7 +53,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $vcal = new vCal();
@@ -71,8 +69,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -80,7 +76,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $vcal = new vCal();
@@ -96,8 +92,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testget_list_view_data()
@@ -105,7 +99,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $vcal = new vCal();
@@ -121,8 +115,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testget_freebusy_lines_cache()
@@ -143,12 +135,12 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_sugar_freebusy()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         global $locale, $timedate;
 
@@ -169,12 +161,12 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_vcal_freebusy()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -201,7 +193,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
 
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $vcal = new vCal();
@@ -221,7 +213,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('aod_index');
         $state->popTable('vcals');
         $state->popTable('tracker');
-        
     }
 
     public function testcache_sugar_vcal_freebusy()
@@ -232,7 +223,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('vcals');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $vcal = new vCal();
@@ -251,7 +242,6 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popGlobals();
         $state->popTable('vcals');
         $state->popTable('tracker');
-        
     }
 
     public function testfold_ical_lines()

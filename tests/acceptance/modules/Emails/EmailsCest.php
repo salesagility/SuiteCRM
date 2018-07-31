@@ -54,4 +54,32 @@ class EmailsCest
 
         $I->see('Emails', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As an administrator I want to view an email body and check that it's not cached.
+     */
+    public function testScenarioViewEmailBodyHTML(
+        \AcceptanceTester $I,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+
+        // TODO: Refactor
+
+        $I->wantTo('View the HTML of two emails');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        $I->loginAsAdmin();
+
+        // Check for HTML caching issue
+        $I->amOnUrl($webDriverHelper->getInstanceURL() . 'index.php?module=Emails&action=DetailView&record=eae65b87-6852-e43c-4213-5b213b39f2aa');
+        $I->see('Test Description 1');
+        $I->amOnUrl($webDriverHelper->getInstanceURL() . 'index.php?module=Emails&action=DetailView&record=eae65b87-6852-e43c-4213-5b213b39f2ab');
+        $I->see('Test Description 2');
+    }
 }

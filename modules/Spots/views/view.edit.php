@@ -62,48 +62,50 @@ class SpotsViewEdit extends ViewEdit
      */
     public function getModuleTitle(
         $show_help = true
-    )
-    {
+    ) {
         global $sugar_version, $sugar_flavor, $server_unique_key, $current_language, $action;
 
         $theTitle = "<div class='moduleTitle'>\n";
 
-        $module = preg_replace("/ /","",$this->module);
+        $module = preg_replace("/ /", "", $this->module);
 
         $params = $this->_getModuleTitleParams();
         $index = 0;
 
-        if(SugarThemeRegistry::current()->directionality == "rtl") {
+        if (SugarThemeRegistry::current()->directionality == "rtl") {
             $params = array_reverse($params);
         }
-        if(count($params) > 1) {
+        if (count($params) > 1) {
             array_shift($params);
         }
         $count = count($params);
         $paramString = '';
-        foreach($params as $parm){
+        foreach ($params as $parm) {
             $index++;
             $paramString .= $parm;
-            if($index < $count){
+            if ($index < $count) {
                 $paramString .= $this->getBreadCrumbSymbol();
             }
         }
 
-        if(!empty($paramString)){
+        if (!empty($paramString)) {
             $theTitle .= "<h2> $paramString </h2>";
 
-            if(!empty($this->bean->id)){
-                $theTitle .= "<div class='favorite' record_id='" . $this->bean->id . "' module='" . $this->bean->module_dir . "'><div class='favorite_icon_outline'>" . SugarThemeRegistry::current()->getImage('favorite-star-outline','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')) . "</div>
-                                                    <div class='favorite_icon_fill'>" . SugarThemeRegistry::current()->getImage('favorite-star','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')) . "</div></div>";
+            if (!empty($this->bean->id)) {
+                $theTitle .= "<div class='favorite' record_id='" . $this->bean->id . "' module='" . $this->bean->module_dir . "'><div class='favorite_icon_outline'>" . SugarThemeRegistry::current()->getImage('favorite-star-outline', 'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null, null, '.gif', translate('LBL_DASHLET_EDIT', 'Home')) . "</div>
+                                                    <div class='favorite_icon_fill'>" . SugarThemeRegistry::current()->getImage('favorite-star', 'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null, null, '.gif', translate('LBL_DASHLET_EDIT', 'Home')) . "</div></div>";
             }
         }
 
         // bug 56131 - restore conditional so that link doesn't appear where it shouldn't
-        if($show_help || $this->type == 'list') {
+        if ($show_help || $this->type == 'list') {
             $theTitle .= "<span class='utils'>";
             $createImageURL = SugarThemeRegistry::current()->getImageURL('create-record.gif');
-            if($this->type == 'list') $theTitle .= '<a href="#" class="btn btn-success showsearch"><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>';$url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
-            if($show_help) {
+            if ($this->type == 'list') {
+                $theTitle .= '<a href="#" class="btn btn-success showsearch"><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>';
+            }
+            $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
+            if ($show_help) {
                 $theTitle .= <<<EOHTML
 &nbsp;
 <a id="create_image" href="{$url}" class="utilsLink">
@@ -119,5 +121,4 @@ EOHTML;
         $theTitle .= "<div class='clear'></div></div>\n";
         return $theTitle;
     }
-
 }

@@ -88,9 +88,8 @@ class AOPAssignManager
         global $sugar_config;
         if ($this->aopFallback) {
             return isset($sugar_config['aop']['distribution_options']) ? $sugar_config['aop']['distribution_options'] : null;
-        } else {
-            return $this->ieX->get_stored_options('distribution_options', '');
         }
+        return $this->ieX->get_stored_options('distribution_options', '');
     }
 
     /**
@@ -146,6 +145,7 @@ class AOPAssignManager
                     break;
                 }
             //No Security Group module found - fall through.
+            // no break
             case 'role':
                 $users = $this->getRoleUsers($distributionOptions[2]);
                 break;

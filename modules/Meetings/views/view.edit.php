@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -44,45 +46,45 @@ require_once('include/json_config.php');
 
 class MeetingsViewEdit extends ViewEdit
 {
- 	/**
- 	 * @see SugarView::preDisplay()
- 	 *
- 	 * Override preDisplay to check for presence of 'status' in $_REQUEST
- 	 * This is to support the "Close And Create New" operation.
- 	 */
- 	public function preDisplay()
- 	{
- 		if(!empty($_REQUEST['status']) && ($_REQUEST['status'] == 'Held')) {
-	       $this->bean->status = 'Held';
- 		}
+    /**
+     * @see SugarView::preDisplay()
+     *
+     * Override preDisplay to check for presence of 'status' in $_REQUEST
+     * This is to support the "Close And Create New" operation.
+     */
+    public function preDisplay()
+    {
+        if (!empty($_REQUEST['status']) && ($_REQUEST['status'] == 'Held')) {
+            $this->bean->status = 'Held';
+        }
 
- 		parent::preDisplay();
- 	}
+        parent::preDisplay();
+    }
 
- 	/**
- 	 * @see SugarView::display()
- 	 */
- 	public function display()
- 	{
- 		global $json;
+    /**
+     * @see SugarView::display()
+     */
+    public function display()
+    {
+        global $json;
         $json = getJSONobj();
         $json_config = new json_config();
-		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->json_id);
-		} else {
-			$this->bean->json_id = $this->bean->id;
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->id);
-		}
- 		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
- 		if($this->ev->isDuplicate){
-	        $this->bean->status = $this->bean->getDefaultStatus();
- 		} //if
+        if (isset($this->bean->json_id) && !empty($this->bean->json_id)) {
+            $javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->json_id);
+        } else {
+            $this->bean->json_id = $this->bean->id;
+            $javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->id);
+        }
+        $this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
+        if ($this->ev->isDuplicate) {
+            $this->bean->status = $this->bean->getDefaultStatus();
+        } //if
 
-		$this->ss->assign('remindersData', Reminder::loadRemindersData('Meetings', $this->bean->id, $this->ev->isDuplicate));
-		$this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Meetings', $this->bean->id, $this->ev->isDuplicate));
-		$this->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
-		$this->ss->assign('remindersDisabled', json_encode(false));
+        $this->ss->assign('remindersData', Reminder::loadRemindersData('Meetings', $this->bean->id, $this->ev->isDuplicate));
+        $this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Meetings', $this->bean->id, $this->ev->isDuplicate));
+        $this->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
+        $this->ss->assign('remindersDisabled', json_encode(false));
 
- 		parent::display();
- 	}
+        parent::display();
+    }
 }

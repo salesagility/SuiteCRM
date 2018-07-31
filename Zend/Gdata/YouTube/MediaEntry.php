@@ -47,7 +47,6 @@ require_once 'Zend/Gdata/YouTube/Extension/MediaGroup.php';
  */
 class Zend_Gdata_YouTube_MediaEntry extends Zend_Gdata_Media_Entry
 {
-
     protected $_entryClassName = 'Zend_Gdata_YouTube_MediaEntry';
 
     /**
@@ -77,5 +76,4 @@ class Zend_Gdata_YouTube_MediaEntry extends Zend_Gdata_Media_Entry
             break;
         }
     }
-
 }

@@ -144,7 +144,7 @@ class JsonApiErrorObjectTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         ];
         $actual = $error->export();
         
-        if(inDeveloperMode()) {
+        if (inDeveloperMode()) {
             unset($actual['meta']['debug']);
         }
 

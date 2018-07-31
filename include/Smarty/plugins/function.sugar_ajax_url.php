@@ -1,6 +1,8 @@
 <?php
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,11 +45,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 function smarty_function_sugar_ajax_url($params, &$smarty)
 {
-    if(empty($params['url'])) {
-   	    $smarty->trigger_error("ajax_url: missing required param (module)");
+    if (empty($params['url'])) {
+        $smarty->trigger_error("ajax_url: missing required param (module)");
         return "";
     }
     return ajaxLink($params['url']);
 }
-
-?>

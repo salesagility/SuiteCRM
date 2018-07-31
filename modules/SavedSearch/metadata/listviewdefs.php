@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,15 +44,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $listViewDefs['SavedSearch'] = array(
-	'NAME' => array(
-		'width' => '40%', 		
-		'label' => 'LBL_LIST_NAME',
-		'link' => true,
-		'customCode' => '<a  href="index.php?action=index&module=SavedSearch&saved_search_select={$ID}">{$NAME}</a>'),
-	'SEARCH_MODULE' => array(
-		'width' => '35%', 
-		'label' => 'LBL_LIST_MODULE'), 
-	'ASSIGNED_USER_NAME' => array(
-		'width' => '10%', 
-		'label' => 'LBL_LIST_ASSIGNED_USER')
+    'NAME' => array(
+        'width' => '40%',
+        'label' => 'LBL_LIST_NAME',
+        'link' => true,
+        'customCode' => '<a  href="index.php?action=index&module=SavedSearch&saved_search_select={$ID}">{$NAME}</a>'),
+    'SEARCH_MODULE' => array(
+        'width' => '35%',
+        'label' => 'LBL_LIST_MODULE'),
+    'ASSIGNED_USER_NAME' => array(
+        'width' => '10%',
+        'label' => 'LBL_LIST_ASSIGNED_USER')
 );

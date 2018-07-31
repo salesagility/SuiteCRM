@@ -39,4 +39,3 @@
  */
 
 $app->add('ResourceServer');
-

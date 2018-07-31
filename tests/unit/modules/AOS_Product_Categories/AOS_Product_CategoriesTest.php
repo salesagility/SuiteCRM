@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -37,7 +37,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aosProductCategories = new AOS_Product_Categories();
         $aosProductCategories->name = 'test';

@@ -226,7 +226,7 @@ class MergeRecord extends SugarBean
     public function bean_implements($interface)
     {
         switch ($interface) {
-            case 'ACL' :
+            case 'ACL':
                 return true;
             default:
                 return false;

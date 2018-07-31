@@ -264,5 +264,4 @@ class Zend_Gdata_Gbase_Query extends Zend_Gdata_Query
             return null;
         }
     }
-
 }

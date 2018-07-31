@@ -104,9 +104,8 @@ class BeanFactory
                 $result = $bean->retrieve($id, $encode, $deleted);
                 if ($result == null) {
                     return false;
-                } else {
-                    self::registerBean($module, $bean, $id);
                 }
+                self::registerBean($module, $bean, $id);
             } else {
                 ++self::$hits;
                 ++self::$touched[$module][$id];

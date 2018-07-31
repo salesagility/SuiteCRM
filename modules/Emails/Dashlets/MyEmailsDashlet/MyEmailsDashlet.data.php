@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,9 +46,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $current_user, $app_strings;
 
 $dashletData['MyEmailsDashlet']['searchFields'] = array(
-												 	   'date_sent'  => array('default' => ''),
+                                                       'date_sent'  => array('default' => ''),
                                                        'name'  => array('default' => ''),
-													   //'from_addr_name' => array('default' => ''),
+                                                       //'from_addr_name' => array('default' => ''),
                                                        'assigned_user_id'   => array('default' => ''),
     'category_id'      => array('default' => ''),
                                                        );
@@ -54,7 +56,7 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
                                                    'from_addr' => array('width'   => '15',
                                                                        'label'   => 'LBL_FROM',
                                                                        'default' => true),
-												   'name' => array('width'   => '40',
+                                                   'name' => array('width'   => '40',
                                                                    'label'   => 'LBL_SUBJECT',
                                                                    'link'    => true,
                                                                    'default' => true),
@@ -83,4 +85,3 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
         'label' => 'LBL_CATEGORY',
         'default' => true),
 );
-
