@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once('SharedSecurityRulesHelper.php');
+
 class SharedSecurityRules extends Basic
 {
 
@@ -140,7 +142,8 @@ class SharedSecurityRules extends Basic
 
         $id = parent::save($check_notify);
         
-        $post = $this->quote($_POST);
+        $helper = new SharedSecurityRulesHelper();
+        $post = $helper->quote($_POST);
 
         require_once('modules/SharedSecurityRulesConditions/SharedSecurityRulesConditions.php');
         $condition = new SharedSecurityRulesConditions();
@@ -152,24 +155,6 @@ class SharedSecurityRules extends Basic
         
         return $id;
     }
-    
-    /**
-     * Quote all in post data
-     * 
-     * @param array $post
-     * @return array
-     */
-    protected function quote($post) {
-        $db = DBManagerFactory::getInstance();
-        foreach ($post as $key => $value) {
-            if (is_array($value) || is_object($value)) {
-                $post[$key] = $this->quote($value);
-            } else {
-                $post[$key] = $db->quote($value);
-            }
-        }
-        return $post;
-    }
 
     /**
      * @param SugarBean $module
@@ -180,6 +165,8 @@ class SharedSecurityRules extends Basic
     public function checkRules(SugarBean &$module, $view)
     {
         global $current_user;
+        
+        $helper = new SharedSecurityRulesHelper();
 
         LoggerManager::getLogger()->info('SharedSecurityRules: In checkRules for module: ' . $module->name . ' and view: ' . $view);
 
@@ -230,7 +217,7 @@ class SharedSecurityRules extends Basic
                                     $users_roles_results = $module->db->query($users_roles_query);
                                     $usertRoleResultsAssoc = $module->db->fetchByAssoc($users_roles_results);
                                     if ($usertRoleResultsAssoc['user_id'] == $current_user->id) {
-                                        $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
+                                        $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
 
                                         if ($conditionResult) {
                                             
@@ -238,7 +225,7 @@ class SharedSecurityRules extends Basic
                                                 LoggerManager::getLogger()->warn('Incorrect action parameter access level at key: ' . $key);
                                             } else {
                                             
-                                                if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
+                                                if (!$helper->findAccess($view, $action['parameters']['accesslevel'][$key])) {
                                                     $result = false;
                                                 } else {
                                                     $result = true;
@@ -267,10 +254,10 @@ class SharedSecurityRules extends Basic
                                     $users_roles_results = $module->db->query($users_roles_query);
                                     $usertRoleResultsAssoc = $module->db->fetchByAssoc($users_roles_results);
                                     if ($usertRoleResultsAssoc['user_id'] == $current_user->id) {
-                                        $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
+                                        $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
 
                                         if ($conditionResult) {
-                                            if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
+                                            if (!$helper->findAccess($view, $action['parameters']['accesslevel'][$key])) {
                                                 $result = false;
                                             } else {
                                                 $result = true;
@@ -279,10 +266,10 @@ class SharedSecurityRules extends Basic
                                     }
                                 } else {
                                     if ($secgroup[0] == $current_user->id) {
-                                        $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
+                                        $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
 
                                         if ($conditionResult) {
-                                            if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
+                                            if (!$helper->findAccess($view, $action['parameters']['accesslevel'][$key])) {
                                                 $result = false;
                                             } else {
                                                 $result = true;
@@ -293,10 +280,10 @@ class SharedSecurityRules extends Basic
                             } elseif (($targetType == "Specify User" && $current_user->id == $action['parameters']['email'][$key]) ||
                                     ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
                                 //we have found a possible record to check against.
-                                $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
+                                $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
 
                                 if ($conditionResult) {
-                                    if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
+                                    if (!$helper->findAccess($view, $action['parameters']['accesslevel'][$key])) {
                                         $result = false;
                                     } else {
                                         $result = true;
@@ -329,281 +316,6 @@ class SharedSecurityRules extends Basic
         }
 
         LoggerManager::getLogger()->info('SharedSecurityRules: Exiting CheckRules with result: ' . $converted_res . ' for view: ' . $view . ' and action: ' . $action['parameters']['accesslevel'][$key]);
-        return $result;
-    }
-
-    /**
-     *
-     * @param array $originalCondition
-     * @param array $allConditionsResults
-     * @return array
-     */
-    private function getParenthesisConditions($originalCondition, $allConditionsResults)
-    {
-        LoggerManager::getLogger()->info('SharedSecurityRules: Entering getParenthesisConditions()');
-        // Just get the conditions we need to check for this
-        $allParenthesisConditions = array();
-
-        foreach ($allConditionsResults as $condition) {
-            if ($condition['condition_order'] > $originalCondition['condition_order'] && $condition['parenthesis'] != $originalCondition['id']) {
-                array_push($allParenthesisConditions, $condition);
-            }
-
-            if ($condition['condition_order'] > $originalCondition['condition_order'] && $condition['parenthesis'] == $originalCondition['id']) {
-                array_push($allParenthesisConditions, $condition);
-                return $allParenthesisConditions;
-            }
-        }
-
-        LoggerManager::getLogger()->info('SharedSecurityRules: Exiting getParenthesisConditions() with all parenthesis conditions');
-        return $allParenthesisConditions;
-    }
-
-    /**
-     *
-     * @param array $allParenthesisConditions
-     * @param SugarBean $moduleBean
-     * @param array $rule
-     * @param string $view
-     * @param string $action
-     * @param string $key
-     * @return boolean
-     */
-    private function checkParenthesisConditions($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key)
-    {
-        LoggerManager::getLogger()->info('SharedSecurityRules: Entering checkParenthesisConditions()');
-
-        $conditionsToCheck = array();
-
-
-        for ($j = 0; $j < count($allParenthesisConditions); $j++) {
-            // Check parenthesis is equal to start, if so then start this whole process again
-            if ($allParenthesisConditions[$j]['parenthesis'] == "START") {
-                $parenthesisConditionArray = $this->getParenthesisConditions($allParenthesisConditions[$j], $allParenthesisConditions);
-                $this->checkParenthesisConditions($parenthesisConditionArray, $moduleBean, $rule, $view, $action, $key);
-            }
-
-            // Check parenthesis is blank, if it is then process as normal...
-            if ($allParenthesisConditions[$j]['parenthesis'] == "") {
-                // Add to array to be processed once checked
-                array_push($conditionsToCheck, $allParenthesisConditions[$j]);
-            }
-        }
-
-        if (sizeof($conditionsToCheck) > 0) {
-            // Get results of searching all conditions within the perms (true = condition met)
-            $tempResult = $this->getConditionResult($conditionsToCheck, $moduleBean, $rule, $view, $action, $key);
-            if (!$tempResult) {
-                LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkParenthesisConditions returning false.');
-                return false;
-            } else {
-                LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkParenthesisConditions returning true.');
-                return true;
-            }
-        }
-
-        LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkParenthesisConditions with no conditions to check.');
-        return false;
-    }
-
-    /**
-     *
-     * @global User $current_user
-     * @global User $current_user
-     * @param array $allConditions
-     * @param SugarBean $moduleBean
-     * @param array $rule
-     * @param string $view
-     * @param string $action
-     * @param string $key
-     * @param boolean $result
-     * @return boolean
-     */
-    private function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false)
-    {
-        global $current_user;
-
-        LoggerManager::getLogger()->info('SharedSecurityRules: Entering getConditionResult()');
-
-        for ($x = 0; $x < sizeof($allConditions); $x++) {
-            // Is it the starting parenthesis?
-            if ($allConditions[$x]['parenthesis'] == "START") {
-                LoggerManager::getLogger()->info('SharedSecurityRules: Parenthesis condition found.');
-
-                $parenthesisConditionArray = $this->getParenthesisConditions($allConditions[$x], $allConditions);
-                $overallResult = $this->checkParenthesisConditions($parenthesisConditionArray, $moduleBean, $rule, $view, $action, $key);
-
-                // Retrieve the number of parenthesis conditions so we know how many conditions to skip for next run through
-                $x = $x + sizeof($parenthesisConditionArray);
-
-                //Check next logical operator
-                $nextOrder = $allConditions[$x]['condition_order'] + 1;
-                $nextQuery = "SELECT logic_op FROM sharedsecurityrulesconditions WHERE sa_shared_sec_rules_id = '{$allConditions[$x]['sa_shared_sec_rules_id']}' AND condition_order = $nextOrder AND deleted=0";
-                $nextResult = $this->db->query($nextQuery, true, "Error retrieving next condition");
-                $nextRow = $this->db->fetchByAssoc($nextResult);
-                $nextConditionLogicOperator = $nextRow['logic_op'];
-
-                // If the condition is a match then continue if it is an AND and finish if its an OR
-                if ($overallResult) {
-                    if ($nextConditionLogicOperator === "AND") {
-                        LoggerManager::getLogger()->info('SharedSecurityRules: In getConditionResult() within parenthesis setting result to true');
-                        $result = true;
-                    } else {
-                        LoggerManager::getLogger()->info('SharedSecurityRules: In getConditionResult() within parenthesis returning true');
-                        return true;
-                    }
-                } else {
-                    if ($nextConditionLogicOperator === "AND") {
-                        LoggerManager::getLogger()->info('SharedSecurityRules: In getConditionResult() within parenthesis returning false');
-                        return false;
-                    } else {
-                        LoggerManager::getLogger()->info('SharedSecurityRules: In getConditionResult() within parenthesis setting result to false');
-                        $result = false;
-                    }
-                }
-
-
-                continue;
-            }
-
-            // Check if there is another condition and get the operator
-            LoggerManager::getLogger()->info('SharedSecurityRules: All parenthesis looked at now working out next order number to be processed');
-            $nextOrder = $allConditions[$x]['condition_order'] + 1;
-            $nextQuery = "SELECT logic_op FROM sharedsecurityrulesconditions WHERE sa_shared_sec_rules_id = '{$allConditions[$x]['sa_shared_sec_rules_id']}' AND condition_order = $nextOrder AND deleted=0";
-            $nextResult = $this->db->query($nextQuery, true, "Error retrieving next condition");
-            $nextRow = $this->db->fetchByAssoc($nextResult);
-            $nextConditionLogicOperator = $nextRow['logic_op'];
-
-            if (unserialize(base64_decode($allConditions[$x]['module_path'])) != false) {
-                $allConditions[$x]['module_path'] = unserialize(base64_decode($allConditions[$x]['module_path']));
-            }
-            /* this needs to be uncommented out and checked */
-
-            if ($allConditions[$x]['module_path'][0] != $rule['flow_module']) {
-                foreach ($allConditions[$x]['module_path'] as $rel) {
-                    if (empty($rel)) {
-                        continue;
-                    }
-                    $moduleBean->load_relationship($rel);
-                    $related = $moduleBean->$rel->getBeans();
-                }
-            }
-
-
-            if ($related !== false && $related !== null && $related !== "") {
-                foreach ($related as $record) {
-                    if ($moduleBean->field_defs[$allConditions[$x]['field']]['type'] == "relate") {
-                        $allConditions[$x]['field'] = $moduleBean->field_defs[$allConditions[$x]['field']]['id_name'];
-                    }
-                    if ($allConditions[$x]['value_type'] == "currentUser") {
-                        $allConditions[$x]['value_type'] = "Field";
-                        $allConditions[$x]['value'] = $current_user->id;
-                    }
-
-                    if ($allConditions[$x]['field'] == 'assigned_user_name') {
-                        $allConditions[$x]['field'] = 'assigned_user_id';
-                    }
-                    if ($this->checkOperator(
-                                    $record->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']
-                            )) {
-                        $result = true;
-                    } else {
-                        if (count($related) <= 1) {
-                            $result = false;
-                        }
-                    }
-                }
-            } else {
-                if ($allConditions[$x]['value_type'] == "currentUser") {
-                    $allConditions[$x]['value_type'] = "Field";
-                    $allConditions[$x]['value'] = $current_user->id;
-                }
-                //check and see if it is pointed at a field rather than a value.
-                if ($allConditions[$x]['value_type'] == "Field" &&
-                        isset($moduleBean->{$allConditions[$x]['value']}) &&
-                        !empty($moduleBean->{$allConditions[$x]['value']})) {
-                    $allConditions[$x]['value'] = $moduleBean->{$allConditions[$x]['value']};
-                }
-
-                if ($allConditions[$x]['field'] == 'assigned_user_name') {
-                    $allConditions[$x]['field'] = 'assigned_user_id';
-                }
-
-                $conditionResult = $this->checkOperator($moduleBean->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']);
-
-                if ($conditionResult) {
-                    if ($nextConditionLogicOperator === "AND") {
-                        $result = true;
-                    } else {
-                        return true;
-                    }
-                } else {
-                    if ($rule['run'] == "Once True") {
-                        if ($this->checkHistory($moduleBean, $allConditions[$x]['field'], $allConditions[$x]['value'])) {
-                            $result = true;
-                        } else {
-                            $result = false;
-                        }
-                    } else {
-                        if ($nextConditionLogicOperator === "AND") {
-                            $result = false;
-                            return $result;
-                        }
-                        $result = false;
-                    }
-                }
-            }
-        }
-
-        $converted_res = '';
-        if (isset($result)) {
-            if ($result == false) {
-                $converted_res = 'false';
-            } elseif ($result == true) {
-                $converted_res = 'true';
-            }
-        }
-        LoggerManager::getLogger()->info('SharedSecurityRules: Exiting getConditionResult() with result: ' . $converted_res);
-        return $result;
-    }
-
-    /**
-     *
-     * @param array $rule
-     * @param SugarBean $moduleBean
-     * @param string $view
-     * @param string $action
-     * @param string $key
-     * @return boolean
-     */
-    private function checkConditions($rule, SugarBean $moduleBean, $view, $action, $key)
-    {
-        LoggerManager::getLogger()->info('SharedSecurityRules: Entered checkConditions() for rule name: ' . $rule['name']);
-
-        $sql_query = "SELECT * FROM sharedsecurityrulesconditions WHERE sharedsecurityrulesconditions.sa_shared_sec_rules_id = '{$rule['id']}' AND sharedsecurityrulesconditions.deleted = '0' ORDER BY sharedsecurityrulesconditions.condition_order ASC ";
-        $conditions_results = $moduleBean->db->query($sql_query);
-
-        $allConditions = array();
-
-        // Loop through all conditions and add to array
-        while ($condition = $moduleBean->db->fetchByAssoc($conditions_results)) {
-            array_push($allConditions, $condition);
-        }
-
-
-        $result = $this->getConditionResult($allConditions, $moduleBean, $rule, $view, $action, $key, $conditions_results);
-
-        if (inDeveloperMode()) {
-            $converted_res = '';
-            if (isset($result)) {
-                if ($result == false) {
-                    $converted_res = 'false';
-                } elseif ($result == true) {
-                    $converted_res = 'true';
-                }
-            }
-            LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkConditions() with result: ' . $converted_res . '  ');
-        }
         return $result;
     }
 
@@ -812,77 +524,6 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * @param string $rowField
-     * @param string $field
-     * @param string $operator
-     *
-     * @return bool
-     */
-    private function checkOperator($rowField, $field, $operator)
-    {
-        LoggerManager::getLogger()->info('SharedSecurityRules: In checkOperator() with row: ' . $rowField . ' field: ' . $field . ' operator: ' . $operator);
-        switch ($operator) {
-            case "Equal_To":
-                if (strcasecmp($rowField, $field) == 0) {
-                    return true;
-                }
-                break;
-            case "Not_Equal_To":
-                if (strcasecmp($rowField, $field) != 0) {
-                    return true;
-                }
-                break;
-            case "Starts_With":
-                if (substr($rowField, 0, strlen($field)) === $field) {
-                    return true;
-                }
-                break;
-            case "Ends_With":
-                if (substr($rowField, -strlen($field)) === $field) {
-                    return true;
-                }
-                break;
-            case "Contains":
-                if (strpos($rowField, $field) !== false) {
-                    return true;
-                }
-                break;
-
-            case "Greater_Than":
-                if ($rowField > $field) {
-                    return true;
-                }
-                break;
-
-            case "Less_Than":
-                if ($rowField < $field) {
-                    return true;
-                }
-                break;
-
-            case "Greater_Than_or_Equal_To":
-                if ($rowField >= $field) {
-                    return true;
-                }
-                break;
-
-            case "Less_Than_or_Equal_To":
-                if ($rowField <= $field) {
-                    return true;
-                }
-                break;
-
-            case "is_null":
-                if ($rowField == null || $rowField == "") {
-                    return true;
-                }
-                break;
-        }
-
-        return false;
-    }
-
-    /**
      *
      * @param string $operator
      * @param string $value
@@ -924,20 +565,6 @@ class SharedSecurityRules extends Basic
                 return " IS NULL ";
         }
 
-        return false;
-    }
-
-    /**
-     * @param string $view
-     * @param string $item
-     *
-     * @return bool
-     */
-    private function findAccess($view, $item)
-    {
-        if (stripos($item, $view) !== false) {
-            return true;
-        }
         return false;
     }
 
