@@ -67,7 +67,7 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
         
         if (self::$verbose) {
             $currentTestName = get_class($this) . '::' . $this->getName(false);
-            echo "\t" . $currentTestName  . " ..";
+            echo $this->formatTestName($currentTestName);
             for ($i = 60; $i > strlen($currentTestName); $i--) {
                 echo ".";
             }
@@ -75,6 +75,10 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
         
         $this->beforeStateCheck();
         parent::setUp();
+    }
+    
+    protected function formatTestName($testName) {
+        return "\t" . $testName . ' ..';
     }
     
     /**
