@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,13 +41,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SearchForm/SearchForm2.php');
 
-class EmployeesSearchForm extends SearchForm
-{
+class EmployeesSearchForm extends SearchForm {
     /**
      * This builds an EmployeesSearchForm from a classic search form.
      */
-    public function __construct(SearchForm $oldSearchForm)
-    {
+    function __construct( SearchForm $oldSearchForm ) {
         parent::__construct($oldSearchForm->seed, $oldSearchForm->module, $oldSearchForm->action);
         $this->setup(
             // $searchdefs
@@ -61,24 +57,23 @@ class EmployeesSearchForm extends SearchForm
             // $displayView
             $oldSearchForm->displayView,
             // listViewDefs
-            $oldSearchForm->listViewDefs
-        );
+            $oldSearchForm->listViewDefs);
         
         $this->lv = $oldSearchForm->lv;
+                     
     }
     
-    public function generateSearchWhere($add_custom_fields = false, $module = '')
-    {
+    public function generateSearchWhere($add_custom_fields = false, $module = '') {
         $onlyActive = false;
         if (isset($this->searchFields['open_only_active_users']['value'])) {
-            if ($this->searchFields['open_only_active_users']['value'] == 1) {
+            if ( $this->searchFields['open_only_active_users']['value'] == 1) {
                 $onlyActive = true;
             }
             unset($this->searchFields['open_only_active_users']['value']);
         }
         $where_clauses = parent::generateSearchWhere($add_custom_fields, $module);
         
-        if ($onlyActive) {
+        if ( $onlyActive ) {
             $where_clauses[] = "users.employee_status = 'Active'";
         }
         

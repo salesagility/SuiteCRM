@@ -52,12 +52,12 @@ class ImportViewLast extends ImportView
 {
     protected $pageTitleKey = 'LBL_STEP_5_TITLE';
 
-    public $lvf;
+    var $lvf;
 
-    /**
+ 	/**
      * @see SugarView::display()
      */
-    public function display()
+ 	public function display()
     {
         global $mod_strings, $app_strings, $current_user, $sugar_config, $current_language;
 
@@ -70,7 +70,7 @@ class ImportViewLast extends ImportView
         // lookup this module's $mod_strings to get the correct module name
         $module_mod_strings =
             return_module_language($current_language, $_REQUEST['import_module']);
-        $this->ss->assign("MODULENAME", $module_mod_strings['LBL_MODULE_NAME']);
+        $this->ss->assign("MODULENAME",$module_mod_strings['LBL_MODULE_NAME']);
 
         // read status file to get totals for records imported, errors, and duplicates
         $count        = 0;
@@ -80,10 +80,12 @@ class ImportViewLast extends ImportView
         $updatedCount = 0;
         $fp = sugar_fopen(ImportCacheFiles::getStatusFileName(), 'r');
         
-        // Read the data if we successfully opened file
-        if ($fp !== false) {
+        // Read the data if we successfully opened file 
+        if ($fp !== false)
+        {
             // Read rows 1 by 1 and add the info
-            while ($row = fgetcsv($fp, 8192)) {
+            while ($row = fgetcsv($fp, 8192))
+            {
                 $count         += (int) $row[0];
                 $errorCount    += (int) $row[1];
                 $dupeCount     += (int) $row[2];
@@ -93,18 +95,18 @@ class ImportViewLast extends ImportView
             fclose($fp);
         }
         
-        $this->ss->assign("showUndoButton", false);
-        if ($createdCount > 0) {
-            $this->ss->assign("showUndoButton", true);
+        $this->ss->assign("showUndoButton",FALSE);
+        if($createdCount > 0)
+        {
+        	$this->ss->assign("showUndoButton",TRUE);
         }
 
-        if ($errorCount > 0 &&  ($createdCount <= 0 && $updatedCount <= 0)) {
+        if ($errorCount > 0 &&  ($createdCount <= 0 && $updatedCount <= 0))
             $activeTab = 2;
-        } elseif ($dupeCount > 0 &&  ($createdCount <= 0 && $updatedCount <= 0)) {
+        else if($dupeCount > 0 &&  ($createdCount <= 0 && $updatedCount <= 0))
             $activeTab = 1;
-        } else {
+        else
             $activeTab = 0;
-        }
 
         $this->ss->assign("JAVASCRIPT", $this->_getJS($activeTab));
 
@@ -116,29 +118,34 @@ class ImportViewLast extends ImportView
         $this->ss->assign("errorrecordsFile", ImportCacheFiles::convertFileNameToUrl(ImportCacheFiles::getErrorRecordsWithoutErrorFileName()));
         $this->ss->assign("dupeFile", ImportCacheFiles::convertFileNameToUrl(ImportCacheFiles::getDuplicateFileName()));
 
-        if ($this->bean->object_name == "Prospect") {
-            $this->ss->assign("PROSPECTLISTBUTTON", $this->_addToProspectListButton());
-        } else {
-            $this->ss->assign("PROSPECTLISTBUTTON", "");
+        if ( $this->bean->object_name == "Prospect" )
+        {
+        	$this->ss->assign("PROSPECTLISTBUTTON", $this->_addToProspectListButton());
+        }
+        else {
+            $this->ss->assign("PROSPECTLISTBUTTON","");
         }
 
         $resultsTable = "";
-        foreach (UsersLastImport::getBeansByImport($_REQUEST['import_module']) as $beanname) {
+        foreach ( UsersLastImport::getBeansByImport($_REQUEST['import_module']) as $beanname )
+        {
             // load bean
-            if (!($this->bean instanceof $beanname)) {
+            if ( !( $this->bean instanceof $beanname ) )
+            {
                 $this->bean = new $beanname;
             }
-            $resultsTable .= $this->getListViewResults();
+           $resultsTable .= $this->getListViewResults();
         }
-        if (empty($resultsTable)) {
+        if(empty($resultsTable))
+        {
             $resultsTable = $this->getListViewResults();
         }
 
         $this->ss->assign("RESULTS_TABLE", $resultsTable);
-        $this->ss->assign("ERROR_TABLE", $this->getListViewTableFromFile(ImportCacheFiles::getErrorRecordsFileName(), 'errors'));
+        $this->ss->assign("ERROR_TABLE", $this->getListViewTableFromFile(ImportCacheFiles::getErrorRecordsFileName(), 'errors') );
         $this->ss->assign("DUP_TABLE", $this->getListViewTableFromFile(ImportCacheFiles::getDuplicateFileDisplayName(), 'dup'));
         $content = $this->ss->fetch('modules/Import/tpls/last.tpl');
-        $this->ss->assign("CONTENT", $content);
+        $this->ss->assign("CONTENT",$content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
     }
 
@@ -149,12 +156,11 @@ class ImportViewLast extends ImportView
         $lvf = !empty($this->lvf) ? $this->lvf : new ListViewFacade($this->bean, $this->bean->module_dir, 0);
 
         $params = array();
-        if (!empty($_REQUEST['orderBy'])) {
+        if(!empty($_REQUEST['orderBy']))
+        {
             $params['orderBy'] = $_REQUEST['orderBy'];
             $params['overrideOrder'] = true;
-            if (!empty($_REQUEST['sortOrder'])) {
-                $params['sortOrder'] = $_REQUEST['sortOrder'];
-            }
+            if(!empty($_REQUEST['sortOrder'])) $params['sortOrder'] = $_REQUEST['sortOrder'];
         }
         $beanname = ($this->bean->object_name == 'Case' ? 'aCase' : $this->bean->object_name);
         // add users_last_import joins so we only show records done in this import
@@ -167,23 +173,23 @@ class ImportViewLast extends ImportView
 
         $lvf->lv->mergeduplicates = false;
         $lvf->lv->showMassupdateFields = false;
-        if ($lvf->type == 2) {
+        if ( $lvf->type == 2 )
             $lvf->template = 'include/ListView/ListViewNoMassUpdate.tpl';
-        }
 
         $module_mod_strings = return_module_language($current_language, $this->bean->module_dir);
         $lvf->setup('', '', $params, $module_mod_strings, 0, -1, '', strtoupper($beanname), array(), 'id');
         global $app_list_strings;
-        return $lvf->display($app_list_strings['moduleList'][$this->bean->module_dir], 'main', true);
+        return $lvf->display($app_list_strings['moduleList'][$this->bean->module_dir], 'main', TRUE);
+
     }
 
     protected function getListViewTableFromFile($fileName, $tableName)
     {
-        $has_header = $_REQUEST['has_header'] == 'on' ? true : false;
-        $if = new ImportFile($fileName, ",", '"', false, false);
+        $has_header = $_REQUEST['has_header'] == 'on' ? TRUE : FALSE;
+        $if = new ImportFile($fileName, ",", '"', FALSE, FALSE);
         $if->setHeaderRow($has_header);
-        $lv = new ImportListView($if, array('offset'=> 0), $tableName);
-        return $lv->display(true);
+        $lv = new ImportListView($if,array('offset'=> 0), $tableName);
+        return $lv->display(TRUE);
     }
 
     /**
@@ -289,9 +295,10 @@ EOJAVASCRIPT;
 				AND users_last_import.deleted=0 AND prospects.deleted=0";
 
         $prospect_id = array();
-        if (!empty($query)) {
+        if(!empty($query)){
             $res=DBManagerFactory::getInstance()->query($query);
-            while ($row = DBManagerFactory::getInstance()->fetchByAssoc($res)) {
+            while($row = DBManagerFactory::getInstance()->fetchByAssoc($res))
+            {
                 $prospect_id[]=$row['id'];
             }
         }
@@ -327,5 +334,6 @@ EOJAVASCRIPT;
      value="{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL']}"
      onclick='open_popup("ProspectLists",600,400,"",true,true,$encoded_popup_request_data,"Single","true");' />
 EOHTML;
+
     }
 }

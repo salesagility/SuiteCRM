@@ -61,7 +61,7 @@ $searchdefs[$module_name] = array(
                 'type' => 'bool'
             ),
 
-            'favorites_only' =>  array(
+            'favorites_only' =>  array (
                 'name' => 'favorites_only',
                 'label' => 'LBL_FAVORITES_FILTER',
                 'type' => 'bool',

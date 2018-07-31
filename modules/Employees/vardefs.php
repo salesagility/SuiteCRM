@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,8 +39,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 global $dictionary;
-if (empty($dictionary['User'])) {
-    include('modules/Users/vardefs.php');
+if(empty($dictionary['User'])){
+	include('modules/Users/vardefs.php');
 }
 $dictionary['Employee']=$dictionary['User'];
 //users of employees modules are not allowed to change the employee/user status.
@@ -59,3 +57,4 @@ $dictionary['Employee']['fields']['email_addresses_primary']['required']=false;
 // bugs 47553 & 49716
 $dictionary['Employee']['fields']['status']['studio']=false;
 $dictionary['Employee']['fields']['status']['required']=false;
+

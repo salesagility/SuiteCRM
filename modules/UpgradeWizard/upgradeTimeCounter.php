@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -66,7 +64,7 @@ $json = getJSONobj();
 /*
 $upgradeStepTime = $json->decode(html_entity_decode($_REQUEST['upgradeStepTime']));
 if(isset($tagdata['jsonObject']) && $tagdata['jsonObject'] != null){
-    $upgradeStepTime = $upgradeStepTime['jsonObject'];
+	$upgradeStepTime = $upgradeStepTime['jsonObject'];
  }
 
  if(!isset($_SESSION['totalUpgradeTime'])){
@@ -83,8 +81,8 @@ $GLOBALS['log']->fatal('TOTAL TIME .....'.$_SESSION['totalUpgradeTime']);
 
 
  if (!empty($response)) {
-     $json = getJSONobj();
-     print $json->encode($response);
+    $json = getJSONobj();
+	print $json->encode($response);
  }
 
 sugar_cleanup();

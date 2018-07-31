@@ -1,4 +1,4 @@
-<?php
+<?PHP
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,24 +43,25 @@
 require_once('modules/Calls_Reschedule/Calls_Reschedule_sugar.php');
 require_once('modules/Calls/Call.php');
 
-class Calls_Reschedule extends Calls_Reschedule_sugar
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
+class Calls_Reschedule extends Calls_Reschedule_sugar {
+
+	function __construct(){
+		parent::__construct();
+	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function Calls_Reschedule()
-    {
+    function Calls_Reschedule(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
+
+
 }

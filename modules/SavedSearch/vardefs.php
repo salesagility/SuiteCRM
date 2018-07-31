@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,53 +39,53 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $dictionary['SavedSearch'] = array('table' => 'saved_search',
-'fields' => array(
-  'id' =>
-  array(
+'fields' => array (
+  'id' => 
+  array (
     'name' => 'id',
     'vname' => 'LBL_NAME',
     'type' => 'id',
     'required'=>true,
     'reportable'=>false,
   ),
-  'name' =>
-  array(
+  'name' => 
+  array (
     'name' => 'name',
     'type' => 'varchar',
     'vname' => 'LBL_NAME',
     'len' => 150,
   ),
-  'search_module' =>
-  array(
+  'search_module' => 
+  array (
     'name' => 'search_module',
     'type' => 'varchar',
     'vname' => 'LBL_MODULE',
     'len' => 150,
   ),
-  'deleted' =>
-  array(
+  'deleted' => 
+  array (
     'name' => 'deleted',
     'vname' => 'LBL_CREATED_BY',
     'type' => 'bool',
     'required'=>true,
     'reportable'=>false,
   ),
-  'date_entered' =>
-  array(
+  'date_entered' => 
+  array (
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
     'required'=>true,
   ),
-  'date_modified' =>
-  array(
+  'date_modified' => 
+  array (
     'name' => 'date_modified',
     'vname' => 'LBL_DATE_MODIFIED',
     'type' => 'datetime',
     'required'=>true,
   ),
-  'assigned_user_id' =>
-  array(
+  'assigned_user_id' => 
+  array (
     'name' => 'assigned_user_id',
     'rname' => 'user_name',
     'id_name' => 'assigned_user_id',
@@ -99,8 +97,8 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'reportable'=>true,
     'massupdate' => false,
   ),
-  'assigned_user_name' =>
-  array(
+  'assigned_user_name' => 
+  array (
     'name' => 'assigned_user_name',
     'vname' => 'LBL_ASSIGNED_TO_NAME',
     'type' => 'varchar',
@@ -109,22 +107,22 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'source'=>'non-db',
     'table' => 'users',
   ),
-  'contents' =>
-  array(
+  'contents' => 
+  array (
     'name' => 'contents',
     'type' => 'text',
     'vname' => 'LBL_DESCRIPTION',
     'isnull' => true,
   ),
-  'description' =>
-  array(
+  'description' => 
+  array (
     'name' => 'description',
     'type' => 'text',
     'vname' => 'LBL_DESCRIPTION',
     'isnull' => true,
   ),
   'assigned_user_link' =>
-  array(
+  array (
         'name' => 'assigned_user_link',
     'type' => 'link',
     'relationship' => 'saved_search_assigned_user',
@@ -135,17 +133,17 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
     'source'=>'non-db',
   ),
 ),
-'relationships' => array(
+'relationships' => array (
   'saved_search_assigned_user' =>
    array('lhs_module'=> 'Users', 'lhs_table'=> 'users', 'lhs_key' => 'id',
    'rhs_module'=> 'SavedSearch', 'rhs_table'=> 'saved_search', 'rhs_key' => 'assigned_user_id',
    'relationship_type'=>'one-to-many')
-),
+), 
 
-'indices' => array(
+'indices' => array (
        array('name' =>'savedsearchpk', 'type' =>'primary', 'fields'=>array('id')),
        array('name' =>'idx_desc', 'type'=>'index', 'fields'=>array('name','deleted')))
 );
 
-VardefManager::createVardef('SavedSearch', 'SavedSearch', array(
+VardefManager::createVardef('SavedSearch','SavedSearch', array(
 ));

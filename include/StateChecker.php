@@ -53,15 +53,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * StateChecker
- *
- * Save and check the system state and reports you about any state change in the following:
- *
- * - Database
- * - File system
- * - Super globals
- * - PHP error reporting level
+ * 
+ * Save and check the system state and reports you about any state change in the following: 
+ * 
+ * - Database 
+ * - File system 
+ * - Super globals 
+ * - PHP error reporting level 
  * - PHP configuration options
- *
+ * 
  * See more about the StateChecker configuration at the StateCheckerConfig class.
  *
  * @author SalesAgility
@@ -219,7 +219,9 @@ class StateChecker
         $this->lastHash = $hash;
         
         if (!$this->checkHash($hash, $key)) {
-            throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
+            if ($key != 'errlevel') { // TODO: temporary remove the error level check from state
+                throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
+            }
         }
         
         if (StateCheckerConfig::get('saveTraces')) {
@@ -320,7 +322,7 @@ class StateChecker
         foreach ($objects as $name => $object) {
             if (!$object->isDir() && !$this->isExcludedFile($name)) {
                 $fileObject = $object;
-                $fileObject->fileSize = filesize($name);
+                $fileObject->modifyTime = filemtime($name);
                 $fileObject->hash = $this->getHash((array)$fileObject, 'filesys::' . $fileObject);
                 $files[] = $name;
             }
@@ -383,14 +385,13 @@ class StateChecker
     
     protected $lashHashAll = null;
     
-    public function getLastHashAll()
-    {
+    public function getLastHashAll() {
         return $this->lashHashAll;
     }
     
     /**
-     * Retrieve a hash of all
-     *
+     * Retrieve a hash of all 
+     * 
      * @return string hash
      */
     public function getStateHash()

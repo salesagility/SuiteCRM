@@ -110,17 +110,15 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
 
             require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Fuzzy.php';
             foreach ($searchFields as $fieldName) {
-                $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy(
-                    $this->_word,
+                $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy($this->_word,
                                                                                     $this->_encoding,
                                                                                     $fieldName,
-                                                                                    $this->_minimumSimilarity
-                );
+                                                                                    $this->_minimumSimilarity);
 
                 $rewrittenSubquery = $subquery->rewrite($index);
 
-                if (!($rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Insignificant  ||
-                       $rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Empty)) {
+                if ( !($rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Insignificant  ||
+                       $rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Empty) ) {
                     $query->addSubquery($rewrittenSubquery);
                 }
 
@@ -136,9 +134,10 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
                 if ($hasInsignificantSubqueries) {
                     require_once 'Zend/Search/Lucene/Search/Query/Insignificant.php';
                     return new Zend_Search_Lucene_Search_Query_Insignificant();
+                } else {
+                    require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+                    return new Zend_Search_Lucene_Search_Query_Empty();
                 }
-                require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
-                return new Zend_Search_Lucene_Search_Query_Empty();
             }
 
             if (count($subqueries) == 1) {

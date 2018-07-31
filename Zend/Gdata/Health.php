@@ -140,31 +140,29 @@ class Zend_Gdata_Health extends Zend_Gdata
      * @param string $id The profile ID
      * @return Zend_Gdata_Health Provides a fluent interface
      */
-    public function setProfileID($id)
-    {
+    public function setProfileID($id) {
         $this->_profileID = $id;
         return $this;
     }
 
-    /**
-    * Retrieves the list of profiles associated with the user's ClientLogin
-    * credentials.
-    *
-    * @param string $query The query of the feed as a URL or Query object
-    * @return Zend_Gdata_Feed
-    */
+     /**
+     * Retrieves the list of profiles associated with the user's ClientLogin
+     * credentials.
+     *
+     * @param string $query The query of the feed as a URL or Query object
+     * @return Zend_Gdata_Feed
+     */
     public function getHealthProfileListFeed($query = null)
     {
         if ($this->_httpClient->getClientLoginToken() === null) {
             require_once 'Zend/Gdata/App/AuthException.php';
             throw new Zend_Gdata_App_AuthException(
-                'Profiles list feed is only available when using ClientLogin'
-            );
+                'Profiles list feed is only available when using ClientLogin');
         }
 
-        if ($query === null) {
+        if($query === null)  {
             $uri = self::CLIENTLOGIN_PROFILELIST_FEED_URI;
-        } elseif ($query instanceof Zend_Gdata_Query) {
+        } else if ($query instanceof Zend_Gdata_Query) {
             $uri = $query->getQueryUrl();
         } else {
             $uri = $query;
@@ -192,16 +190,15 @@ class Zend_Gdata_Health extends Zend_Gdata
             $this->getProfileID() == null) {
             require_once 'Zend/Gdata/App/AuthException.php';
             throw new Zend_Gdata_App_AuthException(
-                'Profile ID must not be null. Did you call setProfileID()?'
-            );
+                'Profile ID must not be null. Did you call setProfileID()?');
         }
 
         if ($query instanceof Zend_Gdata_Query) {
             $uri = $query->getQueryUrl();
-        } elseif ($this->_httpClient->getClientLoginToken() !== null &&
+        } else if ($this->_httpClient->getClientLoginToken() !== null &&
                    $query == null) {
             $uri = self::CLIENTLOGIN_PROFILE_FEED_URI . '/' . $this->getProfileID();
-        } elseif ($query === null) {
+        } else if ($query === null) {
             $uri = self::AUTHSUB_PROFILE_FEED_URI;
         } else {
             $uri = $query;
@@ -226,9 +223,8 @@ class Zend_Gdata_Health extends Zend_Gdata
         if ($query === null) {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
-                'Query must not be null'
-            );
-        } elseif ($query instanceof Zend_Gdata_Query) {
+                'Query must not be null');
+        } else if ($query instanceof Zend_Gdata_Query) {
             $uri = $query->getQueryUrl();
         } else {
             $uri = $query;
@@ -256,8 +252,7 @@ class Zend_Gdata_Health extends Zend_Gdata
             } else {
                 require_once 'Zend/Gdata/App/AuthException.php';
                 throw new Zend_Gdata_App_AuthException(
-                    'Profile ID must not be null. Did you call setProfileID()?'
-                );
+                    'Profile ID must not be null. Did you call setProfileID()?');
             }
         } else {
             $uri = self::AUTHSUB_REGISTER_FEED_URI;

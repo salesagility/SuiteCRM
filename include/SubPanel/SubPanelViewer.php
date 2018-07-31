@@ -84,7 +84,7 @@ if (!empty($_REQUEST['layout_def_key'])) {
 require_once 'include/SubPanel/SubPanelDefinitions.php';
 // retrieve the definitions for all the available subpanels for this module from the subpanel
 $bean = BeanFactory::getBean($module);
-$spd = new SubPanelDefinitions($bean);
+$spd = new SubPanelDefinitions ($bean);
 $aSubPanelObject = $spd->load_subpanel($subpanel, false, false, '', $collection);
 
 $subpanel_object = new SubPanel($module, $record, $subpanel, $aSubPanelObject, $layout_def_key, $collection);
@@ -102,3 +102,4 @@ if (!isset($_SESSION['isMobile'])) {
 if (empty($_REQUEST['inline'])) {
     insert_popup_footer();
 }
+

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
-class CampaignROIChartDashlet extends DashletGenericChart
+class CampaignROIChartDashlet extends DashletGenericChart 
 {
     public $campaign_id;
     /**
@@ -61,14 +59,12 @@ class CampaignROIChartDashlet extends DashletGenericChart
     {
         $this->getSeedBean()->disable_row_level_security = false;
 
-        $campaigns = $this->getSeedBean()->get_full_list("", "");
-        if ($campaigns != null) {
-            foreach ($campaigns as $c) {
+        $campaigns = $this->getSeedBean()->get_full_list("","");
+        if ( $campaigns != null )
+            foreach ($campaigns as $c)
                 $this->_searchFields['campaign_id']['options'][$c->id] = $c->name;
-            }
-        } else {
+        else
             $this->_searchFields['campaign_id']['options'] = array();
-        }
 
         return parent::displayOptions();
     }
@@ -81,16 +77,11 @@ class CampaignROIChartDashlet extends DashletGenericChart
         $rawData = $this->constructQuery(
             $GLOBALS['app_list_strings']['roi_type_dom'],
             $GLOBALS['app_list_strings']['roi_type_dom'],
-            $this->campaign_id[0],
-            null,
-            true,
-            true,
-            true,
-            $this->id
-        );
+            $this->campaign_id[0],null,true,true,true,$this->id);
 
         $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
-        if ($GLOBALS['current_user']->getPreference('currency')) {
+        if ($GLOBALS['current_user']->getPreference('currency')){
+
             $currency = new Currency();
             $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
             $currency_symbol = $currency->symbol;
@@ -102,7 +93,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
         $chartHeight    = 500;
         $autoRefresh = $this->processAutoRefresh();
 
-        $chartReadyData = $this->prepareChartData($rawData, $currency_symbol, $thousands_symbol);
+        $chartReadyData = $this->prepareChartData($rawData,$currency_symbol,$thousands_symbol);
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
         $jsonData = json_encode($chartReadyData['data']);
@@ -116,7 +107,8 @@ class CampaignROIChartDashlet extends DashletGenericChart
         //$colours = "['red','blue','green','orange','yellow','pink']";
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
-        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
+        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
+        {
             return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
@@ -224,12 +216,11 @@ EOD;
         //   return $this->getTitle('<div align="center"></div>') . '<div align="center">' . $returnStr . '</div>'. $this->processAutoRefresh();
     }
 
-    protected function constructQuery($datay= array(), $targets=array(), $campaign_id = null, $cache_file_name='a_file', $refresh=false, $marketing_id='', $is_dashlet=false, $dashlet_id='')
-    {
+    protected function constructQuery($datay= array(),$targets=array(),$campaign_id = null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='') {
         //global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
         global $mod_strings;
         
-        if (!$campaign_id) {
+        if(!$campaign_id) {
             $GLOBALS['log']->debug('roi chart need a campaign id');
             return false;
         }
@@ -241,7 +232,7 @@ EOD;
         $focus = new Campaign();
         $focus->retrieve($campaign_id);
         $opp_count=0;
-        $opp_query  = "select count(*) opp_count,sum(" . db_convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
+        $opp_query  = "select count(*) opp_count,sum(" . db_convert("amount_usdollar","IFNULL",array(0)).")  total_value";
         $opp_query .= " from opportunities";
         $opp_query .= " where campaign_id='$campaign_id'";
         $opp_query .= " and sales_stage='Prospecting'";
@@ -249,9 +240,7 @@ EOD;
 
         $opp_result=$focus->db->query($opp_query);
         $opp_data=$focus->db->fetchByAssoc($opp_result);
-        if (empty($opp_data['total_value'])) {
-            $opp_data['total_value']=0;
-        }
+        if (empty($opp_data['total_value'])) $opp_data['total_value']=0;
 
         $chartData['Total Value']= $opp_data['total_value'];
 
@@ -266,10 +255,10 @@ EOD;
         $opp_data1=$focus->db->fetchByAssoc($opp_result1);
 
         //if (empty($opp_data1[]))
-        if (empty($opp_data1['revenue'])) {
+        if (empty($opp_data1['revenue'])){
             $opp_data1[$mod_strings['LBL_ROI_CHART_REVENUE']] = 0;
             unset($opp_data1['revenue']);
-        } else {
+        }else{
             $opp_data1[$mod_strings['LBL_ROI_CHART_REVENUE']] = $opp_data1['revenue'];
             unset($opp_data1['revenue']);
             $not_empty = true;
@@ -286,21 +275,18 @@ EOD;
         $camp_data1=$focus->db->fetchByAssoc($camp_result1);
 
 
-        if (empty($camp_data1['investment'])) {
+        if (empty($camp_data1['investment']))
             $camp_data1['investment'] = 0;
-        } else {
+        else
             $not_empty = true;
-        }
-        if (empty($camp_data1['budget'])) {
+        if (empty($camp_data1['budget']))
             $camp_data1['budget'] = 0;
-        } else {
+        else
             $not_empty = true;
-        }
-        if (empty($camp_data1['expected_revenue'])) {
+        if (empty($camp_data1['expected_revenue']))
             $camp_data1['expected_revenue'] = 0;
-        } else {
+        else
             $not_empty = true;
-        }
 
         $chartData['Investment']= $camp_data1['investment'];
         $chartData['Budget']= $camp_data1['budget'];
@@ -326,7 +312,7 @@ EOD;
         return $chartData;
     }
 
-    protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
+    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
         $chart['labels'] = array();
@@ -335,7 +321,8 @@ EOD;
         $chart['key'] = array();
         $chart['tooltips']= array();
 
-        foreach ($data as $key=>$value) {
+        foreach($data as $key=>$value)
+        {
             $formattedFloat = (float)number_format((float)$value, 2, '.', '');
             $chart['labels'][] = $key;
             $chart['data'][] = $formattedFloat;

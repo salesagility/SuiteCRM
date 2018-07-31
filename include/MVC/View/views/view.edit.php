@@ -122,10 +122,11 @@ class ViewEdit extends SugarView
      */
     public function getEditView()
     {
-        if (empty($this->ev)) {
+        if(empty($this->ev)) {
             $this->ev = new EditView();
         }
 
         return $this->ev;
     }
 }
+

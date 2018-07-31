@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -52,8 +50,8 @@ logThis('cleaning up files and session.  goodbye.');
 
 //Check the current step.
 
-if (isset($_SESSION['install_file']) && file_exists(isset($_SESSION['install_file']))) {
-    @unlink(isset($_SESSION['install_file']));
+if(isset($_SESSION['install_file']) && file_exists(isset($_SESSION['install_file']))){
+	@unlink(isset($_SESSION['install_file']));
 }
 unlinkUWTempFiles();
 unlinkUploadFiles();
@@ -92,3 +90,4 @@ $stepBack		= $_REQUEST['step'] - 1;
 $stepNext		= $_REQUEST['step'] + 1;
 $stepCancel		= -1;
 $stepRecheck	= $_REQUEST['step'];
+

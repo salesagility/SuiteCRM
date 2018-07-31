@@ -68,9 +68,7 @@ if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
 
 
 //setting default flag value so due date and time not required
-if (!isset($focus->id)) {
-    $focus->date_due_flag = 1;
-}
+if (!isset($focus->id)) $focus->date_due_flag = 1;
 
 //needed when creating a new case with default values passed in
 if (isset($_REQUEST['contact_name']) && is_null($focus->contact_name)) {
@@ -121,9 +119,9 @@ if (!$focus->ACLAccess('EditView')) {
 $GLOBALS['log']->info("EmailTemplate detail view");
 
 if ($has_campaign || $inboundEmail) {
-    $xtpl = new XTemplate('modules/EmailTemplates/EditView.html');
+    $xtpl = new XTemplate ('modules/EmailTemplates/EditView.html');
 } else {
-    $xtpl = new XTemplate('modules/EmailTemplates/EditViewMain.html');
+    $xtpl = new XTemplate ('modules/EmailTemplates/EditViewMain.html');
 } // else
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
@@ -132,16 +130,12 @@ $xtpl->assign("LBL_ACCOUNT", $app_list_strings['moduleList']['Accounts']);
 $xtpl->parse("main.variable_option");
 
 $returnAction = 'index';
-if (isset($_REQUEST['return_module'])) {
-    $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
-}
+if (isset($_REQUEST['return_module'])) $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
 if (isset($_REQUEST['return_action'])) {
     $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
     $returnAction = $_REQUEST['return_action'];
 }
-if (isset($_REQUEST['return_id'])) {
-    $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
-}
+if (isset($_REQUEST['return_id'])) $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
 // handle Create $module then Cancel
 if (empty($_REQUEST['return_id'])) {
     $xtpl->assign("RETURN_ACTION", 'index');
@@ -170,9 +164,8 @@ $popup_request_data = array(
 );
 $json = getJSONobj();
 $xtpl->assign('encoded_assigned_users_popup_request_data', $json->encode($popup_request_data));
-if (!empty($focus->assigned_user_name)) {
+if (!empty($focus->assigned_user_name))
     $xtpl->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
-}
 
 $xtpl->assign("assign_user_select", '<span class="suitepicon suitepicon-action-select"></span>');
 $xtpl->assign("assign_user_clear", '<span class="suitepicon suitepicon-action-clear"></span>');
@@ -194,38 +187,23 @@ $jsLang = getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js
 $xtpl->assign("JSLANG", $jsLang);
 
 $xtpl->assign("ID", $focus->id);
-if (isset($focus->name)) {
-    $xtpl->assign("NAME", $focus->name);
-} else {
-    $xtpl->assign("NAME", "");
-}
+if (isset($focus->name)) $xtpl->assign("NAME", $focus->name); else $xtpl->assign("NAME", "");
 
 //Bug45632
 /* BEGIN - SECURITY GROUPS */
 /**
  * if(isset($focus->assigned_user_id)) $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id); else $xtpl->assign("ASSIGNED_USER_ID", "");
  */
-if (isset($focus->assigned_user_id)) {
-    $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id);
-} elseif (empty($focus->id) && empty($focus->assigned_user_id)) {
+if (isset($focus->assigned_user_id)) $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id);
+else if (empty($focus->id) && empty($focus->assigned_user_id)) {
     $xtpl->assign("ASSIGNED_USER_ID", $current_user->id);
     $xtpl->assign("ASSIGNED_USER_NAME", get_assigned_user_name($current_user->id));
-} else {
-    $xtpl->assign("ASSIGNED_USER_ID", "");
-}
+} else $xtpl->assign("ASSIGNED_USER_ID", "");
 /* END - SECURITY GROUPS */
 //Bug45632
 
-if (isset($focus->description)) {
-    $xtpl->assign("DESCRIPTION", $focus->description);
-} else {
-    $xtpl->assign("DESCRIPTION", "");
-}
-if (isset($focus->subject)) {
-    $xtpl->assign("SUBJECT", $focus->subject);
-} else {
-    $xtpl->assign("SUBJECT", "");
-}
+if (isset($focus->description)) $xtpl->assign("DESCRIPTION", $focus->description); else $xtpl->assign("DESCRIPTION", "");
+if (isset($focus->subject)) $xtpl->assign("SUBJECT", $focus->subject); else $xtpl->assign("SUBJECT", "");
 if ($focus->published == 'on') {
     $xtpl->assign("PUBLISHED", "CHECKED");
 }
@@ -249,6 +227,7 @@ if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty(
     }
 
     $xtpl->assign("ADMIN_EDIT", "<a href='index.php?action=index&module=DynamicLayout&from_action=" . $_REQUEST['action'] . "&from_module=" . $_REQUEST['module'] . "&record=" . $record . "'>" . SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDIT_LAYOUT']) . "</a>");
+
 }
 if (isset($focus->parent_type) && $focus->parent_type != "") {
     $change_parent_button = "<input title='" . $app_strings['LBL_SELECT_BUTTON_TITLE'] . "'
@@ -265,16 +244,8 @@ $xtpl->assign("DESCRIPTION", $focus->description);
 $xtpl->assign("TYPE_OPTIONS", get_select_options_with_id($app_list_strings['record_type_display'], $focus->parent_type));
 //$xtpl->assign("DEFAULT_MODULE","Accounts");
 
-if (isset($focus->body)) {
-    $xtpl->assign("BODY", $focus->body);
-} else {
-    $xtpl->assign("BODY", "");
-}
-if (isset($focus->body_html)) {
-    $xtpl->assign("BODY_HTML", $focus->body_html);
-} else {
-    $xtpl->assign("BODY_HTML", "");
-}
+if (isset($focus->body)) $xtpl->assign("BODY", $focus->body); else $xtpl->assign("BODY", "");
+if (isset($focus->body_html)) $xtpl->assign("BODY_HTML", $focus->body_html); else $xtpl->assign("BODY_HTML", "");
 
 
 // ---------------------------------
@@ -343,7 +314,7 @@ if (true) {
 			       </option>";
         $xtpl->assign("DROPDOWN", $dropdown);
         $xtpl->assign("DEFAULT_MODULE", 'Contacts');
-    //$xtpl->assign("CAMPAIGN_POPUP_JS", '<script type="text/javascript" src="include/javascript/sugar_3.js"></script>');
+        //$xtpl->assign("CAMPAIGN_POPUP_JS", '<script type="text/javascript" src="include/javascript/sugar_3.js"></script>');
     } else {
         $xtpl->assign("DROPDOWN", genDropDownJS2());
         $xtpl->assign("DEFAULT_MODULE", 'Accounts');
@@ -427,3 +398,4 @@ $javascript->setFormName('EditView');
 $javascript->setSugarBean($focus);
 $javascript->addAllFields('');
 echo $javascript->getScript();
+

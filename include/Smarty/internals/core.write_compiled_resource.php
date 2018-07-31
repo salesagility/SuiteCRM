@@ -14,9 +14,9 @@
  */
 function smarty_core_write_compiled_resource($params, &$smarty)
 {
-    if (!@is_writable($smarty->compile_dir)) {
+    if(!@is_writable($smarty->compile_dir)) {
         // compile_dir not writable, see if it exists
-        if (!@is_dir($smarty->compile_dir)) {
+        if(!@is_dir($smarty->compile_dir)) {
             $smarty->trigger_error('the $compile_dir \'' . $smarty->compile_dir . '\' does not exist, or is not a directory.', E_USER_ERROR);
             return false;
         }
@@ -31,3 +31,5 @@ function smarty_core_write_compiled_resource($params, &$smarty)
 }
 
 /* vim: set expandtab: */
+
+?>

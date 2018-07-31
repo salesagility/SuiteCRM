@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,20 +39,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 // created: 2005-11-04 15:39:46
-$acldefs['ProjectTask'] = array(
-  'forms' =>
-  array(
-    'by_name' =>
-    array(
-      'change_project' =>
-      array(
+$acldefs['ProjectTask'] = array (
+  'forms' => 
+  array (
+    'by_name' => 
+    array (
+      'change_project' => 
+      array (
         'display_option' => 'disabled',
         'action_option' => 'list',
         'app_action' => 'EditView',
         'module' => 'Project',
       ),
-      'change_parent' =>
-      array(
+      'change_parent' => 
+      array (
         'display_option' => 'disabled',
         'action_option' => 'list',
         'app_action' => 'EditView',
@@ -62,8 +60,8 @@ $acldefs['ProjectTask'] = array(
       ),
     ),
   ),
-  'form_names' =>
-  array(
+  'form_names' => 
+  array (
     'by_id' => 'by_id',
     'by_name' => 'by_name',
     'DetailView' => 'DetailView',

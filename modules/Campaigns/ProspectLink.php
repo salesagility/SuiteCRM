@@ -118,7 +118,8 @@ class ProspectLink extends Link2
             }
 
             return $join;
+        } else {
+            return parent::getJoin($params, $return_array);
         }
-        return parent::getJoin($params, $return_array);
     }
 }

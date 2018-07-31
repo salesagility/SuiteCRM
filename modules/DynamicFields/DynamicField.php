@@ -64,7 +64,7 @@ class DynamicField
         global $sugar_config;
         $this->module = (!empty($module)) ? $module : ((isset($_REQUEST['module']) && !empty($_REQUEST['module'])) ? $_REQUEST ['module'] : '');
         $this->base_path = "custom/Extension/modules/{$this->module}/Ext/Vardefs";
-        if (isset($sugar_config['dbconfig'])) {
+        if(isset($sugar_config['dbconfig'])) {
             $this->db = DBManagerFactory::getInstance();
         }
     }
@@ -582,10 +582,12 @@ class DynamicField
                 }
 
                 return false;
+            } else {
+                return !empty($vardefs[$name]) && ($vardefs[$name]['type'] == $type);
             }
-            return !empty($vardefs[$name]) && ($vardefs[$name]['type'] == $type);
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -766,8 +768,9 @@ class DynamicField
             fclose($fh);
 
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**

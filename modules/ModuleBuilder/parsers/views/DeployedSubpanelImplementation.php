@@ -56,6 +56,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php';
  */
 class DeployedSubpanelImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
+
     const HISTORYFILENAME = 'restored.php';
     const HISTORYVARIABLENAME = 'layout_defs';
 
@@ -102,26 +103,26 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
         $this->_moduleName = $moduleName;
 
         // BEGIN ASSERTIONS
-        if (!isset($GLOBALS ['beanList'] [$moduleName])) {
+        if (!isset ($GLOBALS ['beanList'] [$moduleName])) {
             sugar_die(get_class($this) . ": Modulename $moduleName is not a Deployed Module");
         }
         // END ASSERTIONS
 
         $this->historyPathname = 'custom/history/modules/' . $moduleName . '/subpanels/' . $subpanelName . '/' . self::HISTORYFILENAME;
-        $this->_history = new History($this->historyPathname);
+        $this->_history = new History ($this->historyPathname);
 
         $module = get_module_info($moduleName);
 
         require_once('include/SubPanel/SubPanelDefinitions.php');
         // retrieve the definitions for all the available subpanels for this module from the subpanel
-        $spd = new SubPanelDefinitions($module);
+        $spd = new SubPanelDefinitions ($module);
 
         // Get the lists of fields already in the subpanel and those that can be added in
         // Get the fields lists from an aSubPanel object describing this subpanel from the SubPanelDefinitions object
         $this->_viewdefs = array();
         $this->_fielddefs = array();
         $this->_language = '';
-        if (!empty($spd->layout_defs)) {
+        if (!empty ($spd->layout_defs)) {
             if (array_key_exists(strtolower($subpanelName), $spd->layout_defs ['subpanel_setup'])) {
                 //First load the original defs from the module folder
                 $originalSubpanel = $spd->load_subpanel($subpanelName, false, true);
@@ -147,7 +148,7 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
                 // Retrieve a copy of the bean for the parent module of this subpanel - so we can find additional fields for the layout
                 $subPanelParentModuleName = $this->_aSubPanelObject->get_module_name();
                 $beanListLower = array_change_key_case($GLOBALS ['beanList']);
-                if (!empty($subPanelParentModuleName) && isset($beanListLower [strtolower($subPanelParentModuleName)])) {
+                if (!empty ($subPanelParentModuleName) && isset ($beanListLower [strtolower($subPanelParentModuleName)])) {
                     $subPanelParentModule = get_module_info($subPanelParentModuleName);
 
                     // Run through the preliminary list, keeping only those fields that are valid to include in a layout
@@ -155,7 +156,7 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
                         $key = strtolower($key);
 
                         if (AbstractMetaDataParser::validField($def)) {
-                            if (!isset($def ['label'])) {
+                            if (!isset ($def ['label'])) {
                                 $def ['label'] = $def ['name'];
                             }
                             $this->_fielddefs [$key] = $def;
@@ -166,6 +167,7 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
                 $this->_mergeFielddefs($this->_fielddefs, $this->_viewdefs);
             }
         }
+
     }
 
     /**
@@ -189,12 +191,13 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
         $this->_viewdefs = $layoutDefinitions;
 
         require_once 'include/SubPanel/SubPanel.php';
-        $subpanel = new SubPanel($this->_moduleName, 'fab4', $this->_subpanelName, $this->_aSubPanelObject);
+        $subpanel = new SubPanel ($this->_moduleName, 'fab4', $this->_subpanelName, $this->_aSubPanelObject);
 
         $subpanel->saveSubPanelDefOverride($this->_aSubPanelObject, 'list_fields', $layoutDefinitions);
         // now clear the cache so that the results are immediately visible
         include_once('include/TemplateHandler/TemplateHandler.php');
         TemplateHandler::clearCache($this->_moduleName);
+
     }
 
     /**
@@ -235,13 +238,14 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
             if (!empty($def['view'])) {
                 $filenames[$def['view']] = substr($file, 0, strlen($file) - 4);
             }
+
         }
 
         // BEGIN ASSERTIONS
-        if (!isset($pathMap [$type])) {
+        if (!isset ($pathMap [$type])) {
             sugar_die("DeployedSubpanelImplementation->getFileName(): Type $type is not recognized");
         }
-        if (!isset($filenames [$view])) {
+        if (!isset ($filenames [$view])) {
             sugar_die("DeployedSubpanelImplementation->getFileName(): View $view is not recognized");
         }
         // END ASSERTIONS
@@ -250,4 +254,5 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
         // Construct filename
         return $pathMap [$type] . 'modules/' . $moduleName . '/metadata/' . $filenames [$view] . '.php';
     }
+
 }

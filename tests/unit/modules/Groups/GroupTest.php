@@ -34,7 +34,7 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushTable('users');
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $group = new Group();
 

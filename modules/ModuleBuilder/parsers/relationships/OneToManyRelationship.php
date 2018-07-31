@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,14 +46,14 @@ require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.p
  * The One-To-Many relationships created by this class are a combination of a subpanel and a custom relate field
  * The LHS (One) module will receive a new subpanel for the RHS module. The subpanel gets its data ('get_subpanel_data') from a link field that references a new Relationship
  * The RHS (Many) module will receive a new relate field to point back to the LHS
- *
+ * 
  * OOB modules implement One-To-Many relationships as:
- *
+ * 
  * On the LHS (One) side:
  * A Relationship of type one-to-many in the rhs modules vardefs.php
  * A link field in the same vardefs.php with 'relationship'= the relationship name and 'source'='non-db'
  * A subpanel which gets its data (get_subpanel_data) from the link field
- *
+ * 
  * On the RHS (Many) side:
  * A Relate field in the vardefs, formatted as in this example, which references a link field:
  * 'name' => 'account_name',
@@ -79,9 +77,9 @@ class OneToManyRelationship extends AbstractRelationship
      * @param array $definition Parameters passed in as array defined in parent::$definitionKeys
      * The lhs_module value is for the One side; the rhs_module value is for the Many
      */
-    public function __construct($definition)
+    function __construct ($definition)
     {
-        parent::__construct($definition) ;
+        parent::__construct ( $definition ) ;
     }
 
     /*
@@ -93,25 +91,21 @@ class OneToManyRelationship extends AbstractRelationship
      * The format is that of TO_MODULE => relationship, FROM_MODULE, FROM_MODULES_SUBPANEL, mimicking the format in the layoutdefs.php
      * @return array    An array of subpanel definitions, keyed by the module
      */
-    public function buildSubpanelDefinitions()
-    {
-        if ($this->relationship_only) {
-            return array() ;
-        }
+    function buildSubpanelDefinitions ()
+    {        
+        if ($this->relationship_only)
+            return array () ;
         
         $source = "";
-        if ($this->rhs_module == $this->lhs_module) {
-            $source = $this->getJoinKeyLHS();
+        if ($this->rhs_module == $this->lhs_module)
+        {
+        	$source = $this->getJoinKeyLHS();
         }
  
-        return array(
-            $this->lhs_module => $this->getSubpanelDefinition(
-                $this->relationship_name,
-                $this->rhs_module,
-                $this->rhs_subpanel,
-                $this->getRightModuleSystemLabel(),
-                $source
-            )
+        return array( 
+        	$this->lhs_module => $this->getSubpanelDefinition ( 
+        		$this->relationship_name, $this->rhs_module, $this->rhs_subpanel , $this->getRightModuleSystemLabel() , $source
+        	) 
         );
     }
 
@@ -119,33 +113,24 @@ class OneToManyRelationship extends AbstractRelationship
     /*
      * @return array    An array of field definitions, ready for the vardefs, keyed by module
      */
-    public function buildVardefs()
+	function buildVardefs ( )
     {
-        $vardefs = array( ) ;
+        $vardefs = array ( ) ;
         
-        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition(
-            $this->lhs_module,
-            $this->relationship_name,
-            false,
-            'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE',
-            $this->relationship_only ? false : $this->getIDName($this->lhs_module)
+        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition ( $this->lhs_module, $this->relationship_name, false,
+            'LBL_' . strtoupper ( $this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel() ) . '_TITLE',
+            $this->relationship_only ? false : $this->getIDName( $this->lhs_module )
         ) ;
-        if ($this->rhs_module != $this->lhs_module) {
-            $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition(
-                $this->rhs_module,
-                $this->relationship_name,
-                true,
-                'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE'
-            );
+        if ($this->rhs_module != $this->lhs_module )
+        {
+        	$vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition ( $this->rhs_module, $this->relationship_name, true,
+                'LBL_' . strtoupper ( $this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()  ) . '_TITLE');
         }
-        if (! $this->relationship_only) {
-            $vardefs [ $this->rhs_module ] [] = $this->getRelateFieldDefinition($this->lhs_module, $this->relationship_name, $this->getLeftModuleSystemLabel()) ;
-            $vardefs [ $this->rhs_module ] [] = $this->getLink2FieldDefinition(
-                $this->lhs_module,
-                $this->relationship_name,
-                true,
-                'LBL_' . strtoupper($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE'
-            );
+        if (! $this->relationship_only)
+        {
+            $vardefs [ $this->rhs_module ] [] = $this->getRelateFieldDefinition ( $this->lhs_module, $this->relationship_name, $this->getLeftModuleSystemLabel() ) ;
+            $vardefs [ $this->rhs_module ] [] = $this->getLink2FieldDefinition ( $this->lhs_module, $this->relationship_name, true,
+                'LBL_' . strtoupper ( $this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()  ) . '_TITLE');
         }
         
         return $vardefs ;
@@ -155,11 +140,10 @@ class OneToManyRelationship extends AbstractRelationship
      * Define what fields to add to which modules layouts
      * @return array    An array of module => fieldname
      */
-    public function buildFieldsToLayouts()
+    function buildFieldsToLayouts ()
     {
-        if ($this->relationship_only) {
-            return array() ;
-        }
+        if ($this->relationship_only)
+            return array () ;
  
         return array( $this->rhs_module =>$this->getValidDBName($this->relationship_name . "_name")); // this must match the name of the relate field from buildVardefs
     }
@@ -167,8 +151,9 @@ class OneToManyRelationship extends AbstractRelationship
     /*
      * @return array    An array of relationship metadata definitions
      */
-    public function buildRelationshipMetaData()
+    function buildRelationshipMetaData ()
     {
-        return array( $this->lhs_module => $this->getRelationshipMetaData(MB_ONETOMANY) ) ;
+        return array( $this->lhs_module => $this->getRelationshipMetaData ( MB_ONETOMANY ) ) ;
     }
+
 }

@@ -1,7 +1,6 @@
 <?php
 
-class bmp
-{
+class bmp {
 
 var $mpdf = null;
 

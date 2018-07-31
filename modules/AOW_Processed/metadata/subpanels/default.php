@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
  * @package Advanced OpenWorkflow for SugarCRM
@@ -27,11 +25,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $subpanel_layout = array(
-    'top_buttons' => array(),
+	'top_buttons' => array(),
 
-    'where' => '',
+	'where' => '',
 
-    'list_fields' => array(
+	'list_fields' => array(
         'parent_name'=>array(
             'vname' => 'LBL_BEAN',
             'target_record_key' => 'parent_id',
@@ -48,15 +46,15 @@ $subpanel_layout = array(
             'vname' => 'LBL_DATE_ENTERED',
             'width' => '15%',
         ),
-        'date_modified'=>array(
-            'vname' => 'LBL_DATE_MODIFIED',
-            'width' => '15%',
-        ),
+		'date_modified'=>array(
+	 		'vname' => 'LBL_DATE_MODIFIED',
+	 		'width' => '15%',
+		),
         'parent_id'=>array(
             'usage'=>'query_only',
         ),
         'parent_type'=>array(
             'usage'=>'query_only',
         ),
-    ),
+	),
 );

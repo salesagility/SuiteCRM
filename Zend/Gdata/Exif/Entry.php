@@ -141,4 +141,5 @@ class Zend_Gdata_Exif_Entry extends Zend_Gdata_Entry
         $this->_tags = $value;
         return $this;
     }
+
 }

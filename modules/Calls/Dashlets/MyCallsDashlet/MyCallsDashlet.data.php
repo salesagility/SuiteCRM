@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,25 +44,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user;
 
 $dashletData['MyCallsDashlet']['searchFields'] = array(
-                                                       
+													   
                                                        'name'        => array('default' => ''),
                                                        'status'           => array('default' => array('Planned')),
                                                        'date_entered'       => array('default' => ''),
                                                        'date_start'             => array('default' => ''),
                                                        
                                                        'assigned_user_id' => array('type'    => 'assigned_user_name',
-                                                                                      'label'   => 'LBL_ASSIGNED_TO',
+                   																   'label'   => 'LBL_ASSIGNED_TO', 
                                                                                    'default' => $current_user->name));
-$dashletData['MyCallsDashlet']['columns'] = array('set_complete' => array('width' => '5',
+$dashletData['MyCallsDashlet']['columns'] = array('set_complete' => array('width' => '5', 
                                                                           'label' => 'LBL_LIST_CLOSE',
                                                                           'default' => true,
                                                                           'sortable' => false,
                                                                           'related_fields' => array('status','recurring_source')),
-                                                  'name' => array('width'   => '40',
+                                                  'name' => array('width'   => '40', 
                                                                   'label'   => 'LBL_SUBJECT',
                                                                   'link'    => true,
                                                                   'default' => true),
-                                                  'parent_name' => array('width' => '29',
+                                                  'parent_name' => array('width' => '29', 
                                                                          'label' => 'LBL_LIST_RELATED_TO',
                                                                          'sortable' => false,
                                                                          'dynamic_module' => 'PARENT_TYPE',
@@ -72,33 +70,33 @@ $dashletData['MyCallsDashlet']['columns'] = array('set_complete' => array('width
                                                                          'id' => 'PARENT_ID',
                                                                          'ACLTag' => 'PARENT',
                                                                          'related_fields' => array('parent_id', 'parent_type'),
-                                                                         'default' => true,
-                                                                        ),
+																		 'default' => true,
+																		),
                                                   
-                                                  'duration' => array('width'    => '10',
+                                                  'duration' => array('width'    => '10', 
                                                                       'label'    => 'LBL_DURATION',
                                                                       'sortable' => false,
                                                                       'related_fields' => array('duration_hours', 'duration_minutes')),
-                                                  'direction' => array('width'   => '10',
-                                                                       'label'   => 'LBL_DIRECTION'),
-                                                  'date_start' => array('width'   => '15',
+                                                  'direction' => array('width'   => '10', 
+                                                                       'label'   => 'LBL_DIRECTION'),  
+                                                  'date_start' => array('width'   => '15', 
                                                                         'label'   => 'LBL_DATE',
                                                                         'default' => true,
                                                                         'related_fields' => array('time_start')),
-                                            'set_accept_links'=> array('width'    => '10',
-                                                                       'label'    => translate('LBL_ACCEPT_THIS', 'Meetings'),
-                                                                       'sortable' => false,
-                                                                        'related_fields' => array('status'),
-                                                                        'default' => true),
-                                                  'status' => array('width'   => '8',
+											'set_accept_links'=> array('width'    => '10', 
+																	   'label'    => translate('LBL_ACCEPT_THIS', 'Meetings'),
+																	   'sortable' => false,
+																	    'related_fields' => array('status'),
+																		'default' => true),
+                                                  'status' => array('width'   => '8', 
                                                                     'label'   => 'LBL_STATUS',
-                                                                    'default'  => true),
-                                                  'date_entered' => array('width'   => '15',
+																	'default'  => true),
+                                                  'date_entered' => array('width'   => '15', 
                                                                           'label'   => 'LBL_DATE_ENTERED'),
-                                                  'date_modified' => array('width'   => '15',
-                                                                          'label'   => 'LBL_DATE_MODIFIED'),
-                                                  'created_by' => array('width'   => '8',
+                                                  'date_modified' => array('width'   => '15', 
+                                                                          'label'   => 'LBL_DATE_MODIFIED'),    
+                                                  'created_by' => array('width'   => '8', 
                                                                         'label'   => 'LBL_CREATED'),
-                                                  'assigned_user_name' => array('width'   => '8',
+                                                  'assigned_user_name' => array('width'   => '8', 
                                                                                 'label'   => 'LBL_LIST_ASSIGNED_USER'),
                                                   );

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,22 +48,23 @@ $ACLbeanList=$beanList;
 
 
 
-if (is_admin($current_user)) {
-    foreach ($ACLbeanList as $module=>$class) {
-        if (empty($installed_classes[$class]) && isset($beanFiles[$class]) && file_exists($beanFiles[$class])) {
-            if ($class == 'Tracker') {
+if(is_admin($current_user)){
+    foreach($ACLbeanList as $module=>$class){
+
+        if(empty($installed_classes[$class]) && isset($beanFiles[$class]) && file_exists($beanFiles[$class])){
+            if($class == 'Tracker'){
             } else {
                 require_once($beanFiles[$class]);
                 $mod = new $class();
                 $GLOBALS['log']->debug("DOING: $class");
-                if ($mod->bean_implements('ACL') && empty($mod->acl_display_only)) {
+                if($mod->bean_implements('ACL') && empty($mod->acl_display_only)){
                     // BUG 10339: do not display messages for upgrade wizard
-                    if (!isset($_REQUEST['upgradeWizard'])) {
-                        echo translate('LBL_ADDING', 'ACL', '') . $mod->module_dir . '<br>';
+                    if(!isset($_REQUEST['upgradeWizard'])){
+                        echo translate('LBL_ADDING','ACL','') . $mod->module_dir . '<br>';
                     }
-                    if (!empty($mod->acltype)) {
+                    if(!empty($mod->acltype)){
                         ACLAction::addActions($mod->getACLCategory(), $mod->acltype);
-                    } else {
+                    }else{
                         ACLAction::addActions($mod->getACLCategory());
                     }
 
@@ -74,4 +73,6 @@ if (is_admin($current_user)) {
             }
         }
     }
+
+
 }

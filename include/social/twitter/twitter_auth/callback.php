@@ -29,7 +29,7 @@ $settings = array(
 );
 
 /* Create TwitteroAuth object with app key/secret and token key/secret from default phase */
-$connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_secret'], $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+$connection = new TwitterOAuth($settings['consumer_key'],$settings['consumer_secret'], $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 
 /* Request access tokens from twitter */
 $access_token = $connection->getAccessToken($_REQUEST['oauth_verifier']);

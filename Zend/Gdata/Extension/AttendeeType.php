@@ -37,6 +37,7 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_Extension_AttendeeType extends Zend_Gdata_Extension
 {
+
     protected $_rootElement = 'attendeeType';
     protected $_value = null;
 
@@ -117,4 +118,6 @@ class Zend_Gdata_Extension_AttendeeType extends Zend_Gdata_Extension
     {
         return $this->getValue();
     }
+
 }
+

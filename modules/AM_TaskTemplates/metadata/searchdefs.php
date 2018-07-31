@@ -1,19 +1,19 @@
 <?php
 $module_name = 'AM_TaskTemplates';
-$searchdefs [$module_name] =
-array(
-  'layout' =>
-  array(
-    'basic_search' =>
-    array(
-      'name' =>
-      array(
+$searchdefs [$module_name] = 
+array (
+  'layout' => 
+  array (
+    'basic_search' => 
+    array (
+      'name' => 
+      array (
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'status' =>
-      array(
+      'status' => 
+      array (
         'type' => 'enum',
         'default' => true,
         'studio' => 'visible',
@@ -21,8 +21,8 @@ array(
         'width' => '10%',
         'name' => 'status',
       ),
-      'priority' =>
-      array(
+      'priority' => 
+      array (
         'type' => 'enum',
         'default' => true,
         'studio' => 'visible',
@@ -30,8 +30,8 @@ array(
         'width' => '10%',
         'name' => 'priority',
       ),
-      'current_user_only' =>
-      array(
+      'current_user_only' => 
+      array (
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
@@ -39,16 +39,16 @@ array(
         'width' => '10%',
       ),
     ),
-    'advanced_search' =>
-    array(
-      'name' =>
-      array(
+    'advanced_search' => 
+    array (
+      'name' => 
+      array (
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'status' =>
-      array(
+      'status' => 
+      array (
         'type' => 'enum',
         'default' => true,
         'studio' => 'visible',
@@ -56,8 +56,8 @@ array(
         'width' => '10%',
         'name' => 'status',
       ),
-      'priority' =>
-      array(
+      'priority' => 
+      array (
         'type' => 'enum',
         'default' => true,
         'studio' => 'visible',
@@ -65,16 +65,16 @@ array(
         'width' => '10%',
         'name' => 'priority',
       ),
-      'duration' =>
-      array(
+      'duration' => 
+      array (
         'type' => 'int',
         'label' => 'LBL_DURATION',
         'width' => '10%',
         'default' => true,
         'name' => 'duration',
       ),
-      'am_tasktemplates_am_projecttemplates_name' =>
-      array(
+      'am_tasktemplates_am_projecttemplates_name' => 
+      array (
         'type' => 'relate',
         'link' => true,
         'label' => 'LBL_AM_TASKTEMPLATES_AM_PROJECTTEMPLATES_FROM_AM_PROJECTTEMPLATES_TITLE',
@@ -83,16 +83,16 @@ array(
         'default' => true,
         'name' => 'am_tasktemplates_am_projecttemplates_name',
       ),
-      'assigned_user_id' =>
-      array(
+      'assigned_user_id' => 
+      array (
         'name' => 'assigned_user_id',
         'label' => 'LBL_ASSIGNED_TO',
         'type' => 'enum',
-        'function' =>
-        array(
+        'function' => 
+        array (
           'name' => 'get_user_array',
-          'params' =>
-          array(
+          'params' => 
+          array (
             0 => false,
           ),
         ),
@@ -101,12 +101,12 @@ array(
       ),
     ),
   ),
-  'templateMeta' =>
-  array(
+  'templateMeta' => 
+  array (
     'maxColumns' => '3',
     'maxColumnsBasic' => '4',
-    'widths' =>
-    array(
+    'widths' => 
+    array (
       'label' => '10',
       'field' => '30',
     ),

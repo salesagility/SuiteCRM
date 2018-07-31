@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -44,10 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class AccountsViewEdit extends ViewEdit
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->useForSubpanel = true;
-        $this->useModuleQuickCreateTemplate = true;
-    }
+ 	public function __construct()
+ 	{
+ 		parent::__construct();
+ 		$this->useForSubpanel = true;
+ 		$this->useModuleQuickCreateTemplate = true;
+ 	}
+
 }

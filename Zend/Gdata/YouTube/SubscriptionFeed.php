@@ -64,4 +64,5 @@ class Zend_Gdata_YouTube_SubscriptionFeed extends Zend_Gdata_Media_Feed
         $this->registerAllNamespaces(Zend_Gdata_YouTube::$namespaces);
         parent::__construct($element);
     }
+
 }

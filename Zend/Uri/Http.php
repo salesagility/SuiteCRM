@@ -234,6 +234,7 @@ class Zend_Uri_Http extends Zend_Uri
         $this->_password = isset($matches[4]) === true ? $matches[4] : '';
         $this->_host     = isset($matches[5]) === true ? $matches[5] : '';
         $this->_port     = isset($matches[7]) === true ? $matches[7] : '';
+
     }
 
     /**

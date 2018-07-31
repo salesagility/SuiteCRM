@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -42,41 +40,41 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-class ViewConnectorSettings extends SugarView
+class ViewConnectorSettings extends SugarView 
 {
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-        
-        return array(
-           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
-           $mod_strings['LBL_ADMINISTRATION_MAIN']
-           );
+ 	/**
+	 * @see SugarView::_getModuleTitleParams()
+	 */
+	protected function _getModuleTitleParams($browserTitle = false)
+	{
+	    global $mod_strings;
+	    
+    	return array(
+    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+    	   $mod_strings['LBL_ADMINISTRATION_MAIN']
+    	   );
     }
     
     /**
-     * @see SugarView::_getModuleTab()
-     */
-    protected function _getModuleTab()
+	 * @see SugarView::_getModuleTab()
+	 */
+	protected function _getModuleTab()
     {
         return 'Administration';
     }
     
     /**
-     * @see SugarView::display()
-     */
-    public function display()
+	 * @see SugarView::display()
+	 */
+	public function display() 
     {
-        global $mod_strings, $app_strings;
-        
-        echo $this->getModuleTitle(false);
-        
-        $this->ss->assign('mod', $mod_strings);
-        $this->ss->assign('app', $app_strings);
-        $this->ss->assign('IMG', 'themes/default/images/');
-        $this->ss->display($this->getCustomFilePathIfExists('modules/Connectors/tpls/administration.tpl'));
+		global $mod_strings, $app_strings;
+		
+		echo $this->getModuleTitle(false);
+		
+		$this->ss->assign('mod', $mod_strings);
+		$this->ss->assign('app', $app_strings);
+		$this->ss->assign('IMG', 'themes/default/images/');
+		$this->ss->display($this->getCustomFilePathIfExists('modules/Connectors/tpls/administration.tpl'));
     }
 }

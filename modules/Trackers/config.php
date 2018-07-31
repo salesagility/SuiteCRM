@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,15 +45,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-$tracker_config =
-  array(
-    'tracker' =>
-    array(
+$tracker_config = 
+  array (
+    'tracker' => 
+    array (
       'bean' => 'Tracker',
       'name' => 'Tracker',
       'metadata' => 'modules/Trackers/vardefs.php',
-      'store' =>
-      array(
+      'store' => 
+      array (
         0 => 'DatabaseStore',
       ),
     ),

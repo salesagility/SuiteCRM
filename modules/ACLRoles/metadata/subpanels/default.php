@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,39 +41,39 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $subpanel_layout = array(
-    'top_buttons' => array(
-            array('widget_class' => 'SubPanelTopCreateButton'),
-            array('widget_class' => 'SubPanelTopSelectButton'),
-    ),
+	'top_buttons' => array(
+			array('widget_class' => 'SubPanelTopCreateButton'),
+			array('widget_class' => 'SubPanelTopSelectButton'),
+	),
 
-    'where' => '',
+	'where' => '',
 
 
-    'list_fields' => array(
+	'list_fields' => array(
         'name'=>array(
-            'vname' => 'LBL_NAME',
-            'width' => '25%',
-        ),
-        'description'=>array(
-            'vname' => 'LBL_DESCRIPTION',
-            'width' => '70%',
-            'sortable'=>false,
-        ),
-/*
-        'edit_button'=>array(
-            'vname' => 'LBL_EDIT_BUTTON',
-            'widget_class' => 'SubPanelEditButton',
-             'module' => 'Contacts',
-            'width' => '5%',
-        ),
-        'remove_button'=>array(
-            'vname' => 'LBL_REMOVE',
-            'widget_class' => 'SubPanelRemoveButton',
-             'module' => 'Contacts',
-            'width' => '5%',
-            'refresh_page'=>true,
-        ),
-*/
-        
-    ),
+		 	'vname' => 'LBL_NAME',
+			'width' => '25%',
+		),
+		'description'=>array(
+		 	'vname' => 'LBL_DESCRIPTION',
+			'width' => '70%',
+			'sortable'=>false,
+		),
+/*		
+		'edit_button'=>array(
+			'vname' => 'LBL_EDIT_BUTTON',
+			'widget_class' => 'SubPanelEditButton',
+		 	'module' => 'Contacts',
+			'width' => '5%',
+		),
+		'remove_button'=>array(
+			'vname' => 'LBL_REMOVE',
+			'widget_class' => 'SubPanelRemoveButton',
+		 	'module' => 'Contacts',
+			'width' => '5%',
+			'refresh_page'=>true,
+		),
+*/		
+		
+	),
 );

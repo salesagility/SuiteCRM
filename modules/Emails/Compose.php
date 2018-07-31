@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,7 +47,7 @@ if (!empty($data['listViewExternalClient'])) {
 }
 //For the full compose/email screen, the compose package is generated and script execution
 //continues to the Emails/index.php page.
-elseif (!isset($data['forQuickCreate'])) {
+else if (!isset($data['forQuickCreate'])) {
     $ret = generateComposeDataPackage($data);
 }
 
@@ -82,7 +80,7 @@ function initFullCompose($ret)
  * @param Bool $forFullCompose If full compose is set to TRUE, then continue execution and include the full Emails UI.  Otherwise
  *             the data generated is returned.
  */
-function generateComposeDataPackage($data, $forFullCompose = true)
+function generateComposeDataPackage($data, $forFullCompose = TRUE)
 {
     // we will need the following:
     if (isset($data['parent_type']) && !empty($data['parent_type']) &&
@@ -114,7 +112,7 @@ function generateComposeDataPackage($data, $forFullCompose = true)
         } else {
             if (isset($bean->full_name)) {
                 $namePlusEmail = from_html($bean->full_name) . " <" . from_html($bean->emailAddress->getPrimaryAddress($bean)) . ">";
-            } elseif (isset($bean->emailAddress)) {
+            } else if (isset($bean->emailAddress)) {
                 $namePlusEmail = "<" . from_html($bean->emailAddress->getPrimaryAddress($bean)) . ">";
             }
         }
@@ -135,6 +133,7 @@ function generateComposeDataPackage($data, $forFullCompose = true)
             }
         }
         if ($bean->module_dir == 'KBDocuments') {
+
             require_once("modules/Emails/EmailUI.php");
             $subject = $bean->kbdocument_name;
             $article_body = str_replace('/' . $GLOBALS['sugar_config']['cache_dir'] . 'images/', $GLOBALS['sugar_config']['site_url'] . '/' . $GLOBALS['sugar_config']['cache_dir'] . 'images/', KBDocument::get_kbdoc_body_without_incrementing_count($bean->id));
@@ -162,7 +161,9 @@ function generateComposeDataPackage($data, $forFullCompose = true)
             'email_id' => $email_id,
 
         );
-    } elseif (isset($data['recordId'])) {
+    } else if (isset($data['recordId'])) {
+
+
         $quotesData = getQuotesRelatedData($data);
         $namePlusEmail = $quotesData['toAddress'];
         $subject = $quotesData['subject'];
@@ -180,13 +181,16 @@ function generateComposeDataPackage($data, $forFullCompose = true)
             'attachments' => $attachments,
             'email_id' => $email_id,
         );
-    } elseif (isset($_REQUEST['ListView'])) {
+
+    } else if (isset($_REQUEST['ListView'])) {
+
         $email = new Email();
         $namePlusEmail = $email->getNamePlusEmailAddressesForCompose($_REQUEST['action_module'], (explode(",", $_REQUEST['uid'])));
         $ret = array(
             'to_email_addrs' => $namePlusEmail,
         );
-    } elseif (isset($data['replyForward'])) {
+    } else if (isset($data['replyForward'])) {
+
         require_once("modules/Emails/EmailUI.php");
 
         $ret = array();
@@ -279,17 +283,17 @@ function generateComposeDataPackage($data, $forFullCompose = true)
 
             $ret['cc_addrs'] = from_html($ccEmails);
         }
+
     } else {
         $ret = array(
             'to_email_addrs' => '',
         );
     }
 
-    if ($forFullCompose) {
+    if ($forFullCompose)
         initFullCompose($ret);
-    } else {
+    else
         return $ret;
-    }
 }
 
 function getQuotesRelatedData($data)

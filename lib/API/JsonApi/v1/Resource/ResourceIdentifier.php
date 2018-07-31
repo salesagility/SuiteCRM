@@ -72,9 +72,9 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
      */
     protected $type;
 
-    /**
-    * @var array $meta
-    */
+     /**
+     * @var array $meta
+     */
     protected $meta;
 
     /**
@@ -155,15 +155,17 @@ class ResourceIdentifier implements LoggerAwareInterface, JsonApiResponseInterfa
         $response = array();
 
         // id can be empty in order to create a new record
-        if (empty($this->getType()) === false) {
+        if(empty($this->getType()) === false) {
             $response['id'] = $this->id;
             $response['type'] = $this->type;
         }
 
-        if ($this->meta !== null) {
+        if($this->meta !== null) {
             $response['meta'] = $this->meta;
         }
 
         return $response;
     }
+
+
 }

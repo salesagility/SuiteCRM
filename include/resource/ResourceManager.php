@@ -60,6 +60,7 @@ class ResourceManager
      */
     private function __construct()
     {
+
     }
 
     /**
@@ -67,7 +68,7 @@ class ResourceManager
      * Singleton method to return static instance of ResourceManager
      * @return ResourceManager The static singleton
      */
-    public static function getInstance()
+    static public function getInstance()
     {
         if (!isset(self::$instance)) {
             self::$instance = new ResourceManager();
@@ -122,6 +123,7 @@ class ResourceManager
             } //if
 
             if ($limit) {
+
                 $db = DBManagerFactory::getInstance();
                 $db->setQueryLimit($limit);
                 $observer->setLimit($limit);
@@ -141,6 +143,7 @@ class ResourceManager
      */
     public function notifyObservers($msg)
     {
+
         if (empty($this->_observers)) {
             return;
         }
@@ -166,8 +169,9 @@ class ResourceManager
      * Returns the observer instances that have been setup for the ResourceManager instance
      * @return array ResourceObserver(s)
      */
-    public function getObservers()
+    function getObservers()
     {
         return $this->_observers;
     }
+
 }

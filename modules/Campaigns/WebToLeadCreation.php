@@ -55,22 +55,27 @@ require_once 'modules/Campaigns/utils.php';
 
 global $mod_strings, $app_list_strings, $app_strings, $current_user, $import_bean_map,$import_file_name, $theme;
 
-$xtpl=new XTemplate('modules/Campaigns/WebToLeadCreation.html');
+$xtpl=new XTemplate ('modules/Campaigns/WebToLeadCreation.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
-if (isset($_REQUEST['module'])) {
+if(isset($_REQUEST['module']))
+{
     $xtpl->assign("MODULE", $_REQUEST['module']);
 }
-if (isset($_REQUEST['return_module'])) {
+if(isset($_REQUEST['return_module']))
+{
     $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
 }
-if (isset($_REQUEST['return_id'])) {
+if(isset($_REQUEST['return_id']))
+{
     $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
 }
-if (isset($_REQUEST['return_id'])) {
+if(isset($_REQUEST['return_id']))
+{
     $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
 }
-if (isset($_REQUEST['record'])) {
+if(isset($_REQUEST['record']))
+{
     $xtpl->assign("RECORD", $_REQUEST['record']);
 }
 
@@ -83,16 +88,20 @@ $subclasses = getListOfExtendingClasses("Person");
 
 $beanList = filterFieldsFromBeans($subclasses);
 
-$xtpl->assign("BEAN_LIST", json_encode($beanList));
+$xtpl->assign("BEAN_LIST",json_encode($beanList));
 
 $personTypeList = "<select id='personTypeSelect'>";
-if (count($beanList) > 0) {
+if(count($beanList) > 0)
+{
     $count=0;
-    foreach ($beanList as $b) {
+    foreach($beanList as $b)
+    {
         $personTypeList.="<option value='".$count."'>".$b->name."</option>";
         $count++;
     }
-} else {
+}
+else
+{
     $personTypeList.="<option value='noPerson'>No matching types</option>";
 }
 
@@ -101,30 +110,30 @@ $web_post_url = $site_url.'/index.php?entryPoint=WebToPersonCapture';
 $json = getJSONobj();
 // Users Popup
 $popup_request_data = array(
-    'call_back_function' => 'set_return',
-    'form_name' => 'WebToLeadCreation',
-    'field_to_name_array' => array(
-        'id' => 'assigned_user_id',
-        'user_name' => 'assigned_user_name',
-        ),
-    );
+	'call_back_function' => 'set_return',
+	'form_name' => 'WebToLeadCreation',
+	'field_to_name_array' => array(
+		'id' => 'assigned_user_id',
+		'user_name' => 'assigned_user_name',
+		),
+	);
 $xtpl->assign('encoded_users_popup_request_data', $json->encode($popup_request_data));
 
 //Campaigns popup
 $popup_request_data = array(
-        'call_back_function' => 'set_return',
-        'form_name' => 'WebToLeadCreation',
-        'field_to_name_array' => array(
-            'id' => 'campaign_id',
-            'name' => 'campaign_name',
-        ),
+		'call_back_function' => 'set_return',
+		'form_name' => 'WebToLeadCreation',
+		'field_to_name_array' => array(
+			'id' => 'campaign_id',
+			'name' => 'campaign_name',
+		),
 );
 $encoded_users_popup_request_data = $json->encode($popup_request_data);
-$xtpl->assign('encoded_campaigns_popup_request_data', $json->encode($popup_request_data));
+$xtpl->assign('encoded_campaigns_popup_request_data' , $json->encode($popup_request_data));
 
 $field_defs_js = "var field_defs = {'Contacts':[";
 
-$xtpl->assign("WEB_POST_URL", $web_post_url);
+$xtpl->assign("WEB_POST_URL",$web_post_url);
 
 if (!empty($focus)) {
     if (empty($focus->assigned_user_id) && empty($focus->id)) {
@@ -141,11 +150,11 @@ if (!empty($focus)) {
 }
 
 
-$xtpl->assign("REDIRECT_URL_DEFAULT", 'http://');
+$xtpl->assign("REDIRECT_URL_DEFAULT",'http://');
 
-if (isset($_REQUEST['campaign_id']) && isValidId($_REQUEST['campaign_id'])) {
+if(isset($_REQUEST['campaign_id']) && isValidId($_REQUEST['campaign_id'])) {
     $campaign = new Campaign();
-    if ($campaign) {
+    if($campaign) {
         $campaign->retrieve($_REQUEST['campaign_id']);
         $xtpl->assign('CAMPAIGN_ID', $campaign->id);
         $xtpl->assign('CAMPAIGN_NAME', $campaign->name);
@@ -161,11 +170,12 @@ $xtpl->out("main");
 function getListOfExtendingClasses($superclass)
 {
     $subclasses = array();
-    foreach ($GLOBALS['moduleList'] as $mod) {
+    foreach($GLOBALS['moduleList'] as $mod)
+    {
         $item = BeanFactory::getBean($mod);
-        if ($item && is_subclass_of($item, $superclass)) {
+        if($item && is_subclass_of($item,$superclass))
             $subclasses[] = $item;
-        }
     }
     return $subclasses;
 }
+

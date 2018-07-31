@@ -1,57 +1,57 @@
 <?php
 $module_name = 'AOS_Product_Categories';
 $viewdefs [$module_name] =
-    array(
+    array (
         'EditView' =>
-        array(
+        array (
             'templateMeta' =>
-            array(
+            array (
                 'maxColumns' => '2',
                 'widths' =>
-                array(
+                array (
                     0 =>
-                    array(
+                    array (
                         'label' => '10',
                         'field' => '30',
                     ),
                     1 =>
-                    array(
+                    array (
                         'label' => '10',
                         'field' => '30',
                     ),
                 ),
                 'useTabs' => false,
                 'tabDefs' =>
-                array(
+                array (
                     'DEFAULT' =>
-                    array(
+                    array (
                         'newTab' => false,
                         'panelDefault' => 'expanded',
                     ),
                 ),
             ),
             'panels' =>
-            array(
+            array (
                 'default' =>
-                array(
+                array (
                     0 =>
-                    array(
+                    array (
                         0 => 'name',
                         1 => 'assigned_user_name',
                     ),
                     1 =>
-                    array(
+                    array (
                         0 => 'description',
                         1 =>
-                        array(
+                        array (
                             'name' => 'parent_category_name',
                             'label' => 'LBL_PRODUCT_CATEGORYS_NAME',
                         ),
                     ),
                     2 =>
-                    array(
+                    array (
                         0 =>
-                        array(
+                        array (
                             'name' => 'is_parent',
                             'label' => 'LBL_IS_PARENT',
                         ),

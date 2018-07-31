@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,15 +38,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['opportunities_contacts'] = array( 'table' => 'opportunities_contacts'
-                                  , 'fields' => array(
+$dictionary['opportunities_contacts'] = array ( 'table' => 'opportunities_contacts'
+                                  , 'fields' => array (
        array('name' =>'id', 'type' =>'varchar', 'len'=>'36')
       , array('name' =>'contact_id', 'type' =>'varchar', 'len'=>'36', )
       , array('name' =>'opportunity_id', 'type' =>'varchar', 'len'=>'36',)
       , array('name' =>'contact_role', 'type' =>'varchar', 'len'=>'50')
-      , array('name' => 'date_modified','type' => 'datetime')
+      , array ('name' => 'date_modified','type' => 'datetime')
       , array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>false)
-                                                      )                                  , 'indices' => array(
+                                                      )                                  , 'indices' => array (
        array('name' =>'opportunities_contactspk', 'type' =>'primary', 'fields'=>array('id'))
       , array('name' =>'idx_con_opp_con', 'type' =>'index', 'fields'=>array('contact_id'))
       , array('name' =>'idx_con_opp_opp', 'type' =>'index', 'fields'=>array('opportunity_id'))
@@ -57,10 +55,10 @@ $dictionary['opportunities_contacts'] = array( 'table' => 'opportunities_contact
       
                                                       )
  
-      , 'relationships' => array('opportunities_contacts' => array('lhs_module'=> 'Opportunities', 'lhs_table'=> 'opportunities', 'lhs_key' => 'id',
-                              'rhs_module'=> 'Contacts', 'rhs_table'=> 'contacts', 'rhs_key' => 'id',
-                              'relationship_type'=>'many-to-many',
-                              'join_table'=> 'opportunities_contacts', 'join_key_lhs'=>'opportunity_id', 'join_key_rhs'=>'contact_id',
-                              ))
+  	  , 'relationships' => array ('opportunities_contacts' => array('lhs_module'=> 'Opportunities', 'lhs_table'=> 'opportunities', 'lhs_key' => 'id',
+							  'rhs_module'=> 'Contacts', 'rhs_table'=> 'contacts', 'rhs_key' => 'id',
+							  'relationship_type'=>'many-to-many',
+							  'join_table'=> 'opportunities_contacts', 'join_key_lhs'=>'opportunity_id', 'join_key_rhs'=>'contact_id',
+							  ))
  
  );

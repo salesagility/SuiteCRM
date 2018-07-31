@@ -58,6 +58,7 @@ require_once 'Zend/Gdata/Gapps/Extension/EmailList.php';
  */
 class Zend_Gdata_Gapps_EmailListEntry extends Zend_Gdata_Entry
 {
+
     protected $_entryClassName = 'Zend_Gdata_Gapps_EmailListEntry';
 
     /**
@@ -120,12 +121,12 @@ class Zend_Gdata_Gapps_EmailListEntry extends Zend_Gdata_Entry
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
 
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('apps') . ':' . 'emailList':
+            case $this->lookupNamespace('apps') . ':' . 'emailList';
                 $emailList = new Zend_Gdata_Gapps_Extension_EmailList();
                 $emailList->transferFromDOM($child);
                 $this->_emailList = $emailList;
                 break;
-            case $this->lookupNamespace('gd') . ':' . 'feedLink':
+            case $this->lookupNamespace('gd') . ':' . 'feedLink';
                 $feedLink = new Zend_Gdata_Extension_FeedLink();
                 $feedLink->transferFromDOM($child);
                 $this->_feedLink[] = $feedLink;
@@ -209,4 +210,5 @@ class Zend_Gdata_Gapps_EmailListEntry extends Zend_Gdata_Entry
         $this->_feedLink = $value;
         return $this;
     }
+
 }

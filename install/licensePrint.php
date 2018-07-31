@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,7 +48,7 @@ clean_incoming_data();
 require_once("install/language/{$_GET['language']}.lang.php");
 require_once("install/install_utils.php");
 
-$license_file = wordwrap(getLicenseContents("LICENSE.txt"), 100);
+$license_file = wordwrap(getLicenseContents("LICENSE.txt"),100);
 $langHeader = get_language_header();
 $out =<<<EOQ
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">

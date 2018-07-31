@@ -232,4 +232,5 @@ class Zend_Search_Lucene_LockManager
         $lock = $lockDirectory->getFileObject(self::OPTIMIZATION_LOCK_FILE);
         $lock->unlock();
     }
+
 }

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,8 +38,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['custom_fields'] = array( 'table' => 'custom_fields'
-                                  , 'fields' => array(
+$dictionary['custom_fields'] = array ( 'table' => 'custom_fields'
+                                  , 'fields' => array (
        array('name' =>'bean_id', 'type' =>'varchar', 'len'=>'36')
       , array('name' =>'set_num', 'type' =>'int', 'len'=>'11', 'default'=>'0')
       , array('name' =>'field0', 'type' =>'varchar', 'len'=>'255')
@@ -55,7 +53,7 @@ $dictionary['custom_fields'] = array( 'table' => 'custom_fields'
       , array('name' =>'field8', 'type' =>'varchar', 'len'=>'255')
       , array('name' =>'field9', 'type' =>'varchar', 'len'=>'255')
       , array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0')
-                                                      )                                  , 'indices' => array(
+                                                      )                                  , 'indices' => array (
        array('name' =>'idx_beanid_set_num', 'type' =>'index', 'fields'=>array('bean_id','set_num'))
                                                       )
                                   );

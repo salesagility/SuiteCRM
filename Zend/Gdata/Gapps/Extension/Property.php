@@ -42,6 +42,7 @@ require_once 'Zend/Gdata/Gapps.php';
  */
 class Zend_Gdata_Gapps_Extension_Property extends Zend_Gdata_Extension
 {
+
     protected $_rootNamespace = 'apps';
     protected $_rootElement = 'property';
 
@@ -70,6 +71,7 @@ class Zend_Gdata_Gapps_Extension_Property extends Zend_Gdata_Extension
         parent::__construct();
         $this->_name = $name;
         $this->_value = $value;
+
     }
 
 
@@ -94,6 +96,7 @@ class Zend_Gdata_Gapps_Extension_Property extends Zend_Gdata_Extension
         }
 
         return $element;
+
     }
 
     /**
@@ -174,3 +177,4 @@ class Zend_Gdata_Gapps_Extension_Property extends Zend_Gdata_Extension
                "\nProperty Value: " . $this->getValue();
     }
 }
+?>

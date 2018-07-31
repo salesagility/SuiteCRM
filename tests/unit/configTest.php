@@ -8,8 +8,7 @@ class configTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertNotEmpty($sugar_config, 'SuiteCRM config is empty');
     }
     
-    public function testFoo()
-    {
+    public function testFoo() {
         $this->assertTrue(true);
     }
 }

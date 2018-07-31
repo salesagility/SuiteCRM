@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,27 +43,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $listViewDefs['ProspectLists'] = array(
     'NAME' => array(
-        'width' => '25',
-        'label' => 'LBL_LIST_PROSPECT_LIST_NAME',
+        'width' => '25', 
+        'label' => 'LBL_LIST_PROSPECT_LIST_NAME', 
         'link' => true,
         'default' => true),
     'LIST_TYPE' => array(
-        'width' => '15',
-        'label' => 'LBL_LIST_TYPE_LIST_NAME',
+        'width' => '15', 
+        'label' => 'LBL_LIST_TYPE_LIST_NAME', 
         'default' => true),
     'DESCRIPTION' => array(
-        'width' => '40',
-        'label' => 'LBL_LIST_DESCRIPTION',
+        'width' => '40', 
+        'label' => 'LBL_LIST_DESCRIPTION', 
         'default' => true),
     'ASSIGNED_USER_NAME' => array(
-        'width' => '10',
+        'width' => '10', 
         'label' => 'LBL_LIST_ASSIGNED_USER',
         'module' => 'Employees',
-        'id' => 'ASSIGNED_USER_ID',
+        'id' => 'ASSIGNED_USER_ID', 
         'default' => true),
-    'DATE_ENTERED' => array(
-        'type' => 'datetime',
-        'label' => 'LBL_DATE_ENTERED',
-        'width' => '10',
-        'default' => true),
+  	'DATE_ENTERED' => array (
+	    'type' => 'datetime',
+	    'label' => 'LBL_DATE_ENTERED',
+	    'width' => '10',
+	    'default' => true),
 );

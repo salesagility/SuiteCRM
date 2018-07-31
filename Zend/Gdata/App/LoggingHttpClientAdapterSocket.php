@@ -115,4 +115,5 @@ class Zend_Gdata_App_LoggingHttpClientAdapterSocket extends Zend_Http_Client_Ada
         $this->log("Closing socket\n\n");
         parent::close();
     }
+
 }

@@ -48,42 +48,42 @@ require_once __DIR__ . '/../../include/SugarObjects/templates/file/File.php';
 // Note is used to store customer information.
 class Note extends File
 {
-    public $field_name_map;
+    var $field_name_map;
     // Stored fields
-    public $id;
-    public $date_entered;
-    public $date_modified;
-    public $modified_user_id;
-    public $assigned_user_id;
-    public $created_by;
-    public $created_by_name;
-    public $modified_by_name;
-    public $description;
-    public $name;
-    public $filename;
+    var $id;
+    var $date_entered;
+    var $date_modified;
+    var $modified_user_id;
+    var $assigned_user_id;
+    var $created_by;
+    var $created_by_name;
+    var $modified_by_name;
+    var $description;
+    var $name;
+    var $filename;
     // handle to an upload_file object
     // used in emails
-    public $file;
-    public $embed_flag; // inline image flag
-    public $parent_type;
-    public $parent_id;
-    public $contact_id;
-    public $portal_flag;
+    var $file;
+    var $embed_flag; // inline image flag
+    var $parent_type;
+    var $parent_id;
+    var $contact_id;
+    var $portal_flag;
 
-    public $parent_name;
-    public $contact_name;
-    public $contact_phone;
-    public $contact_email;
-    public $file_mime_type;
-    public $module_dir = "Notes";
-    public $default_note_name_dom = array('Meeting notes', 'Reminder');
-    public $table_name = "notes";
-    public $new_schema = true;
-    public $object_name = "Note";
-    public $importable = true;
+    var $parent_name;
+    var $contact_name;
+    var $contact_phone;
+    var $contact_email;
+    var $file_mime_type;
+    var $module_dir = "Notes";
+    var $default_note_name_dom = array('Meeting notes', 'Reminder');
+    var $table_name = "notes";
+    var $new_schema = true;
+    var $object_name = "Note";
+    var $importable = true;
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = array(
+    var $additional_column_fields = Array(
         'contact_name',
         'contact_phone',
         'contact_email',
@@ -113,7 +113,7 @@ class Note extends File
     }
 
 
-    public function safeAttachmentName()
+    function safeAttachmentName()
     {
         global $sugar_config;
 
@@ -136,6 +136,7 @@ class Note extends File
                 break; // no need to look for more
             }
         }
+
     }
 
     /**
@@ -144,7 +145,7 @@ class Note extends File
      * related to those notes
      * @param string id ID
      */
-    public function mark_deleted($id)
+    function mark_deleted($id)
     {
         global $sugar_config;
 
@@ -163,7 +164,7 @@ class Note extends File
         parent::mark_deleted($id);
     }
 
-    public function deleteAttachment($isduplicate = "false")
+    function deleteAttachment($isduplicate = "false")
     {
         $removeFile = null;
         
@@ -200,12 +201,12 @@ class Note extends File
     }
 
 
-    public function get_summary_text()
+    function get_summary_text()
     {
         return "$this->name";
     }
 
-    public function create_export_query($order_by, $where, $relate_link_join = '')
+    function create_export_query($order_by, $where, $relate_link_join = '')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -237,21 +238,19 @@ class Note extends File
         return $query;
     }
 
-    public function fill_in_additional_list_fields()
+    function fill_in_additional_list_fields()
     {
         $this->fill_in_additional_detail_fields();
     }
 
-    public function fill_in_additional_detail_fields()
+    function fill_in_additional_detail_fields()
     {
         parent::fill_in_additional_detail_fields();
         //TODO:  Seems odd we need to clear out these values so that list views don't show the previous rows value if current value is blank
-        $this->getRelatedFields(
-            'Contacts',
-            $this->contact_id,
-            array('name' => 'contact_name', 'phone_work' => 'contact_phone')
-        );
+        $this->getRelatedFields('Contacts', $this->contact_id,
+            array('name' => 'contact_name', 'phone_work' => 'contact_phone'));
         if (!empty($this->contact_name)) {
+
             $emailAddress = new SugarEmailAddress();
             $this->contact_email = $emailAddress->getPrimaryAddress(false, $this->contact_id, 'Contacts');
         }
@@ -266,7 +265,7 @@ class Note extends File
     }
 
 
-    public function get_list_view_data()
+    function get_list_view_data()
     {
         $note_fields = $this->get_list_view_array();
         global $app_list_strings, $focus, $action, $currentModule, $mod_strings, $sugar_config;
@@ -300,7 +299,7 @@ class Note extends File
         return $note_fields;
     }
 
-    public function listviewACLHelper()
+    function listviewACLHelper()
     {
         $array_assign = parent::listviewACLHelper();
         $is_owner = false;
@@ -330,13 +329,8 @@ class Note extends File
         /**
          * if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner)) {
          */
-        if (!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess(
-            $this->parent_type,
-                'view',
-            $is_owner,
-            'module',
-            $in_group
-        )
+        if (!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type,
+                'view', $is_owner, 'module', $in_group)
         ) {
             /* END - SECURITY GROUPS */
             $array_assign['PARENT'] = 'a';
@@ -379,12 +373,12 @@ class Note extends File
         return $array_assign;
     }
 
-    public function bean_implements($interface)
+    function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':
                 return true;
-            case 'FILE':
+            case 'FILE' :
                 return true;
         }
 

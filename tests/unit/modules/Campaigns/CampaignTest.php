@@ -32,7 +32,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $campaign = new Campaign();
 
@@ -42,6 +42,8 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('', isset($tpl->_tpl_vars['ASSIGNED_USER_NAME']) ? $tpl->_tpl_vars['ASSIGNED_USER_NAME'] : null);
         
         // clean up
+        
+        
     }
 
     public function testget_summary_text()
@@ -77,7 +79,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $campaign = new Campaign();
@@ -92,6 +94,8 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testmark_relationships_deleted()
@@ -99,7 +103,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $campaign = new Campaign();
@@ -114,6 +118,8 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testfill_in_additional_list_fields()
@@ -121,7 +127,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $campaign = new Campaign();
@@ -135,6 +141,8 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -142,7 +150,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $campaign = new Campaign();
@@ -156,6 +164,8 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testupdate_currency_id()
@@ -163,7 +173,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $campaign = new Campaign();
@@ -177,6 +187,8 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testget_list_view_data()
@@ -230,7 +242,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSaveAndMarkDeleted()
     {
         
-    // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -239,7 +251,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-        // test
+	// test
         
         $campaign = new Campaign();
         $campaign->name = 'test';
@@ -367,18 +379,18 @@ WHERE  emailman.campaign_id = ''
        AND emailman.deleted = 0
        AND emailman.deleted = 0  ";
         $expected = trim($expected);
-        $expected = str_replace(' ', '', $expected);
-        $expected = str_replace("\n", '', $expected);
-        $expected = str_replace("\t", '', $expected);
-        $expected = str_replace("\r", '', $expected);
+        $expected = str_replace(' ','', $expected);
+        $expected = str_replace("\n",'', $expected);
+        $expected = str_replace("\t",'', $expected);
+        $expected = str_replace("\r",'', $expected);
         $expected = strtolower($expected);
 
         $actual = $campaign->get_queue_items();
         $actual = trim($actual);
-        $actual = str_replace(' ', '', $actual);
-        $actual = str_replace("\n", '', $actual);
-        $actual = str_replace("\t", '', $actual);
-        $actual = str_replace("\t", '', $actual);
+        $actual = str_replace(' ','', $actual);
+        $actual = str_replace("\n",'', $actual);
+        $actual = str_replace("\t",'', $actual);
+        $actual = str_replace("\t",'', $actual);
         $actual = strtolower($actual);
 
         $this->assertSame($expected, $actual);
@@ -443,18 +455,18 @@ WHERE  emailman.campaign_id = ''
        AND emailman.deleted = 0  ";
 
         $expected = trim($expected);
-        $expected = str_replace(' ', '', $expected);
-        $expected = str_replace("\n", '', $expected);
-        $expected = str_replace("\r", '', $expected);
-        $expected = str_replace("\t", '', $expected);
+        $expected = str_replace(' ','', $expected);
+        $expected = str_replace("\n",'', $expected);
+        $expected = str_replace("\r",'', $expected);
+        $expected = str_replace("\t",'', $expected);
         $expected = strtolower($expected);
 
         $actual = $campaign->get_queue_items(array('EMAIL_MARKETING_ID_VALUE' => 1, 'group_by' => 'users.id'));
         $actual = trim($actual);
-        $actual = str_replace(' ', '', $actual);
-        $actual = str_replace("\n", '', $actual);
-        $actual = str_replace("\r", '', $actual);
-        $actual = str_replace("\t", '', $actual);
+        $actual = str_replace(' ','', $actual);
+        $actual = str_replace("\n",'', $actual);
+        $actual = str_replace("\r",'', $actual);
+        $actual = str_replace("\t",'', $actual);
         $actual = strtolower($actual);
         $this->assertSame($expected, $actual);
     }

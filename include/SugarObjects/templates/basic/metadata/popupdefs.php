@@ -55,3 +55,4 @@ $popupMeta = array(
     'searchInputs' => array($_module_name . '_number', 'name', 'priority', 'status'),
 
 );
+ 

@@ -42,7 +42,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $schedulersJob = new SchedulersJob();
         $schedulersJob->execute_time = '2015-01-01 00:00:00';
@@ -52,6 +52,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('2015-01-01 00:00:00', $schedulersJob->execute_time_db);
         
         // clean up
+        
+        
     }
 
     public function testhandleDateFormat()
@@ -79,6 +81,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test with valid param
         self::markTestIncomplete();
+        //$result = $schedulersJob->fireUrl('https://suitecrm.com/');
+        //$this->assertEquals(true, $result);
     }
 
     public function testget_list_view_data()
@@ -105,7 +109,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $schedulersJob = new SchedulersJob();
@@ -119,6 +123,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testfailJob()
@@ -186,7 +192,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $schedulersJob = new SchedulersJob();
@@ -202,6 +208,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
         
         // clean up
+        
+        
     }
 
     public function testOnFinalFailure()
@@ -209,7 +217,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        ////error_reporting(E_ERROR | E_PARSE);
         
         
         $schedulersJob = new SchedulersJob();
@@ -225,6 +233,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
         
         // clean up
+        
+        
     }
 
     public function testresolveJob()
@@ -265,6 +275,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('tracker');
         $state->popTable('aod_index');
+        
+        
     }
 
     public function testpostponeJobAndMark_deleted()
@@ -345,7 +357,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
 
         //test with invalid job id
-        $result = SchedulersJob::runJobId('1', '');
+        $result = SchedulersJob::runJobId('1','');
         $this->assertEquals('Job 1 not found.', $result);
 
         //test with valid job id
@@ -432,5 +444,9 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $schedulersJob->assigned_user_id = 1;
 
         self::markTestIncomplete();
+//        $schedulersJob->target = 'url::https://suitecrm.com/';
+//        $result = $schedulersJob->runJob();
+//        $this->assertEquals(true, $result);
+//        $schedulersJob->mark_deleted($schedulersJob->id);
     }
 }

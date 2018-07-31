@@ -37,6 +37,7 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_Calendar_Extension_QuickAdd extends Zend_Gdata_Extension
 {
+
     protected $_rootNamespace = 'gCal';
     protected $_rootElement = 'quickadd';
     protected $_value = null;
@@ -84,9 +85,11 @@ class Zend_Gdata_Calendar_Extension_QuickAdd extends Zend_Gdata_Extension
         case 'value':
             if ($attribute->nodeValue == "true") {
                 $this->_value = true;
-            } elseif ($attribute->nodeValue == "false") {
+            }
+            else if ($attribute->nodeValue == "false") {
                 $this->_value = false;
-            } else {
+            }
+            else {
                 throw new Zend_Gdata_App_InvalidArgumentException("Expected 'true' or 'false' for gCal:selected#value.");
             }
             break;
@@ -125,4 +128,5 @@ class Zend_Gdata_Calendar_Extension_QuickAdd extends Zend_Gdata_Extension
     {
         return $this->getValue();
     }
+
 }

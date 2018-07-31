@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $app_strings;
 
 $dashletMeta['AOK_Knowledge_Base_CategoriesDashlet'] = array('module'		=> 'AOK_Knowledge_Base_Categories',
-                                          'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOK_Knowledge_Base_Categories'),
+										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOK_Knowledge_Base_Categories'), 
                                           'description' => 'A customizable view into AOK_Knowledge_Base_Categories',
                                           'icon'        => 'icon_AOK_Knowledge_Base_Categories_32.gif',
                                           'category'    => 'Module Views');

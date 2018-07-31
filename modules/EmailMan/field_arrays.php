@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,50 +45,50 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['EmailMan'] = array('column_fields' => array(
-        "id"
-        , "date_entered"
-        , "date_modified"
-        , 'user_id'
-        , 'module'
-        , 'module_id'
-        , 'marketing_id'
-        , 'campaign_id'
-        , 'list_id'
-        , 'template_id'
-        , 'from_email'
-        , 'from_name'
-        , 'invalid_email'
-        , 'send_date_time'
-        , 'in_queue'
-        , 'in_queue_date'
-        ,'send_attempts'
-        ),
-        'list_fields' =>  array(
-        "id"
-        , 'user_id'
-        , 'module'
-        , 'module_id'
-        , 'campaign_id'
-        , 'marketing_id'
-        , 'list_id'
-        , 'invalid_email'
-        , 'from_name'
-        , 'from_email'
-        , 'template_id'
-        , 'send_date_time'
-        , 'in_queue'
-        , 'in_queue_date'
-        ,'send_attempts'
-        ,'user_name'
-        ,'to_email'
-        ,'from_email'
-        ,'campaign_name'
-        ,'to_contact'
-        ,'to_lead'
-        ,'to_prospect'
-        ,'contact_email'
-        , 'lead_email'
-        , 'prospect_email'
+$fields_array['EmailMan'] = array ('column_fields' => Array(
+		"id"
+		, "date_entered"
+		, "date_modified"
+		, 'user_id'
+		, 'module'
+		, 'module_id'
+		, 'marketing_id'
+		, 'campaign_id'
+		, 'list_id'
+		, 'template_id'
+		, 'from_email'
+		, 'from_name'
+		, 'invalid_email'
+		, 'send_date_time'
+		, 'in_queue'
+		, 'in_queue_date'
+		,'send_attempts'
+		),
+        'list_fields' =>  Array(
+		"id"
+		, 'user_id'
+		, 'module'
+		, 'module_id'
+		, 'campaign_id'
+		, 'marketing_id'
+		, 'list_id'
+		, 'invalid_email'
+		, 'from_name'
+		, 'from_email'
+		, 'template_id'
+		, 'send_date_time'
+		, 'in_queue'
+		, 'in_queue_date'
+		,'send_attempts'
+		,'user_name'
+		,'to_email'
+		,'from_email'
+		,'campaign_name'
+		,'to_contact'
+		,'to_lead'
+		,'to_prospect'
+		,'contact_email'
+		, 'lead_email'
+		, 'prospect_email'
         ),
 );

@@ -18,19 +18,24 @@ $time_format = $timedate->get_user_time_format(); //get the logged in users time
 
 //Combine date and time dependant on users settings
 $time_separator = ":";
-if (preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
+if(preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
     $time_separator = $match[1];
 }
 
-if (!empty($hour) && !empty($minutes)) {
+if(!empty($hour) && !empty($minutes)) {
+
     $time_start = $hour. $time_separator .$minutes;
+
 }
 
-if (isset($ampm) && !empty($ampm)) {
+if(isset($ampm ) && !empty($ampm )) {
+
+
     $time_start = $timedate->merge_time_meridiem($time_start, $timedate->get_time_format(), $ampm);
 }
 
-if (isset($time_start) && strlen($date) == 10) {
+if(isset($time_start) && strlen($date) == 10) {
+
     $date_start = $date.' ' .$time_start;
 }
 
@@ -59,3 +64,4 @@ $reschedule->call_id = $id;
 
 $call->save();
 $reschedule->save();//save call attempt history line
+

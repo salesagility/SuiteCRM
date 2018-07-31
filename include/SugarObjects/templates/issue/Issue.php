@@ -66,4 +66,5 @@ class Issue extends Basic
         }
         self::__construct();
     }
+
 }

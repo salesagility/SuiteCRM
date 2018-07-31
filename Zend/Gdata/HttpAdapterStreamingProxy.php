@@ -67,8 +67,7 @@ class Zend_Gdata_HttpAdapterStreamingProxy extends Zend_Http_Client_Adapter_Prox
         if (! $this->socket) {
             require_once 'Zend/Http/Client/Adapter/Exception.php';
             throw new Zend_Http_Client_Adapter_Exception(
-                'Trying to write but we are not connected'
-            );
+                'Trying to write but we are not connected');
         }
 
         $host = $this->config['proxy_host'];
@@ -78,16 +77,13 @@ class Zend_Gdata_HttpAdapterStreamingProxy extends Zend_Http_Client_Adapter_Prox
             require_once 'Zend/Http/Client/Adapter/Exception.php';
             throw new Zend_Http_Client_Adapter_Exception(
                 'Trying to write but we are connected to the wrong proxy ' .
-                'server'
-            );
+                'server');
         }
 
         // Add Proxy-Authorization header
         if ($this->config['proxy_user'] && ! isset($headers['proxy-authorization'])) {
             $headers['proxy-authorization'] = Zend_Http_Client::encodeAuthHeader(
-                $this->config['proxy_user'],
-                $this->config['proxy_pass'],
-                $this->config['proxy_auth']
+                $this->config['proxy_user'], $this->config['proxy_pass'], $this->config['proxy_auth']
             );
         }
 
@@ -105,9 +101,7 @@ class Zend_Gdata_HttpAdapterStreamingProxy extends Zend_Http_Client_Adapter_Prox
 
         // Add all headers to the request string
         foreach ($headers as $k => $v) {
-            if (is_string($k)) {
-                $v = "$k: $v";
-            }
+            if (is_string($k)) $v = "$k: $v";
             $request .= "$v\r\n";
         }
 
@@ -117,8 +111,7 @@ class Zend_Gdata_HttpAdapterStreamingProxy extends Zend_Http_Client_Adapter_Prox
         if (! @fwrite($this->socket, $request)) {
             require_once 'Zend/Http/Client/Adapter/Exception.php';
             throw new Zend_Http_Client_Adapter_Exception(
-                'Error writing request to proxy server'
-            );
+                'Error writing request to proxy server');
         }
 
         //read from $body, write to socket
@@ -126,8 +119,7 @@ class Zend_Gdata_HttpAdapterStreamingProxy extends Zend_Http_Client_Adapter_Prox
             if (! @fwrite($this->socket, $body->read(self::CHUNK_SIZE))) {
                 require_once 'Zend/Http/Client/Adapter/Exception.php';
                 throw new Zend_Http_Client_Adapter_Exception(
-                    'Error writing request to server'
-                );
+                    'Error writing request to server');
             }
         }
         return 'Large upload, request is not cached.';

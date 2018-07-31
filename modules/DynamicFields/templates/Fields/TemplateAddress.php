@@ -1,7 +1,5 @@
 <?php
-if (! defined('sugarEntry') || ! sugarEntry) {
-    die('Not A Valid Entry Point') ;
-}
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) die ( 'Not A Valid Entry Point' ) ;
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,30 +38,32 @@ if (! defined('sugarEntry') || ! sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-require_once('modules/DynamicFields/templates/Fields/TemplateField.php') ;
-require_once('modules/DynamicFields/templates/Fields/TemplateAddressCountry.php') ;
+require_once ('modules/DynamicFields/templates/Fields/TemplateField.php') ;
+require_once ('modules/DynamicFields/templates/Fields/TemplateAddressCountry.php') ;
 
 class TemplateAddress extends TemplateField
 {
-    public $type = 'varchar';
-    public $supports_unified_search = true;
+    var $type = 'varchar';
+    var $supports_unified_search = true;
 
-    public function save($df)
+    function save ($df)
     {
         $this->type = 'varchar' ;
 
         require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
-        $parser = new ParserLabel($df->getModuleName(), $df->getPackageName()) ;
-        foreach (array( 'City' , 'State' , 'PostalCode' , 'Country' ) as $addressFieldName) {
-            $systemLabel = strtoupper("LBL_" . $this->name . '_' . $addressFieldName);
-            $parser->handleSave(array( "label_" . $systemLabel => $this->label_value . ' ' . $addressFieldName ), $GLOBALS [ 'current_language' ]) ;
-            $addressField = new TemplateField() ;
+        $parser = new ParserLabel ( $df->getModuleName() , $df->getPackageName() ) ;
+        foreach ( array ( 'City' , 'State' , 'PostalCode' , 'Country' ) as $addressFieldName )
+        {
+            $systemLabel = strtoupper( "LBL_" . $this->name . '_' . $addressFieldName );
+            $parser->handleSave ( array( "label_" . $systemLabel => $this->label_value . ' ' . $addressFieldName ) , $GLOBALS [ 'current_language' ] ) ;
+            $addressField = new TemplateField ( ) ;
             $addressField->len = ($addressFieldName == 'PostalCode') ? 20 : 100 ;
-            $addressField->name = $this->name . '_' . strtolower($addressFieldName) ;
+            $addressField->name = $this->name . '_' . strtolower ( $addressFieldName ) ;
             $addressField->label = $addressField->vname = $systemLabel ;
-            $addressField->save($df) ;
+            $addressField->save ( $df ) ;
         }
         // finally save the base street address field
-        parent::save($df);
+        parent::save($df);      
+        
     }
 }

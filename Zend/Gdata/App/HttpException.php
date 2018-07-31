@@ -44,6 +44,7 @@ require_once 'Zend/Http/Client/Exception.php';
  */
 class Zend_Gdata_App_HttpException extends Zend_Gdata_App_Exception
 {
+
     protected $_httpClientException = null;
     protected $_response = null;
 
@@ -116,4 +117,5 @@ class Zend_Gdata_App_HttpException extends Zend_Gdata_App_Exception
         }
         return null;
     }
+
 }

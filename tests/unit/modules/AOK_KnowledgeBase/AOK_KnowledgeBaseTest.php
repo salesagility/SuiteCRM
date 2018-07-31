@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 class AOK_KnowledgeBaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -139,7 +137,7 @@ $SugarpdfSettings = array(
     "sugarpdf_pdf_protection"=>array(
         "label"=>$mod_strings["PDF_PROTECTION"],
         "info_label"=>$mod_strings["PDF_PROTECTION_INFO"],
-        "value"=>explode(",", PDF_PROTECTION),
+        "value"=>explode(",",PDF_PROTECTION),
         "class"=>"advanced",
         "type"=>"multiselect",
         "selectList"=>array("print"=>"Print", "modify"=>"Modify", "copy"=>"Copy", "annot-forms"=>"Annotations and forms"),
@@ -208,9 +206,9 @@ $SugarpdfSettings = array(
 // Use the OOB directory for images if there is no image in the custom directory
 $small_logo = $SugarpdfSettings['sugarpdf_pdf_small_header_logo']['path'];
 $logo = $SugarpdfSettings['sugarpdf_pdf_header_logo']['path'];
-if (@getimagesize($logo) === false) {
+if (@getimagesize($logo) === FALSE) {
     $SugarpdfSettings['sugarpdf_pdf_header_logo']['path'] = K_PATH_IMAGES.$SugarpdfSettings['sugarpdf_pdf_header_logo']['value'];
 }
-if (@getimagesize($small_logo) === false) {
+if (@getimagesize($small_logo) === FALSE) {
     $SugarpdfSettings['sugarpdf_pdf_small_header_logo']['path'] = K_PATH_IMAGES.$SugarpdfSettings['sugarpdf_pdf_small_header_logo']['value'];
 }

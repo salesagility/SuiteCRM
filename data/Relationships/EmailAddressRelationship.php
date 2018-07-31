@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -60,32 +58,30 @@ class EmailAddressRelationship extends M2MRelationship
     {
         $lhsLinkName = $this->lhsLink;
 
-        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
+        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
+        {
             $lhsClass = get_class($lhs);
             $GLOBALS['log']->fatal("could not load LHS $lhsLinkName in $lhsClass");
             return false;
         }
 
-        if ($lhs->$lhsLinkName->beansAreLoaded()) {
-            $lhs->$lhsLinkName->addBean($rhs);
-        }
+            if ($lhs->$lhsLinkName->beansAreLoaded())
+                $lhs->$lhsLinkName->addBean($rhs);
 
-        $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
+            $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
 
         //Many to many has no additional logic, so just add a new row to the table and notify the beans.
         $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
 
         $this->addRow($dataToInsert);
 
-        if ($this->self_referencing) {
+        if ($this->self_referencing)
             $this->addSelfReferencing($lhs, $rhs, $additionalFields);
-        }
 
-        if ($lhs->$lhsLinkName->beansAreLoaded()) {
-            $lhs->$lhsLinkName->addBean($rhs);
-        }
+            if ($lhs->$lhsLinkName->beansAreLoaded())
+                $lhs->$lhsLinkName->addBean($rhs);
 
-        $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
+            $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
 
         return true;
     }
@@ -102,13 +98,16 @@ class EmailAddressRelationship extends M2MRelationship
             $GLOBALS['log']->fatal("RHS is not a SugarBean object");
             return false;
         }
-        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
+        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
+        {
             $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
             return false;
         }
 
-        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes") {
-            if (!empty($lhs->$lhsLinkName)) {
+        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
+        {
+            if (!empty($lhs->$lhsLinkName))
+            {
                 $lhs->$lhsLinkName->load();
                 $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
             }
@@ -121,12 +120,13 @@ class EmailAddressRelationship extends M2MRelationship
 
         $this->removeRow($dataToRemove);
 
-        if ($this->self_referencing) {
+        if ($this->self_referencing)
             $this->removeSelfReferencing($lhs, $rhs);
-        }
 
-        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes") {
-            if (!empty($lhs->$lhsLinkName)) {
+        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
+        {
+            if (!empty($lhs->$lhsLinkName))
+            {
                 $lhs->$lhsLinkName->load();
                 $this->callAfterDelete($lhs, $rhs, $lhsLinkName);
             }

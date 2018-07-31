@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,23 +39,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-$fields_array['Schedulers_jobs'] = array(
-    'column_fields' => array(
-        'id',
-        'deleted',
-        'date_entered',
-        'date_modified',
-        'job_id',
-        'execute_time',
-        'status',
-    ),
-    'list_fields' => array(
-        'id',
-        'job_id',
-        'execute_time'
-    ),
-    'required_fields' => array(
-        'job_id' => 1,
-        'execute_time' => 1
-    )
+$fields_array['Schedulers_jobs'] = array (
+	'column_fields' => array (
+		'id',
+		'deleted',
+		'date_entered',
+		'date_modified',
+		'job_id',
+		'execute_time',
+		'status',
+	),
+	'list_fields' => array (
+		'id',
+		'job_id',
+		'execute_time'
+	),
+	'required_fields' => array (
+		'job_id' => 1,
+		'execute_time' => 1
+	)
 );

@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 class AOD_IndexEventTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {

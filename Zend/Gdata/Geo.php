@@ -66,4 +66,5 @@ class Zend_Gdata_Geo extends Zend_Gdata
         $this->registerPackage('Zend_Gdata_Geo_Extension');
         parent::__construct($client, $applicationId);
     }
+
 }

@@ -66,6 +66,7 @@ class JsonRPCServerUtils
                 continue;
             }
             if ($condition['name'] === 'email1' || $condition['name'] === 'email2') {
+
                 $email1_value = strtoupper($condition['value']);
                 $email1_condition = " {$table}id in ( SELECT  er.bean_id AS id FROM email_addr_bean_rel er, " .
                     'email_addresses ea WHERE ea.id = er.email_address_id ' .

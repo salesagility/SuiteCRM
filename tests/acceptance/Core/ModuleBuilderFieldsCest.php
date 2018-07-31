@@ -29,7 +29,7 @@ class ModuleBuilderFieldsCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if (!$this->fakeData) {
+        if(!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -41,6 +41,7 @@ class ModuleBuilderFieldsCest
      */
     public function _after(AcceptanceTester $I)
     {
+
     }
 
     // Tests
@@ -86,7 +87,8 @@ class ModuleBuilderFieldsCest
         \AcceptanceTester $I,
         \Step\Acceptance\ModuleBuilder $moduleBuilder,
         \Helper\WebDriverHelper $webDriverHelper
-    ) {
+    )
+    {
         $I->wantTo('Add relate field');
 
         $I->amOnUrl(
@@ -127,7 +129,7 @@ class ModuleBuilderFieldsCest
         // Click save
         $I->click(['name' => 'fsavebtn']);
 
-        $moduleBuilder->closePopupSuccess();
+       $moduleBuilder->closePopupSuccess();
 
         // Add to layout viewlayoutsbtn
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
@@ -142,7 +144,7 @@ class ModuleBuilderFieldsCest
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
-        $I->dragAndDrop('.le_row.special:not(#ygddfdiv)', '.le_panel:last-of-type');
+        $I->dragAndDrop('.le_row.special:not(#ygddfdiv)', '.le_panel:last-of-type' );
         $I->makeScreenshot('DnD.Row');
 
         // Drag field to
@@ -171,7 +173,8 @@ class ModuleBuilderFieldsCest
         \AcceptanceTester $I,
         \Step\Acceptance\ModuleBuilder $moduleBuilder,
         \Helper\WebDriverHelper $webDriverHelper
-    ) {
+    )
+    {
         $I->wantTo('Add html field');
 
         $I->amOnUrl(
@@ -226,7 +229,7 @@ class ModuleBuilderFieldsCest
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
-        $I->dragAndDrop('.le_row.special:not(#ygddfdiv)', '.le_panel:last-of-type');
+        $I->dragAndDrop('.le_row.special:not(#ygddfdiv)', '.le_panel:last-of-type' );
         $I->makeScreenshot('DnD.Row');
 
         // Drag field to
@@ -308,7 +311,7 @@ class ModuleBuilderFieldsCest
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
-        $I->dragAndDrop('.le_row.special:not(#ygddfdiv)', '.le_panel:last-of-type');
+        $I->dragAndDrop('.le_row.special:not(#ygddfdiv)', '.le_panel:last-of-type' );
         $I->makeScreenshot('DnD.Row');
 
         // Drag field to
@@ -397,7 +400,7 @@ class ModuleBuilderFieldsCest
         $I->waitForElementVisible('#name', 30);
         $editView->fillField('#name', $company);
         $relateFieldId = 'test_relate_field';
-        $editView->fillField('#'.$relateFieldId, $company);
+        $editView->fillField( '#'.$relateFieldId, $company);
         $editView->waitForElementNotVisible('#EditView_'.$relateFieldId.' > .yui-ac-content', 30);
         $editView->fillField('#test_int_field', $this->fakeData->numberBetween(0, 1000));
 

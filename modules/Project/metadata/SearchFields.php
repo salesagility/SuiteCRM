@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,32 +37,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-$searchFields['Project'] =
-    array(
+$searchFields['Project'] = 
+    array (
         'name' => array( 'query_type'=>'default'),
         'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
         'favorites_only' => array(
             'query_type'=>'format',
             'operator' => 'subquery',
-            'checked_only' => true,
-            'subquery' => "SELECT favorites.parent_id FROM favorites
+			'checked_only' => true,
+			'subquery' => "SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
 			                        and favorites.parent_type = 'Project'
 			                        and favorites.assigned_user_id = '{1}'",
             'db_field'=>array('id')),
-        //Range Search Support
-       'range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-       'start_range_date_entered' => array('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
-       'end_range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-       'range_date_modified' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-       'start_range_date_modified' => array('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
-       'end_range_date_modified' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-        
-       'range_estimated_start_date' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-       'start_range_estimated_start_date' => array('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
-       'end_range_estimated_start_date' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-       'range_estimated_end_date' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-       'start_range_estimated_end_date' => array('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
-       'end_range_estimated_end_date' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-        //Range Search Support
+		//Range Search Support 
+	   'range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	   'start_range_date_entered' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
+	   'end_range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	   'range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	   'start_range_date_modified' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
+       'end_range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),	
+	    
+	   'range_estimated_start_date' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	   'start_range_estimated_start_date' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
+	   'end_range_estimated_start_date' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	   'range_estimated_end_date' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	   'start_range_estimated_end_date' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
+       'end_range_estimated_end_date' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),	
+		//Range Search Support 				
     );

@@ -23,7 +23,7 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $release = new Release();
 
@@ -35,6 +35,8 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('test', $release->get_summary_text());
         
         // clean up
+        
+        
     }
 
     public function testget_releases()
@@ -55,7 +57,7 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $release = new Release();
@@ -69,6 +71,8 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -76,7 +80,7 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $release = new Release();
@@ -90,6 +94,8 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testget_list_view_data()

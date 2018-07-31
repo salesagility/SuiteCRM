@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,51 +46,52 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
  
 
-define('MB_PACKAGE_PATH', 'custom/modulebuilder/packages') ;
+define ( 'MB_PACKAGE_PATH', 'custom/modulebuilder/packages' ) ;
 define('MB_PACKAGE_BUILD', 'custom' . DIRECTORY_SEPARATOR . 'modulebuilder' . DIRECTORY_SEPARATOR . 'builds');
-require_once('modules/ModuleBuilder/MB/MBPackage.php') ;
+require_once ('modules/ModuleBuilder/MB/MBPackage.php') ;
 
 class ModuleBuilder
 {
-    public $packages = array( ) ;
+    var $packages = array ( ) ;
 
-    public function getPackageList()
+    function getPackageList ()
     {
-        static $list = array( ) ;
-        if (! empty($list) || ! file_exists(MB_PACKAGE_PATH)) {
+        static $list = array ( ) ;
+        if (! empty ( $list ) || ! file_exists ( MB_PACKAGE_PATH ))
             return $list ;
-        }
-        $d = dir(MB_PACKAGE_PATH) ;
-        while ($e = $d->read()) {
-            if (file_exists(MB_PACKAGE_PATH . '/' . $e . '/manifest.php')) {
+        $d = dir ( MB_PACKAGE_PATH ) ;
+        while ( $e = $d->read () )
+        {
+            if (file_exists ( MB_PACKAGE_PATH . '/' . $e . '/manifest.php' ))
+            {
                 $list [] = $e ;
             }
         }
-        sort($list) ; // order important as generate_nodes_array in Tree.php later loops over this by foreach to generate the package list
+        sort ( $list ) ; // order important as generate_nodes_array in Tree.php later loops over this by foreach to generate the package list
         return $list ;
+    
     }
 
     /**
      * @param $name
      * @return MBPackage
      */
-    public function getPackage($name)
+    function getPackage ($name)
     {
-        if (empty($this->packages [ $name ])) {
-            $this->packages [ $name ] = new MBPackage($name) ;
-        }
+        if (empty ( $this->packages [ $name ] ))
+            $this->packages [ $name ] = new MBPackage ( $name ) ;
 
         return $this->packages [ $name ] ;
     }
     
-    public function getPackageKey($name)
+    function getPackageKey ($name)
     {
         $manifestPath = MB_PACKAGE_PATH . '/' . $name . '/manifest.php' ;
-        if (file_exists($manifestPath)) {
-            require($manifestPath) ;
-            if (!empty($manifest)) {
+        if (file_exists ( $manifestPath ))
+        {
+            require( $manifestPath ) ;
+            if(!empty($manifest))
                 return $manifest['key'];
-            }
         }
         return false ;
     }
@@ -102,52 +101,58 @@ class ModuleBuilder
      * @param $module
      * @return mixed
      */
-    public function &getPackageModule($package, $module)
+    function &getPackageModule ($package , $module)
     {
-        $this->getPackage($package) ;
-        $this->packages [ $package ]->getModule($module) ;
+        $this->getPackage ( $package ) ;
+        $this->packages [ $package ]->getModule ( $module ) ;
         return $this->packages [ $package ]->modules [ $module ] ;
     }
 
-    public function save()
+    function save ()
     {
-        $packages = array_keys($this->packages) ;
-        foreach ($packages as $package) {
-            $this->packages [ $package ]->save() ;
+        $packages = array_keys ( $this->packages ) ;
+        foreach ( $packages as $package )
+        {
+            $this->packages [ $package ]->save () ;
         }
     }
 
-    public function build()
+    function build ()
     {
-        $packages = array_keys($this->packages) ;
-        foreach ($packages as $package) {
-            if (count($packages) == 1) {
-                $this->packages [ $package ]->build(true) ;
-            } else {
-                $this->packages [ $package ]->build(false) ;
+        $packages = array_keys ( $this->packages ) ;
+        foreach ( $packages as $package )
+        {
+            if (count ( $packages ) == 1)
+            {
+                $this->packages [ $package ]->build ( true ) ;
+            } else
+            {
+                $this->packages [ $package ]->build ( false ) ;
             }
         }
     }
 
-    public function getPackages()
+    function getPackages ()
     {
-        if (empty($this->packages)) {
-            $list = $this->getPackageList() ;
-            foreach ($list as $package) {
-                if (! empty($this->packages [ $package ])) {
+        if (empty ( $this->packages ))
+        {
+            $list = $this->getPackageList () ;
+            foreach ( $list as $package )
+            {
+                if (! empty ( $this->packages [ $package ] ))
                     continue ;
-                }
-                $this->packages [ $package ] = new MBPackage($package) ;
+                $this->packages [ $package ] = new MBPackage ( $package ) ;
             }
         }
     }
 
-    public function getNodes()
+    function getNodes ()
     {
-        $this->getPackages() ;
-        $nodes = array( ) ;
-        foreach (array_keys($this->packages) as $name) {
-            $nodes [] = $this->packages [ $name ]->getNodes() ;
+        $this->getPackages () ;
+        $nodes = array ( ) ;
+        foreach ( array_keys ( $this->packages ) as $name )
+        {
+            $nodes [] = $this->packages [ $name ]->getNodes () ;
         }
         return $nodes ;
     }
@@ -158,7 +163,7 @@ class ModuleBuilder
      * @param string $module
      * @return array $aliases
      */
-    public static function getModuleAliases($module)
+    static public function getModuleAliases($module)
     {
         $aliases = array($module);
         $relate_arr = array(
@@ -166,10 +171,11 @@ class ModuleBuilder
             'Employees' => 'Users'
         );
 
-        if (isset($relate_arr[$module])) {
+        if (isset($relate_arr[$module])){
             $aliases[] = $relate_arr[$module];
         }
 
         return $aliases;
     }
+
 }

@@ -48,7 +48,9 @@ use SuiteCRM\Enumerator\ExceptionCode;
  */
 class ForbiddenException extends ApiException
 {
+    
     const MSG_PREFIX = '[Forbidden]';
     const DEFAULT_CODE = 8020;
     const HTTP_STATUS = 403;
+    
 }

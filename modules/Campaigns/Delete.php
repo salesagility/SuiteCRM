@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,26 +46,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-if (!isset($_REQUEST['record'])) {
-    sugar_die("A record number must be specified to delete the campaign.");
+if(!isset($_REQUEST['record']))
+{
+	sugar_die("A record number must be specified to delete the campaign.");
 }
 
 $focus = new Campaign();
 $focus->retrieve($_REQUEST['record']);
 
 if (isset($_REQUEST['mode']) and $_REQUEST['mode']=='Test') {
-    //deletes all data associated with the test run.
+	//deletes all data associated with the test run.
     require_once('modules/Campaigns/DeleteTestCampaigns.php');
     $deleteTest = new DeleteTestCampaigns();
     $deleteTest->deleteTestRecords($focus);
 } else {
-    if (!$focus->ACLAccess('Delete')) {
-        ACLController::displayNoAccess(true);
-        sugar_cleanup(true);
-    }
-    $focus->mark_deleted($_REQUEST['record']);
+	if(!$focus->ACLAccess('Delete')){
+		ACLController::displayNoAccess(true);
+		sugar_cleanup(true);
+	}
+	$focus->mark_deleted($_REQUEST['record']);
 }
 
 $return_id=!empty($_REQUEST['return_id'])?$_REQUEST['return_id']:$focus->id;
-require_once('include/formbase.php');
+require_once ('include/formbase.php');
 handleRedirect($return_id, $_REQUEST['return_module']);

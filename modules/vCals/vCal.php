@@ -42,37 +42,36 @@
 
     require_once('modules/Calendar/Calendar.php');
 
-    class vCal extends SugarBean
-    {
+    class vCal extends SugarBean {
 
         // Stored fields
-        public $id;
-        public $date_modified;
-        public $user_id;
-        public $content;
-        public $deleted;
-        public $type;
-        public $source;
-        public $module_dir = "vCals";
-        public $table_name = "vcals";
+        var $id;
+        var $date_modified;
+        var $user_id;
+        var $content;
+        var $deleted;
+        var $type;
+        var $source;
+        var $module_dir = "vCals";
+        var $table_name = "vcals";
 
-        public $object_name = "vCal";
-        public $tracker_visibility = false;
+        var $object_name = "vCal";
+        var $tracker_visibility = false;
 
-        public $new_schema = true;
+        var $new_schema = true;
 
-        public $field_defs = array();
+        var $field_defs = array();
 
         // This is used to retrieve related fields from form posts.
-        public $additional_column_fields = array();
+        var $additional_column_fields = Array();
 
         const UTC_FORMAT = 'Ymd\THi00\Z';
         const EOL = "\r\n";
         const TAB = "\t";
         const CHARSPERLINE = 75;
 
-        public function __construct()
-        {
+        public function __construct() {
+
             parent::__construct();
             $this->disable_row_level_security = true;
         }
@@ -81,39 +80,37 @@
          * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
          *     please update your code, use __construct instead
          */
-        public function vCal()
-        {
+        public function vCal() {
+
             $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
             if (isset($GLOBALS['log'])) {
                 $GLOBALS['log']->deprecated($deprecatedMessage);
-            } else {
+            }
+            else {
                 trigger_error($deprecatedMessage, E_USER_DEPRECATED);
             }
             self::__construct();
         }
 
 
-        public function get_summary_text()
-        {
+        function get_summary_text() {
+
             return "";
         }
 
 
-        public function fill_in_additional_list_fields()
-        {
+        function fill_in_additional_list_fields() {
         }
 
-        public function fill_in_additional_detail_fields()
-        {
+        function fill_in_additional_detail_fields() {
         }
 
-        public function get_list_view_data()
-        {
+        function get_list_view_data() {
         }
 
         // combines all freebusy vcals and returns just the FREEBUSY lines as a string
-        public function get_freebusy_lines_cache(&$user_bean)
-        {
+        function get_freebusy_lines_cache(&$user_bean) {
+
             $ical_array = array();
             // First, get the list of IDs.
             $query = "SELECT id from vcals where user_id='{$user_bean->id}' AND type='vfb' AND deleted=0";
@@ -133,8 +130,8 @@
 
         // query and create the FREEBUSY lines for SugarCRM Meetings and Calls and
         // return the string
-        public function create_sugar_freebusy($user_bean, $start_date_time, $end_date_time)
-        {
+        function create_sugar_freebusy($user_bean, $start_date_time, $end_date_time) {
+
             $ical_array = array();
             global $DO_USER_TIME_OFFSET, $timedate, $current_user;
 
@@ -169,11 +166,12 @@
 
             return self::create_ical_string_from_array($ical_array);
             //        return $ical_array;
+
         }
 
         // return a freebusy vcal string
-        public function get_vcal_freebusy($user_focus, $cached = true)
-        {
+        function get_vcal_freebusy($user_focus, $cached = true) {
+
             global $locale, $timedate;
             $ical_array = array();
             $ical_array[] = array("BEGIN", "VCALENDAR");
@@ -235,19 +233,20 @@
             $str .= "END:VCALENDAR" . self::EOL;
 
             return $str;
+
         }
 
         // static function:
         // cache vcals
-        public static function cache_sugar_vcal(&$user_focus)
-        {
+        static function cache_sugar_vcal(&$user_focus) {
+
             self::cache_sugar_vcal_freebusy($user_focus);
         }
 
         // static function:
         // caches vcal for Activities in Sugar database
-        public static function cache_sugar_vcal_freebusy(&$user_focus)
-        {
+        static function cache_sugar_vcal_freebusy(&$user_focus) {
+
             $focus = new vCal();
             // set freebusy members and save
             $arr = array('user_id' => $user_focus->id, 'type' => 'vfb', 'source' => 'sugar');
@@ -266,8 +265,8 @@
          * Lines of text SHOULD NOT be longer than 75 octets, excluding the line break.
          * Long content lines SHOULD be split into a multiple line representations using a line "folding" technique
          */
-        public static function fold_ical_lines($key, $value)
-        {
+        public static function fold_ical_lines($key, $value) {
+
             $iCalValue = $key . ":" . $value;
 
             if (strlen($iCalValue) <= self::CHARSPERLINE) {
@@ -278,10 +277,7 @@
             $remainingchars = substr($iCalValue, self::CHARSPERLINE);
             $end = self::EOL . self::TAB;
 
-            $remainingchars = substr(
-                chunk_split($end . $remainingchars, self::CHARSPERLINE + strlen(self::EOL), $end),
-                0,
-                -strlen($end) // exclude last EOL and TAB chars
+            $remainingchars = substr(chunk_split($end . $remainingchars, self::CHARSPERLINE + strlen(self::EOL), $end), 0, -strlen($end) // exclude last EOL and TAB chars
             );
 
             return $firstchars . $remainingchars;
@@ -290,8 +286,8 @@
         /**
          * this function takes an iCal string and converts it to iCal array while following RFC rules
          */
-        public static function create_ical_array_from_string($ical_string)
-        {
+        public static function create_ical_array_from_string($ical_string) {
+
             $ical_string = preg_replace("/\r\n\s+/", "", $ical_string);
             $lines = preg_split("/\r?\n/", $ical_string);
             $ical_array = array();
@@ -311,13 +307,14 @@
         /**
          * this function takes an iCal array and converts it to iCal string while following RFC rules
          */
-        public static function create_ical_string_from_array($ical_array, $no_folding = false)
-        {
+        public static function create_ical_string_from_array($ical_array, $no_folding = false) {
+
             $str = "";
             foreach ($ical_array as $ical) {
                 if ($no_folding) {
                     $str .= $ical[0] . ":" . self::escape_ical_chars($ical[1]) . self::EOL;
-                } else {
+                }
+                else {
                     $str .= self::fold_ical_lines($ical[0], self::escape_ical_chars($ical[1])) . self::EOL;
                 }
             }
@@ -332,8 +329,8 @@
          *
          * @return escaped string
          */
-        public static function escape_ical_chars($string)
-        {
+        public static function escape_ical_chars($string) {
+
             $string = str_replace(array("\\", "\r", "\n", ";", ","), array("\\\\", "\\r", "\\n", "\\;", "\\,"), $string);
 
             return $string;
@@ -346,8 +343,8 @@
          *
          * @return unescaped string
          */
-        public static function unescape_ical_chars($string)
-        {
+        public static function unescape_ical_chars($string) {
+
             $string = str_replace(array("\\r", "\\n", "\\;", "\\,", "\\\\"), array("\r", "\n", ";", ",", "\\"), $string);
 
             return $string;
@@ -356,8 +353,8 @@
         /**
          * get ics file content for meeting invite email
          */
-        public static function get_ical_event(SugarBean $bean, User $user)
-        {
+        public static function get_ical_event(SugarBean $bean, User $user) {
+
             global $timedate;
             $ical_array = array();
 
@@ -384,4 +381,5 @@
 
             return self::create_ical_string_from_array($ical_array);
         }
+
     }

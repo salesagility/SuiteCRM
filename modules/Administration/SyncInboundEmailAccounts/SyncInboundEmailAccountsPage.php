@@ -72,8 +72,7 @@ class SyncInboundEmailAccountsPage
      *
      * @param array $includeData
      */
-    public function __construct($includeData)
-    {
+    public function __construct($includeData) {
 
         // create object state
 
@@ -84,6 +83,7 @@ class SyncInboundEmailAccountsPage
         // handle the sub-action
 
         new SyncInboundEmailAccountsSubActionHandler($this);
+
     }
 
     /**
@@ -91,8 +91,7 @@ class SyncInboundEmailAccountsPage
      *
      * @param $ieList
      */
-    public function showForm($ieList)
-    {
+    public function showForm($ieList) {
         $this->tpl->assign('ieList', $ieList);
         $this->tpl->display('modules/Administration/templates/SyncInboundEmailAccounts.tpl');
     }
@@ -100,8 +99,8 @@ class SyncInboundEmailAccountsPage
     /**
      * @param string $output
      */
-    public function showOutput($output)
-    {
+    public function showOutput($output) {
         echo $output;
     }
+
 }

@@ -40,6 +40,7 @@
 
 namespace SuiteCRM\Enumerator;
 
+
 /**
  * Class ExceptionCode
  * @package SuiteCRM\Enumerator

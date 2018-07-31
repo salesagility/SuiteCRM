@@ -43,7 +43,7 @@ global $mod_strings, $app_strings, $sugar_config;
 
 if (ACLController::checkAccess('SurveyResponses', 'edit', true)) {
     $module_menu[] =
-        array(
+        Array(
             "index.php?module=SurveyResponses&action=EditView&return_module=SurveyResponses&return_action=DetailView",
             $mod_strings['LNK_NEW_RECORD'],
             "Add",
@@ -52,7 +52,7 @@ if (ACLController::checkAccess('SurveyResponses', 'edit', true)) {
 }
 if (ACLController::checkAccess('SurveyResponses', 'list', true)) {
     $module_menu[] =
-        array(
+        Array(
             "index.php?module=SurveyResponses&action=index&return_module=SurveyResponses&return_action=DetailView",
             $mod_strings['LNK_LIST'],
             "View",

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,45 +41,45 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class AccountsParseRule extends BaseRule
-{
-    public function __construct()
-    {
-    }
+class AccountsParseRule extends BaseRule {
+
+function __construct() {
+
+}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function AccountsParseRule()
-    {
+    function AccountsParseRule(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    public function preParse($panels, $view)
-    {
-        if ($view == 'DetailView') {
-            foreach ($panels as $name=>$panel) {
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
-                        if ($this->matches($column, '/^parent_id$/')) {
-                            $panels[$name][$rowCount][$key] = 'parent_name';
-                        } elseif ($this->matches($column, '/_address_(street|country)$/') && is_array($column) && isset($column['customCode'])) {
-                            if (preg_match('/\{\$fields\.push_contacts_(billing|shipping)\.value\}/', $column['customCode'], $m)) {
-                                $column['customCode'] = str_replace('{$fields.push_contacts_'. $m[1].'.value}', '{$custom_code_'.$m[1].'}', $column['customCode']);
-                                $panels[$name][$rowCount][$key] = $column;
-                            }
-                        }
-                    } //foreach
-                } //foreach
-            } //foreach
-        }
-        return $panels;
+function preParse($panels, $view) {
+    if($view == 'DetailView') {
+		foreach($panels as $name=>$panel) {
+		   	foreach($panel as $rowCount=>$row) {
+		   	  	 foreach($row as $key=>$column) {
+		   	  	     if($this->matches($column, '/^parent_id$/')) {
+		   	  	 	 	$panels[$name][$rowCount][$key] = 'parent_name';
+   		   	  	 	 } else if($this->matches($column, '/_address_(street|country)$/') && is_array($column) && isset($column['customCode'])) {
+		   	  	 	 	if(preg_match('/\{\$fields\.push_contacts_(billing|shipping)\.value\}/', $column['customCode'], $m)) {
+		   	  	 	 		$column['customCode'] = str_replace('{$fields.push_contacts_'. $m[1].'.value}', '{$custom_code_'.$m[1].'}', $column['customCode']);
+			   	  	 	 	$panels[$name][$rowCount][$key] = $column;
+		   	  	 	 	}
+		   	  	 	 }
+		   	  	 } //foreach
+		   	} //foreach
+		} //foreach
     }
+	return $panels;
+}
+
 }

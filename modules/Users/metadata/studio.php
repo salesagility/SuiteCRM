@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,22 +42,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $GLOBALS['studioDefs']['Users'] = array(
-    'LBL_DETAILVIEW'=>array(
+	'LBL_DETAILVIEW'=>array(
         'template'=>'DetailView',
         'meta_file'=>'modules/Users/detailviewdefs.php',
         'type'=>'Detailview',
     ),
-    'LBL_EDITVIEW'=>array(
+	'LBL_EDITVIEW'=>array(
         'template'=>'EditView',
         'meta_file'=>'modules/Users/editviewdefs.php',
         'type'=>'EditView',
     ),
-    'LBL_LISTVIEW'=>array(
+	'LBL_LISTVIEW'=>array(
         'template'=>'listview',
         'meta_file'=>'modules/Users/listviewdefs.php',
         'type'=>'ListView',
     ),
-    'LBL_SEARCHFORM'=>array(
+	'LBL_SEARCHFORM'=>array(
         'template'=>'xtpl',
         'template_file'=>'modules/Users/SearchForm.html',
         'php_file'=>'modules/Users/ListView.php',

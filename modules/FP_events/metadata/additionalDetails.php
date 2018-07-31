@@ -49,3 +49,4 @@ function additionalDetailsFP_events($fields, SugarBean $bean = null, $params = a
 {
     return additional_details($fields, $bean, $params);
 }
+

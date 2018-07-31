@@ -128,3 +128,4 @@ $mod_strings = array(
     'LBL_AOS_PRODUCT_QUOTES' => 'Product Quotes',
     'LBL_AOS_QUOTES_AOS_CONTRACTS' => 'Quotes: Contracts',
 );
+

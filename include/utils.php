@@ -1188,16 +1188,14 @@ function return_module_language($language, $module, $refresh = false)
     // cn: bug 6048 - merge en_us with requested language
     if ($language != $sugar_config['default_language']) {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh),
-            $loaded_mod_strings
+                LanguageManager::loadModuleLanguage($module, $sugar_config['default_language'], $refresh), $loaded_mod_strings
         );
     }
 
     // Load in en_us strings by default
     if ($language != 'en_us' && $sugar_config['default_language'] != 'en_us') {
         $loaded_mod_strings = sugarLangArrayMerge(
-                LanguageManager::loadModuleLanguage($module, 'en_us', $refresh),
-            $loaded_mod_strings
+                LanguageManager::loadModuleLanguage($module, 'en_us', $refresh), $loaded_mod_strings
         );
     }
 
@@ -2091,9 +2089,7 @@ function clean_xss($str, $cleanImg = true)
     $matches = array_merge($matches, xss_check_pattern($javascript_regex, $str));
 
     if ($cleanImg) {
-        $matches = array_merge(
-            $matches,
-            xss_check_pattern($imgsrc_regex, $str)
+        $matches = array_merge($matches, xss_check_pattern($imgsrc_regex, $str)
         );
     }
 
@@ -2181,8 +2177,9 @@ function clean_string($str, $filter = 'STANDARD', $dieOnBadData = true)
         }
 
         return false;
+    } else {
+        return $str;
     }
-    return $str;
 }
 
 function clean_special_arguments()
@@ -2407,10 +2404,11 @@ function securexsskey($value, $die = true)
     if (!empty($matches)) {
         if ($die) {
             die("Bad data passed in; <a href=\"{$sugar_config['site_url']}\">Return to Home</a>");
+        } else {
+            unset($_REQUEST[$value]);
+            unset($_POST[$value]);
+            unset($_GET[$value]);
         }
-        unset($_REQUEST[$value]);
-        unset($_POST[$value]);
-        unset($_GET[$value]);
     }
 }
 
@@ -2458,6 +2456,8 @@ function clear_register_value($category, $name)
 // this function cleans id's when being imported
 function convert_id($string)
 {
+
+
     $stateSaver = new SuiteCRM\StateSaver();
     $stateSaver->pushErrorLevel();
 
@@ -2587,8 +2587,9 @@ function getSQLDate($date_str)
         }
 
         return "{$match[3]}-{$match[1]}-{$match[2]}";
+    } else {
+        return '';
     }
-    return '';
 }
 
 function clone_history(&$db, $from_id, $to_id, $to_type)
@@ -2988,10 +2989,10 @@ function skype_formatted($number)
     //kbrill - BUG #15375
     if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'Popup') {
         return false;
+    } else {
+        return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 3) == '011';
     }
-    return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 3) == '011';
-    
-    //	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
+//	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
 }
 
 function format_skype($number)
@@ -3307,8 +3308,9 @@ function sugar_cleanup($exit = false)
     if (empty($sugar_config['dbconfig'])) {
         if ($exit) {
             exit;
+        } else {
+            return;
         }
-        return;
     }
 
     if (!class_exists('Tracker', true)) {
@@ -3502,7 +3504,6 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
 //            return; //depricated we have lots of these ignore them
         case E_USER_NOTICE:
             $type = 'User notice';
-            // no break
         case E_NOTICE:
             $type = 'Notice';
             $halt_script = false;
@@ -3511,13 +3512,10 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
 
         case E_USER_WARNING:
             $type = 'User warning';
-            // no break
         case E_COMPILE_WARNING:
             $type = 'Compile warning';
-            // no break
         case E_CORE_WARNING:
             $type = 'Core warning';
-            // no break
         case E_WARNING:
             $type = 'Warning';
             $halt_script = false;
@@ -3525,13 +3523,10 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
 
         case E_USER_ERROR:
             $type = 'User error';
-            // no break
         case E_COMPILE_ERROR:
             $type = 'Compile error';
-            // no break
         case E_CORE_ERROR:
             $type = 'Core error';
-            // no break
         case E_ERROR:
             $type = 'Error';
             $halt_script = true;
@@ -3610,10 +3605,8 @@ function return_bytes($val)
     switch ($last) {
         case 'g':
             $val *= 1024;
-            // no break
         case 'm':
             $val *= 1024;
-            // no break
         case 'k':
             $val *= 1024;
     }
@@ -3728,8 +3721,9 @@ function get_singular_bean_name($bean_name)
     global $beanFiles, $beanList;
     if (array_key_exists($bean_name, $beanList)) {
         return $beanList[$bean_name];
+    } else {
+        return $bean_name;
     }
-    return $bean_name;
 }
 
 /*
@@ -3983,8 +3977,9 @@ function format_number_display($num, $system_id)
         $num = unformat_number($num);
         if (isset($system_id) && $system_id == 1) {
             return sprintf('%d', $num);
+        } else {
+            return sprintf('%d-%d', $num, $system_id);
         }
-        return sprintf('%d-%d', $num, $system_id);
     }
 }
 
@@ -4361,8 +4356,9 @@ function rebuildConfigFile($sugar_config, $sugar_version)
 
     if (write_array_to_file('sugar_config', $sugar_config, 'config.php')) {
         return true;
+    } else {
+        return false;
     }
-    return false;
 }
 
 /**
@@ -4647,8 +4643,7 @@ function ajaxInit()
  * @return string
  */
 function getAbsolutePath(
-$path,
-    $currentServer = false
+$path, $currentServer = false
 ) {
     $path = trim($path);
 
@@ -4906,8 +4901,9 @@ function getVariableFromQueryString($variable, $string)
     $number = preg_match("/{$variable}=([a-zA-Z0-9_-]+)[&]?/", $string, $matches);
     if ($number) {
         return $matches[1];
+    } else {
+        return false;
     }
-    return false;
 }
 
 /**
@@ -4942,8 +4938,9 @@ function getVersionStatus($version)
 {
     if (preg_match('/^[\d\.]+?([a-zA-Z]+?)[\d]*?$/si', $version, $matches)) {
         return strtoupper($matches[1]);
+    } else {
+        return 'GA';
     }
-    return 'GA';
 }
 
 /**
@@ -5110,8 +5107,9 @@ function cmp_beans($a, $b)
     }
     if ($a->$sugar_web_service_order_by < $b->$sugar_web_service_order_by) {
         return -1;
+    } else {
+        return 1;
     }
-    return 1;
 }
 
 function order_beans($beans, $field_name)
@@ -5208,8 +5206,9 @@ function getFTSBoostOptions($optionName)
 {
     if (isset($GLOBALS['app_list_strings'][$optionName])) {
         return $GLOBALS['app_list_strings'][$optionName];
+    } else {
+        return array();
     }
-    return array();
 }
 
 /**
@@ -5479,48 +5478,54 @@ function suite_strlen($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strlen')) {
         return mb_strlen($input, $encoding);
+    } else {
+        return strlen($input);
     }
-    return strlen($input);
 }
 
 function suite_substr($input, $start, $length = null, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_substr')) {
         return mb_substr($input, $start, $length, $encoding);
+    } else {
+        return substr($input, $start, $length);
     }
-    return substr($input, $start, $length);
 }
 
 function suite_strtoupper($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strtoupper')) {
         return mb_strtoupper($input, $encoding);
+    } else {
+        return strtoupper($input);
     }
-    return strtoupper($input);
 }
 
 function suite_strtolower($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strtolower')) {
         return mb_strtolower($input, $encoding);
+    } else {
+        return strtolower($input);
     }
-    return strtolower($input);
 }
 
 function suite_strpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strpos')) {
         return mb_strpos($haystack, $needle, $offset, $encoding);
+    } else {
+        return strpos($haystack, $needle, $offset);
     }
-    return strpos($haystack, $needle, $offset);
 }
 
 function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strrpos')) {
         return mb_strrpos($haystack, $needle, $offset, $encoding);
+    } else {
+        return strrpos($haystack, $needle, $offset);
     }
-    return strrpos($haystack, $needle, $offset);
 }
 
 /**
@@ -5535,8 +5540,7 @@ function isValidId($id)
     return $valid;
 }
 
-function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error')
-{
+function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error') {
     if ($orEmpty && !$email) {
         return true;
     }

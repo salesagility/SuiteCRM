@@ -44,6 +44,7 @@ require_once 'Zend/Gdata/Extension.php';
 
 class Zend_Gdata_Contacts_Extension_Organization extends Zend_Gdata_Extension
 {
+
     protected $_rootNamespace = 'gd';
     protected $_rootElement = 'organization';
     protected $_orgName = null;
@@ -63,14 +64,15 @@ class Zend_Gdata_Contacts_Extension_Organization extends Zend_Gdata_Extension
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
 
-        switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gd') . ':' . 'orgName':
+        switch ($absoluteNodeName)
+        {
+            case $this->lookupNamespace('gd') . ':' . 'orgName';
                 $entry = new Zend_Gdata_Entry();
                 $entry->transferFromDOM($child);
                 $this->_orgName = $entry;
                 break;
 
-            case $this->lookupNamespace('gd') . ':' . 'orgTitle':
+            case $this->lookupNamespace('gd') . ':' . 'orgTitle';
                 $entry = new Zend_Gdata_Entry();
                 $entry->transferFromDOM($child);
                 $this->_orgTitle = $entry;
@@ -85,18 +87,21 @@ class Zend_Gdata_Contacts_Extension_Organization extends Zend_Gdata_Extension
 
     public function getOrganizationName()
     {
-        if ($this->_orgName != null) {
+        if($this->_orgName != null)
             return $this->_orgName->getText();
-        } else {
+        else
             return '';
-        }
     }
     public function getOrganizationTitle()
     {
-        if ($this->_orgTitle != null) {
+        if($this->_orgTitle != null)
             return $this->_orgTitle->getText();
-        } else {
+        else
             return '';
-        }
     }
+
+
+
 }
+
+

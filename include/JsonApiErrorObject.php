@@ -522,6 +522,7 @@ class JsonApiErrorObject
      */
     protected function retrieveMetaFromException(Exception $e)
     {
+        
         $meta = [
             'about' => 'Exception',
             'class' => get_class($e),
@@ -571,7 +572,7 @@ class JsonApiErrorObject
     }
     
     /**
-     *
+     * 
      * @param ServerRequestInterface $request
      * @return $this
      */

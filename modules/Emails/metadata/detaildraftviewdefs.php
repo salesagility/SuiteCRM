@@ -112,7 +112,7 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'label' => 'LBL_DATE_ENTERED',
                 )
             ),
-            array(
+            array (
                 'category_id',
             ),
         )

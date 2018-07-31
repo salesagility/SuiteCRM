@@ -23,21 +23,22 @@
  */
 
 
-function display_field_lines($focus, $field, $value, $view)
-{
+function display_field_lines($focus, $field, $value, $view){
+
     global $mod_strings, $app_list_strings;
 
     $html = '';
 
     if (!is_file('cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
-        require_once('include/language/jsLanguage.php');
+        require_once ('include/language/jsLanguage.php');
         jsLanguage::createModuleStringsCache('AOR_Fields', $GLOBALS['current_language']);
     }
 
     $html .= '<script src="include/javascript/yui3/build/yui/yui-min.js"></script>';
     $html .= '<script src="cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
 
-    if ($view == 'EditView') {
+    if($view == 'EditView'){
+
         $html .= '<script src="modules/AOR_Fields/fieldLines.js"></script>';
         $html .='<script></script>';
         $html .= "<table border='0' cellspacing='4' width='100%' id='fieldLines'></table>";
@@ -49,13 +50,13 @@ function display_field_lines($focus, $field, $value, $view)
         $html .= "sort_by_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], '')))."\";";
         $html .= "</script>";
 
-        if (isset($focus->report_module) && $focus->report_module != '') {
+        if(isset($focus->report_module) && $focus->report_module != ''){
             require_once("modules/AOW_WorkFlow/aow_utils.php");
             $html .= "<script>";
             $html .= "report_rel_modules = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($focus->report_module)))."\";";
             $html .= "report_module = \"".$focus->report_module."\";";
             $html .= "document.getElementById('btn_FieldLine').disabled = '';";
-            if ($focus->id != '') {
+            if($focus->id != ''){
                 $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$focus->id."' AND deleted = 0 ORDER BY field_order ASC";
                 $result = $focus->db->query($sql);
 
@@ -63,7 +64,7 @@ function display_field_lines($focus, $field, $value, $view)
                     $field_name = new AOR_Field();
                     $field_name->retrieve($row['id']);
                     $field_name->module_path = unserialize(base64_decode($field_name->module_path));
-                    $html .= "report_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->report_module, $field_name->module_path[0]))))."\";";
+                    $html .= "report_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->report_module,$field_name->module_path[0]))))."\";";
                     $field_item = json_encode($field_name->toArray());
                     $html .= "loadFieldLine(".$field_item.");";
                 }
@@ -71,6 +72,7 @@ function display_field_lines($focus, $field, $value, $view)
             $html .= "report_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields($focus->report_module)))."\";";
             $html .= "</script>";
         }
+
     }
     return $html;
 }

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,46 +41,46 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class ProductsParseRule extends BaseRule
-{
-    public function __construct()
-    {
-    }
+class ProductsParseRule extends BaseRule {
+
+function __construct() {
+
+}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ProductsParseRule()
-    {
+    function ProductsParseRule(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    public function preParse($panels, $view)
-    {
-        if ($view == 'DetailView') {
-            foreach ($panels as $name=>$panel) {
-                foreach ($panel as $rowCount=>$row) {
-                    foreach ($row as $key=>$column) {
-                        if ($this->matches($column, '/^url$/i')) {
-                            $panels[$name][$rowCount][$key] = 'website';
-                        } elseif ($this->matches($column, '/^manufacturer$/i')) {
-                            $panels[$name][$rowCount][$key] = 'manufacturer_name';
-                        } elseif ($this->matches($column, '/^category$/i')) {
-                            $panels[$name][$rowCount][$key] = 'category_name';
-                        } elseif ($this->matches($column, '/^type$/i')) {
-                            $panels[$name][$rowCount][$key] = 'type_name';
-                        }
-                    } //foreach
-                } //foreach
-            } //foreach
-        } //if
+function preParse($panels, $view) {
+   if($view == 'DetailView') {
+	   foreach($panels as $name=>$panel) {
+	   	  foreach($panel as $rowCount=>$row) {
+	   	  	 foreach($row as $key=>$column) {
+				if ($this->matches($column, '/^url$/i')) {
+                   $panels[$name][$rowCount][$key] = 'website';
+				} else if ($this->matches($column, '/^manufacturer$/i')) {
+				   $panels[$name][$rowCount][$key] = 'manufacturer_name';
+				}  else if ($this->matches($column, '/^category$/i')) {
+				   $panels[$name][$rowCount][$key] = 'category_name';
+				} else if ($this->matches($column, '/^type$/i')) {
+				   $panels[$name][$rowCount][$key] = 'type_name';
+				}
+	   	  	 } //foreach
+	   	  } //foreach
+	   } //foreach
+   } //if
    return $panels;
-    }
+}
+
 }

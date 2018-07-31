@@ -132,4 +132,5 @@ class Zend_Gdata_YouTube_ContactEntry extends Zend_Gdata_YouTube_UserProfileEntr
     {
         return $this->_status;
     }
+
 }

@@ -67,7 +67,7 @@ $where = '';
 $where = $popup->_get_where_clause();
 
 // We can't attach remote documents to emails because we can't necessarialy fetch a copy of them to include.
-if (! empty($where)) {
+if ( ! empty($where) ) {
     $where .= ' AND ';
 }
 $where .= "documents.doc_type IN ( '', 'Sugar')";
@@ -84,7 +84,8 @@ $document_revision_id = empty($_REQUEST['document_revision_id']) ? '' : $_REQUES
 
 $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
 $button  = "<form action='index.php' method='post' name='form' id='form'>\n";
-if (!$hide_clear_button) {
+if(!$hide_clear_button)
+{
     $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
         .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
         .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
@@ -102,7 +103,7 @@ $form->assign('THEME', $theme);
 $form->assign('MODULE_NAME', $currentModule);
 $form->assign('NAME', $name);
 $form->assign('DOCUMENT_NAME', $document_name);
-if (isset($_REQUEST['target'])) {
+if(isset($_REQUEST['target'])) {
     $form->assign('DOCUMENT_TARGET', $_REQUEST['target']);
 } else {
     $form->assign('DOCUMENT_TARGET', '');

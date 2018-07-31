@@ -35,7 +35,7 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushTable('aos_quotes');
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aosQuotes = new AOS_Quotes();
 
@@ -57,5 +57,6 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('aos_quotes');
+        
     }
 }

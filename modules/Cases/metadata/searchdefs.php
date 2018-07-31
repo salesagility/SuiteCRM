@@ -37,101 +37,101 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$searchdefs ['Cases'] =
-array(
-  'layout' =>
-  array(
-    'basic_search' =>
-    array(
+$searchdefs ['Cases'] = 
+array (
+  'layout' => 
+  array (
+    'basic_search' => 
+    array (
       0 => 'name',
-      1 =>
-      array(
+      1 => 
+      array (
         'name' => 'current_user_only',
         'label' => 'LBL_CURRENT_USER_FILTER',
         'type' => 'bool',
       ),
-      2 =>
-      array(
+      2 => 
+      array (
         'name' => 'open_only',
         'label' => 'LBL_OPEN_ITEMS',
         'type' => 'bool',
         'default' => false,
         'width' => '10%',
       ),
-        3 => array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+        3 => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
     ),
-    'advanced_search' =>
-    array(
-      'case_number' =>
-      array(
+    'advanced_search' => 
+    array (
+      'case_number' => 
+      array (
         'name' => 'case_number',
         'default' => true,
         'width' => '10%',
       ),
-      'name' =>
-      array(
+      'name' => 
+      array (
         'name' => 'name',
         'default' => true,
         'width' => '10%',
       ),
-      'account_name' =>
-      array(
+      'account_name' => 
+      array (
         'name' => 'account_name',
         'default' => true,
         'width' => '10%',
       ),
-      'type' =>
-      array(
+      'type' => 
+      array (
         'type' => 'enum',
         'label' => 'LBL_TYPE',
         'width' => '10%',
         'default' => true,
         'name' => 'type',
       ),
-      'state' =>
-      array(
+      'state' => 
+      array (
         'type' => 'enum',
         'default' => true,
         'label' => 'LBL_STATE',
         'width' => '10%',
         'name' => 'state',
       ),
-      'status' =>
-      array(
+      'status' => 
+      array (
         'name' => 'status',
         'default' => true,
         'width' => '10%',
       ),
-      'assigned_user_id' =>
-      array(
+      'assigned_user_id' => 
+      array (
         'name' => 'assigned_user_id',
         'type' => 'enum',
         'label' => 'LBL_ASSIGNED_TO',
-        'function' =>
-        array(
+        'function' => 
+        array (
           'name' => 'get_user_array',
-          'params' =>
-          array(
+          'params' => 
+          array (
             0 => false,
           ),
         ),
         'default' => true,
         'width' => '10%',
       ),
-      'priority' =>
-      array(
+      'priority' => 
+      array (
         'name' => 'priority',
         'default' => true,
         'width' => '10%',
       ),
     ),
   ),
-  'templateMeta' =>
-  array(
+  'templateMeta' => 
+  array (
     'maxColumns' => '3',
     'maxColumnsBasic' => '4',
-    'widths' =>
-    array(
+    'widths' => 
+    array (
       'label' => '10',
       'field' => '30',
     ),

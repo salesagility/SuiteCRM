@@ -150,6 +150,7 @@ class Person extends Basic
             isset($app_list_strings[$this->field_defs['salutation']['options']]) &&
             isset($app_list_strings[$this->field_defs['salutation']['options']][$this->salutation])
         ) {
+
             $salutation = $app_list_strings[$this->field_defs['salutation']['options']][$this->salutation];
         } // if
 
@@ -259,7 +260,7 @@ class Person extends Basic
     ) {
         parent::populateRelatedBean($newBean);
 
-        if ($newBean instanceof Company) {
+        if ($newBean instanceOf Company) {
             $newBean->phone_fax = $this->phone_fax;
             $newBean->phone_office = $this->phone_work;
             $newBean->phone_alternate = $this->phone_other;
@@ -371,7 +372,7 @@ class Person extends Basic
         $this->lawful_basis = '^'.$basis.'^';
         $this->lawful_basis_source = $source;
         $date = TimeDate::getInstance()->nowDb();
-        $date_test = $timedate->to_display_date($date, false);
+        $date_test = $timedate->to_display_date($date,false);
         $this->date_reviewed = $date_test;
 
         return (bool)$this->save();

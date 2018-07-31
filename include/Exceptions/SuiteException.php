@@ -42,6 +42,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SuiteException extends Exception
-{
-}
+class SuiteException extends Exception {}

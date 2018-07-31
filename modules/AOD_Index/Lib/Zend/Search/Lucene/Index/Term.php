@@ -87,9 +87,9 @@ class Zend_Search_Lucene_Index_Term
             $charBytes = 1;
             if ((ord($str[$prefixBytes]) & 0xC0) == 0xC0) {
                 $charBytes++;
-                if (ord($str[$prefixBytes]) & 0x20) {
+                if (ord($str[$prefixBytes]) & 0x20 ) {
                     $charBytes++;
-                    if (ord($str[$prefixBytes]) & 0x10) {
+                    if (ord($str[$prefixBytes]) & 0x10 ) {
                         $charBytes++;
                     }
                 }
@@ -121,9 +121,9 @@ class Zend_Search_Lucene_Index_Term
             $charBytes = 1;
             if ((ord($str[$bytes]) & 0xC0) == 0xC0) {
                 $charBytes++;
-                if (ord($str[$bytes]) & 0x20) {
+                if (ord($str[$bytes]) & 0x20 ) {
                     $charBytes++;
-                    if (ord($str[$bytes]) & 0x10) {
+                    if (ord($str[$bytes]) & 0x10 ) {
                         $charBytes++;
                     }
                 }
@@ -141,3 +141,4 @@ class Zend_Search_Lucene_Index_Term
         return $chars;
     }
 }
+

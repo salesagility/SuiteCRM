@@ -77,7 +77,7 @@ class Zend_Gdata_Calendar_ListFeed extends Zend_Gdata_Feed
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case $this->lookupNamespace('gCal') . ':' . 'timezone':
+        case $this->lookupNamespace('gCal') . ':' . 'timezone';
             $timezone = new Zend_Gdata_Calendar_Extension_Timezone();
             $timezone->transferFromDOM($child);
             $this->_timezone = $timezone;
@@ -102,4 +102,5 @@ class Zend_Gdata_Calendar_ListFeed extends Zend_Gdata_Feed
         $this->_timezone = $value;
         return $this;
     }
+
 }

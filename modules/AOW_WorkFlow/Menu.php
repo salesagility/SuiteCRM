@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
  * @package Advanced OpenWorkflow for SugarCRM
@@ -28,12 +26,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings, $app_strings, $sugar_config;
  
-if (ACLController::checkAccess('AOW_WorkFlow', 'edit', true)) {
-    $module_menu[]=array("index.php?module=AOW_WorkFlow&action=EditView&return_module=AOW_WorkFlow&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create", 'AOW_WorkFlow');
-}
-if (ACLController::checkAccess('AOW_WorkFlow', 'list', true)) {
-    $module_menu[]=array("index.php?module=AOW_WorkFlow&action=index&return_module=AOW_WorkFlow&return_action=DetailView", $mod_strings['LNK_LIST'],"List", 'AOW_WorkFlow');
-}
-if (ACLController::checkAccess('AOW_Processed', 'list', true)) {
-    $module_menu[]=array("index.php?module=AOW_Processed&action=index&return_module=AOW_Processed&return_action=DetailView", $mod_strings['LNK_PROCESSED_LIST'],"View_Process_Audit", 'AOW_Processed');
-}
+if(ACLController::checkAccess('AOW_WorkFlow', 'edit', true))$module_menu[]=Array("index.php?module=AOW_WorkFlow&action=EditView&return_module=AOW_WorkFlow&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create", 'AOW_WorkFlow');
+if(ACLController::checkAccess('AOW_WorkFlow', 'list', true))$module_menu[]=Array("index.php?module=AOW_WorkFlow&action=index&return_module=AOW_WorkFlow&return_action=DetailView", $mod_strings['LNK_LIST'],"List", 'AOW_WorkFlow');
+if(ACLController::checkAccess('AOW_Processed', 'list', true))$module_menu[]=Array("index.php?module=AOW_Processed&action=index&return_module=AOW_Processed&return_action=DetailView", $mod_strings['LNK_PROCESSED_LIST'],"View_Process_Audit", 'AOW_Processed');

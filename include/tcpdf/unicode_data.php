@@ -10,7 +10,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -29,20 +29,20 @@ r46451 - 2009-04-23 16:57:40 -0700 (Thu, 23 Apr 2009) - jenny - tcpdf initial ch
 // License     : GNU LGPL (http://www.gnu.org/copyleft/lesser.html)
 // 	----------------------------------------------------------------------------
 //  Copyright (C) 2002-2009  Nicola Asuni - Tecnick.com S.r.l.
-//
+// 	
 // 	This program is free software: you can redistribute it and/or modify
 // 	it under the terms of the GNU Lesser General Public License as published by
 // 	the Free Software Foundation, either version 2.1 of the License, or
 // 	(at your option) any later version.
-//
+// 	
 // 	This program is distributed in the hope that it will be useful,
 // 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 // 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // 	GNU Lesser General Public License for more details.
-//
+// 	
 // 	You should have received a copy of the GNU Lesser General Public License
 // 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
+// 	
 // 	See LICENSE.TXT file for more information.
 //  ----------------------------------------------------------------------------
 //
@@ -17874,11 +17874,11 @@ $unicode = array(
 
 /**
  * Mirror unicode characters.
- * For information on bidi mirroring, see UAX #9: Bidirectional Algorithm,
+ * For information on bidi mirroring, see UAX #9: Bidirectional Algorithm, 
  * at http://www.unicode.org/unicode/reports/tr9/
  */
 global $unicode_mirror;
-$unicode_mirror = array(
+$unicode_mirror = array (
 0x0028=>0x0029,
 0x0029=>0x0028,
 0x003C=>0x003E,
@@ -18321,7 +18321,7 @@ $unicode_arlet = array(
  * char code=>isolated, final, initial, medial
  */
 global $laa_array;
-$laa_array = array(
+$laa_array = array (
 1570 =>array(65269, 65270, 65269, 65270),
 1571 =>array(65271, 65272, 65271, 65272),
 1573 =>array(65273, 65274, 65273, 65274),
@@ -18330,12 +18330,12 @@ $laa_array = array(
 
 /**
  * Array of character substitutions for sequences of two diacritics symbols starting with SHADDA (0651 HEX, 1617 DEC).
- * Combining characters that can occur with Shadda (U0651) are placed in UE586-UE594.
+ * Combining characters that can occur with Shadda (U0651) are placed in UE586-UE594. 
  * Putting the combining mark and shadda in the same glyph allows us to avoid the two marks overlapping each other in an illegible manner.
  * second NSM char code=>substitution char
  */
 global $diacritics;
-$diacritics = array(
+$diacritics = array (
 1612=>64606, # Shadda + Dammatan
 1613=>64607, # Shadda + Kasratan
 1614=>64608, # Shadda + Fatha
@@ -18347,7 +18347,7 @@ $diacritics = array(
  * Array of character substitutions from UTF-8 unicode to latin1
  */
 global $utf8tolatin;
-$utf8tolatin = array(
+$utf8tolatin = array (
 8364=>128, # Euro1
 338=>140,  # OE
 352=>138,  # Scaron
@@ -18380,3 +18380,4 @@ $utf8tolatin = array(
 //============================================================+
 // END OF FILE
 //============================================================+
+?>

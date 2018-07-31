@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -53,7 +51,6 @@ require_once('modules/UpgradeWizard/SugarMerge/EditViewMerge.php');
  * This class extends the EditViewMerge - since the meta data is relatively the same the only thing that needs to be changed is the parameter for viewdefs
  *
  */
-class QuickCreateMerge extends EditViewMerge
-{
-    protected $viewDefs = 'QuickCreate';
+class QuickCreateMerge extends EditViewMerge{
+	protected $viewDefs = 'QuickCreate';
 }

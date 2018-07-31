@@ -2,17 +2,14 @@
 
 require_once __DIR__ . '/../TemplateSampleService.php';
 
-class smpl_Invoice_Sample
-{
-    public function getType()
-    {
-        return 'AOS_Invoices';
-    }
-        
-    public function getBody()
-    {
+class smpl_Invoice_Sample{
+		function getType() {
+			return 'AOS_Invoices';
+		}
+		
+		function getBody() {
         global $locale;
-        return '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
+			return '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
 <tbody style="text-align: left;">
 <tr style="text-align: left;">
 <td style="text-align: left;">
@@ -20,14 +17,14 @@ class smpl_Invoice_Sample
 </td>
 </tr>
 <tr style="text-align: left;">
-<td style="font-weight: bold; text-align: left;"><div>'.translate('LBL_BROWSER_TITLE').' Ltd<br />'.translate('LBL_ANY_STREET', 'AOS_PDF_Templates').'<br />'.translate('LBL_ANY_TOWN', 'AOS_PDF_Templates').'</span><br />'.translate('LBL_ANY_WHERE', 'AOS_PDF_Templates').'</div></td>
+<td style="font-weight: bold; text-align: left;"><div>'.translate('LBL_BROWSER_TITLE').' Ltd<br />'.translate('LBL_ANY_STREET','AOS_PDF_Templates').'<br />'.translate('LBL_ANY_TOWN','AOS_PDF_Templates').'</span><br />'.translate('LBL_ANY_WHERE','AOS_PDF_Templates').'</div></td>
 </tr>
 <tr style="text-align: left;">
 <td style="text-align: left;"></td>
 </tr>
 <tr style="text-align: left;">
 <td style="text-align: left;">
-<h1>'.strtoupper(translate('LBL_PDF_NAME', 'AOS_Invoices')).'</h1>
+<h1>'.strtoupper(translate('LBL_PDF_NAME','AOS_Invoices')).'</h1>
 </td>
 </tr>
 </tbody>
@@ -36,8 +33,8 @@ class smpl_Invoice_Sample
 <table style="text-align: center; width: 100%; border: 0pt none; border-spacing: 0pt;">
 <tbody style="text-align: left;">
 <tr style="text-align: left;">
-<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_PREPARED_FOR', 'AOS_PDF_Templates').'</td>
-<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_PREPARED_BY', 'AOS_PDF_Templates').'</td>
+<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_PREPARED_FOR','AOS_PDF_Templates').'</td>
+<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_PREPARED_BY','AOS_PDF_Templates').'</td>
 </tr>
 <tr style="text-align: left;">
 <td style="padding: 2px 6px; border-style: solid; border-width: 0.5px; width: 50%; vertical-align: top; text-align: left;">
@@ -46,15 +43,15 @@ class smpl_Invoice_Sample
 <td style="padding: 2px 6px; border-style: solid; border-width: 0.5px; width: 50%; vertical-align: top; text-align: left;"><div>$aos_invoices_modified_by_name</div></td>
 </tr>
 <tr style="text-align: left;">
-<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_INVOICE_DATE', 'AOS_Invoices').'</td>
-<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_DUE_DATE', 'AOS_Invoices').'</td>
+<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_INVOICE_DATE','AOS_Invoices').'</td>
+<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_DUE_DATE','AOS_Invoices').'</td>
 </tr>
 <tr style="text-align: left;">
 <td style="padding: 2px 6px; border-style: solid; border-width: 0.5px; width: 50%; vertical-align: top; text-align: left;"><div>$aos_invoices_date_entered</div></td>
 <td style="padding: 2px 6px; border-style: solid; border-width: 0.5px; width: 50%; vertical-align: top; text-align: left;"><div>$aos_invoices_due_date</div></td>
 </tr>
 <tr style="text-align: left;">
-<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_INVOICE_NUMBER', 'AOS_Invoices').'</td>
+<td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;">'.translate('LBL_INVOICE_NUMBER','AOS_Invoices').'</td>
 <td style="font-weight: bold; background-color: #b0c4de; padding: 2px 6px; border-style: solid; border-width: 0.5px; vertical-align: top; text-align: left; width: 50%;"></td>
 </tr>
 <tr style="text-align: left;">
@@ -67,14 +64,14 @@ class smpl_Invoice_Sample
 <table repeat_header="1" style="width: 100%; border: 0pt none; border-spacing: 0pt;">
 <tbody>
 <tr>
-<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_PRODUCT_QUANITY', 'AOS_Invoices').'</td>
-<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_PRODUCT_NAME', 'AOS_Invoices').'</td>
-<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_DESCRIPTION', 'AOS_Products').'</td>
-<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_LIST_PRICE', 'AOS_Invoices').'</td>
-<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_DISCOUNT_AMT', 'AOS_Invoices').'</td>
-<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_UNIT_PRICE', 'AOS_Invoices').'</td>
-<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_VAT', 'AOS_Invoices').'</td>
-<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_TOTAL_PRICE', 'AOS_Invoices').'</td>
+<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_PRODUCT_QUANITY','AOS_Invoices').'</td>
+<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_PRODUCT_NAME','AOS_Invoices').'</td>
+<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_DESCRIPTION','AOS_Products').'</td>
+<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_LIST_PRICE','AOS_Invoices').'</td>
+<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_DISCOUNT_AMT','AOS_Invoices').'</td>
+<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_UNIT_PRICE','AOS_Invoices').'</td>
+<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_VAT','AOS_Invoices').'</td>
+<td style="border-style: solid; background-color: #b0c4de; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: center;">'.translate('LBL_TOTAL_PRICE','AOS_Invoices').'</td>
 </tr>
 <tr>
 <td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; text-align: center;">$aos_products_quotes_product_qty</td>
@@ -96,54 +93,52 @@ class smpl_Invoice_Sample
 </tr>
 <tr>
 <td colspan="6">&nbsp;</td>
-<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_TOTAL_AMT', 'AOS_Invoices').'</td>
+<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_TOTAL_AMT','AOS_Invoices').'</td>
 <td style="border-style: solid; border-width: 0.5px; padding: 2px 6px;">$total_amt</td>
 </tr>
 <tr>
 <td colspan="6">&nbsp;</td>
-<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_DISCOUNT_AMOUNT', 'AOS_Invoices').'</td>
+<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_DISCOUNT_AMOUNT','AOS_Invoices').'</td>
 <td style="border-style: solid; border-width: 0.5px; padding: 2px 6px;">$discount_amount</td>
 </tr>
 <tr>
 <td colspan="6">&nbsp;</td>
-<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_SUBTOTAL_AMOUNT', 'AOS_Invoices').'</td>
+<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_SUBTOTAL_AMOUNT','AOS_Invoices').'</td>
 <td style="border-style: solid; border-width: 0.5px; padding: 2px 6px;">$subtotal_amount</td>
 </tr>
 <tr>
 <td colspan="6">&nbsp;</td>
-<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_TAX_AMOUNT', 'AOS_Invoices').'</td>
+<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_TAX_AMOUNT','AOS_Invoices').'</td>
 <td style="border-style: solid; border-width: 0.5px; padding: 2px 6px;">$tax_amount</td>
 </tr>
 <tr>
 <td colspan="6">&nbsp;</td>
-<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_SHIPPING_AMOUNT', 'AOS_Invoices').'</td>
+<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_SHIPPING_AMOUNT','AOS_Invoices').'</td>
 <td style="border-style: solid; border-width: 0.5px; padding: 2px 6px;">$shipping_amount</td>
 </tr>
 <tr>
 <td colspan="6">&nbsp;</td>
-<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_GRAND_TOTAL', 'AOS_Invoices').'</td>
+<td style="border-style: solid; border-width: 0.5px; padding: 2px 6px; font-weight: bold; text-align: right;">'.translate('LBL_GRAND_TOTAL','AOS_Invoices').'</td>
 <td style="border-style: solid; border-width: 0.5px; padding: 2px 6px;">$total_amount</td>
 </tr>
 </tbody>
 </table>
 <p>&nbsp;</p>';
-    }
+		}
 
-    public function getHeader()
-    {
-        return '';
-    }
+		function getHeader() {
+			return '';
+		}
 
-    public function getFooter()
-    {
-        global $locale;
-        return '<table style="width: 100%; border: 0pt none; border-spacing: 0pt;">
+		function getFooter() {
+		global $locale;
+			return '<table style="width: 100%; border: 0pt none; border-spacing: 0pt;">
 <tbody>
 <tr>
-<td>'.translate('LBL_PAGE', 'AOS_PDF_Templates').' {PAGENO}</td>
+<td>'.translate('LBL_PAGE','AOS_PDF_Templates').' {PAGENO}</td>
 <td style="text-align: right;">{DATE '.$locale->getPrecedentPreference('default_date_format').'}</td>
 </tr>
 </tbody>
 </table>';
-    }
+		}
 }

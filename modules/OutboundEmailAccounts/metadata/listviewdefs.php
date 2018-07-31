@@ -1,9 +1,9 @@
 <?php
 $module_name = 'OutboundEmailAccounts';
-$listViewDefs [$module_name] =
-array(
-  'NAME' =>
-  array(
+$listViewDefs [$module_name] = 
+array (
+  'NAME' => 
+  array (
     'width' => '32%',
     'label' => 'LBL_NAME',
     'default' => true,
@@ -17,18 +17,19 @@ array(
 //    'id' => 'ASSIGNED_USER_ID',
 //    'default' => true,
 //  ),
-  'USERNAME' =>
-  array(
+  'USERNAME' => 
+  array (
     'type' => 'varchar',
     'label' => 'LBL_USERNAME',
     'width' => '10%',
     'default' => false,
   ),
   'smtp_servername' =>
-  array(
+  array (
     'type' => 'varchar',
     'label' => 'LBL_SMTP_SERVERNAME',
     'width' => '10%',
     'default' => false,
   ),
 );
+

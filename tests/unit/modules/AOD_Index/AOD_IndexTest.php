@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -25,7 +25,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aod_index = new AOD_Index();
 
@@ -34,6 +34,8 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($result);
         
         // clean up
+        
+        
     }
 
     public function testfind()
@@ -44,20 +46,20 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-        //execute the method with parameters and verify that it returns true
-        $hits = $aod_index->find('/');
+         //execute the method with parameters and verify that it returns true
+         $hits = $aod_index->find('/');
         $this->assertTrue(is_array($hits));
     }
 
     public function testoptimise()
     {
-        self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
+	self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
         // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
 
-        // test
+	// test
         
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
@@ -71,6 +73,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('tracker');
+
     }
 
     public function testgetIndex()
@@ -78,7 +81,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aod_index = new AOD_Index();
         $result = $aod_index->getIndex();
 
-        //execute the method and verify it returns a different instance of samme type
+        //execute the method and verify it returns a different instance of samme type 
         $this->assertInstanceOf('AOD_Index', $result);
         $this->assertNotSame($aod_index, $result);
     }
@@ -103,7 +106,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $aod_index = new AOD_Index();
@@ -119,6 +122,8 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testisModuleSearchable()
@@ -155,6 +160,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with a searchable module but invalid bean id, it will still index it
         $result = $aod_index->index('Accounts', 1);
         $this->assertEquals(null, $result);
+        
     }
 
     public function testremove()
@@ -164,7 +170,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $aod_index = new AOD_Index();
@@ -180,6 +186,8 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testgetIndexableModules()

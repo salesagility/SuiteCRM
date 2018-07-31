@@ -17,7 +17,7 @@ class ViewJsonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         /*
-        setup required paramerers and execute the method.
+        setup required paramerers and execute the method. 
         it uses die/exit which stops the execution of PHP unit as well so this method cannot be tested.
         */
 

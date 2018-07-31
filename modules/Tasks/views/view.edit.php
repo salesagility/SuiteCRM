@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -45,27 +43,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class TasksViewEdit extends ViewEdit
 {
     /**
-     * @see SugarView::preDisplay()
-     */
-    public function preDisplay()
-    {
-        if ($_REQUEST['module'] != 'Tasks' && isset($_REQUEST['status']) && empty($_REQUEST['status'])) {
-            $this->bean->status = '';
-        } //if
-        if (!empty($_REQUEST['status']) && ($_REQUEST['status'] == 'Completed')) {
-            $this->bean->status = 'Completed';
-        }
-        parent::preDisplay();
-    }
+ 	 * @see SugarView::preDisplay()
+ 	 */
+ 	public function preDisplay()
+ 	{
+ 		if($_REQUEST['module'] != 'Tasks' && isset($_REQUEST['status']) && empty($_REQUEST['status'])) {
+	       $this->bean->status = '';
+ 		} //if
+ 		if(!empty($_REQUEST['status']) && ($_REQUEST['status'] == 'Completed')) {
+	       $this->bean->status = 'Completed';
+ 		}
+ 		parent::preDisplay();
+ 	}
 
-    /**
-     * @see SugarView::display()
-     */
-    public function display()
-    {
-        if ($this->ev->isDuplicate) {
-            $this->bean->status = $this->bean->getDefaultStatus();
-        } //if
-        parent::display();
-    }
+ 	/**
+ 	 * @see SugarView::display()
+ 	 */
+ 	public function display()
+ 	{
+ 		if($this->ev->isDuplicate){
+	       $this->bean->status = $this->bean->getDefaultStatus();
+ 		} //if
+ 		parent::display();
+ 	}
 }

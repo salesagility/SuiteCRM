@@ -229,9 +229,9 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
                         // we don't have anything to compare.  That means if we just add
                         // the letters for current term we get the new word
                         $similarity = (($prefixUtf8Length == 0)? 0 : 1 - strlen($target)/$prefixUtf8Length);
-                    } elseif (strlen($target) == 0) {
+                    } else if (strlen($target) == 0) {
                         $similarity = (($prefixUtf8Length == 0)? 0 : 1 - $termRestLength/$prefixUtf8Length);
-                    } elseif ($maxDistance < abs($termRestLength - strlen($target))) {
+                    } else if ($maxDistance < abs($termRestLength - strlen($target))){
                         //just adding the characters of term to target or vice-versa results in too many edits
                         //for example "pre" length is 3 and "prefixes" length is 8.  We can see that
                         //given this optimal circumstance, the edit distance cannot be less than 5.
@@ -267,7 +267,7 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
                                        $this->_maxDistances[strlen($target)] :
                                        $this->_calculateMaxDistance(0, $termRestLength, strlen($target));
 
-                    if ($maxDistance < abs($termRestLength - strlen($target))) {
+                    if ($maxDistance < abs($termRestLength - strlen($target))){
                         //just adding the characters of term to target or vice-versa results in too many edits
                         //for example "pre" length is 3 and "prefixes" length is 8.  We can see that
                         //given this optimal circumstance, the edit distance cannot be less than 5.
@@ -300,38 +300,33 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
         if (count($this->_matches) == 0) {
             require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
             return new Zend_Search_Lucene_Search_Query_Empty();
-        } elseif (count($this->_matches) == 1) {
+        } else if (count($this->_matches) == 1) {
             require_once 'Zend/Search/Lucene/Search/Query/Term.php';
             return new Zend_Search_Lucene_Search_Query_Term(reset($this->_matches));
-        }
-        require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
-        $rewrittenQuery = new Zend_Search_Lucene_Search_Query_Boolean();
+        } else {
+            require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
+            $rewrittenQuery = new Zend_Search_Lucene_Search_Query_Boolean();
 
-        array_multisort(
-                $this->_scores,
-                SORT_DESC,
-                SORT_NUMERIC,
-                            $this->_termKeys,
-                SORT_ASC,
-                SORT_STRING,
-                            $this->_matches
-            );
+            array_multisort($this->_scores,   SORT_DESC, SORT_NUMERIC,
+                            $this->_termKeys, SORT_ASC,  SORT_STRING,
+                            $this->_matches);
 
-        $termCount = 0;
-        require_once 'Zend/Search/Lucene/Search/Query/Term.php';
-        foreach ($this->_matches as $id => $matchedTerm) {
-            $subquery = new Zend_Search_Lucene_Search_Query_Term($matchedTerm);
-            $subquery->setBoost($this->_scores[$id]);
+            $termCount = 0;
+            require_once 'Zend/Search/Lucene/Search/Query/Term.php';
+            foreach ($this->_matches as $id => $matchedTerm) {
+                $subquery = new Zend_Search_Lucene_Search_Query_Term($matchedTerm);
+                $subquery->setBoost($this->_scores[$id]);
 
-            $rewrittenQuery->addSubquery($subquery);
+                $rewrittenQuery->addSubquery($subquery);
 
-            $termCount++;
-            if ($termCount >= self::MAX_CLAUSE_COUNT) {
-                break;
+                $termCount++;
+                if ($termCount >= self::MAX_CLAUSE_COUNT) {
+                    break;
+                }
             }
-        }
 
-        return $rewrittenQuery;
+            return $rewrittenQuery;
+        }
     }
 
     /**
@@ -458,9 +453,9 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
                     // we don't have anything to compare.  That means if we just add
                     // the letters for current term we get the new word
                     $similarity = (($prefixUtf8Length == 0)? 0 : 1 - strlen($target)/$prefixUtf8Length);
-                } elseif (strlen($target) == 0) {
+                } else if (strlen($target) == 0) {
                     $similarity = (($prefixUtf8Length == 0)? 0 : 1 - $termRestLength/$prefixUtf8Length);
-                } elseif ($maxDistance < abs($termRestLength - strlen($target))) {
+                } else if ($maxDistance < abs($termRestLength - strlen($target))){
                     //just adding the characters of term to target or vice-versa results in too many edits
                     //for example "pre" length is 3 and "prefixes" length is 8.  We can see that
                     //given this optimal circumstance, the edit distance cannot be less than 5.
@@ -495,3 +490,4 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
              . (($this->getBoost() != 1)? '^' . round($this->getBoost(), 4) : '');
     }
 }
+

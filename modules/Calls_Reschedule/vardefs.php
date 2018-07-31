@@ -38,12 +38,12 @@
  ********************************************************************************/
 
 $dictionary['Calls_Reschedule'] = array(
-    'table'=>'calls_reschedule',
-    'audited'=>true,
-        'duplicate_merge'=>true,
-        'fields'=>array(
-  'reason' =>
-  array(
+	'table'=>'calls_reschedule',
+	'audited'=>true,
+		'duplicate_merge'=>true,
+		'fields'=>array (
+  'reason' => 
+  array (
     'required' => false,
     'name' => 'reason',
     'vname' => 'LBL_REASON',
@@ -66,7 +66,7 @@ $dictionary['Calls_Reschedule'] = array(
     'dependency' => false,
   ),
   'call_id' =>
-  array(
+  array (
     'required' => false,
     'name' => 'call_id',
     'vname' => '',
@@ -86,7 +86,7 @@ $dictionary['Calls_Reschedule'] = array(
     'size' => '20',
   ),
   'call_name' =>
-  array(
+  array (
     'required' => false,
     'source' => 'non-db',
     'name' => 'call_name',
@@ -113,12 +113,12 @@ $dictionary['Calls_Reschedule'] = array(
     'studio' => 'visible',
   ),
 ),
-    'relationships'=>array(
+	'relationships'=>array (
 ),
-    'optimistic_locking'=>true,
-        'unified_search'=>true,
-    );
-if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+	'optimistic_locking'=>true,
+		'unified_search'=>true,
+	);
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('Calls_Reschedule', 'Calls_Reschedule', array('basic','assignable'));
+VardefManager::createVardef('Calls_Reschedule','Calls_Reschedule', array('basic','assignable'));

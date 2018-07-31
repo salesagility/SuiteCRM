@@ -52,8 +52,7 @@ class Zend_Gdata_YouTube_Extension_MediaContent extends Zend_Gdata_Media_Extensi
     protected $_format = null;
 
 
-    public function __construct()
-    {
+    function __construct() {
         $this->registerAllNamespaces(Zend_Gdata_YouTube::$namespaces);
         parent::__construct();
     }
@@ -117,4 +116,5 @@ class Zend_Gdata_YouTube_Extension_MediaContent extends Zend_Gdata_Media_Extensi
         $this->_format = $value;
         return $this;
     }
+
 }

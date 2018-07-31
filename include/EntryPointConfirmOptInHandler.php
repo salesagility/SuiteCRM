@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -152,6 +153,7 @@ class EntryPointConfirmOptInHandler
      */
     private function methodConfirmOptInUser($request)
     {
+
         $emailAddress = BeanFactory::getBean('EmailAddresses');
         $this->emailAddress = $emailAddress->retrieve_by_string_fields([
             'confirm_opt_in_token' => $request['from']
@@ -172,12 +174,11 @@ class EntryPointConfirmOptInHandler
 
             $people = $this->getIDs($this->emailAddress->email_address, 'Prospects');
             if ($people) {
-                $this->setLawfulBasisForEachPerson($people, 'Prospects');
+                $this->setLawfulBasisForEachPerson($people,  'Prospects');
             }
         }
         $template = new Sugar_Smarty();
         $template->assign('FOCUS', $this->emailAddress);
-        $template->assign('APP', $GLOBALS['app_strings']);
 
         return $template->fetch('include/EntryPointConfirmOptIn.tpl');
     }
@@ -188,8 +189,7 @@ class EntryPointConfirmOptInHandler
      *
      * @return array|bool
      */
-    private function getIDs($email, $module)
-    {
+    private function getIDs($email, $module) {
         $people = $this->emailAddress->getRelatedId($email, $module);
         return $people;
     }
@@ -197,13 +197,12 @@ class EntryPointConfirmOptInHandler
     /**
      * @param array $people
      */
-    private function setLawfulBasisForEachPerson(array $people, $module)
-    {
+    private function setLawfulBasisForEachPerson(array $people, $module) {
         /** @var Person $person */
         foreach ($people as $person) {
             $bean = BeanFactory::getBean($module, $person);
-            if ($bean) {
-                if (!$bean->setLawfulBasis('consent', 'email')) {
+            if($bean) {
+                if(!$bean->setLawfulBasis('consent', 'email')){
                     LoggerManager::getLogger()->warn('Lawful basis saving failed for record ' . $bean->name);
                 }
             }

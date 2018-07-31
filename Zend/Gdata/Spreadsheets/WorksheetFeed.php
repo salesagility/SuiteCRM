@@ -60,4 +60,5 @@ class Zend_Gdata_Spreadsheets_WorksheetFeed extends Zend_Gdata_Feed
      * @var string
      */
     protected $_feedClassName = 'Zend_Gdata_Spreadsheets_WorksheetFeed';
+
 }

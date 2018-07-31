@@ -19,7 +19,7 @@ $dest = $_REQUEST['dest'];
 			}
 		}
 
-		elseif ($dest=='D') {
+		else if ($dest=='D') {
 			header('Content-Description: File Transfer');
 			if (headers_sent())
 				$this->Error('Some data has already been output to browser, can\'t send PDF file');

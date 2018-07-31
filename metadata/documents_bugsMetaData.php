@@ -38,12 +38,12 @@
  ********************************************************************************/
 
 
-$dictionary["documents_bugs"] = array(
+$dictionary["documents_bugs"] = array (
   'true_relationship_type' => 'many-to-many',
-  'relationships' =>
-  array(
-    'documents_bugs' =>
-    array(
+  'relationships' => 
+  array (
+    'documents_bugs' => 
+    array (
       'lhs_module' => 'Documents',
       'lhs_table' => 'documents',
       'lhs_key' => 'id',
@@ -57,70 +57,71 @@ $dictionary["documents_bugs"] = array(
     ),
   ),
   'table' => 'documents_bugs',
-  'fields' =>
-  array(
-    0 =>
-    array(
+  'fields' => 
+  array (
+    0 => 
+    array (
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    1 =>
-    array(
+    1 => 
+    array (
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
-    2 =>
-    array(
+    2 => 
+    array (
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
       'default' => '0',
       'required' => true,
     ),
-    3 =>
-    array(
+    3 => 
+    array (
       'name' => 'document_id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    4 =>
-    array(
+    4 => 
+    array (
       'name' => 'bug_id',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
-  'indices' =>
-  array(
-    0 =>
-    array(
+  'indices' => 
+  array (
+    0 => 
+    array (
       'name' => 'documents_bugsspk',
       'type' => 'primary',
-      'fields' =>
-      array(
+      'fields' => 
+      array (
         0 => 'id',
       ),
     ),
-    1 =>
-    array(
+    1 => 
+    array (
       'name' => 'documents_bugs_bug_id',
       'type' => 'alternate_key',
-      'fields' =>
-      array(
+      'fields' => 
+      array (
         0 => 'bug_id',
         1 => 'document_id',
       ),
     ),
-    2 =>
-    array(
+    2 => 
+    array (
       'name' => 'documents_bugs_document_id',
       'type' => 'alternate_key',
-      'fields' =>
-      array(
+      'fields' => 
+      array (
         0 => 'document_id',
         1 => 'bug_id',
       ),
     ),
   ),
 );
+

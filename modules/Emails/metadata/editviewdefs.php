@@ -59,7 +59,7 @@ $viewdefs[$module_name]['EditView'] = array(
             array(
                 'parent_name'
             ),
-            array(
+            array (
                 'category_id',
             ),
         )

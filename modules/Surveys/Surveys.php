@@ -122,7 +122,7 @@ class Surveys extends Basic
     /**
      * Surveys constructor.
      */
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
     }
@@ -131,7 +131,7 @@ class Surveys extends Basic
      * @param string $interface
      * @return bool
      */
-    public function bean_implements($interface)
+    function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':

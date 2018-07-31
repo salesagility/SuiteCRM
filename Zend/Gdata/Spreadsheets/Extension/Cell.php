@@ -98,12 +98,8 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         $element->setAttribute('row', $this->_row);
         $element->setAttribute('col', $this->_col);
-        if ($this->_inputValue) {
-            $element->setAttribute('inputValue', $this->_inputValue);
-        }
-        if ($this->_numericValue) {
-            $element->setAttribute('numericValue', $this->_numericValue);
-        }
+        if ($this->_inputValue) $element->setAttribute('inputValue', $this->_inputValue);
+        if ($this->_numericValue) $element->setAttribute('numericValue', $this->_numericValue);
         return $element;
     }
 
@@ -201,4 +197,5 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
     {
         $this->_numericValue = $numericValue;
     }
+
 }

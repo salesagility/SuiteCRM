@@ -6,7 +6,8 @@ require_once 'include/DetailView/DetailView2.php';
 
 class SurveysViewReports extends SugarView
 {
-    public function __construct()
+
+    function __construct()
     {
         parent::__construct();
     }
@@ -119,6 +120,7 @@ EOF;
                         );
                         break;
                 }
+
             }
         }
 
@@ -127,6 +129,7 @@ EOF;
         $this->ss->assign('surveysSentDistinct', $distinctCount);
         $html = $this->ss->fetch('modules/Surveys/tpls/reports.tpl');
         echo $html;
+
     }
 
     private function getCheckboxQuestionSkeleton($arr)

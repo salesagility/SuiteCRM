@@ -39,7 +39,7 @@
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
-class SugarFieldPassword extends SugarFieldBase
+class SugarFieldPassword extends SugarFieldBase 
 {
     /**
      * @see SugarFieldBase::importSanitize()
@@ -49,7 +49,8 @@ class SugarFieldPassword extends SugarFieldBase
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        ) {
+        )
+    {
         $value = md5($value);
         
         return $value;

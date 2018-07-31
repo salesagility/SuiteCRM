@@ -58,3 +58,4 @@ $viewdefs[$module_name]['QuickCreate'] = array(
     ),
 
 );
+?>

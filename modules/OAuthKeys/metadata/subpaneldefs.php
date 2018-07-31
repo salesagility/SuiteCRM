@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,19 +41,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $layout_defs['OAuthKeys'] = array(
-    // list of what Subpanels to show in the DetailView
-    'subpanel_setup' => array(
-        'tokens' => array(
-            'order' => 30,
-            'module' => 'OAuthTokens',
-            'sort_order' => 'asc',
-            'sort_by' => 'token_ts',
-            'subpanel_name' => 'ForKeys',
-            'get_subpanel_data' => 'tokens',
-            'title_key' => 'LBL_TOKENS',
-            'top_buttons' => array(
-            ),
+	// list of what Subpanels to show in the DetailView
+	'subpanel_setup' => array(
+		'tokens' => array(
+			'order' => 30,
+			'module' => 'OAuthTokens',
+			'sort_order' => 'asc',
+			'sort_by' => 'token_ts',
+			'subpanel_name' => 'ForKeys',
+			'get_subpanel_data' => 'tokens',
+			'title_key' => 'LBL_TOKENS',
+			'top_buttons' => array(
+			),
 
-        ),
+		),
     )
 );

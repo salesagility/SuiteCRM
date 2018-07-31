@@ -46,6 +46,7 @@ require_once 'include/SugarObjects/templates/basic/Basic.php';
 
 class Sale extends Basic
 {
+
     public $amount_usdollar;
     public $currency_id;
 
@@ -55,6 +56,7 @@ class Sale extends Basic
     public function __construct()
     {
         parent::__construct();
+
     }
 
     /**

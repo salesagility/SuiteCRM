@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,9 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class SugarWidgetSubPanelTopFilterButton extends SugarWidgetSubPanelTopButton
-{
-    public function display($defines, $additionalFormFields = null, $nonbutton = false)
+class SugarWidgetSubPanelTopFilterButton  extends SugarWidgetSubPanelTopButton{
+
+    function display($defines, $additionalFormFields = NULL, $nonbutton = false)
     {
         global $app_strings;
 
@@ -52,4 +50,5 @@ class SugarWidgetSubPanelTopFilterButton extends SugarWidgetSubPanelTopButton
 
         return $button;
     }
+
 }

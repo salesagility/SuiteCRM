@@ -1,8 +1,6 @@
 <?php
 //FILE SUGARCRM flav=pro || flav=sales
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -67,4 +65,5 @@ class UsersViewQuickedit extends ViewQuickEdit
      * We will still take the DCMENUCANCEL and DCMENUFULLFORM buttons, but we inject our own Save button via the QuickEditFooter.tpl file
      */
     protected $defaultButtons = array('DCMENUCANCEL', 'DCMENUFULLFORM');
+
 }

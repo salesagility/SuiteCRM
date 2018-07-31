@@ -130,6 +130,7 @@ DBManager::setQueryLimit(0);
 //end bug fix
 
 do {
+
     $no_items_in_queue = true;
 
     $result = $db->limitQuery($select_query, 0, $max_emails_per_run);
@@ -169,6 +170,7 @@ do {
         //find the template associated with marketing message. make sure that template has a subject and
         //a non-empty body
         if (!isset($template_status[$row['marketing_id']])) {
+
             $current_emailmarketing = new EmailMarketing();
             $current_emailmarketing->retrieve($row['marketing_id']);
 
@@ -313,6 +315,7 @@ if (isset($temp_user)) {
 if (isset($_REQUEST['return_module']) && isset($_REQUEST['return_action']) && isset($_REQUEST['return_id'])) {
     $from_wiz = ' ';
     if (isset($_REQUEST['from_wiz']) && $_REQUEST['from_wiz']) {
+
         if (isset($_REQUEST['WizardMarketingSave']) && $_REQUEST['WizardMarketingSave']) {
             $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=Wi" .
                     "zardMarketing&return_id=" . $_REQUEST['campaign_id'] . "&campaign_id=" . $_REQUEST['campaign_id'] .

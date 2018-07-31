@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,17 +38,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['users_feeds'] = array( 'table' => 'users_feeds'
-                                  , 'fields' => array(
+$dictionary['users_feeds'] = array ( 'table' => 'users_feeds'
+                                  , 'fields' => array (
     
        array('name' =>'user_id', 'type' =>'varchar', 'len'=>'36', )
       , array('name' =>'feed_id', 'type' =>'varchar', 'len'=>'36', )
       , array('name' =>'rank', 'type' =>'int', 'required' => false)
-      , array('name' => 'date_modified','type' => 'datetime')
+      , array ('name' => 'date_modified','type' => 'datetime')
       , array('name' =>'deleted', 'type' =>'bool', 'len'=>'', 'default'=>'0', 'required' => false)
-                                                      )
-                                 , 'indices' => array(
+                                                      ) 
+                                 , 'indices' => array (
   
-       array('name' =>'idx_ud_user_id', 'type' =>'index', 'fields'=>array('user_id', 'feed_id'))
+       array('name' =>'idx_ud_user_id', 'type' =>'index', 'fields'=>array('user_id', 'feed_id'))                                  
                                                       )
                                   );

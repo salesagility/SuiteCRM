@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,65 +39,65 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-        // Create the indexes
+		// Create the indexes
 $dictionary['vCal'] = array('table' => 'vcals'
-                               ,'fields' => array(
-  'id' =>
-  array(
+                               ,'fields' => array (
+  'id' => 
+  array (
     'name' => 'id',
     'vname' => 'LBL_NAME',
     'type' => 'id',
     'required'=>true,
     'reportable'=>false,
   ),
-     'deleted' =>
-  array(
+     'deleted' => 
+  array (
     'name' => 'deleted',
     'vname' => 'LBL_DELETED',
     'type' => 'bool',
     'required' => false,
     'reportable'=>false,
   ),
-  'date_entered' =>
-  array(
+  'date_entered' => 
+  array (
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
   ),
-  'date_modified' =>
-  array(
+  'date_modified' => 
+  array (
     'name' => 'date_modified',
     'vname' => 'LBL_DATE_MODIFIED',
     'type' => 'datetime',
   ),
-    'user_id' =>
-  array(
+    'user_id' => 
+  array (
     'name' => 'user_id',
     'type' => 'id',
-    'required'=>true,
-    'reportable'=>false,
+	'required'=>true,
+	'reportable'=>false,
   ),
-    'type' =>
-  array(
+    'type' => 
+  array (
     'name' => 'type',
     'type' => 'varchar',
     'len' => 100,
   ),
-  'source' =>
-  array(
+  'source' => 
+  array (
     'name' => 'source',
     'type' => 'varchar',
     'len' => 100,
   ),
-  'content' =>
-  array(
+  'content' => 
+  array (
     'name' => 'content',
     'type' => 'text',
   ),
   
 
 )
-                                                      , 'indices' => array(
+                                                      , 'indices' => array (
        array('name' =>'vcalspk', 'type' =>'primary', 'fields'=>array('id')),
         array('name' =>'idx_vcal', 'type' =>'index', 'fields'=>array('type', 'user_id'))
                                                       )

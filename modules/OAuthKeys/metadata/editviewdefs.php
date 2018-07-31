@@ -44,11 +44,11 @@ $viewdefs['OAuthKeys']['EditView'] = array(
                                             array('label' => '10', 'field' => '30')
                                             ),
  ),
- 'panels' =>array(
+ 'panels' =>array (
   'default' =>
-  array(
+  array (
     array('name'),
-    array('c_key', 'c_secret'),
+    array ('c_key', 'c_secret'),
     array('description'),
   ),
 ),

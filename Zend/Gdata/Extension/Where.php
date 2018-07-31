@@ -42,6 +42,7 @@ require_once 'Zend/Gdata/Extension/EntryLink.php';
  */
 class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
 {
+
     protected $_rootElement = 'where';
     protected $_label = null;
     protected $_rel = null;
@@ -117,7 +118,8 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
     {
         if ($this->_valueString != null) {
             return $this->_valueString;
-        } else {
+        }
+        else {
             return parent::__toString();
         }
     }
@@ -165,4 +167,5 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
         $this->_entryLink = $value;
         return $this;
     }
+
 }

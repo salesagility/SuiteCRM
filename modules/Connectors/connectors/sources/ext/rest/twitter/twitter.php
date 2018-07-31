@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -59,6 +57,8 @@ class ext_rest_twitter extends ext_rest
         $this->allowedModuleList = array('Accounts' => $app_list_strings['moduleList']['Accounts'],
             'Contacts' => $app_list_strings['moduleList']['Contacts'],
             'Leads' => $app_list_strings['moduleList']['Leads']);
+
+
     }
 
     /**
@@ -74,8 +74,9 @@ class ext_rest_twitter extends ext_rest
         foreach ($moduleList as $module) {
             if (!in_array($module, $this->allowedModuleList)) {
                 continue;
+            } else {
+                $outModuleList[$module] = $module;
             }
-            $outModuleList[$module] = $module;
         }
         return $outModuleList;
     }

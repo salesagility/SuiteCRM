@@ -37,6 +37,7 @@ require_once 'Zend/Gdata/App/Extension.php';
  */
 class Zend_Gdata_YouTube_Extension_MediaCredit extends Zend_Gdata_Extension
 {
+
     protected $_rootElement = 'credit';
     protected $_rootNamespace = 'media';
 
@@ -67,12 +68,9 @@ class Zend_Gdata_YouTube_Extension_MediaCredit extends Zend_Gdata_Extension
      * @param string $role
      * @param string $scheme
      */
-    public function __construct(
-        $text = null,
-        $role = null,
-        $scheme = null,
-        $yttype = null
-    ) {
+    public function __construct($text = null, $role = null,  $scheme = null,
+        $yttype = null)
+    {
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
         $this->_text = $text;
@@ -101,11 +99,8 @@ class Zend_Gdata_YouTube_Extension_MediaCredit extends Zend_Gdata_Extension
             $element->setAttribute('scheme', $this->_scheme);
         }
         if ($this->_yttype !== null) {
-            $element->setAttributeNS(
-                'http://gdata.youtube.com/schemas/2007',
-                'yt:type',
-                $this->_yttype
-            );
+            $element->setAttributeNS('http://gdata.youtube.com/schemas/2007',
+                'yt:type', $this->_yttype);
         }
         return $element;
     }
@@ -190,4 +185,5 @@ class Zend_Gdata_YouTube_Extension_MediaCredit extends Zend_Gdata_Extension
         $this->_yttype = $value;
         return $this;
     }
+
 }

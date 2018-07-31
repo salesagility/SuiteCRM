@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,31 +42,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $module_name = 'FP_Event_Locations';
-$listViewDefs [$module_name] =
-array(
-  'DATE_ENTERED' =>
-  array(
+$listViewDefs [$module_name] = 
+array (
+  'DATE_ENTERED' => 
+  array (
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
   ),
-  'NAME' =>
-  array(
+  'NAME' => 
+  array (
     'width' => '32%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
-  'CAPACITY' =>
-  array(
+  'CAPACITY' => 
+  array (
     'type' => 'varchar',
     'default' => true,
     'label' => 'LBL_CAPACITY',
     'width' => '10%',
   ),
-  'ASSIGNED_USER_NAME' =>
-  array(
+  'ASSIGNED_USER_NAME' => 
+  array (
     'width' => '9%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'module' => 'Employees',
@@ -76,3 +74,4 @@ array(
     'default' => true,
   ),
 );
+

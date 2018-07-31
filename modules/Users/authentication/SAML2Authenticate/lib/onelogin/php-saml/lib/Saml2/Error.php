@@ -1,5 +1,5 @@
 <?php
-
+ 
 /**
  * Error class of OneLogin PHP Toolkit
  *

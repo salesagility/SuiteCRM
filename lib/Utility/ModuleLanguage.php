@@ -48,9 +48,9 @@ class ModuleLanguage
      * @param string $moduleName
      * @return array
      */
-    public function getModuleLanguageStrings(CurrentLanguage $currentLanguage, $moduleName)
-    {
+    public function getModuleLanguageStrings(CurrentLanguage $currentLanguage, $moduleName) {
         $moduleLanguageStrings = return_module_language($currentLanguage->getCurrentLanguage(), $moduleName);
         return $moduleLanguageStrings;
     }
+
 }

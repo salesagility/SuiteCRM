@@ -37,17 +37,17 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$listViewDefs ['Notes'] =
-array(
-  'NAME' =>
-  array(
+$listViewDefs ['Notes'] = 
+array (
+  'NAME' => 
+  array (
     'width' => '40%',
     'label' => 'LBL_LIST_SUBJECT',
     'link' => true,
     'default' => true,
   ),
-  'CONTACT_NAME' =>
-  array(
+  'CONTACT_NAME' => 
+  array (
     'width' => '20%',
     'label' => 'LBL_LIST_CONTACT',
     'link' => true,
@@ -55,13 +55,13 @@ array(
     'module' => 'Contacts',
     'default' => true,
     'ACLTag' => 'CONTACT',
-    'related_fields' =>
-    array(
+    'related_fields' => 
+    array (
       0 => 'contact_id',
     ),
   ),
-  'PARENT_NAME' =>
-  array(
+  'PARENT_NAME' => 
+  array (
     'width' => '20%',
     'label' => 'LBL_LIST_RELATED_TO',
     'dynamic_module' => 'PARENT_TYPE',
@@ -70,21 +70,21 @@ array(
     'default' => true,
     'sortable' => false,
     'ACLTag' => 'PARENT',
-    'related_fields' =>
-    array(
+    'related_fields' => 
+    array (
       0 => 'parent_id',
       1 => 'parent_type',
     ),
   ),
   
-  'FILENAME' =>
-  array(
+  'FILENAME' => 
+  array (
     'width' => '20%',
     'label' => 'LBL_LIST_FILENAME',
     'default' => true,
     'type' => 'file',
-    'related_fields' =>
-    array(
+    'related_fields' => 
+    array (
       0 => 'file_url',
       1 => 'id',
     ),
@@ -93,26 +93,27 @@ array(
       'module' => 'Notes',
     ),
   ),
-  'CREATED_BY_NAME' =>
-  array(
+  'CREATED_BY_NAME' => 
+  array (
     'type' => 'relate',
     'label' => 'LBL_CREATED_BY',
     'width' => '10%',
     'default' => true,
-    'related_fields' =>  array( 'created_by' ),
+	'related_fields' =>  array ( 'created_by' ),
   ),
-  'DATE_MODIFIED' =>
-  array(
+  'DATE_MODIFIED' => 
+  array (
     'width' => '20%',
     'label' => 'LBL_DATE_MODIFIED',
     'link' => false,
     'default' => false,
   ),
-  'DATE_ENTERED' =>
-  array(
+  'DATE_ENTERED' => 
+  array (
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '10%',
     'default' => true,
-  ),
+  ),  
 );
+

@@ -149,7 +149,7 @@ class Zend_Search_Lucene_Search_QueryParserContext
 
         if ($sign == Zend_Search_Lucene_Search_QueryToken::TT_REQUIRED) {
             $this->_nextEntrySign = true;
-        } elseif ($sign == Zend_Search_Lucene_Search_QueryToken::TT_PROHIBITED) {
+        } else if ($sign == Zend_Search_Lucene_Search_QueryToken::TT_PROHIBITED) {
             $this->_nextEntrySign = false;
         } else {
             require_once 'Zend/Search/Lucene/Exception.php';
@@ -394,7 +394,8 @@ class Zend_Search_Lucene_Search_QueryParserContext
     {
         if ($this->_mode === self::GM_BOOLEAN) {
             return $this->_booleanExpressionQuery();
+        } else {
+            return $this->_signStyleExpressionQuery();
         }
-        return $this->_signStyleExpressionQuery();
     }
 }

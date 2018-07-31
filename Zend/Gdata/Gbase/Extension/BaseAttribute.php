@@ -55,16 +55,14 @@ class Zend_Gdata_Gbase_Extension_BaseAttribute extends Zend_Gdata_App_Extension_
     {
         $this->registerAllNamespaces(Zend_Gdata_Gbase::$namespaces);
         if ($type !== null) {
-            $attr = array('name' => 'type', 'value' => $type);
-            $typeAttr = array('type' => $attr);
-            $this->setExtensionAttributes($typeAttr);
+          $attr = array('name' => 'type', 'value' => $type);
+          $typeAttr = array('type' => $attr);
+          $this->setExtensionAttributes($typeAttr);
         }
-        parent::__construct(
-            $name,
+        parent::__construct($name,
                             $this->_rootNamespace,
                             $this->lookupNamespace($this->_rootNamespace),
-                            $text
-        );
+                            $text);
     }
 
     /**
@@ -72,9 +70,8 @@ class Zend_Gdata_Gbase_Extension_BaseAttribute extends Zend_Gdata_App_Extension_
      *
      * @return attribute name The requested object.
      */
-    public function getName()
-    {
-        return $this->_rootElement;
+    public function getName() {
+      return $this->_rootElement;
     }
 
     /**
@@ -82,10 +79,9 @@ class Zend_Gdata_Gbase_Extension_BaseAttribute extends Zend_Gdata_App_Extension_
      *
      * @return attribute type The requested object.
      */
-    public function getType()
-    {
-        $typeAttr = $this->getExtensionAttributes();
-        return $typeAttr['type']['value'];
+    public function getType() {
+      $typeAttr = $this->getExtensionAttributes();
+      return $typeAttr['type']['value'];
     }
 
     /**
@@ -96,10 +92,9 @@ class Zend_Gdata_Gbase_Extension_BaseAttribute extends Zend_Gdata_App_Extension_
      * @param string $name The name of the Base attribute
      * @return Zend_Gdata_Extension_ItemEntry Provides a fluent interface
      */
-    public function setName($name)
-    {
-        $this->_rootElement = $name;
-        return $this;
+    public function setName($name) {
+      $this->_rootElement = $name;
+      return $this;
     }
 
     /**
@@ -110,11 +105,11 @@ class Zend_Gdata_Gbase_Extension_BaseAttribute extends Zend_Gdata_App_Extension_
      * @param string $type The type of the Base attribute
      * @return Zend_Gdata_Extension_ItemEntry Provides a fluent interface
      */
-    public function setType($type)
-    {
-        $attr = array('name' => 'type', 'value' => $type);
-        $typeAttr = array('type' => $attr);
-        $this->setExtensionAttributes($typeAttr);
-        return $this;
+    public function setType($type) {
+      $attr = array('name' => 'type', 'value' => $type);
+      $typeAttr = array('type' => $attr);
+      $this->setExtensionAttributes($typeAttr);
+      return $this;
     }
+
 }

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,128 +42,113 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Generic formatter
  * @api
  */
-class default_formatter
-{
-    protected $_ss;
-    protected $_component;
-    protected $_tplFileName;
-    protected $_module;
-    protected $_hoverField;
+class default_formatter {
 
-    public function __construct()
-    {
-    }
+   protected $_ss;
+   protected $_component;
+   protected $_tplFileName;
+   protected $_module;
+   protected $_hoverField;
 
-    public function getDetailViewFormat()
-    {
-        $source = $this->_component->getSource();
-        $class = get_class($source);
-        $dir = str_replace('_', '/', $class);
-        $config = $source->getConfig();
-        $this->_ss->assign('config', $config);
-        $this->_ss->assign('source', $class);
-        $this->_ss->assign('module', $this->_module);
-        $mapping = $source->getMapping();
-        $mapping = !empty($mapping['beans'][$this->_module]) ? implode(',', array_values($mapping['beans'][$this->_module])) : '';
-        $this->_ss->assign('mapping', $mapping);
+   public function __construct() {}
 
-        if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
-            return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-        } elseif (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
-            return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-        } elseif (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
-            return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
-        } elseif (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
-            return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
-        } elseif (preg_match('/_soap_/', $class)) {
-            return $this->_ss->fetch("include/connectors/formatters/ext/soap/tpls/default.tpl");
-        }
-        return $this->_ss->fetch("include/connectors/formatters/ext/rest/tpls/default.tpl");
-    }
+   public function getDetailViewFormat() {
+   	  $source = $this->_component->getSource();
+   	  $class = get_class($source);
+   	  $dir = str_replace('_', '/', $class);
+   	  $config = $source->getConfig();
+   	  $this->_ss->assign('config', $config);
+   	  $this->_ss->assign('source', $class);
+   	  $this->_ss->assign('module', $this->_module);
+   	  $mapping = $source->getMapping();
+   	  $mapping = !empty($mapping['beans'][$this->_module]) ? implode(',', array_values($mapping['beans'][$this->_module])) : '';
+   	  $this->_ss->assign('mapping', $mapping);
 
-    public function getEditViewFormat()
-    {
-        return '';
-    }
+   	  if(file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
+   	  	 return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
+      } else if(file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
+      	 return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
+      } else if(file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
+      	 return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+      } else if(file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
+      	 return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+      } else if(preg_match('/_soap_/', $class)) {
+      	 return $this->_ss->fetch("include/connectors/formatters/ext/soap/tpls/default.tpl");
+      } else {
+      	 return $this->_ss->fetch("include/connectors/formatters/ext/rest/tpls/default.tpl");
+      }
+   }
 
-    public function getListViewFormat()
-    {
-        return '';
-    }
+   public function getEditViewFormat() {
+   	  return '';
+   }
 
-    public function getSearchFormFormat()
-    {
-        return '';
-    }
+   public function getListViewFormat() {
+   	  return '';
+   }
 
-    protected function fetchSmarty()
-    {
-        $source = $this->_component->getSource();
-        $class = get_class($source);
-        $dir = str_replace('_', '/', $class);
-        $config = $source->getConfig();
-        $this->_ss->assign('config', $config);
-        $this->_ss->assign('source', $class);
-        $this->_ss->assign('module', $this->_module);
-        if (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
-            return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-        } elseif (file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
-            return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
-        } elseif (file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
-            return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
-        }
-        return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
-    }
+   public function getSearchFormFormat() {
+   	  return '';
+   }
 
-    public function getSourceMapping()
-    {
-        $source = $this->_component->getSource();
-        $mapping = $source->getMapping();
-        return $mapping;
-    }
+   protected function fetchSmarty(){
+   	  $source = $this->_component->getSource();
+   	  $class = get_class($source);
+   	  $dir = str_replace('_', '/', $class);
+   	  $config = $source->getConfig();
+   	  $this->_ss->assign('config', $config);
+	  $this->_ss->assign('source', $class);
+	  $this->_ss->assign('module', $this->_module);
+   	  if(file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
+	  	return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
+	  } else if(file_exists("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl")) {
+	   	return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/{$this->_module}.tpl");
+	  } else if(file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl")) {
+	   	return $this->_ss->fetch("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+	  } else {
+	   	return $this->_ss->fetch("modules/Connectors/connectors/formatters/{$dir}/tpls/default.tpl");
+	  }
+   }
 
-    public function setSmarty($smarty)
-    {
-        $this->_ss = $smarty;
-    }
+   public function getSourceMapping(){
+   	  $source = $this->_component->getSource();
+      $mapping = $source->getMapping();
+      return $mapping;
+   }
 
-    public function getSmarty()
-    {
-        return $this->_ss;
-    }
+   public function setSmarty($smarty) {
+   	   $this->_ss = $smarty;
+   }
 
-    public function setComponent($component)
-    {
-        $this->_component = $component;
-    }
+   public function getSmarty() {
+   	   return $this->_ss;
+   }
 
-    public function getComponent()
-    {
-        return $this->_component;
-    }
+   public function setComponent($component) {
+   	   $this->_component = $component;
+   }
 
-    public function getTplFileName()
-    {
-        return $this->tplFileName;
-    }
+   public function getComponent() {
+   	   return $this->_component;
+   }
 
-    public function setTplFileName($tplFileName)
-    {
-        $this->tplFileName = $tplFileName;
-    }
+   public function getTplFileName(){
+   		return $this->tplFileName;
+   }
 
-    public function setModule($module)
-    {
-        $this->_module = $module;
-    }
+   public function setTplFileName($tplFileName){
+   		$this->tplFileName = $tplFileName;
+   }
 
-    public function getModule()
-    {
-        return $this->_module;
-    }
+   public function setModule($module) {
+   	    $this->_module = $module;
+   }
 
-    public function getIconFilePath()
-    {
-        return '';
-    }
+   public function getModule() {
+   	    return $this->_module;
+   }
+
+   public function getIconFilePath() {
+   	    return '';
+   }
 }

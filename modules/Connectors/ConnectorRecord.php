@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -43,28 +41,29 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
- class ConnectorRecord extends MergeRecord
- {
-     public $object_name = 'ConnectorRecord';
-     public $module_dir = 'Connector';
+ class ConnectorRecord extends MergeRecord{
+	var $object_name = 'ConnectorRecord';
+    var $module_dir = 'Connector';
 
 
-     public function __construct($merge_module = '', $merge_id = '')
-     {
-         parent::__construct($merge_module, $merge_id);
-     }
+    function __construct($merge_module = '', $merge_id = '') {
+       parent::__construct($merge_module, $merge_id);
+    }
 
-     /**
-      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-      */
-     public function ConnectorRecord($merge_module = '', $merge_id = '')
-     {
-         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-         if (isset($GLOBALS['log'])) {
-             $GLOBALS['log']->deprecated($deprecatedMessage);
-         } else {
-             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-         }
-         self::__construct($merge_module, $merge_id);
-     }
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ConnectorRecord($merge_module = '', $merge_id = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($merge_module, $merge_id);
+    }
+
+
  }
+

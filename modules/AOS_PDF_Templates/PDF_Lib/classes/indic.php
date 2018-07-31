@@ -1,7 +1,6 @@
 <?php
 
-class indic
-{
+class indic {
 
 function indic() {
 
@@ -47,7 +46,7 @@ function substituteIndic($earr, $lang, $font) {
 	}
 
 	// BENGALI vowels [09BF 09C7 09C8]
-	elseif ($lang=='bn') {
+	else if ($lang=='bn') {
 
 		// Khanda Ta 09CE not in font -> replace with 09A4|09CD
 		$vstr = preg_replace('/09CE/','09A4 09CD 200D', $vstr);	// mPDF 5.3.09
@@ -78,7 +77,7 @@ function substituteIndic($earr, $lang, $font) {
 	}
 
 	// GUJARATI pre-based vowel [0ABF]
-	elseif ($lang=='gu') {
+	else if ($lang=='gu') {
 		$prebasedvowels = "(0ABF)";
 		$nukta = "0ABC";
 		$halant = "0ACD";
@@ -88,7 +87,7 @@ function substituteIndic($earr, $lang, $font) {
 	}
 
 	// GURMUKHI/PUNJABI pre-based vowel [0ABF]
-	elseif ($lang=='pa') {
+	else if ($lang=='pa') {
 		$prebasedvowels = "(0A3F)";
 		$nukta = "0A3C";
 		$halant = "0A4D";
@@ -98,7 +97,7 @@ function substituteIndic($earr, $lang, $font) {
 	}
 
 	// TAMIL pre-based vowel [0ABF]
-	elseif ($lang=='ta') {
+	else if ($lang=='ta') {
 		// Shrii (Shree)
 		$vstr = preg_replace('/0BB6 0BCD 0BB0 0BC0/','E04B', $vstr);
 
@@ -115,7 +114,7 @@ function substituteIndic($earr, $lang, $font) {
 	}
 
 	// ORIYA
-	elseif ($lang=='or') {
+	else if ($lang=='or') {
 		// ORIYA double-part vowels []
 		$vstr = str_replace('0B48','0B47 0B56', $vstr);	// 2-part Vowel
 		$vstr = str_replace('0B4B','0B47 0B3E', $vstr);	// 2-part Vowel
@@ -129,7 +128,7 @@ function substituteIndic($earr, $lang, $font) {
 	}
 
 	// MALAYALAM
-	elseif ($lang=='ml') {
+	else if ($lang=='ml') {
 		// Chillus - old forms - remove ZWNJ after
 		// This font Volt rules recognises e.g. "Na Halant(Virama)" as ChilluN 
 		$vstr = preg_replace('/(0D23 0D4D|0D28 0D4D|0D30 0D4D|0D32 0D4D|0D33 0D4D) 200D/','\\1', $vstr);
@@ -167,7 +166,7 @@ function substituteIndic($earr, $lang, $font) {
 	}
 
 	// TELUGU 
-	elseif ($lang=='te') {
+	else if ($lang=='te') {
 		// TELUGU double-part vowels [0C48 -> 0C46 0C56]
 		$vstr = str_replace('0C48','0C46 0C56', $vstr);	// 2-part Vowel 
 		$prebasedvowels = "(0C46)";
@@ -180,7 +179,7 @@ function substituteIndic($earr, $lang, $font) {
 
 
 	// KANNADA
-	elseif ($lang=='kn') {
+	else if ($lang=='kn') {
 		// KANNADA double-part vowels [0CC8 -> 0CC6 0CD6]
 		$vstr = str_replace('0CC0','0CBF 0CD5', $vstr);	// 2-part Vowel 
 		$vstr = str_replace('0CC7','0CC6 0CD5', $vstr);	// 2-part Vowel 
@@ -281,7 +280,7 @@ function substituteIndic($earr, $lang, $font) {
 	}
 
 	// BENGALI Shift Reph [E068]
-	elseif ($lang=='bn') {
+	else if ($lang=='bn') {
 		$bnfullconjuncts = "E002|E003|E004|E041|E042|E043|E044|E045|E046|E047|E048|E049|E04A|E04B|E04C|E04D|E04E|E04F|E050|E051|E052|E053|E054|E055|E056|E057|E058|E059|E05A|E05B|E05C|E05D|E05E|E05F|E060|E061|E062|E063|E064|E065|E06A|E06B|E06C|E06D|E06E|E06F|E070|E071|E072|E073|E074|E075|E076|E077|E078|E079|E07A|E07B|E07C|E07D|E07E|E07F|E080|E081|E082|E083|E084|E085|E086|E087|E088|E089|E08A|E08B|E08C|E08D|E08E|E08F|E090|E091|E092|E093|E094|E095|E096|E097|E098|E099|E09A|E09B|E09C|E09D|E09E|E09F|E0A0|E0A1|E0A2|E0A3|E0A4|E0A5|E0A6|E0A7|E0A8|E0A9|E0AA|E0AB|E0AC|E0AD|E0AE|E0AF|E0B0|E0B1|E0B2|E0B3|E0B4|E0B5|E0B6|E0B7|E0B8|E0B9|E0BA|E0BB|E0BC|E0BD|E0BE|E0BF|E0C0|E0C1|E0C2|E0C3|E0C4|E0C5|E0C6|E0C7|E0C8|E0C9|E0CA|E0CB|E0CC|E0CD|E0CE|E0CF|E0D0|E0D1|E0D2|E0D3|E0D4|E0D5|E0D6|E0D7|E0D8|E0D9|E0DA|E0DB|E0DC|E0DD|E0DE|E0DF|E0E0|E0E1|E0E2|E0E3|E0E4|E0E5|E0E6|E0E7|E0E8|E0E9|E0EA|E0EB|E0EC|E0ED|E0EE|E0EF|E0F0|E0F1|E0F2|E0F3|E0F4|E0F5|E0F6|E0F7|E0F8|E0F9|E0FA|E0FB|E0FC|E0FD|E0FE|E0FF|E100|E101|E102|E103|E104|E105|E106|E107|E108|E109|E10A|E10B|E10C|E10D|E10E|E10F|E110|E111|E112|E113|E114|E115|E116|E117|E118|E119|E11A|E11B|E11C|E11D|E11E|E11F|E120|E121|E122|E123|E124|E125|E126|E127|E128|E129|E12A|E12B|E12C|E12D|E12E|E12F|E130|E131|E132|E133|E134|E135|E136|E137|E138|E139|E13A|E13B|E13C|E13D|E13E|E13F|E140|E141|E142|E143|E144|E145|E146|E147|E148|E149|E14A|E14B|E14C|E14D|E14E|E14F|E150|E151|E152|E153|E154|E155|E156|E157|E158|E159|E15A|E15B|E15C|E15D|E15E|E15F|E160|E161|E162|E163|E164|E165|E166|E167|E168|E169|E16A|E16B|E16C|E16D|E16E|E16F|E170|E171|E172|E173|E174|E175|E176|E177|E178|E179|E17A|E17B|E17C|E17D|E17E|E17F|E180|E181|E182|E183|E184|E185|E186|E187|E188|E189|E18A|E18B|E18C|E18D|E18E|E18F|E190|E191|E192|E193|E194|E195|E196|E197|E198|E199|E19A";
 		// $bnfullcons - set above;
 		$vstr = preg_replace('/E068 ('.$bnfullconjuncts.'|'.$bnfullcons.')/', '\\1 E068', $vstr);
@@ -290,7 +289,7 @@ function substituteIndic($earr, $lang, $font) {
 	}
 
 	// GUJARATI Shift Reph [E032]
-	elseif ($lang=='gu') {
+	else if ($lang=='gu') {
 		$gufullforms = "0A95|0A96|0A97|0A98|0A99|0A9A|0A9B|0A9C|0A9D|0A9E|0A9F|0AA0|0AA1|0AA2|0AA3|0AA4|0AA5|0AA6|0AA7|0AA8|0AAA|0AAB|0AAC|0AAD|0AAE|0AAF|0AB0|0AB2|0AB3|0AB5|0AB6|0AB7|0AB8|0AB9|E002|E003|E004|E005|E006|E007|E008|E009|E00A|E00B|E00C|E00D|E00E|E00F|E010|E011|E012|E013|E014|E015|E016|E017|E018|E019|E01A|E01B|E01C|E01D|E01E|E01F|E020|E021|E022|E023|E024|E025|E026|E027|E05E|E05F|E060|E061|E062|E063|E064|E065|E066|E067|E068|E069|E06A|E06B|E06C|E06D|E06E|E06F|E070|E071|E072|E073|E074|E075|E076|E077|E078|E079|E07A|E07B|E07C|E07D|E07E|E07F|E080|E081|E082|E083|E084|E085|E086|E087|E088|E089|E08A|E08B|E08C|E08D|E08E|E08F|E090|E091|E092|E093|E094|E095|E096|E097|E098|E099|E09A|E09B|E09C|E09D|E09E|E09F|E0A0|E0A1|E0A2|E0A3|E0A4|E0A5";
 		$vstr = preg_replace('/E032 ('.$gufullforms.')/', '\\1 E032', $vstr);
 		// Now shift it beyond post-based vowels  // ??? Need to add others e.g. 0949,094A,094B,094C + presentation forms like E198
@@ -300,7 +299,7 @@ function substituteIndic($earr, $lang, $font) {
 
 
 	// TELUGU Shift Reph to LEFT [E046|E069|E077]    [TelRaSmallOne] => E046    [TelRaSmallTwo] => E069    [TelRaSmallThree] => E077
-	elseif ($lang=='te') {
+	else if ($lang=='te') {
 		// tefullforms defined earlier
 		$tepartialforms = "E00D|E00E|E00F|E010|E011|E012|E013|E014|E015|E016|E017|E018|E019|E01A|E01B|E01C|E01D|E01E|E01F|E020|E021|E022|E023|E024|E025|E026|E027|E07C|E07D|E07E";
 		$matraligs = "E07F|E080|E081|E082|E083|E084|E085|E086|E087|E088|E089|E08A|E08B|E08C|E08D|E08E|E08F|E090|E091|E092|E093|E094|E095|E096|E097|E098|E099|E09A|E09B|E09C|E09D|E09E|E09F|E0A0|E0A1|E0A2|E0A3|E0A4|E0A5|E0A6|E0A7|E0A8|E0A9|E0AA|E0AB|E0AC|E0AD|E0AE|E0AF";
@@ -315,7 +314,7 @@ function substituteIndic($earr, $lang, $font) {
 
 
 	// KANNADA Shift Reph to  RIGHT [E00B]
-	elseif ($lang=='kn') {
+	else if ($lang=='kn') {
 		$knfullforms = "0C95|0C96|0C97|0C98|0C99|0C9A|0C9B|0C9C|0C9D|0C9E|0C9F|0CA0|0CA1|0CA2|0CA3|0CA4|0CA5|0CA6|0CA7|0CA8|0CAA|0CAB|0CAC|0CAD|0CAE|0CAF|0CB0|0CB1|0CB2|0CB3|0CB5|0CB6|0CB7|0CB8|0CB9|E07D|E07E|E0A3";
 		$knpartialforms = "E00C|E00D|E00E|E00F|E010|E011|E012|E013|E014|0C9E|E015|E016|E017|E018|E019|E01A|E01B|E01C|E01D|E01E|E01F|E020|E021|E022|E023|E024|E025|E026|E027|E028|E029|E02A|E02B|E02C|E02D|E07F";
 		while(preg_match('/E00B ('.$knpartialforms.')/', $vstr)) {
@@ -334,7 +333,7 @@ function substituteIndic($earr, $lang, $font) {
 
 
 	// ORIYA Shift Reph to  RIGHT [E069|E06A|E06B|E06C]
-	elseif ($lang=='or') {
+	else if ($lang=='or') {
 		$orrephs = "E069|E06A|E06B|E06C";
 		$orfullforms = "0B15|0B16|0B17|0B18|0B19|0B1A|0B1B|0B1C|0B1D|0B1E|0B1F|0B20|0B21|0B22|0B23|0B24|0B25|0B26|0B27|0B28|0B29|0B2A|0B2B|0B2C|0B2D|0B2E|0B2F|0B30|0B31|0B32|0B33|0B34|0B35|0B36|0B37|0B38|E003|E004|E005|E006|E007|E008|E009|E00A|E00B|E00C|E00D|E00E|E00F|E010|E011|E012|E013|E014|E015|E016|E017|E018|E019|E01A|E01B|E01C|E01D|E01E|E01F|E020|E021|E022|E023|E024|E025|E026|E027|E028|E029|E02A|E02B|E02C|E02D|E02E|E02F|E030|E031|E032|E033|E034|E035|E036|E037";
 		// E123 - E147  FullHalant forms ? add to FullForms
@@ -358,7 +357,7 @@ function substituteIndic($earr, $lang, $font) {
 
 
 	// MALAYALAM Shift Reph to LEFT [E00E] (mlylmRaVattu)
-	elseif ($lang=='ml') {
+	else if ($lang=='ml') {
 		$halant = "0D4D";	
 		$vstr = preg_replace('/([A-F0-9]{4}) '.$halant.' 0D30/','E00E \\1', $vstr);	// 0D30 = Ra
 		$vstr = preg_replace('/([A-F0-9]{4}) '.$halant.' '.$mlprebasedvowels .' 0D30/','\\2 E00E \\1', $vstr);	// 0D30 = Ra
@@ -389,7 +388,7 @@ function substituteIndic($earr, $lang, $font) {
 
 
 	// KANNADA Shift 
-	elseif ($lang=='kn') {
+	else if ($lang=='kn') {
 		$knvowels = "0CBE|0CC0|0CC1|0CC2|0CC3|0CC4|0CC7|0CC8|0CCA|0CCB|0CD5|0CD6"
 	// mPDF 5.3.87  Shouldn't swop E082 and E047 (belowbase1) below
 	// E082 is a matraIligature

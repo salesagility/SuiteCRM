@@ -90,4 +90,5 @@ class Zend_Search_Lucene_Search_Highlighter_Default implements Zend_Search_Lucen
 
         $this->_doc->highlight($words, $color);
     }
+
 }

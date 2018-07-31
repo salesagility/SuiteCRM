@@ -222,8 +222,8 @@ $dictionary['AM_ProjectTemplates'] = array(
 
     ),
     'relationships' => array(
-                  
-    ),
+      			
+	),
     'optimistic_locking' => true,
     'unified_search' => true,
 );

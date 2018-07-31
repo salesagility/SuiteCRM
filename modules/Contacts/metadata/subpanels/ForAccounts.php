@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,68 +41,69 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $subpanel_layout = array(
-    'top_buttons' => array(
-        array('widget_class' => 'SubPanelTopCreateButton'),
-        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Contacts'),
-    ),
+	'top_buttons' => array(
+		array('widget_class' => 'SubPanelTopCreateButton'),
+		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Contacts'),
+	),
 
-    'where' => '',
-    
-    
+	'where' => '',
+	
+	
 
-    'list_fields' => array(
-        'first_name'=>array(
-            'name'=>'first_name',
-            'usage' => 'query_only',
-        ),
-        'last_name'=>array(
-            'name'=>'last_name',
-            'usage' => 'query_only',
-        ),
-        'salutation'=>array(
-            'name'=>'salutation',
-            'usage' => 'query_only',
-        ),
-        'name'=>array(
-            'name'=>'name',
-            'vname' => 'LBL_LIST_NAME',
-            'widget_class' => 'SubPanelDetailViewLink',
-            'module' => 'Contacts',
-            'width' => '43%',
-        ),
-        'primary_address_city'=>array(
-            'name'=>'primary_address_city',
-            'vname' => 'LBL_LIST_CITY',
-            'width' => '20%',
-        ),
-        'primary_address_state'=>array(
-            'name'=>'primary_address_state',
-            'vname' => 'LBL_LIST_STATE',
-            'width' => '10%',
-        ),
-        'email1'=>array(
-            'name'=>'email1',
-            'vname' => 'LBL_LIST_EMAIL',
-            'widget_class' => 'SubPanelEmailLink',
-            'width' => '30%',
-            'sortable' => false,
-        ),
-        'phone_work'=>array(
-            'name'=>'phone_work',
-            'vname' => 'LBL_LIST_PHONE',
-            'width' => '15%',
-        ),
-        'edit_button'=>array(
-            'vname' => 'LBL_EDIT_BUTTON',
-            'widget_class' => 'SubPanelEditButton',
-            'module' => 'Contacts',
-            'width' => '5%',
-        ),
-        'remove_button'=>array(
-            'vname' => 'LBL_REMOVE',
-            'widget_class' => 'SubPanelRemoveButton',
-            'module' => 'Contacts',
-            'width' => '5%',
-        ),
-    ),
-);
+	'list_fields' => array(
+		'first_name'=>array(
+			'name'=>'first_name',
+			'usage' => 'query_only',
+		),
+		'last_name'=>array(
+			'name'=>'last_name',
+		 	'usage' => 'query_only',
+		),
+		'salutation'=>array(
+			'name'=>'salutation',
+		 	'usage' => 'query_only',
+		),
+		'name'=>array(
+			'name'=>'name',		
+			'vname' => 'LBL_LIST_NAME',
+			'widget_class' => 'SubPanelDetailViewLink',
+		 	'module' => 'Contacts',
+			'width' => '43%',
+		),
+		'primary_address_city'=>array(
+			'name'=>'primary_address_city',		
+			'vname' => 'LBL_LIST_CITY',
+			'width' => '20%',
+		),
+		'primary_address_state'=>array(
+			'name'=>'primary_address_state',		
+			'vname' => 'LBL_LIST_STATE',
+			'width' => '10%',
+		),
+		'email1'=>array(
+			'name'=>'email1',		
+			'vname' => 'LBL_LIST_EMAIL',
+			'widget_class' => 'SubPanelEmailLink',
+			'width' => '30%',
+			'sortable' => false,
+		),
+		'phone_work'=>array (
+			'name'=>'phone_work',		
+			'vname' => 'LBL_LIST_PHONE',
+			'width' => '15%',
+		),
+		'edit_button'=>array(
+			'vname' => 'LBL_EDIT_BUTTON',
+			'widget_class' => 'SubPanelEditButton',
+		 	'module' => 'Contacts',
+			'width' => '5%',
+		),
+		'remove_button'=>array(
+			'vname' => 'LBL_REMOVE',
+			'widget_class' => 'SubPanelRemoveButton',
+		 	'module' => 'Contacts',
+			'width' => '5%',
+		),
+	),
+);		
+

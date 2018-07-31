@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,10 +42,10 @@ require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 
 class TemplateDynamicenum extends TemplateEnum
 {
-    public $type = 'dynamicenum';
-    public $parentenum = '';
+    var $type = 'dynamicenum';
+    var $parentenum = '';
 
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
         $this->vardef_map['parentenum'] = 'ext2';
@@ -56,19 +54,19 @@ class TemplateDynamicenum extends TemplateEnum
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function TemplateDynamicenum()
-    {
+    function TemplateDynamicenum(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    public function get_field_def()
+    function get_field_def()
     {
         $def = parent::get_field_def();
         $def['dbType'] = 'enum';
@@ -76,7 +74,7 @@ class TemplateDynamicenum extends TemplateEnum
         return $def;
     }
 
-    public function get_xtpl_edit()
+    function get_xtpl_edit()
     {
         $name = $this->name;
         $value = '';
@@ -100,5 +98,7 @@ class TemplateDynamicenum extends TemplateEnum
         $returnXTPL[strtoupper('options_' . $this->name)] = get_select_options_with_id($app_list_strings[$this->ext1], $value);
 
         return $returnXTPL;
+
+
     }
 }

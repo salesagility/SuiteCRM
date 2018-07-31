@@ -126,7 +126,7 @@ class ExtNode
      * add a child node.
      * @param $node
      */
-    public function add_node($node)
+    function add_node($node)
     {
         $this->nodes[$node->uid] = $node;
     }
@@ -138,7 +138,7 @@ class ExtNode
      * nodes: definition of children nodes.
      *
      */
-    public function get_definition()
+    function get_definition()
     {
         $ret = array();
 

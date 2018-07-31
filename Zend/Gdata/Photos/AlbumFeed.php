@@ -178,52 +178,52 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
 
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gphoto') . ':' . 'id':
+            case $this->lookupNamespace('gphoto') . ':' . 'id';
                 $id = new Zend_Gdata_Photos_Extension_Id();
                 $id->transferFromDOM($child);
                 $this->_gphotoId = $id;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'user':
+            case $this->lookupNamespace('gphoto') . ':' . 'user';
                 $user = new Zend_Gdata_Photos_Extension_User();
                 $user->transferFromDOM($child);
                 $this->_gphotoUser = $user;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'nickname':
+            case $this->lookupNamespace('gphoto') . ':' . 'nickname';
                 $nickname = new Zend_Gdata_Photos_Extension_Nickname();
                 $nickname->transferFromDOM($child);
                 $this->_gphotoNickname = $nickname;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'name':
+            case $this->lookupNamespace('gphoto') . ':' . 'name';
                 $name = new Zend_Gdata_Photos_Extension_Name();
                 $name->transferFromDOM($child);
                 $this->_gphotoName = $name;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'location':
+            case $this->lookupNamespace('gphoto') . ':' . 'location';
                 $location = new Zend_Gdata_Photos_Extension_Location();
                 $location->transferFromDOM($child);
                 $this->_gphotoLocation = $location;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'access':
+            case $this->lookupNamespace('gphoto') . ':' . 'access';
                 $access = new Zend_Gdata_Photos_Extension_Access();
                 $access->transferFromDOM($child);
                 $this->_gphotoAccess = $access;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'timestamp':
+            case $this->lookupNamespace('gphoto') . ':' . 'timestamp';
                 $timestamp = new Zend_Gdata_Photos_Extension_Timestamp();
                 $timestamp->transferFromDOM($child);
                 $this->_gphotoTimestamp = $timestamp;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'numphotos':
+            case $this->lookupNamespace('gphoto') . ':' . 'numphotos';
                 $numphotos = new Zend_Gdata_Photos_Extension_NumPhotos();
                 $numphotos->transferFromDOM($child);
                 $this->_gphotoNumPhotos = $numphotos;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'commentingEnabled':
+            case $this->lookupNamespace('gphoto') . ':' . 'commentingEnabled';
                 $commentingEnabled = new Zend_Gdata_Photos_Extension_CommentingEnabled();
                 $commentingEnabled->transferFromDOM($child);
                 $this->_gphotoCommentingEnabled = $commentingEnabled;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'commentCount':
+            case $this->lookupNamespace('gphoto') . ':' . 'commentCount';
                 $commentCount = new Zend_Gdata_Photos_Extension_CommentCount();
                 $commentCount->transferFromDOM($child);
                 $this->_gphotoCommentCount = $commentCount;
@@ -235,8 +235,8 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
                 foreach ($categories as $category) {
                     if ($category->scheme == Zend_Gdata_Photos::KIND_PATH &&
                         $this->_entryKindClassMapping[$category->term] != "") {
-                        $entryClassName = $this->_entryKindClassMapping[$category->term];
-                        break;
+                            $entryClassName = $this->_entryKindClassMapping[$category->term];
+                            break;
                     } else {
                         require_once 'Zend/Gdata/App/Exception.php';
                         throw new Zend_Gdata_App_Exception('Entry is missing kind declaration.');
@@ -505,4 +505,5 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_gphotoTimestamp = $value;
         return $this;
     }
+
 }

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,21 +40,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $current_user;
 $silent = isset($_REQUEST['silent']) ? true : false;
-if (is_admin($current_user)) {
+if(is_admin($current_user)){
     global $mod_strings;
-    if (!$silent) {
-        echo $mod_strings['LBL_REBUILD_DASHLETS_DESC'];
-    }
-    if (is_file($cachedfile = sugar_cached('dashlets/dashlets.php'))) {
+	if (!$silent) { echo $mod_strings['LBL_REBUILD_DASHLETS_DESC']; }
+    if(is_file($cachedfile = sugar_cached('dashlets/dashlets.php'))) {
         unlink($cachedfile);
     }
     require_once('include/Dashlets/DashletCacheBuilder.php');
 
     $dc = new DashletCacheBuilder();
     $dc->buildCache();
-    if (!$silent) {
-        echo '<br><br><br><br>' . $mod_strings['LBL_REBUILD_DASHLETS_DESC_SUCCESS'];
-    }
-} else {
-    sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
+   if( !$silent ) echo '<br><br><br><br>' . $mod_strings['LBL_REBUILD_DASHLETS_DESC_SUCCESS'];
+}
+else{
+	sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }

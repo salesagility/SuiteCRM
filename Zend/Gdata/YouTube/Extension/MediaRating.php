@@ -37,6 +37,7 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_YouTube_Extension_MediaRating extends Zend_Gdata_Extension
 {
+
     protected $_rootElement = 'rating';
     protected $_rootNamespace = 'media';
 
@@ -144,4 +145,6 @@ class Zend_Gdata_YouTube_Extension_MediaRating extends Zend_Gdata_Extension
         $this->_country = $value;
         return $this;
     }
+
+
 }

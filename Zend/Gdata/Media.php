@@ -61,4 +61,5 @@ class Zend_Gdata_Media extends Zend_Gdata
         $this->registerPackage('Zend_Gdata_Media_Extension');
         parent::__construct($client, $applicationId);
     }
+
 }

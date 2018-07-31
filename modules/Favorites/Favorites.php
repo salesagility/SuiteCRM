@@ -76,8 +76,9 @@ class Favorites extends Basic
             $favorite_record->save();
 
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -117,7 +118,7 @@ class Favorites extends Basic
         $i = 0;
         while ($row = $db->fetchByAssoc($result)) {
             $bean = BeanFactory::getBean($row['parent_type'], $row['parent_id']);
-            if ($bean) {
+            if($bean) {
                 $return_array[$i]['item_summary'] = $bean->name;
                 $return_array[$i]['item_summary_short'] = to_html(getTrackerSubstring($bean->name));
                 $return_array[$i]['id'] = $row['parent_id'];
@@ -133,6 +134,7 @@ class Favorites extends Basic
 
                 ++$i;
             }
+
         }
 
         return $return_array;
@@ -141,7 +143,7 @@ class Favorites extends Basic
     /**
      * @parm string $module
      * @return array Representing an array of \SuiteCRM\API\JsonApi\Resource\Resource
-     */
+     */ 
     public function getCurrentUserFavoritesForModule($module)
     {
         $db = DBManagerFactory::getInstance();
@@ -189,11 +191,10 @@ class Favorites extends Basic
         return $response;
     }
 
-    public function save($notify = false)
-    {
+    public function save($notify = false) {
         global $current_user;
 
-        if (empty($this->assigned_user_id)) {
+        if(empty($this->assigned_user_id)) {
             $this->assigned_user_id = $current_user->id;
         }
         parent::save($notify);
@@ -207,7 +208,7 @@ class Favorites extends Basic
         switch ($interface) {
             case 'ACL':
                 return false;
-            default:
+            default :
                 return false;
         }
     }

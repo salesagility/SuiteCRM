@@ -1,6 +1,6 @@
 <?php
 
-// Create an __autoload function
+// Create an __autoload function 
 // (can conflicts other autoloaders)
 // http://php.net/manual/en/language.oop5.autoload.php
 
@@ -22,3 +22,4 @@ foreach ($folderInfo as $element) {
         include_once $libDir.$element;
     }
 }
+    

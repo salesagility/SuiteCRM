@@ -37,71 +37,66 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class LeadsController extends SugarController
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
+class LeadsController extends SugarController{
+	function __construct(){
+		parent::__construct();
+	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function LeadsController()
-    {
+    function LeadsController(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
-    public function pre_editview()
-    {
-        //IF we have a prospect id leads convert it to a lead
-        if (empty($this->bean->id) && !empty($_REQUEST['return_module']) &&$_REQUEST['return_module'] == 'Prospects') {
-            $prospect=new Prospect();
-            $prospect->retrieve($_REQUEST['return_id']);
-            foreach ($prospect->field_defs as $key=>$value) {
-                if ($key == 'id' or $key=='deleted') {
-                    continue;
-                }
-                if (isset($this->bean->field_defs[$key])) {
-                    $this->bean->$key = $prospect->$key;
-                }
-            }
-            $_POST['is_converted']=true;
-        }
-        return true;
-    }
-    public function action_editview()
-    {
-        $this->view = 'edit';
-        return true;
-    }
+	function pre_editview(){
+		//IF we have a prospect id leads convert it to a lead
+		if (empty($this->bean->id) && !empty($_REQUEST['return_module']) &&$_REQUEST['return_module'] == 'Prospects' ) {
 
-    protected function callLegacyCode()
-    {
-        if (strtolower($this->do_action) == 'convertlead') {
-            if (file_exists('modules/Leads/ConvertLead.php') && !file_exists('custom/modules/Leads/metadata/convertdefs.php')) {
-                if (!empty($_REQUEST['emailAddressWidget'])) {
-                    foreach ($_REQUEST as $key=>$value) {
-                        if (preg_match('/^Leads.*?emailAddress[\d]+$/', $key)) {
-                            $_REQUEST['Leads_email_widget_id'] = 0;
-                            break;
-                        }
-                    }
-                }
-                $this->action_default();
+			$prospect=new Prospect();
+			$prospect->retrieve($_REQUEST['return_id']);
+			foreach($prospect->field_defs as $key=>$value)
+			{
+				if ($key == 'id' or $key=='deleted' )continue;
+				if (isset($this->bean->field_defs[$key])) {
+					$this->bean->$key = $prospect->$key;
+				}
+			}
+			$_POST['is_converted']=true;
+		}
+		return true;
+	}
+	function action_editview(){
+		$this->view = 'edit';
+		return true;
+	}
+
+	protected function callLegacyCode(){
+    	if(strtolower($this->do_action) == 'convertlead'){
+        	if(file_exists('modules/Leads/ConvertLead.php') && !file_exists('custom/modules/Leads/metadata/convertdefs.php')){
+	        	if(!empty($_REQUEST['emailAddressWidget'])) {
+				   foreach($_REQUEST as $key=>$value) {
+				   	  if(preg_match('/^Leads.*?emailAddress[\d]+$/', $key)) {
+				   	  	 $_REQUEST['Leads_email_widget_id'] = 0;
+				   	  	 break;
+				   	  }
+				   }
+				}
+        		$this->action_default();
                 $this->_processed = true;
-            } else {
-                $this->view = 'convertlead';
+            }else{
+            	$this->view = 'convertlead';
                 $this->_processed = true;
             }
-        } else {
-            parent::callLegacyCode();
+  		}else{
+                parent::callLegacyCode();
         }
-    }
+	}
 }

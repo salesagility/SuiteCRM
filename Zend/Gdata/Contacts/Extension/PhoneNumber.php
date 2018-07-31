@@ -43,9 +43,10 @@ require_once 'Zend/Gdata/Extension.php';
 
 class Zend_Gdata_Contacts_Extension_PhoneNumber extends Zend_Gdata_Extension
 {
+
     protected $_rootNamespace = 'gd';
     protected $_rootElement = 'phoneNumber';
-    protected $_isPrimaryNumber = false;
+    protected $_isPrimaryNumber = FALSE;
     protected $_phoneType = 'main';
 
     /**
@@ -61,7 +62,8 @@ class Zend_Gdata_Contacts_Extension_PhoneNumber extends Zend_Gdata_Extension
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
-        switch ($absoluteNodeName) {
+        switch ($absoluteNodeName)
+        {
             default:
                 parent::takeChildFromDOM($child);
                 break;
@@ -76,13 +78,13 @@ class Zend_Gdata_Contacts_Extension_PhoneNumber extends Zend_Gdata_Extension
      */
     protected function takeAttributeFromDOM($attribute)
     {
-        switch ($attribute->localName) {
+        switch ($attribute->localName)
+        {
             case 'primary':
-                if (strtolower($attribute->nodeValue) == 'true') {
+                if(strtolower($attribute->nodeValue) == 'true')
                     $this->_isPrimaryNumber = true;
-                } else {
+                else
                     $this->_isPrimaryNumber = false;
-                }
             break;
             
             case 'rel':
@@ -110,3 +112,4 @@ class Zend_Gdata_Contacts_Extension_PhoneNumber extends Zend_Gdata_Extension
         return $this->_isPrimaryNumber;
     }
 }
+ 

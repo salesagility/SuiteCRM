@@ -1,7 +1,5 @@
 <?php
- if (!defined('sugarEntry')) {
-     define('sugarEntry', true);
- }
+ if(!defined('sugarEntry'))define('sugarEntry', true);
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -66,14 +64,15 @@ if (!is_windows()) {
             }
             sugar_die('cron.php running with user that is not in allowed_cron_users in config.php');
         }
-    } else {
+    }
+    else {
         $GLOBALS['log']->warning('cron.php: missing expected allowed_cron_users entry in config.php. ' .
                                  'No cron user checks will occur.');
     }
 }
 
-if (empty($current_language)) {
-    $current_language = $sugar_config['default_language'];
+if(empty($current_language)) {
+	$current_language = $sugar_config['default_language'];
 }
 
 $app_list_strings = return_app_list_strings_language($current_language);
@@ -87,10 +86,10 @@ $GLOBALS['log']->debug('--------------------------------------------> at cron.ph
 $cron_driver = !empty($sugar_config['cron_class'])?$sugar_config['cron_class']:'SugarCronJobs';
 $GLOBALS['log']->debug("Using $cron_driver as CRON driver");
 
-if (file_exists("custom/include/SugarQueue/$cron_driver.php")) {
-    require_once "custom/include/SugarQueue/$cron_driver.php";
+if(file_exists("custom/include/SugarQueue/$cron_driver.php")) {
+   require_once "custom/include/SugarQueue/$cron_driver.php";
 } else {
-    require_once "include/SugarQueue/$cron_driver.php";
+   require_once "include/SugarQueue/$cron_driver.php";
 }
 
 $jobq = new $cron_driver();
@@ -102,16 +101,14 @@ sugar_cleanup(false);
 // some jobs have annoying habit of calling sugar_cleanup(), and it can be called only once
 // but job results can be written to DB after job is finished, so we have to disconnect here again
 // just in case we couldn't call cleanup
-if (class_exists('DBManagerFactory')) {
-    $db = DBManagerFactory::getInstance();
-    $db->disconnect();
+if(class_exists('DBManagerFactory')) {
+	$db = DBManagerFactory::getInstance();
+	$db->disconnect();
 }
 
 // If we have a session left over, destroy it
-if (session_id()) {
+if(session_id()) {
     session_destroy();
 }
 
-if ($exit_on_cleanup) {
-    exit($jobq->runOk()?0:1);
-}
+if($exit_on_cleanup) exit($jobq->runOk()?0:1);

@@ -61,11 +61,9 @@ class Zend_Gdata_Gapps_EmailListRecipientQuery extends Zend_Gdata_Gapps_Query
      * @param string $startRecipient (optional) Value for the
      *          startRecipient property.
      */
-    public function __construct(
-        $domain = null,
-        $emailListName = null,
-            $startRecipient = null
-    ) {
+    public function __construct($domain = null, $emailListName = null,
+            $startRecipient = null)
+    {
         parent::__construct($domain);
         $this->setEmailListName($emailListName);
         $this->setStartRecipient($startRecipient);
@@ -79,10 +77,10 @@ class Zend_Gdata_Gapps_EmailListRecipientQuery extends Zend_Gdata_Gapps_Query
      * @param string $value The email list name to filter search results by,
      *          or null to disable.
      */
-    public function setEmailListName($value)
-    {
-        $this->_emailListName = $value;
-    }
+     public function setEmailListName($value)
+     {
+         $this->_emailListName = $value;
+     }
 
     /**
      * Get the email list name to query for. If no name is set, null will be
@@ -137,6 +135,7 @@ class Zend_Gdata_Gapps_EmailListRecipientQuery extends Zend_Gdata_Gapps_Query
      */
     public function getQueryUrl()
     {
+
         $uri = $this->getBaseUrl();
         $uri .= Zend_Gdata_Gapps::APPS_EMAIL_LIST_PATH;
         if ($this->_emailListName !== null) {
@@ -144,11 +143,11 @@ class Zend_Gdata_Gapps_EmailListRecipientQuery extends Zend_Gdata_Gapps_Query
         } else {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
-                    'EmailListName must not be null'
-            );
+                    'EmailListName must not be null');
         }
         $uri .= Zend_Gdata_Gapps::APPS_EMAIL_LIST_RECIPIENT_POSTFIX . '/';
         $uri .= $this->getQueryString();
         return $uri;
     }
+
 }

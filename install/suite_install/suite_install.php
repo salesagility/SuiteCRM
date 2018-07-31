@@ -51,4 +51,4 @@ setSystemEmailTemplatesDefaultConfig();
 require_once('modules/Administration/QuickRepairAndRebuild.php');
 $actions = array('clearAll');
 $randc = new RepairAndClear();
-$randc->repairAndClearAll($actions, array(translate('LBL_ALL_MODULES')), true, false);
+$randc->repairAndClearAll($actions, array(translate('LBL_ALL_MODULES')), true,false);

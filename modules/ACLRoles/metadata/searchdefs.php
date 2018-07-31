@@ -44,15 +44,15 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
   $searchdefs['ACLRoles'] = array(
-                    'templateMeta' => array(
-                            'maxColumns' => '3',
-                            'maxColumnsBasic' => '4',
-                            'widths' => array('label' => '10', 'field' => '30'),
+					'templateMeta' => array(
+							'maxColumns' => '3', 
+  							'maxColumnsBasic' => '4', 
+                            'widths' => array('label' => '10', 'field' => '30'),                 
                            ),
-                    'layout' => array(
-                        'basic_search' => array(
-                            'name' => array('name' => 'name', 'label' => 'LBL_NAME',),
-                            ),
-                        'advanced_search' => array(),
-                    ),
-               );
+                    'layout' => array(  					
+						'basic_search' => array(
+						    'name' => array('name' => 'name', 'label' => 'LBL_NAME',),
+						 	),
+						'advanced_search' => array(),
+					),
+ 			   );

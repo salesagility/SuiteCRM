@@ -60,4 +60,5 @@ class Zend_Gdata_Geo_Feed extends Zend_Gdata_Feed
         $this->registerAllNamespaces(Zend_Gdata_Geo::$namespaces);
         parent::__construct($element);
     }
+
 }

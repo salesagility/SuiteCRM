@@ -169,58 +169,58 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case $this->lookupNamespace('gd') . ':' . 'where':
+        case $this->lookupNamespace('gd') . ':' . 'where';
             $where = new Zend_Gdata_Extension_Where();
             $where->transferFromDOM($child);
             $this->_where[] = $where;
             break;
-        case $this->lookupNamespace('gd') . ':' . 'when':
+        case $this->lookupNamespace('gd') . ':' . 'when';
             $when = new Zend_Gdata_Extension_When();
             $when->transferFromDOM($child);
             $this->_when[] = $when;
             break;
-        case $this->lookupNamespace('gd') . ':' . 'who':
+        case $this->lookupNamespace('gd') . ':' . 'who';
             $who = new Zend_Gdata_Extension_Who();
             $who ->transferFromDOM($child);
             $this->_who[] = $who;
             break;
-        case $this->lookupNamespace('gd') . ':' . 'recurrence':
+        case $this->lookupNamespace('gd') . ':' . 'recurrence';
             $recurrence = new Zend_Gdata_Extension_Recurrence();
             $recurrence->transferFromDOM($child);
             $this->_recurrence = $recurrence;
             break;
-        case $this->lookupNamespace('gd') . ':' . 'eventStatus':
+        case $this->lookupNamespace('gd') . ':' . 'eventStatus';
             $eventStatus = new Zend_Gdata_Extension_EventStatus();
             $eventStatus->transferFromDOM($child);
             $this->_eventStatus = $eventStatus;
             break;
-        case $this->lookupNamespace('gd') . ':' . 'comments':
+        case $this->lookupNamespace('gd') . ':' . 'comments';
             $comments = new Zend_Gdata_Extension_Comments();
             $comments->transferFromDOM($child);
             $this->_comments = $comments;
             break;
-        case $this->lookupNamespace('gd') . ':' . 'transparency':
+        case $this->lookupNamespace('gd') . ':' . 'transparency';
             $transparency = new Zend_Gdata_Extension_Transparency();
             $transparency ->transferFromDOM($child);
             $this->_transparency = $transparency;
             break;
-        case $this->lookupNamespace('gd') . ':' . 'visibility':
+        case $this->lookupNamespace('gd') . ':' . 'visibility';
             $visiblity = new Zend_Gdata_Extension_Visibility();
             $visiblity ->transferFromDOM($child);
             $this->_visibility = $visiblity;
             break;
-        case $this->lookupNamespace('gd') . ':' . 'recurrenceException':
+        case $this->lookupNamespace('gd') . ':' . 'recurrenceException';
             require_once 'Zend/Gdata/Extension/RecurrenceException.php';
             $recurrenceException = new Zend_Gdata_Extension_RecurrenceException();
             $recurrenceException ->transferFromDOM($child);
             $this->_recurrenceException[] = $recurrenceException;
             break;
-        case $this->lookupNamespace('gd') . ':' . 'originalEvent':
+        case $this->lookupNamespace('gd') . ':' . 'originalEvent';
             $originalEvent = new Zend_Gdata_Extension_OriginalEvent();
             $originalEvent ->transferFromDOM($child);
             $this->_originalEvent = $originalEvent;
             break;
-        case $this->lookupNamespace('gd') . ':' . 'extendedProperty':
+        case $this->lookupNamespace('gd') . ':' . 'extendedProperty';
             $extProp = new Zend_Gdata_Extension_ExtendedProperty();
             $extProp->transferFromDOM($child);
             $this->_extendedProperty[] = $extProp;
@@ -423,4 +423,6 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
         $this->_entryLink = $value;
         return $this;
     }
+
+
 }

@@ -231,11 +231,8 @@ class SugarFieldParent extends SugarFieldRelate
         //Build the javascript
         $quicksearch_js = '<script language="javascript">';
         $quicksearch_js .= "if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}";
-        $quicksearch_js .= "sqs_objects['$qsFieldName']=" . str_replace(
-            $dynamicParentTypePlaceHolder,
-                $dynamicParentType,
-            $json::encode($sqsFieldArray)
-        ) . ';';
+        $quicksearch_js .= "sqs_objects['$qsFieldName']=" . str_replace($dynamicParentTypePlaceHolder,
+                $dynamicParentType, $json::encode($sqsFieldArray)) . ';';
         $quicksearch_js .= '</script>';
         return $quicksearch_js;
     }

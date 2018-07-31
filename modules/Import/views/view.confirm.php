@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -56,19 +54,19 @@ require_once('include/upload_file.php');
 class ImportViewConfirm extends ImportView
 {
     const SAMPLE_ROW_SIZE = 3;
-    protected $pageTitleKey = 'LBL_CONFIRM_TITLE';
+ 	protected $pageTitleKey = 'LBL_CONFIRM_TITLE';
     protected $errorScript = "";
     
-    /**
+ 	/**
      * @see SugarView::display()
      */
-    public function display()
+ 	public function display()
     {
         global $mod_strings, $app_strings, $current_user;
         global $sugar_config, $locale;
         
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
-        $this->ss->assign("TYPE", (!empty($_REQUEST['type']) ? $_REQUEST['type'] : "import"));
+        $this->ss->assign("TYPE",( !empty($_REQUEST['type']) ? $_REQUEST['type'] : "import" ));
         $this->ss->assign("SOURCE_ID", $_REQUEST['source_id']);
 
         $this->instruction = 'LBL_SELECT_PROPERTY_INSTRUCTION';
@@ -76,7 +74,7 @@ class ImportViewConfirm extends ImportView
 
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false), ENT_NOQUOTES);
         $this->ss->assign("CURRENT_STEP", $this->currentStep);
-        $sugar_config['import_max_records_per_file'] = (empty($sugar_config['import_max_records_per_file']) ? 1000 : $sugar_config['import_max_records_per_file']);
+        $sugar_config['import_max_records_per_file'] = ( empty($sugar_config['import_max_records_per_file']) ? 1000 : $sugar_config['import_max_records_per_file'] );
         $importSource = isset($_REQUEST['source']) ? $_REQUEST['source'] : 'csv' ;
 
         // Clear out this user's last import
@@ -86,51 +84,60 @@ class ImportViewConfirm extends ImportView
 
         // handle uploaded file
         $uploadFile = new UploadFile('userfile');
-        if (isset($_FILES['userfile']) && $uploadFile->confirm_upload()) {
+        if (isset($_FILES['userfile']) && $uploadFile->confirm_upload())
+        {
             $uploadFile->final_move('IMPORT_'.$this->bean->object_name.'_'.$current_user->id);
             $uploadFileName = $uploadFile->get_upload_path('IMPORT_'.$this->bean->object_name.'_'.$current_user->id);
-        } elseif (!empty($_REQUEST['tmp_file'])) {
+        }
+        elseif( !empty($_REQUEST['tmp_file']) )
+        {
             $uploadFileName = "upload://".basename($_REQUEST['tmp_file']);
-        } else {
-            $this->_showImportError($mod_strings['LBL_IMPORT_MODULE_ERROR_NO_UPLOAD'], $_REQUEST['import_module'], 'Step2', true, null, true);
+        }
+        else
+        {
+            $this->_showImportError($mod_strings['LBL_IMPORT_MODULE_ERROR_NO_UPLOAD'],$_REQUEST['import_module'],'Step2', true, null, true);
             return;
         }
 
         //check the file size, we dont want to process an empty file
-        if (isset($_FILES['userfile']['size']) && $_FILES['userfile']['size'] == 0) {
+        if(isset($_FILES['userfile']['size']) && $_FILES['userfile']['size'] == 0){
             //this file is empty, throw error message
-            $this->_showImportError($mod_strings['LBL_NO_LINES'], $_REQUEST['import_module'], 'Step2', false, null, true);
+            $this->_showImportError($mod_strings['LBL_NO_LINES'],$_REQUEST['import_module'],'Step2', false, null, true);
             return;
         }
 
         $mimeTypeOk = true;
 
         //check to see if the file mime type is not a form of text or application octed streramand fire error if not
-        if (isset($_FILES['userfile']['type']) && strpos($_FILES['userfile']['type'], 'octet-stream') === false && strpos($_FILES['userfile']['type'], 'text') === false
-            && strpos($_FILES['userfile']['type'], 'application/vnd.ms-excel') === false) {
+        if(isset($_FILES['userfile']['type']) && strpos($_FILES['userfile']['type'],'octet-stream') === false && strpos($_FILES['userfile']['type'],'text') === false
+            && strpos($_FILES['userfile']['type'],'application/vnd.ms-excel') === false) {
             //this file does not have a known text or application type of mime type, issue the warning
             $error_msgs[] = $mod_strings['LBL_MIME_TYPE_ERROR_1'];
             $error_msgs[] = $mod_strings['LBL_MIME_TYPE_ERROR_2'];
-            $this->_showImportError($error_msgs, $_REQUEST['import_module'], 'Step2', true, $mod_strings['LBL_OK']);
+            $this->_showImportError($error_msgs,$_REQUEST['import_module'],'Step2', true, $mod_strings['LBL_OK']);
             $mimeTypeOk = false;
         }
 
         $this->ss->assign("FILE_NAME", $uploadFileName);
 
         // Now parse the file and look for errors
-        $importFile = new ImportFile($uploadFileName, $_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), false);
+        $importFile = new ImportFile( $uploadFileName, $_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'],ENT_QUOTES), FALSE);
 
-        if ($this->shouldAutoDetectProperties($importSource)) {
+        if( $this->shouldAutoDetectProperties($importSource) )
+        {
             $GLOBALS['log']->debug("Auto detecing csv properties...");
             $autoDetectOk = $importFile->autoDetectCSVProperties();
             $importFileMap = array();
             $this->ss->assign("SOURCE", 'csv');
-            if ($autoDetectOk === false) {
+            if($autoDetectOk === FALSE)
+            {
                 //show error only if previous mime type check has passed
-                if ($mimeTypeOk) {
-                    $this->ss->assign("AUTO_DETECT_ERROR", $mod_strings['LBL_AUTO_DETECT_ERROR']);
-                }
-            } else {
+                if($mimeTypeOk){
+                     $this->ss->assign("AUTO_DETECT_ERROR",  $mod_strings['LBL_AUTO_DETECT_ERROR']);
+                 }
+            }
+            else
+            {
                 $dateFormat = $importFile->getDateFormat();
                 $timeFormat = $importFile->getTimeFormat();
                 if ($dateFormat) {
@@ -140,7 +147,9 @@ class ImportViewConfirm extends ImportView
                     $importFileMap['importlocale_timeformat'] = $timeFormat;
                 }
             }
-        } else {
+        }
+        else
+        {
             $impotMapSeed = $this->getImportMap($importSource);
             $importFile->setImportFileMap($impotMapSeed);
             $importFileMap = $impotMapSeed->getMapping($_REQUEST['import_module']);
@@ -150,10 +159,11 @@ class ImportViewConfirm extends ImportView
         $enclosure = $importFile->getFieldEnclosure();
         $hasHeader = $importFile->hasHeaderRow();
 
-        $encodeOutput = true;
+        $encodeOutput = TRUE;
         //Handle users navigating back through the wizard.
-        if (!empty($_REQUEST['previous_action']) && $_REQUEST['previous_action'] == 'Confirm') {
-            $encodeOutput = false;
+        if( !empty($_REQUEST['previous_action']) && $_REQUEST['previous_action'] == 'Confirm')
+        {
+            $encodeOutput = FALSE;
             $importFileMap = $this->overloadImportFileMapFromRequest($importFileMap);
             $delimeter = !empty($_REQUEST['custom_delimiter']) ? $_REQUEST['custom_delimiter'] : $delimeter;
             $enclosure = isset($_REQUEST['custom_enclosure']) ? $_REQUEST['custom_enclosure'] : $enclosure;
@@ -161,37 +171,38 @@ class ImportViewConfirm extends ImportView
             $hasHeader = !empty($_REQUEST['has_header']) ? $_REQUEST['has_header'] : $hasHeader;
             if ($hasHeader == 'on') {
                 $hasHeader = true;
-            } elseif ($hasHeader == 'off') {
+            } else if ($hasHeader == 'off') {
                 $hasHeader = false;
             }
         }
 
-        $this->ss->assign("IMPORT_ENCLOSURE_OPTIONS", $this->getEnclosureOptions($enclosure));
-        $this->ss->assign("IMPORT_DELIMETER_OPTIONS", $this->getDelimeterOptions($delimeter));
-        $this->ss->assign("CUSTOM_DELIMITER", $delimeter);
-        $this->ss->assign("CUSTOM_ENCLOSURE", htmlentities($enclosure, ENT_QUOTES));
+        $this->ss->assign("IMPORT_ENCLOSURE_OPTIONS",  $this->getEnclosureOptions($enclosure));
+        $this->ss->assign("IMPORT_DELIMETER_OPTIONS",  $this->getDelimeterOptions($delimeter));
+        $this->ss->assign("CUSTOM_DELIMITER",  $delimeter);
+        $this->ss->assign("CUSTOM_ENCLOSURE",  htmlentities($enclosure, ENT_QUOTES));
         $hasHeaderFlag = $hasHeader ? " CHECKED" : "";
         $this->ss->assign("HAS_HEADER_CHECKED", $hasHeaderFlag);
 
-        if (!$importFile->fileExists()) {
-            $this->_showImportError($mod_strings['LBL_CANNOT_OPEN'], $_REQUEST['import_module'], 'Step2', false, null, true);
+        if ( !$importFile->fileExists() ) {
+            $this->_showImportError($mod_strings['LBL_CANNOT_OPEN'],$_REQUEST['import_module'],'Step2', false, null, true);
             return;
         }
 
-        //Check if we will exceed the maximum number of records allowed per import.
-        $maxRecordsExceeded = false;
-        $maxRecordsWarningMessg = "";
-        $lineCount = $importFile->getNumberOfLinesInfile();
-        $maxLineCount = isset($sugar_config['import_max_records_total_limit']) ? $sugar_config['import_max_records_total_limit'] : 5000;
-        if (!empty($maxLineCount) && ($lineCount > $maxLineCount)) {
-            $maxRecordsExceeded = true;
-            $maxRecordsWarningMessg = string_format($mod_strings['LBL_IMPORT_ERROR_MAX_REC_LIMIT_REACHED'], array($lineCount, $maxLineCount));
-        }
+         //Check if we will exceed the maximum number of records allowed per import.
+         $maxRecordsExceeded = FALSE;
+         $maxRecordsWarningMessg = "";
+         $lineCount = $importFile->getNumberOfLinesInfile();
+         $maxLineCount = isset($sugar_config['import_max_records_total_limit'] ) ? $sugar_config['import_max_records_total_limit'] : 5000;
+         if( !empty($maxLineCount) && ($lineCount > $maxLineCount) )
+         {
+             $maxRecordsExceeded = TRUE;
+             $maxRecordsWarningMessg = string_format($mod_strings['LBL_IMPORT_ERROR_MAX_REC_LIMIT_REACHED'], array($lineCount, $maxLineCount) );
+         }
 
         //Retrieve a sample set of data
         $rows = $this->getSampleSet($importFile);
-        $this->ss->assign('column_count', $this->getMaxColumnsInSampleSet($rows));
-        $this->ss->assign('HAS_HEADER', $importFile->hasHeaderRow(false));
+        $this->ss->assign('column_count', $this->getMaxColumnsInSampleSet($rows) );
+        $this->ss->assign('HAS_HEADER', $importFile->hasHeaderRow(FALSE) );
         $this->ss->assign('getNumberJs', $locale->getNumberJs());
         $this->setImportFileCharacterSet($importFile, $importFileMap);
         $this->setDateTimeProperties($importFileMap);
@@ -201,12 +212,13 @@ class ImportViewConfirm extends ImportView
 
         $importMappingJS = $this->getImportMappingJS();
 
-        $this->ss->assign("SAMPLE_ROWS", $rows);
-        $JS = $this->_getJS($maxRecordsExceeded, $maxRecordsWarningMessg, $importMappingJS, $importFileMap);
+        $this->ss->assign("SAMPLE_ROWS",$rows);
+        $JS = $this->_getJS($maxRecordsExceeded, $maxRecordsWarningMessg, $importMappingJS, $importFileMap );
         $this->ss->assign("JAVASCRIPT", $JS);
         $content = $this->ss->fetch('modules/Import/tpls/confirm.tpl');
-        $this->ss->assign("CONTENT", $content);
+        $this->ss->assign("CONTENT",$content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
+        
     }
 
     private function getDelimeterOptions($selctedDelim)
@@ -218,7 +230,8 @@ class ImportViewConfirm extends ImportView
     private function getEnclosureOptions($enclosure)
     {
         $results = array();
-        foreach ($GLOBALS['app_list_strings']['import_enclosure_options'] as $k => $v) {
+        foreach ($GLOBALS['app_list_strings']['import_enclosure_options'] as $k => $v)
+        {
             $results[htmlentities($k, ENT_QUOTES)] = $v;
         }
 
@@ -233,44 +246,49 @@ class ImportViewConfirm extends ImportView
             'importlocale_dec_sep','importlocale_default_locale_name_format','custom_delimiter', 'custom_enclosure'
         );
 
-        foreach ($overideKeys as $key) {
-            if (!empty($_REQUEST[$key])) {
+        foreach($overideKeys as $key)
+        {
+            if( !empty( $_REQUEST[$key]) )
                 $importFileMap[$key] = $_REQUEST[$key];
-            }
         }
         return $importFileMap;
     }
 
     private function shouldAutoDetectProperties($importSource)
     {
-        if (empty($importSource) || $importSource == 'csv') {
-            return true;
-        }
-        return false;
+        if(empty($importSource) || $importSource == 'csv' )
+            return TRUE;
+        else
+            return FALSE;
     }
 
     private function getImportMap($importSource)
     {
-        if (strncasecmp("custom:", $importSource, 7) == 0) {
-            $id = substr($importSource, 7);
+        if ( strncasecmp("custom:",$importSource,7) == 0)
+        {
+            $id = substr($importSource,7);
             $import_map_seed = new ImportMap();
             $import_map_seed->retrieve($id, false);
 
             $this->ss->assign("SOURCE_ID", $import_map_seed->id);
             $this->ss->assign("SOURCE_NAME", $import_map_seed->name);
             $this->ss->assign("SOURCE", $import_map_seed->source);
-        } else {
+        }
+        else
+        {
             $classname = 'ImportMap' . ucfirst($importSource);
-            if (file_exists("modules/Import/maps/{$classname}.php")) {
+            if ( file_exists("modules/Import/maps/{$classname}.php") )
                 require_once("modules/Import/maps/{$classname}.php");
-            } elseif (file_exists("custom/modules/Import/maps/{$classname}.php")) {
+            elseif ( file_exists("custom/modules/Import/maps/{$classname}.php") )
                 require_once("custom/modules/Import/maps/{$classname}.php");
-            } else {
+            else
+            {
                 require_once("custom/modules/Import/maps/ImportMapOther.php");
                 $classname = 'ImportMapOther';
                 $importSource = 'other';
             }
-            if (class_exists($classname)) {
+            if ( class_exists($classname) )
+            {
                 $import_map_seed = new $classname;
                 $this->ss->assign("SOURCE", $importSource);
             }
@@ -286,6 +304,7 @@ class ImportViewConfirm extends ImportView
         $localized_name_format = isset($field_map['importlocale_default_locale_name_format'])? $field_map['importlocale_default_locale_name_format'] : $locale->getLocaleFormatMacro($current_user);
         $this->ss->assign('default_locale_name_format', $localized_name_format);
         $this->ss->assign('getNameJs', $locale->getNameJs());
+
     }
 
     private function setNumberFormatOptions($field_map = array())
@@ -295,18 +314,21 @@ class ImportViewConfirm extends ImportView
         $num_grp_sep = isset($field_map['importlocale_num_grp_sep'])? $field_map['importlocale_num_grp_sep'] : $current_user->getPreference('num_grp_sep');
         $dec_sep = isset($field_map['importlocale_dec_sep'])? $field_map['importlocale_dec_sep'] : $current_user->getPreference('dec_sep');
 
-        $this->ss->assign("NUM_GRP_SEP", (empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep));
-        $this->ss->assign("DEC_SEP", (empty($dec_sep)? $sugar_config['default_decimal_seperator'] : $dec_sep));
+        $this->ss->assign("NUM_GRP_SEP",( empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep ));
+        $this->ss->assign("DEC_SEP",( empty($dec_sep)? $sugar_config['default_decimal_seperator'] : $dec_sep ));
 
 
         $significantDigits = isset($field_map['importlocale_default_currency_significant_digits']) ? $field_map['importlocale_default_currency_significant_digits']
                                 :  $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
 
         $sigDigits = '';
-        for ($i=0; $i<=6; $i++) {
-            if ($significantDigits == $i) {
+        for($i=0; $i<=6; $i++)
+        {
+            if($significantDigits == $i)
+            {
                 $sigDigits .= '<option value="'.$i.'" selected="true">'.$i.'</option>';
-            } else {
+            } else
+            {
                 $sigDigits .= '<option value="'.$i.'">'.$i.'</option>';
             }
         }
@@ -315,24 +337,24 @@ class ImportViewConfirm extends ImportView
     }
 
 
-    private function setCurrencyOptions($field_map = array())
+    private function setCurrencyOptions($field_map = array() )
     {
         global $locale, $current_user;
         $cur_id = isset($field_map['importlocale_currency'])? $field_map['importlocale_currency'] : $locale->getPrecedentPreference('currency', $current_user);
         // get currency preference
         require_once('modules/Currencies/ListCurrency.php');
         $currency = new ListCurrency();
-        if ($cur_id) {
+        if($cur_id)
             $selectCurrency = $currency->getSelectOptions($cur_id);
-        } else {
+        else
             $selectCurrency = $currency->getSelectOptions();
-        }
 
         $this->ss->assign("CURRENCY", $selectCurrency);
 
         $currenciesVars = "";
         $i=0;
-        foreach ($locale->currencies as $id => $arrVal) {
+        foreach($locale->currencies as $id => $arrVal)
+        {
             $currenciesVars .= "currencies[{$i}] = '{$arrVal['symbol']}';\n";
             $i++;
         }
@@ -344,10 +366,11 @@ function setSymbolValue(id) {
 }
 eoq;
         return $currencySymbolsJs;
+
     }
 
 
-    private function setDateTimeProperties($field_map = array())
+    private function setDateTimeProperties( $field_map = array() )
     {
         global $current_user, $sugar_config;
 
@@ -360,9 +383,8 @@ eoq;
 
         // get list of valid timezones
         $userTZ = isset($field_map['importlocale_timezone'])? $field_map['importlocale_timezone'] : $current_user->getPreference('timezone');
-        if (empty($userTZ)) {
+        if(empty($userTZ))
             $userTZ = TimeDate::userTimezone();
-        }
 
         $this->ss->assign('TIMEZONE_CURRENT', $userTZ);
         $this->ss->assign('TIMEOPTIONS', $timeOptions);
@@ -374,7 +396,7 @@ eoq;
     {
         global $locale;
         $charset_for_import = isset($field_map['importlocale_charset']) ? $field_map['importlocale_charset'] : $importFile->autoDetectCharacterSet();
-        $charsetOptions = get_select_options_with_id($locale->getCharsetSelect(), $charset_for_import);//wdong,  bug 25927, here we should use the charset testing results from above.
+        $charsetOptions = get_select_options_with_id( $locale->getCharsetSelect(), $charset_for_import);//wdong,  bug 25927, here we should use the charset testing results from above.
         $this->ss->assign('CHARSETOPTIONS', $charsetOptions);
     }
 
@@ -382,9 +404,11 @@ eoq;
     {
         $results = array();
         $importMappings = array('ImportMapSalesforce', 'ImportMapOutlook');
-        foreach ($importMappings as $importMap) {
+        foreach($importMappings as $importMap)
+        {
             $tmpFile = "modules/Import/maps/$importMap.php";
-            if (file_exists($tmpFile)) {
+            if( file_exists($tmpFile) )
+            {
                 require_once($tmpFile);
                 $t = new $importMap();
                 $results[$t->name] = array('delim' => $t->delimiter, 'enclos' => $t->enclosure, 'has_header' => $t->has_header);
@@ -396,12 +420,12 @@ eoq;
     public function getMaxColumnsInSampleSet($sampleSet)
     {
         $maxColumns = 0;
-        foreach ($sampleSet as $v) {
-            if (count($v) > $maxColumns) {
+        foreach($sampleSet as $v)
+        {
+            if(count($v) > $maxColumns)
                 $maxColumns = count($v);
-            } else {
+            else
                 continue;
-            }
         }
 
         return $maxColumns;
@@ -410,12 +434,14 @@ eoq;
     public function getSampleSet($importFile)
     {
         $rows = array();
-        for ($i=0; $i < self::SAMPLE_ROW_SIZE; $i++) {
+        for($i=0; $i < self::SAMPLE_ROW_SIZE; $i++)
+        {
             $rows[] = $importFile->getNextRow();
         }
 
-        if (! $importFile->hasHeaderRow(false)) {
-            array_unshift($rows, array_fill(0, 1, ''));
+        if( ! $importFile->hasHeaderRow(FALSE) )
+        {
+            array_unshift($rows, array_fill(0,1,'') );
         }
         
         foreach ($rows as &$row) {
@@ -590,27 +616,26 @@ EOJAVASCRIPT;
      * @param string $module what module we were importing into
      * @param string $action what page we should go back to
      */
-    protected function _showImportError($message, $module, $action = 'Step1', $showCancel = false, $cancelLabel = null, $display = false)
+    protected function _showImportError($message,$module,$action = 'Step1',$showCancel = false, $cancelLabel = null, $display = false)
     {
-        if (!is_array($message)) {
+        if(!is_array($message)){
             $message = array($message);
         }
         $ss = new Sugar_Smarty();
         $display_msg = '';
-        foreach ($message as $m) {
+        foreach($message as $m){
             $display_msg .= '<p>'.htmlentities($m, ENT_QUOTES).'</p><br>';
         }
-        global $mod_strings;
+		global $mod_strings;
 
-        $ss->assign("MESSAGE", $display_msg);
-        $ss->assign("ACTION", $action);
-        $ss->assign("IMPORT_MODULE", $module);
+        $ss->assign("MESSAGE",$display_msg);
+        $ss->assign("ACTION",$action);
+        $ss->assign("IMPORT_MODULE",$module);
         $ss->assign("MOD", $GLOBALS['mod_strings']);
-        $ss->assign("SOURCE", "");
-        $ss->assign("SHOWCANCEL", $showCancel);
-        if (isset($_REQUEST['source'])) {
+        $ss->assign("SOURCE","");
+        $ss->assign("SHOWCANCEL",$showCancel);
+        if ( isset($_REQUEST['source']) )
             $ss->assign("SOURCE", $_REQUEST['source']);
-        }
 
         if ($cancelLabel) {
             $ss->assign('CANCELLABEL', $cancelLabel);
@@ -620,4 +645,6 @@ EOJAVASCRIPT;
 
         echo $ss->fetch('modules/Import/tpls/error.tpl');
     }
+
 }
+

@@ -44,6 +44,7 @@ require_once 'Zend/Gdata/Extension.php';
 
 class Zend_Gdata_Contacts_Extension_Name extends Zend_Gdata_Extension
 {
+
     protected $_rootNamespace = 'gd';
     protected $_rootElement = 'name';
     protected $_names = array('first_name' => '', 'last_name' => '', 'full_name' => '');
@@ -60,20 +61,21 @@ class Zend_Gdata_Contacts_Extension_Name extends Zend_Gdata_Extension
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
-        switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gd') . ':' . 'fullName':
+        switch ($absoluteNodeName)
+        {
+            case $this->lookupNamespace('gd') . ':' . 'fullName';
                 $entry = new Zend_Gdata_Entry();
                 $entry->transferFromDOM($child);
                 $this->_names['full_name'] = $entry->getText();
                 break;
 
-            case $this->lookupNamespace('gd') . ':' . 'givenName':
+            case $this->lookupNamespace('gd') . ':' . 'givenName';
                 $entry = new Zend_Gdata_Entry();
                 $entry->transferFromDOM($child);
                 $this->_names['first_name'] = $entry->getText();
                 break;
 
-             case $this->lookupNamespace('gd') . ':' . 'familyName':
+             case $this->lookupNamespace('gd') . ':' . 'familyName';
                 $entry = new Zend_Gdata_Entry();
                 $entry->transferFromDOM($child);
                 $this->_names['last_name'] = $entry->getText();
@@ -89,3 +91,4 @@ class Zend_Gdata_Contacts_Extension_Name extends Zend_Gdata_Extension
         return $this->_names;
     }
 }
+ 

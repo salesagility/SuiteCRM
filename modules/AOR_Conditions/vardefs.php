@@ -23,12 +23,12 @@
  */
 
 $dictionary['AOR_Condition'] = array(
-    'table'=>'aor_conditions',
-    'audited'=>false,
-    'duplicate_merge'=>true,
-    'fields'=>array(
+	'table'=>'aor_conditions',
+	'audited'=>false,
+	'duplicate_merge'=>true,
+	'fields'=>array (
   'aor_report_id' =>
-  array(
+  array (
     'required' => false,
     'name' => 'aor_report_id',
     'vname' => 'LBL_AOR_REPORT_ID',
@@ -46,8 +46,8 @@ $dictionary['AOR_Condition'] = array(
     'len' => 36,
     'size' => '20',
   ),
-  'condition_order' =>
-  array(
+  'condition_order' => 
+  array (
     'required' => false,
     'name' => 'condition_order',
     'vname' => 'LBL_ORDER',
@@ -79,14 +79,14 @@ $dictionary['AOR_Condition'] = array(
             'type' => 'varchar',
         ),
   'module_path' =>
-  array(
+  array (
     'name' => 'module_path',
     'type' => 'longtext',
     'vname' => 'LBL_MODULE_PATH',
     'isnull' => true,
   ),
-  'field' =>
-  array(
+  'field' => 
+  array (
     'required' => false,
     'name' => 'field',
     'vname' => 'LBL_FIELD',
@@ -107,8 +107,8 @@ $dictionary['AOR_Condition'] = array(
     'studio' => 'visible',
     'dependency' => false,
   ),
-  'operator' =>
-  array(
+  'operator' => 
+  array (
     'required' => false,
     'name' => 'operator',
     'vname' => 'LBL_OPERATOR',
@@ -131,7 +131,7 @@ $dictionary['AOR_Condition'] = array(
     'dependency' => false,
   ),
     'value_type' =>
-    array(
+    array (
     'required' => false,
     'name' => 'value_type',
     'vname' => 'LBL_VALUE_TYPE',
@@ -153,8 +153,8 @@ $dictionary['AOR_Condition'] = array(
     'studio' => 'visible',
     'dependency' => false,
   ),
-  'value' =>
-  array(
+  'value' => 
+  array (
     'required' => false,
     'name' => 'value',
     'vname' => 'LBL_VALUE',
@@ -173,7 +173,7 @@ $dictionary['AOR_Condition'] = array(
     'size' => '20',
   ),
         'parameter' =>
-            array(
+            array (
                 'required' => false,
                 'name' => 'parameter',
                 'vname' => 'LBL_PARAMETER',
@@ -191,7 +191,7 @@ $dictionary['AOR_Condition'] = array(
                 'studio' => 'visible',
             ),
   'aor_reports' =>
-  array(
+  array (
     'name' => 'aor_reports',
     'type' => 'link',
     'relationship' => 'aor_reports_aor_conditions',
@@ -200,7 +200,7 @@ $dictionary['AOR_Condition'] = array(
     'source'=>'non-db',
   ),
 ),
-    'relationships'=>array(
+	'relationships'=>array (
 ),
     'indices' => array(
         array(
@@ -209,11 +209,11 @@ $dictionary['AOR_Condition'] = array(
             'fields' => array('aor_report_id'),
         ),
     ),
-    'optimistic_locking'=>true,
-    'unified_search'=>true,
+	'optimistic_locking'=>true,
+	'unified_search'=>true,
 );
 
-if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Conditions', 'AOR_Condition', array('basic'));
+VardefManager::createVardef('AOR_Conditions','AOR_Condition', array('basic'));

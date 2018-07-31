@@ -39,11 +39,12 @@
 
 require_once('modules/Calls_Reschedule/Calls_Reschedule.php');
 
-function reschedule_history($focus, $field, $value, $view)
-{
+function reschedule_history($focus, $field, $value, $view){
+
     global $app_list_strings;
 
-    if ($view == 'DetailView') {
+    if($view == 'DetailView'){
+
         $html = '';
         $html .= '<ul id="history_list">';
 
@@ -54,21 +55,25 @@ function reschedule_history($focus, $field, $value, $view)
         $reschedule = new Calls_Reschedule();
 
         while ($row = $focus->db->fetchByAssoc($result)) {
-            $reschedule->retrieve($row['id']);
+        
+        	$reschedule->retrieve($row['id']);
                        
             $html .= '<li>'.$app_list_strings["call_reschedule_dom"][$reschedule->reason].' - '.$reschedule->date_entered.' by '.$reschedule->created_by_name.'</li>';
+
         }
 
         $html .= '</ul>';
 
         return $html;
     }
+
 }
 
-function reschedule_count($focus, $field, $value, $view)
-{
-    $query = "SELECT COUNT(*) FROM calls_reschedule WHERE call_id='".$focus->id."'";
-    $result = $focus->db->getOne($query);
+function reschedule_count($focus, $field, $value, $view){
 
-    $focus->reschedule_count = $result;
-}
+        $query = "SELECT COUNT(*) FROM calls_reschedule WHERE call_id='".$focus->id."'";
+        $result = $focus->db->getOne($query);
+
+        $focus->reschedule_count = $result;
+
+    }

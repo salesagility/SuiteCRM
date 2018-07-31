@@ -75,9 +75,8 @@ class EqualsOperator extends Operator implements OperatorInterface
      */
     public function isValid($operator)
     {
-        if (!is_string($operator)) {
-            throw new InvalidArgumentException(
-                '[JsonApi][v1][Filters][Operators][Comparators]'.
+        if(!is_string($operator)) {
+            throw new InvalidArgumentException('[JsonApi][v1][Filters][Operators][Comparators]'.
                 '[EqualsOperator][isValid][expected type to be string] $operator'
             );
         }

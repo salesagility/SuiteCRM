@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,11 +38,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$searchFields['Users'] =
-    array(
-        'user_name' => array( 'query_type'=>'default'),
-        'first_name' => array( 'query_type'=>'default'),
-        'last_name'=> array('query_type'=>'default'),
+$searchFields['Users'] = 
+	array (
+	    'user_name' => array( 'query_type'=>'default'),
+		'first_name' => array( 'query_type'=>'default'),
+		'last_name'=> array('query_type'=>'default'),
         'search_name'=> array('query_type'=>'default','db_field'=>array('first_name','last_name'),'force_unifiedsearch'=>true),
         'is_admin'=> array('query_type'=>'default', 'operator'=>'=', 'input_type' => 'checkbox'),
         'is_group'=> array('query_type'=>'default', 'operator'=>'=', 'input_type' => 'checkbox'),
@@ -65,10 +63,10 @@ $searchFields['Users'] =
                 'SELECT id FROM users where phone_other LIKE',
                 'SELECT id FROM users where phone_work LIKE',
                 'SELECT id FROM users where phone_mobile LIKE',
-                'OR' =>true
+                'OR' =>true              
             ),
             'db_field' => array(
                 'id',
             )
         ),
-    );
+	);

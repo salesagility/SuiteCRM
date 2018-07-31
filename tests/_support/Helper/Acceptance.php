@@ -6,7 +6,6 @@ namespace Helper;
 
 use Codeception\Test\Metadata;
 use Codeception\TestInterface;
-
 class Acceptance extends \Codeception\Module
 {
     public function seePageHas($text, $selector = null)

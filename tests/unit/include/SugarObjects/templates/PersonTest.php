@@ -47,6 +47,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testSetLawfulBasis()
     {
+
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('aod_indexevent');
@@ -61,7 +62,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         // Test when  basis is not a string
         $this->tester->expectException(
              new InvalidArgumentException('basis must be a string'),
-             function () use ($person) {
+             function() use ($person) {
                  $person->setLawfulBasis(1, '');
              }
         );
@@ -69,7 +70,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         // test when basis does not exist
         $this->tester->expectException(
             new InvalidArgumentException('invalid lawful basis'),
-            function () use ($person) {
+            function() use ($person) {
                 $person->setLawfulBasis('Test Invalid Basis', '');
             }
         );
@@ -91,7 +92,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         // Test when source is not a string
         $this->tester->expectException(
             new InvalidArgumentException('source for lawful basis must be a string'),
-            function () use ($person) {
+            function() use ($person) {
                 $person->setLawfulBasis('', 1);
             }
         );
@@ -99,8 +100,8 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         // test when source does not exist
         $this->tester->expectException(
             new InvalidArgumentException('invalid lawful basis source'),
-            function () use ($person) {
-                $person->setLawfulBasis('', 'Test Invalid Sources');
+            function() use ($person) {
+                $person->setLawfulBasis('','Test Invalid Sources');
             }
         );
 

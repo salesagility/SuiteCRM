@@ -41,18 +41,15 @@ class Zend_Oauth_Token_Access extends Zend_Oauth_Token
 {
     /**
      * Cast to HTTP header
-     *
-     * @param  string $url
-     * @param  Zend_Oauth_Config_ConfigInterface $config
-     * @param  null|array $customParams
-     * @param  null|string $realm
+     * 
+     * @param  string $url 
+     * @param  Zend_Oauth_Config_ConfigInterface $config 
+     * @param  null|array $customParams 
+     * @param  null|string $realm 
      * @return string
      */
     public function toHeader(
-        $url,
-        Zend_Oauth_Config_ConfigInterface $config,
-        array $customParams = null,
-        $realm = null
+        $url, Zend_Oauth_Config_ConfigInterface $config, array $customParams = null, $realm = null
     ) {
         if (!Zend_Uri::check($url)) {
             require_once 'Zend/Oauth/Exception.php';
@@ -66,10 +63,10 @@ class Zend_Oauth_Token_Access extends Zend_Oauth_Token
 
     /**
      * Cast to HTTP query string
-     *
-     * @param  mixed $url
-     * @param  Zend_Oauth_Config_ConfigInterface $config
-     * @param  null|array $params
+     * 
+     * @param  mixed $url 
+     * @param  Zend_Oauth_Config_ConfigInterface $config 
+     * @param  null|array $params 
      * @return string
      */
     public function toQueryString($url, Zend_Oauth_Config_ConfigInterface $config, array $params = null)
@@ -86,11 +83,11 @@ class Zend_Oauth_Token_Access extends Zend_Oauth_Token
 
     /**
      * Get OAuth client
-     *
-     * @param  array $oauthOptions
-     * @param  null|string $uri
-     * @param  null|array|Zend_Config $config
-     * @param  bool $excludeCustomParamsFromHeader
+     * 
+     * @param  array $oauthOptions 
+     * @param  null|string $uri 
+     * @param  null|array|Zend_Config $config 
+     * @param  bool $excludeCustomParamsFromHeader 
      * @return Zend_Oauth_Client
      */
     public function getHttpClient(array $oauthOptions, $uri = null, $config = null, $excludeCustomParamsFromHeader = true)

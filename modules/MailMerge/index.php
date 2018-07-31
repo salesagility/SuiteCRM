@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,9 +49,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $theme;
 global $mod_strings;
 global $current_language;
-if (isset($_REQUEST['step'])) {
-    $step = $_REQUEST['step'];
-} else {
-    $step = '1';
+if(isset($_REQUEST['step']))
+{
+	$step = $_REQUEST['step'];
 }
-include('modules/MailMerge/Step'. intval($step). '.php');
+else
+{
+	$step = '1';
+}
+include ('modules/MailMerge/Step'. intval($step). '.php');

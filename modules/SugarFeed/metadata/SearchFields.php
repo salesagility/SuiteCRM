@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,9 +39,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $module_name = 'SugarFeed';
-$searchFields[$module_name] =
-    array(
-        'name' => array( 'query_type'=>'default'),
-        'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
-        'assigned_user_id'=> array('query_type'=>'default'),
-    );
+$searchFields[$module_name] = 
+	array (
+		'name' => array( 'query_type'=>'default'),
+		'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+		'assigned_user_id'=> array('query_type'=>'default'),
+	);
+

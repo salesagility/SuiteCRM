@@ -51,8 +51,8 @@ class OutboundEmail
     /**
      * Necessary
      */
-    public $db;
-    public $field_defs = array(
+    var $db;
+    var $field_defs = array(
         'id',
         'name',
         'type',
@@ -118,7 +118,7 @@ class OutboundEmail
      *
      * @param String $user_id
      */
-    public function getUsersMailerForSystemOverride($user_id)
+    function getUsersMailerForSystemOverride($user_id)
     {
         $query = "SELECT id FROM outbound_email WHERE user_id = '{$user_id}' AND type = 'system-override' ORDER BY name";
         $rs = $this->db->query($query);
@@ -128,8 +128,9 @@ class OutboundEmail
             $oe->retrieve($row['id']);
 
             return $oe;
+        } else {
+            return null;
         }
-        return null;
     }
 
     /**
@@ -139,7 +140,7 @@ class OutboundEmail
      * @param string $user_name
      * @param string $user_pass
      */
-    public function createUserSystemOverrideAccount($user_id, $user_name = "", $user_pass = "")
+    function createUserSystemOverrideAccount($user_id, $user_name = "", $user_pass = "")
     {
         $ob = $this->getSystemMailerSettings();
         $ob->id = create_guid();
@@ -160,7 +161,7 @@ class OutboundEmail
      * @param unknown_type $user_id
      * @return unknown
      */
-    public function doesUserOverrideAccountRequireCredentials($user_id)
+    function doesUserOverrideAccountRequireCredentials($user_id)
     {
         $userCredentialsReq = false;
         $sys = new OutboundEmail();
@@ -177,12 +178,13 @@ class OutboundEmail
         }
 
         return $userCredentialsReq;
+
     }
 
     /**
      * Retrieves name value pairs for opts lists
      */
-    public function getUserMailers($user)
+    function getUserMailers($user)
     {
         global $app_strings;
 
@@ -269,7 +271,7 @@ class OutboundEmail
      * @param string mailer_id
      * @return object
      */
-    public function getUserMailerSettings(&$user, $mailer_id = '', $ieId = '')
+    function getUserMailerSettings(&$user, $mailer_id = '', $ieId = '')
     {
         $mailer = '';
 
@@ -310,7 +312,7 @@ class OutboundEmail
      * @param string $outbound_id
      * @return array
      */
-    public function getAssociatedInboundAccounts($user)
+    function getAssociatedInboundAccounts($user)
     {
         $query = "SELECT id,stored_options FROM inbound_email WHERE is_personal='1' AND deleted='0' AND created_by = '{$user->id}'";
         $rs = $this->db->query($query);
@@ -332,7 +334,7 @@ class OutboundEmail
      * @param string mailer_id
      * @return object
      */
-    public function getInboundMailerSettings($user, $mailer_id = '', $ieId = '')
+    function getInboundMailerSettings($user, $mailer_id = '', $ieId = '')
     {
         $mailer = '';
 
@@ -377,7 +379,7 @@ class OutboundEmail
     /**
      *  Determine if the user is allowed to use the current system outbound connection.
      */
-    public function isAllowUserAccessToSystemDefaultOutbound()
+    function isAllowUserAccessToSystemDefaultOutbound()
     {
         $allowAccess = false;
 
@@ -402,7 +404,7 @@ class OutboundEmail
     /**
      * Retrieves the system's Outbound options
      */
-    public function getSystemMailerSettings()
+    function getSystemMailerSettings()
     {
         $q = "SELECT id FROM outbound_email WHERE type = 'system'";
         $r = $this->db->query($q);
@@ -436,7 +438,7 @@ class OutboundEmail
      * @param string $id
      * @return object $this
      */
-    public function retrieve($id)
+    function retrieve($id)
     {
         require_once('include/utils/encryption_utils.php');
         $q = "SELECT * FROM outbound_email WHERE id = '{$id}'";
@@ -461,7 +463,7 @@ class OutboundEmail
         return $this;
     }
 
-    public function populateFromPost()
+    function populateFromPost()
     {
         foreach ($this->field_defs as $def) {
             if (isset($_POST[$def])) {
@@ -509,7 +511,7 @@ class OutboundEmail
     /**
      * saves an instance
      */
-    public function save()
+    function save()
     {
         require_once('include/utils/encryption_utils.php');
         if (empty($this->id)) {
@@ -527,10 +529,8 @@ class OutboundEmail
             foreach ($values as $k => $val) {
                 $updvalues[] = "{$cols[$k]} = $val";
             }
-            $q = "UPDATE outbound_email SET " . implode(
-                ', ',
-                    $updvalues
-            ) . " WHERE id = " . $this->db->quoted($this->id);
+            $q = "UPDATE outbound_email SET " . implode(', ',
+                    $updvalues) . " WHERE id = " . $this->db->quoted($this->id);
         }
 
         $this->db->query($q, true);
@@ -541,7 +541,7 @@ class OutboundEmail
     /**
      * Saves system mailer.  Presumes all values are filled.
      */
-    public function saveSystem()
+    function saveSystem()
     {
         $q = "SELECT id FROM outbound_email WHERE type = 'system'";
         $r = $this->db->query($q);
@@ -564,13 +564,14 @@ class OutboundEmail
         $this->save();
 
         $this->updateUserSystemOverrideAccounts();
+
     }
 
     /**
      * Update the user system override accounts with the system information if anything has changed.
      *
      */
-    public function updateUserSystemOverrideAccounts()
+    function updateUserSystemOverrideAccounts()
     {
         require_once('include/utils/encryption_utils.php');
         $updateFields = array(
@@ -601,7 +602,7 @@ class OutboundEmail
      * Remove all of the user override accounts.
      *
      */
-    public function removeUserOverrideAccounts()
+    function removeUserOverrideAccounts()
     {
         $query = "DELETE FROM outbound_email WHERE type = 'system-override'";
 
@@ -611,7 +612,7 @@ class OutboundEmail
     /**
      * Deletes an instance
      */
-    public function delete()
+    function delete()
     {
         if (empty($this->id)) {
             return false;
@@ -656,8 +657,9 @@ class OutboundEmail
             $oe = $this->getUsersMailerForSystemOverride($user->id);
             if (!empty($oe) && !empty($oe->id)) {
                 return $oe;
+            } else {
+                return $this->getSystemMailerSettings();
             }
-            return $this->getSystemMailerSettings();
         }
         $res = $this->db->query("SELECT id FROM outbound_email WHERE user_id = '{$user->id}' AND name='" . $this->db->quote($name) . "'");
         $a = $this->db->fetchByAssoc($res);

@@ -55,4 +55,5 @@ class Zend_Gdata_Books_Extension_BooksCategory extends
         $this->registerAllNamespaces(Zend_Gdata_Books::$namespaces);
         parent::__construct($term, $scheme, $label);
     }
+
 }

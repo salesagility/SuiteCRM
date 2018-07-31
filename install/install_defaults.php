@@ -74,7 +74,7 @@
             'setup_site_session_path' => false,
             'setup_site_custom_log_dir' => false,
             'setup_site_log_dir' => false,
-               'setup_site_log_level' =>'fatal',
+       		'setup_site_log_level' =>'fatal',
             'setup_site_specify_guid' => false,
             'setup_site_guid' => '',
             'setup_site_admin_password' => '',

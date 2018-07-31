@@ -47,6 +47,7 @@ require_once 'Zend/Gdata/Geo/Extension/GeoRssWhere.php';
  */
 class Zend_Gdata_Geo_Entry extends Zend_Gdata_Entry
 {
+
     protected $_entryClassName = 'Zend_Gdata_Geo_Entry';
 
     protected $_where = null;
@@ -91,4 +92,6 @@ class Zend_Gdata_Geo_Entry extends Zend_Gdata_Entry
         $this->_where = $value;
         return $this;
     }
+
+
 }

@@ -17,7 +17,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $emailMan = new EmailMan();
 
@@ -40,6 +40,8 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
+        
+        
     }
 
     public function testEmailMan()
@@ -83,12 +85,8 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //with parameters
         $expected = 'SELECT emailman.* , campaigns.name as campaign_name, email_marketing.name as message_name, (CASE related_type WHEN \'Contacts\' THEN LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,\'\'),\' \',IFNULL(contacts.last_name,\'\')))) WHEN \'Leads\' THEN LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,\'\'),\' \',IFNULL(leads.last_name,\'\')))) WHEN \'Accounts\' THEN accounts.name WHEN \'Users\' THEN LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,\'\'),\' \',IFNULL(users.last_name,\'\')))) WHEN \'Prospects\' THEN LTRIM(RTRIM(CONCAT(IFNULL(prospects.first_name,\'\'),\' \',IFNULL(prospects.last_name,\'\')))) END) recipient_name FROM emailman LEFT JOIN users ON users.id = emailman.related_id and emailman.related_type =\'Users\' LEFT JOIN contacts ON contacts.id = emailman.related_id and emailman.related_type =\'Contacts\' LEFT JOIN leads ON leads.id = emailman.related_id and emailman.related_type =\'Leads\' LEFT JOIN accounts ON accounts.id = emailman.related_id and emailman.related_type =\'Accounts\' LEFT JOIN prospects ON prospects.id = emailman.related_id and emailman.related_type =\'Prospects\' LEFT JOIN prospect_lists ON prospect_lists.id = emailman.list_id LEFT JOIN email_addr_bean_rel ON email_addr_bean_rel.bean_id = emailman.related_id and emailman.related_type = email_addr_bean_rel.bean_module and email_addr_bean_rel.primary_address = 1 and email_addr_bean_rel.deleted=0 LEFT JOIN campaigns ON campaigns.id = emailman.campaign_id LEFT JOIN email_marketing ON email_marketing.id = emailman.marketing_id INNER JOIN (select min(id) as id from emailman  em GROUP BY em.user_id) secondary on emailman.id = secondary.id WHERE emailman.user_id="" AND  emailman.deleted=0';
-        $actual = $emailMan->create_queue_items_query(
-            'emailman.id',
-            'emailman.user_id=""',
-            array(),
-            array('group_by' => 'emailman.user_id')
-        );
+        $actual = $emailMan->create_queue_items_query('emailman.id', 'emailman.user_id=""', array(),
+            array('group_by' => 'emailman.user_id'));
         $this->assertSame($expected, $actual);
     }
 
@@ -133,7 +131,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('campaign_log');
         $state->pushTable('aod_index');
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $emailMan = new EmailMan();
@@ -174,7 +172,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails_text');
         $state->pushTable('tracker');
         
-        // test
+        // test 
         
         $emailMan = new EmailMan();
 
@@ -198,14 +196,14 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testverify_campaign()
     {
 
-    // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
 
-        // test
+	// test
         
         
         $emailMan = new EmailMan();
@@ -223,7 +221,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsendEmail()
     {
 
-    // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('campaign_log');
@@ -231,7 +229,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails_email_addr_rel');
         $state->pushTable('tracker');
 
-        // test
+	// test
         
         
         $emailMan = new EmailMan();
@@ -258,14 +256,14 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testvalid_email_address()
     {
 
-    // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
 
-        // test
+	// test
         
         
         $emailMan = new EmailMan();
@@ -285,14 +283,14 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testis_primary_email_address()
     {
 
-    // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
 
-        // test
+	// test
         
         $emailMan = new EmailMan();
 
@@ -311,14 +309,14 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_export_query()
     {
 
-    // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
 
-        // test
+	// test
         
         $emailMan = new EmailMan();
 
@@ -342,17 +340,17 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testmark_deleted()
     {
 
-    // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
 
-        // test
+	// test
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $emailMan = new EmailMan();
@@ -375,7 +373,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_ref_email()
     {
 
-    // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('campaign_log');
@@ -388,24 +386,13 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-        // test
+	// test
         
         $emailMan = new EmailMan();
         $emailMan->test = true;
 
-        $result = $emailMan->create_ref_email(
-            0,
-            'test',
-            'test text',
-            'test html',
-            'test campaign',
-            'from@test.com',
-            '1',
-            '',
-            array(),
-            true,
-            'test from address'
-        );
+        $result = $emailMan->create_ref_email(0, 'test', 'test text', 'test html', 'test campaign', 'from@test.com',
+            '1', '', array(), true, 'test from address');
 
         //test for email id returned and mark delete for cleanup
         $this->assertEquals(36, strlen($result));

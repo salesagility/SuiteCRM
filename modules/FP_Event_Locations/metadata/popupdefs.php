@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,11 +42,14 @@ $module_name = 'FP_Event_Locations';
 $object_name = 'FP_Event_Locations';
 $_module_name = 'fp_event_locations';
 $popupMeta = array('moduleMain' => $module_name,
-                        'varName' => $object_name,
-                        'orderBy' => $_module_name.'.name',
-                        'whereClauses' =>
-                            array('name' => $_module_name . '.name',
-                                ),
-                            'searchInputs'=> array($_module_name. '_number', 'name', 'priority','status'),
-                            
-                        );
+						'varName' => $object_name,
+						'orderBy' => $_module_name.'.name',
+						'whereClauses' => 
+							array('name' => $_module_name . '.name', 
+								),
+						    'searchInputs'=> array($_module_name. '_number', 'name', 'priority','status'),
+							
+						);
+
+ 
+ 

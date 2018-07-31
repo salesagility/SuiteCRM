@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,36 +48,35 @@ require_once('include/nusoap/nusoap.php');
  * a getList and getItem method override to return results from the connector
  * @api
  */
-abstract class ext_soap extends source
-{
-    protected $_client;
+abstract class ext_soap extends source {
 
-    /**
-     * obj2array
-     * Given an object, returns the object as an Array
-     *
-     * @param $obj Object to convert to an array
-     * @return $out Array reflecting the object's properties
-     */
-    public function obj2array($obj)
-    {
-        $out = array();
-        if (empty($obj)) {
-            return $out;
-        }
+	protected $_client;
 
-        foreach ($obj as $key => $val) {
-            switch (true) {
-          case is_object($val):
-             $out[$key] = $this->obj2array($val);
-             break;
-          case is_array($val):
-             $out[$key] = $this->obj2array($val);
-             break;
-          default:
-            $out[$key] = $val;
-        }
-        }
-        return $out;
-    }
+ 	/**
+ 	 * obj2array
+ 	 * Given an object, returns the object as an Array
+ 	 *
+ 	 * @param $obj Object to convert to an array
+ 	 * @return $out Array reflecting the object's properties
+ 	 */
+ 	public function obj2array($obj) {
+	  $out = array();
+	  if(empty($obj)) {
+	     return $out;
+	  }
+
+	  foreach ($obj as $key => $val) {
+	    switch(true) {
+	      case is_object($val):
+	         $out[$key] = $this->obj2array($val);
+	         break;
+	      case is_array($val):
+	         $out[$key] = $this->obj2array($val);
+	         break;
+	      default:
+	        $out[$key] = $val;
+	    }
+	  }
+  	  return $out;
+	}
 }

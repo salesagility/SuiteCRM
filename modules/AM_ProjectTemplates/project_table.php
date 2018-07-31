@@ -19,20 +19,20 @@
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
 
-class AM_ProjectTemplatesTable
-{
+class AM_ProjectTemplatesTable {
+
     private $tasks;
     private $project_template_id;
-    public function __construct($project_template_id, $tasks)
+    public function __construct( $project_template_id, $tasks)
     {
         $this->tasks = $tasks;
-        $this->project_template_id = $project_template_id;
+		$this->project_template_id = $project_template_id;
         //draw the grid
         $this->draw($this->project_template_id, $this->tasks);
     }
 
-    public function draw($project_template_id, $tasks)
-    {
+    public function draw($project_template_id, $tasks){
+
         global $mod_strings, $app_list_strings;
 
         // Instantiate the TimeDate Class
@@ -56,52 +56,56 @@ class AM_ProjectTemplatesTable
         $task_count = 0;
 
 
-        //Get resources
-        $project_template = new AM_ProjectTemplates();
-        $project_template->retrieve($project_template_id);
-        //Get project resources (users & contacts)
-        $resources1 = $project_template->get_linked_beans('am_projecttemplates_users_1', 'User');
-        $resources2 = $project_template->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
-        //Combine resources into array of objects
-        $resource_array = array();
-        foreach ($resources1 as $user) {
-            $resource = new stdClass;
-            $resource->id = $user->id;
-            $resource->name = $user->name;
-            $resource->type = 'user';
-            $resource_array[] = $resource;
-        }
-        foreach ($resources2 as $contact) {
-            $resource = new stdClass;
-            $resource->id = $contact->id;
-            $resource->name = $contact->name;
-            $resource->type = 'contact';
-            $resource_array[] = $resource;
-        }
+		//Get resources
+		$project_template = new AM_ProjectTemplates();
+		$project_template->retrieve($project_template_id);
+		//Get project resources (users & contacts)
+		$resources1 = $project_template->get_linked_beans('am_projecttemplates_users_1','User');
+		$resources2 = $project_template->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+		//Combine resources into array of objects
+		$resource_array = array();
+		foreach($resources1 as $user){
+			$resource = new stdClass;
+			$resource->id = $user->id;
+			$resource->name = $user->name;
+			$resource->type = 'user';
+			$resource_array[] = $resource;
+		}
+		foreach($resources2 as $contact){
+			$resource = new stdClass;
+			$resource->id = $contact->id;
+			$resource->name = $contact->name;
+			$resource->type = 'contact';
+			$resource_array[] = $resource;
+		}
 
-        if (!is_null($tasks)) {
-            foreach ($tasks as $task) {
-                $task->duration_unit = "Days";
-                $task->date_start =  Date('Y-m-d');
-                $task->date_finish = Date('Y-m-d', strtotime("+" . $task->duration -1 . " days"));
+        if(!is_null($tasks)){
+            foreach($tasks as $task){
+				
+				$task->duration_unit = "Days";
+				$task->date_start =  Date('Y-m-d');
+				$task->date_finish = Date('Y-m-d', strtotime("+" . $task->duration -1 . " days"));
 
                 echo '<tr class="row_sortable">
                         <td class="project_table_cells"><input class="order_number" name="order_number[]" rel="'.$task->id.'" type="hidden" value="'.$task->order_number.'" />'.$task->task_number.'</td>';
 
-                if (ACLController::checkAccess('AM_ProjectTemplates', 'edit', true)) {
-                    echo '<td class="project_table_cells" ><span class="Task_name" ><a data = "'.$task->id.','.$task->predecessors.','.$task->relationship_type.','.$timeDate->to_display_date($task->date_start, true).','.$task->duration.','.$task->duration_unit.','.$task->assigned_user_id.','.$task->milestone_flag.','.$task->percent_complete.','.$task->description.'" onclick = "edit_task($(this));"title = "'.$mod_strings['LBL_TASK_TITLE'].'" href = "#" >'.$task->name.'</a ></span ></td>';
-                } else {
-                    echo '<td class="project_table_cells" ><span class="Task_name" >'.$task->name.'</span ></td>';
-                }
+                        if(ACLController::checkAccess('AM_ProjectTemplates', 'edit', true)){
+                            echo '<td class="project_table_cells" ><span class="Task_name" ><a data = "'.$task->id.','.$task->predecessors.','.$task->relationship_type.','.$timeDate->to_display_date($task->date_start, true).','.$task->duration.','.$task->duration_unit.','.$task->assigned_user_id.','.$task->milestone_flag.','.$task->percent_complete.','.$task->description.'" onclick = "edit_task($(this));"title = "'.$mod_strings['LBL_TASK_TITLE'].'" href = "#" >'.$task->name.'</a ></span ></td>';
+                        }
+                        else{
+                            echo '<td class="project_table_cells" ><span class="Task_name" >'.$task->name.'</span ></td>';
+                        }
 
                 echo '<td class="project_table_cells">';
 
-                foreach ($tasks as $predecessor) {
-                    if ($predecessor->task_number==$task->predecessors) {
-                        echo $predecessor->name;
-                    }
-                }
-                echo '
+                                foreach ($tasks as $predecessor){
+
+                                    if($predecessor->task_number==$task->predecessors){
+                                        echo $predecessor->name;
+                                    }
+
+                                }
+                        echo '
                         </td>
                         <!-- td class="project_table_cells">'
                             .$timeDate->to_display_date($task->date_start, true).
@@ -113,53 +117,58 @@ class AM_ProjectTemplatesTable
                             .$task->duration.' '.$app_list_strings['duration_unit_dom'][$task->duration_unit].
                         '</td>
                         <td style="min-width:105px;" class="project_table_cells" >';
-                $rflag = '0';
-                foreach ($resource_array as $resource) {
-                    if ($resource->id == $task->assigned_user_id) {
-                        if ($resource->type == 'user') {
-                            echo '<a target="blank" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->name.'</a>';
-                            $rflag = '1';
-                        } elseif ($resource->type == 'contact') {
-                            echo '<a target="blank" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->name.'</a>';
-                            $rflag = '1';
+                        $rflag = '0';
+                        foreach ($resource_array as $resource) {
+
+                           if($resource->id == $task->assigned_user_id){
+
+                               if($resource->type == 'user'){
+                                   echo '<a target="blank" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->name.'</a>';
+                                   $rflag = '1';
+                               }
+                               elseif($resource->type == 'contact'){
+                                   echo '<a target="blank" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->name.'</a>';
+                                   $rflag = '1';
+                               }
+                           }
                         }
-                    }
-                }
 
-                if ($rflag == '0') {
-                    echo $mod_strings['LBL_UNASSIGNED'];
-                }
+                        if($rflag == '0'){
+                            echo $mod_strings['LBL_UNASSIGNED'];
+                        }
 
-                if ($task->milestone_flag == '1') {
-                    $checked = $app_list_strings['checkbox_dom']['1'];
-                } else {
-                    $checked = $app_list_strings['checkbox_dom']['2'];
-                }
-                echo '</td>
+                        if($task->milestone_flag == '1'){
+                            $checked = $app_list_strings['checkbox_dom']['1'];
+                        }
+                        else {
+                            $checked = $app_list_strings['checkbox_dom']['2'];
+                        }
+                        echo '</td>
                         <td class="project_table_cells">'.$task->percent_complete.'</td>
                         <td class="project_table_cells">'.$checked.'</td>
                         <td class="project_table_cells">
                             <span id="exportToPDFSpan">';
 
-                if (ACLController::checkAccess('AM_ProjectTemplates', 'delete', true)) {
-                    echo '<button style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > Delete Task </button >';
-                } else {
-                    echo '<button disabled="disabled" style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > Delete Task </button >';
-                }
-                echo '</span>
+                                if(ACLController::checkAccess('AM_ProjectTemplates', 'delete', true)) {
+                                   echo '<button style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > Delete Task </button >';
+                                }
+                                else{
+                                   echo '<button disabled="disabled" style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > Delete Task </button >';
+                                }
+                        echo '</span>
                          </td>
                     </tr>';
 
-                $task_count++;
+                    $task_count++;
+                }
             }
-        }
 
         echo '</table>';
     }
 
     // Function for basic field validation (present and neither empty nor only white space
-    public function IsNullOrEmptyString($question)
-    {
+    public function IsNullOrEmptyString($question){
         return (!isset($question) || trim($question)==='');
     }
+
 }

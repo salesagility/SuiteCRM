@@ -1,11 +1,11 @@
 <?php
 
 $dictionary['jjwg_Address_Cache'] = array(
-    'table'=>'jjwg_address_cache',
-    'audited'=>true,
-    'fields'=>array(
-  'lat' =>
-  array(
+	'table'=>'jjwg_address_cache',
+	'audited'=>true,
+	'fields'=>array (
+  'lat' => 
+  array (
     'required' => true,
     'name' => 'lat',
     'vname' => 'LBL_LAT',
@@ -22,8 +22,8 @@ $dictionary['jjwg_Address_Cache'] = array(
     'size' => '20',
     'precision' => '8',
   ),
-  'lng' =>
-  array(
+  'lng' => 
+  array (
     'required' => true,
     'name' => 'lng',
     'vname' => 'LBL_LNG',
@@ -40,8 +40,8 @@ $dictionary['jjwg_Address_Cache'] = array(
     'size' => '20',
     'precision' => '8',
   ),
-  'name' =>
-  array(
+  'name' => 
+  array (
     'name' => 'name',
     'vname' => 'LBL_NAME',
     'type' => 'name',
@@ -60,11 +60,12 @@ $dictionary['jjwg_Address_Cache'] = array(
     'size' => '20',
   ),
 ),
-    'relationships'=>array(
+	'relationships'=>array (
 ),
-    'optimistic_locking'=>true,
+	'optimistic_locking'=>true,
 );
-if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('jjwg_Address_Cache', 'jjwg_Address_Cache', array('basic','assignable'));
+VardefManager::createVardef('jjwg_Address_Cache','jjwg_Address_Cache', array('basic','assignable'));
+

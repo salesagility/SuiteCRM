@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,14 +43,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'OAuthKeys';
 $listViewDefs[$module_name] = array(
-    'NAME' => array(
-        'width' => '32',
-        'label' => 'LBL_NAME',
-        'default' => true,
+	'NAME' => array(
+		'width' => '32',
+		'label' => 'LBL_NAME',
+		'default' => true,
         'link' => true,
     ),
-    'C_KEY' => array(
-        'width' => '40',
-        'label' => 'LBL_CONSKEY',
+	'C_KEY' => array(
+		'width' => '40',
+		'label' => 'LBL_CONSKEY',
         'default' => true),
 );

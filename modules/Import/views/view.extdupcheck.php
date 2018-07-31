@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -55,18 +53,18 @@ class ImportViewExtdupcheck extends ImportView
 {
     protected $pageTitleKey = 'LBL_STEP_DUP_TITLE';
 
-    /**
+ 	/**
      * @see SugarView::display()
      */
-    public function display()
+ 	public function display()
     {
         global $mod_strings, $app_strings, $current_user;
         global $sugar_config;
 
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
-        $this->ss->assign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" alt="'.$app_strings['LNK_DELETE'].'" border="0"'));
-        $this->ss->assign("PUBLISH_INLINE_PNG", SugarThemeRegistry::current()->getImage('publish_inline', 'align="absmiddle" alt="'.$mod_strings['LBL_PUBLISH'].'" border="0"'));
-        $this->ss->assign("UNPUBLISH_INLINE_PNG", SugarThemeRegistry::current()->getImage('unpublish_inline', 'align="absmiddle" alt="'.$mod_strings['LBL_UNPUBLISH'].'" border="0"'));
+        $this->ss->assign("DELETE_INLINE_PNG",  SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" alt="'.$app_strings['LNK_DELETE'].'" border="0"'));
+        $this->ss->assign("PUBLISH_INLINE_PNG",  SugarThemeRegistry::current()->getImage('publish_inline','align="absmiddle" alt="'.$mod_strings['LBL_PUBLISH'].'" border="0"'));
+        $this->ss->assign("UNPUBLISH_INLINE_PNG",  SugarThemeRegistry::current()->getImage('unpublish_inline','align="absmiddle" alt="'.$mod_strings['LBL_UNPUBLISH'].'" border="0"'));
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
         $this->ss->assign("JAVASCRIPT", $this->_getJS());
         $this->ss->assign("CURRENT_STEP", $this->currentStep);
@@ -77,8 +75,8 @@ class ImportViewExtdupcheck extends ImportView
 
         $dupe_disabled =  array();
 
-        foreach ($dupe_indexes as $dk=>$dv) {
-            $dupe_disabled[] =  array("dupeVal" => $dk, "label" => $dv);
+        foreach($dupe_indexes as $dk=>$dv){
+                $dupe_disabled[] =  array("dupeVal" => $dk, "label" => $dv);
         }
 
 
@@ -90,7 +88,7 @@ class ImportViewExtdupcheck extends ImportView
         $this->ss->assign("RECORDTHRESHOLD", $sugar_config['import_max_records_per_file']);
 
         $content = $this->ss->fetch('modules/Import/tpls/extdupcheck.tpl');
-        $this->ss->assign("CONTENT", $content);
+        $this->ss->assign("CONTENT",$content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
     }
 

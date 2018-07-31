@@ -16,7 +16,7 @@ class TodayTest extends SuiteCRM\StateCheckerUnitAbstract
     public function _before()
     {
         parent::_before();
-        if (self::$filter === null) {
+        if(self::$filter === null) {
             self::$filter = new \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByPreMadeFilters\Today();
         }
     }
@@ -29,7 +29,7 @@ class TodayTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testGetByPreMadeFilter()
     {
         $today = new \DateTime();
-        $today = $today->setTime(0, 0, 0);
+        $today = $today->setTime(0,0,0);
         $expected = 'date_entered >= "'. $today->format(DATE_ATOM) . '"';
         $actual = self::$filter->getByPreMadeFilter();
         $this->assertEquals(
@@ -37,4 +37,5 @@ class TodayTest extends SuiteCRM\StateCheckerUnitAbstract
             $actual
         );
     }
+
 }

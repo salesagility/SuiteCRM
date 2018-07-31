@@ -37,145 +37,141 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class MBVardefs
-{
-    public $templates = array();
-    public $iTemplates = array();
-    public $vardefs = array();
-    public $vardef = array();
-    public $path = '';
-    public $name = '';
-    public $errors = array();
+class MBVardefs{
+	var $templates = array();
+	var $iTemplates = array();
+	var $vardefs = array();
+	var $vardef = array();
+	var $path = '';
+	var $name = '';
+	var $errors = array();
 
-    public function __construct($name, $path, $key_name)
-    {
-        $this->path = $path;
-        $this->name = $name;
-        $this->key_name = $key_name;
-        $this->load();
-    }
+	function __construct($name, $path, $key_name){
+		$this->path = $path;
+		$this->name = $name;
+		$this->key_name = $key_name;
+		$this->load();
+	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function MBVardefs($name, $path, $key_name)
-    {
+    function MBVardefs($name, $path, $key_name){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($name, $path, $key_name);
     }
 
 
-    public function loadTemplate($by_group, $template, $file)
-    {
-        $module = $this->name;
-        $table_name = $this->name;
-        $object_name = $this->key_name;
-        $_object_name = strtolower($this->key_name);
+	function loadTemplate($by_group, $template, $file){
+		$module = $this->name;
+		$table_name = $this->name;
+		$object_name = $this->key_name;
+		$_object_name = strtolower($this->key_name);
 
-        // required by the vardef template for team security in SugarObjects
-        $table_name = strtolower($module);
+		// required by the vardef template for team security in SugarObjects
+		$table_name = strtolower($module);
 
-        if (file_exists($file)) {
-            include($file);
-            if (isset($vardefs)) {
-                if ($by_group) {
+		if(file_exists($file)){
+			include($file);
+            if (isset($vardefs))
+            {
+                if($by_group){
                     $this->vardefs['fields'] [$template]= $vardefs['fields'];
-                } else {
+                }else{
                     $this->vardefs['fields']= array_merge($this->vardefs['fields'], $vardefs['fields']);
-                    if (!empty($vardefs['relationships'])) {
+                    if(!empty($vardefs['relationships'])){
                         $this->vardefs['relationships']= array_merge($this->vardefs['relationships'], $vardefs['relationships']);
                     }
                 }
             }
-        }
+		}
         //Bug40450 - Extra 'Name' field in a File type module in module builder
-        if (array_key_exists('file', $this->templates)) {
+        if(array_key_exists('file', $this->templates))
+        {
             unset($this->vardefs['fields']['name']);
             unset($this->vardefs['fields']['file']['name']);
         }
-    }
 
-    public function mergeVardefs($by_group=false)
+	}
+
+	function mergeVardefs($by_group=false){
+		$this->vardefs = array(
+					'fields'=>array(),
+					'relationships'=>array(),
+		);
+//		$object_name = $this->key_name;
+//		$_object_name = strtolower($this->name);
+		$module_name = $this->name;
+		$this->loadTemplate($by_group,'basic',  MB_TEMPLATES . '/basic/vardefs.php');
+		foreach($this->iTemplates as $template=>$val){
+			$file = MB_IMPLEMENTS . '/' . $template . '/vardefs.php';
+			$this->loadTemplate($by_group,$template, $file);
+		}
+		foreach($this->templates as $template=>$val){
+			if($template == 'basic')continue;
+			$file = MB_TEMPLATES . '/' . $template . '/vardefs.php';
+			$this->loadTemplate($by_group,$template, $file);
+		}
+
+		if($by_group){
+			$this->vardefs['fields'][$this->name] = $this->vardef['fields'];
+		}else{
+			$this->vardefs['fields'] = array_merge($this->vardefs['fields'], $this->vardef['fields']);
+		}
+	}
+
+	function updateVardefs($by_group=false){
+		$this->mergeVardefs($by_group);
+	}
+
+
+	function getVardefs(){
+		return $this->vardefs;
+	}
+
+	function getVardef(){
+		return $this->vardef;
+	}
+
+
+    function addFieldVardef($vardef)
     {
-        $this->vardefs = array(
-                    'fields'=>array(),
-                    'relationships'=>array(),
-        );
-        //		$object_name = $this->key_name;
-        //		$_object_name = strtolower($this->name);
-        $module_name = $this->name;
-        $this->loadTemplate($by_group, 'basic', MB_TEMPLATES . '/basic/vardefs.php');
-        foreach ($this->iTemplates as $template=>$val) {
-            $file = MB_IMPLEMENTS . '/' . $template . '/vardefs.php';
-            $this->loadTemplate($by_group, $template, $file);
-        }
-        foreach ($this->templates as $template=>$val) {
-            if ($template == 'basic') {
-                continue;
-            }
-            $file = MB_TEMPLATES . '/' . $template . '/vardefs.php';
-            $this->loadTemplate($by_group, $template, $file);
-        }
-
-        if ($by_group) {
-            $this->vardefs['fields'][$this->name] = $this->vardef['fields'];
-        } else {
-            $this->vardefs['fields'] = array_merge($this->vardefs['fields'], $this->vardef['fields']);
-        }
-    }
-
-    public function updateVardefs($by_group=false)
-    {
-        $this->mergeVardefs($by_group);
-    }
-
-
-    public function getVardefs()
-    {
-        return $this->vardefs;
-    }
-
-    public function getVardef()
-    {
-        return $this->vardef;
-    }
-
-
-    public function addFieldVardef($vardef)
-    {
-        if (!isset($vardef['default']) || strlen($vardef['default']) == 0) {
+        if(!isset($vardef['default']) || strlen($vardef['default']) == 0)
+        {
             unset($vardef['default']);
         }
         $this->vardef['fields'][$vardef['name']] = $vardef;
     }
 
-    public function deleteField($field)
-    {
-        unset($this->vardef['fields'][$field->name]);
-    }
+	function deleteField($field){
+		unset($this->vardef['fields'][$field->name]);
+	}
 
-    public function save()
-    {
-        $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
-        write_array_to_file('vardefs', $this->vardef, $this->path . '/vardefs.php', 'w', $header);
-    }
+	function save(){
+		$header = file_get_contents('modules/ModuleBuilder/MB/header.php');
+		write_array_to_file('vardefs', $this->vardef, $this->path . '/vardefs.php','w', $header);
+	}
 
-    public function build($path)
-    {
-        $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
-        write_array_to_file('dictionary["' . $this->name . '"]', $this->getVardefs(), $path . '/vardefs.php', 'w', $header);
-    }
-    public function load()
-    {
-        $this->vardef = array('fields'=>array(), 'relationships'=>array());
-        if (file_exists($this->path . '/vardefs.php')) {
-            include($this->path. '/vardefs.php');
-            $this->vardef = $vardefs;
-        }
-    }
+	function build($path){
+		$header = file_get_contents('modules/ModuleBuilder/MB/header.php');
+		write_array_to_file('dictionary["' . $this->name . '"]', $this->getVardefs(), $path . '/vardefs.php', 'w', $header);
+	}
+	function load(){
+		$this->vardef = array('fields'=>array(), 'relationships'=>array());
+		if(file_exists($this->path . '/vardefs.php')){
+			include($this->path. '/vardefs.php');
+			$this->vardef = $vardefs;
+		}
+	}
+
+
+
+
+
 }

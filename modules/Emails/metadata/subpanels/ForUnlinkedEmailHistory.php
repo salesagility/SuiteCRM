@@ -45,32 +45,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $subpanel_layout = array(
     'where' => '',
 
-    'fill_in_additional_fields'	=> true,
-    'list_fields' => array(
-        'object_image'=>array(
-            'vname' => 'LBL_OBJECT_IMAGE',
+	'fill_in_additional_fields'	=> true,
+	'list_fields' => array(
+		'object_image'=>array(
+			'vname' => 'LBL_OBJECT_IMAGE',
             'widget_class'			=> 'SubPanelIcon',
-            'width'					=> '2%',
-        ),
-        'name' => array(
-             'vname'				=> 'LBL_LIST_SUBJECT',
-             'widget_class'			=> 'SubPanelDetailViewLink',
-             'width'				=> '30%',
+ 		 	'width'					=> '2%',
+		),
+		'name' => array(
+			 'vname'				=> 'LBL_LIST_SUBJECT',
+			 'widget_class'			=> 'SubPanelDetailViewLink',
+			 'width'				=> '30%',
              'parent_info'          => true,
-        ),
-        'status' => array(
-             'vname'				=> 'LBL_LIST_STATUS',
-             'width'				=> '15%',
-        ),
-        'category_id' => array(
-            'vname'				=> 'LBL_LIST_CATEGORY',
-            'width'				=> '15%',
-        ),
-        'reply_to_status' => array(
-             'usage'				=> 'query_only',
+		),
+		'status' => array(
+			 'vname'				=> 'LBL_LIST_STATUS',
+			 'width'				=> '15%',
+		),
+		'category_id' => array(
+			'vname'				=> 'LBL_LIST_CATEGORY',
+			'width'				=> '15%',
+		),
+		'reply_to_status' => array(
+			 'usage'				=> 'query_only',
              'force_exists'			=> true,
-        ),
-        'contact_name'=>array(
+		),
+		'contact_name'=>array(
              'widget_class'         => 'SubPanelDetailViewLink',
              'target_record_key'    => 'contact_id',
              'target_module'        => 'Contacts',

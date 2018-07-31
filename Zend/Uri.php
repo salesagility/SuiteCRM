@@ -41,7 +41,7 @@ abstract class Zend_Uri
      *
      * @var array
      */
-    protected static $_config = array(
+    static protected $_config = array(
         'allow_unwise' => false
     );
 
@@ -164,7 +164,7 @@ abstract class Zend_Uri
      *
      * @param Zend_Config|array $config
      */
-    public static function setConfig($config)
+    static public function setConfig($config)
     {
         if ($config instanceof Zend_Config) {
             $config = $config->toArray();

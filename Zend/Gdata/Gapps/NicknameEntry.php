@@ -58,6 +58,7 @@ require_once 'Zend/Gdata/Gapps/Extension/Nickname.php';
  */
 class Zend_Gdata_Gapps_NicknameEntry extends Zend_Gdata_Entry
 {
+
     protected $_entryClassName = 'Zend_Gdata_Gapps_NicknameEntry';
 
     /**
@@ -119,12 +120,12 @@ class Zend_Gdata_Gapps_NicknameEntry extends Zend_Gdata_Entry
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
 
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('apps') . ':' . 'login':
+            case $this->lookupNamespace('apps') . ':' . 'login';
                 $login = new Zend_Gdata_Gapps_Extension_Login();
                 $login->transferFromDOM($child);
                 $this->_login = $login;
                 break;
-            case $this->lookupNamespace('apps') . ':' . 'nickname':
+            case $this->lookupNamespace('apps') . ':' . 'nickname';
                 $nickname = new Zend_Gdata_Gapps_Extension_Nickname();
                 $nickname->transferFromDOM($child);
                 $this->_nickname = $nickname;
@@ -184,4 +185,5 @@ class Zend_Gdata_Gapps_NicknameEntry extends Zend_Gdata_Entry
         $this->_nickname = $value;
         return $this;
     }
+
 }

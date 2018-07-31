@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,16 +47,20 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
      * @param bool $refresh cache
      * @return array list of beans
      */
-    public static function getCurrenciesList($refresh = false)
+    static public function getCurrenciesList($refresh = false)
     {
         static $list = false;
-        if ($list === false || $refresh == true) {
+        if ($list === false || $refresh == true)
+        {
             $currency = new Currency();
             $list = $currency->get_full_list('name');
             $currency->retrieve('-99');
-            if (is_array($list)) {
+            if (is_array($list))
+            {
                 $list = array_merge(array($currency), $list);
-            } else {
+            }
+            else
+            {
                 $list = array($currency);
             }
         }
@@ -75,7 +77,8 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
     {
         static $currencies;
         $value = $this->_get_list_value($layout_def);
-        if (empty($currencies[$value])) {
+        if (empty($currencies[$value]))
+        {
             $currency = new Currency();
             $currency->retrieve($value);
             $currencies[$value] = $currency->symbol . ' ' . $currency->iso4217;
@@ -93,20 +96,27 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
     {
         $tmpList = self::getCurrenciesList();
         $list = array();
-        foreach ($tmpList as $bean) {
+        foreach ($tmpList as $bean)
+        {
             $list[$bean->id] = $bean->symbol . ' ' . $bean->iso4217;
         }
 
         $field_def = $this->reporter->all_fields[$layout_def['column_key']];
-        if (!empty($field_def['sort_on'])) {
+        if (!empty ($field_def['sort_on']))
+        {
             $order_by = $layout_def['table_alias'].".".$field_def['sort_on'];
-        } else {
+        }
+        else
+        {
             $order_by = $this->_get_column_select($layout_def);
         }
 
-        if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
+        if (empty ($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a')
+        {
             $order_dir = "ASC";
-        } else {
+        }
+        else
+        {
             $order_dir = "DESC";
         }
         return $this->reporter->db->orderByEnum($order_by, $list, $order_dir);

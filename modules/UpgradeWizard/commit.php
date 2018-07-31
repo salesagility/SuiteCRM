@@ -387,26 +387,26 @@ eoq;
     }
     logThis('finished check to see if current_db_version in $_SESSION equals target_db_version in $_SESSION');
 
-    //Look for chance folder and delete it if found. Bug 23595
+//Look for chance folder and delete it if found. Bug 23595
     if (function_exists('deleteChance')) {
         logThis('running deleteChance() function');
         @deleteChance();
     }
 
-    //also add the cache cleaning here.
+//also add the cache cleaning here.
     if (function_exists('deleteCache')) {
         logThis('running deleteCache() function');
         @deleteCache();
     }
 
-    //add tabs
+//add tabs
     $from_dir = remove_file_extension($install_file).'-restore';
     logThis('call addNewSystemTabsFromUpgrade('.$from_dir.')');
     addNewSystemTabsFromUpgrade($from_dir);
     logThis('finished addNewSystemTabsFromUpgrade');
 
-    //run fix on dropdown lists that may have been incorrectly named
-    //fix_dropdown_list();
+//run fix on dropdown lists that may have been incorrectly named
+//fix_dropdown_list();
 
     ///////////////////////////////////////////////////////////////////////////////
     ////	REGISTER UPGRADE
