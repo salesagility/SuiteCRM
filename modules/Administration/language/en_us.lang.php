@@ -915,10 +915,22 @@ $mod_strings = array(
     // SearchWrapper
     'LBL_SEARCH_HEADER' => 'Search',
     'LBL_SEARCH_HEADER_DESC' => 'Manage your search preferences.',
-    'LBL_SEARCH_WRAPPER' => 'Search 2.0',
-    'LBL_SEARCH_WRAPPER_DESC' => 'Manager your search preferences.',
+    'LBL_SEARCH_WRAPPER' => 'Search (New)',
+    'LBL_SEARCH_WRAPPER_DESC' => 'Manage your search preferences.',
     'LBL_ELASTIC_SEARCH' => 'Elasticsearch',
     'LBL_ELASTIC_SEARCH_SETTINGS' => 'Elasticsearch',
-    'LBL_ELASTIC_SEARCH_SETTINGS_DESC' => 'Configure Elasticsearch preferences.'
+    'LBL_ELASTIC_SEARCH_SETTINGS_DESC' => 'Configure Elasticsearch preferences.',
+
+    'LBL_SEARCH_CONTROLLER' => 'Search Controller',
+    'LBL_SEARCH_CONTROLLER_HELP' => 'Set up the controller handling the search from the top search bar.',
+
+    'LBL_SEARCH_ENGINE' => 'Search Engine',
+    'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search wrapper.',
+
+    'LBL_SEARCH_ENGINE_MODULES' => 'Search Modules',
+    'LBL_SEARCH_ENGINE_MODULES_HELP' => 'Search Modules',
+
+    'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
+    'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine'
 );
 
