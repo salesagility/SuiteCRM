@@ -1,6 +1,7 @@
-## SuiteCRM 7.10
+## SuiteCRM 7.10.7
 
-[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=develop)](https://travis-ci.org/salesagility/SuiteCRM)
+[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
+[![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
 
 
 ### What's in this repository ###
@@ -42,7 +43,7 @@ SuiteCRM in your language: [ Download and install language packs from][suitecrm_
 
 See our [Code of Conduct][code_of_conduct] on our Wiki.
 
-[code_of_conduct]: https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM#Code_of_Conduct
+[code_of_conduct]: https://docs.suitecrm.com/community/code-of-conduct/
 
 
 ### Helpful links for the community ###
@@ -66,7 +67,7 @@ The following links offer various ways to view, contribute and collaborate to th
 
 [ View the Community Roadmap here and get involved][suitecrm_roadmap]
 
-[suitecrm_roadmap]: https://suitecrm.com/community/roadmap
+[suitecrm_roadmap]: https://suitecrm.com/roadmap
 
 [More detailed SuiteCRM Community LTS Roadmap][suitecrm_detailed_roadmap]
 

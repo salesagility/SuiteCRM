@@ -1,7 +1,7 @@
 <?php
 
 
-class SugarBeanRelationshipType extends \Codeception\Test\Unit
+class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -13,22 +13,19 @@ class SugarBeanRelationshipType extends \Codeception\Test\Unit
      */
     private static $sugarBeanRelationShipType;
 
-    protected function _before()
+    public function _before()
     {
-        if(self::$sugarBeanRelationShipType === null) {
+        parent::_before();
+        if (self::$sugarBeanRelationShipType === null) {
             self::$sugarBeanRelationShipType = new \SuiteCRM\API\JsonApi\v1\Enumerator\SugarBeanRelationshipType();
         }
-    }
-
-    protected function _after()
-    {
     }
 
     public function testFromSugarBeanLinkToOne()
     {
         $obj = new \stdClass();
-        $obj->getType = function() {
-          return "one";
+        $obj->getType = function () {
+            return "one";
         };
 
         $expected = self::$sugarBeanRelationShipType::TO_ONE;
@@ -40,7 +37,7 @@ class SugarBeanRelationshipType extends \Codeception\Test\Unit
     public function testFromSugarBeanLinkToMany()
     {
         $obj = new \stdClass();
-        $obj->getType = function() {
+        $obj->getType = function () {
             return "one";
         };
 

@@ -46,7 +46,7 @@ global $sugar_config, $current_user;
 
 $bean = BeanFactory::getBean($_REQUEST['module']);
 
-if(!$bean){
+if (!$bean) {
     sugar_die("Invalid Module");
 }
 
@@ -59,9 +59,9 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
     $mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_post']);
     $ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
     $query = $bean->create_export_query($order_by, $ret_array['where'], $ret_array['join']);
-    $result = $GLOBALS['db']->query($query, true);
+    $result = DBManagerFactory::getInstance()->query($query, true);
     $uids = array();
-    while ($val = $GLOBALS['db']->fetchByAssoc($result, false)) {
+    while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result, false)) {
         array_push($recordIds, $val['id']);
     }
 } else {
@@ -69,19 +69,21 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
 }
 
 
-$template = BeanFactory::getBean('AOS_PDF_Templates',$_REQUEST['templateID']);
+$template = BeanFactory::getBean('AOS_PDF_Templates', $_REQUEST['templateID']);
 
-if(!$template){
+if (!$template) {
     sugar_die("Invalid Template");
 }
 
 $file_name = str_replace(" ", "_", $template->name) . ".pdf";
 
-$pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+$format = $template->page_size . ($template->orientation === 'Landscape' ? '-L' : '');
+
+$pdf = new mPDF('en', $format, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
 
 foreach ($recordIds as $recordId) {
     $bean->retrieve($recordId);
-    $pdf_history = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+    $pdf_history = new mPDF('en', $format, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
 
     $object_arr = array();
     $object_arr[$bean->module_dir] = $bean->id;
@@ -115,11 +117,13 @@ foreach ($recordIds as $recordId) {
     );
 
     $text = preg_replace($search, $replace, $template->description);
-    $text = preg_replace_callback('/\{DATE\s+(.*?)\}/',
+    $text = preg_replace_callback(
+        '/\{DATE\s+(.*?)\}/',
         function ($matches) {
             return date($matches[1]);
         },
-        $text);
+        $text
+    );
     $header = preg_replace($search, $replace, $template->pdfheader);
     $footer = preg_replace($search, $replace, $template->pdffooter);
 
@@ -162,7 +166,6 @@ foreach ($recordIds as $recordId) {
         $pdf->writeHTML($printable);
 
         rename($sugar_config['upload_dir'] . 'nfile.pdf', $sugar_config['upload_dir'] . $note->id);
-
     } catch (mPDF_exception $e) {
         echo $e;
     }

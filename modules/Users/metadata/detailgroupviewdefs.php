@@ -38,9 +38,9 @@
  ********************************************************************************/
 
 $viewdefs['Users']['DetailView'] = array(
-    'templateMeta' => array('maxColumns' => '2', 
+    'templateMeta' => array('maxColumns' => '2',
                             'widths' => array(
-                                array('label' => '10', 'field' => '30'), 
+                                array('label' => '10', 'field' => '30'),
                                 array('label' => '10', 'field' => '30')
                             ),
                             'form' => array(
@@ -48,8 +48,8 @@ $viewdefs['Users']['DetailView'] = array(
                                 'footerTpl'=>'modules/Users/tpls/DetailViewFooter.tpl',
                             ),
                       ),
-    'panels' => array (
-        'LBL_USER_INFORMATION' => array (
+    'panels' => array(
+        'LBL_USER_INFORMATION' => array(
             array('user_name',
                   array('name' => 'last_name',
                         'label' => 'LBL_LIST_NAME',

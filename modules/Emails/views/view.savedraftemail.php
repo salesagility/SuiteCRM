@@ -40,7 +40,7 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
 class EmailsViewSaveDraftEmail extends ViewAjax
@@ -61,7 +61,7 @@ class EmailsViewSaveDraftEmail extends ViewAjax
         global $app_strings;
         $response = array();
 
-        if(empty($this->bean->status)) {
+        if (empty($this->bean->status)) {
             $this->bean->status = $_REQUEST['status'];
         }
 
@@ -93,5 +93,4 @@ class EmailsViewSaveDraftEmail extends ViewAjax
 
         echo json_encode($response);
     }
-
 }

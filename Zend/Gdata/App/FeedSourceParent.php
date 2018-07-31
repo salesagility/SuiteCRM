@@ -263,5 +263,4 @@ abstract class Zend_Gdata_App_FeedSourceParent extends Zend_Gdata_App_FeedEntryP
         $this->_subtitle = $value;
         return $this;
     }
-
 }

@@ -76,9 +76,8 @@ class Favorites extends Basic
             $favorite_record->save();
 
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -88,7 +87,9 @@ class Favorites extends Basic
      */
     public function getFavoriteID($module, $record_id)
     {
-        global $db, $current_user;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
+        
         $query = "SELECT id FROM favorites WHERE parent_id= '" . $record_id . "' AND parent_type = '" . $module . "' AND assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
 
         return $db->getOne($query);
@@ -100,7 +101,8 @@ class Favorites extends Basic
      */
     public function getCurrentUserSidebarFavorites($id = null)
     {
-        global $db, $current_user;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
 
         $return_array = array();
 
@@ -115,7 +117,7 @@ class Favorites extends Basic
         $i = 0;
         while ($row = $db->fetchByAssoc($result)) {
             $bean = BeanFactory::getBean($row['parent_type'], $row['parent_id']);
-            if($bean) {
+            if ($bean) {
                 $return_array[$i]['item_summary'] = $bean->name;
                 $return_array[$i]['item_summary_short'] = to_html(getTrackerSubstring($bean->name));
                 $return_array[$i]['id'] = $row['parent_id'];
@@ -131,7 +133,6 @@ class Favorites extends Basic
 
                 ++$i;
             }
-
         }
 
         return $return_array;
@@ -140,10 +141,10 @@ class Favorites extends Basic
     /**
      * @parm string $module
      * @return array Representing an array of \SuiteCRM\API\JsonApi\Resource\Resource
-     */ 
+     */
     public function getCurrentUserFavoritesForModule($module)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         global $current_user;
         global $moduleList;
 
@@ -188,10 +189,11 @@ class Favorites extends Basic
         return $response;
     }
 
-    public function save($notify = false) {
+    public function save($notify = false)
+    {
         global $current_user;
 
-        if(empty($this->assigned_user_id)) {
+        if (empty($this->assigned_user_id)) {
             $this->assigned_user_id = $current_user->id;
         }
         parent::save($notify);
@@ -205,7 +207,7 @@ class Favorites extends Basic
         switch ($interface) {
             case 'ACL':
                 return false;
-            default :
+            default:
                 return false;
         }
     }

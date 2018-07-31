@@ -66,6 +66,9 @@ class SugarEmailAddress extends SugarBean
     const COI_STAT_OPT_IN = 'opt-in';
     const COI_STAT_CONFIRMED_OPT_IN = 'confirmed-opt-in';
 
+    /** @var boolean $tracker_visibility */
+    public $tracker_visibility = false;
+    
     /**
      * @var string $table_name
      */
@@ -644,11 +647,13 @@ class SugarEmailAddress extends SugarBean
                     $emailId = isset($address['email_address_id'])
                     && isset($current_links[$address['email_address_id']])
                         ? $address['email_address_id'] : null;
-                    $emailId = $this->AddUpdateEmailAddress($address['email_address'],
+                    $emailId = $this->AddUpdateEmailAddress(
+                        $address['email_address'],
                         $address['invalid_email'],
                         $address['opt_out'],
                         $emailId,
-                        !is_null($optIn) ? $address['confirm_opt_in_flag'] : null);// this will save the email address if not found
+                        !is_null($optIn) ? $address['confirm_opt_in_flag'] : null
+                    );// this will save the email address if not found
 
                     //verify linkage and flags.
                     $upd_eabr = "";
@@ -765,9 +770,8 @@ class SugarEmailAddress extends SugarBean
         }
         if (count($returnArray) > 0) {
             return $returnArray;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -847,6 +851,7 @@ class SugarEmailAddress extends SugarBean
         $post_from_email_address_widget = (isset($_REQUEST[$module . '_email_widget_id']));
         $primaryValue = $primary;
         $widgetCount = 0;
+        $widget_id = '';
         $hasEmailValue = false;
         $email_ids = array();
 
@@ -865,7 +870,6 @@ class SugarEmailAddress extends SugarBean
             if (empty($widget_id)) {
                 $GLOBALS['log']->debug('Widget not found, so it should be an update and not a create');
             }
-
 
             //Iterate over the widgets for this module, in case there are multiple email widgets for this module
             while (isset($_REQUEST[$module . $widget_id . 'emailAddress' . $widgetCount])) {
@@ -998,8 +1002,8 @@ class SugarEmailAddress extends SugarBean
                                     $email_id = (array_key_exists($k, $email_ids)) ? $email_ids[$k] : null;
                                     $primary = ($k == $primaryValue) ? true : false;
                                     $replyTo = ($k == $replyToField) ? true : false;
-                                    $invalid = (in_array($k, $invalidValues)) ? true : false;
-                                    $optOut = (in_array($k, $optOutValues)) ? true : false;
+                                    $invalid = (in_array($k, (array)$invalidValues)) ? true : false;
+                                    $optOut = (in_array($k, (array)$optOutValues)) ? true : false;
                                     $optIn = (in_array($k, $optInValues)) ? true : false;
                                     $this->addAddress(
                                         trim($new_addrs[$k]),
@@ -1177,18 +1181,17 @@ class SugarEmailAddress extends SugarBean
 
         if (!empty($a) && !empty($a['id'])) {
             return $a['id'];
-        } else {
-            $guid = '';
-            if (!empty($address)) {
-                $guid = create_guid();
-                $now = TimeDate::getInstance()->nowDb();
-                $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted)
-                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0)";
-                $ra = $this->db->query($qa);
-            }
-
-            return $guid;
         }
+        $guid = '';
+        if (!empty($address)) {
+            $guid = create_guid();
+            $now = TimeDate::getInstance()->nowDb();
+            $query = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted)
+                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0)";
+            $this->db->query($query);
+        }
+
+        return $guid;
     }
 
     /**
@@ -1249,24 +1252,26 @@ class SugarEmailAddress extends SugarBean
 
         // confirmed opt in check
         if (!is_null($optInFlag)) {
-            $isValidEmailAddress = ($opt_out !== 1 && $invalid !== 1);
-            $this->retrieve($id);
-            $optInIndication = $this->getOptInStatus();
-            if (
-               $isValidEmailAddress
-               && $this->isOptedInStatus($optInIndication)
-               && (int)$optInFlag === 1
-            ) {
-                $new_confirmed_opt_in = $this->getConfirmedOptInState();
-            } elseif (
-                $isValidEmailAddress
-                && (int)$optInFlag === 1
-            ) {
-                $new_confirmed_opt_in = self::COI_STAT_OPT_IN;
-            } else {
-                // Reset the opt in status
-               $new_confirmed_opt_in = self::COI_STAT_DISABLED;
-            }
+            $optInFlag = (int)$optInFlag;
+        }
+
+        $isValidEmailAddress = ($opt_out !== 1 && $invalid !== 1);
+        $this->retrieve($id);
+        $optInIndication = $this->getOptInStatus();
+        if (
+           $isValidEmailAddress
+           && $this->isOptedInStatus($optInIndication)
+           && (int)$optInFlag === 1
+        ) {
+            $new_confirmed_opt_in = $this->getConfirmedOptInState();
+        } elseif (
+            $isValidEmailAddress
+            && (int)$optInFlag === 1
+        ) {
+            $new_confirmed_opt_in = self::COI_STAT_OPT_IN;
+        } else {
+            // Reset the opt in status
+            $new_confirmed_opt_in = self::COI_STAT_DISABLED;
         }
 
         // determine how we are going to put in this address - UPDATE or INSERT
@@ -1293,19 +1298,18 @@ class SugarEmailAddress extends SugarBean
                 $duplicate->confirm_opt_in = $new_confirmed_opt_in;
                 $upd_r = $this->db->query($upd_q);
 
-                if (!is_null($optInFlag)) {
-                    if ($new_confirmed_opt_in === self::COI_STAT_DISABLED) {
-                        // reset confirm opt in
-                        $upd_q = 'UPDATE ' . $this->table_name . ' ' .
+
+                if ($new_confirmed_opt_in === self::COI_STAT_DISABLED) {
+                    // reset confirm opt in
+                    $upd_q = 'UPDATE ' . $this->table_name . ' ' .
                             'SET '.
                             'confirm_opt_in_date=NULL,' .
                             'confirm_opt_in_sent_date=NULL,' .
                             'confirm_opt_in_fail_date=NULL ' .
                             'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
-                        $upd_r = $this->db->query($upd_q);
-                        // set for audit table detection
-                        $duplicate->confirm_opt_in = null;
-                    }
+                    $upd_r = $this->db->query($upd_q);
+                    // set for audit table detection
+                    $duplicate->confirm_opt_in = null;
                 }
             }
 
@@ -1318,22 +1322,21 @@ class SugarEmailAddress extends SugarBean
             $this->auditBean(true);
 
             return $duplicate_email['id'];
-        } else {
-            // no case-insensitive address match - it's new, or undeleted.
-            $guid = '';
-            $isUpdate = true;
-            if (!empty($address)) {
-                $guid = create_guid();
-                $now = TimeDate::getInstance()->nowDb();
-                $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : '') . ")
-                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out" . (!is_null($optInFlag) ? ", '" . $this->db->quote($new_confirmed_opt_in) ."'" : '') . ")";
-                $this->db->query($qa);
-                $isUpdate = false;
-            }
-
-            $this->auditBean($isUpdate);
-            return $guid;
         }
+        // no case-insensitive address match - it's new, or undeleted.
+        $guid = '';
+        $isUpdate = true;
+        if (!empty($address)) {
+            $guid = create_guid();
+            $now = TimeDate::getInstance()->nowDb();
+            $qa = "INSERT INTO email_addresses (id, email_address, email_address_caps, date_created, date_modified, deleted, invalid_email, opt_out" . (!is_null($optInFlag) ? ", confirm_opt_in" : '') . ")
+                        VALUES('{$guid}', '{$address}', '{$addressCaps}', '$now', '$now', 0 , $new_invalid, $new_opt_out" . (!is_null($optInFlag) ? ", '" . $this->db->quote($new_confirmed_opt_in) ."'" : '') . ")";
+            $this->db->query($qa);
+            $isUpdate = false;
+        }
+
+        $this->auditBean($isUpdate);
+        return $guid;
     }
 
     /**
@@ -1521,10 +1524,14 @@ class SugarEmailAddress extends SugarBean
                 $prefillDataArr[] = array(
                     'email_address' => $email,
                     'primary_address' => isset($_REQUEST['emailAddressPrimaryFlag']) && $_REQUEST['emailAddressPrimaryFlag'] == $key,
-                    'invalid_email' => isset($_REQUEST['emailAddressInvalidFlag']) && in_array($key,
-                            $_REQUEST['emailAddressInvalidFlag']),
-                    'opt_out' => isset($_REQUEST['emailAddressOptOutFlag']) && in_array($key,
-                            $_REQUEST['emailAddressOptOutFlag']),
+                    'invalid_email' => isset($_REQUEST['emailAddressInvalidFlag']) && in_array(
+                        $key,
+                            $_REQUEST['emailAddressInvalidFlag']
+                    ),
+                    'opt_out' => isset($_REQUEST['emailAddressOptOutFlag']) && in_array(
+                        $key,
+                            $_REQUEST['emailAddressOptOutFlag']
+                    ),
                     'reply_to_address' => false
                 );
                 $key = $module . $widget_id . 'emailAddress' . ++$count;
@@ -1563,8 +1570,10 @@ class SugarEmailAddress extends SugarBean
         $this->smarty->assign('prefillData', $prefillData);
         $this->smarty->assign('tabindex', $tabindex);
         //Set addDefaultAddress flag (do not add if it's from the Email module)
-        $this->smarty->assign('addDefaultAddress',
-            (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Emails') ? 'false' : 'true');
+        $this->smarty->assign(
+            'addDefaultAddress',
+            (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Emails') ? 'false' : 'true'
+        );
         $form = $this->view;
 
         //determine if this should be a quickcreate form, or a quick create form under subpanels
@@ -2049,7 +2058,14 @@ class SugarEmailAddress extends SugarBean
     public function getOptInStatus()
     {
         $configurator = new Configurator();
-        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        
+        $enableConfirmedOptIn = null;
+        if (isset($configurator->config['email_enable_confirm_opt_in'])) {
+            $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        } else {
+            LoggerManager::getLogger()->warn('EmailUI::populateComposeViewFields: $configurator->config[email_enable_confirm_opt_in] is not set');
+        }
+        
         $optInFromFlags = $this->getOptInIndicationFromFlags();
 
         if ($enableConfirmedOptIn === self::COI_STAT_DISABLED) {
@@ -2137,9 +2153,8 @@ class SugarEmailAddress extends SugarBean
                 return false;
             } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
                 return true;
-            } else {
-                throw new Exception('its impossible email sending state');
             }
+            throw new Exception('its impossible email sending state');
         } catch (RuntimeException $e) {
             if (!empty($this->confirm_opt_in_fail_date)) {
                 throw $e;
@@ -2164,9 +2179,8 @@ class SugarEmailAddress extends SugarBean
                 return true;
             } elseif ($maxdate === $this->confirm_opt_in_sent_date) {
                 return false;
-            } else {
-                throw new Exception('its impossible email sending state');
             }
+            throw new Exception('its impossible email sending state');
         } catch (RuntimeException $e) {
             if (!empty($this->confirm_opt_in_sent_date)) {
                 throw $e;

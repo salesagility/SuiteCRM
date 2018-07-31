@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\NotAllowedException;
 
-class NotAllowedExceptionTest extends \Codeception\Test\Unit
+class NotAllowedExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -18,16 +18,15 @@ class NotAllowedExceptionTest extends \Codeception\Test\Unit
      */
     private static $exception;
 
-    protected function _before()
+    public function _before()
     {
-        if(self::$exception === null) {
+        parent::_before();
+        if (self::$exception === null) {
             self::$exception = new NotAllowedException();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetMessage()
     {

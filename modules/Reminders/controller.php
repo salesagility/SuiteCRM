@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,18 +41,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class RemindersController extends SugarController {
-
-    public function action_getInviteesPersonName() {
+class RemindersController extends SugarController
+{
+    public function action_getInviteesPersonName()
+    {
         $personModules = array('Users', 'Contacts', 'Leads');
         $ret = array();
         $invitees = $_REQUEST['invitees'];
-        foreach($invitees as $invitee) {
-            if(!isset($invitee['personName']) || !$invitee['personName']) {
+        foreach ($invitees as $invitee) {
+            if (!isset($invitee['personName']) || !$invitee['personName']) {
                 $person = BeanFactory::getBean($invitee['personModule'], $invitee['personModuleId']);
                 $invitee['personName'] = $person->name;
             }
-            if(isset($invitee['personModule']) && $invitee['personModule'] && in_array($invitee['personModule'], $personModules) && isset($invitee['personModuleId']) && $invitee['personModuleId'] && isset($invitee['personName']) && $invitee['personName']) {
+            if (isset($invitee['personModule']) && $invitee['personModule'] && in_array($invitee['personModule'], $personModules) && isset($invitee['personModuleId']) && $invitee['personModuleId'] && isset($invitee['personName']) && $invitee['personName']) {
                 $ret[] = $invitee;
             }
         }
@@ -60,9 +63,9 @@ class RemindersController extends SugarController {
         die();
     }
 
-    public function action_getUserPreferencesForReminders() {
+    public function action_getUserPreferencesForReminders()
+    {
         echo Reminder::loadRemindersDefaultValuesDataJson();
         die();
     }
-
 }

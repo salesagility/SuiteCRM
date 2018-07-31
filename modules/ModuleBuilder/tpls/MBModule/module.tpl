@@ -60,7 +60,7 @@
 	</tr>
 	<tr>
 	<tr><td class='mbLBL'><b>{$mod_strings.LBL_PACKAGE}</b></td><td colspan='5'>{$package->name}</td></tr>
-	<tr><td class='mbLBL'><font color="#ff0000"> * </font><b>{$mod_strings.LBL_MODULE_NAME}</b></td><td colspan='5'><input type='text' name='name' value='{$module->name}' size='36' maxlength='36'></td></tr>
+	<tr><td class='mbLBL'><font color="#ff0000"> * </font><b>{$mod_strings.LBL_MODULE_NAME}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td><td colspan='5'><input type='text' name='name' value='{$module->name}' size='36' maxlength='36'></td></tr>
 	<tr><td class='mbLBL'><font color="#ff0000"> * </font><b>{$mod_strings.LBL_LABEL}</b></td><td colspan='5'><input type='text' name='label' value='{$module->config.label}' size='36' maxlength='36'></td></tr>
 	<tr>
 	<tr>
@@ -95,21 +95,21 @@
                         <table id='type_{$type}' onclick='ModuleBuilder.buttonDown(this,"{$type}", "type"); ModuleBuilder.buttonToForm("CreateModule", "type", "type");' class='wizardButton' onmousedown='return false;' onmouseout='ModuleBuilder.buttonOut(this,"{$type}", "type");'>
 							<tr>
 							  <td  align='center'>
-								  <a href="#">
+								  <a href="javascript:void(0)">
 									  <span class="suitepicon suitepicon-module-{$type}"></span>
 								  </a>
 							  </td>
 							</tr>
 							<tr>
 								<td>
-									<a href="#">{$name}</a>
+									<a href="javascript:void(0)">{$name}</a>
 								</td>
 							</tr>
 					    </table>
 						<script>ModuleBuilder.buttonAdd('type_{$type}', '{$type}', 'type');</script>
 					</td>
                     {else}
-                    <td align='center'><span class="suitepicon suitepicon-module-{$type}"></span>}<br>{$name}
+                    <td align='center'><span class="suitepicon suitepicon-module-{$type}"></span><br>{$name}
                     {/if}
                     </td>
                     {/if}

@@ -1,9 +1,11 @@
 <?php
 
-class ViewPopupTest extends PHPUnit_Framework_TestCase
+class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -23,26 +25,117 @@ class ViewPopupTest extends PHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
+        if (isset($_SESSION)) {
+            $session = $_SESSION;
+        }
 
-        //error_reporting(E_ERROR | E_PARSE |E_ALL);
-
-        //execute the method with required child objects preset. it should return some html. 
+        //execute the method with required child objects preset. it should return some html.
         $view = new ViewPopup();
         $view->module = 'Accounts';
 
         try {
-            $view->bean = new Account();
+            $view->bean = BeanFactory::getBean('Accounts');
+            self::assertTrue(false);
         } catch (Exception $e) {
-            $this->assertStringStartsWith('mysqli_query()', $e->getMessage());
+            self::assertTrue(true);
         }
 
-        ob_start();
+        // clean up
 
-        $view->display();
+        if (isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
+    }
 
-        $renderedContent = ob_get_contents();
-        ob_end_clean();
+    public function testdisplayGetModulePopupPickerIfNoListviewsSearchDefs()
+    {
 
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        $view = new ViewPopup();
+        $view->module = 'Audit'; // Confirms has no listview/searchdefs
+
+        $customPath = 'custom/modules/' . $view->module . '/Popup_picker.php';
+        $modulePath = 'modules/' . $view->module . '/Popup_picker.php';
+
+        // test no custom module Popup picker
+        // test module Popup picker exists
+
+        $this->assertFileNotExists($customPath);
+
+        $result = get_custom_file_if_exists($modulePath);
+
+        $this->assertSame($modulePath, $result);
+
+        // Now add a custom module Popup picker
+
+        // Create mock file
+        // @TODO set up vfsStream and test get_custom_file_if_exists
+
+        $dirname = dirname($customPath);
+        if (!is_dir($dirname)) {
+            mkdir($dirname, 0755, true);
+        }
+
+        file_put_contents($customPath, '');
+
+        $this->assertFileExists($customPath);
+
+        $result = get_custom_file_if_exists($modulePath);
+
+        $this->assertSame($customPath, $result);
+
+        // Cleanup
+        unlink($customPath);
+        rmdir($dirname);
+    }
+
+    public function testdisplayGetCustomDefaultPopupPickerIdNoModulePopupPicker()
+    {
+
+        $view = new ViewPopup();
+        $view->module = 'Accounts'; // Confirms has no Popup_picker
+
+        $modulePath = 'modules/' . $view->module . '/Popup_picker.php';
+        $customPath = 'custom/include/Popups/Popup_picker.php';
+        $defaultPath = 'include/Popups/Popup_picker.php';
+
+        // test no module Popup picker
+        // test default Popup picker exists
+        // test no custom default Popup picker exists
+
+        $result1 = get_custom_file_if_exists($modulePath);
+        $result2 = file_exists($result1);
+
+        $this->assertFalse($result2);
+
+        $this->assertFileNotExists($customPath);
+        $this->assertFileExists($defaultPath);
+
+        $result = get_custom_file_if_exists($defaultPath);
+
+        $this->assertSame($defaultPath, $result);
+
+        // Now add a custom Popup picker
+
+        // Create mock file
+        // @TODO set up vfsStream and test get_custom_file_if_exists
+
+        $dirname = dirname($customPath);
+        if (!is_dir($dirname)) {
+            mkdir($dirname, 0755, true);
+        }
+
+        file_put_contents($customPath, '');
+
+        $this->assertFileExists($customPath);
+
+        $result = get_custom_file_if_exists($defaultPath);
+
+        $this->assertSame($customPath, $result);
+
+        // Cleanup
+        unlink($customPath);
+        rmdir($dirname);
     }
 }

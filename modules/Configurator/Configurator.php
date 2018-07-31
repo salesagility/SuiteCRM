@@ -42,21 +42,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class Configurator {
-	var $config = '';
-	var $override = '';
-	var $allow_undefined = array ('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu','enable_line_editing_list','enable_line_editing_detail', 'hide_subpanels');
-	var $errors = array ('main' => '');
-	var $logger = NULL;
-	var $previous_sugar_override_config_array = array();
-	var $useAuthenticationClass = false;
+class Configurator
+{
+    public $config = '';
+    public $override = '';
+    public $allow_undefined = array('stack_trace_errors', 'export_delimiter', 'use_real_names', 'developerMode', 'default_module_favicon', 'authenticationClass', 'SAML_loginurl', 'SAML_logouturl', 'SAML_X509Cert', 'dashlet_auto_refresh_min', 'show_download_tab', 'enable_action_menu','enable_line_editing_list','enable_line_editing_detail', 'hide_subpanels');
+    public $errors = array('main' => '');
+    public $logger = null;
+    public $previous_sugar_override_config_array = array();
+    public $useAuthenticationClass = false;
 
     /**
      * @var array
      */
     protected $keysToIgnoreLoadedOverrideFile = [];
 
-	protected $error = null;
+    protected $error = null;
 
     public function __construct()
     {
@@ -107,17 +108,17 @@ class Configurator {
         $diffArray = deepArrayDiff($this->config, $sugar_config);
         $overrideArray = sugarArrayMergeRecursive($overrideArray, $diffArray);
 
-      foreach ($this->keysToIgnoreLoadedOverrideFile as $key => $val) {
-          $overrideArray[$key] = $val;
-      }
+        foreach ($this->keysToIgnoreLoadedOverrideFile as $key => $val) {
+            $overrideArray[$key] = $val;
+        }
 
-		// To remember checkbox state
-		if (!$this->useAuthenticationClass && !$fromParseLoggerSettings) {
-			if (isset($overrideArray['authenticationClass']) &&
-				$overrideArray['authenticationClass'] == 'SAMLAuthenticate') {
-				unset($overrideArray['authenticationClass']);
-			}
-		}
+        // To remember checkbox state
+        if (!$this->useAuthenticationClass && !$fromParseLoggerSettings) {
+            if (isset($overrideArray['authenticationClass']) &&
+                $overrideArray['authenticationClass'] == 'SAMLAuthenticate') {
+                unset($overrideArray['authenticationClass']);
+            }
+        }
 
         $overideString = "<?php\n/***CONFIGURATOR***/\n";
 
@@ -166,22 +167,23 @@ class Configurator {
         $this->keysToIgnoreLoadedOverrideFile[$key] = $value;
     }
 
-	//bug #27947 , if previous $sugar_config['stack_trace_errors'] is true and now we disable it , we should clear all the cache.
-	public function clearCache(){
-		global $sugar_config, $sugar_version;
-		$currentConfigArray = $this->readOverride();
-		foreach($currentConfigArray as $key => $val) {
-			if (in_array($key, $this->allow_undefined) || isset ($sugar_config[$key])) {
-				if (empty($val) ) {
-					if(!empty($this->previous_sugar_override_config_array['stack_trace_errors']) && $key == 'stack_trace_errors'){
-						require_once('include/TemplateHandler/TemplateHandler.php');
-						TemplateHandler::clearAll();
-						return;
-					}
-				}
-			}
-		}
-	}
+    //bug #27947 , if previous $sugar_config['stack_trace_errors'] is true and now we disable it , we should clear all the cache.
+    public function clearCache()
+    {
+        global $sugar_config, $sugar_version;
+        $currentConfigArray = $this->readOverride();
+        foreach ($currentConfigArray as $key => $val) {
+            if (in_array($key, $this->allow_undefined) || isset($sugar_config[$key])) {
+                if (empty($val)) {
+                    if (!empty($this->previous_sugar_override_config_array['stack_trace_errors']) && $key == 'stack_trace_errors') {
+                        require_once('include/TemplateHandler/TemplateHandler.php');
+                        TemplateHandler::clearAll();
+                        return;
+                    }
+                }
+            }
+        }
+    }
 
     public function saveConfig()
     {
@@ -369,7 +371,6 @@ class Configurator {
         }
 
         return $confirmOptInEnabled;
-
     }
 
     /**
@@ -385,13 +386,13 @@ class Configurator {
         }
 
         return $confirmOptInEnabled;
-
     }
 
     /**
      * @return null|string
      */
-    public function getConfirmOptInTemplateId() {
+    public function getConfirmOptInTemplateId()
+    {
         /** @var null|string $confirmOptInTemplateId */
         $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
         if (empty($confirmOptInTemplateId)) {
@@ -412,10 +413,10 @@ class Configurator {
      *
      * @return string
      */
-    public function getConfirmOptInEnumValue() {
+    public function getConfirmOptInEnumValue()
+    {
         // TODO: use this function everywhere to make the code more clear also this variable 'email_enable_confirm_opt_in' is enum but assuming a bool -> should change this config variable name
         $ret = isset($this->config['email_enable_confirm_opt_in']) ? $this->config['email_enable_confirm_opt_in'] : SugarEmailAddress::COI_STAT_DISABLED;
         return $ret;
     }
-
 }

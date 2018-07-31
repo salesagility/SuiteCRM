@@ -96,5 +96,4 @@ class Zend_Gdata_Spreadsheets_Extension_Custom extends Zend_Gdata_Extension
     {
         return $this->_rootElement;
     }
-
 }

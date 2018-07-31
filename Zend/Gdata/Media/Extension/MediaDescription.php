@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/App/Extension.php';
  */
 class Zend_Gdata_Media_Extension_MediaDescription extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'description';
     protected $_rootNamespace = 'media';
 
@@ -112,5 +111,4 @@ class Zend_Gdata_Media_Extension_MediaDescription extends Zend_Gdata_Extension
         $this->_type = $value;
         return $this;
     }
-
 }

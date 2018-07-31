@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,15 +52,15 @@ require_once('modules/Administration/QuickRepairAndRebuild.php');
 class ViewRepair extends SugarView
 {
     /**
-	 * @see SugarView::display()
-	 */
-	public function display()
-	{
-	    $randc = new RepairAndClear();
-        $randc->repairAndClearAll(array('clearAll'),array(translate('LBL_ALL_MODULES')), false,true);
+     * @see SugarView::display()
+     */
+    public function display()
+    {
+        $randc = new RepairAndClear();
+        $randc->repairAndClearAll(array('clearAll'), array(translate('LBL_ALL_MODULES')), false, true);
         
         echo <<<EOHTML
 <br /><br /><a href="index.php?module=Administration&action=index">{$GLOBALS['mod_strings']['LBL_DIAGNOSTIC_DELETE_RETURN']}</a>
 EOHTML;
-	}
+    }
 }

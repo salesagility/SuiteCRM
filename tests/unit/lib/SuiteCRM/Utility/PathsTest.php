@@ -1,7 +1,7 @@
 <?php
 
 
-class PathsTest extends \Codeception\Test\Unit
+class PathsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -18,20 +18,19 @@ class PathsTest extends \Codeception\Test\Unit
      */
     private static $projectPath;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if (self::$paths === null) {
             self::$paths = new \SuiteCRM\Utility\Paths();
         }
 
-        if(self::$projectPath === null) {
+        if (self::$projectPath === null) {
             self::$projectPath = dirname(dirname(dirname(dirname(dirname(__DIR__)))));
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetProjectPath()
     {

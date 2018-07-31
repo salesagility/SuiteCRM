@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 // array elements are regexp patterns, and must not contain '#' signs
-$disc_client_ignore = array (
+$disc_client_ignore = array(
     // dirs
     "\\./cache/.*",
     "\\./examples/.*",
@@ -49,11 +51,11 @@ $disc_client_ignore = array (
     
      "\\.*sync\\.log\\.*",
     "\\.htaccess\$",
-	"\\.*\\.tmp\$",
+    "\\.*\\.tmp\$",
     "\\.*\\.bak\$",
     "\\.*\\.zip\$",
     
 );
 
-$disc_client_no_sync = array (
+$disc_client_no_sync = array(
 );

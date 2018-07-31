@@ -38,12 +38,12 @@
  ********************************************************************************/
 
 
-$dictionary["documents_opportunities"] = array (
+$dictionary["documents_opportunities"] = array(
   'true_relationship_type' => 'many-to-many',
-  'relationships' => 
-  array (
-    'documents_opportunities' => 
-    array (
+  'relationships' =>
+  array(
+    'documents_opportunities' =>
+    array(
       'lhs_module' => 'Documents',
       'lhs_table' => 'documents',
       'lhs_key' => 'id',
@@ -57,71 +57,70 @@ $dictionary["documents_opportunities"] = array (
     ),
   ),
   'table' => 'documents_opportunities',
-  'fields' => 
-  array (
-    0 => 
-    array (
+  'fields' =>
+  array(
+    0 =>
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    1 => 
-    array (
+    1 =>
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
-    2 => 
-    array (
+    2 =>
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
       'default' => '0',
       'required' => true,
     ),
-    3 => 
-    array (
+    3 =>
+    array(
       'name' => 'document_id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    4 => 
-    array (
+    4 =>
+    array(
       'name' => 'opportunity_id',
       'type' => 'varchar',
       'len' => 36,
     ),
   ),
-  'indices' => 
-  array (
-    0 => 
-    array (
+  'indices' =>
+  array(
+    0 =>
+    array(
       'name' => 'documents_opportunitiesspk',
       'type' => 'primary',
-      'fields' => 
-      array (
+      'fields' =>
+      array(
         0 => 'id',
       ),
     ),
-    1 => 
-    array (
+    1 =>
+    array(
       'name' => 'idx_docu_opps_oppo_id',
       'type' => 'alternate_key',
-      'fields' => 
-      array (
+      'fields' =>
+      array(
         0 => 'opportunity_id',
         1 => 'document_id',
       ),
     ),
-    2 => 
-    array (
+    2 =>
+    array(
       'name' => 'idx_docu_oppo_docu_id',
       'type' => 'alternate_key',
-      'fields' => 
-      array (
+      'fields' =>
+      array(
         0 => 'document_id',
         1 => 'opportunity_id',
       ),
     ),
   ),
 );
-

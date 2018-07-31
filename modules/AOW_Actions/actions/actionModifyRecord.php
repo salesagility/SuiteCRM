@@ -25,53 +25,56 @@
 
 
 require_once('modules/AOW_Actions/actions/actionCreateRecord.php');
-class actionModifyRecord extends actionCreateRecord {
-
-    function __construct($id = ''){
+class actionModifyRecord extends actionCreateRecord
+{
+    public function __construct($id = '')
+    {
         parent::__construct($id);
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function actionModifyRecord($id = ''){
+    public function actionModifyRecord($id = '')
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id);
     }
 
 
-    function loadJS(){
+    public function loadJS()
+    {
         return parent::loadJS();
     }
 
-    function edit_display($line,SugarBean $bean = null, $params = array()){
+    public function edit_display($line, SugarBean $bean = null, $params = array())
+    {
         require_once("modules/AOW_WorkFlow/aow_utils.php");
 
-        $modules = getModuleRelationships($bean->module_dir,'EditView', $params['rel_type']);
+        $modules = getModuleRelationships($bean->module_dir, 'EditView', $params['rel_type']);
 
         $html = "<input type='hidden' name='aow_actions_param[".$line."][record_type]' id='aow_actions_param_record_type".$line."' value='' />";
         $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='modify-record'>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top">'.translate("LBL_RECORD_TYPE","AOW_Actions").':<span class="required">*</span>&nbsp;&nbsp;';
+        $html .= '<td id="name_label" scope="row" valign="top">'.translate("LBL_RECORD_TYPE", "AOW_Actions").':<span class="required">*</span>&nbsp;&nbsp;';
         $html .= "<select name='aow_actions_param[".$line."][rel_type]' id='aow_actions_param_rel_type".$line."'  onchange='show_mrModuleFields($line);'>".$modules."</select></td>";
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><table id="crLine' . $line . '_table" width="100%" class="lines"></table></td>';
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" class="button" value="'.translate("LBL_ADD_FIELD","AOW_Actions").'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
+        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" class="button" value="'.translate("LBL_ADD_FIELD", "AOW_Actions").'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%" class="relationship"></table></td>';
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" class="button" value="'.translate("LBL_ADD_RELATIONSHIP","AOW_Actions").'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
+        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" class="button" value="'.translate("LBL_ADD_RELATIONSHIP", "AOW_Actions").'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
         $html .= "</tr>";
 
 
@@ -91,19 +94,26 @@ EOS;
 
         $module = getRelatedModule($bean->module_name, $params['rel_type']);
         $html .= "cr_module[" . $line . "] = \"" . $module . "\";";
-        $html .= "cr_fields[" . $line . "] = \"" . trim(preg_replace('/\s+/', ' ',
-                getModuleFields($module, 'EditView', '', array(), array('email1', 'email2')))) . "\";";
+        $html .= "cr_fields[" . $line . "] = \"" . trim(preg_replace(
+            '/\s+/',
+            ' ',
+                getModuleFields($module, 'EditView', '', array(), array('email1', 'email2'))
+        )) . "\";";
         $html .= "cr_relationships[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($module)))."\";";
-        if($params && array_key_exists('field',$params)){
-            foreach($params['field'] as $key => $field){
-                if(is_array($params['value'][$key]))$params['value'][$key] = json_encode($params['value'][$key]);
+        if ($params && array_key_exists('field', $params)) {
+            foreach ($params['field'] as $key => $field) {
+                if (is_array($params['value'][$key])) {
+                    $params['value'][$key] = json_encode($params['value'][$key]);
+                }
 
-                $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n")," ",$params['value'][$key])."','".$params['value_type'][$key]."');";
+                $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n"), " ", $params['value'][$key])."','".$params['value_type'][$key]."');";
             }
         }
-        if(isset($params['rel'])){
-            foreach($params['rel'] as $key => $field){
-                if(is_array($params['rel_value'][$key]))$params['rel_value'][$key] = json_encode($params['rel_value'][$key]);
+        if (isset($params['rel'])) {
+            foreach ($params['rel'] as $key => $field) {
+                if (is_array($params['rel_value'][$key])) {
+                    $params['rel_value'][$key] = json_encode($params['rel_value'][$key]);
+                }
 
                 $html .= "load_crrelline('".$line."','".$field."','".$params['rel_value'][$key]."','".$params['rel_value_type'][$key]."');";
             }
@@ -112,15 +122,17 @@ EOS;
         return $html;
     }
 
-    function run_action(SugarBean $bean, $params = array(), $in_save=false){
-
-        if(isset($params['rel_type']) && $params['rel_type'] != '' && $bean->module_dir != $params['rel_type']){
+    public function run_action(SugarBean $bean, $params = array(), $in_save=false)
+    {
+        if (isset($params['rel_type']) && $params['rel_type'] != '' && $bean->module_dir != $params['rel_type']) {
             $relatedFields = $bean->get_linked_fields();
             $field = $relatedFields[$params['rel_type']];
-            if(!isset($field['module']) || $field['module'] == '') $field['module'] = getRelatedModule($bean->module_dir,$field['name']);
-            $linkedBeans = $bean->get_linked_beans($field['name'],$field['module']);
-            if($linkedBeans){
-                foreach($linkedBeans as $linkedBean){
+            if (!isset($field['module']) || $field['module'] == '') {
+                $field['module'] = getRelatedModule($bean->module_dir, $field['name']);
+            }
+            $linkedBeans = $bean->get_linked_beans($field['name'], $field['module']);
+            if ($linkedBeans) {
+                foreach ($linkedBeans as $linkedBean) {
                     $this->set_record($linkedBean, $bean, $params, false);
                     $this->set_relationships($linkedBean, $bean, $params);
                 }
@@ -131,6 +143,4 @@ EOS;
         }
         return true;
     }
-
-
 }

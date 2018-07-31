@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,49 +44,57 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 //for users
-function user_get_validate_record_js() {
+function user_get_validate_record_js()
+{
 }
-function user_get_chooser_js() {
+function user_get_chooser_js()
+{
 }
-function user_get_confsettings_js() {
+function user_get_confsettings_js()
+{
 };
 //end for users
-function get_chooser_js() {
-	// added here for compatibility
+function get_chooser_js()
+{
+    // added here for compatibility
 }
-function get_validate_record_js() {
+function get_validate_record_js()
+{
 }
-function get_new_record_form() {
+function get_new_record_form()
+{
+    if (empty($_SESSION['studio']['module'])) {
+        return '';
+    }
 
-	if(empty($_SESSION['studio']['module']))return '';
-
-	global $mod_strings;
-	$module_name = $_SESSION['studio']['module'];
-	$debug = true;
-	$html = "";
+    global $mod_strings;
+    $module_name = $_SESSION['studio']['module'];
+    $debug = true;
+    $html = "";
 
 
-	$html = get_left_form_header($mod_strings['LBL_TOOLBOX']);
-	$add_field_icon = SugarThemeRegistry::current()->getImage("plus_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"',null,null,'.gif',$mod_strings['LBL_ADD_FIELD']);
-	$minus_field_icon = SugarThemeRegistry::current()->getImage("minus_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"',null,null,'.gif',$mod_strings['LBL_ADD_FIELD']);
-	$edit_field_icon = SugarThemeRegistry::current()->getImage("edit_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"',null,null,'.gif',$mod_strings['LBL_ADD_FIELD']);
-	$delete = SugarThemeRegistry::current()->getImage("delete_inline", "border='0' style='margin-left:4px;margin-right:4px;'",null,null,'.gif',$mod_strings['LBL_DELETE']);
-	$show_bin = true;
-	if (isset ($_REQUEST['edit_subpanel_MSI']))
-	global $sugar_version, $sugar_config;
-		$show_bin = false;
+    $html = get_left_form_header($mod_strings['LBL_TOOLBOX']);
+    $add_field_icon = SugarThemeRegistry::current()->getImage("plus_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_ADD_FIELD']);
+    $minus_field_icon = SugarThemeRegistry::current()->getImage("minus_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_ADD_FIELD']);
+    $edit_field_icon = SugarThemeRegistry::current()->getImage("edit_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_ADD_FIELD']);
+    $delete = SugarThemeRegistry::current()->getImage("delete_inline", "border='0' style='margin-left:4px;margin-right:4px;'", null, null, '.gif', $mod_strings['LBL_DELETE']);
+    $show_bin = true;
+    if (isset($_REQUEST['edit_subpanel_MSI'])) {
+        global $sugar_version, $sugar_config;
+    }
+    $show_bin = false;
 
-	$html .= "
+    $html .= "
 
 			<script type=\"text/javascript\" src=\"modules/DynamicLayout/DynamicLayout_3.js\">
 			</script>
 			<p>
 		";
 
-	if (isset ($_REQUEST['edit_col_MSI'])) {
-		// do nothing
-	} else {
-		$html .= <<<EOQ
+    if (isset($_REQUEST['edit_col_MSI'])) {
+        // do nothing
+    } else {
+        $html .= <<<EOQ
 
 
 	   <link rel="stylesheet" type="text/css" href="include/javascript/yui-old/assets/container.css" />
@@ -95,13 +105,13 @@ function get_new_record_form() {
 
 EOQ;
 
-		$field_style = '';
-		$bin_style = '';
+        $field_style = '';
+        $bin_style = '';
 
-		$add_icon = SugarThemeRegistry::current()->getImage("plus_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"',null,null,'.gif',$mod_strings['LBL_MAXIMIZE']);
-		$min_icon = SugarThemeRegistry::current()->getImage("minus_inline", 'style="margin-left:4px;margin-right:4px;"  border="0" align="absmiddle"',null,null,'.gif',$mod_strings['LBL_MINIMIZE']);
-	   $del_icon = SugarThemeRegistry::current()->getImage("delete_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"',null,null,'.gif',$mod_strings['LBL_MINIMIZE']);
-		$html .=<<<EOQ
+        $add_icon = SugarThemeRegistry::current()->getImage("plus_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_MAXIMIZE']);
+        $min_icon = SugarThemeRegistry::current()->getImage("minus_inline", 'style="margin-left:4px;margin-right:4px;"  border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_MINIMIZE']);
+        $del_icon = SugarThemeRegistry::current()->getImage("delete_inline", 'style="margin-left:4px;margin-right:4px;" border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_MINIMIZE']);
+        $html .=<<<EOQ
 		              <br><br><table  cellpadding="0" cellspacing="0" border="1" width="100%"   id='s_field_delete'>
 							<tr><td colspan='2' align='center'>
 					       $del_icon <br>Drag Fields Here To Delete
@@ -124,12 +134,12 @@ EOQ;
 					</div>
 
 EOQ;
-
-	}
-	$html .= get_left_form_footer();
-	if (!$debug)
-		return $html;
-	return $html.<<<EOQ
+    }
+    $html .= get_left_form_footer();
+    if (!$debug) {
+        return $html;
+    }
+    return $html.<<<EOQ
 
 EOQ;
 }

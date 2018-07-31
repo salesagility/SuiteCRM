@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,41 +42,41 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $popupMeta = array(
-	'moduleMain' => 'Campaign',
-	'varName' => 'CAMPAIGN',
-	'orderBy' => 'name',
-	'whereClauses' => 
-		array('name' => 'campaigns.name'),
-	'searchInputs' =>
-		array('name'),
-	'listviewdefs' => array(
-		'NAME' => array(
-			'width' => '20', 
-			'label' => 'LBL_LIST_CAMPAIGN_NAME',
-	        'link' => true,
-	        'default' => true), 
-		 'CAMPAIGN_TYPE' => array(
-	        'width' => '10', 
-	        'label' => 'LBL_LIST_TYPE',
-	        'default' => true),
-		'STATUS' => array(
-			'width' => '10', 
-			'label' => 'LBL_LIST_STATUS',
-	        'default' => true),
-		'START_DATE' => array(
-	        'width' => '10', 
-	        'label' => 'LBL_LIST_START_DATE',
-	        'default' => true),
-		'END_DATE' => array(
-	        'width' => '10', 
-	        'label' => 'LBL_LIST_END_DATE',
-	        'default' => true), 
-	),
-	'searchdefs'   => array(
-	 	'name', 
-		'campaign_type', 
-		'status',
-		'start_date',
-		'end_date'
-	)
+    'moduleMain' => 'Campaign',
+    'varName' => 'CAMPAIGN',
+    'orderBy' => 'name',
+    'whereClauses' =>
+        array('name' => 'campaigns.name'),
+    'searchInputs' =>
+        array('name'),
+    'listviewdefs' => array(
+        'NAME' => array(
+            'width' => '20',
+            'label' => 'LBL_LIST_CAMPAIGN_NAME',
+            'link' => true,
+            'default' => true),
+         'CAMPAIGN_TYPE' => array(
+            'width' => '10',
+            'label' => 'LBL_LIST_TYPE',
+            'default' => true),
+        'STATUS' => array(
+            'width' => '10',
+            'label' => 'LBL_LIST_STATUS',
+            'default' => true),
+        'START_DATE' => array(
+            'width' => '10',
+            'label' => 'LBL_LIST_START_DATE',
+            'default' => true),
+        'END_DATE' => array(
+            'width' => '10',
+            'label' => 'LBL_LIST_END_DATE',
+            'default' => true),
+    ),
+    'searchdefs'   => array(
+        'name',
+        'campaign_type',
+        'status',
+        'start_date',
+        'end_date'
+    )
 );

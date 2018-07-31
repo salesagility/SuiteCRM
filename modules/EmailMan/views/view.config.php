@@ -113,13 +113,71 @@ class ViewConfig extends SugarView
         $this->ss->assign("notify_fromname", $focus->settings['notify_fromname']);
         $this->ss->assign("notify_allow_default_outbound_on", (!empty($focus->settings['notify_allow_default_outbound']) && $focus->settings['notify_allow_default_outbound']) ? "checked='checked'" : "");
 
-        $this->ss->assign("mail_smtptype", $focus->settings['mail_smtptype']);
-        $this->ss->assign("mail_smtpserver", $focus->settings['mail_smtpserver']);
-        $this->ss->assign("mail_smtpport", $focus->settings['mail_smtpport']);
-        $this->ss->assign("mail_smtpuser", $focus->settings['mail_smtpuser']);
-        $this->ss->assign("mail_smtpauth_req", ($focus->settings['mail_smtpauth_req']) ? "checked='checked'" : "");
-        $this->ss->assign("mail_haspass", empty($focus->settings['mail_smtppass'])?0:1);
-        $this->ss->assign("MAIL_SSL_OPTIONS", get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $focus->settings['mail_smtpssl']));
+        $mailSmtpType = null;
+        if (isset($focus->settings['mail_smtptype'])) {
+            $mailSmtpType = $focus->settings['mail_smtptype'];
+        } else {
+            LoggerManager::getLogger()->error('EmailMan view display error: mail smtp type is not set for focus');
+        }
+        
+        $mailSmtpServer = null;
+        if (isset($focus->settings['mail_smtpserver'])) {
+            $mailSmtpServer = $focus->settings['mail_smtpserver'];
+        } else {
+            LoggerManager::getLogger()->error('EmailMan view display error: mail smtp type is not set for focus');
+        }
+        
+        $mailSmtpPort = null;
+        if (isset($focus->settings['mail_smtpport'])) {
+            $mailSmtpPort = $focus->settings['mail_smtpport'];
+        } else {
+            LoggerManager::getLogger()->error('EmailMan view display error: mail smtp port is not set for focus');
+        }
+        
+        $mailSmtpUser = null;
+        if (isset($focus->settings['mail_smtpuser'])) {
+            $mailSmtpUser = $focus->settings['mail_smtpuser'];
+        } else {
+            LoggerManager::getLogger()->error('EmailMan view display error: mail smtp user is not set for focus');
+        }
+        
+        $mailSmtpAuthReq = null;
+        if (isset($focus->settings['mail_smtpauth_req'])) {
+            $mailSmtpAuthReq = $focus->settings['mail_smtpauth_req'];
+        } else {
+            LoggerManager::getLogger()->error('EmailMan view display error: mail smtp auth req is not set for focus');
+        }
+        
+        $mailSmtpSsl = null;
+        if (isset($focus->settings['mail_smtpssl'])) {
+            $mailSmtpSsl = $focus->settings['mail_smtpssl'];
+        } else {
+            LoggerManager::getLogger()->error('EmailMan view display error: mail smtp pass is not set for focus');
+        }
+        
+        $mailSmtpPass = null;
+        if (isset($focus->settings['mail_smtppass'])) {
+            $mailSmtpPass = $focus->settings['mail_smtppass'];
+        } else {
+            LoggerManager::getLogger()->error('EmailMan view display error: mail smtp pass is not set for focus');
+        }
+        
+        $mailSendType = null;
+        if (isset($focus->settings['mail_sendtype'])) {
+            $mailSendType = $focus->settings['mail_sendtype'];
+        } else {
+            LoggerManager::getLogger()->error('EmailMan view display error: mail send type is not set for focus');
+        }
+        
+        
+        
+        $this->ss->assign("mail_smtptype", $mailSmtpType);
+        $this->ss->assign("mail_smtpserver", $mailSmtpServer);
+        $this->ss->assign("mail_smtpport", $mailSmtpPort);
+        $this->ss->assign("mail_smtpuser", $mailSmtpUser);
+        $this->ss->assign("mail_smtpauth_req", ($mailSmtpAuthReq) ? "checked='checked'" : "");
+        $this->ss->assign("mail_haspass", empty($mailSmtpPass)?0:1);
+        $this->ss->assign("MAIL_SSL_OPTIONS", get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $mailSmtpSsl));
 
         //Assign the current users email for the test send dialogue.
         $this->ss->assign("CURRENT_USER_EMAIL", $current_user->email1);
@@ -133,11 +191,11 @@ class ViewConfig extends SugarView
         }
 
         $this->ss->assign("OUTBOUND_TYPE_CLASS", $outboundSendTypeCSSClass);
-        $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $focus->settings['mail_sendtype']));
+        $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $mailSendType));
 
         $configurator = new Configurator();
 
-        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name', '','name',true);
+        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name', true);
         if (empty($email_templates_arr)) {
             throw new RuntimeException('System Email templates are missing');
         }

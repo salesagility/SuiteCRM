@@ -193,10 +193,9 @@ class Link2
     {
         if (is_object($this->relationship) && method_exists($this->relationship, 'load')) {
             return $this->relationship->load($this, $params);
-        } else {
-            $GLOBALS['log']->fatal('load() function is not implemented in a relationship');
-            return null;
         }
+        $GLOBALS['log']->fatal('load() function is not implemented in a relationship');
+        return null;
     }
 
     /**
@@ -223,9 +222,8 @@ class Link2
 
         if ($this->getSide() == REL_LHS) {
             return $this->relationship->getRHSModule();
-        } else {
-            return $this->relationship->getLHSModule();
         }
+        return $this->relationship->getLHSModule();
     }
 
     /**
@@ -239,9 +237,8 @@ class Link2
 
         if ($this->getSide() == REL_LHS) {
             return $this->relationship->getRHSLink();
-        } else {
-            return $this->relationship->getLHSLink();
         }
+        return $this->relationship->getLHSLink();
     }
 
     /**
@@ -287,9 +284,9 @@ class Link2
     {
         if (!empty($this->relationship_fields) && !empty($this->relationship_fields[$name])) {
             return $this->relationship_fields[$name];
-        } else {
-            return null;
-        } //For now return null. Later try the relationship object directly.
+        }
+        return null;
+        //For now return null. Later try the relationship object directly.
     }
     
     /**
@@ -307,13 +304,25 @@ class Link2
     {
         //First try the relationship
         if ($this->relationship->getLHSLink() == $this->name &&
-            ($this->relationship->getLHSModule() == $this->focus->module_name)
+            ($this->relationship->getLHSModule() == (isset($this->focus->module_name) ? $this->focus->module_name : null))
         ) {
             return REL_LHS;
         }
 
-        if ($this->relationship->getRHSLink() == $this->name &&
-            ($this->relationship->getRHSModule() == $this->focus->module_name)
+        $rhsLink = $this->relationship->getRHSLink();
+        $rhsModule = $this->relationship->getRHSModule();
+        if (!isset($this->focus)) {
+            LoggerManager::getLogger()->warn('No focus of Link2 when trying to get side.');
+            $focusModuleName = null;
+        } elseif (!isset($this->focus->module_name)) {
+            LoggerManager::getLogger()->warn('No module name degined in focus of Link2 when trying to get side.');
+            $focusModuleName = null;
+        } else {
+            $focusModuleName = $this->focus->module_name;
+        }
+        
+        if ($rhsLink == $this->name &&
+            ($rhsModule == $focusModuleName)
         ) {
             return REL_RHS;
         }
@@ -326,9 +335,8 @@ class Link2
                     || $this->name != $this->relationship->def['join_key_lhs'])
             ) {
                 return REL_LHS;
-            } else {
-                return REL_RHS;
             }
+            return REL_RHS;
         } elseif (!empty($this->def['id_name'])) {
             //Next try using the id_name and relationship join keys
             if (isset($this->relationship->def['join_key_lhs'])
@@ -607,12 +615,10 @@ class Link2
             }
             if ($this->getSide() == REL_LHS) {
                 return $this->relationship->remove($this->focus, $related_id);
-            } else {
-                return $this->relationship->remove($related_id, $this->focus);
             }
-        } else {
-            return $this->relationship->removeAll($this);
+            return $this->relationship->remove($related_id, $this->focus);
         }
+        return $this->relationship->removeAll($this);
     }
 
     /**

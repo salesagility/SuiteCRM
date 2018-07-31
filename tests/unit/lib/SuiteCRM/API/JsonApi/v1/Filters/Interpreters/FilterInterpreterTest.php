@@ -1,7 +1,7 @@
 <?php
 
 
-class FilterInterpreterTest extends \Codeception\Test\Unit
+class FilterInterpreterTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -13,9 +13,10 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
      */
     private static $interpreter;
 
-    protected function _before()
+    public function _before()
     {
-        if(self::$interpreter === null) {
+        parent::_before();
+        if (self::$interpreter === null) {
 
             // load PSR 11 interface
             $container = $this->tester->getContainerInterface();
@@ -23,9 +24,6 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
         }
     }
 
-    protected function _after()
-    {
-    }
 
     public function testIsFilterByPreMadeWithByPreMadeFilterCase()
     {
@@ -91,7 +89,7 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Interpreters][getFilterByPreMadeName][cannot find filter]'),
-            function() {
+            function () {
                 $filter = array('InvalidFilterThatIsNotFound');
                 self::$interpreter->getFilterByPreMadeName($filter);
             }

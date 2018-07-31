@@ -41,13 +41,12 @@
 
 namespace SuiteCRM;
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 /**
- * Description of LangText
+ * LangText
  *
  * @author gyula
  */

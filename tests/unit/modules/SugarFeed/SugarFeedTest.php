@@ -1,9 +1,11 @@
-<?PHP
+<?php
 
-class SugarFeedTest extends PHPUnit_Framework_TestCase
+class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -11,7 +13,10 @@ class SugarFeedTest extends PHPUnit_Framework_TestCase
 
     public function testSugarFeed()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         //execute the contructor and check for the Object type and  attributes
         $sugarFeed = new SugarFeed();
@@ -26,10 +31,21 @@ class SugarFeedTest extends PHPUnit_Framework_TestCase
 
         $this->assertAttributeEquals(true, 'new_schema', $sugarFeed);
         $this->assertAttributeEquals(false, 'importable', $sugarFeed);
+        
+        // clean up
     }
 
     public function testactivateAndDisableModuleFeed()
     {
+        self::markTestIncomplete('environment dependency');
+
+        // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('config');
+
+        // test
+        
         $admin = new Administration();
 
         //test activateModuleFeed method
@@ -41,18 +57,29 @@ class SugarFeedTest extends PHPUnit_Framework_TestCase
         SugarFeed::disableModuleFeed('Accounts');
         $admin->retrieveSettings('sugarfeed');
         $this->assertEquals(0, $admin->settings['sugarfeed_module_Accounts']);
+        
+        // clean up
+        
+        $state->popTable('config');
     }
 
     public function testflushBackendCache()
     {
-
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             SugarFeed::flushBackendCache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testgetModuleFeedFiles()
@@ -100,6 +127,15 @@ class SugarFeedTest extends PHPUnit_Framework_TestCase
 
     public function testpushFeed2()
     {
+
+    // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('sugarfeed');
+
+        // test
+        
         $lead = new Lead();
         $lead->id = 1;
         $lead->assigned_user_id = 1;
@@ -116,10 +152,22 @@ class SugarFeedTest extends PHPUnit_Framework_TestCase
 
         //mark the record as deleted
         $sugarFeed->mark_deleted($sugarFeed->id);
+        
+        // clean up
+        
+        $state->popTable('sugarfeed');
+        $state->popTable('aod_index');
     }
 
     public function testpushFeed()
     {
+        // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('sugarfeed');
+
+        // test
+        
         SugarFeed::pushFeed('some text', 'SugarFeed', 1, 1, 'Link', 'some url');
 
         //retrieve newly created bean
@@ -133,8 +181,12 @@ class SugarFeedTest extends PHPUnit_Framework_TestCase
         //test fetchReplies method
         $this->fetchReplies();
 
-        //mark the record as deleted 
+        //mark the record as deleted
         $sugarFeed->mark_deleted($sugarFeed->id);
+        
+        // clean up
+        
+        $state->popTable('sugarfeed');
     }
 
     public function fetchReplies()
@@ -187,7 +239,9 @@ class SugarFeedTest extends PHPUnit_Framework_TestCase
 
     public function testgetTimeLapse()
     {
-        $result = SugarFeed::getTimeLapse('2016-01-15 11:16:02');
+        global $timedate;
+
+        $result = SugarFeed::getTimeLapse($timedate->asUser($timedate->fromDb('2016-01-15 11:16:02')));
         $this->assertTrue(isset($result));
         $this->assertGreaterThan(0, strlen($result));
     }

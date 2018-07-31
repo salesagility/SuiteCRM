@@ -273,7 +273,7 @@ class EmailMan extends SugarBean
         return $query['select'] . $query['from'] . $query['where'] . $query['order_by'];
     }
 
-// if
+    // if
 
     /**
      * @param $order_by
@@ -299,8 +299,17 @@ class EmailMan extends SugarBean
         $singleSelect = false
     ) {
         if ($return_array) {
-            return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
-                $return_array, $parentbean, $singleSelect);
+            return parent::create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect
+            );
         }
 
         $query =
@@ -404,8 +413,16 @@ class EmailMan extends SugarBean
         global $locale, $current_user;
         $temp_array = parent::get_list_view_array();
 
-        $related_type = $temp_array['RELATED_TYPE'];
-        $related_id = $temp_array['RELATED_ID'];
+        $related_type = isset($temp_array['RELATED_TYPE']) ? $temp_array['RELATED_TYPE'] : null;
+        
+        if (!isset($temp_array['RELATED_ID'])) {
+            LoggerManager::getLogger()->warn('EmailMan List view array has not related id for list view data');
+            $tempArrayRelatedId = null;
+        } else {
+            $tempArrayRelatedId = $temp_array['RELATED_ID'];
+        }
+        
+        $related_id = $tempArrayRelatedId;
         $is_person = SugarModule::get($related_type)->moduleImplements('Person');
 
         if ($is_person) {
@@ -418,8 +435,11 @@ class EmailMan extends SugarBean
         $row = $this->db->fetchByAssoc($result);
 
         if ($row) {
-            $temp_array['RECIPIENT_NAME'] = $is_person ? $locale->getLocaleFormattedName($row['first_name'],
-                $row['last_name'], '') : $row['name'];
+            $temp_array['RECIPIENT_NAME'] = $is_person ? $locale->getLocaleFormattedName(
+                $row['first_name'],
+                $row['last_name'],
+                ''
+            ) : $row['name'];
         }
 
         //also store the recipient_email address
@@ -431,7 +451,14 @@ class EmailMan extends SugarBean
             $temp_array['RECIPIENT_EMAIL'] = $row['email_address'];
         }
 
-        $this->email1 = $temp_array['RECIPIENT_EMAIL'];
+        if (!isset($temp_array['RECIPIENT_EMAIL'])) {
+            LoggerManager::getLogger()->warn('EmailMan List view array has not recipient email for list view data');
+            $temArrayRecipientEmail = null;
+        } else {
+            $temArrayRecipientEmail = $temp_array['RECIPIENT_EMAIL'];
+        }
+        
+        $this->email1 = $temArrayRecipientEmail;
         $temp_array['EMAIL1_LINK'] = $current_user->getEmailLink('email1', $this, '', '', 'ListView');
 
         return $temp_array;
@@ -552,6 +579,7 @@ class EmailMan extends SugarBean
                 $this->ref_email->description_html = $body_html;
                 $this->ref_email->description = $body_text;
                 $this->ref_email->from_addr = $from_address;
+                isValidEmailAddress($this->ref_email->from_addr);
                 $this->ref_email->from_addr_name = $from_address_name;
                 $this->ref_email->assigned_user_id = $sender_id;
                 if ($this->test) {
@@ -567,32 +595,64 @@ class EmailMan extends SugarBean
                 $this->ref_email->status = 'sent';
                 $retId = $this->ref_email->save();
 
-                foreach ($notes as $note) {
-                    if ($note->object_name == 'Note') {
-                        if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) {
-                            $file_location = $note->file->temp_file_location;
-                            $filename = $note->file->original_file_name;
-                            $mime_type = $note->file->mime_type;
-                        } else {
-                            $file_location = "upload://{$note->id}";
+                foreach ((array)$notes as $note) {
+                    if (!is_object($note)) {
+                        LoggerManager::getLogger()->warn('EmailMan create a reference email but given note is not an object. Type of note was: "' . gettype($note) . '"');
+                    } else {
+                        if ($note->object_name == 'Note') {
+                            if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) {
+                                $file_location = $note->file->temp_file_location;
+                                $filename = $note->file->original_file_name;
+                                $mime_type = $note->file->mime_type;
+                            } else {
+                                $file_location = "upload://{$note->id}";
+                                $filename = $note->id . $note->filename;
+                                $mime_type = $note->file_mime_type;
+                            }
+                        } elseif ($note->object_name == 'DocumentRevision') { // from Documents
                             $filename = $note->id . $note->filename;
+                            $file_location = "upload://$filename";
                             $mime_type = $note->file_mime_type;
                         }
-                    } elseif ($note->object_name == 'DocumentRevision') { // from Documents
-                        $filename = $note->id . $note->filename;
-                        $file_location = "upload://$filename";
-                        $mime_type = $note->file_mime_type;
                     }
 
                     $noteAudit = new Note();
                     $noteAudit->parent_id = $retId;
                     $noteAudit->parent_type = $this->ref_email->module_dir;
-                    $noteAudit->description = "[" . $note->filename . "] " . $mod_strings['LBL_ATTACHMENT_AUDIT'];
+                    
+                    if (!isset($note->filename)) {
+                        LoggerManager::getLogger()->warn('EmailMan create ref email error: Note filename is undefined.');
+                        $noteFilename = null;
+                    } else {
+                        $noteFilename = $note->filename ;
+                    }
+                    
+                    $noteAudit->description = "[" . $noteFilename . "] " . $mod_strings['LBL_ATTACHMENT_AUDIT'];
+                    
+                    
+                    if (!isset($filename)) {
+                        LoggerManager::getLogger()->warn('EmailMan create ref email error: Filename is undefined.');
+                        $filename = null;
+                    }
+                    
                     $noteAudit->filename = $filename;
+                    
+                    if (!isset($mime_type)) {
+                        LoggerManager::getLogger()->warn('EmailMan create ref email error: Mime Type is undefined.');
+                        $mime_type = null;
+                    }
+                    
                     $noteAudit->file_mime_type = $mime_type;
                     $noteAudit_id = $noteAudit->save();
 
-                    UploadFile::duplicate_file($note->id, $noteAudit_id, $filename);
+                    if (!isset($note->id)) {
+                        LoggerManager::getLogger()->warn('EmailMan create ref email but Note ID is undefined.');
+                        $noteId = null;
+                    } else {
+                        $noteId = $note->id;
+                    }
+                    
+                    UploadFile::duplicate_file($noteId, $noteAudit_id, $filename);
                 }
             }
 
@@ -633,8 +693,10 @@ class EmailMan extends SugarBean
             $campaignData = serialize($macro_nv);
 
             //required for one email per campaign per marketing message.
-            $this->ref_email->$rel_name->add($this->related_id,
-                array('campaign_data' => $this->db->quote($campaignData)));
+            $this->ref_email->$rel_name->add(
+                $this->related_id,
+                array('campaign_data' => $this->db->quote($campaignData))
+            );
         }
 
         return $this->ref_email->id;
@@ -656,7 +718,21 @@ class EmailMan extends SugarBean
         $email->to_addrs_emails = $module->email1 . ';';
         $email->type = 'archived';
         $email->deleted = '0';
-        $email->name = $this->current_campaign->name . ': ' . $mail->Subject;
+        
+        if (!isset($this->current_campaign)) {
+            LoggerManager::getLogger()->warn('EmailMan has not current campaign for create individual email.');
+            $currentCampaignNameMailSubject = null;
+        } else {
+            $currentCampaignNameMailSubject = $this->current_campaign->name . ': ' . $mail->Subject;
+        }
+        
+        $email->name = $currentCampaignNameMailSubject;
+        
+        if (!isset($mail->ContentType)) {
+            LoggerManager::getLogger()->warn('EmailMan given an mail for creating individual email but there is not content type.');
+            $mail->ContentType = null;
+        }
+            
         if ($mail->ContentType == "text/plain") {
             $email->description = $mail->Body;
             $email->description_html = null;
@@ -665,6 +741,7 @@ class EmailMan extends SugarBean
             $email->description = $mail->AltBody;
         }
         $email->from_addr = $mail->From;
+        isValidEmailAddress($email->from_addr);
         $email->assigned_user_id = $this->user_id;
         $email->parent_type = $this->related_type;
         $email->parent_id = $this->related_id;
@@ -925,6 +1002,7 @@ class EmailMan extends SugarBean
                 $this->current_mailbox->retrieve($this->current_emailmarketing->inbound_email_id);
                 //extract the email address.
                 $this->mailbox_from_addr = $this->current_mailbox->get_stored_options('from_addr', 'nobody@example.com', null);
+                isValidEmailAddress($this->mailbox_from_addr);
             }
 
             // fetch campaign details..
@@ -954,7 +1032,9 @@ class EmailMan extends SugarBean
             $mail->ClearAllRecipients();
             $mail->ClearReplyTos();
             $mail->Sender = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
+            isValidEmailAddress($mail->Sender);
             $mail->From = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
+            isValidEmailAddress($mail->From);
             $mail->FromName = $locale->translateCharsetMIME(trim($this->current_emailmarketing->from_name), 'UTF-8', $OBCharset);
             
             $mail->ClearCustomHeaders();
@@ -1062,7 +1142,8 @@ class EmailMan extends SugarBean
                     $decodedFromName = mb_decode_mimeheader($this->current_emailmarketing->from_name);
                     $fromAddressName = "{$decodedFromName} <{$this->mailbox_from_addr}>";
 
-                    $email_id=$this->create_ref_email($this->marketing_id,
+                    $email_id=$this->create_ref_email(
+                        $this->marketing_id,
                                             $this->current_emailtemplate->subject,
                                             $this->current_emailtemplate->body,
                                             $this->current_emailtemplate->body_html,
@@ -1340,7 +1421,8 @@ class EmailMan extends SugarBean
                 . ' Please set up in email settings'
             );
             SugarApplication::appendErrorMessage(
-                $app_strings['ERR_OPT_IN_TPL_NOT_SET']);
+                $app_strings['ERR_OPT_IN_TPL_NOT_SET']
+            );
 
             return false;
         }
@@ -1356,6 +1438,7 @@ class EmailMan extends SugarBean
         $defaults = $emailObj->getSystemDefaultEmail();
 
         $mailer->From = $defaults['email'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $defaults['name'];
 
         $mailer->Subject = from_html($emailTemplate->subject);
@@ -1376,10 +1459,14 @@ class EmailMan extends SugarBean
 
         $mailer->addAddress($emailAddressString, $focus->name);
 
-        $mailer->replace('contact_first_name',
-            isset($focus->first_name) ? $focus->first_name : '');
-        $mailer->replace('contact_last_name',
-            isset($focus->last_name) ? $focus->last_name : '');
+        $mailer->replace(
+            'contact_first_name',
+            isset($focus->first_name) ? $focus->first_name : ''
+        );
+        $mailer->replace(
+            'contact_last_name',
+            isset($focus->last_name) ? $focus->last_name : ''
+        );
         $emailAddressConfirmOptInToken = $emailAddress->getConfirmOptInTokenGenerateIfNotExists();
         $mailer->replace('emailaddress_confirm_opt_in_token', $emailAddressConfirmOptInToken);
         
@@ -1397,7 +1484,8 @@ class EmailMan extends SugarBean
                 . $mailer->ErrorInfo
             );
         } else {
-            $log->debug('Confirm Opt In Email sent: '
+            $log->debug(
+                'Confirm Opt In Email sent: '
                 . $emailAddress->email_address
             );
         }
