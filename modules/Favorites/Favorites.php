@@ -110,7 +110,7 @@ class Favorites extends Basic
         if ($id) {
             $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND parent_id = '" . $id . "' AND deleted = 0 ORDER BY date_entered DESC";
         } else {
-            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
+            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC LIMIT 30";
         }
 
         $result = $db->query($query);
