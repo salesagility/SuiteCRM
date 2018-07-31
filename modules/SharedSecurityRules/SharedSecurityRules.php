@@ -139,16 +139,36 @@ class SharedSecurityRules extends Basic
         }
 
         $id = parent::save($check_notify);
+        
+        $post = $this->quote($_POST);
 
         require_once('modules/SharedSecurityRulesConditions/SharedSecurityRulesConditions.php');
         $condition = new SharedSecurityRulesConditions();
-        $condition->save_lines($_POST, $this, 'aor_conditions_');
+        $condition->save_lines($post, $this, 'aor_conditions_');
 
         require_once('modules/SharedSecurityRulesActions/SharedSecurityRulesActions.php');
         $action = new SharedSecurityRulesActions();
-        $action->save_lines($_POST, $this, 'shared_rules_actions_');
+        $action->save_lines($post, $this, 'shared_rules_actions_');
         
         return $id;
+    }
+    
+    /**
+     * Quote all in post data
+     * 
+     * @param array $post
+     * @return array
+     */
+    protected function quote($post) {
+        $db = DBManagerFactory::getInstance();
+        foreach ($post as $key => $value) {
+            if (is_array($value) || is_object($value)) {
+                $post[$key] = $this->quote($value);
+            } else {
+                $post[$key] = $db->quote($value);
+            }
+        }
+        return $post;
     }
 
     /**
