@@ -359,6 +359,9 @@ class Popup_Picker
         } //end Unlinked Emails
 
         foreach ($focus_notes_list as $note) {
+            if (!$note->ACLAccess('list')) {
+                continue;
+            }
             if ($note->ACLAccess('view')) {
                 $history_list[] = array(
                     'name' => $note->name,
