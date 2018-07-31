@@ -62,11 +62,11 @@ class SharedSecurityRulesHelper {
      */
     public function quote($post) {
         foreach ($post as $key => $value) {
+            $needsDeepQuote = false;
             if (is_array($value) || is_object($value)) {
-                $post[$key] = $this->quote($value);
-            } else {
-                $post[$key] = $this->db->quote($value);
+                $needsDeepQuote = true;
             }
+            $post[$key] = $needsDeepQuote ? $this->quote($value) : $this->db->quote($value);
         }
         return $post;
     }
