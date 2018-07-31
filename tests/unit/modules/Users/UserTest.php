@@ -1166,7 +1166,8 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(true, $user->isPrimaryEmail("abc@abc.com"));
     }
     
-    public function testError() {
+    public function testError()
+    {
         global $app_strings;
         
         // setup
@@ -1193,7 +1194,5 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         // clean up
         unset($app_strings['TEST_ERROR_MESSAGE']);
         unset($_REQUEST['error_string']);
-        
     }
-    
 }

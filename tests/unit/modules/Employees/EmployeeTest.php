@@ -258,7 +258,8 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('email_addresses');
     }
     
-    public function testError() {
+    public function testError()
+    {
         global $app_strings;
         
         // setup
@@ -280,11 +281,11 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         include __DIR__ . '/../../../../modules/Employees/Error.php';
         $contents = ob_get_contents();
         ob_end_clean();
-        $this->assertContains('<span class=\'error\'>Hello error<br><br>' . $app_strings['NTC_CLICK_BACK'] . '</span>', $contents);
+        $this->assertContains('<span class=\'error\'>Hello error<br><br>' . $app_strings['NTC_CLICK_BACK'] . '</span>',
+                $contents);
         
         // clean up
         unset($app_strings['TEST_ERROR_MESSAGE']);
         unset($_REQUEST['error_string']);
-    }
-    
+    }    
 }

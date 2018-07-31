@@ -38,6 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace SuiteCRM;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -47,13 +49,15 @@ use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 
 include_once __DIR__ . '/../../../include/utils.php';
 
-class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract {
+class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
+{
     
-    public function testGetAppString() {
+    public function testGetAppString()
+    {
         global $app_strings;
         
         // setup: test works only if it is not exists
-        $this->assertTrue(!isset($app_string['TEST_NONEXISTS_LABEL']));
+        $this->assertTrue(!isset($app_strings['TEST_NONEXISTS_LABEL']));
         
         // test if label is not set
         
@@ -76,7 +80,5 @@ class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract {
         
         // clean up
         unset($app_strings['TEST_NONEXISTS_LABEL']);
-        
     }
-    
 }
