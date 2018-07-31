@@ -160,7 +160,7 @@ class UsersViewEdit extends ViewEdit
         // FIXME: Translate error prefix
         if (isset($_REQUEST['error_string'])) {
             LoggerManager::getLogger()->warn('Using error string in request is deprecated: ' . $_REQUEST[
-                'error_password']);
+                'error_string']);
             $this->ss->assign('ERROR_STRING', '<span class="error">Error: ' . $mod_strings['LBL_ERROR'] . '</span>');
         }
         if (isset($_REQUEST['error_password'])) {
