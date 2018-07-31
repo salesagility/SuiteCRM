@@ -815,11 +815,11 @@ class AOR_Report extends Basic
 
             $row_class = $row_class == 'oddListRowS1' ? 'evenListRowS1' : 'oddListRowS1';
         }
-        $html .= "</tbody>";
+        $html .= "</tbody></table>";
 
         $html .= $this->getTotalHTML($fields, $totals);
 
-        $html .= '</table></div>';
+        $html .= '</div>';
 
         $html .= "    <script type=\"text/javascript\">
                             groupedReportToggler = {
@@ -903,7 +903,7 @@ class AOR_Report extends Basic
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
         $showTotal = false;
-        $html = '</table><table>';
+        $html = '<table>';
         $html .= "<thead class='fc-head'>";
         $html .= "<tr>";
         foreach ($fields as $label => $field) {
@@ -988,7 +988,7 @@ class AOR_Report extends Basic
             }
         }
         $html .= '</tr>';
-        $html .= '</tbody>';
+        $html .= '</tbody></table>';
 
         return $html;
     }
