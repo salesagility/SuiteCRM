@@ -96,7 +96,7 @@ class UsersViewEdit extends ViewEdit
 
     public function display()
     {
-        global $current_user, $app_list_strings;
+        global $current_user, $app_list_strings, $mod_strings;
 
 
         //lets set the return values
@@ -159,10 +159,12 @@ class UsersViewEdit extends ViewEdit
 
         // FIXME: Translate error prefix
         if (isset($_REQUEST['error_string'])) {
-            $this->ss->assign('ERROR_STRING', '<span class="error">Error: '.$_REQUEST['error_string'].'</span>');
+            LoggerManager::getLogger()->warn('Using error string in request is deprecated: ' . $_REQUEST['error_password']);
+            $this->ss->assign('ERROR_STRING', '<span class="error">Error: ' . $mod_strings['LBL_ERROR'] . '</span>');
         }
         if (isset($_REQUEST['error_password'])) {
-            $this->ss->assign('ERROR_PASSWORD', '<span id="error_pwd" class="error">Error: '.$_REQUEST['error_password'].'</span>');
+            LoggerManager::getLogger()->warn('Using password error in request is deprecated: ' . $_REQUEST['error_password']);
+            $this->ss->assign('ERROR_PASSWORD', '<span id="error_pwd" class="error">Error: ' . $mod_strings['LBL_ERROR'] . '</span>');
         }
 
 
