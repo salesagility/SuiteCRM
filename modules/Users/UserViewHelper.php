@@ -529,8 +529,8 @@ class UserViewHelper
         }
 
         /* Module Tab Chooser */
-        require_once('include/templates/TemplateGroupChooser.php');
-        require_once('modules/MySettings/TabController.php');
+        require_once(get_custom_file_if_exists('include/templates/TemplateGroupChooser.php'));
+        require_once(get_custom_file_if_exists('modules/MySettings/TabController.php'));
         $chooser = new TemplateGroupChooser();
         $controller = new TabController();
 
@@ -558,10 +558,12 @@ class UserViewHelper
         $chooser->args['left_name'] = 'display_tabs';
         $chooser->args['right_name'] = 'hide_tabs';
 
-        $chooser->args['left_label'] =  translate('LBL_DISPLAY_TABS', 'Users');
-        $chooser->args['right_label'] =  translate('LBL_HIDE_TABS', 'Users');
-        require_once('include/Smarty/plugins/function.sugar_help.php');
-        $chooser->args['title'] =  translate('LBL_EDIT_TABS', 'Users').smarty_function_sugar_help(array("text"=>translate('LBL_CHOOSE_WHICH', 'Users')), $ss);
+
+        $chooser->args['left_label'] =  translate('LBL_DISPLAY_TABS','Users');
+        $chooser->args['right_label'] =  translate('LBL_HIDE_TABS','Users');
+        require_once(get_custom_file_if_exists('include/Smarty/plugins/function.sugar_help.php'));
+        $chooser->args['title'] =  translate('LBL_EDIT_TABS','Users').smarty_function_sugar_help(array("text"=>translate('LBL_CHOOSE_WHICH','Users')),$ss);
+
 
         $this->ss->assign('TAB_CHOOSER', $chooser->display());
         $this->ss->assign('CHOOSER_SCRIPT', 'set_chooser();');
@@ -628,7 +630,7 @@ class UserViewHelper
         $this->ss->assign("FDOWDISPLAY", $fdowDays[$currentFDOW]);
 
         //// Numbers and Currency display
-        require_once('modules/Currencies/ListCurrency.php');
+        require_once(get_custom_file_if_exists('modules/Currencies/ListCurrency.php'));
         $currency = new ListCurrency();
 
         // 10/13/2006 Collin - Changed to use Localization.getConfigPreference
