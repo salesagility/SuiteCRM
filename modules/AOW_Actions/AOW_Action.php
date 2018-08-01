@@ -88,7 +88,7 @@ class AOW_Action extends Basic
     function save_lines($post_data, $parent, $key = '')
     {
 
-        $field = $key . 'field';
+        $field = $key . 'action';
         $postedField = null;
         if (isset($post_data[$field])) {
             $postedField = $post_data[$field];
