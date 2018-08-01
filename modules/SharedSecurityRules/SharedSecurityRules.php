@@ -221,27 +221,7 @@ class SharedSecurityRules extends Basic
                                 }
                                 
                             } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                                
-                                $actionParameterEmailKey1 = null;
-                                if (!isset($action['parameters']['email'][$key]['1'])) {                                    
-                                    LoggerManager::getLogger()->warn('action parameter email [1] is not set at key: ' . $key);
-                                } else {
-                                    $actionParameterEmailKey1 = $action['parameters']['email'][$key]['1'];
-                                }
-                                
-                                $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$actionParameterEmailKey1}' && securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
-                                $sec_group_results = $module->db->query($sec_group_query);
-                                $secgroup = $module->db->fetchRow($sec_group_results);
-                                if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
-                                    $usertRoleResultsAssoc = $checker->getUsertRuleResultsAssoc($module, $action['parameters']['email'][$key]['2'], $current_user->id);
-                                    if ($usertRoleResultsAssoc['user_id'] == $current_user->id) {
-                                        $result = $checker->updateResultByCondition($result, $helper, $rule, $moduleBean, $view, $action, $key);
-                                    }
-                                } else {
-                                    if ($secgroup[0] == $current_user->id) {
-                                        $result = $checker->updateResultByCondition($result, $helper, $rule, $moduleBean, $view, $action, $key);
-                                    }
-                                }
+                                $result = $checker->getResultByUserActionKey($result, $helper, $rule, $moduleBean, $action, $key, $current_user->id, $module);
                             } elseif (($targetType == "Specify User" && $current_user->id == $action['parameters']['email'][$key]) ||
                                     ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
                                 //we have found a possible record to check against.
