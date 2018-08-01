@@ -277,7 +277,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test if there is an error
         
         $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
-        $_REQUEST['error_string'] = 'TEST_ERROR_MESSAGE';
+        $request['error_string'] = 'TEST_ERROR_MESSAGE';
         ob_start();
         include __DIR__ . '/../../../../modules/Employees/Error.php';
         $contents = ob_get_contents();
@@ -287,6 +287,5 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         unset($app_strings['TEST_ERROR_MESSAGE']);
-        unset($_REQUEST['error_string']);
     }
 }

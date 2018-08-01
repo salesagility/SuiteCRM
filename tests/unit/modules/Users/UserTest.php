@@ -1185,7 +1185,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         // test if there is an error
         
         $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
-        $_REQUEST['error_string'] = 'TEST_ERROR_MESSAGE';
+        $request['error_string'] = 'TEST_ERROR_MESSAGE';
         ob_start();
         include __DIR__ . '/../../../../modules/Users/Error.php';
         $contents = ob_get_contents();
@@ -1195,6 +1195,5 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         
         // clean up
         unset($app_strings['TEST_ERROR_MESSAGE']);
-        unset($_REQUEST['error_string']);
     }
 }
