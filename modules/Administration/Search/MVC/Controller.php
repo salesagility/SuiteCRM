@@ -40,26 +40,53 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 30/07/18
- * Time: 14:05
+ * Date: 01/08/18
+ * Time: 15:45
  */
 
-namespace SuiteCRM\Modules\Administration\Search;
+namespace SuiteCRM\Modules\Administration\Search\MVC;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class Controller extends MVC\Controller
+abstract class Controller
 {
-    public function __construct()
+    /** @var View */
+    protected $view;
+
+    /**
+     * Controller constructor.
+     *
+     * @param View $view
+     */
+    public function __construct(View $view)
     {
-        parent::__construct(new View());
+        $this->view = $view;
     }
 
-    public function doSave()
+    /**
+     * Handler a request by reading the request 'do' parameters.
+     *
+     * Always falls back to the 'display' method.
+     */
+    public function handle()
     {
-        // TODO
-        echo 'Save not yet implemented';
+        if (
+            isset($_REQUEST['do']) &&
+            !empty($_REQUEST['do']) &&
+            method_exists($this, 'do' . $_REQUEST['do'])
+        ) {
+            $methodName = 'do' . $_REQUEST['do'];
+            $this->$methodName();
+        } else {
+            $this->display();
+        }
+    }
+
+    public function display()
+    {
+        $this->view->preDisplay();
+        $this->view->display();
     }
 }

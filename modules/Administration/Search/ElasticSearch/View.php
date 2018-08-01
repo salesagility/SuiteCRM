@@ -48,71 +48,28 @@
 
 namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;
 
-use Sugar_Smarty;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class View
-{
-    /** @var Sugar_Smarty */
-    public $ss;
-    /** @var array Associative array with the configuration as loaded from the configuration file */
-    private $elasticSearchConfig;
+use SuiteCRM\Modules\Administration\Search\MVC\View as AbstractView;
 
+class View extends AbstractView
+{
     /**
      * ElasticSearchSettingsView constructor.
-     * @param $elasticSearchConfig
      */
-    public function __construct($elasticSearchConfig)
+    public function __construct()
     {
-        $this->elasticSearchConfig = $elasticSearchConfig;
-        $this->ss = new Sugar_Smarty();
+        parent::__construct(__DIR__ . '/view.tpl');
     }
 
-    public function display()
+    public function preDisplay()
     {
-        global $mod_strings;
-        global $app_list_strings;
-        global $app_strings;
+        parent::preDisplay();
 
-        $errors = array();
-        $buttons = $this->getButtons($app_strings, $mod_strings);
-        $this->ss->assign('MOD', $mod_strings);
-        $this->ss->assign('APP', $app_strings);
-        $this->ss->assign('APP_LIST', $app_list_strings);
-        $this->ss->assign('LANGUAGES', get_languages());
-        $this->ss->assign("JAVASCRIPT", get_set_focus_js());
-        $this->ss->assign('config', $this->elasticSearchConfig);
-        $this->ss->assign('error', $errors);
-        $this->ss->assign("BUTTONS", $buttons);
+        global $sugar_config;
 
-        $this->ss->display('modules/Administration/Search/ElasticSearch/view.tpl');
+        $this->smarty->assign('config', $sugar_config['search']['ElasticSearch']);
     }
-
-    /**
-     * @param $app_strings
-     * @param $mod_strings
-     * @return string
-     */
-    private function getButtons($app_strings, $mod_strings)
-    {
-        return <<<EOQ
-    <input title="{$app_strings['LBL_SAVE_BUTTON_TITLE']}"
-        accessKey="{$app_strings['LBL_SAVE_BUTTON_KEY']}"
-        class="button primary"
-        type="submit"
-        name="save"
-        onclick="return check_form('ConfigureSettings');"
-        value="{$app_strings['LBL_SAVE_BUTTON_LABEL']}" >&nbsp;
-    <input title="{$mod_strings['LBL_CANCEL_BUTTON_TITLE']}" 
-        onclick="document.location.href='index.php?module=Administration&action=index'"
-        class="button"
-        type="button"
-        name="cancel"
-        value="{$app_strings['LBL_CANCEL_BUTTON_LABEL']}" >
-EOQ;
-    }
-
 }

@@ -50,96 +50,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use SuiteCRM\Search\SearchWrapper;
-
-require_once __DIR__ . '/../../Home/UnifiedSearchAdvanced.php';
-
-class View
+class View extends MVC\View
 {
-    public $smarty;
-
-    /**
-     * View constructor.
-     */
     public function __construct()
     {
-        $this->smarty = new \Sugar_Smarty();
+        parent::__construct(__DIR__ . '/view.tpl');
     }
 
-    public function display()
+    public function preDisplay()
     {
-        global $mod_strings;
-        global $app_list_strings;
-        global $app_strings;
-        global $sugar_config;
+        parent::preDisplay();
 
-        $errors = array();
-        //$buttons = $this->getButtons($app_strings, $mod_strings);
-        $this->smarty->assign('MOD', $mod_strings);
-        $this->smarty->assign('APP', $app_strings);
-        $this->smarty->assign('APP_LIST', $app_list_strings);
-        $this->smarty->assign('LANGUAGES', get_languages());
-        $this->smarty->assign('JAVASCRIPT', get_set_focus_js());
-        $this->smarty->assign('error', $errors);
-
-        $this->smarty->assign('config', $sugar_config['search']);
         $this->smarty->assign('controllers', $this->getSearchControllers());
         $this->smarty->assign('engines', $this->getEngines());
         $this->smarty->assign('modules', $this->getModules());
-
-        //$this->smarty->assign("BUTTONS", $buttons);
-
-        $this->smarty->display('modules/Administration/Search/view.tpl');
-    }
-
-    private function getSearchControllers()
-    {
-        return [
-            'Search' => 'Search (new)',
-            'UnifiedSearch' => 'Global Unified Search (legacy)'
-        ];
-    }
-
-    private function getEngines()
-    {
-        $engines = [];
-
-        foreach (SearchWrapper::getEngines() as $engine) {
-            $engines[$engine] = translate('LBL_' . $this->from_camel_case($engine));
-        }
-
-        return $engines;
-    }
-
-    private function from_camel_case($input, $uppercase = true)
-    {
-        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
-        $ret = $matches[0];
-        foreach ($ret as &$match) {
-            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
-        }
-
-        $return = implode('_', $ret);
-
-        if ($uppercase) {
-            $return = strtoupper($return);
-        }
-
-        return $return;
-    }
-
-    private function getModules()
-    {
-        $s = new \UnifiedSearchAdvanced();
-        $r = $s->retrieveEnabledAndDisabledModules();
-        $r = array_merge($r['enabled'], $r['disabled']);
-
-        $modules = [];
-
-        foreach ($r as $module) {
-            $modules[$module['module']] = $module['label'];
-        }
-
-        return $modules;
     }
 }

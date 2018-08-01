@@ -61,8 +61,6 @@ class Controller
 {
     /** @var Configurator */
     private $cfg;
-    /** @var array reference to the values stored in cfg regarding the ElasticSearch */
-    private $elasticSearchConfig;
     /** @var View */
     private $view;
 
@@ -72,8 +70,7 @@ class Controller
     public function __construct()
     {
         $this->cfg = new Configurator();
-        $this->elasticSearchConfig = &$this->cfg->config['search']['ElasticSearch'];
-        $this->view = new View($this->elasticSearchConfig);
+        $this->view = new View();
     }
 
     /**
@@ -81,7 +78,8 @@ class Controller
      */
     public function display()
     {
-        $this->view->ss->assign('schedulers', $this->getElasticsearchIndexingSchedulers());
+        $this->view->preDisplay();
+        $this->view->getSmarty()->assign('schedulers', $this->getElasticsearchIndexingSchedulers());
         $this->view->display();
     }
 
