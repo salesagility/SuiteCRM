@@ -141,7 +141,7 @@ class SharedSecurityRules extends Basic
             unset($_POST['aow_actions_id']);
         }
 
-        $id = parent::save($check_notify);
+        $returnId = parent::save($check_notify);
         
         $helper = new SharedSecurityRulesHelper($this->db);
         $post = $helper->quote($_POST);
@@ -154,7 +154,7 @@ class SharedSecurityRules extends Basic
         $action = new SharedSecurityRulesActions();
         $action->save_lines($post, $this, 'shared_rules_actions_');
         
-        return $id;
+        return $returnId;
     }
 
     /**
