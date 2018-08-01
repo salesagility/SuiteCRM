@@ -1179,7 +1179,8 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         include __DIR__ . '/../../../../modules/Users/Error.php';
         $contents = ob_get_contents();
         ob_end_clean();
-        $this->assertContains('<span class=\'error\'><br><br>' . $app_strings['NTC_CLICK_BACK'] . '</span>', $contents);
+        $expected = '<span class=\'error\'><br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
+        $this->assertContains($expected, $contents);
         
         // test if there is an error
         
