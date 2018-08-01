@@ -1,5 +1,5 @@
 <?php
-/*********************************************************************************
+/**
  * SugarCRM is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2010 SugarCRM Inc.
  *
@@ -32,7 +32,7 @@
  * SugarCRM" logo. If the display of the logo is not reasonably feasible for
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
- ********************************************************************************/
+ */
 /*
  * Created on Mar 23, 2007
  *

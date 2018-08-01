@@ -24,16 +24,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
-/*********************************************************************************
+/**
  * $Id$
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ */
 
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_Products/AOS_Products.php');
