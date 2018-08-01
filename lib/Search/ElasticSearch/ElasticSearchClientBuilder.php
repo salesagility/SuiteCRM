@@ -63,7 +63,7 @@ class ElasticSearchClientBuilder
     public static function getClient()
     {
         if (empty(self::$hosts)) {
-            self::$hosts = self::loadConfig(__DIR__ . '/elasticsearch.json');
+            self::$hosts = self::loadFromSugarConfig();
         }
 
         $client = ClientBuilder::create()->setHosts(self::$hosts)->build();
@@ -71,6 +71,13 @@ class ElasticSearchClientBuilder
         return $client;
     }
 
+    /** @noinspection PhpUnusedPrivateMethodInspection */
+    /**
+     * Loads config from a json file.
+     *
+     * @param $file
+     * @return array
+     */
     private static function loadConfig($file)
     {
         if (!file_exists($file)) {
@@ -86,6 +93,40 @@ class ElasticSearchClientBuilder
         return json_decode($results, true);
     }
 
+    /**
+     * Loads Elasticsearch client configuration from the $sugar_config global.
+     *
+     * @return array
+     */
+    private static function loadFromSugarConfig()
+    {
+        global $sugar_config;
+
+        $host = $sugar_config['search']['ElasticSearch']['host'];
+        $user = $sugar_config['search']['ElasticSearch']['user'];
+        $pass = $sugar_config['search']['ElasticSearch']['pass'];
+
+        $host = trim($host);
+        $user = trim($user);
+
+        if (empty($user)) {
+            return [$host];
+        }
+
+        return [
+            [
+                'host' => $host,
+                'user' => $user,
+                'pass' => $pass
+            ]
+        ];
+    }
+
+    /**
+     * Returns the default connection (['127.0.0.1']).
+     *
+     * @return array
+     */
     private static function loadDefaultConfig()
     {
         return ['127.0.0.1'];

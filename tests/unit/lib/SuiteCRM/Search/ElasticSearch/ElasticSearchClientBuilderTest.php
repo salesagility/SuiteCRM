@@ -46,6 +46,7 @@
 
 use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
 use SuiteCRM\Search\SearchTestAbstract;
+use SuiteCRM\StateSaver;
 
 class ElasticSearchClientBuilderTest extends SearchTestAbstract
 {
@@ -83,5 +84,81 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         $expected = ["127.0.0.1"];
 
         self::assertEquals($expected, $config);
+    }
+
+    public function testLoadSugarConfig()
+    {
+        global $sugar_config;
+
+        $stateSave = new StateSaver();
+        $stateSave->pushGlobals();
+
+        $sugar_config['search']['ElasticSearch']['host'] = '127.0.0.1';
+        $sugar_config['search']['ElasticSearch']['user'] = 'foo';
+        $sugar_config['search']['ElasticSearch']['pass'] = 'bar';
+
+        $actual = $this->loadFromSugarConfig();
+        $expected = [
+            [
+                'host' => '127.0.0.1',
+                'user' => 'foo',
+                'pass' => 'bar'
+            ]
+        ];
+
+        self::assertEquals($expected, $actual);
+
+        $stateSave->popGlobals();
+    }
+
+    public function testLoadSugarConfig2()
+    {
+        global $sugar_config;
+
+        $stateSave = new StateSaver();
+        $stateSave->pushGlobals();
+
+        $sugar_config['search']['ElasticSearch']['host'] = 'localhost';
+        $sugar_config['search']['ElasticSearch']['user'] = 'bar';
+        $sugar_config['search']['ElasticSearch']['pass'] = '';
+
+        $actual = $this->loadFromSugarConfig();
+        $expected = [
+            [
+                'host' => 'localhost',
+                'user' => 'bar',
+                'pass' => ''
+            ]
+        ];
+
+        self::assertEquals($expected, $actual);
+
+        $stateSave->popGlobals();
+    }
+
+    public function testLoadSugarConfig3()
+    {
+        global $sugar_config;
+
+        $stateSave = new StateSaver();
+        $stateSave->pushGlobals();
+
+        $sugar_config['search']['ElasticSearch']['host'] = 'www.example.com';
+        $sugar_config['search']['ElasticSearch']['user'] = '';
+        $sugar_config['search']['ElasticSearch']['pass'] = '';
+
+        $actual = $this->loadFromSugarConfig();
+
+        $expected = ['www.example.com'];
+
+        self::assertEquals($expected, $actual);
+
+        $stateSave->popGlobals();
+    }
+
+    private function loadFromSugarConfig()
+    {
+        $builder = new ElasticSearchClientBuilder();
+        return self::invokeMethod($builder, 'loadFromSugarConfig');
     }
 }
