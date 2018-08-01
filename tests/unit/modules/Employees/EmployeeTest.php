@@ -281,7 +281,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         include __DIR__ . '/../../../../modules/Employees/Error.php';
         $contents = ob_get_contents();
         ob_end_clean();
-        $this->assertContains('<span class=\'error\'>Hello error</span>',
+        $this->assertContains('<span class=\'error\'>Hello error<br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>',
                 $contents);
         
         // clean up
