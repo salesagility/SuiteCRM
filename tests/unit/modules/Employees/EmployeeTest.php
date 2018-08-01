@@ -281,7 +281,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         include __DIR__ . '/../../../../modules/Employees/Error.php';
         $contents = ob_get_contents();
         ob_end_clean();
-        $this->assertContains('<span class=\'error\'>'  . "\n" . 'Hello error</span>',
+        $this->assertContains('<span class=\'error\'>Hello error</span>',
                 $contents);
         
         // clean up
