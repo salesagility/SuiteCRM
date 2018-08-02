@@ -50,6 +50,7 @@ namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;
 
 use BeanFactory;
 use Configurator;
+use SuiteCRM\Modules\Administration\Search\MVC\Controller as AbstractController;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -57,20 +58,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once __DIR__ . '/../../../Configurator/Configurator.php';
 
-class Controller
+class Controller extends AbstractController
 {
-    /** @var Configurator */
-    private $cfg;
-    /** @var View */
-    private $view;
-
     /**
      * ElasticSearchSettingsController constructor.
      */
     public function __construct()
     {
-        $this->cfg = new Configurator();
-        $this->view = new View();
+        parent::__construct(new View());
     }
 
     /**
@@ -78,25 +73,14 @@ class Controller
      */
     public function display()
     {
-        $this->view->preDisplay();
         $this->view->getSmarty()->assign('schedulers', $this->getElasticsearchIndexingSchedulers());
-        $this->view->display();
-    }
-
-    /**
-     * Returns true if the browser is sending a request to save data.
-     *
-     * @return bool
-     */
-    public function isSaveRequest()
-    {
-        return isset($_REQUEST['do']) && $_REQUEST['do'] == 'save';
+        parent::display();
     }
 
     /**
      * Saves the configuration getting data from POST.
      */
-    public function saveConfig()
+    public function doSaveConfig()
     {
         $enabled = filter_input(INPUT_POST, 'enabled', FILTER_VALIDATE_BOOLEAN);
         $host = filter_input(INPUT_POST, 'host', FILTER_SANITIZE_STRING);
@@ -105,12 +89,14 @@ class Controller
 
         $enabled = boolval(intval($enabled));
 
-        $this->cfg->config['search']['ElasticSearch']['enabled'] = $enabled;
-        $this->cfg->config['search']['ElasticSearch']['host'] = $host;
-        $this->cfg->config['search']['ElasticSearch']['user'] = $user;
-        $this->cfg->config['search']['ElasticSearch']['pass'] = $pass;
+        $cfg = new Configurator();
 
-        $this->cfg->saveConfig();
+        $cfg->config['search']['ElasticSearch']['enabled'] = $enabled;
+        $cfg->config['search']['ElasticSearch']['host'] = $host;
+        $cfg->config['search']['ElasticSearch']['user'] = $user;
+        $cfg->config['search']['ElasticSearch']['pass'] = $pass;
+
+        $cfg->saveConfig();
 
         /*
          * For some unknown and rather magic reason, after the configuration is saved, the file is not instantly changed.

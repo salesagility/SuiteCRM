@@ -47,7 +47,7 @@
       class="detail-view"
       enctype='multipart/form-data'
       method="POST"
-      action="index.php?module=Administration&action=ElasticSearchSettings&do=save">
+      action="index.php?module=Administration&action=ElasticSearchSettings&do=SaveConfig">
 
     <div class="row">
         <div class="panel panel-primary">

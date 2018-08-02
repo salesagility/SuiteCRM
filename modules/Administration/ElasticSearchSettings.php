@@ -48,8 +48,4 @@ if (!is_admin($current_user)) sugar_die("Unauthorized access to administration."
 
 $controller = new Controller();
 
-if ($controller->isSaveRequest()) {
-    $controller->saveConfig();
-} else {
-    $controller->display();
-}
+$controller->handle();
