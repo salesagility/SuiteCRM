@@ -52,6 +52,8 @@ use BeanFactory;
 use Configurator;
 use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\BadRequest400Exception;
+use SchedulersJob;
+use SugarJobQueue;
 use SuiteCRM\Modules\Administration\Search\MVC\Controller as AbstractController;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 
@@ -60,6 +62,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once __DIR__ . '/../../../Configurator/Configurator.php';
+require_once __DIR__ . '/../../../SchedulersJobs/SchedulersJob.php';
+require_once __DIR__ . '/../../../../include/SugarQueue/SugarJobQueue.php';
 
 class Controller extends AbstractController
 {
@@ -157,6 +161,40 @@ class Controller extends AbstractController
 
         echo json_encode($return);
 
+        die;
+    }
+
+    public function doFullIndex()
+    {
+        $this->scheduleIndex(false);
+    }
+
+    public function doPartialIndex()
+    {
+        $this->scheduleIndex(true);
+    }
+
+    /**
+     * Schedules an indexing job.
+     *
+     * @param bool $partial
+     */
+    private function scheduleIndex($partial)
+    {
+        ob_clean(); // deletes the rest of the html previous to this.
+
+        $job = new SchedulersJob();
+
+        $job->name = 'Index requested by an administrator';
+        $job->target = 'function::runElasticSearchIndexerScheduler';
+        $job->data = json_encode(['partial' => $partial]);
+        $job->assigned_user_id = 1;
+
+        $queue = new SugarJobQueue();
+        /** @noinspection PhpParamsInspection */
+        $queue->submitJob($job);
+
+        echo 'success';
         die;
     }
 

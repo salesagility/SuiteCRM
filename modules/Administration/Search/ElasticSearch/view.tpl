@@ -127,10 +127,16 @@
     </div>
 
     <div class="row">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Search Preferences</div>
+        <div class="col-md-6">
+            <div class="panel panel-primary ">
+                <div class="panel-heading">Index</div>
+            </div>
             <div class="panel-body tab-content">
-                <p>There are no search preferences available at the current time.</p>
+                <label>Schedule an indexing.</label>
+                <div>
+                    <button class="btn btn-primary" type="button" id="es-full-index">Schedule full indexing</button>
+                    <button class="btn btn-default" type="button" id="es-partial-index">Schedule partial indexing</button>
+                </div>
             </div>
         </div>
     </div>
@@ -142,4 +148,4 @@
     {$JAVASCRIPT}
 
 </form>
-<script src="modules/Administration/Search/ElasticSearch/testConnection.js"></script>
+<script src="modules/Administration/Search/ElasticSearch/scripts.js"></script>

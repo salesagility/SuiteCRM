@@ -62,3 +62,23 @@ $('#es-test-connection').click(function () {
         alert("Failed perform ping request.");
     })
 });
+
+$('#es-full-index').click(function () {
+    var url = "index.php?module=Administration&action=ElasticSearchSettings&do=FullIndex";
+
+    $.ajax(url).done(function () {
+        alert("A full indexing has been scheduled and will start in the next 60 seconds. Search results might be incomplete until the process is complete.");
+    }).error(function () {
+        alert("Failed to start full index.");
+    })
+});
+
+$('#es-partial-index').click(function () {
+    var url = "index.php?module=Administration&action=ElasticSearchSettings&do=PartialIndex";
+
+    $.ajax(url).done(function () {
+        alert("A full indexing has been scheduled and will start in the next 60 seconds.");
+    }).error(function () {
+        alert("Failed to start partial index.");
+    })
+});
