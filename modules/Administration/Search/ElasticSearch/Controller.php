@@ -50,7 +50,10 @@ namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;
 
 use BeanFactory;
 use Configurator;
+use Elasticsearch\ClientBuilder;
+use Elasticsearch\Common\Exceptions\BadRequest400Exception;
 use SuiteCRM\Modules\Administration\Search\MVC\Controller as AbstractController;
+use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -110,6 +113,49 @@ class Controller extends AbstractController
 
         //header('Location: index.php?module=Administration&action=ElasticSearchSettings');
         header('Location: index.php?module=Administration&action=index');
+
+        die;
+    }
+
+    public function doTestConnection()
+    {
+        ob_clean(); // deletes the rest of the html previous to this.
+
+        header('Content-Type: application/json');
+
+        $input = INPUT_POST;
+
+        $host = filter_input($input, 'host', FILTER_SANITIZE_STRING);
+        $user = filter_input($input, 'user', FILTER_SANITIZE_STRING);
+        $pass = filter_input($input, 'pass', FILTER_SANITIZE_STRING);
+
+        $config = [['host' => $host, 'user' => $user, 'pass' => $pass]];
+
+        $client = ClientBuilder::create()->setHosts($config)->build();
+
+        $i = new ElasticSearchIndexer($client);
+
+        $return = ['status' => 'fail', 'request' => $config[0],];
+
+        try {
+            $info = $client->info();
+            $time = $i->ping();
+
+            $return['status'] = 'success';
+            $return['ping'] = $time;
+            $return['info'] = $info;
+
+        } /** @noinspection PhpRedundantCatchClauseInspection */
+        catch (BadRequest400Exception $e) {
+            $error = json_decode($e->getMessage());
+            $return['error'] = $error->error->reason;
+            $return['errorDetails'] = $error;
+        } catch (\Exception $e) {
+            $return['error'] = $e->getMessage();
+            $return['errorType'] = get_class($e);
+        }
+
+        echo json_encode($return);
 
         die;
     }

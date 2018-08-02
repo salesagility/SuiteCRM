@@ -62,11 +62,10 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    {*TODO check connection action*}
                     <button
                             class="btn btn-primary"
-                            onclick="alert('TODO');"
-                            type="button">Test connection [TODO]
+                            id="es-test-connection"
+                            type="button">Test connection
                     </button>
                 </div>
             </div>
@@ -143,3 +142,4 @@
     {$JAVASCRIPT}
 
 </form>
+<script src="modules/Administration/Search/ElasticSearch/testConnection.js"></script>
