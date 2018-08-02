@@ -60,7 +60,7 @@ global $app_strings;
     echo getAppString($_REQUEST['error_string']);
                     } else {
     LoggerManager::getLogger()->warn('Passing error string in request is deprecated. Please update your code.');
-    echo getAppString($request['error_string']);
+    echo isset($request) ? getAppString($request['error_string']) : null;
 } ?>
 <br><br>
 <?php echo $app_strings['NTC_CLICK_BACK']; ?>
