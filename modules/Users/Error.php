@@ -52,22 +52,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 include_once __DIR__ . '/../../include/utils.php';
 
 global $app_strings;
-$else = false;
 echo "<br><br>";
 
 if (isset($_REQUEST['ie_error']) && $_REQUEST['ie_error'] == 'true') {
     echo '<a href="index.php?module=Users&action=EditView&record='.$_REQUEST['id'].'">'.$mod_strings['ERR_IE_FAILURE1'].'</a><br>';
     echo $mod_strings['ERR_IE_FAILURE2'];
-    $else = true;
-}
-if (!$else) {
+                    } else {
     ?>
 <span class='error'><?php if (isset($_REQUEST['error_string'])) {
         LoggerManager::getLogger()->warn('Passing error string in request is deprecated. Please update your code.');
         echo getAppString($_REQUEST['error_string']);
-        $else = true;
-    }
-    if (!$else) {
+} else {
         LoggerManager::getLogger()->warn('Passing error string in request is deprecated. Please update your code.');
         echo getAppString($request['error_string']);
     } ?>
