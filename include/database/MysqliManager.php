@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
  * Description: This file handles the Data base functionality for the application.
  * It acts as the DB abstraction layer for the application. It depends on helper classes
  * which generate the necessary SQL. This sql is then passed to PEAR DB classes.
@@ -91,7 +91,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 
 require_once('include/database/MysqlManager.php');
 

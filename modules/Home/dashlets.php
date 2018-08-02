@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
  * Description:
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights

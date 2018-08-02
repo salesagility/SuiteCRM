@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
 * Description: The functionality of the abstract DBHelper class has been moved to DBManager and
 * its database specific derivatives. This class is no longer used and no code should be added

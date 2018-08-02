@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
  * Description:  Represents a relationship from a single bean's perspective.
  * Does not actively do work but is used by SugarBean to manipulate relationships.
  * Work is deferred to the relationship classes.
@@ -50,7 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 require_once 'data/Relationships/RelationshipFactory.php';
 
 /**

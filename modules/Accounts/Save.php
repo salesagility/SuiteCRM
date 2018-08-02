@@ -41,14 +41,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
  * Description:  Saves an Account record and then redirects the browser to the
  * defined return URL.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 require_once('modules/Accounts/AccountFormBase.php');
 $accountForm = new AccountFormBase();
 $prefix = empty($_REQUEST['dup_checked']) ? '' : 'Accounts';

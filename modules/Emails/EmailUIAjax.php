@@ -86,7 +86,7 @@ function handleSubs($subs, $email, $json, $user = null)
     return $out;
 }
 
-/**
+/*********************************************************************************
  * Description:
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
  * Reserved. Contributor(s): ______________________________________..

@@ -41,14 +41,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
  * Description:  This class is used to include the json server config inline. Previous method
  * of using <script src=json_server.php></script> causes multiple server hits per page load
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 
 global $app_strings, $json;
 $json = getJSONobj();
