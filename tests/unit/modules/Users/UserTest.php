@@ -1186,6 +1186,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
         $request['error_string'] = 'TEST_ERROR_MESSAGE';
+        $this->assertEquals($request['error_string'], 'TEST_ERROR_MESSAGE');
         ob_start();
         include __DIR__ . '/../../../../modules/Users/Error.php';
         $contents = ob_get_contents();

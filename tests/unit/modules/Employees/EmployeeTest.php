@@ -278,6 +278,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
         $request['error_string'] = 'TEST_ERROR_MESSAGE';
+        $this->assertEquals($request['error_string'], 'TEST_ERROR_MESSAGE');
         ob_start();
         include __DIR__ . '/../../../../modules/Employees/Error.php';
         $contents = ob_get_contents();
