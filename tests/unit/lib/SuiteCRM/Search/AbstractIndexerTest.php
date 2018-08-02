@@ -141,7 +141,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
 class IndexerMock extends AbstractIndexer
 {
-    function run()
+    function index()
     {
     }
 

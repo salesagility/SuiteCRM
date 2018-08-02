@@ -37,98 +37,29 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search\ElasticSearch;
+/**
+ * Created by PhpStorm.
+ * User: viocolano
+ * Date: 30/07/18
+ * Time: 14:05
+ */
+
+namespace SuiteCRM\Modules\Administration\Search;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use Elasticsearch\ClientBuilder;
-
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 26/06/18
- * Time: 11:11
- */
-class ElasticSearchClientBuilder
+class Controller extends MVC\Controller
 {
-    private static $hosts;
-
-    /**
-     * Returns a preconfigured elasticsearch client.
-     *
-     * @return \Elasticsearch\Client
-     */
-    public static function getClient()
+    public function __construct()
     {
-        if (empty(self::$hosts)) {
-            self::$hosts = self::loadFromSugarConfig();
-        }
-
-        $client = ClientBuilder::create()->setHosts(self::$hosts)->build();
-
-        return $client;
+        parent::__construct(new View());
     }
 
-    /** @noinspection PhpUnusedPrivateMethodInspection */
-    /**
-     * Loads config from a json file.
-     *
-     * @param $file
-     * @return array
-     */
-    private static function loadConfig($file)
+    public function doSave()
     {
-        if (!file_exists($file)) {
-            return self::loadDefaultConfig();
-        }
-
-        $results = file_get_contents($file);
-
-        if ($results === false) {
-            return self::loadDefaultConfig();
-        }
-
-        return json_decode($results, true);
-    }
-
-    /**
-     * Loads Elasticsearch client configuration from the $sugar_config global.
-     *
-     * @return array
-     */
-    private static function loadFromSugarConfig()
-    {
-        global $sugar_config;
-
-        $host = $sugar_config['search']['ElasticSearch']['host'];
-        $user = $sugar_config['search']['ElasticSearch']['user'];
-        $pass = $sugar_config['search']['ElasticSearch']['pass'];
-
-        $host = trim($host);
-        $user = trim($user);
-
-        if (empty($user)) {
-            return [$host];
-        }
-
-        return [
-            [
-                'host' => $host,
-                'user' => $user,
-                'pass' => $pass
-            ]
-        ];
-    }
-
-    /**
-     * Returns the default connection (['127.0.0.1']).
-     *
-     * @return array
-     */
-    private static function loadDefaultConfig()
-    {
-        return ['127.0.0.1'];
+        // TODO
+        echo 'Save not yet implemented';
     }
 }

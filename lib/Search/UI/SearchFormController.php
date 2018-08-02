@@ -69,7 +69,7 @@ class SearchFormController extends Controller
 
     public function display()
     {
-        $this->view->getTemplate()->assign('searchQueryString', $this->query->getSearchString());
+        $this->view->getTemplate()->assign('searchQueryString', htmlspecialchars($this->query->getSearchString(), ENT_COMPAT | ENT_XHTML, 'UTF-8'));
         $this->view->getTemplate()->assign('searchQuerySize', $this->query->getSize());
         $this->view->getTemplate()->assign('searchQueryEngine', $this->query->getEngine());
 

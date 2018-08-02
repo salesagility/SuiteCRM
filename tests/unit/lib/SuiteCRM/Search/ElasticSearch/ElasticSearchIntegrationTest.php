@@ -155,7 +155,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         // Perform a new indexing
         echo PHP_EOL;
-        $this->indexer->run();
+        $this->indexer->index();
 
         $this->waitForIndexing();
 
@@ -276,7 +276,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
             unlink(self::LOCK_FILE);
         }
         // Perform a full search
-        $this->indexer->run();
+        $this->indexer->index();
         // Make sure that just one module has been indexed
         $actual = $this->indexer->getIndexedModulesCount();
         self::assertEquals(1, $actual, "Only one module [$module] should have been indexed.");
@@ -296,7 +296,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         // Run another differential index
 
-        $this->indexer->run();
+        $this->indexer->index();
 
         // Make sure that one and only one record has been updated;
         $actual = $this->indexer->getIndexedRecordsCount();
@@ -330,7 +330,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $id2 = $bean2->id;
 
         // Perform a differential indexing
-        $this->indexer->run();
+        $this->indexer->index();
 
         // Assert that only one (bean2) has been indexed...
         $actual = $this->indexer->getIndexedRecordsCount();

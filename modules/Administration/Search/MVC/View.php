@@ -40,60 +40,63 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 18/07/18
- * Time: 15:04
+ * Date: 01/08/18
+ * Time: 15:45
  */
 
-/** @noinspection PhpIllegalStringOffsetInspection */
+namespace SuiteCRM\Modules\Administration\Search\MVC;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class ElasticSearchSettingsView
+use Sugar_Smarty;
+use SuiteCRM\Search\SearchWrapper;
+
+require_once __DIR__ . '/../../../Home/UnifiedSearchAdvanced.php';
+
+abstract class View
 {
-    /** @var Sugar_Smarty */
-    public $ss;
-    /** @var array Associative array with the configuration as loaded from the configuration file */
-    private $elasticSearchConfig;
+    protected $smarty;
+    protected $file;
 
     /**
-     * ElasticSearchSettingsView constructor.
-     * @param $elasticSearchConfig
+     * View constructor.
+     * @param $file
      */
-    public function __construct($elasticSearchConfig)
+    public function __construct($file)
     {
-        $this->elasticSearchConfig = $elasticSearchConfig;
-        $this->ss = new Sugar_Smarty();
+        $this->smarty = new Sugar_Smarty();
+        $this->file = $file;
     }
 
-    public function display()
+    public function preDisplay()
     {
         global $mod_strings;
         global $app_list_strings;
         global $app_strings;
+        global $sugar_config;
 
         $errors = array();
-        $buttons = $this->getButtons($app_strings, $mod_strings);
-        $this->ss->assign('MOD', $mod_strings);
-        $this->ss->assign('APP', $app_strings);
-        $this->ss->assign('APP_LIST', $app_list_strings);
-        $this->ss->assign('LANGUAGES', get_languages());
-        $this->ss->assign("JAVASCRIPT", get_set_focus_js());
-        $this->ss->assign('config', $this->elasticSearchConfig);
-        $this->ss->assign('error', $errors);
-        $this->ss->assign("BUTTONS", $buttons);
+        $this->smarty->assign('MOD', $mod_strings);
+        $this->smarty->assign('APP', $app_strings);
+        $this->smarty->assign('APP_LIST', $app_list_strings);
+        $this->smarty->assign('LANGUAGES', get_languages());
+        $this->smarty->assign('JAVASCRIPT', get_set_focus_js());
+        $this->smarty->assign('error', $errors);
+        $this->smarty->assign('BUTTONS', $this->getButtons());
 
-        $this->ss->display('modules/Administration/Search/ElasticSearch/ElasticSearchSettingsTemplate.tpl');
+        $this->smarty->assign('config', $sugar_config['search']);
     }
 
     /**
-     * @param $app_strings
-     * @param $mod_strings
      * @return string
      */
-    private function getButtons($app_strings, $mod_strings)
+    private function getButtons()
     {
+        global $mod_strings;
+        global $app_strings;
+
         return <<<EOQ
     <input title="{$app_strings['LBL_SAVE_BUTTON_TITLE']}"
         accessKey="{$app_strings['LBL_SAVE_BUTTON_KEY']}"
@@ -111,4 +114,67 @@ class ElasticSearchSettingsView
 EOQ;
     }
 
+    public function display()
+    {
+        $this->smarty->display($this->file);
+    }
+
+    /**
+     * @return Sugar_Smarty
+     */
+    public function getSmarty()
+    {
+        return $this->smarty;
+    }
+
+    protected function getSearchControllers()
+    {
+        return [
+            'Search' => 'Search (new)',
+            'UnifiedSearch' => 'Global Unified Search (legacy)'
+        ];
+    }
+
+    protected function getEngines()
+    {
+        $engines = [];
+
+        foreach (SearchWrapper::getEngines() as $engine) {
+            $engines[$engine] = translate('LBL_' . $this->from_camel_case($engine));
+        }
+
+        return $engines;
+    }
+
+    protected function from_camel_case($input, $uppercase = true)
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret = $matches[0];
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+
+        $return = implode('_', $ret);
+
+        if ($uppercase) {
+            $return = strtoupper($return);
+        }
+
+        return $return;
+    }
+
+    protected function getModules()
+    {
+        $s = new \UnifiedSearchAdvanced();
+        $r = $s->retrieveEnabledAndDisabledModules();
+        $r = array_merge($r['enabled'], $r['disabled']);
+
+        $modules = [];
+
+        foreach ($r as $module) {
+            $modules[$module['module']] = $module['label'];
+        }
+
+        return $modules;
+    }
 }

@@ -143,7 +143,7 @@ class ElasticSearchCommands extends \Robo\Tasks
      *
      * @param int $differential 0 = full index | 1 = differential index
      * @param int $searchdefs 0 = BeanJsonSerializer | 1 = SearchDefsDocumentifier
-     * @see ElasticSearchIndexer::run()
+     * @see ElasticSearchIndexer::index()
      * @see SearchDefsDocumentifier
      * @see JsonSerializerDocumentifier
      */
@@ -154,7 +154,7 @@ class ElasticSearchCommands extends \Robo\Tasks
         if ($searchdefs) {
             $indexer->setDocumentifier(new SearchDefsDocumentifier());
         }
-        $indexer->run();
+        $indexer->index();
     }
 
     /**

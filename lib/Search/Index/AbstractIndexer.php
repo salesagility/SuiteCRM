@@ -147,7 +147,7 @@ abstract class AbstractIndexer
      * @see AbstractIndexer:getModulesToIndex
      * @return void
      */
-    abstract function run();
+    abstract function index();
 
     /**
      * Indexes a single module.

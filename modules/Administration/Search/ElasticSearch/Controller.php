@@ -46,30 +46,33 @@
  * Time: 15:04
  */
 
+namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;
+
+use BeanFactory;
+use Configurator;
+use Elasticsearch\ClientBuilder;
+use Elasticsearch\Common\Exceptions\BadRequest400Exception;
+use SchedulersJob;
+use SugarJobQueue;
+use SuiteCRM\Modules\Administration\Search\MVC\Controller as AbstractController;
+use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/ElasticSearchSettingsView.php';
 require_once __DIR__ . '/../../../Configurator/Configurator.php';
+require_once __DIR__ . '/../../../SchedulersJobs/SchedulersJob.php';
+require_once __DIR__ . '/../../../../include/SugarQueue/SugarJobQueue.php';
 
-class ElasticSearchSettingsController
+class Controller extends AbstractController
 {
-    /** @var Configurator */
-    private $cfg;
-    /** @var array reference to the values stored in cfg regarding the ElasticSearch */
-    private $elasticSearchConfig;
-    /** @var ElasticSearchSettingsView */
-    private $view;
-
     /**
      * ElasticSearchSettingsController constructor.
      */
     public function __construct()
     {
-        $this->cfg = new Configurator();
-        $this->elasticSearchConfig = &$this->cfg->config['search']['ElasticSearch'];
-        $this->view = new ElasticSearchSettingsView($this->elasticSearchConfig);
+        parent::__construct(new View());
     }
 
     /**
@@ -77,24 +80,14 @@ class ElasticSearchSettingsController
      */
     public function display()
     {
-        $this->view->ss->assign('schedulers', $this->getElasticsearchIndexingSchedulers());
-        $this->view->display();
-    }
-
-    /**
-     * Returns true if the browser is sending a request to save data.
-     *
-     * @return bool
-     */
-    public function isSaveRequest()
-    {
-        return isset($_REQUEST['do']) && $_REQUEST['do'] == 'save';
+        $this->view->getSmarty()->assign('schedulers', $this->getElasticsearchIndexingSchedulers());
+        parent::display();
     }
 
     /**
      * Saves the configuration getting data from POST.
      */
-    public function saveConfig()
+    public function doSaveConfig()
     {
         $enabled = filter_input(INPUT_POST, 'enabled', FILTER_VALIDATE_BOOLEAN);
         $host = filter_input(INPUT_POST, 'host', FILTER_SANITIZE_STRING);
@@ -103,12 +96,14 @@ class ElasticSearchSettingsController
 
         $enabled = boolval(intval($enabled));
 
-        $this->cfg->config['search']['ElasticSearch']['enabled'] = $enabled;
-        $this->cfg->config['search']['ElasticSearch']['host'] = $host;
-        $this->cfg->config['search']['ElasticSearch']['user'] = $user;
-        $this->cfg->config['search']['ElasticSearch']['pass'] = $pass;
+        $cfg = new Configurator();
 
-        $this->cfg->saveConfig();
+        $cfg->config['search']['ElasticSearch']['enabled'] = $enabled;
+        $cfg->config['search']['ElasticSearch']['host'] = $host;
+        $cfg->config['search']['ElasticSearch']['user'] = $user;
+        $cfg->config['search']['ElasticSearch']['pass'] = $pass;
+
+        $cfg->saveConfig();
 
         /*
          * For some unknown and rather magic reason, after the configuration is saved, the file is not instantly changed.
@@ -123,6 +118,83 @@ class ElasticSearchSettingsController
         //header('Location: index.php?module=Administration&action=ElasticSearchSettings');
         header('Location: index.php?module=Administration&action=index');
 
+        die;
+    }
+
+    public function doTestConnection()
+    {
+        ob_clean(); // deletes the rest of the html previous to this.
+
+        header('Content-Type: application/json');
+
+        $input = INPUT_POST;
+
+        $host = filter_input($input, 'host', FILTER_SANITIZE_STRING);
+        $user = filter_input($input, 'user', FILTER_SANITIZE_STRING);
+        $pass = filter_input($input, 'pass', FILTER_SANITIZE_STRING);
+
+        $config = [['host' => $host, 'user' => $user, 'pass' => $pass]];
+
+        $client = ClientBuilder::create()->setHosts($config)->build();
+
+        $i = new ElasticSearchIndexer($client);
+
+        $return = ['status' => 'fail', 'request' => $config[0],];
+
+        try {
+            $info = $client->info();
+            $time = $i->ping();
+
+            $return['status'] = 'success';
+            $return['ping'] = $time;
+            $return['info'] = $info;
+
+        } /** @noinspection PhpRedundantCatchClauseInspection */
+        catch (BadRequest400Exception $e) {
+            $error = json_decode($e->getMessage());
+            $return['error'] = $error->error->reason;
+            $return['errorDetails'] = $error;
+        } catch (\Exception $e) {
+            $return['error'] = $e->getMessage();
+            $return['errorType'] = get_class($e);
+        }
+
+        echo json_encode($return);
+
+        die;
+    }
+
+    public function doFullIndex()
+    {
+        $this->scheduleIndex(false);
+    }
+
+    public function doPartialIndex()
+    {
+        $this->scheduleIndex(true);
+    }
+
+    /**
+     * Schedules an indexing job.
+     *
+     * @param bool $partial
+     */
+    private function scheduleIndex($partial)
+    {
+        ob_clean(); // deletes the rest of the html previous to this.
+
+        $job = new SchedulersJob();
+
+        $job->name = 'Index requested by an administrator';
+        $job->target = 'function::runElasticSearchIndexerScheduler';
+        $job->data = json_encode(['partial' => $partial]);
+        $job->assigned_user_id = 1;
+
+        $queue = new SugarJobQueue();
+        /** @noinspection PhpParamsInspection */
+        $queue->submitJob($job);
+
+        echo 'success';
         die;
     }
 

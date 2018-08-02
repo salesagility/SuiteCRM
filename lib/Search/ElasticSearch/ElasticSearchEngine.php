@@ -95,7 +95,6 @@ class ElasticSearchEngine extends SearchEngine
     protected function validateQuery(SearchQuery &$query)
     {
         $query->trim();
-        $query->replace('-', ' ');
         $query->convertEncoding();
     }
 

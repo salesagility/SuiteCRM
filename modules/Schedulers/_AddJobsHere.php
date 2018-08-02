@@ -823,9 +823,9 @@ EOF;
     }
 }
 
-function runElasticSearchIndexerScheduler()
+function runElasticSearchIndexerScheduler($data)
 {
-    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob();
+    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode($data));
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {

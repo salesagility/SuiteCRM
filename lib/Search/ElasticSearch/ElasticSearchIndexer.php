@@ -95,7 +95,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /** @inheritdoc */
-    public function run()
+    public function index()
     {
         $this->logger->debug('Starting indexing procedures');
 
@@ -705,9 +705,13 @@ class ElasticSearchIndexer extends AbstractIndexer
     /**
      * Scheduler job method.
      *
+     * Available options are:
+     * - [bool] partial
+     *
+     * @param array $options
      * @return bool
      */
-    public static function schedulerJob()
+    public static function schedulerJob($options = [])
     {
         if (self::isEnabled() === false) {
             return true;
@@ -716,9 +720,14 @@ class ElasticSearchIndexer extends AbstractIndexer
         $i = new self();
         $i->getLogger()->debug('Starting scheduled job');
 
-        try {
+        if (isset($options['partial'])) {
+            $i->setDifferentialIndexingEnabled($options['partial']);
+        } else {
             $i->setDifferentialIndexingEnabled(true);
-            $i->run();
+        }
+
+        try {
+            $i->index();
         } catch (\Exception $e) {
             $i->getLogger()->error('An error has occurred while running a scheduled indexing');
             $i->getLogger()->error($e);

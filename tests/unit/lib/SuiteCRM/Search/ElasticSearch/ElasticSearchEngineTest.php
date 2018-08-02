@@ -57,7 +57,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     {
         $engine = new ElasticSearchEngine();
         $str = " test AND test2 OR t-test3 ";
-        $exp = "test AND test2 OR t test3";
+        $exp = "test AND test2 OR t-test3";
         $query = SearchQuery::fromString($str);
 
         $this->invokeMethod($engine, 'validateQuery', [&$query]);

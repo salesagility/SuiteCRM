@@ -37,98 +37,39 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search\ElasticSearch;
+/**
+ * Created by PhpStorm.
+ * User: viocolano
+ * Date: 18/07/18
+ * Time: 15:04
+ */
+
+/** @noinspection PhpIllegalStringOffsetInspection */
+
+namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use Elasticsearch\ClientBuilder;
+use SuiteCRM\Modules\Administration\Search\MVC\View as AbstractView;
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 26/06/18
- * Time: 11:11
- */
-class ElasticSearchClientBuilder
+class View extends AbstractView
 {
-    private static $hosts;
-
     /**
-     * Returns a preconfigured elasticsearch client.
-     *
-     * @return \Elasticsearch\Client
+     * ElasticSearchSettingsView constructor.
      */
-    public static function getClient()
+    public function __construct()
     {
-        if (empty(self::$hosts)) {
-            self::$hosts = self::loadFromSugarConfig();
-        }
-
-        $client = ClientBuilder::create()->setHosts(self::$hosts)->build();
-
-        return $client;
+        parent::__construct(__DIR__ . '/view.tpl');
     }
 
-    /** @noinspection PhpUnusedPrivateMethodInspection */
-    /**
-     * Loads config from a json file.
-     *
-     * @param $file
-     * @return array
-     */
-    private static function loadConfig($file)
+    public function preDisplay()
     {
-        if (!file_exists($file)) {
-            return self::loadDefaultConfig();
-        }
+        parent::preDisplay();
 
-        $results = file_get_contents($file);
-
-        if ($results === false) {
-            return self::loadDefaultConfig();
-        }
-
-        return json_decode($results, true);
-    }
-
-    /**
-     * Loads Elasticsearch client configuration from the $sugar_config global.
-     *
-     * @return array
-     */
-    private static function loadFromSugarConfig()
-    {
         global $sugar_config;
 
-        $host = $sugar_config['search']['ElasticSearch']['host'];
-        $user = $sugar_config['search']['ElasticSearch']['user'];
-        $pass = $sugar_config['search']['ElasticSearch']['pass'];
-
-        $host = trim($host);
-        $user = trim($user);
-
-        if (empty($user)) {
-            return [$host];
-        }
-
-        return [
-            [
-                'host' => $host,
-                'user' => $user,
-                'pass' => $pass
-            ]
-        ];
-    }
-
-    /**
-     * Returns the default connection (['127.0.0.1']).
-     *
-     * @return array
-     */
-    private static function loadDefaultConfig()
-    {
-        return ['127.0.0.1'];
+        $this->smarty->assign('config', $sugar_config['search']['ElasticSearch']);
     }
 }

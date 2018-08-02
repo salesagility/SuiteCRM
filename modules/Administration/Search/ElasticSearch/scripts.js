@@ -1,5 +1,4 @@
-<?php
-/**
+/*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,98 +36,49 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search\ElasticSearch;
+$('#es-test-connection').click(function () {
+    var url = "index.php?module=Administration&action=ElasticSearchSettings&do=TestConnection";
+    var host = $('#es-host').val();
+    var user = $('#es-user').val();
+    var pass = $('#es-password').val();
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-use Elasticsearch\ClientBuilder;
-
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 26/06/18
- * Time: 11:11
- */
-class ElasticSearchClientBuilder
-{
-    private static $hosts;
-
-    /**
-     * Returns a preconfigured elasticsearch client.
-     *
-     * @return \Elasticsearch\Client
-     */
-    public static function getClient()
-    {
-        if (empty(self::$hosts)) {
-            self::$hosts = self::loadFromSugarConfig();
+    $.ajax({
+        url: url,
+        method: "POST",
+        data: {
+            host: host,
+            user: user,
+            pass: pass
         }
+    }).done(function (data) {
+        console.log(data);
 
-        $client = ClientBuilder::create()->setHosts(self::$hosts)->build();
-
-        return $client;
-    }
-
-    /** @noinspection PhpUnusedPrivateMethodInspection */
-    /**
-     * Loads config from a json file.
-     *
-     * @param $file
-     * @return array
-     */
-    private static function loadConfig($file)
-    {
-        if (!file_exists($file)) {
-            return self::loadDefaultConfig();
+        if (data.status === "success") {
+            alert("Connection successful.\n\nPing: " + data.ping / 1000 + " ms\nElasticsearch version: " + data.info.version.number);
+        } else {
+            alert("Connection failed.\n\n" + data.error + ".");
         }
+    }).error(function () {
+        alert("Failed perform ping request.");
+    })
+});
 
-        $results = file_get_contents($file);
+$('#es-full-index').click(function () {
+    var url = "index.php?module=Administration&action=ElasticSearchSettings&do=FullIndex";
 
-        if ($results === false) {
-            return self::loadDefaultConfig();
-        }
+    $.ajax(url).done(function () {
+        alert("A full indexing has been scheduled and will start in the next 60 seconds. Search results might be incomplete until the process is complete.");
+    }).error(function () {
+        alert("Failed to start full index.");
+    })
+});
 
-        return json_decode($results, true);
-    }
+$('#es-partial-index').click(function () {
+    var url = "index.php?module=Administration&action=ElasticSearchSettings&do=PartialIndex";
 
-    /**
-     * Loads Elasticsearch client configuration from the $sugar_config global.
-     *
-     * @return array
-     */
-    private static function loadFromSugarConfig()
-    {
-        global $sugar_config;
-
-        $host = $sugar_config['search']['ElasticSearch']['host'];
-        $user = $sugar_config['search']['ElasticSearch']['user'];
-        $pass = $sugar_config['search']['ElasticSearch']['pass'];
-
-        $host = trim($host);
-        $user = trim($user);
-
-        if (empty($user)) {
-            return [$host];
-        }
-
-        return [
-            [
-                'host' => $host,
-                'user' => $user,
-                'pass' => $pass
-            ]
-        ];
-    }
-
-    /**
-     * Returns the default connection (['127.0.0.1']).
-     *
-     * @return array
-     */
-    private static function loadDefaultConfig()
-    {
-        return ['127.0.0.1'];
-    }
-}
+    $.ajax(url).done(function () {
+        alert("A full indexing has been scheduled and will start in the next 60 seconds.");
+    }).error(function () {
+        alert("Failed to start partial index.");
+    })
+});
