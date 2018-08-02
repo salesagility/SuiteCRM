@@ -95,7 +95,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /** @inheritdoc */
-    public function run()
+    public function index()
     {
         $this->logger->debug('Starting indexing procedures');
 
@@ -718,7 +718,7 @@ class ElasticSearchIndexer extends AbstractIndexer
 
         try {
             $i->setDifferentialIndexingEnabled(true);
-            $i->run();
+            $i->index();
         } catch (\Exception $e) {
             $i->getLogger()->error('An error has occurred while running a scheduled indexing');
             $i->getLogger()->error($e);
