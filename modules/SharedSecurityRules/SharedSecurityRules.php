@@ -176,7 +176,8 @@ class SharedSecurityRules extends Basic
         LoggerManager::getLogger()->info('SharedSecurityRules: Class is: ' . $class);
 
         $moduleBean = new $class();
-        if (!empty($module->fetched_row) && !empty($module->fetched_row['id']) && !empty($module->fetched_row['assigned_user_id']) && !empty($module->fetched_row['created_by'])) {
+        if (!empty($module->fetched_row) && !empty($module->fetched_row['id']) &&
+                !empty($module->fetched_row['assigned_user_id']) && !empty($module->fetched_row['created_by'])) {
             $moduleBean->populateFromRow($module->fetched_row);
         } elseif ($moduleBean->module_name != 'Documents') {
             $moduleBean->retrieve($module->id);
@@ -199,14 +200,7 @@ class SharedSecurityRules extends Basic
             $result = $checker->updateResultByRule($result, $action, $key, $module, $current_user->id, $helper, $rule, $moduleBean, $view);
         }
 
-        $converted_res = '';
-        if (isset($result)) {
-            if ($result == false) {
-                $converted_res = 'false';
-            } elseif ($result == true) {
-                $converted_res = 'true';
-            }
-        }
+        $converted_res = $result ? 'true' : 'false';
 
         if (is_null($key)) {
             LoggerManager::getLogger()->warn('Key is not set for Action parameter access level for shared security groups.');
