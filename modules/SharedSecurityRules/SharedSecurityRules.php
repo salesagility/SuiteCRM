@@ -193,6 +193,8 @@ class SharedSecurityRules extends Basic
 
         /* CREATING SQL QUERY VERSION */
         $query_results = $module->db->query($sql_query);
+        $action = null;
+        $key = null;
         while ($rule = $module->db->fetchByAssoc($query_results)) {
             $result = $checker->updateResultByRule($result, $action, $key, $module, $current_user->id, $helper, $rule, $moduleBean, $view);
         }
@@ -206,8 +208,7 @@ class SharedSecurityRules extends Basic
             }
         }
 
-        if (!isset($key)) {
-            $key = null;
+        if (is_null($key)) {
             LoggerManager::getLogger()->warn('Key is not set for Action parameter access level for shared security groups.');
         }
 
