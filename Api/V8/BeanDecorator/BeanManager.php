@@ -170,10 +170,59 @@ class BeanManager
     }
 
     /**
-     * @return \DBManager
+     * @param \SugarBean $sourceBean
+     * @param \SugarBean $relatedBean
+     *
+     * @return string
+     * @throws \DomainException In case link field is not found.
      */
-    public function getDb()
+    public function getLinkedFieldName(\SugarBean $sourceBean, \SugarBean $relatedBean)
     {
-        return $this->db;
+        $linkedFields = $sourceBean->get_linked_fields();
+        $relationship = \Relationship::retrieve_by_modules(
+            $sourceBean->module_name,
+            $relatedBean->module_name,
+            $sourceBean->db
+        );
+
+        $linkFieldName = '';
+        foreach ($linkedFields as $linkedField) {
+            if ($linkedField['relationship'] === $relationship) {
+                $linkFieldName = $linkedField['name'];
+            }
+        }
+
+        if (!$linkFieldName) {
+            throw new \DomainException(
+                sprintf(
+                    'Link field has not found in %s to determine relationship for %s',
+                    $sourceBean->getObjectName(),
+                    $relatedBean->getObjectName()
+                )
+            );
+        }
+
+        return $linkFieldName;
+    }
+
+    /**
+     * @param string $module
+     * @param string $where
+     *
+     * @return integer
+     */
+    public function countRecords($module, $where)
+    {
+        $rowCount = $this->db->fetchRow(
+            $this->db->query(
+                sprintf(
+                    "SELECT COUNT(*) AS cnt FROM %s %s",
+                    $this->newBeanSafe($module)->getTableName(),
+                    $where === '' ? '' : 'WHERE ' .  $where
+                )
+            )
+        )["cnt"];
+
+        return intval($rowCount);
     }
 }

@@ -11,7 +11,7 @@ abstract class BaseController
 
     /**
      * @param HttpResponse $httpResponse
-     * @param DocumentResponse|ErrorResponse $response
+     * @param mixed $response
      * @param integer $status
      *
      * @return HttpResponse

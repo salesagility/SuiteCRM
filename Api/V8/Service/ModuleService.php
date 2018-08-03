@@ -95,7 +95,7 @@ class ModuleService
         $number = $params->getPage()->getNumber();
         // negative numbers are validated in params
         $offset = $number !== 0 ? ($number - 1) * $size : $number;
-        $realRowCount = $this->countRecords($module, $where);
+        $realRowCount = $this->beanManager->countRecords($module, $where);
         $limit = $size === BeanManager::DEFAULT_ALL_RECORDS ? BeanManager::DEFAULT_LIMIT : $size;
 
         $beanListResponse = $this->beanManager->getList($module)
@@ -246,27 +246,5 @@ class ModuleService
         $dataResponse->setRelationships($this->relationshipHelper->getRelationships($bean, $path));
 
         return $dataResponse;
-    }
-
-    /**
-     * @param string $module
-     * @param string $where
-     *
-     * @return integer
-     */
-    public function countRecords($module, $where)
-    {
-        $db = $this->beanManager->getDb();
-        $rowCount = $db->fetchRow(
-            $db->query(
-                sprintf(
-                    "SELECT COUNT(*) AS cnt FROM %s %s",
-                    $this->beanManager->newBeanSafe($module)->getTableName(),
-                    $where === '' ? '' : 'WHERE ' .  $where
-                )
-            )
-        )["cnt"];
-
-        return intval($rowCount);
     }
 }

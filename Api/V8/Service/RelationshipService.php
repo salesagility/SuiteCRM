@@ -82,7 +82,7 @@ class RelationshipService
     {
         $sourceBean = $params->getSourceBean();
         $relatedBean = $params->getRelatedBean();
-        $linkFieldName = $this->getLinkedFieldName($sourceBean, $relatedBean);
+        $linkFieldName = $this->beanManager->getLinkedFieldName($sourceBean, $relatedBean);
 
         $this->beanManager->createRelationshipSafe($sourceBean, $relatedBean, $linkFieldName);
 
@@ -146,41 +146,5 @@ class RelationshipService
         ));
 
         return $response;
-    }
-
-    /**
-     * @param \SugarBean $sourceBean
-     * @param \SugarBean $relatedBean
-     *
-     * @return string
-     * @throws \DomainException In case link field is not found.
-     */
-    public function getLinkedFieldName(\SugarBean $sourceBean, \SugarBean $relatedBean)
-    {
-        $linkedFields = $sourceBean->get_linked_fields();
-        $relationship = \Relationship::retrieve_by_modules(
-            $sourceBean->module_name,
-            $relatedBean->module_name,
-            $sourceBean->db
-        );
-
-        $linkFieldName = '';
-        foreach ($linkedFields as $linkedField) {
-            if ($linkedField['relationship'] === $relationship) {
-                $linkFieldName = $linkedField['name'];
-            }
-        }
-
-        if (!$linkFieldName) {
-            throw new \DomainException(
-                sprintf(
-                    'Link field has not found in %s to determine relationship for %s',
-                    $sourceBean->getObjectName(),
-                    $relatedBean->getObjectName()
-                )
-            );
-        }
-
-        return $linkFieldName;
     }
 }

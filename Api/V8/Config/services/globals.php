@@ -6,7 +6,6 @@ return [
         return $sugar_config;
     },
     DBManager::class => function () {
-        global $db;
-        return $db;
+        return DBManagerFactory::getInstance();
     },
 ];

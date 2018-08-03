@@ -54,7 +54,7 @@ class ParamsMiddleware
      *
      * @return array
      */
-    private function getParameters(Request $request)
+    protected function getParameters(Request $request)
     {
         $routeParams = array_map(
             function ($value) {
