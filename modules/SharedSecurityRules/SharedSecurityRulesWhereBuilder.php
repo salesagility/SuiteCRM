@@ -42,9 +42,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SharedSecurityRulesWhereBuilder {
+class SharedSecurityRulesWhereBuilder
+{
+    public function getTargetType($action, $key)
+    {
+        if (!isset($action['parameters']['email_target_type'][$key])) {
+            LoggerManager::getLogger()->warn('action parameter email_target_type si not set at key: ' . $key);
+            $targetType = null;
+        } else {
+            $targetType = $action['parameters']['email_target_type'][$key];
+        }
+        return $targetType;
+    }
     
-    public function getWhereArray($module, $userId) {
+    public function getWhereArray($module, $userId)
+    {
         $where = "";
         $addWhere = "";
         $resWhere = "";
@@ -67,13 +79,8 @@ class SharedSecurityRulesWhereBuilder {
                         LoggerManager::getLogger()->warn('Incorrect action parameter: accesslevel');
                     } else {
                         foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
-                            if (!isset($action['parameters']['email_target_type'][$key])) {
-                                LoggerManager::getLogger()->warn('action parameter email_target_type si not set at key: ' . $key);
-                                $targetType = null;
-                            } else {
-                                $targetType = $action['parameters']['email_target_type'][$key];
-                            }
-
+                            $targetType = $this->getTargetType();
+                            
                             if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
                                 $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$userId}' AND acl_roles_users.deleted = '0'";
                                 $users_roles_results = $module->db->query($users_roles_query);
@@ -203,6 +210,6 @@ class SharedSecurityRulesWhereBuilder {
         $whereArray = array();
         $whereArray['resWhere'] = $resWhere;
         $whereArray['addWhere'] = $addWhere;
+        return $whereArray;
     }
-    
 }
