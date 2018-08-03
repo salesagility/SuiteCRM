@@ -60,25 +60,29 @@ class SearchResults
     private $options;
     /** @var float The number of seconds it took to perform the search */
     private $searchTime;
+    /** @var int The total number of hits (without pagination) */
+    private $total;
     /** @var bool Flag specifying if the (nested) hits are grouped by the modules */
     private $groupedByModule;
 
     /**
      * SearchResults constructor.
      *
+     * @param array $hits Contains the results ids
      * @param bool $groupedByModule Flag specifying if the (nested) hits are grouped by the modules
      * @param float $searchTime The number of seconds it took to perform the search
-     * @param array $hits Contains the results ids
+     * @param int $total The number of total hits (without pagination)
      * @param array $scores Contains the scores of each hit. This should match in structure with $hits
      * @param array $options Similar to scores, but customisable by the search engine
      */
-    public function __construct(array $hits, $groupedByModule = true, $searchTime = null, array $scores = null, array $options = null)
+    public function __construct(array $hits, $groupedByModule = true, $searchTime = null, $total = null, array $scores = null, array $options = null)
     {
         $this->hits = $hits;
         $this->scores = $scores;
         $this->options = $options;
         $this->groupedByModule = $groupedByModule;
         $this->searchTime = $searchTime;
+        $this->total = $total;
 
         if ($this->scores != null && count($hits) != count($scores)) {
             throw new \RuntimeException('The sizes of $hits and $scores must match.');
@@ -125,6 +129,16 @@ class SearchResults
     public function getScores()
     {
         return $this->scores;
+    }
+
+    /**
+     * Returns the total number of hits (without pagination).
+     *
+     * @return int
+     */
+    public function getTotal()
+    {
+        return $this->total;
     }
 
     /**

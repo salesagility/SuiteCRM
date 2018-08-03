@@ -86,7 +86,7 @@ class ElasticSearchEngine extends SearchEngine
         $results = $this->parseHits($hits);
         $end = microtime(true);
         $searchTime = ($end - $start);
-        return new SearchResults($results, true, $searchTime);
+        return new SearchResults($results, true, $searchTime, $hits['hits']['total']);
     }
 
     /**
