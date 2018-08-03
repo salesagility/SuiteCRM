@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/SubPanel/SubPanel.php');
 require_once('include/SubPanel/SubPanelTilesTabs.php');
 require_once('include/SubPanel/SubPanelDefinitions.php');
+require_once('include/SubPanel/SubPanelRowCounter.php');
 
 /**
  * Subpanel tiles
@@ -59,6 +60,11 @@ class SubPanelTiles
     public $layout_def_key;
     public $show_tabs = false;
 
+    /**
+     * @var SubPanelRowCounter
+     */
+    protected $rowCounter;
+
     public $subpanel_definitions;
 
     public $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
@@ -71,6 +77,7 @@ class SubPanelTiles
         $this->module = $focus->module_dir;
         $this->layout_def_key = $layout_def_key;
         $this->subpanel_definitions=new SubPanelDefinitions($focus, $layout_def_key, $layout_def_override);
+        $this->rowCounter = new SubPanelRowCounter($focus);
     }
 
     /*
@@ -357,7 +364,7 @@ class SubPanelTiles
             elseif ($current_user->getPreference('count_collapsed_subpanels')) {
 
                 $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
-                $count = (int)$this->getSubPanelRowCount($subPanelDef);
+                $count = $this->rowCounter->getSubPanelRowCount($subPanelDef);
 
                 if ($count === 0) {
                     $tabs_properties[$t]['title'] .= ' (0)';
@@ -394,97 +401,6 @@ class SubPanelTiles
         $template_body = $template->fetch('include/SubPanel/tpls/SubPanelTiles.tpl');
 
         return $template_header . $template_body . $template_footer;
-    }
-
-    /**
-     * @param string $subPanelDef
-     * @return int
-     */
-    protected function getSubPanelRowCount($subPanelDef)
-    {
-        global $db;
-
-        if (!isset($subPanelDef['get_subpanel_data'])) {
-            foreach ($subPanelDef['collection_list'] as $subSubPanelDef) {
-                if($this->getSubPanelRowCount($subSubPanelDef)) {
-                    return 1;
-                }
-            }
-            return 0;
-        }
-
-        $query = $this->makeSubPanelRowCountQuery($subPanelDef);
-        if (!$query) {
-            return -1;
-        }
-
-        $result = $db->query($query);
-        if ($row = $db->fetchByAssoc($result)) {
-            return array_shift($row);
-        }
-
-        return 0;
-    }
-
-    /**
-     * @param array $subPanelDef
-     * @return string
-     */
-    protected function makeSubPanelRowCountQuery($subPanelDef) {
-
-        $relationshipName = $subPanelDef['get_subpanel_data'];
-
-        if (substr($relationshipName, 0, 9) === 'function:') {
-            include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'utils.php';
-            $functionName = substr($relationshipName, 9);
-            $qry = [];
-            if (method_exists($this->focus, $functionName)) {
-                $qry = $this->focus->$functionName($subPanelDef['function_parameters']);
-            } elseif (function_exists($functionName)) {
-                $qry = call_user_func($functionName, $subPanelDef['function_parameters']);
-            }
-            if (is_array($qry) && count($qry)) {
-                $qry =  $qry['select'] . $qry['from'] . $qry['join'] . $qry['where'];
-            }
-            return $this->selectQueryToCountQuery($qry);
-        }
-
-        $this->focus->load_relationship($relationshipName);
-        /** @var Link2 $relationship */
-        $relationship = $this->focus->$relationshipName;
-
-        if ($relationship) {
-            return $this->selectQueryToCountQuery($relationship->getQuery());
-        }
-
-        return '';
-    }
-
-    /**
-     * @param string $selectQuery
-     * @return string
-     */
-    protected function selectQueryToCountQuery($selectQuery)
-    {
-        if (!is_string($selectQuery)) {
-            return '';
-        }
-
-        if (0 !== stripos($selectQuery, 'SELECT')) {
-            return '';
-        }
-
-        $fromPos = strpos($selectQuery, ' FROM');
-        if ($fromPos === false) {
-            return '';
-        }
-
-        $selectPart = trim(substr($selectQuery, 7, $fromPos - 7));
-        if (false !== strpos($selectPart, ',')) {
-            return '';
-        }
-
-        return 'SELECT COUNT(' . $selectPart . ') ' . substr($selectQuery, $fromPos) . ' LIMIT 1';
     }
 
     public function getLayoutManager()
