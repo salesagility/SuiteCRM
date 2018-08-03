@@ -55,7 +55,7 @@ class SharedSecurityRulesWhereBuilder
         return $targetType;
     }
     
-    public function getWhereArray($module, $userId)
+    public function getWhereArray(SugarBean $module, $userId)
     {
         $where = "";
         $addWhere = "";

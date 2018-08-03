@@ -46,7 +46,7 @@ include_once('SharedSecurityRulesHelper.php');
 
 class SharedSecurityRulesChecker
 {
-    public function updateResultByRule($result, &$action, &$key, $module, $userId, $helper, $rule, $moduleBean, $view)
+    public function updateResultByRule($result, &$action, &$key, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
     {
         $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' AND sharedsecurityrulesactions.deleted = '0'";
         $actions_results = $module->db->query($sql_query);
@@ -64,7 +64,7 @@ class SharedSecurityRulesChecker
         return $result;
     }
     
-    public function updateResultByEmailTargetType($result, $action, $module, $userId, $helper, $rule, $moduleBean, $view)
+    public function updateResultByEmailTargetType($result, $action, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
     {
         foreach ($action['parameters']['email_target_type'] as $key => $targetType) {
             if (!isset($action['parameters']['email'][$key]['0'])) {
