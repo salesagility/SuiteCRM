@@ -124,6 +124,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'DynamicFields' => 'DynamicFields',
                 'EAPM' => 'EAPM',
                 'EmailAddresses' => 'EmailAddresses',
+                'EmailAddressesAudit' => 'EmailAddressesAudit',
                 'EmailMan' => 'EmailMan',
                 'EmailMarketing' => 'EmailMarketing',
                 'Emails' => 'Emails',

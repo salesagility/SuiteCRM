@@ -548,6 +548,8 @@ $modules_exempt_from_availability_check['SurveyQuestionOptions'] = 'SurveyQuesti
 $report_include_modules['SurveyQuestionOptions'] = 'SurveyQuestionOptions';
 $modInvisList[] = 'SurveyQuestionOptions';
 
+$beanList['EmailAddressesAudit'] = 'EmailAddressAudit';
+$beanFiles['EmailAddressAudit'] = 'modules/EmailAddressesAudit/EmailAddressAudit.php';
 
 
 if (file_exists('include/modules_override.php')) {
