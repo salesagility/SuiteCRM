@@ -38,13 +38,19 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace SuiteCRM\SubPanel;
 
 class SubPanelRowCounter
 {
     /**
-     * @var SugarBean
+     * @var \SugarBean
      */
     private $focus;
+
+    /**
+     * @var array
+     */
+    private $subPanelDef;
 
     /**
      * SubPanelRowCounter constructor.
@@ -61,32 +67,59 @@ class SubPanelRowCounter
      */
     public function getSubPanelRowCount($subPanelDef)
     {
-        if (!isset($subPanelDef['get_subpanel_data'])) {
-            foreach ($subPanelDef['collection_list'] as $subSubPanelDef) {
-                if($this->getSubPanelRowCount($subSubPanelDef)) {
-                    return 1;
-                }
-            }
-            return 0;
-        }
+        $this->setSubPanelDefs($subPanelDef);
 
-        return $this->getSingleSubPanelRowCount($subPanelDef);
+        try {
+            return $this->doGetSubPanelRowCount($this->subPanelDef);
+        } catch (\Exception $e) {
+            $GLOBALS['log']->error($e->getMessage());
+            return -1;
+        }
+    }
+
+    /**
+     * @param string[] $subPanelDef
+     */
+    public function setSubPanelDefs($subPanelDef)
+    {
+        $this->subPanelDef = $subPanelDef;
     }
 
     /**
      * @param array $subPanelDef
      * @return int
      */
-    public function getSingleSubPanelRowCount($subPanelDef)
+    private function doGetSubPanelRowCount($subPanelDef)
+    {
+        if (!isset($subPanelDef['get_subpanel_data'])) {
+            foreach ($subPanelDef['collection_list'] as $subSubPanelDef) {
+                if ($this->doGetSubPanelRowCount($subSubPanelDef)) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
+        return $this->getSingleSubPanelRowCount();
+    }
+
+    /**
+     * @return int
+     */
+    public function getSingleSubPanelRowCount()
     {
         global $db;
 
-        $query = $this->makeSubPanelRowCountQuery($subPanelDef);
+        $query = $this->makeSubPanelRowCountQuery();
         if (!$query) {
             return -1;
         }
 
         $result = $db->query($query);
+        if ($result === false) {
+            return -1;
+        }
+
         if ($row = $db->fetchByAssoc($result)) {
             return (int)array_shift($row);
         }
@@ -95,30 +128,19 @@ class SubPanelRowCounter
     }
 
     /**
-     * @param array $subPanelDef
      * @return string
      */
-    public function makeSubPanelRowCountQuery($subPanelDef) {
+    public function makeSubPanelRowCountQuery()
+    {
 
-        $relationshipName = $subPanelDef['get_subpanel_data'];
+        $relationshipName = $this->subPanelDef['get_subpanel_data'];
 
-        if (substr($relationshipName, 0, 9) === 'function:') {
-            include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'utils.php';
-            $functionName = substr($relationshipName, 9);
-            $qry = [];
-            if (method_exists($this->focus, $functionName)) {
-                $qry = $this->focus->$functionName($subPanelDef['function_parameters']);
-            } elseif (function_exists($functionName)) {
-                $qry = call_user_func($functionName, $subPanelDef['function_parameters']);
-            }
-            if (is_array($qry) && count($qry)) {
-                $qry =  $qry['select'] . $qry['from'] . $qry['join'] . $qry['where'];
-            }
-            return $this->selectQueryToCountQuery($qry);
+        if (0 === strpos($relationshipName, 'function:')) {
+            return $this->makeFunctionCountQuery($relationshipName);
         }
 
         $this->focus->load_relationship($relationshipName);
-        /** @var Link2 $relationship */
+        /** @var \Link2 $relationship */
         $relationship = $this->focus->$relationshipName;
 
         if ($relationship) {
@@ -129,14 +151,36 @@ class SubPanelRowCounter
     }
 
     /**
+     * @param $relationshipName
+     * @return string
+     */
+    public function makeFunctionCountQuery($relationshipName)
+    {
+        include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'utils.php';
+        $functionName = substr($relationshipName, 9);
+        $qry = [];
+        if (method_exists($this->focus, $functionName)) {
+            $qry = $this->focus->$functionName($this->subPanelDef['function_parameters']);
+        } elseif (\function_exists($functionName)) {
+            $qry = $functionName($this->subPanelDef['function_parameters']);
+        }
+        if (\is_array($qry) && \count($qry)) {
+            $qry = $qry['select'] . $qry['from'] . $qry['join'] . $qry['where'];
+        }
+        return $this->selectQueryToCountQuery($qry);
+    }
+
+    /**
      * @param string $selectQuery
      * @return string
      */
     public function selectQueryToCountQuery($selectQuery)
     {
-        if (!is_string($selectQuery)) {
+        if (!\is_string($selectQuery)) {
             return '';
         }
+
+        $selectQuery = trim(str_replace(["\n", "\t", "\r", '  '], ' ', $selectQuery));
 
         if (0 !== stripos($selectQuery, 'SELECT')) {
             return '';
@@ -152,6 +196,13 @@ class SubPanelRowCounter
             return '';
         }
 
-        return 'SELECT COUNT(' . $selectPart . ') ' . substr($selectQuery, $fromPos) . ' LIMIT 1';
+        $selectArr = explode(' ', $selectPart);
+        $selectPartFirst = $selectArr[0];
+
+        if (strpos($selectPartFirst, '*') !== false) {
+            $selectPartFirst = \str_replace('*', 'id', $selectPartFirst);
+        }
+
+        return 'SELECT COUNT(' . $selectPartFirst . ')' . substr($selectQuery, $fromPos) . ' LIMIT 1';
     }
 }

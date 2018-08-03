@@ -40,11 +40,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
 require_once('include/SubPanel/SubPanel.php');
 require_once('include/SubPanel/SubPanelTilesTabs.php');
 require_once('include/SubPanel/SubPanelDefinitions.php');
-require_once('include/SubPanel/SubPanelRowCounter.php');
 
 /**
  * Subpanel tiles
@@ -61,7 +59,7 @@ class SubPanelTiles
     public $show_tabs = false;
 
     /**
-     * @var SubPanelRowCounter
+     * @var \SuiteCRM\SubPanel\SubPanelRowCounter
      */
     protected $rowCounter;
 
@@ -77,7 +75,7 @@ class SubPanelTiles
         $this->module = $focus->module_dir;
         $this->layout_def_key = $layout_def_key;
         $this->subpanel_definitions=new SubPanelDefinitions($focus, $layout_def_key, $layout_def_override);
-        $this->rowCounter = new SubPanelRowCounter($focus);
+        $this->rowCounter = new \SuiteCRM\SubPanel\SubPanelRowCounter($focus);
     }
 
     /*
