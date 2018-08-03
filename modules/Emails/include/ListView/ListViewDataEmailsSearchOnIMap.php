@@ -369,10 +369,13 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             'assigned_user_name' => '',
         );
 
-        if (!empty($uid))
-        {
+        if (!empty($uid)) {
             $email = BeanFactory::getBean('Emails');
-            $email->retrieve_by_string_fields(array('uid' => $uid));
+            $email->retrieve_by_string_fields(
+                array(
+                    'uid' => $uid
+                )
+            );
             $ret['assigned_user_id'] = $email->assigned_user_id;
             $ret['assigned_user_name'] = $email->assigned_user_name;
         }
