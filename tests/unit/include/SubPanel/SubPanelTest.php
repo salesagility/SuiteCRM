@@ -94,12 +94,12 @@ class SubPanelTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $bean = new Account();
         $counter = new SubPanelRowCounter($bean);
 
-        $nonExistantFunctionQuery = $counter->makeFunctionCountQuery('');
-        $this->assertEquals('', $nonExistantFunctionQuery);
+        $nonExistantQuery = $counter->makeFunctionCountQuery('');
+        $this->assertEquals('', $nonExistantQuery);
 
-        $existantFunctionQuery = $counter->makeFunctionCountQuery('function:getProductsServicesPurchasedQuery');
+        $existantQuery = $counter->makeFunctionCountQuery('function:getProductsServicesPurchasedQuery');
         $expectedQueryStart = 'SELECT COUNT(aos_products_quotes.id)';
-        $this->assertContains($expectedQueryStart, $existantFunctionQuery);
+        $this->assertContains($expectedQueryStart, $existantQuery);
     }
 
     public function testMakeSubPanelRowCountQuery()

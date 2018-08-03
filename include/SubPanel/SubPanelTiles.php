@@ -358,9 +358,7 @@ class SubPanelTiles
 
                 // Get subpanel buttons
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel, $subpanel_object->subpanel_query);
-            }
-            elseif ($current_user->getPreference('count_collapsed_subpanels')) {
-
+            } elseif ($current_user->getPreference('count_collapsed_subpanels')) {
                 $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
                 $count = $this->rowCounter->getSubPanelRowCount($subPanelDef);
 
