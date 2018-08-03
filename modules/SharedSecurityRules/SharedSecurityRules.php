@@ -194,19 +194,7 @@ class SharedSecurityRules extends Basic
         /* CREATING SQL QUERY VERSION */
         $query_results = $module->db->query($sql_query);
         while ($rule = $module->db->fetchByAssoc($query_results)) {
-            $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' AND sharedsecurityrulesactions.deleted = '0'";
-            $actions_results = $module->db->query($sql_query);
-            while ($action = $module->db->fetchByAssoc($actions_results)) {
-                $unserialized = unserialize(base64_decode($action['parameters']));
-                if ($unserialized != false) {
-                    $action['parameters'] = $unserialized;
-                }
-                if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || !is_object($action['parameters']['email_target_type']))) {
-                    LoggerManager::getLogger()->warn('Incorrect action parameter: email_target_type');
-                } else {
-                    $result = $checker->updateResultByEmailTargetType($result, $action, $module, $current_user->id, $helper, $rule, $moduleBean, $view);
-                }
-            }
+            $result = $checker->updateResultByRule($result, $action, $module, $current_user->id, $helper, $rule, $moduleBean, $view);
         }
 
         $converted_res = '';
@@ -264,7 +252,6 @@ class SharedSecurityRules extends Basic
                         LoggerManager::getLogger()->warn('Incorrect action parameter: accesslevel');
                     } else {
                         foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
-                            
                             if (!isset($action['parameters']['email_target_type'][$key])) {
                                 LoggerManager::getLogger()->warn('action parameter email_target_type si not set at key: ' . $key);
                                 $targetType = null;
@@ -280,7 +267,6 @@ class SharedSecurityRules extends Basic
                                     $actionIsUser = true;
                                 }
                             } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                                
                                 $actionParameterEmailKey1 = null;
                                 if (!isset($action['parameters']['email'][$key]['1'])) {
                                     LoggerManager::getLogger()->warn('Shared Security Rules trying to build rule where but action parameters email [1] is not set at key: ' . $key);

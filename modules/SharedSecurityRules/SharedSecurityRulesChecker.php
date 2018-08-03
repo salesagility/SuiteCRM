@@ -46,6 +46,24 @@ include_once('SharedSecurityRulesHelper.php');
 
 class SharedSecurityRulesChecker
 {
+    public function updateResultByRule($result, $action, $module, $userId, $helper, $rule, $moduleBean, $view)
+    {
+        $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' AND sharedsecurityrulesactions.deleted = '0'";
+        $actions_results = $module->db->query($sql_query);
+        while ($action = $module->db->fetchByAssoc($actions_results)) {
+            $unserialized = unserialize(base64_decode($action['parameters']));
+            if ($unserialized != false) {
+                $action['parameters'] = $unserialized;
+            }
+            if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || !is_object($action['parameters']['email_target_type']))) {
+                LoggerManager::getLogger()->warn('Incorrect action parameter: email_target_type');
+            } else {
+                $result = $this->updateResultByEmailTargetType($result, $action, $module, $userId, $helper, $rule, $moduleBean, $view);
+            }
+        }
+        return $result;
+    }
+    
     public function updateResultByEmailTargetType($result, $action, $module, $userId, $helper, $rule, $moduleBean, $view)
     {
         foreach ($action['parameters']['email_target_type'] as $key => $targetType) {
