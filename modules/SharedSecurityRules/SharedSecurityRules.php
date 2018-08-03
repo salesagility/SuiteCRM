@@ -204,31 +204,7 @@ class SharedSecurityRules extends Basic
                 if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || !is_object($action['parameters']['email_target_type']))) {
                     LoggerManager::getLogger()->warn('Incorrect action parameter: email_target_type');
                 } else {
-                    foreach ($action['parameters']['email_target_type'] as $key => $targetType) {
-                        
-                        if (!isset($action['parameters']['email'][$key]['0'])) {
-                            LoggerManager::getLogger()->warn('action parameter email is not set at key: ' . $key);
-                        } else {                         
-                            if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
-                                
-                                if (!isset($action['parameters']['email'][$key]['2'])) {
-                                    LoggerManager::getLogger()->warn('action parameter email [2] is not set at key: ' . $key);
-                                } else {
-                                    $usertRoleResultsAssoc = $checker->getUsertRuleResultsAssoc($module, $action['parameters']['email'][$key]['2'], $current_user->id);
-                                    if ($usertRoleResultsAssoc['user_id'] == $current_user->id) {
-                                        $result = $checker->updateResultByCondition($result, $helper, $rule, $moduleBean, $view, $action, $key);
-                                    }
-                                }
-                                
-                            } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                                $result = $checker->getResultByUserActionKey($result, $helper, $rule, $moduleBean, $action, $key, $current_user->id, $module);
-                            } elseif (($targetType == "Specify User" && $current_user->id == $action['parameters']['email'][$key]) ||
-                                    ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
-                                //we have found a possible record to check against.
-                                $result = $checker->updateResultByCondition($result, $helper, $rule, $moduleBean, $view, $action, $key);
-                            }
-                        }
-                    }
+                    $result = $checker->updateResultByEmailTargetType($result, $action, $module, $current_user->id, $helper, $rule, $moduleBean, $view);
                 }
             }
         }
