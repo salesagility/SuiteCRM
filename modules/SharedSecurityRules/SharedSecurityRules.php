@@ -194,7 +194,7 @@ class SharedSecurityRules extends Basic
         /* CREATING SQL QUERY VERSION */
         $query_results = $module->db->query($sql_query);
         while ($rule = $module->db->fetchByAssoc($query_results)) {
-            $result = $checker->updateResultByRule($result, $action, $module, $current_user->id, $helper, $rule, $moduleBean, $view);
+            $result = $checker->updateResultByRule($result, $action, $key, $module, $current_user->id, $helper, $rule, $moduleBean, $view);
         }
 
         $converted_res = '';
