@@ -53,8 +53,8 @@ use SuiteCRM\Robo\Traits\RoboTrait;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
-use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Utility\BeanJsonSerializer;
 
 /**
@@ -68,14 +68,6 @@ class ElasticSearchCommands extends \Robo\Tasks
     use CliRunnerTrait;
 
     /**
-     * ElasticSearchCommands constructor.
-     */
-    public function __construct()
-    {
-        $this->bootstrap();
-    }
-
-    /**
      * Performs a search using the given parameters.
      *
      * The full Elasticsearch query string syntax is available. See link below.
@@ -87,6 +79,8 @@ class ElasticSearchCommands extends \Robo\Tasks
      */
     public function elasticSearch($query, $size = 20, $showJson = false)
     {
+        $this->bootstrap();
+
         $engine = new SearchWrapper();
 
         $result = $engine->search('ElasticSearchEngine', SearchQuery::fromString($query, $size));
@@ -120,10 +114,10 @@ class ElasticSearchCommands extends \Robo\Tasks
 
         foreach ($ids as $id) {
             $bean = BeanFactory::getBean($module, $id);
-            $results[] = mb_convert_encoding($bean->name, "UTF-8", "HTML-ENTITIES");
-
             if ($showJson) {
                 $results[] = BeanJsonSerializer::serialize($bean, true, true);
+            } else {
+                $results[] = mb_convert_encoding($bean->name, "UTF-8", "HTML-ENTITIES");
             }
         }
 
@@ -149,6 +143,8 @@ class ElasticSearchCommands extends \Robo\Tasks
      */
     public function elasticIndex($differential = 1, $searchdefs = 0)
     {
+        $this->bootstrap();
+
         $indexer = new ElasticSearchIndexer();
         $indexer->setDifferentialIndexingEnabled($differential);
         if ($searchdefs) {
@@ -162,6 +158,8 @@ class ElasticSearchCommands extends \Robo\Tasks
      */
     public function elasticRmIndex()
     {
+        $this->bootstrap();
+
         $indexer = new ElasticSearchIndexer();
         $indexer->removeIndex();
     }

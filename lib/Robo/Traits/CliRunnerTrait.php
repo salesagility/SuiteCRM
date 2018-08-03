@@ -46,39 +46,38 @@
 
 namespace SuiteCRM\Robo\Traits;
 
-if (!defined('sugarEntry')) {
-    define('sugarEntry', true);
-    define('SUITE_CLI_RUNNER', true);
-}
-
-$root = __DIR__ . '/../../../';
-
-require $root . 'config.php';
-require $root . 'config_override.php';
-require_once $root . 'vendor/autoload.php';
-require_once $root . 'include/database/DBManagerFactory.php';
-require_once $root . 'include/utils.php';
-require_once $root . 'include/modules.php';
-require_once $root . 'include/entryPoint.php';
-
 /**
  * This Trait creates a fully working instance of SugarCRM.
  *
- * This is supposed to be used from command line.
+ * The main advantage of this class is that it establish a working database connection to be used from your CLIs.
  *
  * To make the instance work properly, bootstrap() must be invoked first.
  */
 trait CliRunnerTrait
 {
     /**
-     * Sets up the missing global variables to make SugarCRM work from CLI.
+     * Sets up the missing global variables to make SugarCRM works from CLI.
      */
     protected function bootstrap()
     {
-        //Oddly entry point loads app_strings but not app_list_strings, manually do this here.
-        global $current_language;
-        global $app_list_strings;
-        global $sugar_config;
+        global $current_language, $app_list_strings, $sugar_config;
+
+        if (!defined('sugarEntry')) {
+            define('sugarEntry', true);
+            define('SUITE_CLI_RUNNER', true);
+        }
+
+        /*
+         * The following file inclusions have been moved here
+         * since they have side effects and can make other
+         * Robo Tasks fail (i.e. failed database connection).
+         */
+
+        $root = __DIR__ . '/../../../';
+
+        require $root . 'config.php';
+        require $root . 'config_override.php';
+        require_once $root . 'include/entryPoint.php';
 
         $current_language = 'en_us';
         $app_list_strings = return_app_list_strings_language($current_language);
