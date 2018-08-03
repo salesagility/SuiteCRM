@@ -226,6 +226,7 @@ class SharedSecurityRules extends Basic
     public static function buildRuleWhere(SugarBean $module)
     {
         global $current_user;
+        $builder = new SharedSecurityRulesWhereBuilder();
         $whereArray = $builder->getWhereArray($module, $current_user->id);
         return $whereArray;
     }
