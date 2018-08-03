@@ -41,13 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
  * Description: TODO:  To be written.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 ?>
 <?php
 header("Location:index.php?module=Project&action=ResourceList&parentTab=All&ajax_load=1&loadLanguageJS=1");

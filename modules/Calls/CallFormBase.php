@@ -41,13 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
  * Description: Call Form Base
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 
 require_once('include/SugarObjects/forms/FormBase.php');
 

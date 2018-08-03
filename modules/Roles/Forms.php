@@ -41,13 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
  * Description:  Contains a variety of utility functions specific to this module.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 
 
 function get_validate_record_js()

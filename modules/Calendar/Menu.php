@@ -45,13 +45,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-/**
+/*********************************************************************************
 
  * Description:  TODO To be written.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 global $mod_strings;
 if (ACLController::checkAccess('Meetings', 'edit', true)) {
     $module_menu[]=array("index.php?module=Meetings&action=EditView&return_module=Meetings&return_action=DetailView", $mod_strings['LNK_NEW_MEETING'],"Schedule_Meeting");

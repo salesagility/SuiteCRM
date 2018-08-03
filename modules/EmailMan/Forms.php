@@ -41,10 +41,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
  * Description:  Contains a variety of utility functions specific to this module.
- */
+ ********************************************************************************/
 
 /**
  * Create javascript to validate the data entered into a record.

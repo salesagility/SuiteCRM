@@ -27,13 +27,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author SalesAgility Ltd <support@salesagility.com>
  */
 
-/**
+/*********************************************************************************
  * $Id$
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_Invoices/AOS_Invoices.php');

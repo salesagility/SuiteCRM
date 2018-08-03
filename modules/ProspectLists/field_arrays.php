@@ -41,13 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 $fields_array['ProspectList'] = array('column_fields' => array(
                 "id", "date_entered",
                 "date_modified", "modified_user_id",

@@ -42,14 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
  * Description: This file is used to override the default Meta-data DetailView behavior
  * to provide customization specific to the Campaigns module.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 
 class OpportunitiesViewEdit extends ViewEdit
 {

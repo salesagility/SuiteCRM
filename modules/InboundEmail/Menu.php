@@ -41,13 +41,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
+/*********************************************************************************
 
  * Description:  TODO: To be written.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- */
+ ********************************************************************************/
 global $mod_strings;
 $module_menu = array();
 $module_menu[]= array("index.php?module=InboundEmail&action=EditView", $mod_strings['LNK_LIST_CREATE_NEW_GROUP'],"Setup_Email");
