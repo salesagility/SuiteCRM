@@ -79,7 +79,7 @@ class SharedSecurityRulesWhereBuilder
                         LoggerManager::getLogger()->warn('Incorrect action parameter: accesslevel');
                     } else {
                         foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
-                            $targetType = $this->getTargetType();
+                            $targetType = $this->getTargetType($action, $key);
                             
                             if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
                                 $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$userId}' AND acl_roles_users.deleted = '0'";
