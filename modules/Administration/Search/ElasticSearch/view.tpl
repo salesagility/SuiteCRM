@@ -111,8 +111,14 @@
                                 action='DetailView'}
                                 &mdash;
                                 <b>{$scheduler->status}</b>
-                                &mdash; last run: {$scheduler->last_run}
-                                (<b>{diff_for_humans datetime=$scheduler->last_run}</b>)
+                                &mdash;
+                                {if !empty($scheduler->last_run)}
+                                    last run:
+                                    {$scheduler->last_run}
+                                    (<b>{diff_for_humans datetime=$scheduler->last_run}</b>)
+                                {else}
+                                    This job has never run
+                                {/if}
                             </li>
                             {foreachelse}
                             <p class="error">No schedulers found. Consider creating one.</p>
