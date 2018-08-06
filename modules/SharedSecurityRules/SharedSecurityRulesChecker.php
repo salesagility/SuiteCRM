@@ -151,15 +151,15 @@ class SharedSecurityRulesChecker
     public function updateResultByCondition($result, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view, $action, $key)
     {
         $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
-
-        $error = false;
         if ($conditionResult) {
             if (!isset($action['parameters']['accesslevel'][$key])) {
-                $error = true;
                 LoggerManager::getLogger()->warn('Incorrect action parameter access level at key: ' . $key);
-            }
-            if (!$error) {
-                $result = !$helper->findAccess($view, $action['parameters']['accesslevel'][$key]) ? false : true;
+            } else {
+                if (!$helper->findAccess($view, $action['parameters']['accesslevel'][$key])) {
+                    $result = false;
+                } else {
+                    $result = true;
+                }
             }
         }
         return $result;
