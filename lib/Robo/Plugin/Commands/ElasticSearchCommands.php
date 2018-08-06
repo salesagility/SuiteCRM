@@ -54,6 +54,7 @@ use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\SearchResults;
 use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Utility\BeanJsonSerializer;
 
@@ -86,17 +87,18 @@ class ElasticSearchCommands extends \Robo\Tasks
         $result = $engine->search('ElasticSearchEngine', SearchQuery::fromString($query, $size));
         $hits = $result->getHits();
 
-        if (!empty($hits)) {
-            $this->io()->title("Results");
-            foreach ($hits as $key => $module) {
-                $this->printModuleResults($showJson, $key, $module);
-            }
-        } else {
-           $this->io()->note('No results matching your query. Try broadening your criteria.');
+        if (empty($hits)) {
+            $this->io()->note('No results matching your query. Try broadening your criteria.');
+            $this->showSearchTime($result);
+            return;
         }
 
-        $time = round($result->getSearchTime() * 1000);
-        $this->io()->success("Search performed in $time ms");
+        $this->io()->title("Results");
+        foreach ($hits as $key => $module) {
+            $this->printModuleResults($showJson, $key, $module);
+        }
+
+        $this->showSearchTime($result);
     }
 
     /**
@@ -114,11 +116,10 @@ class ElasticSearchCommands extends \Robo\Tasks
 
         foreach ($ids as $id) {
             $bean = BeanFactory::getBean($module, $id);
-            if ($showJson) {
-                $results[] = BeanJsonSerializer::serialize($bean, true, true);
-            } else {
-                $results[] = mb_convert_encoding($bean->name, "UTF-8", "HTML-ENTITIES");
-            }
+
+            $results[] = $showJson
+                ? BeanJsonSerializer::serialize($bean, true, true)
+                : mb_convert_encoding($bean->name, "UTF-8", "HTML-ENTITIES");
         }
 
         $this->io()->listing($results);
@@ -162,5 +163,16 @@ class ElasticSearchCommands extends \Robo\Tasks
 
         $indexer = new ElasticSearchIndexer();
         $indexer->removeIndex();
+    }
+
+    /**
+     * Pretty prints the search time.
+     *
+     * @param SearchResults $result
+     */
+    private function showSearchTime(SearchResults $result)
+    {
+        $time = round($result->getSearchTime() * 1000);
+        $this->io()->success("Search performed in $time ms");
     }
 }

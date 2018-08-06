@@ -8,11 +8,10 @@
  * The only parameter to pass is 'datetime', to be given in UTC.
  *
  * @param $params array
- * @param $smarty Smarty
  * @return string
  * @see Carbon::diffForHumans()
  */
-function smarty_function_diff_for_humans(array $params, Smarty &$smarty)
+function smarty_function_diff_for_humans(array $params)
 {
     return \Carbon\Carbon::createFromTimeString($params['datetime'])->diffForHumans();
 }
