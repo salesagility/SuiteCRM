@@ -147,15 +147,15 @@ class SharedSecurityRulesChecker
     {
         $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
 
+        $result = false;
+        $error = false;
         if ($conditionResult) {
             if (!isset($action['parameters']['accesslevel'][$key])) {
+                $error = true;
                 LoggerManager::getLogger()->warn('Incorrect action parameter access level at key: ' . $key);
-            } else {
-                if (!$helper->findAccess($view, $action['parameters']['accesslevel'][$key])) {
-                    $result = false;
-                } else {
-                    $result = true;
-                }
+            }
+            if (!$error) {
+                $result = !$helper->findAccess($view, $action['parameters']['accesslevel'][$key]) ? false : true;
             }
         }
         return $result;
