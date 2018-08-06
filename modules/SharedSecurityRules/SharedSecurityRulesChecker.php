@@ -175,9 +175,9 @@ class SharedSecurityRulesChecker
      */
     public function getUsertRuleResultsAssoc(SugarBean $module, $actionParamEmail2, $currentUserId)
     {
-        $actionParamEmail2Quote = $module->db->quote($actionParamEmail2);
+        $actionParamEmail2Q = $module->db->quote($actionParamEmail2);
         $currentUserIdQuote = $module->db->quote($currentUserId);
-        $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '$actionParamEmail2Quote' AND acl_roles_users.user_id = '$currentUserIdQuote' AND acl_roles_users.deleted = '0'";
+        $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '$actionParamEmail2Q' AND acl_roles_users.user_id = '$currentUserIdQuote' AND acl_roles_users.deleted = '0'";
         $users_roles_results = $module->db->query($users_roles_query);
         $userRoleResultsAssoc = $module->db->fetchByAssoc($users_roles_results);
         return $userRoleResultsAssoc;
