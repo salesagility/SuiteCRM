@@ -62,33 +62,34 @@ require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
 class SearchDefsDocumentifier extends AbstractDocumentifier
 {
     /** @var array a cache with fields definition */
-    protected static $fields = [];
+    protected $fields = [];
 
     /** @inheritdoc */
-    public function documentify(\SugarBean $bean)
+    public function documentify(\SugarBean $bean, ParserSearchFields $parser = null)
     {
         $module_name = $bean->module_name;
 
-        if (empty(self::$fields[$module_name])) {
-            self::$fields[$module_name] = $this->getFieldsToIndex($module_name);
+        if (empty($this->fields[$module_name])) {
+            $this->fields[$module_name] = $this->getFieldsToIndex($module_name, $parser);
         }
 
         // Making a friendly reference to the mapping
-        $fields = &self::$fields[$module_name];
+        $fields = &$this->fields[$module_name];
 
         $body = [];
 
         foreach ($fields as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $subvalue) {
-                    if (property_exists($bean, $subvalue)) {
+                    if (property_exists($bean, $subvalue) && !empty($bean->$subvalue)) {
                         $body[$key][$subvalue] = $this->cleanValue($bean->$subvalue);
                     }
                 }
-            } else {
-                if (property_exists($bean, $value)) {
-                    $body[$value] = $this->cleanValue($bean->$value);
-                }
+                continue;
+            }
+
+            if (property_exists($bean, $value) && !empty($bean->$value)) {
+                $body[$value] = $this->cleanValue($bean->$value);
             }
         }
 
@@ -137,12 +138,13 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
                 continue;
             }
 
-            if (!empty($field['db_field'])) {
-                foreach ($field['db_field'] as $db_field) {
-                    $parsedFields[$key][] = $db_field;
-                }
-            } else {
+            if (empty($field['db_field'])) {
                 $parsedFields[] = $key;
+                continue;
+            }
+
+            foreach ($field['db_field'] as $db_field) {
+                $parsedFields[$key][] = $db_field;
             }
         }
 

@@ -273,42 +273,32 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
                 [
                     'phone_mobile' => '(978) 836-3300',
                     'phone_work' => '(711) 112-3512',
-                    'phone_other' => '',
-                    'phone_fax' => '',
-                    'assistant_phone' => '',
                 ],
             'address_street' =>
                 [
                     'primary_address_street' => '345 Sugar Blvd.',
-                    'alt_address_street' => ''
                 ],
             'address_city' =>
                 [
                     'primary_address_city' => 'Salt Lake City',
-                    'alt_address_city' => ''
                 ],
             'address_state' =>
                 [
                     'primary_address_state' => 'CA',
-                    'alt_address_state' => ''
                 ],
             'address_postalcode' =>
                 [
                     'primary_address_postalcode' => '58821',
-                    'alt_address_postalcode' => ''
                 ],
             'address_country' =>
                 [
                     'primary_address_country' => 'USA',
-                    'alt_address_country' => ''
                 ],
             'current_user_only' =>
                 [
                     'assigned_user_id' => 'seed_max_id',
                 ],
             'assigned_user_id' => 'seed_max_id',
-            'campaign_name' => '',
-            'assistant' => ''
         ];
 
         $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
