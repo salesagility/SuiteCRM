@@ -44,4 +44,11 @@ abstract class SearchTestAbstract extends \SuiteCRM\StateCheckerPHPUnitTestCaseA
         $property->setAccessible(true);
         $property->setValue($object, $value);
     }
+
+    /** @inheritdoc */
+    protected function tearDown()
+    {
+        parent::tearDown();
+        \Mockery::close();
+    }
 }
