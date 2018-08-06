@@ -55,7 +55,7 @@ use SugarBean;
 
 class ElasticSearchHooks
 {
-    public function beanSaved($bean, $event, $arguments)
+    public function beanSaved($bean)
     {
         if (ElasticSearchIndexer::isEnabled() === false) {
             return;
@@ -69,11 +69,13 @@ class ElasticSearchHooks
             $indexer->indexBean($bean);
         } catch (\Exception $e) {
             $message = 'Failed to add bean to index because: ' . $e->getMessage();
+
             if (isset($indexer)) {
                 $indexer->getLogger()->error($message);
-            } else {
-                LoggerManager::getLogger()->error($message);
+                return;
             }
+
+            LoggerManager::getLogger()->error($message);
         }
     }
 
@@ -97,7 +99,7 @@ class ElasticSearchHooks
         return !in_array($bean->module_name, $indexer->getModulesToIndex());
     }
 
-    public function beanDeleted($bean, $event, $arguments)
+    public function beanDeleted($bean)
     {
         if (ElasticSearchIndexer::isEnabled() === false) {
             return;
@@ -111,11 +113,13 @@ class ElasticSearchHooks
             $indexer->removeBean($bean);
         } catch (\Exception $e) {
             $message = 'Failed to remove bean from index because: ' . $e->getMessage();
+
             if (isset($indexer)) {
                 $indexer->getLogger()->error($message);
-            } else {
-                LoggerManager::getLogger()->error($message);
+                return;
             }
+
+            LoggerManager::getLogger()->error($message);
         }
     }
 }

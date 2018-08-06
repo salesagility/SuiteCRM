@@ -54,9 +54,105 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
     public function testGetFieldsToIndex()
     {
         $documentifier = new SearchDefsDocumentifier();
-        $mockParser = m::mock('ParserSearchFields');
+
         $mockModule = 'MockModule';
-        $mockFields = [
+
+        $mockParser = $this->getMockParser($mockModule);
+        $expected = $this->getExpectedFields();
+
+        $actual = self::invokeMethod($documentifier, 'getFieldsToIndex', [$mockModule, $mockParser]);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testDocumentifyContact()
+    {
+        $documentifier = new SearchDefsDocumentifier();
+
+        $module = 'Contacts';
+
+        $mockParser = $this->getMockParser($module);
+
+        /** @var \Contact $contact */
+        $contact = BeanFactory::newBean('Contacts');
+
+        $contact->first_name = 'Foo';
+        $contact->last_name = 'Bar';
+        $contact->alt_address_city = 'FooCity';
+        $contact->phone_fax = '132';
+
+        $expected = [
+            'first_name' => 'Foo',
+            'last_name' => 'Bar',
+            'search_name' =>
+                [
+                    'first_name' => 'Foo',
+                    'last_name' => 'Bar',
+                ],
+            'phone' =>
+                [
+                    'phone_fax' => '132',
+                ],
+            'address_city' =>
+                [
+                    'alt_address_city' => 'FooCity',
+                ],
+        ];
+
+        $actual = $documentifier->documentify($contact, $mockParser);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testDocumentifyAccount()
+    {
+        $documentifier = new SearchDefsDocumentifier();
+
+        /** @var Account $account */
+        $account = BeanFactory::newBean('Accounts');
+
+        $account->name = 'SuperDogs Ldt.';
+        $account->phone_office = '123456789';
+        $account->annual_revenue = '123 (USD)';
+        $account->billing_address_city = 'FooCity';
+        $account->billing_address_country = 'FooCountry';
+        $account->billing_address_postalcode = 'FooPostalCode';
+
+        $actual = $documentifier->documentify($account);
+        $expected = [
+            'name' =>
+                [
+                    'name' => 'SuperDogs Ldt.',
+                ],
+            'annual_revenue' => '123 (USD)',
+            'address_city' =>
+                [
+                    'billing_address_city' => 'FooCity',
+                ],
+            'address_postalcode' =>
+                [
+                    'billing_address_postalcode' => 'FooPostalCode',
+                ],
+            'address_country' =>
+                [
+                    'billing_address_country' => 'FooCountry',
+                ],
+            'phone' =>
+                [
+                    'phone_office' => '123456789',
+                ],
+        ];
+
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @param string $mockModule
+     * @return array
+     */
+    private function getFields($mockModule)
+    {
+        return [
             $mockModule => [
                 'first_name' =>
                     [
@@ -260,8 +356,14 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
                     ],
             ]
         ];
+    }
 
-        $expected = [
+    /**
+     * @return array
+     */
+    private function getExpectedFields()
+    {
+        return [
             'first_name',
             'last_name',
             'search_name' =>
@@ -318,15 +420,21 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
                 ],
             'campaign_name',
         ];
+    }
 
+    /**
+     * @param $mockModule
+     * @return m\MockInterface
+     */
+    private function getMockParser($mockModule)
+    {
+        $mockParser = m::mock('ParserSearchFields');
+        $mockFields = $this->getFields($mockModule);
         $mockParser
             ->shouldReceive('getSearchFields')
             ->once()
             ->with()
             ->andReturn($mockFields);
-
-        $actual = self::invokeMethod($documentifier, 'getFieldsToIndex', [$mockModule, $mockParser]);
-
-        self::assertEquals($expected, $actual);
+        return $mockParser;
     }
 }

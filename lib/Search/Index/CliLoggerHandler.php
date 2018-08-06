@@ -78,7 +78,7 @@ class CliLoggerHandler extends StreamHandler
 class Formatter implements FormatterInterface
 {
     /**  @var array a list of the available colours for quicker usage */
-    private $colours = [];
+    private $colors = [];
     /** @var string the format of the log line */
     private $format;
     /** @var string string used for padding new lines */
@@ -91,18 +91,18 @@ class Formatter implements FormatterInterface
      */
     public function __construct()
     {
-        $this->colours = $this->getColours();
+        $this->colors = $this->getColors();
 
-        $c = &$this->colours;
+        $color = &$this->colors;
 
-        $this->format = "[{$c['bold']}%s{$c['reset']}][%s] {$c['bold']}%s" . PHP_EOL;
+        $this->format = "[{$color['bold']}%s{$color['reset']}][%s] {$color['bold']}%s" . PHP_EOL;
 
         $this->padding =
             PHP_EOL
-            . $c['reset']
-            . $c['gray-dark']
+            . $color['reset']
+            . $color['gray-dark']
             . str_repeat('  ~', 4)
-            . $c['reset']
+            . $color['reset']
             . str_repeat(' ', 2);
     }
 
@@ -111,28 +111,28 @@ class Formatter implements FormatterInterface
      *
      * @return array
      */
-    protected function getColours()
+    protected function getColors()
     {
         return [
-            'white' => $this->e(97),
-            'gray' => $this->e(37),
-            'gray-dark' => $this->e(90),
-            'cyan' => $this->e(36),
-            'cyan-light' => $this->e(96),
-            'blue' => $this->e(34),
-            'blue-light' => $this->e(94),
-            'green' => $this->e(32),
-            'green-light' => $this->e(92),
-            'yellow' => $this->e(33),
-            'yellow-light' => $this->e(93),
-            'purple' => $this->e(95),
-            'red' => $this->e(31),
-            'red-light' => $this->e(91),
-            'bg-red' => $this->e(41),
-            'bg-red-light' => $this->e(101),
-            'bold' => $this->e(1), // this will also make colours lighter
-            'reverse' => $this->e(7),
-            'reset' => $this->e(0),
+            'white' => $this->code(97),
+            'gray' => $this->code(37),
+            'gray-dark' => $this->code(90),
+            'cyan' => $this->code(36),
+            'cyan-light' => $this->code(96),
+            'blue' => $this->code(34),
+            'blue-light' => $this->code(94),
+            'green' => $this->code(32),
+            'green-light' => $this->code(92),
+            'yellow' => $this->code(33),
+            'yellow-light' => $this->code(93),
+            'purple' => $this->code(95),
+            'red' => $this->code(31),
+            'red-light' => $this->code(91),
+            'bg-red' => $this->code(41),
+            'bg-red-light' => $this->code(101),
+            'bold' => $this->code(1), // this will also make colours lighter
+            'reverse' => $this->code(7),
+            'reset' => $this->code(0),
         ];
     }
 
@@ -142,7 +142,7 @@ class Formatter implements FormatterInterface
      * @param $code int
      * @return string
      */
-    protected function e($code)
+    protected function code($code)
     {
         return "\e[{$code}m";
     }
@@ -176,7 +176,7 @@ class Formatter implements FormatterInterface
         list($color, $code) = $this->getColourAndCode($level);
 
         if ($level >= Logger::WARNING || $this->alwaysColourLine) {
-            $message = $color . $message . $this->colours['reset'];
+            $message = $color . $message . $this->colors['reset'];
         }
 
         $message = preg_replace("/\n\s*/", $this->padding . $color, $message);
@@ -196,32 +196,32 @@ class Formatter implements FormatterInterface
     {
         switch ($level) {
             case Logger::INFO:
-                $color = $this->colours['cyan'];
+                $color = $this->colors['cyan'];
                 $code = '=';
                 break;
             case Logger::NOTICE:
-                $color = $this->colours['green'];
+                $color = $this->colors['green'];
                 $code = '?';
                 break;
             case Logger::WARNING:
-                $color = $this->colours['yellow'];
+                $color = $this->colors['yellow'];
                 $code = '*';
                 break;
             case Logger::ERROR:
-                $color = $this->colours['red'];
+                $color = $this->colors['red'];
                 $code = '!';
                 break;
             case Logger::CRITICAL:
-                $color = $this->colours['bg-red-light'];
+                $color = $this->colors['bg-red-light'];
                 $code = '!';
                 break;
             case Logger::EMERGENCY:
-                $color = $this->colours['bg-red'];
+                $color = $this->colors['bg-red'];
                 $code = '!';
                 break;
             case Logger::DEBUG:
             default:
-                $color = $this->colours['blue'];
+                $color = $this->colors['blue'];
                 $code = '@';
                 break;
         }

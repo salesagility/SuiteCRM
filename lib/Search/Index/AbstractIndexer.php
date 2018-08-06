@@ -293,11 +293,15 @@ abstract class AbstractIndexer
     {
         if (is_array($modules)) {
             $this->modulesToIndex = array_merge($this->modulesToIndex, $modules);
-        } elseif (is_string($modules)) {
-            $this->modulesToIndex[] = $modules;
-        } else {
-            throw new InvalidArgumentException("Wrong type provided to AddModulesToIndex");
+            return;
         }
+
+        if (is_string($modules)) {
+            $this->modulesToIndex[] = $modules;
+            return;
+        }
+
+        throw new InvalidArgumentException("Wrong type provided to AddModulesToIndex");
     }
 
     /**
