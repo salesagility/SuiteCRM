@@ -64,33 +64,38 @@ class SharedSecurityRulesChecker
         return $result;
     }
     
+    public function getResultByTargetType($targetType, $action, $key, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
+    {
+        if (!isset($action['parameters']['email'][$key]['0'])) {
+            LoggerManager::getLogger()->warn('action parameter email is not set at key: ' . $key);
+        } else {
+            if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
+                if (!isset($action['parameters']['email'][$key]['2'])) {
+                    LoggerManager::getLogger()->warn('action parameter email [2] is not set at key: ' . $key);
+                } else {
+                    $usertRoleResultsAssoc = $this->getUsertRuleResultsAssoc($module, $action['parameters']['email']
+                                [$key]['2'], $userId);
+                    if ($usertRoleResultsAssoc['user_id'] == $userId) {
+                        $result = $this->updateResultByCondition($result, $helper, $rule, $moduleBean, $view,
+                                    $action, $key);
+                    }
+                }
+            } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
+                $result = $this->getResultByUserActionKey($result, $helper, $rule, $moduleBean, $action, $key,
+                            $userId, $module);
+            } elseif (($targetType == "Specify User" && $userId == $action['parameters']['email'][$key]) ||
+                                    ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
+                //we have found a possible record to check against.
+                                $result = $this->updateResultByCondition($result, $helper, $rule, $moduleBean, $view,
+                                        $action, $key);
+            }
+        }
+    }
+    
     public function updateResultByEmailTargetType($result, $action, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
     {
         foreach ($action['parameters']['email_target_type'] as $key => $targetType) {
-            if (!isset($action['parameters']['email'][$key]['0'])) {
-                LoggerManager::getLogger()->warn('action parameter email is not set at key: ' . $key);
-            } else {
-                if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
-                    if (!isset($action['parameters']['email'][$key]['2'])) {
-                        LoggerManager::getLogger()->warn('action parameter email [2] is not set at key: ' . $key);
-                    } else {
-                        $usertRoleResultsAssoc = $this->getUsertRuleResultsAssoc($module, $action['parameters']['email']
-                                [$key]['2'], $userId);
-                        if ($usertRoleResultsAssoc['user_id'] == $userId) {
-                            $result = $this->updateResultByCondition($result, $helper, $rule, $moduleBean, $view,
-                                    $action, $key);
-                        }
-                    }
-                } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                    $result = $this->getResultByUserActionKey($result, $helper, $rule, $moduleBean, $action, $key,
-                            $userId, $module);
-                } elseif (($targetType == "Specify User" && $userId == $action['parameters']['email'][$key]) ||
-                                    ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
-                    //we have found a possible record to check against.
-                                $result = $this->updateResultByCondition($result, $helper, $rule, $moduleBean, $view,
-                                        $action, $key);
-                }
-            }
+            $result = $this->getResultByTargetType();
         }
         return $result;
     }
