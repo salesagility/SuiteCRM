@@ -69,11 +69,13 @@ class ElasticSearchHooks
             $indexer->indexBean($bean);
         } catch (\Exception $e) {
             $message = 'Failed to add bean to index because: ' . $e->getMessage();
+
             if (isset($indexer)) {
                 $indexer->getLogger()->error($message);
-            } else {
-                LoggerManager::getLogger()->error($message);
+                return;
             }
+
+            LoggerManager::getLogger()->error($message);
         }
     }
 
@@ -111,11 +113,13 @@ class ElasticSearchHooks
             $indexer->removeBean($bean);
         } catch (\Exception $e) {
             $message = 'Failed to remove bean from index because: ' . $e->getMessage();
+
             if (isset($indexer)) {
                 $indexer->getLogger()->error($message);
-            } else {
-                LoggerManager::getLogger()->error($message);
+                return;
             }
+
+            LoggerManager::getLogger()->error($message);
         }
     }
 }
