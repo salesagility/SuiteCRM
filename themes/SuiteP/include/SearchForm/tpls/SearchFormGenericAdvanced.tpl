@@ -191,9 +191,11 @@
 
 <script>
     {literal}
-    if (typeof(loadSSL_Scripts) == 'function') {
-        loadSSL_Scripts();
-    }
+    $(document).ready(function () {
+        if (typeof(loadSSL_Scripts) == 'function') {
+            loadSSL_Scripts();
+        }
+    });
     {/literal}
 </script>
 <script>

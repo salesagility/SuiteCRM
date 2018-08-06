@@ -279,13 +279,13 @@ class M2MRelationship extends SugarRelationship
 
               if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
               {
-                  if (get_class($lhs) != 'SecurityGroup' && $lhs->$lhsLinkName instanceof Link2)
+                  if (get_class($lhs) != 'SecurityGroup' && (!empty($lhs->$lhsLinkName) || $lhs->load_relationship($lhsLinkName)) && $lhs->$lhsLinkName instanceof Link2)
                   {
                       $lhs->$lhsLinkName->load();
                       $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
                   }
 
-                  if (get_class($rhs) != 'SecurityGroup' && $rhs->$rhsLinkName instanceof Link2)
+                  if (get_class($rhs) != 'SecurityGroup' && (!empty($rhs->$rhsLinkName) || $rhs->load_relationship($rhsLinkName)) && $rhs->$rhsLinkName instanceof Link2)
                   {
                       $rhs->$rhsLinkName->load();
                       $this->callBeforeDelete($rhs, $lhs, $rhsLinkName);
