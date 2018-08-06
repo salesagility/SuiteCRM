@@ -41,7 +41,7 @@
 
 namespace SuiteCRM\API\OAuth2;
 
-
+use League\OAuth2\Server\CryptKey;
 use SuiteCRM\API\v8\Exception\ApiException;
 
 class Keys
@@ -57,7 +57,7 @@ class Keys
         if(!file_exists($path)) {
             $this->setUpKeys();
         }
-        return file_get_contents($path);
+        return new CryptKey($path);
     }
 
     /**
@@ -70,7 +70,7 @@ class Keys
         if(!file_exists($path)) {
             $this->setUpKeys();
         }
-        return file_get_contents($path);
+        return new CryptKey($path);
     }
 
     /**
