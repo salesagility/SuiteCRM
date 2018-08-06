@@ -66,16 +66,13 @@ class SearchWrapper
     /**
      * Perform a search with the given query and engine.
      *
+     * If no search engine field is provided in the query, the default one will be used.
+     *
      * @param $query SearchQuery
      */
     public static function searchAndView(SearchQuery $query)
     {
-        if (empty($query->getEngine())) {
-            // TODO use configurable default engine instead
-            $engine = key(self::$engines);
-        } else {
-            $engine = $query->getEngine();
-        }
+        $engine = $query->getEngine() ?: self::getDefaultEngine();
 
         $engine = self::fetchEngine($engine);
         $engine->searchAndView($query);
@@ -95,17 +92,15 @@ class SearchWrapper
     {
         if (is_subclass_of($engineName, SearchEngine::class, false)) {
             return $engineName;
-        } elseif (!is_string($engineName)) {
+        }
+
+        if (!is_string($engineName)) {
             throw new SearchEngineNotFoundException('$engineName should either be a string or a SearchEngine');
         }
 
-        if (isset(self::$engines[$engineName])) {
-            // Look in the $engines definitions first
-            $filename = self::$engines[$engineName];
-        } else {
-            // Then look in the extension folder
-            $filename = self::$CUSTOM_ENGINES_PATH . $engineName . '.php';
-        }
+        $filename = isset(self::$engines[$engineName])
+            ? self::$engines[$engineName]
+            : self::$CUSTOM_ENGINES_PATH . $engineName . '.php';
 
         if (!file_exists($filename)) {
             throw new SearchEngineNotFoundException("Unable to find search file '$filename'' for engine '$engineName''.");
@@ -165,5 +160,16 @@ class SearchWrapper
             $custom[] = $file['filename'];
         }
         return array_merge($default, $custom);
+    }
+
+    /**
+     * Retrieves the default search engine name from the global configuration.
+     *
+     * @return string
+     */
+    private static function getDefaultEngine()
+    {
+        // TODO use configurable default engine instead
+        return key(self::$engines);
     }
 }
