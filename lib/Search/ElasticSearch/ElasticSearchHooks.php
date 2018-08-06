@@ -55,7 +55,7 @@ use SugarBean;
 
 class ElasticSearchHooks
 {
-    public function beanSaved($bean, $event, $arguments)
+    public function beanSaved($bean)
     {
         if (ElasticSearchIndexer::isEnabled() === false) {
             return;
@@ -97,7 +97,7 @@ class ElasticSearchHooks
         return !in_array($bean->module_name, $indexer->getModulesToIndex());
     }
 
-    public function beanDeleted($bean, $event, $arguments)
+    public function beanDeleted($bean)
     {
         if (ElasticSearchIndexer::isEnabled() === false) {
             return;
