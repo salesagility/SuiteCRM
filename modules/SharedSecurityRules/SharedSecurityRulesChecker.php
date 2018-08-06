@@ -114,14 +114,14 @@ class SharedSecurityRulesChecker
      */
     public function getResultByUserActionKey($result, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $action, $key, $userId, SugarBean $module)
     {
-        $actionParameterEmailKey1 = null;
+        $actionParamEmail1 = null;
         if (!isset($action['parameters']['email'][$key]['1'])) {
             LoggerManager::getLogger()->warn('action parameter email [1] is not set at key: ' . $key);
         } else {
-            $actionParameterEmailKey1 = $action['parameters']['email'][$key]['1'];
+            $actionParamEmail1 = $action['parameters']['email'][$key]['1'];
         }
 
-        $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '$actionParameterEmailKey1' && securitygroups_users.user_id = '$userId' AND securitygroups_users.deleted = '0'";
+        $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '$actionParamEmail1' && securitygroups_users.user_id = '$userId' AND securitygroups_users.deleted = '0'";
         $sec_group_results = $module->db->query($sec_group_query);
         $secgroup = $module->db->fetchRow($sec_group_results);
         if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $userId) {
