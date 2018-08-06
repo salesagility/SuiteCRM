@@ -73,9 +73,9 @@ class SharedSecurityRulesChecker
                 if (!isset($action['parameters']['email'][$key]['2'])) {
                     LoggerManager::getLogger()->warn('action parameter email [2] is not set at key: ' . $key);
                 } else {
-                    $usertRoleResultsAssoc = $this->getUsertRuleResultsAssoc($module, $action['parameters']['email']
+                    $userRoleResultsAssoc = $this->getUsertRuleResultsAssoc($module, $action['parameters']['email']
                                 [$key]['2'], $userId);
-                    if ($usertRoleResultsAssoc['user_id'] == $userId) {
+                    if ($userRoleResultsAssoc['user_id'] == $userId) {
                         $result = $this->updateResultByCondition($result, $helper, $rule, $moduleBean, $view,
                                     $action, $key);
                     }
@@ -125,8 +125,8 @@ class SharedSecurityRulesChecker
         $sec_group_results = $module->db->query($sec_group_query);
         $secgroup = $module->db->fetchRow($sec_group_results);
         if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $userId) {
-            $usertRoleResultsAssoc = $this->getUsertRuleResultsAssoc($module, $action['parameters']['email'][$key]['2'], $userId);
-            if ($usertRoleResultsAssoc['user_id'] == $userId) {
+            $userRoleResultsAssoc = $this->getUsertRuleResultsAssoc($module, $action['parameters']['email'][$key]['2'], $userId);
+            if ($userRoleResultsAssoc['user_id'] == $userId) {
                 $result = $this->updateResultByCondition($result, $helper, $rule, $moduleBean, $view, $action, $key);
             }
         } else {
@@ -179,7 +179,7 @@ class SharedSecurityRulesChecker
         $currentUserIdQuote = $module->db->quote($currentUserId);
         $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '$actionParametersEmailKey2Quote' AND acl_roles_users.user_id = '$currentUserIdQuote' AND acl_roles_users.deleted = '0'";
         $users_roles_results = $module->db->query($users_roles_query);
-        $usertRoleResultsAssoc = $module->db->fetchByAssoc($users_roles_results);
-        return $usertRoleResultsAssoc;
+        $userRoleResultsAssoc = $module->db->fetchByAssoc($users_roles_results);
+        return $userRoleResultsAssoc;
     }
 }
