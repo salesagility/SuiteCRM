@@ -152,7 +152,6 @@ class SharedSecurityRulesChecker
     {
         $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
 
-        $result = false;
         $error = false;
         if ($conditionResult) {
             if (!isset($action['parameters']['accesslevel'][$key])) {
