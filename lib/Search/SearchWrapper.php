@@ -70,12 +70,12 @@ class SearchWrapper
      *
      * @param $query SearchQuery
      */
-    public static function searchAndView(SearchQuery $query)
+    public static function searchAndDisplay(SearchQuery $query)
     {
         $engine = $query->getEngine() ?: self::getDefaultEngine();
 
         $engine = self::fetchEngine($engine);
-        $engine->searchAndView($query);
+        $engine->searchAndDisplay($query);
     }
 
     /**
