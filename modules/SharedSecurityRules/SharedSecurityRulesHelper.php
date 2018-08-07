@@ -151,7 +151,7 @@ class SharedSecurityRulesHelper
         return false;
     }
     
-    private function getResultByLogicOp($overallResult, $nextConditionLogicOperator)
+    private function getResultByLogicOp($result, $overallResult, $nextConditionLogicOperator)
     {
         if ($overallResult) {
             if ($nextConditionLogicOperator === "AND") {
@@ -229,6 +229,66 @@ class SharedSecurityRulesHelper
                     
         return $result;
     }
+    
+    private function updateAllCondIfRelated($allConditions, $x, $userId, $moduleBean)
+    {
+        if ($allConditions[$x]['value_type'] == "currentUser") {
+            $allConditions[$x]['value_type'] = "Field";
+            $allConditions[$x]['value'] = $userId;
+        }
+        
+        //check and see if it is pointed at a field rather than a value.
+        if ($allConditions[$x]['value_type'] == "Field" &&
+                isset($moduleBean->{$allConditions[$x]['value']}) &&
+                !empty($moduleBean->{$allConditions[$x]['value']})) {
+            $allConditions[$x]['value'] = $moduleBean->{$allConditions[$x]['value']};
+        }
+
+        if ($allConditions[$x]['field'] == 'assigned_user_name') {
+            $allConditions[$x]['field'] = 'assigned_user_id';
+        }
+        
+        return $allConditions;
+    }
+    
+    private function getResultByHistory($moduleBean, $allConditions, $x)
+    {
+        if ($this->checkHistory($moduleBean, $allConditions[$x]['field'], $allConditions[$x]['value'])) {
+            $result = true;
+        } else {
+            $result = false;
+        }
+        return $result;
+    }
+    
+    private function getResultByNxtCongLogOp($nextConditionLogicOperator)
+    {
+        if ($nextConditionLogicOperator === "AND") {
+            $result = false;
+            throw new SharedSecurityRulesHelperException('getResultIfRelated:false (AND)', false);
+        }
+        $result = false;
+        return $result;
+    }
+    
+    private function getResultIfRelated($result, $conditionResult, $nextConditionLogicOperator, $rule, $moduleBean, $allConditions, $x)
+    {
+        if ($conditionResult) {
+            if ($nextConditionLogicOperator === "AND") {
+                $result = true;
+            } else {
+                throw new SharedSecurityRulesHelperException('getResultIfRelated:false (!AND)', false);
+            }
+        } else {
+            if ($rule['run'] == "Once True") {
+                $result = $this->getResultByHistory($moduleBean, $allConditions, $x);
+            } else {
+                $result = $this->getResultByNxtCongLogOp($nextConditionLogicOperator);
+            }
+        }
+                
+        return $result;
+    }
 
     /**
      *
@@ -269,7 +329,7 @@ class SharedSecurityRulesHelper
 
                 // If the condition is a match then continue if it is an AND and finish if its an OR
                 try {
-                    $result = $this->getResultByLogicOp($overallResult, $nextConditionLogicOperator);
+                    $result = $this->getResultByLogicOp($result, $overallResult, $nextConditionLogicOperator);
                 } catch (SharedSecurityRulesHelperException $e) {
                     LoggerManager::getLogger()->info($e->getMessage());
                     return $e->return;
@@ -297,43 +357,14 @@ class SharedSecurityRulesHelper
                     $result = $this->updateResult($result, $record, $allConditions, $x, $related);
                 }
             } else {
-                if ($allConditions[$x]['value_type'] == "currentUser") {
-                    $allConditions[$x]['value_type'] = "Field";
-                    $allConditions[$x]['value'] = $current_user->id;
-                }
-                //check and see if it is pointed at a field rather than a value.
-                if ($allConditions[$x]['value_type'] == "Field" &&
-                        isset($moduleBean->{$allConditions[$x]['value']}) &&
-                        !empty($moduleBean->{$allConditions[$x]['value']})) {
-                    $allConditions[$x]['value'] = $moduleBean->{$allConditions[$x]['value']};
-                }
-
-                if ($allConditions[$x]['field'] == 'assigned_user_name') {
-                    $allConditions[$x]['field'] = 'assigned_user_id';
-                }
+                $allConditions = $this->updateAllCondIfRelated($allConditions, $x, $current_user->id, $moduleBean);
 
                 $conditionResult = $this->checkOperator($moduleBean->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']);
 
-                if ($conditionResult) {
-                    if ($nextConditionLogicOperator === "AND") {
-                        $result = true;
-                    } else {
-                        return true;
-                    }
-                } else {
-                    if ($rule['run'] == "Once True") {
-                        if ($this->checkHistory($moduleBean, $allConditions[$x]['field'], $allConditions[$x]['value'])) {
-                            $result = true;
-                        } else {
-                            $result = false;
-                        }
-                    } else {
-                        if ($nextConditionLogicOperator === "AND") {
-                            $result = false;
-                            return $result;
-                        }
-                        $result = false;
-                    }
+                try {
+                    $result = $this->getResultIfRelated();
+                } catch (SharedSecurityRulesHelperException $e) {
+                    return $e->return;
                 }
             }
         }
