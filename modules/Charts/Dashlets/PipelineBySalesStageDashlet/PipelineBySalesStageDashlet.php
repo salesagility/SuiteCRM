@@ -49,6 +49,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
     public $pbss_date_start;
     public $pbss_date_end;
     public $pbss_sales_stages = array();
+    private $currency;
 
     public $maxLabelSizeBeforeTotal = 18;
     public $labelReplacementString = '...';
@@ -108,10 +109,11 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         $is_currency = true;
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
 
-        $currency_symbol = $sugar_config['default_currency_symbol'];
-        if ($current_user->getPreference('currency')){
-
-            $currency = new Currency();
+        $this->currency = new Currency();
+        $currency = $this->currency;
+        $currency_symbol = $currency->getDefaultCurrencySymbol();
+        $currency->retrieve($currency->retrieveIDBySymbol($currency_symbol));
+        if ($current_user->getPreference('currency')) {
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
         }
@@ -316,9 +318,10 @@ EOD;
     */
     protected function constructQuery()
     {
+        $conversion_rate = $this->currency->conversion_rate;
         $query = "  SELECT opportunities.sales_stage,
                         count(*) AS opp_count,
-                        sum(amount_usdollar/1000) AS total
+                        sum((amount_usdollar*".$conversion_rate.")/1000) AS total
                     FROM users,opportunities  ";
         $query .= " WHERE opportunities.date_closed >= ". db_convert("'".$this->pbss_date_start."'",'date').
             " AND opportunities.date_closed <= ".db_convert("'".$this->pbss_date_end."'",'date') .
