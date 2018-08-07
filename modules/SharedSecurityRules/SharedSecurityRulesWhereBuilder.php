@@ -147,11 +147,7 @@ class SharedSecurityRulesWhereBuilder
                             }
                             $value = $condition['value'];
                             $operatorValue = SharedSecurityRules::changeOperator($condition['operator'], $value, $accessLevel == 'none');
-                            if ($module->field_defs[$condition['field']]['source'] == "custom_fields") {
-                                $table = $module->table_name . "_cstm";
-                            } else {
-                                $table = $module->table_name;
-                            }
+                            $table = $module->table_name . ($module->field_defs[$condition['field']]['source'] == "custom_fields" ? '_cstm' : '');
                             $conditionQuery = " " . $table . "." . $condition['field'] . " " . $operatorValue . " ";
                             if ($accessLevel == 'none') {
                                 $where = $resWhere;
