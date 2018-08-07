@@ -101,7 +101,7 @@ class ElasticSearchHooks
         return !in_array($bean->module_name, $indexer->getModulesToIndex());
     }
 
-    public function beanDeleted($bean)
+    public function beanDeleted($bean, $event, $arguments)
     {
         if (ElasticSearchIndexer::isEnabled() === false) {
             return;
