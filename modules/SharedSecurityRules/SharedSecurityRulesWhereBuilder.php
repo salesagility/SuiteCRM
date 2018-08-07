@@ -141,13 +141,12 @@ class SharedSecurityRulesWhereBuilder
                                     $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$userId}' AND acl_roles_users.deleted = '0'";
                                     $users_roles_results = $module->db->query($users_roles_query);
                                     $user_id = $module->db->fetchRow($users_roles_results);
-                                    if ($user_id[0] == $userId) {
-                                        $actionIsUser = true;
-                                    }
+                                    $uid = $user_id[0];
                                 } else {
-                                    if ($secgroup[0] == $userId) {
-                                        $actionIsUser = true;
-                                    }
+                                    $uid = $secgroup[0];
+                                }
+                                if ($uid == $userId) {
+                                    $actionIsUser = true;
                                 }
                             } elseif (($targetType == "Specify User" && $userId == $action['parameters']['email'][$key]) ||
                                     ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
