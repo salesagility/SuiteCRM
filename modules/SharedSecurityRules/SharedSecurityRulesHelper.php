@@ -42,25 +42,30 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SharedSecurityRulesHelper {
+include_once 'SharedSecurityRulesHelperException.php';
+
+class SharedSecurityRulesHelper
+{
     
     /**
      *
-     * @var DBManager 
+     * @var DBManager
      */
     protected $db;
     
-    public function __construct(DBManager $db) {
+    public function __construct(DBManager $db)
+    {
         $this->db = $db;
     }
     
     /**
      * Quote all in post data
-     * 
+     *
      * @param array $post
      * @return array
      */
-    public function quote($post) {
+    public function quote($post)
+    {
         foreach ($post as $key => $value) {
             $needsDeepQuote = false;
             if (is_array($value) || is_object($value)) {
@@ -145,6 +150,27 @@ class SharedSecurityRulesHelper {
         LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkParenthesisConditions with no conditions to check.');
         return false;
     }
+    
+    private function getResultByLogicOp($overallResult, $nextConditionLogicOperator)
+    {
+        if ($overallResult) {
+            if ($nextConditionLogicOperator === "AND") {
+                LoggerManager::getLogger()->info('SharedSecurityRules: In getConditionResult() within parenthesis setting result to true');
+                $result = true;
+            } else {
+                throw new SharedSecurityRulesHelperException('SharedSecurityRules: In getConditionResult() within parenthesis returning true', true);
+            }
+        } else {
+            if ($nextConditionLogicOperator === "AND") {
+                throw new SharedSecurityRulesHelperException('SharedSecurityRules: In getConditionResult() within parenthesis returning false', false);
+            } else {
+                LoggerManager::getLogger()->info('SharedSecurityRules: In getConditionResult() within parenthesis setting result to false');
+                $result = false;
+            }
+        }
+                
+        return $result;
+    }
 
     /**
      *
@@ -184,24 +210,12 @@ class SharedSecurityRulesHelper {
                 $nextConditionLogicOperator = $nextRow['logic_op'];
 
                 // If the condition is a match then continue if it is an AND and finish if its an OR
-                if ($overallResult) {
-                    if ($nextConditionLogicOperator === "AND") {
-                        LoggerManager::getLogger()->info('SharedSecurityRules: In getConditionResult() within parenthesis setting result to true');
-                        $result = true;
-                    } else {
-                        LoggerManager::getLogger()->info('SharedSecurityRules: In getConditionResult() within parenthesis returning true');
-                        return true;
-                    }
-                } else {
-                    if ($nextConditionLogicOperator === "AND") {
-                        LoggerManager::getLogger()->info('SharedSecurityRules: In getConditionResult() within parenthesis returning false');
-                        return false;
-                    } else {
-                        LoggerManager::getLogger()->info('SharedSecurityRules: In getConditionResult() within parenthesis setting result to false');
-                        $result = false;
-                    }
+                try {
+                    $result = $this->getResultByLogicOp($overallResult, $nextConditionLogicOperator);
+                } catch (SharedSecurityRulesHelperException $e) {
+                    LoggerManager::getLogger()->info($e->getMessage());
+                    return $e->return;
                 }
-
 
                 continue;
             }
