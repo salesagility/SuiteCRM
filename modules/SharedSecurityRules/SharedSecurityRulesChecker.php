@@ -176,4 +176,54 @@ class SharedSecurityRulesChecker
         $userRoleResultsAssoc = $module->db->fetchByAssoc($users_roles_results);
         return $userRoleResultsAssoc;
     }
+    
+    public function getModuleBean($module) {
+        
+        $class = get_class($module);
+        LoggerManager::getLogger()->info('SharedSecurityRules: Class is: ' . $class);
+        
+        $moduleBean = new $class();
+        if (!empty($module->fetched_row) && !empty($module->fetched_row['id']) &&
+                !empty($module->fetched_row['assigned_user_id']) && !empty($module->fetched_row['created_by'])) {
+            $moduleBean->populateFromRow($module->fetched_row);
+        } elseif ($moduleBean->module_name != 'Documents') {
+            $moduleBean->retrieve($module->id);
+        } else {
+            LoggerManager::getLogger()->warn('Checking rules does not applyed for ' . $class);
+        }
+        return $moduleBean;
+    }
+    
+    public function getResult($module, $moduleBean, $userId, $view) {
+
+        $helper = new SharedSecurityRulesHelper($this->db);
+        
+        LoggerManager::getLogger()->info('SharedSecurityRules: Module bean ID: ' . $moduleBean->id);
+        $result = null;
+        if (empty($moduleBean->id) || $moduleBean->id == "[SELECT_ID_LIST]") {
+            return $result;
+        }
+        $sql_query = "SELECT * FROM sharedsecurityrules WHERE sharedsecurityrules.status = 'Complete' AND sharedsecurityrules.flow_module = '{$module->module_name}' AND sharedsecurityrules.deleted = '0'";
+
+        /* CREATING SQL QUERY VERSION */
+        $query_results = $module->db->query($sql_query);
+        $action = null;
+        $key = null;
+        while ($rule = $module->db->fetchByAssoc($query_results)) {
+            $result = $this->updateResultByRule($result, $action, $module, $userId, $helper, $rule, $moduleBean, $view);
+        }
+
+        $converted_res = $result ? 'true' : 'false';
+
+        if (is_null($key)) {
+            LoggerManager::getLogger()->warn('Key is not set for Action parameter access level for shared security groups.');
+        }
+
+        if (!isset($action['parameters']['accesslevel'][$key])) {
+            $action['parameters']['accesslevel'][$key] = null;
+            LoggerManager::getLogger()->warn('Action parameter access level at key: ' . $key . ' is needed for shared security groups, but it is not set.');
+        }
+
+        LoggerManager::getLogger()->info('SharedSecurityRules: Exiting CheckRules with result: ' . $converted_res . ' for view: ' . $view . ' and action: ' . $action['parameters']['accesslevel'][$key]);
+    }
 }
