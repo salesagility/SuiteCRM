@@ -93,6 +93,71 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
+    public function getUidByTargetType($targetType, $action, $key, $userId, $module)
+    {
+        if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
+            $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$userId}' AND acl_roles_users.deleted = '0'";
+            $users_roles_results = $module->db->query($users_roles_query);
+            $user_id = $module->db->fetchRow($users_roles_results);
+            $uid = $user_id[0];
+        } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
+            $actionParamEmail1 = null;
+            if (!isset($action['parameters']['email'][$key]['1'])) {
+                LoggerManager::getLogger()->warn('Shared Security Rules trying to build rule where but action parameters email [1] is not set at key: ' . $key);
+            } else {
+                $actionParamEmail1 = $action['parameters']['email'][$key]['1'];
+            }
+                                
+            $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$actionParamEmail1}' AND securitygroups_users.user_id = '{$userId}' AND securitygroups_users.deleted = '0'";
+            $sec_group_results = $module->db->query($sec_group_query);
+            $secgroup = $module->db->fetchRow($sec_group_results);
+            if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $userId) {
+                $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$userId}' AND acl_roles_users.deleted = '0'";
+                $users_roles_results = $module->db->query($users_roles_query);
+                $user_id = $module->db->fetchRow($users_roles_results);
+                $uid = $user_id[0];
+            } else {
+                $uid = $secgroup[0];
+            }
+        } elseif (($targetType == "Specify User" && $userId == $action['parameters']['email'][$key]) ||
+                                    ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
+            $uid = $userId;
+        }
+        return $uid;
+    }
+    
+    public function checkIfActionIsUser($action, $userId, $module)
+    {
+        if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || is_object($action['parameters']['email_target_type']))) {
+            LoggerManager::getLogger()->warn('Incorrect action parameter: email_target_type');
+        } else {
+            if (!isset($action['parameters']['accesslevel']) || !(is_array($action['parameters']['accesslevel']) || is_object($action['parameters']['accesslevel']))) {
+                LoggerManager::getLogger()->warn('Incorrect action parameter: accesslevel');
+            } else {
+                foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
+                    $targetType = $this->getTargetType($action, $key);
+                            
+                    $uid = $this->getUidByTargetType($targetType, $action, $key, $userId, $module);
+                            
+                    if ($uid == $userId) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    public function unserializeActionParameters($actionParametes)
+    {
+        $unserialized = unserialize(base64_decode($actionParametes));
+        if ($unserialized != false) {
+            $actionParametes = $unserialized;
+        }
+        return $actionParametes;
+    }
+
+
     public function getWhereArray(SugarBean $module, $userId)
     {
         $where = "";
@@ -106,54 +171,10 @@ class SharedSecurityRulesWhereBuilder
             $actions_results = $module->db->query($sql_query);
             $actionIsUser = false;
             while (($action = $module->db->fetchByAssoc($actions_results)) != null) {
-                $unserialized = unserialize(base64_decode($action['parameters']));
-                if ($unserialized != false) {
-                    $action['parameters'] = $unserialized;
-                }
-                if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || is_object($action['parameters']['email_target_type']))) {
-                    LoggerManager::getLogger()->warn('Incorrect action parameter: email_target_type');
-                } else {
-                    if (!isset($action['parameters']['accesslevel']) || !(is_array($action['parameters']['accesslevel']) || is_object($action['parameters']['accesslevel']))) {
-                        LoggerManager::getLogger()->warn('Incorrect action parameter: accesslevel');
-                    } else {
-                        foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
-                            $targetType = $this->getTargetType($action, $key);
-                            
-                            if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
-                                $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$userId}' AND acl_roles_users.deleted = '0'";
-                                $users_roles_results = $module->db->query($users_roles_query);
-                                $user_id = $module->db->fetchRow($users_roles_results);
-                                if ($user_id[0] == $userId) {
-                                    $actionIsUser = true;
-                                }
-                            } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                                $actionParamEmail1 = null;
-                                if (!isset($action['parameters']['email'][$key]['1'])) {
-                                    LoggerManager::getLogger()->warn('Shared Security Rules trying to build rule where but action parameters email [1] is not set at key: ' . $key);
-                                } else {
-                                    $actionParamEmail1 = $action['parameters']['email'][$key]['1'];
-                                }
-                                
-                                $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$actionParamEmail1}' AND securitygroups_users.user_id = '{$userId}' AND securitygroups_users.deleted = '0'";
-                                $sec_group_results = $module->db->query($sec_group_query);
-                                $secgroup = $module->db->fetchRow($sec_group_results);
-                                if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $userId) {
-                                    $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$userId}' AND acl_roles_users.deleted = '0'";
-                                    $users_roles_results = $module->db->query($users_roles_query);
-                                    $user_id = $module->db->fetchRow($users_roles_results);
-                                    $uid = $user_id[0];
-                                } else {
-                                    $uid = $secgroup[0];
-                                }
-                                if ($uid == $userId) {
-                                    $actionIsUser = true;
-                                }
-                            } elseif (($targetType == "Specify User" && $userId == $action['parameters']['email'][$key]) ||
-                                    ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
-                                $actionIsUser = true;
-                            }
-                        }
-                    }
+                $action['parameters'] = $this->unserializeActionParameters($action['parametes']);
+                if ($this->checkIfActionIsUser($action, $userId, $module)) {
+                    $actionIsUser = true;
+                    break;
                 }
             }
             if ($actionIsUser == true) {
