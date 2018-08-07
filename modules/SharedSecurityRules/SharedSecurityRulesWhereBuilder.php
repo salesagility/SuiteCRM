@@ -126,6 +126,20 @@ class SharedSecurityRulesWhereBuilder
         return $uid;
     }
     
+    public function checkTargetLevelUid($action, $userId, $module)
+    {
+        foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
+            $targetType = $this->getTargetType($action, $key);
+                            
+            $uid = $this->getUidByTargetType($targetType, $action, $key, $userId, $module);
+                            
+            if ($uid == $userId) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public function checkIfActionIsUser($action, $userId, $module, &$accessLevel)
     {
         if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || is_object($action['parameters']['email_target_type']))) {
@@ -134,14 +148,8 @@ class SharedSecurityRulesWhereBuilder
             if (!isset($action['parameters']['accesslevel']) || !(is_array($action['parameters']['accesslevel']) || is_object($action['parameters']['accesslevel']))) {
                 LoggerManager::getLogger()->warn('Incorrect action parameter: accesslevel');
             } else {
-                foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
-                    $targetType = $this->getTargetType($action, $key);
-                            
-                    $uid = $this->getUidByTargetType($targetType, $action, $key, $userId, $module);
-                            
-                    if ($uid == $userId) {
-                        return true;
-                    }
+                if ($this->checkTargetLevelUid()) {
+                    return true;
                 }
             }
         }
