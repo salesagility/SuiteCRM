@@ -148,7 +148,7 @@ class SharedSecurityRulesWhereBuilder
             if (!isset($action['parameters']['accesslevel']) || !(is_array($action['parameters']['accesslevel']) || is_object($action['parameters']['accesslevel']))) {
                 LoggerManager::getLogger()->warn('Incorrect action parameter: accesslevel');
             } else {
-                if ($this->checkTargetLevelUid($action, $userId, $module, &$accessLevel)) {
+                if ($this->checkTargetLevelUid($action, $userId, $module, $accessLevel)) {
                     return true;
                 }
             }
