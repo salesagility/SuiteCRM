@@ -55,6 +55,24 @@ class SharedSecurityRulesWhereBuilder
         return $targetType;
     }
     
+    public function updateWhereAndParenthesis(&$where, &$parenthesis, $condition)
+    {
+        if (is_null($parenthesis)) {
+            $parenthesis = " ( ";
+            if (empty($where)) {
+                $where = $parenthesis;
+            } else {
+                $where .= $condition['logic_op'] . " " . $parenthesis;
+            }
+        } else {
+            if (empty($where)) {
+                $where = $parenthesis;
+            } else {
+                $where .= $parenthesis;
+            }
+        }
+    }
+    
     public function getWhereArray(SugarBean $module, $userId)
     {
         $where = "";
@@ -149,26 +167,9 @@ class SharedSecurityRulesWhereBuilder
                             $operatorValue = SharedSecurityRules::changeOperator($condition['operator'], $value, $accessLevel == 'none');
                             $table = $module->table_name . ($module->field_defs[$condition['field']]['source'] == "custom_fields" ? '_cstm' : '');
                             $conditionQuery = " " . $table . "." . $condition['field'] . " " . $operatorValue . " ";
-                            if ($accessLevel == 'none') {
-                                $where = $resWhere;
-                            } else {
-                                $where = $addWhere;
-                            }
+                            $where = $accessLevel == 'none' ? $resWhere : $addWhere;
                             if ($condition['parenthesis'] == "START") {
-                                if (is_null($parenthesis)) {
-                                    $parenthesis = " ( ";
-                                    if (empty($where)) {
-                                        $where = $parenthesis;
-                                    } else {
-                                        $where .= $condition['logic_op'] . " " . $parenthesis;
-                                    }
-                                } else {
-                                    if (empty($where)) {
-                                        $where = $parenthesis;
-                                    } else {
-                                        $where .= $parenthesis;
-                                    }
-                                }
+                                $this->updateWhereAndParenthesis($where, $parenthesis, $condition);
                             } elseif ($condition['parenthesis'] != "START" && !empty($condition['parenthesis'])) {
                                 $parenthesis = " ) ";
                                 if (empty($where)) {
