@@ -46,6 +46,13 @@ include_once('SharedSecurityRulesHelper.php');
 
 class SharedSecurityRulesChecker
 {
+    
+    protected $db;
+    
+    public function __construct(DBManager $db) {
+        $this->db = $db;
+    }
+    
     public function updateResultByRule($result, &$action, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
     {
         $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' AND sharedsecurityrulesactions.deleted = '0'";

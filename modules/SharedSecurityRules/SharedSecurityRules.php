@@ -168,7 +168,7 @@ class SharedSecurityRules extends Basic
     {
         global $current_user;
         
-        $checker = new SharedSecurityRulesChecker();
+        $checker = new SharedSecurityRulesChecker($this->db);
 
         LoggerManager::getLogger()->info('SharedSecurityRules: In checkRules for module: ' . $module->name . ' and view: ' . $view);
 
