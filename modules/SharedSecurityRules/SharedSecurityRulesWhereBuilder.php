@@ -146,11 +146,7 @@ class SharedSecurityRulesWhereBuilder
                                 $condition['value'] = $module->{$condition['value']};
                             }
                             $value = $condition['value'];
-                            if ($accessLevel == 'none') {
-                                $operatorValue = SharedSecurityRules::changeOperator($condition['operator'], $value, true);
-                            } else {
-                                $operatorValue = SharedSecurityRules::changeOperator($condition['operator'], $value, false);
-                            }
+                            $operatorValue = SharedSecurityRules::changeOperator($condition['operator'], $value, $accessLevel == 'none');
                             if ($module->field_defs[$condition['field']]['source'] == "custom_fields") {
                                 $table = $module->table_name . "_cstm";
                             } else {
