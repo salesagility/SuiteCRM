@@ -44,6 +44,8 @@
  * Time: 14:10
  */
 
+/** @noinspection PhpUnusedParameterInspection */
+
 namespace SuiteCRM\Search\ElasticSearch;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -55,7 +57,7 @@ use SugarBean;
 
 class ElasticSearchHooks
 {
-    public function beanSaved($bean)
+    public function beanSaved($bean, $event, $arguments)
     {
         if (ElasticSearchIndexer::isEnabled() === false) {
             return;
