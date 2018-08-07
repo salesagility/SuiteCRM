@@ -172,7 +172,7 @@ class SharedSecurityRulesHelper
         return $result;
     }
     
-    private function getRelated($allConditions, $x, $rule, $rel, $moduleBean)
+    private function getRelated($related, $allConditions, $x, $rule, $rel, $moduleBean)
     {
         if ($allConditions[$x]['module_path'][0] != $rule['flow_module']) {
             foreach ($allConditions[$x]['module_path'] as $rel) {
@@ -196,7 +196,7 @@ class SharedSecurityRulesHelper
         return $allCondXModPath;
     }
     
-    private function updateAllCond($moduleBean, $allConditions, $x, $userId)
+    private function updateAllCond($allConditions, $moduleBean, $allConditions, $x, $userId)
     {
         if ($moduleBean->field_defs[$allConditions[$x]['field']]['type'] == "relate") {
             $allConditions[$x]['field'] = $moduleBean->field_defs[$allConditions[$x]['field']]['id_name'];
@@ -289,11 +289,11 @@ class SharedSecurityRulesHelper
             $allConditions[$x]['module_path'] = $this->updateAllCondModPath($allConditions[$x]['module_path']);
             /* this needs to be uncommented out and checked */
 
-            $related = $this->getRelated($allConditions, $x, $rule, $rel, $moduleBean);
+            $related = $this->getRelated($related, $allConditions, $x, $rule, $rel, $moduleBean);
 
             if ($related !== false && $related !== null && $related !== "") {
                 foreach ($related as $record) {
-                    $allConditions = $this->updateAllCond($moduleBean, $allConditions, $x, $current_user->id);
+                    $allConditions = $this->updateAllCond($allConditions, $moduleBean, $allConditions, $x, $current_user->id);
                     $result = $this->updateResult($result, $record, $allConditions, $x, $related);
                 }
             } else {
