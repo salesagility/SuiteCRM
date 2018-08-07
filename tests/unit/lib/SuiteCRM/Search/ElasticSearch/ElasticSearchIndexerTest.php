@@ -44,7 +44,7 @@ use Mockery as m;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer as i;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
-use SuiteCRM\Utility\BeanJsonSerializerTestData\SaltBean;
+use SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
 
 /**
  * Created by PhpStorm.
@@ -150,7 +150,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
     private function getTestBean()
     {
         /** @var SugarBean $bean */
-        $bean = new SaltBean('Contacts', __DIR__ . '/../../Utility/BeanJsonSerializerTestData/ContactBean.json');
+        $bean = new BeanMock(__DIR__ . '/../../Utility/BeanJsonSerializerTestData/ContactBean.json');
         return $bean;
     }
 

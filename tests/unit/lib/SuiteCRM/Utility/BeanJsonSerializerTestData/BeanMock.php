@@ -47,7 +47,7 @@
 namespace SuiteCRM\Utility\BeanJsonSerializerTestData;
 
 
-class SaltBean extends \SugarBean
+class BeanMock extends \SugarBean
 {
     public $fetched_rel_row = [];
     public $id;
@@ -55,7 +55,8 @@ class SaltBean extends \SugarBean
     public $module_name;
     public $module_dir;
 
-    public function __construct($module, $file)
+    /** @noinspection PhpMissingParentConstructorInspection */
+    public function __construct($file)
     {
         $array = json_decode(file_get_contents($file), true);
 
