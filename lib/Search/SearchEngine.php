@@ -36,7 +36,7 @@ abstract class SearchEngine
      *
      * @param $query SearchQuery
      */
-    public function searchAndView(SearchQuery $query)
+    public function searchAndDisplay(SearchQuery $query)
     {
         $this->validateQuery($query);
         $this->displayForm($query);

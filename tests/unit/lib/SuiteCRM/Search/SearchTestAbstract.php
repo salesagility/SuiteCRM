@@ -46,7 +46,7 @@ abstract class SearchTestAbstract extends \SuiteCRM\StateCheckerPHPUnitTestCaseA
     }
 
     /** @inheritdoc */
-    protected function tearDown()
+    public function tearDown()
     {
         parent::tearDown();
         \Mockery::close();

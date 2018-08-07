@@ -67,14 +67,7 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
     /** @inheritdoc */
     public function documentify(\SugarBean $bean, ParserSearchFields $parser = null)
     {
-        $module_name = $bean->module_name;
-
-        if (empty($this->fields[$module_name])) {
-            $this->fields[$module_name] = $this->getFieldsToIndex($module_name, $parser);
-        }
-
-        // Making a friendly reference to the mapping
-        $fields = &$this->fields[$module_name];
+        $fields = $this->getFieldsToIndexCached($bean, $parser);
 
         $body = [];
 
@@ -96,10 +89,7 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
         // TODO fix addresses and phone nesting
         // Maybe create mappings from a field to a target path in the final document?
 
-        if (isset($body['name'])) {
-            $name = $body['name'];
-            $body['name'] = ['name' => $name];
-        }
+        $this->sanitizeName($body);
 
         return $body;
     }
@@ -162,5 +152,37 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
     protected function cleanValue($string)
     {
         return mb_convert_encoding($string, 'UTF-8', 'HTML-ENTITIES');
+    }
+
+    /**
+     * Cached version of getFieldsToIndex().
+     *
+     * @see getFieldsToIndex
+     * @param \SugarBean $bean
+     * @param ParserSearchFields $parser
+     * @return array
+     */
+    private function &getFieldsToIndexCached(\SugarBean $bean, ParserSearchFields $parser = null)
+    {
+        $module_name = $bean->module_name;
+
+        if (empty($this->fields[$module_name])) {
+            $this->fields[$module_name] = $this->getFieldsToIndex($module_name, $parser);
+        }
+
+        return $this->fields[$module_name];
+    }
+
+    /**
+     * Standardize the behaviour of the name field between the two Documentifiers.
+     *
+     * @param $body
+     */
+    private function sanitizeName(&$body)
+    {
+        if (isset($body['name'])) {
+            $name = $body['name'];
+            $body['name'] = ['name' => $name];
+        }
     }
 }

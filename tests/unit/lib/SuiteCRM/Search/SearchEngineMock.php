@@ -61,7 +61,7 @@ class SearchEngineMock extends SearchEngine
         return false;
     }
 
-    public function searchAndView(SearchQuery $query)
+    public function searchAndDisplay(SearchQuery $query)
     {
         echo $this->search($query);
     }

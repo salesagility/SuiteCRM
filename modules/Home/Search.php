@@ -46,4 +46,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $query = SearchQuery::fromGetRequest();
 
-SearchWrapper::searchAndView($query);
+SearchWrapper::searchAndDisplay($query);

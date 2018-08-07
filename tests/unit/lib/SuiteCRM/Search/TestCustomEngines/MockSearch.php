@@ -10,7 +10,7 @@ class MockSearch extends SearchEngine
         return ['foo'];
     }
 
-    public function searchAndView(SearchQuery $query)
+    public function searchAndDisplay(SearchQuery $query)
     {
         echo $query->getSearchString();
     }

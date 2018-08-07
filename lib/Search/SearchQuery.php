@@ -202,36 +202,14 @@ class SearchQuery
      */
     public static function fromRequestArray(array $request)
     {
-        if (isset($request['search-query-string'])) {
-            $searchQuery = filter_var($request['search-query-string'], FILTER_SANITIZE_STRING);
-        }
+        $searchQuery = self::filterArray($request, 'search-query-string', '', FILTER_SANITIZE_STRING);
+        $searchQueryAlt = self::filterArray($request, 'query_string', '', FILTER_SANITIZE_STRING);
+        $searchSize = self::filterArray($request, 'search-query-size', 10, FILTER_SANITIZE_NUMBER_INT);
+        $searchFrom = self::filterArray($request, 'search-query-from', 0, FILTER_SANITIZE_NUMBER_INT);
+        $searchEngine = self::filterArray($request, 'search-engine', null, FILTER_SANITIZE_STRING);
 
-        if (isset($request['search-query-size'])) {
-            $searchSize = filter_var($request['search-query-size'], FILTER_SANITIZE_NUMBER_INT);
-        }
-
-        if (isset($request['search-query-from'])) {
-            $searchFrom = filter_var($request['search-query-from'], FILTER_SANITIZE_NUMBER_INT);
-        }
-
-        if (isset($request['search-engine'])) {
-            $searchEngine = filter_var($request['search-engine'], FILTER_SANITIZE_STRING);
-        }
-
-        if (empty($searchQuery)) {
-            $searchQuery = filter_var($request['query_string'], FILTER_SANITIZE_STRING);
-        }
-
-        if (empty($searchSize)) {
-            $searchSize = 10;
-        }
-
-        if (empty($searchFrom)) {
-            $searchFrom = null;
-        }
-
-        if (empty($searchEngine)) {
-            $searchEngine = null;
+        if (!empty($searchQueryAlt) && empty($searchQuery)) {
+            $searchQuery = $searchQueryAlt;
         }
 
         unset(
@@ -254,5 +232,20 @@ class SearchQuery
     public static function fromGetRequest()
     {
         return self::fromRequestArray($_GET);
+    }
+
+    private static function filterArray(array $array, $key, $default, $filter = null)
+    {
+        if (!isset($array[$key])) {
+            return $default;
+        }
+
+        $value = filter_var($array[$key], $filter);
+
+        if ($value === false) {
+            return $default;
+        }
+
+        return $value;
     }
 }

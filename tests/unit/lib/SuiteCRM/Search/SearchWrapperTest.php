@@ -79,7 +79,7 @@ class SearchWrapperTest extends SearchTestAbstract
         self::assertEquals($actual, $expected);
     }
 
-    public function testSearchAndViewCustom()
+    public function testSearchAndDisplayCustom()
     {
         $search = new SearchWrapper();
         $this->setValue($search, 'CUSTOM_ENGINES_PATH', __DIR__ . '/TestCustomEngines/');
@@ -87,20 +87,20 @@ class SearchWrapperTest extends SearchTestAbstract
         $query = SearchQuery::fromString('bar', null, null, 'MockSearch');
 
         ob_start();
-        $search::searchAndView($query);
+        $search::searchAndDisplay($query);
         $output = ob_get_flush();
 
         self::assertEquals('bar', $output);
     }
 
-    public function testSearchAndViewBuiltIn()
+    public function testSearchAndDisplayBuiltIn()
     {
         SearchWrapper::addEngine('SearchEngineMock', 'tests/unit/lib/SuiteCRM/Search/SearchEngineMock.php');
 
         $query = SearchQuery::fromString('foo', null, null, 'SearchEngineMock');
 
         ob_start();
-        SearchWrapper::searchAndView($query);
+        SearchWrapper::searchAndDisplay($query);
         $output = ob_get_flush();
 
         self::assertEquals('bar', $output);

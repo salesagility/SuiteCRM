@@ -83,6 +83,8 @@ script:
 after_script:
   - ./build/push_output.sh
   - cat suitecrm.log
+  # ElasticSearch Indexing logs
+  - cat search_index.log
   - sudo cat /var/log/apache2/error.log
   - echo $TRAVIS_COMMIT_RANGE
 
