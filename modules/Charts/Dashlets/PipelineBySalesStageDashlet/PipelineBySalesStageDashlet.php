@@ -321,7 +321,7 @@ EOD;
         $conversion_rate = $this->currency->conversion_rate;
         $query = "  SELECT opportunities.sales_stage,
                         count(*) AS opp_count,
-                        sum((amount_usdollar/".$conversion_rate.")/1000) AS total
+                        sum((amount_usdollar*".$conversion_rate.")/1000) AS total
                     FROM users,opportunities  ";
         $query .= " WHERE opportunities.date_closed >= ". db_convert("'".$this->pbss_date_start."'",'date').
             " AND opportunities.date_closed <= ".db_convert("'".$this->pbss_date_end."'",'date') .
