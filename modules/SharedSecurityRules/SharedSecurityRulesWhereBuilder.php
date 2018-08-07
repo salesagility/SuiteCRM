@@ -55,12 +55,15 @@ class SharedSecurityRulesWhereBuilder
         return $targetType;
     }
     
-    public function addParenthesisToWhere(&$where, $parenthesis)
+    public function addParenthesisToWhere(&$where, $parenthesis, $logOp = null)
     {
         if (empty($where)) {
             $where = $parenthesis;
         } else {
             $where .= $parenthesis;
+        }
+        if (null !== $logOp) {
+            $where = $logOp . $where;
         }
     }
     
@@ -69,17 +72,12 @@ class SharedSecurityRulesWhereBuilder
         if ($condition['parenthesis'] == "START") {
             if (is_null($parenthesis)) {
                 $parenthesis = " ( ";
-                if (empty($where)) {
-                    $where = $parenthesis;
-                } else {
-                    $where .= $condition['logic_op'] . " " . $parenthesis;
-                }
+                $this->addParenthesisToWhere($where, $parenthesis, $condition['logic_op'] . ' ');
             } else {
                 $this->addParenthesisToWhere($where, $parenthesis);
             }
         } elseif ($condition['parenthesis'] != "START" && !empty($condition['parenthesis'])) {
-            $parenthesis = " ) ";
-            $this->addParenthesisToWhere($where, $parenthesis);
+            $this->addParenthesisToWhere($where, ' ) ');
             $parenthesis = null;
         } else {
             if (!empty($parenthesis) && $parenthesis == " ( ") {
