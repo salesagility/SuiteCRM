@@ -171,6 +171,64 @@ class SharedSecurityRulesHelper
                 
         return $result;
     }
+    
+    private function getRelated($allConditions, $x, $rule, $rel, $moduleBean)
+    {
+        if ($allConditions[$x]['module_path'][0] != $rule['flow_module']) {
+            foreach ($allConditions[$x]['module_path'] as $rel) {
+                if (empty($rel)) {
+                    continue;
+                }
+                $moduleBean->load_relationship($rel);
+                $related = $moduleBean->$rel->getBeans();
+            }
+        }
+            
+        return $related;
+    }
+    
+    private function updateAllCondModPath($allCondXModPath)
+    {
+        if (unserialize(base64_decode($allCondXModPath)) != false) {
+            $allCondXModPath = unserialize(base64_decode($allCondXModPath));
+        }
+            
+        return $allCondXModPath;
+    }
+    
+    private function updateAllCond($moduleBean, $allConditions, $x, $userId)
+    {
+        if ($moduleBean->field_defs[$allConditions[$x]['field']]['type'] == "relate") {
+            $allConditions[$x]['field'] = $moduleBean->field_defs[$allConditions[$x]['field']]['id_name'];
+        }
+        if ($allConditions[$x]['value_type'] == "currentUser") {
+            $allConditions[$x]['value_type'] = "Field";
+            $allConditions[$x]['value'] = $userId;
+        }
+
+        if ($allConditions[$x]['field'] == 'assigned_user_name') {
+            $allConditions[$x]['field'] = 'assigned_user_id';
+        }
+                    
+        return $allConditions;
+    }
+    
+    private function updateResult($result, $record, $allConditions, $x, $related)
+    {
+        $recAllCondXField = $record->{$allConditions[$x]['field']};
+        $allCondXVal = $allConditions[$x]['value'];
+        $allCondXOp = $allConditions[$x]['operator'];
+        $chkOpRes = $this->checkOperator($recAllCondXField, $allCondXVal, $allCondXOp);
+        if ($chkOpRes) {
+            $result = true;
+        } else {
+            if (count($related) <= 1) {
+                $result = false;
+            }
+        }
+                    
+        return $result;
+    }
 
     /**
      *
@@ -228,44 +286,15 @@ class SharedSecurityRulesHelper
             $nextRow = $this->db->fetchByAssoc($nextResult);
             $nextConditionLogicOperator = $nextRow['logic_op'];
 
-            if (unserialize(base64_decode($allConditions[$x]['module_path'])) != false) {
-                $allConditions[$x]['module_path'] = unserialize(base64_decode($allConditions[$x]['module_path']));
-            }
+            $allConditions[$x]['module_path'] = $this->updateAllCondModPath($allConditions[$x]['module_path']);
             /* this needs to be uncommented out and checked */
 
-            if ($allConditions[$x]['module_path'][0] != $rule['flow_module']) {
-                foreach ($allConditions[$x]['module_path'] as $rel) {
-                    if (empty($rel)) {
-                        continue;
-                    }
-                    $moduleBean->load_relationship($rel);
-                    $related = $moduleBean->$rel->getBeans();
-                }
-            }
-
+            $related = $this->getRelated($allConditions, $x, $rule, $rel, $moduleBean);
 
             if ($related !== false && $related !== null && $related !== "") {
                 foreach ($related as $record) {
-                    if ($moduleBean->field_defs[$allConditions[$x]['field']]['type'] == "relate") {
-                        $allConditions[$x]['field'] = $moduleBean->field_defs[$allConditions[$x]['field']]['id_name'];
-                    }
-                    if ($allConditions[$x]['value_type'] == "currentUser") {
-                        $allConditions[$x]['value_type'] = "Field";
-                        $allConditions[$x]['value'] = $current_user->id;
-                    }
-
-                    if ($allConditions[$x]['field'] == 'assigned_user_name') {
-                        $allConditions[$x]['field'] = 'assigned_user_id';
-                    }
-                    if ($this->checkOperator(
-                                    $record->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']
-                            )) {
-                        $result = true;
-                    } else {
-                        if (count($related) <= 1) {
-                            $result = false;
-                        }
-                    }
+                    $allConditions = $this->updateAllCond($moduleBean, $allConditions, $x, $current_user->id);
+                    $result = $this->updateResult($result, $record, $allConditions, $x, $related);
                 }
             } else {
                 if ($allConditions[$x]['value_type'] == "currentUser") {
