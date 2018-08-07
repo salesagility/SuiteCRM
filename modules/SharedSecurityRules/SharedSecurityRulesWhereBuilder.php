@@ -55,20 +55,42 @@ class SharedSecurityRulesWhereBuilder
         return $targetType;
     }
     
-    public function updateWhereAndParenthesis(&$where, &$parenthesis, $condition)
+    public function addParenthesisToWhere(&$where, $parenthesis)
     {
-        if (is_null($parenthesis)) {
-            $parenthesis = " ( ";
-            if (empty($where)) {
-                $where = $parenthesis;
-            } else {
-                $where .= $condition['logic_op'] . " " . $parenthesis;
-            }
+        if (empty($where)) {
+            $where = $parenthesis;
         } else {
-            if (empty($where)) {
-                $where = $parenthesis;
+            $where .= $parenthesis;
+        }
+    }
+    
+    public function updateWhereAndParenthesis(&$where, &$parenthesis, $condition, $conditionQuery)
+    {
+        if ($condition['parenthesis'] == "START") {
+            if (is_null($parenthesis)) {
+                $parenthesis = " ( ";
+                if (empty($where)) {
+                    $where = $parenthesis;
+                } else {
+                    $where .= $condition['logic_op'] . " " . $parenthesis;
+                }
             } else {
-                $where .= $parenthesis;
+                $this->addParenthesisToWhere($where, $parenthesis);
+            }
+        } elseif ($condition['parenthesis'] != "START" && !empty($condition['parenthesis'])) {
+            $parenthesis = " ) ";
+            $this->addParenthesisToWhere($where, $parenthesis);
+            $parenthesis = null;
+        } else {
+            if (!empty($parenthesis) && $parenthesis == " ( ") {
+                $where .= $conditionQuery;
+                $parenthesis = null;
+            } elseif (empty($where)) {
+                $where = $conditionQuery;
+            } elseif (!empty($condition['logic_op'])) {
+                $where .= $condition['logic_op'] . " " . $conditionQuery;
+            } else {
+                $where .= " OR " . $conditionQuery;
             }
         }
     }
@@ -168,28 +190,8 @@ class SharedSecurityRulesWhereBuilder
                             $table = $module->table_name . ($module->field_defs[$condition['field']]['source'] == "custom_fields" ? '_cstm' : '');
                             $conditionQuery = " " . $table . "." . $condition['field'] . " " . $operatorValue . " ";
                             $where = $accessLevel == 'none' ? $resWhere : $addWhere;
-                            if ($condition['parenthesis'] == "START") {
-                                $this->updateWhereAndParenthesis($where, $parenthesis, $condition);
-                            } elseif ($condition['parenthesis'] != "START" && !empty($condition['parenthesis'])) {
-                                $parenthesis = " ) ";
-                                if (empty($where)) {
-                                    $where = $parenthesis;
-                                } else {
-                                    $where .= $parenthesis;
-                                }
-                                $parenthesis = null;
-                            } else {
-                                if (!empty($parenthesis) && $parenthesis == " ( ") {
-                                    $where .= $conditionQuery;
-                                    $parenthesis = null;
-                                } elseif (empty($where)) {
-                                    $where = $conditionQuery;
-                                } elseif (!empty($condition['logic_op'])) {
-                                    $where .= $condition['logic_op'] . " " . $conditionQuery;
-                                } else {
-                                    $where .= " OR " . $conditionQuery;
-                                }
-                            }
+                            $this->updateWhereAndParenthesis($where, $parenthesis, $condition, $conditionQuery);
+                            
                             if ($accessLevel == 'none') {
                                 $resWhere = $where;
                             } else {
