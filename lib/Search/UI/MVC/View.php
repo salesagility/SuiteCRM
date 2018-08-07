@@ -57,7 +57,7 @@ abstract class View
     /** @var Sugar_Smarty */
     protected $smarty;
     /** @var string */
-    protected $file;
+    protected $templateFile;
 
     /**
      * View constructor.
@@ -66,7 +66,7 @@ abstract class View
     public function __construct($file)
     {
         $this->smarty = new Sugar_Smarty();
-        $this->file = $file;
+        $this->templateFile = $file;
     }
 
     /**
@@ -77,8 +77,27 @@ abstract class View
         return $this->smarty;
     }
 
+    /**
+     * Renders the template.
+     */
     public function display()
     {
-        $this->smarty->display($this->file);
+        $this->smarty->display($this->templateFile);
+    }
+
+    /**
+     * @param string $templateFile
+     */
+    public function setTemplateFile($templateFile)
+    {
+        $this->templateFile = $templateFile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplateFile()
+    {
+        return $this->templateFile;
     }
 }

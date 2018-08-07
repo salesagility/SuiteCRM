@@ -52,16 +52,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use BeanFactory;
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Elasticsearch\Client;
 use JsonSchema\Exception\RuntimeException;
 use Monolog\Logger;
 use SugarBean;
 use SuiteCRM\Search\Index\AbstractIndexer;
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
+use SuiteCRM\Search\Index\IndexingLockFileTrait;
+use SuiteCRM\Search\Index\IndexingStatisticsTrait;
 
 class ElasticSearchIndexer extends AbstractIndexer
 {
+    use IndexingStatisticsTrait;
+    use IndexingLockFileTrait;
+
     /** @var string File containing a timestamp of the last (complete or differential) indexing. */
     const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
     /** @var string The name of the Elasticsearch index to use. */
@@ -70,16 +74,6 @@ class ElasticSearchIndexer extends AbstractIndexer
     private $client = null;
     /** @var int the size of the batch to be sent to the Elasticsearch while batch indexing */
     private $batchSize = 1000;
-
-    // stats
-    /** @var int number of modules indexed */
-    private $indexedModulesCount;
-    /** @var int number of records (beans) indexed */
-    private $indexedRecordsCount;
-    /** @var int number of record fields indexed */
-    private $indexedFieldsCount;
-    /** @var int number of records (beans) removed */
-    private $removedRecordsCount;
     /** @var Carbon|false the timestamp of the last indexing. false if unknown */
     private $lastRunTimestamp = false;
 
@@ -138,36 +132,6 @@ class ElasticSearchIndexer extends AbstractIndexer
         $this->statistics($end, $start);
 
         $this->logger->info("Indexing complete");
-    }
-
-    /**
-     * Reads the lock file.
-     *
-     * Returns a Carbon timestamp or `false` if the file could not be found.
-     *
-     * @return Carbon|false
-     */
-    private function readLockFile()
-    {
-        $this->logger->debug("Reading lock file " . self::LOCK_FILE);
-        if (file_exists(self::LOCK_FILE)) {
-            $data = file_get_contents(self::LOCK_FILE);
-            $data = intval($data);
-
-            if (empty($data)) {
-                $this->logger->warn('Failed to read lock file. Returning \'false\'.');
-                return false;
-            }
-
-            $carbon = Carbon::createFromTimestamp($data);
-
-            $this->logger->debug(sprintf("Last logged indexing performed on %s (%s)", $carbon->toDateTimeString(), $carbon->diffForHumans()));
-
-            return $carbon;
-        } else {
-            $this->logger->debug("Lock file not found");
-            return false;
-        }
     }
 
     /**
@@ -408,9 +372,12 @@ class ElasticSearchIndexer extends AbstractIndexer
                 $type = $item[$action]['error']['type'];
                 $reason = $item[$action]['error']['reason'];
                 $this->logger->error("[$action] [$type] $reason");
+
                 if ($action === 'index') {
                     $this->indexedRecordsCount--;
-                } else if ($action === 'delete') {
+                }
+
+                if ($action === 'delete') {
                     $this->removedRecordsCount--;
                 }
             }
@@ -421,50 +388,6 @@ class ElasticSearchIndexer extends AbstractIndexer
 
         // unset the bulk response when you are done to save memory
         unset($responses);
-    }
-
-    /** Writes the lock file with the current timestamp to the default location */
-    private function writeLockFile()
-    {
-        $this->logger->debug('Writing lock file to ' . self::LOCK_FILE);
-
-        try {
-            $result = file_put_contents(self::LOCK_FILE, Carbon::now()->timestamp);
-
-            if ($result === false) {
-                throw new \RuntimeException('Failed to write lock file!');
-            }
-        } catch (\Exception $e) {
-            $this->logger->error('Error while writing lock file');
-            $this->logger->error($e);
-        }
-    }
-
-    /**
-     * Shows statistics for the past run.
-     *
-     * @param $end float
-     * @param $start float
-     */
-    private function statistics($end, $start)
-    {
-        if ($this->removedRecordsCount) {
-            $this->logger->debug(sprintf('%s records have been removed', $this->removedRecordsCount));
-        }
-
-        if ($this->indexedRecordsCount != 0) {
-            $elapsed = ($end - $start); // seconds
-            $estimation = $elapsed / $this->indexedRecordsCount * 200000;
-            CarbonInterval::setLocale('en');
-            $estimationString = CarbonInterval::seconds(intval(round($estimation)))->cascade()->forHumans(true);
-            $this->logger->debug(sprintf('%d modules, %d records and %d fields indexed in %01.3F s', $this->indexedModulesCount, $this->indexedRecordsCount, $this->indexedFieldsCount, $elapsed));
-
-            if ($this->indexedRecordsCount > 100) {
-                $this->logger->debug("It would take ~$estimationString for 200,000 records, assuming a linear expansion");
-            }
-        } else {
-            $this->logger->debug('No record has been indexed');
-        }
     }
 
     /** Removes all the indexes from Elasticsearch, effectively nuking all data. */
@@ -518,30 +441,6 @@ class ElasticSearchIndexer extends AbstractIndexer
         ];
 
         return $args;
-    }
-
-    /** @return int */
-    public function getRemovedRecordsCount()
-    {
-        return $this->removedRecordsCount;
-    }
-
-    /** @return int */
-    public function getIndexedRecordsCount()
-    {
-        return $this->indexedRecordsCount;
-    }
-
-    /** @return int */
-    public function getIndexedFieldsCount()
-    {
-        return $this->indexedFieldsCount;
-    }
-
-    /** @return int */
-    public function getIndexedModulesCount()
-    {
-        return $this->indexedModulesCount;
     }
 
     /** @return int */
@@ -618,10 +517,10 @@ class ElasticSearchIndexer extends AbstractIndexer
         if ($status === false) {
             $this->logger->error("Failed to ping server");
             return false;
-        } else {
-            $this->logger->debug("Ping performed in $elapsed µs");
-            return $elapsed;
         }
+
+        $this->logger->debug("Ping performed in $elapsed µs");
+        return $elapsed;
     }
 
     /**
@@ -651,12 +550,14 @@ class ElasticSearchIndexer extends AbstractIndexer
     {
         $params = ['index' => $this->index, 'filter_path' => "$this->index.mappings.$module._meta"];
         $results = $this->client->indices()->getMapping($params);
-        if (isset($results[$this->index])) {
-            $meta = $results[$this->index]['mappings'][$module]['_meta'];
-            return $meta;
-        } else {
+
+        if (!isset($results[$this->index])) {
             return null;
         }
+
+        $meta = $results[$this->index]['mappings'][$module]['_meta'];
+        return $meta;
+
     }
 
     /**
@@ -669,11 +570,11 @@ class ElasticSearchIndexer extends AbstractIndexer
     {
         $meta = $this->getMeta($module);
 
-        if (isset($meta['last_index'])) {
-            return $meta['last_index'];
-        } else {
+        if (!isset($meta['last_index'])) {
             throw new RuntimeException("Last index metadata not found.");
         }
+
+        return $meta['last_index'];
     }
 
     /**
@@ -691,15 +592,6 @@ class ElasticSearchIndexer extends AbstractIndexer
             \LoggerManager::getLogger()->fatal("Failed to retrieve ElasticSearch options");
             return false;
         }
-    }
-
-    /** Resets the counters to zero. */
-    private function resetCounts()
-    {
-        $this->indexedModulesCount = 0;
-        $this->indexedRecordsCount = 0;
-        $this->indexedFieldsCount = 0;
-        $this->removedRecordsCount = 0;
     }
 
     /**
@@ -720,11 +612,9 @@ class ElasticSearchIndexer extends AbstractIndexer
         $i = new self();
         $i->getLogger()->debug('Starting scheduled job');
 
-        if (isset($options['partial'])) {
-            $i->setDifferentialIndexingEnabled($options['partial']);
-        } else {
-            $i->setDifferentialIndexingEnabled(true);
-        }
+        $i->setDifferentialIndexingEnabled(
+            isset($options['partial']) ? $options['partial'] : true
+        );
 
         try {
             $i->index();
