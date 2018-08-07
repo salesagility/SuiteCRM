@@ -126,7 +126,7 @@ class SharedSecurityRulesWhereBuilder
         return $uid;
     }
     
-    public function checkIfActionIsUser($action, $userId, $module)
+    public function checkIfActionIsUser($action, $userId, $module, &$accessLevel)
     {
         if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || is_object($action['parameters']['email_target_type']))) {
             LoggerManager::getLogger()->warn('Incorrect action parameter: email_target_type');
@@ -164,6 +164,7 @@ class SharedSecurityRulesWhereBuilder
         $addWhere = "";
         $resWhere = "";
         $parenthesis = null;
+        $accessLevel = null;
         $sql = "SELECT * FROM sharedsecurityrules WHERE sharedsecurityrules.status = 'Complete' AND sharedsecurityrules.flow_module = '{$module->module_dir}' AND sharedsecurityrules.deleted ='0'";
         $results = DBManagerFactory::getInstance()->query($sql);
         while (($rule = $module->db->fetchByAssoc($results)) != null) {
@@ -172,7 +173,7 @@ class SharedSecurityRulesWhereBuilder
             $actionIsUser = false;
             while (($action = $module->db->fetchByAssoc($actions_results)) != null) {
                 $action['parameters'] = $this->unserializeIfSerialized($action['parametes']);
-                if ($this->checkIfActionIsUser($action, $userId, $module)) {
+                if ($this->checkIfActionIsUser($action, $userId, $module, $accessLevel)) {
                     $actionIsUser = true;
                     break;
                 }
