@@ -172,7 +172,7 @@ class SharedSecurityRulesHelper
         return $result;
     }
     
-    private function getRelated($allConditions, $x, $rule, $moduleBean)
+    private function getRelated($allConditions, $x, $rule, $rel, $moduleBean)
     {
         if ($allConditions[$x]['module_path'][0] != $rule['flow_module']) {
             foreach ($allConditions[$x]['module_path'] as $rel) {
@@ -289,20 +289,6 @@ class SharedSecurityRulesHelper
                 
         return $result;
     }
-    
-    private function logConvRes($result)
-    {
-        $converted_res = '';
-        if (isset($result)) {
-            if ($result == false) {
-                $converted_res = 'false';
-            } elseif ($result == true) {
-                $converted_res = 'true';
-            }
-        }
-        LoggerManager::getLogger()->info('SharedSecurityRules: Exiting getConditionResult() with result: ' . $converted_res);
-        return $converted_res;
-    }
 
     /**
      *
@@ -363,7 +349,7 @@ class SharedSecurityRulesHelper
             $allConditions[$x]['module_path'] = $this->updateAllCondModPath($allConditions[$x]['module_path']);
             /* this needs to be uncommented out and checked */
 
-            $related = $this->getRelated($allConditions, $x, $rule, $moduleBean);
+            $related = $this->getRelated($allConditions, $x, $rule, $rel, $moduleBean);
 
             if ($related !== false && $related !== null && $related !== "") {
                 foreach ($related as $record) {
@@ -383,7 +369,15 @@ class SharedSecurityRulesHelper
             }
         }
 
-        $this->logConvRes($result);
+        $converted_res = '';
+        if (isset($result)) {
+            if ($result == false) {
+                $converted_res = 'false';
+            } elseif ($result == true) {
+                $converted_res = 'true';
+            }
+        }
+        LoggerManager::getLogger()->info('SharedSecurityRules: Exiting getConditionResult() with result: ' . $converted_res);
         return $result;
     }
     
