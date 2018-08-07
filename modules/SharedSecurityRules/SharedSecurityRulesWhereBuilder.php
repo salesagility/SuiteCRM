@@ -148,13 +148,13 @@ class SharedSecurityRulesWhereBuilder
         return false;
     }
     
-    public function unserializeActionParameters($actionParametes)
+    public function unserializeIfSerialized($serialized)
     {
-        $unserialized = unserialize(base64_decode($actionParametes));
+        $unserialized = unserialize(base64_decode($serialized));
         if ($unserialized != false) {
-            $actionParametes = $unserialized;
+            $serialized = $unserialized;
         }
-        return $actionParametes;
+        return $serialized;
     }
 
 
@@ -171,7 +171,7 @@ class SharedSecurityRulesWhereBuilder
             $actions_results = $module->db->query($sql_query);
             $actionIsUser = false;
             while (($action = $module->db->fetchByAssoc($actions_results)) != null) {
-                $action['parameters'] = $this->unserializeActionParameters($action['parametes']);
+                $action['parameters'] = $this->unserializeIfSerialized($action['parametes']);
                 if ($this->checkIfActionIsUser($action, $userId, $module)) {
                     $actionIsUser = true;
                     break;
@@ -183,9 +183,7 @@ class SharedSecurityRulesWhereBuilder
                 $related = false;
                 if ($conditions_results->num_rows != 0) {
                     while ($condition = $module->db->fetchByAssoc($conditions_results)) {
-                        if (unserialize(base64_decode($condition['module_path'])) != false) {
-                            $condition['module_path'] = unserialize(base64_decode($condition['module_path']));
-                        }
+                        $condition['module_path'] = $this->unserializeIfSerialized($condition['module_path']);
 
                         if ($condition['module_path'][0] != $rule['flow_module']) {
                             foreach ($condition['module_path'] as $rel) {
