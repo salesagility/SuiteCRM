@@ -36,11 +36,11 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$('#es-test-connection').click(function () {
+$("#es-test-connection").click(function () {
     var url = "index.php?module=Administration&action=ElasticSearchSettings&do=TestConnection";
-    var host = $('#es-host').val();
-    var user = $('#es-user').val();
-    var pass = $('#es-password').val();
+    var host = $("#es-host").val();
+    var user = $("#es-user").val();
+    var pass = $("#es-password").val();
 
     $.ajax({
         url: url,
@@ -51,8 +51,6 @@ $('#es-test-connection').click(function () {
             pass: pass
         }
     }).done(function (data) {
-        console.log(data);
-
         if (data.status === "success") {
             alert("Connection successful.\n\nPing: " + data.ping / 1000 + " ms\nElasticsearch version: " + data.info.version.number);
         } else {
@@ -60,25 +58,25 @@ $('#es-test-connection').click(function () {
         }
     }).error(function () {
         alert("Failed perform ping request.");
-    })
+    });
 });
 
-$('#es-full-index').click(function () {
+$("#es-full-index").click(function () {
     var url = "index.php?module=Administration&action=ElasticSearchSettings&do=FullIndex";
 
     $.ajax(url).done(function () {
         alert("A full indexing has been scheduled and will start in the next 60 seconds. Search results might be incomplete until the process is complete.");
     }).error(function () {
         alert("Failed to start full index.");
-    })
+    });
 });
 
-$('#es-partial-index').click(function () {
+$("#es-partial-index").click(function () {
     var url = "index.php?module=Administration&action=ElasticSearchSettings&do=PartialIndex";
 
     $.ajax(url).done(function () {
         alert("A full indexing has been scheduled and will start in the next 60 seconds.");
     }).error(function () {
         alert("Failed to start partial index.");
-    })
+    });
 });
