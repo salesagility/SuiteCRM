@@ -150,24 +150,25 @@ class ElasticSearchIndexer extends AbstractIndexer
     private function readLockFile()
     {
         $this->logger->debug("Reading lock file " . self::LOCK_FILE);
-        if (file_exists(self::LOCK_FILE)) {
-            $data = file_get_contents(self::LOCK_FILE);
-            $data = intval($data);
 
-            if (empty($data)) {
-                $this->logger->warn('Failed to read lock file. Returning \'false\'.');
-                return false;
-            }
-
-            $carbon = Carbon::createFromTimestamp($data);
-
-            $this->logger->debug(sprintf("Last logged indexing performed on %s (%s)", $carbon->toDateTimeString(), $carbon->diffForHumans()));
-
-            return $carbon;
-        } else {
+        if (!file_exists(self::LOCK_FILE)) {
             $this->logger->debug("Lock file not found");
             return false;
         }
+
+        $data = file_get_contents(self::LOCK_FILE);
+        $data = intval($data);
+
+        if (empty($data)) {
+            $this->logger->warn('Failed to read lock file. Returning \'false\'.');
+            return false;
+        }
+
+        $carbon = Carbon::createFromTimestamp($data);
+
+        $this->logger->debug(sprintf("Last logged indexing performed on %s (%s)", $carbon->toDateTimeString(), $carbon->diffForHumans()));
+
+        return $carbon;
     }
 
     /**
@@ -408,9 +409,12 @@ class ElasticSearchIndexer extends AbstractIndexer
                 $type = $item[$action]['error']['type'];
                 $reason = $item[$action]['error']['reason'];
                 $this->logger->error("[$action] [$type] $reason");
+
                 if ($action === 'index') {
                     $this->indexedRecordsCount--;
-                } else if ($action === 'delete') {
+                }
+
+                if ($action === 'delete') {
                     $this->removedRecordsCount--;
                 }
             }
@@ -452,18 +456,19 @@ class ElasticSearchIndexer extends AbstractIndexer
             $this->logger->debug(sprintf('%s records have been removed', $this->removedRecordsCount));
         }
 
-        if ($this->indexedRecordsCount != 0) {
-            $elapsed = ($end - $start); // seconds
-            $estimation = $elapsed / $this->indexedRecordsCount * 200000;
-            CarbonInterval::setLocale('en');
-            $estimationString = CarbonInterval::seconds(intval(round($estimation)))->cascade()->forHumans(true);
-            $this->logger->debug(sprintf('%d modules, %d records and %d fields indexed in %01.3F s', $this->indexedModulesCount, $this->indexedRecordsCount, $this->indexedFieldsCount, $elapsed));
-
-            if ($this->indexedRecordsCount > 100) {
-                $this->logger->debug("It would take ~$estimationString for 200,000 records, assuming a linear expansion");
-            }
-        } else {
+        if ($this->indexedRecordsCount === 0) {
             $this->logger->debug('No record has been indexed');
+            return;
+        }
+
+        $elapsed = ($end - $start); // seconds
+        $estimation = $elapsed / $this->indexedRecordsCount * 200000;
+        CarbonInterval::setLocale('en');
+        $estimationString = CarbonInterval::seconds(intval(round($estimation)))->cascade()->forHumans(true);
+        $this->logger->debug(sprintf('%d modules, %d records and %d fields indexed in %01.3F s', $this->indexedModulesCount, $this->indexedRecordsCount, $this->indexedFieldsCount, $elapsed));
+
+        if ($this->indexedRecordsCount > 100) {
+            $this->logger->debug("It would take ~$estimationString for 200,000 records, assuming a linear expansion");
         }
     }
 
@@ -618,10 +623,10 @@ class ElasticSearchIndexer extends AbstractIndexer
         if ($status === false) {
             $this->logger->error("Failed to ping server");
             return false;
-        } else {
-            $this->logger->debug("Ping performed in $elapsed µs");
-            return $elapsed;
         }
+
+        $this->logger->debug("Ping performed in $elapsed µs");
+        return $elapsed;
     }
 
     /**
@@ -651,12 +656,14 @@ class ElasticSearchIndexer extends AbstractIndexer
     {
         $params = ['index' => $this->index, 'filter_path' => "$this->index.mappings.$module._meta"];
         $results = $this->client->indices()->getMapping($params);
-        if (isset($results[$this->index])) {
-            $meta = $results[$this->index]['mappings'][$module]['_meta'];
-            return $meta;
-        } else {
+
+        if (!isset($results[$this->index])) {
             return null;
         }
+
+        $meta = $results[$this->index]['mappings'][$module]['_meta'];
+        return $meta;
+
     }
 
     /**
@@ -669,11 +676,11 @@ class ElasticSearchIndexer extends AbstractIndexer
     {
         $meta = $this->getMeta($module);
 
-        if (isset($meta['last_index'])) {
-            return $meta['last_index'];
-        } else {
+        if (!isset($meta['last_index'])) {
             throw new RuntimeException("Last index metadata not found.");
         }
+
+        return $meta['last_index'];
     }
 
     /**
@@ -720,11 +727,9 @@ class ElasticSearchIndexer extends AbstractIndexer
         $i = new self();
         $i->getLogger()->debug('Starting scheduled job');
 
-        if (isset($options['partial'])) {
-            $i->setDifferentialIndexingEnabled($options['partial']);
-        } else {
-            $i->setDifferentialIndexingEnabled(true);
-        }
+        $i->setDifferentialIndexingEnabled(
+            isset($options['partial']) ? $options['partial'] : true
+        );
 
         try {
             $i->index();
