@@ -66,8 +66,6 @@ class ElasticSearchIndexer extends AbstractIndexer
     use IndexingStatisticsTrait;
     use IndexingLockFileTrait;
 
-    /** @var string File containing a timestamp of the last (complete or differential) indexing. */
-    const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
     /** @var string The name of the Elasticsearch index to use. */
     private $index = 'main';
     /** @var Client */
