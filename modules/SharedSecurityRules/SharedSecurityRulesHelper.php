@@ -54,7 +54,7 @@ class SharedSecurityRulesHelper
     protected $db;
     
     /**
-     * 
+     *
      * @param DBManager $db
      */
     public function __construct(DBManager $db)
@@ -108,21 +108,32 @@ class SharedSecurityRulesHelper
         return $allParenthesisConditions;
     }
     
-
     /**
-     *
+     * 
+     * @param bool $tempResult
+     * @return boolean
+     */
+    protected function getParenthesisConditionsReturn($tempResult)
+    {
+        if (!$tempResult) {
+            LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkParenthesisConditions returning false.');
+            return false;
+        }
+        LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkParenthesisConditions returning true.');
+        return true;
+    }
+    
+    /**
+     * 
      * @param array $allParenthesisConditions
      * @param SugarBean $moduleBean
      * @param array $rule
      * @param string $view
      * @param string $action
      * @param string $key
-     * @return boolean
+     * @return array
      */
-    protected function checkParenthesisConditions($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key)
-    {
-        LoggerManager::getLogger()->info('SharedSecurityRules: Entering checkParenthesisConditions()');
-
+    protected function getConditionsToCheck($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key) {
         $conditionsToCheck = array();
 
         for ($j = 0; $j < count($allParenthesisConditions); $j++) {
@@ -138,17 +149,30 @@ class SharedSecurityRulesHelper
                 array_push($conditionsToCheck, $allParenthesisConditions[$j]);
             }
         }
+        return $conditionsToCheck;
+    }
+
+    /**
+     *
+     * @param array $allParenthesisConditions
+     * @param SugarBean $moduleBean
+     * @param array $rule
+     * @param string $view
+     * @param string $action
+     * @param string $key
+     * @return boolean
+     */
+    protected function checkParenthesisConditions($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key)
+    {
+        LoggerManager::getLogger()->info('SharedSecurityRules: Entering checkParenthesisConditions()');
+
+        
+        $conditionsToCheck = $this->getConditionsToCheck();
 
         if (sizeof($conditionsToCheck) > 0) {
             // Get results of searching all conditions within the perms (true = condition met)
             $tempResult = $this->getConditionResult($conditionsToCheck, $moduleBean, $rule, $view, $action, $key);
-            if (!$tempResult) {
-                LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkParenthesisConditions returning false.');
-                return false;
-            } else {
-                LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkParenthesisConditions returning true.');
-                return true;
-            }
+            return $this->getParenthesisConditionsReturn($tempResult);
         }
 
         LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkParenthesisConditions with no conditions to check.');
@@ -156,7 +180,7 @@ class SharedSecurityRulesHelper
     }
     
     /**
-     * 
+     *
      * @param bool $overallResult
      * @param string $nextConditionLogicOperator
      * @return boolean
