@@ -53,13 +53,14 @@ class SharedSecurityRulesController extends SugarController
      * @return array
      */
     protected function getRequestFields($request) {
-        if (!isset($request['moduletype'])) {
+        $requestModuleType = $this->getRequestVar($request, 'moduletype');
+        if (!$requestModuleType) {
             LoggerManager::getLogger()->warn('moduletype is not defined in request for SharedSecurityRulesController::action_fielddefs()');
             $fields = [];
         } else {
-            $bean = BeanFactory::getBean($request['moduletype']);
+            $bean = BeanFactory::getBean($requestModuleType);
             $matrix = new SharedSecurityRules();
-            $fields = $matrix->getFieldDefs($bean->field_defs, $request['moduletype']);
+            $fields = $matrix->getFieldDefs($bean->field_defs, $requestModuleType);
         }
         asort($fields);
         return $fields;
@@ -80,31 +81,15 @@ class SharedSecurityRulesController extends SugarController
     /**
      * 
      * @param array $request
-     * @return string
+     * @param string $key
+     * @return mixed
      */
-    protected function getRequestAOWAction($request) {
-        $requestAOWAction = null;
-        if (!isset($request['aow_action'])) {
-            LoggerManager::getLogger()->warn('aow_action is not defined in request for SharedSecurityRulesController::action_getAction()');
-        } else {
-            $requestAOWAction = $request['aow_action'];
+    protected function getRequestVar($request, $key, $default = null) {
+        if (!isset($request[$key])) {
+            LoggerManager::getLogger()->warn('Requested key for Share Security Rules controller is not set: ' . $key);
+            return $default;
         }
-        return $requestAOWAction;
-    }
-    
-    /**
-     * 
-     * @param array $request
-     * @return string
-     */
-    protected function getRequestLine($request) {
-        $requestLine = null;
-        if (!isset($request['line'])) {
-            LoggerManager::getLogger()->warn('line is not defined in request for SharedSecurityRulesController::action_getAction()');
-        } else {
-            $requestLine = $request['line'];
-        }
-        return $requestLine;
+        return $request[$key];
     }
 
     /**
@@ -130,11 +115,12 @@ class SharedSecurityRulesController extends SugarController
     protected function getParams($request) {
         
         $id = '';
-        $params = array();
-        if (isset($request['id'])) {
+        $requestId = $this->getRequestVar($request, 'id');
+        $params = array();        
+        if ($requestId) {
             require_once('modules/AOW_Actions/AOW_Action.php');
             $aow_action = new SharedSecurityRulesActions();
-            $aow_action->retrieve($request['id']);
+            $aow_action->retrieve($requestId);
             $id = $aow_action->id;
             
             $aowActionParameters = $this->getAOWActionParameters($aow_action);
@@ -155,14 +141,14 @@ class SharedSecurityRulesController extends SugarController
         global $beanList, $beanFiles;
         $request = $_REQUEST;
         
-        $requestAOWAction = $this->getRequestAOWAction($request);
-        $requestLine = $this->getRequestLine($request);
+        $requestAOWAction = $this->getRequestVar($request, 'aow_action');
+        $requestLine = $this->getRequestVar($request, 'line');
 
         $action_name = 'action' . $requestAOWAction;
         $line = $requestLine;
         
         
-        $requestAOWModule = $this->getRequestAOWModule($request);
+        $requestAOWModule = $this->getRequestVar($request, 'aow_module');
 
         if ($requestAOWModule == '' || !isset($beanList[$requestAOWModule])) {
             echo '';
@@ -187,25 +173,10 @@ class SharedSecurityRulesController extends SugarController
 
         $action = new $action_name($id);
 
-        require_once($beanFiles[$beanList[$request['aow_module']]]);
-        $bean = new $beanList[$request['aow_module']];
+        require_once($beanFiles[$beanList[$requestAOWModule]]);
+        $bean = new $beanList[$requestAOWModule];
         echo $action->edit_display($line, $bean, $params);
         return $this->protectedDie();
-    }
-    
-    /**
-     * 
-     * @param array $request
-     * @return string
-     */
-    protected function getRequestAOWType($request) {
-        $requestAOWType = null;
-        if (!isset($request['aow_type'])) {
-            LoggerManager::getLogger()->warn('aow_type is not defined in request for SharedSecurityRulesController::getRequestAOWType()');
-        } else {
-            $requestAOWType = $request['aow_type'];
-        }
-        return $requestAOWType;
     }
 
     /**
@@ -216,21 +187,22 @@ class SharedSecurityRulesController extends SugarController
     {
         $request = $_REQUEST;
         
-        $requestAOWModule = $this->getRequestAOWModule($request);
-        $requestAOWFieldname = $this->getRequestAOWFieldname($request);
-        $requestAOWNewFieldname = $this->getRequestAOWNewFieldname($request);        
+        $requestAOWModule = $this->getRequestVar($request, 'aow_module');
+        $requestAOWFieldname = $this->getRequestVar($request, 'aow_fieldname');
+        $requestAOWNewFieldname = $this->getRequestVar($request, 'aow_newfieldname');        
         $rel_module = $this->getModuleByRequest($request, $requestAOWModule);
         $module = $requestAOWModule;
         $fieldname = $requestAOWFieldname;
         $aow_field = $requestAOWNewFieldname;
-        $view = $this->getViewByRequest($request);
-        $value = $this->getValueByRequest($request);
-        $requestAOWType = $this->getRequestAOWType($request);
+        $view = $this->getRequestVar($request, 'view', 'EditView');
+        $value = $this->getRequestVar($request, 'aow_value' , '');
+        $requestAOWType = $this->getRequestVar($request, 'aow_type');
 
         switch ($requestAOWType) {
             case 'Field':
-                if (isset($request['alt_module']) && $request['alt_module'] != '') {
-                    $module = $request['alt_module'];
+                $altModule = $this->getRequestVar($beanFiles, 'alt_module');
+                if ($altModule) {
+                    $module = $altModule;
                 }
                 if ($view == 'EditView') {
                     echo "<select type='text'  name='$aow_field' id='$aow_field ' title='' tabindex='116'>" . getModuleFields($module, $view, $value, getValidFieldsTypes($module, $fieldname)) . "</select>";
@@ -258,52 +230,7 @@ class SharedSecurityRulesController extends SugarController
         }
         return $this->protectedDie();
     }
-    
-    /**
-     * 
-     * @param array $request
-     * @return string
-     */
-    protected function getRequestAOWModule($request)
-    {
-        if (!isset($request['aow_module'])) {
-            LoggerManager::getLogger()->warn('aow_module is not defined in request for SharedSecurityRulesController::getRequestAOWModule()');
-            $request['aow_module'] = null;
-        }
-        $requestAOWModule = $request['aow_module'];
-        return $requestAOWModule;
-    }
-    
-    /**
-     * 
-     * @param array $request
-     * @return string
-     */
-    protected function getRequestAOWFieldname($request)
-    {
-        if (!isset($request['aow_fieldname'])) {
-            LoggerManager::getLogger()->warn('aow_fieldname is not defined in request for SharedSecurityRulesController::getRequestAOWFieldname()');
-            $request['aow_fieldname'] = null;
-        }
-        $requestAOWFieldname = $request['aow_fieldname'];
-        return $requestAOWFieldname;
-    }
-    
-    /**
-     * 
-     * @param array $request
-     * @return string
-     */
-    protected function getRequestAOWNewFieldname($request)
-    {
-        if (!isset($request['aow_newfieldname'])) {
-            LoggerManager::getLogger()->warn('aow_newfieldname is not defined in request for SharedSecurityRulesController::getRequestAOWNewFieldname()');
-            $request['aow_newfieldname'] = null;
-        }
-        $requestAOWNewFieldname = $request['aow_newfieldname'];
-        return $requestAOWNewFieldname;
-    }
-    
+
     /**
      * 
      * @param array $request
@@ -312,33 +239,12 @@ class SharedSecurityRulesController extends SugarController
      */
     protected function getModuleByRequest($request, $requestAOWModule)
     {
-        $module = isset($request['rel_field']) && $request['rel_field'] != '' ?
-            getRelatedModule($requestAOWModule, $request['rel_field']) :
+        $relFiled = $this->getRequestVar($request, 'rel_field');
+        $module = $relFiled ?
+            getRelatedModule($requestAOWModule, $relFiled) :
             $requestAOWModule;
         return $module;
-    }
-    
-    /**
-     * 
-     * @param array $request
-     * @return string
-     */
-    protected function getViewByRequest($request)
-    {
-        $view = isset($request['view']) ? $request['view'] : 'EditView';
-        return $view;
-    }
-    
-    /**
-     * 
-     * @param array $request
-     * @return string
-     */
-    protected function getValueByRequest($request, $key = 'aow_value')
-    {
-        $value = isset($request['aow_value']) ? $request['aow_value'] : '';
-        return $value;
-    }
+    }    
     
     /**
      * 
@@ -415,16 +321,16 @@ class SharedSecurityRulesController extends SugarController
         global $app_list_strings, $beanFiles, $beanList;
         $request = $_REQUEST;
         
-        $requestAOWModule = $this->getRequestAOWModule($request);
-        $requestAOWFieldname = $this->getRequestAOWFieldname($request);
-        $requestAOWNewFieldname = $this->getRequestAOWNewFieldname($request);
+        $requestAOWModule = $this->getRequestVar($request, 'aow_module');
+        $requestAOWFieldname = $this->getRequestVar($request, 'aow_fieldname');
+        $requestAOWNewFieldname = $this->getRequestVar($request, 'aow_newfieldname');
         $module = $this->getModuleByRequest($request, $requestAOWModule);
         
         $fieldname = $requestAOWFieldname;
         $aow_field = $requestAOWNewFieldname;
 
-        $view = $this->getViewByRequest($request);
-        $value = $this->getValueByRequest($request);
+        $view = $this->getRequestVar($request, 'view', 'EditView');
+        $value = $this->getRequestVar($request, 'aow_value' , '');
         
         if (!isset($beanList[$module]) || !isset($beanFiles[$beanList[$module]])) {
             LoggerManager::getLogger()->warn('bean file not set in bean list for module: ' . $module . ' in SharedSecurityRulesController::action_getFieldTypeOptions()');
@@ -452,51 +358,6 @@ class SharedSecurityRulesController extends SugarController
             echo $app_list_strings['aow_condition_type_list'][$value];
         }
         return $this->protectedDie();
-    }
-    
-    /**
-     * 
-     * @param array $request
-     * @return string
-     */
-    protected function getRequestedAORModule($request) {
-        $requestedAORModule = null;
-        if (!isset($request['aor_module'])) {
-            LoggerManager::getLogger()->warn('aor_module is not defined in request for SharedSecurityRulesController::action_getModuleOperatorField()');
-        } else {
-            $requestedAORModule = $request['aor_module'];
-        }
-        return $requestedAORModule;
-    }
-    
-    /**
-     * 
-     * @param array $request
-     * @return string
-     */
-    protected function getRequestAorFieldName($request) {
-        $requestAorFieldName = null;
-        if (!isset($request['aor_fieldname'])) {
-            LoggerManager::getLogger()->warn('No request[aor_fieldname]');
-        } else {
-            $requestAorFieldName = $request['aor_fieldname'];
-        }
-        return $requestAorFieldName;
-    }
-
-    /**
-     * 
-     * @param array $request
-     * @return string
-     */
-    protected function getRequestAorNewFieldName($request) {
-        $requestAorNewFieldName = null;
-        if (!isset($request['aor_newfieldname'])) {
-            LoggerManager::getLogger()->warn('No request[aor_newfieldname]');
-        } else {
-            $requestAorNewFieldName = $request['aor_newfieldname'];
-        }
-        return $requestAorNewFieldName;
     }
     
     /**
@@ -582,12 +443,7 @@ class SharedSecurityRulesController extends SugarController
         
         $onchange = "";
         
-        $m = null;
-        if (!isset($request['m'])) {
-            LoggerManager::getLogger()->warn('m needed for Shared Security Rules Action for action get Module Operator Field');
-        } else {
-            $m = $request['m'];
-        }
+        $m = $this->getRequestVar($request, 'm');
         
         if ($m != "aomr") {
             $onchange = "UpdatePreview(\"preview\");";
@@ -607,18 +463,18 @@ class SharedSecurityRulesController extends SugarController
         global $app_list_strings, $beanFiles, $beanList;
         $request = $_REQUEST;
         
-        $requestedAORModule = $this->getRequestedAORModule($request);
+        $requestedAORModule = $this->getRequestedVar($request, 'aor_module');
         $module = $this->getModuleByRequest($request, $requestedAORModule);
-        $requestAorFieldName = $this->getRequestAorFieldName($request);
+        $requestAorFieldName = $this->getRequestedVar($request, 'aor_fieldname');
         
         $fieldname = $requestAorFieldName;
         
-        $requestAorNewFieldName = $this->getRequestAorNewFieldName($request);
+        $requestAorNewFieldName = $this->getRequestedVar($request, 'aor_newfieldname');
         
         $aor_field = $requestAorNewFieldName;
 
-        $view = $this->getViewByRequest($request);
-        $value = $this->getValueByRequest($request, 'aor_value');
+        $view = $this->getRequestVar($request, 'view', 'EditView');
+        $value = $this->getRequestVar($request, 'aor_value' , '');
 
         if (!isset($module) || !isset($beanList[$module]) && !isset($beanFiles[$beanList[$module]])) {
             LoggerManager::getLogger()->error('Bean module is not defined in beanlist');
