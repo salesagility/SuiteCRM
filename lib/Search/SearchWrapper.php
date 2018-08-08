@@ -165,11 +165,47 @@ class SearchWrapper
     /**
      * Retrieves the default search engine name from the global configuration.
      *
+     * If the default config does not have an engine, the first engine from the engines array is returned.
+     *
      * @return string
      */
-    private static function getDefaultEngine()
+    public static function getDefaultEngine()
     {
-        // TODO use configurable default engine instead
-        return key(self::$engines);
+        $config = self::getSearchConfig('defaultEngine');
+
+        return $config === null
+            ? key(self::$engines) // first engine in the array
+            : $config;
+    }
+
+    /**
+     * Returns the configured search controller from the sugar config.
+     *
+     * If the value is, for some reason, not set, `null` is returned.
+     *
+     * @return string|null
+     */
+    public static function getController()
+    {
+        return self::getSearchConfig('controller');
+    }
+
+    /**
+     * Returns a configured parameter from the sugar config.
+     *
+     * If the values is not set, returns `null`.
+     *
+     * @param $key
+     * @return mixed|null
+     */
+    private static function getSearchConfig($key)
+    {
+        global $sugar_config;
+
+        if (!isset($sugar_config['search'][$key])) {
+            return null;
+        }
+
+        return $sugar_config['search'][$key];
     }
 }
