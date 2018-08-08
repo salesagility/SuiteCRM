@@ -317,7 +317,7 @@ class SharedSecurityRulesController extends SugarController
      * @param array $request
      * @return string
      */
-    protected function getValueByRequest($request)
+    protected function getValueByRequest($request, $key = 'aow_value')
     {
         $value = isset($request['aow_value']) ? $request['aow_value'] : '';
         return $value;
@@ -436,76 +436,73 @@ class SharedSecurityRulesController extends SugarController
         }
         return $this->protectedDie();
     }
-
+    
     /**
-     *
-     * @global array $app_list_strings
-     * @global array $beanFiles
-     * @global array $beanList
-     * @return null
+     * 
+     * @param array $request
+     * @return string
      */
-    protected function action_getModuleOperatorField()
-    {
-        global $app_list_strings, $beanFiles, $beanList;
-        $request = $_REQUEST;
-        
+    protected function getRequestedAORModule($request) {
         $requestedAORModule = null;
         if (!isset($request['aor_module'])) {
             LoggerManager::getLogger()->warn('aor_module is not defined in request for SharedSecurityRulesController::action_getModuleOperatorField()');
         } else {
             $requestedAORModule = $request['aor_module'];
         }
-
+        return $requestedAORModule;
+    }
+    
+    /**
+     * 
+     * @param array $request
+     * @param string $requestedAORModule
+     * @return string
+     */
+    protected function getModuleOrRelatedModuleByRequest($request, $requestedAORModule) {
         if (isset($request['rel_field']) && $request['rel_field'] != '') {
             $module = getRelatedModule($requestedAORModule, $request['rel_field']);
         } else {
             $module = $requestedAORModule;
         }
-        
+        return $module;
+    }
+    
+    /**
+     * 
+     * @param array $request
+     * @return string
+     */
+    protected function getRequestAorFieldName($request) {
         $requestAorFieldName = null;
         if (!isset($request['aor_fieldname'])) {
             LoggerManager::getLogger()->warn('No request[aor_fieldname]');
         } else {
             $requestAorFieldName = $request['aor_fieldname'];
         }
-        
-        $fieldname = $requestAorFieldName;
-        
+        return $requestAorFieldName;
+    }
+
+    /**
+     * 
+     * @param array $request
+     * @return string
+     */
+    protected function getRequestAorNewFieldName($request) {
         $requestAorNewFieldName = null;
         if (!isset($request['aor_newfieldname'])) {
             LoggerManager::getLogger()->warn('No request[aor_newfieldname]');
         } else {
             $requestAorNewFieldName = $request['aor_newfieldname'];
         }
-        
-        $aor_field = $requestAorNewFieldName;
-
-        if (isset($request['view'])) {
-            $view = $request['view'];
-        } else {
-            $view = 'EditView';
-        }
-
-        if (isset($request['aor_value'])) {
-            $value = $request['aor_value'];
-        } else {
-            $value = '';
-        }
-
-        if (!isset($module) || !isset($beanList[$module]) && !isset($beanFiles[$beanList[$module]])) {
-            LoggerManager::getLogger()->error('Bean module is not defined in beanlist');
-            return $this->protectedDie();
-        }
-                
-        if (!file_exists($beanFiles[$beanList[$module]])) {
-            LoggerManager::getLogger()->error('Bean file not found: ' . $beanFiles[$beanList[$module]]);
-            return $this->protectedDie();
-        }
-        
-        require_once($beanFiles[$beanList[$module]]);
-        $focus = new $beanList[$module];
-        $vardef = $focus->getFieldDefinition($fieldname);
-
+        return $requestAorNewFieldName;
+    }
+    
+    /**
+     * 
+     * @param array $vardef
+     * @return array
+     */
+    protected function getValidOppForModuleOpField($vardef) {
         switch ($vardef['type']) {
             case 'double':
             case 'decimal':
@@ -555,14 +552,32 @@ class SharedSecurityRulesController extends SugarController
                 $valid_opp = array('Equal_To', 'Not_Equal_To', 'Contains', 'Not_Contains', 'Starts_With', 'Ends_With',);
                 break;
         }
-
+        return $valid_opp;
+    }
+    
+    /**
+     * 
+     * @param array $app_list_strings
+     * @param array $valid_opp
+     * @return array
+     */
+    protected function updateAppListStringsAOROpList($app_list_strings, $valid_opp) {
         $keys = array_keys($app_list_strings['aor_operator_list']);
         foreach ($keys as $key) {
             if (!in_array($key, $valid_opp)) {
                 unset($app_list_strings['aor_operator_list'][$key]);
             }
         }
-
+        return $app_list_strings;
+    }
+    
+    /**
+     * 
+     * @param array $request
+     * @return string
+     */
+    protected function getOnChange($request) {
+        
         $onchange = "";
         
         $m = null;
@@ -575,6 +590,53 @@ class SharedSecurityRulesController extends SugarController
         if ($m != "aomr") {
             $onchange = "UpdatePreview(\"preview\");";
         }
+        return $onchange;
+    }
+    
+    /**
+     *
+     * @global array $app_list_strings
+     * @global array $beanFiles
+     * @global array $beanList
+     * @return null
+     */
+    protected function action_getModuleOperatorField()
+    {
+        global $app_list_strings, $beanFiles, $beanList;
+        $request = $_REQUEST;
+        
+        $requestedAORModule = $this->getRequestedAORModule($request);
+        $module = $this->getModuleOrRelatedModuleByRequest($request, $requestedAORModule);
+        $requestAorFieldName = $this->getRequestAorFieldName($request);
+        
+        $fieldname = $requestAorFieldName;
+        
+        $requestAorNewFieldName = $this->getRequestAorNewFieldName($request);
+        
+        $aor_field = $requestAorNewFieldName;
+
+        $view = $this->getViewByRequest($request);
+        $value = $this->getValueByRequest($request, 'aor_value');
+
+        if (!isset($module) || !isset($beanList[$module]) && !isset($beanFiles[$beanList[$module]])) {
+            LoggerManager::getLogger()->error('Bean module is not defined in beanlist');
+            return $this->protectedDie();
+        }
+                
+        if (!file_exists($beanFiles[$beanList[$module]])) {
+            LoggerManager::getLogger()->error('Bean file not found: ' . $beanFiles[$beanList[$module]]);
+            return $this->protectedDie();
+        }
+        
+        require_once($beanFiles[$beanList[$module]]);
+        $focus = new $beanList[$module];
+        $vardef = $focus->getFieldDefinition($fieldname);
+
+        $valid_opp = $this->getValidOppForModuleOpField($vardef);
+
+        $app_list_strings = $this->updateAppListStringsAOROpList($app_list_strings, $valid_opp);
+
+        $onchange = $this->getOnChange($request);
         
         if ($view == 'EditView') {
             echo "<select type='text' style='width:178px;' name='{$aor_field}' id='{$aor_field}' title=''
