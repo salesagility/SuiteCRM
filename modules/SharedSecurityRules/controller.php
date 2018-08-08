@@ -55,7 +55,7 @@ class SharedSecurityRulesController extends SugarController
     protected function getRequestFields($request) {
         $requestModuleType = $this->getRequestVar($request, 'moduletype');
         if (!$requestModuleType) {
-            LoggerManager::getLogger()->warn('moduletype is not defined in request for SharedSecurityRulesController::action_fielddefs()');
+            LoggerManager::getLogger()->warn('moduletype is not defined in request for SharedSecurityRulesController::getRequestFields()');
             $fields = [];
         } else {
             $bean = BeanFactory::getBean($requestModuleType);
@@ -463,13 +463,13 @@ class SharedSecurityRulesController extends SugarController
         global $app_list_strings, $beanFiles, $beanList;
         $request = $_REQUEST;
         
-        $requestedAORModule = $this->getRequestedVar($request, 'aor_module');
+        $requestedAORModule = $this->getRequestVar($request, 'aor_module');
         $module = $this->getModuleByRequest($request, $requestedAORModule);
-        $requestAorFieldName = $this->getRequestedVar($request, 'aor_fieldname');
+        $requestAorFieldName = $this->getRequestVar($request, 'aor_fieldname');
         
         $fieldname = $requestAorFieldName;
         
-        $requestAorNewFieldName = $this->getRequestedVar($request, 'aor_newfieldname');
+        $requestAorNewFieldName = $this->getRequestVar($request, 'aor_newfieldname');
         
         $aor_field = $requestAorNewFieldName;
 
