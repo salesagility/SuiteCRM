@@ -186,6 +186,19 @@ class SharedSecurityRulesWhereBuilder
         }
     }
 
+    public function updateRelated(&$related, $condition, $rule, $module)
+    {
+        if ($condition['module_path'][0] != $rule['flow_module']) {
+            foreach ($condition['module_path'] as $rel) {
+                if (empty($rel)) {
+                    continue;
+                }
+                $module->load_relationship($rel);
+                $related = $module->$rel->getBeans();
+            }
+        }
+    }
+    
     public function getWhereArray(SugarBean $module, $userId)
     {
         $where = "";
@@ -208,15 +221,7 @@ class SharedSecurityRulesWhereBuilder
                     while ($condition = $module->db->fetchByAssoc($conditions_results)) {
                         $condition['module_path'] = $this->unserializeIfSerialized($condition['module_path']);
 
-                        if ($condition['module_path'][0] != $rule['flow_module']) {
-                            foreach ($condition['module_path'] as $rel) {
-                                if (empty($rel)) {
-                                    continue;
-                                }
-                                $module->load_relationship($rel);
-                                $related = $module->$rel->getBeans();
-                            }
-                        }
+                        $this->updateRelated($related, $condition, $rule, $module);
 
                         if ($related == false) {
                             if ($condition['value_type'] == "Field" &&
