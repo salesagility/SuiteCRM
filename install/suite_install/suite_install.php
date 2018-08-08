@@ -29,7 +29,8 @@ install_aod();
 require_once('install/suite_install/AdvancedOpenEvents.php');
 install_aoe();
 
-require_once('install/suite_install/ElasticSearch.php');
+require_once('install/suite_install/Search.php');
+install_search();
 install_es();
 
 require_once('install/suite_install/Projects.php');

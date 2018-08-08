@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,54 +37,26 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+use SuiteCRM\Search\SearchTestAbstract;
 
-function install_es()
+/**
+ * Created by PhpStorm.
+ * User: viocolano
+ * Date: 08/08/18
+ * Time: 10:18
+ */
+class SearchInstallTest extends SearchTestAbstract
 {
-    require_once('modules/Administration/Administration.php');
+    public function testConfiguredSuccessfully()
+    {
+        global $sugar_config;
 
-    global $sugar_config;
+        self::assertArrayHasKey('search', $sugar_config, 'Search config not present');
 
-    $sugar_config['search']['ElasticSearch']['enabled'] = false;
-    $sugar_config['search']['ElasticSearch']['host'] = 'localhost';
-    $sugar_config['search']['ElasticSearch']['user'] = '';
-    $sugar_config['search']['ElasticSearch']['pass'] = '';
+        self::assertArrayHasKey('controller', $sugar_config['search']);
+        self::assertArrayHasKey('default_engine', $sugar_config['search']);
+        self::assertArrayHasKey('modules', $sugar_config['search']);
 
-    ksort($sugar_config);
-    write_array_to_file('sugar_config', $sugar_config, 'config.php');
-
-    installESHooks();
-}
-
-function installESHooks()
-{
-    require_once('ModuleInstall/ModuleInstaller.php');
-
-    $hooks = array(
-        array(
-            'module' => '',
-            'hook' => 'after_save',
-            'order' => 1,
-            'description' => 'ElasticSearch Index Changes',
-            'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
-            'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
-            'function' => 'beanSaved',
-        ),
-        array(
-            'module' => '',
-            'hook' => 'after_delete',
-            'order' => 1,
-            'description' => 'ElasticSearch Index Changes',
-            'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
-            'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
-            'function' => 'beanDeleted',
-        ),
-    );
-
-    foreach ($hooks as $hook) {
-        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
+        self::assertTrue(is_array($sugar_config['search']['modules']));
     }
-
 }
