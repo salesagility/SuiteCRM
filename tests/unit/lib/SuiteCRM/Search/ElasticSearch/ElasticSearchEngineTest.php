@@ -286,4 +286,17 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertTrue(is_float($results->getSearchTime()));
         self::assertGreaterThan(0, $results->getSearchTime());
     }
+
+    public function testGetIndex()
+    {
+        $engine = new ElasticSearchEngine();
+
+        self::assertEquals('main', $engine->getIndex());
+
+        $expected = 'Foo';
+        $engine->setIndex($expected);
+        $actual = $engine->getIndex();
+
+        self::assertEquals($expected, $actual);
+    }
 }
