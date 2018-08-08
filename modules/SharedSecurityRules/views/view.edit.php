@@ -71,7 +71,9 @@ class SharedSecurityRulesViewEdit extends ViewEdit
 
             $condition_name->retrieve($row['id']);
             if ($condition_name->value_type == 'Date') {
-                $condition_name->value = unserialize(base64_decode($condition_name->value));
+                $helper = new SharedSecurityRulesHelper($this->bean->db);
+                $condition_name->value = $helper->unserializeIfSerialized($condition_name->value);
+                // orig: $condition_name->value = unserialize(base64_decode($condition_name->value));
             }
             $condition_item = $condition_name->toArray();
 
