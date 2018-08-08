@@ -265,6 +265,7 @@ class SharedSecurityRulesChecker
             $result = $this->updateResultByRule($result, $action, $module, $userId, $helper, $rule, $moduleBean, $view);
         }
 
+        $converted_res = $helper->getConvertedRes($result);
         $converted_res = $result ? 'true' : 'false';
 
         if (is_null($key)) {
