@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/../SharedSecurityRulesHelper.php';
 
 require_once("modules/AOW_WorkFlow/aow_utils.php");
 
@@ -125,7 +126,9 @@ class SharedSecurityRulesController extends SugarController
             
             $aowActionParameters = $this->getAOWActionParameters($aow_action);
             
-            $params = unserialize(base64_decode($aowActionParameters));
+            $helper = new SharedSecurityRulesHelper($aow_action->db);
+            $params = $helper->unserializeIfSerialized($aowActionParameters);
+            // originaly: $params = unserialize(base64_decode($aowActionParameters));
         }
         return $params;
     }

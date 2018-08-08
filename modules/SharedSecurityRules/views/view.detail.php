@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/../SharedSecurityRulesHelper.php';
+
 require_once 'include/MVC/View/views/view.detail.php';
 require_once 'modules/AOW_WorkFlow/aow_utils.php';
 require_once 'modules/AOR_Reports/aor_utils.php';
@@ -78,7 +80,10 @@ class SharedSecurityRulesViewDetail extends ViewDetail
                     } else {
                         $conditionNameValue = $condition_name->value;
                     }
-                    $condition_name->value = unserialize(base64_decode($conditionNameValue));
+                    
+                    $helper = new SharedSecurityRulesHelper($this->bean->db);
+                    $condition_name->value = $helper->unserializeIfSerialized($conditionNameValue);
+                    // orig: $condition_name->value = unserialize(base64_decode($conditionNameValue));
                 }
                 $condition_item = $condition_name->toArray();
 

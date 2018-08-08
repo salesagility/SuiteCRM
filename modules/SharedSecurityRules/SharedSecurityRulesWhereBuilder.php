@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/SharedSecurityRulesHelper.php';
+
 class SharedSecurityRulesWhereBuilder
 {
     /**
@@ -202,20 +204,6 @@ class SharedSecurityRulesWhereBuilder
     
     /**
      * 
-     * @param string $serialized
-     * @return string
-     */
-    protected function unserializeIfSerialized($serialized)
-    {
-        $unserialized = unserialize(base64_decode($serialized));
-        if ($unserialized != false) {
-            $serialized = $unserialized;
-        }
-        return $serialized;
-    }
-    
-    /**
-     * 
      * @param string $accessLevel
      * @param string $where
      * @param string $resWhere
@@ -240,8 +228,9 @@ class SharedSecurityRulesWhereBuilder
      */
     protected function updateActionAccess(SugarBean $module, &$actions_results, $userId, &$accessLevel, &$actionIsUser)
     {
+        $helper = new SharedSecurityRulesHelper($module->db);
         while (($action = $module->db->fetchByAssoc($actions_results)) != null) {
-            $action['parameters'] = $this->unserializeIfSerialized($action['parametes']);
+            $action['parameters'] = $helper->unserializeIfSerialized($action['parametes']);
             if ($this->checkIfActionIsUser($action, $userId, $module, $accessLevel)) {
                 $actionIsUser = true;
                 break;
@@ -296,9 +285,10 @@ class SharedSecurityRulesWhereBuilder
      */
     protected function processConditions($conditions_results, SugarBean $module, &$related, $rule, $accessLevel, $resWhere, $addWhere, $parenthesis)
     {
+        $helper = new SharedSecurityRulesHelper($module->db);
         if ($conditions_results->num_rows != 0) {
             while ($condition = $module->db->fetchByAssoc($conditions_results)) {
-                $condition['module_path'] = $this->unserializeIfSerialized($condition['module_path']);
+                $condition['module_path'] = $helper->unserializeIfSerialized($condition['module_path']);
 
                 $this->updateRelated($related, $condition, $rule, $module);
 

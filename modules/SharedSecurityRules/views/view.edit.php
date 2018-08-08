@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/../SharedSecurityRulesHelper.php';
+
 require_once('include/MVC/View/views/view.edit.php');
 require_once("modules/SharedSecurityRules/SharedSecurityRules.php");
 
@@ -69,7 +71,9 @@ class SharedSecurityRulesViewEdit extends ViewEdit
 
             $condition_name->retrieve($row['id']);
             if ($condition_name->value_type == 'Date') {
-                $condition_name->value = unserialize(base64_decode($condition_name->value));
+                $helper = new SharedSecurityRulesHelper($this->bean->db);
+                $condition_name->value = $helper->unserializeIfSerialized($condition_name->value);
+                // orig: $condition_name->value = unserialize(base64_decode($condition_name->value));
             }
             $condition_item = $condition_name->toArray();
 
