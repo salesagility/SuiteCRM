@@ -189,6 +189,8 @@ class ElasticSearchClientBuilder
             unset($merged['scheme']);
         }
 
+        unset($merged['path'], $merged['query']);
+
         return $merged;
     }
 
