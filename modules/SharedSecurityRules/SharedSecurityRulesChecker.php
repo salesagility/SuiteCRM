@@ -47,12 +47,32 @@ include_once('SharedSecurityRulesHelper.php');
 class SharedSecurityRulesChecker
 {
     
+    /**
+     *
+     * @var DBManager
+     */
     protected $db;
     
+    /**
+     * 
+     * @param DBManager $db
+     */
     public function __construct(DBManager $db) {
         $this->db = $db;
     }
-    
+        
+    /**
+     * 
+     * @param bool|null $result
+     * @param array $action
+     * @param SugarBean $module
+     * @param string $userId
+     * @param SharedSecurityRulesHelper $helper
+     * @param array $rule
+     * @param SugarBean $moduleBean
+     * @param string $view
+     * @return bool|null
+     */
     protected function updateResultByRule($result, &$action, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
     {
         $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' AND sharedsecurityrulesactions.deleted = '0'";
@@ -71,6 +91,18 @@ class SharedSecurityRulesChecker
         return $result;
     }
     
+    /**
+     * 
+     * @param bool|null $result
+     * @param array $action
+     * @param SugarBean $module
+     * @param string $userId
+     * @param SharedSecurityRulesHelper $helper
+     * @param array $rule
+     * @param SugarBean $moduleBean
+     * @param string $view
+     * @return bool|null
+     */
     protected function updateResultByEmailTargetType($result, $action, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
     {
         foreach ($action['parameters']['email_target_type'] as $key => $targetType) {
@@ -184,7 +216,12 @@ class SharedSecurityRulesChecker
         return $userRoleResultsAssoc;
     }
     
-    public function getModuleBean($module) {
+    /**
+     * 
+     * @param SugarBean $module
+     * @return SugarBean
+     */
+    public function getModuleBean(SugarBean $module) {
         
         $class = get_class($module);
         LoggerManager::getLogger()->info('SharedSecurityRules: Class is: ' . $class);
@@ -201,7 +238,15 @@ class SharedSecurityRulesChecker
         return $moduleBean;
     }
     
-    public function getResult($module, $moduleBean, $userId, $view) {
+    /**
+     * 
+     * @param SugarBean $module
+     * @param SugarBean $moduleBean
+     * @param string $userId
+     * @param string $view
+     * @return boolean|null
+     */
+    public function getResult(SugarBean $module, SugarBean $moduleBean, $userId, $view) {
 
         $helper = new SharedSecurityRulesHelper($this->db);
         
@@ -232,5 +277,7 @@ class SharedSecurityRulesChecker
         }
 
         LoggerManager::getLogger()->info('SharedSecurityRules: Exiting CheckRules with result: ' . $converted_res . ' for view: ' . $view . ' and action: ' . $action['parameters']['accesslevel'][$key]);
+        
+        return $result;
     }
 }

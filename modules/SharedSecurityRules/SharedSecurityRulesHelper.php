@@ -53,6 +53,10 @@ class SharedSecurityRulesHelper
      */
     protected $db;
     
+    /**
+     * 
+     * @param DBManager $db
+     */
     public function __construct(DBManager $db)
     {
         $this->db = $db;
@@ -151,6 +155,13 @@ class SharedSecurityRulesHelper
         return false;
     }
     
+    /**
+     * 
+     * @param bool $overallResult
+     * @param string $nextConditionLogicOperator
+     * @return boolean
+     * @throws SharedSecurityRulesHelperException
+     */
     protected function getResultByLogicOp($overallResult, $nextConditionLogicOperator)
     {
         if ($overallResult) {

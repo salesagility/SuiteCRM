@@ -44,6 +44,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SharedSecurityRulesWhereBuilder
 {
+    /**
+     * 
+     * @param array $action
+     * @param string $key
+     * @return mixed
+     */
     protected function getTargetType($action, $key)
     {
         if (!isset($action['parameters']['email_target_type'][$key])) {
@@ -55,6 +61,12 @@ class SharedSecurityRulesWhereBuilder
         return $targetType;
     }
     
+    /**
+     * 
+     * @param string $where
+     * @param string $parenthesis
+     * @param string $logOp
+     */
     protected function addParenthesisToWhere(&$where, $parenthesis, $logOp = null)
     {
         if (empty($where)) {
@@ -67,6 +79,13 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
+    /**
+     * 
+     * @param string $where
+     * @param string $parenthesis
+     * @param array $condition
+     * @param string $conditionQuery
+     */
     protected function updateWhereAndParenthesis(&$where, &$parenthesis, $condition, $conditionQuery)
     {
         if ($condition['parenthesis'] == "START") {
@@ -93,7 +112,16 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
-    protected function getUidByTargetType($targetType, $action, $key, $userId, $module)
+    /**
+     * 
+     * @param string $targetType
+     * @param array $action
+     * @param string $key
+     * @param string $userId
+     * @param SugarBean $module
+     * @return string
+     */
+    protected function getUidByTargetType($targetType, $action, $key, $userId, SugarBean $module)
     {
         if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
             $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$userId}' AND acl_roles_users.deleted = '0'";
@@ -126,7 +154,15 @@ class SharedSecurityRulesWhereBuilder
         return $uid;
     }
     
-    protected function checkTargetLevelUid($action, $userId, $module, &$accessLevel)
+    /**
+     * 
+     * @param array $action
+     * @param string $userId
+     * @param SugarBean $module
+     * @param string $accessLevel
+     * @return boolean
+     */
+    protected function checkTargetLevelUid($action, $userId, SugarBean $module, &$accessLevel)
     {
         foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
             $targetType = $this->getTargetType($action, $key);
@@ -140,7 +176,15 @@ class SharedSecurityRulesWhereBuilder
         return false;
     }
     
-    protected function checkIfActionIsUser($action, $userId, $module, &$accessLevel)
+    /**
+     * 
+     * @param array $action
+     * @param string $userId
+     * @param SugarBean $module
+     * @param string $accessLevel
+     * @return boolean
+     */
+    protected function checkIfActionIsUser($action, $userId, SugarBean $module, &$accessLevel)
     {
         if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || is_object($action['parameters']['email_target_type']))) {
             LoggerManager::getLogger()->warn('Incorrect action parameter: email_target_type');
@@ -156,6 +200,11 @@ class SharedSecurityRulesWhereBuilder
         return false;
     }
     
+    /**
+     * 
+     * @param string $serialized
+     * @return string
+     */
     protected function unserializeIfSerialized($serialized)
     {
         $unserialized = unserialize(base64_decode($serialized));
@@ -165,7 +214,13 @@ class SharedSecurityRulesWhereBuilder
         return $serialized;
     }
     
-    
+    /**
+     * 
+     * @param string $accessLevel
+     * @param string $where
+     * @param string $resWhere
+     * @param string $addWhere
+     */
     protected function updateWhereResults($accessLevel, $where, &$resWhere, &$addWhere)
     {
         if ($accessLevel == 'none') {
@@ -175,7 +230,15 @@ class SharedSecurityRulesWhereBuilder
         }
     }
 
-    protected function updateActionAccess($module, &$actions_results, $userId, &$accessLevel, &$actionIsUser)
+    /**
+     * 
+     * @param SugarBean $module
+     * @param resource $actions_results
+     * @param string $userId
+     * @param string $accessLevel
+     * @param boolean $actionIsUser
+     */
+    protected function updateActionAccess(SugarBean $module, &$actions_results, $userId, &$accessLevel, &$actionIsUser)
     {
         while (($action = $module->db->fetchByAssoc($actions_results)) != null) {
             $action['parameters'] = $this->unserializeIfSerialized($action['parametes']);
@@ -186,7 +249,14 @@ class SharedSecurityRulesWhereBuilder
         }
     }
 
-    protected function updateRelated(&$related, $condition, $rule, $module)
+    /**
+     * 
+     * @param bool $related
+     * @param array $condition
+     * @param array $rule
+     * @param SugarBean $module
+     */
+    protected function updateRelated(&$related, $condition, $rule, SugarBean $module)
     {
         if ($condition['module_path'][0] != $rule['flow_module']) {
             foreach ($condition['module_path'] as $rel) {
@@ -199,7 +269,12 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
-    protected function updateCondValue(&$condition, $module)
+    /**
+     * 
+     * @param array $condition
+     * @param SugarBean $module
+     */
+    protected function updateCondValue(&$condition, SugarBean $module)
     {
         if ($condition['value_type'] == "Field" &&
                                     isset($module->{$condition['value']}) &&
@@ -208,7 +283,18 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
-    protected function processConditions($conditions_results, $module, &$related, $rule, $accessLevel, $resWhere, $addWhere, $parenthesis)
+    /**
+     * 
+     * @param resource $conditions_results
+     * @param SugarBean $module
+     * @param bool $related
+     * @param array $rule
+     * @param string $accessLevel
+     * @param string $resWhere
+     * @param string $addWhere
+     * @param string $parenthesis
+     */
+    protected function processConditions($conditions_results, SugarBean $module, &$related, $rule, $accessLevel, $resWhere, $addWhere, $parenthesis)
     {
         if ($conditions_results->num_rows != 0) {
             while ($condition = $module->db->fetchByAssoc($conditions_results)) {
@@ -230,6 +316,12 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
+    /**
+     * 
+     * @param SugarBean $module
+     * @param string $userId
+     * @return string
+     */
     public function getWhereArray(SugarBean $module, $userId)
     {
         $where = "";
