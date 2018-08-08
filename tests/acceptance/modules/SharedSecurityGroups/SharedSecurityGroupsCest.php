@@ -53,13 +53,14 @@ use Step\Acceptance\ListView;
  *
  * @author gyula
  */
-class SharedSecurityGroupsCest {
-    
+class SharedSecurityGroupsCest
+{
     const WAITING_DELAY = 5;
     
     // ---- common parts of all jobs
     
-    protected function clearSearch(AcceptanceTester $I) {
+    protected function clearSearch(AcceptanceTester $I)
+    {
         // delete the search settings, if other test DID NOT DOING THIS???!!!
         if (!version_compare(PHP_VERSION, '7.2', '>=') && !version_compare(PHP_VERSION, '7.0', '>=')) {
             $I->waitForElementVisible('#MassUpdate a.glyphicon.glyphicon-remove', self::WAITING_DELAY);
@@ -69,7 +70,8 @@ class SharedSecurityGroupsCest {
         return false;
     }
     
-    protected function goToAccountsPage(AcceptanceTester $I) {
+    protected function goToAccountsPage(AcceptanceTester $I)
+    {
         $allMenuButton = '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav.all';
         $I->waitForElementVisible($allMenuButton, self::WAITING_DELAY);
         $I->click('All', $allMenuButton);
@@ -79,7 +81,8 @@ class SharedSecurityGroupsCest {
         $I->waitForElementVisible('#pagecontent', self::WAITING_DELAY);
     }
     
-    protected function doLogout(AcceptanceTester $I) {
+    protected function doLogout(AcceptanceTester $I)
+    {
         $I->waitForElementVisible('#with-label > span:nth-child(2)');
         $I->click('#with-label > span:nth-child(2)');
         $I->waitForElementVisible('.desktop-bar #logout_link');
@@ -87,7 +90,8 @@ class SharedSecurityGroupsCest {
         $I->waitForElementVisible('#bigbutton', self::WAITING_DELAY);
     }
     
-    protected function doLogin(AcceptanceTester $I, WebDriverHelper $w, $usr, $pwd) {
+    protected function doLogin(AcceptanceTester $I, WebDriverHelper $w, $usr, $pwd)
+    {
         $I->amOnUrl($w->getInstanceURL());
         $I->seeElement('#loginform');
         $I->fillField('#user_name', $usr);
@@ -100,21 +104,22 @@ class SharedSecurityGroupsCest {
     
     // --- Admin jobs
     
-    protected function cleanUpAccounts(AcceptanceTester $I) {
+    protected function cleanUpAccounts(AcceptanceTester $I)
+    {
         
         // we are going to accounts module and clean up
         
         // go to accounts
-        $this->goToAccountsPage($I); 
+        $this->goToAccountsPage($I);
         if ($this->clearSearch($I)) {
-            // go to detail view        
+            // go to detail view
             $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
             $I->click('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a');
             // delete it
             $I->click('ACTIONS', '#tab-actions');
             $I->waitForElementVisible('#tab-actions > .dropdown-menu', self::WAITING_DELAY);
             $I->click('#delete_button');
-            $I->acceptPopup(); 
+            $I->acceptPopup();
             // repeat...
             // go to detail view
             $I->waitForElementVisible('#MassUpdate > div.list-view-rounded-corners > table > tbody > tr > td:nth-child(3) > b > a', self::WAITING_DELAY);
@@ -128,7 +133,8 @@ class SharedSecurityGroupsCest {
         }
     }
     
-    protected function cleanUpSharedRule(AcceptanceTester $I, Administration $a) {
+    protected function cleanUpSharedRule(AcceptanceTester $I, Administration $a)
+    {
         
         // delete shared rule
         $a->gotoAdministration();
@@ -140,20 +146,19 @@ class SharedSecurityGroupsCest {
         $I->click('ACTIONS', '#tab-actions');
         $I->waitForElementVisible('#tab-actions > .dropdown-menu', self::WAITING_DELAY);
         $I->click('#delete_button');
-        $I->acceptPopup(); 
-        
+        $I->acceptPopup();
     }
 
 
-    protected function cleanUpAfterTestedSharedSecurityGroups(AcceptanceTester $I, Administration $a) {
-        
+    protected function cleanUpAfterTestedSharedSecurityGroups(AcceptanceTester $I, Administration $a)
+    {
         $this->cleanUpSharedRule($I, $a);
         $this->cleanUpAccounts($I);
-        
     }
     
     
-    protected function createSharedSecurityRule(AcceptanceTester $I, Administration $a) {
+    protected function createSharedSecurityRule(AcceptanceTester $I, Administration $a)
+    {
                 
         // we are goint to create a shared sec rule (filtered by account name contains 'foo')
         $a->gotoAdministration();
@@ -180,7 +185,8 @@ class SharedSecurityGroupsCest {
         $I->see('foo');
     }
 
-    protected function createTestAccounts(AcceptanceTester $I, Administration $a) {
+    protected function createTestAccounts(AcceptanceTester $I, Administration $a)
+    {
         
         // we are going to create an account with name contains 'foo'
         
@@ -207,15 +213,15 @@ class SharedSecurityGroupsCest {
         $I->fillField('#name', 'test acc2');
         $I->waitForElementVisible('#SAVE', self::WAITING_DELAY);
         $I->click('#SAVE');
-        
     }
     
     // --- Mr Tester jobs
     
-    protected function firstLoginWithMrTester(AcceptanceTester $I, Administration $a, WebDriverHelper $w) {
+    protected function firstLoginWithMrTester(AcceptanceTester $I, Administration $a, WebDriverHelper $w)
+    {
         
         // now we are going to login with the tester user (use the following code if it is the first login)
-        // 
+        //
         $I->waitForElementVisible('#next_tab_personalinfo', self::WAITING_DELAY);
         $I->click('#next_tab_personalinfo'); // next..
         $I->waitForElementVisible('#next_tab_locale', self::WAITING_DELAY);
@@ -224,7 +230,6 @@ class SharedSecurityGroupsCest {
         $I->click('#next_tab_finish'); // next..
         $I->waitForElementVisible('#finish > div:nth-child(2) > input:nth-child(2)', self::WAITING_DELAY);
         $I->click('#finish > div:nth-child(2) > input:nth-child(2)'); // finish..
-        
     }
 
     public function testSharedSecurityGroups(
@@ -233,7 +238,6 @@ class SharedSecurityGroupsCest {
         Administration $a,
         WebDriverHelper $w
     ) {
-        
         $I->amOnUrl($w->getInstanceURL());
         
         // (only for tessting: apply the following lines to run only this one test)
@@ -276,7 +280,5 @@ class SharedSecurityGroupsCest {
         $I->amOnUrl($w->getInstanceURL());
         $this->doLogin($I, $w, $I->getAdminUser(), $I->getAdminPassword());
         $this->cleanUpAfterTestedSharedSecurityGroups($I, $a);
-        
     }
-    
 }
