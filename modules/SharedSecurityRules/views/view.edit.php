@@ -108,6 +108,41 @@ class SharedSecurityRulesViewEdit extends ViewEdit
 
         parent::preDisplay();
     }
+    
+    /**
+     *
+     * @param SugarBean $currentBean
+     * @param string $field
+     */
+    protected function getCurrentBeanFieldNameMapVNameLog(SugarBean $currentBean, $field)
+    {
+        if (!isset($currentBean->field_name_map[$field])) {
+            if (!isset($field)) {
+                LoggerManager::getLogger()->warn('editview: current bean field map index is not set');
+            } else {
+                LoggerManager::getLogger()->warn('editview: current bean field map is not set at index: ' . $field);
+            }
+        } else {
+            LoggerManager::getLogger()->warn('editview: current bean field map index error');
+        }
+    }
+    
+    /**
+     *
+     * @param SugarBean $currentBean
+     * @param string $field
+     * @return string
+     */
+    protected function getCurrentBeanFieldNameMapVName(SugarBean $currentBean, $field)
+    {
+        $currentBeanFieldNameMapVName = null;
+        if (!isset($currentBean->field_name_map[$field]['vname'])) {
+            $this->getCurrentBeanFieldNameMapVNameLog();
+        } else {
+            $currentBeanFieldNameMapVName = $currentBean->field_name_map[$field]['vname'];
+        }
+        return $currentBeanFieldNameMapVName;
+    }
 
     /**
      *
@@ -152,20 +187,7 @@ class SharedSecurityRulesViewEdit extends ViewEdit
                 }
             }
 
-            $currentBeanFieldNamMapVName = null;
-            if (!isset($currentBean->field_name_map[$field]['vname'])) {
-                if (!isset($currentBean->field_name_map[$field])) {
-                    if (!isset($field)) {
-                        LoggerManager::getLogger()->warn('editview: current bean field map index is not set');
-                    } else {
-                        LoggerManager::getLogger()->warn('editview: current bean field map is not set at index: ' . $field);
-                    }
-                } else {
-                    LoggerManager::getLogger()->warn('editview: current bean field map index error');
-                }
-            } else {
-                $currentBeanFieldNamMapVName = $currentBean->field_name_map[$field]['vname'];
-            }
+            $currentBeanFieldNameMapVName = $this->getCurrentBeanFieldNameMapVName($currentBean, $field);
 
             $fieldDisplay = $currentBeanFieldNamMapVName;
             $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
