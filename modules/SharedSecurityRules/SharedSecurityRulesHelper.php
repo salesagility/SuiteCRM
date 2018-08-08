@@ -262,7 +262,10 @@ class SharedSecurityRulesHelper
             $nextResult = $this->db->query($nextQuery, true, "Error retrieving next condition");
             $nextRow = $this->db->fetchByAssoc($nextResult);
             $nextConditionLogicOperator = $nextRow['logic_op'];
-            $allConditions[$x]['module_path'] = $this->unserializeIfSerialized($allConditions[$x]['module_path']);
+
+            if (unserialize(base64_decode($allConditions[$x]['module_path'])) != false) {
+                $allConditions[$x]['module_path'] = unserialize(base64_decode($allConditions[$x]['module_path']));
+            }
             /* this needs to be uncommented out and checked */
 
             if ($allConditions[$x]['module_path'][0] != $rule['flow_module']) {
@@ -470,28 +473,8 @@ class SharedSecurityRulesHelper
         return false;
     }
     
-    /**
-     * 
-     * @param mixed $result
-     * @return string
-     */
     public function getConvertedRes($result) {        
         $converted_res = $result ? 'true' : 'false';
         return $converted_res;
-    }
-    
-    
-    /**
-     * 
-     * @param string $serialized
-     * @return string
-     */
-    public function unserializeIfSerialized($serialized)
-    {
-        $unserialized = unserialize(base64_decode($serialized));
-        if ($unserialized != false) {
-            $serialized = $unserialized;
-        }
-        return $serialized;
     }
 }
