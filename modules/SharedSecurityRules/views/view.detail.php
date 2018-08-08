@@ -52,7 +52,7 @@ class SharedSecurityRulesViewDetail extends ViewDetail
 {
     
     /**
-     * 
+     *
      * @return array
      */
     private function getConditionLines()
@@ -69,10 +69,8 @@ class SharedSecurityRulesViewDetail extends ViewDetail
         $result = $this->bean->db->query($sql);
         $conditions = array();
         while ($row = $this->bean->db->fetchByAssoc($result)) {
-            
             $condition_name = BeanFactory::getBean('SharedSecurityRulesConditions', $row['id']);
             if ($condition_name) {
-            
                 if ($condition_name->value_type == 'Date') {
                     $conditionNameValue = null;
                     if (!isset($condition_name->value)) {
@@ -88,7 +86,6 @@ class SharedSecurityRulesViewDetail extends ViewDetail
                 $condition_item = $condition_name->toArray();
 
                 if (!$condition_name->parenthesis) {
-                    
                     $beanFlowModule = null;
                     if (isset($this->bean->flow_module)) {
                         $beanFlowModule = $this->bean->flow_module;
@@ -102,14 +99,13 @@ class SharedSecurityRulesViewDetail extends ViewDetail
                 }
                 
                 $conditions[$condition_item['condition_order']] = $condition_item;
-                
             }
         }
         return $conditions;
     }
 
     /**
-     * 
+     *
      */
     public function preDisplay()
     {
@@ -119,9 +115,44 @@ class SharedSecurityRulesViewDetail extends ViewDetail
 
         parent::preDisplay();
     }
+    
+    /**
+     *
+     * @param SugarBean $currentBean
+     * @param string $field
+     */
+    protected function getCurrentBeanFieldNameMapVNameLog(SugarBean $currentBean, $field)
+    {
+        if (!isset($currentBean->field_name_map[$field])) {
+            if (!isset($field)) {
+                LoggerManager::getLogger()->warn('detailview: current bean field map index is not set');
+            } else {
+                LoggerManager::getLogger()->warn('detailview: current bean field map is not set at index: ' . $field);
+            }
+        } else {
+            LoggerManager::getLogger()->warn('detailview: current bean field map index error');
+        }
+    }
+    
+    /**
+     *
+     * @param SugarBean $currentBean
+     * @param string $field
+     * @return string
+     */
+    protected function getCurrentBeanFieldNameMapVName(SugarBean $currentBean, $field)
+    {
+        $currentBeanFieldNameMapVName = null;
+        if (!isset($currentBean->field_name_map[$field]['vname'])) {
+            $this->getCurrentBeanFieldNameMapVNameLog();
+        } else {
+            $currentBeanFieldNameMapVName = $currentBean->field_name_map[$field]['vname'];
+        }
+        return $currentBeanFieldNameMapVName;
+    }
 
     /**
-     * 
+     *
      * @global array $app_list_strings
      * @param string $modulePath
      * @param string $field
@@ -163,22 +194,9 @@ class SharedSecurityRulesViewDetail extends ViewDetail
                 }
             }
             
-            $currentBeanFieldNamMapVName = null;
-            if (!isset($currentBean->field_name_map[$field]['vname'])) {
-                if (!isset($currentBean->field_name_map[$field])) {
-                    if (!isset($field)) {
-                        LoggerManager::getLogger()->warn('detailview: current bean field map index is not set');
-                    } else {
-                        LoggerManager::getLogger()->warn('detailview: current bean field map is not set at index: ' . $field);
-                    }
-                } else {
-                    LoggerManager::getLogger()->warn('detailview: current bean field map index error');
-                }
-            } else {
-                $currentBeanFieldNamMapVName = $currentBean->field_name_map[$field]['vname'];
-            }
+            $currentBeanFieldNameMapVName = $this->getCurrentBeanFieldNameMapVName($currentBean, $field);
             
-            $fieldDisplay = $currentBeanFieldNamMapVName;
+            $fieldDisplay = $currentBeanFieldNameMapVName;
             $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
             $fieldDisplay = trim($fieldDisplay, ':');
             foreach ($modulePathDisplay as &$module) {
