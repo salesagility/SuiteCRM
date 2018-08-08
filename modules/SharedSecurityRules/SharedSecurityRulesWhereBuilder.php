@@ -199,6 +199,37 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
+    public function updateCondValue(&$condition, $module)
+    {
+        if ($condition['value_type'] == "Field" &&
+                                    isset($module->{$condition['value']}) &&
+                                    !empty($module->{$condition['value']})) {
+            $condition['value'] = $module->{$condition['value']};
+        }
+    }
+    
+    public function processConditions($conditions_results, $module, &$related, $rule, $accessLevel, $resWhere, $addWhere, $parenthesis)
+    {
+        if ($conditions_results->num_rows != 0) {
+            while ($condition = $module->db->fetchByAssoc($conditions_results)) {
+                $condition['module_path'] = $this->unserializeIfSerialized($condition['module_path']);
+
+                $this->updateRelated($related, $condition, $rule, $module);
+
+                if ($related == false) {
+                    $this->updateCondValue($condition, $module);
+                    $value = $condition['value'];
+                    $operatorValue = SharedSecurityRules::changeOperator($condition['operator'], $value, $accessLevel == 'none');
+                    $table = $module->table_name . ($module->field_defs[$condition['field']]['source'] == "custom_fields" ? '_cstm' : '');
+                    $conditionQuery = " " . $table . "." . $condition['field'] . " " . $operatorValue . " ";
+                    $where = $accessLevel == 'none' ? $resWhere : $addWhere;
+                    $this->updateWhereAndParenthesis($where, $parenthesis, $condition, $conditionQuery);
+                    $this->updateWhereResults($accessLevel, $where, $resWhere, $addWhere);
+                }
+            }
+        }
+    }
+    
     public function getWhereArray(SugarBean $module, $userId)
     {
         $where = "";
@@ -217,28 +248,7 @@ class SharedSecurityRulesWhereBuilder
                 $sql_query = "SELECT * FROM sharedsecurityrulesconditions WHERE sharedsecurityrulesconditions.sa_shared_sec_rules_id = '{$rule['id']}' AND sharedsecurityrulesconditions.deleted = '0' ORDER BY sharedsecurityrulesconditions.condition_order ASC ";
                 $conditions_results = $module->db->query($sql_query);
                 $related = false;
-                if ($conditions_results->num_rows != 0) {
-                    while ($condition = $module->db->fetchByAssoc($conditions_results)) {
-                        $condition['module_path'] = $this->unserializeIfSerialized($condition['module_path']);
-
-                        $this->updateRelated($related, $condition, $rule, $module);
-
-                        if ($related == false) {
-                            if ($condition['value_type'] == "Field" &&
-                                    isset($module->{$condition['value']}) &&
-                                    !empty($module->{$condition['value']})) {
-                                $condition['value'] = $module->{$condition['value']};
-                            }
-                            $value = $condition['value'];
-                            $operatorValue = SharedSecurityRules::changeOperator($condition['operator'], $value, $accessLevel == 'none');
-                            $table = $module->table_name . ($module->field_defs[$condition['field']]['source'] == "custom_fields" ? '_cstm' : '');
-                            $conditionQuery = " " . $table . "." . $condition['field'] . " " . $operatorValue . " ";
-                            $where = $accessLevel == 'none' ? $resWhere : $addWhere;
-                            $this->updateWhereAndParenthesis($where, $parenthesis, $condition, $conditionQuery);
-                            $this->updateWhereResults($accessLevel, $where, $resWhere, $addWhere);
-                        }
-                    }
-                }
+                $this->processConditions($conditions_results, $module, $related, $rule, $accessLevel, $resWhere, $addWhere, $parenthesis);
             }
         }
         $whereArray = array();
