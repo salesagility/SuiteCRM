@@ -399,62 +399,26 @@ class SharedSecurityRulesHelper
         LoggerManager::getLogger()->info('SharedSecurityRules: In checkOperator() with row: ' . $rowField . ' field: ' . $field . ' operator: ' . $operator);
         switch ($operator) {
             case "Equal_To":
-                if (strcasecmp($rowField, $field) == 0) {
-                    return true;
-                }
-                break;
+                return strcasecmp($rowField, $field) == 0;
             case "Not_Equal_To":
-                if (strcasecmp($rowField, $field) != 0) {
-                    return true;
-                }
-                break;
+                return strcasecmp($rowField, $field) != 0;
             case "Starts_With":
-                if (substr($rowField, 0, strlen($field)) === $field) {
-                    return true;
-                }
-                break;
+                return substr($rowField, 0, strlen($field)) === $field;
             case "Ends_With":
-                if (substr($rowField, -strlen($field)) === $field) {
-                    return true;
-                }
-                break;
+                return substr($rowField, -strlen($field)) === $field;
             case "Contains":
-                if (strpos($rowField, $field) !== false) {
-                    return true;
-                }
-                break;
-
+                return strpos($rowField, $field) !== false;
             case "Greater_Than":
-                if ($rowField > $field) {
-                    return true;
-                }
-                break;
-
+                return $rowField > $field;
             case "Less_Than":
-                if ($rowField < $field) {
-                    return true;
-                }
-                break;
-
+                return $rowField < $field;
             case "Greater_Than_or_Equal_To":
-                if ($rowField >= $field) {
-                    return true;
-                }
-                break;
-
+                return $rowField >= $field;
             case "Less_Than_or_Equal_To":
-                if ($rowField <= $field) {
-                    return true;
-                }
-                break;
-
+                return $rowField <= $field;
             case "is_null":
-                if ($rowField == null || $rowField == "") {
-                    return true;
-                }
-                break;
+                return $rowField == null || $rowField == "";
         }
-
         return false;
     }
 
