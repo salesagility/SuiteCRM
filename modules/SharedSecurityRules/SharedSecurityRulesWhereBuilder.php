@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SharedSecurityRulesWhereBuilder
 {
-    public function getTargetType($action, $key)
+    protected function getTargetType($action, $key)
     {
         if (!isset($action['parameters']['email_target_type'][$key])) {
             LoggerManager::getLogger()->warn('action parameter email_target_type si not set at key: ' . $key);
@@ -55,7 +55,7 @@ class SharedSecurityRulesWhereBuilder
         return $targetType;
     }
     
-    public function addParenthesisToWhere(&$where, $parenthesis, $logOp = null)
+    protected function addParenthesisToWhere(&$where, $parenthesis, $logOp = null)
     {
         if (empty($where)) {
             $where = $parenthesis;
@@ -67,7 +67,7 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
-    public function updateWhereAndParenthesis(&$where, &$parenthesis, $condition, $conditionQuery)
+    protected function updateWhereAndParenthesis(&$where, &$parenthesis, $condition, $conditionQuery)
     {
         if ($condition['parenthesis'] == "START") {
             if (is_null($parenthesis)) {
@@ -93,7 +93,7 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
-    public function getUidByTargetType($targetType, $action, $key, $userId, $module)
+    protected function getUidByTargetType($targetType, $action, $key, $userId, $module)
     {
         if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
             $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$userId}' AND acl_roles_users.deleted = '0'";
@@ -126,7 +126,7 @@ class SharedSecurityRulesWhereBuilder
         return $uid;
     }
     
-    public function checkTargetLevelUid($action, $userId, $module, &$accessLevel)
+    protected function checkTargetLevelUid($action, $userId, $module, &$accessLevel)
     {
         foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
             $targetType = $this->getTargetType($action, $key);
@@ -140,7 +140,7 @@ class SharedSecurityRulesWhereBuilder
         return false;
     }
     
-    public function checkIfActionIsUser($action, $userId, $module, &$accessLevel)
+    protected function checkIfActionIsUser($action, $userId, $module, &$accessLevel)
     {
         if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || is_object($action['parameters']['email_target_type']))) {
             LoggerManager::getLogger()->warn('Incorrect action parameter: email_target_type');
@@ -156,7 +156,7 @@ class SharedSecurityRulesWhereBuilder
         return false;
     }
     
-    public function unserializeIfSerialized($serialized)
+    protected function unserializeIfSerialized($serialized)
     {
         $unserialized = unserialize(base64_decode($serialized));
         if ($unserialized != false) {
@@ -166,7 +166,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     
-    public function updateWhereResults($accessLevel, $where, &$resWhere, &$addWhere)
+    protected function updateWhereResults($accessLevel, $where, &$resWhere, &$addWhere)
     {
         if ($accessLevel == 'none') {
             $resWhere = $where;
@@ -175,7 +175,7 @@ class SharedSecurityRulesWhereBuilder
         }
     }
 
-    public function updateActionAccess($module, &$actions_results, $userId, &$accessLevel, &$actionIsUser)
+    protected function updateActionAccess($module, &$actions_results, $userId, &$accessLevel, &$actionIsUser)
     {
         while (($action = $module->db->fetchByAssoc($actions_results)) != null) {
             $action['parameters'] = $this->unserializeIfSerialized($action['parametes']);
@@ -186,7 +186,7 @@ class SharedSecurityRulesWhereBuilder
         }
     }
 
-    public function updateRelated(&$related, $condition, $rule, $module)
+    protected function updateRelated(&$related, $condition, $rule, $module)
     {
         if ($condition['module_path'][0] != $rule['flow_module']) {
             foreach ($condition['module_path'] as $rel) {
@@ -199,7 +199,7 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
-    public function updateCondValue(&$condition, $module)
+    protected function updateCondValue(&$condition, $module)
     {
         if ($condition['value_type'] == "Field" &&
                                     isset($module->{$condition['value']}) &&
@@ -208,7 +208,7 @@ class SharedSecurityRulesWhereBuilder
         }
     }
     
-    public function processConditions($conditions_results, $module, &$related, $rule, $accessLevel, $resWhere, $addWhere, $parenthesis)
+    protected function processConditions($conditions_results, $module, &$related, $rule, $accessLevel, $resWhere, $addWhere, $parenthesis)
     {
         if ($conditions_results->num_rows != 0) {
             while ($condition = $module->db->fetchByAssoc($conditions_results)) {

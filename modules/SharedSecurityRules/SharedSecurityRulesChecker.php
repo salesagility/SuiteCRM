@@ -53,7 +53,7 @@ class SharedSecurityRulesChecker
         $this->db = $db;
     }
     
-    public function updateResultByRule($result, &$action, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
+    protected function updateResultByRule($result, &$action, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
     {
         $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' AND sharedsecurityrulesactions.deleted = '0'";
         $actions_results = $module->db->query($sql_query);
@@ -71,7 +71,7 @@ class SharedSecurityRulesChecker
         return $result;
     }
     
-    public function updateResultByEmailTargetType($result, $action, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
+    protected function updateResultByEmailTargetType($result, $action, SugarBean $module, $userId, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view)
     {
         foreach ($action['parameters']['email_target_type'] as $key => $targetType) {
             if (!isset($action['parameters']['email'][$key]['0'])) {
@@ -114,7 +114,7 @@ class SharedSecurityRulesChecker
      * @param SugarBean $module
      * @return boolean|null
      */
-    public function getResultByUserActionKey($result, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $action, $key, $userId, SugarBean $module)
+    protected function getResultByUserActionKey($result, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $action, $key, $userId, SugarBean $module)
     {
         $actionParamEmail1 = null;
         if (!isset($action['parameters']['email'][$key]['1'])) {
@@ -150,7 +150,7 @@ class SharedSecurityRulesChecker
      * @param string $key
      * @return boolean|null
      */
-    public function updateResultByCondition($result, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view, $action, $key)
+    protected function updateResultByCondition($result, SharedSecurityRulesHelper $helper, $rule, SugarBean $moduleBean, $view, $action, $key)
     {
         $conditionResult = $helper->checkConditions($rule, $moduleBean, $view, $action, $key);
         if ($conditionResult) {
@@ -174,7 +174,7 @@ class SharedSecurityRulesChecker
      * @param string $currentUserId
      * @return array
      */
-    public function getUsertRuleResultsAssoc(SugarBean $module, $actionParamEmail2, $currentUserId)
+    protected function getUsertRuleResultsAssoc(SugarBean $module, $actionParamEmail2, $currentUserId)
     {
         $actionParamEmail2Q = $module->db->quote($actionParamEmail2);
         $currentUserIdQuote = $module->db->quote($currentUserId);

@@ -83,7 +83,7 @@ class SharedSecurityRulesHelper
      * @param array $allConditionsResults
      * @return array
      */
-    private function getParenthesisConditions($originalCondition, $allConditionsResults)
+    protected function getParenthesisConditions($originalCondition, $allConditionsResults)
     {
         LoggerManager::getLogger()->info('SharedSecurityRules: Entering getParenthesisConditions()');
         // Just get the conditions we need to check for this
@@ -115,7 +115,7 @@ class SharedSecurityRulesHelper
      * @param string $key
      * @return boolean
      */
-    private function checkParenthesisConditions($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key)
+    protected function checkParenthesisConditions($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key)
     {
         LoggerManager::getLogger()->info('SharedSecurityRules: Entering checkParenthesisConditions()');
 
@@ -151,7 +151,7 @@ class SharedSecurityRulesHelper
         return false;
     }
     
-    private function getResultByLogicOp($overallResult, $nextConditionLogicOperator)
+    protected function getResultByLogicOp($overallResult, $nextConditionLogicOperator)
     {
         if ($overallResult) {
             if ($nextConditionLogicOperator === "AND") {
@@ -185,7 +185,7 @@ class SharedSecurityRulesHelper
      * @param boolean $result
      * @return boolean
      */
-    private function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false)
+    protected function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false)
     {
         global $current_user;
 
@@ -368,7 +368,7 @@ class SharedSecurityRulesHelper
      *
      * @return bool
      */
-    private function checkOperator($rowField, $field, $operator)
+    protected function checkOperator($rowField, $field, $operator)
     {
         LoggerManager::getLogger()->info('SharedSecurityRules: In checkOperator() with row: ' . $rowField . ' field: ' . $field . ' operator: ' . $operator);
         switch ($operator) {
