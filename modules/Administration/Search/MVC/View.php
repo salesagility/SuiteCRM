@@ -127,14 +127,6 @@ EOQ;
         return $this->smarty;
     }
 
-    protected function getSearchControllers()
-    {
-        return [
-            'Search' => 'Search (new)',
-            'UnifiedSearch' => 'Global Unified Search (legacy)'
-        ];
-    }
-
     protected function getEngines()
     {
         $engines = [];

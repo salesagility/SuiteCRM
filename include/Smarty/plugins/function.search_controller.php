@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,54 +37,16 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+use SuiteCRM\Search\SearchWrapper;
 
-function install_es()
+/**
+ * This smarty function will generate a hidden input with the configured search controller as an action.
+ *
+ * @return string
+ */
+function smarty_function_search_controller()
 {
-    require_once('modules/Administration/Administration.php');
-
-    global $sugar_config;
-
-    $sugar_config['search']['ElasticSearch']['enabled'] = false;
-    $sugar_config['search']['ElasticSearch']['host'] = 'localhost';
-    $sugar_config['search']['ElasticSearch']['user'] = '';
-    $sugar_config['search']['ElasticSearch']['pass'] = '';
-
-    ksort($sugar_config);
-    write_array_to_file('sugar_config', $sugar_config, 'config.php');
-
-    installESHooks();
-}
-
-function installESHooks()
-{
-    require_once('ModuleInstall/ModuleInstaller.php');
-
-    $hooks = array(
-        array(
-            'module' => '',
-            'hook' => 'after_save',
-            'order' => 1,
-            'description' => 'ElasticSearch Index Changes',
-            'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
-            'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
-            'function' => 'beanSaved',
-        ),
-        array(
-            'module' => '',
-            'hook' => 'after_delete',
-            'order' => 1,
-            'description' => 'ElasticSearch Index Changes',
-            'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
-            'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
-            'function' => 'beanDeleted',
-        ),
-    );
-
-    foreach ($hooks as $hook) {
-        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
-    }
-
+    $controller = SearchWrapper::getController();
+    $input = "<input type='hidden' class='form-control' name='action' value='$controller'>";
+    return $input;
 }

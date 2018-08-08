@@ -38,8 +38,8 @@
 <h1 class="module-title-text">Search</h1>
 
 <form id="search-wrapper-form">
-    {*hidden inputs to handle actions*}
-    <input name="action" value="Search" type="hidden">
+    {*hidden input to handle actions*}
+    {search_controller}
 
     <div class="row">
         <div class="col-md-6 msfcol">

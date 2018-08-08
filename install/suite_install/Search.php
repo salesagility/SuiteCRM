@@ -1,5 +1,6 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,35 +38,76 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 30/07/18
- * Time: 14:35
- */
-
-namespace SuiteCRM\Modules\Administration\Search;
-
-use SuiteCRM\Search\SearchWrapper;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class View extends MVC\View
+require_once('modules/Administration/Administration.php');
+
+/**
+ * Configure defaults for the SearchWrapper.
+ */
+function install_search()
 {
-    public function __construct()
-    {
-        parent::__construct(__DIR__ . '/view.tpl');
+    global $sugar_config;
+
+    $sugar_config['search']['controller'] = 'UnifiedSearch';
+    $sugar_config['search']['default_engine'] = 'ElasticSearchEngine';
+    $sugar_config['search']['modules'] = [
+        'Accounts', 'Calls', 'Cases', 'Contacts', 'Documents', 'Leads', 'Meetings', 'Notes', 'Opportunities'
+    ];
+
+    ksort($sugar_config);
+    write_array_to_file('sugar_config', $sugar_config, 'config.php');
+}
+
+/**
+ * Configure defaults for Elasticsearch and installs logic hooks.
+ */
+function install_es()
+{
+    global $sugar_config;
+
+    $sugar_config['search']['ElasticSearch'] = [
+        'enabled' => false,
+        'host' => 'localhost',
+        'user' => '',
+        'pass' => '',
+    ];
+
+    ksort($sugar_config);
+    write_array_to_file('sugar_config', $sugar_config, 'config.php');
+
+    installESHooks();
+}
+
+function installESHooks()
+{
+    require_once('ModuleInstall/ModuleInstaller.php');
+
+    $hooks = array(
+        array(
+            'module' => '',
+            'hook' => 'after_save',
+            'order' => 1,
+            'description' => 'ElasticSearch Index Changes',
+            'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
+            'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
+            'function' => 'beanSaved',
+        ),
+        array(
+            'module' => '',
+            'hook' => 'after_delete',
+            'order' => 1,
+            'description' => 'ElasticSearch Index Changes',
+            'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
+            'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
+            'function' => 'beanDeleted',
+        ),
+    );
+
+    foreach ($hooks as $hook) {
+        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
     }
 
-    public function preDisplay()
-    {
-        parent::preDisplay();
-
-        $this->smarty->assign('selectedController', SearchWrapper::getController());
-        $this->smarty->assign('selectedEngine', SearchWrapper::getDefaultEngine());
-        $this->smarty->assign('engines', $this->getEngines());
-        $this->smarty->assign('modules', $this->getModules());
-    }
 }

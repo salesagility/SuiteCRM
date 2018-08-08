@@ -115,18 +115,11 @@ class Controller extends AbstractController
          * Long story short, I am redirecting to the admin panel too.
          */
 
-        //header('Location: index.php?module=Administration&action=ElasticSearchSettings');
-        header('Location: index.php?module=Administration&action=index');
-
-        die;
+        $this->redirect('index.php?module=Administration&action=index');
     }
 
     public function doTestConnection()
     {
-        ob_clean(); // deletes the rest of the html previous to this.
-
-        header('Content-Type: application/json');
-
         $input = INPUT_POST;
 
         $host = filter_input($input, 'host', FILTER_SANITIZE_STRING);
@@ -159,9 +152,7 @@ class Controller extends AbstractController
             $return['errorType'] = get_class($e);
         }
 
-        echo json_encode($return);
-
-        die;
+        $this->yieldJson($return);
     }
 
     public function doFullIndex()
@@ -181,8 +172,6 @@ class Controller extends AbstractController
      */
     private function scheduleIndex($partial)
     {
-        ob_clean(); // deletes the rest of the html previous to this.
-
         $job = new SchedulersJob();
 
         $job->name = 'Index requested by an administrator';
@@ -194,8 +183,7 @@ class Controller extends AbstractController
         /** @noinspection PhpParamsInspection */
         $queue->submitJob($job);
 
-        echo 'success';
-        die;
+        $this->yieldJson(['status' => 'success']);
     }
 
     public function getElasticsearchIndexingSchedulers()

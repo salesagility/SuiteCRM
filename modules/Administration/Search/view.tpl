@@ -53,7 +53,7 @@
                     <div class="form-group">
                         <label for="search-controller">{sugar_translate label="LBL_SEARCH_CONTROLLER"}</label>
                         {html_options
-                        options=$controllers
+                        options=$APP_LIST.search_controllers
                         selected=$selectedController
                         id="search-controller"
                         name="search-controller"
@@ -89,9 +89,10 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">{sugar_translate label="LBL_SEARCH_MODULES"}</div>
                 <div class="panel-body tab-content">
-                    <label>{sugar_translate label="LBL_SEARCH_CONTROLLER"}</label>
+                    <div class="alert alert-warning">NOT YET IMPLEMENTED</div>
+                    <label>{sugar_translate label="LBL_SEARCH_MODULES"}</label>
                     <p>
-                        <small class="form-text text-muted">{sugar_translate label="LBL_SEARCH_CONTROLLER_HELP"}</small>
+                        <small class="form-text text-muted">{sugar_translate label="LBL_SEARCH_MODULES_HELP"}</small>
                     </p>
                     <div class="modules-container">
                         {foreach from=$modules item=name key=key}
@@ -107,7 +108,6 @@
     </div>
 
     <div>
-        <button class="button primary">SAVE</button>
         {$BUTTONS}
     </div>
 

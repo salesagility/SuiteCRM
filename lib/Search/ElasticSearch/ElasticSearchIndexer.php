@@ -66,8 +66,6 @@ class ElasticSearchIndexer extends AbstractIndexer
     use IndexingStatisticsTrait;
     use IndexingLockFileTrait;
 
-    /** @var string File containing a timestamp of the last (complete or differential) indexing. */
-    const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
     /** @var string The name of the Elasticsearch index to use. */
     private $index = 'main';
     /** @var Client */
@@ -609,22 +607,22 @@ class ElasticSearchIndexer extends AbstractIndexer
             return true;
         }
 
-        $i = new self();
-        $i->getLogger()->debug('Starting scheduled job');
+        $indexer = new self();
+        $indexer->getLogger()->debug('Starting scheduled job');
 
-        $i->setDifferentialIndexingEnabled(
+        $indexer->setDifferentialIndexingEnabled(
             isset($options['partial']) ? $options['partial'] : true
         );
 
         try {
-            $i->index();
+            $indexer->index();
         } catch (\Exception $e) {
-            $i->getLogger()->error('An error has occurred while running a scheduled indexing');
-            $i->getLogger()->error($e);
+            $indexer->getLogger()->error('An error has occurred while running a scheduled indexing');
+            $indexer->getLogger()->error($e);
             return false;
         }
 
-        $i->getLogger()->debug('Scheduler has finished');
+        $indexer->getLogger()->debug('Scheduler has finished');
 
         return true;
     }

@@ -37,35 +37,26 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\Search\SearchTestAbstract;
+
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 30/07/18
- * Time: 14:35
+ * Date: 08/08/18
+ * Time: 10:18
  */
-
-namespace SuiteCRM\Modules\Administration\Search;
-
-use SuiteCRM\Search\SearchWrapper;
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-class View extends MVC\View
+class SearchInstallTest extends SearchTestAbstract
 {
-    public function __construct()
+    public function testConfiguredSuccessfully()
     {
-        parent::__construct(__DIR__ . '/view.tpl');
-    }
+        global $sugar_config;
 
-    public function preDisplay()
-    {
-        parent::preDisplay();
+        self::assertArrayHasKey('search', $sugar_config, 'Search config not present');
 
-        $this->smarty->assign('selectedController', SearchWrapper::getController());
-        $this->smarty->assign('selectedEngine', SearchWrapper::getDefaultEngine());
-        $this->smarty->assign('engines', $this->getEngines());
-        $this->smarty->assign('modules', $this->getModules());
+        self::assertArrayHasKey('controller', $sugar_config['search']);
+        self::assertArrayHasKey('default_engine', $sugar_config['search']);
+        self::assertArrayHasKey('modules', $sugar_config['search']);
+
+        self::assertTrue(is_array($sugar_config['search']['modules']));
     }
 }
