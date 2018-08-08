@@ -89,6 +89,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">{sugar_translate label="LBL_SEARCH_MODULES"}</div>
                 <div class="panel-body tab-content">
+                    <div class="alert alert-warning">NOT YET IMPLEMENTED</div>
                     <label>{sugar_translate label="LBL_SEARCH_MODULES"}</label>
                     <p>
                         <small class="form-text text-muted">{sugar_translate label="LBL_SEARCH_MODULES_HELP"}</small>
@@ -107,7 +108,6 @@
     </div>
 
     <div>
-        <button class="button primary">SAVE</button>
         {$BUTTONS}
     </div>
 

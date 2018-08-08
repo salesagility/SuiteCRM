@@ -50,6 +50,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use Configurator;
+
+require_once __DIR__ . '/../../Configurator/Configurator.php';
+
 class Controller extends MVC\Controller
 {
     public function __construct()
@@ -59,7 +63,18 @@ class Controller extends MVC\Controller
 
     public function doSave()
     {
-        // TODO
-        echo 'Save not yet implemented';
+        $input = INPUT_POST;
+
+        $searchController = filter_input($input, 'search-controller', FILTER_SANITIZE_STRING);
+        $searchEngine = filter_input($input, 'search-engine', FILTER_SANITIZE_STRING);
+
+        $cfg = new Configurator();
+
+        $cfg->config['search']['controller'] = $searchController;
+        $cfg->config['search']['defaultEngine'] = $searchEngine;
+
+        $cfg->saveConfig();
+
+        $this->redirect('index.php?module=Administration&action=index');
     }
 }

@@ -46,6 +46,8 @@
 
 namespace SuiteCRM\Modules\Administration\Search;
 
+use SuiteCRM\Search\SearchWrapper;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -61,7 +63,8 @@ class View extends MVC\View
     {
         parent::preDisplay();
 
-        $this->smarty->assign('selectedController', $this->getSelectedController());
+        $this->smarty->assign('selectedController', SearchWrapper::getController());
+        $this->smarty->assign('selectedEngine', SearchWrapper::getDefaultEngine());
         $this->smarty->assign('engines', $this->getEngines());
         $this->smarty->assign('modules', $this->getModules());
     }
