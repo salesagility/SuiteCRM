@@ -61,7 +61,7 @@ class View extends MVC\View
     {
         parent::preDisplay();
 
-        $this->smarty->assign('controllers', $this->getSearchControllers());
+        $this->smarty->assign('selectedController', $this->getSelectedController());
         $this->smarty->assign('engines', $this->getEngines());
         $this->smarty->assign('modules', $this->getModules());
     }

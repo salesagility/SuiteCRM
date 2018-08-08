@@ -3637,6 +3637,10 @@ $app_list_strings['oauth2_duration_units'] = [
     'month' => 'months',
 ];
 
+$app_list_strings['search_controllers'] = [
+    'Search' => 'Search (new)',
+    'UnifiedSearch' => 'Global Unified Search (legacy)'
+];
 
 
 $app_strings['LBL_DEFAULT_API_ERROR_TITLE'] = 'JSON API Error';

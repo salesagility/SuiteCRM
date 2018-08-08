@@ -127,14 +127,6 @@ EOQ;
         return $this->smarty;
     }
 
-    protected function getSearchControllers()
-    {
-        return [
-            'Search' => 'Search (new)',
-            'UnifiedSearch' => 'Global Unified Search (legacy)'
-        ];
-    }
-
     protected function getEngines()
     {
         $engines = [];
@@ -176,5 +168,23 @@ EOQ;
         }
 
         return $modules;
+    }
+
+    /**
+     * Returns the configured search controller from the sugar config.
+     *
+     * If the value is, for some reason, not set, `null` is returned.
+     *
+     * @return string|null
+     */
+    protected function getSelectedController()
+    {
+        global $sugar_config;
+
+        if (!isset($sugar_config['search']['controller'])) {
+            return null;
+        }
+
+        return $sugar_config['search']['controller'];
     }
 }

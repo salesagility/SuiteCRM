@@ -927,8 +927,8 @@ $mod_strings = array(
     'LBL_SEARCH_ENGINE' => 'Search Engine',
     'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search wrapper.',
 
-    'LBL_SEARCH_ENGINE_MODULES' => 'Search Modules',
-    'LBL_SEARCH_ENGINE_MODULES_HELP' => 'Search Modules',
+    'LBL_SEARCH_MODULES' => 'Search Modules',
+    'LBL_SEARCH_MODULES_HELP' => 'Choose which modules will be included in the search.',
 
     'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
     'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine'
