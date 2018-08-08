@@ -66,7 +66,7 @@ abstract class Controller
     }
 
     /**
-     * Handler a request by reading the request 'do' parameters.
+     * Handles a request by reading the request 'do' parameters.
      *
      * Always falls back to the 'display' method.
      */
@@ -84,9 +84,36 @@ abstract class Controller
         }
     }
 
+    /**
+     * Echoes the view.
+     */
     public function display()
     {
         $this->view->preDisplay();
         $this->view->display();
+    }
+
+    /**
+     * Performs a redirect to a page.
+     *
+     * @param string $location
+     */
+    public function redirect($location)
+    {
+        header("Location: $location");
+        exit;
+    }
+
+    /**
+     * Echoes a JSON with the proper header parameters.
+     *
+     * @param array $data
+     */
+    public function yieldJson(array $data)
+    {
+        ob_clean(); // deletes the rest of the html previous to this.
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        exit;
     }
 }
