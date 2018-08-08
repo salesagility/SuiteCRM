@@ -1,4 +1,5 @@
-{*
+<?php
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -34,33 +35,18 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- *}
-<h1 class="module-title-text">Search</h1>
+ */
 
-<form id="search-wrapper-form">
-    {*hidden input to handle actions*}
-    {search_controller}
+use SuiteCRM\Search\SearchWrapper;
 
-    <div class="row">
-        <div class="col-md-6 msfcol">
-            <label for="search-query-string" class="text-muted">Search Query</label>
-            <input type="text"
-                   name="search-query-string"
-                   id="search-query-string"
-                   placeholder="Search..."
-                   value="{$searchQueryString}"
-                   autofocus/>
-        </div>
-        <div class="col-md-2 msfcol">
-            <label for="search-query-size" class="text-muted">Results per page</label>
-            {html_options options=$sizeOptions selected=$searchQuerySize id="search-query-size" name="search-query-size"}
-        </div>
-        <div class="col-md-2 msfcol">
-            <label for="search-query-size" class="text-muted">Engine</label>
-            {html_options options=$engineOptions selected=$searchQueryEngine id="search-engine" name="search-engine"}
-        </div>
-        <div class="col-md-2 msfcol">
-            <input type="submit" value="search"/>
-        </div>
-    </div>
-</form>
+/**
+ * This smarty function will generate a hidden input with the configured search controller as an action.
+ *
+ * @return string
+ */
+function smarty_function_search_controller()
+{
+    $controller = SearchWrapper::getController();
+    $input = "<input type='hidden' class='form-control' name='action' value='$controller'>";
+    return $input;
+}
