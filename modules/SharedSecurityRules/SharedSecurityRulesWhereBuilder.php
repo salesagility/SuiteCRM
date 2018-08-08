@@ -175,6 +175,16 @@ class SharedSecurityRulesWhereBuilder
         }
     }
 
+    public function updateActionAccess($module, &$actions_results, $userId, &$accessLevel, &$actionIsUser)
+    {
+        while (($action = $module->db->fetchByAssoc($actions_results)) != null) {
+            $action['parameters'] = $this->unserializeIfSerialized($action['parametes']);
+            if ($this->checkIfActionIsUser($action, $userId, $module, $accessLevel)) {
+                $actionIsUser = true;
+                break;
+            }
+        }
+    }
 
     public function getWhereArray(SugarBean $module, $userId)
     {
@@ -189,13 +199,7 @@ class SharedSecurityRulesWhereBuilder
             $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' AND sharedsecurityrulesactions.deleted = '0'";
             $actions_results = $module->db->query($sql_query);
             $actionIsUser = false;
-            while (($action = $module->db->fetchByAssoc($actions_results)) != null) {
-                $action['parameters'] = $this->unserializeIfSerialized($action['parametes']);
-                if ($this->checkIfActionIsUser($action, $userId, $module, $accessLevel)) {
-                    $actionIsUser = true;
-                    break;
-                }
-            }
+            $this->updateActionAccess($module, $actions_results, $userId, $accessLevel, $actionIsUser);
             if ($actionIsUser == true) {
                 $sql_query = "SELECT * FROM sharedsecurityrulesconditions WHERE sharedsecurityrulesconditions.sa_shared_sec_rules_id = '{$rule['id']}' AND sharedsecurityrulesconditions.deleted = '0' ORDER BY sharedsecurityrulesconditions.condition_order ASC ";
                 $conditions_results = $module->db->query($sql_query);
