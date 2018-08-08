@@ -346,7 +346,11 @@ class SharedSecurityRulesHelper
 
         $converted_res = '';
         if (isset($result)) {
-            $converted_res = $this->getConvertedRes($result);
+            if ($result == false) {
+                $converted_res = 'false';
+            } elseif ($result == true) {
+                $converted_res = 'true';
+            }
         }
         LoggerManager::getLogger()->info('SharedSecurityRules: Exiting getConditionResult() with result: ' . $converted_res);
         return $result;
@@ -381,7 +385,11 @@ class SharedSecurityRulesHelper
         if (inDeveloperMode()) {
             $converted_res = '';
             if (isset($result)) {
-                $converted_res = $this->getConvertedRes($result);
+                if ($result == false) {
+                    $converted_res = 'false';
+                } elseif ($result == true) {
+                    $converted_res = 'true';
+                }
             }
             LoggerManager::getLogger()->info('SharedSecurityRules: Exiting checkConditions() with result: ' . $converted_res . '  ');
         }
@@ -471,10 +479,5 @@ class SharedSecurityRulesHelper
             return true;
         }
         return false;
-    }
-    
-    public function getConvertedRes($result) {        
-        $converted_res = $result ? 'true' : 'false';
-        return $converted_res;
     }
 }
