@@ -49,7 +49,7 @@ class SharedSecurityRulesController extends SugarController
 {
     
     /**
-     * 
+     *
      * @return null
      */
     public function action_fielddefs()
@@ -64,13 +64,13 @@ class SharedSecurityRulesController extends SugarController
             $matrix = new SharedSecurityRules();
             $fields = $matrix->getFieldDefs($bean->field_defs, $request['moduletype']);
         }
-        asort($fields);        
+        asort($fields);
         echo get_select_options_with_id($fields, "");
         return $this->protectedDie();
     }
 
     /**
-     * 
+     *
      * @global array $beanList
      * @global array $beanFiles
      * @return null
@@ -152,7 +152,7 @@ class SharedSecurityRulesController extends SugarController
     }
 
     /**
-     * 
+     *
      * @return null
      */
     protected function action_getModuleFieldType()
@@ -241,68 +241,95 @@ class SharedSecurityRulesController extends SugarController
         }
         return $this->protectedDie();
     }
-
+    
     /**
      * 
-     * @global array $app_list_strings
-     * @global array $beanFiles
-     * @global array $beanList
-     * @return null
+     * @param array $request
+     * @return string
      */
-    protected function action_getFieldTypeOptions()
+    protected function getRequestAOWModule($request)
     {
-        global $app_list_strings, $beanFiles, $beanList;
-        $request = $_REQUEST;
-        
-        
-        $requestAOWModule = null;
         if (!isset($request['aow_module'])) {
             LoggerManager::getLogger()->warn('aow_module is not defined in request for SharedSecurityRulesController::action_getFieldTypeOptions()');
             $request['aow_module'] = null;
         }
         $requestAOWModule = $request['aow_module'];
-        
-        $requestAOWFieldname = null;
+        return $requestAOWModule;
+    }
+    
+    /**
+     * 
+     * @param array $request
+     * @return string
+     */
+    protected function getRequestAOWFieldname($request)
+    {
         if (!isset($request['aow_fieldname'])) {
             LoggerManager::getLogger()->warn('aow_fieldname is not defined in request for SharedSecurityRulesController::action_getFieldTypeOptions()');
             $request['aow_fieldname'] = null;
         }
         $requestAOWFieldname = $request['aow_fieldname'];
-        
-        $requestAOWNewFieldname = null;
+        return $requestAOWFieldname;
+    }
+    
+    /**
+     * 
+     * @param array $request
+     * @return string
+     */
+    protected function getRequestAOWNewFieldname($request)
+    {
         if (!isset($request['aow_newfieldname'])) {
             LoggerManager::getLogger()->warn('aow_newfieldname is not defined in request for SharedSecurityRulesController::action_getFieldTypeOptions()');
             $request['aow_newfieldname'] = null;
         }
         $requestAOWNewFieldname = $request['aow_newfieldname'];
-
+        return $requestAOWNewFieldname;
+    }
+    
+    /**
+     * 
+     * @param array $request
+     * @param string $requestAOWModule
+     * @return string
+     */
+    protected function getModuleByRequest($request, $requestAOWModule)
+    {
         $module = isset($request['rel_field']) && $request['rel_field'] != '' ?
             getRelatedModule($requestAOWModule, $request['rel_field']) :
             $requestAOWModule;
-        
-        $fieldname = $requestAOWFieldname;
-        $aow_field = $requestAOWNewFieldname;
-
+        return $module;
+    }
+    
+    /**
+     * 
+     * @param array $request
+     * @return string
+     */
+    protected function getViewByRequest($request)
+    {
         $view = isset($request['view']) ? $request['view'] : 'EditView';
+        return $view;
+    }
+    
+    /**
+     * 
+     * @param array $request
+     * @return string
+     */
+    protected function getValueByRequest($request)
+    {
         $value = isset($request['aow_value']) ? $request['aow_value'] : '';
-        
-        if (!isset($beanList[$module]) || !isset($beanFiles[$beanList[$module]])) {
-            LoggerManager::getLogger()->warn('bean file not set in bean list for module: ' . $module . ' in SharedSecurityRulesController::action_getFieldTypeOptions()');
-            return $this->protectedDie();
-        }
-
-        require_once($beanFiles[$beanList[$module]]);
-        $focus = new $beanList[$module];
-        $vardef = $focus->getFieldDefinition($fieldname);
-
-        // Usetting these as they are not required
-        //unset($app_list_strings['aow_condition_type_list']['Field']);
-        unset($app_list_strings['aow_condition_type_list']['Any_Change']);
-        unset($app_list_strings['aow_condition_type_list']['SecurityGroup']);
-        unset($app_list_strings['aow_condition_type_list']['Date']);
-        unset($app_list_strings['aow_condition_type_list']['Multi']);
-
-
+        return $value;
+    }
+    
+    /**
+     * 
+     * @param array $vardef
+     * @return array
+     */
+    protected function getValidOpp($vardef)
+    {
         switch ($vardef['type']) {
             case 'double':
             case 'decimal':
@@ -336,7 +363,17 @@ class SharedSecurityRulesController extends SugarController
                 $valid_opp = array('Value', 'Field', 'Any_Change');
                 break;
         }
-
+        return $valid_opp;
+    }
+    
+    /**
+     * 
+     * @param array $app_list_strings
+     * @param array $valid_opp
+     * @return array
+     */
+    protected function updateAppListStrings($app_list_strings, $valid_opp)
+    {
         if (!file_exists('modules/SecurityGroups/SecurityGroup.php')) {
             unset($app_list_strings['aow_condition_type_list']['SecurityGroup']);
         }
@@ -346,6 +383,51 @@ class SharedSecurityRulesController extends SugarController
                 unset($app_list_strings['aow_condition_type_list'][$key]);
             }
         }
+        return $app_list_strings;
+    }
+
+    /**
+     *
+     * @global array $app_list_strings
+     * @global array $beanFiles
+     * @global array $beanList
+     * @return null
+     */
+    protected function action_getFieldTypeOptions()
+    {
+        global $app_list_strings, $beanFiles, $beanList;
+        $request = $_REQUEST;
+        
+        $requestAOWModule = $this->getRequestAOWModule($request);
+        $requestAOWFieldname = $this->getRequestAOWFieldname($request);
+        $requestAOWNewFieldname = $this->getRequestAOWNewFieldname($request);
+        $module = $this->getModuleByRequest($request, $requestAOWModule);
+        
+        $fieldname = $requestAOWFieldname;
+        $aow_field = $requestAOWNewFieldname;
+
+        $view = $this->getViewByRequest($request);
+        $value = $this->getValueByRequest($request);
+        
+        if (!isset($beanList[$module]) || !isset($beanFiles[$beanList[$module]])) {
+            LoggerManager::getLogger()->warn('bean file not set in bean list for module: ' . $module . ' in SharedSecurityRulesController::action_getFieldTypeOptions()');
+            return $this->protectedDie();
+        }
+
+        require_once($beanFiles[$beanList[$module]]);
+        $focus = new $beanList[$module];
+        $vardef = $focus->getFieldDefinition($fieldname);
+
+        // Usetting these as they are not required
+        //unset($app_list_strings['aow_condition_type_list']['Field']);
+        unset($app_list_strings['aow_condition_type_list']['Any_Change']);
+        unset($app_list_strings['aow_condition_type_list']['SecurityGroup']);
+        unset($app_list_strings['aow_condition_type_list']['Date']);
+        unset($app_list_strings['aow_condition_type_list']['Multi']);
+
+        $valid_opp = $this->getValidOpp($vardef);
+
+        $app_list_strings = $this->updateAppListStrings($app_list_strings, $valid_opp);
 
         if ($view == 'EditView') {
             echo "<select type='text'  name='$aow_field' id='$aow_field' title='' tabindex='116'>" . get_select_options_with_id($app_list_strings['aow_condition_type_list'], $value) . "</select>";
@@ -356,7 +438,7 @@ class SharedSecurityRulesController extends SugarController
     }
 
     /**
-     * 
+     *
      * @global array $app_list_strings
      * @global array $beanFiles
      * @global array $beanList
@@ -505,9 +587,10 @@ class SharedSecurityRulesController extends SugarController
     }
     
     /**
-     * 
+     *
      */
-    protected function protectedDie() {
+    protected function protectedDie()
+    {
         die();
     }
 }
