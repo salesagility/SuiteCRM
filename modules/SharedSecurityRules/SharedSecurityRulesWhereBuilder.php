@@ -164,6 +164,16 @@ class SharedSecurityRulesWhereBuilder
         }
         return $serialized;
     }
+    
+    
+    public function updateWhereResults($accessLevel, $where, &$resWhere, &$addWhere)
+    {
+        if ($accessLevel == 'none') {
+            $resWhere = $where;
+        } else {
+            $addWhere = $where;
+        }
+    }
 
 
     public function getWhereArray(SugarBean $module, $userId)
@@ -216,12 +226,7 @@ class SharedSecurityRulesWhereBuilder
                             $conditionQuery = " " . $table . "." . $condition['field'] . " " . $operatorValue . " ";
                             $where = $accessLevel == 'none' ? $resWhere : $addWhere;
                             $this->updateWhereAndParenthesis($where, $parenthesis, $condition, $conditionQuery);
-                            
-                            if ($accessLevel == 'none') {
-                                $resWhere = $where;
-                            } else {
-                                $addWhere = $where;
-                            }
+                            $this->updateWhereResults($accessLevel, $where, $resWhere, $addWhere);
                         }
                     }
                 }
