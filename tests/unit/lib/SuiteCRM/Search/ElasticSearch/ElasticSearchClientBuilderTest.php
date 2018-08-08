@@ -61,16 +61,18 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
     public function testLoadConfig()
     {
         $builder = new ElasticSearchClientBuilder();
-        $config = self::invokeMethod($builder, 'loadConfig', [__DIR__ . '/TestData/ElasticsearchServerConfig.json']);
+        $config = self::invokeMethod($builder, 'loadFromFile', [__DIR__ . '/TestData/ElasticsearchServerConfig.json']);
         $expected = [
             [
-                "host" => "foo.com",
-                "port" => "9200",
-                "scheme" => "https",
-                "user" => "username",
-                "pass" => "password!#$?*abc"
+                'host' => 'foo.com',
+                'port' => '9200',
+                'scheme' => 'https',
+                'user' => 'username',
+                'pass' => 'password!#$?*abc'
             ],
-            ["host" => "localhost"]
+            [
+                'host' => 'localhost'
+            ]
         ];
 
         self::assertEquals($expected, $config);
@@ -80,8 +82,10 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
     public function testLoadConfigFileNotThere()
     {
         $builder = new ElasticSearchClientBuilder();
-        $config = self::invokeMethod($builder, 'loadConfig', [__DIR__ . '/TestData/NopeNotHere.json']);
-        $expected = ["127.0.0.1"];
+        $config = self::invokeMethod($builder, 'loadFromFile', [__DIR__ . '/TestData/NopeNotHere.json']);
+        $expected = [
+            ['host' => '127.0.0.1']
+        ];
 
         self::assertEquals($expected, $config);
     }
@@ -149,7 +153,9 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
 
         $actual = $this->loadFromSugarConfig();
 
-        $expected = ['www.example.com'];
+        $expected = [
+            ['host' => 'www.example.com']
+        ];
 
         self::assertEquals($expected, $actual);
 
@@ -161,4 +167,138 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
         $builder = new ElasticSearchClientBuilder();
         return self::invokeMethod($builder, 'loadFromSugarConfig');
     }
+
+    private function sanitizeHost(array $host)
+    {
+        $builder = new ElasticSearchClientBuilder();
+        return self::invokeMethod($builder, 'sanitizeHost', [$host]);
+    }
+
+    public function testUrlParser1()
+    {
+        $data = [
+            'host' => 'www.example.com'
+        ];
+
+        $expected = [
+            'host' => 'www.example.com'
+        ];
+
+        $actual = $this->sanitizeHost($data);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testUrlParser2()
+    {
+        $data = [
+            'host' => 'https://www.example.com',
+            'user' => 'foo'
+        ];
+
+        $expected = [
+            'host' => 'www.example.com',
+            'user' => 'foo',
+            'scheme' => 'https'
+        ];
+
+        $actual = $this->sanitizeHost($data);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testUrlParser3()
+    {
+        $data = [
+            'host' => 'https://www.example.com:42',
+            'user' => 'foo',
+            'pass' => 'bar'
+        ];
+
+        $expected = [
+            'host' => 'www.example.com',
+            'user' => 'foo',
+            'pass' => 'bar',
+            'scheme' => 'https',
+            'port' => 42
+        ];
+
+        $actual = $this->sanitizeHost($data);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testUrlParser4()
+    {
+        $data = [
+            'host' => 'bar:pass@mydomain.server.com:9201',
+            'user' => 'foo',
+        ];
+
+        $expected = [
+            'host' => 'mydomain.server.com',
+            'user' => 'bar',
+            'pass' => 'pass',
+            'port' => 9201
+        ];
+
+        $actual = $this->sanitizeHost($data);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testUrlParser5()
+    {
+        $data = [
+            'user' => 'foo',
+        ];
+
+        try {
+            $this->sanitizeHost($data);
+        } catch (InvalidArgumentException $e) {
+            return;
+        }
+
+        $this->fail('Exception not thrown!');
+    }
+
+    public function testUrlParser6()
+    {
+        $data = [
+            'host' => 0.5,
+            'user' => 'foo',
+        ];
+
+        try {
+            $this->sanitizeHost($data);
+        } catch (InvalidArgumentException $e) {
+            return;
+        }
+    }
+
+    public function testUrlParserBadUrls()
+    {
+        $url1 = ['host' => 'http:///example.com'];
+        $url2 = ['host' => 'http://:80'];
+        $url3 = ['host' => 'http://user@:80'];
+
+        try {
+            $this->sanitizeHost($url1);
+            $this->fail('Exception not thrown!');
+        } catch (InvalidArgumentException $e) {
+        }
+
+        try {
+            $this->sanitizeHost($url2);
+            $this->fail('Exception not thrown!');
+        } catch (InvalidArgumentException $e) {
+        }
+
+        try {
+            $this->sanitizeHost($url3);
+            $this->fail('Exception not thrown!');
+        } catch (InvalidArgumentException $e) {
+        }
+    }
+
 }

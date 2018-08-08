@@ -37,8 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/** @noinspection PhpIllegalStringOffsetInspection */
-
 /**
  * Created by PhpStorm.
  * User: viocolano
@@ -46,16 +44,21 @@
  * Time: 15:04
  */
 
+/** @noinspection PhpUndefinedClassInspection */
+
 namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;
 
 use BeanFactory;
 use Configurator;
 use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\BadRequest400Exception;
+use Exception;
 use SchedulersJob;
 use SugarJobQueue;
 use SuiteCRM\Modules\Administration\Search\MVC\Controller as AbstractController;
+use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
+use Throwable;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -126,17 +129,23 @@ class Controller extends AbstractController
         $user = filter_input($input, 'user', FILTER_SANITIZE_STRING);
         $pass = filter_input($input, 'pass', FILTER_SANITIZE_STRING);
 
-        $config = [['host' => $host, 'user' => $user, 'pass' => $pass]];
-
-        $client = ClientBuilder::create()->setHosts($config)->build();
-
-        $i = new ElasticSearchIndexer($client);
-
-        $return = ['status' => 'fail', 'request' => $config[0],];
-
         try {
+            $config = [
+                ElasticSearchClientBuilder::sanitizeHost([
+                    'host' => $host,
+                    'user' => $user,
+                    'pass' => $pass
+                ])
+            ];
+
+            $client = ClientBuilder::create()->setHosts($config)->build();
+
+            $indexer = new ElasticSearchIndexer($client);
+
+            $return = ['status' => 'fail', 'request' => $config[0],];
+
             $info = $client->info();
-            $time = $i->ping();
+            $time = $indexer->ping();
 
             $return['status'] = 'success';
             $return['ping'] = $time;
@@ -147,9 +156,12 @@ class Controller extends AbstractController
             $error = json_decode($e->getMessage());
             $return['error'] = $error->error->reason;
             $return['errorDetails'] = $error;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $return['error'] = $e->getMessage();
             $return['errorType'] = get_class($e);
+        } catch (Throwable $t) {
+            $return['error'] = $t->getMessage();
+            $return['errorType'] = get_class($t);
         }
 
         $this->yieldJson($return);

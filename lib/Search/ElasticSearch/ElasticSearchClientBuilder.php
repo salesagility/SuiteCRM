@@ -78,7 +78,7 @@ class ElasticSearchClientBuilder
      * @param $file
      * @return array
      */
-    private static function loadConfig($file)
+    private static function loadFromFile($file)
     {
         if (!file_exists($file)) {
             return self::loadDefaultConfig();
@@ -90,7 +90,26 @@ class ElasticSearchClientBuilder
             return self::loadDefaultConfig();
         }
 
-        return json_decode($results, true);
+        $hosts = json_decode($results, true);
+
+        return self::loadFromArray($hosts);
+    }
+
+    /**
+     * Sanitizes an array of configured hosts.
+     *
+     * @param $hosts
+     * @return array
+     */
+    private static function loadFromArray($hosts)
+    {
+        $sanitized = [];
+
+        foreach ($hosts as $host) {
+            $sanitized[] = self::sanitizeHost($host);
+        }
+
+        return $sanitized;
     }
 
     /**
@@ -110,15 +129,15 @@ class ElasticSearchClientBuilder
         $user = trim($user);
 
         if (empty($user)) {
-            return [$host];
+            return [self::sanitizeHost($host)];
         }
 
         return [
-            [
+            self::sanitizeHost([
                 'host' => $host,
                 'user' => $user,
                 'pass' => $pass
-            ]
+            ])
         ];
     }
 
@@ -129,6 +148,65 @@ class ElasticSearchClientBuilder
      */
     private static function loadDefaultConfig()
     {
-        return ['127.0.0.1'];
+        return [self::sanitizeHost('127.0.0.1')];
+    }
+
+    /**
+     * Perform a series of standardizations and checks to make sure that the host is valid.
+     *
+     * Especially useful when reading user inputs.
+     *
+     * @param array|string $host
+     * @return array
+     */
+    public static function sanitizeHost($host)
+    {
+        if (is_string($host)) {
+            $host = ['host' => $host];
+        }
+
+        if (!isset($host['host'])) {
+            throw new \InvalidArgumentException('Host URL cannot be empty');
+        }
+
+        $hostURL = $host['host'];
+
+        if (!is_string($hostURL)) {
+            throw new \InvalidArgumentException('Host URL must be a string');
+        }
+
+        $hostURL = self::addHttp($hostURL, isset($host['scheme']) ? $host['scheme'] : 'http');
+
+        $parsedHost = parse_url($hostURL);
+
+        if (!is_array($parsedHost)) {
+            throw new \InvalidArgumentException("Failed to parse Host URL '$hostURL'");
+        }
+
+        $merged = array_merge($host, $parsedHost);
+
+        if (isset($merged['scheme']) && $merged['scheme'] === 'http') {
+            unset($merged['scheme']);
+        }
+
+        unset($merged['path'], $merged['query']);
+
+        return $merged;
+    }
+
+    /**
+     * Adds the scheme to url lacking of it.
+     *
+     * @param string $url
+     * @param string $scheme
+     * @return string
+     */
+    private static function addHttp($url, $scheme = 'http')
+    {
+        if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+            $url = $scheme . '://' . $url;
+        }
+
+        return $url;
     }
 }

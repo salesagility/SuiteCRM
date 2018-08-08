@@ -34,9 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SearchQuery
 {
+    /** @var string Search query string */
     private $query;
+    /** @var int The number of results per page */
     private $size;
+    /** @var int The where to start */
     private $from;
+    /** @var null|string Optional parameter to specify the SearchEngine (unqualified class name) to use. */
     private $engine;
     /** @var array Structure containing additional search parameters */
     private $options = [];
@@ -104,6 +108,11 @@ class SearchQuery
         return $this->options;
     }
 
+    /**
+     * Checks if the query string is empty.
+     *
+     * @return bool
+     */
     public function isEmpty()
     {
         return empty($this->query);
@@ -234,6 +243,15 @@ class SearchQuery
         return self::fromRequestArray($_GET);
     }
 
+    /**
+     * Validates and filters values from an array.
+     *
+     * @param array $array The array to filter
+     * @param string $key The key of the array to load
+     * @param mixed $default The default value in case the array value is empty
+     * @param null|string $filter Optional filter to be used. e.g. FILTER_SANITIZE_STRING
+     * @return mixed
+     */
     private static function filterArray(array $array, $key, $default, $filter = null)
     {
         if (!isset($array[$key])) {
