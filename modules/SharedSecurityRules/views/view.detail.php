@@ -79,9 +79,7 @@ class SharedSecurityRulesViewDetail extends ViewDetail
                         $conditionNameValue = $condition_name->value;
                     }
                     
-                    $helper = new SharedSecurityRulesHelper($this->bean->db);
-                    $condition_name->value = $helper->unserializeIfSerialized($conditionNameValue);
-                    // orig: $condition_name->value = unserialize(base64_decode($conditionNameValue));
+                    $condition_name->value = unserialize(base64_decode($conditionNameValue));
                 }
                 $condition_item = $condition_name->toArray();
 
