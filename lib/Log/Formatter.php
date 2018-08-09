@@ -37,33 +37,14 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search\Index;
+namespace SuiteCRM\Log;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 use Monolog\Formatter\FormatterInterface;
-use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-
-/**
- * This class extends the base Monolog StreamHandler to perform logging on CLI output.
- *
- * This logger is ideal for CLIs as it is minimal and offers nice colour formatting.
- */
-class CliLoggerHandler extends StreamHandler
-{
-    /**
-     * CliLoggerHandler constructor.
-     * @throws \Exception
-     */
-    public function __construct()
-    {
-        parent::__construct('php://stderr');
-        $this->setFormatter(new Formatter());
-    }
-}
 
 /**
  * Formatter for CliLoggerHandler.
@@ -100,6 +81,47 @@ class Formatter implements FormatterInterface
     }
 
     /**
+     * Formats a set of log records.
+     *
+     * @param  array $records A set of records to format
+     *
+     * @return mixed The formatted set of records
+     */
+    public function formatBatch(array $records)
+    {
+        $formatted = [];
+        foreach ($records as $record) {
+            $formatted = $this->format($record);
+        }
+        return $formatted;
+    }
+
+    /**
+     * Formats a log record.
+     *
+     * @param  array $record A record to format
+     *
+     * @return mixed The formatted record
+     */
+    public function format(array $record)
+    {
+        $level = $record['level'];
+        $message = $record['message'];
+
+        list($color, $code) = $this->getColourAndCode($level);
+
+        if ($level >= Logger::WARNING || $this->alwaysColourLine) {
+            $message = $color . $message . $this->colors['reset'];
+        }
+
+        $message = preg_replace("/\n\s*/", $this->padding . $color, $message);
+
+        $time = (new \DateTime())->format('H:m:s');
+
+        return sprintf($this->format, $color . $code, $time, $message);
+    }
+
+    /**
      * Creates an array with the available colours.
      *
      * @return array
@@ -132,7 +154,8 @@ class Formatter implements FormatterInterface
     /**
      * Utility to make a unix terminal escape sequence given the code.
      *
-     * @param $code int
+     * @param int $code
+     *
      * @return string
      */
     protected function code($code)
@@ -141,48 +164,10 @@ class Formatter implements FormatterInterface
     }
 
     /**
-     * Formats a set of log records.
-     *
-     * @param  array $records A set of records to format
-     * @return mixed The formatted set of records
-     */
-    public function formatBatch(array $records)
-    {
-        $formatted = [];
-        foreach ($records as $record) {
-            $formatted = $this->format($record);
-        }
-        return $formatted;
-    }
-
-    /**
-     * Formats a log record.
-     *
-     * @param  array $record A record to format
-     * @return mixed The formatted record
-     */
-    public function format(array $record)
-    {
-        $level = $record['level'];
-        $message = $record['message'];
-
-        list($color, $code) = $this->getColourAndCode($level);
-
-        if ($level >= Logger::WARNING || $this->alwaysColourLine) {
-            $message = $color . $message . $this->colors['reset'];
-        }
-
-        $message = preg_replace("/\n\s*/", $this->padding . $color, $message);
-
-        $time = (new \DateTime())->format('H:m:s');
-
-        return sprintf($this->format, $color . $code, $time, $message);
-    }
-
-    /**
      * Retrieves the right colour formatting and symbol to show in brackets.
      *
-     * @param $level int
+     * @param int $level
+     *
      * @return string[]
      */
     protected function getColourAndCode($level)
@@ -218,6 +203,6 @@ class Formatter implements FormatterInterface
                 $code = '@';
                 break;
         }
-        return array($color, $code);
+        return [$color, $code];
     }
 }

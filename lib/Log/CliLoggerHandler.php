@@ -37,66 +37,29 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\SugarLogger;
+namespace SuiteCRM\Log;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use LoggerManager;
-use Monolog\Handler\AbstractProcessingHandler;
+use Monolog\Handler\StreamHandler;
 
 /**
- * Integrates Monolog with the LoggerManager.
+ * This class extends the base Monolog StreamHandler to perform logging on CLI output.
+ *
+ * This logger is ideal for CLIs as it is minimal and offers nice colour formatting.
  */
-class SugarLoggerMonologHandler extends AbstractProcessingHandler
+class CliLoggerHandler extends StreamHandler
 {
-
     /**
-     * Writes the record down to the log of the implementing handler
+     * CliLoggerHandler constructor.
      *
-     * @param  array $record
-     * @return void
+     * @throws \Exception
      */
-    protected function write(array $record)
+    public function __construct()
     {
-        $logger = LoggerManager::getLogger();
-
-        $message = $record['message'];
-        $level = $record['level'];
-        $channel = $record['channel'];
-
-        $level = $this->monologLevelToSugarLoggerLevel($level);
-
-        $logger->$level("[$channel] $message");
-    }
-
-    /**
-     * Converts a Monolog logging level to the corresponding level string as specified in the LoggerManager class.
-     *
-     * @param int $level
-     * @return string
-     */
-    protected function monologLevelToSugarLoggerLevel($level)
-    {
-        $level = intval($level);
-
-        switch ($level) {
-            case 100:
-                return 'debug';
-            case 200:
-                return 'info';
-            case 300:
-                return 'warn';
-            case 400:
-                return 'error';
-            case 500:
-                return 'fatal';
-            case 600:
-            case 550:
-                return 'security';
-            default:
-                return 'debug';
-        }
+        parent::__construct('php://stderr');
+        $this->setFormatter(new Formatter());
     }
 }

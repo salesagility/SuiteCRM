@@ -47,9 +47,10 @@ use InvalidArgumentException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use ReflectionClass;
+use SuiteCRM\Log\CliLoggerHandler;
+use SuiteCRM\Log\SugarLoggerHandler;
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
-use SuiteCRM\SugarLogger\SugarLoggerMonologHandler;
 
 /**
  * This class defines common methods and fields for a search indexer.
@@ -86,7 +87,7 @@ abstract class AbstractIndexer
         $this->logger = new Logger($this->getIndexerName());
 
         // Set up SugarLog handler (this will forward messages to the default logging)
-        $this->logger->pushHandler(new SugarLoggerMonologHandler());
+        $this->logger->pushHandler(new SugarLoggerHandler());
 
         // Set up Monolog logfile logger
         try {
@@ -118,7 +119,8 @@ abstract class AbstractIndexer
     /**
      * Method to retrieve the (short) class name of an object.
      *
-     * @param $obj object
+     * @param object $obj
+     *
      * @return string
      */
     private function getObjectClassName($obj)
@@ -151,7 +153,7 @@ abstract class AbstractIndexer
      *  that have been created/modified/deleted after the last indexing run.
      *  Additionally, beans that have been removed must be removed from the index too.
      *
-     * @param $module string the name of the module, e.g. Accounts, Contacts, etc.
+     * @param string $module the name of the module, e.g. Accounts, Contacts, etc.
      * @return void
      */
     abstract function indexModule($module);
@@ -159,7 +161,8 @@ abstract class AbstractIndexer
     /**
      * Indexes a single bean.
      *
-     * @param $bean \SugarBean
+     * @param \SugarBean $bean
+     *
      * @return void
      */
     abstract function indexBean(\SugarBean $bean);
@@ -169,8 +172,9 @@ abstract class AbstractIndexer
      *
      * This should not take in account of the differential indexing.
      *
-     * @param $module string name of the module, e.g. Accounts, Contacts, etc.
-     * @param $beans \SugarBean[]
+     * @param string       $module name of the module, e.g. Accounts, Contacts, etc.
+     * @param \SugarBean[] $beans
+     *
      * @return void
      */
     abstract function indexBeans($module, array $beans);
@@ -270,7 +274,7 @@ abstract class AbstractIndexer
     /**
      * Overrides the list of modules that have to be indexed for the next indexing runs.
      *
-     * @param $modules string[]
+     * @param string[] $modules
      */
     public function setModulesToIndex(array $modules)
     {
@@ -280,7 +284,7 @@ abstract class AbstractIndexer
     /**
      * Adds one or more module to index for the next indexing runs.
      *
-     * @param $modules string|string[]
+     * @param string|string[] $modules
      */
     public function addModulesToIndex($modules)
     {

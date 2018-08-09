@@ -1,8 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
-
-use SuiteCRM\Log\CliLoggerHandler;
-
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,29 +37,66 @@ use SuiteCRM\Log\CliLoggerHandler;
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-class CliLoggerTest extends \Codeception\Test\Unit
+namespace SuiteCRM\Log;
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+use LoggerManager;
+use Monolog\Handler\AbstractProcessingHandler;
+
+/**
+ * Integrates Monolog with the LoggerManager.
+ */
+class SugarLoggerHandler extends AbstractProcessingHandler
 {
-    /** @var Monolog\Logger */
-    private $logger;
 
-    public function testLogging()
+    /**
+     * Writes the record down to the log of the implementing handler
+     *
+     * @param  array $record
+     * @return void
+     */
+    protected function write(array $record)
     {
-        $this->logger->debug("\n");
-        $this->logger->debug('DEBUG');
-        $this->logger->info("INFO");
-        $this->logger->notice('NOTICE');
-        $this->logger->warning('WARNING');
-        $this->logger->error('ERROR');
-        $this->logger->critical('CRITICAL');
-        $this->logger->emergency('EMERGENCY');
+        $logger = LoggerManager::getLogger();
 
-        $this->logger->emergency(new RuntimeException("Exception!"));
+        $message = $record['message'];
+        $level = $record['level'];
+        $channel = $record['channel'];
+
+        $level = $this->psrToSugarLevel($level);
+
+        $logger->$level("[$channel] $message");
     }
 
-    protected function setUp()
+    /**
+     * Converts a Monolog logging level to the corresponding level string as specified in the LoggerManager class.
+     *
+     * @param int $level
+     * @return string
+     */
+    protected function psrToSugarLevel($level)
     {
-        $this->logger = new Monolog\Logger("Test");
-        $this->logger->pushHandler(new CliLoggerHandler());
-        return parent::setUp();
+        $level = intval($level);
+
+        switch ($level) {
+            case 100:
+                return 'debug';
+            case 200:
+                return 'info';
+            case 300:
+                return 'warn';
+            case 400:
+                return 'error';
+            case 500:
+                return 'fatal';
+            case 600:
+            case 550:
+                return 'security';
+            default:
+                return 'debug';
+        }
     }
 }
