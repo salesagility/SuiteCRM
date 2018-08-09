@@ -381,7 +381,7 @@ class AOW_WorkFlow extends Basic
             if ($condition->operator === 'Anniversary') {
                 $where = '('.$field.' '.$this->getSQLOperator($condition->operator);
                 $leapYearQuery = '';
-                if ($timedate->getNow()->format('m-d') === '02-28' && $timedate->getNow()->format('L')) {
+                if ($timedate->getNow()->format('m-d') === '02-28' && !$timedate->getNow()->format('L')) {
                     // If we're not in a leap year then the 29th feb is also celebrated on the 28th
                     $leapYearQuery = ' OR '.$field.' '.str_replace('28', '29', $this->getSQLOperator($condition->operator));
                 }
