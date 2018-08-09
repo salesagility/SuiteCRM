@@ -75,6 +75,8 @@ class AOW_WorkFlow extends Basic
      */
     private function getSQLOperator($key)
     {
+        global $timedate;
+
         $sqlOperatorList['Equal_To'] = '=';
         $sqlOperatorList['Not_Equal_To'] = '!=';
         $sqlOperatorList['Greater_Than'] = '>';
@@ -85,6 +87,12 @@ class AOW_WorkFlow extends Basic
         $sqlOperatorList['Starts_With'] = 'LIKE';
         $sqlOperatorList['Ends_With'] = 'LIKE';
         $sqlOperatorList['is_null'] = 'IS NULL';
+
+        if ($key === 'Anniversary') {
+            $userDate = $timedate->getNow();
+            return "LIKE '_____{$userDate->format('m')}_{$userDate->format('d')}%'";
+        }
+
         if (!isset($sqlOperatorList[$key])) {
             return false;
         }
@@ -367,6 +375,17 @@ class AOW_WorkFlow extends Basic
 
             if ($condition->operator == 'is_null') {
                 $query['where'][] = '('.$field.' '.$this->getSQLOperator($condition->operator).' OR '.$field.' '.$this->getSQLOperator('Equal_To')." '')";
+                return $query;
+            }
+
+            if ($condition->operator === 'Anniversary') {
+                $where = '('.$field.' '.$this->getSQLOperator($condition->operator);
+                $leapYearQuery = '';
+                if ($timedate->getNow()->format('m-d') === '02-28' && $timedate->getNow()->format('L')) {
+                    // If we're not in a leap year then the 29th feb is also celebrated on the 28th
+                    $leapYearQuery = ' OR '.$field.' '.str_replace('28', '29', $this->getSQLOperator($condition->operator));
+                }
+                $query['where'][] = $where. "$leapYearQuery)";
                 return $query;
             }
 
@@ -757,6 +776,8 @@ class AOW_WorkFlow extends Basic
 
     public function compare_condition($var1, $var2, $operator = 'Equal_To')
     {
+        global $timedate;
+
         switch ($operator) {
             case "Not_Equal_To": return $var1 != $var2;
             case "Greater_Than":  return $var1 >  $var2;
@@ -788,7 +809,20 @@ class AOW_WorkFlow extends Basic
                     return true;
                 }
                     return !in_array($var1, $var2);
-                
+
+            case "Anniversary":
+                $userDate = $timedate->getNow();
+                $objectDate = new DateTime();
+                $objectDate->setTimestamp($var1);
+                if ($objectDate->format('m-d') === '02-29' && !$userDate->format('L')) {
+                    // If we're not in a leap year then the 29th feb is celebrated on the 28th
+                    $objectDate->sub(new DateInterval('P1D'));
+                }
+                return (
+                    $userDate->format('m') === $objectDate->format('m') &&
+                    $userDate->format('d') === $objectDate->format('d')
+                );
+
             case "Equal_To":
             default: return $var1 == $var2;
         }
