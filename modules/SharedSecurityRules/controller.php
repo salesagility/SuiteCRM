@@ -129,7 +129,8 @@ class SharedSecurityRulesController extends SugarController
             
             $aowActionParameters = $this->getAOWActionParameters($aow_action);
             
-            $params = unserialize(base64_decode($aowActionParameters));
+            $helper = new SharedSecurityRulesHelper($aow_action->db);
+            $params = $helper->unserializeIfSerialized($aowActionParameters);
         }
         return $params;
     }
