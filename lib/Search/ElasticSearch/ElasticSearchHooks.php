@@ -37,84 +37,159 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/** @noinspection PhpUnusedParameterInspection */
-
 namespace SuiteCRM\Search\ElasticSearch;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use LoggerManager;
+use InvalidArgumentException;
 use SugarBean;
+use SuiteCRM\Utility\SuiteLogger;
+use Throwable;
 
+/**
+ * Class ElasticSearchHooks handles logic hooks to keep the elasticsearch index synchronised.
+ */
 class ElasticSearchHooks
 {
-    public function beanSaved($bean, $event, $arguments)
+    /** @var SugarBean */
+    private $bean;
+    /** @var string */
+    private $action;
+    /** @var ElasticSearchIndexer */
+    private $indexer;
+
+    /**
+     * Callback for save beans.
+     *
+     * @param SugarBean $bean
+     * @param           $event
+     * @param           $arguments
+     */
+    public function beanSaved(SugarBean $bean, $event, $arguments)
+    {
+        $this->action = 'index';
+
+        $this->reIndexSafe($bean);
+    }
+
+    /**
+     * Callback for deleted beans.
+     *
+     * @param SugarBean $bean
+     * @param           $event
+     * @param           $arguments
+     */
+    public function beanDeleted(SugarBean $bean, $event, $arguments)
+    {
+        $this->action = 'remove';
+
+        $this->reIndexSafe($bean);
+    }
+
+    // ~ ~ ~ ~ ~ ~
+    // Private Methods
+    // ~ ~ ~ ~ ~ ~
+
+    /**
+     * @param SugarBean $bean
+     */
+    private function reIndexSafe(SugarBean $bean)
+    {
+        try {
+            $this->reIndex($bean);
+        } catch (\Exception $exception) {
+            $this->handleError($exception);
+        } catch (\Throwable $throwable) {
+            $this->handleError($throwable);
+        }
+    }
+
+    /**
+     * @param SugarBean $bean
+     *
+     * @return void
+     */
+    private function reIndex(SugarBean $bean)
     {
         if (ElasticSearchIndexer::isEnabled() === false) {
             return;
         }
 
-        try {
-            $indexer = $this->getIndexer($bean);
-            if ($this->isBlacklisted($bean, $indexer)) {
-                return;
-            }
-            $indexer->indexBean($bean);
-        } catch (\Exception $e) {
-            $message = 'Failed to add bean to index because: ' . $e->getMessage();
+        $this->bean = $bean;
 
-            if (isset($indexer)) {
-                $indexer->getLogger()->error($message);
-                return;
-            }
+        $this->getIndexer();
 
-            LoggerManager::getLogger()->error($message);
+        if ($this->isBlacklisted()) {
+            return;
         }
+
+        $this->correctAction();
+
+        $this->performAction($bean);
     }
 
     /**
-     * @param $bean
-     * @return ElasticSearchIndexer
+     * @return void
      */
-    private function getIndexer($bean)
+    private function getIndexer()
     {
-        $indexer = !isset($bean->indexer) ? new ElasticSearchIndexer() : $bean->indexer;
-        return $indexer;
+        /** @noinspection PhpUndefinedFieldInspection */
+        $indexer = !isset($this->bean->indexer)
+            ? new ElasticSearchIndexer()
+            : $this->bean->indexer;
+
+        $this->indexer = $indexer;
     }
 
     /**
-     * @param $bean SugarBean
-     * @param $indexer ElasticSearchIndexer
      * @return bool
      */
-    private function isBlacklisted($bean, $indexer)
+    private function isBlacklisted()
     {
-        return !in_array($bean->module_name, $indexer->getModulesToIndex());
+        return !in_array($this->bean->module_name, $this->indexer->getModulesToIndex());
     }
 
-    public function beanDeleted($bean, $event, $arguments)
+    private function correctAction()
     {
-        if (ElasticSearchIndexer::isEnabled() === false) {
+        if ($this->bean->deleted) {
+            $this->action = 'remove';
+        }
+    }
+
+    /**
+     * @param SugarBean $bean
+     */
+    private function performAction(SugarBean $bean)
+    {
+        switch ($this->action) {
+            case 'index':
+                $this->indexer->indexBean($bean);
+                break;
+            case 'remove':
+                $this->indexer->removeBean($bean);
+                break;
+            default:
+                throw new InvalidArgumentException('Wrong action provided');
+        }
+    }
+
+    /**
+     * @param Throwable $exception
+     */
+    private function handleError($exception)
+    {
+        $message = "Failed to $this->action bean to index";
+
+        if (isset($this->indexer)) {
+            $this->indexer->getLogger()->error($message);
+            $this->indexer->getLogger()->error($exception);
             return;
         }
 
-        try {
-            $indexer = $this->getIndexer($bean);
-            if ($this->isBlacklisted($bean, $indexer)) {
-                return;
-            }
-            $indexer->removeBean($bean);
-        } catch (\Exception $e) {
-            $message = 'Failed to remove bean from index because: ' . $e->getMessage();
-
-            if (isset($indexer)) {
-                $indexer->getLogger()->error($message);
-                return;
-            }
-
-            LoggerManager::getLogger()->error($message);
-        }
+        $logger = new SuiteLogger();
+        $logger->error($message);
+        $logger->error($exception);
     }
 }
