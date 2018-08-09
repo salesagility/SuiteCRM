@@ -47,9 +47,9 @@ use Monolog\Formatter\FormatterInterface;
 use Monolog\Logger;
 
 /**
- * Formatter for CliLoggerHandler.
+ * CliLoggerFormatter for CliLoggerHandler.
  */
-class Formatter implements FormatterInterface
+class CliLoggerFormatter implements FormatterInterface
 {
     /**  @var array a list of the available colours for quicker usage */
     private $colors = [];

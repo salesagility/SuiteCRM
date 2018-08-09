@@ -60,6 +60,6 @@ class CliLoggerHandler extends StreamHandler
     public function __construct()
     {
         parent::__construct('php://stderr');
-        $this->setFormatter(new Formatter());
+        $this->setFormatter(new CliLoggerFormatter());
     }
 }
