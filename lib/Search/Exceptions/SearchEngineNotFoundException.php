@@ -46,7 +46,13 @@
 
 namespace SuiteCRM\Search\Exceptions;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
+/**
+ * Class SearchEngineNotFoundException has to be thrown when a search engine could not be found.
+ */
 class SearchEngineNotFoundException extends SearchException
 {
 

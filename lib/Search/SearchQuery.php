@@ -32,7 +32,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @see fromArray()
  * @author Vittorio Iocolano
  */
-class SearchQuery
+class SearchQuery implements \JsonSerializable
 {
     /** @var string Search query string */
     private $query;
@@ -265,5 +265,17 @@ class SearchQuery
         }
 
         return $value;
+    }
+
+    /** @inheritdoc */
+    public function jsonSerialize()
+    {
+        return [
+            'query' => $this->query,
+            'size' => $this->size,
+            'from' => $this->from,
+            'engine' => $this->engine,
+            'options' => $this->options
+        ];
     }
 }
