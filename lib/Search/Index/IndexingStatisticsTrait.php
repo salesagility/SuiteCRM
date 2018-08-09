@@ -37,21 +37,14 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 07/08/18
- * Time: 15:52
- */
-
 namespace SuiteCRM\Search\Index;
-
-use Carbon\CarbonInterval;
-use Monolog\Logger;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
+use Carbon\CarbonInterval;
+use Monolog\Logger;
 
 /**
  * Trait IndexingStatisticsTrait.

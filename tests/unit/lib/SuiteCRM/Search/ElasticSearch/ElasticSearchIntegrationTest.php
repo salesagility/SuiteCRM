@@ -48,12 +48,6 @@ use SuiteCRM\StateSaver;
 /** @noinspection PhpIncludeInspection */
 require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 22/06/18
- * Time: 12:37
- */
 class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 {
     const LOCK_FILE = 'cache/ElasticSearchIndex.lock';

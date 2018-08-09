@@ -41,12 +41,6 @@ use SuiteCRM\Search\Index\CliLoggerHandler;
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 18/07/18
- * Time: 12:17
- */
 class CliLoggerTest extends \Codeception\Test\Unit
 {
     /** @var Monolog\Logger */

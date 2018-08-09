@@ -37,13 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 25/06/18
- * Time: 16:47
- */
-
 namespace SuiteCRM\Robo\Plugin\Commands;
 
 use BeanFactory;

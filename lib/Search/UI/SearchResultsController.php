@@ -37,22 +37,15 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 26/07/18
- * Time: 15:05
- */
-
 namespace SuiteCRM\Search\UI;
-
-use SuiteCRM\Search\SearchQuery;
-use SuiteCRM\Search\SearchResults;
-use SuiteCRM\Search\UI\MVC\Controller;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
+use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\SearchResults;
+use SuiteCRM\Search\UI\MVC\Controller;
 
 class SearchResultsController extends Controller
 {

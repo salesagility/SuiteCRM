@@ -37,13 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 18/07/18
- * Time: 15:04
- */
-
 /** @noinspection PhpIllegalStringOffsetInspection */
 
 namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;

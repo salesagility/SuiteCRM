@@ -1,20 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 21/06/18
- * Time: 16:07
- */
 
 namespace SuiteCRM\Search;
-
-use SuiteCRM\Search\Exceptions\SearchInvalidRequestException;
-use SuiteCRM\Search\UI\SearchFormController;
-use SuiteCRM\Search\UI\SearchResultsController;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
+use SuiteCRM\Search\Exceptions\SearchInvalidRequestException;
+use SuiteCRM\Search\UI\SearchFormController;
+use SuiteCRM\Search\UI\SearchResultsController;
 
 /**
  * This abstract class offers the interface and utilities for other classes to be used as search engines.

@@ -37,13 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 27/07/18
- * Time: 11:51
- */
-
 namespace SuiteCRM\Search\Exceptions;
 
 if (!defined('sugarEntry') || !sugarEntry) {
