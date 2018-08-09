@@ -42,17 +42,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/SharedSecurityRulesHelper.php';
 
 require_once("modules/AOW_WorkFlow/aow_utils.php");
 
 class SharedSecurityRulesController extends SugarController
 {
     /**
-     * 
+     *
      * @param array $request
      * @return array
      */
-    protected function getRequestFields($request) {
+    protected function getRequestFields($request)
+    {
         $requestModuleType = $this->getRequestVar($request, 'moduletype');
         if (!$requestModuleType) {
             LoggerManager::getLogger()->warn('moduletype is not defined in request for SharedSecurityRulesController::getRequestFields()');
@@ -79,12 +81,13 @@ class SharedSecurityRulesController extends SugarController
     }
     
     /**
-     * 
+     *
      * @param array $request
      * @param string $key
      * @return mixed
      */
-    protected function getRequestVar($request, $key, $default = null) {
+    protected function getRequestVar($request, $key, $default = null)
+    {
         if (!isset($request[$key])) {
             LoggerManager::getLogger()->warn('Requested key for Share Security Rules controller is not set: ' . $key);
             return $default;
@@ -93,30 +96,31 @@ class SharedSecurityRulesController extends SugarController
     }
 
     /**
-     * 
+     *
      * @param SharedSecurityRulesActions $aow_action
      * @return array
      */
-    protected function getAOWActionParameters(SharedSecurityRulesActions $aow_action) {
-            $aowActionParameters = null;
-            if (!isset($aow_action->parameters)) {
-                LoggerManager::getLogger()->warn('Shared Security Rules controller needs an aow_action parameter');
-            } else {
-                $aowActionParameters = $aow_action->parameters;
-            }
-            return $aowActionParameters;
+    protected function getAOWActionParameters(SharedSecurityRulesActions $aow_action)
+    {
+        $aowActionParameters = null;
+        if (!isset($aow_action->parameters)) {
+            LoggerManager::getLogger()->warn('Shared Security Rules controller needs an aow_action parameter');
+        } else {
+            $aowActionParameters = $aow_action->parameters;
+        }
+        return $aowActionParameters;
     }
     
     /**
-     * 
+     *
      * @param array $request
      * @return array
      */
-    protected function getParams($request) {
-        
+    protected function getParams($request)
+    {
         $id = '';
         $requestId = $this->getRequestVar($request, 'id');
-        $params = array();        
+        $params = array();
         if ($requestId) {
             require_once('modules/AOW_Actions/AOW_Action.php');
             $aow_action = new SharedSecurityRulesActions();
@@ -189,13 +193,13 @@ class SharedSecurityRulesController extends SugarController
         
         $requestAOWModule = $this->getRequestVar($request, 'aow_module');
         $requestAOWFieldname = $this->getRequestVar($request, 'aow_fieldname');
-        $requestAOWNewFieldname = $this->getRequestVar($request, 'aow_newfieldname');        
+        $requestAOWNewFieldname = $this->getRequestVar($request, 'aow_newfieldname');
         $rel_module = $this->getModuleByRequest($request, $requestAOWModule);
         $module = $requestAOWModule;
         $fieldname = $requestAOWFieldname;
         $aow_field = $requestAOWNewFieldname;
         $view = $this->getRequestVar($request, 'view', 'EditView');
-        $value = $this->getRequestVar($request, 'aow_value' , '');
+        $value = $this->getRequestVar($request, 'aow_value', '');
         $requestAOWType = $this->getRequestVar($request, 'aow_type');
 
         switch ($requestAOWType) {
@@ -232,7 +236,7 @@ class SharedSecurityRulesController extends SugarController
     }
 
     /**
-     * 
+     *
      * @param array $request
      * @param string $requestAOWModule
      * @return string
@@ -244,10 +248,10 @@ class SharedSecurityRulesController extends SugarController
             getRelatedModule($requestAOWModule, $relFiled) :
             $requestAOWModule;
         return $module;
-    }    
+    }
     
     /**
-     * 
+     *
      * @param array $vardef
      * @return array
      */
@@ -290,7 +294,7 @@ class SharedSecurityRulesController extends SugarController
     }
     
     /**
-     * 
+     *
      * @param array $app_list_strings
      * @param array $valid_opp
      * @return array
@@ -330,7 +334,7 @@ class SharedSecurityRulesController extends SugarController
         $aow_field = $requestAOWNewFieldname;
 
         $view = $this->getRequestVar($request, 'view', 'EditView');
-        $value = $this->getRequestVar($request, 'aow_value' , '');
+        $value = $this->getRequestVar($request, 'aow_value', '');
         
         if (!isset($beanList[$module]) || !isset($beanFiles[$beanList[$module]])) {
             LoggerManager::getLogger()->warn('bean file not set in bean list for module: ' . $module . ' in SharedSecurityRulesController::action_getFieldTypeOptions()');
@@ -361,11 +365,12 @@ class SharedSecurityRulesController extends SugarController
     }
     
     /**
-     * 
+     *
      * @param array $vardef
      * @return array
      */
-    protected function getValidOppForModuleOpField($vardef) {
+    protected function getValidOppForModuleOpField($vardef)
+    {
         switch ($vardef['type']) {
             case 'double':
             case 'decimal':
@@ -419,12 +424,13 @@ class SharedSecurityRulesController extends SugarController
     }
     
     /**
-     * 
+     *
      * @param array $app_list_strings
      * @param array $valid_opp
      * @return array
      */
-    protected function updateAppListStringsAOROpList($app_list_strings, $valid_opp) {
+    protected function updateAppListStringsAOROpList($app_list_strings, $valid_opp)
+    {
         $keys = array_keys($app_list_strings['aor_operator_list']);
         foreach ($keys as $key) {
             if (!in_array($key, $valid_opp)) {
@@ -435,12 +441,12 @@ class SharedSecurityRulesController extends SugarController
     }
     
     /**
-     * 
+     *
      * @param array $request
      * @return string
      */
-    protected function getOnChange($request) {
-        
+    protected function getOnChange($request)
+    {
         $onchange = "";
         
         $m = $this->getRequestVar($request, 'm');
@@ -474,7 +480,7 @@ class SharedSecurityRulesController extends SugarController
         $aor_field = $requestAorNewFieldName;
 
         $view = $this->getRequestVar($request, 'view', 'EditView');
-        $value = $this->getRequestVar($request, 'aor_value' , '');
+        $value = $this->getRequestVar($request, 'aor_value', '');
 
         if (!isset($module) || !isset($beanList[$module]) && !isset($beanFiles[$beanList[$module]])) {
             LoggerManager::getLogger()->error('Bean module is not defined in beanlist');

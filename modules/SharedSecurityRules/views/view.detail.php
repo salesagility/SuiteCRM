@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/../SharedSecurityRulesHelper.php';
+
 require_once 'include/MVC/View/views/view.detail.php';
 require_once 'modules/AOW_WorkFlow/aow_utils.php';
 require_once 'modules/AOR_Reports/aor_utils.php';
@@ -50,7 +52,7 @@ class SharedSecurityRulesViewDetail extends ViewDetail
 {
     
     /**
-     * 
+     *
      * @return array
      */
     private function getConditionLines()
@@ -67,10 +69,8 @@ class SharedSecurityRulesViewDetail extends ViewDetail
         $result = $this->bean->db->query($sql);
         $conditions = array();
         while ($row = $this->bean->db->fetchByAssoc($result)) {
-            
             $condition_name = BeanFactory::getBean('SharedSecurityRulesConditions', $row['id']);
             if ($condition_name) {
-            
                 if ($condition_name->value_type == 'Date') {
                     $conditionNameValue = null;
                     if (!isset($condition_name->value)) {
@@ -83,7 +83,6 @@ class SharedSecurityRulesViewDetail extends ViewDetail
                 $condition_item = $condition_name->toArray();
 
                 if (!$condition_name->parenthesis) {
-                    
                     $beanFlowModule = null;
                     if (isset($this->bean->flow_module)) {
                         $beanFlowModule = $this->bean->flow_module;
@@ -97,14 +96,13 @@ class SharedSecurityRulesViewDetail extends ViewDetail
                 }
                 
                 $conditions[$condition_item['condition_order']] = $condition_item;
-                
             }
         }
         return $conditions;
     }
 
     /**
-     * 
+     *
      */
     public function preDisplay()
     {
@@ -116,7 +114,7 @@ class SharedSecurityRulesViewDetail extends ViewDetail
     }
 
     /**
-     * 
+     *
      * @global array $app_list_strings
      * @param string $modulePath
      * @param string $field

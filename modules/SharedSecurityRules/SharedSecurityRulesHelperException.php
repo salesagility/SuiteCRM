@@ -51,7 +51,7 @@ class SharedSecurityRulesHelperException extends Exception
     public $return;
     
     /**
-     * 
+     *
      * @param string $message
      * @param int $code
      * @param Throwable $previous

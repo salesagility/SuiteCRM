@@ -43,8 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 include_once __DIR__ . '/SharedSecurityRulesHelper.php';
-include_once('SharedSecurityRulesChecker.php');
-include_once('SharedSecurityRulesWhereBuilder.php');
+include_once __DIR__ . '/SharedSecurityRulesChecker.php';
+include_once __DIR__ . '/SharedSecurityRulesWhereBuilder.php';
 
 class SharedSecurityRules extends Basic
 {

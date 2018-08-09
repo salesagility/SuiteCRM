@@ -109,7 +109,7 @@ class SharedSecurityRulesHelper
     }
     
     /**
-     * 
+     *
      * @param bool $tempResult
      * @return boolean
      */
@@ -124,7 +124,7 @@ class SharedSecurityRulesHelper
     }
     
     /**
-     * 
+     *
      * @param array $allParenthesisConditions
      * @param SugarBean $moduleBean
      * @param array $rule
@@ -133,7 +133,8 @@ class SharedSecurityRulesHelper
      * @param string $key
      * @return array
      */
-    protected function getConditionsToCheck($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key) {
+    protected function getConditionsToCheck($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key)
+    {
         $conditionsToCheck = array();
 
         for ($j = 0; $j < count($allParenthesisConditions); $j++) {
@@ -473,7 +474,8 @@ class SharedSecurityRulesHelper
         return false;
     }
     
-    public function getConvertedRes($result) {        
+    public function getConvertedRes($result)
+    {
         $converted_res = $result ? 'true' : 'false';
         return $converted_res;
     }

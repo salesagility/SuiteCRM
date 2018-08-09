@@ -42,10 +42,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/SharedSecurityRulesHelper.php';
+
 class SharedSecurityRulesWhereBuilder
 {
     /**
-     * 
+     *
      * @param array $action
      * @param string $key
      * @return mixed
@@ -62,7 +64,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     /**
-     * 
+     *
      * @param string $where
      * @param string $parenthesis
      * @param string $logOp
@@ -80,7 +82,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     /**
-     * 
+     *
      * @param string $where
      * @param string $parenthesis
      * @param array $condition
@@ -113,7 +115,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     /**
-     * 
+     *
      * @param string $targetType
      * @param array $action
      * @param string $key
@@ -155,7 +157,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     /**
-     * 
+     *
      * @param array $action
      * @param string $userId
      * @param SugarBean $module
@@ -177,7 +179,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     /**
-     * 
+     *
      * @param array $action
      * @param string $userId
      * @param SugarBean $module
@@ -201,7 +203,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     /**
-     * 
+     *
      * @param string $serialized
      * @return string
      */
@@ -215,7 +217,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     /**
-     * 
+     *
      * @param string $accessLevel
      * @param string $where
      * @param string $resWhere
@@ -231,7 +233,7 @@ class SharedSecurityRulesWhereBuilder
     }
 
     /**
-     * 
+     *
      * @param SugarBean $module
      * @param resource $actions_results
      * @param string $userId
@@ -250,7 +252,7 @@ class SharedSecurityRulesWhereBuilder
     }
 
     /**
-     * 
+     *
      * @param bool $related
      * @param array $condition
      * @param array $rule
@@ -270,7 +272,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     /**
-     * 
+     *
      * @param array $condition
      * @param SugarBean $module
      */
@@ -284,7 +286,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     /**
-     * 
+     *
      * @param resource $conditions_results
      * @param SugarBean $module
      * @param bool $related
@@ -317,7 +319,7 @@ class SharedSecurityRulesWhereBuilder
     }
     
     /**
-     * 
+     *
      * @param SugarBean $module
      * @param string $userId
      * @return string

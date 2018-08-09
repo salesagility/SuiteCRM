@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once('SharedSecurityRulesHelper.php');
+include_once __DIR__ . '/SharedSecurityRulesHelper.php';
 
 class SharedSecurityRulesChecker
 {
@@ -54,15 +54,16 @@ class SharedSecurityRulesChecker
     protected $db;
     
     /**
-     * 
+     *
      * @param DBManager $db
      */
-    public function __construct(DBManager $db) {
+    public function __construct(DBManager $db)
+    {
         $this->db = $db;
     }
         
     /**
-     * 
+     *
      * @param bool|null $result
      * @param array $action
      * @param SugarBean $module
@@ -92,7 +93,7 @@ class SharedSecurityRulesChecker
     }
     
     /**
-     * 
+     *
      * @param bool|null $result
      * @param array $action
      * @param SugarBean $module
@@ -217,12 +218,12 @@ class SharedSecurityRulesChecker
     }
     
     /**
-     * 
+     *
      * @param SugarBean $module
      * @return SugarBean
      */
-    public function getModuleBean(SugarBean $module) {
-        
+    public function getModuleBean(SugarBean $module)
+    {
         $class = get_class($module);
         LoggerManager::getLogger()->info('SharedSecurityRules: Class is: ' . $class);
         
@@ -239,15 +240,15 @@ class SharedSecurityRulesChecker
     }
     
     /**
-     * 
+     *
      * @param SugarBean $module
      * @param SugarBean $moduleBean
      * @param string $userId
      * @param string $view
      * @return boolean|null
      */
-    public function getResult(SugarBean $module, SugarBean $moduleBean, $userId, $view) {
-
+    public function getResult(SugarBean $module, SugarBean $moduleBean, $userId, $view)
+    {
         $helper = new SharedSecurityRulesHelper($this->db);
         
         LoggerManager::getLogger()->info('SharedSecurityRules: Module bean ID: ' . $moduleBean->id);
