@@ -1,6 +1,7 @@
 ---
 name: Documentation
-about: We have our own SuiteDocs issue tracker repo here:  https://github.com/salesagility/SuiteDocs
+about: 'We have our own SuiteDocs issue tracker repo here:  https://github.com/salesagility/SuiteDocs'
+
 ---
 
 The SuiteCRM documentation has its own dedicated repository. Please open your

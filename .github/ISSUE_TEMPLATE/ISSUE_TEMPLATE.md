@@ -1,6 +1,7 @@
 ---
 name: Bug Report
 about: Found a bug within SuiteCRM? Please raise it here!
+
 ---
 
 <!--- Provide a general summary of the issue in the **Title** above -->

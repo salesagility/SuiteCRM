@@ -1,6 +1,7 @@
 ---
 name: Security Issue
 about: In the interest of the product all Security bugs should be emailed to security@suitecrm.com
+
 ---
 
 Please don't disclose security bugs publicly until they have been handled by the security team emailing them on security@suitecrm.com. This will be delivered directly to the product team who handle security issues.
