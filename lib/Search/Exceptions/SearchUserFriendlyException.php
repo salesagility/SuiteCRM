@@ -37,33 +37,30 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Search\SearchQuery;
-use SuiteCRM\Search\SearchWrapper;
-use SuiteCRM\Search\UI\SearchThrowableHandler;
+/**
+ * Created by PhpStorm.
+ * User: viocolano
+ * Date: 09/08/18
+ * Time: 11:22
+ */
+
+namespace SuiteCRM\Search\Exceptions;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-try {
-    $query = SearchQuery::fromGetRequest();
-    SearchWrapper::searchAndDisplay($query);
-} catch (Exception $e) {
-    handleThrowable($e, $query);
-} catch (Throwable $e) {
-    handleThrowable($e, $query);
-}
-
 /**
- * Handles an exception/error.
+ * Class SearchUserFriendlyException contains an error that can be safely shown to the user.
  *
- * The double exception is because php 5.x does not support handling errors and does not have a Throwable class.
+ * This should not contain technical details. The exception message will be directly shown to the user in case of error.
  *
- * @param Throwable $e
- * @param SearchQuery $query
+ * Consider using the translation framework to localise the error message.
+ *
+ * An example could be: "An error has occurred while performing the search. Your query syntax might not be valid."
+ *
  */
-function handleThrowable($e, SearchQuery $query)
+class SearchUserFriendlyException extends SearchException
 {
-    $handler = new SearchThrowableHandler($e, $query);
-    $handler->handle();
+
 }

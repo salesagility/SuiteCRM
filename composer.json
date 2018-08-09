@@ -29,7 +29,8 @@
     "ezyang/htmlpurifier": "^4.10",
     "elasticsearch/elasticsearch": "^5.3",
     "nesbot/carbon": "^1.31",
-    "monolog/monolog": "^1.23"
+    "monolog/monolog": "^1.23",
+    "filp/whoops": "^2.2"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
