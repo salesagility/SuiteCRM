@@ -52,12 +52,18 @@ $("#es-test-connection").click(function () {
         }
     }).done(function (data) {
         if (data.status === "success") {
-            alert("Connection successful.\n\nPing: " + data.ping / 1000 + " ms\nElasticsearch version: " + data.info.version.number);
+            alert(
+                SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_TEST_CONNECTION_SUCCESS")
+                + "\n\nPing: " + data.ping / 1000 + " ms\nElasticsearch v" + data.info.version.number
+            );
         } else {
-            alert("Connection failed.\n\n" + data.error + ".");
+            alert(
+                SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_TEST_CONNECTION_FAIL")
+                + "\n\n" + data.error + "."
+            );
         }
     }).error(function () {
-        alert("Failed perform ping request.");
+        alert(SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_TEST_CONNECTION_ERROR"));
     });
 });
 
@@ -65,9 +71,9 @@ $("#es-full-index").click(function () {
     var url = "index.php?module=Administration&action=ElasticSearchSettings&do=FullIndex";
 
     $.ajax(url).done(function () {
-        alert("A full indexing has been scheduled and will start in the next 60 seconds. Search results might be incomplete until the process is complete.");
+        alert(SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_SUCCESS"));
     }).error(function () {
-        alert("Failed to start full index.");
+        alert(SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_FAIL"));
     });
 });
 
@@ -75,8 +81,8 @@ $("#es-partial-index").click(function () {
     var url = "index.php?module=Administration&action=ElasticSearchSettings&do=PartialIndex";
 
     $.ajax(url).done(function () {
-        alert("A full indexing has been scheduled and will start in the next 60 seconds.");
+        alert(SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_SUCCESS"));
     }).error(function () {
-        alert("Failed to start partial index.");
+        alert(SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_FAIL"));
     });
 });

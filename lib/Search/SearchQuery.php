@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 21/06/18
- * Time: 16:09
- */
 
 namespace SuiteCRM\Search;
 

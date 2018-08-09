@@ -37,16 +37,13 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 18/07/18
- * Time: 15:04
- */
-
 /** @noinspection PhpUndefinedClassInspection */
 
 namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 use BeanFactory;
 use Configurator;
@@ -59,10 +56,6 @@ use SuiteCRM\Modules\Administration\Search\MVC\Controller as AbstractController;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use Throwable;
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 
 require_once __DIR__ . '/../../../Configurator/Configurator.php';
 require_once __DIR__ . '/../../../SchedulersJobs/SchedulersJob.php';

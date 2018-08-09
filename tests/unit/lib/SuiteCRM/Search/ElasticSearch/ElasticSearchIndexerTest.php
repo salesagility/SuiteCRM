@@ -46,12 +46,6 @@ use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer as i;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 use SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 22/06/18
- * Time: 12:37
- */
 class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 {
     public function testGetModulesToIndex()

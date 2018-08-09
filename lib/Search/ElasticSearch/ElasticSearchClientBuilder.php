@@ -45,12 +45,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use Elasticsearch\ClientBuilder;
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 26/06/18
- * Time: 11:11
- */
 class ElasticSearchClientBuilder
 {
     private static $hosts;

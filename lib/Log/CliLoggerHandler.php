@@ -37,60 +37,29 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search\UI\MVC;
+namespace SuiteCRM\Log;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use Sugar_Smarty;
+use Monolog\Handler\StreamHandler;
 
-abstract class View
+/**
+ * This class extends the base Monolog StreamHandler to perform logging on CLI output.
+ *
+ * This logger is ideal for CLIs as it is minimal and offers nice colour formatting.
+ */
+class CliLoggerHandler extends StreamHandler
 {
-    /** @var Sugar_Smarty */
-    protected $smarty;
-    /** @var string */
-    protected $templateFile;
-
     /**
-     * View constructor.
-     * @param $file
+     * CliLoggerHandler constructor.
+     *
+     * @throws \Exception
      */
-    public function __construct($file)
+    public function __construct()
     {
-        $this->smarty = new Sugar_Smarty();
-        $this->templateFile = $file;
-    }
-
-    /**
-     * @return Sugar_Smarty
-     */
-    public function getTemplate()
-    {
-        return $this->smarty;
-    }
-
-    /**
-     * Renders the template.
-     */
-    public function display()
-    {
-        $this->smarty->display($this->templateFile);
-    }
-
-    /**
-     * @param string $templateFile
-     */
-    public function setTemplateFile($templateFile)
-    {
-        $this->templateFile = $templateFile;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplateFile()
-    {
-        return $this->templateFile;
+        parent::__construct('php://stderr');
+        $this->setFormatter(new CliLoggerFormatter());
     }
 }

@@ -39,12 +39,6 @@
 
 use SuiteCRM\Search\SearchTestAbstract;
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 08/08/18
- * Time: 10:18
- */
 class SearchInstallTest extends SearchTestAbstract
 {
     public function testConfiguredSuccessfully()

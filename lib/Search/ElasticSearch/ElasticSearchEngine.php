@@ -41,13 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 21/06/18
- * Time: 16:25
- */
-
 use Elasticsearch\Client;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
 use SuiteCRM\Search\SearchEngine;

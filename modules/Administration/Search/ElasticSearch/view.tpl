@@ -35,10 +35,9 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
-<h1>Elasticsearch Settings</h1>
-<p class="text-muted">Manage your settings. Elasticsearch requires an external Elasticsearch server to work.</p>
-<p class="text-muted">Check Elasticsearch's <a href="https://github.com/elastic/elasticsearch">repo</a> to learn how to
-    set up their server.</p>
+<h1>{$MOD.LBL_ELASTIC_SEARCH_SETTINGS}</h1>
+<p class="text-muted">{$MOD.LBL_ELASTIC_SEARCH_SETTINGS_DESC}</p>
+<p class="text-muted">{$MOD.LBL_ELASTIC_SEARCH_SETTINGS_HELP}</p>
 
 <br/>
 
@@ -47,26 +46,24 @@
       class="detail-view"
       enctype='multipart/form-data'
       method="POST"
-      action="index.php?module=Administration&action=ElasticSearchSettings&do=SaveConfig">
+      action="?module=Administration&action=ElasticSearchSettings&do=SaveConfig">
 
     <div class="row">
         <div class="panel panel-primary">
-            <div class="panel-heading">General</div>
+            <div class="panel-heading">{$MOD.LBL_ELASTIC_SEARCH_GENERAL}</div>
             <div class="panel-body tab-content text-center">
                 <div class="col-md-6">
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input"
                                id="es-enabled" name="enabled"
                                {if $config.enabled}checked='checked'{/if}>
-                        <label class="form-check-label" for="es-enabled">Enable Elasticsearch.</label>
+                        <label class="form-check-label" for="es-enabled">{$MOD.LBL_ELASTIC_SEARCH_ENABLE}</label>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <button
-                            class="btn btn-primary"
+                    <button class="btn btn-primary"
                             id="es-test-connection"
-                            type="button">Test connection
-                    </button>
+                            type="button">{$MOD.LBL_ELASTIC_SEARCH_TEST_CONNECTION}</button>
                 </div>
             </div>
         </div>
@@ -75,10 +72,10 @@
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-primary">
-                <div class="panel-heading">Server</div>
+                <div class="panel-heading">{$MOD.LBL_ELASTIC_SEARCH_SERVER}</div>
                 <div class="panel-body tab-content">
                     <div class="form-group">
-                        <label for="es-host">Host</label>
+                        <label for="es-host">{$MOD.LBL_ELASTIC_SEARCH_HOST}</label>
                         <input type="text" class="form-control"
                                id="es-host" name="host" value="{$config.host}">
                         <small class="form-text text-muted">e.g. localhost, 192.168.1.1:9200,
@@ -86,10 +83,10 @@
                         </small>
                     </div>
                     <div class="form-group">
-                        <label for="es-user">Username</label>
+                        <label for="es-user">{$MOD.LBL_ELASTIC_SEARCH_USER}</label>
                         <input type="text" class="form-control"
                                id="es-user" name="user" value="{$config.user}">
-                        <label for="es-password">Password</label>
+                        <label for="es-password">{$MOD.LBL_ELASTIC_SEARCH_PASS}</label>
                         <input type="password" class="form-control"
                                id="es-password" name="pass" value="{$config.pass}">
                     </div>
@@ -98,9 +95,9 @@
         </div>
         <div class="col-md-6">
             <div class="panel panel-primary">
-                <div class="panel-heading">Schedulers</div>
+                <div class="panel-heading">{$MOD.LBL_ELASTIC_SEARCH_SCHEDULERS}</div>
                 <div class="panel-body tab-content">
-                    <label>The following ElasticSearch schedulers were detected:</label>
+                    <label>{$MOD.LBL_ELASTIC_SEARCH_SCHEDULERS_HELP}</label>
                     <ul class="list-group">
                         {foreach from=$schedulers item=scheduler}
                             <li class="list-group-item {if $scheduler->status eq 'Inactive'}list-group-item-warning{/if}">
@@ -113,20 +110,18 @@
                                 <b>{$scheduler->status}</b>
                                 &mdash;
                                 {if !empty($scheduler->last_run)}
-                                    last run:
+                                    {$MOD.LBL_ELASTIC_SEARCH_SCHEDULERS_LAST_RUN}
                                     {$scheduler->last_run}
                                     (<b>{diff_for_humans datetime=$scheduler->last_run}</b>)
                                 {else}
-                                    This job has never run
+                                    {$MOD.LBL_ELASTIC_SEARCH_SCHEDULERS_NEVER_RUN}
                                 {/if}
                             </li>
                             {foreachelse}
-                            <p class="error">No schedulers found. Consider creating one.</p>
+                            <p class="error">{$MOD.LBL_ELASTIC_SEARCH_SCHEDULERS_NOT_FOUND}</p>
                         {/foreach}
                     </ul>
-                    <small class="form-text text-muted">The ElasticSearch module uses schedulers to keep the database
-                        and the indexing engine synchronised.
-                    </small>
+                    <small class="form-text text-muted">{$MOD.LBL_ELASTIC_SEARCH_SCHEDULERS_DESC}</small>
                 </div>
             </div>
         </div>
@@ -135,13 +130,15 @@
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-primary ">
-                <div class="panel-heading">Index</div>
+                <div class="panel-heading">{$MOD.LBL_ELASTIC_SEARCH_INDEX}</div>
             </div>
             <div class="panel-body tab-content">
-                <label>Schedule an indexing.</label>
+                <label>{$MOD.LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_HELP}</label>
                 <div>
-                    <button class="btn btn-primary" type="button" id="es-full-index">Schedule full indexing</button>
-                    <button class="btn btn-default" type="button" id="es-partial-index">Schedule partial indexing</button>
+                    <button class="btn btn-primary" type="button"
+                            id="es-full-index">{$MOD.LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL}</button>
+                    <button class="btn btn-default" type="button"
+                            id="es-partial-index">{$MOD.LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART}</button>
                 </div>
             </div>
         </div>

@@ -8,12 +8,6 @@ use Mockery;
 use ReflectionException;
 use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 21/06/18
- * Time: 16:48
- */
 class SearchWrapperTest extends SearchTestAbstract
 {
     public function testFetchEngine()

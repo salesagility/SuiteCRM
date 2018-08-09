@@ -39,13 +39,6 @@
 
 use SuiteCRM\Search\SearchTestAbstract;
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 19/07/18
- * Time: 15:09
- */
-
 require_once 'include/utils/LogicHook.php';
 require_once 'modules/Schedulers/Scheduler.php';
 

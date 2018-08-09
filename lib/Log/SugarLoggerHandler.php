@@ -37,14 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 17/07/18
- * Time: 14:54
- */
-
-namespace SuiteCRM\SugarLogger;
+namespace SuiteCRM\Log;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -56,7 +49,7 @@ use Monolog\Handler\AbstractProcessingHandler;
 /**
  * Integrates Monolog with the LoggerManager.
  */
-class SugarLoggerMonologHandler extends AbstractProcessingHandler
+class SugarLoggerHandler extends AbstractProcessingHandler
 {
 
     /**
@@ -73,7 +66,7 @@ class SugarLoggerMonologHandler extends AbstractProcessingHandler
         $level = $record['level'];
         $channel = $record['channel'];
 
-        $level = $this->monologLevelToSugarLoggerLevel($level);
+        $level = $this->psrToSugarLevel($level);
 
         $logger->$level("[$channel] $message");
     }
@@ -84,7 +77,7 @@ class SugarLoggerMonologHandler extends AbstractProcessingHandler
      * @param int $level
      * @return string
      */
-    protected function monologLevelToSugarLoggerLevel($level)
+    protected function psrToSugarLevel($level)
     {
         $level = intval($level);
 

@@ -1,8 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
-
-use SuiteCRM\Search\Index\CliLoggerHandler;
-
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,13 +37,16 @@ use SuiteCRM\Search\Index\CliLoggerHandler;
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
+use SuiteCRM\Log\CliLoggerHandler;
+
 /**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 18/07/18
- * Time: 12:17
+ * Class CliLoggerHandlerTest test for CliLoggerHandler.
+ *
+ * @see CliLoggerHandler
  */
-class CliLoggerTest extends \Codeception\Test\Unit
+class CliLoggerHandlerTest extends \Codeception\Test\Unit
 {
     /** @var Monolog\Logger */
     private $logger;

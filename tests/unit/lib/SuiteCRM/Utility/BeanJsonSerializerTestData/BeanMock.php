@@ -37,15 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 29/06/18
- * Time: 15:09
- */
-
 namespace SuiteCRM\Utility\BeanJsonSerializerTestData;
-
 
 class BeanMock extends \SugarBean
 {

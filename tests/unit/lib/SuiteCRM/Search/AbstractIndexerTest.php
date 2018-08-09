@@ -40,17 +40,9 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Created by PhpStorm.
- * User: viocolano
- * Date: 05/07/18
- * Time: 15:01
- */
-
 use SuiteCRM\Search\Index\AbstractIndexer;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
-
 
 class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 {
