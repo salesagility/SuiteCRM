@@ -48,10 +48,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 try {
     $query = SearchQuery::fromGetRequest();
     SearchWrapper::searchAndDisplay($query);
-} catch (Exception $e) {
-    handleThrowable($e, $query);
-} catch (Throwable $e) {
-    handleThrowable($e, $query);
+} catch (Exception $exception) {
+    handleThrowable($exception, $query);
+} catch (Throwable $throwable) {
+    handleThrowable($throwable, $query);
 }
 
 /**
@@ -59,11 +59,11 @@ try {
  *
  * The double exception is because php 5.x does not support handling errors and does not have a Throwable class.
  *
- * @param Throwable $e
+ * @param Throwable $throwable
  * @param SearchQuery $query
  */
-function handleThrowable($e, SearchQuery $query)
+function handleThrowable($throwable, SearchQuery $query)
 {
-    $handler = new SearchThrowableHandler($e, $query);
+    $handler = new SearchThrowableHandler($throwable, $query);
     $handler->handle();
 }
