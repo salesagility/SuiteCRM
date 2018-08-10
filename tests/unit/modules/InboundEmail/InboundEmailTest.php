@@ -47,6 +47,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(false, 'isAutoImport', $inboundEmail);
 
         $this->assertAttributeEquals(0, 'attachmentCount', $inboundEmail);
+        $this->assertAttributeEquals('function::pollMonitoredInboxes', 'job_name', $inboundEmail);
     }
     // --------------------------------------- [OK]
 //    public function testsaveAndOthers()
