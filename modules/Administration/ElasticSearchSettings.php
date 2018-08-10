@@ -37,14 +37,17 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Modules\Administration\Search\ElasticSearch\Controller;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Modules\Administration\Search\ElasticSearch\Controller;
+
 global $current_user;
-if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
+
+if (!is_admin($current_user)) {
+    sugar_die("Unauthorized access to administration.");
+}
 
 $controller = new Controller();
 
