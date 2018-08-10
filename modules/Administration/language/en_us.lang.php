@@ -945,7 +945,7 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART' => 'Schedule partial indexing',
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_SUCCESS' => 'A full indexing has been scheduled and will start in the next 60 seconds. Search results might be incomplete until the process is complete.',
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_FAIL' => 'Failed to start full index.',
-    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_SUCCESS' => 'A full indexing has been scheduled and will start in the next 60 seconds.',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_SUCCESS' => 'A partial indexing has been scheduled and will start in the next 60 seconds.',
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_FAIL' => 'Failed to start partial index.',
 
     // SearchWrapper Settings
