@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use Sugar_Smarty;
 use SuiteCRM\Search\SearchWrapper;
+use SuiteCRM\Utility\StringUtils;
 
 require_once __DIR__ . '/../../../Home/UnifiedSearchAdvanced.php';
 
@@ -148,38 +149,10 @@ EOQ;
         $engines = [];
 
         foreach (SearchWrapper::getEngines() as $engine) {
-            $engines[$engine] = translate('LBL_' . $this->camelToUnderscoreCase($engine));
+            $engines[$engine] = translate('LBL_' . StringUtils::camelToUnderscoreCase($engine));
         }
 
         return $engines;
-    }
-
-    /**
-     * Converts a string from camelCase to snake_case
-     *
-     * @param string $input
-     * @param bool   $uppercase
-     *
-     * @return string
-     */
-    protected function camelToUnderscoreCase($input, $uppercase = true)
-    {
-        // Breaks the camel-cased word into matches
-        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
-
-        $ret = $matches[0];
-
-        foreach ($ret as &$match) {
-            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
-        }
-
-        $return = implode('_', $ret);
-
-        if ($uppercase) {
-            $return = strtoupper($return);
-        }
-
-        return $return;
     }
 
     /**
