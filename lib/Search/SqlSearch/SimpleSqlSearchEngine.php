@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
+use SuiteCRM\Search\SearchWrapper;
 
 /**
  * SimpleSqlSearchEngine is a naive search engine that checks the table structure and compares using the LIKE statement.
@@ -56,17 +57,12 @@ class SimpleSqlSearchEngine extends SearchEngine
      * Performs a search using the search engine and returns a list SearchResults instance.
      *
      * @param SearchQuery $query
+     *
      * @return SearchResults
      */
     public function search(SearchQuery $query)
     {
-        $modules = [
-            'Accounts', 'Contacts', 'Users',
-            'Opportunities', 'Leads', 'Emails',
-            'Calls', 'Meetings', 'Tasks',
-            'Surveys', 'Cases', 'Documents',
-            'Notes'
-        ];
+        $modules = SearchWrapper::getModules();
 
         $results = [];
 
@@ -84,7 +80,8 @@ class SimpleSqlSearchEngine extends SearchEngine
      * Performs a search in a single module table and returns a list of ids.
      *
      * @param SearchQuery $query
-     * @param string $module
+     * @param string      $module
+     *
      * @return array
      */
     private function searchModule(SearchQuery $query, $module)
@@ -92,7 +89,7 @@ class SimpleSqlSearchEngine extends SearchEngine
         $seed = BeanFactory::getBean($module);
         $table = $seed->table_name;
 
-        $fields = $this->filterTableStructure($this->getTableStructureFromManager($table));
+        $fields = $this->filterTableStructure($this->getTableStructure($table));
 
         $sql = $this->makeSearchQuery($query, $table, $fields);
 
@@ -113,6 +110,7 @@ class SimpleSqlSearchEngine extends SearchEngine
      * Filters an array of table structures to only retrieve search-relevant fields.
      *
      * @param array $fields
+     *
      * @return array
      */
     protected function filterTableStructure(array $fields)
@@ -136,10 +134,12 @@ class SimpleSqlSearchEngine extends SearchEngine
      * Uses the DBManager getTableDescription method to retrieve the structure of the table in a name->type format.
      *
      * @see \DBManager::getTableDescription()
-     * @param $table
+     *
+     * @param string $table
+     *
      * @return array
      */
-    protected function getTableStructureFromManager($table)
+    protected function getTableStructure($table)
     {
         $descriptions = DBManagerFactory::getInstance()->getTableDescription($table);
 
@@ -156,45 +156,33 @@ class SimpleSqlSearchEngine extends SearchEngine
      * Makes the search SQL query.
      *
      * @param SearchQuery $query
-     * @param $table
-     * @param array $fields
+     * @param string      $table
+     * @param array       $fields
+     *
      * @return string
      */
     private function makeSearchQuery(SearchQuery $query, $table, array $fields)
     {
-        $sql = "SELECT id FROM %s WHERE %s AND deleted=0";
+        $sql = 'SELECT id FROM %s WHERE %s AND deleted=0';
 
         $wheres = [];
 
-        foreach ($fields as $name => $type) {
-            $wheres[] = sprintf("%s LIKE '%s'", $name, $query->getSearchString());
+        // The database manager is not exposing any database-specific escaping functions,
+        // so only addslashes() will be used here.
+        $slashedString = addslashes($query->getSearchString());
+
+        foreach (array_keys($fields) as $name) {
+            $wheres[] = sprintf("%s LIKE '%s'", $name, $slashedString);
         }
 
         $sql = sprintf($sql, $table, implode(' OR ', $wheres));
         return $sql;
     }
 
-    /**
-     * Uses the DESCRIBE command to retrieve the structure of the table in a name->type format.
-     *
-     * Not safe as it is not database independent.
-     *
-     * @deprecated
-     * @param $table
-     * @return array
-     */
-    protected function getTableStructureFromQuery($table)
+    /** @inheritdoc */
+    protected function validateQuery(SearchQuery &$query)
     {
-        $db = DBManagerFactory::getInstance();
-
-        $results = $db->query("DESCRIBE $table");
-
-        $fields = [];
-
-        while ($row = $db->fetchRow($results)) {
-            $fields[$row['Field']] = $row['Type'];
-        }
-
-        return $fields;
+        parent::validateQuery($query);
+        $query->convertEncoding();
     }
 }
