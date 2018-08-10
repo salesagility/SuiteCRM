@@ -43,22 +43,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use InvalidArgumentException;
 use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Search\UI\MVC\View;
 use SuiteCRM\Utility\StringUtils;
 
-
+/**
+ * Class SearchFormView handles the search bar and form.
+ */
 class SearchFormView extends View
 {
-
     public function __construct()
     {
         parent::__construct(__DIR__ . '/templates/search.form.tpl');
     }
 
+    /** @inheritdoc */
     public function display()
     {
-        $sizes = [10 => 10, 20 => 20, 30 => 30, 40 => 40, 50 => 50];
+        $sizes = $this->makeSizesFromConfig();
         $engines = [];
 
         foreach (SearchWrapper::getEngines() as $engine) {
@@ -71,4 +74,61 @@ class SearchFormView extends View
         parent::display();
     }
 
+    /**
+     * Makes an array with the page size from the sugar config.
+     *
+     * @return array
+     */
+    protected function makeSizesFromConfig()
+    {
+        global $sugar_config;
+
+        try {
+            return $this->makeSizes(
+                $sugar_config['search']['pagination']['min'],
+                $sugar_config['search']['pagination']['step'],
+                $sugar_config['search']['pagination']['max']
+            );
+        } catch (InvalidArgumentException $exception) {
+            return $this->makeSizes(10, 10, 50);
+        }
+    }
+
+    /**
+     * Makes an array with the page size from the given parameters.
+     *
+     * @param int $min
+     * @param int $step
+     * @param int $max
+     *
+     * @throws InvalidArgumentException in case of failure
+     *
+     * @return array
+     */
+    protected function makeSizes($min, $step, $max)
+    {
+        $min = intval($min);
+        $step = intval($step);
+        $max = intval($max);
+
+        if (!is_integer($min) || !is_integer($step) || !is_integer($max)) {
+            throw new InvalidArgumentException('Arguments must be integers');
+        }
+
+        if ($min > $max) {
+            throw new InvalidArgumentException('$min must be smaller than $max');
+        }
+
+        if ($max == 0 || $min == 0 || $min == 0) {
+            throw new InvalidArgumentException('Arguments cannot be zero');
+        }
+
+        $sizes = [];
+
+        for ($it = $min; $it <= $max; $it += $step) {
+            $sizes[$it] = $it;
+        }
+
+        return $sizes;
+    }
 }

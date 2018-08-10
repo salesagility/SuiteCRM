@@ -56,6 +56,9 @@ function install_search()
     $sugar_config['search']['modules'] = [
         'Accounts', 'Calls', 'Cases', 'Contacts', 'Documents', 'Leads', 'Meetings', 'Notes', 'Opportunities'
     ];
+    $sugar_config['search']['pagination'] = [
+        'min' => 10, 'max' => 50, 'step' => 10,
+    ];
 
     ksort($sugar_config);
     write_array_to_file('sugar_config', $sugar_config, 'config.php');
@@ -81,12 +84,15 @@ function install_es()
     installESHooks();
 }
 
+/**
+ * Sets up the Elasticsearch logic hooks.
+ */
 function installESHooks()
 {
     require_once('ModuleInstall/ModuleInstaller.php');
 
-    $hooks = array(
-        array(
+    $hooks = [
+        [
             'module' => '',
             'hook' => 'after_save',
             'order' => 1,
@@ -94,8 +100,8 @@ function installESHooks()
             'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
             'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
             'function' => 'beanSaved',
-        ),
-        array(
+        ],
+        [
             'module' => '',
             'hook' => 'after_delete',
             'order' => 1,
@@ -103,11 +109,20 @@ function installESHooks()
             'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
             'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
             'function' => 'beanDeleted',
-        ),
-    );
+        ],
+    ];
 
     foreach ($hooks as $hook) {
-        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
+        check_logic_hook_file(
+            $hook['module'],
+            $hook['hook'],
+            [
+                $hook['order'],
+                $hook['description'],
+                $hook['file'],
+                $hook['class'],
+                $hook['function'],
+            ]
+        );
     }
-
 }
