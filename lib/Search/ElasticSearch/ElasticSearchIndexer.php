@@ -52,7 +52,9 @@ use SugarBean;
 use SuiteCRM\Search\Index\AbstractIndexer;
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\Index\IndexingLockFileTrait;
+use SuiteCRM\Search\Index\IndexingSchedulerTrait;
 use SuiteCRM\Search\Index\IndexingStatisticsTrait;
+use Symfony\Component\Yaml\Parser as YamlParser;
 
 /**
  * Class ElasticSearchIndexer takes care of creating a search index for the database.
@@ -61,6 +63,7 @@ class ElasticSearchIndexer extends AbstractIndexer
 {
     use IndexingStatisticsTrait;
     use IndexingLockFileTrait;
+    use IndexingSchedulerTrait;
 
     /** @var string The name of the Elasticsearch index to use. */
     private $index = 'main';
@@ -405,44 +408,14 @@ class ElasticSearchIndexer extends AbstractIndexer
      */
     private function getDefaultMapParams()
     {
-        $fields = [
-            "keyword" => [
-                "type" => "keyword",
-                "ignore_above" => 256,
-            ],
-        ];
+        $file = __DIR__ . '/defaultParams.yml';
 
-        return [
-            'mappings' => [
-                '_default_' => [
-                    'properties' => [
-                        'name' => [
-                            'properties' => [
-                                'name' => [
-                                    'type' => 'text',
-                                    'copy_to' => 'named',
-                                    'fields' => $fields,
-                                ],
-                                'first' => [
-                                    'type' => 'text',
-                                    'copy_to' => 'named',
-                                    'fields' => $fields,
-                                ],
-                                'last' => [
-                                    'type' => 'text',
-                                    'copy_to' => 'named',
-                                    'fields' => $fields,
-                                ],
-                            ],
-                        ],
-                        'named' => [
-                            'type' => 'text',
-                            'fields' => $fields,
-                        ],
-                    ],
-                ],
-            ],
-        ];
+        $this->logger->debug("Loading mapping file $file");
+
+        $parse = new YamlParser();
+        $parsed = $parse->parseFile($file);
+
+        return ['mappings' => $parsed['mappings']];
     }
 
     /**
@@ -592,41 +565,5 @@ class ElasticSearchIndexer extends AbstractIndexer
             \LoggerManager::getLogger()->fatal("Failed to retrieve ElasticSearch options");
             return false;
         }
-    }
-
-    /**
-     * Scheduler job method.
-     *
-     * Available options are:
-     * - [bool] partial
-     *
-     * @param array $options
-     *
-     * @return bool
-     */
-    public static function schedulerJob($options = [])
-    {
-        if (self::isEnabled() === false) {
-            return true;
-        }
-
-        $indexer = new self();
-        $indexer->getLogger()->debug('Starting scheduled job');
-
-        $indexer->setDifferentialIndexing(
-            isset($options['partial']) ? $options['partial'] : true
-        );
-
-        try {
-            $indexer->index();
-        } catch (\Exception $exception) {
-            $indexer->getLogger()->error('An error has occurred while running a scheduled indexing');
-            $indexer->getLogger()->error($exception);
-            return false;
-        }
-
-        $indexer->getLogger()->debug('Scheduler has finished');
-
-        return true;
     }
 }
