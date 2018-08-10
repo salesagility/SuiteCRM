@@ -48,13 +48,19 @@ use SuiteCRM\Search\SearchWrapper;
 
 require_once __DIR__ . '/../../../Home/UnifiedSearchAdvanced.php';
 
+/**
+ * Class View holds utilities for rendering a template file.
+ */
 abstract class View
 {
+    /** @var Sugar_Smarty The smarty template */
     protected $smarty;
+    /** @var string Path to the smarty template file */
     protected $file;
 
     /**
      * View constructor.
+     *
      * @param $file
      */
     public function __construct($file)
@@ -63,6 +69,11 @@ abstract class View
         $this->file = $file;
     }
 
+    /**
+     * Configures translations and global variables.
+     *
+     * Extend to assign more variable.
+     */
     public function preDisplay()
     {
         global $mod_strings;
@@ -70,7 +81,7 @@ abstract class View
         global $app_strings;
         global $sugar_config;
 
-        $errors = array();
+        $errors = [];
         $this->smarty->assign('MOD', $mod_strings);
         $this->smarty->assign('APP', $app_strings);
         $this->smarty->assign('APP_LIST', $app_list_strings);
@@ -83,9 +94,29 @@ abstract class View
     }
 
     /**
+     * Echoes the view.
+     */
+    public function display()
+    {
+        $this->smarty->display($this->file);
+    }
+
+    /**
+     * Returns the smarty template object.
+     *
+     * @return Sugar_Smarty
+     */
+    public function getSmarty()
+    {
+        return $this->smarty;
+    }
+
+    /**
+     * Returns the cancel and save button.
+     *
      * @return string
      */
-    private function getButtons()
+    protected function getButtons()
     {
         global $mod_strings;
         global $app_strings;
@@ -107,34 +138,37 @@ abstract class View
 EOQ;
     }
 
-    public function display()
-    {
-        $this->smarty->display($this->file);
-    }
-
     /**
-     * @return Sugar_Smarty
+     * Returns an associative array with their class name and translated label
+     *
+     * @return array
      */
-    public function getSmarty()
-    {
-        return $this->smarty;
-    }
-
     protected function getEngines()
     {
         $engines = [];
 
         foreach (SearchWrapper::getEngines() as $engine) {
-            $engines[$engine] = translate('LBL_' . $this->from_camel_case($engine));
+            $engines[$engine] = translate('LBL_' . $this->camelToUnderscoreCase($engine));
         }
 
         return $engines;
     }
 
-    protected function from_camel_case($input, $uppercase = true)
+    /**
+     * Converts a string from camelCase to snake_case
+     *
+     * @param string $input
+     * @param bool   $uppercase
+     *
+     * @return string
+     */
+    protected function camelToUnderscoreCase($input, $uppercase = true)
     {
+        // Breaks the camel-cased word into matches
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+
         $ret = $matches[0];
+
         foreach ($ret as &$match) {
             $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
         }
@@ -148,15 +182,20 @@ EOQ;
         return $return;
     }
 
+    /**
+     * Returns the list of modules from the search defs.
+     *
+     * @return string[]
+     */
     protected function getModules()
     {
-        $s = new \UnifiedSearchAdvanced();
-        $r = $s->retrieveEnabledAndDisabledModules();
-        $r = array_merge($r['enabled'], $r['disabled']);
+        $unifiedSearch = new \UnifiedSearchAdvanced();
+        $allModules = $unifiedSearch->retrieveEnabledAndDisabledModules();
+        $allModules = array_merge($allModules['enabled'], $allModules['disabled']);
 
         $modules = [];
 
-        foreach ($r as $module) {
+        foreach ($allModules as $module) {
             $modules[$module['module']] = $module['label'];
         }
 
