@@ -43,6 +43,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+/**
+ * Abstract controller for the Search settings.
+ */
 abstract class Controller
 {
     /** @var View */
@@ -65,16 +68,13 @@ abstract class Controller
      */
     public function handle()
     {
-        if (
-            isset($_REQUEST['do']) &&
-            !empty($_REQUEST['do']) &&
-            method_exists($this, 'do' . $_REQUEST['do'])
-        ) {
-            $methodName = 'do' . $_REQUEST['do'];
+        if ($this->isActionRequest()) {
+            $methodName = $this->getActionName();
             $this->$methodName();
-        } else {
-            $this->display();
+            return;
         }
+
+        $this->display();
     }
 
     /**
@@ -108,5 +108,25 @@ abstract class Controller
         header('Content-Type: application/json');
         echo json_encode($data);
         exit;
+    }
+
+    /**
+     * Returns whether the client is asking for an action to be executed by the controller.
+     *
+     * @return bool
+     */
+    private function isActionRequest()
+    {
+        return method_exists($this, $this->getActionName());
+    }
+
+    /**
+     * Returns the name of the action sent by the client, sanitized and prefixed with 'do'.
+     *
+     * @return string
+     */
+    private function getActionName()
+    {
+        return 'do' . filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING);
     }
 }
