@@ -7,7 +7,13 @@ namespace SuiteCRM\Search;
 use Mockery;
 use ReflectionException;
 use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
+use SuiteCRM\StateSaver;
 
+/**
+ * Class SearchWrapperTest
+ *
+ * @see SearchWrapper
+ */
 class SearchWrapperTest extends SearchTestAbstract
 {
     public function testFetchEngine()
@@ -15,9 +21,9 @@ class SearchWrapperTest extends SearchTestAbstract
         $search = new SearchWrapper();
 
         try {
-            $SearchEngine = $this->invokeMethod($search, 'fetchEngine', ['ElasticSearchEngine']);
-            $this->assertInstanceOf('ElasticSearchEngine', $SearchEngine);
-        } catch (ReflectionException $e) {
+            $searchEngine = $this->invokeMethod($search, 'fetchEngine', ['ElasticSearchEngine']);
+            $this->assertInstanceOf('ElasticSearchEngine', $searchEngine);
+        } catch (ReflectionException $exception) {
             $this->fail("Failed to use reflection!");
         }
     }
@@ -25,14 +31,14 @@ class SearchWrapperTest extends SearchTestAbstract
     public function testFetchEngineNonExisting()
     {
         $search = new SearchWrapper();
-        $this->setValue($search, 'CUSTOM_ENGINES_PATH', __DIR__ . '/TestCustomEngines/');
+        $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
 
         try {
             $this->invokeMethod($search, 'fetchEngine', ['VeryFakeEngine']);
             $this->fail("Exception should be thrown here!");
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException $exception) {
             $this->fail("Failed to use reflection!");
-        } catch (SearchEngineNotFoundException $e) {
+        } catch (SearchEngineNotFoundException $exception) {
             // All good!
         }
     }
@@ -40,7 +46,7 @@ class SearchWrapperTest extends SearchTestAbstract
     public function testFetchEngineCustom()
     {
         $search = new SearchWrapper();
-        $this->setValue($search, 'CUSTOM_ENGINES_PATH', __DIR__ . '/TestCustomEngines/');
+        $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
 
         $engine = $this->invokeMethod($search, 'fetchEngine', ['MockSearch']);
 
@@ -50,13 +56,13 @@ class SearchWrapperTest extends SearchTestAbstract
     public function testFetchEngineCustomBad()
     {
         $search = new SearchWrapper();
-        $this->setValue($search, 'CUSTOM_ENGINES_PATH', __DIR__ . '/TestCustomEngines/');
+        $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
 
         try {
             $this->invokeMethod($search, 'fetchEngine', ['BadMockSearch']);
             $this->fail("Exception should be thrown here!");
-        } catch (SearchEngineNotFoundException $e) {
-            echo $e->getMessage();
+        } catch (SearchEngineNotFoundException $exception) {
+            echo $exception->getMessage();
         }
     }
 
@@ -76,7 +82,7 @@ class SearchWrapperTest extends SearchTestAbstract
     public function testSearchAndDisplayCustom()
     {
         $search = new SearchWrapper();
-        $this->setValue($search, 'CUSTOM_ENGINES_PATH', __DIR__ . '/TestCustomEngines/');
+        $this->setValue($search, 'customEnginePath', __DIR__ . '/TestCustomEngines/');
 
         $query = SearchQuery::fromString('bar', null, null, 'MockSearch');
 
@@ -139,10 +145,48 @@ class SearchWrapperTest extends SearchTestAbstract
         try {
             SearchWrapper::search($mockEngine, $query);
             self::fail("Exception should have been thrown!");
-        } catch (SearchEngineNotFoundException $e) {
+        } catch (SearchEngineNotFoundException $exception) {
             // All good!
         }
 
         Mockery::close();
+    }
+
+    public function testGetModules()
+    {
+        $actual = SearchWrapper::getModules();
+
+        self::assertTrue(is_array($actual));
+        self::assertGreaterThan(1, count($actual));
+    }
+
+    public function testGetDefaultEngine()
+    {
+        global $sugar_config;
+
+        $saver = new StateSaver();
+
+        $saver->pushGlobal('sugar_config');
+
+        $sugar_config['search']['defaultEngine'] = 'foo';
+
+        self::assertEquals('foo', SearchWrapper::getDefaultEngine());
+
+        $saver->popGlobal('sugar_config');
+    }
+
+    public function testGetController()
+    {
+        global $sugar_config;
+
+        $saver = new StateSaver();
+
+        $saver->pushGlobal('sugar_config');
+
+        $sugar_config['search']['controller'] = 'foo';
+
+        self::assertEquals('foo', SearchWrapper::getController());
+
+        $saver->popGlobal('sugar_config');
     }
 }

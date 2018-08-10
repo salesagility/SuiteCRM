@@ -40,15 +40,21 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use Mockery as m;
 use SuiteCRM\Search\Index\AbstractIndexer;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 
+/**
+ * Class AbstractIndexerTest
+ *
+ * @see AbstractIndexer
+ */
 class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 {
     public function testConstruct()
     {
-        $indexer = new IndexerMock();
+        $indexer = $this->getIndexerMock();
         self::assertInstanceOf(AbstractIndexer::class, $indexer);
     }
 
@@ -58,106 +64,84 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
         $doc = new SearchDefsDocumentifier();
         $modules = ['Module1', 'Module2'];
 
-        $i = new IndexerMock();
+        $indexer = $this->getIndexerMock();
 
-        $i->setDifferentialIndexingEnabled($differential);
-        $i->setDocumentifier($doc);
-        $i->setModulesToIndex($modules);
+        $indexer->setDifferentialIndexing($differential);
+        $indexer->setDocumentifier($doc);
+        $indexer->setModulesToIndex($modules);
 
-        self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
-        self::assertEquals($doc, $i->getDocumentifier());
-        self::assertEquals($modules, $i->getModulesToIndex());
+        self::assertEquals($differential, $indexer->isDifferentialIndexing());
+        self::assertEquals($doc, $indexer->getDocumentifier());
+        self::assertEquals($modules, $indexer->getModulesToIndex());
 
-        $i = new IndexerMock();
+        $indexer = $this->getIndexerMock();
 
         $differential = false;
         $doc = new JsonSerializerDocumentifier();
         $modules = ['Foo', 'Bar'];
 
-        $i->setDifferentialIndexingEnabled($differential);
-        $i->setDocumentifier($doc);
-        $i->setModulesToIndex($modules);
+        $indexer->setDifferentialIndexing($differential);
+        $indexer->setDocumentifier($doc);
+        $indexer->setModulesToIndex($modules);
 
-        self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
-        self::assertEquals($doc, $i->getDocumentifier());
-        self::assertEquals($modules, $i->getModulesToIndex());
+        self::assertEquals($differential, $indexer->isDifferentialIndexing());
+        self::assertEquals($doc, $indexer->getDocumentifier());
+        self::assertEquals($modules, $indexer->getModulesToIndex());
     }
 
     public function testAddModulesToIndex()
     {
-        $i = new IndexerMock();
-        $i->addModulesToIndex('Foo');
+        $indexer = $this->getIndexerMock();
+        $indexer->addModulesToIndex('Foo');
 
-        self::assertContains('Foo', $i->getModulesToIndex());
+        self::assertContains('Foo', $indexer->getModulesToIndex());
 
-        $i->addModulesToIndex(['Fu', 'Bar']);
+        $indexer->addModulesToIndex(['Fu', 'Bar']);
 
-        self::assertContains('Fu', $i->getModulesToIndex());
-        self::assertContains('Bar', $i->getModulesToIndex());
+        self::assertContains('Fu', $indexer->getModulesToIndex());
+        self::assertContains('Bar', $indexer->getModulesToIndex());
 
         try {
-            $i->addModulesToIndex((object)["test"]);
+            $indexer->addModulesToIndex((object)["test"]);
             self::fail("Exception should have been thrown");
         } catch (InvalidArgumentException $ignore) {
             // All good!
-        } catch (Exception $e) {
-            throw $e;
+        } catch (Exception $exception) {
+            throw $exception;
         }
     }
 
     public function testGetDocumentifierName()
     {
-        $i = new IndexerMock();
+        $indexer = $this->getIndexerMock();
         $doc1 = new JsonSerializerDocumentifier();
         $doc2 = new SearchDefsDocumentifier();
         $doc1Exp = 'JsonSerializerDocumentifier';
         $doc2Exp = 'SearchDefsDocumentifier';
 
-        $i->setDocumentifier($doc1);
-        self::assertEquals($doc1Exp, $i->getDocumentifierName());
+        $indexer->setDocumentifier($doc1);
+        self::assertEquals($doc1Exp, $indexer->getDocumentifierName());
 
-        $i->setDocumentifier($doc2);
-        self::assertEquals($doc2Exp, $i->getDocumentifierName());
+        $indexer->setDocumentifier($doc2);
+        self::assertEquals($doc2Exp, $indexer->getDocumentifierName());
     }
 
     public function testGetIndexerName()
     {
-        $i = new IndexerMock();
+        $indexer = $this->getIndexerMock();
 
-        $expected = "IndexerMock";
-        $actual = $i->getIndexerName();
+        $expected = $indexer->mockery_getName();
+        $actual = $indexer->getIndexerName();
 
         self::assertEquals($expected, $actual, "Indexer name does not match");
     }
-}
 
-class IndexerMock extends AbstractIndexer
-{
-    function index()
+    /**
+     * @return m\Mock|AbstractIndexer
+     */
+    private function getIndexerMock()
     {
-    }
-
-    function indexModule($module)
-    {
-    }
-
-    function indexBean(SugarBean $bean)
-    {
-    }
-
-    function indexBeans($module, array $beans)
-    {
-    }
-
-    function removeBean(SugarBean $bean)
-    {
-    }
-
-    function removeBeans(array $beans)
-    {
-    }
-
-    function removeIndex()
-    {
+        $indexer = m::mock(AbstractIndexer::class)->makePartial();
+        return $indexer;
     }
 }

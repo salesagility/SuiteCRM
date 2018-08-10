@@ -61,14 +61,14 @@ class SearchWrapper
     ];
 
     /** @var string Path to the folder where to load custom engines from */
-    private static $CUSTOM_ENGINES_PATH = __DIR__ . '/../../custom/Extension/SearchEngines/';
+    private static $customEnginePath = __DIR__ . '/../../custom/Extension/SearchEngines/';
 
     /**
      * Perform a search with the given query and engine.
      *
      * If no search engine field is provided in the query, the default one will be used.
      *
-     * @param $query SearchQuery
+     * @param SearchQuery $query
      */
     public static function searchAndDisplay(SearchQuery $query)
     {
@@ -84,7 +84,8 @@ class SearchWrapper
      * It first searches in the default definitions array `self::$engines`,
      * then attempts to find a matching engine in the folder `self::CUSTOM_ENGINES_PATH`.
      *
-     * @param $engineName string|SearchEngine
+     * @param string|SearchEngine $engineName
+     *
      * @throws SearchEngineNotFoundException
      * @return SearchEngine
      */
@@ -100,7 +101,7 @@ class SearchWrapper
 
         $filename = isset(self::$engines[$engineName])
             ? self::$engines[$engineName]
-            : self::$CUSTOM_ENGINES_PATH . $engineName . '.php';
+            : self::$customEnginePath . $engineName . '.php';
 
         if (!file_exists($filename)) {
             throw new SearchEngineNotFoundException("Unable to find search file '$filename'' for engine '$engineName''.");
@@ -124,8 +125,9 @@ class SearchWrapper
      *
      * Results are grouped by module.
      *
-     * @param $engine string|SearchEngine
-     * @param $query SearchQuery
+     * @param string|SearchEngine $engine
+     * @param SearchQuery         $query
+     *
      * @return SearchResults
      */
     public static function search($engine, SearchQuery $query)
@@ -138,8 +140,8 @@ class SearchWrapper
     /**
      * Binds a class name / engine name to a file.
      *
-     * @param $className string
-     * @param $file string
+     * @param string $className
+     * @param string $file
      */
     public static function addEngine($className, $file)
     {
@@ -155,7 +157,7 @@ class SearchWrapper
     {
         $default = array_keys(self::$engines);
         $custom = [];
-        foreach (glob(self::$CUSTOM_ENGINES_PATH . '*.php') as $file) {
+        foreach (glob(self::$customEnginePath . '*.php') as $file) {
             $file = pathinfo($file);
             $custom[] = $file['filename'];
         }
@@ -191,6 +193,16 @@ class SearchWrapper
     }
 
     /**
+     * Returns the configured modules to be used with search.
+     *
+     * @return array|null
+     */
+    public static function getModules()
+    {
+        return self::getSearchConfig('modules');
+    }
+
+    /**
      * Returns a configured parameter from the sugar config.
      *
      * If the values is not set, returns `null`.
@@ -200,6 +212,7 @@ class SearchWrapper
      */
     private static function getSearchConfig($key)
     {
+        /** @noinspection PhpVariableNamingConventionInspection */
         global $sugar_config;
 
         if (!isset($sugar_config['search'][$key])) {

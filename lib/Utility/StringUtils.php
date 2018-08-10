@@ -37,98 +37,77 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search\UI;
+namespace SuiteCRM\Utility;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use InvalidArgumentException;
-use SuiteCRM\Search\SearchWrapper;
-use SuiteCRM\Search\UI\MVC\View;
-use SuiteCRM\Utility\StringUtils;
-
 /**
- * Class SearchFormView handles the search bar and form.
+ * Class StringUtils holds static methods to perform various operations with strings.
  */
-class SearchFormView extends View
+class StringUtils
 {
-    public function __construct()
+    /**
+     * Converts a string from camelCase to snake_case
+     *
+     * @param string $input
+     * @param bool   $uppercase
+     *
+     * @return string
+     */
+    public static function camelToUnderscoreCase($input, $uppercase = true)
     {
-        parent::__construct(__DIR__ . '/templates/search.form.tpl');
-    }
+        $shards = self::explodeCamelCase($input);
 
-    /** @inheritdoc */
-    public function display()
-    {
-        $sizes = $this->makeSizesFromConfig();
-        $engines = [];
+        $return = implode('_', $shards);
 
-        foreach (SearchWrapper::getEngines() as $engine) {
-            $engines[$engine] = StringUtils::camelToTranslation($engine);
+        if ($uppercase) {
+            $return = strtoupper($return);
         }
 
-        $this->smarty->assign('sizeOptions', $sizes);
-        $this->smarty->assign('engineOptions', $engines);
-
-        parent::display();
+        return $return;
     }
 
     /**
-     * Makes an array with the page size from the sugar config.
+     * Attempts to find a translation for a camel-cased string, like a class name.
      *
-     * @return array
+     * For instance, if you pass `ElasticSearchEngine` it will look for the label `LBL_ELASTIC_SEARCH_ENGINE`.
+     *
+     * @param string $input
+     *
+     * @return string
      */
-    protected function makeSizesFromConfig()
+    public static function camelToTranslation($input)
     {
-        global $sugar_config;
+        $label = 'LBL_' . StringUtils::camelToUnderscoreCase($input);
+        $translation = translate($label);
 
-        try {
-            return $this->makeSizes(
-                $sugar_config['search']['pagination']['min'],
-                $sugar_config['search']['pagination']['step'],
-                $sugar_config['search']['pagination']['max']
-            );
-        } catch (InvalidArgumentException $exception) {
-            return $this->makeSizes(10, 10, 50);
+        if ($label !== $translation) {
+            return $translation;
         }
+
+        return ucwords(implode(' ', self::explodeCamelCase($input)));
     }
 
     /**
-     * Makes an array with the page size from the given parameters.
+     * Explodes a camel case string into its components.
      *
-     * @param int $min
-     * @param int $step
-     * @param int $max
+     * @param string $input
      *
-     * @throws InvalidArgumentException in case of failure
-     *
-     * @return array
+     * @return string[]
      */
-    protected function makeSizes($min, $step, $max)
+    public static function explodeCamelCase($input)
     {
-        $min = intval($min);
-        $step = intval($step);
-        $max = intval($max);
+        // Breaks the camel-cased word into matches
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
 
-        if (!is_integer($min) || !is_integer($step) || !is_integer($max)) {
-            throw new InvalidArgumentException('Arguments must be integers');
+        $ret = $matches[0];
+
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
         }
 
-        if ($min > $max) {
-            throw new InvalidArgumentException('$min must be smaller than $max');
-        }
-
-        if ($max == 0 || $min == 0 || $min == 0) {
-            throw new InvalidArgumentException('Arguments cannot be zero');
-        }
-
-        $sizes = [];
-
-        for ($it = $min; $it <= $max; $it += $step) {
-            $sizes[$it] = $it;
-        }
-
-        return $sizes;
+        return $ret;
     }
 }

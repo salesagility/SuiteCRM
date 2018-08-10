@@ -72,7 +72,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $GLOBALS['sugar_config']['search']['ElasticSearch']['enabled'] = true;
         $this->searchEngine->setIndex('test');
         $this->indexer->setIndex('test');
-        $this->indexer->setDifferentialIndexingEnabled(false);
+        $this->indexer->setDifferentialIndexing(false);
         $this->indexer->removeIndex();
     }
 
@@ -257,7 +257,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $bean = BeanFactory::newBean($module);
 
         // Setting up the indexer
-        $this->indexer->setDifferentialIndexingEnabled(true);
+        $this->indexer->setDifferentialIndexing(true);
         $this->indexer->setModulesToIndex([$bean->module_name]);
 
         // Set up the search engine
