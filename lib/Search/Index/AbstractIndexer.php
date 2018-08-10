@@ -65,7 +65,7 @@ use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 abstract class AbstractIndexer
 {
     /** @var bool when enabled only beans changed after the last indexing should be indexed */
-    protected $differentialIndexingEnabled = false;
+    protected $differentialIndexing = false;
     /** @var AbstractDocumentifier determines how a bean is converted into a document */
     protected $documentifier = null;
     /** @var string[] The modules that have to be indexed. This should be made customisable */
@@ -74,7 +74,7 @@ abstract class AbstractIndexer
         'Opportunities', 'Leads', 'Emails',
         'Calls', 'Meetings', 'Tasks',
         'Surveys', 'Cases', 'Documents',
-        'Notes'
+        'Notes',
     ];
     /** @var Logger Monolog instance to log on a separate file */
     protected $logger;
@@ -92,17 +92,17 @@ abstract class AbstractIndexer
         // Set up Monolog logfile logger
         try {
             $this->logger->pushHandler(new StreamHandler($this->logFile));
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             $this->logger->error('Failed to create indexer log stream handler.');
-            $this->logger->error($e);
+            $this->logger->error($exception);
         }
 
         // Set up Monolog CLI handler
         try {
             $this->logger->pushHandler(new CliLoggerHandler());
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             $this->logger->error('Failed to create CLI logger handler.');
-            $this->logger->error($e);
+            $this->logger->error($exception);
         }
     }
 
@@ -128,7 +128,7 @@ abstract class AbstractIndexer
         try {
             $reflect = new ReflectionClass($obj);
             return $reflect->getShortName();
-        } catch (\ReflectionException $e) {
+        } catch (\ReflectionException $exception) {
             return get_class($obj);
         }
     }
@@ -154,6 +154,7 @@ abstract class AbstractIndexer
      *  Additionally, beans that have been removed must be removed from the index too.
      *
      * @param string $module the name of the module, e.g. Accounts, Contacts, etc.
+     *
      * @return void
      */
     abstract function indexModule($module);
@@ -183,6 +184,7 @@ abstract class AbstractIndexer
      * Removes a bean from the index.
      *
      * @param \SugarBean $bean
+     *
      * @return void
      */
     abstract function removeBean(\SugarBean $bean);
@@ -191,6 +193,7 @@ abstract class AbstractIndexer
      * Removes an array of beans from the index.
      *
      * @param array $beans
+     *
      * @return void
      */
     abstract function removeBeans(array $beans);
@@ -211,20 +214,21 @@ abstract class AbstractIndexer
      *
      * @return bool
      */
-    public function isDifferentialIndexingEnabled()
+    public function isDifferentialIndexing()
     {
-        return $this->differentialIndexingEnabled;
+        return $this->differentialIndexing;
     }
 
     /**
      * Sets whether the next indexing should be performed differentially or not.
      *
-     * @param bool $differentialIndexingEnabled
-     * @see isDifferentialIndexingEnabled()
+     * @param bool $differentialIndexing
+     *
+     * @see isDifferentialIndexing()
      */
-    public function setDifferentialIndexingEnabled($differentialIndexingEnabled)
+    public function setDifferentialIndexing($differentialIndexing)
     {
-        $this->differentialIndexingEnabled = boolval($differentialIndexingEnabled);
+        $this->differentialIndexing = boolval($differentialIndexing);
     }
 
     /**

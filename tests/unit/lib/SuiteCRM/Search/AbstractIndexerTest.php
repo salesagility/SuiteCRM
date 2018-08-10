@@ -60,11 +60,11 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
         $i = new IndexerMock();
 
-        $i->setDifferentialIndexingEnabled($differential);
+        $i->setDifferentialIndexing($differential);
         $i->setDocumentifier($doc);
         $i->setModulesToIndex($modules);
 
-        self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
+        self::assertEquals($differential, $i->isDifferentialIndexing());
         self::assertEquals($doc, $i->getDocumentifier());
         self::assertEquals($modules, $i->getModulesToIndex());
 
@@ -74,11 +74,11 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
         $doc = new JsonSerializerDocumentifier();
         $modules = ['Foo', 'Bar'];
 
-        $i->setDifferentialIndexingEnabled($differential);
+        $i->setDifferentialIndexing($differential);
         $i->setDocumentifier($doc);
         $i->setModulesToIndex($modules);
 
-        self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
+        self::assertEquals($differential, $i->isDifferentialIndexing());
         self::assertEquals($doc, $i->getDocumentifier());
         self::assertEquals($modules, $i->getModulesToIndex());
     }

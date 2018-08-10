@@ -92,7 +92,7 @@ class ElasticSearchIndexer extends AbstractIndexer
 
         $this->logger->debug('Indexing is performed using ' . $this->getDocumentifierName());
 
-        if ($this->differentialIndexingEnabled) {
+        if ($this->differentialIndexing) {
             $this->lastRunTimestamp = $this->readLockFile();
         }
 
@@ -120,7 +120,7 @@ class ElasticSearchIndexer extends AbstractIndexer
 
         $end = microtime(true);
 
-        if ($this->differentialIndexingEnabled) {
+        if ($this->differentialIndexing) {
             $this->writeLockFile();
         }
 
@@ -395,7 +395,7 @@ class ElasticSearchIndexer extends AbstractIndexer
      */
     private function differentialIndexing()
     {
-        return $this->differentialIndexingEnabled && $this->lastRunTimestamp !== false;
+        return $this->differentialIndexing && $this->lastRunTimestamp !== false;
     }
 
     /**
@@ -613,7 +613,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         $indexer = new self();
         $indexer->getLogger()->debug('Starting scheduled job');
 
-        $indexer->setDifferentialIndexingEnabled(
+        $indexer->setDifferentialIndexing(
             isset($options['partial']) ? $options['partial'] : true
         );
 
