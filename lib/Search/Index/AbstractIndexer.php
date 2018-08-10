@@ -51,6 +51,7 @@ use SuiteCRM\Log\CliLoggerHandler;
 use SuiteCRM\Log\SugarLoggerHandler;
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
+use SuiteCRM\Search\SearchWrapper;
 
 /**
  * This class defines common methods and fields for a search indexer.
@@ -68,14 +69,8 @@ abstract class AbstractIndexer
     protected $differentialIndexing = false;
     /** @var AbstractDocumentifier determines how a bean is converted into a document */
     protected $documentifier = null;
-    /** @var string[] The modules that have to be indexed. This should be made customisable */
-    protected $modulesToIndex = [
-        'Accounts', 'Contacts', 'Users',
-        'Opportunities', 'Leads', 'Emails',
-        'Calls', 'Meetings', 'Tasks',
-        'Surveys', 'Cases', 'Documents',
-        'Notes',
-    ];
+    /** @var string[] The modules that have to be indexed */
+    protected $modulesToIndex = null;
     /** @var Logger Monolog instance to log on a separate file */
     protected $logger;
     /** @var string where the log files are going to be stored */
@@ -104,6 +99,8 @@ abstract class AbstractIndexer
             $this->logger->error('Failed to create CLI logger handler.');
             $this->logger->error($exception);
         }
+
+        $this->setModulesToIndex(SearchWrapper::getModules());
     }
 
     /**
@@ -142,7 +139,7 @@ abstract class AbstractIndexer
      * @see AbstractIndexer:getModulesToIndex
      * @return void
      */
-    abstract function index();
+    public abstract function index();
 
     /**
      * Indexes a single module.
@@ -157,7 +154,7 @@ abstract class AbstractIndexer
      *
      * @return void
      */
-    abstract function indexModule($module);
+    public abstract function indexModule($module);
 
     /**
      * Indexes a single bean.
@@ -166,7 +163,7 @@ abstract class AbstractIndexer
      *
      * @return void
      */
-    abstract function indexBean(\SugarBean $bean);
+    public abstract function indexBean(\SugarBean $bean);
 
     /**
      * Indexes an array of SugarBeans.
@@ -178,7 +175,7 @@ abstract class AbstractIndexer
      *
      * @return void
      */
-    abstract function indexBeans($module, array $beans);
+    public abstract function indexBeans($module, array $beans);
 
     /**
      * Removes a bean from the index.
@@ -187,7 +184,7 @@ abstract class AbstractIndexer
      *
      * @return void
      */
-    abstract function removeBean(\SugarBean $bean);
+    public abstract function removeBean(\SugarBean $bean);
 
     /**
      * Removes an array of beans from the index.
@@ -196,14 +193,14 @@ abstract class AbstractIndexer
      *
      * @return void
      */
-    abstract function removeBeans(array $beans);
+    public abstract function removeBeans(array $beans);
 
     /**
      * Deletes all the records from the index.
      *
      * @return void
      */
-    abstract function removeIndex();
+    public abstract function removeIndex();
 
     /**
      * Returns whether the next indexing should be performed differentially or not.
@@ -282,6 +279,10 @@ abstract class AbstractIndexer
      */
     public function setModulesToIndex(array $modules)
     {
+        if ($modules === null) {
+            throw new InvalidArgumentException('Modules cannot be `null`.');
+        }
+
         $this->modulesToIndex = $modules;
     }
 
