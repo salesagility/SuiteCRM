@@ -36,6 +36,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+/* global SUGAR */
+
 $("#es-test-connection").click(function () {
     var url = "index.php?module=Administration&action=ElasticSearchSettings&do=TestConnection";
     var host = $("#es-host").val();
