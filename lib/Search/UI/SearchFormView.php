@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Search\UI\MVC\View;
+use SuiteCRM\Utility\StringUtils;
 
 
 class SearchFormView extends View
@@ -61,8 +62,7 @@ class SearchFormView extends View
         $engines = [];
 
         foreach (SearchWrapper::getEngines() as $engine) {
-            // TODO retrieve translations
-            $engines[$engine] = $engine;
+            $engines[$engine] = StringUtils::camelToTranslation($engine);
         }
 
         $this->smarty->assign('sizeOptions', $sizes);

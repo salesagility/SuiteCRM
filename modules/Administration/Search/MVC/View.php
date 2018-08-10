@@ -149,7 +149,7 @@ EOQ;
         $engines = [];
 
         foreach (SearchWrapper::getEngines() as $engine) {
-            $engines[$engine] = translate('LBL_' . StringUtils::camelToUnderscoreCase($engine));
+            $engines[$engine] = StringUtils::camelToTranslation($engine);
         }
 
         return $engines;

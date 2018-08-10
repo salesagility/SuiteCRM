@@ -58,6 +58,47 @@ class StringUtils
      */
     public static function camelToUnderscoreCase($input, $uppercase = true)
     {
+        $shards = self::explodeCamelCase($input);
+
+        $return = implode('_', $shards);
+
+        if ($uppercase) {
+            $return = strtoupper($return);
+        }
+
+        return $return;
+    }
+
+    /**
+     * Attempts to find a translation for a camel-cased string, like a class name.
+     *
+     * For instance, if you pass `ElasticSearchEngine` it will look for the label `LBL_ELASTIC_SEARCH_ENGINE`.
+     *
+     * @param string $input
+     *
+     * @return string
+     */
+    public static function camelToTranslation($input)
+    {
+        $label = 'LBL_' . StringUtils::camelToUnderscoreCase($input);
+        $translation = translate($label);
+
+        if ($label !== $translation) {
+            return $translation;
+        }
+
+        return ucwords(implode(' ', self::explodeCamelCase($input)));
+    }
+
+    /**
+     * Explodes a camel case string into its components.
+     *
+     * @param string $input
+     *
+     * @return string[]
+     */
+    public static function explodeCamelCase($input)
+    {
         // Breaks the camel-cased word into matches
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
 
@@ -67,12 +108,6 @@ class StringUtils
             $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
         }
 
-        $return = implode('_', $ret);
-
-        if ($uppercase) {
-            $return = strtoupper($return);
-        }
-
-        return $return;
+        return $ret;
     }
 }
