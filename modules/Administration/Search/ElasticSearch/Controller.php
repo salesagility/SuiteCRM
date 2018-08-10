@@ -37,8 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/** @noinspection PhpUndefinedClassInspection */
-
 namespace SuiteCRM\Modules\Administration\Search\ElasticSearch;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -50,6 +48,7 @@ use Configurator;
 use Elasticsearch\ClientBuilder;
 use Elasticsearch\Common\Exceptions\BadRequest400Exception;
 use Exception;
+use Scheduler;
 use SchedulersJob;
 use SugarJobQueue;
 use SuiteCRM\Modules\Administration\Search\MVC\Controller as AbstractController;
@@ -61,6 +60,9 @@ require_once __DIR__ . '/../../../Configurator/Configurator.php';
 require_once __DIR__ . '/../../../SchedulersJobs/SchedulersJob.php';
 require_once __DIR__ . '/../../../../include/SugarQueue/SugarJobQueue.php';
 
+/**
+ * Class Controller handles the actions for the Elasticsearch settings.
+ */
 class Controller extends AbstractController
 {
     /**
@@ -76,7 +78,7 @@ class Controller extends AbstractController
      */
     public function display()
     {
-        $this->view->getSmarty()->assign('schedulers', $this->getElasticsearchIndexingSchedulers());
+        $this->view->getSmarty()->assign('schedulers', $this->getSchedulers());
         parent::display();
     }
 
@@ -114,6 +116,9 @@ class Controller extends AbstractController
         $this->redirect('index.php?module=Administration&action=index');
     }
 
+    /**
+     * Test the connection with the Elasticsearch and returns a json.
+     */
     public function doTestConnection()
     {
         $input = INPUT_POST;
@@ -127,8 +132,8 @@ class Controller extends AbstractController
                 ElasticSearchClientBuilder::sanitizeHost([
                     'host' => $host,
                     'user' => $user,
-                    'pass' => $pass
-                ])
+                    'pass' => $pass,
+                ]),
             ];
 
             $client = ClientBuilder::create()->setHosts($config)->build();
@@ -145,29 +150,48 @@ class Controller extends AbstractController
             $return['info'] = $info;
 
         } /** @noinspection PhpRedundantCatchClauseInspection */
-        catch (BadRequest400Exception $e) {
-            $error = json_decode($e->getMessage());
+        catch (BadRequest400Exception $exception) {
+            $error = json_decode($exception->getMessage());
             $return['error'] = $error->error->reason;
             $return['errorDetails'] = $error;
-        } catch (Exception $e) {
-            $return['error'] = $e->getMessage();
-            $return['errorType'] = get_class($e);
-        } catch (Throwable $t) {
-            $return['error'] = $t->getMessage();
-            $return['errorType'] = get_class($t);
+        } catch (Exception $exception) {
+            $return['error'] = $exception->getMessage();
+            $return['errorType'] = get_class($exception);
+        } catch (Throwable $throwable) {
+            $return['error'] = $throwable->getMessage();
+            $return['errorType'] = get_class($throwable);
         }
 
         $this->yieldJson($return);
     }
 
+    /**
+     * Schedules a full indexing.
+     */
     public function doFullIndex()
     {
         $this->scheduleIndex(false);
     }
 
+    /**
+     * Schedules a partial indexing.
+     */
     public function doPartialIndex()
     {
         $this->scheduleIndex(true);
+    }
+
+    /**
+     * Returns all the Elasticsearch-related scheduler jobs.
+     *
+     * @return Scheduler[]|null
+     */
+    public function getSchedulers()
+    {
+        $where = "schedulers.job='function::runElasticSearchIndexerScheduler'";
+        /** @var Scheduler[]|null $schedulers */
+        $schedulers = BeanFactory::getBean('Schedulers')->get_full_list(null, $where);
+        return $schedulers;
     }
 
     /**
@@ -175,7 +199,7 @@ class Controller extends AbstractController
      *
      * @param bool $partial
      */
-    private function scheduleIndex($partial)
+    protected function scheduleIndex($partial)
     {
         $job = new SchedulersJob();
 
@@ -189,12 +213,5 @@ class Controller extends AbstractController
         $queue->submitJob($job);
 
         $this->yieldJson(['status' => 'success']);
-    }
-
-    public function getElasticsearchIndexingSchedulers()
-    {
-        $where = "schedulers.job='function::runElasticSearchIndexerScheduler'";
-        $schedulers = BeanFactory::getBean('Schedulers')->get_full_list(null, $where);
-        return $schedulers;
     }
 }
