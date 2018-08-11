@@ -763,7 +763,7 @@ EOQ;
 	{
 	    $db = DBManagerFactory::getInstance();
 		$name = $db->quote($name);
-		$query = "SELECT * from users where user_name='$name'";
+		$query = "SELECT * FROM users WHERE user_name='$name' AND deleted=0";
 		if(!empty($where)) {
 		    $query .= " AND $where";
 		}
