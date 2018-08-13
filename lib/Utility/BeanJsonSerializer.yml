@@ -21,12 +21,18 @@ mappings:
   salutation: name.salutation
   account_id: account.id
   account_name: account.name
+  account_description: account.description
   title: account.title
   department: account.department
   parent_id: parent.id
   parent_name: parent.name
   messenger_id: messenger.id
   messenger_type: messenger.type
+  lead_source: lead.type
+  lead_source_description: lead.description
+  opportunity_id: opportunity.id
+  opportunity_name: opportunity.name
+  opportunity_amount: opportunity.amount
 regexMappings:
   /^email[0-9]*$/: +email
   /^phone\_([a-z_]+)$/: phone.@1
@@ -52,6 +58,9 @@ blacklist:
 - joomla_account_id
 - portal_account_disabled
 - portal_user_type
+- portal_only
+- portal_name
+- portal_app
 - user_hash
 - pwd_last_changed
 - authenticate_id
@@ -60,7 +69,6 @@ blacklist:
 - external_auth_only
 - receive_notifications
 - status
-- portal_only
 - show_on_employees
 - is_group
 - factor_auth
