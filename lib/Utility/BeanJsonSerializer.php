@@ -437,9 +437,7 @@ class BeanJsonSerializer
                 $keys = array_merge($keys, array_keys($bean->fetched_rel_row));
             }
 
-            $fields = get_object_vars($bean);
-
-            return [$fields, $keys];
+            return [$bean, $keys];
         }
 
         if (isset($bean->column_fields) && is_array($bean->column_fields)) {
