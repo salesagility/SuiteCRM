@@ -111,6 +111,7 @@ class SugarFieldEmailBody extends SugarFieldBase
             } elseif (!empty($vardef['default_value'])) {
                 return $vardef['default_value'];
             }
+            LoggerManager::getLogger()->warn('Vardef has no value');
         }
 
         return utf8_decode($vardef['value']);
