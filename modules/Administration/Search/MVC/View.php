@@ -47,8 +47,6 @@ use Sugar_Smarty;
 use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Utility\StringUtils;
 
-require_once __DIR__ . '/../../../Home/UnifiedSearchAdvanced.php';
-
 /**
  * Class View holds utilities for rendering a template file.
  */
@@ -153,25 +151,5 @@ EOQ;
         }
 
         return $engines;
-    }
-
-    /**
-     * Returns the list of modules from the search defs.
-     *
-     * @return string[]
-     */
-    protected function getModules()
-    {
-        $unifiedSearch = new \UnifiedSearchAdvanced();
-        $allModules = $unifiedSearch->retrieveEnabledAndDisabledModules();
-        $allModules = array_merge($allModules['enabled'], $allModules['disabled']);
-
-        $modules = [];
-
-        foreach ($allModules as $module) {
-            $modules[$module['module']] = $module['label'];
-        }
-
-        return $modules;
     }
 }

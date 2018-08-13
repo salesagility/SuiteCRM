@@ -89,19 +89,11 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">{sugar_translate label="LBL_SEARCH_MODULES"}</div>
                 <div class="panel-body tab-content">
-                    <div class="alert alert-warning">NOT YET IMPLEMENTED</div>
                     <label>{sugar_translate label="LBL_SEARCH_MODULES"}</label>
                     <p>
                         <small class="form-text text-muted">{sugar_translate label="LBL_SEARCH_MODULES_HELP"}</small>
                     </p>
-                    <div class="modules-container">
-                        {foreach from=$modules item=name key=key}
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="{$key}" name="{$key}">
-                                <label class="form-check-label" for="{$key}">{$name}</label>
-                            </div>
-                        {/foreach}
-                    </div>
+                    {modules_selector name='search-modules' selectedModules=$selectedModules}
                 </div>
             </div>
         </div>

@@ -53,9 +53,7 @@ function install_search()
 
     $sugar_config['search']['controller'] = 'UnifiedSearch';
     $sugar_config['search']['default_engine'] = 'ElasticSearchEngine';
-    $sugar_config['search']['modules'] = [
-        'Accounts', 'Calls', 'Cases', 'Contacts', 'Documents', 'Leads', 'Meetings', 'Notes', 'Opportunities'
-    ];
+    $sugar_config['search']['modules'] = '["Accounts","Calls","Cases","Contacts","Documents","Leads","Meetings","Notes","Opportunities"]';
     $sugar_config['search']['pagination'] = [
         'min' => 10, 'max' => 50, 'step' => 10,
     ];
