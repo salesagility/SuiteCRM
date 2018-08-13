@@ -62,7 +62,9 @@
     "name": "",
     "id": null
   },
-  "lead_source": "Web Site",
+  "lead": {
+    "type": "Web Site"
+  },
   "birthdate": null,
   "age": null,
   "email": [
