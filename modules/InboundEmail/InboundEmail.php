@@ -5110,9 +5110,10 @@ class InboundEmail extends SugarBean
      * @param $uid
      * @param bool $forDisplay
      * @param bool $clean_email
+     * @param bool $isGroupFolderExists
      * @return boolean
      */
-    public function returnImportedEmail($msgNo, $uid, $forDisplay = false, $clean_email = true)
+    public function returnImportedEmail($msgNo, $uid, $forDisplay = false, $clean_email = true, $isGroupFolderExists = false)
     {
         $GLOBALS['log']->debug("InboundEmail processing 1 email {$msgNo}-----------------------------------------------------------------------------------------");
         global $timedate;
@@ -5359,7 +5360,14 @@ class InboundEmail extends SugarBean
         ///////////////////////////////////////////////////////////////////////
         ////	DEAL WITH THE MAILBOX
         if (!$forDisplay) {
-            $r = imap_setflag_full($this->conn, $msgNo, '\\SEEN');
+            if (!$isGroupFolderExists)
+            {
+                $r = imap_setflag_full($this->conn, $msgNo, '\\SEEN');
+            }
+            else
+            {
+                $r = imap_clearflag_full($this->conn, $msgNo, '\\SEEN');
+            }
 
             // if delete_seen, mark msg as deleted
             if ($this->delete_seen == 1 && !$forDisplay) {
