@@ -45,13 +45,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use InvalidArgumentException;
 use Person;
+use SugarBean;
 
+/**
+ * Class BeanJsonSerializer converts a SugarBean into a pretty JSON Document.
+ */
 class BeanJsonSerializer
 {
     /**
      * Fields we don't want to be serialized.
      */
-    const garbage = [
+    const GARBAGE = [
         'deleted', 'photo', 'do_not_call', 'lawful_basis', 'date_reviewed', 'lawful_basis_source',
         'c_accept_status_fields', 'm_accept_status_fields', 'e_invite_status_fields', 'e_accept_status_fields',
         'jjwg_maps_lng_c', 'jjwg_maps_lat_c', 'jjwg_maps_geocode_status_c', 'jjwg_maps_address_c',
@@ -63,15 +67,38 @@ class BeanJsonSerializer
         'report_to_name_mod', 'campaign_name_mod', 'email_opt_out'
     ];
 
+    /** @var ArrayMapper */
+    private $mapper;
+
+    /**
+     * BeanJsonSerializer constructor.
+     */
+    public function __construct()
+    {
+        $this->mapper = new ArrayMapper();
+        $this->mapper->loadYaml(__DIR__ . '/BeanJsonSerializer.yml');
+    }
+
+    /**
+     * Factory method.
+     *
+     * @return BeanJsonSerializer
+     */
+    public static function make()
+    {
+        return new self();
+    }
+
     /**
      * Converts a SugarBean to a nested, standardised, cleaned JSON string.
      *
-     * @param $bean \SugarBean the bean to serialise
-     * @param bool $hideEmptyValues removes fields with empty (`''` or `null`) values.
-     * @param bool $pretty to make *very* pretty formatted.
+     * @param \SugarBean $bean            the bean to serialise
+     * @param bool       $hideEmptyValues removes fields with empty (`''` or `null`) values.
+     * @param bool       $pretty          to make *very* pretty formatted.
+     *
      * @return string
      */
-    public static function serialize($bean, $hideEmptyValues = true, $pretty = false)
+    public function serialize($bean, $hideEmptyValues = true, $pretty = false)
     {
         $flags = JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE;
 
@@ -89,12 +116,14 @@ class BeanJsonSerializer
      * This has a serious impact on performance if enabled (~70% slower). Also, I suspect no more fields are detected.
      * Keep it disabled.
      *
-     * @param $bean \SugarBean the bean to serialise
-     * @param bool $hideEmptyValues removes fields with empty (`''` or `null`) values.
-     * @param bool $loadRelationships whether to load the bean relationship
+     * @param \SugarBean $bean              the bean to serialise
+     * @param bool       $hideEmptyValues   removes fields with empty (`''` or `null`) values.
+     * @param bool       $loadRelationships whether to load the bean relationship
+     *
+     * @deprecated
      * @return array
      */
-    public static function toArray($bean, $hideEmptyValues = true, $loadRelationships = false)
+    public function toArrayOld($bean, $hideEmptyValues = true, $loadRelationships = false)
     {
         if ($loadRelationships) {
             $bean->load_relationships();
@@ -119,7 +148,7 @@ class BeanJsonSerializer
 
         // does a number of checks and validation to standardise the format of fields, especially adding nesting of values
         foreach ($keys as $key) {
-            if (in_array($key, self::garbage)) {
+            if (in_array($key, self::GARBAGE)) {
                 continue;
             }
 
@@ -239,7 +268,7 @@ class BeanJsonSerializer
 
             //region name
             if ($key === 'name') {
-                self::fixName($bean, $value, $prettyBean);
+                self::fixName($bean, $prettyBean);
                 continue;
             }
 
@@ -307,6 +336,7 @@ class BeanJsonSerializer
 
             //region emails
             if ($key === 'email') {
+                // TODO CHECK THIS
                 continue;
             }
 
@@ -342,11 +372,57 @@ class BeanJsonSerializer
     }
 
     /**
-     * @param $bean
-     * @param $value
-     * @param $prettyBean
+     * Converts a SugarBean to a nested, standardised, cleaned associative array.
+     *
+     * The `$loadRelationships` option allows to choose whether to load the bean's relationship or not.
+     * This has a serious impact on performance if enabled (~70% slower). Also, I suspect no more fields are detected.
+     * Keep it disabled.
+     *
+     * @param \SugarBean $bean              the bean to serialise
+     * @param bool       $hideEmptyValues   removes fields with empty (`''` or `null`) values.
+     * @param bool       $loadRelationships whether to load the bean relationship
+     *
+     * @return array
      */
-    private static function fixName($bean, $value, &$prettyBean)
+    public function toArray(SugarBean $bean, $hideEmptyValues = true, $loadRelationships = false)
+    {
+        if ($loadRelationships) {
+            $bean->load_relationships();
+        }
+
+        // creates an associative array with all the raw values that might need serialisation
+        if (isset($bean->fetched_row) && is_array($bean->fetched_row)) {
+            $keys = array_keys($bean->fetched_row);
+            if ($bean->fetched_rel_row && is_array($bean->fetched_rel_row)) {
+                $keys = array_merge($keys, array_keys($bean->fetched_rel_row));
+            }
+            $fields = get_object_vars($bean);
+        } else if (isset($bean->column_fields) && is_array($bean->column_fields)) {
+            $keys = $bean->column_fields;
+            $fields = $bean;
+        } else {
+            $fields = get_object_vars($bean);
+            $keys = array_keys($fields);
+        }
+
+        $this->mapper->setMappable($fields);
+        $this->mapper->setHideEmptyValues($hideEmptyValues);
+
+        $prettyBean = $this->mapper->map($keys);
+
+        self::fixPhone($prettyBean);
+        self::fixName($bean, $prettyBean);
+
+        return $prettyBean;
+    }
+
+    /**
+     * Standardizes name structure to avoid collision.
+     *
+     * @param SugarBean $bean
+     * @param           $prettyBean
+     */
+    private function fixName(SugarBean $bean, &$prettyBean)
     {
         if (is_subclass_of($bean, Person::class)
             || (isset($bean->module_name) && $bean->module_name === 'Contacts')) {
@@ -357,7 +433,21 @@ class BeanJsonSerializer
                 $prettyBean['name']['last'] = $bean->last_name;
             }
         } else {
-            $prettyBean['name'] = ['name' => $value];
+            $prettyBean['name'] = ['name' => $bean->name];
+        }
+    }
+
+    /**
+     * Applies sanitizePhone() to all the phones in the serialisation array.
+     *
+     * @param $prettyBean
+     */
+    private function fixPhone(&$prettyBean)
+    {
+        if (isset($prettyBean['phone'])) {
+            foreach ($prettyBean['phone'] as &$phone) {
+                $phone = self::sanitizePhone($phone);
+            }
         }
     }
 
@@ -367,7 +457,7 @@ class BeanJsonSerializer
      * @param $phone
      * @return null|string|string[]
      */
-    public static function sanitizePhone($phone)
+    public function sanitizePhone($phone)
     {
         return $phone = preg_replace('/[^0-9+]/', '', $phone);
     }

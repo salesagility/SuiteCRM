@@ -116,7 +116,7 @@ class CliLoggerFormatter implements FormatterInterface
 
         $message = preg_replace("/\n\s*/", $this->padding . $color, $message);
 
-        $time = (new \DateTime())->format('H:m:s');
+        $time = (new \DateTime())->format('H:i:s');
 
         return sprintf($this->format, $color . $code, $time, $message);
     }

@@ -107,12 +107,14 @@ class ElasticSearchCommands extends \Robo\Tasks
 
         $results = [];
 
+        $json = BeanJsonSerializer::make();
+
         foreach ($ids as $id) {
             $bean = BeanFactory::getBean($module, $id);
 
             $results[] = $showJson
-                ? BeanJsonSerializer::serialize($bean, true, true)
-                : mb_convert_encoding($bean->name, "UTF-8", "HTML-ENTITIES");
+                ? $json->serialize($bean, true, true)
+                : mb_convert_encoding($bean->name, 'UTF-8', 'HTML-ENTITIES');
         }
 
         $this->io()->listing($results);

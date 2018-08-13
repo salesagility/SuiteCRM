@@ -54,16 +54,16 @@ class BeanJsonSerializerTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $data3 = "(ab) 0123 213 23";
         $expe3 = "012321323";
 
-        self::assertEquals($expe1, BeanJsonSerializer::sanitizePhone($data1));
-        self::assertEquals($expe2, BeanJsonSerializer::sanitizePhone($data2));
-        self::assertEquals($expe3, BeanJsonSerializer::sanitizePhone($data3));
+        self::assertEquals($expe1, BeanJsonSerializer::make()->sanitizePhone($data1));
+        self::assertEquals($expe2, BeanJsonSerializer::make()->sanitizePhone($data2));
+        self::assertEquals($expe3, BeanJsonSerializer::make()->sanitizePhone($data3));
     }
 
     public function testToArrayContact()
     {
         $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');
         $expected = json_decode(file_get_contents(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.expected.json'), true);
-        $actual = BeanJsonSerializer::toArray($mockBean, false);
+        $actual = BeanJsonSerializer::make()->toArray($mockBean, false);
 
         self::assertEquals($expected, $actual);
     }
@@ -72,7 +72,7 @@ class BeanJsonSerializerTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
     {
         $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/AccountBean.json');
         $expected = json_decode(file_get_contents(__DIR__ . '/BeanJsonSerializerTestData/AccountBean.expected.json'), true);
-        $actual = BeanJsonSerializer::toArray($mockBean, false);
+        $actual = BeanJsonSerializer::make()->toArray($mockBean, false);
 
         self::assertEquals($expected, $actual);
     }
@@ -80,7 +80,7 @@ class BeanJsonSerializerTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
     public function testSerializeContact()
     {
         $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');
-        $actual = BeanJsonSerializer::serialize($mockBean, false, true);
+        $actual = BeanJsonSerializer::make()->serialize($mockBean, false, true);
 
         self::assertJsonStringEqualsJsonFile(
             __DIR__ . '/BeanJsonSerializerTestData/ContactBean.expected.json',
@@ -91,7 +91,7 @@ class BeanJsonSerializerTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
     public function testSerializeAccount()
     {
         $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/AccountBean.json');
-        $actual = BeanJsonSerializer::serialize($mockBean, false, true);
+        $actual = BeanJsonSerializer::make()->serialize($mockBean, false, true);
 
         self::assertJsonStringEqualsJsonFile(
             __DIR__ . '/BeanJsonSerializerTestData/AccountBean.expected.json',

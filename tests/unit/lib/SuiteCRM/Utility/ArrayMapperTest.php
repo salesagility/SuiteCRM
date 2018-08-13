@@ -1,4 +1,8 @@
-/*
+<?php
+
+use SuiteCRM\Utility\ArrayMapper;
+
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -35,56 +39,60 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+class ArrayMapperTest extends \Codeception\Test\Unit
+{
+    public function test()
+    {
+        $array = [
+            'address_city' => 'city',
+            'address_street' => 'street',
+            'email1' => 'hello@email1.com',
+            'email2' => 'hello@email2.com',
+            'other_field' => 'something',
+            'phone' => [
+                'phone_fax' => '123',
+                'phone_home' => '789',
+            ],
+            'test' => 'deep',
+            'empty' => null,
+        ];
 
-/* global SUGAR */
+        $mappings = [
+            'address_city' => 'address.city',
+            'address_street' => 'address.street',
+            'email1' => '+email',
+            'email2' => '+email',
+            'phone.phone_fax' => 'phone.fax',
+            'phone.phone_home' => 'phone.home',
+            'test' => 'very.very',
+        ];
 
-$("#es-test-connection").click(function () {
-    var url = "index.php?module=Administration&action=ElasticSearchSettings&do=TestConnection";
-    var host = $("#es-host").val();
-    var user = $("#es-user").val();
-    var pass = $("#es-password").val();
+        $expected = [
+            'address' => [
+                'city' => 'city',
+                'street' => 'street',
+            ],
+            'email' => [
+                'hello@email1.com',
+                'hello@email2.com',
+            ],
+            'phone' => [
+                'fax' => '123',
+                'home' => '789',
+            ],
+            'very' => [
+                'very' => 'deep',
+            ],
+            'other_field' => 'something',
+        ];
 
-    $.ajax({
-        url: url,
-        method: "POST",
-        data: {
-            host: host,
-            user: user,
-            pass: pass
-        }
-    }).done(function (data) {
-        if (data.status === "success") {
-            alert(
-                SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_TEST_CONNECTION_SUCCESS")
-                + "\n\nPing: " + data.ping / 1000 + " ms\nElasticsearch v" + data.info.version.number
-            );
-        } else {
-            alert(
-                SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_TEST_CONNECTION_FAIL")
-                + "\n\n" + data.error + "."
-            );
-        }
-    }).error(function () {
-        alert(SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_TEST_CONNECTION_ERROR"));
-    });
-});
+        $mapper = new ArrayMapper();
 
-$("#es-full-index").click(function () {
-    var url = "index.php?module=Administration&action=ElasticSearchSettings&do=FullIndex";
+        $mapper->setMappable($array);
+        $mapper->setMappings($mappings);
 
-    $.ajax(url).done(function () {
-        alert(SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_SUCCESS"));
-    }).error(function () {
-        alert(SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_FAIL"));
-    });
-});
+        $actual = $mapper->map();
 
-$("#es-partial-index").click(function () {
-    var url = "index.php?module=Administration&action=ElasticSearchSettings&do=PartialIndex";
-
-    $.ajax(url).done(function () {
-        alert(SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_SUCCESS"));
-    }).error(function () {
-        alert(SUGAR.language.get("Administration", "LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_FAIL"));
-    });
-});
+        self::assertEquals($expected, $actual);
+    }
+}

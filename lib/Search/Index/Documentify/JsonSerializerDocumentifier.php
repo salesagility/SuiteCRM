@@ -55,10 +55,21 @@ use SuiteCRM\Utility\BeanJsonSerializer;
  */
 class JsonSerializerDocumentifier extends AbstractDocumentifier
 {
+    /** @var BeanJsonSerializer */
+    private $serializer;
+
+    /**
+     * JsonSerializerDocumentifier constructor.
+     */
+    public function __construct()
+    {
+        $this->serializer = BeanJsonSerializer::make();
+    }
+
     /** @inheritdoc */
     public function documentify(\SugarBean $bean)
     {
-        $values = BeanJsonSerializer::toArray($bean);
+        $values = $this->serializer->toArray($bean);
         unset($values['id']);
         return $values;
     }
