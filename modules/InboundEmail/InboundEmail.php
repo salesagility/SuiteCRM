@@ -167,6 +167,7 @@ class InboundEmail extends SugarBean
     public $keyForUsersDefaultIEAccount = 'defaultIEAccount';
     // prefix to use when importing inlinge images in emails
     public $imagePrefix;
+    public $job_name = 'function::pollMonitoredInboxes';
 
     /**
      * Email constructor
@@ -6005,11 +6006,12 @@ class InboundEmail extends SugarBean
         //TODO figure out if the since date is UDT
         if ($storedOptions['only_since']) {// POP3 does not support Unseen flags
             if (!isset($storedOptions['only_since_last']) && !empty($storedOptions['only_since_last'])) {
-                $q = 'SELECT last_run FROM schedulers WHERE job = \'function::pollMonitoredInboxes\'';
+                $q = "SELECT last_run FROM schedulers WHERE job = '{$this->job_name}'";
                 $r = $this->db->query($q, true);
                 $a = $this->db->fetchByAssoc($r);
 
                 $date = date('r', strtotime($a['last_run']));
+                LoggerManager::getLogger()->debug("-----> getNewMessageIds() executed query: {$q}");
             } else {
                 $date = $storedOptions['only_since_last'];
             }
@@ -6020,13 +6022,13 @@ class InboundEmail extends SugarBean
             $this->save();
         } else {
             if (!is_resource($this->conn)) {
-                LoggerManager::getLogger()->fatal('Inbounc Email Connection is not valid resource for getting New Message Ids.');
+                LoggerManager::getLogger()->fatal('Inbound Email Connection is not valid resource for getting New Message Ids.');
                 return false;
             }
             $ret = imap_search($this->conn, 'UNDELETED UNSEEN');
         }
 
-        $GLOBALS['log']->debug('-----> getNewMessageIds() got ' . count($ret) . ' new Messages');
+        LoggerManager::getLogger()->debug('-----> getNewMessageIds() got ' . count($ret) . ' new Messages');
 
         return $ret;
     }
