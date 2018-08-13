@@ -67,6 +67,28 @@ class BeanJsonSerializer
         'report_to_name_mod', 'campaign_name_mod', 'email_opt_out'
     ];
 
+    /** @var ArrayMapper */
+    private $mapper;
+
+    /**
+     * BeanJsonSerializer constructor.
+     */
+    public function __construct()
+    {
+        $this->mapper = new ArrayMapper();
+        $this->mapper->loadYaml(__DIR__ . '/BeanJsonSerializer.yml');
+    }
+
+    /**
+     * Factory method.
+     *
+     * @return BeanJsonSerializer
+     */
+    public static function make()
+    {
+        return new self();
+    }
+
     /**
      * Converts a SugarBean to a nested, standardised, cleaned JSON string.
      *
@@ -76,7 +98,7 @@ class BeanJsonSerializer
      *
      * @return string
      */
-    public static function serialize($bean, $hideEmptyValues = true, $pretty = false)
+    public function serialize($bean, $hideEmptyValues = true, $pretty = false)
     {
         $flags = JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE;
 
@@ -101,7 +123,7 @@ class BeanJsonSerializer
      * @deprecated
      * @return array
      */
-    public static function toArrayOld($bean, $hideEmptyValues = true, $loadRelationships = false)
+    public function toArrayOld($bean, $hideEmptyValues = true, $loadRelationships = false)
     {
         if ($loadRelationships) {
             $bean->load_relationships();
@@ -362,7 +384,7 @@ class BeanJsonSerializer
      *
      * @return array
      */
-    public static function toArray(SugarBean $bean, $hideEmptyValues = true, $loadRelationships = false)
+    public function toArray(SugarBean $bean, $hideEmptyValues = true, $loadRelationships = false)
     {
         if ($loadRelationships) {
             $bean->load_relationships();
@@ -383,13 +405,10 @@ class BeanJsonSerializer
             $keys = array_keys($fields);
         }
 
-        $mapper = new ArrayMapper();
+        $this->mapper->setMappable($fields);
+        $this->mapper->setHideEmptyValues($hideEmptyValues);
 
-        $mapper->setMappable($fields);
-        $mapper->loadYaml(__DIR__ . '/BeanJsonSerializer.yml');
-        $mapper->setHideEmptyValues($hideEmptyValues);
-
-        $prettyBean = $mapper->map($keys);
+        $prettyBean = $this->mapper->map($keys);
 
         self::fixPhone($prettyBean);
         self::fixName($bean, $prettyBean);
@@ -403,7 +422,7 @@ class BeanJsonSerializer
      * @param SugarBean $bean
      * @param           $prettyBean
      */
-    private static function fixName(SugarBean $bean, &$prettyBean)
+    private function fixName(SugarBean $bean, &$prettyBean)
     {
         if (is_subclass_of($bean, Person::class)
             || (isset($bean->module_name) && $bean->module_name === 'Contacts')) {
@@ -423,7 +442,7 @@ class BeanJsonSerializer
      *
      * @param $prettyBean
      */
-    private static function fixPhone(&$prettyBean)
+    private function fixPhone(&$prettyBean)
     {
         if (isset($prettyBean['phone'])) {
             foreach ($prettyBean['phone'] as &$phone) {
@@ -438,7 +457,7 @@ class BeanJsonSerializer
      * @param $phone
      * @return null|string|string[]
      */
-    public static function sanitizePhone($phone)
+    public function sanitizePhone($phone)
     {
         return $phone = preg_replace('/[^0-9+]/', '', $phone);
     }

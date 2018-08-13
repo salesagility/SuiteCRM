@@ -59,7 +59,6 @@ class ArrayMapper
     /** @var bool */
     private $hideEmptyValues = true;
 
-
     /** @var array */
     private $path = [];
     /** @var array */
@@ -101,6 +100,7 @@ class ArrayMapper
         }
 
         $this->mappable = $mappable;
+        $this->cleanArray = [];
     }
 
     /**
