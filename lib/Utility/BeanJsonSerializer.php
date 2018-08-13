@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use InvalidArgumentException;
 use Person;
+use SugarBean;
 
 /**
  * Class BeanJsonSerializer converts a SugarBean into a pretty JSON Document.
@@ -97,9 +98,10 @@ class BeanJsonSerializer
      * @param bool       $hideEmptyValues   removes fields with empty (`''` or `null`) values.
      * @param bool       $loadRelationships whether to load the bean relationship
      *
+     * @deprecated
      * @return array
      */
-    public static function toArray($bean, $hideEmptyValues = true, $loadRelationships = false)
+    public static function toArrayOld($bean, $hideEmptyValues = true, $loadRelationships = false)
     {
         if ($loadRelationships) {
             $bean->load_relationships();
@@ -244,7 +246,7 @@ class BeanJsonSerializer
 
             //region name
             if ($key === 'name') {
-                self::fixName($bean, $value, $prettyBean);
+                self::fixName($bean, $prettyBean);
                 continue;
             }
 
@@ -348,11 +350,60 @@ class BeanJsonSerializer
     }
 
     /**
-     * @param $bean
-     * @param $value
-     * @param $prettyBean
+     * Converts a SugarBean to a nested, standardised, cleaned associative array.
+     *
+     * The `$loadRelationships` option allows to choose whether to load the bean's relationship or not.
+     * This has a serious impact on performance if enabled (~70% slower). Also, I suspect no more fields are detected.
+     * Keep it disabled.
+     *
+     * @param \SugarBean $bean              the bean to serialise
+     * @param bool       $hideEmptyValues   removes fields with empty (`''` or `null`) values.
+     * @param bool       $loadRelationships whether to load the bean relationship
+     *
+     * @return array
      */
-    private static function fixName($bean, $value, &$prettyBean)
+    public static function toArray(SugarBean $bean, $hideEmptyValues = true, $loadRelationships = false)
+    {
+        if ($loadRelationships) {
+            $bean->load_relationships();
+        }
+
+        // creates an associative array with all the raw values that might need serialisation
+        if (isset($bean->fetched_row) && is_array($bean->fetched_row)) {
+            $keys = array_keys($bean->fetched_row);
+            if ($bean->fetched_rel_row && is_array($bean->fetched_rel_row)) {
+                $keys = array_merge($keys, array_keys($bean->fetched_rel_row));
+            }
+            $fields = get_object_vars($bean);
+        } else if (isset($bean->column_fields) && is_array($bean->column_fields)) {
+            $keys = $bean->column_fields;
+            $fields = $bean;
+        } else {
+            $fields = get_object_vars($bean);
+            $keys = array_keys($fields);
+        }
+
+        $mapper = new ArrayMapper();
+
+        $mapper->setMappable($fields);
+        $mapper->loadYaml(__DIR__ . '/BeanJsonSerializer.yml');
+        $mapper->setHideEmptyValues($hideEmptyValues);
+
+        $prettyBean = $mapper->map($keys);
+
+        self::fixPhone($prettyBean);
+        self::fixName($bean, $prettyBean);
+
+        return $prettyBean;
+    }
+
+    /**
+     * Standardizes name structure to avoid collision.
+     *
+     * @param SugarBean $bean
+     * @param           $prettyBean
+     */
+    private static function fixName(SugarBean $bean, &$prettyBean)
     {
         if (is_subclass_of($bean, Person::class)
             || (isset($bean->module_name) && $bean->module_name === 'Contacts')) {
@@ -363,7 +414,21 @@ class BeanJsonSerializer
                 $prettyBean['name']['last'] = $bean->last_name;
             }
         } else {
-            $prettyBean['name'] = ['name' => $value];
+            $prettyBean['name'] = ['name' => $bean->name];
+        }
+    }
+
+    /**
+     * Applies sanitizePhone() to all the phones in the serialisation array.
+     *
+     * @param $prettyBean
+     */
+    private static function fixPhone(&$prettyBean)
+    {
+        if (isset($prettyBean['phone'])) {
+            foreach ($prettyBean['phone'] as &$phone) {
+                $phone = self::sanitizePhone($phone);
+            }
         }
     }
 
