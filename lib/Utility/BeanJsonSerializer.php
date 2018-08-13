@@ -46,12 +46,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 use InvalidArgumentException;
 use Person;
 
+/**
+ * Class BeanJsonSerializer converts a SugarBean into a pretty JSON Document.
+ */
 class BeanJsonSerializer
 {
     /**
      * Fields we don't want to be serialized.
      */
-    const garbage = [
+    const GARBAGE = [
         'deleted', 'photo', 'do_not_call', 'lawful_basis', 'date_reviewed', 'lawful_basis_source',
         'c_accept_status_fields', 'm_accept_status_fields', 'e_invite_status_fields', 'e_accept_status_fields',
         'jjwg_maps_lng_c', 'jjwg_maps_lat_c', 'jjwg_maps_geocode_status_c', 'jjwg_maps_address_c',
@@ -66,9 +69,10 @@ class BeanJsonSerializer
     /**
      * Converts a SugarBean to a nested, standardised, cleaned JSON string.
      *
-     * @param $bean \SugarBean the bean to serialise
-     * @param bool $hideEmptyValues removes fields with empty (`''` or `null`) values.
-     * @param bool $pretty to make *very* pretty formatted.
+     * @param \SugarBean $bean            the bean to serialise
+     * @param bool       $hideEmptyValues removes fields with empty (`''` or `null`) values.
+     * @param bool       $pretty          to make *very* pretty formatted.
+     *
      * @return string
      */
     public static function serialize($bean, $hideEmptyValues = true, $pretty = false)
@@ -89,9 +93,10 @@ class BeanJsonSerializer
      * This has a serious impact on performance if enabled (~70% slower). Also, I suspect no more fields are detected.
      * Keep it disabled.
      *
-     * @param $bean \SugarBean the bean to serialise
-     * @param bool $hideEmptyValues removes fields with empty (`''` or `null`) values.
-     * @param bool $loadRelationships whether to load the bean relationship
+     * @param \SugarBean $bean              the bean to serialise
+     * @param bool       $hideEmptyValues   removes fields with empty (`''` or `null`) values.
+     * @param bool       $loadRelationships whether to load the bean relationship
+     *
      * @return array
      */
     public static function toArray($bean, $hideEmptyValues = true, $loadRelationships = false)
@@ -119,7 +124,7 @@ class BeanJsonSerializer
 
         // does a number of checks and validation to standardise the format of fields, especially adding nesting of values
         foreach ($keys as $key) {
-            if (in_array($key, self::garbage)) {
+            if (in_array($key, self::GARBAGE)) {
                 continue;
             }
 
@@ -307,6 +312,7 @@ class BeanJsonSerializer
 
             //region emails
             if ($key === 'email') {
+                // TODO CHECK THIS
                 continue;
             }
 
