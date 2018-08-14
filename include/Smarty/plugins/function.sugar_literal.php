@@ -9,10 +9,9 @@
  *
  *
  * @param array $params
- * @param Smarty $smarty
  * @return string with content wrapped around with literals
  */
-function smarty_function_sugar_literal($params, &$smarty)
+function smarty_function_sugar_literal($params)
 {
     $content = '';
 
