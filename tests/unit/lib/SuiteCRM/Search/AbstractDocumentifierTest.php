@@ -83,7 +83,7 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertEquals($expected, $document);
     }
 
-    protected function setUp()
+    public function setUp()
     {
         $this->documentifier = \Mockery::mock(AbstractDocumentifier::class)->makePartial();
 
