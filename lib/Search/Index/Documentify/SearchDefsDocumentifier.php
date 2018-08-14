@@ -43,7 +43,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use Exception;
+use LoggerManager;
+use Monolog\Logger;
 use ParserSearchFields;
+use SuiteCRM\Log\CliLoggerHandler;
+use SuiteCRM\Log\SugarLoggerHandler;
 use SuiteCRM\Utility\ArrayMapper;
 
 require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
@@ -57,13 +62,25 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
 {
     /** @var array a cache with fields definition */
     protected $fields = [];
+    /** @var ArrayMapper */
     protected $mapper = null;
+    /** @var Logger */
+    protected $logger;
 
     /**
      * SearchDefsDocumentifier constructor.
      */
     public function __construct()
     {
+        try {
+            $this->logger = new Logger('SearchDefsDocumentifier', [
+                new CliLoggerHandler(),
+                new SugarLoggerHandler(),
+            ]);
+        } catch (Exception $exception) {
+            LoggerManager::getLogger()->error('Failed to start Monolog loggers');
+        }
+
         $this->mapper = ArrayMapper::make()
             ->loadYaml(__DIR__ . '/SearchDefsDocumentifier.yml')
             ->setHideEmptyValues(true);
@@ -105,14 +122,22 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
 
         $parsedFields = [];
 
+        $badKeys = ['favorites_only', 'open_only', 'do_not_call', 'email', 'optinprimary'];
+        $goodOperators = ['=', 'in'];
+
         foreach ($fields as $key => $field) {
+            if (in_array($key, $badKeys)) {
+                continue;
+            }
+
             if (isset($field['query_type']) && $field['query_type'] != 'default') {
-                // echo "[$module]->$key is not a supported query type!", PHP_EOL;
+                $this->logger->warn("[$module]->$key is not a supported query type [{$field['query_type']}]");
                 continue;
             };
 
-            if (!empty($field['operator'])) {
-                // echo "[$module]->$key has an operator!", PHP_EOL;
+            if (!empty($field['operator']) && !in_array($field['operator'], $goodOperators)) {
+                $this->logger->warn("[$module]->$key has an unsupported operator [{$field['operator']}]");
+                $this->logger->warn("field:\n" . json_encode($field, JSON_PRETTY_PRINT));
                 continue;
             }
 

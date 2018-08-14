@@ -370,7 +370,6 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
                     'phone_fax',
                     'assistant_phone',
                 ],
-            'assistant',
             'address_street' =>
                 [
                     'primary_address_street',
@@ -400,11 +399,13 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
                 [
                     'assigned_user_id',
                 ],
-            'assigned_user_id',
+            'lead_source',
             'account_id' =>
                 [
                     'accounts.id',
                 ],
+            'assistant',
+            'assigned_user_id',
             'campaign_name',
             'date_entered',
             'created_by',

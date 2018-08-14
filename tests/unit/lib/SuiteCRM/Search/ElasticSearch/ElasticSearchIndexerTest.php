@@ -295,6 +295,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
                         'user_name' => 'Max Jensen',
                     ],
             ],
+            'lead_source' => 'Web Site',
         ];
 
         $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
