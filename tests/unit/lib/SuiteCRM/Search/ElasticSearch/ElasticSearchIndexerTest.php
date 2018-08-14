@@ -264,8 +264,8 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
             ],
             'phone' =>
                 [
-                    'mobile' => '(978) 836-3300',
-                    'work' => '(711) 112-3512',
+                    'mobile' => '9788363300',
+                    'work' => '7111123512',
                 ],
             'address' => [
                 'primary' => [
