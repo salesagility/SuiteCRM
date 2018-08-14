@@ -44,6 +44,9 @@ class ArrayMapperTest extends \Codeception\Test\Unit
     public function test()
     {
         $array = [
+            'object' => (object)[
+                'hey' => 'there',
+            ],
             'array' => [
                 'foo',
                 'bar',
@@ -72,6 +75,9 @@ class ArrayMapperTest extends \Codeception\Test\Unit
         ];
 
         $expected = [
+            'object' => [
+                'hey' => 'there',
+            ],
             'address' => [
                 'city' => 'city',
                 'street' => 'street',
