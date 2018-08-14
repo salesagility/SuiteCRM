@@ -89,7 +89,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     /** @inheritdoc */
     public function index()
     {
-        $this->logger->debug('Starting indexing procedures');
+        $this->logger->info('Starting indexing procedures');
 
         $this->resetCounts();
 
