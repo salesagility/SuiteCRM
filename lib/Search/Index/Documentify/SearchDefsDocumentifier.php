@@ -137,20 +137,6 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
     }
 
     /**
-     * Converts a string to the proper document-friendly encoding and format.
-     *
-     * Most notably, converts HTML entities to UTF-8 characters.
-     *
-     * @param string $string
-     *
-     * @return null|string
-     */
-    protected function cleanValue($string)
-    {
-        return mb_convert_encoding($string, 'UTF-8', 'HTML-ENTITIES');
-    }
-
-    /**
      * Cached version of getFieldsToIndex().
      *
      * @see getFieldsToIndex
