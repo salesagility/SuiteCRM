@@ -44,6 +44,10 @@ class ArrayMapperTest extends \Codeception\Test\Unit
     public function test()
     {
         $array = [
+            'array' => [
+                'foo',
+                'bar',
+            ],
             'address_city' => 'city',
             'address_street' => 'street',
             'email1' => 'hello@email1.com',
@@ -84,14 +88,16 @@ class ArrayMapperTest extends \Codeception\Test\Unit
                 'very' => 'deep',
             ],
             'other_field' => 'something',
+            'array' => [
+                'foo',
+                'bar',
+            ],
         ];
 
-        $mapper = new ArrayMapper();
-
-        $mapper->setMappable($array);
-        $mapper->setMappings($mappings);
-
-        $actual = $mapper->map();
+        $actual = ArrayMapper::make()
+            ->setMappable($array)
+            ->setMappings($mappings)
+            ->map();
 
         self::assertEquals($expected, $actual);
     }

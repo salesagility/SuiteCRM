@@ -60,11 +60,13 @@ class Controller extends MVC\Controller
 
         $searchController = filter_input($input, 'search-controller', FILTER_SANITIZE_STRING);
         $searchEngine = filter_input($input, 'search-engine', FILTER_SANITIZE_STRING);
+        $searchModules = mb_convert_encoding(filter_input($input, 'search-modules', FILTER_SANITIZE_STRING), 'UTF-8', 'HTML-ENTITIES');
 
         $cfg = new Configurator();
 
         $cfg->config['search']['controller'] = $searchController;
         $cfg->config['search']['defaultEngine'] = $searchEngine;
+        $cfg->config['search']['modules'] = $searchModules;
 
         $cfg->saveConfig();
 

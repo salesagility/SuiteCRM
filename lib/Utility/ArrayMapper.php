@@ -51,7 +51,7 @@ class ArrayMapper
     /** @var array|object */
     private $mappable = null;
     /** @var array */
-    private $mappings = null;
+    private $mappings = [];
     /** @var null|array */
     private $regexMappings = [];
     /** @var array */
@@ -76,10 +76,14 @@ class ArrayMapper
 
     /**
      * @param array $mappings
+     *
+     * @return ArrayMapper fluent setter
      */
     public function setMappings($mappings)
     {
         $this->mappings = $mappings;
+
+        return $this;
     }
 
     /**
@@ -91,7 +95,9 @@ class ArrayMapper
     }
 
     /**
-     * @param array $mappable
+     * @param array|object $mappable
+     *
+     * @return ArrayMapper fluent setter
      */
     public function setMappable($mappable)
     {
@@ -101,6 +107,8 @@ class ArrayMapper
 
         $this->mappable = $mappable;
         $this->cleanArray = [];
+
+        return $this;
     }
 
     /**
@@ -113,10 +121,14 @@ class ArrayMapper
 
     /**
      * @param array|null $regexMappings
+     *
+     * @return ArrayMapper fluent setter
      */
     public function setRegexMappings(array $regexMappings)
     {
         $this->regexMappings = $regexMappings;
+
+        return $this;
     }
 
     /**
@@ -129,10 +141,14 @@ class ArrayMapper
 
     /**
      * @param array $blacklist
+     *
+     * @return ArrayMapper fluent setter
      */
     public function setBlacklist(array $blacklist)
     {
         $this->blacklist = $blacklist;
+
+        return $this;
     }
 
     /**
@@ -145,12 +161,26 @@ class ArrayMapper
 
     /**
      * @param bool $hideEmptyValues
+     *
+     * @return ArrayMapper fluent setter
      */
     public function setHideEmptyValues($hideEmptyValues)
     {
         $this->hideEmptyValues = $hideEmptyValues;
+
+        return $this;
     }
     //endregion
+
+    /**
+     * Factory method for cleaner syntax with fluent setters.
+     *
+     * @return ArrayMapper
+     */
+    public static function make()
+    {
+        return new self();
+    }
 
     /**
      * Maps the given array using the given parameters.
@@ -176,15 +206,27 @@ class ArrayMapper
      * Loads configuration from a Yaml file.
      *
      * @param $file
+     *
+     * @return ArrayMapper fluent setter
      */
     public function loadYaml($file)
     {
         $parse = new Yaml();
         $parsed = $parse->parseFile($file);
 
-        $this->mappings = $parsed['mappings'];
-        $this->regexMappings = $parsed['regexMappings'];
-        $this->blacklist = $parsed['blacklist'];
+        if (isset($parsed['mappings'])) {
+            $this->mappings = $parsed['mappings'];
+        }
+
+        if (isset($parsed['regexMappings'])) {
+            $this->regexMappings = $parsed['regexMappings'];
+        }
+
+        if (isset($parsed['blacklist'])) {
+            $this->blacklist = $parsed['blacklist'];
+        }
+
+        return $this;
     }
 
     /**
@@ -255,7 +297,7 @@ class ArrayMapper
             return;
         }
 
-        if ($this->handleDefault($key, $value)) {
+        if ($this->handleDefault($value, $path)) {
             return;
         }
     }
@@ -332,14 +374,14 @@ class ArrayMapper
     }
 
     /**
-     * @param string $key
      * @param mixed  $value
+     * @param string $path
      *
      * @return bool
      */
-    private function handleDefault($key, $value)
+    private function handleDefault($value, $path)
     {
-        $this->cleanArray[$key] = $value;
+        $this->handleValue($value, $path);
         array_pop($this->path);
         return true;
     }

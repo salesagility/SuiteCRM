@@ -230,7 +230,9 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
                             'country' => 'USA',
                         ],
                 ],
-            'lead_source' => 'Web Site',
+            'lead' => [
+                'type' => 'Web Site',
+            ],
             'email' =>
                 [
                     0 => 'kid79@example.co.jp',

@@ -1,4 +1,10 @@
 mappings:
+  # Name
+  first_name: name.first
+  last_name: name.last
+  name: name.name
+  salutation: name.salutation
+  # Metadata
   date_entered: meta.created.date
   created_by: meta.created.user_id
   date_modified: meta.modified.date
@@ -8,31 +14,31 @@ mappings:
   created_by_name: meta.created.user_name
   assigned_user_name: meta.assigned.user_name
   assigned_user_name_owner: meta.assigned.owner_name
-  assistant: assistant.name
-  assistant_phone: assistant.phone
-  reports_to_id: reports_to.id
-  report_to_name: reports_to.name
-  reports_to_name: reports_to.name
-  campaign_id: campaign.id
-  campaign_name: campaign.name
-  first_name: name.first
-  last_name: name.last
-  name: name.name
-  salutation: name.salutation
+  # Account
   account_id: account.id
   account_name: account.name
   account_description: account.description
   title: account.title
   department: account.department
+  # Opportunity
+  opportunity_id: opportunity.id
+  opportunity_name: opportunity.name
+  opportunity_amount: opportunity.amount
+  # Reports to
+  reports_to_id: reports_to.id
+  report_to_name: reports_to.name
+  reports_to_name: reports_to.name
+  # Other
+  assistant: assistant.name
+  assistant_phone: assistant.phone
+  campaign_id: campaign.id
+  campaign_name: campaign.name
   parent_id: parent.id
   parent_name: parent.name
   messenger_id: messenger.id
   messenger_type: messenger.type
   lead_source: lead.type
   lead_source_description: lead.description
-  opportunity_id: opportunity.id
-  opportunity_name: opportunity.name
-  opportunity_amount: opportunity.amount
 regexMappings:
   /^email[0-9]*$/: +email
   /^phone\_([a-z_]+)$/: phone.@1

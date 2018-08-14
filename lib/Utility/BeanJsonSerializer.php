@@ -52,21 +52,6 @@ use SugarBean;
  */
 class BeanJsonSerializer
 {
-    /**
-     * Fields we don't want to be serialized.
-     */
-    const GARBAGE = [
-        'deleted', 'photo', 'do_not_call', 'lawful_basis', 'date_reviewed', 'lawful_basis_source',
-        'c_accept_status_fields', 'm_accept_status_fields', 'e_invite_status_fields', 'e_accept_status_fields',
-        'jjwg_maps_lng_c', 'jjwg_maps_lat_c', 'jjwg_maps_geocode_status_c', 'jjwg_maps_address_c',
-        'opportunity_role_fields', 'id_c', 'joomla_account_id', 'portal_account_disabled', 'portal_user_type',
-        'user_hash', 'pwd_last_changed', 'authenticate_id', 'sugar_login', 'is_admin', 'external_auth_only',
-        'receive_notifications', 'status', 'portal_only', 'show_on_employees', 'is_group', 'factor_auth',
-        'factor_auth_interface', 'securitygroup_noninher_fields', 'system_generated_password', 'full_name',
-        'modified_by_name_mod', 'created_by_name_mod', 'assigned_user_name_mod', 'parent_name_mod',
-        'report_to_name_mod', 'campaign_name_mod', 'email_opt_out'
-    ];
-
     /** @var ArrayMapper */
     private $mapper;
 
@@ -129,26 +114,13 @@ class BeanJsonSerializer
             $bean->load_relationships();
         }
 
-        // creates an associative array with all the raw values that might need serialisation
-        if (isset($bean->fetched_row) && is_array($bean->fetched_row)) {
-            $keys = array_keys($bean->fetched_row);
-            if ($bean->fetched_rel_row && is_array($bean->fetched_rel_row)) {
-                $keys = array_merge($keys, array_keys($bean->fetched_rel_row));
-            }
-            $fields = $bean;
-        } elseif (isset($bean->column_fields) && is_array($bean->column_fields)) {
-            $keys = $bean->column_fields;
-            $fields = $bean;
-        } else {
-            $fields = get_object_vars($bean);
-            $keys = array_keys($fields);
-        }
+        list($fields, $keys) = $this->getFieldsAndKeys($bean);
 
         $prettyBean = [];
 
         // does a number of checks and validation to standardise the format of fields, especially adding nesting of values
         foreach ($keys as $key) {
-            if (in_array($key, self::GARBAGE)) {
+            if (in_array($key, $this->mapper->getBlacklist())) {
                 continue;
             }
 
@@ -336,7 +308,7 @@ class BeanJsonSerializer
 
             //region emails
             if ($key === 'email') {
-                // TODO CHECK THIS
+                $prettyBean['email'][] = $value;
                 continue;
             }
 
@@ -390,20 +362,7 @@ class BeanJsonSerializer
             $bean->load_relationships();
         }
 
-        // creates an associative array with all the raw values that might need serialisation
-        if (isset($bean->fetched_row) && is_array($bean->fetched_row)) {
-            $keys = array_keys($bean->fetched_row);
-            if ($bean->fetched_rel_row && is_array($bean->fetched_rel_row)) {
-                $keys = array_merge($keys, array_keys($bean->fetched_rel_row));
-            }
-            $fields = get_object_vars($bean);
-        } else if (isset($bean->column_fields) && is_array($bean->column_fields)) {
-            $keys = $bean->column_fields;
-            $fields = $bean;
-        } else {
-            $fields = get_object_vars($bean);
-            $keys = array_keys($fields);
-        }
+        list($fields, $keys) = $this->getFieldsAndKeys($bean);
 
         $this->mapper->setMappable($fields);
         $this->mapper->setHideEmptyValues($hideEmptyValues);
@@ -460,5 +419,34 @@ class BeanJsonSerializer
     public function sanitizePhone($phone)
     {
         return $phone = preg_replace('/[^0-9+]/', '', $phone);
+    }
+
+    /**
+     * Creates an associative array with all the raw values that might need serialisation
+     *
+     * @param SugarBean $bean
+     *
+     * @return array
+     */
+    private function getFieldsAndKeys(SugarBean $bean)
+    {
+        if (isset($bean->fetched_row) && is_array($bean->fetched_row)) {
+            $keys = array_keys($bean->fetched_row);
+
+            if ($bean->fetched_rel_row && is_array($bean->fetched_rel_row)) {
+                $keys = array_merge($keys, array_keys($bean->fetched_rel_row));
+            }
+
+            return [$bean, $keys];
+        }
+
+        if (isset($bean->column_fields) && is_array($bean->column_fields)) {
+            return [$bean, $bean->column_fields];
+        }
+
+        $fields = get_object_vars($bean);
+        $keys = array_keys($fields);
+
+        return [$fields, $keys];
     }
 }
