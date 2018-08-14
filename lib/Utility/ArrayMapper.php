@@ -297,7 +297,7 @@ class ArrayMapper
             return;
         }
 
-        if ($this->handleDefault($key, $value)) {
+        if ($this->handleDefault($value, $path)) {
             return;
         }
     }
@@ -374,14 +374,14 @@ class ArrayMapper
     }
 
     /**
-     * @param string $key
      * @param mixed  $value
+     * @param string $path
      *
      * @return bool
      */
-    private function handleDefault($key, $value)
+    private function handleDefault($value, $path)
     {
-        $this->cleanArray[$key] = $value;
+        $this->handleValue($value, $path);
         array_pop($this->path);
         return true;
     }
