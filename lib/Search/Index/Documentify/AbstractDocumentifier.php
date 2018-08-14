@@ -85,4 +85,24 @@ abstract class AbstractDocumentifier
     {
         return $phone = preg_replace('/[^0-9+]/', '', $phone);
     }
+
+    /**
+     * Returns the default metadata, that are always present in a bean.
+     *
+     * @return string[]
+     */
+    protected function getMetaData()
+    {
+        return [
+            'date_entered',
+            'created_by',
+            'date_modified',
+            'modified_user_id',
+            'assigned_user_id',
+            'modified_by_name',
+            'created_by_name',
+            'assigned_user_name',
+            'assigned_user_name_owner',
+        ];
+    }
 }

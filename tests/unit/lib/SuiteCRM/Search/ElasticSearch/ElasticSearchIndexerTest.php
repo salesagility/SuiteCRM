@@ -277,9 +277,23 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
                 ],
             ],
             'meta' => [
-                'assigned' => [
-                    'user_id' => 'seed_max_id',
-                ],
+                'created' =>
+                    [
+                        'date' => '2018-06-12 11:01:34',
+                        'user_id' => '1',
+                        'user_name' => 'Administrator',
+                    ],
+                'modified' =>
+                    [
+                        'date' => '2018-06-12 11:01:34',
+                        'user_id' => '1',
+                        'user_name' => 'Administrator',
+                    ],
+                'assigned' =>
+                    [
+                        'user_id' => 'seed_max_id',
+                        'user_name' => 'Max Jensen',
+                    ],
             ],
         ];
 

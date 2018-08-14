@@ -130,6 +130,9 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
             }
         }
 
+        // injects the standard metadata fields as they are not present in the searchdefs
+        $parsedFields = array_merge($parsedFields, $this->getMetaData());
+
         return $parsedFields;
     }
 
