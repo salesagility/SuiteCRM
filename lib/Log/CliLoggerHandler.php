@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 /**
  * This class extends the base Monolog StreamHandler to perform logging on CLI output.
@@ -55,11 +56,13 @@ class CliLoggerHandler extends StreamHandler
     /**
      * CliLoggerHandler constructor.
      *
+     * @param int $level
+     *
      * @throws \Exception
      */
-    public function __construct()
+    public function __construct($level = Logger::DEBUG)
     {
-        parent::__construct('php://stderr');
+        parent::__construct('php://stderr', $level);
         $this->setFormatter(new CliLoggerFormatter());
     }
 }
