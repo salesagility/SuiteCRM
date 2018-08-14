@@ -61,7 +61,6 @@ before_script:
   - phpenv config-add travis.php.ini
 
 script:
-  # dovecot
   - sudo apt-get install dovecot-imapd
   - sudo echo protocols = imap imaps >> /etc/dovecot/dovecot.conf
   - sudo echo mail_location = mbox:~/mail:INBOX=/var/mail/%u >> /etc/dovecot/dovecot.conf
