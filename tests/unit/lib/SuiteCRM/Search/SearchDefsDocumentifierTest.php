@@ -75,20 +75,19 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
         $contact->phone_fax = '132';
 
         $expected = [
-            'first_name' => 'Foo',
-            'last_name' => 'Bar',
-            'search_name' =>
-                [
-                    'first_name' => 'Foo',
-                    'last_name' => 'Bar',
-                ],
+            'name' => [
+                'first' => 'Foo',
+                'last' => 'Bar',
+            ],
             'phone' =>
                 [
-                    'phone_fax' => '132',
+                    'fax' => '132',
                 ],
-            'address_city' =>
+            'address' =>
                 [
-                    'alt_address_city' => 'FooCity',
+                    'alt' => [
+                        'city' => 'FooCity',
+                    ],
                 ],
         ];
 
@@ -118,21 +117,16 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
                     'name' => 'SuperDogs Ldt.',
                 ],
             'annual_revenue' => '123 (USD)',
-            'address_city' =>
-                [
-                    'billing_address_city' => 'FooCity',
+            'address' => [
+                'billing' => [
+                    'city' => 'FooCity',
+                    'postalcode' => 'FooPostalCode',
+                    'country' => 'FooCountry',
                 ],
-            'address_postalcode' =>
-                [
-                    'billing_address_postalcode' => 'FooPostalCode',
-                ],
-            'address_country' =>
-                [
-                    'billing_address_country' => 'FooCountry',
-                ],
+            ],
             'phone' =>
                 [
-                    'phone_office' => '123456789',
+                    'office' => '123456789',
                 ],
         ];
 
