@@ -239,11 +239,6 @@ class BeanJsonSerializer
             //endregion
 
             //region name
-            if ($key === 'name') {
-                self::fixName($bean, $prettyBean);
-                continue;
-            }
-
             if ($key === 'first_name') {
                 $prettyBean['name']['first'] = $value;
                 continue;
@@ -340,6 +335,8 @@ class BeanJsonSerializer
             $prettyBean[$key] = $value;
         }
 
+        self::fixName($bean, $prettyBean);
+
         return $prettyBean;
     }
 
@@ -368,8 +365,6 @@ class BeanJsonSerializer
         $this->mapper->setHideEmptyValues($hideEmptyValues);
 
         $prettyBean = $this->mapper->map($keys);
-
-        self::fixName($bean, $prettyBean);
 
         return $prettyBean;
     }
