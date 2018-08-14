@@ -72,6 +72,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $GLOBALS['sugar_config']['search']['ElasticSearch']['enabled'] = true;
         $this->searchEngine->setIndex('test');
         $this->indexer->setIndex('test');
+        $this->indexer->setModulesToIndex(['Contacts']);
         $this->indexer->setDifferentialIndexing(false);
         $this->indexer->removeIndex();
     }
