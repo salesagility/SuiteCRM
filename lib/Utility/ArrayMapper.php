@@ -99,7 +99,7 @@ class ArrayMapper
      *
      * @return ArrayMapper fluent setter
      */
-    public function setMappable($mappable)
+    public function setMappable(&$mappable)
     {
         if (!is_object($mappable) && !is_array($mappable)) {
             throw new InvalidArgumentException('Argument must be either a an array or an object');
