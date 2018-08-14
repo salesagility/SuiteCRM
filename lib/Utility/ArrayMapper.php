@@ -173,6 +173,16 @@ class ArrayMapper
     //endregion
 
     /**
+     * Factory method for cleaner syntax with fluent setters.
+     *
+     * @return ArrayMapper
+     */
+    public static function make()
+    {
+        return new self();
+    }
+
+    /**
      * Maps the given array using the given parameters.
      *
      * @param array|null $keys
