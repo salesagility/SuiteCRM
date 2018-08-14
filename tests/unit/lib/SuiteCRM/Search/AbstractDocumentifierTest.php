@@ -37,41 +37,56 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search\Index\Documentify;
+use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-use SuiteCRM\Utility\BeanJsonSerializer;
-
-/**
- * This class makes a document using a BeanJsonSerializer.
- *
- * Note: This documentifier does not use the search definitions files and is not module-customisable.
- * It provides, on the other hand, a human-friendly document, making advanced search queries easier.
- *
- * @see BeanJsonSerializer
- */
-class JsonSerializerDocumentifier extends AbstractDocumentifier
+class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
 {
-    /** @var BeanJsonSerializer */
-    private $serializer;
+    /** @var AbstractDocumentifier */
+    private $documentifier;
 
-    /**
-     * JsonSerializerDocumentifier constructor.
-     */
-    public function __construct()
+    public function testSanitizePhone()
     {
-        $this->serializer = BeanJsonSerializer::make();
+        $data1 = "(+44) 012321323";
+        $expe1 = "+44012321323";
+
+        $data2 = "(+45) 0123-213-23";
+        $expe2 = "+45012321323";
+
+        $data3 = "(ab) 0123 213 23";
+        $expe3 = "012321323";
+
+        self::assertEquals($expe1, $this->documentifier->sanitizePhone($data1));
+        self::assertEquals($expe2, $this->documentifier->sanitizePhone($data2));
+        self::assertEquals($expe3, $this->documentifier->sanitizePhone($data3));
     }
 
-    /** @inheritdoc */
-    public function documentify(\SugarBean $bean)
+    public function testFixPhone()
     {
-        $values = $this->serializer->toArray($bean);
-        $this->fixPhone($values);
-        unset($values['id']);
-        return $values;
+        $document = [
+            'name' => 'foo',
+            'phone' => [
+                'home' => '+44 077 099 885',
+                'work' => '+44-077-099-885',
+            ],
+        ];
+
+        $expected = [
+            'name' => 'foo',
+            'phone' => [
+                'home' => '+44077099885',
+                'work' => '+44077099885',
+            ],
+        ];
+
+        $this->documentifier->fixPhone($document);
+
+        self::assertEquals($expected, $document);
+    }
+
+    protected function setUp()
+    {
+        $this->documentifier = \Mockery::mock(AbstractDocumentifier::class)->makePartial();
+
+        return parent::setUp();
     }
 }

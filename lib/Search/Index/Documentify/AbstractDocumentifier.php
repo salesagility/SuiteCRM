@@ -54,8 +54,35 @@ abstract class AbstractDocumentifier
     /**
      * Converts a bean to a document-friendly associative array.
      *
-     * @param $bean \SugarBean
+     * @param \SugarBean $bean
+     *
      * @return array
      */
     public abstract function documentify(\SugarBean $bean);
+
+    /**
+     * Applies sanitizePhone() to all the phones in the serialisation array.
+     *
+     * @param $document
+     */
+    public function fixPhone(array &$document)
+    {
+        if (isset($document['phone'])) {
+            foreach ($document['phone'] as &$phone) {
+                $phone = self::sanitizePhone($phone);
+            }
+        }
+    }
+
+    /**
+     * Strips non-numeric characters from a phone number (apart from `+`), to improve search results.
+     *
+     * @param string $phone
+     *
+     * @return null|string
+     */
+    public function sanitizePhone($phone)
+    {
+        return $phone = preg_replace('/[^0-9+]/', '', $phone);
+    }
 }

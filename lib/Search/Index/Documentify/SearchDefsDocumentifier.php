@@ -80,6 +80,8 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
             ->setMappable($body)
             ->map();
 
+        $this->fixPhone($body);
+
         return $body;
     }
 
