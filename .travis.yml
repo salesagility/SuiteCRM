@@ -61,6 +61,11 @@ before_script:
   - phpenv config-add travis.php.ini
 
 script:
+  - sudo apt-get install dovecot-imapd
+  - sudo echo protocols = imap imaps >> /etc/dovecot/dovecot.conf
+  - sudo echo mail_location = mbox:~/mail:INBOX=/var/mail/%u >> /etc/dovecot/dovecot.conf
+  - sudo /etc/init.d/dovecot start
+
   # Run the silent installer or the wizard installer ?
   - echo "using install wizard"
   - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d
