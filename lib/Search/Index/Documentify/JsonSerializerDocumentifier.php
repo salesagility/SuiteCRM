@@ -71,6 +71,7 @@ class JsonSerializerDocumentifier extends AbstractDocumentifier
     {
         $values = $this->serializer->toArray($bean);
         $this->fixPhone($values);
+        $this->fixEmails($bean, $values);
         unset($values['id']);
         return $values;
     }

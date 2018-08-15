@@ -98,6 +98,7 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
             ->map();
 
         $this->fixPhone($body);
+        $this->fixEmails($bean, $body);
 
         return $body;
     }

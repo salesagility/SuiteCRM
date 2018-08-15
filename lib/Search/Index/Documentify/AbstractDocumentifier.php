@@ -39,6 +39,9 @@
 
 namespace SuiteCRM\Search\Index\Documentify;
 
+use SugarBean;
+use SugarEmailAddress;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -70,6 +73,27 @@ abstract class AbstractDocumentifier
         if (isset($document['phone'])) {
             foreach ($document['phone'] as &$phone) {
                 $phone = self::sanitizePhone($phone);
+            }
+        }
+    }
+
+    /**
+     * Attempts to fill the email field if it is empty.
+     *
+     * @param SugarBean $bean
+     * @param array     $document
+     */
+    public function fixEmails(SugarBean $bean, array &$document)
+    {
+        if (!isset($document['email']) && $bean->hasEmails()) {
+            /** @var SugarEmailAddress $emailManager */
+            if (isset($bean->emailAddress)) {
+                $emailManager = $bean->emailAddress;
+                $email = $emailManager->getPrimaryAddress($bean);
+
+                if (!empty($email)) {
+                    $document['email'][] = $email;
+                }
             }
         }
     }
