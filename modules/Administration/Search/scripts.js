@@ -37,17 +37,17 @@
  */
 
 $(function () {
-    var checkBox = $('#search-wrapper-enabled');
-    var select = $('#search-engine');
+    var checkBox = $("#search-wrapper-enabled");
+    var select = $("#search-engine");
+
+    function toggle() {
+        var enabled = checkBox.prop("checked");
+        select.prop("disabled", !enabled);
+    }
 
     checkBox.change(function () {
         toggle();
     });
-
-    function toggle() {
-        var enabled = checkBox.prop('checked');
-        select.prop('disabled', !enabled);
-    }
 
     toggle();
 });
