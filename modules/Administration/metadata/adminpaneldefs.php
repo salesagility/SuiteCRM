@@ -239,19 +239,19 @@ $admin_group_header['sagility'] = array(
 
 $admin_option_defs = [];
 
-$admin_option_defs['Administration']['global_search'] = [
-    'icon_SearchForm',
-    'LBL_GLOBAL_SEARCH_SETTINGS',
-    'LBL_GLOBAL_SEARCH_SETTINGS_DESC',
-    './index.php?module=Administration&action=GlobalSearchSettings',
-    'global-search'
-];
-
 $admin_option_defs['Administration']['search_wrapper'] = [
     'icon_SearchForm',
     'LBL_SEARCH_WRAPPER',
     'LBL_SEARCH_WRAPPER_DESC',
     './index.php?module=Administration&action=SearchSettings',
+    'global-search'
+];
+
+$admin_option_defs['Administration']['global_search'] = [
+    'icon_SearchForm',
+    'LBL_SEARCH_MODULES',
+    'LBL_SEARCH_MODULES_HELP',
+    './index.php?module=Administration&action=GlobalSearchSettings',
     'global-search'
 ];
 
