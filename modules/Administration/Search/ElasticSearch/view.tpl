@@ -36,7 +36,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
 <h1>{$MOD.LBL_ELASTIC_SEARCH_SETTINGS}</h1>
-<p class="text-muted">{$MOD.LBL_ELASTIC_SEARCH_SETTINGS_DESC}</p>
 <p class="text-muted">{$MOD.LBL_ELASTIC_SEARCH_SETTINGS_HELP}</p>
 
 <br/>
