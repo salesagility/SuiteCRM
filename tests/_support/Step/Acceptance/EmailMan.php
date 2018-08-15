@@ -29,7 +29,6 @@ class EmailMan extends \AcceptanceTester
         $I->click('#mass_Email_config');
 
         $I->fillField('#notify_fromname', $faker->name());
-        
         $I->fillField('#notify_fromaddress', $faker->email);
         $I->click('#gmail-button');
 
