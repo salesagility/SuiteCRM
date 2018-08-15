@@ -330,7 +330,7 @@ class UserViewHelper
         }
         if ($this->usertype=='GROUP' || $this->usertype=='PORTAL_ONLY') {
             $this->ss->assign('HIDE_FOR_GROUP_AND_PORTAL', 'none');
-            $this->ss->assign('HIDE_CHANGE_USERTYPE','none');
+            $this->ss->assign('HIDE_CHANGE_USERTYPE', 'none');
             $this->ss->assign('HIDE_IF_GAUTH_UNCONFIGURED', 'none');
         } else {
             $this->ss->assign('HIDE_FOR_NORMAL_AND_ADMIN','none');
