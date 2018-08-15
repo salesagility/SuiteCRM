@@ -748,7 +748,6 @@ $mod_strings = array(
     'LBL_SAML_LOGIN_URL_DESC' => 'Enter Login URL',
     'LBL_SAML_LOGOUT_URL_DESC' => 'Enter Logout URL',
 
-    'LBL_GLOBAL_SEARCH_SETTINGS_TITLE' => 'Select the module(s) that users will be able to search against using the Global Search.',
     'LBL_SELECT_MODULES' => 'Advanced',
     'LBL_SELECT_MODULES_TITLE' => 'Drag and drop to select modules and to change the display order. Perform a search to apply the changes.',
     'LBL_LANGUAGE_PACKS' => 'Language Packs' /*for 508 compliance fix*/,
@@ -958,7 +957,7 @@ $mod_strings = array(
     'LBL_SEARCH_ENGINE_TOOLTIP' => 'Select a search engine for the Global Search.',
 
     'LBL_SEARCH_MODULES' => 'Search Modules',
-    'LBL_SEARCH_MODULES_HELP' => 'Configure the available modules to search for the system',
+    'LBL_SEARCH_MODULES_HELP' => 'Select the module(s) that users will be able to search against using the Global Search.',
 
     // Search Engines Translations
     'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',

@@ -41,11 +41,11 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td colspan="100">
-        <h2> {$moduleTitle}</h2>
+        <h2> {$MOD.LBL_SEARCH_MODULES}</h2>
     </td>
 </tr>
 <tr>
-    <td colspan="100">{$MOD.LBL_GLOBAL_SEARCH_SETTINGS_TITLE}</td>
+    <td colspan="100">{$MOD.LBL_SEARCH_MODULES_HELP}</td>
 </tr>
 <tr>
     <td>
