@@ -48,5 +48,18 @@ class UserWizardCest
         $I->seeValidSystemEnvironment();
         $I->configureInstaller($webDriverHelper);
         $I->waitForInstallerToFinish();
+        
+        // ---------- Email Settings ---------------
+        
+        $I->wantTo('Save an outgoing email configuration');
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to email configuration and save settings
+        $I->loginAsAdmin();
+        $emailMan->createEmailSettings();
+
+        $I->dontSee('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');
     }
 }

@@ -65,6 +65,8 @@ script:
   - echo "using install wizard"
   - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d
   - ./build/push_output.sh
+  
+  
 
   # set the log level to error
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
