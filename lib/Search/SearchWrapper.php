@@ -99,6 +99,10 @@ class SearchWrapper
             throw new SearchEngineNotFoundException('$engineName should either be a string or a SearchEngine');
         }
 
+        if (!preg_match("/^[a-zA-Z0-9_]*$/", $engineName)) {
+            throw new SearchEngineNotFoundException("'$engineName' is not a valid class name. Only letters, digits and underscores are allowed.");
+        }
+
         $filename = isset(self::$engines[$engineName])
             ? self::$engines[$engineName]
             : self::$customEnginePath . $engineName . '.php';
