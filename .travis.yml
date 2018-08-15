@@ -25,8 +25,6 @@ env:
   - INSTANCE_URL=http://localhost/ DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1
 
 before_install:
-  sudo ./travis_dovecot.sh
-  
   # Install chrome driver#
   - whereis google-chrome-stable
   - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
@@ -63,7 +61,7 @@ before_script:
   - phpenv config-add travis.php.ini
 
 script:
-  # Run the silent installer or the wizard installer ?
+  # Run the wizard installer ?
   - echo "using install wizard"
   - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d
   - ./build/push_output.sh
@@ -84,7 +82,6 @@ after_script:
   - cat suitecrm.log
   - sudo cat /var/log/apache2/error.log
   - echo $TRAVIS_COMMIT_RANGE
-  - sudo cat /var/log/dovecot.log
 
 branches:
   only:
