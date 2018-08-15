@@ -36,7 +36,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
 <h1>{sugar_translate label="LBL_SEARCH_HEADER"}</h1>
-<p class="text-muted">{sugar_translate label="LBL_SEARCH_HEADER_DESC"}</p>
 
 <form id="SearchSettings"
       name="ConfigureSettings"
@@ -45,64 +44,67 @@
       method="POST"
       action="index.php?module=Administration&action=SearchSettings&do=Save">
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">{sugar_translate label="LBL_SEARCH_CONTROLLER"}</div>
-                <div class="panel-body tab-content">
-                    <div class="form-group">
-                        <label for="search-controller">{sugar_translate label="LBL_SEARCH_CONTROLLER"}</label>
-                        {html_options
-                        options=$APP_LIST.search_controllers
-                        selected=$selectedController
-                        id="search-controller"
-                        name="search-controller"
-                        class="form-control"
-                        }
+    <table class="edit view" width="100%" cellspacing="1" cellpadding="0" border="0">
+        <tr>
+            <th scope="row" colspan="4" align="left">
+                <h4>Search Interface</h4>
+            </th>
+        </tr>
+
+        <tr>
+            {*search controller*}
+            <td>
+                <div class="td-container">
+                    <div>
+                        <label for="search-wrapper-enabled">{sugar_translate label="LBL_SEARCH_CONTROLLER"}</label>
+                        {sugar_help text=$MOD.LBL_SEARCH_CONTROLLER_TOOLTIP}
+                    </div>
+                    <div>
                         <small class="form-text text-muted">{sugar_translate label="LBL_SEARCH_CONTROLLER_HELP"}</small>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">{sugar_translate label="LBL_SEARCH_ENGINE"}</div>
-                <div class="panel-body tab-content">
-                    <div class="form-group">
+            </td>
+            <td scope="row" style="vertical-align: middle">
+                {*If the checkbox is disabled the hidden value will be ridden instead1*}
+                <input type="hidden" name="search-controller" value="UnifiedSearch">
+                <input type="checkbox" name="search-controller"
+                       id="search-wrapper-enabled"
+                       value="Search"
+                       {if $selectedController eq 'Search'}checked="checked"{/if}
+            </td>
+        </tr>
+
+        <tr>
+            {*search engine*}
+            <td>
+                <div class="td-container">
+                    <div>
                         <label for="search-engine">{sugar_translate label="LBL_SEARCH_ENGINE"}</label>
-                        {html_options
-                        options=$engines
-                        selected=$selectedEngine
-                        id="search-engine"
-                        name="search-engine"
-                        class="form-control"
-                        }
+                        {sugar_help text=$MOD.LBL_SEARCH_ENGINE_TOOLTIP}
+                    </div>
+                    <div>
                         <small class="form-text text-muted">{sugar_translate label="LBL_SEARCH_ENGINE_HELP"}</small>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            </td>
+            <td scope="row" style="vertical-align: middle">
+                {html_options
+                options=$engines
+                selected=$selectedEngine
+                id="search-engine"
+                name="search-engine"
+                class="form-control"
+                }
+            </td>
+        </tr>
+    </table>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">{sugar_translate label="LBL_SEARCH_MODULES"}</div>
-                <div class="panel-body tab-content">
-                    <label>{sugar_translate label="LBL_SEARCH_MODULES"}</label>
-                    <p>
-                        <small class="form-text text-muted">{sugar_translate label="LBL_SEARCH_MODULES_HELP"}</small>
-                    </p>
-                    {modules_selector name='search-modules' selectedModules=$selectedModules}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div>
+    <div class="settings-buttons">
         {$BUTTONS}
     </div>
 
     {$JAVASCRIPT}
+
+    <script src="modules/Administration/Search/scripts.js"></script>
 
 </form>

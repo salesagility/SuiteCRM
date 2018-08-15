@@ -1,5 +1,4 @@
-<?php
-/**
+/*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,37 +36,18 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Modules\Administration\Search;
+$(function () {
+    var checkBox = $('#search-wrapper-enabled');
+    var select = $('#search-engine');
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+    checkBox.change(function () {
+        toggle();
+    });
 
-use Configurator;
-
-require_once __DIR__ . '/../../Configurator/Configurator.php';
-
-class Controller extends MVC\Controller
-{
-    public function __construct()
-    {
-        parent::__construct(new View());
+    function toggle() {
+        var enabled = checkBox.prop('checked');
+        select.prop('disabled', !enabled);
     }
 
-    public function doSave()
-    {
-        $input = INPUT_POST;
-
-        $searchController = filter_input($input, 'search-controller', FILTER_SANITIZE_STRING);
-        $searchEngine = filter_input($input, 'search-engine', FILTER_SANITIZE_STRING);
-
-        $cfg = new Configurator();
-
-        $cfg->config['search']['controller'] = $searchController;
-        $cfg->config['search']['defaultEngine'] = $searchEngine;
-
-        $cfg->saveConfig();
-
-        $this->redirect('index.php?module=Administration&action=index');
-    }
-}
+    toggle();
+});
