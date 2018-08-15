@@ -1,7 +1,4 @@
 <?php
-
-use SuiteCRM\Utility\ArrayMapper;
-
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,72 +36,57 @@ use SuiteCRM\Utility\ArrayMapper;
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-class ArrayMapperTest extends \Codeception\Test\Unit
-{
-    public function test()
-    {
-        $array = [
-            'object' => (object)[
-                'hey' => 'there',
-            ],
-            'array' => [
-                'foo',
-                'bar',
-            ],
-            'address_city' => 'city',
-            'address_street' => 'street',
-            'email1' => 'hello@email1.com',
-            'email2' => 'hello@email2.com',
-            'other_field' => 'something',
-            'phone' => [
-                'phone_fax' => '123',
-                'phone_home' => '789',
-            ],
-            'test' => 'deep',
-            'empty' => null,
-        ];
 
-        $mappings = [
-            'address_city' => 'address.city',
-            'address_street' => 'address.street',
-            'email1' => '+email',
-            'email2' => '+email',
-            'phone.phone_fax' => 'phone.fax',
-            'phone.phone_home' => 'phone.home',
-            'test' => 'very.very',
+use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
+
+class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
+{
+    /** @var AbstractDocumentifier */
+    private $documentifier;
+
+    public function testSanitizePhone()
+    {
+        $data1 = "(+44) 012321323";
+        $expe1 = "+44012321323";
+
+        $data2 = "(+45) 0123-213-23";
+        $expe2 = "+45012321323";
+
+        $data3 = "(ab) 0123 213 23";
+        $expe3 = "012321323";
+
+        self::assertEquals($expe1, $this->documentifier->sanitizePhone($data1));
+        self::assertEquals($expe2, $this->documentifier->sanitizePhone($data2));
+        self::assertEquals($expe3, $this->documentifier->sanitizePhone($data3));
+    }
+
+    public function testFixPhone()
+    {
+        $document = [
+            'name' => 'foo',
+            'phone' => [
+                'home' => '+44 077 099 885',
+                'work' => '+44-077-099-885',
+            ],
         ];
 
         $expected = [
-            'object' => [
-                'hey' => 'there',
-            ],
-            'address' => [
-                'city' => 'city',
-                'street' => 'street',
-            ],
-            'email' => [
-                'hello@email1.com',
-                'hello@email2.com',
-            ],
+            'name' => 'foo',
             'phone' => [
-                'fax' => '123',
-                'home' => '789',
-            ],
-            'very' => [
-                'very' => 'deep',
-            ],
-            'other_field' => 'something',
-            'array' => [
-                'foo',
-                'bar',
+                'home' => '+44077099885',
+                'work' => '+44077099885',
             ],
         ];
 
-        $actual = ArrayMapper::make()
-            ->setMappable($array)
-            ->setMappings($mappings)
-            ->map();
+        $this->documentifier->fixPhone($document);
 
-        self::assertEquals($expected, $actual);
+        self::assertEquals($expected, $document);
+    }
+
+    public function setUp()
+    {
+        $this->documentifier = \Mockery::mock(AbstractDocumentifier::class)->makePartial();
+
+        return parent::setUp();
     }
 }

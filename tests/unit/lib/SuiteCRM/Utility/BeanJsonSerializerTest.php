@@ -43,22 +43,6 @@ use SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
 class BeanJsonSerializerTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
 
-    public function testSanitizePhone()
-    {
-        $data1 = "(+44) 012321323";
-        $expe1 = "+44012321323";
-
-        $data2 = "(+45) 0123-213-23";
-        $expe2 = "+45012321323";
-
-        $data3 = "(ab) 0123 213 23";
-        $expe3 = "012321323";
-
-        self::assertEquals($expe1, BeanJsonSerializer::make()->sanitizePhone($data1));
-        self::assertEquals($expe2, BeanJsonSerializer::make()->sanitizePhone($data2));
-        self::assertEquals($expe3, BeanJsonSerializer::make()->sanitizePhone($data3));
-    }
-
     public function testToArrayContact()
     {
         $mockBean = new BeanMock(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');

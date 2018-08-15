@@ -43,7 +43,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use Exception;
+use LoggerManager;
+use Monolog\Logger;
 use ParserSearchFields;
+use SuiteCRM\Log\CliLoggerHandler;
+use SuiteCRM\Log\SugarLoggerHandler;
+use SuiteCRM\Utility\ArrayMapper;
 
 require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
 
@@ -56,33 +62,43 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
 {
     /** @var array a cache with fields definition */
     protected $fields = [];
+    /** @var ArrayMapper */
+    protected $mapper = null;
+    /** @var Logger */
+    protected $logger;
+
+    /**
+     * SearchDefsDocumentifier constructor.
+     */
+    public function __construct()
+    {
+        try {
+            $this->logger = new Logger('SearchDefsDocumentifier', [
+                new CliLoggerHandler(),
+                new SugarLoggerHandler(),
+            ]);
+        } catch (Exception $exception) {
+            LoggerManager::getLogger()->error('Failed to start Monolog loggers');
+        }
+
+        $this->mapper = ArrayMapper::make()
+            ->loadYaml(__DIR__ . '/SearchDefsDocumentifier.yml')
+            ->setHideEmptyValues(true);
+    }
 
     /** @inheritdoc */
     public function documentify(\SugarBean $bean, ParserSearchFields $parser = null)
     {
-        $fields = $this->getFieldsToIndexCached($bean, $parser);
+        $fields = &$this->getFieldsToIndexCached($bean, $parser);
 
-        $body = [];
+        $body = &$this->parseBeans($bean, $fields);
 
-        foreach ($fields as $key => $value) {
-            if (is_array($value)) {
-                foreach ($value as $subvalue) {
-                    if (property_exists($bean, $subvalue) && !empty($bean->$subvalue)) {
-                        $body[$key][$subvalue] = $this->cleanValue($bean->$subvalue);
-                    }
-                }
-                continue;
-            }
+        $body = $this->mapper
+            ->setMappable($body)
+            ->map();
 
-            if (property_exists($bean, $value) && !empty($bean->$value)) {
-                $body[$value] = $this->cleanValue($bean->$value);
-            }
-        }
-
-        // TODO fix addresses and phone nesting
-        // Maybe create mappings from a field to a target path in the final document?
-
-        $this->sanitizeName($body);
+        $this->fixPhone($body);
+        $this->fixEmails($bean, $body);
 
         return $body;
     }
@@ -92,8 +108,9 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
      *
      * The mapping is cached in the class property `$fields`.
      *
-     * @param $module string
+     * @param string                  $module
      * @param ParserSearchFields|null $parser
+     *
      * @return string[]
      */
     protected function getFieldsToIndex($module, ParserSearchFields $parser = null)
@@ -106,14 +123,22 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
 
         $parsedFields = [];
 
+        $badKeys = ['favorites_only', 'open_only', 'do_not_call', 'email', 'optinprimary'];
+        $goodOperators = ['=', 'in'];
+
         foreach ($fields as $key => $field) {
+            if (in_array($key, $badKeys)) {
+                continue;
+            }
+
             if (isset($field['query_type']) && $field['query_type'] != 'default') {
-                // echo "[$module]->$key is not a supported query type!", PHP_EOL;
+                $this->logger->warn("[$module]->$key is not a supported query type [{$field['query_type']}]");
                 continue;
             };
 
-            if (!empty($field['operator'])) {
-                // echo "[$module]->$key has an operator!", PHP_EOL;
+            if (!empty($field['operator']) && !in_array($field['operator'], $goodOperators)) {
+                $this->logger->warn("[$module]->$key has an unsupported operator [{$field['operator']}]");
+                $this->logger->warn("field:\n" . json_encode($field, JSON_PRETTY_PRINT));
                 continue;
             }
 
@@ -131,28 +156,20 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
             }
         }
 
-        return $parsedFields;
-    }
+        // injects the standard metadata fields as they are not present in the searchdefs
+        $parsedFields = array_merge($parsedFields, $this->getMetaData());
 
-    /**
-     * Converts a string to the proper document-friendly encoding and format.
-     *
-     * Most notably, converts HTML entities to UTF-8 characters.
-     *
-     * @param $string string
-     * @return null|string|string[]
-     */
-    protected function cleanValue($string)
-    {
-        return mb_convert_encoding($string, 'UTF-8', 'HTML-ENTITIES');
+        return $parsedFields;
     }
 
     /**
      * Cached version of getFieldsToIndex().
      *
      * @see getFieldsToIndex
-     * @param \SugarBean $bean
+     *
+     * @param \SugarBean         $bean
      * @param ParserSearchFields $parser
+     *
      * @return array
      */
     private function &getFieldsToIndexCached(\SugarBean $bean, ParserSearchFields $parser = null)
@@ -167,15 +184,30 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
     }
 
     /**
-     * Standardize the behaviour of the name field between the two Documentifiers.
+     * @param \SugarBean $bean
+     * @param array      $fields
      *
-     * @param $body
+     * @return mixed
      */
-    private function sanitizeName(&$body)
+    private function &parseBeans(\SugarBean $bean, array &$fields)
     {
-        if (isset($body['name'])) {
-            $name = $body['name'];
-            $body['name'] = ['name' => $name];
+        $body = [];
+
+        foreach ($fields as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $subvalue) {
+                    if (property_exists($bean, $subvalue) && !empty($bean->$subvalue)) {
+                        $body[$key][$subvalue] = $bean->$subvalue;
+                    }
+                }
+                continue;
+            }
+
+            if (property_exists($bean, $value) && !empty($bean->$value)) {
+                $body[$value] = $bean->$value;
+            }
         }
+
+        return $body;
     }
 }

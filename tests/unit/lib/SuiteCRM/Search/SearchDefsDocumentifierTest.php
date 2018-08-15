@@ -75,20 +75,19 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
         $contact->phone_fax = '132';
 
         $expected = [
-            'first_name' => 'Foo',
-            'last_name' => 'Bar',
-            'search_name' =>
-                [
-                    'first_name' => 'Foo',
-                    'last_name' => 'Bar',
-                ],
+            'name' => [
+                'first' => 'Foo',
+                'last' => 'Bar',
+            ],
             'phone' =>
                 [
-                    'phone_fax' => '132',
+                    'fax' => '132',
                 ],
-            'address_city' =>
+            'address' =>
                 [
-                    'alt_address_city' => 'FooCity',
+                    'alt' => [
+                        'city' => 'FooCity',
+                    ],
                 ],
         ];
 
@@ -118,21 +117,16 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
                     'name' => 'SuperDogs Ldt.',
                 ],
             'annual_revenue' => '123 (USD)',
-            'address_city' =>
-                [
-                    'billing_address_city' => 'FooCity',
+            'address' => [
+                'billing' => [
+                    'city' => 'FooCity',
+                    'postalcode' => 'FooPostalCode',
+                    'country' => 'FooCountry',
                 ],
-            'address_postalcode' =>
-                [
-                    'billing_address_postalcode' => 'FooPostalCode',
-                ],
-            'address_country' =>
-                [
-                    'billing_address_country' => 'FooCountry',
-                ],
+            ],
             'phone' =>
                 [
-                    'phone_office' => '123456789',
+                    'office' => '123456789',
                 ],
         ];
 
@@ -376,7 +370,6 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
                     'phone_fax',
                     'assistant_phone',
                 ],
-            'assistant',
             'address_street' =>
                 [
                     'primary_address_street',
@@ -406,12 +399,23 @@ class SearchDefsDocumentifierTest extends SearchTestAbstract
                 [
                     'assigned_user_id',
                 ],
-            'assigned_user_id',
+            'lead_source',
             'account_id' =>
                 [
                     'accounts.id',
                 ],
+            'assistant',
+            'assigned_user_id',
             'campaign_name',
+            'date_entered',
+            'created_by',
+            'date_modified',
+            'modified_user_id',
+            'assigned_user_id',
+            'modified_by_name',
+            'created_by_name',
+            'assigned_user_name',
+            'assigned_user_name_owner',
         ];
     }
 

@@ -258,43 +258,44 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         $indexer->setDocumentifier(new SearchDefsDocumentifier());
 
         $expected = [
-            'first_name' => 'Cindy',
-            'last_name' => 'Espana',
-            'search_name' =>
-                [
-                    'first_name' => 'Cindy',
-                    'last_name' => 'Espana',
-                ],
+            'name' => [
+                'first' => 'Cindy',
+                'last' => 'Espana',
+            ],
             'phone' =>
                 [
-                    'phone_mobile' => '(978) 836-3300',
-                    'phone_work' => '(711) 112-3512',
+                    'mobile' => '9788363300',
+                    'work' => '7111123512',
                 ],
-            'address_street' =>
-                [
-                    'primary_address_street' => '345 Sugar Blvd.',
+            'address' => [
+                'primary' => [
+                    'street' => '345 Sugar Blvd.',
+                    'city' => 'Salt Lake City',
+                    'state' => 'CA',
+                    'postalcode' => '58821',
+                    'country' => 'USA',
                 ],
-            'address_city' =>
-                [
-                    'primary_address_city' => 'Salt Lake City',
-                ],
-            'address_state' =>
-                [
-                    'primary_address_state' => 'CA',
-                ],
-            'address_postalcode' =>
-                [
-                    'primary_address_postalcode' => '58821',
-                ],
-            'address_country' =>
-                [
-                    'primary_address_country' => 'USA',
-                ],
-            'current_user_only' =>
-                [
-                    'assigned_user_id' => 'seed_max_id',
-                ],
-            'assigned_user_id' => 'seed_max_id',
+            ],
+            'meta' => [
+                'created' =>
+                    [
+                        'date' => '2018-06-12 11:01:34',
+                        'user_id' => '1',
+                        'user_name' => 'Administrator',
+                    ],
+                'modified' =>
+                    [
+                        'date' => '2018-06-12 11:01:34',
+                        'user_id' => '1',
+                        'user_name' => 'Administrator',
+                    ],
+                'assigned' =>
+                    [
+                        'user_id' => 'seed_max_id',
+                        'user_name' => 'Max Jensen',
+                    ],
+            ],
+            'lead_source' => 'Web Site',
         ];
 
         $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);

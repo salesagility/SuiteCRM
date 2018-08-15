@@ -914,14 +914,14 @@ $mod_strings = array(
 
     // SearchWrapper
     'LBL_SEARCH_HEADER' => 'Search',
-    'LBL_SEARCH_HEADER_DESC' => 'Manage your search preferences.',
-    'LBL_SEARCH_WRAPPER' => 'Search (New)',
-    'LBL_SEARCH_WRAPPER_DESC' => 'Manage your search preferences.',
+    'LBL_SEARCH_HEADER_DESC' => 'Manage your search preferences',
+    'LBL_SEARCH_WRAPPER' => 'Search Settings',
+    'LBL_SEARCH_WRAPPER_DESC' => 'Configure the global search preferences for the system',
 
     // Elasticsearch Settings
     'LBL_ELASTIC_SEARCH' => 'Elasticsearch',
     'LBL_ELASTIC_SEARCH_SETTINGS' => 'Elasticsearch',
-    'LBL_ELASTIC_SEARCH_SETTINGS_DESC' => 'Configure Elasticsearch preferences.',
+    'LBL_ELASTIC_SEARCH_SETTINGS_DESC' => 'Configure Elasticsearch preferences',
     'LBL_ELASTIC_SEARCH_SETTINGS_HELP' => 'Elasticsearch requires an external server set up to work. Read the <a href="https://docs.suitecrm.com/admin/administration-panel/search/elasticsearch/">documentation</a> to learn how.',
     'LBL_ELASTIC_SEARCH_GENERAL' => 'General',
     'LBL_ELASTIC_SEARCH_ENABLE' => 'Enable Elasticsearch.',
@@ -940,7 +940,7 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_SCHEDULERS_NOT_FOUND' => 'No schedulers found. Consider creating one.',
     'LBL_ELASTIC_SEARCH_SCHEDULERS_DESC' => 'The ElasticSearch module uses schedulers to keep the database and the indexing engine synchronised.',
     'LBL_ELASTIC_SEARCH_INDEX' => 'Index',
-    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_HELP' => 'Schedule an indexing.',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_HELP' => 'Schedule an indexing',
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL' => 'Schedule full indexing',
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART' => 'Schedule partial indexing',
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_SUCCESS' => 'A full indexing has been scheduled and will start in the next 60 seconds. Search results might be inconsistent until the process is complete.',
@@ -950,13 +950,13 @@ $mod_strings = array(
 
     // SearchWrapper Settings
     'LBL_SEARCH_CONTROLLER' => 'Search Controller',
-    'LBL_SEARCH_CONTROLLER_HELP' => 'Set up the controller handling the search from the top search bar.',
+    'LBL_SEARCH_CONTROLLER_HELP' => 'Set up the controller handling the search from the top search bar',
 
     'LBL_SEARCH_ENGINE' => 'Search Engine',
-    'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search wrapper.',
+    'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search wrapper',
 
     'LBL_SEARCH_MODULES' => 'Search Modules',
-    'LBL_SEARCH_MODULES_HELP' => 'Choose which modules will be included in the search.',
+    'LBL_SEARCH_MODULES_HELP' => 'Configure the available modules to search for the system',
 
     'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
     'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine'

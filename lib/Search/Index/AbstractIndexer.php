@@ -100,7 +100,7 @@ abstract class AbstractIndexer
             $this->logger->error($exception);
         }
 
-        $this->setModulesToIndex(SearchWrapper::getModules());
+        $this->modulesToIndex = SearchWrapper::getModules();
     }
 
     /**
@@ -281,6 +281,10 @@ abstract class AbstractIndexer
     {
         if ($modules === null) {
             throw new InvalidArgumentException('Modules cannot be `null`.');
+        }
+
+        if (isset($this->logger)) {
+            $this->logger->debug('Modules have been set to ' . json_encode($modules));
         }
 
         $this->modulesToIndex = $modules;

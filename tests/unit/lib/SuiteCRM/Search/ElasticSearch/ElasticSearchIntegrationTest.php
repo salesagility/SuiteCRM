@@ -41,8 +41,8 @@
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
-use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\SearchWrapper;
 use SuiteCRM\StateSaver;
 
 /** @noinspection PhpIncludeInspection */
@@ -72,6 +72,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $GLOBALS['sugar_config']['search']['ElasticSearch']['enabled'] = true;
         $this->searchEngine->setIndex('test');
         $this->indexer->setIndex('test');
+        $this->indexer->setModulesToIndex(['Contacts']);
         $this->indexer->setDifferentialIndexing(false);
         $this->indexer->removeIndex();
     }
@@ -171,9 +172,8 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         // lets test a more complex query
         // Search by city
 
-        $query = $this->indexer->getDocumentifierName() == "SearchDefsDocumentifier"
-            ? SearchQuery::fromString("address_city.primary_address_city:$city", 1)
-            : SearchQuery::fromString("address.primary.city:$city", 1);
+        $query = SearchQuery::fromString("address.primary.city:$city", 1);
+
         $results = SearchWrapper::search(
             $this->searchEngine,
             $query

@@ -239,11 +239,6 @@ class BeanJsonSerializer
             //endregion
 
             //region name
-            if ($key === 'name') {
-                self::fixName($bean, $prettyBean);
-                continue;
-            }
-
             if ($key === 'first_name') {
                 $prettyBean['name']['first'] = $value;
                 continue;
@@ -320,7 +315,7 @@ class BeanJsonSerializer
 
             //region phone
             if (preg_match('/^phone\_([a-z_]+)$/', $key, $matches)) {
-                $prettyBean['phone'][$matches[1]] = self::sanitizePhone($value);
+                $prettyBean['phone'][$matches[1]] = $value;
                 continue;
             }
             //endregion
@@ -339,6 +334,8 @@ class BeanJsonSerializer
 
             $prettyBean[$key] = $value;
         }
+
+        self::fixName($bean, $prettyBean);
 
         return $prettyBean;
     }
@@ -369,9 +366,6 @@ class BeanJsonSerializer
 
         $prettyBean = $this->mapper->map($keys);
 
-        self::fixPhone($prettyBean);
-        self::fixName($bean, $prettyBean);
-
         return $prettyBean;
     }
 
@@ -394,31 +388,6 @@ class BeanJsonSerializer
         } else {
             $prettyBean['name'] = ['name' => $bean->name];
         }
-    }
-
-    /**
-     * Applies sanitizePhone() to all the phones in the serialisation array.
-     *
-     * @param $prettyBean
-     */
-    private function fixPhone(&$prettyBean)
-    {
-        if (isset($prettyBean['phone'])) {
-            foreach ($prettyBean['phone'] as &$phone) {
-                $phone = self::sanitizePhone($phone);
-            }
-        }
-    }
-
-    /**
-     * Strips non-numeric characters from a phone number (apart from `+`), to improve search results.
-     *
-     * @param $phone
-     * @return null|string|string[]
-     */
-    public function sanitizePhone($phone)
-    {
-        return $phone = preg_replace('/[^0-9+]/', '', $phone);
     }
 
     /**

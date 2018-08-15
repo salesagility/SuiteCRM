@@ -92,8 +92,8 @@ trait IndexingStatisticsTrait
     /**
      * Shows statistics for the past run.
      *
-     * @param $end float
-     * @param $start float
+     * @param float $end
+     * @param float $start
      */
     private function statistics($end, $start)
     {
@@ -107,12 +107,14 @@ trait IndexingStatisticsTrait
         }
 
         $elapsed = ($end - $start); // seconds
-        $estimation = $elapsed / $this->indexedRecordsCount * 200000;
-        CarbonInterval::setLocale('en');
-        $estimationString = CarbonInterval::seconds(intval(round($estimation)))->cascade()->forHumans(true);
         $this->logger->debug(sprintf('%d modules, %d records and %d fields indexed in %01.3F s', $this->indexedModulesCount, $this->indexedRecordsCount, $this->indexedFieldsCount, $elapsed));
 
         if ($this->indexedRecordsCount > 100) {
+            $estimation = $elapsed / $this->indexedRecordsCount * 200000;
+            CarbonInterval::setLocale('en');
+            $estimationString = CarbonInterval::seconds(intval(round($estimation)))->cascade()->forHumans(true);
+            $fieldsSpeed = $this->indexedFieldsCount / $elapsed;
+            $this->logger->debug(sprintf('Average speed is %01.3F fields/s', $fieldsSpeed));
             $this->logger->debug("It would take ~$estimationString for 200,000 records, assuming a linear expansion");
         }
     }

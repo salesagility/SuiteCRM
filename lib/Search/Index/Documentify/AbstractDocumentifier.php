@@ -39,6 +39,9 @@
 
 namespace SuiteCRM\Search\Index\Documentify;
 
+use SugarBean;
+use SugarEmailAddress;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -54,8 +57,76 @@ abstract class AbstractDocumentifier
     /**
      * Converts a bean to a document-friendly associative array.
      *
-     * @param $bean \SugarBean
+     * @param \SugarBean $bean
+     *
      * @return array
      */
     public abstract function documentify(\SugarBean $bean);
+
+    /**
+     * Applies sanitizePhone() to all the phones in the serialisation array.
+     *
+     * @param $document
+     */
+    public function fixPhone(array &$document)
+    {
+        if (isset($document['phone'])) {
+            foreach ($document['phone'] as &$phone) {
+                $phone = self::sanitizePhone($phone);
+            }
+        }
+    }
+
+    /**
+     * Attempts to fill the email field if it is empty.
+     *
+     * @param SugarBean $bean
+     * @param array     $document
+     */
+    public function fixEmails(SugarBean $bean, array &$document)
+    {
+        if (!isset($document['email']) && $bean->hasEmails()) {
+            /** @var SugarEmailAddress $emailManager */
+            if (isset($bean->emailAddress)) {
+                $emailManager = $bean->emailAddress;
+                $email = $emailManager->getPrimaryAddress($bean);
+
+                if (!empty($email)) {
+                    $document['email'][] = $email;
+                }
+            }
+        }
+    }
+
+    /**
+     * Strips non-numeric characters from a phone number (apart from `+`), to improve search results.
+     *
+     * @param string $phone
+     *
+     * @return null|string
+     */
+    public function sanitizePhone($phone)
+    {
+        return $phone = preg_replace('/[^0-9+]/', '', $phone);
+    }
+
+    /**
+     * Returns the default metadata, that are always present in a bean.
+     *
+     * @return string[]
+     */
+    protected function getMetaData()
+    {
+        return [
+            'date_entered',
+            'created_by',
+            'date_modified',
+            'modified_user_id',
+            'assigned_user_id',
+            'modified_by_name',
+            'created_by_name',
+            'assigned_user_name',
+            'assigned_user_name_owner',
+        ];
+    }
 }

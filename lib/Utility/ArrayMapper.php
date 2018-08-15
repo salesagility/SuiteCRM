@@ -39,6 +39,9 @@
 
 namespace SuiteCRM\Utility;
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 use InvalidArgumentException;
 use Symfony\Component\Yaml\Yaml;
@@ -99,7 +102,7 @@ class ArrayMapper
      *
      * @return ArrayMapper fluent setter
      */
-    public function setMappable($mappable)
+    public function setMappable(&$mappable)
     {
         if (!is_object($mappable) && !is_array($mappable)) {
             throw new InvalidArgumentException('Argument must be either a an array or an object');
@@ -257,7 +260,7 @@ class ArrayMapper
     private function mapObject($obj, array $keys = null)
     {
         if ($keys === null) {
-            $keys = get_object_vars($obj);
+            $keys = array_keys(get_object_vars($obj));
         }
 
         foreach ($keys as $key) {
@@ -324,7 +327,6 @@ class ArrayMapper
         }
 
         return false;
-
     }
 
     /**
