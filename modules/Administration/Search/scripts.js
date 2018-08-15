@@ -1,5 +1,4 @@
-<?php
-/**
+/*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,27 +36,18 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Modules\Administration\Search;
+$(function () {
+    var checkBox = $('#search-wrapper-enabled');
+    var select = $('#search-engine');
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+    checkBox.change(function () {
+        toggle();
+    });
 
-use SuiteCRM\Search\SearchWrapper;
-
-class View extends MVC\View
-{
-    public function __construct()
-    {
-        parent::__construct(__DIR__ . '/view.tpl');
+    function toggle() {
+        var enabled = checkBox.prop('checked');
+        select.prop('disabled', !enabled);
     }
 
-    public function preDisplay()
-    {
-        parent::preDisplay();
-
-        $this->smarty->assign('selectedController', SearchWrapper::getController());
-        $this->smarty->assign('selectedEngine', SearchWrapper::getDefaultEngine());
-        $this->smarty->assign('engines', $this->getEngines());
-    }
-}
+    toggle();
+});

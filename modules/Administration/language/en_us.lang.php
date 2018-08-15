@@ -748,7 +748,6 @@ $mod_strings = array(
     'LBL_SAML_LOGIN_URL_DESC' => 'Enter Login URL',
     'LBL_SAML_LOGOUT_URL_DESC' => 'Enter Logout URL',
 
-    'LBL_GLOBAL_SEARCH_SETTINGS_TITLE' => 'Select the module(s) that users will be able to search against using the Global Search.',
     'LBL_SELECT_MODULES' => 'Advanced',
     'LBL_SELECT_MODULES_TITLE' => 'Drag and drop to select modules and to change the display order. Perform a search to apply the changes.',
     'LBL_LANGUAGE_PACKS' => 'Language Packs' /*for 508 compliance fix*/,
@@ -913,7 +912,7 @@ $mod_strings = array(
     'LBL_PWDSEC_CHARS' => 'Characters',
 
     // SearchWrapper
-    'LBL_SEARCH_HEADER' => 'Search',
+    'LBL_SEARCH_HEADER' => 'Search Settings',
     'LBL_SEARCH_HEADER_DESC' => 'Manage your search preferences',
     'LBL_SEARCH_WRAPPER' => 'Search Settings',
     'LBL_SEARCH_WRAPPER_DESC' => 'Configure the global search preferences for the system',
@@ -949,15 +948,18 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_FAIL' => 'Failed to start partial index.',
 
     // SearchWrapper Settings
-    'LBL_SEARCH_CONTROLLER' => 'Search Controller',
-    'LBL_SEARCH_CONTROLLER_HELP' => 'Set up the controller handling the search from the top search bar',
+    'LBL_SEARCH_CONTROLLER' => 'Enable new Search',
+    'LBL_SEARCH_CONTROLLER_HELP' => 'If not enabled the search will use the legacy global search controller',
+    'LBL_SEARCH_CONTROLLER_TOOLTIP' => 'A Search interface that allows admin user to introduce new engines.',
 
     'LBL_SEARCH_ENGINE' => 'Search Engine',
     'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search wrapper',
+    'LBL_SEARCH_ENGINE_TOOLTIP' => 'Select a search engine for the Global Search.',
 
     'LBL_SEARCH_MODULES' => 'Search Modules',
-    'LBL_SEARCH_MODULES_HELP' => 'Configure the available modules to search for the system',
+    'LBL_SEARCH_MODULES_HELP' => 'Select the module(s) that users will be able to search against using the Global Search.',
 
+    // Search Engines Translations
     'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
     'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine'
 );
