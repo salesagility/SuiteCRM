@@ -93,7 +93,6 @@ ISPASSIVE;
 
         $requestedAuthnStr = '';
         if (isset($security['requestedAuthnContext']) && $security['requestedAuthnContext'] !== false) {
-
             $authnComparison = 'exact';
             if (isset($security['requestedAuthnContextComparison'])) {
                 $authnComparison = $security['requestedAuthnContextComparison'];

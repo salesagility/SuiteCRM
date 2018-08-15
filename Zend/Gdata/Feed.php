@@ -114,9 +114,11 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
         // This will be duplicated by the HTTP ETag header.
         if ($majorVersion >= 2) {
             if ($this->_etag != null) {
-                $element->setAttributeNS($this->lookupNamespace('gd'),
+                $element->setAttributeNS(
+                    $this->lookupNamespace('gd'),
                                          'gd:etag',
-                                         $this->_etag);
+                                         $this->_etag
+                );
             }
         }
 
@@ -170,8 +172,7 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
             $etag = $attribute->nodeValue;
             if ($this->_etag === null) {
                 $this->_etag = $etag;
-            }
-            elseif ($this->_etag != $etag) {
+            } elseif ($this->_etag != $etag) {
                 require_once('Zend/Gdata/App/IOException.php');
                 throw new Zend_Gdata_App_IOException("ETag mismatch");
             }
@@ -189,7 +190,8 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
      *        value of the totalResults property. Use null to unset.
      * @return Zend_Gdata_Feed Provides a fluent interface.
      */
-    function setTotalResults($value) {
+    public function setTotalResults($value)
+    {
         $this->_totalResults = $value;
         return $this;
     }
@@ -200,7 +202,8 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
      * @return Zend_Gdata_Extension_OpenSearchTotalResults|null The value of
      *         the totalResults property, or null if unset.
      */
-    function getTotalResults() {
+    public function getTotalResults()
+    {
         return $this->_totalResults;
     }
 
@@ -211,7 +214,8 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
      *        for the startIndex property. Use null to unset.
      * @return Zend_Gdata_Feed Provides a fluent interface.
      */
-    function setStartIndex($value) {
+    public function setStartIndex($value)
+    {
         $this->_startIndex = $value;
         return $this;
     }
@@ -222,7 +226,8 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
      * @return Zend_Gdata_Extension_OpenSearchStartIndex|null The value of the
      *         startIndex property, or null if unset.
      */
-    function getStartIndex() {
+    public function getStartIndex()
+    {
         return $this->_startIndex;
     }
 
@@ -233,7 +238,8 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
      *        value for the itemsPerPage property. Use nul to unset.
      * @return Zend_Gdata_Feed Provides a fluent interface.
      */
-    function setItemsPerPage($value) {
+    public function setItemsPerPage($value)
+    {
         $this->_itemsPerPage = $value;
         return $this;
     }
@@ -244,8 +250,8 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
      * @return Zend_Gdata_Extension_OpenSearchItemsPerPage|null The value of
      *         the itemsPerPage property, or null if unset.
      */
-    function getItemsPerPage() {
+    public function getItemsPerPage()
+    {
         return $this->_itemsPerPage;
     }
-
 }

@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/App/Extension.php';
  */
 class Zend_Gdata_Media_Extension_MediaThumbnail extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'thumbnail';
     protected $_rootNamespace = 'media';
 
@@ -69,9 +68,12 @@ class Zend_Gdata_Media_Extension_MediaThumbnail extends Zend_Gdata_Extension
      * @param int $height
      * @param string $time
      */
-    public function __construct($url = null, $width = null, $height = null,
-            $time = null)
-    {
+    public function __construct(
+        $url = null,
+        $width = null,
+        $height = null,
+            $time = null
+    ) {
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
         $this->_url = $url;
@@ -206,5 +208,4 @@ class Zend_Gdata_Media_Extension_MediaThumbnail extends Zend_Gdata_Extension
         $this->_time = $value;
         return $this;
     }
-
 }

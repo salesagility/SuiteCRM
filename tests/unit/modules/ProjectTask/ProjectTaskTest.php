@@ -11,7 +11,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
     
-        public function testcreate_export_query()
+    public function testcreate_export_query()
     {
         $projectTask = new ProjectTask();
 
@@ -55,7 +55,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $projectTask = new ProjectTask();
 
@@ -68,13 +68,11 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
         
         // clean up
-        
-        
     }
 
     public function testsave()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
@@ -83,12 +81,12 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-	// test
+        // test
         
         $projectTask = new ProjectTask();
 
         $projectTask->name = 'test';
-        //$projectTask->project_id = "1";
+        
         $projectTask->assigned_user_id = '1';
         $projectTask->description = 'test description';
         $projectTask->parent_task_id = 1;
@@ -105,7 +103,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $projectTask->mark_deleted($projectTask->id);
         $result = $projectTask->retrieve($projectTask->id);
-        $this->assertEquals(null, $result);   
+        $this->assertEquals(null, $result);
         
         // clean up
         
@@ -132,7 +130,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $projectTask = new ProjectTask();
@@ -146,8 +144,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetProjectTaskParent()
@@ -173,7 +169,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $projectTask = new ProjectTask();
@@ -189,7 +185,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -310,12 +305,12 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $projectTask = new ProjectTask();
 

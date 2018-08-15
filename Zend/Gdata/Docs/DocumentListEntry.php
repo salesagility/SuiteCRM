@@ -50,5 +50,4 @@ class Zend_Gdata_Docs_DocumentListEntry extends Zend_Gdata_Entry
         $this->registerAllNamespaces(Zend_Gdata_Docs::$namespaces);
         parent::__construct($element);
     }
-
 }

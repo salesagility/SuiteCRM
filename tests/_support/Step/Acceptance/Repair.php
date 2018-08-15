@@ -4,7 +4,7 @@ namespace Step\Acceptance;
 
 class Repair extends Administration
 {
-    public function clickQuickRepairAndRebuild ()
+    public function clickQuickRepairAndRebuild()
     {
         $I = $this;
         $I->gotoAdministration();

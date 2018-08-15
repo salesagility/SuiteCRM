@@ -103,4 +103,3 @@ $mod_strings = array(
     'LBL_AOS_PRODUCTS' => 'Products',
     'LBL_AOS_QUOTES' => 'Quotes',
 );
-

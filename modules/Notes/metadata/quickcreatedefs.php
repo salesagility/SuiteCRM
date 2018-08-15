@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,30 +34,30 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $viewdefs ['Notes'] =
-array (
+array(
   'QuickCreate' =>
-  array (
+  array(
     'templateMeta' =>
-    array (
+    array(
       'form' =>
-      array (
+      array(
         'enctype' => 'multipart/form-data',
       ),
       'maxColumns' => '2',
       'widths' =>
-      array (
+      array(
 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -65,51 +66,50 @@ array (
 <script>toggle_portal_flag(); function toggle_portal_flag()  {literal} { {/literal} {$TOGGLE_JS} {literal} } {/literal} </script>',
     ),
     'panels' =>
-    array (
+    array(
       'default' =>
-      array (
+      array(
 
-        array (
+        array(
            'contact_name',
            'parent_name',
         ),
-        array (
+        array(
 
-          array (
+          array(
             'name' => 'name',
             'label' => 'LBL_SUBJECT',
             'displayParams' =>
-            array (
+            array(
               'size' => 50,
               'required' => true,
             ),
           ),
           array(
-          	'name' => 'assigned_user_name','label' => 'LBL_ASSIGNED_TO',
+              'name' => 'assigned_user_name','label' => 'LBL_ASSIGNED_TO',
           ),
         ),
 
-        array (
+        array(
            'filename',
         ),
 
-        array (
+        array(
 
-          array (
+          array(
             'name' => 'description',
             'label' => 'LBL_NOTE_STATUS',
             'displayParams' =>
-            array (
+            array(
               'rows' => 6,
               'cols' => 75,
             ),
           ),
         ),
-         array (
+         array(
            
         ),
       ),
     ),
   ),
 );
-

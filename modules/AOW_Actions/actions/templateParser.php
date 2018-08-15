@@ -5,7 +5,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -21,36 +21,35 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 require_once 'modules/AOS_PDF_Templates/templateParser.php';
  
-class aowTemplateParser extends templateParser {
+class aowTemplateParser extends templateParser
+{
+    public static function parse_template($string, $bean_arr)
+    {
+        global $beanList;
 
-		static function parse_template($string, $bean_arr) {
-			global $beanList;
+        $person = array();
+    
+        foreach ($bean_arr as $bean_name => $bean_id) {
+            $focus = BeanFactory::getBean($bean_name, $bean_id);
+            $string = aowTemplateParser::parse_template_bean($string, strtolower($beanList[$bean_name]), $focus);
 
-            $person = array();
-	
-			foreach($bean_arr as $bean_name => $bean_id) {
-
-				$focus = BeanFactory::getBean($bean_name, $bean_id);
-				$string = aowTemplateParser::parse_template_bean($string, strtolower($beanList[$bean_name]), $focus);
-
-                if($focus instanceof Person){
-                    $person[] = $focus;
-                }
-				
-			}
-
-            if(!empty($person)){
-                $focus = $person[0];
-            } else {
-                $focus = new Contact();
+            if ($focus instanceof Person) {
+                $person[] = $focus;
             }
-            $string = aowTemplateParser::parse_template_bean($string, 'contact', $focus);
+        }
 
-			return $string;
-		}
-	}
+        if (!empty($person)) {
+            $focus = $person[0];
+        } else {
+            $focus = new Contact();
+        }
+        $string = aowTemplateParser::parse_template_bean($string, 'contact', $focus);
+
+        return $string;
+    }
+}

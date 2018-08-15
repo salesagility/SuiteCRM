@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -54,7 +55,9 @@ class SugarCache
      */
     public static $isCacheReset = false;
 
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * initializes the cache in question
@@ -63,21 +66,22 @@ class SugarCache
     {
         $lastPriority = 1000;
         $locations = array('include/SugarCache','custom/include/SugarCache');
- 	    foreach ( $locations as $location ) {
+        foreach ($locations as $location) {
             if (is_dir($location) && $dir = opendir($location)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
                             || $file == "."
                             || !is_file("$location/$file")
-                            )
+                            ) {
                         continue;
+                    }
                     require_once("$location/$file");
                     $cacheClass = basename($file, ".php");
-                    if ( class_exists($cacheClass) && is_subclass_of($cacheClass,'SugarCacheAbstract') ) {
+                    if (class_exists($cacheClass) && is_subclass_of($cacheClass, 'SugarCacheAbstract')) {
                         $GLOBALS['log']->debug("Found cache backend $cacheClass");
                         $cacheInstance = new $cacheClass();
-                        if ( $cacheInstance->useBackend()
-                                && $cacheInstance->getPriority() < $lastPriority ) {
+                        if ($cacheInstance->useBackend()
+                                && $cacheInstance->getPriority() < $lastPriority) {
                             $GLOBALS['log']->debug("Using cache backend $cacheClass, since ".$cacheInstance->getPriority()." is less than ".$lastPriority);
                             self::$_cacheInstance = $cacheInstance;
                             $lastPriority = $cacheInstance->getPriority();
@@ -94,8 +98,9 @@ class SugarCache
      */
     public static function instance()
     {
-        if ( !is_subclass_of(self::$_cacheInstance,'SugarCacheAbstract') )
+        if (!is_subclass_of(self::$_cacheInstance, 'SugarCacheAbstract')) {
             self::_init();
+        }
 
         return self::$_cacheInstance;
     }
@@ -108,23 +113,23 @@ class SugarCache
     public static function cleanOpcodes()
     {
         // APC
-        if ( function_exists('apc_clear_cache') && ini_get('apc.stat') == 0 ) {
+        if (function_exists('apc_clear_cache') && ini_get('apc.stat') == 0) {
             apc_clear_cache();
         }
         // Wincache
-        if ( function_exists('wincache_refresh_if_changed') ) {
+        if (function_exists('wincache_refresh_if_changed')) {
             wincache_refresh_if_changed();
         }
         // Zend
-        if ( function_exists('accelerator_reset') ) {
+        if (function_exists('accelerator_reset')) {
             accelerator_reset();
         }
         // eAccelerator
-        if ( function_exists('eaccelerator_clear') ) {
+        if (function_exists('eaccelerator_clear')) {
             eaccelerator_clear();
         }
         // XCache
-        if ( function_exists('xcache_clear_cache') && !ini_get('xcache.admin.enable_auth') ) {
+        if (function_exists('xcache_clear_cache') && !ini_get('xcache.admin.enable_auth')) {
             $max = xcache_count(XC_TYPE_PHP);
             for ($i = 0; $i < $max; $i++) {
                 if (!xcache_clear_cache(XC_TYPE_PHP, $i)) {
@@ -133,7 +138,7 @@ class SugarCache
             }
         }
         // Zend OPcache
-        if ( function_exists('opcache_reset') ) {
+        if (function_exists('opcache_reset')) {
             opcache_reset();
         }
     }
@@ -141,12 +146,11 @@ class SugarCache
     /**
      * Try to reset file from caches
      */
-    public static function cleanFile( $file )
+    public static function cleanFile($file)
     {
         // APC
-        if ( function_exists('apc_delete_file') && ini_get('apc.stat') == 0 )
-        {
-            apc_delete_file( $file );
+        if (function_exists('apc_delete_file') && ini_get('apc.stat') == 0) {
+            apc_delete_file($file);
         }
     }
 }
@@ -174,7 +178,7 @@ function sugar_cache_retrieve($key)
  */
 function sugar_cache_put($key, $value, $ttl = null)
 {
-    SugarCache::instance()->set($key,$value, $ttl);
+    SugarCache::instance()->set($key, $value, $ttl);
 }
 
 /**

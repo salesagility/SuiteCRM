@@ -1,11 +1,14 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 //Shorten name.
 $data = $_REQUEST;
@@ -47,7 +50,7 @@ if (!empty($data['listViewExternalClient'])) {
 }
 //For the full compose/email screen, the compose package is generated and script execution
 //continues to the Emails/index.php page.
-else if (!isset($data['forQuickCreate'])) {
+elseif (!isset($data['forQuickCreate'])) {
     $ret = generateComposeDataPackage($data);
 }
 
@@ -80,7 +83,7 @@ function initFullCompose($ret)
  * @param Bool $forFullCompose If full compose is set to TRUE, then continue execution and include the full Emails UI.  Otherwise
  *             the data generated is returned.
  */
-function generateComposeDataPackage($data, $forFullCompose = TRUE)
+function generateComposeDataPackage($data, $forFullCompose = true)
 {
     // we will need the following:
     if (isset($data['parent_type']) && !empty($data['parent_type']) &&
@@ -112,7 +115,7 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
         } else {
             if (isset($bean->full_name)) {
                 $namePlusEmail = from_html($bean->full_name) . " <" . from_html($bean->emailAddress->getPrimaryAddress($bean)) . ">";
-            } else if (isset($bean->emailAddress)) {
+            } elseif (isset($bean->emailAddress)) {
                 $namePlusEmail = "<" . from_html($bean->emailAddress->getPrimaryAddress($bean)) . ">";
             }
         }
@@ -133,7 +136,6 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
             }
         }
         if ($bean->module_dir == 'KBDocuments') {
-
             require_once("modules/Emails/EmailUI.php");
             $subject = $bean->kbdocument_name;
             $article_body = str_replace('/' . $GLOBALS['sugar_config']['cache_dir'] . 'images/', $GLOBALS['sugar_config']['site_url'] . '/' . $GLOBALS['sugar_config']['cache_dir'] . 'images/', KBDocument::get_kbdoc_body_without_incrementing_count($bean->id));
@@ -161,9 +163,7 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
             'email_id' => $email_id,
 
         );
-    } else if (isset($data['recordId'])) {
-
-
+    } elseif (isset($data['recordId'])) {
         $quotesData = getQuotesRelatedData($data);
         $namePlusEmail = $quotesData['toAddress'];
         $subject = $quotesData['subject'];
@@ -181,16 +181,13 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
             'attachments' => $attachments,
             'email_id' => $email_id,
         );
-
-    } else if (isset($_REQUEST['ListView'])) {
-
+    } elseif (isset($_REQUEST['ListView'])) {
         $email = new Email();
         $namePlusEmail = $email->getNamePlusEmailAddressesForCompose($_REQUEST['action_module'], (explode(",", $_REQUEST['uid'])));
         $ret = array(
             'to_email_addrs' => $namePlusEmail,
         );
-    } else if (isset($data['replyForward'])) {
-
+    } elseif (isset($data['replyForward'])) {
         require_once("modules/Emails/EmailUI.php");
 
         $ret = array();
@@ -205,6 +202,7 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
             $emailType = $ie->email->type;
         }
         $ie->email->from_addr = $ie->email->from_addr_name;
+        isValidEmailAddress($ie->email->from_addr);
         $ie->email->to_addrs = to_html($ie->email->to_addrs_names);
         $ie->email->cc_addrs = to_html($ie->email->cc_addrs_names);
         $ie->email->bcc_addrs = $ie->email->bcc_addrs_names;
@@ -233,6 +231,7 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
         } else {
             if ($email->type != 'draft') {
                 $return['to'] = from_html($ie->email->from_addr);
+                isValidEmailAddress($return['to']);
             }
         } // else
         $ret = array(
@@ -281,17 +280,17 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
 
             $ret['cc_addrs'] = from_html($ccEmails);
         }
-
     } else {
         $ret = array(
             'to_email_addrs' => '',
         );
     }
 
-    if ($forFullCompose)
+    if ($forFullCompose) {
         initFullCompose($ret);
-    else
+    } else {
         return $ret;
+    }
 }
 
 function getQuotesRelatedData($data)

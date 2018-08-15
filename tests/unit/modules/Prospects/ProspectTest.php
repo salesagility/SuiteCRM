@@ -35,7 +35,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $prospect = new Prospect();
 
@@ -51,8 +51,6 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('last &lt;email1@test.com&gt;', 'email_and_name1', $prospect);
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -90,14 +88,13 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $prospect = new Prospect();
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            //$prospect->converted_prospect('1', '2', '3', '4');
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
@@ -106,8 +103,6 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('Multiple errors in query');
         
         // clean up
-        
-        
     }
 
     public function testbean_implements()
@@ -137,7 +132,6 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_unlinked_email_query()
     {
-        
         self::markTestIncomplete('environment dependency (CRLF2)');
         
         $prospect = new Prospect();

@@ -40,14 +40,14 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aosContracts = new AOS_Contracts();
         $aosContracts->name = 'test';
 
         $aosContracts->save();
 
-        //test for record ID to verify that record is saved 
+        //test for record ID to verify that record is saved
         $this->assertTrue(isset($aosContracts->id));
         $this->assertEquals(36, strlen($aosContracts->id));
 
@@ -63,7 +63,6 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('tracker');
         $state->popTable('aos_contracts');
         $state->popTable('aod_indexevent');
-        
     }
 
     public function testCreateReminderAndCreateLinkAndDeleteCall()
@@ -80,7 +79,7 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aosContracts = new AOS_Contracts();
         $aosContracts->name = 'test';
 
-        //test createReminder() 
+        //test createReminder()
         $aosContracts->createReminder();
 
         //verify record ID to check that record is saved
@@ -96,7 +95,7 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $call->retrieve($aosContracts->call_id);
         $this->assertAttributeEquals('Accounts', 'parent_type', $call);
 
-        //delete the call and verify that this record cannot be retrieved anymore.		
+        //delete the call and verify that this record cannot be retrieved anymore.
         $aosContracts->deleteCall();
         $result = $call->retrieve($aosContracts->call_id);
         $this->assertEquals(null, $result);

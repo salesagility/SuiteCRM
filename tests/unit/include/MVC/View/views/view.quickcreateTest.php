@@ -13,8 +13,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testpreDisplay()
     {
-        
-        if(isset($_REQUEST)) {
+        if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
 
@@ -39,7 +38,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        if(isset($_request)) {
+        if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
             unset($_REQUEST);
@@ -48,12 +47,11 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
-        
-        if(isset($_SESSION)) {
+        if (isset($_SESSION)) {
             $_session = $_SESSION;
         }
         
-        if(isset($_REQUEST)) {
+        if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
         
@@ -62,7 +60,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //execute the method with required child objects and parameters preset. it will return some html.
         $view = new ViewQuickcreate();
@@ -78,19 +76,19 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
 
         $this->assertGreaterThan(0, strlen($renderedContent));
-        $this->assertEquals(false, json_decode($renderedContent)); //check that it doesn't return json. 
+        $this->assertEquals(false, json_decode($renderedContent)); //check that it doesn't return json.
         
         // clean up
         
         
         
-        if(isset($_session)) {
+        if (isset($_session)) {
             $_SESSION = $_session;
         } else {
             unset($_SESSION);
         }
         
-        if(isset($_request)) {
+        if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
             unset($_REQUEST);

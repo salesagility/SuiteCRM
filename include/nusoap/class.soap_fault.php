@@ -13,7 +13,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -39,7 +39,9 @@ r354 - 2004-08-02 23:00:37 -0700 (Mon, 02 Aug 2004) - sugarjacob - Adding Soap
 */
 
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 
@@ -52,80 +54,81 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access public
 */
-class nusoap_fault extends nusoap_base {
-	/**
-	 * The fault code (client|server)
-	 * @var string
-	 * @access private
-	 */
-	var $faultcode;
-	/**
-	 * The fault actor
-	 * @var string
-	 * @access private
-	 */
-	var $faultactor;
-	/**
-	 * The fault string, a description of the fault
-	 * @var string
-	 * @access private
-	 */
-	var $faultstring;
-	/**
-	 * The fault detail, typically a string or array of string
-	 * @var mixed
-	 * @access private
-	 */
-	var $faultdetail;
+class nusoap_fault extends nusoap_base
+{
+    /**
+     * The fault code (client|server)
+     * @var string
+     * @access private
+     */
+    public $faultcode;
+    /**
+     * The fault actor
+     * @var string
+     * @access private
+     */
+    public $faultactor;
+    /**
+     * The fault string, a description of the fault
+     * @var string
+     * @access private
+     */
+    public $faultstring;
+    /**
+     * The fault detail, typically a string or array of string
+     * @var mixed
+     * @access private
+     */
+    public $faultdetail;
 
-	/**
-	* constructor
+    /**
+    * constructor
     *
     * @param string $faultcode (SOAP-ENV:Client | SOAP-ENV:Server)
     * @param string $faultactor only used when msg routed between multiple actors
     * @param string $faultstring human readable error message
     * @param mixed $faultdetail detail, typically a string or array of string
-	*/
-	function nusoap_fault($faultcode,$faultactor='',$faultstring='',$faultdetail=''){
-		parent::nusoap_base();
-		$this->faultcode = $faultcode;
-		$this->faultactor = $faultactor;
-		$this->faultstring = $faultstring;
-		$this->faultdetail = $faultdetail;
-	}
+    */
+    public function nusoap_fault($faultcode, $faultactor='', $faultstring='', $faultdetail='')
+    {
+        parent::nusoap_base();
+        $this->faultcode = $faultcode;
+        $this->faultactor = $faultactor;
+        $this->faultstring = $faultstring;
+        $this->faultdetail = $faultdetail;
+    }
 
-	/**
-	* serialize a fault
-	*
-	* @return	string	The serialization of the fault instance.
-	* @access   public
-	*/
-	function serialize(){
-		$ns_string = '';
-		foreach($this->namespaces as $k => $v){
-			$ns_string .= "\n  xmlns:$k=\"$v\"";
-		}
-		$return_msg =
-			'<?xml version="1.0" encoding="'.$this->soap_defencoding.'"?>'.
-			'<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"'.$ns_string.">\n".
-				'<SOAP-ENV:Body>'.
-				'<SOAP-ENV:Fault>'.
-					$this->serialize_val($this->faultcode, 'faultcode').
-					$this->serialize_val($this->faultactor, 'faultactor').
-					$this->serialize_val($this->faultstring, 'faultstring').
-					$this->serialize_val($this->faultdetail, 'detail').
-				'</SOAP-ENV:Fault>'.
-				'</SOAP-ENV:Body>'.
-			'</SOAP-ENV:Envelope>';
-		return $return_msg;
-	}
+    /**
+    * serialize a fault
+    *
+    * @return	string	The serialization of the fault instance.
+    * @access   public
+    */
+    public function serialize()
+    {
+        $ns_string = '';
+        foreach ($this->namespaces as $k => $v) {
+            $ns_string .= "\n  xmlns:$k=\"$v\"";
+        }
+        $return_msg =
+            '<?xml version="1.0" encoding="'.$this->soap_defencoding.'"?>'.
+            '<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"'.$ns_string.">\n".
+                '<SOAP-ENV:Body>'.
+                '<SOAP-ENV:Fault>'.
+                    $this->serialize_val($this->faultcode, 'faultcode').
+                    $this->serialize_val($this->faultactor, 'faultactor').
+                    $this->serialize_val($this->faultstring, 'faultstring').
+                    $this->serialize_val($this->faultdetail, 'detail').
+                '</SOAP-ENV:Fault>'.
+                '</SOAP-ENV:Body>'.
+            '</SOAP-ENV:Envelope>';
+        return $return_msg;
+    }
 }
 
 /**
  * Backward compatibility
  */
-class soap_fault extends nusoap_fault {
+class soap_fault extends nusoap_fault
+{
 }
-
-
-?>

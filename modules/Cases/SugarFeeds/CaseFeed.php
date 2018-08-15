@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,33 +37,34 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('modules/SugarFeed/feedLogicBase.php');
 
 
-class CaseFeed extends FeedLogicBase {
-    var $module = 'Cases';
-    function pushFeed($bean, $event, $arguments){
+class CaseFeed extends FeedLogicBase
+{
+    public $module = 'Cases';
+    public function pushFeed($bean, $event, $arguments)
+    {
         $text = '';
-	if(empty($bean->fetched_row) && $bean->in_save){
+        if (empty($bean->fetched_row) && $bean->in_save) {
             $accountName = $bean->account_name;
-            if(empty($accountName) && $bean->account_id){
-                $acc = BeanFactory::getBean('Accounts',$bean->account_id);
+            if (empty($accountName) && $bean->account_id) {
+                $acc = BeanFactory::getBean('Accounts', $bean->account_id);
                 $accountName = $acc->name;
             }
             $text =  '{SugarFeed.CREATED_CASE} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name.'] {SugarFeed.FOR} [Accounts:' . $bean->account_id . ':' . $accountName . ']: '. $bean->description;
-        }else{
-            if(!empty($bean->fetched_row['status'] ) && $bean->fetched_row['status'] != $bean->status && strpos($bean->status, 'Closed') !== false){
+        } else {
+            if (!empty($bean->fetched_row['status']) && $bean->fetched_row['status'] != $bean->status && strpos($bean->status, 'Closed') !== false) {
                 $text =  '{SugarFeed.CLOSED_CASE} [' . $bean->module_dir . ':' . $bean->id . ':' . $bean->name. '] {SugarFeed.FOR} [Accounts:' . $bean->account_id . ':' . $bean->account_name . ']';
             }
         }
 
-        if(!empty($text)){
-			SugarFeed::pushFeed2($text, $bean);
+        if (!empty($text)) {
+            SugarFeed::pushFeed2($text, $bean);
         }
-
     }
 }

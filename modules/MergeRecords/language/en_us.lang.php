@@ -73,4 +73,3 @@ $mod_strings = array(
     'LBL_PROCEED' => 'Proceed ?',
     'LBL_STEP1_DIRECTIONS' => 'Find possible duplicate records. If possible duplicates are found, you can select which records to merge with the current record.',
 );
-

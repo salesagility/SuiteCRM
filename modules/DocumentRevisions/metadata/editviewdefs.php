@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,40 +34,40 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $viewdefs['DocumentRevisions']['EditView'] = array(
     'templateMeta' => array('form' => array('enctype'=>'multipart/form-data',
                                             'hidden'=>array('<input type="hidden" name="return_id" value="{$smarty.request.return_id}">'),
-                                ),       
-                            'maxColumns' => '2', 
+                                ),
+                            'maxColumns' => '2',
                             'widths' => array(
-                                array('label' => '10', 'field' => '30'), 
+                                array('label' => '10', 'field' => '30'),
                                 array('label' => '10', 'field' => '30')
                                 ),
                             'javascript' => '{sugar_getscript file="include/javascript/popup_parent_helper.js"}
 {sugar_getscript file="cache/include/javascript/sugar_grp_jsolait.js"}
 {sugar_getscript file="modules/Documents/documents.js"}',
         ),
-    'panels' =>array (
-        '' => 
-        array (
-            array (
-                array ( 'name' => 'document_name', 'type' => 'readonly' ),
-                array ( 'name' => 'latest_revision', 'type' => 'readonly' ),
+    'panels' =>array(
+        '' =>
+        array(
+            array(
+                array( 'name' => 'document_name', 'type' => 'readonly' ),
+                array( 'name' => 'latest_revision', 'type' => 'readonly' ),
             ),
-            array (
+            array(
                 'revision',
             ),
             
-            array (
+            array(
                 'filename',
             ),
             
-            array (
-                array ( 'name' => 'change_log', 'size' => '126', 'maxlength' => '255' ),
+            array(
+                array( 'name' => 'change_log', 'size' => '126', 'maxlength' => '255' ),
             ),
 
         ),

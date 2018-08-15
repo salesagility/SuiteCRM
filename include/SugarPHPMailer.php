@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -68,6 +68,8 @@ class SugarPHPMailer extends PHPMailer
      * @var string
      */
     public $Body_html;
+    
+    private static $FromNameOrigin = null;
 
     /**
      * Constructor.
@@ -75,6 +77,9 @@ class SugarPHPMailer extends PHPMailer
      */
     public function __construct($exceptions = null)
     {
+        if (null == self::$FromNameOrigin) {
+            self::$FromNameOrigin = $this->FromName;
+        }
         parent::__construct($exceptions);
         global $locale;
         global $current_user;
@@ -103,7 +108,6 @@ class SugarPHPMailer extends PHPMailer
         // cn: gmail fix
         $this->protocol = ($this->oe->mail_smtpssl == 1) ? 'ssl://' : $this->protocol;
         $this->SMTPAutoTLS = false;
-
     }
 
     /**
@@ -218,7 +222,6 @@ class SugarPHPMailer extends PHPMailer
 
             // HTML email RFC compliance
             if ($this->ContentType === 'text/html' && strpos($this->Body, '<html') === false) {
-
                 $langHeader = get_language_header();
 
                 $head = <<<eoq
@@ -232,9 +235,16 @@ class SugarPHPMailer extends PHPMailer
 eoq;
                 $this->Body = $head . $this->Body . '</body></html>';
             }
+            
+            $fromName = $this->FromName;
+            
+            // checking if username already set for phpmailer and
+            // using that as username instead fromname
+            if ($this->FromName == self::$FromNameOrigin && !empty($this->Username)) {
+                $fromName = $this->Username;
+            }
 
-            $this->FromName = $locale->translateCharset(trim($this->FromName), 'UTF-8', $OBCharset);
-
+            $this->FromName = $locale->translateCharset(trim($fromName), 'UTF-8', $OBCharset);
         }
     }
 
@@ -423,7 +433,8 @@ eoq;
      * @param string $key
      * @param string $value
      */
-    public function replace($key, $value) {
+    public function replace($key, $value)
+    {
         $this->Subject = preg_replace('/\$' . $key . '\b/', $value, $this->Subject);
         $this->Body = preg_replace('/\$' . $key . '\b/', $value, $this->Body);
         $this->Body_html = preg_replace('/\$' . $key . '\b/', $value, $this->Body_html);
@@ -455,7 +466,7 @@ eoq;
             $this->exceptions = true;
 
             // pass callabck function for PHPMailer to call to provide log :
-            $this->Debugoutput = function($str, $level) {
+            $this->Debugoutput = function ($str, $level) {
                 // obfuscate part of response if previous line was a server 334 request, for authentication data:
                 static $previousIs334 = false;
                 if ($previousIs334) {
@@ -469,14 +480,12 @@ eoq;
             $this->SMTPDebug = 3;
             $ret = parent::send();
             $this->exceptions =  $saveExceptionsState;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $phpMailerExceptionMsg=$e->errorMessage(); //Pretty error messages from PHPMailer
             if ($phpMailerExceptionMsg) {
                 $GLOBALS['log']->error("send: PHPMailer Exception: { $phpMailerExceptionMsg }");
             }
-        }
-        catch (\Exception $e) { //The leading slash means the Global PHP Exception class will be caught
+        } catch (\Exception $e) { //The leading slash means the Global PHP Exception class will be caught
             $phpMailerExceptionMsg=$e->getMessage(); //generic error messages from anything else
             if ($phpMailerExceptionMsg) {
                 $GLOBALS['log']->error("send: PHPMailer Exception: { $phpMailerExceptionMsg }");
@@ -493,5 +502,4 @@ eoq;
         */
         return $ret;
     }
-
 } // end class definition

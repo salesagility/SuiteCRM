@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
@@ -21,32 +21,31 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 /**
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates_sugar.php');
-class AOS_PDF_Templates extends AOS_PDF_Templates_sugar {
-
-	function __construct(){
-		parent::__construct();
-	}
+class AOS_PDF_Templates extends AOS_PDF_Templates_sugar
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_PDF_Templates(){
+    public function AOS_PDF_Templates()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
-
-
 }

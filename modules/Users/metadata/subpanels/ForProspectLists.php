@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,51 +37,51 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 $subpanel_layout = array(
-	'top_buttons' => array(
+    'top_buttons' => array(
         array('widget_class' => 'SubPanelTopCreateButton'),
-			array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Users'),
-	),
+            array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Users'),
+    ),
 
-	'where' => '',
-	
-	
+    'where' => '',
+    
+    
 
     'list_fields'=> array(
         'first_name'=>array(
-		 	'usage' => 'query_only',
-		),
-		'last_name'=>array(
-		 	'usage' => 'query_only',
-		),
-		'name'=>array(
-			'vname' => 'LBL_LIST_NAME',
-		 	'target_module' => 'Employees',
-		 	'module' => 'Users',
-			'target_module' => 'Employees',
-		    'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '35%',
-		),
-		'email1'=>array(
-			'vname' => 'LBL_LIST_EMAIL',
-			'widget_class' => 'SubPanelEmailLink',
-			'width' => '35%',
-		),
-		'phone_work'=>array (
-			'vname' => 'LBL_LIST_PHONE',
-			'width' => '26%',
-		),
-		'remove_button'=>array(
-			'vname' => 'LBL_REMOVE',
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'Users',
-			'width' => '4%',
-			'linked_field' => 'users',
-		),
-	),
+            'usage' => 'query_only',
+        ),
+        'last_name'=>array(
+            'usage' => 'query_only',
+        ),
+        'name'=>array(
+            'vname' => 'LBL_LIST_NAME',
+            'target_module' => 'Employees',
+            'module' => 'Users',
+            'target_module' => 'Employees',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '35%',
+        ),
+        'email1'=>array(
+            'vname' => 'LBL_LIST_EMAIL',
+            'widget_class' => 'SubPanelEmailLink',
+            'width' => '35%',
+        ),
+        'phone_work'=>array(
+            'vname' => 'LBL_LIST_PHONE',
+            'width' => '26%',
+        ),
+        'remove_button'=>array(
+            'vname' => 'LBL_REMOVE',
+            'widget_class' => 'SubPanelRemoveButton',
+            'module' => 'Users',
+            'width' => '4%',
+            'linked_field' => 'users',
+        ),
+    ),
 );

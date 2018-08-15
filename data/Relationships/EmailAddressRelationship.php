@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once("data/Relationships/M2MRelationship.php");
@@ -58,30 +61,32 @@ class EmailAddressRelationship extends M2MRelationship
     {
         $lhsLinkName = $this->lhsLink;
 
-        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
-        {
+        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
             $lhsClass = get_class($lhs);
             $GLOBALS['log']->fatal("could not load LHS $lhsLinkName in $lhsClass");
             return false;
         }
 
-            if ($lhs->$lhsLinkName->beansAreLoaded())
-                $lhs->$lhsLinkName->addBean($rhs);
+        if ($lhs->$lhsLinkName->beansAreLoaded()) {
+            $lhs->$lhsLinkName->addBean($rhs);
+        }
 
-            $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
+        $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
 
         //Many to many has no additional logic, so just add a new row to the table and notify the beans.
         $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
 
         $this->addRow($dataToInsert);
 
-        if ($this->self_referencing)
+        if ($this->self_referencing) {
             $this->addSelfReferencing($lhs, $rhs, $additionalFields);
+        }
 
-            if ($lhs->$lhsLinkName->beansAreLoaded())
-                $lhs->$lhsLinkName->addBean($rhs);
+        if ($lhs->$lhsLinkName->beansAreLoaded()) {
+            $lhs->$lhsLinkName->addBean($rhs);
+        }
 
-            $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
+        $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
 
         return true;
     }
@@ -98,16 +103,13 @@ class EmailAddressRelationship extends M2MRelationship
             $GLOBALS['log']->fatal("RHS is not a SugarBean object");
             return false;
         }
-        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
-        {
+        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
             $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
             return false;
         }
 
-        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
-        {
-            if (!empty($lhs->$lhsLinkName))
-            {
+        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes") {
+            if (!empty($lhs->$lhsLinkName)) {
                 $lhs->$lhsLinkName->load();
                 $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
             }
@@ -120,13 +122,12 @@ class EmailAddressRelationship extends M2MRelationship
 
         $this->removeRow($dataToRemove);
 
-        if ($this->self_referencing)
+        if ($this->self_referencing) {
             $this->removeSelfReferencing($lhs, $rhs);
+        }
 
-        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
-        {
-            if (!empty($lhs->$lhsLinkName))
-            {
+        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes") {
+            if (!empty($lhs->$lhsLinkName)) {
                 $lhs->$lhsLinkName->load();
                 $this->callAfterDelete($lhs, $rhs, $lhsLinkName);
             }
