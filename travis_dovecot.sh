@@ -17,7 +17,7 @@ echo "testuser:chilisauce" | sudo chpasswd
 
 # setup email
 sudo stop dovecot
-[ -d "/home/testuser/Maildir" ] && sudo rm -R /home/testuser/Maildir
+# [ -d "/home/testuser/Maildir" ] && sudo rm -R /home/testuser/Maildir
 sudo cp -Rp /resources/Maildir /home/testuser/
 sudo chown -R testuser:testuser /home/testuser/Maildir
 sudo start dovecot
