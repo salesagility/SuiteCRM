@@ -49,8 +49,5 @@ class SearchInstallTest extends SearchTestAbstract
 
         self::assertArrayHasKey('controller', $sugar_config['search']);
         self::assertArrayHasKey('default_engine', $sugar_config['search']);
-        self::assertArrayHasKey('modules', $sugar_config['search']);
-
-        self::assertJson($sugar_config['search']['modules'], 'Not a valid modules JSON');
     }
 }
