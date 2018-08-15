@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../../modules/Home/UnifiedSearchAdvanced.php';
+use SuiteCRM\Search\SearchModules;
 
 /**
  * Prints a panel that allows you to select modules.
@@ -13,7 +13,7 @@ require_once __DIR__ . '/../../../modules/Home/UnifiedSearchAdvanced.php';
  */
 function smarty_function_modules_selector($params)
 {
-    $modules = getModules();
+    $modules = SearchModules::getModulesList();
     $name = $params['name'];
 
     echo
@@ -70,24 +70,4 @@ function script($name)
         }
     </script>
     <?php
-}
-
-/**
- * Returns the list of modules from the search defs.
- *
- * @return string[]
- */
-function getModules()
-{
-    $unifiedSearch = new \UnifiedSearchAdvanced();
-    $allModules = $unifiedSearch->retrieveEnabledAndDisabledModules();
-    $allModules = array_merge($allModules['enabled'], $allModules['disabled']);
-
-    $modules = [];
-
-    foreach ($allModules as $module) {
-        $modules[$module['module']] = $module['label'];
-    }
-
-    return $modules;
 }

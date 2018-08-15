@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,88 +37,68 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace SuiteCRM\Search;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/Administration/Administration.php');
+require_once __DIR__ . '/../../modules/Home/UnifiedSearchAdvanced.php';
 
 /**
- * Configure defaults for the SearchWrapper.
+ * Class SearchModules fetches the search modules.
+ *
+ * This class currently depends on the Unified Advanced Search to find the modules.
  */
-function install_search()
+class SearchModules
 {
-    global $sugar_config;
+    /**
+     * Returns the list of modules from the search defs.
+     *
+     * Each entry is defined as key (module name) => value (module translation).
+     *
+     * @return string[]
+     */
+    public static function getModulesList()
+    {
+        $allModules = self::getAllModules();
+        $allModules = array_merge($allModules['enabled'], $allModules['disabled']);
 
-    $sugar_config['search']['controller'] = 'UnifiedSearch';
-    $sugar_config['search']['default_engine'] = 'ElasticSearchEngine';
-    $sugar_config['search']['pagination'] = [
-        'min' => 10, 'max' => 50, 'step' => 10,
-    ];
+        $modules = [];
 
-    ksort($sugar_config);
-    write_array_to_file('sugar_config', $sugar_config, 'config.php');
-}
+        foreach ($allModules as $module) {
+            $modules[$module['module']] = $module['label'];
+        }
 
-/**
- * Configure defaults for Elasticsearch and installs logic hooks.
- */
-function install_es()
-{
-    global $sugar_config;
+        return $modules;
+    }
 
-    $sugar_config['search']['ElasticSearch'] = [
-        'enabled' => false,
-        'host' => 'localhost',
-        'user' => '',
-        'pass' => '',
-    ];
+    /**
+     * Returns an array with all the enabled modules names.
+     *
+     * @return string[]
+     */
+    public static function getEnabledModules()
+    {
+        $allModules = self::getAllModules();
+        $enabledModules = $allModules['enabled'];
 
-    ksort($sugar_config);
-    write_array_to_file('sugar_config', $sugar_config, 'config.php');
+        $modules = [];
 
-    installESHooks();
-}
+        foreach ($enabledModules as $module) {
+            $modules[] = $module['module'];
+        }
 
-/**
- * Sets up the Elasticsearch logic hooks.
- */
-function installESHooks()
-{
-    require_once('ModuleInstall/ModuleInstaller.php');
+        return $modules;
+    }
 
-    $hooks = [
-        [
-            'module' => '',
-            'hook' => 'after_save',
-            'order' => 1,
-            'description' => 'ElasticSearch Index Changes',
-            'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
-            'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
-            'function' => 'beanSaved',
-        ],
-        [
-            'module' => '',
-            'hook' => 'after_delete',
-            'order' => 1,
-            'description' => 'ElasticSearch Index Changes',
-            'file' => 'lib/Search/ElasticSearch/ElasticSearchHooks.php',
-            'class' => 'SuiteCRM\Search\ElasticSearch\ElasticSearchHooks',
-            'function' => 'beanDeleted',
-        ],
-    ];
-
-    foreach ($hooks as $hook) {
-        check_logic_hook_file(
-            $hook['module'],
-            $hook['hook'],
-            [
-                $hook['order'],
-                $hook['description'],
-                $hook['file'],
-                $hook['class'],
-                $hook['function'],
-            ]
-        );
+    /**
+     * @return array
+     */
+    private static function getAllModules()
+    {
+        $unifiedSearch = new \UnifiedSearchAdvanced();
+        $allModules = $unifiedSearch->retrieveEnabledAndDisabledModules();
+        return $allModules;
     }
 }

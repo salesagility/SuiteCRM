@@ -58,7 +58,6 @@ class View extends MVC\View
 
         $this->smarty->assign('selectedController', SearchWrapper::getController());
         $this->smarty->assign('selectedEngine', SearchWrapper::getDefaultEngine());
-        $this->smarty->assign('selectedModules', SearchWrapper::getModules());
         $this->smarty->assign('engines', $this->getEngines());
     }
 }

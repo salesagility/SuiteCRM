@@ -199,7 +199,7 @@ class SearchWrapper
      */
     public static function getModules()
     {
-        return json_decode(self::getSearchConfig('modules'));
+        return SearchModules::getEnabledModules();
     }
 
     /**
