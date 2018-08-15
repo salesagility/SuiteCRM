@@ -98,6 +98,16 @@ abstract class Controller
     }
 
     /**
+     * Returns true if the current request has been sent via AJAX.
+     *
+     * @return bool
+     */
+    public function isAjax()
+    {
+        return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+    }
+
+    /**
      * Echoes a JSON with the proper header parameters.
      *
      * @param array $data
