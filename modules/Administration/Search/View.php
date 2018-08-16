@@ -45,6 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use SuiteCRM\Search\SearchWrapper;
 
+/**
+ * Class View renders the Search settings.
+ */
 class View extends MVC\View
 {
     public function __construct()
@@ -58,6 +61,12 @@ class View extends MVC\View
 
         $this->smarty->assign('selectedController', SearchWrapper::getController());
         $this->smarty->assign('selectedEngine', SearchWrapper::getDefaultEngine());
-        $this->smarty->assign('engines', $this->getEngines());
+        $this->smarty->assign('engines', [
+            translate('LBL_LEGACY_SEARCH_ENGINES') => [
+                'BasicSearchEngine' => translate('LBL_BASIC_SEARCH_ENGINE'),
+                'BasicAndAodEngine' => translate('LBL_BASIC_AND_AOD_ENGINE'),
+            ],
+            translate('LBL_SEARCH_WRAPPER_ENGINES') => $this->getEngines(),
+        ]);
     }
 }
