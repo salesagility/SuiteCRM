@@ -22,8 +22,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * Use one of the static `from*()` methods to initialize.
  *
- * @see fromString()
- * @see fromArray()
+ * @see    fromString()
+ * @see    fromArray()
  * @author Vittorio Iocolano
  */
 class SearchQuery implements \JsonSerializable
@@ -42,11 +42,12 @@ class SearchQuery implements \JsonSerializable
     /**
      * SearchQuery constructor.
      *
-     * @param string $searchString Search query
-     * @param string|null $engine Name of the search engine to use. `null` will use the default as specified by the config
-     * @param int $size Number of results
-     * @param int $from Offset of the search. Used for pagination
-     * @param array $options [optional] used for additional options by SearchEngines.
+     * @param string      $searchString Search query
+     * @param string|null $engine       Name of the search engine to use. `null` will use the default as specified by
+     *                                  the config
+     * @param int         $size         Number of results
+     * @param int         $from         Offset of the search. Used for pagination
+     * @param array       $options      [optional] used for additional options by SearchEngines.
      */
     private function __construct($searchString, $engine = null, $size = 10, $from = 0, array $options = [])
     {
@@ -55,6 +56,95 @@ class SearchQuery implements \JsonSerializable
         $this->from = intval($from);
         $this->options = $options;
         $this->engine = $engine !== null ? strval($engine) : null;
+    }
+
+    /**
+     * Creates a query object from a query string, i.e. from a search from.
+     *
+     * `$size` and `$from` are for pagination.
+     *
+     * @param string      $searchString A string containing the search query.
+     * @param int         $size         The number of results
+     * @param int         $from         The results offset (for pagination)
+     * @param string|null $engine       Name of the search engine to use. Use default if `null`
+     * @param array|null  $options      Array with options (optional)
+     *
+     * @return SearchQuery a fully built query
+     */
+    public static function fromString($searchString, $size = 50, $from = 0, $engine = null, array $options = [])
+    {
+        return new self($searchString, $engine, $size, $from, $options);
+    }
+
+    /**
+     * Makes a query from an array containing data.
+     * Fields are:
+     * - search-query-string
+     * - search-engine
+     * - search-query-size
+     * - search-query-from
+     *
+     * @param array $request
+     *
+     * @return SearchQuery
+     */
+    public static function fromRequestArray(array $request)
+    {
+        $searchQuery = self::filterArray($request, 'search-query-string', '', FILTER_SANITIZE_STRING);
+        $searchQueryAlt = self::filterArray($request, 'query_string', '', FILTER_SANITIZE_STRING);
+        $searchSize = self::filterArray($request, 'search-query-size', 10, FILTER_SANITIZE_NUMBER_INT);
+        $searchFrom = self::filterArray($request, 'search-query-from', 0, FILTER_SANITIZE_NUMBER_INT);
+        $searchEngine = self::filterArray($request, 'search-engine', null, FILTER_SANITIZE_STRING);
+
+        if (!empty($searchQueryAlt) && empty($searchQuery)) {
+            $searchQuery = $searchQueryAlt;
+        }
+
+        unset(
+            $request['search-query-string'],
+            $request['query_string'],
+            $request['search-query-size'],
+            $request['search-query-from'],
+            $request['search-engine']
+        );
+
+        return new self($searchQuery, $searchEngine, $searchSize, $searchFrom, $request);
+    }
+
+    /**
+     * Makes a Query from a GET request.
+     *
+     * @see fromRequestArray
+     * @return SearchQuery
+     */
+    public static function fromGetRequest()
+    {
+        return self::fromRequestArray($_GET);
+    }
+
+    /**
+     * Validates and filters values from an array.
+     *
+     * @param array       $array   The array to filter
+     * @param string      $key     The key of the array to load
+     * @param mixed       $default The default value in case the array value is empty
+     * @param null|string $filter  Optional filter to be used. e.g. FILTER_SANITIZE_STRING
+     *
+     * @return mixed
+     */
+    private static function filterArray(array $array, $key, $default, $filter = null)
+    {
+        if (!isset($array[$key])) {
+            return $default;
+        }
+
+        $value = filter_var($array[$key], $filter);
+
+        if ($value === false) {
+            return $default;
+        }
+
+        return $value;
     }
 
     /**
@@ -87,6 +177,7 @@ class SearchQuery implements \JsonSerializable
 
     /**
      * @param $key
+     *
      * @return mixed value
      */
     public function getOption($key)
@@ -175,92 +266,6 @@ class SearchQuery implements \JsonSerializable
         $this->query = mb_convert_encoding($this->query, 'UTF-8', 'HTML-ENTITIES');
     }
 
-    /**
-     * Creates a query object from a query string, i.e. from a search from.
-     *
-     * `$size` and `$from` are for pagination.
-     *
-     * @param $searchString string a search string, as it would appear on a search bar
-     * @param int $size the number of results
-     * @param int $from
-     * @param string|null $engine Name of the search engine to use. Use default if `null`
-     * @param array|null $options
-     * @return SearchQuery a fully built query
-     */
-    public static function fromString($searchString, $size = 50, $from = 0, $engine = null, array $options = [])
-    {
-        return new self($searchString, $engine, $size, $from, $options);
-    }
-
-    /**
-     * Makes a query from an array containing data.
-     * Fields are:
-     * - search-query-string
-     * - search-engine
-     * - search-query-size
-     * - search-query-from
-     *
-     * @param array $request
-     * @return SearchQuery
-     */
-    public static function fromRequestArray(array $request)
-    {
-        $searchQuery = self::filterArray($request, 'search-query-string', '', FILTER_SANITIZE_STRING);
-        $searchQueryAlt = self::filterArray($request, 'query_string', '', FILTER_SANITIZE_STRING);
-        $searchSize = self::filterArray($request, 'search-query-size', 10, FILTER_SANITIZE_NUMBER_INT);
-        $searchFrom = self::filterArray($request, 'search-query-from', 0, FILTER_SANITIZE_NUMBER_INT);
-        $searchEngine = self::filterArray($request, 'search-engine', null, FILTER_SANITIZE_STRING);
-
-        if (!empty($searchQueryAlt) && empty($searchQuery)) {
-            $searchQuery = $searchQueryAlt;
-        }
-
-        unset(
-            $request['search-query-string'],
-            $request['query_string'],
-            $request['search-query-size'],
-            $request['search-query-from'],
-            $request['search-engine']
-        );
-
-        return new self($searchQuery, $searchEngine, $searchSize, $searchFrom, $request);
-    }
-
-    /**
-     * Makes a Query from a GET request.
-     *
-     * @see fromRequestArray
-     * @return SearchQuery
-     */
-    public static function fromGetRequest()
-    {
-        return self::fromRequestArray($_GET);
-    }
-
-    /**
-     * Validates and filters values from an array.
-     *
-     * @param array $array The array to filter
-     * @param string $key The key of the array to load
-     * @param mixed $default The default value in case the array value is empty
-     * @param null|string $filter Optional filter to be used. e.g. FILTER_SANITIZE_STRING
-     * @return mixed
-     */
-    private static function filterArray(array $array, $key, $default, $filter = null)
-    {
-        if (!isset($array[$key])) {
-            return $default;
-        }
-
-        $value = filter_var($array[$key], $filter);
-
-        if ($value === false) {
-            return $default;
-        }
-
-        return $value;
-    }
-
     /** @inheritdoc */
     public function jsonSerialize()
     {
@@ -269,7 +274,7 @@ class SearchQuery implements \JsonSerializable
             'size' => $this->size,
             'from' => $this->from,
             'engine' => $this->engine,
-            'options' => $this->options
+            'options' => $this->options,
         ];
     }
 }

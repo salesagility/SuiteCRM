@@ -111,6 +111,7 @@ trait IndexingLockFileTrait
      * Checks if the file is readable.
      *
      * @param string $filename
+     *
      * @return bool
      */
     private function checkFile($filename)

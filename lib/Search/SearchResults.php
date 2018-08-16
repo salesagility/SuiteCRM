@@ -68,12 +68,12 @@ class SearchResults
     /**
      * SearchResults constructor.
      *
-     * @param array $hits Contains the results ids
-     * @param bool $groupedByModule Flag specifying if the (nested) hits are grouped by the modules
-     * @param float $searchTime The number of seconds it took to perform the search
-     * @param int $total The number of total hits (without pagination)
-     * @param array $scores Contains the scores of each hit. This should match in structure with $hits
-     * @param array $options Similar to scores, but customisable by the search engine
+     * @param array $hits            Contains the results ids
+     * @param bool  $groupedByModule Flag specifying if the (nested) hits are grouped by the modules
+     * @param float $searchTime      The number of seconds it took to perform the search
+     * @param int   $total           The number of total hits (without pagination)
+     * @param array $scores          Contains the scores of each hit. This should match in structure with $hits
+     * @param array $options         Similar to scores, but customisable by the search engine
      */
     public function __construct(array $hits, $groupedByModule = true, $searchTime = null, $total = null, array $scores = null, array $options = null)
     {
@@ -151,6 +151,7 @@ class SearchResults
 
     /**
      * @param string $key
+     *
      * @return array
      */
     public function getOption($key)

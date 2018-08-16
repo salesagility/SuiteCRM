@@ -82,6 +82,22 @@ class ElasticSearchEngine extends SearchEngine
     }
 
     /**
+     * @return string
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    /**
+     * @param string $index
+     */
+    public function setIndex($index)
+    {
+        $this->index = $index;
+    }
+
+    /**
      * @param SearchQuery $query
      */
     protected function validateQuery(SearchQuery &$query)
@@ -111,10 +127,10 @@ class ElasticSearchEngine extends SearchEngine
                         'fields' => ['name.*^5', '_all'],
                         'analyzer' => 'standard',
                         'default_operator' => 'OR',
-                        'minimum_should_match' => '66%'
-                    ]
-                ]
-            ]
+                        'minimum_should_match' => '66%',
+                    ],
+                ],
+            ],
         ];
 
         return $params;
@@ -157,21 +173,5 @@ class ElasticSearchEngine extends SearchEngine
         }
 
         return $results;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIndex()
-    {
-        return $this->index;
-    }
-
-    /**
-     * @param string $index
-     */
-    public function setIndex($index)
-    {
-        $this->index = $index;
     }
 }

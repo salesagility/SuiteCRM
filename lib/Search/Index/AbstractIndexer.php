@@ -94,50 +94,6 @@ abstract class AbstractIndexer
     }
 
     /**
-     * Sets up the internal logger.
-     */
-    protected function setupLogger()
-    {
-        $this->logger = new Logger($this->getIndexerName());
-
-        // Set up SugarLog handler (this will forward messages to the default logging)
-        $this->logger->pushHandler(new SugarLoggerHandler());
-
-        // Set up Monolog logfile logger
-        try {
-            $this->logger->pushHandler(new StreamHandler($this->logFile));
-        } catch (\Exception $exception) {
-            $this->logger->error('Failed to create indexer log stream handler.');
-            $this->logger->error($exception);
-        }
-
-        // Set up Monolog CLI handler
-        try {
-            $this->logger->pushHandler(new CliLoggerHandler());
-        } catch (\Exception $exception) {
-            $this->logger->error('Failed to create CLI logger handler.');
-            $this->logger->error($exception);
-        }
-    }
-
-    /**
-     * Method to retrieve the (short) class name of an object.
-     *
-     * @param object $obj
-     *
-     * @return string
-     */
-    private function getObjectClassName($obj)
-    {
-        try {
-            $reflect = new ReflectionClass($obj);
-            return $reflect->getShortName();
-        } catch (\ReflectionException $exception) {
-            return get_class($obj);
-        }
-    }
-
-    /**
      * Performs the indexing procedures for the whole database.
      *
      * All modules specified in `getModulesToIndex()` must be indexed.
@@ -325,5 +281,49 @@ abstract class AbstractIndexer
     public function getLogger()
     {
         return $this->logger;
+    }
+
+    /**
+     * Sets up the internal logger.
+     */
+    protected function setupLogger()
+    {
+        $this->logger = new Logger($this->getIndexerName());
+
+        // Set up SugarLog handler (this will forward messages to the default logging)
+        $this->logger->pushHandler(new SugarLoggerHandler());
+
+        // Set up Monolog logfile logger
+        try {
+            $this->logger->pushHandler(new StreamHandler($this->logFile));
+        } catch (\Exception $exception) {
+            $this->logger->error('Failed to create indexer log stream handler.');
+            $this->logger->error($exception);
+        }
+
+        // Set up Monolog CLI handler
+        try {
+            $this->logger->pushHandler(new CliLoggerHandler());
+        } catch (\Exception $exception) {
+            $this->logger->error('Failed to create CLI logger handler.');
+            $this->logger->error($exception);
+        }
+    }
+
+    /**
+     * Method to retrieve the (short) class name of an object.
+     *
+     * @param object $obj
+     *
+     * @return string
+     */
+    private function getObjectClassName($obj)
+    {
+        try {
+            $reflect = new ReflectionClass($obj);
+            return $reflect->getShortName();
+        } catch (\ReflectionException $exception) {
+            return get_class($obj);
+        }
     }
 }

@@ -86,6 +86,24 @@ class ElasticSearchIndexer extends AbstractIndexer
         $this->client = !empty($client) ? $client : ElasticSearchClientBuilder::getClient();
     }
 
+    /**
+     * Returns whether the Elasticsearch is enabled by user configuration or not.
+     *
+     * @return bool
+     */
+    public static function isEnabled()
+    {
+        /** @noinspection PhpVariableNamingConventionInspection */
+        global $sugar_config;
+
+        try {
+            return $sugar_config['search']['ElasticSearch']['enabled'];
+        } catch (\Exception $exception) {
+            \LoggerManager::getLogger()->fatal("Failed to retrieve ElasticSearch options");
+            return false;
+        }
+    }
+
     /** @inheritdoc */
     public function index()
     {
@@ -260,48 +278,6 @@ class ElasticSearchIndexer extends AbstractIndexer
         $this->client->index($args);
     }
 
-    /**
-     * Creates a batch indexing request for Elasticsearch.
-     *
-     * The size of the batch is defined by `this::batchSize`.
-     *
-     * Additionally, Beans marked as deleted will be remove from the index.
-     *
-     * @param string      $module
-     * @param SugarBean[] $beans
-     *
-     * @see batchSize
-     */
-    private function indexBatch($module, array $beans)
-    {
-        $params = ['body' => []];
-
-        foreach ($beans as $key => $bean) {
-            $head = ['_index' => $this->index, '_type' => $module, '_id' => $bean->id];
-
-            if ($bean->deleted) {
-                $params['body'][] = ['delete' => $head];
-                $this->removedRecordsCount++;
-            } else {
-                $body = $this->makeIndexParamsBodyFromBean($bean);
-                $params['body'][] = ['index' => $head];
-                $params['body'][] = $body;
-                $this->indexedRecordsCount++;
-                $this->indexedFieldsCount += count($body);
-            }
-
-            // Send a batch of $this->batchSize elements to the server
-            if ($key % $this->batchSize == 0) {
-                $this->sendBatch($params);
-            }
-        }
-
-        // Send the last batch if it exists
-        if (!empty($params['body'])) {
-            $this->sendBatch($params);
-        }
-    }
-
     /** @inheritdoc */
     public function removeBean(SugarBean $bean)
     {
@@ -389,6 +365,77 @@ class ElasticSearchIndexer extends AbstractIndexer
         $meta = $results[$this->index]['mappings'][$module]['_meta'];
         return $meta;
 
+    }
+
+    /** @return int */
+    public function getBatchSize()
+    {
+        return $this->batchSize;
+    }
+
+    /** @param int $batchSize */
+    public function setBatchSize($batchSize)
+    {
+        $this->batchSize = $batchSize;
+    }
+
+    /** @return string */
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    /**
+     * Sets the name of the Elasticsearch index to send requests to.
+     *
+     * @param string $index
+     */
+    public function setIndex($index)
+    {
+        $this->logger->debug("Setting index to $index");
+        $this->index = $index;
+    }
+
+    /**
+     * Creates a batch indexing request for Elasticsearch.
+     *
+     * The size of the batch is defined by `this::batchSize`.
+     *
+     * Additionally, Beans marked as deleted will be remove from the index.
+     *
+     * @param string      $module
+     * @param SugarBean[] $beans
+     *
+     * @see batchSize
+     */
+    private function indexBatch($module, array $beans)
+    {
+        $params = ['body' => []];
+
+        foreach ($beans as $key => $bean) {
+            $head = ['_index' => $this->index, '_type' => $module, '_id' => $bean->id];
+
+            if ($bean->deleted) {
+                $params['body'][] = ['delete' => $head];
+                $this->removedRecordsCount++;
+            } else {
+                $body = $this->makeIndexParamsBodyFromBean($bean);
+                $params['body'][] = ['index' => $head];
+                $params['body'][] = $body;
+                $this->indexedRecordsCount++;
+                $this->indexedFieldsCount += count($body);
+            }
+
+            // Send a batch of $this->batchSize elements to the server
+            if ($key % $this->batchSize == 0) {
+                $this->sendBatch($params);
+            }
+        }
+
+        // Send the last batch if it exists
+        if (!empty($params['body'])) {
+            $this->sendBatch($params);
+        }
     }
 
     /**
@@ -518,52 +565,5 @@ class ElasticSearchIndexer extends AbstractIndexer
         }
 
         return $meta['last_index'];
-    }
-
-    /** @return int */
-    public function getBatchSize()
-    {
-        return $this->batchSize;
-    }
-
-    /** @param int $batchSize */
-    public function setBatchSize($batchSize)
-    {
-        $this->batchSize = $batchSize;
-    }
-
-    /** @return string */
-    public function getIndex()
-    {
-        return $this->index;
-    }
-
-    /**
-     * Sets the name of the Elasticsearch index to send requests to.
-     *
-     * @param string $index
-     */
-    public function setIndex($index)
-    {
-        $this->logger->debug("Setting index to $index");
-        $this->index = $index;
-    }
-
-    /**
-     * Returns whether the Elasticsearch is enabled by user configuration or not.
-     *
-     * @return bool
-     */
-    public static function isEnabled()
-    {
-        /** @noinspection PhpVariableNamingConventionInspection */
-        global $sugar_config;
-
-        try {
-            return $sugar_config['search']['ElasticSearch']['enabled'];
-        } catch (\Exception $exception) {
-            \LoggerManager::getLogger()->fatal("Failed to retrieve ElasticSearch options");
-            return false;
-        }
     }
 }

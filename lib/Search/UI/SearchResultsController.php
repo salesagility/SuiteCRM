@@ -54,7 +54,8 @@ class SearchResultsController extends Controller
 
     /**
      * SearchResultsController constructor.
-     * @param SearchQuery $query
+     *
+     * @param SearchQuery   $query
      * @param SearchResults $results
      */
     public function __construct(SearchQuery $query, SearchResults $results)
