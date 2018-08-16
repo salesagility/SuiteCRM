@@ -53,6 +53,7 @@ use SuiteCRM\Utility\BeanJsonSerializer;
 
 /**
  * Class ElasticSearchCommands
+ *
  * @package SuiteCRM\Robo\Plugin\Commands
  */
 class ElasticSearchCommands extends \Robo\Tasks
@@ -67,9 +68,10 @@ class ElasticSearchCommands extends \Robo\Tasks
      * The full Elasticsearch query string syntax is available. See link below.
      *
      * @see https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-query-string-query.html#query-string-syntax
-     * @param string $query The search query. See elasticsearch syntax.
-     * @param int $size How many results to show
-     * @param bool $showJson if set to `1` shows a JSON for each results.
+     *
+     * @param string $query    The search query. See elasticsearch syntax.
+     * @param int    $size     How many results to show
+     * @param bool   $showJson if set to `1` shows a JSON for each results.
      */
     public function elasticSearch($query, $size = 20, $showJson = false)
     {
@@ -95,36 +97,10 @@ class ElasticSearchCommands extends \Robo\Tasks
     }
 
     /**
-     * Print the results for each module.
-     *
-     * @param bool $showJson
-     * @param string $module
-     * @param array $ids
-     */
-    private function printModuleResults($showJson, $module, array $ids)
-    {
-        $this->io()->section($module);
-
-        $results = [];
-
-        $json = BeanJsonSerializer::make();
-
-        foreach ($ids as $id) {
-            $bean = BeanFactory::getBean($module, $id);
-
-            $results[] = $showJson
-                ? $json->serialize($bean, true, true)
-                : mb_convert_encoding($bean->name, 'UTF-8', 'HTML-ENTITIES');
-        }
-
-        $this->io()->listing($results);
-    }
-
-    /**
      * Indexes the sql database in the Elasticsearch engine.
      *
-     * Differential indexing will only update (and fetch) beans that have been created/modified/removed since the last run.
-     * This should be much faster than a full index.
+     * Differential indexing will only update (and fetch) beans that have been created/modified/removed since the last
+     * run. This should be much faster than a full index.
      *
      * The two documentifiers differ slightly on the type of structure they output.
      * See the relative classes to know more.
@@ -132,7 +108,8 @@ class ElasticSearchCommands extends \Robo\Tasks
      * NOTE: from CLI passing `true` or `false` won't work. Use `0` and `1`, instead as parameters.
      *
      * @param int $differential 0 = full index | 1 = differential index
-     * @param int $searchdefs 0 = BeanJsonSerializer | 1 = SearchDefsDocumentifier
+     * @param int $searchdefs   0 = BeanJsonSerializer | 1 = SearchDefsDocumentifier
+     *
      * @see ElasticSearchIndexer::index()
      * @see SearchDefsDocumentifier
      * @see JsonSerializerDocumentifier
@@ -158,6 +135,32 @@ class ElasticSearchCommands extends \Robo\Tasks
 
         $indexer = new ElasticSearchIndexer();
         $indexer->removeIndex();
+    }
+
+    /**
+     * Print the results for each module.
+     *
+     * @param bool   $showJson
+     * @param string $module
+     * @param array  $ids
+     */
+    private function printModuleResults($showJson, $module, array $ids)
+    {
+        $this->io()->section($module);
+
+        $results = [];
+
+        $json = BeanJsonSerializer::make();
+
+        foreach ($ids as $id) {
+            $bean = BeanFactory::getBean($module, $id);
+
+            $results[] = $showJson
+                ? $json->serialize($bean, true, true)
+                : mb_convert_encoding($bean->name, 'UTF-8', 'HTML-ENTITIES');
+        }
+
+        $this->io()->listing($results);
     }
 
     /**
