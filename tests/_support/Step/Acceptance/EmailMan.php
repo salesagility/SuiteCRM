@@ -4,6 +4,10 @@ namespace Step\Acceptance;
 
 class EmailMan extends \AcceptanceTester
 {
+    
+    private static $testerEmailAddress = 'sa.tester2@gmail.com';
+    private static $testerEmailPassword = 'chilisauce';
+    
     /**
      * Go to email settings
      */
@@ -33,9 +37,9 @@ class EmailMan extends \AcceptanceTester
         $I->click('#gmail-button');
 
         $I->checkOption('#mail_smtpauth_req');
-        $I->fillField('#mail_smtpuser', $faker->email);
+        $I->fillField('#mail_smtpuser', self::$testerEmailAddress);
         $I->executeJS('SUGAR.util.setEmailPasswordEdit(\'mail_smtppass\')');
-        $I->fillField('#mail_smtppass', $faker->email);
+        $I->fillField('#mail_smtppass', self::$testerEmailPassword);
         $I->checkOption('#notify_allow_default_outbound');
 
         $EditView->clickSaveButton();
