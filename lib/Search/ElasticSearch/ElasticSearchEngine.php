@@ -49,6 +49,9 @@ use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
 
+/**
+ * SearchEngine that use Elasticsearch index for performing almost real-time search.
+ */
 class ElasticSearchEngine extends SearchEngine
 {
     /** @var Client */

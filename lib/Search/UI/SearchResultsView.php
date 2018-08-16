@@ -45,6 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use SuiteCRM\Search\UI\MVC\View;
 
+/**
+ * View that renders the search results.
+ */
 class SearchResultsView extends View
 {
     /**

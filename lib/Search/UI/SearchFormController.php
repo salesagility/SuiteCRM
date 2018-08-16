@@ -46,6 +46,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\UI\MVC\Controller;
 
+/**
+ * Controller for the search form (search bar, button and options).
+ */
 class SearchFormController extends Controller
 {
     private $query;

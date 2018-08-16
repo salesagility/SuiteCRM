@@ -47,6 +47,9 @@ use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
 use SuiteCRM\Search\UI\MVC\Controller;
 
+/**
+ * Controller that handles the search results.
+ */
 class SearchResultsController extends Controller
 {
     private $query;

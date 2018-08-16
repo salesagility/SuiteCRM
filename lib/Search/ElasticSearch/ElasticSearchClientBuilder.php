@@ -45,6 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use Elasticsearch\ClientBuilder;
 
+/**
+ * Class ElasticSearchClientBuilder generates a configured Elasticsearch client.
+ */
 class ElasticSearchClientBuilder
 {
     private static $hosts;

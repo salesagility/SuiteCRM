@@ -43,6 +43,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+/**
+ * Generic controller for the Search Framework.
+ */
 abstract class Controller
 {
     /** @var View */
