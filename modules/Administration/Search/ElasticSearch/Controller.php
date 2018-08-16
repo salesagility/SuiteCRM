@@ -103,15 +103,9 @@ class Controller extends AbstractController
 
         $cfg->saveConfig();
 
-        /*
-         * For some unknown and rather magic reason, after the configuration is saved, the file is not instantly changed.
-         * In the moment when the configuration file is loaded, it still retains the old values, thus it would seem
-         * that the changes are not applied, and you need to reload the page. This is probably the hidden reason behind
-         * the fact that when hitting save in more or less every voice of the administration menu, they will take you
-         * back to the admin page, rather then keeping you in page you were before.
-         *
-         * Long story short, I am redirecting to the admin panel too.
-         */
+        if ($this->isAjax()) {
+            $this->yieldJson(['status' => 'success']);
+        }
 
         $this->redirect('index.php?module=Administration&action=index');
     }

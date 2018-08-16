@@ -1,5 +1,4 @@
-<?php
-/**
+/*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,41 +36,29 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Modules\Administration\Search;
+/* global SUGAR */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+$("form").submit(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-use Configurator;
+    var method = $(this).attr("method");
+    var action = $(this).attr("action");
+    var data = $(this).serialize();
 
-require_once __DIR__ . '/../../Configurator/Configurator.php';
+    console.log(data);
 
-class Controller extends MVC\Controller
-{
-    public function __construct()
-    {
-        parent::__construct(new View());
+    function translate(label) {
+        return SUGAR.language.get("Administration", label);
     }
 
-    public function doSave()
-    {
-        $input = INPUT_POST;
-
-        $searchController = filter_input($input, 'search-controller', FILTER_SANITIZE_STRING);
-        $searchEngine = filter_input($input, 'search-engine', FILTER_SANITIZE_STRING);
-
-        $cfg = new Configurator();
-
-        $cfg->config['search']['controller'] = $searchController;
-        $cfg->config['search']['defaultEngine'] = $searchEngine;
-
-        $cfg->saveConfig();
-
-        if ($this->isAjax()) {
-            $this->yieldJson(['status' => 'success']);
-        }
-
-        $this->redirect('index.php?module=Administration&action=index');
-    }
-}
+    $.ajax({
+        url: action,
+        type: method.toLowerCase(),
+        data: data
+    }).success(function () {
+        alert(translate("LBL_AJAX_SUBMIT_SUCCESS"));
+    }).fail(function () {
+        alert("LBL_AJAX_SUBMIT_FAIL");
+    });
+});
