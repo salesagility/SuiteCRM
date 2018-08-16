@@ -1,5 +1,4 @@
-<?php
-/**
+/*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,17 +36,29 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Search\SearchTestAbstract;
+/* global SUGAR */
 
-class SearchInstallTest extends SearchTestAbstract
-{
-    public function testConfiguredSuccessfully()
-    {
-        global $sugar_config;
+$("form").submit(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-        self::assertArrayHasKey('search', $sugar_config, 'Search config not present');
+    var method = $(this).attr("method");
+    var action = $(this).attr("action");
+    var data = $(this).serialize();
 
-        self::assertArrayHasKey('controller', $sugar_config['search']);
-        self::assertArrayHasKey('default_engine', $sugar_config['search']);
+    console.log(data);
+
+    function translate(label) {
+        return SUGAR.language.get("Administration", label);
     }
-}
+
+    $.ajax({
+        url: action,
+        type: method.toLowerCase(),
+        data: data
+    }).success(function () {
+        alert(translate("LBL_AJAX_SUBMIT_SUCCESS"));
+    }).fail(function () {
+        alert("LBL_AJAX_SUBMIT_FAIL");
+    });
+});

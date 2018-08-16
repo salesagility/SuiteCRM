@@ -52,11 +52,12 @@ class SearchFormController extends Controller
 
     /**
      * SearchFormController constructor.
+     *
      * @param SearchQuery $query
      */
     public function __construct($query)
     {
-        $this->view = new SearchFormView();
+        parent::__construct(new SearchFormView());
         $this->query = $query;
     }
 

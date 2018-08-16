@@ -42,24 +42,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 use Elasticsearch\Client;
+use Elasticsearch\Common\Exceptions\BadRequest400Exception;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
+use SuiteCRM\Search\Exceptions\SearchInvalidRequestException;
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
 
 class ElasticSearchEngine extends SearchEngine
 {
-    /**
-     * @var Client
-     */
+    /** @var Client */
     private $client;
-    /**
-     * @var string
-     */
+    /** @var string */
     private $index = 'main';
 
     /**
      * ElasticSearchEngine constructor.
+     *
      * @param Client|null $client
      */
     public function __construct(Client $client = null)
@@ -83,7 +82,7 @@ class ElasticSearchEngine extends SearchEngine
     }
 
     /**
-     * @param $query SearchQuery
+     * @param SearchQuery $query
      */
     protected function validateQuery(SearchQuery &$query)
     {
@@ -93,7 +92,9 @@ class ElasticSearchEngine extends SearchEngine
 
     /**
      * Generates the parameter array for the Elasticsearch API from a SearchQuery.
-     * @param $query SearchQuery
+     *
+     * @param SearchQuery $query
+     *
      * @return array
      */
     private function createSearchParams($query)
@@ -122,12 +123,17 @@ class ElasticSearchEngine extends SearchEngine
     /**
      * Calls the Elasticsearch API.
      *
-     * @param $params array
+     * @param array $params
+     *
      * @return array
      */
     private function runElasticSearch($params)
     {
-        $results = $this->client->search($params);
+        try {
+            $results = $this->client->search($params);
+        } /** @noinspection PhpRedundantCatchClauseInspection */ catch (BadRequest400Exception $exception) {
+            throw new SearchInvalidRequestException('The query was not valid.');
+        }
 
         return $results;
     }
@@ -136,7 +142,8 @@ class ElasticSearchEngine extends SearchEngine
      * Reads the array returned from the Elasticsearch API
      * and converts it into an associative array of ids, grouped by Module.
      *
-     * @param $hits array
+     * @param array $hits
+     *
      * @return array
      */
     private function parseHits($hits)
@@ -167,5 +174,4 @@ class ElasticSearchEngine extends SearchEngine
     {
         $this->index = $index;
     }
-
 }

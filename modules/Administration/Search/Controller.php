@@ -68,6 +68,10 @@ class Controller extends MVC\Controller
 
         $cfg->saveConfig();
 
+        if ($this->isAjax()) {
+            $this->yieldJson(['status' => 'success']);
+        }
+
         $this->redirect('index.php?module=Administration&action=index');
     }
 }

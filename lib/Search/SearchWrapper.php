@@ -57,7 +57,6 @@ class SearchWrapper
      */
     private static $engines = [
         'ElasticSearchEngine' => 'lib/Search/ElasticSearch/ElasticSearchEngine.php',
-        'SimpleSqlSearchEngine' => 'lib/Search/SqlSearch/SimpleSqlSearchEngine.php',
     ];
 
     /** @var string Path to the folder where to load custom engines from */
@@ -97,6 +96,10 @@ class SearchWrapper
 
         if (!is_string($engineName)) {
             throw new SearchEngineNotFoundException('$engineName should either be a string or a SearchEngine');
+        }
+
+        if (!preg_match("/^[a-zA-Z0-9_]*$/", $engineName)) {
+            throw new SearchEngineNotFoundException("'$engineName' is not a valid class name. Only letters, digits and underscores are allowed.");
         }
 
         $filename = isset(self::$engines[$engineName])

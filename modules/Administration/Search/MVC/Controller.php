@@ -39,6 +39,8 @@
 
 namespace SuiteCRM\Modules\Administration\Search\MVC;
 
+use SuiteCRM\Search\UI\MVC\Controller as BaseController;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -46,87 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Abstract controller for the Search settings.
  */
-abstract class Controller
+abstract class Controller extends BaseController
 {
-    /** @var View */
-    protected $view;
 
-    /**
-     * Controller constructor.
-     *
-     * @param View $view
-     */
-    public function __construct(View $view)
-    {
-        $this->view = $view;
-    }
-
-    /**
-     * Handles a request by reading the request 'do' parameters.
-     *
-     * Always falls back to the 'display' method.
-     */
-    public function handle()
-    {
-        if ($this->isActionRequest()) {
-            $methodName = $this->getActionName();
-            $this->$methodName();
-            return;
-        }
-
-        $this->display();
-    }
-
-    /**
-     * Echoes the view.
-     */
-    public function display()
-    {
-        $this->view->preDisplay();
-        $this->view->display();
-    }
-
-    /**
-     * Performs a redirect to a page.
-     *
-     * @param string $location
-     */
-    public function redirect($location)
-    {
-        header("Location: $location");
-        exit;
-    }
-
-    /**
-     * Echoes a JSON with the proper header parameters.
-     *
-     * @param array $data
-     */
-    public function yieldJson(array $data)
-    {
-        ob_clean(); // deletes the rest of the html previous to this.
-        header('Content-Type: application/json');
-        echo json_encode($data);
-        exit;
-    }
-
-    /**
-     * Returns whether the client is asking for an action to be executed by the controller.
-     *
-     * @return bool
-     */
-    private function isActionRequest()
-    {
-        return method_exists($this, $this->getActionName());
-    }
-
-    /**
-     * Returns the name of the action sent by the client, sanitized and prefixed with 'do'.
-     *
-     * @return string
-     */
-    private function getActionName()
-    {
-        return 'do' . filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING);
-    }
 }

@@ -65,7 +65,7 @@
                 </div>
             </td>
             <td scope="row" style="vertical-align: middle">
-                {*If the checkbox is disabled the hidden value will be ridden instead1*}
+                {*If the checkbox is disabled the hidden value will be overridden*}
                 <input type="hidden" name="search-controller" value="UnifiedSearch">
                 <input type="checkbox" name="search-controller"
                        id="search-wrapper-enabled"
@@ -106,5 +106,6 @@
     {$JAVASCRIPT}
 
     <script src="modules/Administration/Search/scripts.js"></script>
+    <script src="modules/Administration/Search/ajaxSubmit.js"></script>
 
 </form>

@@ -151,3 +151,4 @@
 
 </form>
 <script src="modules/Administration/Search/ElasticSearch/scripts.js"></script>
+<script src="modules/Administration/Search/ajaxSubmit.js"></script>
