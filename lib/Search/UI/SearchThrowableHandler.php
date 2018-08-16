@@ -157,7 +157,7 @@ class SearchThrowableHandler
                 'Default Search Engine' => SearchWrapper::getDefaultEngine(),
                 'Friendly Error Message' => $this->getFriendlyMessage(),
             ];
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             return ['error' => 'failed to get SearchWrapper status'];
         }
     }

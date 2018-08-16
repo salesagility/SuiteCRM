@@ -98,7 +98,7 @@ trait IndexingLockFileTrait
 
         try {
             $name = (new \ReflectionClass($this))->getShortName();
-        } catch (\ReflectionException $e) {
+        } catch (\ReflectionException $exception) {
             $name = str_replace('\\', '.', get_class($this));
         }
 
@@ -147,9 +147,9 @@ trait IndexingLockFileTrait
             if ($result === false) {
                 throw new \RuntimeException('Failed to write lock file!');
             }
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             $this->logger->error('Error while writing lock file');
-            $this->logger->error($e);
+            $this->logger->error($exception);
         }
     }
 }
