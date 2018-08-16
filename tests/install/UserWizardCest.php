@@ -38,9 +38,12 @@ class UserWizardCest
      * Given that that I install SuiteCRM with the default configuration settings I
      * Expect to be able to login as an administrator.
      */
-    public function testScenarioInstallSuiteCRMWithDefaultConfiguration(InstallTester $I, AcceptanceTester $I2, 
+    public function testScenarioInstallSuiteCRMWithDefaultConfiguration(InstallTester $I, AcceptanceTester $I2,
         \Step\Acceptance\EmailMan $emailMan, \Helper\WebDriverHelper $webDriverHelper)
     {
+        
+        // -------- Install and setup CRM ----------
+        
         $I->wantTo('check the php version meets the recommended requirements.');
         $I->amOnUrl($webDriverHelper->getInstanceURL());
         $I->waitForText('Setup');
@@ -62,5 +65,7 @@ class UserWizardCest
         $emailMan->createEmailSettings();
 
         $I2->dontSee('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');
+        $I2->see('An email was sent to the specified email address using the provided outgoing mail settings. ' +
+                'Please check to see if the email was received to verify the settings are correct.');
     }
 }
