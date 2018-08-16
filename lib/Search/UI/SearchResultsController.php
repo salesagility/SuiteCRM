@@ -59,7 +59,7 @@ class SearchResultsController extends Controller
      */
     public function __construct(SearchQuery $query, SearchResults $results)
     {
-        $this->view = new SearchResultsView();
+        parent::__construct(new SearchResultsView());
         $this->query = $query;
         $this->results = $results;
     }

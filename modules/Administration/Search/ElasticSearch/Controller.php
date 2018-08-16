@@ -78,7 +78,7 @@ class Controller extends AbstractController
      */
     public function display()
     {
-        $this->view->getSmarty()->assign('schedulers', $this->getSchedulers());
+        $this->view->getTemplate()->assign('schedulers', $this->getSchedulers());
         parent::display();
     }
 

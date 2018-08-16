@@ -54,7 +54,8 @@ abstract class View
 
     /**
      * View constructor.
-     * @param $file
+     *
+     * @param string $file
      */
     public function __construct($file)
     {
@@ -71,6 +72,14 @@ abstract class View
     }
 
     /**
+     * Where to assign vars to the template.
+     */
+    public function preDisplay()
+    {
+
+    }
+
+    /**
      * Renders the template.
      */
     public function display()
@@ -79,18 +88,18 @@ abstract class View
     }
 
     /**
-     * @param string $templateFile
-     */
-    public function setTemplateFile($templateFile)
-    {
-        $this->templateFile = $templateFile;
-    }
-
-    /**
      * @return string
      */
     public function getTemplateFile()
     {
         return $this->templateFile;
+    }
+
+    /**
+     * @param string $templateFile
+     */
+    public function setTemplateFile($templateFile)
+    {
+        $this->templateFile = $templateFile;
     }
 }

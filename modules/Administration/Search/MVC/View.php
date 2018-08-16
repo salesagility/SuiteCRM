@@ -43,31 +43,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use Sugar_Smarty;
 use SuiteCRM\Search\SearchWrapper;
+use SuiteCRM\Search\UI\MVC\View as BaseView;
 use SuiteCRM\Utility\StringUtils;
 
 /**
  * Class View holds utilities for rendering a template file.
  */
-abstract class View
+abstract class View extends BaseView
 {
-    /** @var Sugar_Smarty The smarty template */
-    protected $smarty;
-    /** @var string Path to the smarty template file */
-    protected $file;
-
-    /**
-     * View constructor.
-     *
-     * @param $file
-     */
-    public function __construct($file)
-    {
-        $this->smarty = new Sugar_Smarty();
-        $this->file = $file;
-    }
-
     /**
      * Configures translations and global variables.
      *
@@ -90,24 +74,6 @@ abstract class View
         $this->smarty->assign('BUTTONS', $this->getButtons());
 
         $this->smarty->assign('config', $sugar_config['search']);
-    }
-
-    /**
-     * Echoes the view.
-     */
-    public function display()
-    {
-        $this->smarty->display($this->file);
-    }
-
-    /**
-     * Returns the smarty template object.
-     *
-     * @return Sugar_Smarty
-     */
-    public function getSmarty()
-    {
-        return $this->smarty;
     }
 
     /**
