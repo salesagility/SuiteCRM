@@ -19,6 +19,7 @@ abstract class SearchEngine
      * Performs a search using the search engine and returns a list SearchResults instance.
      *
      * @param SearchQuery $query
+     *
      * @return SearchResults
      */
     public abstract function search(SearchQuery $query);
@@ -28,7 +29,7 @@ abstract class SearchEngine
      *
      * The search view contains both a search bar and search results (if any).
      *
-     * @param $query SearchQuery
+     * @param SearchQuery $query
      */
     public function searchAndDisplay(SearchQuery $query)
     {
@@ -44,7 +45,7 @@ abstract class SearchEngine
     /**
      * Shows the default search form (search bar and options) for a given search query.
      *
-     * @param $query SearchQuery
+     * @param SearchQuery $query
      */
     public function displayForm(SearchQuery $query)
     {
@@ -55,7 +56,7 @@ abstract class SearchEngine
     /**
      * Shows the default search results for the given search query and results.
      *
-     * @param SearchQuery $query
+     * @param SearchQuery   $query
      * @param SearchResults $results
      */
     public function displayResults(SearchQuery $query, SearchResults $results)
@@ -72,7 +73,8 @@ abstract class SearchEngine
      *
      * If it is impossible to validate or sanitize the query a `SearchInvalidRequestException` should be thrown.
      *
-     * @param $query SearchQuery the query to validate
+     * @param SearchQuery $query the query to validate
+     *
      * @throws SearchInvalidRequestException if the query is not valid
      */
     protected function validateQuery(SearchQuery &$query)

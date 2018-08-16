@@ -77,36 +77,6 @@ class SimpleSqlSearchEngine extends SearchEngine
     }
 
     /**
-     * Performs a search in a single module table and returns a list of ids.
-     *
-     * @param SearchQuery $query
-     * @param string      $module
-     *
-     * @return array
-     */
-    private function searchModule(SearchQuery $query, $module)
-    {
-        $seed = BeanFactory::getBean($module);
-        $table = $seed->table_name;
-
-        $fields = $this->filterTableStructure($this->getTableStructure($table));
-
-        $sql = $this->makeSearchQuery($query, $table, $fields);
-
-        $hits = [];
-
-        $db = DBManagerFactory::getInstance();
-
-        $result = $db->query($sql);
-
-        while ($row = $db->fetchRow($result)) {
-            $hits [] = $row['id'];
-        }
-
-        return $hits;
-    }
-
-    /**
      * Filters an array of table structures to only retrieve search-relevant fields.
      *
      * @param array $fields
@@ -152,6 +122,43 @@ class SimpleSqlSearchEngine extends SearchEngine
         return $fields;
     }
 
+    /** @inheritdoc */
+    protected function validateQuery(SearchQuery &$query)
+    {
+        parent::validateQuery($query);
+        $query->convertEncoding();
+    }
+
+    /**
+     * Performs a search in a single module table and returns a list of ids.
+     *
+     * @param SearchQuery $query
+     * @param string      $module
+     *
+     * @return array
+     */
+    private function searchModule(SearchQuery $query, $module)
+    {
+        $seed = BeanFactory::getBean($module);
+        $table = $seed->table_name;
+
+        $fields = $this->filterTableStructure($this->getTableStructure($table));
+
+        $sql = $this->makeSearchQuery($query, $table, $fields);
+
+        $hits = [];
+
+        $db = DBManagerFactory::getInstance();
+
+        $result = $db->query($sql);
+
+        while ($row = $db->fetchRow($result)) {
+            $hits [] = $row['id'];
+        }
+
+        return $hits;
+    }
+
     /**
      * Makes the search SQL query.
      *
@@ -177,12 +184,5 @@ class SimpleSqlSearchEngine extends SearchEngine
 
         $sql = sprintf($sql, $table, implode(' OR ', $wheres));
         return $sql;
-    }
-
-    /** @inheritdoc */
-    protected function validateQuery(SearchQuery &$query)
-    {
-        parent::validateQuery($query);
-        $query->convertEncoding();
     }
 }

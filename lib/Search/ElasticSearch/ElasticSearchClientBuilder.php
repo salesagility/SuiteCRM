@@ -45,6 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use Elasticsearch\ClientBuilder;
 
+/**
+ * Class ElasticSearchClientBuilder generates a configured Elasticsearch client.
+ */
 class ElasticSearchClientBuilder
 {
     private static $hosts;
@@ -66,84 +69,6 @@ class ElasticSearchClientBuilder
     }
 
     /** @noinspection PhpUnusedPrivateMethodInspection */
-    /**
-     * Loads config from a json file.
-     *
-     * @param $file
-     * @return array
-     */
-    private static function loadFromFile($file)
-    {
-        if (!file_exists($file)) {
-            return self::loadDefaultConfig();
-        }
-
-        $results = file_get_contents($file);
-
-        if ($results === false) {
-            return self::loadDefaultConfig();
-        }
-
-        $hosts = json_decode($results, true);
-
-        return self::loadFromArray($hosts);
-    }
-
-    /**
-     * Sanitizes an array of configured hosts.
-     *
-     * @param $hosts
-     * @return array
-     */
-    private static function loadFromArray($hosts)
-    {
-        $sanitized = [];
-
-        foreach ($hosts as $host) {
-            $sanitized[] = self::sanitizeHost($host);
-        }
-
-        return $sanitized;
-    }
-
-    /**
-     * Loads Elasticsearch client configuration from the $sugar_config global.
-     *
-     * @return array
-     */
-    private static function loadFromSugarConfig()
-    {
-        global $sugar_config;
-
-        $host = $sugar_config['search']['ElasticSearch']['host'];
-        $user = $sugar_config['search']['ElasticSearch']['user'];
-        $pass = $sugar_config['search']['ElasticSearch']['pass'];
-
-        $host = trim($host);
-        $user = trim($user);
-
-        if (empty($user)) {
-            return [self::sanitizeHost($host)];
-        }
-
-        return [
-            self::sanitizeHost([
-                'host' => $host,
-                'user' => $user,
-                'pass' => $pass
-            ])
-        ];
-    }
-
-    /**
-     * Returns the default connection (['127.0.0.1']).
-     *
-     * @return array
-     */
-    private static function loadDefaultConfig()
-    {
-        return [self::sanitizeHost('127.0.0.1')];
-    }
 
     /**
      * Perform a series of standardizations and checks to make sure that the host is valid.
@@ -151,6 +76,7 @@ class ElasticSearchClientBuilder
      * Especially useful when reading user inputs.
      *
      * @param array|string $host
+     *
      * @return array
      */
     public static function sanitizeHost($host)
@@ -188,11 +114,94 @@ class ElasticSearchClientBuilder
         return $merged;
     }
 
+    /** @noinspection PhpUnusedPrivateMethodInspection */
+    /**
+     * Loads config from a json file.
+     *
+     * @param $file
+     *
+     * @return array
+     */
+    private static function loadFromFile($file)
+    {
+        if (!file_exists($file)) {
+            return self::loadDefaultConfig();
+        }
+
+        $results = file_get_contents($file);
+
+        if ($results === false) {
+            return self::loadDefaultConfig();
+        }
+
+        $hosts = json_decode($results, true);
+
+        return self::loadFromArray($hosts);
+    }
+
+    /**
+     * Sanitizes an array of configured hosts.
+     *
+     * @param $hosts
+     *
+     * @return array
+     */
+    private static function loadFromArray($hosts)
+    {
+        $sanitized = [];
+
+        foreach ($hosts as $host) {
+            $sanitized[] = self::sanitizeHost($host);
+        }
+
+        return $sanitized;
+    }
+
+    /**
+     * Loads Elasticsearch client configuration from the $sugar_config global.
+     *
+     * @return array
+     */
+    private static function loadFromSugarConfig()
+    {
+        global $sugar_config;
+
+        $host = $sugar_config['search']['ElasticSearch']['host'];
+        $user = $sugar_config['search']['ElasticSearch']['user'];
+        $pass = $sugar_config['search']['ElasticSearch']['pass'];
+
+        $host = trim($host);
+        $user = trim($user);
+
+        if (empty($user)) {
+            return [self::sanitizeHost($host)];
+        }
+
+        return [
+            self::sanitizeHost([
+                'host' => $host,
+                'user' => $user,
+                'pass' => $pass,
+            ]),
+        ];
+    }
+
+    /**
+     * Returns the default connection (['127.0.0.1']).
+     *
+     * @return array
+     */
+    private static function loadDefaultConfig()
+    {
+        return [self::sanitizeHost('127.0.0.1')];
+    }
+
     /**
      * Adds the scheme to url lacking of it.
      *
      * @param string $url
      * @param string $scheme
+     *
      * @return string
      */
     private static function addHttp($url, $scheme = 'http')

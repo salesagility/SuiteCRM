@@ -39,14 +39,15 @@
 
 namespace SuiteCRM\Modules\Administration\Search;
 
+use SuiteCRM\Search\SearchConfigurator;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use Configurator;
-
-require_once __DIR__ . '/../../Configurator/Configurator.php';
-
+/**
+ * Class Controller handles the the actions for the search settings.
+ */
 class Controller extends MVC\Controller
 {
     public function __construct()
@@ -54,19 +55,18 @@ class Controller extends MVC\Controller
         parent::__construct(new View());
     }
 
+    /**
+     * Saves the configuration from a POST request.
+     *
+     * If called from ajax it will return a json.
+     */
     public function doSave()
     {
-        $input = INPUT_POST;
+        $searchEngine = filter_input(INPUT_POST, 'search-engine', FILTER_SANITIZE_STRING);
 
-        $searchController = filter_input($input, 'search-controller', FILTER_SANITIZE_STRING);
-        $searchEngine = filter_input($input, 'search-engine', FILTER_SANITIZE_STRING);
-
-        $cfg = new Configurator();
-
-        $cfg->config['search']['controller'] = $searchController;
-        $cfg->config['search']['defaultEngine'] = $searchEngine;
-
-        $cfg->saveConfig();
+        SearchConfigurator::make()
+            ->setEngine($searchEngine)
+            ->save();
 
         if ($this->isAjax()) {
             $this->yieldJson(['status' => 'success']);

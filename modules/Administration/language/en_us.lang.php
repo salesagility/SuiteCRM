@@ -960,6 +960,10 @@ $mod_strings = array(
     'LBL_SEARCH_MODULES_HELP' => 'Select the module(s) that users will be able to search against using the Global Search.',
 
     // Search Engines Translations
+    'LBL_LEGACY_SEARCH_ENGINES' => 'Legacy Search',
+    'LBL_SEARCH_WRAPPER_ENGINES' => 'Search Engines (new)',
+    'LBL_BASIC_SEARCH_ENGINE' => 'Basic Search',
+    'LBL_BASIC_AND_AOD_ENGINE' => 'Basic + Advanced Search',
     'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
     'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine',
 

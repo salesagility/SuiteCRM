@@ -56,7 +56,8 @@ use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
 /**
- * Class SearchThrowableHandler handles an Exception or Error thrown during the search process and displays an error screen.
+ * Class SearchThrowableHandler handles an Exception or Error thrown during the search process and displays an error
+ * screen.
  *
  * If developer mode is enabled, further details will be provided.
  */
@@ -69,7 +70,8 @@ class SearchThrowableHandler
 
     /**
      * SearchThrowableHandler constructor.
-     * @param Throwable $throwable
+     *
+     * @param Throwable   $throwable
      * @param SearchQuery $query
      */
     public function __construct($throwable, SearchQuery $query)
@@ -153,9 +155,9 @@ class SearchThrowableHandler
                 'Available Engines' => implode(', ', SearchWrapper::getEngines()),
                 'Search Controller' => SearchWrapper::getController(),
                 'Default Search Engine' => SearchWrapper::getDefaultEngine(),
-                'Friendly Error Message' => $this->getFriendlyMessage()
+                'Friendly Error Message' => $this->getFriendlyMessage(),
             ];
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             return ['error' => 'failed to get SearchWrapper status'];
         }
     }

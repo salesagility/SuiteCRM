@@ -78,52 +78,6 @@ class SearchWrapper
     }
 
     /**
-     * Performs various validation and retrieves an instance of a given search engine.
-     *
-     * It first searches in the default definitions array `self::$engines`,
-     * then attempts to find a matching engine in the folder `self::CUSTOM_ENGINES_PATH`.
-     *
-     * @param string|SearchEngine $engineName
-     *
-     * @throws SearchEngineNotFoundException
-     * @return SearchEngine
-     */
-    private static function fetchEngine($engineName)
-    {
-        if (is_subclass_of($engineName, SearchEngine::class, false)) {
-            return $engineName;
-        }
-
-        if (!is_string($engineName)) {
-            throw new SearchEngineNotFoundException('$engineName should either be a string or a SearchEngine');
-        }
-
-        if (!preg_match("/^[a-zA-Z0-9_]*$/", $engineName)) {
-            throw new SearchEngineNotFoundException("'$engineName' is not a valid class name. Only letters, digits and underscores are allowed.");
-        }
-
-        $filename = isset(self::$engines[$engineName])
-            ? self::$engines[$engineName]
-            : self::$customEnginePath . $engineName . '.php';
-
-        if (!file_exists($filename)) {
-            throw new SearchEngineNotFoundException("Unable to find search file '$filename'' for engine '$engineName''.");
-        }
-
-        /** @noinspection PhpIncludeInspection */
-        require_once $filename;
-
-        if (!is_subclass_of($engineName, SearchEngine::class)) {
-            throw new SearchEngineNotFoundException("The provided class '$engineName' is not a subclass of SearchEngine");
-        }
-
-        /** @var SearchEngine $engineName */
-        $engineName = new $engineName();
-
-        return $engineName;
-    }
-
-    /**
      * Perform a search with the given query and engine.
      *
      * Results are grouped by module.
@@ -206,11 +160,58 @@ class SearchWrapper
     }
 
     /**
+     * Performs various validation and retrieves an instance of a given search engine.
+     *
+     * It first searches in the default definitions array `self::$engines`,
+     * then attempts to find a matching engine in the folder `self::CUSTOM_ENGINES_PATH`.
+     *
+     * @param string|SearchEngine $engineName
+     *
+     * @throws SearchEngineNotFoundException
+     * @return SearchEngine
+     */
+    private static function fetchEngine($engineName)
+    {
+        if (is_subclass_of($engineName, SearchEngine::class, false)) {
+            return $engineName;
+        }
+
+        if (!is_string($engineName)) {
+            throw new SearchEngineNotFoundException('$engineName should either be a string or a SearchEngine');
+        }
+
+        if (!preg_match("/^[a-zA-Z0-9_]*$/", $engineName)) {
+            throw new SearchEngineNotFoundException("'$engineName' is not a valid class name. Only letters, digits and underscores are allowed.");
+        }
+
+        $filename = isset(self::$engines[$engineName])
+            ? self::$engines[$engineName]
+            : self::$customEnginePath . $engineName . '.php';
+
+        if (!file_exists($filename)) {
+            throw new SearchEngineNotFoundException("Unable to find search file '$filename'' for engine '$engineName''.");
+        }
+
+        /** @noinspection PhpIncludeInspection */
+        require_once $filename;
+
+        if (!is_subclass_of($engineName, SearchEngine::class)) {
+            throw new SearchEngineNotFoundException("The provided class '$engineName' is not a subclass of SearchEngine");
+        }
+
+        /** @var SearchEngine $engineName */
+        $engineName = new $engineName();
+
+        return $engineName;
+    }
+
+    /**
      * Returns a configured parameter from the sugar config.
      *
      * If the values is not set, returns `null`.
      *
      * @param $key
+     *
      * @return mixed|null
      */
     private static function getSearchConfig($key)

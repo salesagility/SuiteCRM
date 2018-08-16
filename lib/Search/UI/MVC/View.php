@@ -45,6 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use Sugar_Smarty;
 
+/**
+ * Generic view for the Search Framework.
+ */
 abstract class View
 {
     /** @var Sugar_Smarty */

@@ -37,106 +37,102 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search\UI\MVC;
+namespace SuiteCRM\Search;
+
+use Configurator;
+use InvalidArgumentException;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/../../modules/Configurator/Configurator.php';
+
 /**
- * Generic controller for the Search Framework.
+ * Class SearchConfigurator handles the configuration calls for the Search Framework.
+ *
+ * All the methods are fluent and save() must be called at the end to make the changes permanent.
  */
-abstract class Controller
+class SearchConfigurator
 {
-    /** @var View */
-    protected $view;
+    /** @var Configurator */
+    private $configurator;
 
     /**
-     * Controller constructor.
+     * SearchConfigurator constructor.
      *
-     * @param View $view
+     * @param null|Configurator $configurator
      */
-    public function __construct(View $view)
+    public function __construct(Configurator $configurator = null)
     {
-        $this->view = $view;
-    }
-
-    /**
-     * Handles a request by reading the request 'do' parameters.
-     *
-     * Always falls back to the 'display' method.
-     */
-    public function handle()
-    {
-        if ($this->isActionRequest()) {
-            $methodName = $this->getActionName();
-            $this->$methodName();
-            return;
+        if ($configurator === null) {
+            $configurator = new Configurator();
         }
 
-        $this->display();
+        $this->configurator = $configurator;
     }
 
     /**
-     * Echoes the view.
-     */
-    public function display()
-    {
-        $this->view->preDisplay();
-        $this->view->display();
-    }
-
-    /**
-     * Performs a redirect to a page.
+     * Factory method for nice fluent syntax.
      *
-     * @param string $location
+     * @return SearchConfigurator
      */
-    public function redirect($location)
+    public static function make()
     {
-        header("Location: $location");
-        exit;
+        return new self();
     }
 
     /**
-     * Returns true if the current request has been sent via AJAX.
+     * Configure the Search Framework configuration only based on the search engine.
      *
-     * @return bool
+     * This supports the fake engine names used to refer to the legacy search.
+     *
+     * @param string $engine
+     *
+     * @return SearchConfigurator
      */
-    public function isAjax()
+    public function setEngine($engine)
     {
-        return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+        if (empty($engine)) {
+            throw new InvalidArgumentException('$engine cannot be empty');
+        }
+
+        if (!is_string($engine)) {
+            throw new InvalidArgumentException('$engine must be a string');
+        }
+
+        $searchController = 'UnifiedSearch';
+        $enableAod = false;
+
+        switch ($engine) {
+            case 'BasicSearchEngine':
+                // Only basic search
+                break;
+            case 'BasicAndAodEngine':
+                // Basic search and AOD
+                $enableAod = true;
+                break;
+            default:
+                // SearchWrapper with a specific engine
+                $searchController = 'Search';
+        }
+
+        $this->configurator->config['search']['controller'] = $searchController;
+        $this->configurator->config['search']['defaultEngine'] = $engine;
+        $this->configurator->config['aod']['enable_aod'] = $enableAod;
+
+        return $this;
     }
 
     /**
-     * Echoes a JSON with the proper header parameters.
+     * Saves the current configuration.
      *
-     * @param array $data
+     * @return SearchConfigurator
      */
-    public function yieldJson(array $data)
+    public function save()
     {
-        ob_clean(); // deletes the rest of the html previous to this.
-        header('Content-Type: application/json');
-        echo json_encode($data);
-        exit;
-    }
+        $this->configurator->saveConfig();
 
-    /**
-     * Returns whether the client is asking for an action to be executed by the controller.
-     *
-     * @return bool
-     */
-    private function isActionRequest()
-    {
-        return method_exists($this, $this->getActionName());
-    }
-
-    /**
-     * Returns the name of the action sent by the client, sanitized and prefixed with 'do'.
-     *
-     * @return string
-     */
-    private function getActionName()
-    {
-        return 'do' . filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING);
+        return $this;
     }
 }

@@ -46,8 +46,6 @@ $("form").submit(function (e) {
     var action = $(this).attr("action");
     var data = $(this).serialize();
 
-    console.log(data);
-
     function translate(label) {
         return SUGAR.language.get("Administration", label);
     }

@@ -52,29 +52,6 @@
         </tr>
 
         <tr>
-            {*search controller*}
-            <td>
-                <div class="td-container">
-                    <div>
-                        <label for="search-wrapper-enabled">{sugar_translate label="LBL_SEARCH_CONTROLLER"}</label>
-                        {sugar_help text=$MOD.LBL_SEARCH_CONTROLLER_TOOLTIP}
-                    </div>
-                    <div>
-                        <small class="form-text text-muted">{sugar_translate label="LBL_SEARCH_CONTROLLER_HELP"}</small>
-                    </div>
-                </div>
-            </td>
-            <td scope="row" style="vertical-align: middle">
-                {*If the checkbox is disabled the hidden value will be overridden*}
-                <input type="hidden" name="search-controller" value="UnifiedSearch">
-                <input type="checkbox" name="search-controller"
-                       id="search-wrapper-enabled"
-                       value="Search"
-                       {if $selectedController eq 'Search'}checked="checked"{/if}
-            </td>
-        </tr>
-
-        <tr>
             {*search engine*}
             <td>
                 <div class="td-container">
@@ -105,7 +82,6 @@
 
     {$JAVASCRIPT}
 
-    <script src="modules/Administration/Search/scripts.js"></script>
     <script src="modules/Administration/Search/ajaxSubmit.js"></script>
 
 </form>
