@@ -79,6 +79,25 @@ abstract class AbstractIndexer
     public function __construct()
     {
         $this->documentifier = new JsonSerializerDocumentifier();
+        $this->modulesToIndex = SearchWrapper::getModules();
+        $this->setupLogger();
+    }
+
+    /**
+     * Returns the short name (class name, without namespace) of the current Indexer.
+     *
+     * @return string
+     */
+    public function getIndexerName()
+    {
+        return $this->getObjectClassName($this);
+    }
+
+    /**
+     * Sets up the internal logger.
+     */
+    protected function setupLogger()
+    {
         $this->logger = new Logger($this->getIndexerName());
 
         // Set up SugarLog handler (this will forward messages to the default logging)
@@ -99,18 +118,6 @@ abstract class AbstractIndexer
             $this->logger->error('Failed to create CLI logger handler.');
             $this->logger->error($exception);
         }
-
-        $this->modulesToIndex = SearchWrapper::getModules();
-    }
-
-    /**
-     * Returns the short name (class name, without namespace) of the current Indexer.
-     *
-     * @return string
-     */
-    public function getIndexerName()
-    {
-        return $this->getObjectClassName($this);
     }
 
     /**
