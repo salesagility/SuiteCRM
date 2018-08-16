@@ -87,6 +87,13 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertEquals($differential, $indexer->isDifferentialIndexing());
         self::assertEquals($doc, $indexer->getDocumentifier());
         self::assertEquals($modules, $indexer->getModulesToIndex());
+
+        try {
+            $indexer->setModulesToIndex(null);
+            $this->fail('Null should not be accepted');
+        } catch (Throwable $throwable) {
+            // All good!
+        }
     }
 
     public function testAddModulesToIndex()
@@ -134,6 +141,15 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
         $actual = $indexer->getIndexerName();
 
         self::assertEquals($expected, $actual, "Indexer name does not match");
+    }
+
+    public function testLogger()
+    {
+        $indexer = $this->getIndexerMock();
+
+        $this->invokeMethod($indexer, 'setupLogger');
+
+        self::assertInstanceOf(\Monolog\Logger::class, $indexer->getLogger());
     }
 
     /**
