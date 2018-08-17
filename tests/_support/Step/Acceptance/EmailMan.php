@@ -42,9 +42,9 @@ class EmailMan extends \AcceptanceTester
         $I->fillField('#mail_smtppass', self::$testerEmailPassword);
         $I->checkOption('#notify_allow_default_outbound');
         
-        $I->waitForJS('testOutboundSettings();');
+        $I->waitForJS("$('#sendTestOutboundEmailSettingsBtn').click();");
         $I->fillField('outboundtest_from_address', 'sa.tester2@gmail.com');
-        $I->waitForJS('sendTestEmail();');
+        $I->waitForJS('$(\'#testOutbound input[type="button"]\')[0].click();');
         $I->wait(10);
         $I->see('An email was sent to the specified email address using the provided outgoing mail settings. ' .
                 'Please check to see if the email was received to verify the settings are correct.');
