@@ -70,9 +70,8 @@ class UserWizardCest
         
         $I2->wantTo('Email Outbound Account Settings');
         $I2->amOnUrl(
-            $webDriverHelper->getInstanceURL()
+            $webDriverHelper->getInstanceURL() . '/index.php?module=Users&action=EditView&record=1'
         );
-        $I2->click('Profile');
         $I2->click('Settings');
         $I2->waitForJS("$('#accountSettings').click(); SUGAR.email2.accounts.showEditInboundAccountDialogue();");
         $I2->click('Prefill Gmail™ Defaults');
