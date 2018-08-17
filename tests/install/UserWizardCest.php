@@ -65,8 +65,6 @@ class UserWizardCest
         $emailMan->createEmailSettings();
 
         $I2->dontSee('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');
-        $I2->see('An email was sent to the specified email address using the provided outgoing mail settings. ' .
-                'Please check to see if the email was received to verify the settings are correct.');
         
         // --------- Email Outbound Account Settings --------------
         
