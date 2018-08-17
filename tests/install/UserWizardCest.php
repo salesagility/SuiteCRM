@@ -70,6 +70,7 @@ class UserWizardCest
         
         // --------- Email Outbound Account Settings --------------
         
+        $I2->wantTo('Email Outbound Account Settings');
         $I2->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
