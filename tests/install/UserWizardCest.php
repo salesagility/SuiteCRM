@@ -67,5 +67,23 @@ class UserWizardCest
         $I2->dontSee('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');
         $I2->see('An email was sent to the specified email address using the provided outgoing mail settings. ' +
                 'Please check to see if the email was received to verify the settings are correct.');
+        
+        // --------- Email Outbound Account Settings --------------
+        
+        $I2->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+        $I2->click('Profile');
+        $I2->click('Settings');
+        $I2->waitForJS("$('#accountSettings').click(); SUGAR.email2.accounts.showEditInboundAccountDialogue();");
+        $I2->click('Prefill Gmail™ Defaults');
+        $I2->fillField('ie_name', 'test gmail account');
+        $I2->fillField('email_user', 'sa.tester2');
+        $I2->fillField('email_password', 'chilisauce');
+        $I2->fillField('trashFolder', '[Gmail]/Bin');
+        $I2->fillField('sentFolder', '[Gmail]/Sent Mail');
+        $I2->waitForJS('SUGAR.email2.accounts.saveIeAccount(getUserEditViewUserId());');
+        $I2->see('Set up Mail Accounts to view incoming emails from your email accounts');
+        $I2->see('test gmail account');
     }
 }
