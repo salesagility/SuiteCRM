@@ -3012,7 +3012,12 @@ class InboundEmail extends SugarBean
         }
 
         $exServ = explode('::', $this->service);
-        $service = '/' . $exServ[1];
+        if (!isset($exServ[1])) {
+            LoggerManager::getLogger()->warn('incorrect service given: ' . $this->service);
+            $service = '/';
+        } else {
+            $service = '/' . $exServ[1];
+        }
 
         $nonSsl = array(
             'both-secure' => '/notls/novalidate-cert/secure',
@@ -6102,7 +6107,7 @@ class InboundEmail extends SugarBean
         }
         
         if ($requestFolder === 'sent') {
-            $inboundEmail->mailbox = $this->get_stored_options('sentFolder');
+            $this->mailbox = $this->get_stored_options('sentFolder');
         }
 
         if ($requestFolder === 'inbound') {
@@ -6158,7 +6163,11 @@ class InboundEmail extends SugarBean
                 if ($errors == 'Mailbox is empty') { // false positive
                     $successful = true;
                 } else {
-                    $msg .= $errors;
+                    if (!isset($msg)) {
+                        $msg = $errors;
+                    } else {
+                        $msg .= $errors;
+                    }
                     $msg .= '<p>' . $alerts . '<p>';
                     $msg .= '<p>' . $mod_strings['ERR_TEST_MAILBOX'];
                 }
@@ -6175,7 +6184,12 @@ class InboundEmail extends SugarBean
             }
 
             imap_errors(); // collapse error stack
-            imap_close($this->conn);
+            if (is_resource($this->conn)) {
+                imap_close($this->conn);
+            } else {
+                LoggerManager::getLogger()->warn('Connection is not a valid resource.');
+            }
+            
 
             return $msg;
         } elseif (!is_resource($this->conn)) {
