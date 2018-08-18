@@ -68,14 +68,13 @@ function updateTimeDateFields(fieldInput, ln) {
 
 function updateHiddenReportFields(ln, _form) {
 // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
-  if ($('#aor_conditions_value' + ln).length) {
-      var conditionsValue = $('#aor_conditions_value' + ln).val();
-      var fieldValue = conditionsValue;
-      var fieldSign = conditionsValue;
-      var fieldNumber = conditionsValue;
-      var fieldTime = conditionsValue;
+  if ($('#aor_conditions_value\\['+ln+'\\]\\[0\\]').length) {
+      var fieldValue = $('#aor_conditions_value\\['+ln+'\\]\\[0\\]').val();
+      var fieldSign = $('#aor_conditions_value\\['+ln+'\\]\\[1\\]').val();
+      var fieldNumber = $('#aor_conditions_value\\['+ln+'\\]\\[2\\]').val();
+      var fieldTime = $('#aor_conditions_value\\['+ln+'\\]\\[3\\]').val();
 
-      _form.append('<input type="hidden" name="parameter_date_value['+ ln + '] value="' + fieldValue + '">');
+      _form.append('<input type="hidden" name="parameter_date_value['+ ln + ']" value="' + fieldValue + '">');
       _form.append('<input type="hidden" name="parameter_date_sign['+ ln + ']" value="' + fieldSign + '">');
       _form.append('<input type="hidden" name="parameter_date_number['+ ln + ']" value="' + fieldNumber + '">');
       _form.append('<input type="hidden" name="parameter_date_time['+ ln + ']" value="' + fieldTime + '">');
@@ -101,8 +100,8 @@ function appendHiddenFields(_form, ln, id) {
 
     // values can be #aor_conditions_value3 or #aor_conditions_value[3]
     var fieldInput = '';
-    if ($('#aor_conditions_value' + ln).length > 0) {
-        fieldInput = $('#aor_conditions_value' + ln).val();
+    if ($('#aor_conditions_value\\['+ln+'\\]\\[0\\]').length > 0) {
+        fieldInput = $('#aor_conditions_value\\['+ln+'\\]\\[0\\]').val();
         fieldInput = updateTimeDateFields(fieldInput, ln);
     } else {
         fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
@@ -173,6 +172,14 @@ function changeReportPage(record, offset, group_value, table_id) {
     query += "&parameter_type[]=" + fieldType;
     var fieldInput = '';
     if ($('#aor_conditions_value' + ln).length > 0) {
+		var fieldValue = $('#aor_conditions_value\\['+ln+'\\]\\[0\\]').val();
+        query += "&parameter_date_value[]=" + fieldValue;
+        var fieldSign = $('#aor_conditions_value\\['+ln+'\\]\\[1\\]').val();
+        query += "&parameter_date_sign[]=" + fieldSign;
+        var fieldNumber = $('#aor_conditions_value\\['+ln+'\\]\\[2\\]').val();
+        query += "&parameter_date_number[]=" + fieldNumber;
+        var fieldTime = $('#aor_conditions_value\\['+ln+'\\]\\[3\\]').val();
+        query += "&parameter_date_time[]=" + fieldTime;
         fieldInput = $('#aor_conditions_value' + ln).val();
         fieldInput = updateTimeDateFields(fieldInput, ln);
     } else {
