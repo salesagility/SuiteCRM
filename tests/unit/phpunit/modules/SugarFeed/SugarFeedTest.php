@@ -251,7 +251,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $result = SugarFeed::getTimeLapse('2016-01-15 11:16:02');
         $this->assertTrue(isset($result));
-        $this->assertGreaterThan(0, strlen($result));
+        $this->assertGreaterThanOrEqual(0, strlen($result));
     }
 
     public function testparseMessage()
