@@ -9,6 +9,8 @@ use SuiteCRM\Exception\Exception;
 use SuiteCRM\Exception\InvalidArgumentException;
 use SuiteCRM\Utility\Paths;
 
+include_once __DIR__ . '/FilterParserMock.php';
+
 class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
