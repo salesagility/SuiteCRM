@@ -3,21 +3,12 @@
 
 class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        global $current_user;
-        get_sugar_config_defaults();
-        $current_user = new User();
-    }
-
     public function testAOR_Report()
     {
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //execute the contructor and check for the Object type and  attributes
         $aor_Report = new AOR_Report();
@@ -33,8 +24,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'importable', $aor_Report);
         
         // clean up
-        
-        
     }
 
     public function testbean_implements()
@@ -142,7 +131,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aor_Report = new AOR_Report();
@@ -156,8 +145,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetReportFields()
@@ -171,19 +158,50 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_report_chart()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushGlobal('dictionary');
+        $state->pushGlobal('app_list_strings');
+        $state->pushGlobal('current_user');
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
+        
+        $chartBean = BeanFactory::getBean('AOR_Charts');
+        $charts = (array)$chartBean->get_full_list();
+        
 
         //execute the method and verify that it returns chart display script. strings returned vary due to included chart id.
-        $expected = '';
         $result = $aor_Report->build_report_chart();
-        $this->assertEquals($expected, $result);
+        foreach ($charts as $chart) {
+            $this->assertContains($chart->id, $result);
+        }
+        
+        // clean up
+        
+        unset($GLOBALS['_SESSION']);
+        unset($GLOBALS['objectList']);
+        unset($GLOBALS['mod_strings']);
+        unset($GLOBALS['toHTML']);
+        unset($GLOBALS['module']);
+        unset($GLOBALS['action']);
+        unset($GLOBALS['disable_date_format']);
+        unset($GLOBALS['fill_in_rel_depth']);
+        unset($GLOBALS['currentModule']);
+        $state->popGlobal('current_user');
+        $state->popGlobal('app_list_strings');
+        $state->popGlobal('dictionary');
+        $state->popGlobals();
     }
 
     public function testbuild_group_report()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
+        
+        // test
         
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
@@ -246,7 +264,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method with required data preset and verify it returns expected result
         $fields = array('label' => array('display' => 1, 'total' => 'SUM', 'label' => 'total'));
         $totals = array('label' => array(10, 20, 30));
-        $expected = "<thead class='fc-head'><tr><th>total Sum</td></tr></thead></body><tr class='oddListRowS1'><td>60</td></tr></body>";
+        $expected = "<table><thead class='fc-head'><tr><th>total Sum</th></tr></thead><tbody><tr class='oddListRowS1'><td>60</td></tr></tbody></table>";
 
         $aor_Report = new AOR_Report();
         $actual = $aor_Report->getTotalHTML($fields, $totals);
@@ -321,8 +339,14 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test with type custom and verify that it retunrs expected results
         $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `accounts_contacts` ON `accounts`.id = `contacts`.id_c '));
-        $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(),
-            'custom', array());
+        $actual = $aor_Report->build_report_query_join(
+            'contacts',
+            'accounts_contacts',
+            'accounts',
+            new Account(),
+            'custom',
+            array()
+        );
         $this->assertSame($expected, $actual);
 
         //test with type relationship and verify that it retunrs expected results
@@ -331,8 +355,14 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'id_select' => array('accounts_contacts' => '`accounts_contacts`.id AS \'accounts_contacts_id\''),
             'id_select_group' => array('accounts_contacts' => '`accounts_contacts`.id')
         );
-        $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(),
-            'relationship', array());
+        $actual = $aor_Report->build_report_query_join(
+            'contacts',
+            'accounts_contacts',
+            'accounts',
+            new Account(),
+            'relationship',
+            array()
+        );
         $this->assertSame($expected, $actual);
     }
 
