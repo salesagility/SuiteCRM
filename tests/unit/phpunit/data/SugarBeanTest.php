@@ -3748,7 +3748,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
 
         $results = $tmpUser->create_new_list_query($order_by, $where);
-        $this->assertEquals(" SELECT  users.*  FROM users  where ( (  (  ( EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.*  FROM users  where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -3759,7 +3759,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);
 
 
         // clean up
@@ -3818,7 +3818,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
         $this->assertEmpty($tmpUser->getOwnerWhere($current_user->id));
         $results = $tmpUser->create_new_list_query($order_by, $where);
-        $this->assertEquals(" SELECT  users.*  FROM users  where ( (  (  ( EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.*  FROM users  where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -3829,7 +3829,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);
 
         $tmpUser->field_defs = $fieldDefs; // restore field defs
         // clean up
@@ -3879,7 +3879,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
 
         $results = $tmpUser->create_new_list_query($order_by, $where);
-        $this->assertEquals(" SELECT  users.*  FROM users  where ( (  (  ( EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.*  FROM users  where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -3890,7 +3890,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);
 
 
 
@@ -3921,7 +3921,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);
 
         $tmpUser->field_defs = $fieldDefs; // restore field defs
         // test
@@ -4053,7 +4053,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $filter = [];
         $params = ['joined_tables' => ['foo', 'bar', 'bazz']];
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
-        $this->assertEquals(" SELECT  users.*  FROM users  where ( (  (  ( EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.*  FROM users  where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -4064,7 +4064,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);
 
         $tmpUser->field_defs = $fieldDefs; // restore field defs
         // clean up
@@ -4172,7 +4172,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $tmpUser->field_defs['id']['link_type'] = 'test';
 
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
-        $this->assertEquals(" SELECT  users.*  FROM users  where ( (  (  ( EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.*  FROM users  where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -4183,7 +4183,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);
 
         $tmpUser->field_defs = $fieldDefs; // restore field defs
         // clean up
@@ -4240,7 +4240,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $tmpUser->field_defs['id']['force_blank'] = true;
 
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
-        $this->assertEquals(" SELECT  users.*  FROM users  where ( (  (  ( EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.*  FROM users  where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -4251,7 +4251,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);
 
         $tmpUser->field_defs = $fieldDefs; // restore field defs
         // clean up
@@ -4353,7 +4353,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);
 
         $tmpUser->field_defs = $fieldDefs; // restore field defs
         // clean up
@@ -4424,7 +4424,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);
 
         $tmpUser->field_defs = $fieldDefs; // restore field defs
         // clean up
