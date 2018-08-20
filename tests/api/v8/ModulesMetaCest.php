@@ -24,7 +24,7 @@ class ModulesMetaCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if (!$this->fakeData) {
+        if(!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -176,8 +176,7 @@ class ModulesMetaCest
      * URL: /api/v8/modules/{module}/favorites
      * @see global $moduleList for posible {module} values
      */
-    public function TestScenarioGetModuleFavorites(apiTester $I)
-    {
+    public function TestScenarioGetModuleFavorites(apiTester $I) {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
@@ -250,7 +249,7 @@ class ModulesMetaCest
         $I->assertNotEmpty($decodedResponse);
         $I->assertArrayHasKey('data', $decodedResponse);
 
-        if (isset($decodedResponse['data'][0])) {
+        if(isset($decodedResponse['data'][0])) {
             // response has many results
             $I->assertArrayHasKey('type', $decodedResponse['data'][0]);
             $I->assertEquals('Accounts', $decodedResponse['data'][0]['type']);
@@ -271,8 +270,7 @@ class ModulesMetaCest
      * URL: /api/v8/modules/favorites
      * @see global $moduleList for posible {module} values
      */
-    public function TestScenarioGetAllModulesFavorites(apiTester $I)
-    {
+    public function TestScenarioGetAllModulesFavorites(apiTester $I) {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
@@ -346,7 +344,7 @@ class ModulesMetaCest
         $I->assertArrayHasKey('data', $decodedResponse);
         $I->assertArrayHasKey('included', $decodedResponse);
 
-        if (isset($decodedResponse['included'][0])) {
+        if(isset($decodedResponse['included'][0])) {
             // response has many results
             $I->assertArrayHasKey('type', $decodedResponse['included'][0]);
             $I->assertArrayHasKey('id', $decodedResponse['included'][0]);
@@ -488,4 +486,5 @@ class ModulesMetaCest
         $I->assertArrayHasKey('modules', $decodedResponse['meta']['menu']);
         $I->assertArrayHasKey('all', $decodedResponse['meta']['menu']['modules']);
     }
+
 }

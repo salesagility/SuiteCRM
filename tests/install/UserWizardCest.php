@@ -38,12 +38,8 @@ class UserWizardCest
      * Given that that I install SuiteCRM with the default configuration settings I
      * Expect to be able to login as an administrator.
      */
-    public function testScenarioInstallSuiteCRMWithDefaultConfiguration(InstallTester $I, AcceptanceTester $I2,
-        \Step\Acceptance\EmailMan $emailMan, \Helper\WebDriverHelper $webDriverHelper)
+    public function testScenarioInstallSuiteCRMWithDefaultConfiguration(InstallTester $I, \Helper\WebDriverHelper $webDriverHelper)
     {
-        
-        // -------- Install and setup CRM ----------
-        
         $I->wantTo('check the php version meets the recommended requirements.');
         $I->amOnUrl($webDriverHelper->getInstanceURL());
         $I->waitForText('Setup');
@@ -52,52 +48,6 @@ class UserWizardCest
         $I->seeValidSystemEnvironment();
         $I->configureInstaller($webDriverHelper);
         $I->waitForInstallerToFinish();
-        
-        // ---------- Email Settings ---------------
-        
-        $I2->wantTo('Save an outgoing email configuration');
-        $I2->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
-        // Navigate to email configuration and save settings
-        $I2->loginAsAdmin();
-        $emailMan->createEmailSettings();
-
-        $I2->dontSee('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');
-        
-        // --------- Email Outbound Account Settings --------------
-        
-        $I2->wantTo('Email Outbound Account Settings');
-        $I2->amOnUrl(
-            $webDriverHelper->getInstanceURL() . '/index.php?module=Users&action=EditView&record=1'
-        );
-        $I2->click('Settings');
-        $I2->wait(1);
-        $I2->scrollTo('body', 0, 0);
-        $I2->wait(1);
-        $I2->executeJS("$('#accountSettings').click();");
-        $I2->wait(1);
-        $I2->scrollTo('body', 0, 0);
-        $I2->wait(1);
-        $I2->executeJS('SUGAR.email2.accounts.showEditInboundAccountDialogue();');
-        $I2->wait(1);
-        $I2->scrollTo('body', 0, 0);
-        $I2->wait(1);
-        $I2->executeJS('SUGAR.email2.accounts.fillInboundGmailDefaults();');
-        $I2->wait(1);
-        $I2->scrollTo('body', 0, 0);
-        $I2->wait(1);
-        
-        $I2->fillField('ie_name', 'test mail acc1');
-        $I2->fillField('email_user', 'sa.tester2');
-        $I2->fillField('email_password', 'chilisauce');
-        $I2->fillField('trashFolder', '[Gmail]/Bin');
-        $I2->fillField('sentFolder', '[Gmail]/Sent Mail');
-        
-        $I2->executeJS('SUGAR.email2.accounts.saveIeAccount(getUserEditViewUserId());');
-        $I2->wait(1);
-        $I2->scrollTo('body', 0, 0);
-        $I2->wait(1);
     }
+
 }
