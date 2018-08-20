@@ -44,15 +44,15 @@ class UserWizardCest
         
         // -------- Install and setup CRM ----------
         
-//        $I->wantTo('check the php version meets the recommended requirements.');
-//        $I->amOnUrl($webDriverHelper->getInstanceURL());
-//        $I->waitForText('Setup');
-//        $I->maySeeOldVersionDetected();
-//        $I->acceptLicense();
-//        $I->seeValidSystemEnvironment();
-//        $I->configureInstaller($webDriverHelper);
-//        $I->waitForInstallerToFinish();
-//        
+        $I->wantTo('check the php version meets the recommended requirements.');
+        $I->amOnUrl($webDriverHelper->getInstanceURL());
+        $I->waitForText('Setup');
+        $I->maySeeOldVersionDetected();
+        $I->acceptLicense();
+        $I->seeValidSystemEnvironment();
+        $I->configureInstaller($webDriverHelper);
+        $I->waitForInstallerToFinish();
+        
         // ---------- Email Settings ---------------
         
         $I2->wantTo('Save an outgoing email configuration');
@@ -73,14 +73,31 @@ class UserWizardCest
             $webDriverHelper->getInstanceURL() . '/index.php?module=Users&action=EditView&record=1'
         );
         $I2->click('Settings');
-        $I2->waitForJS("$('#accountSettings').click(); SUGAR.email2.accounts.showEditInboundAccountDialogue(); SUGAR.email2.accounts.fillInboundGmailDefaults();");
-        $I2->fillField('ie_name', 'test gmail account');
+        $I2->wait(1);
+        $I2->scrollTo('body', 0, 0);
+        $I2->wait(1);
+        $I2->executeJS("$('#accountSettings').click();");
+        $I2->wait(1);
+        $I2->scrollTo('body', 0, 0);
+        $I2->wait(1);
+        $I2->executeJS('SUGAR.email2.accounts.showEditInboundAccountDialogue();');
+        $I2->wait(1);
+        $I2->scrollTo('body', 0, 0);
+        $I2->wait(1);
+        $I2->executeJS('SUGAR.email2.accounts.fillInboundGmailDefaults();');
+        $I2->wait(1);
+        $I2->scrollTo('body', 0, 0);
+        $I2->wait(1);
+        
+        $I2->fillField('ie_name', 'test mail acc1');
         $I2->fillField('email_user', 'sa.tester2');
         $I2->fillField('email_password', 'chilisauce');
         $I2->fillField('trashFolder', '[Gmail]/Bin');
         $I2->fillField('sentFolder', '[Gmail]/Sent Mail');
-        $I2->waitForJS('SUGAR.email2.accounts.saveIeAccount(getUserEditViewUserId());');
-        $I2->see('Set up Mail Accounts to view incoming emails from your email accounts');
-        $I2->see('test gmail account');
+        
+        $I2->executeJS('SUGAR.email2.accounts.saveIeAccount(getUserEditViewUserId());');
+        $I2->wait(1);
+        $I2->scrollTo('body', 0, 0);
+        $I2->wait(1);
     }
 }
