@@ -3910,7 +3910,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
 
         $results = $tmpUser->create_new_list_query($order_by, $where);
-        $this->assertEquals(" SELECT  users.*  FROM users  where (foo='bar' AND  (  (  ( EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.*  FROM users  where (foo='bar' AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
