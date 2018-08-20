@@ -4883,8 +4883,14 @@ class InboundEmail extends SugarBean
         // UNCOMMENT THIS IF YOU HAVE THIS PROBLEM!  See notes on Bug # 45477
         // $this->markEmails($uid, "read");
 
-        $header = imap_headerinfo($this->conn, $msgNo);
-        $fullHeader = imap_fetchheader($this->conn, $msgNo); // raw headers
+        if (!is_resource($this->conn)) {
+            LoggerManager::getLogger()->warn('Connection is not a valid resource for importOneEmail()');
+            $header = null;
+            $fullHeader = null;
+        } else {
+            $header = imap_headerinfo($this->conn, $msgNo);
+            $fullHeader = imap_fetchheader($this->conn, $msgNo); // raw headers
+        }
 
         // reset inline images cache
         $this->inlineImages = array();
