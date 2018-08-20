@@ -773,6 +773,7 @@ class GoogleSync
 
         $event_local->name = $event_remote->getSummary();
         $event_local->description = $event_remote->getDescription();
+        $event_local->location = $event_remote->getLocation();
 
         // Get Start/End/Duration from Google Event
         $starttime = strtotime($event_remote->getStart()['dateTime']);
