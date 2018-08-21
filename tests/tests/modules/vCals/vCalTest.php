@@ -279,7 +279,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $meeting->location = 'test location';
         $meeting->description = 'test description';
 
-        $expectedStart = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SugarCRM//SugarCRM Calendar//EN\r\nBEGIN:VEVENT\r\nUID:1\r\nORGANIZED;CN=:\r\nDTSTART:20160211T173000Z\r\nDTEND:20160211T173000Z\r\n";
+        $expectedStart = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SugarCRM//SugarCRM Calendar//EN\r\nBEGIN:VEVENT\r\nUID:1\r\nORGANIZER;CN=:\r\nDTSTART:20160211T173000Z\r\nDTEND:20160211T173000Z\r\n";
         $expectedEnd = "\r\nSUMMARY:test\r\nLOCATION:test location\r\nDESCRIPTION:test description\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
 
         $result = vCal::get_ical_event($meeting, $user);
