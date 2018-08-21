@@ -31,8 +31,6 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(false, $result);
         
         // clean up
-        
-        
     }
 
     public function testgetFavoriteID()

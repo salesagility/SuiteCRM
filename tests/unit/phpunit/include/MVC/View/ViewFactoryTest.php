@@ -24,8 +24,6 @@ class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertInstanceOf('UsersViewList', $view);
         
         // clean up
-        
-        
     }
 
     public function test_loadConfig()

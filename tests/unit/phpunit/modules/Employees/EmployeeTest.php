@@ -44,8 +44,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Administrator', $employee->get_summary_text());
         
         // clean up
-        
-        
     }
 
 
@@ -68,8 +66,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -100,12 +96,12 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testverify_data()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-	// test
+    // test
         
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
@@ -119,7 +115,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_list_view_data()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -179,8 +175,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
 
@@ -219,8 +213,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     /**
@@ -248,12 +240,12 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testhasCustomFields()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-	// test
+    // test
         
         
         $employee = new Employee();

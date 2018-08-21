@@ -3,8 +3,6 @@
 
 class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-
-
     public function testgetSignatureButtons()
     {
         self::markTestIncomplete('environment dependency');
@@ -158,9 +156,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         try {
             $result = $user->getUserPrivGuid();
             $this->fail('This function sould throws an Exception.');
-        }
-        catch (Exception $e) {
-            
+        } catch (Exception $e) {
         }
 
         $this->assertTrue(isset($result));
@@ -189,7 +185,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     public function testSetAndGetAndResetPreference()
-    {        
+    {
         self::markTestIncomplete('environment dependency');
 
         $db = DBManagerFactory::getInstance();
@@ -240,8 +236,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
 
@@ -416,8 +410,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $user->mark_deleted($user->id);
         
         // clean up
-        
-        
     }
 
     public function retrieve($id)
@@ -579,7 +571,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(isset($result));
         $this->assertGreaterThan(0, strlen($result));
-
     }
 
 
@@ -728,8 +719,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
     }
 
     public function testlist_view_parse_additional_sections()
@@ -1015,8 +1004,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
     }
 
     public function testgetAdminModules()
@@ -1041,8 +1028,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
     }
 
     public function testisAdminForModule()
@@ -1070,16 +1055,13 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test with id and is_admin set
         $user->is_admin = 1;
-        $this->assertEquals(true, $user->isAdminForModule("Accounts")); 
+        $this->assertEquals(true, $user->isAdminForModule("Accounts"));
         
         
         // clean up
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
-	
     }
 
     public function testshowLastNameFirst()
@@ -1166,8 +1148,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
 

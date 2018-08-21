@@ -45,8 +45,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('test', $bug->get_summary_text());
         
         // clean up
-        
-        
     }
 
     public function testcreate_list_query()
@@ -100,8 +98,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -206,7 +202,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -215,7 +211,7 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-	// test
+    // test
         
         $bug = new Bug();
 

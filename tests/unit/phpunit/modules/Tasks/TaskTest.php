@@ -65,7 +65,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('tasks');
         $state->popTable('aod_indexevent');
         $state->popTable('aod_index');
-        
     }
 
     public function testget_summary_text()
@@ -116,8 +115,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -140,8 +137,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_parent_fields()
@@ -165,8 +160,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testget_list_view_data()
@@ -241,7 +234,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+    // test
         
         $task = new Task();
 
@@ -252,7 +245,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-
     }
 
     public function testgetDefaultStatus()

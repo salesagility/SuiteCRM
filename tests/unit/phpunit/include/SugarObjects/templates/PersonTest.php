@@ -47,7 +47,6 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSetLawfulBasis()
     {
-
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('aod_indexevent');

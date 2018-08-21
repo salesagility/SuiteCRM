@@ -40,8 +40,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals($oauthToken::REQUEST, $oauthToken->tstate);
         
         // clean up
-        
-        
     }
 
     public function testsetConsumer()
@@ -79,13 +77,13 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSaveAndOthers()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
 
-	// test
+    // test
         
         $oauthToken = OAuthToken::generate();
 
@@ -112,8 +110,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('aod_index');
         $state->popTable('tracker');
-
-
     }
 
     public function load($id)
@@ -159,12 +155,12 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreateAuthorized()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
 
-	// test
+    // test
         
         $oauthKey = new OAuthKey();
         $oauthKey->id = '1';
@@ -189,8 +185,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('tracker');
-
-
     }
 
     public function copyAuthData($token)
@@ -218,7 +212,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcleanup()
     {
-
         $state = new SuiteCRM\StateSaver();
         
         
@@ -234,8 +227,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testcheckNonce()
@@ -262,8 +253,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testdeleteByUser()
@@ -283,8 +272,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testdisplayDateFromTs()

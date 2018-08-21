@@ -70,7 +70,7 @@ class CodeCoverageCommandsTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue($actual);
 
         // restore config override
-        if(!empty($configOverrideData)) {
+        if (!empty($configOverrideData)) {
             \file_put_contents($configOverridePath, $configOverrideData);
         }
     }

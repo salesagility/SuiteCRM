@@ -14,8 +14,7 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testViewSugarpdf()
     {
-        
-        if(isset($_REQUEST)) {
+        if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
         
@@ -43,7 +42,7 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // clean up
         
-        if(isset($_request)) {
+        if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
             unset($_REQUEST);

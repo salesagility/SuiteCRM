@@ -30,7 +30,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = clean_path($path);
         $this->assertSame($expected, $actual);
 
-        //valid network path 
+        //valid network path
         $expected = '//SuiteCRM-develop/include/utils';
         $path = '\\\\/SuiteCRM-develop/include/utils';
         $actual = clean_path($path);
@@ -80,7 +80,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'Alerts' => 'Alerts',
                 'AM_ProjectTemplates' => 'AM_ProjectTemplates',
                 'AM_TaskTemplates' => 'AM_TaskTemplates',
-				'AOBH_BusinessHours' => 'AOBH_BusinessHours',
+                'AOBH_BusinessHours' => 'AOBH_BusinessHours',
                 'AOD_Index' => 'AOD_Index',
                 'AOD_IndexEvent' => 'AOD_IndexEvent',
                 'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',
@@ -261,7 +261,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $cache_dir = 'vfs://root';
 
-        //without filename 
+        //without filename
         $tempArray = array('filename' => 'soap_array.txt', 'md5' => '523ef67de860fc54794f27117dba4fac', 'data' => 'some soap data');
         $actual = write_encoded_file($tempArray, $cache_dir, '');
         $this->assertFileExists($actual);
@@ -295,7 +295,6 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgenerateMD5array()
     {
-        
         self::markTestIncomplete('environment dependency');
         
         //execute the method and test if it returns expected values
@@ -422,7 +421,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = sugar_rename('', '');
         $this->assertFalse($actual);
 
-        //test with valid file names 
+        //test with valid file names
         $actual = sugar_rename($dir.'/'.$file, $dir.'/'.'newtest.txt');
         $this->assertTrue($actual);
 
@@ -431,8 +430,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfileToHash()
     {
-        
-        if(isset($_SESSION)) {
+        if (isset($_SESSION)) {
             $_session = $_SESSION;
         }
         
@@ -452,7 +450,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // clean up
 
-        if(isset($_session)) {
+        if (isset($_session)) {
             $_SESSION = $_session;
         } else {
             unset($_SESSION);
@@ -461,8 +459,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testhashToFile()
     {
-        
-        if(isset($_SESSION)) {
+        if (isset($_SESSION)) {
             $_session = $_SESSION;
         }
         
@@ -479,7 +476,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // clean up
 
-        if(isset($_session)) {
+        if (isset($_session)) {
             $_SESSION = $_session;
         } else {
             unset($_SESSION);

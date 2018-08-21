@@ -7,13 +7,13 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
         $state->pushGlobals();
         
-	// test
+    // test
         
         //execute the contructor and check for the Object type and  attributes
         $ical = new iCal();
@@ -34,10 +34,10 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        $state = new \SuiteCRM\StateSaver();
 //        $state->pushTable('email_addresses');
 //        $state->pushGlobals();
-//        
+//
 //	// test
-//        
-//        
+//
+//
 //        //error_reporting(E_ERROR | E_PARSE);
 //
 //        $ical = new iCal();
@@ -52,9 +52,9 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        //match the leading and trailing string parts to verify it returns expected results
 //        $this->assertStringStartsWith($expectedStart, $actual);
 //        $this->assertStringEndsWith($expectedEnd, $actual);
-//        
+//
 //        // clean up
-//        
+//
 //        $state->popGlobals();
 //        $state->popTable('email_addresses');
 //    }

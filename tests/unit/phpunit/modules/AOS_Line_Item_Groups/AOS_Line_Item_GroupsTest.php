@@ -41,7 +41,7 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
 
         $aosLineItemGroup = new AOS_Line_Item_Groups();
 
-        //populate required values		
+        //populate required values
         $post_data = array();
         $post_data['group_number'] = array(0, 0);
         $post_data['name'] = array('test1', 'test2');
@@ -67,7 +67,6 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         $state->popTable('aod_index');
         $state->popTable('tracker');
         $state->popTable('aos_line_item_groups');
-        
     }
 
     public function testsave()

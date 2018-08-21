@@ -33,8 +33,6 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
     }
 
     public function testconfiguration()
@@ -50,14 +48,14 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
     public function testSaveAndGetAddressCacheInfoAndDeleteAllAddressCache()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('jjwg_address_cache');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
 
-	// test
+    // test
         
         $jjwgAddressCache = new jjwg_Address_Cache();
 
@@ -94,7 +92,6 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state->popTable('tracker');
         $state->popTable('aod_index');
         $state->popTable('jjwg_address_cache');
-
     }
 
     public function testis_valid_lng()

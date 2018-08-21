@@ -74,8 +74,6 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('test account', $name);
         
         // clean up
-        
-        
     }
 
     public function testget_contacts()
@@ -116,8 +114,6 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_list_fields()
@@ -139,8 +135,6 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -162,8 +156,6 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testget_list_view_data()
@@ -272,7 +264,6 @@ WHERE ( accounts.deleted IS NULL
 
     public function testget_unlinked_email_query()
     {
-        
         $Account = new Account();
 
         //without setting type parameter

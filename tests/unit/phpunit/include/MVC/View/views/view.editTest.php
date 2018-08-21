@@ -3,8 +3,8 @@
  class ViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
  {
      public function setUp()
-    {
-        parent::setUp();
+     {
+         parent::setUp();
 
          global $current_user;
          get_sugar_config_defaults();
@@ -27,12 +27,11 @@
 
      public function testpreDisplay()
      {
+         if (isset($_SESSION)) {
+             $session = $_SESSION;
+         }
         
-        if(isset($_SESSION)) {
-            $session = $_SESSION;
-        }
-        
-        $state = new SuiteCRM\StateSaver();
+         $state = new SuiteCRM\StateSaver();
         
         
          ////error_reporting(E_ERROR | E_PARSE);
@@ -55,7 +54,7 @@
         
         
         
-        if(isset($session)) {
+        if (isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);
@@ -64,7 +63,6 @@
 
      public function testdisplay()
      {
-
          $state = new SuiteCRM\StateSaver();
          
          
@@ -82,7 +80,5 @@
          $renderedContent = ob_get_contents();
          ob_end_clean();
          $this->assertGreaterThan(0, strlen($renderedContent));
-         
-         
      }
  }

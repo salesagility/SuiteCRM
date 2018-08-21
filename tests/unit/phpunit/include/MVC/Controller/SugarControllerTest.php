@@ -26,7 +26,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals($default_module, 'module', $SugarController);
         $this->assertAttributeEquals(null, 'target_module', $SugarController);
 
-        //secondly test with module name and check for correct assignment. 
+        //secondly test with module name and check for correct assignment.
         $SugarController->setup('Users');
         $this->assertAttributeEquals('Users', 'module', $SugarController);
         $this->assertAttributeEquals(null, 'target_module', $SugarController);
@@ -62,13 +62,13 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testexecute()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-	// test
+    // test
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -124,13 +124,11 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testpre_save()
     {
-        if(isset($_SESSION)) {
+        if (isset($_SESSION)) {
             $session = $_SESSION;
         }
         
@@ -158,7 +156,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // cleanup
         
-        if(isset($session)) {
+        if (isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);
@@ -170,12 +168,11 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testaction_save()
     {
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
-        if(isset($_SESSION)) {
+        if (isset($_SESSION)) {
             $session = $_SESSION;
         }
         
@@ -204,7 +201,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // cleanup
         
-        if(isset($session)) {
+        if (isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);

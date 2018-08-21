@@ -37,17 +37,17 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
     {
         parent::_before();
         $container = $this->tester->getContainerInterface();
-        if(self::$filterParser === null) {
+        if (self::$filterParser === null) {
             // load PSR 11 interface
             // Load mock class
             self::$filterParser = new FilterParserMock($container);
         }
 
-        if(self::$operator === null) {
+        if (self::$operator === null) {
             self::$operator = new Operator($container);
         }
 
-        if(self::$fieldOperator === null) {
+        if (self::$fieldOperator === null) {
             self::$fieldOperator = new FieldOperator($container);
         }
     }
@@ -61,7 +61,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
                 '[JsonApi][v1][Filters][Parsers][FilterParser]'.
                 '[splitFieldKeys][expected type to be string] $fieldKey'
             ),
-            function() {
+            function () {
                 $emptyArray = array();
                 self::$filterParser->splitFieldKeysAdapter($emptyArray);
             }
@@ -74,7 +74,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
             new Exception(
                 '[JsonApi][v1][Filters][Parsers][FilterParser][splitFieldKeys][InvalidValue] expected period ""'
             ),
-            function() {
+            function () {
                 self::$filterParser->splitFieldKeysAdapter('');
             }
         );
@@ -87,7 +87,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
             new Exception(
                 '[JsonApi][v1][Filters][Parsers][FilterParser][splitFieldKeys][InvalidValue] expected period "Accounts"'
             ),
-            function() {
+            function () {
                 self::$filterParser->splitFieldKeysAdapter('Accounts');
             }
         );
@@ -100,7 +100,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
             new Exception(
                 '[JsonApi][v1][Filters][FilterParser][splitFieldKeys][InvalidValue] "'.$badKey.'"'
             ),
-            function() {
+            function () {
                 self::$filterParser->splitFieldKeysAdapter('Accounts.bad+key');
             }
         );
@@ -132,7 +132,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
             new Exception(
                 '[JsonApi][v1][FilterParser][parseFieldKey][expected type to be string] $fieldKey'
             ),
-            function() {
+            function () {
                 self::$filterParser->parseFieldKeyAdapter(array());
             }
         );
@@ -179,7 +179,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
                 '[splitValues][expected type to be string] $fieldKey'
             ),
-            function() {
+            function () {
                 self::$filterParser->splitValuesAdapter(array());
             }
         );
@@ -192,7 +192,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
                 '[splitValues][InvalidValue] expected delimiter "bad value"'
             ),
-            function() {
+            function () {
                 self::$filterParser->splitValuesAdapter('bad value');
             }
         );
@@ -281,14 +281,13 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testParseFieldFilterWithMissingOperator()
     {
-
         $this->tester->expectException(
             new Exception(
                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
                 '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
                 'containers '
             ),
-            function() {
+            function () {
                 self::$filterParser->parseFieldFilterAdapter('[[missingTestOperator]]');
             }
         );
@@ -296,7 +295,6 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testParseFilter()
     {
-
         $expectedResult = array(
             self::$fieldOperator->toFilterTag('Accounts') => array(
                 self::$fieldOperator->toFilterTag('name') => array(
