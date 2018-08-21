@@ -44,9 +44,9 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         $aorScheduledReports->mark_deleted($aorScheduledReports->id);
         unset($aorScheduledReports);
 
-            // clean up
+        // clean up
                 
-            $state->popGlobals();
+        $state->popGlobals();
         $state->popTable('tracker');
         $state->popTable('aod_index');
         $state->popTable('aor_scheduled_reports');
@@ -75,7 +75,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         
         
 
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $this->assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value
@@ -95,7 +95,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
         //test without a last_run date
         //@todo: NEEDS FIXING - are we sure?
-        //$this->assertFalse($aorScheduledReports->shouldRun(new DateTime()) );
+        
 
         //test without a older last_run date
         $aorScheduledReports->last_run = date("d-m-y H:i:s", mktime(0, 0, 0, 10, 3, 2014));
