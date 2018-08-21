@@ -44,7 +44,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     // test
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
@@ -76,7 +76,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarView = new SugarView();
@@ -99,7 +99,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarView = new SugarView();
@@ -121,7 +121,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarView = new SugarView();
@@ -143,7 +143,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarView = new SugarView();
@@ -173,7 +173,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarView = new SugarView();
@@ -195,7 +195,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarView = new SugarView();
@@ -225,7 +225,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $SugarView = new SugarView();
 
@@ -252,7 +252,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarView = new SugarView();

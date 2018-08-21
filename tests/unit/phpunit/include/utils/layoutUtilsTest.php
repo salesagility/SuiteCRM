@@ -6,7 +6,7 @@ class layout_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testget_form_header()
     {
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //execute the method and test if it returns html and contains the values provided in parameters
 

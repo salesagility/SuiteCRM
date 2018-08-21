@@ -35,7 +35,7 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aos_invoices');
         $state->pushTable('tracker');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aosInvoices = new AOS_Invoices();
         $aosInvoices->name = 'test';

@@ -70,7 +70,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
     // test
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarController = new SugarController();
@@ -109,7 +109,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarController = new SugarController();

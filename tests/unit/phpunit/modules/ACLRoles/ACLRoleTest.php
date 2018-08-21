@@ -62,7 +62,7 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aclRole = new ACLRole();
 
@@ -81,7 +81,7 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aclRole = new ACLRole();
 
