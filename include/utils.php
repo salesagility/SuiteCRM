@@ -5432,3 +5432,20 @@ function isValidId($id) {
     $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
     return $valid;
 }
+
+function getAppString($key) {
+    
+    global $app_strings;
+    
+    if (!isset($app_strings[$key])) {
+        LoggerManager::getLogger()->warn('Language key not found: ' . $key);
+        return $key;
+    }
+    
+    if (!$app_strings[$key]) {
+        LoggerManager::getLogger()->warn('Language string is empty at key: ' . $key);
+        return $key;
+    }
+    
+    return $app_strings[$key];
+}

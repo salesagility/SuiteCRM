@@ -370,8 +370,9 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 
 	if (!$focus->verify_data())
 	{
-		header("Location: index.php?action=Error&module=Users&error_string=".urlencode($focus->error_string));
-		exit;
+            SugarApplication::appendErrorMessage($focus->error_string);
+            header('Location: index.php?action=Error&module=Users');
+            exit;
 	}
 	else
 	{	$GLOBALS['sugar_config']['disable_team_access_check'] = true;
@@ -387,11 +388,11 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 			(isset($_POST['password_change']) && $_POST['password_change'] == 'true') ) {
 			if (!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {
 			   if((isset($_POST['page']) && $_POST['page'] == 'EditView')){
-			       header("Location: index.php?action=EditView&module=Users&record=".$_POST['record']."&error_password=".urlencode($focus->error_string));
+			       header("Location: index.php?action=EditView&module=Users&record=".$_POST['record']);
 			       exit;
 			   }
 			   if((isset($_POST['page']) && $_POST['page'] == 'Change')){
-			       header("Location: index.php?action=ChangePassword&module=Users&record=".$_POST['record']."&error_password=".urlencode($focus->error_string));
+			       header("Location: index.php?action=ChangePassword&module=Users&record=".$_POST['record']);
 			       exit;
 			   }
 		   }
