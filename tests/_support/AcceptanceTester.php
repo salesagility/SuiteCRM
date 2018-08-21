@@ -85,5 +85,4 @@ class AcceptanceTester extends \Codeception\Actor
         $I->dontSee('error');
         $I->dontSee('PHP');
     }
-
 }

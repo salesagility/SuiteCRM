@@ -4,7 +4,6 @@ namespace Step\Acceptance;
 
 use \AcceptanceTester as Tester;
 
-
 class Dashboard extends Tester
 {
     /**
