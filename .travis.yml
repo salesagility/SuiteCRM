@@ -77,7 +77,7 @@ script:
   # Run the unit tests
   # Run API functional tests
   # RUN Basic Acceptance test
-  - ./vendor/bin/codecept run -f unit --steps -v && ./vendor/bin/codecept run api --steps -f -v && sudo chmod -R 777 . && ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -v;
+  - ./vendor/bin/codecept run -f unit --steps -v && ./vendor/bin/codecept run api --steps -f -v && sudo chmod -R 777 . && ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv;
 
 after_script:
   - ./build/push_output.sh
