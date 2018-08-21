@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {

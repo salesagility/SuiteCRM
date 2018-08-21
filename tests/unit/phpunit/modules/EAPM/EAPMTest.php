@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
