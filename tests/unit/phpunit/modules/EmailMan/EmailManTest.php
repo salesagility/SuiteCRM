@@ -17,7 +17,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $emailMan = new EmailMan();
 
@@ -129,7 +129,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('campaign_log');
         $state->pushTable('aod_index');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $emailMan = new EmailMan();
@@ -348,7 +348,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     // test
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $emailMan = new EmailMan();

@@ -47,7 +47,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $eapm = new EAPM();
         $this->assertEquals(false, $eapm->bean_implements('')); //test with blank value
@@ -176,7 +176,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $eapm = new EAPM();
@@ -208,7 +208,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $eapm = new EAPM();
@@ -264,7 +264,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $eapm = new EAPM();
