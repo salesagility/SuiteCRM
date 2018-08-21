@@ -24,7 +24,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     // test
         
         //execute the contructor and check for the Object type and  attributes
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $this->assertInstanceOf('Lead', $lead);
         $this->assertInstanceOf('Person', $lead);
@@ -51,7 +51,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         //test without pre settting attributes
         $result = $lead->get_account();
@@ -68,7 +68,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_opportunity()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         //test without pre settting attributes
         $result = $lead->get_opportunity();
@@ -83,7 +83,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_contact()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         //test without pre settting attributes
         $result = $lead->get_contact();
@@ -99,7 +99,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_list_query()
     {
         $this->markTestIncomplete('Breaks on php 7.1');
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         //test with empty string params
         $expected = "SELECT leads.*, users.user_name assigned_user_name,leads_cstm.* FROM leads 			LEFT JOIN users\n                                ON leads.assigned_user_id=users.id LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = leads.id AND eabl.bean_module = 'Leads' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN leads_cstm ON leads.id = leads_cstm.id_c where  leads.deleted=0 ";
@@ -119,7 +119,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_new_list_query()
     {
         /*
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         //test with empty string params
         $expected = " SELECT  leads.* , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' e_invite_status_fields , '                                    '  fp_events_leads_1fp_events_ida , '                                                                                                                                                                                                                                                              ' e_accept_status_fields , LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),' ',IFNULL(leads.last_name,'')))) as name , jt3.user_name modified_by_name , jt3.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt4.user_name created_by_name , jt4.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt5.user_name assigned_user_name , jt5.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod, LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),' ',IFNULL(leads.last_name,'')))) as full_name , jt6.name campaign_name , jt6.assigned_user_id campaign_name_owner  , 'Campaigns' campaign_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM leads   LEFT JOIN  users jt3 ON leads.modified_user_id=jt3.id AND jt3.deleted=0\n\n AND jt3.deleted=0  LEFT JOIN  users jt4 ON leads.created_by=jt4.id AND jt4.deleted=0\n\n AND jt4.deleted=0  LEFT JOIN  users jt5 ON leads.assigned_user_id=jt5.id AND jt5.deleted=0\n\n AND jt5.deleted=0  LEFT JOIN  campaigns jt6 ON leads.campaign_id=jt6.id AND jt6.deleted=0\n\n AND jt6.deleted=0 where leads.deleted=0";
@@ -139,7 +139,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $this->markTestSkipped("converted_lead: Error in query, id's not properly escaped ");
         
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $lead->first_name = "firstn";
         $lead->last_name = "lastnn";
@@ -188,7 +188,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
 
     // test
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $lead->first_name = "firstn";
         $lead->last_name = "lastn";
@@ -211,7 +211,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $lead->first_name = "firstn";
         $lead->last_name = "lastn";
@@ -232,7 +232,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     // test
         
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $expected = array(
             'NAME' => ' ',
@@ -267,7 +267,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_linked_fields()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $expected = array(
             'created_by_link',
@@ -304,7 +304,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestSkipped('State dependecy');
         
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         //test with empty string params
         $expected = "leads.last_name like '%' or leads.account_name like '%' or leads.first_name like '%' or ea.email_address like '%'";
@@ -320,7 +320,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testset_notification_body()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         //test with attributes preset and verify template variables are set accordingly
 
@@ -341,7 +341,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $this->assertEquals(false, $lead->bean_implements('')); //test with blank value
         $this->assertEquals(false, $lead->bean_implements('test')); //test with invalid value
@@ -357,7 +357,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     // test
         
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $expected = array("MAIN" => "a", "ACCOUNT" => "a", "OPPORTUNITY" => "a", "CONTACT" => "a");
         $actual = $lead->listviewACLHelper();
@@ -371,7 +371,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconvertCustomFieldsForm()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $form = "";
         $prefix = "";
@@ -386,7 +386,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_unlinked_email_query()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear
 
@@ -402,7 +402,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_old_related_calls()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $expected = array();
         $expected['select'] = 'SELECT calls.id ';
@@ -419,7 +419,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetActivitiesOptions()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $expected = array("copy" => "Copy", "move" => "Move", "donothing" => "Do Nothing");
         $actual = $lead->getActivitiesOptions();
@@ -429,7 +429,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_old_related_meetings()
     {
-        $lead = new Lead();
+        $lead = BeanFactory::getBean('Leads');
 
         $expected = array();
         $expected['select'] = 'SELECT meetings.id ';
