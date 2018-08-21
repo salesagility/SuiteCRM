@@ -35,7 +35,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         $this->markTestIncomplete('Breaks on php 7.1');
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $contact = new Contact();
 
@@ -68,12 +68,12 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
 
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         $contact = new Contact();
 
         $expected = array( "MAIN"=>"span", "ACCOUNT"=>"span");
@@ -168,7 +168,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $contact = new Contact();
@@ -193,7 +193,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
 
-    // test
+        // test
         
         $contact = new Contact();
 
@@ -216,7 +216,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                     );
 
         $actual = $contact->get_list_view_data();
-        //$this->assertSame($expected, $actual);
+        
         $this->assertEquals($expected['NAME'], $actual['NAME']);
         $this->assertEquals($expected['FIRST_NAME'], $actual['FIRST_NAME']);
         $this->assertEquals($expected['LAST_NAME'], $actual['LAST_NAME']);
@@ -272,8 +272,8 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
 
 
-        //$result = $contact->get_contact_id_by_email("test@test.com");
-        //$this->assertEquals(null,$result);
+        
+        
 
         $this->markTestSkipped('Invalid Columns(email1,email2) in Query ');
     }
@@ -283,7 +283,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $contact = new Contact();
@@ -330,7 +330,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $contact = new Contact();
