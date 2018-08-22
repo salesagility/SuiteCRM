@@ -425,7 +425,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             if ($method != "save") {
                 $value = convertDateUserToDB($value);
             }
-            $datetime_format = $timedate->get_date_time_format($current_user);
+            $datetime_format = $timedate->get_date_time_format();
 
             if ($vardef['type'] == "date") {
                 $value = $value . ' 00:00:00';
