@@ -429,7 +429,6 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_old_related_meetings()
     {
-        $this->markTestIncomplete('Environment dependency');
         $lead = BeanFactory::getBean('Leads');
 
         $expected = array();
