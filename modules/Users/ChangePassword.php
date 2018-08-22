@@ -50,14 +50,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 if (isset($_POST['saveConfig'])){
     require_once('modules/Users/User.php');
 	$focus = new User();
-	$focus->retrieve($_POST['record']);	
-	if(!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {
-            SugarApplication::appendErrorMessage($focus->error_string);
-            SugarApplication::redirect("index.php?action=ChangePassword&module=Users&record=".$_POST['record']);
+        if (!isValidId($_POST['record'])) {
+            LoggerManager::getLogger()->warn('Invalid ID in post request');
+        } else {
+            $record = $_POST['record'];
+            $focus->retrieve($record);	
+            if(!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {
+                SugarApplication::appendErrorMessage($focus->error_string);
+                SugarApplication::redirect('index.php?action=ChangePassword&module=Users&record=' . $record);
+            }
+
+            // Send to new user wizard if it hasn't been run
+            $ut = $GLOBALS['current_user']->getPreference('ut');
         }
-    
-	// Send to new user wizard if it hasn't been run
-	$ut = $GLOBALS['current_user']->getPreference('ut');
     if(empty($ut))
         SugarApplication::redirect('index.php?module=Users&action=Wizard');
     
