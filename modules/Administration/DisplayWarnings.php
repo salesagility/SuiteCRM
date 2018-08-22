@@ -42,7 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-global $db, $current_user, $timedate;
+global $current_user, $timedate;
+$db = DBManagerFactory::getInstance();
+
 function displayAdminError($errorString)
 {
     $output = '<p class="error">'.$errorString.'</p>';
@@ -57,7 +59,11 @@ if (isset($_SESSION['rebuild_extensions'])) {
     displayAdminError(translate('MSG_REBUILD_EXTENSIONS', 'Administration'));
 }
 
-if ((strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')) {
+if (!isset($_SERVER['SERVER_SOFTWARE'])) {
+    LoggerManager::getLogger()->warn('SERVER_SOFTVARE is undefined got Display Warnings');
+}
+
+if (isset($_SERVER['SERVER_SOFTWARE']) && (strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')) {
     displayAdminError(translate('LBL_FASTCGI_LOGGING', 'Administration'));
 }
 if (is_admin($current_user)) {

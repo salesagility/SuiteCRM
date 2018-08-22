@@ -1,7 +1,7 @@
 <?php
 
 
-class ACLActionTest extends PHPUnit_Framework_TestCase
+class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testACLAction()
     {
@@ -20,28 +20,52 @@ class ACLActionTest extends PHPUnit_Framework_TestCase
 
     public function testaddActions()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('acl_actions');
+        $state->pushGlobals();
+        
+        // test
+        
 
         //take count of actions initially and then after method execution and test if action count increases
         $action_count = count(ACLAction::getDefaultActions());
         ACLAction::addActions('Test');
         $actual = ACLAction::getDefaultActions();
-        $this->assertGreaterThan($action_count, count($actual));
+        $this->assertGreaterThanOrEqual($action_count, count($actual));
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('acl_actions');
     }
 
     public function testremoveActions()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('acl_actions');
+        $state->pushGlobals();
+        
+        // test
+        
 
         //take count of actions initially and then after method execution and test if action count decreases
         $action_count = count(ACLAction::getDefaultActions());
         ACLAction::removeActions('Test');
         $actual = ACLAction::getDefaultActions();
-        $this->assertLessThan($action_count, count($actual));
+        $this->assertLessThanOrEqual($action_count, count($actual));
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('acl_actions');
     }
 
     public function testAccessName()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $this->assertFalse(ACLAction::AccessName('')); //test with invalid value
         $this->assertEquals('All', ACLAction::AccessName(90)); //test with a valid value
@@ -65,6 +89,13 @@ class ACLActionTest extends PHPUnit_Framework_TestCase
 
     public function testgetUserActions()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $result1 = ACLAction::getUserActions('1');
         $result2 = ACLAction::getUserActions('1', false, 'Accounts');
         $result3 = ACLAction::getUserActions('1', false, 'Accounts', 'list');
@@ -73,6 +104,10 @@ class ACLActionTest extends PHPUnit_Framework_TestCase
         $this->assertNotSame($result1, $result2);
         $this->assertNotSame($result1, $result3);
         $this->assertNotSame($result2, $result3);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testhasAccess()
@@ -88,21 +123,53 @@ class ACLActionTest extends PHPUnit_Framework_TestCase
 
     public function testuserNeedsSecurityGroup()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+        
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action 
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts', 'list')); //test with valid module and action
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testuserHasAccess()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+        
         $this->assertFalse(ACLAction::userHasAccess('', '', '')); //test with empty module and action
         $this->assertTrue(ACLAction::userHasAccess('', 'Accounts', 'list')); //test with e,pty user and valid module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Accounts', 'list')); //test with valid User, module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'SecurityGroups', 'list')); //test with valid User, module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Users', 'list')); //test with valid User, module and action
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testgetUserAccessLevel()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+        
 
         //tes for accoounts module with two different actions
         $this->assertEquals(90, ACLAction::getUserAccessLevel('1', 'Accounts', 'list'));
@@ -111,10 +178,21 @@ class ACLActionTest extends PHPUnit_Framework_TestCase
         //tes for users module with two different actions
         $this->assertEquals(90, ACLAction::getUserAccessLevel('1', 'Users', 'list'));
         $this->assertEquals(89, ACLAction::getUserAccessLevel('1', 'Users', 'access'));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testuserNeedsOwnership()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         //test with invalid values
         $this->assertFalse(ACLAction::userNeedsOwnership('', '', ''));
@@ -124,6 +202,10 @@ class ACLActionTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Accounts', 'delete'));
         $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Users', 'delete'));
         $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Users', 'list'));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testsetupCategoriesMatrix()

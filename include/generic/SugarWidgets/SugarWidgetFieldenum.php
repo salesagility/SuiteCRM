@@ -88,7 +88,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
 		return $this->_get_column_select($layout_def)." <> ".$this->reporter->db->quoted($input_name0)."\n";
 	}
 
-	public function queryFilterone_of($layout_def) {
+	public function queryFilterone_of($layout_def, $rename_columns = true) {
 		$arr = array ();
 		foreach ($layout_def['input_name0'] as $value) {
 			$arr[] = $this->reporter->db->quoted($value);

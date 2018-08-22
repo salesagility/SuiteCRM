@@ -1,9 +1,17 @@
 <?php
 
-class TaskTest extends PHPUnit_Framework_TestCase
+class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testTask()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $task = new Task();
@@ -17,11 +25,25 @@ class TaskTest extends PHPUnit_Framework_TestCase
 
         $this->assertAttributeEquals(true, 'new_schema', $task);
         $this->assertAttributeEquals(true, 'importable', $task);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 
     public function testsave()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('tasks');
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
+
 
         $task = new Task();
 
@@ -40,10 +62,24 @@ class TaskTest extends PHPUnit_Framework_TestCase
         $task->mark_deleted($task->id);
         $result = $task->retrieve($task->id);
         $this->assertEquals(null, $result);
+        
+        // cleanup
+        
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
+        $state->popTable('tasks');
     }
 
     public function testget_summary_text()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $task = new Task();
 
         //test without setting name
@@ -52,10 +88,23 @@ class TaskTest extends PHPUnit_Framework_TestCase
         //test with name set
         $task->name = 'test';
         $this->assertEquals('test', $task->get_summary_text());
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 
     public function testcreate_export_query()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $task = new Task();
 
         //test with empty string params
@@ -67,10 +116,17 @@ class TaskTest extends PHPUnit_Framework_TestCase
         $expected = 'SELECT tasks.*, users.user_name as assigned_user_name  FROM tasks   LEFT JOIN users ON tasks.assigned_user_id=users.id where users.user_name = "" AND tasks.deleted=0 ORDER BY tasks.name';
         $actual = $task->create_export_query('tasks.id', 'users.user_name = ""');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 
     public function testfill_in_additional_list_fields()
     {
+        $this->markTestIncomplete('method has no implementation');
+        
         $task = new Task();
 
         //execute the method and test if it works and does not throws an exception.
@@ -78,14 +134,21 @@ class TaskTest extends PHPUnit_Framework_TestCase
             $task->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
-        $this->markTestIncomplete('method has no implementation');
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $task = new Task();
         $task->contact_id = 1;
 
@@ -94,12 +157,25 @@ class TaskTest extends PHPUnit_Framework_TestCase
             $task->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 
     public function testfill_in_additional_parent_fields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $task = new Task();
         $task->parent_type = 'Accounts';
         $task->parent_id = '1';
@@ -109,12 +185,25 @@ class TaskTest extends PHPUnit_Framework_TestCase
             $task->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 
     public function testget_list_view_data()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $task = new Task();
         $current_theme = SugarThemeRegistry::current();
 
@@ -153,10 +242,23 @@ class TaskTest extends PHPUnit_Framework_TestCase
                 $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
             }
         }
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 
     public function testset_notification_body()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $task = new Task();
 
         //test with attributes preset and verify template variables are set accordingly
@@ -176,31 +278,77 @@ class TaskTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($task->priority, $result->_tpl_vars['TASK_PRIORITY']);
         $this->assertEquals('02/11/2016 17:30 UTC(+00:00)', $result->_tpl_vars['TASK_DUEDATE']);
         $this->assertEquals($task->description, $result->_tpl_vars['TASK_DESCRIPTION']);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 
     public function testbean_implements()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $task = new Task();
 
         $this->assertEquals(false, $task->bean_implements('')); //test with blank value
         $this->assertEquals(false, $task->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $task->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 
     public function testlistviewACLHelper()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $task = new Task();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $task->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 
     public function testgetDefaultStatus()
     {
+        $this->markTestIncomplete('Incorrect state hash (in PHPUnitTest): Hash doesn\'t match at key "database::aod_indexevent".');
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $task = new Task();
 
         $result = $task->getDefaultStatus();
         $this->assertEquals('Not Started', $result);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popGlobals();
     }
 }

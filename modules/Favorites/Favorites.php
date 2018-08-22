@@ -88,7 +88,9 @@ class Favorites extends Basic
      */
     public function getFavoriteID($module, $record_id)
     {
-        global $db, $current_user;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
+        
         $query = "SELECT id FROM favorites WHERE parent_id= '" . $record_id . "' AND parent_type = '" . $module . "' AND assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
 
         return $db->getOne($query);
@@ -100,14 +102,15 @@ class Favorites extends Basic
      */
     public function getCurrentUserSidebarFavorites($id = null)
     {
-        global $db, $current_user;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
 
         $return_array = array();
 
         if ($id) {
             $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND parent_id = '" . $id . "' AND deleted = 0 ORDER BY date_entered DESC";
         } else {
-            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
+            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC LIMIT 30";
         }
 
         $result = $db->query($query);

@@ -1,9 +1,16 @@
 <?php
 
-class ViewQuickTest extends PHPUnit_Framework_TestCase
+class ViewQuickTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewQuick()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and type attribute
 
@@ -13,10 +20,21 @@ class ViewQuickTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('ViewDetail', $view);
         $this->assertAttributeEquals('detail', 'type', $view);
         $this->assertTrue(is_array($view->options));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testdisplay()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $view = new ViewQuick();
 
         //execute the method with required child objects preset. it will return some html.
@@ -36,5 +54,9 @@ class ViewQuickTest extends PHPUnit_Framework_TestCase
 
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertNotEquals(false, json_decode($renderedContent));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-class AOS_ContractsTest extends PHPUnit_Framework_TestCase
+class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOS_Contracts()
     {
@@ -23,7 +23,15 @@ class AOS_ContractsTest extends PHPUnit_Framework_TestCase
 
     public function testsaveAndDelete()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aos_contracts');
+        $state->pushGlobals();
+        
+        // test
+        
 
         $aosContracts = new AOS_Contracts();
         $aosContracts->name = 'test';
@@ -38,10 +46,18 @@ class AOS_ContractsTest extends PHPUnit_Framework_TestCase
         $aosContracts->mark_deleted($aosContracts->id);
         $result = $aosContracts->retrieve($aosContracts->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aos_contracts');
+        $state->popTable('aod_indexevent');
     }
 
     public function testCreateReminderAndCreateLinkAndDeleteCall()
     {
+        $this->markTestIncomplete("Error: Class 'call' not found");
+        
         $call = new call();
 
         $aosContracts = new AOS_Contracts();

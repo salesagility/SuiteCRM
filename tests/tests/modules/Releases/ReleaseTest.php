@@ -1,6 +1,6 @@
 <?php
 
-class ReleaseTest extends PHPUnit_Framework_TestCase
+class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testRelease()
     {
@@ -20,8 +20,6 @@ class ReleaseTest extends PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
-        error_reporting(E_ERROR | E_PARSE);
-
         $release = new Release();
 
         //test without setting name
@@ -54,7 +52,7 @@ class ReleaseTest extends PHPUnit_Framework_TestCase
             $release->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -67,7 +65,7 @@ class ReleaseTest extends PHPUnit_Framework_TestCase
             $release->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -100,7 +98,7 @@ class ReleaseTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "name like '%'";
+        $expected = "name like 'test%'";
         $actual = $release->build_generic_where_clause('test');
         $this->assertSame($expected, $actual);
     }
