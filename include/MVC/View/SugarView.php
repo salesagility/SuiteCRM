@@ -1237,7 +1237,7 @@ EOHTML;
      */
     protected function _checkModule()
     {
-        if (!empty($this->module) && !file_exists('modules/' . $this->module)) {
+        if (!empty($this->module) && !file_exists('modules/' . $this->module) && !file_exists('custom/modules/' . $this->module)) {
             $error = str_replace("[module]", "$this->module", $GLOBALS['app_strings']['ERR_CANNOT_FIND_MODULE']);
             $GLOBALS['log']->fatal($error);
             echo $error;
