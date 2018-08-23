@@ -610,6 +610,10 @@ class AOW_WorkFlow extends Basic
             $field = $condition->field;
             $value = $condition->value;
 
+            if ($condition->operator === 'Anniversary' && $this->hasAlreadyRunToday($bean)) {
+                return false;
+            }
+
             $dateFields = array('date','datetime', 'datetimecombo');
             if ($this->isSQLOperator($condition->operator)) {
                 $data = $condition_bean->field_defs[$field];
@@ -772,6 +776,24 @@ class AOW_WorkFlow extends Basic
         }
 
         return true;
+    }
+
+    /**
+     * @param SugarBean $bean
+     * @return bool
+     */
+    protected function hasAlreadyRunToday(SugarBean $bean)
+    {
+        global $db, $timedate;
+
+        $day = $timedate->getNow()->format('Y-m-d');
+        $sql = "SELECT id FROM aow_processed WHERE aow_workflow_id = '{$this->id}' " .
+            "AND parent_id = '{$bean->id}' AND status = 'Complete' AND date_entered LIKE '$day%' LIMIT 1";
+
+        if ($db->fetchByAssoc($db->query($sql))) {
+            return true;
+        }
+        return false;
     }
 
     public function compare_condition($var1, $var2, $operator = 'Equal_To')
