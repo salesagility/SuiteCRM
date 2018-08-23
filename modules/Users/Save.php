@@ -217,6 +217,12 @@ if (!$focus->is_group && !$focus->portal_only) {
         $focus->setPreference('subpanel_tabs', '', 0, 'global');
     }
 
+    if (isset($_POST['user_count_collapsed_subpanels'])) {
+        $focus->setPreference('count_collapsed_subpanels', $_POST['user_count_collapsed_subpanels'], 0, 'global');
+    } else {
+        $focus->setPreference('count_collapsed_subpanels', '', 0, 'global');
+    }
+
     if (isset($_POST['user_theme'])) {
         $focus->setPreference('user_theme', $_POST['user_theme'], 0, 'global');
         $_SESSION['authenticated_user_theme'] = $_POST['user_theme'];
@@ -406,7 +412,8 @@ if (!$focus->is_group && !$focus->portal_only) {
 }
 
 if (!$focus->verify_data()) {
-    header("Location: index.php?action=Error&module=Users&error_string=" . urlencode($focus->error_string));
+    SugarApplication::appendErrorMessage($focus->error_string);
+    header('Location: index.php?action=Error&module=Users');
     exit;
 }
     $GLOBALS['sugar_config']['disable_team_access_check'] = true;
@@ -426,11 +433,11 @@ if (!$focus->verify_data()) {
             }
 
             if ((isset($_POST['page']) && $_POST['page'] == 'EditView')) {
-                header("Location: index.php?action=EditView&module=Users&record=" . $_POST['record'] . "&error_password=" . urlencode($focus->error_string));
+                header("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
                 exit;
             }
             if ((isset($_POST['page']) && $_POST['page'] == 'Change')) {
-                header("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record'] . "&error_password=" . urlencode($focus->error_string));
+                header("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
                 exit;
             }
         } else {

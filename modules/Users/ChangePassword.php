@@ -55,7 +55,8 @@ if (isset($_POST['saveConfig'])) {
     $focus = new User();
     $focus->retrieve($_POST['record']);
     if (!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {
-        SugarApplication::redirect("index.php?action=ChangePassword&module=Users&record=".$_POST['record']."&error_password=".urlencode($focus->error_string));
+        SugarApplication::appendErrorMessage($focus->error_string);
+        SugarApplication::redirect("index.php?action=ChangePassword&module=Users&record=".$_POST['record']);
     }
     
     // Send to new user wizard if it hasn't been run

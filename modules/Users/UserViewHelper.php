@@ -529,6 +529,10 @@ class UserViewHelper
             $this->ss->assign("SUBPANEL_TABS", $GLOBALS['sugar_config']['default_subpanel_tabs']?'checked':'');
         }
 
+        if ($this->bean->getPreference('count_collapsed_subpanels')) {
+            $this->ss->assign("COUNT_COLLAPSED_SUBPANELS", 'checked');
+        }
+
         /* Module Tab Chooser */
         require_once('include/templates/TemplateGroupChooser.php');
         require_once('modules/MySettings/TabController.php');

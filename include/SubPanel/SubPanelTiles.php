@@ -41,7 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 require_once('include/SubPanel/SubPanel.php');
 require_once('include/SubPanel/SubPanelTilesTabs.php');
 require_once('include/SubPanel/SubPanelDefinitions.php');
@@ -60,6 +59,11 @@ class SubPanelTiles
     public $layout_def_key;
     public $show_tabs = false;
 
+    /**
+     * @var \SuiteCRM\SubPanel\SubPanelRowCounter
+     */
+    protected $rowCounter;
+
     public $subpanel_definitions;
 
     public $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
@@ -72,6 +76,7 @@ class SubPanelTiles
         $this->module = $focus->module_dir;
         $this->layout_def_key = $layout_def_key;
         $this->subpanel_definitions=new SubPanelDefinitions($focus, $layout_def_key, $layout_def_override);
+        $this->rowCounter = new \SuiteCRM\SubPanel\SubPanelRowCounter($focus);
     }
 
     /*
@@ -354,7 +359,19 @@ class SubPanelTiles
 
                 // Get subpanel buttons
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel, $subpanel_object->subpanel_query);
+            } elseif ($current_user->getPreference('count_collapsed_subpanels')) {
+                $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
+                $count = $this->rowCounter->getSubPanelRowCount($subPanelDef);
+
+                if ($count === 0) {
+                    $tabs_properties[$t]['title'] .= ' (0)';
+                }
+                elseif ($count > 0) {
+                    $tabs_properties[$t]['title'] .= ' +';
+                    $tabs_properties[$t]['collapsed_override'] = 1;
+                }
             }
+
 
             array_push($tab_names, $tab);
         }
@@ -382,7 +399,6 @@ class SubPanelTiles
 
         return $template_header . $template_body . $template_footer;
     }
-
 
     public function getLayoutManager()
     {

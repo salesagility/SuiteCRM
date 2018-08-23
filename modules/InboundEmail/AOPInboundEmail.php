@@ -27,6 +27,8 @@ require_once 'include/clean.php';
 class AOPInboundEmail extends InboundEmail
 {
 
+    public $job_name = 'function::pollMonitoredInboxesAOP';
+
     /**
      * Replaces embedded image links with links to the appropriate note in the CRM.
      * @param $string

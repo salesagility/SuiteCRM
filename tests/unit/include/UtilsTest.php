@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,33 +38,47 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+namespace SuiteCRM;
 
- * Description: TODO:  To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
-include_once __DIR__ . '/../../include/utils.php';
+use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 
-global $app_strings;
-echo "<br><br>";
+include_once __DIR__ . '/../../../include/utils.php';
 
-if (isset($_REQUEST['ie_error']) && $_REQUEST['ie_error'] == 'true') {
-    echo '<a href="index.php?module=Users&action=EditView&record='.$_REQUEST['id'].'">'.$mod_strings['ERR_IE_FAILURE1'].'</a><br>';
-    echo $mod_strings['ERR_IE_FAILURE2'];
-} else {
-    ?>
-<span class='error'><?php if (isset($_REQUEST['error_string'])) {
-        LoggerManager::getLogger()->warn('Passing error string in request is deprecated. Please update your code.');
-        echo getAppString($_REQUEST['error_string']);
-} else {
-        LoggerManager::getLogger()->warn('Passing error string in request is deprecated. Please update your code.');
-        echo isset($request) ? getAppString($request['error_string']) : null;
-    } ?>
-<br><br>
-<?php echo $app_strings['NTC_CLICK_BACK'];
-}?>
-</span>
+class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
+{
+    
+    public function testGetAppString()
+    {
+        global $app_strings;
+        
+        // setup: test works only if it is not exists
+        $this->assertTrue(!isset($app_strings['TEST_NONEXISTS_LABEL']));
+        
+        // test if label is not set
+        
+        $result = getAppString('TEST_NONEXISTS_LABEL');
+        $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
+        
+        // test if label is empty (bool:false)
+        
+        $app_strings['TEST_NONEXISTS_LABEL'] = '';
+        
+        $result = getAppString('TEST_NONEXISTS_LABEL');
+        $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
+        
+        // test if it founds
+        
+        $app_strings['TEST_NONEXISTS_LABEL'] = 'Hello test';
+        
+        $result = getAppString('TEST_NONEXISTS_LABEL');
+        $this->assertEquals('Hello test', $result);
+        
+        // clean up
+        unset($app_strings['TEST_NONEXISTS_LABEL']);
+    }
+}
