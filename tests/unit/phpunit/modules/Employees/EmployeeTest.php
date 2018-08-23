@@ -276,7 +276,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test if there is no error
         
         ob_start();
-        include __DIR__ . '/../../../../modules/Employees/Error.php';
+        include __DIR__ . '/../../../../../modules/Employees/Error.php';
         $contents = ob_get_contents();
         ob_end_clean();
         $expected = '<span class=\'error\'><br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
