@@ -90,7 +90,13 @@ class Favorites extends Basic
         global $current_user;
         $db = DBManagerFactory::getInstance();
         
-        $query = "SELECT id FROM favorites WHERE parent_id= '" . $record_id . "' AND parent_type = '" . $module . "' AND assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
+        $recordIdQuote = $db->quote($record_id);
+        $moduleQuote = $db->quote($module);
+        $currentUserIdQuote = $db->quote($current_user->id);
+        
+        $query = "SELECT id FROM favorites WHERE parent_id= '" . $recordIdQuote .
+                "' AND parent_type = '" . $moduleQuote . "' AND assigned_user_id = '" .
+                $currentUserIdQuote . "' AND deleted = 0 ORDER BY date_entered DESC";
 
         return $db->getOne($query);
     }
@@ -105,11 +111,16 @@ class Favorites extends Basic
         $db = DBManagerFactory::getInstance();
 
         $return_array = array();
-
+        
+        $currentUserIdQuote = $db->quote($current_user->id);
         if ($id) {
-            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND parent_id = '" . $id . "' AND deleted = 0 ORDER BY date_entered DESC";
+            $idQuote = $db->quote($id);
+            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" .
+                    $currentUserIdQuote . "' AND parent_id = '" . $idQuote .
+                    "' AND deleted = 0 ORDER BY date_entered DESC";
         } else {
-            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
+            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" .
+                    $currentUserIdQuote . "' AND deleted = 0 ORDER BY date_entered DESC";
         }
 
         $result = $db->query($query);
@@ -164,11 +175,13 @@ class Favorites extends Basic
 
         $response = array();
 
+        $currentUserIdQuote = $db->quote($current_user->id);
+        $moduleQuote = $db->quote($module);
         $dbResult = $db->query(
             "SELECT parent_id, parent_type FROM favorites " .
-            " WHERE assigned_user_id = '" . $current_user->id . "'" .
+            " WHERE assigned_user_id = '" . $currentUserIdQuote . "'" .
             " AND deleted = 0 " .
-            " AND parent_type = '" . $db->quote($module) . "'" .
+            " AND parent_type = '" . $moduleQuote . "'" .
             " ORDER BY date_entered DESC "
         );
 
