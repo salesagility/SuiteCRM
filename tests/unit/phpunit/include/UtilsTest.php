@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 
-include_once __DIR__ . '/../../../include/utils.php';
+include_once __DIR__ . '/../../../../include/utils.php';
 
 class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
 {
