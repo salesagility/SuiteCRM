@@ -246,7 +246,7 @@ class actionComputeField extends actionBase
                             break;
                         }
                     }
-                } elseif (is_string($relatedEntityId)) {
+                } elseif (isValidId($relatedEntityId)) {
                     // If this is a string, it's probably an id of an object - really a relate field
                     $entity = BeanFactory::getBean(
                         $relateFields[$relationParameters[$i]]['module'],
