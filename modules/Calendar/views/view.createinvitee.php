@@ -47,7 +47,7 @@ class CalendarViewCreateInvitee extends SugarView
    
     public function preDisplay()
     {
-        global $beanFiles, $beanList;
+        global $beanFiles, $beanList, $current_user;
 
         $module = empty($_REQUEST['inviteeModule']) ? '' : $_REQUEST['inviteeModule'];
 
@@ -61,6 +61,7 @@ class CalendarViewCreateInvitee extends SugarView
         if ($this->bean->ACLAccess('save')) {
             require_once('include/formbase.php');
             $this->bean = populateFromPost("", $this->bean);
+            $this->bean->assigned_user_id = $current_user->id;
             $this->bean->save();
         } else {
             $this->returnNoAccess($this->bean->object_name);

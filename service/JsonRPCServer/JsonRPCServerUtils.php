@@ -93,15 +93,18 @@ class JsonRPCServerUtils
             }
         }
 
-        if ($table === 'users.') {
-            $cond_arr[] = $table . "status='Active'";
-        }
         $group = strtolower(trim($query_obj['group']));
         if ($group !== 'and' && $group !== 'or') {
             $group = 'and';
         }
 
-        return implode(" $group ", $cond_arr);
+        $query = implode(" $group ", $cond_arr);
+
+        if ($table === 'users.') {
+            $query = "(" . $query . ")" . " and users.status='Active'";
+        }
+
+        return $query;
     }
 
     /**

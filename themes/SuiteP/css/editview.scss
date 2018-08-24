@@ -185,6 +185,19 @@ div#searchResults {
   text-transform: uppercase;
 }
 
+.create_invitee_button {
+  font-size: $page-font-size;
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  padding: 0 10px;
+  margin: 4px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
+}
+
 #create-invitee-edit td {
   padding-bottom: 8px;
   line-height: $input-line-height;
