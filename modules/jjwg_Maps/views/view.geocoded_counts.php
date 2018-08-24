@@ -105,4 +105,3 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView
         echo '<a href="'.htmlspecialchars($delete_url).'">'.$GLOBALS['app_strings']['LBL_DELETE'].' - '.$GLOBALS['mod_strings']['LBL_ADDRESS_CACHE'].'</a>';
     }
 }
-

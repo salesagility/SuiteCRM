@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,6 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -53,7 +53,7 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         return parent::getWidgetId();
     }
 
-    public function display($defines, $additionalFormFields = NULL, $nonbutton = false)
+    public function &_get_form($defines, $additionalFormFields = null, $nonbutton = false)
     {
         if ((ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'], 'edit', true) ||
                 $defines['module'] == "Activities" & !ACLController::checkAccess("Emails", 'edit', true))) {
@@ -103,15 +103,22 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
 
             $emailUI = new EmailUI();
             $emailUI->appendTick = false;
-            $button = '<a class="email-link" onclick="$(document).openComposeViewModal(this);" data-module="'
+            $button = '<div type="hidden" onclick="$(document).openComposeViewModal(this);" data-module="'
             . $bean->module_name . '" data-record-id="'
             . $bean->id . '" data-module-name="'
             . $bean->name .'" data-email-address="'
-            . $bean->email1 .'">'
-            . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL']
-            . '</a>';
+            . $bean->email1 .'">';
+        }
+        return $button;
+    }
+
+    public function display($defines, $additionalFormFields = null, $nonbutton = false)
+    {
+        $focus = new Meeting;
+        if (!$focus->ACLAccess('EditView')) {
+            return '';
         }
 
-        return $button;
+        return parent::display($defines, $additionalFormFields);
     }
 }

@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,15 +37,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:  Defines the Account SugarBean Account entity with the necessary
  * methods and variables.
- ********************************************************************************/
+ */
 
 require_once("include/SugarObjects/templates/company/Company.php");
 require_once __DIR__ . '/../../include/EmailInterface.php';
@@ -130,13 +131,13 @@ class Account extends Company implements EmailInterface
     public $importable = true;
     public $new_schema = true;
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'opportunity_id', 'bug_id', 'case_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id', 'parent_name', 'member_id'
-	);
-    public $relationship_fields = Array('opportunity_id'=>'opportunities', 'bug_id' => 'bugs', 'case_id'=>'cases',
-									'contact_id'=>'contacts', 'task_id'=>'tasks', 'note_id'=>'notes',
-									'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails','member_id'=>'members',
-									'project_id'=>'project',
-									);
+    public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'opportunity_id', 'bug_id', 'case_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id', 'parent_name', 'member_id'
+    );
+    public $relationship_fields = array('opportunity_id'=>'opportunities', 'bug_id' => 'bugs', 'case_id'=>'cases',
+                                    'contact_id'=>'contacts', 'task_id'=>'tasks', 'note_id'=>'notes',
+                                    'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails','member_id'=>'members',
+                                    'project_id'=>'project',
+                                    );
 
     //Meta-Data Framework fields
     public $push_billing;
@@ -158,7 +159,7 @@ class Account extends Company implements EmailInterface
 
         //Email logic
         if (!empty($_REQUEST['parent_id']) && !empty($_REQUEST['parent_type']) && $_REQUEST['parent_type'] == 'Emails'
-        	&& !empty($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Emails') {
+            && !empty($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Emails') {
             $_REQUEST['parent_name'] = '';
             $_REQUEST['parent_id'] = '';
         }
@@ -205,21 +206,21 @@ class Account extends Company implements EmailInterface
     * This method is used to provide backward compatibility with old data that was prefixed with http://
     * We now automatically prefix http://
     * @deprecated.
- 	*/
+    */
     public function remove_redundant_http()
     {	/*
-		if(preg_match("@http://@", $this->website))
-		{
-			$this->website = substr($this->website, 7);
-		}
-		*/
+        if(preg_match("@http://@", $this->website))
+        {
+            $this->website = substr($this->website, 7);
+        }
+        */
     }
 
     public function fill_in_additional_list_fields()
     {
         parent::fill_in_additional_list_fields();
         // Fill in the assigned_user_name
-	//	$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
+    //	$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
     }
 
     public function fill_in_additional_detail_fields()
@@ -273,7 +274,7 @@ class Account extends Company implements EmailInterface
     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
         array_push($where_clauses, "accounts.name like '$the_query_string%'");
         if (is_numeric($the_query_string)) {
@@ -369,8 +370,8 @@ class Account extends Company implements EmailInterface
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
     public function get_unlinked_email_query($type=array())

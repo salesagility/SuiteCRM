@@ -63,9 +63,7 @@ class Zend_Search_Lucene_Analysis_TokenFilter_ShortWords extends Zend_Search_Luc
     {
         if (strlen($srcToken->getTermText()) < $this->length) {
             return null;
-        } else {
-            return $srcToken;
         }
+        return $srcToken;
     }
 }
-

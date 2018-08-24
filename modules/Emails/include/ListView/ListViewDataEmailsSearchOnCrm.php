@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -229,9 +229,11 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
                             $additionalDetailsFile = 'custom/modules/' . $this->lvde->seed->module_dir . '/metadata/additionalDetails.php';
                         }
                         require_once($additionalDetailsFile);
-                        $ar = $this->lvde->getAdditionalDetails($data[$dataIndex],
+                        $ar = $this->lvde->getAdditionalDetails(
+                            $data[$dataIndex],
                             (empty($this->lvde->additionalDetailsFunction) ? 'additionalDetails' : $this->lvde->additionalDetailsFunction) . $this->lvde->seed->object_name,
-                            $additionalDetailsEdit);
+                            $additionalDetailsEdit
+                        );
                     }
                     $pageData['additionalDetails'][$dataIndex] = $ar['string'];
                     $pageData['additionalDetails']['fieldToAddTo'] = $ar['fieldToAddTo'];

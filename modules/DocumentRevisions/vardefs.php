@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,15 +37,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
-                               ,'fields' => array (
+                               ,'fields' => array(
   'id' =>
-  array (
+  array(
     'name' => 'id',
     'vname' => 'LBL_REVISION_NAME',
     'type' => 'varchar',
@@ -54,7 +55,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
   ),
 
  'change_log' =>
-  array (
+  array(
     'name' => 'change_log',
     'vname' => 'LBL_CHANGE_LOG',
     'type' => 'varchar',
@@ -62,7 +63,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
   ),
 
   'document_id' =>
-  array (
+  array(
     'name' => 'document_id',
     'vname' => 'LBL_DOCUMENT',
     'type' => 'varchar',
@@ -71,7 +72,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
     'reportable'=>false,
   ),
 'doc_id' =>
-  array (
+  array(
     'name' => 'doc_id',
     'vname' => 'LBL_DOC_ID',
     'type' => 'varchar',
@@ -81,7 +82,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
     'studio' => 'false',
   ),
   'doc_type' =>
-  array (
+  array(
     'name' => 'doc_type',
     'vname' => 'LBL_DOC_TYPE',
     'type' => 'enum',
@@ -91,7 +92,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
     'studio' => 'false',
   ),
 'doc_url' =>
-  array (
+  array(
     'name' => 'doc_url',
     'vname' => 'LBL_DOC_URL',
     'type' => 'varchar',
@@ -101,13 +102,13 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
     'studio' => 'false',
   ),
    'date_entered' =>
-  array (
+  array(
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
   ),
   'created_by' =>
-  array (
+  array(
     'name' => 'created_by',
     'rname' => 'user_name',
     'id_name' => 'modified_user_id',
@@ -119,7 +120,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
     'source'=>'db',
   ),
   'filename' =>
-  array (
+  array(
     'name' => 'filename',
     'vname' => 'LBL_FILENAME',
     'type' => 'file',
@@ -130,14 +131,14 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
     'linkModuleOverride' => 'Documents',
   ),
   'file_ext' =>
-  array (
+  array(
     'name' => 'file_ext',
     'vname' => 'LBL_FILE_EXTENSION',
     'type' => 'varchar',
     'len' => 100,
   ),
   'file_mime_type' =>
-  array (
+  array(
     'name' => 'file_mime_type',
     'vname' => 'LBL_MIME',
     'type' => 'varchar',
@@ -145,7 +146,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
   ),
 
   'revision'=>
-  array (
+  array(
     'name' => 'revision',
     'vname' => 'LBL_REVISION',
     'type' => 'varchar',
@@ -154,7 +155,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
   ),
 
   'deleted' =>
-  array (
+  array(
     'name' => 'deleted',
     'vname' => 'LBL_DELETED',
     'type' => 'bool',
@@ -162,13 +163,13 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
     'reportable'=>false,
   ),
   'date_modified' =>
-  array (
+  array(
     'name' => 'date_modified',
     'vname' => 'LBL_DATE_MODIFIED',
     'type' => 'datetime',
   ),
   'documents' =>
-  array (
+  array(
     'name' => 'documents',
     'type' => 'link',
     'relationship' => 'document_revisions',
@@ -177,7 +178,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
   ),
 
 'created_by_link' =>
-  array (
+  array(
     'name' => 'created_by_link',
     'type' => 'link',
     'relationship' => 'revisions_created_by',
@@ -189,7 +190,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
   ),
 
 'created_by_name' =>
-  array (
+  array(
     'name' => 'created_by_name',
     'rname' => 'user_name',
     'db_concat_fields'=> array(0=>'first_name', 1=>'last_name'),
@@ -205,7 +206,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
      'source'=>'non-db',
   ),
   'latest_revision_id'=>
-  array (
+  array(
     'name' => 'latest_revision_id',
     'vname' => 'LBL_REVISION',
     'type' => 'varchar',
@@ -213,7 +214,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
     'source'=>'non-db',
   ),
   'document_name' =>
-  array (
+  array(
       'name' => 'document_name',
       'vname' => 'LBL_DOC_NAME',
       'type' => 'varchar',
@@ -221,7 +222,7 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
       'source' => 'non-db',
   ),
   'latest_revision' =>
-  array (
+  array(
       'name' => 'latest_revision',
       'vname' => 'LBL_CURRENT_DOC_VERSION',
       'type' => 'varchar',
@@ -236,9 +237,8 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
             'relationship_type'=>'one-to-many'),
 ),
 
-'indices' => array (
+'indices' => array(
        array('name' =>'documentrevisionspk', 'type' =>'primary', 'fields'=>array('id')),
        array('name' =>'documentrevision_mimetype', 'type' =>'index', 'fields'=>array('file_mime_type')),
        )
 );
-

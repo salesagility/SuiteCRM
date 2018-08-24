@@ -2,12 +2,13 @@
 if (! defined('sugarEntry') || ! sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (! defined('sugarEntry') || ! sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,12 +37,12 @@ if (! defined('sugarEntry') || ! sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
-require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
+require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 
 class ParserModifyLayoutView extends ModuleBuilderParser
 {
@@ -97,7 +98,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
 
         // get the fieldDefs from the bean
         $class = $GLOBALS ['beanList'] [$module];
-        require_once ($GLOBALS ['beanFiles'] [$class]);
+        require_once($GLOBALS ['beanFiles'] [$class]);
         $bean = new $class();
         $this->_fieldDefs = & $bean->field_defs;
 
@@ -210,7 +211,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                 } else {
                     $property = $slotComponents ['3'];
                     if ($value == '(filler)') {
-                        $this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID] = NULL;
+                        $this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID] = null;
                     } else {
                         $this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID] [$property] = $value;
                     }
@@ -276,7 +277,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
 
     // add a new field to the end of a panel
     // don't write out (caller should call handleSave() when ready)
-    public function _addField($properties, $panelID = FALSE)
+    public function _addField($properties, $panelID = false)
     {
 
         // if a panelID was not passed, use the first available panel in the list
@@ -292,7 +293,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                 foreach ($panel_contents as $row_id => $row) {
                     foreach ($row as $col_id => $col) {
                         if ($col['name'] == '(filler)') {
-                            $this->_viewdefs['panels'][$loop_panelID][$row_id][$col_id] = NULL;
+                            $this->_viewdefs['panels'][$loop_panelID][$row_id][$col_id] = null;
                         } elseif ($col['name'] == '(empty)') {
                             unset($this->_viewdefs['panels'][$loop_panelID][$row_id][$col_id]);
                         }
@@ -409,7 +410,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         $origFieldDefs = array();
         $GLOBALS['log']->debug("Original File = ".$this->_originalFile);
         if (file_exists($this->_originalFile)) {
-            include ($this->_originalFile);
+            include($this->_originalFile);
             $origdefs = $viewdefs [$this->_module] [$this->_sourceView] ['panels'];
 //          $GLOBALS['log']->debug($origdefs);
             // Fix for a flexibility in the format of the panel sections - if only one panel, then we don't have a panel level defined, it goes straight into rows

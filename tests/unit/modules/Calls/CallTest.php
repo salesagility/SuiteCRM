@@ -184,7 +184,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
 
         // test
-        // 
+        //
         
                 
         $call = new Call();

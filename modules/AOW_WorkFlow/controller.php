@@ -201,7 +201,7 @@ class AOW_WorkFlowController extends SugarController
                 $valid_opp = array('Value','Field','Any_Change','Date');
                 break;
             case 'enum':
-            case 'dynamicenum':    
+            case 'dynamicenum':
             case 'multienum':
                 $valid_opp = array('Value','Field','Any_Change', 'Multi');
                 break;
@@ -396,9 +396,9 @@ class AOW_WorkFlowController extends SugarController
                 }
                 echo getDateField($module, $aow_field, $view, $value);
                 break;
-            Case 'Round_Robin':
-            Case 'Least_Busy':
-            Case 'Random':
+            case 'Round_Robin':
+            case 'Least_Busy':
+            case 'Random':
                 echo getAssignField($aow_field, $view, $value);
                 break;
             case 'Value':

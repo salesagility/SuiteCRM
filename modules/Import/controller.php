@@ -3,12 +3,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -19,7 +20,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -37,16 +38,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description: Controller for the Import module
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
- ********************************************************************************/
+ */
 
 require_once("modules/Import/Forms.php");
 require_once("include/MVC/Controller/SugarController.php");
@@ -129,7 +130,7 @@ class ImportController extends SugarController
         }
         
         echo json_encode($results);
-        sugar_cleanup(TRUE);
+        sugar_cleanup(true);
     }
     public function action_RefreshMapping()
     {
@@ -144,9 +145,9 @@ class ImportController extends SugarController
         }
         $enclosure = $_REQUEST['qualif'];
         $enclosure = html_entity_decode($enclosure, ENT_QUOTES);
-        $hasHeader = isset($_REQUEST['header']) && !empty($_REQUEST['header']) ? TRUE : FALSE;
+        $hasHeader = isset($_REQUEST['header']) && !empty($_REQUEST['header']) ? true : false;
 
-        $importFile = new ImportFile($fileName, $delim, $enclosure, FALSE);
+        $importFile = new ImportFile($fileName, $delim, $enclosure, false);
         $importFile->setHeaderRow($hasHeader);
         $rows = $v->getSampleSet($importFile);
 
@@ -156,31 +157,31 @@ class ImportController extends SugarController
         $ss->assign("column_count", $v->getMaxColumnsInSampleSet($rows));
         $ss->assign("MOD", $mod_strings);
         $ss->display('modules/Import/tpls/confirm_table.tpl');
-        sugar_cleanup(TRUE);
+        sugar_cleanup(true);
     }
 
     public function action_RefreshTable()
     {
         $offset = isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         $tableID = isset($_REQUEST['tableID']) ? $_REQUEST['tableID'] : 'errors';
-        $has_header = $_REQUEST['has_header'] == 'on' ? TRUE : FALSE;
+        $has_header = $_REQUEST['has_header'] == 'on' ? true : false;
         if ($tableID == 'dup') {
             $tableFilename = ImportCacheFiles::getDuplicateFileName();
         } else {
             $tableFilename = ImportCacheFiles::getErrorRecordsFileName();
         }
 
-        $if = new ImportFile($tableFilename, ",", '"', FALSE, FALSE);
+        $if = new ImportFile($tableFilename, ",", '"', false, false);
         $if->setHeaderRow($has_header);
         $lv = new ImportListView($if, array('offset'=> $offset), $tableID);
-        $lv->display(FALSE);
+        $lv->display(false);
         
-        sugar_cleanup(TRUE);
+        sugar_cleanup(true);
     }
     
     public function action_Step1()
     {
-        $fromAdminView = isset($_REQUEST['from_admin_wizard']) ? $_REQUEST['from_admin_wizard'] : FALSE;
+        $fromAdminView = isset($_REQUEST['from_admin_wizard']) ? $_REQUEST['from_admin_wizard'] : false;
         if ($this->importModule == 'Administration' || $fromAdminView
         ) {
             $this->view = 'step1';

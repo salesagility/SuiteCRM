@@ -25,12 +25,12 @@ class SecurityGroupMessage extends Basic
     public $modified_user_link;
 
 
-    public $additional_column_fields = Array();
-    public $field_defs = array (
+    public $additional_column_fields = array();
+    public $field_defs = array(
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'name'=>array('name' =>'name', 'type' =>'varchar', 'len'=>'255', )
-      , 'date_entered'=>array ('name' => 'date_entered','type' => 'datetime')
-      , 'date_modified'=>array ('name' => 'date_modified','type' => 'datetime')
+      , 'date_entered'=>array('name' => 'date_entered','type' => 'datetime')
+      , 'date_modified'=>array('name' => 'date_modified','type' => 'datetime')
       , 'modified_user_id'=>array('name' =>'modified_user_id', 'type' =>'char', 'len'=>'36',)
       , 'created_by'=>array('name' =>'created_by', 'type' =>'char', 'len'=>'36',)
       , 'description'=>array('name' =>'description', 'type' =>'text', 'len'=>'',)
@@ -182,8 +182,8 @@ class SecurityGroupMessage extends Basic
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return false;
-		}
+            case 'ACL':return false;
+        }
         return false;
     }
 }

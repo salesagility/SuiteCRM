@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/ListView/ListViewSubPanel.php');
 require_once('include/SubPanel/registered_layout_defs.php');
@@ -52,8 +53,8 @@ class SubPanel
     public $subpanel_id;
     public $parent_record_id;
     public $parent_module;  // the name of the parent module
-	public $parent_bean;  // the instantiated bean of the parent
-	public $template_file;
+    public $parent_bean;  // the instantiated bean of the parent
+    public $template_file;
     public $linked_fields;
     public $action = 'DetailView';
     public $show_select_button = true;
@@ -191,7 +192,7 @@ class SubPanel
             $file_name = $exploded[count($exploded) - 1];
             $mod_name =  $exploded[count($exploded) - 2];
             $header_text= "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=$file_name&from_module=$mod_name&mod_lang="
-				.$_REQUEST['module']."'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', 'Edit Layout')."</a>";
+                .$_REQUEST['module']."'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', 'Edit Layout')."</a>";
         }
         $ListView->setHeaderTitle('');
         $ListView->setHeaderText('');
@@ -262,7 +263,7 @@ class SubPanel
         $reject_tabs = array('history'=>1, 'activities'=>1);
         foreach ($tabs as $key=>$tab) {
             foreach ($tab as $k=>$v) {
-                if (! isset ($reject_tabs [$k])) {
+                if (! isset($reject_tabs [$k])) {
                     $ret_tabs [$k] = $v;
                 }
             }
@@ -283,9 +284,9 @@ class SubPanel
         $path = 'custom/modules/'. $panel->_instance_properties['module'] . '/metadata/subpanels';
 
         //bug# 40171: "Custom subpanels not working as expected"
-  		//each custom subpanel needs to have a unique custom def file
-  		$filename = $panel->parent_bean->object_name . "_subpanel_" . $panel->name; //bug 42262 (filename with $panel->_instance_properties['get_subpanel_data'] can create problem if had word "function" in it)
-  		$oldName1 = '_override' . $panel->parent_bean->object_name .$panel->_instance_properties['module'] . $panel->_instance_properties['subpanel_name'] ;
+        //each custom subpanel needs to have a unique custom def file
+        $filename = $panel->parent_bean->object_name . "_subpanel_" . $panel->name; //bug 42262 (filename with $panel->_instance_properties['get_subpanel_data'] can create problem if had word "function" in it)
+        $oldName1 = '_override' . $panel->parent_bean->object_name .$panel->_instance_properties['module'] . $panel->_instance_properties['subpanel_name'] ;
         $oldName2 = '_override' . $panel->parent_bean->object_name .$panel->_instance_properties['get_subpanel_data'] ;
         if (file_exists('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$oldName1.php")) {
             unlink('custom/Extension/modules/'. $panel->parent_bean->module_dir . "/Ext/Layoutdefs/$oldName1.php");
@@ -423,7 +424,7 @@ class SubPanel
 
         if (isset($subpanel_defs['searchdefs'])) {
             $searchdefs[$module]['layout']['basic_search'] = $subpanel_defs['searchdefs'];
-            $searchdefs[$module]['templateMeta'] = Array ('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => Array ( 'label' => 10, 'field' => 30 )) ;
+            $searchdefs[$module]['templateMeta'] = array('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => array( 'label' => 10, 'field' => 30 )) ;
             return $searchdefs;
         }
 

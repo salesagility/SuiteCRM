@@ -1,5 +1,6 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -419,12 +420,11 @@ class TimeDate
 
         if (!empty($cachedValue)) {
             return $cachedValue;
-        } else {
-            $value = $this->merge_date_time($this->get_date_format($user), $this->get_time_format($user));
-            sugar_cache_put($cacheKey, $value, 0);
-
-            return $value;
         }
+        $value = $this->merge_date_time($this->get_date_format($user), $this->get_time_format($user));
+        sugar_cache_put($cacheKey, $value, 0);
+
+        return $value;
     }
 
     /**
@@ -872,8 +872,11 @@ class TimeDate
     public function fromUserDate($date, $convert_tz = false, User $user = null)
     {
         try {
-            return SugarDateTime::createFromFormat($this->get_date_format($user), $date,
-                $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone);
+            return SugarDateTime::createFromFormat(
+                $this->get_date_format($user),
+                $date,
+                $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone
+            );
         } catch (Exception $e) {
             $uf = $this->get_date_format($user);
             $GLOBALS['log']->error("fromUserDate: Conversion of $date from user format $uf failed: {$e->getMessage()}");
@@ -1003,8 +1006,14 @@ class TimeDate
      */
     public function to_display_date_time($date, $meridiem = true, $convert_tz = true, $user = null)
     {
-        return $this->_convert($date, self::DB_DATETIME_FORMAT, self::$gmtTimezone, $this->get_date_time_format($user),
-            $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone, true);
+        return $this->_convert(
+            $date,
+            self::DB_DATETIME_FORMAT,
+            self::$gmtTimezone,
+            $this->get_date_time_format($user),
+            $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone,
+            true
+        );
     }
 
     /**
@@ -1024,9 +1033,13 @@ class TimeDate
             $date = $this->expandTime($date, self::DB_DATETIME_FORMAT, self::$gmtTimezone);
         }
 
-        return $this->_convert($date,
-            $convert_tz ? self::DB_DATETIME_FORMAT : self::DB_TIME_FORMAT, self::$gmtTimezone,
-            $this->get_time_format(), $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone);
+        return $this->_convert(
+            $date,
+            $convert_tz ? self::DB_DATETIME_FORMAT : self::DB_TIME_FORMAT,
+            self::$gmtTimezone,
+            $this->get_time_format(),
+            $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone
+        );
     }
 
     /**
@@ -1068,9 +1081,14 @@ class TimeDate
      */
     public function to_display_date($date, $convert_tz = true)
     {
-        return $this->_convert($date,
-            self::DB_DATETIME_FORMAT, self::$gmtTimezone,
-            $this->get_date_format(), $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone, true);
+        return $this->_convert(
+            $date,
+            self::DB_DATETIME_FORMAT,
+            self::$gmtTimezone,
+            $this->get_date_format(),
+            $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone,
+            true
+        );
     }
 
     /**
@@ -1125,10 +1143,14 @@ class TimeDate
      */
     public function to_db($date)
     {
-        return $this->_convert($date,
-            $this->get_date_time_format(), $this->_getUserTZ(),
-            $this->get_db_date_time_format(), self::$gmtTimezone,
-            true);
+        return $this->_convert(
+            $date,
+            $this->get_date_time_format(),
+            $this->_getUserTZ(),
+            $this->get_db_date_time_format(),
+            self::$gmtTimezone,
+            true
+        );
     }
 
     /**
@@ -1142,9 +1164,14 @@ class TimeDate
      */
     public function to_db_date($date, $convert_tz = true)
     {
-        return $this->_convert($date,
-            $this->get_date_time_format(), $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone,
-            self::DB_DATE_FORMAT, self::$gmtTimezone, true);
+        return $this->_convert(
+            $date,
+            $this->get_date_time_format(),
+            $convert_tz ? $this->_getUserTZ() : self::$gmtTimezone,
+            self::DB_DATE_FORMAT,
+            self::$gmtTimezone,
+            true
+        );
     }
 
     /**
@@ -1166,10 +1193,13 @@ class TimeDate
             $date = $this->expandTime($date, $format, $tz);
         }
 
-        return $this->_convert($date,
+        return $this->_convert(
+            $date,
             $convert_tz ? $format : $this->get_time_format(),
             $tz,
-            self::DB_TIME_FORMAT, self::$gmtTimezone);
+            self::DB_TIME_FORMAT,
+            self::$gmtTimezone
+        );
     }
 
     /**
@@ -1183,8 +1213,11 @@ class TimeDate
     public function to_db_date_time($date, $time)
     {
         try {
-            $phpdate = SugarDateTime::createFromFormat($this->get_date_time_format(),
-                $this->merge_date_time($date, $time), self::$gmtTimezone);
+            $phpdate = SugarDateTime::createFromFormat(
+                $this->get_date_time_format(),
+                $this->merge_date_time($date, $time),
+                self::$gmtTimezone
+            );
             if ($phpdate == false) {
                 return array('', '');
             }
@@ -1519,8 +1552,13 @@ class TimeDate
             $name = $translated;
         }
 
-        return sprintf("%s (GMT%+2d:%02d)%s", str_replace('_', ' ', $name), $off / 3600, (abs($off) / 60) % 60,
-            "");//$now->format('I')==1?"(+DST)":"");
+        return sprintf(
+            "%s (GMT%+2d:%02d)%s",
+            str_replace('_', ' ', $name),
+            $off / 3600,
+            (abs($off) / 60) % 60,
+            ""
+        );//$now->format('I')==1?"(+DST)":"");
     }
 
 
@@ -1536,9 +1574,8 @@ class TimeDate
     {
         if ($a[0] == $b[0]) {
             return strcmp($a[1], $b[1]);
-        } else {
-            return $a[0] < $b[0] ? -1 : 1;
         }
+        return $a[0] < $b[0] ? -1 : 1;
     }
 
     /**
@@ -1588,35 +1625,35 @@ class TimeDate
             return $this->fromTimestamp($time['ts']);
         } elseif (isset($time['date_str'])) {
             return $this->fromDb($time['date_str']);
-        } else {
-            $hour = 0;
-            $min = 0;
-            $sec = 0;
-            $now = $this->getNow(true);
-            $day = $now->day;
-            $month = $now->month;
-            $year = $now->year;
-            if (isset($time['sec'])) {
-                $sec = $time['sec'];
-            }
-            if (isset($time['min'])) {
-                $min = $time['min'];
-            }
-            if (isset($time['hour'])) {
-                $hour = $time['hour'];
-            }
-            if (isset($time['day'])) {
-                $day = $time['day'];
-            }
-            if (isset($time['month'])) {
-                $month = $time['month'];
-            }
-            if (isset($time['year']) && $time['year'] >= 1970) {
-                $year = $time['year'];
-            }
-
-            return $now->setDate($year, $month, $day)->setTime($hour, $min, $sec)->setTimeZone(self::$gmtTimezone);
         }
+        $hour = 0;
+        $min = 0;
+        $sec = 0;
+        $now = $this->getNow(true);
+        $day = $now->day;
+        $month = $now->month;
+        $year = $now->year;
+        if (isset($time['sec'])) {
+            $sec = $time['sec'];
+        }
+        if (isset($time['min'])) {
+            $min = $time['min'];
+        }
+        if (isset($time['hour'])) {
+            $hour = $time['hour'];
+        }
+        if (isset($time['day'])) {
+            $day = $time['day'];
+        }
+        if (isset($time['month'])) {
+            $month = $time['month'];
+        }
+        if (isset($time['year']) && $time['year'] >= 1970) {
+            $year = $time['year'];
+        }
+
+        return $now->setDate($year, $month, $day)->setTime($hour, $min, $sec)->setTimeZone(self::$gmtTimezone);
+        
 
         return null;
     }
@@ -1719,9 +1756,8 @@ class TimeDate
         }
         if ($daystart) {
             return $now->get_day_begin();
-        } else {
-            return $now->get_day_end();
         }
+        return $now->get_day_end();
     }
 
     /**

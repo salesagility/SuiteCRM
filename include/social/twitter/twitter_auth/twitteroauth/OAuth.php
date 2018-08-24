@@ -15,7 +15,7 @@ class OAuthConsumer
     public $key;
     public $secret;
 
-    public function __construct($key, $secret, $callback_url = NULL)
+    public function __construct($key, $secret, $callback_url = null)
     {
         $this->key = $key;
         $this->secret = $secret;
@@ -251,7 +251,7 @@ class OAuthRequest
     public static $version = '1.0';
     public static $POST_INPUT = 'php://input';
 
-    public function __construct($http_method, $http_url, $parameters = NULL)
+    public function __construct($http_method, $http_url, $parameters = null)
     {
         @$parameters or $parameters = array();
         $parameters = array_merge(OAuthUtil::parse_parameters(parse_url($http_url, PHP_URL_QUERY)), $parameters);
@@ -264,7 +264,7 @@ class OAuthRequest
     /**
      * attempt to build up a request from what was passed to the server
      */
-    public static function from_request($http_method = NULL, $http_url = NULL, $parameters = NULL)
+    public static function from_request($http_method = null, $http_url = null, $parameters = null)
     {
         $scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on")
             ? 'http'
@@ -290,8 +290,10 @@ class OAuthRequest
             // It's a POST request of the proper content-type, so parse POST
             // parameters and add those overriding any duplicates from GET
             if ($http_method == "POST"
-                && @strstr($request_headers["Content-Type"],
-                    "application/x-www-form-urlencoded")
+                && @strstr(
+                    $request_headers["Content-Type"],
+                    "application/x-www-form-urlencoded"
+                )
             ) {
                 $post_data = OAuthUtil::parse_parameters(
                     file_get_contents(self::$POST_INPUT)
@@ -315,7 +317,7 @@ class OAuthRequest
     /**
      * pretty much a helper function to set up the request
      */
-    public static function from_consumer_and_token($consumer, $token, $http_method, $http_url, $parameters = NULL)
+    public static function from_consumer_and_token($consumer, $token, $http_method, $http_url, $parameters = null)
     {
         @$parameters or $parameters = array();
         $defaults = array("oauth_version" => OAuthRequest::$version,
@@ -558,7 +560,7 @@ class OAuthServer
         $consumer = $this->get_consumer($request);
 
         // no token required for the initial token request
-        $token = NULL;
+        $token = null;
 
         $this->check_signature($request, $consumer, $token);
 
@@ -635,8 +637,10 @@ class OAuthServer
             throw new OAuthException('No signature method parameter. This parameter is required');
         }
 
-        if (!in_array($signature_method,
-            array_keys($this->signature_methods))
+        if (!in_array(
+            $signature_method,
+            array_keys($this->signature_methods)
+        )
         ) {
             throw new OAuthException(
                 "Signature method '$signature_method' not supported " .
@@ -672,7 +676,9 @@ class OAuthServer
     {
         $token_field = @$request->get_parameter('oauth_token');
         $token = $this->data_store->lookup_token(
-            $consumer, $token_type, $token_field
+            $consumer,
+            $token_type,
+            $token_field
         );
         if (!$token) {
             throw new OAuthException("Invalid $token_type token: $token_field");
@@ -795,9 +801,8 @@ class OAuthUtil
                 ' ',
                 str_replace('%7E', '~', rawurlencode($input))
             );
-        } else {
-            return '';
         }
+        return '';
     }
 
 
@@ -847,7 +852,7 @@ class OAuthUtil
             // returns the headers in the same case as they are in the
             // request
             $out = array();
-            foreach ($headers AS $key => $value) {
+            foreach ($headers as $key => $value) {
                 $key = str_replace(
                     " ",
                     "-",

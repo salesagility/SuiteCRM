@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -226,11 +227,11 @@ EOQ;
                 } // if
             } // foreach
         } // if
-		if (isset($GLOBALS['check_notify'])) {
-		    $check_notify = $GLOBALS['check_notify'];
-		} else {
-		    $check_notify = FALSE;
-		}
+        if (isset($GLOBALS['check_notify'])) {
+            $check_notify = $GLOBALS['check_notify'];
+        } else {
+            $check_notify = false;
+        }
         if ($preProcessedImages) {
             $focus->body_html = $emailTemplateBodyHtml;
         }
@@ -279,7 +280,7 @@ EOQ;
             if (isset($preProcessedImages[$file['name']])) {
                 $oldId = $preProcessedImages[$file['name']];
                 $note->id = $oldId;
-                $note->new_with_id = TRUE;
+                $note->new_with_id = true;
                 $GLOBALS['log']->debug("Image {$file['name']} has already been processed.");
             }
 
@@ -303,7 +304,7 @@ EOQ;
 
         $focus->saved_attachments = array();
         foreach ($focus->attachments as $note) {
-            if (!empty($note->id) && $note->new_with_id === FALSE) {
+            if (!empty($note->id) && $note->new_with_id === false) {
                 if (empty($_REQUEST['old_id'])) {
                     array_push($focus->saved_attachments, $note);
                 } // to support duplication of email templates
@@ -340,7 +341,7 @@ EOQ;
             array_push($focus->saved_attachments, $note);
             $note->id = $note_id;
 
-            if ($note->new_with_id === FALSE) {
+            if ($note->new_with_id === false) {
                 $note->file->final_move($note->id);
             } else {
                 $GLOBALS['log']->debug("Not performing final move for note id {$note->id} as it has already been processed");
@@ -412,4 +413,3 @@ EOQ;
         }
     }
 }
-

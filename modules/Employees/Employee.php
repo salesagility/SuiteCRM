@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -94,10 +94,10 @@ class Employee extends Person
     public $object_name = "Employee";
     public $user_preferences;
 
-    public $encodeFields = Array("first_name", "last_name", "description");
+    public $encodeFields = array("first_name", "last_name", "description");
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('reports_to_name');
+    public $additional_column_fields = array('reports_to_name');
 
 
 
@@ -171,7 +171,7 @@ class Employee extends Person
     {
         //none of the checks from the users module are valid here since the user_name and
         //is_admin_on fields are not editable.
-        return TRUE;
+        return true;
     }
 
     public function get_list_view_data()
@@ -324,4 +324,3 @@ class Employee extends Person
         return parent::save($check_notify);
     }
 }
-

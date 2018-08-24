@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -74,7 +75,7 @@ $params[] = $mod_strings['LBL_STEP2_FORM_TITLE'];
 $params[] = $focus->merge_bean->name;
 echo getClassicModuleTitle($focus->merge_bean->module_dir, $params, true);
 
-       $order_by_name = $focus->merge_module.'2_'.strtoupper($focus->merge_bean->object_name).'_ORDER_BY' ; 
+       $order_by_name = $focus->merge_module.'2_'.strtoupper($focus->merge_bean->object_name).'_ORDER_BY' ;
        $lvso = isset($_REQUEST['lvso'])?$_REQUEST['lvso']:"";
        $request_order_by_name = isset($_REQUEST[$order_by_name])?$_REQUEST[$order_by_name]:"";
 
@@ -90,7 +91,7 @@ echo '<form onsubmit="return check_form(\'MassUpdate\');" id="MassUpdate" name="
 $focus->populate_search_params($_REQUEST);
 echo $focus->get_inputs_for_search_params($_REQUEST);
 
-$where_clauses = Array();
+$where_clauses = array();
 $where_clauses = $focus->create_where_statement();
 $where = $focus->generate_where_statement($where_clauses);
 
@@ -137,7 +138,7 @@ if (!empty($_REQUEST['displayColumns'])) {
             $displayColumns[$col] = $params;
         }
     }
-} 
+}
 $params = array('massupdate' => true, 'export' => false, 'handleMassupdate' => false );
 $ListView->displayColumns = $displayColumns;
 $ListView->lvd->listviewName = $focus->merge_module; //27633, this will make the $module to be merge_module instead of 'MergeRecords'. Then the key of  offset and orderby will be correct.
@@ -161,7 +162,7 @@ $cancel_title=$app_strings['LBL_CANCEL_BUTTON_TITLE'];
 $cancel_key=$app_strings['LBL_CANCEL_BUTTON_KEY'];
 $cancel_label=$app_strings['LBL_CANCEL_BUTTON_LABEL'];
 
-echo ($ListView->display());
+echo($ListView->display());
 
 $error_select=$current_module_strings['LBL_SELECT_ERROR'];
 $form_top = <<<EOQ

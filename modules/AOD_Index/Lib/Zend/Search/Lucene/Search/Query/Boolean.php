@@ -141,8 +141,10 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         $query->setBoost($this->getBoost());
 
         foreach ($this->_subqueries as $subqueryId => $subquery) {
-            $query->addSubquery($subquery->rewrite($index),
-                                ($this->_signs === null)?  true : $this->_signs[$subqueryId]);
+            $query->addSubquery(
+                $subquery->rewrite($index),
+                                ($this->_signs === null)?  true : $this->_signs[$subqueryId]
+            );
         }
 
         return $query;
@@ -199,12 +201,11 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                     // Matching is required, but is actually empty
                     require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
                     return new Zend_Search_Lucene_Search_Query_Empty();
-                } else {
-                    // Matching is optional or prohibited, but is empty
-                    // Remove it from subqueries and signs list
-                    unset($subqueries[$id]);
-                    unset($signs[$id]);
                 }
+                // Matching is optional or prohibited, but is empty
+                // Remove it from subqueries and signs list
+                unset($subqueries[$id]);
+                unset($signs[$id]);
             }
         }
 
@@ -498,9 +499,15 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             $resVectorsIds[]   = $subqueryId;
         }
         // sort resvectors in order of subquery cardinality increasing
-        array_multisort($resVectorsSizes, SORT_ASC, SORT_NUMERIC,
-                        $resVectorsIds,   SORT_ASC, SORT_NUMERIC,
-                        $resVectors);
+        array_multisort(
+            $resVectorsSizes,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $resVectorsIds,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $resVectors
+        );
 
         foreach ($resVectors as $nextResVector) {
             if ($this->_resVector === null) {
@@ -562,9 +569,15 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         }
 
         // sort resvectors in order of subquery cardinality increasing
-        array_multisort($requiredVectorsSizes, SORT_ASC, SORT_NUMERIC,
-                        $requiredVectorsIds,   SORT_ASC, SORT_NUMERIC,
-                        $requiredVectors);
+        array_multisort(
+            $requiredVectorsSizes,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $requiredVectorsIds,
+            SORT_ASC,
+            SORT_NUMERIC,
+                        $requiredVectors
+        );
 
         $required = null;
         foreach ($requiredVectors as $nextResVector) {
@@ -612,8 +625,10 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
     public function _conjunctionScore($docId, Zend_Search_Lucene_Interface $reader)
     {
         if ($this->_coord === null) {
-            $this->_coord = $reader->getSimilarity()->coord(count($this->_subqueries),
-                                                            count($this->_subqueries));
+            $this->_coord = $reader->getSimilarity()->coord(
+                count($this->_subqueries),
+                                                            count($this->_subqueries)
+            );
         }
 
         $score = 0;
@@ -740,12 +755,10 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         if (isset($this->_resVector[$docId])) {
             if ($this->_signs === null) {
                 return $this->_conjunctionScore($docId, $reader);
-            } else {
-                return $this->_nonConjunctionScore($docId, $reader);
             }
-        } else {
-            return 0;
+            return $this->_nonConjunctionScore($docId, $reader);
         }
+        return 0;
     }
 
     /**
@@ -812,4 +825,3 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         return $query;
     }
 }
-

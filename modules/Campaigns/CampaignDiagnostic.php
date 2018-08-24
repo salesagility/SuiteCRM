@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -64,7 +65,7 @@ if (!isset($_REQUEST['inline']) || $_REQUEST['inline'] != 'inline') {
     $params = array();
     $params[] = "<a href='index.php?module=Campaigns&action=index'>{$mod_strings['LBL_MODULE_NAME']}</a>";
     $params[] = $mod_strings['LBL_CAMPAIGN_DIAGNOSTICS'];
-	
+    
     echo getClassicModuleTitle('Campaigns', $params, true);
 }
 
@@ -104,7 +105,7 @@ $focus = new Administration();
 $focus->retrieveSettings(); //retrieve all admin settings.
 
 
-//run query for mail boxes of type 'bounce' 
+//run query for mail boxes of type 'bounce'
 $email_health = 0;
 $email_components = 2;
 $mbox_qry = "select * from inbound_email where deleted ='0' and mailbox_type = 'bounce'";
@@ -144,7 +145,7 @@ $mboxTable.= '</table>' ;
     
 $ss->assign("MAILBOXES_DETECTED_MESSAGE", $mboxTable);
 
-//email settings configured 
+//email settings configured
 $conf_msg="<table border='0' width='100%' class='detail view' cellpadding='0' cellspacing='0'>";
 if (strstr($focus->settings['notify_fromaddress'], 'example.com')) {
     //if from address is the default, then set "bad" message and increment health counter
@@ -175,7 +176,7 @@ if (strstr($focus->settings['notify_fromaddress'], 'example.com')) {
     }
 }
           
-$conf_msg .= '</table>'; 
+$conf_msg .= '</table>';
 $ss->assign("EMAIL_SETTINGS_CONFIGURED_MESSAGE", $conf_msg);
 $email_setup_wiz_link='';
 if ($email_health>0) {
@@ -194,7 +195,7 @@ $ss->assign('RECHECK_BTN', $mod_strings['LBL_RECHECK_BTN']);
 
 /************* SCHEDULER COMPONENTS ************/
 
-//create and run the scheduler queries 
+//create and run the scheduler queries
 $sched_qry = "select job, name, status from schedulers where deleted = 0 and status = 'Active'";
 $sched_res = $focus->db->query($sched_qry);
 $sched_health = 0;
@@ -250,10 +251,10 @@ if ($sched_health>0) {
     } else {
         $admin_sched_link=$mod_strings['LBL_NON_ADMIN_ERROR_MSG'];
     }
-}    
+}
 
 //put table html together and display
-    $final_sched_msg = $sched_mes . $sched_mes_body . '</table>' . $admin_sched_link;        
+    $final_sched_msg = $sched_mes . $sched_mes_body . '</table>' . $admin_sched_link;
     $ss->assign("SCHEDULER_EMAILS_MESSAGE", $final_sched_msg);
     $ss->assign('SCHEDULE_IMAGE', define_image($sched_health, 2));
 
@@ -264,8 +265,8 @@ if (!isset($_REQUEST['inline']) || $_REQUEST['inline'] != 'inline') {
 }
 
 /**
- * This function takes in 3 parameters and determines the appropriate image source.  
- * 
+ * This function takes in 3 parameters and determines the appropriate image source.
+ *
  * @param  int $num parameter is the "health" parameter being tracked whenever there is something wrong.  (higher number =bad)
  * @param  int $total Parameter is the total number things being checked.
  * @return string HTML img tag
@@ -281,9 +282,8 @@ function define_image($num, $total)
         //if health number is zero, then all checks passed, set green image
         //green
         return SugarThemeRegistry::current()->getImage('green_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_VALID']);
-    } else {
-        //if health number is between total and num params, then some checks failed but not all, set yellow image
-        //yellow
-        return SugarThemeRegistry::current()->getImage('yellow_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_ALERT']);
     }
+    //if health number is between total and num params, then some checks failed but not all, set yellow image
+    //yellow
+    return SugarThemeRegistry::current()->getImage('yellow_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_ALERT']);
 }

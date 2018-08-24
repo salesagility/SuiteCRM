@@ -63,10 +63,12 @@ function clearPasswordSettings()
 
 require_once('modules/Administration/Forms.php');
 echo getClassicModuleTitle(
-        "Administration", array(
+        "Administration",
+    array(
     "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . "</a>",
     $mod_strings['LBL_MANAGE_PASSWORD_TITLE'],
-        ), false
+        ),
+    false
 );
 require_once('modules/Configurator/Configurator.php');
 $configurator = new Configurator();

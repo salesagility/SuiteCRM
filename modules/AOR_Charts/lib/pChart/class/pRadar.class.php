@@ -42,14 +42,14 @@
          $AxisB		= isset($Format["AxisB"]) ? $Format["AxisB"] : 60;
          $AxisAlpha		= isset($Format["AxisAlpha"]) ? $Format["AxisAlpha"] : 50;
          $AxisRotation      = isset($Format["AxisRotation"]) ? $Format["AxisRotation"] : 0;
-         $DrawTicks		= isset($Format["DrawTicks"]) ? $Format["DrawTicks"] : TRUE;
+         $DrawTicks		= isset($Format["DrawTicks"]) ? $Format["DrawTicks"] : true;
          $TicksLength	= isset($Format["TicksLength"]) ? $Format["TicksLength"] : 2;
-         $DrawAxisValues	= isset($Format["DrawAxisValues"]) ? $Format["DrawAxisValues"] : TRUE;
-         $AxisBoxRounded	= isset($Format["AxisBoxRounded"]) ? $Format["AxisBoxRounded"] : TRUE;
+         $DrawAxisValues	= isset($Format["DrawAxisValues"]) ? $Format["DrawAxisValues"] : true;
+         $AxisBoxRounded	= isset($Format["AxisBoxRounded"]) ? $Format["AxisBoxRounded"] : true;
          $AxisFontName	= isset($Format["AxisFontName"]) ? $Format["AxisFontName"] : $this->pChartObject->FontName;
          $AxisFontSize	= isset($Format["AxisFontSize"]) ? $Format["AxisFontSize"] : $this->pChartObject->FontSize;
-         $WriteValues	= isset($Format["WriteValues"]) ? $Format["WriteValues"] : FALSE;
-         $WriteValuesInBubble = isset($Format["WriteValuesInBubble"]) ? $Format["WriteValuesInBubble"] : TRUE;
+         $WriteValues	= isset($Format["WriteValues"]) ? $Format["WriteValues"] : false;
+         $WriteValuesInBubble = isset($Format["WriteValuesInBubble"]) ? $Format["WriteValuesInBubble"] : true;
          $ValueFontName	= isset($Format["ValueFontName"]) ? $Format["ValueFontName"] : $this->pChartObject->FontName;
          $ValueFontSize	= isset($Format["ValueFontSize"]) ? $Format["ValueFontSize"] : $this->pChartObject->FontSize;
          $ValuePadding	= isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 4;
@@ -62,41 +62,41 @@
          $InnerBubbleG	= isset($Format["InnerBubbleG"]) ? $Format["InnerBubbleG"] : 255;
          $InnerBubbleB	= isset($Format["InnerBubbleB"]) ? $Format["InnerBubbleB"] : 255;
          $InnerBubbleAlpha	= isset($Format["InnerBubbleAlpha"]) ? $Format["InnerBubbleAlpha"] : 100;
-         $DrawBackground	= isset($Format["DrawBackground"]) ? $Format["DrawBackground"] : TRUE;
+         $DrawBackground	= isset($Format["DrawBackground"]) ? $Format["DrawBackground"] : true;
          $BackgroundR	= isset($Format["BackgroundR"]) ? $Format["BackgroundR"] : 255;
          $BackgroundG	= isset($Format["BackgroundG"]) ? $Format["BackgroundG"] : 255;
          $BackgroundB	= isset($Format["BackgroundB"]) ? $Format["BackgroundB"] : 255;
          $BackgroundAlpha	= isset($Format["BackgroundAlpha"]) ? $Format["BackgroundAlpha"] : 50;
-         $BackgroundGradient= isset($Format["BackgroundGradient"]) ? $Format["BackgroundGradient"] : NULL;
+         $BackgroundGradient= isset($Format["BackgroundGradient"]) ? $Format["BackgroundGradient"] : null;
          $Layout		= isset($Format["Layout"]) ? $Format["Layout"] : RADAR_LAYOUT_STAR;
          $SegmentHeight	= isset($Format["SegmentHeight"]) ? $Format["SegmentHeight"] : SEGMENT_HEIGHT_AUTO;
          $Segments		= isset($Format["Segments"]) ? $Format["Segments"] : 4;
-         $WriteLabels	= isset($Format["WriteLabels"]) ? $Format["WriteLabels"] : TRUE;
+         $WriteLabels	= isset($Format["WriteLabels"]) ? $Format["WriteLabels"] : true;
          $SkipLabels	= isset($Format["SkipLabels"]) ? $Format["SkipLabels"] : 1;
-         $LabelMiddle	= isset($Format["LabelMiddle"]) ? $Format["LabelMiddle"] : FALSE;
-         $LabelsBackground	= isset($Format["LabelsBackground"]) ? $Format["LabelsBackground"] : TRUE;
+         $LabelMiddle	= isset($Format["LabelMiddle"]) ? $Format["LabelMiddle"] : false;
+         $LabelsBackground	= isset($Format["LabelsBackground"]) ? $Format["LabelsBackground"] : true;
          $LabelsBGR		= isset($Format["LabelsBGR"]) ? $Format["LabelsBGR"] : 255;
          $LabelsBGG		= isset($Format["LabelsBGR"]) ? $Format["LabelsBGG"] : 255;
          $LabelsBGB		= isset($Format["LabelsBGR"]) ? $Format["LabelsBGB"] : 255;
          $LabelsBGAlpha	= isset($Format["LabelsBGAlpha"]) ? $Format["LabelsBGAlpha"] : 50;
          $LabelPos		= isset($Format["LabelPos"]) ? $Format["LabelPos"] : RADAR_LABELS_ROTATED;
          $LabelPadding	= isset($Format["LabelPadding"]) ? $Format["LabelPadding"] : 4;
-         $DrawPoints	= isset($Format["DrawPoints"]) ? $Format["DrawPoints"] : TRUE;
+         $DrawPoints	= isset($Format["DrawPoints"]) ? $Format["DrawPoints"] : true;
          $PointRadius	= isset($Format["PointRadius"]) ? $Format["PointRadius"] : 4;
          $PointSurrounding	= isset($Format["PointRadius"]) ? $Format["PointRadius"] : -30;
-         $DrawLines		= isset($Format["DrawLines"]) ? $Format["DrawLines"] : TRUE;
-         $LineLoopStart	= isset($Format["LineLoopStart"]) ? $Format["LineLoopStart"] : TRUE;
-         $DrawPoly		= isset($Format["DrawPoly"]) ? $Format["DrawPoly"] : FALSE;
+         $DrawLines		= isset($Format["DrawLines"]) ? $Format["DrawLines"] : true;
+         $LineLoopStart	= isset($Format["LineLoopStart"]) ? $Format["LineLoopStart"] : true;
+         $DrawPoly		= isset($Format["DrawPoly"]) ? $Format["DrawPoly"] : false;
          $PolyAlpha		= isset($Format["PolyAlpha"]) ? $Format["PolyAlpha"] : 40;
          $FontSize		= $Object->FontSize;
          $X1		= $Object->GraphAreaX1;
          $Y1		= $Object->GraphAreaY1;
          $X2		= $Object->GraphAreaX2;
          $Y2		= $Object->GraphAreaY2;
-         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
+         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
 
          /* Cancel default tick length if ticks not enabled */
-         if ($DrawTicks == FALSE) {
+         if ($DrawTicks == false) {
              $TicksLength = 0;
          }
 
@@ -158,9 +158,9 @@
          /* Background processing */
          if ($DrawBackground) {
              $RestoreShadow = $Object->Shadow;
-             $Object->Shadow = FALSE;
+             $Object->Shadow = false;
 
-             if ($BackgroundGradient == NULL) {
+             if ($BackgroundGradient == null) {
                  if ($Layout == RADAR_LAYOUT_STAR) {
                      $Color      = array("R"=>$BackgroundR,"G"=>$BackgroundG,"B"=>$BackgroundB,"Alpha"=>$BackgroundAlpha);
                      $PointArray = "";
@@ -223,13 +223,13 @@
 
          if ($DrawAxisValues) {
              if ($LabelsBackground) {
-                 $Options = array("DrawBox"=>TRUE, "Align"=>TEXT_ALIGN_MIDDLEMIDDLE,"BoxR"=>$LabelsBGR,"BoxG"=>$LabelsBGG,"BoxB"=>$LabelsBGB,"BoxAlpha"=>$LabelsBGAlpha);
+                 $Options = array("DrawBox"=>true, "Align"=>TEXT_ALIGN_MIDDLEMIDDLE,"BoxR"=>$LabelsBGR,"BoxG"=>$LabelsBGG,"BoxB"=>$LabelsBGB,"BoxAlpha"=>$LabelsBGAlpha);
              } else {
                  $Options = array("Align"=>TEXT_ALIGN_MIDDLEMIDDLE);
              }
 
              if ($AxisBoxRounded) {
-                 $Options["BoxRounded"] = TRUE;
+                 $Options["BoxRounded"] = true;
              }
 
              $Options["FontName"] = $AxisFontName;
@@ -341,7 +341,7 @@
 
              /* Draw the polygons */
              if ($DrawPoly) {
-                 if ($PolyAlpha != NULL) {
+                 if ($PolyAlpha != null) {
                      $Color = array("R"=>$Palette[$ID]["R"],"G"=>$Palette[$ID]["G"],"B"=>$Palette[$ID]["B"],"Alpha"=>$PolyAlpha,"Surrounding"=>$PointSurrounding);
                  }
 
@@ -407,14 +407,14 @@
          $AxisB		= isset($Format["AxisB"]) ? $Format["AxisB"] : 60;
          $AxisAlpha		= isset($Format["AxisAlpha"]) ? $Format["AxisAlpha"] : 50;
          $AxisRotation      = isset($Format["AxisRotation"]) ? $Format["AxisRotation"] : -90;
-         $DrawTicks		= isset($Format["DrawTicks"]) ? $Format["DrawTicks"] : TRUE;
+         $DrawTicks		= isset($Format["DrawTicks"]) ? $Format["DrawTicks"] : true;
          $TicksLength	= isset($Format["TicksLength"]) ? $Format["TicksLength"] : 2;
-         $DrawAxisValues	= isset($Format["DrawAxisValues"]) ? $Format["DrawAxisValues"] : TRUE;
-         $AxisBoxRounded	= isset($Format["AxisBoxRounded"]) ? $Format["AxisBoxRounded"] : TRUE;
+         $DrawAxisValues	= isset($Format["DrawAxisValues"]) ? $Format["DrawAxisValues"] : true;
+         $AxisBoxRounded	= isset($Format["AxisBoxRounded"]) ? $Format["AxisBoxRounded"] : true;
          $AxisFontName	= isset($Format["FontName"]) ? $Format["FontName"] : $this->pChartObject->FontName;
          $AxisFontSize	= isset($Format["FontSize"]) ? $Format["FontSize"] : $this->pChartObject->FontSize;
-         $WriteValues	= isset($Format["WriteValues"]) ? $Format["WriteValues"] : FALSE;
-         $WriteValuesInBubble = isset($Format["WriteValuesInBubble"]) ? $Format["WriteValuesInBubble"] : TRUE;
+         $WriteValues	= isset($Format["WriteValues"]) ? $Format["WriteValues"] : false;
+         $WriteValuesInBubble = isset($Format["WriteValuesInBubble"]) ? $Format["WriteValuesInBubble"] : true;
          $ValueFontName	= isset($Format["ValueFontName"]) ? $Format["ValueFontName"] : $this->pChartObject->FontName;
          $ValueFontSize	= isset($Format["ValueFontSize"]) ? $Format["ValueFontSize"] : $this->pChartObject->FontSize;
          $ValuePadding	= isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 4;
@@ -427,43 +427,43 @@
          $InnerBubbleG	= isset($Format["InnerBubbleG"]) ? $Format["InnerBubbleG"] : 255;
          $InnerBubbleB	= isset($Format["InnerBubbleB"]) ? $Format["InnerBubbleB"] : 255;
          $InnerBubbleAlpha	= isset($Format["InnerBubbleAlpha"]) ? $Format["InnerBubbleAlpha"] : 100;
-         $DrawBackground	= isset($Format["DrawBackground"]) ? $Format["DrawBackground"] : TRUE;
+         $DrawBackground	= isset($Format["DrawBackground"]) ? $Format["DrawBackground"] : true;
          $BackgroundR	= isset($Format["BackgroundR"]) ? $Format["BackgroundR"] : 255;
          $BackgroundG	= isset($Format["BackgroundG"]) ? $Format["BackgroundG"] : 255;
          $BackgroundB	= isset($Format["BackgroundB"]) ? $Format["BackgroundB"] : 255;
          $BackgroundAlpha	= isset($Format["BackgroundAlpha"]) ? $Format["BackgroundAlpha"] : 50;
-         $BackgroundGradient= isset($Format["BackgroundGradient"]) ? $Format["BackgroundGradient"] : NULL;
+         $BackgroundGradient= isset($Format["BackgroundGradient"]) ? $Format["BackgroundGradient"] : null;
          $AxisSteps		= isset($Format["AxisSteps"]) ? $Format["AxisSteps"] : 20;
          $SegmentHeight	= isset($Format["SegmentHeight"]) ? $Format["SegmentHeight"] : SEGMENT_HEIGHT_AUTO;
          $Segments		= isset($Format["Segments"]) ? $Format["Segments"] : 4;
-         $WriteLabels	= isset($Format["WriteLabels"]) ? $Format["WriteLabels"] : TRUE;
-         $LabelsBackground	= isset($Format["LabelsBackground"]) ? $Format["LabelsBackground"] : TRUE;
+         $WriteLabels	= isset($Format["WriteLabels"]) ? $Format["WriteLabels"] : true;
+         $LabelsBackground	= isset($Format["LabelsBackground"]) ? $Format["LabelsBackground"] : true;
          $LabelsBGR		= isset($Format["LabelsBGR"]) ? $Format["LabelsBGR"] : 255;
          $LabelsBGG		= isset($Format["LabelsBGR"]) ? $Format["LabelsBGG"] : 255;
          $LabelsBGB		= isset($Format["LabelsBGR"]) ? $Format["LabelsBGB"] : 255;
          $LabelsBGAlpha	= isset($Format["LabelsBGAlpha"]) ? $Format["LabelsBGAlpha"] : 50;
          $LabelPos		= isset($Format["LabelPos"]) ? $Format["LabelPos"] : RADAR_LABELS_ROTATED;
          $LabelPadding	= isset($Format["LabelPadding"]) ? $Format["LabelPadding"] : 4;
-         $DrawPoints	= isset($Format["DrawPoints"]) ? $Format["DrawPoints"] : TRUE;
+         $DrawPoints	= isset($Format["DrawPoints"]) ? $Format["DrawPoints"] : true;
          $PointRadius	= isset($Format["PointRadius"]) ? $Format["PointRadius"] : 4;
          $PointSurrounding	= isset($Format["PointRadius"]) ? $Format["PointRadius"] : -30;
-         $DrawLines		= isset($Format["DrawLines"]) ? $Format["DrawLines"] : TRUE;
-         $LineLoopStart	= isset($Format["LineLoopStart"]) ? $Format["LineLoopStart"] : FALSE;
-         $DrawPoly		= isset($Format["DrawPoly"]) ? $Format["DrawPoly"] : FALSE;
-         $PolyAlpha		= isset($Format["PolyAlpha"]) ? $Format["PolyAlpha"] : NULL;
+         $DrawLines		= isset($Format["DrawLines"]) ? $Format["DrawLines"] : true;
+         $LineLoopStart	= isset($Format["LineLoopStart"]) ? $Format["LineLoopStart"] : false;
+         $DrawPoly		= isset($Format["DrawPoly"]) ? $Format["DrawPoly"] : false;
+         $PolyAlpha		= isset($Format["PolyAlpha"]) ? $Format["PolyAlpha"] : null;
          $FontSize		= $Object->FontSize;
          $X1		= $Object->GraphAreaX1;
          $Y1		= $Object->GraphAreaY1;
          $X2		= $Object->GraphAreaX2;
          $Y2		= $Object->GraphAreaY2;
-         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
+         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
 
          if ($AxisBoxRounded) {
-             $DrawAxisValues = TRUE;
+             $DrawAxisValues = true;
          }
 
          /* Cancel default tick length if ticks not enabled */
-         if ($DrawTicks == FALSE) {
+         if ($DrawTicks == false) {
              $TicksLength = 0;
          }
 
@@ -518,9 +518,9 @@
          /* Background processing */
          if ($DrawBackground) {
              $RestoreShadow = $Object->Shadow;
-             $Object->Shadow = FALSE;
+             $Object->Shadow = false;
 
-             if ($BackgroundGradient == NULL) {
+             if ($BackgroundGradient == null) {
                  $Color = array("R"=>$BackgroundR,"G"=>$BackgroundG,"B"=>$BackgroundB,"Alpha"=>$BackgroundAlpha);
                  $Object->drawFilledCircle($CenterX, $CenterY, $EdgeHeight, $Color);
              } else {
@@ -546,13 +546,13 @@
 
          if ($DrawAxisValues) {
              if ($LabelsBackground) {
-                 $Options = array("DrawBox"=>TRUE, "Align"=>TEXT_ALIGN_MIDDLEMIDDLE,"BoxR"=>$LabelsBGR,"BoxG"=>$LabelsBGG,"BoxB"=>$LabelsBGB,"BoxAlpha"=>$LabelsBGAlpha);
+                 $Options = array("DrawBox"=>true, "Align"=>TEXT_ALIGN_MIDDLEMIDDLE,"BoxR"=>$LabelsBGR,"BoxG"=>$LabelsBGG,"BoxB"=>$LabelsBGB,"BoxAlpha"=>$LabelsBGAlpha);
              } else {
                  $Options = array("Align"=>TEXT_ALIGN_MIDDLEMIDDLE);
              }
 
              if ($AxisBoxRounded) {
-                 $Options["BoxRounded"] = TRUE;
+                 $Options["BoxRounded"] = true;
              }
 
              $Options["FontName"] = $AxisFontName;
@@ -642,7 +642,7 @@
 
              /* Draw the polygons */
              if ($DrawPoly) {
-                 if ($PolyAlpha != NULL) {
+                 if ($PolyAlpha != null) {
                      $Color = array("R"=>$Palette[$ID]["R"],"G"=>$Palette[$ID]["G"],"B"=>$Palette[$ID]["B"],"Alpha"=>$PolyAlpha,"Surrounding"=>$PointSurrounding);
                  }
 

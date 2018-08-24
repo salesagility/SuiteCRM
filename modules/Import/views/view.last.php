@@ -80,7 +80,7 @@ class ImportViewLast extends ImportView
         $updatedCount = 0;
         $fp = sugar_fopen(ImportCacheFiles::getStatusFileName(), 'r');
         
-        // Read the data if we successfully opened file 
+        // Read the data if we successfully opened file
         if ($fp !== false) {
             // Read rows 1 by 1 and add the info
             while ($row = fgetcsv($fp, 8192)) {
@@ -93,9 +93,9 @@ class ImportViewLast extends ImportView
             fclose($fp);
         }
         
-        $this->ss->assign("showUndoButton", FALSE);
+        $this->ss->assign("showUndoButton", false);
         if ($createdCount > 0) {
-            $this->ss->assign("showUndoButton", TRUE);
+            $this->ss->assign("showUndoButton", true);
         }
 
         if ($errorCount > 0 &&  ($createdCount <= 0 && $updatedCount <= 0)) {
@@ -174,16 +174,16 @@ class ImportViewLast extends ImportView
         $module_mod_strings = return_module_language($current_language, $this->bean->module_dir);
         $lvf->setup('', '', $params, $module_mod_strings, 0, -1, '', strtoupper($beanname), array(), 'id');
         global $app_list_strings;
-        return $lvf->display($app_list_strings['moduleList'][$this->bean->module_dir], 'main', TRUE);
+        return $lvf->display($app_list_strings['moduleList'][$this->bean->module_dir], 'main', true);
     }
 
     protected function getListViewTableFromFile($fileName, $tableName)
     {
-        $has_header = $_REQUEST['has_header'] == 'on' ? TRUE : FALSE;
-        $if = new ImportFile($fileName, ",", '"', FALSE, FALSE);
+        $has_header = $_REQUEST['has_header'] == 'on' ? true : false;
+        $if = new ImportFile($fileName, ",", '"', false, false);
         $if->setHeaderRow($has_header);
         $lv = new ImportListView($if, array('offset'=> 0), $tableName);
-        return $lv->display(TRUE);
+        return $lv->display(true);
     }
 
     /**

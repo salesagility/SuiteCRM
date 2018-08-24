@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -601,7 +602,7 @@ function pollMonitoredInboxesAOP()
                             $uid = imap_uid($aopInboundEmailX->conn, $msgNo);
                         } // else
                         if ($isGroupFolderExists) {
-                            if ($aopInboundEmailX->returnImportedEmail($msgNo, $uid)) {
+                            if ($aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists)) {
                                 // add to folder
                                 $sugarFolder->addBean($aopInboundEmailX->email);
                                 if ($aopInboundEmailX->isPop3Protocol()) {
@@ -731,7 +732,17 @@ function aorRunScheduledReports()
     require_once 'include/SugarQueue/SugarJobQueue.php';
     $date = new DateTime();//Ensure we check all schedules at the same instant
     foreach (BeanFactory::getBean('AOR_Scheduled_Reports')->get_full_list() as $scheduledReport) {
-        if ($scheduledReport->status == 'active' && $scheduledReport->shouldRun($date)) {
+
+        if ($scheduledReport->status != 'active') {
+            continue;
+        }
+        try {
+            $shouldRun = $scheduledReport->shouldRun($date);
+        } catch (Exception $ex) {
+            LoggerManager::getLogger()->warn('aorRunScheduledReports: id: ' . $scheduledReport->id . ' got exception. code: ' . $ex->getCode() . ', message: ' . $ex->getMessage());
+            $shouldRun = false;
+        }
+        if ($shouldRun) {
             if (empty($scheduledReport->aor_report_id)) {
                 continue;
             }

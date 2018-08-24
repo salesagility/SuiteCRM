@@ -111,7 +111,6 @@ require_once 'Zend/Gdata/Media/Extension/MediaTitle.php';
  */
 class Zend_Gdata_Media_Extension_MediaGroup extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'group';
     protected $_rootNamespace = 'media';
 
@@ -228,22 +227,26 @@ class Zend_Gdata_Media_Extension_MediaGroup extends Zend_Gdata_Extension
         }
         if ($this->_copyright != null) {
             $element->appendChild(
-                    $this->_copyright->getDOM($element->ownerDocument));
+                    $this->_copyright->getDOM($element->ownerDocument)
+            );
         }
         if ($this->_description != null) {
             $element->appendChild(
-                    $this->_description->getDOM($element->ownerDocument));
+                    $this->_description->getDOM($element->ownerDocument)
+            );
         }
         foreach ($this->_hash as $hash) {
             $element->appendChild($hash->getDOM($element->ownerDocument));
         }
         if ($this->_keywords != null) {
             $element->appendChild(
-                    $this->_keywords->getDOM($element->ownerDocument));
+                    $this->_keywords->getDOM($element->ownerDocument)
+            );
         }
         if ($this->_title != null) {
             $element->appendChild(
-                    $this->_title->getDOM($element->ownerDocument));
+                    $this->_title->getDOM($element->ownerDocument)
+            );
         }
         return $element;
     }
@@ -562,5 +565,4 @@ class Zend_Gdata_Media_Extension_MediaGroup extends Zend_Gdata_Extension
         $this->_mediaText = $value;
         return $this;
     }
-
 }

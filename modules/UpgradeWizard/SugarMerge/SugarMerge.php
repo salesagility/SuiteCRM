@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -66,7 +67,7 @@ class SugarMerge
     private $custom_path = 'custom';
     private $original_path = '';
     private $merged = array();
-    private $fp = NULL;
+    private $fp = null;
 
     public function __construct($new_path='', $original_path='', $custom_path='custom')
     {
@@ -75,12 +76,12 @@ class SugarMerge
         $this->custom_path = empty($custom_path) || preg_match('/[\/]$/', $custom_path) ? $custom_path : $custom_path . '/';
 
         $this->mergeMapping = array(
-			'editviewdefs.php'=> new EditViewMerge(),
-			'detailviewdefs.php'=>new DetailViewMerge(),
-			'listviewdefs.php'=>new ListViewMerge(),
-			'searchdefs.php'=>new SearchMerge(),
-			'quickcreatedefs.php'=>new QuickCreateMerge(),
-		);
+            'editviewdefs.php'=> new EditViewMerge(),
+            'detailviewdefs.php'=>new DetailViewMerge(),
+            'listviewdefs.php'=>new ListViewMerge(),
+            'searchdefs.php'=>new SearchMerge(),
+            'quickcreatedefs.php'=>new QuickCreateMerge(),
+        );
     }
 
     /**
@@ -132,7 +133,7 @@ class SugarMerge
                         //lets make sure that the directory matches the case of the module before we pass it in
                         global $moduleList;
                         //lets populate an array with the available modules, and make the key's lowercase
-                        $checkModList =  array_combine ($moduleList, $moduleList);
+                        $checkModList =  array_combine($moduleList, $moduleList);
                         $checkModList = array_change_key_case($checkModList);
 
                         //now lets compare with the current directory.  This accounts for cases in which the directory was created in lowercase
@@ -143,7 +144,7 @@ class SugarMerge
 
                         if (is_array($merge)) {
                             if (in_array($e, $merge)) {
-                                $this->merged[$e] = $this->mergeModule($e, TRUE, $save, $logHistory);
+                                $this->merged[$e] = $this->mergeModule($e, true, $save, $logHistory);
                             } else {
                                 $GLOBALS['log']->debug("SugarMerge is skipping $e module as filter array passed in but module not specified for merge.");
                                 continue;
@@ -219,13 +220,13 @@ class SugarMerge
     }
 
     /**
-	 * Create a history copy of the custom file that will be merged so that it can be access through
-	 * studio if admins wish to revert at a later date.
-	 *
-	 * @param STRING $module - name of the module
-	 * @param STRING $file - name of the file
-	 * @param STRING $customFile - Path to the custom file that will be merged
-	 */
+     * Create a history copy of the custom file that will be merged so that it can be access through
+     * studio if admins wish to revert at a later date.
+     *
+     * @param STRING $module - name of the module
+     * @param STRING $file - name of the file
+     * @param STRING $customFile - Path to the custom file that will be merged
+     */
     protected function createHistoryLog($module, $customFile, $file)
     {
         $historyPath = 'custom/' . MB_HISTORYMETADATALOCATION . "/modules/$module/metadata/$file";

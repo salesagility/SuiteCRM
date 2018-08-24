@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,16 +37,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description: Bean class for the users_last_import table
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
- ********************************************************************************/
+ */
 
 
 require_once('modules/Import/Forms.php');
@@ -77,7 +78,7 @@ class UsersLastImport extends SugarBean
         "deleted"
         );
     public $new_schema = true;
-    public $additional_column_fields = Array();
+    public $additional_column_fields = array();
 
     /**
      * Constructor
@@ -194,7 +195,8 @@ class UsersLastImport extends SugarBean
             "SELECT email_address_id
                 FROM email_addr_bean_rel
                 WHERE email_addr_bean_rel.bean_id='{$bean_id}'
-                    AND email_addr_bean_rel.bean_module='{$focus->module_dir}'");
+                    AND email_addr_bean_rel.bean_module='{$focus->module_dir}'"
+        );
         $this->db->query(
             "DELETE FROM email_addr_bean_rel
                 WHERE email_addr_bean_rel.bean_id='{$bean_id}'
@@ -205,17 +207,20 @@ class UsersLastImport extends SugarBean
             if (!$this->db->getOne(
                     "SELECT email_address_id
                         FROM email_addr_bean_rel
-                        WHERE email_address_id = '{$row2['email_address_id']}'")) {
+                        WHERE email_address_id = '{$row2['email_address_id']}'"
+            )) {
                 $this->db->query(
                     "DELETE FROM email_addresses
-                        WHERE id = '{$row2['email_address_id']}'");
+                        WHERE id = '{$row2['email_address_id']}'"
+                );
             }
         }
 
         if ($focus->hasCustomFields()) {
             $this->db->query(
                 "DELETE FROM {$focus->table_name}_cstm
-                    WHERE id_c = '{$bean_id}'");
+                    WHERE id_c = '{$bean_id}'"
+            );
         }
     }
 
@@ -244,4 +249,3 @@ class UsersLastImport extends SugarBean
         return $returnarray;
     }
 }
-

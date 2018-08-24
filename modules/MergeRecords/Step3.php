@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -50,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-require_once ('include/JSON.php');
+require_once('include/JSON.php');
 $timedate = TimeDate::getInstance();
 global $app_strings;
 global $mod_strings;
@@ -87,7 +88,7 @@ $filter_for_invalid_related_attributes   = array(array('type'=>'link','link_type
 //following attributes will be ignored from the merge process.
 $invalid_attribute_by_name= array('date_entered'=>'date_entered','date_modified'=>'date_modified','modified_user_id'=>'modified_user_id', 'created_by'=>'created_by','deleted'=>'deleted');
 
-$merge_ids_array = array ();
+$merge_ids_array = array();
 if (isset($_REQUEST['change_parent']) && $_REQUEST['change_parent']=='1') {
     $base_id=$_REQUEST['change_parent_id'];
     foreach ($_REQUEST['merged_ids'] as $id) {
@@ -119,13 +120,13 @@ $params[] = $mod_strings['LBL_MODULE_NAME'];
 $params[] = $focus->merge_bean->name;
 echo getClassicModuleTitle($focus->merge_bean->module_dir, $params, true);
 
-$mergeBeanArray = array ();
+$mergeBeanArray = array();
 $records=1;
 //render a column for each record to merge
 $merged_ids='';
 $merge_records_names=array();
 foreach ($merge_ids_array as $id) {
-    require_once ($focus->merge_bean_file_path);
+    require_once($focus->merge_bean_file_path);
     $mergeBeanArray[$id] = new $focus->merge_bean_class();
     $mergeBeanArray[$id]->retrieve($id);
     $merge_records_names[]=$mergeBeanArray[$id]->get_summary_text();
@@ -147,13 +148,13 @@ $xtpl->assign("MERGE_MODULE", $focus->merge_module);
 $xtpl->assign("MERGED_IDS", $merged_ids);
 
 //set return parameters.
-if (!empty ($_REQUEST['return_module'])) {
+if (!empty($_REQUEST['return_module'])) {
     $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
 }
-if (!empty ($_REQUEST['return_action'])) {
+if (!empty($_REQUEST['return_action'])) {
     $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
 }
-if (!empty ($_REQUEST['return_id'])) {
+if (!empty($_REQUEST['return_id'])) {
     $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
 }
 
@@ -183,9 +184,9 @@ foreach ($temp_field_array as $field_array) {
         }
         //check for vname in mod strings first, then app, else just display name
         $col_name =$tempName;
-        if (isset ($focus->merge_bean_strings[$field_array['vname']]) && $focus->merge_bean_strings[$field_array['vname']] != '') {
+        if (isset($focus->merge_bean_strings[$field_array['vname']]) && $focus->merge_bean_strings[$field_array['vname']] != '') {
             $xtpl->assign("FIELD_LABEL", $focus->merge_bean_strings[$field_array['vname']]);
-        } elseif (isset ($app_strings[$field_array['vname']]) && $app_strings[$field_array['vname']] != '') {
+        } elseif (isset($app_strings[$field_array['vname']]) && $app_strings[$field_array['vname']] != '') {
             $xtpl->assign("FIELD_LABEL", $app_strings[$field_array['vname']]);
         } else {
             $xtpl->assign("FIELD_LABEL", $tempName);
@@ -200,7 +201,7 @@ foreach ($temp_field_array as $field_array) {
         $xtpl->assign("CELL_WIDTH", "20%");
         $xtpl->parse("main.".$section_name.".merge_cell_label");
 
-        if (isset ($field_array['custom_type']) && $field_array['custom_type'] != '') {
+        if (isset($field_array['custom_type']) && $field_array['custom_type'] != '') {
             $field_check = $field_array['custom_type'];
         } else {
             $field_check = $field_array['type'];
@@ -273,7 +274,7 @@ foreach ($temp_field_array as $field_array) {
                 $xtpl->assign("CELL_WIDTH", $col_width);
                 $xtpl->assign("MERGED_LINKS", implode(',', $exclude));
 
-                $popup_data = array ('call_back_function' => 'set_return', 'form_name' => 'EditView', 'field_to_name_array' => array ('id' =>$tempId, 'name' =>$tempName,),);
+                $popup_data = array('call_back_function' => 'set_return', 'form_name' => 'EditView', 'field_to_name_array' => array('id' =>$tempId, 'name' =>$tempName,),);
                 $xtpl->assign('ENCODED_POPUP_DATA', $json->encode($popup_data));
 
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_popup");
@@ -359,13 +360,13 @@ foreach ($temp_field_array as $field_array) {
                     break;
             }
 
-            $json_data = array ('field_name' =>$tempName, 'field_type' => $field_check,);
+            $json_data = array('field_name' =>$tempName, 'field_type' => $field_check,);
             //add an array of fields/values to the json array
             //for setting all the values for merge
             if ($field_check == 'relate' or $field_check == 'link') {
-                $temp_array = Array ();
+                $temp_array = array();
                 $tempId = $field_array['id_name'];
-                $json_data['popup_fields'] = Array ($tempName => $mergeBeanArray[$id]->$tempName,$tempId => $mergeBeanArray[$id]->$tempId,);
+                $json_data['popup_fields'] = array($tempName => $mergeBeanArray[$id]->$tempName,$tempId => $mergeBeanArray[$id]->$tempId,);
             } elseif ($field_check == 'teamset') {
                 $json_data['field_value'] = TeamSetManager::getCommaDelimitedTeams($mergeBeanArray[$id]->team_set_id, $mergeBeanArray[$id]->team_id, true);
                 $json_data['field_value2'] = TeamSetManager::getTeamsFromSet($mergeBeanArray[$id]->team_set_id);
@@ -513,7 +514,7 @@ function get_related_name($field_def, $id_value)
                 global $beanList, $beanFiles;
                 //get the bean field defs based on the module param
                 $bean = $beanList[$field_def['module']];
-                require_once ($beanFiles[$bean]);
+                require_once($beanFiles[$bean]);
                 $focus = new $bean();
                 if (!empty($focus->field_defs[$field_def['rname']])) {
                     $related_def = $focus->field_defs[$field_def['rname']];

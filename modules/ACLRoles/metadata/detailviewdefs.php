@@ -1,11 +1,11 @@
 <?php
 $viewdefs['ACLRoles']['DetailView'] = array(
     'templateMeta' => array('form' => array(),
-                            'maxColumns' => '', 
+                            'maxColumns' => '',
                             'widths' => array(
                                             ),
                             'includes'=> array(
-                                         ),                                            
+                                         ),
                            ),
     'panels' => array(
           

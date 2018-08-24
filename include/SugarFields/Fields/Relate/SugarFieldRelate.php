@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -323,8 +323,10 @@ class SugarFieldRelate extends SugarFieldBase
                 $names['l'] = $temp[1];
             }
             for ($i = 0; $i < strlen($default_locale_name_format); $i++) {
-                $new_field .= array_key_exists($default_locale_name_format{$i},
-                    $names) ? $names[$default_locale_name_format{$i}] : $default_locale_name_format{$i};
+                $new_field .= array_key_exists(
+                    $default_locale_name_format{$i},
+                    $names
+                ) ? $names[$default_locale_name_format{$i}] : $default_locale_name_format{$i};
             }
         } else {
             $new_field = $rawField;
@@ -357,8 +359,11 @@ class SugarFieldRelate extends SugarFieldBase
         // let's try to lookup the field the relationship is expecting to use (user_name).
         if ($vardef['module'] == 'Users' && isset($vardef['rname']) && $vardef['rname'] == 'user_name') {
             $userFocus = new User;
-            $query = sprintf("SELECT user_name FROM {$userFocus->table_name} WHERE %s=%s AND deleted=0",
-                $userFocus->db->concat('users', array('first_name', 'last_name')), $userFocus->db->quoted($value));
+            $query = sprintf(
+                "SELECT user_name FROM {$userFocus->table_name} WHERE %s=%s AND deleted=0",
+                $userFocus->db->concat('users', array('first_name', 'last_name')),
+                $userFocus->db->quoted($value)
+            );
             $username = $userFocus->db->getOne($query);
             if (!empty($username)) {
                 $value = $username;
@@ -379,9 +384,8 @@ class SugarFieldRelate extends SugarFieldBase
             $returnValue = $settings->$fieldtype($value, $rvardef);
             if (!$returnValue) {
                 return false;
-            } else {
-                $value = $returnValue;
             }
+            $value = $returnValue;
         }
 
         if (isset($vardef['id_name'])) {
@@ -456,7 +460,10 @@ class SugarFieldRelate extends SugarFieldBase
                         $newbean->save(false);
                         $focus->$idField = $newbean->id;
                         ImportFieldSanitize::$createdBeans[] = ImportFile::writeRowToLastImport(
-                            $focus->module_dir, $newbean->object_name, $newbean->id);
+                            $focus->module_dir,
+                            $newbean->object_name,
+                            $newbean->id
+                        );
                     }
                 }
             }

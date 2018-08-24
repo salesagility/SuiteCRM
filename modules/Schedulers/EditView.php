@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,14 +37,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- * Description:  
- ********************************************************************************/
+ * Description:
+ */
 global $current_user;
 if (!is_admin($current_user)) {
     sugar_die("Unauthorized access to administration.");
@@ -144,7 +145,7 @@ $time_from_hour = intval(substr($focus->time_from, 0, 2));
 $time_from_min = substr($focus->time_from, 3, 5);
 $time_to_hour = intval(substr($focus->time_to, 0, 2));
 $time_to_min = substr($focus->time_to, 3, 5);
-$hours_arr = array ();
+$hours_arr = array();
 $mins_arr = array();
 $num_of_hours = 13;
 $start_at = 1;
@@ -153,7 +154,7 @@ $start_at = 1;
 include_once('modules/Schedulers/_AddJobsHere.php');
 
 if (is_array($job_strings) && !empty($job_strings)) {
-    $job_function = "<option value=''>--</option>"; 
+    $job_function = "<option value=''>--</option>";
     foreach ($job_strings as $k => $function) {
         $job_function .= "<option value='function::".$function."'";
         if ($focus->job === "function::".$function) {
@@ -163,7 +164,7 @@ if (is_array($job_strings) && !empty($job_strings)) {
     }
 }
 
-if (empty ($time_meridiem_start)) {
+if (empty($time_meridiem_start)) {
     $num_of_hours = 24;
     $start_at = 0;
 }
@@ -186,7 +187,7 @@ $mins_arr_unreq = $mins_arr;
 $hours_arr_unreq[''] = '--';
 $mins_arr_unreq[''] = '--';
 
-// explode crontab notation 
+// explode crontab notation
 if (!empty($focus->job_interval)) {
     $exInterval = explode("::", $focus->job_interval);
 } else {
@@ -203,12 +204,12 @@ $xtpl = new XTemplate('modules/Schedulers/EditView.html');
 // Days of the week
 $xtpl->assign('USE_ADV_BOOL', 'false');
 $xtDays = array(1 => 'MON',
-				2 => 'TUE',
-				3 => 'WED',
-				4 => 'THU',
-				5 => 'FRI',
-				6 => 'SAT',
-				0 => 'SUN');
+                2 => 'TUE',
+                3 => 'WED',
+                4 => 'THU',
+                5 => 'FRI',
+                6 => 'SAT',
+                0 => 'SUN');
 
 if ($exInterval[4] == '*') {
     $xtpl->assign('ALL', "CHECKED");
@@ -329,7 +330,7 @@ if (strstr($focus->job, 'url::')) {
 } else {
     $job_url = 'http://';
 }
-	
+    
 $xtpl->assign('JOB_FUNCTION', $job_function);
 $xtpl->assign('JOB_URL', $job_url);
 $xtpl->assign('JOB_INTERVAL', $focus->job_interval);

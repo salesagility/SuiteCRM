@@ -247,7 +247,7 @@ class FP_eventsController extends SugarController
                 foreach ($target_list->prospects->getBeans() as $contact) {
                     $contact_id_list = $event->fp_events_prospects_1->get();
 
-                    if (!in_array($contact->id, $contact_id_list)) { //check if its already related 
+                    if (!in_array($contact->id, $contact_id_list)) { //check if its already related
 
                         $event->fp_events_prospects_1->add($contact->id);
                     }
@@ -346,7 +346,7 @@ class FP_eventsController extends SugarController
         $result = $db->query($query);
         $lead_count = $db->getRowCount($result);//count leads
 
-        $delegate_count = $contact_count + $prospect_count + $lead_count;//Total up delegates 
+        $delegate_count = $contact_count + $prospect_count + $lead_count;//Total up delegates
         $invite_count = 0; //used to count the number of emails sent
         $error_count = 0; //used to count the number of failed email attempts
 
@@ -541,7 +541,7 @@ class FP_eventsController extends SugarController
             SugarApplication::appendErrorMessage($error_count.$mod_strings['LBL_ERROR_MSG_4']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         }
-        // Redirect with error count if failed email attempts are greater than 10 
+        // Redirect with error count if failed email attempts are greater than 10
         elseif ($error_count > 10) {
             $_SESSION['user_error_message'] = array();
             SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_MSG_3']);
@@ -581,7 +581,7 @@ class FP_eventsController extends SugarController
             $emailObj->description_html = $mail->Body;
             $emailObj->from_addr = $mail->From;
             isValidEmailAddress($emailObj->from_addr);
-            if ($relatedBean instanceOf SugarBean && !empty($relatedBean->id)) {
+            if ($relatedBean instanceof SugarBean && !empty($relatedBean->id)) {
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;
             }
@@ -592,8 +592,7 @@ class FP_eventsController extends SugarController
             $emailObj->save();
 
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }

@@ -441,5 +441,4 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     {
         return $this->getSpreadsheetFeed($location = null);
     }
-
 }

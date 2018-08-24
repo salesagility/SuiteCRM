@@ -205,9 +205,8 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
     {
         if ($nonBlockingLock) {
             return flock($this->_fileHandle, $lockType | LOCK_NB);
-        } else {
-            return flock($this->_fileHandle, $lockType);
         }
+        return flock($this->_fileHandle, $lockType);
     }
 
     /**
@@ -221,9 +220,7 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
     {
         if ($this->_fileHandle !== null) {
             return flock($this->_fileHandle, LOCK_UN);
-        } else {
-            return true;
         }
+        return true;
     }
 }
-

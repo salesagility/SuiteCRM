@@ -13,7 +13,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -111,7 +111,7 @@ class soap_transport_http extends nusoap_base
     * @param boolean $use_curl Whether to try to force cURL use
     * @access public
     */
-    public function soap_transport_http($url, $curl_options = NULL, $use_curl = false)
+    public function soap_transport_http($url, $curl_options = null, $use_curl = false)
     {
         parent::nusoap_base();
         $this->debug("ctor url=$url use_curl=$use_curl curl_options:");
@@ -390,7 +390,7 @@ class soap_transport_http extends nusoap_base
                 // recent versions of cURL turn on peer/host checking by default,
                 // while PHP binaries are not compiled with a default location for the
                 // CA cert bundle, so disable peer/host checking.
-                //$this->setCurlOption(CURLOPT_CAINFO, 'f:\php-4.3.2-win32\extensions\curl-ca-bundle.crt');		
+                //$this->setCurlOption(CURLOPT_CAINFO, 'f:\php-4.3.2-win32\extensions\curl-ca-bundle.crt');
                 $this->setCurlOption(CURLOPT_SSL_VERIFYPEER, 0);
                 $this->setCurlOption(CURLOPT_SSL_VERIFYHOST, 0);
     
@@ -462,11 +462,10 @@ class soap_transport_http extends nusoap_base
             }
             $this->debug('cURL connection set up');
             return true;
-        } else {
-            $this->setError('Unknown scheme ' . $this->scheme);
-            $this->debug('Unknown scheme ' . $this->scheme);
-            return false;
         }
+        $this->setError('Unknown scheme ' . $this->scheme);
+        $this->debug('Unknown scheme ' . $this->scheme);
+        return false;
     }
 
     /**
@@ -479,7 +478,7 @@ class soap_transport_http extends nusoap_base
     * @return	string data
     * @access   public
     */
-    public function send($data, $timeout=0, $response_timeout=30, $cookies=NULL)
+    public function send($data, $timeout=0, $response_timeout=30, $cookies=null)
     {
         $this->debug('entered send() with data of length: '.strlen($data));
 
@@ -503,7 +502,7 @@ class soap_transport_http extends nusoap_base
             } else {
                 $this->setError("Too many tries to get an OK response ($this->response_status_line)");
             }
-        }		
+        }
         $this->debug('end of send()');
         return $respdata;
     }
@@ -584,7 +583,7 @@ class soap_transport_http extends nusoap_base
     
                 $hashedDigest = md5($unhashedDigest);
     
-                $opaque = '';	
+                $opaque = '';
                 if (isset($digestRequest['opaque'])) {
                     $opaque = ', opaque="' . $digestRequest['opaque'] . '"';
                 }
@@ -714,7 +713,7 @@ class soap_transport_http extends nusoap_base
         // read chunk-size, chunk-extension (if any) and CRLF
         // get the position of the linebreak
         $chunkend = strpos($buffer, $lb);
-        if ($chunkend == FALSE) {
+        if ($chunkend == false) {
             $this->debug('no linebreak found in decodeChunked');
             return $new;
         }
@@ -727,7 +726,7 @@ class soap_transport_http extends nusoap_base
             $chunkend = strpos($buffer, $lb, $chunkstart + $chunk_size);
             
             // Just in case we got a broken connection
-            if ($chunkend == FALSE) {
+            if ($chunkend == false) {
                 $chunk = substr($buffer, $chunkstart);
                 // append chunk-data to entity-body
                 $new .= $chunk;
@@ -745,7 +744,7 @@ class soap_transport_http extends nusoap_base
             $chunkstart = $chunkend + strlen($lb);
             
             $chunkend = strpos($buffer, $lb, $chunkstart) + strlen($lb);
-            if ($chunkend == FALSE) {
+            if ($chunkend == false) {
                 break; //Just in case we got a broken connection
             }
             $temp = substr($buffer, $chunkstart, $chunkend-$chunkstart);
@@ -813,7 +812,7 @@ class soap_transport_http extends nusoap_base
     * @return	boolean	true if OK, false if problem
     * @access   private
     */
-    public function sendRequest($data, $cookies = NULL)
+    public function sendRequest($data, $cookies = null)
     {
         // build cookie string
         $cookie_str = $this->getCookiesForRequest($cookies, (($this->scheme == 'ssl') || ($this->scheme == 'https')));
@@ -853,8 +852,8 @@ class soap_transport_http extends nusoap_base
                 $this->setCurlOption(CURLOPT_POST, 1);
                 $this->setCurlOption(CURLOPT_POSTFIELDS, $data);
                 $this->debug('set cURL POST data');
-            } else {
             }
+            
             // insert custom user-set cURL options
             foreach ($this->ch_options as $key => $val) {
                 $this->setCurlOption($key, $val);
@@ -1014,7 +1013,7 @@ class soap_transport_http extends nusoap_base
         
             // close filepointer
             if (
-            (isset($this->incoming_headers['connection']) && strtolower($this->incoming_headers['connection']) == 'close') || 
+            (isset($this->incoming_headers['connection']) && strtolower($this->incoming_headers['connection']) == 'close') ||
             (! $this->persistentConnection) || feof($this->fp)) {
                 fclose($this->fp);
                 $this->fp = false;
@@ -1054,11 +1053,11 @@ class soap_transport_http extends nusoap_base
                 $this->setError($err);
                 curl_close($this->ch);
                 return false;
-            } else {
-                //echo '<pre>';
+            }
+            //echo '<pre>';
             //var_dump(curl_getinfo($this->ch));
             //echo '</pre>';
-            }
+            
             // close curl
             $this->debug('No cURL error, closing cURL');
             curl_close($this->ch);
@@ -1315,7 +1314,7 @@ class soap_transport_http extends nusoap_base
         }
                         
         $cookie_param = ';secure;';
-        if (strpos($cookie_str, $cookie_param) !== FALSE) {
+        if (strpos($cookie_str, $cookie_param) !== false) {
             $secure = true;
         } else {
             $secure = false;
@@ -1332,7 +1331,7 @@ class soap_transport_http extends nusoap_base
                             'path' => $path,
                             'expires' => $expires,
                             'secure' => $secure
-                            );		
+                            );
             return $cookie;
         }
         return false;

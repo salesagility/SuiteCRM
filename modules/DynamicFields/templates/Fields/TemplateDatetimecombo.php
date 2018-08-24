@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
@@ -48,7 +49,7 @@ class TemplateDatetimecombo extends TemplateRange
     public $type = 'datetimecombo';
     public $len = '';
     public $dateStrings = array(
-		'-none-' => '',
+        '-none-' => '',
         'today'=>'now',
         'yesterday'=> '-1 day',
         'tomorrow'=>'+1 day',
@@ -64,61 +65,61 @@ class TemplateDatetimecombo extends TemplateRange
     );
     
     public $hoursStrings = array(
-    	'' => '',
-    	'01' => '01',	
-    	'02' => '02',
-    	'03' => '03',
-    	'04' => '04',
-    	'05' => '05',
-    	'06' => '06',
-    	'07' => '07',
-    	'08' => '08',
-    	'09' => '09',
-    	'10' => '10',
-    	'11' => '11',
-    	'12' => '12',
+        '' => '',
+        '01' => '01',
+        '02' => '02',
+        '03' => '03',
+        '04' => '04',
+        '05' => '05',
+        '06' => '06',
+        '07' => '07',
+        '08' => '08',
+        '09' => '09',
+        '10' => '10',
+        '11' => '11',
+        '12' => '12',
     );
     
     public $hoursStrings24 = array(
-    	'' => '',
+        '' => '',
         '00' => '00',
-    	'01' => '01',	
-    	'02' => '02',
-    	'03' => '03',
-    	'04' => '04',
-    	'05' => '05',
-    	'06' => '06',
-    	'07' => '07',
-    	'08' => '08',
-    	'09' => '09',
-    	'10' => '10',
-    	'11' => '11',
-    	'12' => '12',
-    	'13' => '13',	
-    	'14' => '14',
-    	'15' => '15',
-    	'16' => '16',
-    	'17' => '17',
-    	'18' => '18',
-    	'19' => '19',
-    	'20' => '20',
-    	'21' => '21',
-    	'22' => '22',
-    	'23' => '23',
-    );    
+        '01' => '01',
+        '02' => '02',
+        '03' => '03',
+        '04' => '04',
+        '05' => '05',
+        '06' => '06',
+        '07' => '07',
+        '08' => '08',
+        '09' => '09',
+        '10' => '10',
+        '11' => '11',
+        '12' => '12',
+        '13' => '13',
+        '14' => '14',
+        '15' => '15',
+        '16' => '16',
+        '17' => '17',
+        '18' => '18',
+        '19' => '19',
+        '20' => '20',
+        '21' => '21',
+        '22' => '22',
+        '23' => '23',
+    );
     
     public $minutesStrings = array(
-    	'' => '',
-    	'00' => '00',	
-    	'15' => '15',
-    	'30' => '30',
-    	'45' => '45',
+        '' => '',
+        '00' => '00',
+        '15' => '15',
+        '30' => '30',
+        '45' => '45',
     );
     
     public $meridiemStrings = array(
-    	'' => '',
-    	'am' => 'am',
-    	'pm' => 'pm',
+        '' => '',
+        'am' => 'am',
+        'pm' => 'pm',
     );
 
     public function get_db_default($modify=false)
@@ -136,7 +137,7 @@ class TemplateDatetimecombo extends TemplateRange
         }
         return $def;
     }
-	
+    
     public function populateFromPost()
     {
         parent::populateFromPost();
@@ -144,7 +145,7 @@ class TemplateDatetimecombo extends TemplateRange
             $_REQUEST['default'] = $_REQUEST['defaultDate'].'&'.$_REQUEST['defaultTime'];
 
             $defaultTime = $_REQUEST['defaultTime'];
-            $hours = substr($defaultTime, 0, 2); 
+            $hours = substr($defaultTime, 0, 2);
             $minutes = substr($defaultTime, 3, 2);
             $meridiem = substr($defaultTime, 5, 2);
             if (empty($meridiem)) {
@@ -168,7 +169,7 @@ class TemplateDatetimecombo extends TemplateRange
         }
         unset($_REQUEST['defaultDate']);
         unset($_REQUEST['defaultTime']);
-    	
+        
         foreach ($this->vardef_map as $vardef=>$field) {
             if (isset($_REQUEST[$vardef])) {
                 //  Bug #48826. Some fields are allowed to have special characters and must be decoded from the request

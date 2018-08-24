@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('include/Dashlets/DashletGeneric.php');
@@ -264,7 +265,13 @@ class SugarFeedDashlet extends DashletGeneric
 
             $where .= $module_limiter;
 
-            $this->lvs->setup($this->seedBean, $this->displayTpl, $where , $lvsParams, 0, $this->displayRows,
+            $this->lvs->setup(
+                $this->seedBean,
+                $this->displayTpl,
+                $where,
+                $lvsParams,
+                0,
+                $this->displayRows,
                               array('name',
                                     'description',
                                     'date_entered',
@@ -279,7 +286,8 @@ class SugarFeedDashlet extends DashletGeneric
 
 
                                     'link_url',
-                                    'link_type'));
+                                    'link_type')
+            );
 
             foreach ($this->lvs->data['data'] as $row => $data) {
                 $this->lvs->data['data'][$row]['NAME'] = str_replace("{this.CREATED_BY}", get_assigned_user_name($this->lvs->data['data'][$row]['CREATED_BY']), $data['NAME']);
@@ -289,7 +297,7 @@ class SugarFeedDashlet extends DashletGeneric
                 if (count($modStringMatches) == 3 && $modStringMatches[1] == 'SugarFeed' && !empty($data['RELATED_MODULE'])) {
                     $modKey = $modStringMatches[2];
                     $modString = translate($modKey, $modStringMatches[1]);
-                    if (strpos($modString, '{0}') === FALSE || !isset($GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']])) {
+                    if (strpos($modString, '{0}') === false || !isset($GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']])) {
                         continue;
                     }
 
@@ -324,7 +332,7 @@ class SugarFeedDashlet extends DashletGeneric
 
         foreach ($external_modules as $apiName) {
             $api = ExternalAPIFactory::loadAPI($apiName);
-            if ($api !== FALSE) {
+            if ($api !== false) {
                 // FIXME: Actually calculate the oldest sugar feed we can see, once we get an API that supports this sort of filter.
                 $reply = $api->getLatestUpdates(0, $fetchRecordCount);
                 if ($reply['success'] && count($reply['messages']) > 0) {
@@ -382,9 +390,13 @@ class SugarFeedDashlet extends DashletGeneric
             $text = htmlspecialchars($_REQUEST['text']);
             //allow for bold and italic user tags
             $text = preg_replace('/&amp;lt;(\/*[bi])&amp;gt;/i', '<$1>', $text);
-            SugarFeed::pushFeed($text, 'UserFeed', $GLOBALS['current_user']->id,
+            SugarFeed::pushFeed(
+                $text,
+                'UserFeed',
+                $GLOBALS['current_user']->id,
                                 $GLOBALS['current_user']->id,
-                                $_REQUEST['link_type'], $_REQUEST['link_url']
+                                $_REQUEST['link_type'],
+                $_REQUEST['link_url']
                                 );
         }
     }
@@ -395,9 +407,13 @@ class SugarFeedDashlet extends DashletGeneric
             $text = htmlspecialchars($_REQUEST['text']);
             //allow for bold and italic user tags
             $text = preg_replace('/&amp;lt;(\/*[bi])&amp;gt;/i', '<$1>', $text);
-            SugarFeed::pushFeed($text, 'SugarFeed', $_REQUEST['parentFeed'],
+            SugarFeed::pushFeed(
+                $text,
+                'SugarFeed',
+                $_REQUEST['parentFeed'],
                                 $GLOBALS['current_user']->id,
-                                '', ''
+                                '',
+                ''
                                 );
         }
     }
@@ -510,9 +526,8 @@ enableQS(false);
             if ($matches[1] == "this") {
                 $var = $matches[2];
                 return $class->$var;
-            } else {
-                return translate($matches[2], $matches[1]);
             }
+            return translate($matches[2], $matches[1]);
         };
 
         $listview = preg_replace_callback('/\{([^\^ }]+)\.([^\}]+)\}/', $function, $listview);
@@ -569,9 +584,8 @@ enableQS(false);
         if (! $this->shouldDisplay()) {
             // The Sugar Feeds are disabled, populate the warning message
             return translate('LBL_DASHLET_DISABLED', 'SugarFeed');
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**
@@ -627,9 +641,8 @@ enableQS(false);
 
         if (!isset($admin->settings['sugarfeed_enabled']) || $admin->settings['sugarfeed_enabled'] != '1') {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     public function check_enabled($type)

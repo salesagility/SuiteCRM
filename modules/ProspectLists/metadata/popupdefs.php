@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 global $mod_strings;
@@ -46,13 +47,13 @@ global $mod_strings;
 $popupMeta = array('moduleMain' => 'ProspectList',
                         'varName' => 'PROSPECTLIST',
                         'orderBy' => 'name',
-                        'whereClauses' => 
+                        'whereClauses' =>
                             array('name' => 'prospect_lists.name',
                                     'list_type' => 'prospect_lists.list_type'),
                         'searchInputs' =>
                             array('name', 'list_type'),
                         'selectDoms' =>
-                            array('LIST_OPTIONS' => 
+                            array('LIST_OPTIONS' =>
                                             array('dom' => 'prospect_list_type_dom', 'searchInput' => 'list_type'),
                                   ),
                         'create' =>
@@ -63,20 +64,20 @@ $popupMeta = array('moduleMain' => 'ProspectList',
                                   ),
                         'listviewdefs' => array(
                             'NAME' => array(
-                                'width' => '25', 
-                                'label' => 'LBL_LIST_PROSPECT_LIST_NAME', 
+                                'width' => '25',
+                                'label' => 'LBL_LIST_PROSPECT_LIST_NAME',
                                 'link' => true,
                                 'default' => true),
                             'LIST_TYPE' => array(
-                                'width' => '15', 
-                                'label' => 'LBL_LIST_TYPE_LIST_NAME', 
+                                'width' => '15',
+                                'label' => 'LBL_LIST_TYPE_LIST_NAME',
                                 'default' => true),
                             'DESCRIPTION' => array(
-                                'width' => '50', 
-                                'label' => 'LBL_LIST_DESCRIPTION', 
+                                'width' => '50',
+                                'label' => 'LBL_LIST_DESCRIPTION',
                                 'default' => true),
                             'ASSIGNED_USER_NAME' => array(
-                                'width' => '10', 
+                                'width' => '10',
                                 'label' => 'LBL_LIST_ASSIGNED_USER',
                                 'module' => 'Employees',
                                 'default' => true),

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -60,23 +61,22 @@ class JsChart extends SugarChart
     public function isSupported($chartType)
     {
         $charts = array(
-			"stacked group by chart",
-			"group by chart",
-			"bar chart",
-			"horizontal group by chart",
-			"horizontal",
-			"horizontal bar chart",
-			"pie chart",
-			"gauge chart",
-			"funnel chart 3D",
-			"line chart",
-		);
+            "stacked group by chart",
+            "group by chart",
+            "bar chart",
+            "horizontal group by chart",
+            "horizontal",
+            "horizontal bar chart",
+            "pie chart",
+            "gauge chart",
+            "funnel chart 3D",
+            "line chart",
+        );
 
         if (in_array($chartType, $charts)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function tab($str, $depth)
@@ -196,15 +196,15 @@ class JsChart extends SugarChart
 
         $chartType = $xml->properties->type;
         if ($chartType == "pie chart") {
-            return array ("pieType" => "basic","tip" => "name","chartType" => "pieChart");
+            return array("pieType" => "basic","tip" => "name","chartType" => "pieChart");
         } elseif ($chartType == "line chart") {
-            return array ("lineType" => "basic","tip" => "name","chartType" => "lineChart");
+            return array("lineType" => "basic","tip" => "name","chartType" => "lineChart");
         } elseif ($chartType == "funnel chart 3D") {
-            return array ("funnelType" => "basic","tip" => "name","chartType" => "funnelChart");
+            return array("funnelType" => "basic","tip" => "name","chartType" => "funnelChart");
         } elseif ($chartType == "gauge chart") {
-            return array ("gaugeType" => "basic","tip" => "name","chartType" => "gaugeChart");
+            return array("gaugeType" => "basic","tip" => "name","chartType" => "gaugeChart");
         } elseif ($chartType == "stacked group by chart") {
-            return array ("orientation" => "vertical","barType" => "stacked","tip" => "name","chartType" => "barChart");
+            return array("orientation" => "vertical","barType" => "stacked","tip" => "name","chartType" => "barChart");
         } elseif ($chartType == "group by chart") {
             return array("orientation" => "vertical", "barType" => "grouped", "tip" => "title","chartType" => "barChart");
         } elseif ($chartType == "bar chart") {
@@ -213,9 +213,8 @@ class JsChart extends SugarChart
             return array("orientation" => "horizontal", "barType" => "stacked", "tip" => "name","chartType" => "barChart");
         } elseif ($chartType == "horizontal bar chart" || "horizontal") {
             return array("orientation" => "horizontal","barType" => "basic","tip" => "label","chartType" => "barChart");
-        } else {
-            return array("orientation" => "vertical","barType" => "stacked","tip" => "name","chartType" => "barChart");
         }
+        return array("orientation" => "vertical","barType" => "stacked","tip" => "name","chartType" => "barChart");
     }
     public function getChartDimensions($xmlStr)
     {
@@ -223,12 +222,10 @@ class JsChart extends SugarChart
             if ($this->chartType == "horizontal group by chart" || $this->chartType == "horizontal bar chart") {
                 $height = ($this->getNumNodes($xmlStr) * 60) + 100;
                 return array("width"=>$this->width, "height"=>($height));
-            } else {
-                return array("width"=>($this->width * 2), "height"=>$this->height);
             }
-        } else {
-            return array("width"=>"100%", "height"=>$this->height);
+            return array("width"=>($this->width * 2), "height"=>$this->height);
         }
+        return array("width"=>"100%", "height"=>$this->height);
     }
 
     public function checkData($xmlstr)
@@ -236,9 +233,8 @@ class JsChart extends SugarChart
         $xml = new SimpleXMLElement($xmlstr);
         if (sizeof($xml->data->group) > 0) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function getNumNodes($xmlstr)
@@ -515,7 +511,7 @@ class JsChart extends SugarChart
                 $groupcontent .= $this->tab("\"valuelabels\": [\n".$subgroupValueLabelsStr, 2);
                 $groupcontent .= $this->tab("]\n", 2);
                 //$groupcontent .= $this->tab("\"links\": [\n".$subgroupLinksStr,2);
-				//$groupcontent .= $this->tab("]\n",2);
+                //$groupcontent .= $this->tab("]\n",2);
             }
 
             $groupcontent .= $this->tab("}", 1);
@@ -589,9 +585,8 @@ class JsChart extends SugarChart
             }
             $content .= "\n}";
             return $content;
-        } else {
-            return "No Data";
         }
+        return "No Data";
     }
 
     public function buildHTMLLegend($xmlFile)
@@ -679,7 +674,7 @@ class JsChart extends SugarChart
         }
 
         // write the contents to the file
-        if (fwrite($fh, $jsonContents) === FALSE) {
+        if (fwrite($fh, $jsonContents) === false) {
             $GLOBALS['log']->debug("Cannot write to file ($this->jsonFilename)");
             return false;
         }

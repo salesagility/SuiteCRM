@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,34 +34,34 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 
 class ViewDropdown extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   translate('LBL_MODULE_NAME', 'Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME', 'Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     public function display()
     {
         $ajax = new AjaxCompose();
         $smarty = $this->generateSmarty();
-		
+        
         if (isset($_REQUEST['refreshTree'])) {
-            require_once ('modules/ModuleBuilder/Module/DropDownTree.php');
+            require_once('modules/ModuleBuilder/Module/DropDownTree.php');
             $mbt = new DropDownTree();
             $ajax->addSection('west', $mbt->getName(), $mbt->fetchNodes());
             $smarty->assign('refreshTree', true);
@@ -75,7 +76,7 @@ class ViewDropdown extends SugarView
         $ajax->addSection('east2', $mod_strings['LBL_SECTION_DROPDOWNED'], $body);
         echo $ajax->getJavascript();
     }
- 	
+    
     public function generateSmarty()
     {
         //get the selected language
@@ -88,7 +89,7 @@ class ViewDropdown extends SugarView
         //		$my_list_strings = $GLOBALS['app_list_strings'];
 
         $smarty = new Sugar_Smarty();
-		      
+              
         //if we are using ModuleBuilder then process the following
         if (!empty($_REQUEST['view_package']) && $_REQUEST['view_package'] != 'studio') {
             require_once('modules/ModuleBuilder/MB/ModuleBuilder.php');
@@ -101,7 +102,7 @@ class ViewDropdown extends SugarView
                 $new = true;
                 $_REQUEST['dropdown_name'] = $_REQUEST['field']. '_list';
             }
-			
+            
             $vardef = (!empty($module->mbvardefs->fields[$_REQUEST['dropdown_name']]))? $module->mbvardefs->fields[$_REQUEST['dropdown_name']]: array();
             $module->mblanguage->generateAppStrings(false) ;
             $my_list_strings = array_merge($my_list_strings, $module->mblanguage->appListStrings[$selected_lang.'.lang.php']);
@@ -116,7 +117,7 @@ class ViewDropdown extends SugarView
                 unset($my_list_strings[$key]);
             }
         }
-		
+        
         $dropdowns = array_keys($my_list_strings);
         asort($dropdowns);
         $keys = array_keys($dropdowns);
@@ -129,11 +130,11 @@ class ViewDropdown extends SugarView
 
         if (!empty($_REQUEST['dropdown_name']) && !$new) {
             $name = $_REQUEST['dropdown_name'];
-			
+            
             // handle the case where we've saved a dropdown in one language, and now attempt to edit it for another language. The $name exists, but $my_list_strings[$name] doesn't
             // for now, we just treat it as if it was new. A better approach might be to use the first language version as a template for future languages
             if (!isset($my_list_strings[$name])) {
-                $my_list_strings[$name] = array () ;
+                $my_list_strings[$name] = array() ;
             }
  
             $selected_dropdown = (!empty($vardef['options']) && !empty($my_list_strings[$vardef['options']])) ? $my_list_strings[$vardef['options']] : $my_list_strings[$name];
@@ -153,9 +154,8 @@ class ViewDropdown extends SugarView
             for ($i = 0; $i < 100; $i++) {
                 if (empty($my_list_strings[$use_name])) {
                     break;
-                } else {
-                    $use_name = $pre_pop_name.'_'.$i;
                 }
+                $use_name = $pre_pop_name.'_'.$i;
             }
             $smarty->assign('prepopulated_name', $use_name);
         }

@@ -103,7 +103,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $projectTask->mark_deleted($projectTask->id);
         $result = $projectTask->retrieve($projectTask->id);
-        $this->assertEquals(null, $result);   
+        $this->assertEquals(null, $result);
         
         // clean up
         

@@ -1,13 +1,14 @@
 <?php
-if (! defined ('sugarEntry') || ! sugarEntry) {
-    die ('Not A Valid Entry Point') ;
+if (! defined('sugarEntry') || ! sugarEntry) {
+    die('Not A Valid Entry Point') ;
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (! defined ('sugarEntry') || ! sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,12 +37,12 @@ if (! defined ('sugarEntry') || ! sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
-require_once ('modules/DynamicFields/DynamicField.php') ;
+require_once('modules/DynamicFields/DynamicField.php') ;
 
 class StandardField extends DynamicField
 {
@@ -113,8 +114,8 @@ class StandardField extends DynamicField
         $this->loadBaseDef($field->name);
         $newDef = $field->get_field_def();
         
-        require_once ('modules/DynamicFields/FieldCases.php') ;
-        $this->baseField = get_widget ($field->type) ;
+        require_once('modules/DynamicFields/FieldCases.php') ;
+        $this->baseField = get_widget($field->type) ;
         foreach ($field->vardef_map as $property => $fmd_col) {
             if ($property == "action" || $property == "label_value" || $property == "label"
                 || ((substr($property, 0, 3) == 'ext' && strlen($property) == 4))
@@ -124,7 +125,8 @@ class StandardField extends DynamicField
                    
             // Bug 37043 - Avoid writing out vardef defintions that are the default value.
             if (isset($newDef[$property]) &&
-                ((!isset($currdef[$property]) && !$this->isDefaultValue($property, $newDef[$property], $this->baseField))
+                (
+                    (!isset($currdef[$property]) && !$this->isDefaultValue($property, $newDef[$property], $this->baseField))
                     || (isset($currdef[$property]) && $currdef[$property] != $newDef[$property])
                 )
             ) {

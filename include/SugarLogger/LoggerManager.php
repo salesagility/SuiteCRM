@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
  * Log management
@@ -56,24 +57,24 @@ class LoggerManager
     /**
      * @var null|LoggerManager
      */
-    private static $_instance = NULL;
+    private static $_instance = null;
 
     //these are the mappings for levels to different log types
     private static $_logMapping = array(
-		'default' => 'SugarLogger',
-	);
+        'default' => 'SugarLogger',
+    );
 
     //these are the log level mappings anything with a lower value than your current log level will be logged
     private static $_levelMapping = array(
-		'debug'      => 100,
-		'info'       => 70,
-		'warn'       => 50,
-		'deprecated' => 40,
-		'error'      => 25,
-		'fatal'      => 10,
-		'security'   => 5,
-		'off'        => 0,
-	);
+        'debug'      => 100,
+        'info'       => 70,
+        'warn'       => 50,
+        'deprecated' => 40,
+        'error'      => 25,
+        'fatal'      => 10,
+        'security'   => 5,
+        'off'        => 0,
+    );
 
     //only let the getLogger instantiate this object
     private function __construct()
@@ -95,9 +96,9 @@ class LoggerManager
      * @param string $message - also handles array as parameter, though that is deprecated.
      */
     public function __call(
- 	    $method,
- 	    $message
- 	    ) {
+        $method,
+        $message
+        ) {
         if (!isset(self::$_levelMapping[$method])) {
             $method = $this->_level;
         }
@@ -106,11 +107,12 @@ class LoggerManager
                 //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
                 || (!empty(self::$_levelMapping[$method])
                     && (
-                            (isset(self::$_levelMapping[$this->_level]) ? self::$_levelMapping[$this->_level] : null) >= 
-                            (isset(self::$_levelMapping[$method]) ? self::$_levelMapping[$method] : null)))) {
+                            (isset(self::$_levelMapping[$this->_level]) ? self::$_levelMapping[$this->_level] : null) >=
+                            (isset(self::$_levelMapping[$method]) ? self::$_levelMapping[$method] : null)
+                    ))) {
             //now we get the logger type this allows for having a file logger an email logger, a firebug logger or any other logger you wish you can set different levels to log differently
             $logger = (!empty(self::$_logMapping[$method])) ?
- 			    self::$_logMapping[$method] : self::$_logMapping['default'];
+                self::$_logMapping[$method] : self::$_logMapping['default'];
             //if we haven't instantiated that logger let's instantiate
             if (!isset(self::$_loggers[$logger])) {
                 self::$_loggers[$logger] = new $logger();
@@ -131,9 +133,9 @@ class LoggerManager
             $method = $this->_level;
         }
         if ($method == $this->_level
- 	    		//otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
- 	    		|| (!empty(self::$_levelMapping[$method])
- 	    				&& self::$_levelMapping[$this->_level] >= self::$_levelMapping[$method])) {
+                //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
+                || (!empty(self::$_levelMapping[$method])
+                        && self::$_levelMapping[$this->_level] >= self::$_levelMapping[$method])) {
             return true;
         }
         return false;
@@ -161,8 +163,8 @@ class LoggerManager
      * @param string $name name of logger level to set it to
      */
     public function setLevel(
- 	    $name
- 	    ) {
+        $name
+        ) {
         if (isset(self::$_levelMapping[$name])) {
             $this->_level = $name;
         }
@@ -188,9 +190,9 @@ class LoggerManager
      * @param string $logger name of logger class to use
      */
     public static function setLogger(
- 	    $level,
- 	    $logger
- 	    ) {
+        $level,
+        $logger
+        ) {
         self::$_logMapping[$level] = $logger;
     }
 

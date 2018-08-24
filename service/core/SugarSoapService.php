@@ -68,8 +68,8 @@ abstract class SugarSoapService extends SugarWebService
     abstract public function registerFunction($function, $input, $output);
     
     /**
-     * This is an abstract method. This implementation method should register all the complex type	 
-     * 
+     * This is an abstract method. This implementation method should register all the complex type
+     *
      * @param String $name - name of complex type
      * @param String $typeClass - (complexType|simpleType|attribute)
      * @param String $phpType - array or struct
@@ -79,7 +79,7 @@ abstract class SugarSoapService extends SugarWebService
      * @param Array $attrs - array(array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'xsd:string[]'))
      * @param String $arrayType - arrayType: namespace:name (xsd:string)
      * @access public
-     */    
+     */
     abstract public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs=array(), $arrayType='');
     
     /**

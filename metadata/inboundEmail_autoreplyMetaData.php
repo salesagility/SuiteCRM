@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,20 +37,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-$dictionary['InboundEmail_autoreply'] = array ('table' => 'inbound_email_autoreply',
-    'fields' => array (
-        'id' => array (
+$dictionary['InboundEmail_autoreply'] = array('table' => 'inbound_email_autoreply',
+    'fields' => array(
+        'id' => array(
             'name' => 'id',
             'vname' => 'LBL_ID',
             'type' => 'id',
             'required' => true,
             'reportable' => false,
         ),
-        'deleted' => array (
+        'deleted' => array(
             'name' => 'deleted',
             'vname' => 'LBL_DELETED',
             'type' => 'bool',
@@ -57,19 +58,19 @@ $dictionary['InboundEmail_autoreply'] = array ('table' => 'inbound_email_autorep
             'default' => '0',
             'reportable'=>false,
         ),
-        'date_entered' => array (
+        'date_entered' => array(
             'name' => 'date_entered',
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
         ),
-        'date_modified' => array (
+        'date_modified' => array(
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
         ),
-        'autoreplied_to' => array (
+        'autoreplied_to' => array(
             'name' => 'autoreplied_to',
             'vname' => 'LBL_AUTOREPLIED_TO',
             'type' => 'varchar',
@@ -87,7 +88,7 @@ $dictionary['InboundEmail_autoreply'] = array ('table' => 'inbound_email_autorep
             'reportable' => false,
         ),
     ),
-    'indices' => array (
+    'indices' => array(
         array(
             'name' => 'ie_autopk',
             'type' =>'primary',
@@ -103,6 +104,6 @@ $dictionary['InboundEmail_autoreply'] = array ('table' => 'inbound_email_autorep
             )
         ),
     ), /* end indices */
-    'relationships' => array (
+    'relationships' => array(
     ), /* end relationships */
 );

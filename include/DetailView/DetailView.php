@@ -2,9 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,10 +36,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -251,7 +255,7 @@ class DetailView extends ListView
         }
     }
 
-    public function processListNavigation($xtpl, $html_varName, $current_offset, $display_audit_link = false, $next_offset = null, $previous_offset = null, $row_count = null, $sugarbean = NULL, $subpanel_def = NULL, $col_count = 20)
+    public function processListNavigation($xtpl, $html_varName, $current_offset, $display_audit_link = false, $next_offset = null, $previous_offset = null, $row_count = null, $sugarbean = null, $subpanel_def = null, $col_count = 20)
     {
         global $export_module, $sugar_config, $current_user;
         //intialize audit_link
@@ -262,10 +266,10 @@ class DetailView extends ListView
         if ($display_audit_link && (!isset($sugar_config['disc_client']) || $sugar_config['disc_client'] == false)) {
             //Audit link
             $popup_request_data = array(
-		        'call_back_function' => 'set_return',
-		        'form_name' => 'EditView',
-		        'field_to_name_array' => array(),
-		    );
+                'call_back_function' => 'set_return',
+                'form_name' => 'EditView',
+                'field_to_name_array' => array(),
+            );
             $json = getJSONobj();
             $encoded_popup_request_data = $json->encode($popup_request_data);
             $audit_link = "<a href='javascript:void(0)' onclick='open_popup(\"Audit\", \"600\", \"400\", \"&record=".$_REQUEST['record']."&module_name=".$_REQUEST['module']."\", true, false, $encoded_popup_request_data);'>".$this->local_app_strings['LNK_VIEW_CHANGE_LOG']."</a>";
@@ -431,15 +435,14 @@ class DetailView extends ListView
      * and navigating from list to detail for the first time.
      * if false in this case: the user changes the list query (which generates a new stamp) and pastes a URL
      * from a previously navigated item.
- 	 */
+     */
     public function isRequestFromListView($html_varName)
     {
         $varList = $this->getLocalSessionVariable($html_varName, "FROM_LIST_VIEW");
         if (isset($_GET['stamp']) && isset($varList) && $varList == $_GET['stamp']) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -452,8 +455,7 @@ class DetailView extends ListView
     {
         if (isset($_SESSION[$name."2_".$value])) {
             return $_SESSION[$name."2_".$value];
-        } else {
-            return "";
         }
+        return "";
     }
 }

@@ -2,12 +2,13 @@
 if (!defined('sugarEntry')) {
     define('sugarEntry', true);
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry')) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry')) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -210,7 +211,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return array $view The view(s) requested.  Current supported types are edit, detail, list, and subpanel.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function get_module_layout($session, $a_module_names, $a_type, $a_view, $md5 = FALSE)
+    public function get_module_layout($session, $a_module_names, $a_type, $a_view, $md5 = false)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_layout');
 
@@ -259,7 +260,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
     public function get_module_layout_md5($session, $module_name, $type, $view)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_layout_md5');
-        $results = self::get_module_layout($session, $module_name, $type, $view, TRUE);
+        $results = self::get_module_layout($session, $module_name, $type, $view, true);
         return array('md5'=> $results);
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_module_layout_md5');
     }
@@ -288,13 +289,13 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
         $modules = array();
         $availModules = array_keys($_SESSION['avail_modules']); //ACL check already performed.
         switch ($filter) {
-    	    case 'default':
-    	        $modules = self::$helperObject->get_visible_modules($availModules);
-    	       break;
-    	    case 'all':
-    	    default:
-    	        $modules = $availModules;
-    	}
+            case 'default':
+                $modules = self::$helperObject->get_visible_modules($availModules);
+               break;
+            case 'all':
+            default:
+                $modules = $availModules;
+        }
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_available_modules');
         return array('modules'=> $modules);
@@ -420,7 +421,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
             $search_string = trim(DBManagerFactory::getInstance()->quote(securexss(from_html(clean_string($search_string, 'UNIFIED_SEARCH')))));
             foreach ($modules_to_search as $name => $beanName) {
                 $where_clauses_array = array();
-                $unifiedSearchFields = array () ;
+                $unifiedSearchFields = array() ;
                 foreach ($unified_search_modules[$name]['fields'] as $field=>$def) {
                     $unifiedSearchFields[$name] [ $field ] = $def ;
                     $unifiedSearchFields[$name] [ $field ]['value'] = $search_string;
@@ -430,8 +431,8 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                 $seed = new $beanName();
                 require_once 'include/SearchForm/SearchForm2.php' ;
                 if ($beanName == "User"
-    			    || $beanName == "ProjectTask"
-    			    ) {
+                    || $beanName == "ProjectTask"
+                    ) {
                     if (!self::$helperObject->check_modules_access($current_user, $seed->module_dir, 'read')) {
                         continue;
                     } // if
@@ -441,16 +442,16 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                 }
 
                 if ($beanName != "User"
-    			    && $beanName != "ProjectTask"
-    			    ) {
-                    $searchForm = new SearchForm ($seed, $name) ;
+                    && $beanName != "ProjectTask"
+                    ) {
+                    $searchForm = new SearchForm($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
-                    $searchForm = new SearchForm ($seed, $name) ;
+                    $searchForm = new SearchForm($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                    $searchForm->setup(array($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     $emailQuery = false;
 
@@ -531,7 +532,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                     } // if
                 } // else
 
-    			$GLOBALS['log']->info('SugarWebServiceImpl->search_by_module - query = ' . $main_query);
+                $GLOBALS['log']->info('SugarWebServiceImpl->search_by_module - query = ' . $main_query);
                 if ($max_results < -1) {
                     $result = $seed->db->query($main_query);
                 } else {
@@ -555,7 +556,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                             $nameValueArray[$field] = self::$helperObject->get_name_value($field, $row[$field]);
                         } // if
                     } // foreach
-    				$rowArray[] = $nameValueArray;
+                    $rowArray[] = $nameValueArray;
                 } // while
                 $output_list[] = array('name' => $name, 'records' => $rowArray);
             } // foreach

@@ -8,7 +8,7 @@ class smpl_Invoice_Sample
     {
         return 'AOS_Invoices';
     }
-		
+        
     public function getBody()
     {
         global $locale;

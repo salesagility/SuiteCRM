@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,11 +37,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/********************************************************************************* 
 
  * Description:
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
@@ -206,9 +207,8 @@ eoq;
         foreach ($errors as $error) {
             if (is_array($error)) { // manual diff files
                 continue;
-            } else {
-                $out .= "{$error}<br />";
             }
+            $out .= "{$error}<br />";
         }
         $out .= "</span><br />";
     }
@@ -234,36 +234,36 @@ eoq;
     $_SESSION['target_db_version']  = $manifest['version'];
     $_SESSION['upgrade_from_flavor']  = $manifest['name'];
     // aw: BUG 10161: check flavor conversion sql files
-	$sqlFile = ''; // cn: bug
-	if (version_compare($sugar_db_version, $manifest['version'], '=')) {
-	    $type = $db->getScriptName();
+    $sqlFile = ''; // cn: bug
+    if (version_compare($sugar_db_version, $manifest['version'], '=')) {
+        $type = $db->getScriptName();
 
-	    switch ($manifest['name']) {
-			case 'SugarCE to SugarPro':
-				$sqlFile = $origVersion . '_ce_to_pro_' . $type;
-				break;
-			case 'SugarCE to SugarEnt':
-				$sqlFile = $origVersion . '_ce_to_ent_' . $type;
-				break;
-			case 'SugarCE to SugarCorp':
-				$sqlFile = $origVersion . '_ce_to_corp_' . $db->dbType;
-				break;
-			case 'SugarCE to SugarUlt':
-				$sqlFile = $origVersion . '_ce_to_ult_' . $db->dbType;
-				break;
-			case 'SugarPro to SugarEnt':
-				$sqlFile = $origVersion . '_pro_to_ent_' . $type;
-				break;
-			default:
-				break;
-		}
-	} else {
-	    $type = $db->dbType;
-	    if ($type == 'oci8') {
-	        $type = 'oracle';
-	    }
-	    $sqlFile = $origVersion . '_to_' . $destVersion . '_' . $type;
-	}
+        switch ($manifest['name']) {
+            case 'SugarCE to SugarPro':
+                $sqlFile = $origVersion . '_ce_to_pro_' . $type;
+                break;
+            case 'SugarCE to SugarEnt':
+                $sqlFile = $origVersion . '_ce_to_ent_' . $type;
+                break;
+            case 'SugarCE to SugarCorp':
+                $sqlFile = $origVersion . '_ce_to_corp_' . $db->dbType;
+                break;
+            case 'SugarCE to SugarUlt':
+                $sqlFile = $origVersion . '_ce_to_ult_' . $db->dbType;
+                break;
+            case 'SugarPro to SugarEnt':
+                $sqlFile = $origVersion . '_pro_to_ent_' . $type;
+                break;
+            default:
+                break;
+        }
+    } else {
+        $type = $db->dbType;
+        if ($type == 'oci8') {
+            $type = 'oracle';
+        }
+        $sqlFile = $origVersion . '_to_' . $destVersion . '_' . $type;
+    }
 
     $newTables = array();
 

@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -81,8 +82,8 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
         $focus->retrieve($_REQUEST[$prefix.'record']);
     }
 
-    if (!empty($_POST['assigned_user_id']) && 
-        ($focus->assigned_user_id != $_POST['assigned_user_id']) && 
+    if (!empty($_POST['assigned_user_id']) &&
+        ($focus->assigned_user_id != $_POST['assigned_user_id']) &&
         ($_POST['assigned_user_id'] != $current_user->id)) {
         $GLOBALS['check_notify'] = true;
     }
@@ -128,18 +129,18 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
         				if($_POST[$prefix.$field][0] === '' && !empty($_POST[$prefix.$field][1]) ) {
         					unset($_POST[$prefix.$field][0]);
         				}
-        				$_POST[$prefix.$field] = encodeMultienumValue($_POST[$prefix.$field]);	
+        				$_POST[$prefix.$field] = encodeMultienumValue($_POST[$prefix.$field]);
         			}
-        
+
         			$focus->$field = $_POST[$prefix.$field];
-        			/* 
+        			/*
         			 * overrides the passed value for booleans.
         			 * this will be fully deprecated when the change to binary booleans is complete.
         			 /
         			if(isset($focus->field_defs[$prefix.$field]) && $focus->field_defs[$prefix.$field]['type'] == 'bool' && isset($focus->field_defs[$prefix.$field]['options'])) {
         				$opts = explode("|", $focus->field_defs[$prefix.$field]['options']);
         				$bool = $_POST[$prefix.$field];
-        
+
         				if(is_int($bool) || ($bool === "0" || $bool === "1" || $bool === "2")) {
         					// 1=on, 2=off
         					$selection = ($_POST[$prefix.$field] == "0") ? 1 : 0;
@@ -257,8 +258,8 @@ function buildRedirectURL($return_id='', $return_module='')
         
        //if we are doing a "Close and Create New"
         if (isCloseAndCreateNewPressed()) {
-            $return_action = "EditView";    
-            $isDuplicate = "true";        
+            $return_action = "EditView";
+            $isDuplicate = "true";
             $status = "";
             
             // Meeting Integration
@@ -266,19 +267,19 @@ function buildRedirectURL($return_id='', $return_module='')
                 $additionalFlags = array('meetingIntegrationShowForm' => '1');
             }
             // END Meeting Integration
-        } 
+        }
         // if we create a new record "Save", we want to redirect to the DetailView
-        elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == "Save" 
+        elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == "Save"
             && $_REQUEST['return_module'] != 'Activities'
-            && $_REQUEST['return_module'] != 'Home' 
-            && $_REQUEST['return_module'] != 'Forecasts' 
+            && $_REQUEST['return_module'] != 'Home'
+            && $_REQUEST['return_module'] != 'Forecasts'
             && $_REQUEST['return_module'] != 'Calendar'
             && $_REQUEST['return_module'] != 'MailMerge'
             ) {
             $return_action = 'DetailView';
         } elseif ($_REQUEST['return_module'] == 'Activities' || $_REQUEST['return_module'] == 'Calendar') {
             $return_module = $_REQUEST['module'];
-            $return_action = $_REQUEST['return_action']; 
+            $return_action = $_REQUEST['return_action'];
         // wp: return action needs to be set for one-click close in task list
         } else {
             // if we "Cancel", we go back to the list view.
@@ -353,9 +354,9 @@ function getLikeForEachWord($fieldname, $value, $minsize=4)
 
 function isCloseAndCreateNewPressed()
 {
-    return isset($_REQUEST['action']) && 
+    return isset($_REQUEST['action']) &&
            $_REQUEST['action'] == "Save" &&
-           isset($_REQUEST['isSaveAndNew']) && 
+           isset($_REQUEST['isSaveAndNew']) &&
            $_REQUEST['isSaveAndNew'] == 'true';
 }
 

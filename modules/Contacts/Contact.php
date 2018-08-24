@@ -1,5 +1,6 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 /*********************************************************************************
@@ -142,7 +143,7 @@ class Contact extends Person implements EmailInterface
     public $importable = true;
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array(
+    public $additional_column_fields = array(
         'bug_id',
         'assigned_user_name',
         'account_name',
@@ -156,7 +157,7 @@ class Contact extends Person implements EmailInterface
         'email_id'
     );
 
-    public $relationship_fields = Array(
+    public $relationship_fields = array(
         'account_id' => 'accounts',
         'bug_id' => 'bugs',
         'call_id' => 'calls',
@@ -211,8 +212,11 @@ class Contact extends Person implements EmailInterface
         $is_owner = false;
         //MFH BUG 18281; JChi #15255
         $is_owner = !empty($this->assigned_user_id) && $this->assigned_user_id == $GLOBALS['current_user']->id;
-        if (!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess('Accounts', 'view',
-                $is_owner)
+        if (!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess(
+            'Accounts',
+            'view',
+                $is_owner
+        )
         ) {
             $array_assign['ACCOUNT'] = 'a';
         } else {
@@ -236,19 +240,38 @@ class Contact extends Person implements EmailInterface
     ) {
         //if this is from "contact address popup" action, then process popup list query
         if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'ContactAddressPopup') {
-            return $this->address_popup_create_new_list_query($order_by, $where, $filter, $params, $show_deleted,
-                $join_type, $return_array, $parentbean, $singleSelect, $ifListForExport);
-        } else {
-            //any other action goes to parent function in sugarbean
-            if (strpos($order_by, 'sync_contact') !== false) {
-                //we have found that the user is ordering by the sync_contact field, it would be troublesome to sort by this field
-                //and perhaps a performance issue, so just remove it
-                $order_by = '';
-            }
-
-            return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
-                $return_array, $parentbean, $singleSelect, $ifListForExport);
+            return $this->address_popup_create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect,
+                $ifListForExport
+            );
         }
+        //any other action goes to parent function in sugarbean
+        if (strpos($order_by, 'sync_contact') !== false) {
+            //we have found that the user is ordering by the sync_contact field, it would be troublesome to sort by this field
+            //and perhaps a performance issue, so just remove it
+            $order_by = '';
+        }
+
+        return parent::create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect,
+                $ifListForExport
+            );
     }
 
 
@@ -265,8 +288,17 @@ class Contact extends Person implements EmailInterface
     ) {
         //if this is any action that is not the contact address popup, then go to parent function in sugarbean
         if (isset($_REQUEST['action']) && $_REQUEST['action'] !== 'ContactAddressPopup') {
-            return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
-                $return_array, $parentbean, $singleSelect);
+            return parent::create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect
+            );
         }
 
         $custom_join = $this->getCustomJoin();
@@ -423,8 +455,15 @@ class Contact extends Person implements EmailInterface
             if (null === $locale || !is_object($locale) || !method_exists($locale, 'getLocaleFormattedName')) {
                 $GLOBALS['log']->fatal('Call to a member function getLocaleFormattedName() on ' . gettype($locale));
             } else {
-                $this->report_to_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name'], '', '',
-                    '', null, true);
+                $this->report_to_name = $locale->getLocaleFormattedName(
+                    $row['first_name'],
+                    $row['last_name'],
+                    '',
+                    '',
+                    '',
+                    null,
+                    true
+                );
             }
         } else {
             $this->account_name = '';
@@ -504,7 +543,7 @@ class Contact extends Person implements EmailInterface
      */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
 
         array_push($where_clauses, "contacts.last_name like '$the_query_string%'");

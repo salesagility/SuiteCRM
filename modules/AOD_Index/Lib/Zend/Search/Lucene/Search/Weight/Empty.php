@@ -54,4 +54,3 @@ class Zend_Search_Lucene_Search_Weight_Empty extends Zend_Search_Lucene_Search_W
     {
     }
 }
-

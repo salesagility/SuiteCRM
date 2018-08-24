@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * Constants of OneLogin PHP Toolkit
  *

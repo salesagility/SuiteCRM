@@ -140,9 +140,11 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
 
         $metaNodes = $xpath->query('/html/head/meta[@name]');
         foreach ($metaNodes as $metaNode) {
-            $this->addField(Zend_Search_Lucene_Field::Text($metaNode->getAttribute('name'),
+            $this->addField(Zend_Search_Lucene_Field::Text(
+                $metaNode->getAttribute('name'),
                                                            $metaNode->getAttribute('content'),
-                                                           'UTF-8'));
+                                                           'UTF-8'
+            ));
         }
 
         $docBody = '';
@@ -332,8 +334,10 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
 
             for ($count = 0; $count < $highlightedWordNodeSet->length; $count++) {
                 $nodeToImport = $highlightedWordNodeSet->item($count);
-                $node->parentNode->insertBefore($this->_doc->importNode($nodeToImport, true /* deep copy */),
-                                                $matchedWordNode);
+                $node->parentNode->insertBefore(
+                    $this->_doc->importNode($nodeToImport, true /* deep copy */),
+                                                $matchedWordNode
+                );
             }
 
             $node->parentNode->removeChild($matchedWordNode);
@@ -477,4 +481,3 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         return implode($outputFragments);
     }
 }
-

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 require_once('modules/DynamicFields/FieldViewer.php');
@@ -43,16 +44,16 @@ require_once('modules/DynamicFields/FieldViewer.php');
 class ViewModulefield extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   translate('LBL_MODULE_NAME', 'Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME', 'Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     public function display()
@@ -114,26 +115,26 @@ class ViewModulefield extends SugarView
             'DROP','OPENROWSET','VIEW','DUMMY','OPENXML','WAITFOR','DUMP','OPTION','WHEN','ELSE','OR','WHERE',
             'END','ORDER','WHILE','ERRLVL','OUTER','WITH','ESCAPE','OVER','WRITETEXT',
             //Mysql Keywords from http://dev.mysql.com/doc/refman/5.0/en/reserved-words.html (those not in MSSQL's list)
-			'ANALYZE', 'ASENSITIVE', 'BEFORE', 'BIGINT', 'BINARY', 'BOTH', 'CALL', 'CHANGE', 'CHARACTER',
-			'CONDITION', 'DATABASES', 'DAY_HOUR', 'DAY_MICROSECOND', 'DAY_MINUTE', 'DAY_SECOND', 'DEC', 'DECIMAL', 'DELAYED',
-			'DESCRIBE', 'DETERMINISTIC', 'DISTINCTROW', 'DIV', 'DUAL', 'EACH', 'ELSEIF', 'ENCLOSED', 'ESCAPED', 'EXPLAIN',
-			'FALSE', 'FLOAT', 'FLOAT4', 'FLOAT8', 'FORCE', 'FULLTEXT', 'HIGH_PRIORITY', 'HOUR_MICROSECOND', 'HOUR_MINUTE',
-			'HOUR_SECOND', 'IGNORE', 'INFILE', 'INOUT', 'INSENSITIVE', 'INT', 'INT1', 'INT2', 'INT3', 'INT4', 'INT8',
-			'INTEGER', 'ITERATE', 'KEYS', 'LEADING', 'LEAVE', 'LIMIT', 'LINES', 'LOCALTIME', 'LOCALTIMESTAMP', 'LOCK',
-			'LONGBLOB', 'LONGTEXT', 'LOOP', 'LOW_PRIORITY', 'MATCH', 'MEDIUMBLOB', 'MEDIUMINT', 'MEDIUMTEXT', 'MIDDLEINT',
-			'MINUTE_MICROSECOND', 'MINUTE_SECOND', 'MOD', 'MODIFIES', 'NATURAL', 'NO_WRITE_TO_BINLOG', 'NUMERIC', 'OPTIMIZE',
-			'OPTIONALLY', 'OUT', 'OUTFILE', 'PURGE', 'READS', 'REAL', 'REGEXP', 'RELEASE', 'RENAME', 'REPEAT', 'REPLACE',
-			'REQUIRE', 'RLIKE', 'SCHEMAS', 'SECOND_MICROSECOND', 'SENSITIVE', 'SEPARATOR', 'SHOW', 'SMALLINT', 'SONAME',
-			'SPATIAL', 'SPECIFIC', 'SQL', 'SQLEXCEPTION', 'SQLSTATE', 'SQLWARNING', 'SQL_BIG_RESULT', 'SQL_CALC_FOUND_ROWS',
-			'SQL_SMALL_RESULT', 'SSL', 'STARTING', 'STRAIGHT_JOIN', 'TERMINATED', 'TINYBLOB', 'TINYINT', 'TINYTEXT',
-			'TRAILING', 'TRUE', 'UNDO', 'UNLOCK', 'UNSIGNED', 'USAGE', 'USING', 'UTC_DATE', 'UTC_TIME', 'UTC_TIMESTAMP',
-			'VARBINARY', 'VARCHARACTER', 'WRITE', 'XOR', 'YEAR_MONTH', 'ZEROFILL', 'CONNECTION', 'LABEL', 'UPGRADE',
-			//Oracle datatypes
+            'ANALYZE', 'ASENSITIVE', 'BEFORE', 'BIGINT', 'BINARY', 'BOTH', 'CALL', 'CHANGE', 'CHARACTER',
+            'CONDITION', 'DATABASES', 'DAY_HOUR', 'DAY_MICROSECOND', 'DAY_MINUTE', 'DAY_SECOND', 'DEC', 'DECIMAL', 'DELAYED',
+            'DESCRIBE', 'DETERMINISTIC', 'DISTINCTROW', 'DIV', 'DUAL', 'EACH', 'ELSEIF', 'ENCLOSED', 'ESCAPED', 'EXPLAIN',
+            'FALSE', 'FLOAT', 'FLOAT4', 'FLOAT8', 'FORCE', 'FULLTEXT', 'HIGH_PRIORITY', 'HOUR_MICROSECOND', 'HOUR_MINUTE',
+            'HOUR_SECOND', 'IGNORE', 'INFILE', 'INOUT', 'INSENSITIVE', 'INT', 'INT1', 'INT2', 'INT3', 'INT4', 'INT8',
+            'INTEGER', 'ITERATE', 'KEYS', 'LEADING', 'LEAVE', 'LIMIT', 'LINES', 'LOCALTIME', 'LOCALTIMESTAMP', 'LOCK',
+            'LONGBLOB', 'LONGTEXT', 'LOOP', 'LOW_PRIORITY', 'MATCH', 'MEDIUMBLOB', 'MEDIUMINT', 'MEDIUMTEXT', 'MIDDLEINT',
+            'MINUTE_MICROSECOND', 'MINUTE_SECOND', 'MOD', 'MODIFIES', 'NATURAL', 'NO_WRITE_TO_BINLOG', 'NUMERIC', 'OPTIMIZE',
+            'OPTIONALLY', 'OUT', 'OUTFILE', 'PURGE', 'READS', 'REAL', 'REGEXP', 'RELEASE', 'RENAME', 'REPEAT', 'REPLACE',
+            'REQUIRE', 'RLIKE', 'SCHEMAS', 'SECOND_MICROSECOND', 'SENSITIVE', 'SEPARATOR', 'SHOW', 'SMALLINT', 'SONAME',
+            'SPATIAL', 'SPECIFIC', 'SQL', 'SQLEXCEPTION', 'SQLSTATE', 'SQLWARNING', 'SQL_BIG_RESULT', 'SQL_CALC_FOUND_ROWS',
+            'SQL_SMALL_RESULT', 'SSL', 'STARTING', 'STRAIGHT_JOIN', 'TERMINATED', 'TINYBLOB', 'TINYINT', 'TINYTEXT',
+            'TRAILING', 'TRUE', 'UNDO', 'UNLOCK', 'UNSIGNED', 'USAGE', 'USING', 'UTC_DATE', 'UTC_TIME', 'UTC_TIMESTAMP',
+            'VARBINARY', 'VARCHARACTER', 'WRITE', 'XOR', 'YEAR_MONTH', 'ZEROFILL', 'CONNECTION', 'LABEL', 'UPGRADE',
+            //Oracle datatypes
             'DATE','VARCHAR','VARCHAR2','NVARCHAR2','CHAR','NCHAR','NUMBER','PLS_INTEGER','BINARY_INTEGER','LONG','TIMESTAMP',
-			'INTERVAL','RAW','ROWID','UROWID','MLSLABEL','CLOB','NCLOB','BLOB','BFILE','XMLTYPE',
-			//SugarCRM reserved
-        	'ID', 'ID_C', 'PARENT_NAME', 'PARENT_ID',
-			);
+            'INTERVAL','RAW','ROWID','UROWID','MLSLABEL','CLOB','NCLOB','BLOB','BFILE','XMLTYPE',
+            //SugarCRM reserved
+            'ID', 'ID_C', 'PARENT_NAME', 'PARENT_ID',
+            );
 
 
         //C.L. - Add support to mark related module id columns as reserved keywords
@@ -160,7 +161,7 @@ class ViewModulefield extends SugarView
                 $module->mbvardefs = new stdClass();
             }
             $module->mbvardefs->vardefs =  $dictionary[$objectName];
-			
+            
             $module->name = $moduleName;
             if (!$ac) {
                 $ac = new AjaxCompose();
@@ -185,8 +186,8 @@ class ViewModulefield extends SugarView
                 $vardef['type'] = 'datetimecombo';
             }
             
-            require_once ('modules/DynamicFields/FieldCases.php') ;
-            $tf = get_widget (empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
+            require_once('modules/DynamicFields/FieldCases.php') ;
+            $tf = get_widget(empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
             $tf->module = $module;
             $tf->populateFromRow($vardef);
             $vardef = array_merge($vardef, $tf->get_field_def());
@@ -205,14 +206,14 @@ class ViewModulefield extends SugarView
                 if (!empty($def['type']) && $def['type'] == "enum" && $field != $vardef['name']) {
                     if (!empty($def['studio']) && $def['studio'] == "false") {
                         continue;
-                    } //bug51866 
+                    } //bug51866
                     $enumFields[$field] = translate($def['vname'], $moduleName);
                     if (substr($enumFields[$field], -1) == ":") {
                         $enumFields[$field] = substr($enumFields[$field], 0, strlen($enumFields[$field]) - 1);
                     }
                 }
             }
-            $fv->ss->assign('allowAutoInc', $allowAutoInc);   
+            $fv->ss->assign('allowAutoInc', $allowAutoInc);
 
             $GLOBALS['log']->warn('view.modulefield: hidelevel '.$fv->ss->get_template_vars('hideLevel')." ".print_r($vardef, true));
             if (!empty($vardef['vname'])) {
@@ -255,13 +256,13 @@ class ViewModulefield extends SugarView
                 }
             }
 
-            require_once ('modules/DynamicFields/FieldCases.php') ;
-            $tf = get_widget (empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
+            require_once('modules/DynamicFields/FieldCases.php') ;
+            $tf = get_widget(empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
             $tf->module = $module;
             $tf->populateFromRow($vardef);
             $vardef = array_merge($vardef, $tf->get_field_def());
-			
-			
+            
+            
 
             $fv->ss->assign('module', $module);
             $fv->ss->assign('package', $package);
@@ -304,7 +305,7 @@ class ViewModulefield extends SugarView
                 $vardef[$toEscape] = htmlentities($vardef[$toEscape], ENT_QUOTES, 'UTF-8');
             }
         }
-		
+        
         if ((!empty($vardef['studio']) && is_array($vardef['studio']) && !empty($vardef['studio']['no_duplicate']) && $vardef['studio']['no_duplicate'] == true)
            || (strcmp($field_name, "name") == 0) || (isset($vardef['type']) && $vardef['type'] == 'name')) { // bug #35767, do not allow cloning of name field
             $fv->ss->assign('no_duplicate', true);
@@ -323,13 +324,13 @@ class ViewModulefield extends SugarView
         $fv->ss->assign('importable_options', $GLOBALS['app_list_strings']['custom_fields_importable_dom']);
         $fv->ss->assign('duplicate_merge_options', $GLOBALS['app_list_strings']['custom_fields_merge_dup_dom']);
 
-        $triggers = array () ;
-        $existing_field_names = array () ;
+        $triggers = array() ;
+        $existing_field_names = array() ;
         foreach ($module->mbvardefs->vardefs['fields'] as $field) {
             if ($field [ 'type' ] == 'enum' || $field [ 'type'] == 'multienum') {
                 $triggers [] = $field [ 'name' ] ;
             }
-        	
+            
             if (!isset($field['source']) || $field['source'] != 'non-db') {
                 if (preg_match('/^(.*?)(_c)?$/', $field['name'], $matches)) {
                     $existing_field_names [] = strtoupper($matches[1]);

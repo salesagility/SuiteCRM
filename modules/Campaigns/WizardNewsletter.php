@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -109,7 +110,7 @@ $ss->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
 require_once('include/QuickSearchDefaults.php');
 $qsd = QuickSearchDefaults::getQuickSearchDefaults();
 $qsd->setFormName('wizform');
-$sqs_objects = array('parent_name' => $qsd->getQSParent(), 
+$sqs_objects = array('parent_name' => $qsd->getQSParent(),
                     'assigned_user_name' => $qsd->getQSUser(),
                     //'prospect_list_name' => getProspectListQSObjects(),
                     'test_name' => getProspectListQSObjects('prospect_list_type_test', 'test_name', 'wiz_step3_test_name_id'),
@@ -190,7 +191,7 @@ if (empty($focus->assigned_user_id) && empty($focus->id)) {
 if (empty($focus->assigned_name) && empty($focus->id)) {
     $focus->assigned_user_name = $current_user->user_name;
 }
-$ss->assign("ASSIGNED_USER_OPTIONS", get_select_options_with_id(get_user_array(TRUE, "Active", $focus->assigned_user_id), $focus->assigned_user_id));
+$ss->assign("ASSIGNED_USER_OPTIONS", get_select_options_with_id(get_user_array(true, "Active", $focus->assigned_user_id), $focus->assigned_user_id));
 //$ss->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
 
 $focus->list_view_parse_additional_sections($ss);
@@ -283,8 +284,8 @@ if ($campaign_type == 'general') {
                     $type_option_html .="<option value='$optionKey' >$optionName</option>";
                 }
             } else {
-                //since the campaign type is empty, then select first one                
-                $type_option_html .="<option value='$optionKey' selected>$optionName</option>";    
+                //since the campaign type is empty, then select first one
+                $type_option_html .="<option value='$optionKey' selected>$optionName</option>";
                 //mark as selected for next time
                 $selected=true;
             }
@@ -318,7 +319,7 @@ if ($campaign_type == 'general') {
 $focus->load_relationship('tracked_urls');
 
 $trkr_lists = $focus->tracked_urls->get();
-$trkr_html ='';    
+$trkr_html ='';
 $ss->assign('TRACKER_COUNT', count($trkr_lists));
 if (count($trkr_lists)>0) {
     global $odd_bg, $even_bg, $hilite_bg;
@@ -361,7 +362,7 @@ if (count($trkr_lists)>0) {
 /************** SUBSCRIPTION UI DIV Stuff ***************/
 //fill in popups for target list options
     $popup_request_data = array(
-        'call_back_function' => 'set_return', 
+        'call_back_function' => 'set_return',
         'form_name' => 'wizform',
         'field_to_name_array' => array(
             'id' => 'wiz_step3_subscription_name_id',
@@ -375,7 +376,7 @@ $encoded_newsletter_popup_request_data = $json->encode($popup_request_data);
 $ss->assign('encoded_subscription_popup_request_data', $encoded_newsletter_popup_request_data);
 
     $popup_request_data = array(
-        'call_back_function' => 'set_return', 
+        'call_back_function' => 'set_return',
         'form_name' => 'wizform',
         'field_to_name_array' => array(
             'id' => 'wiz_step3_unsubscription_name_id',
@@ -404,7 +405,7 @@ $ss->assign('encoded_test_popup_request_data', $encoded_newsletter_popup_request
 
 
     $popup_request_data = array(
-        'call_back_function' => 'set_return_prospect_list', 
+        'call_back_function' => 'set_return_prospect_list',
         'form_name' => 'wizform',
         'field_to_name_array' => array(
             'id' => 'popup_target_list_id',
@@ -470,13 +471,13 @@ $focus->load_relationship('prospectlists');
 $prospect_lists = $focus->prospectlists->get();
 
 if ((isset($_REQUEST['wizardtype']) && $_REQUEST['wizardtype'] ==1) || ($focus->campaign_type=='NewsLetter')) {
-    //this is a newsletter type campaign, fill in subscription values   
+    //this is a newsletter type campaign, fill in subscription values
 
     //if prospect lists are returned, then iterate through and populate form values
     if (count($prospect_lists)>0) {
         foreach ($prospect_lists as $pl_id) {
             //retrieve prospect list
-            $pl = new ProspectList();   
+            $pl = new ProspectList();
             $pl->retrieve($pl_id);
 
             if (isset($pl->list_type) && !empty($pl->list_type)) {
@@ -543,7 +544,7 @@ if (!empty($focus->id)) {
         $summ_url = "<a  href='index.php?action=WizardHome&module=Campaigns";
         $summ_url .= "&return_id=".$focus->id."&record=".$focus->id;
         $summ_url .= "'> ". $mod_strings['LBL_NAVIGATION_MENU_SUMMARY']."</a>";
-    } 
+    }
    
 
 
@@ -561,11 +562,11 @@ $script_to_call ='';
             }
             $script_to_call .='   direct(' . $directStep . ');';
         }
-    } 
+    }
     $ss->assign("HILITE_ALL", $script_to_call);
 
 
-//  this is the wizard control script that resides in page    
+//  this is the wizard control script that resides in page
  $divScript = <<<EOQ
 
  <script type="text/javascript" language="javascript">
@@ -640,7 +641,7 @@ if ($campaign_type == 'general') {
 $ss->assign('TOTAL_STEPS', count($steps));
 $sshtml = create_wiz_step_divs($steps, $ss);
 $ss->assign('STEPS', $sshtml);
-     	   	
+             
 
 /**************************** FINAL END OF PAGE UI Stuff *******************/
 

@@ -3,12 +3,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -19,7 +20,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -37,16 +38,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description: class for sanitizing field values
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
- ********************************************************************************/
+ */
 require_once('modules/Import/sources/ImportFile.php');
 
 class ImportFieldSanitize
@@ -106,7 +107,7 @@ class ImportFieldSanitize
         }
         
         $field = $sfh::getSugarField(ucfirst($name));
-        if ($field instanceOf SugarFieldBase) {
+        if ($field instanceof SugarFieldBase) {
             $value = $field->importSanitize($value, $vardef, $focus, $this);
         }
         
@@ -139,7 +140,10 @@ class ImportFieldSanitize
         }
 
         $value = $timedate->swap_formats(
-            $value, $format, $timedate->get_date_format());
+            $value,
+            $format,
+            $timedate->get_date_format()
+        );
 
         return $value;
     }
@@ -240,11 +244,22 @@ class ImportFieldSanitize
         }
 
         $value = $timedate->swap_formats(
-            $value, $format, $timedate->get_time_format());
+            $value,
+            $format,
+            $timedate->get_time_format()
+        );
         $value = $timedate->handle_offset(
-            $value, $timedate->get_time_format(), false, $GLOBALS['current_user'], $this->timezone);
+            $value,
+            $timedate->get_time_format(),
+            false,
+            $GLOBALS['current_user'],
+            $this->timezone
+        );
         $value = $timedate->handle_offset(
-            $value, $timedate->get_time_format(), true);
+            $value,
+            $timedate->get_time_format(),
+            true
+        );
 
         return $value;
     }
@@ -280,37 +295,43 @@ class ImportFieldSanitize
         if (isset($reg['positions']['h']) && (
                 !is_numeric($dateparts[$reg['positions']['h']])
                 || $dateparts[$reg['positions']['h']] < 1
-                || $dateparts[$reg['positions']['h']] > 12)) {
+                || $dateparts[$reg['positions']['h']] > 12
+        )) {
             return false;
         }
         if (isset($reg['positions']['H']) && (
                 !is_numeric($dateparts[$reg['positions']['H']])
                 || $dateparts[$reg['positions']['H']] < 0
-                || $dateparts[$reg['positions']['H']] > 23)) {
+                || $dateparts[$reg['positions']['H']] > 23
+        )) {
             return false;
         }
         if (isset($reg['positions']['i']) && (
                 !is_numeric($dateparts[$reg['positions']['i']])
                 || $dateparts[$reg['positions']['i']] < 0
-                || $dateparts[$reg['positions']['i']] > 59)) {
+                || $dateparts[$reg['positions']['i']] > 59
+        )) {
             return false;
         }
         if (isset($reg['positions']['s']) && (
                 !is_numeric($dateparts[$reg['positions']['s']])
                 || $dateparts[$reg['positions']['s']] < 0
-                || $dateparts[$reg['positions']['s']] > 59)) {
+                || $dateparts[$reg['positions']['s']] > 59
+        )) {
             return false;
         }
         if (isset($reg['positions']['d']) && (
                 !is_numeric($dateparts[$reg['positions']['d']])
                 || $dateparts[$reg['positions']['d']] < 1
-                || $dateparts[$reg['positions']['d']] > 31)) {
+                || $dateparts[$reg['positions']['d']] > 31
+        )) {
             return false;
         }
         if (isset($reg['positions']['m']) && (
                 !is_numeric($dateparts[$reg['positions']['m']])
                 || $dateparts[$reg['positions']['m']] < 1
-                || $dateparts[$reg['positions']['m']] > 12)) {
+                || $dateparts[$reg['positions']['m']] > 12
+        )) {
             return false;
         }
         if (isset($reg['positions']['Y']) &&

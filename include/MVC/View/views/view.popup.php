@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 include_once __DIR__ . '/../../../../include/utils/layout_utils.php';
 
@@ -79,7 +80,7 @@ class ViewPopup extends SugarView
     {
         global $popupMeta, $mod_strings;
 
-        if (($this->bean instanceOf SugarBean) && !$this->bean->ACLAccess('list')) {
+        if (($this->bean instanceof SugarBean) && !$this->bean->ACLAccess('list')) {
             ACLController::displayNoAccess();
             sugar_cleanup(true);
         }
@@ -138,7 +139,7 @@ class ViewPopup extends SugarView
                 $current_query_by_page = json_decode(html_entity_decode($_REQUEST['current_query_by_page']), true);
                 foreach ($current_query_by_page as $search_key=>$search_value) {
                     if ($search_key != $this->module.'2_'.strtoupper($this->bean->object_name).'_offset'
-                    	&& !in_array($search_key, $blockVariables)) {
+                        && !in_array($search_key, $blockVariables)) {
                         if (!is_array($search_value)) {
                             $_REQUEST[$search_key] = securexss($search_value);
                         } else {
@@ -222,9 +223,9 @@ class ViewPopup extends SugarView
             echo $popup->display();
         } else {
             if (file_exists('modules/' . $this->module . '/Popup_picker.php')) {
-                require_once('modules/' . $this->module . '/Popup_picker.php');
+                require_once(get_custom_file_if_exists('modules/' . $this->module . '/Popup_picker.php'));
             } else {
-                require_once('include/Popups/Popup_picker.php');
+                require_once(get_custom_file_if_exists('include/Popups/Popup_picker.php'));
             }
 
             $popup = new Popup_Picker();

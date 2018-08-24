@@ -13,7 +13,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -522,16 +522,15 @@ class nusoap_base
                 $xml = "<$name$xmlns$atts/>";
                 $this->debug("serialize_val returning $xml");
                 return $xml;
-            } else {
-                if (isset($type) && isset($type_prefix)) {
-                    $type_str = " xsi:type=\"$type_prefix:$type\"";
-                } else {
-                    $type_str = '';
-                }
-                $xml = "<$name$xmlns$type_str$atts xsi:nil=\"true\"/>";
-                $this->debug("serialize_val returning $xml");
-                return $xml;
             }
+            if (isset($type) && isset($type_prefix)) {
+                $type_str = " xsi:type=\"$type_prefix:$type\"";
+            } else {
+                $type_str = '';
+            }
+            $xml = "<$name$xmlns$type_str$atts xsi:nil=\"true\"/>";
+            $this->debug("serialize_val returning $xml");
+            return $xml;
         }
         // serialize if an xsd built-in primitive type
         if ($type != '' && isset($this->typemap[$this->XMLSchemaVersion][$type])) {
@@ -549,11 +548,10 @@ class nusoap_base
                 $xml = "<$name$xmlns$atts>$val</$name>";
                 $this->debug("serialize_val returning $xml");
                 return $xml;
-            } else {
-                $xml = "<$name$xmlns xsi:type=\"xsd:$type\"$atts>$val</$name>";
-                $this->debug("serialize_val returning $xml");
-                return $xml;
             }
+            $xml = "<$name$xmlns xsi:type=\"xsd:$type\"$atts>$val</$name>";
+            $this->debug("serialize_val returning $xml");
+            return $xml;
         }
         // detect type and serialize
         $xml = '';
@@ -821,9 +819,8 @@ class nusoap_base
                 return $p . ':' . $name;
             }
             return $qname;
-        } else {
-            return $qname;
         }
+        return $qname;
     }
 
     /**
@@ -843,12 +840,10 @@ class nusoap_base
             $prefix = substr($qname, 0, strpos($qname, ':'));
             if (isset($this->namespaces[$prefix])) {
                 return $this->namespaces[$prefix].':'.$name;
-            } else {
-                return $qname;
             }
-        } else {
             return $qname;
         }
+        return $qname;
     }
 
     /**
@@ -864,9 +859,8 @@ class nusoap_base
         if ($sstr = strrchr($str, ':')) {
             // get unqualified name
             return substr($sstr, 1);
-        } else {
-            return $str;
         }
+        return $str;
     }
 
     /**
@@ -984,10 +978,10 @@ function timestamp_to_iso8601($timestamp, $utc=true)
 {
     $datestr = date('Y-m-d\TH:i:sO', $timestamp);
     $pos = strrpos($datestr, "+");
-    if ($pos === FALSE) {
+    if ($pos === false) {
         $pos = strrpos($datestr, "-");
     }
-    if ($pos !== FALSE) {
+    if ($pos !== false) {
         if (strlen($datestr) == $pos + 5) {
             $datestr = substr($datestr, 0, $pos + 3) . ':' . substr($datestr, -2);
         }
@@ -1008,9 +1002,8 @@ function timestamp_to_iso8601($timestamp, $utc=true)
             return sprintf('%04d-%02d-%02dT%02d:%02d:%02dZ', $regs[1], $regs[2], $regs[3], $regs[4], $regs[5], $regs[6]);
         }
         return false;
-    } else {
-        return $datestr;
     }
+    return $datestr;
 }
 
 /**
@@ -1047,10 +1040,9 @@ function iso8601_to_timestamp($datestr)
             }
         }
         return gmmktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-    //		return strtotime("$regs[1]-$regs[2]-$regs[3] $regs[4]:$regs[5]:$regs[6]Z");
-    } else {
-        return false;
+        //		return strtotime("$regs[1]-$regs[2]-$regs[3] $regs[4]:$regs[5]:$regs[6]Z");
     }
+    return false;
 }
 
 /**

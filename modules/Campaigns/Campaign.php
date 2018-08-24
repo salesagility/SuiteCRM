@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,14 +37,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
 
 class Campaign extends SugarBean
 {
@@ -88,10 +89,10 @@ class Campaign extends SugarBean
 
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array(
-				'assigned_user_name', 'assigned_user_id',
-	);
+                'assigned_user_name', 'assigned_user_id',
+    );
 
-    public $relationship_fields = Array('prospect_list_id'=>'prospect_lists');
+    public $relationship_fields = array('prospect_list_id'=>'prospect_lists');
 
     public $new_schema = true;
         
@@ -123,8 +124,8 @@ class Campaign extends SugarBean
             if (is_array($user)) {
                 $fullName = $locale->getLocaleFormattedName($user['first_name'], $user['last_name']);
             } else /*if(is_object($user))*/ {
-				$fullName = $locale->getLocaleFormattedName($user->first_name, $user->last_name);
-			}
+                $fullName = $locale->getLocaleFormattedName($user->first_name, $user->last_name);
+            }
             $listTmpl->assign('ASSIGNED_USER_NAME', $fullName);
         }
     }
@@ -195,11 +196,11 @@ class Campaign extends SugarBean
         parent::fill_in_additional_detail_fields();
         //format numbers.
 
-		//don't need additional formatting here.
-		//$this->budget=format_number($this->budget);
-		//$this->expected_cost=format_number($this->expected_cost);
-		//$this->actual_cost=format_number($this->actual_cost);
-		//$this->expected_revenue=format_number($this->expected_revenue);
+        //don't need additional formatting here.
+        //$this->budget=format_number($this->budget);
+        //$this->expected_cost=format_number($this->expected_cost);
+        //$this->actual_cost=format_number($this->actual_cost);
+        //$this->expected_revenue=format_number($this->expected_revenue);
     }
 
 
@@ -229,7 +230,7 @@ class Campaign extends SugarBean
     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
         array_push($where_clauses, "campaigns.name like '$the_query_string%'");
 
@@ -245,10 +246,10 @@ class Campaign extends SugarBean
         return $the_where;
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
 
-			//US DOLLAR
+            //US DOLLAR
         if (isset($this->amount) && !empty($this->amount)) {
             $currency = new Currency();
             $currency->retrieve($this->currency_id);
@@ -260,7 +261,7 @@ class Campaign extends SugarBean
         if ($this->campaign_type != 'NewsLetter') {
             $this->frequency = '';
         }
-		
+        
         return parent::save($check_notify);
     }
 
@@ -412,8 +413,8 @@ class Campaign extends SugarBean
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
 

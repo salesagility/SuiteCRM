@@ -3,12 +3,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -19,7 +20,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -37,16 +38,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description: Class to handle processing an import file
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
- ********************************************************************************/
+ */
 
 require_once('modules/Import/CsvAutoDetect.php');
 require_once('modules/Import/sources/ImportDataSource.php');
@@ -61,12 +62,12 @@ class ImportFile extends ImportDataSource
     /**
      * File pointer returned from fopen() call
      */
-    private $_fp = FALSE;
+    private $_fp = false;
 
     /**
      * True if the csv file has a header row.
      */
-    private $_hasHeader = FALSE;
+    private $_hasHeader = false;
 
     /**
      * True if the csv file has a header row.
@@ -112,7 +113,7 @@ class ImportFile extends ImportDataSource
      * @param string $enclosure
      * @param bool   $deleteFile
      */
-    public function __construct($filename, $delimiter  = ',', $enclosure  = '', $deleteFile = true, $checkUploadPath = TRUE)
+    public function __construct($filename, $delimiter  = ',', $enclosure  = '', $deleteFile = true, $checkUploadPath = true)
     {
         if (!is_file($filename) || !is_readable($filename)) {
             return false;
@@ -145,7 +146,7 @@ class ImportFile extends ImportDataSource
      */
     private function setFpAfterBOM()
     {
-        if ($this->_fp === FALSE) {
+        if ($this->_fp === false) {
             return;
         }
 
@@ -174,7 +175,7 @@ class ImportFile extends ImportDataSource
     }
 
     /**
-	 * This is needed to prevent unserialize vulnerability
+     * This is needed to prevent unserialize vulnerability
      */
     public function __wakeup()
     {
@@ -202,7 +203,7 @@ class ImportFile extends ImportDataSource
      */
     public function getNextRow()
     {
-        $this->_currentRow = FALSE;
+        $this->_currentRow = false;
 
         if (!$this->fileExists()) {
             return false;
@@ -265,7 +266,7 @@ class ImportFile extends ImportDataSource
         if ($this->_fp) {
             rewind($this->_fp);
             while (!feof($this->_fp)) {
-                if (fgets($this->_fp) !== FALSE) {
+                if (fgets($this->_fp) !== false) {
                     $lineCount++;
                 }
             }
@@ -291,10 +292,9 @@ class ImportFile extends ImportDataSource
         if ($ret) {
             $this->_delimiter = $delimiter;
             $this->_enclosure = $enclosure;
-            return TRUE;
-        } else {
-            return FALSE;
+            return true;
         }
+        return false;
     }
 
     public function getFieldDelimeter()
@@ -344,7 +344,7 @@ class ImportFile extends ImportDataSource
             }
         }
         
-        // If we couldn't detect the charset, set it to default export/import charset 
+        // If we couldn't detect the charset, set it to default export/import charset
         if (empty($charset_for_import)) {
             $charset_for_import = $locale->getExportCharset();
         }
@@ -378,17 +378,17 @@ class ImportFile extends ImportDataSource
         $this->_hasHeader = $hasHeader;
     }
 
-    public function hasHeaderRow($autoDetect = TRUE)
+    public function hasHeaderRow($autoDetect = true)
     {
         if ($autoDetect) {
             if (!isset($_REQUEST['import_module'])) {
-                return FALSE;
+                return false;
             }
 
             $module = $_REQUEST['import_module'];
 
-            $ret = FALSE;
-            $heading = FALSE;
+            $ret = false;
+            $heading = false;
 
             if ($this->_detector) {
                 $ret = $this->_detector->hasHeader($heading, $module, $this->_encoding);
@@ -429,7 +429,7 @@ class ImportFile extends ImportDataSource
 
     public function valid()
     {
-        return $this->_currentRow !== FALSE;
+        return $this->_currentRow !== false;
     }
 
     public function rewind()
@@ -442,7 +442,7 @@ class ImportFile extends ImportDataSource
     public function getTotalRecordCount()
     {
         $totalCount = $this->getNumberOfLinesInfile();
-        if ($this->hasHeaderRow(FALSE) && $totalCount > 0) {
+        if ($this->hasHeaderRow(false) && $totalCount > 0) {
             $totalCount--;
         }
         return $totalCount;
@@ -454,7 +454,7 @@ class ImportFile extends ImportDataSource
         $this->_dataSet = array();
         $this->rewind();
         //If there's a header don't include it.
-        if ($this->hasHeaderRow(FALSE)) {
+        if ($this->hasHeaderRow(false)) {
             $this->next();
         }
 
@@ -472,10 +472,9 @@ class ImportFile extends ImportDataSource
     public function getHeaderColumns()
     {
         $this->rewind();
-        if ($this->hasHeaderRow(FALSE)) {
+        if ($this->hasHeaderRow(false)) {
             return $this->_currentRow;
-        } else {
-            return FALSE;
         }
+        return false;
     }
 }

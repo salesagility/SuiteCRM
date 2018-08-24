@@ -522,11 +522,10 @@ class Email extends Basic
                 'name' => DBManagerFactory::getInstance()->quote($fileName),
                 'nameForDisplay' => $fileName
             );
-        } else {
-            $GLOBALS['log']->debug("Email Attachment [$fileName] could not be moved to upload dir");
-
-            return array();
         }
+        $GLOBALS['log']->debug("Email Attachment [$fileName] could not be moved to upload dir");
+
+        return array();
     }
 
     /**
@@ -1006,8 +1005,10 @@ class Email extends Basic
             if (empty($addr_arr['display'])) {
                 $mail->AddAddress($addr_arr['email'], "");
             } else {
-                $mail->AddAddress($addr_arr['email'],
-                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset));
+                $mail->AddAddress(
+                    $addr_arr['email'],
+                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset)
+                );
             }
             $emailAddressCollection[] = $addr_arr['email'];
         }
@@ -1019,8 +1020,10 @@ class Email extends Basic
             if (empty($addr_arr['display'])) {
                 $mail->AddCC($addr_arr['email'], "");
             } else {
-                $mail->AddCC($addr_arr['email'],
-                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset));
+                $mail->AddCC(
+                    $addr_arr['email'],
+                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset)
+                );
             }
             $emailAddressCollection[] = $addr_arr['email'];
         }
@@ -1033,8 +1036,10 @@ class Email extends Basic
             if (empty($addr_arr['display'])) {
                 $mail->AddBCC($addr_arr['email'], "");
             } else {
-                $mail->AddBCC($addr_arr['email'],
-                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset));
+                $mail->AddBCC(
+                    $addr_arr['email'],
+                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset)
+                );
             }
             $emailAddressCollection[] = $addr_arr['email'];
         }
@@ -1061,8 +1066,11 @@ class Email extends Basic
                     //$fileLocation = $this->et->userCacheDir."/{$file}";
                     $fileGUID = preg_replace('/[^a-z0-9\-]/', "", substr($file, 0, 36));
                     $fileLocation = $this->et->userCacheDir . "/{$fileGUID}";
-                    $filename = substr($file, 36,
-                        strlen($file)); // strip GUID	for PHPMailer class to name outbound file
+                    $filename = substr(
+                        $file,
+                        36,
+                        strlen($file)
+                    ); // strip GUID	for PHPMailer class to name outbound file
 
                     $mail->AddAttachment($fileLocation, $filename, 'base64', $this->email2GetMime($fileLocation));
                     //$mail->AddAttachment($fileLocation, $filename, 'base64');
@@ -1104,8 +1112,12 @@ class Email extends Basic
                     $docGUID = preg_replace('/[^a-z0-9\-]/', "", $docRev->id);
                     $fileLocation = "upload://{$docGUID}";
                     $mime_type = $docRev->file_mime_type;
-                    $mail->AddAttachment($fileLocation,
-                        $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset), 'base64', $mime_type);
+                    $mail->AddAttachment(
+                        $fileLocation,
+                        $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
+                        'base64',
+                        $mime_type
+                    );
 
                     // only save attachments if we're archiving or drafting
                     if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
@@ -1155,12 +1167,18 @@ class Email extends Basic
                         $fileGUID = preg_replace('/[^a-z0-9\-]/', "", substr($noteId, 0, 36));
                         $fileLocation = $this->et->userCacheDir . "/{$fileGUID}";
                         //$fileLocation = $this->et->userCacheDir."/{$noteId}";
-                        $filename = substr($noteId, 36,
-                            strlen($noteId)); // strip GUID	for PHPMailer class to name outbound file
+                        $filename = substr(
+                            $noteId,
+                            36,
+                            strlen($noteId)
+                        ); // strip GUID	for PHPMailer class to name outbound file
 
-                        $mail->AddAttachment($fileLocation,
-                            $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset), 'base64',
-                            $this->email2GetMime($fileLocation));
+                        $mail->AddAttachment(
+                            $fileLocation,
+                            $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
+                            'base64',
+                            $this->email2GetMime($fileLocation)
+                        );
 
                         //If we are saving an email we were going to forward we need to save the attachments as well.
                         if ((($this->type == 'draft') && !empty($this->id))
@@ -1323,7 +1341,7 @@ class Email extends Basic
                 } // else
             } // if
         } // if
-		return true;
+        return true;
     } // end email2send
 
     /**
@@ -1459,8 +1477,10 @@ class Email extends Basic
             //Bug 39503 - SugarBean is not setting date_sent when seconds missing
             if (empty($this->date_sent)) {
                 global $timedate;
-                $date_sent_obj = $timedate->fromUser($timedate->merge_date_time($this->date_start, $this->time_start),
-                    $current_user);
+                $date_sent_obj = $timedate->fromUser(
+                    $timedate->merge_date_time($this->date_start, $this->time_start),
+                    $current_user
+                );
                 if (!empty($date_sent_obj) && ($date_sent_obj instanceof SugarDateTime)) {
                     $this->date_sent = $date_sent_obj->asDb();
                 }
@@ -1472,16 +1492,20 @@ class Email extends Basic
                 if (!empty($this->fetched_row) && !empty($this->fetched_row['parent_id']) && !empty($this->fetched_row['parent_type'])) {
                     if ($this->fetched_row['parent_id'] != $this->parent_id || $this->fetched_row['parent_type'] != $this->parent_type) {
                         $mod = strtolower($this->fetched_row['parent_type']);
-                        $rel = array_key_exists($mod,
-                            $this->field_defs) ? $mod : $mod . "_activities_emails"; //Custom modules rel name
+                        $rel = array_key_exists(
+                            $mod,
+                            $this->field_defs
+                        ) ? $mod : $mod . "_activities_emails"; //Custom modules rel name
                         if ($this->load_relationship($rel)) {
                             $this->$rel->delete($this->id, $this->fetched_row['parent_id']);
                         }
                     }
                 }
                 $mod = strtolower($this->parent_type);
-                $rel = array_key_exists($mod,
-                    $this->field_defs) ? $mod : $mod . "_activities_emails"; //Custom modules rel name
+                $rel = array_key_exists(
+                    $mod,
+                    $this->field_defs
+                ) ? $mod : $mod . "_activities_emails"; //Custom modules rel name
                 if ($this->load_relationship($rel)) {
                     $this->$rel->add($this->parent_id);
                 }
@@ -1593,11 +1617,11 @@ class Email extends Basic
 
         if (!empty($a1) && !empty($a1['id'])) {
             return $a1['id'];
-        } else {
-            $guid = create_guid();
-            $q2 = "INSERT INTO emails_email_addr_rel VALUES('{$guid}', '{$this->id}', '{$type}', '{$id}', 0)";
-            $r2 = $this->db->query($q2);
         }
+        $guid = create_guid();
+        $q2 = "INSERT INTO emails_email_addr_rel VALUES('{$guid}', '{$this->id}', '{$type}', '{$id}', 0)";
+        $r2 = $this->db->query($q2);
+        
 
         return $guid;
     }
@@ -2571,9 +2595,8 @@ class Email extends Basic
             return true;
         } elseif (!empty($plainSig) && false !== strpos($plain, $plainSig)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -2597,8 +2620,10 @@ class Email extends Basic
      */
     public function getStartPage($uri)
     {
-        if (strpos($uri,
-            '&')) { // "&" to ensure that we can explode the GET vars - else we're gonna trigger a Notice error
+        if (strpos(
+            $uri,
+            '&'
+        )) { // "&" to ensure that we can explode the GET vars - else we're gonna trigger a Notice error
             $serial = substr($uri, (strpos($uri, '?') + 1), strlen($uri));
             $exUri = explode('&', $serial);
             $start = array('module' => '', 'action' => '', 'group' => '', 'record' => '', 'type' => '');
@@ -2614,9 +2639,8 @@ class Email extends Basic
             }
 
             return $start;
-        } else {
-            return array();
         }
+        return array();
     }
 
     /**
@@ -2726,8 +2750,11 @@ class Email extends Basic
         $mail->replaceImageByRegex("(?:{$sugar_config['site_url']})?/?cache/images/", sugar_cached("images/"));
 
         //Replace any embeded images using the secure entryPoint for src url.
-        $mail->replaceImageByRegex("(?:{$sugar_config['site_url']})?/?index.php[?]entryPoint=download&(?:amp;)?[^\"]+?id=",
-            "upload://", true);
+        $mail->replaceImageByRegex(
+            "(?:{$sugar_config['site_url']})?/?index.php[?]entryPoint=download&(?:amp;)?[^\"]+?id=",
+            "upload://",
+            true
+        );
 
         $mail->Body = from_html($mail->Body);
     }
@@ -2753,16 +2780,20 @@ class Email extends Basic
             if (empty($addr_arr['display'])) {
                 $mail->AddAddress($addr_arr['email'], "");
             } else {
-                $mail->AddAddress($addr_arr['email'],
-                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset));
+                $mail->AddAddress(
+                    $addr_arr['email'],
+                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset)
+                );
             }
         }
         foreach ($this->cc_addrs_arr as $addr_arr) {
             if (empty($addr_arr['display'])) {
                 $mail->AddCC($addr_arr['email'], "");
             } else {
-                $mail->AddCC($addr_arr['email'],
-                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset));
+                $mail->AddCC(
+                    $addr_arr['email'],
+                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset)
+                );
             }
         }
 
@@ -2770,8 +2801,10 @@ class Email extends Basic
             if (empty($addr_arr['display'])) {
                 $mail->AddBCC($addr_arr['email'], "");
             } else {
-                $mail->AddBCC($addr_arr['email'],
-                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset));
+                $mail->AddBCC(
+                    $addr_arr['email'],
+                    $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset)
+                );
             }
         }
 
@@ -2781,8 +2814,8 @@ class Email extends Basic
         
         
         if ($mail->oe->type === 'system') {
-            $mail->From = 
-                $sender = 
+            $mail->From =
+                $sender =
                 $ReplyToAddr = $mail->oe->smtp_from_addr;
             isValidEmailAddress($mail->From);
             $ReplyToName = $mail->oe->smtp_from_name;
@@ -2871,8 +2904,12 @@ class Email extends Basic
                         break; // no need to look for more
                     }
                 }
-                $mail->AddAttachment($file_location, $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
-                    'base64', $mime_type);
+                $mail->AddAttachment(
+                    $file_location,
+                    $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
+                    'base64',
+                    $mime_type
+                );
 
                 // embedded Images
                 if ($note->embed_flag == true) {
@@ -2949,8 +2986,13 @@ class Email extends Basic
         /**
          * if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner)){
          */
-        if (!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type,
-                'view', $is_owner, 'module', $in_group)
+        if (!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess(
+            $this->parent_type,
+                'view',
+            $is_owner,
+            'module',
+            $in_group
+        )
         ) {
             /* END - SECURITY GROUPS */
             $array_assign['PARENT'] = 'a';
@@ -3036,8 +3078,17 @@ class Email extends Basic
         $ifListForExport = false
     ) {
         if ($return_array) {
-            return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
-                $return_array, $parentbean, $singleSelect);
+            return parent::create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $parentbean,
+                $singleSelect
+            );
         }
         $custom_join = $this->getCustomJoin();
 
@@ -3263,8 +3314,10 @@ class Email extends Basic
         $email_fields['FROM_ADDR_NAME'] = $this->from_addr_name;
         $email_fields['TO_ADDRS'] = $this->to_addrs;
         $email_fields['TO_ADDRS_NAMES'] = $this->to_addrs_names;
-        $mod_strings = return_module_language($GLOBALS['current_language'],
-            'Emails'); // hard-coding for Home screen ListView
+        $mod_strings = return_module_language(
+            $GLOBALS['current_language'],
+            'Emails'
+        ); // hard-coding for Home screen ListView
 
         if ($this->status != 'replied') {
             $email_fields['QUICK_REPLY'] = '<a href="index.php?module=Emails&action=ReplyTo&record='. $this->id .'">'
@@ -3278,33 +3331,58 @@ class Email extends Basic
         } else {
             switch ($this->intent) {
                 case 'support':
-                    $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Cases&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage('CreateCases',
-                            'border="0"', null, null, ".gif",
-                            $mod_strings['LBL_CREATE_CASES']) . $mod_strings['LBL_CREATE_CASE'] . '</a>';
+                    $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Cases&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage(
+                        'CreateCases',
+                            'border="0"',
+                        null,
+                        null,
+                        ".gif",
+                            $mod_strings['LBL_CREATE_CASES']
+                    ) . $mod_strings['LBL_CREATE_CASE'] . '</a>';
                     break;
 
                 case 'sales':
-                    $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Leads&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage('CreateLeads',
-                            'border="0"', null, null, ".gif",
-                            $mod_strings['LBL_CREATE_LEADS']) . $mod_strings['LBL_CREATE_LEAD'] . '</a>';
+                    $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Leads&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage(
+                        'CreateLeads',
+                            'border="0"',
+                        null,
+                        null,
+                        ".gif",
+                            $mod_strings['LBL_CREATE_LEADS']
+                    ) . $mod_strings['LBL_CREATE_LEAD'] . '</a>';
                     break;
 
                 case 'contact':
-                    $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Contacts&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage('CreateContacts',
-                            'border="0"', null, null, ".gif",
-                            $mod_strings['LBL_CREATE_CONTACTS']) . $mod_strings['LBL_CREATE_CONTACT'] . '</a>';
+                    $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Contacts&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage(
+                        'CreateContacts',
+                            'border="0"',
+                        null,
+                        null,
+                        ".gif",
+                            $mod_strings['LBL_CREATE_CONTACTS']
+                    ) . $mod_strings['LBL_CREATE_CONTACT'] . '</a>';
                     break;
 
                 case 'bug':
-                    $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Bugs&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage('CreateBugs',
-                            'border="0"', null, null, ".gif",
-                            $mod_strings['LBL_CREATE_BUGS']) . $mod_strings['LBL_CREATE_BUG'] . '</a>';
+                    $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Bugs&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage(
+                        'CreateBugs',
+                            'border="0"',
+                        null,
+                        null,
+                        ".gif",
+                            $mod_strings['LBL_CREATE_BUGS']
+                    ) . $mod_strings['LBL_CREATE_BUG'] . '</a>';
                     break;
 
                 case 'task':
-                    $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Tasks&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage('CreateTasks',
-                            'border="0"', null, null, ".gif",
-                            $mod_strings['LBL_CREATE_TASKS']) . $mod_strings['LBL_CREATE_TASK'] . '</a>';
+                    $email_fields['CREATE_RELATED'] = '<a href="index.php?module=Tasks&action=EditView&inbound_email_id=' . $this->id . '" >' . SugarThemeRegistry::current()->getImage(
+                        'CreateTasks',
+                            'border="0"',
+                        null,
+                        null,
+                        ".gif",
+                            $mod_strings['LBL_CREATE_TASKS']
+                    ) . $mod_strings['LBL_CREATE_TASK'] . '</a>';
                     break;
 
                 case 'bounce':
@@ -3332,7 +3410,7 @@ class Email extends Basic
             $email_fields['TYPE_NAME'] = $this->type_name;
         }
 
-        $email_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $app_list_strings['email_category_dom'][$this->category_id];
+        $email_fields['CATEGORY_ID'] = empty($this->category_id) ? "" : $app_list_strings['email_category_dom'][$this->category_id];
 
         return $email_fields;
     }
@@ -3353,8 +3431,14 @@ class Email extends Basic
             $mod_strings = return_module_language($current_language, 'Emails');
         }
 
-        return $mod_strings['LBL_QUICK_CREATE'] . "&nbsp;<a id='$this->id' onclick='return quick_create_overlib(\"{$this->id}\", \"" . SugarThemeRegistry::current()->__toString() . "\", this);' href=\"#\" >" . SugarThemeRegistry::current()->getImage("advanced_search",
-                "border='0' align='absmiddle'", null, null, '.gif', $mod_strings['LBL_QUICK_CREATE']) . "</a>";
+        return $mod_strings['LBL_QUICK_CREATE'] . "&nbsp;<a id='$this->id' onclick='return quick_create_overlib(\"{$this->id}\", \"" . SugarThemeRegistry::current()->__toString() . "\", this);' href=\"#\" >" . SugarThemeRegistry::current()->getImage(
+            "advanced_search",
+                "border='0' align='absmiddle'",
+            null,
+            null,
+            '.gif',
+            $mod_strings['LBL_QUICK_CREATE']
+        ) . "</a>";
     }
 
     /**
@@ -3406,8 +3490,10 @@ class Email extends Basic
         );
 
         $sort = !empty($_REQUEST['sort']) ? $this->db->getValidDBName($_REQUEST['sort']) : "";
-        $direction = !empty($_REQUEST['dir']) && in_array(strtolower($_REQUEST['dir']),
-            array("asc", "desc")) ? $_REQUEST['dir'] : "";
+        $direction = !empty($_REQUEST['dir']) && in_array(
+            strtolower($_REQUEST['dir']),
+            array("asc", "desc")
+        ) ? $_REQUEST['dir'] : "";
 
         $order = (!empty($sort) && !empty($direction)) ? " ORDER BY {$hrSortLocal[$sort]} {$direction}" : "";
 
@@ -3620,9 +3706,8 @@ class Email extends Basic
             $exStr = explode(';', $str);
 
             return $exStr[0] . '...';
-        } else {
-            return $str;
         }
+        return $str;
     }
 
     /**
@@ -3858,11 +3943,23 @@ eoq;
 				</script>
 			<span id="showUsersDiv" style="position:relative;">
 				<a href="#" id="showUsers" onClick="javascript:showUserSelect();">
-					' . SugarThemeRegistry::current()->getImage('Users', '', null, null, ".gif",
-                $mod_strings['LBL_USERS']) . '</a>&nbsp;
+					' . SugarThemeRegistry::current()->getImage(
+            'Users',
+            '',
+            null,
+            null,
+            ".gif",
+                $mod_strings['LBL_USERS']
+        ) . '</a>&nbsp;
 				<a href="#" id="showUsers" onClick="javascript:showUserSelect();">
-					<span style="display:none;" id="checkMark">' . SugarThemeRegistry::current()->getImage('check_inline',
-                'border="0"', null, null, ".gif", $mod_strings['LBL_CHECK_INLINE']) . '</span>
+					<span style="display:none;" id="checkMark">' . SugarThemeRegistry::current()->getImage(
+                    'check_inline',
+                'border="0"',
+                    null,
+                    null,
+                    ".gif",
+                    $mod_strings['LBL_CHECK_INLINE']
+                ) . '</span>
 				</a>
 
 
@@ -3870,8 +3967,14 @@ eoq;
 				<table cellpadding="0" cellspacing="0" border="0" class="list view">
 					<tr height="20">
 						<td  colspan="' . $colspan . '" id="hiddenhead" onClick="hideUserSelect();" onMouseOver="this.style.border = \'outset red 1px\';" onMouseOut="this.style.border = \'inset white 0px\';this.style.borderBottom = \'inset red 1px\';">
-							<a href="#" onClick="javascript:hideUserSelect();">' . SugarThemeRegistry::current()->getImage('close',
-                'border="0"', null, null, ".gif", $mod_strings['LBL_CLOSE']) . '</a>
+							<a href="#" onClick="javascript:hideUserSelect();">' . SugarThemeRegistry::current()->getImage(
+                    'close',
+                'border="0"',
+                    null,
+                    null,
+                    ".gif",
+                    $mod_strings['LBL_CLOSE']
+                ) . '</a>
 							' . $mod_strings['LBL_USER_SELECT'] . '
 						</td>
 					</tr>
@@ -3954,8 +4057,11 @@ eoq;
             return;
         }
         $upload = new UploadFile();
-        $this->description_html = preg_replace("#class=\"image\" src=\"cid:$noteId\.(.+?)\"#",
-            "class=\"image\" src=\"{$this->imagePrefix}{$noteId}.\\1\"", $this->description_html);
+        $this->description_html = preg_replace(
+            "#class=\"image\" src=\"cid:$noteId\.(.+?)\"#",
+            "class=\"image\" src=\"{$this->imagePrefix}{$noteId}.\\1\"",
+            $this->description_html
+        );
         // ensure the image is in the cache
         $imgfilename = sugar_cached("images/") . "$noteId." . strtolower($subtype);
         $src = "upload://$noteId";
@@ -4128,8 +4234,11 @@ eoq;
                 $bean->reply_to_name = $bean->from_name;
             } else { // we have a compound string
                 $newFromAddr = str_replace($old, $new, $request['from_addr']);
-                $bean->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')),
-                    (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) - 1);
+                $bean->from_addr = substr(
+                    $newFromAddr,
+                    (1 + strpos($newFromAddr, '<')),
+                    (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) - 1
+                );
                 isValidEmailAddress($bean->from_addr);
                 $bean->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') - 1));
                 $bean->reply_to_addr = $bean->from_addr;

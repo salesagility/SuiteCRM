@@ -1,9 +1,9 @@
 <?php
  /**
-*
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-*
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
  if (!defined('sugarEntry')) {
      define('sugarEntry', true);
@@ -190,7 +190,7 @@ $help_url = get_help_button_url();
 //if this license print, then redirect and exit,
 if (isset($_REQUEST['page']) && $_REQUEST['page'] == 'licensePrint') {
     include('install/licensePrint.php');
-    exit ();
+    exit();
 }
 
 if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
@@ -381,7 +381,7 @@ if (!isset($_SESSION['oc_install']) || $_SESSION['oc_install'] == false) {
     }
 } else {
     if (is_readable('config.php')) {
-        require_once ('config.php');
+        require_once('config.php');
     }
 }
 
@@ -518,13 +518,13 @@ EOQ;
         // store the submitted data because the 'Next' button was clicked
         switch ($workflow[trim($_REQUEST['current_step'])]) {
         case 'old_php.php':
-		$_SESSION['language'] = $_REQUEST['language'];
-		$_SESSION['setup_old_php'] = get_boolean_from_request('setup_old_php');
-		break;
+        $_SESSION['language'] = $_REQUEST['language'];
+        $_SESSION['setup_old_php'] = get_boolean_from_request('setup_old_php');
+        break;
 
-	case 'welcome.php':
-        	$_SESSION['language'] = $_REQUEST['language'];
-   			$_SESSION['setup_site_admin_user_name'] = 'admin';
+    case 'welcome.php':
+            $_SESSION['language'] = $_REQUEST['language'];
+            $_SESSION['setup_site_admin_user_name'] = 'admin';
 //        break;
 //      case 'license.php':
                 $_SESSION['setup_license_accept']   = get_boolean_from_request('setup_license_accept');
@@ -654,12 +654,12 @@ EOQ;
     case 'old_php.php':
     case 'welcome.php':
     case 'license.php':
-			//
-			// Check to see if session variables are working properly
-			//
-			$_SESSION['test_session'] = 'sessions are available';
+            //
+            // Check to see if session variables are working properly
+            //
+            $_SESSION['test_session'] = 'sessions are available';
         @session_write_close();
-			unset($_SESSION['test_session']);
+            unset($_SESSION['test_session']);
         @session_start();
 
             if (!isset($_SESSION['test_session'])) {
@@ -692,7 +692,7 @@ EOQ;
                     //then try to convert again
                     if (isset($sugar_config['disc_client']) && $sugar_config['disc_client'] == true && isset($sugar_config['oc_converted']) && $sugar_config['oc_converted'] == false) {
                         header('Location: index.php?entryPoint=oc_convert&first_time=true');
-                        exit ();
+                        exit();
                     }
                 }
             }

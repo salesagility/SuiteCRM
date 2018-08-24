@@ -23,7 +23,7 @@
  */
  
  $metafiles['AOR_Reports'] = array(
-    'detailviewdefs'  => 	'modules/AOR_Reports/metadata/detailviewdefs.php', 	
+    'detailviewdefs'  => 	'modules/AOR_Reports/metadata/detailviewdefs.php',
     'editviewdefs'    => 	'modules/AOR_Reports/metadata/editviewdefs.php',
     'listviewdefs'    => 	'modules/AOR_Reports/metadata/listviewdefs.php',
     'searchdefs'      =>    'modules/AOR_Reports/metadata/searchdefs.php',

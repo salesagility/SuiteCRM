@@ -321,5 +321,3 @@ class LanguageManager
         write_array_to_file("sugar_config", $GLOBALS['sugar_config'], "config.php");
     }
 }
-
-

@@ -24,9 +24,13 @@
  * @param boolean
  * @return string
  */
-function smarty_modifier_truncate($string, $length = 80, $etc = '...',
-                                  $break_words = false, $middle = false)
-{
+function smarty_modifier_truncate(
+    $string,
+    $length = 80,
+    $etc = '...',
+                                  $break_words = false,
+    $middle = false
+) {
     if ($length == 0) {
         return '';
     }
@@ -38,12 +42,10 @@ function smarty_modifier_truncate($string, $length = 80, $etc = '...',
         }
         if (!$middle) {
             return substr($string, 0, $length) . $etc;
-        } else {
-            return substr($string, 0, $length/2) . $etc . substr($string, -$length/2);
         }
-    } else {
-        return $string;
+        return substr($string, 0, $length/2) . $etc . substr($string, -$length/2);
     }
+    return $string;
 }
 
 /* vim: set expandtab: */

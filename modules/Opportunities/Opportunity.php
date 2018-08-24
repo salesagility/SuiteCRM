@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,14 +37,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
 
 
 
@@ -103,14 +104,14 @@ class Opportunity extends SugarBean
     public $object_name = "Opportunity";
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'account_name', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id'
-	);
+    public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'account_name', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id'
+    );
 
-    public $relationship_fields = Array('task_id'=>'tasks', 'note_id'=>'notes', 'account_id'=>'accounts',
-									'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails', 'project_id'=>'project',
-									// Bug 38529 & 40938
-									'currency_id' => 'currencies',
-									);
+    public $relationship_fields = array('task_id'=>'tasks', 'note_id'=>'notes', 'account_id'=>'accounts',
+                                    'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails', 'project_id'=>'project',
+                                    // Bug 38529 & 40938
+                                    'currency_id' => 'currencies',
+                                    );
 
     public function __construct()
     {
@@ -286,8 +287,8 @@ class Opportunity extends SugarBean
         foreach ((array)$query_array as $qstring) {
             $query.=' '.$qstring;
         }
-        $temp = Array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
-		
+        $temp = array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
+        
         $contact = new Contact();
         return $this->build_related_list2($query, $contact, $temp);
     }
@@ -353,7 +354,7 @@ class Opportunity extends SugarBean
     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
         array_push($where_clauses, "opportunities.name like '$the_query_string%'");
         array_push($where_clauses, "accounts.name like '$the_query_string%'");
@@ -370,7 +371,7 @@ class Opportunity extends SugarBean
         return $the_where;
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         // Bug 32581 - Make sure the currency_id is set to something
         global $current_user, $app_list_strings;
@@ -401,7 +402,7 @@ class Opportunity extends SugarBean
         //if account_id was replaced unlink the previous account_id.
         //this rel_fields_before_value is populated by sugarbean during the retrieve call.
         if (!empty($this->account_id) and !empty($this->rel_fields_before_value['account_id']) and
-				(trim($this->account_id) != trim($this->rel_fields_before_value['account_id']))) {
+                (trim($this->account_id) != trim($this->rel_fields_before_value['account_id']))) {
             //unlink the old record.
             $this->load_relationship('accounts');
             $this->accounts->delete($this->id, $this->rel_fields_before_value['account_id']);
@@ -438,8 +439,8 @@ class Opportunity extends SugarBean
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
     public function listviewACLHelper()
@@ -486,11 +487,11 @@ class Opportunity extends SugarBean
         $ret_array = array();
         $db = DBManagerFactory::getInstance();
         $query = "SELECT acc.id, acc.name, acc.assigned_user_id "
-			. "FROM accounts acc, accounts_opportunities a_o "
-			. "WHERE acc.id=a_o.account_id"
-			. " AND a_o.opportunity_id='$opp_id'"
-			. " AND a_o.deleted=0"
-			. " AND acc.deleted=0";
+            . "FROM accounts acc, accounts_opportunities a_o "
+            . "WHERE acc.id=a_o.account_id"
+            . " AND a_o.opportunity_id='$opp_id'"
+            . " AND a_o.deleted=0"
+            . " AND acc.deleted=0";
         $result = $db->query($query, true, "Error filling in opportunity account details: ");
         $row = $db->fetchByAssoc($result);
         if ($row != null) {

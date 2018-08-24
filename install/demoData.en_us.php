@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -47,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 //VP
 global $sugar_demodata;
 $sugar_demodata['users'][0] = array(
-  'id' => 'seed_jim_id',	
+  'id' => 'seed_jim_id',
   'last_name' => 'Brennan',
   'first_name' => 'Jim',
   'user_name' => 'jim',
@@ -60,7 +61,7 @@ $sugar_demodata['users'][0] = array(
 
 //west team
 $sugar_demodata['users'][] = array(
-  'id' => 'seed_sarah_id',	
+  'id' => 'seed_sarah_id',
   'last_name' => 'Smith',
   'first_name' => 'Sarah',
   'user_name' => 'sarah',
@@ -72,7 +73,7 @@ $sugar_demodata['users'][] = array(
 );
 
 $sugar_demodata['users'][] = array(
-  'id' => 'seed_sally_id',	
+  'id' => 'seed_sally_id',
   'last_name' => 'Bronsen',
   'first_name' => 'Sally',
   'user_name' => 'sally',
@@ -84,7 +85,7 @@ $sugar_demodata['users'][] = array(
 );
 
 $sugar_demodata['users'][] = array(
-  'id' => 'seed_max_id',	
+  'id' => 'seed_max_id',
   'last_name' => 'Jensen',
   'first_name' => 'Max',
   'user_name' => 'max',
@@ -97,7 +98,7 @@ $sugar_demodata['users'][] = array(
 
 //east team
 $sugar_demodata['users'][] = array(
-  'id' => 'seed_will_id',	
+  'id' => 'seed_will_id',
   'last_name' => 'Westin',
   'first_name' => 'Will',
   'user_name' => 'will',
@@ -109,7 +110,7 @@ $sugar_demodata['users'][] = array(
 );
 
 $sugar_demodata['users'][] = array(
-  'id' => 'seed_chris_id',	
+  'id' => 'seed_chris_id',
   'last_name' => 'Olliver',
   'first_name' => 'Chris',
   'user_name' => 'chris',
@@ -122,13 +123,13 @@ $sugar_demodata['users'][] = array(
 
 //teams demodata
 $sugar_demodata['teams'][] = array(
-  'name' => 'East',	
+  'name' => 'East',
   'description' => 'This is the team for the East',
   'team_id' => 'East',
 );
 
 $sugar_demodata['teams'][] = array(
-  'name' => 'West',	
+  'name' => 'West',
   'description' => 'This is the team for the West',
   'team_id' => 'West',
 );
@@ -21430,47 +21431,47 @@ $sugar_demodata['titles'] = array(
 
 //tasks
 $sugar_demodata['task_seed_data_names'] = array(
-    'Assemble catalogs', 
-    'Make travel arrangements', 
-    'Send a letter', 
-    'Send contract', 
-    'Send fax', 
-    'Send a follow-up letter', 
-    'Send literature', 
-    'Send proposal', 
-    'Send quote', 
-    'Call to schedule meeting', 
-    'Setup evaluation', 
-    'Get demo feedback', 
-    'Arrange introduction', 
-    'Escalate support request', 
-    'Close out support request', 
-    'Ship product', 
-    'Arrange reference call', 
-    'Schedule training', 
-    'Send local user group information', 
+    'Assemble catalogs',
+    'Make travel arrangements',
+    'Send a letter',
+    'Send contract',
+    'Send fax',
+    'Send a follow-up letter',
+    'Send literature',
+    'Send proposal',
+    'Send quote',
+    'Call to schedule meeting',
+    'Setup evaluation',
+    'Get demo feedback',
+    'Arrange introduction',
+    'Escalate support request',
+    'Close out support request',
+    'Ship product',
+    'Arrange reference call',
+    'Schedule training',
+    'Send local user group information',
     'Add to mailing list',
 );
 
 //meetings
 $sugar_demodata['meeting_seed_data_names'] = array(
-    'Follow-up on proposal', 
-    'Initial discussion', 
-    'Review needs', 
-    'Discuss pricing', 
-    'Demo', 
+    'Follow-up on proposal',
+    'Initial discussion',
+    'Review needs',
+    'Discuss pricing',
+    'Demo',
     'Introduce all players',
 );
 $sugar_demodata['meeting_seed_data_descriptions'] = 'Meeting to discuss project plan and hash out the details of implementation';
 
 //emails
 $sugar_demodata['email_seed_data_subjects'] = array(
-    'Follow-up on proposal', 
-    'Initial discussion', 
-    'Review needs', 
-    'Discuss pricing', 
-    'Demo', 
-    'Introduce all players', 
+    'Follow-up on proposal',
+    'Initial discussion',
+    'Review needs',
+    'Discuss pricing',
+    'Demo',
+    'Introduce all players',
 );
 $sugar_demodata['email_seed_data_descriptions'] = 'Meeting to discuss project plan and hash out the details of implementation';
 
@@ -21482,13 +21483,13 @@ $sugar_demodata['primary_address_country'] = 'USA';
 
 //manufacturers
 $sugar_demodata['manufacturer_seed_data_names'] = array(
-    'TekWare Inc.', 
+    'TekWare Inc.',
     'Acme Suppliers'
 );
 
 //Shippers
 $sugar_demodata['shipper_seed_data_names'] = array(
-    'FedEx', 
+    'FedEx',
     'USPS Ground'
 );
 
@@ -21496,16 +21497,16 @@ $sugar_demodata['shipper_seed_data_names'] = array(
 $sugar_demodata['category_ext_name'] = ' Widgets';
 $sugar_demodata['product_ext_name'] = ' Gadget';
 $sugar_demodata['productcategory_seed_data_names'] = array(
-    'Desktops', 
-    'Laptops', 
-    'Stationary Device', 
+    'Desktops',
+    'Laptops',
+    'Stationary Device',
     'Modular Device'
 );
 
 //producttype
 $sugar_demodata['producttype_seed_data_names']= array(
-    'Devices', 
-    'Hardware', 
+    'Devices',
+    'Hardware',
     'Support Contract'
 );
 
@@ -21539,7 +21540,7 @@ $sugar_demodata['producttemplate_seed_data'][] = array(
     'weight' => 20.0,
     'date_available' => '2009-10-15',
     'qty_in_stock' => '72',
-); 
+);
 
 $sugar_demodata['producttemplate_seed_data'][] = array(
     'name' => 'TK 1000 Desktop',
@@ -21557,7 +21558,7 @@ $sugar_demodata['producttemplate_seed_data'][] = array(
     'weight' => 20.0,
     'date_available' => '2009-10-15',
     'qty_in_stock' => '65',
-); 
+);
 
 $sugar_demodata['producttemplate_seed_data'][] = array(
     'name' => 'TK m30 Desktop',
@@ -21575,7 +21576,7 @@ $sugar_demodata['producttemplate_seed_data'][] = array(
     'weight' => 5.0,
     'date_available' => '2009-10-15',
     'qty_in_stock' => '12',
-); 
+);
 
 $sugar_demodata['producttemplate_seed_data'][] = array(
     'name' => 'Reflective Mirror Widget',
@@ -21593,7 +21594,7 @@ $sugar_demodata['producttemplate_seed_data'][] = array(
     'weight' => 20.0,
     'date_available' => '2009-10-15',
     'qty_in_stock' => '65',
-); 
+);
 
 
 $sugar_demodata['contract_seed_data'][] = array(
@@ -21605,7 +21606,7 @@ $sugar_demodata['contract_seed_data'][] = array(
     'company_signed_date' => '2010-03-15',
     'customer_signed_date' => '2010-03-16',
     'description' => 'This is a sub-contract for a very large project.',
-); 
+);
 
 $sugar_demodata['contract_seed_data'][] = array(
     'name' => 'Ion Engines for Auto Plant',
@@ -21616,7 +21617,7 @@ $sugar_demodata['contract_seed_data'][] = array(
     'company_signed_date' => '2010-03-15',
     'customer_signed_date' => '2010-03-16',
     'description' => 'In competition with Sienar Fleet Systems for this one.',
-); 
+);
 
 $sugar_demodata['project_seed_data']['audit'] = array(
     'name' => 'Create new plan for the annual audit',
@@ -21687,11 +21688,11 @@ $sugar_demodata['quotes_seed_data']['quotes'][0] = array(
     'payment_terms' => 'Net 30',
 
     'bundle_data' => array(
-        0 => array (
+        0 => array(
             'bundle_name' => 'Computers',
             'bundle_stage' => 'Draft',
             'comment' => 'TK Desktop Computers',
-            'products' => array (
+            'products' => array(
                 1 => array('name'=>'TK 1000 Desktop', 'quantity'=>'1'),
                 2 => array('name'=>'TK m30 Desktop', 'quantity'=>'2'),
             ),
@@ -21710,11 +21711,11 @@ $sugar_demodata['quotes_seed_data']['quotes'][1] = array(
          
 
     'bundle_data' => array(
-        0 => array (
+        0 => array(
             'bundle_name' => 'Mirrors',
             'bundle_stage' => 'Draft',
             'comment' => 'Reflective Mirrors',
-            'products' => array (
+            'products' => array(
                 1 => array('name'=>'Reflective Mirror Widget', 'quantity'=>'2'),
             ),
         ),

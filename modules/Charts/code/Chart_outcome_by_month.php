@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -165,7 +165,7 @@ class Chart_outcome_by_month
 	<?php echo '<span onmouseover="this.style.cursor=\'move\'" id="chart_handle_' . $this->order . '">' . get_form_header($current_module_strings['LBL_YEAR_BY_OUTCOME'], $tools, false) . '</span>'; ?>
 
 <?php
-	$cal_lang = "en";
+    $cal_lang = "en";
         $cal_dateformat = parse_calendardate($app_strings['NTC_DATE_FORMAT']);
 
         if (empty($_SESSION['obm_ids'])) {
@@ -205,11 +205,11 @@ echo "<p align='center'>".$this->gen_xml($date_start, $date_end, $ids, $cache_fi
 
 
 <?php
-	if (file_exists($cache_file_name)) {
-	    $file_date = $timedate->asUser($timedate->fromTimestamp(filemtime($cache_file_name)));
-	} else {
-	    $file_date = '';
-	} ?>
+    if (file_exists($cache_file_name)) {
+        $file_date = $timedate->asUser($timedate->fromTimestamp(filemtime($cache_file_name)));
+    } else {
+        $file_date = '';
+    } ?>
 
 <span class='chartFootnote'>
 <p align="right"><i><?php  echo $current_module_strings['LBL_CREATED_ON'].' '.$file_date; ?></i></p>

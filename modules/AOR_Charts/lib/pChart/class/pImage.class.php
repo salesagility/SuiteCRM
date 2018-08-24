@@ -33,19 +33,19 @@
  class pImage extends pDraw
  {
      /* Image settings, size, quality, .. */
-     public $XSize		= NULL;				// Width of the picture
-   public $YSize		= NULL;				// Height of the picture
-   public $Picture		= NULL;				// GD picture object
-   public $Antialias	= TRUE;				// Turn antialias on or off
+     public $XSize		= null;				// Width of the picture
+   public $YSize		= null;				// Height of the picture
+   public $Picture		= null;				// GD picture object
+   public $Antialias	= true;				// Turn antialias on or off
    public $AntialiasQuality  = 0;				// Quality of the antialiasing implementation (0-1)
    public $Mask		= "";				// Already drawn pixels mask (Filled circle implementation)
-   public $TransparentBackground = FALSE;			// Just to know if we need to flush the alpha channels when rendering
+   public $TransparentBackground = false;			// Just to know if we need to flush the alpha channels when rendering
 
    /* Graph area settings */
-     public $GraphAreaX1	= NULL;				// Graph area X origin
-   public $GraphAreaY1	= NULL;				// Graph area Y origin
-   public $GraphAreaX2	= NULL;				// Graph area bottom right X position
-   public $GraphAreaY2	= NULL;				// Graph area bottom right Y position
+     public $GraphAreaX1	= null;				// Graph area X origin
+   public $GraphAreaY1	= null;				// Graph area Y origin
+   public $GraphAreaX2	= null;				// Graph area bottom right X position
+   public $GraphAreaY2	= null;				// Graph area bottom right Y position
 
    /* Scale settings */
      public $ScaleMinDivHeight = 20;				// Minimum height for scame divs
@@ -53,39 +53,39 @@
      /* Font properties */
      public $FontName	= "fonts/GeosansLight.ttf";	// Default font file
    public $FontSize	= 12;				// Default font size
-   public $FontBox		= NULL;				// Return the bounding box of the last written string
+   public $FontBox		= null;				// Return the bounding box of the last written string
    public $FontColorR	= 0;				// Default color settings
    public $FontColorG	= 0;				// Default color settings
    public $FontColorB	= 0;				// Default color settings
    public $FontColorA	= 100;				// Default transparency
 
    /* Shadow properties */
-     public $Shadow		= FALSE;			// Turn shadows on or off
-   public $ShadowX		= NULL;				// X Offset of the shadow
-   public $ShadowY		= NULL;				// Y Offset of the shadow
-   public $ShadowR		= NULL;				// R component of the shadow
-   public $ShadowG		= NULL;				// G component of the shadow
-   public $ShadowB		= NULL;				// B component of the shadow
-   public $Shadowa		= NULL;				// Alpha level of the shadow
+     public $Shadow		= false;			// Turn shadows on or off
+   public $ShadowX		= null;				// X Offset of the shadow
+   public $ShadowY		= null;				// Y Offset of the shadow
+   public $ShadowR		= null;				// R component of the shadow
+   public $ShadowG		= null;				// G component of the shadow
+   public $ShadowB		= null;				// B component of the shadow
+   public $Shadowa		= null;				// Alpha level of the shadow
 
    /* Image map */
-     public $ImageMap	= NULL;				// Aray containing the image map
+     public $ImageMap	= null;				// Aray containing the image map
    public $ImageMapIndex	= "pChart";			// Name of the session array
-   public $ImageMapStorageMode = NULL;			// Save the current imagemap storage mode
-   public $ImageMapAutoDelete  = TRUE;			// Automatic deletion of the image map temp files
+   public $ImageMapStorageMode = null;			// Save the current imagemap storage mode
+   public $ImageMapAutoDelete  = true;			// Automatic deletion of the image map temp files
 
    /* Data Set */
-     public $DataSet		= NULL;				// Attached dataset
+     public $DataSet		= null;				// Attached dataset
 
      /* Last generated chart info */
      public $LastChartLayout	= CHART_LAST_LAYOUT_REGULAR;	// Last layout : regular or stacked
 
      /* Class constructor */
-     public function pImage($XSize, $YSize, $DataSet=NULL, $TransparentBackground=FALSE)
+     public function pImage($XSize, $YSize, $DataSet=null, $TransparentBackground=false)
      {
          $this->TransparentBackground = $TransparentBackground;
 
-         if ($DataSet != NULL) {
+         if ($DataSet != null) {
              $this->DataSet = $DataSet;
          }
 
@@ -94,9 +94,9 @@
          $this->Picture = imagecreatetruecolor($XSize, $YSize);
 
          if ($this->TransparentBackground) {
-             imagealphablending($this->Picture, FALSE);
+             imagealphablending($this->Picture, false);
              imagefilledrectangle($this->Picture, 0, 0, $XSize, $YSize, imagecolorallocatealpha($this->Picture, 255, 255, 255, 127));
-             imagealphablending($this->Picture, TRUE);
+             imagealphablending($this->Picture, true);
              imagesavealpha($this->Picture, true);
          } else {
              $C_White = $this->AllocateColor($this->Picture, 255, 255, 255);
@@ -105,7 +105,7 @@
      }
 
      /* Enable / Disable and set shadow properties */
-     public function setShadow($Enabled=TRUE, $Format="")
+     public function setShadow($Enabled=true, $Format="")
      {
          $X	    = isset($Format["X"]) ? $Format["X"] : 2;
          $Y	    = isset($Format["Y"]) ? $Format["Y"] : 2;
@@ -163,7 +163,7 @@
      }
 
      /* Render the picture to a web browser stream */
-     public function stroke($BrowserExpire=FALSE)
+     public function stroke($BrowserExpire=false)
      {
          if ($this->TransparentBackground) {
              imagealphablending($this->Picture, false);
@@ -204,9 +204,8 @@
          $Angle = rad2deg(atan2($Opposite, $Adjacent));
          if ($Angle > 0) {
              return($Angle);
-         } else {
-             return(360-abs($Angle));
          }
+         return(360-abs($Angle));
      }
 
      /* Return the surrounding box of text area */
@@ -276,8 +275,8 @@
          $G		= isset($Format["G"]) ? $Format["G"] : -1;
          $B		= isset($Format["B"]) ? $Format["B"] : -1;
          $Alpha	= isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
-         $FontName	= isset($Format["FontName"]) ? $Format["FontName"] : NULL;
-         $FontSize	= isset($Format["FontSize"]) ? $Format["FontSize"] : NULL;
+         $FontName	= isset($Format["FontName"]) ? $Format["FontName"] : null;
+         $FontSize	= isset($Format["FontSize"]) ? $Format["FontSize"] : null;
 
          if ($R != -1) {
              $this->FontColorR = $R;
@@ -288,15 +287,15 @@
          if ($B != -1) {
              $this->FontColorB = $B;
          }
-         if ($Alpha != NULL) {
+         if ($Alpha != null) {
              $this->FontColorA = $Alpha;
          }
 
-         if ($FontName != NULL) {
+         if ($FontName != null) {
              $this->FontName = $FontName;
          }
  
-         if ($FontSize != NULL) {
+         if ($FontSize != null) {
              $this->FontSize = $FontSize;
          }
      }
@@ -307,9 +306,8 @@
          $Values = preg_split("/\./", $Value);
          if (isset($Values[1])) {
              return(substr($Values[1], 0, 1));
-         } else {
-             return(0);
          }
+         return(0);
      }
 
      /* Attach a dataset to your pChart Object */
@@ -334,7 +332,7 @@
              if (!isset($_SESSION)) {
                  session_start();
              }
-             $_SESSION[$this->ImageMapIndex]    = NULL;
+             $_SESSION[$this->ImageMapIndex]    = null;
          } elseif ($StorageMode == IMAGE_MAP_STORAGE_FILE) {
              $this->ImageMapFileName 		= $UniqueID;
              $this->ImageMapStorageFolder	= $StorageFolder;
@@ -346,9 +344,9 @@
      }
 
      /* Add a zone to the image map */
-     public function addToImageMap($Type, $Plots, $Color=NULL, $Title=NULL, $Message=NULL, $HTMLEncode=FALSE)
+     public function addToImageMap($Type, $Plots, $Color=null, $Title=null, $Message=null, $HTMLEncode=false)
      {
-         if ($this->ImageMapStorageMode == NULL) {
+         if ($this->ImageMapStorageMode == null) {
              $this->initialiseImageMap();
          }
 
@@ -392,7 +390,7 @@
      /* Replace the title of one image map serie */
      public function replaceImageMapTitle($OldTitle, $NewTitle)
      {
-         if ($this->ImageMapStorageMode == NULL) {
+         if ($this->ImageMapStorageMode == null) {
              return(-1);
          }
 
@@ -457,12 +455,12 @@
      /* Replace the values of the image map contents */
      public function replaceImageMapValues($Title, $Values)
      {
-         if ($this->ImageMapStorageMode == NULL) {
+         if ($this->ImageMapStorageMode == null) {
              return(-1);
          }
 
          $Values = $this->removeVOIDFromArray($Title, $Values);
-         $ID = 0; 
+         $ID = 0;
          if ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION) {
              if (!isset($_SESSION)) {
                  return(-1);
@@ -513,7 +511,7 @@
              if (!isset($_SESSION)) {
                  session_start();
              }
-             if ($_SESSION[$Name] != NULL) {
+             if ($_SESSION[$Name] != null) {
                  foreach ($_SESSION[$Name] as $Key => $Params) {
                      echo $Params[0].IMAGE_MAP_DELIMITER.$Params[1].IMAGE_MAP_DELIMITER.$Params[2].IMAGE_MAP_DELIMITER.$Params[3].IMAGE_MAP_DELIMITER.$Params[4]."\r\n";
                  }

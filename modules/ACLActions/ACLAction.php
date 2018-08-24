@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 /* BEGIN - SECURITY GROUPS */
 if (file_exists("modules/ACLActions/actiondefs.override.php")) {
     require_once("modules/ACLActions/actiondefs.override.php");
@@ -250,16 +251,15 @@ class ACLAction extends SugarBean
         if (!$refresh && !empty($_SESSION['ACL'][$user_id])) {
             if (empty($category) && empty($action)) {
                 return $_SESSION['ACL'][$user_id];
-            } else {
-                if (!empty($category) && isset($_SESSION['ACL'][$user_id][$category])) {
-                    if (empty($action)) {
-                        if (empty($type)) {
-                            return $_SESSION['ACL'][$user_id][$category];
-                        }
-                        return isset($_SESSION['ACL'][$user_id][$category][$type]) ? $_SESSION['ACL'][$user_id][$category][$type] : null;
-                    } elseif (!empty($type) && isset($_SESSION['ACL'][$user_id][$category][$type][$action])) {
-                        return $_SESSION['ACL'][$user_id][$category][$type][$action];
+            }
+            if (!empty($category) && isset($_SESSION['ACL'][$user_id][$category])) {
+                if (empty($action)) {
+                    if (empty($type)) {
+                        return $_SESSION['ACL'][$user_id][$category];
                     }
+                    return isset($_SESSION['ACL'][$user_id][$category][$type]) ? $_SESSION['ACL'][$user_id][$category][$type] : null;
+                } elseif (!empty($type) && isset($_SESSION['ACL'][$user_id][$category][$type][$action])) {
+                    return $_SESSION['ACL'][$user_id][$category][$type][$action];
                 }
             }
         }
@@ -311,9 +311,9 @@ class ACLAction extends SugarBean
         /* BEGIN - SECURITY GROUPS */
         global $sugar_config;
         $has_user_role = false; //used for user_role_precedence
-		$has_role = false; //used to determine if default actions can be ignored. If a user has a defined role don't use the defaults
-		/* END - SECURITY GROUPS */
-        while ($row = $db->fetchByAssoc($result, FALSE)) {
+        $has_role = false; //used to determine if default actions can be ignored. If a user has a defined role don't use the defaults
+        /* END - SECURITY GROUPS */
+        while ($row = $db->fetchByAssoc($result, false)) {
             /* BEGIN - SECURITY GROUPS */
             if ($has_user_role == false && $row['user_role'] == 1) {
                 $has_user_role = true;
@@ -324,8 +324,8 @@ class ACLAction extends SugarBean
             //if user roles should take precedence over group roles and we have a user role
             //break when we get to processing the group roles
             if ($has_user_role == true && $row['user_role'] == 0
-					&& isset($sugar_config['securitysuite_user_role_precedence'])
-					&& $sugar_config['securitysuite_user_role_precedence'] == true) {
+                    && isset($sugar_config['securitysuite_user_role_precedence'])
+                    && $sugar_config['securitysuite_user_role_precedence'] == true) {
                 break;
             }
             if ($row['user_role'] == -1 && $has_role == true) {
@@ -343,20 +343,21 @@ class ACLAction extends SugarBean
                 $selected_actions[$acl->category] = array();
             }
             if (!isset($selected_actions[$acl->category][$acl->acltype][$acl->name])
-				|| (
-					/* BEGIN - SECURITY GROUPS - additive security*/
-					(
-						(isset($sugar_config['securitysuite_additive']) && $sugar_config['securitysuite_additive'] == true
-						&& $selected_actions[$acl->category][$acl->acltype][$acl->name]['aclaccess'] < $acl->aclaccess)
-					||
-						((!isset($sugar_config['securitysuite_additive']) || $sugar_config['securitysuite_additive'] == false)
-						&& $selected_actions[$acl->category][$acl->acltype][$acl->name]['aclaccess'] > $acl->aclaccess)
-					)
-					/* END - SECURITY GROUPS */
+                || (
+                    /* BEGIN - SECURITY GROUPS - additive security*/
+                    (
+                        (isset($sugar_config['securitysuite_additive']) && $sugar_config['securitysuite_additive'] == true
+                        && $selected_actions[$acl->category][$acl->acltype][$acl->name]['aclaccess'] < $acl->aclaccess)
+                    ||
+                        ((!isset($sugar_config['securitysuite_additive']) || $sugar_config['securitysuite_additive'] == false)
+                        && $selected_actions[$acl->category][$acl->acltype][$acl->name]['aclaccess'] > $acl->aclaccess)
+                    )
+                    /* END - SECURITY GROUPS */
                     && $isOverride
                     )
                 ||
-                    (!empty($selected_actions[$acl->category][$acl->acltype][$acl->name]['isDefault'])
+                    (
+                        !empty($selected_actions[$acl->category][$acl->acltype][$acl->name]['isDefault'])
                     && $isOverride
                     )
                 ) {
@@ -426,17 +427,18 @@ class ACLAction extends SugarBean
             return true;
         }
         */
-        if ($access != 0 && ($access == ACL_ALLOW_ALL
-			|| ($is_owner && ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP))  //if owner that's better than in group so count it...better way to clean this up?
-			|| ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow
-		)) {
+        if ($access != 0 && (
+            $access == ACL_ALLOW_ALL
+            || ($is_owner && ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP))  //if owner that's better than in group so count it...better way to clean this up?
+            || ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow
+        )) {
             return true;
         }
         if (!is_null($action) && isset($action->aclaccess)) {
             if ($action->aclaccess == ACL_ALLOW_ALL
-				|| ($is_owner && $action->aclaccess == ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP))
-				|| ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow
-			) {
+                || ($is_owner && $action->aclaccess == ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP))
+                || ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow
+            ) {
                 return true;
             }
         }
@@ -578,7 +580,7 @@ class ACLAction extends SugarBean
                     $names[$act_name] = translate($ACLActions[$type_name]['actions'][$act_name]['label'], 'ACLActions');
                     $categories[$cat_name][$type_name][$act_name]['accessColor'] = ACLAction::AccessColor(isset($action['aclaccess']) ? $action['aclaccess'] : null);
                     if ($type_name== 'module') {
-                        if ($act_name != 'aclaccess' && 
+                        if ($act_name != 'aclaccess' &&
                                 (isset($categories[$cat_name]['module']['access']['aclaccess']) ? $categories[$cat_name]['module']['access']['aclaccess'] : null) == ACL_ALLOW_DISABLED) {
                             $categories[$cat_name][$type_name][$act_name]['accessColor'] = 'darkgray';
                             $disabled[] = $cat_name;

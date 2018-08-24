@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -55,7 +55,7 @@ require_once 'modules/Campaigns/utils.php';
 
 global $mod_strings, $app_list_strings, $app_strings, $current_user, $import_bean_map,$import_file_name, $theme;
 
-$xtpl=new XTemplate ('modules/Campaigns/WebToLeadCreation.html');
+$xtpl=new XTemplate('modules/Campaigns/WebToLeadCreation.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 if (isset($_REQUEST['module'])) {
@@ -101,23 +101,23 @@ $web_post_url = $site_url.'/index.php?entryPoint=WebToPersonCapture';
 $json = getJSONobj();
 // Users Popup
 $popup_request_data = array(
-	'call_back_function' => 'set_return',
-	'form_name' => 'WebToLeadCreation',
-	'field_to_name_array' => array(
-		'id' => 'assigned_user_id',
-		'user_name' => 'assigned_user_name',
-		),
-	);
+    'call_back_function' => 'set_return',
+    'form_name' => 'WebToLeadCreation',
+    'field_to_name_array' => array(
+        'id' => 'assigned_user_id',
+        'user_name' => 'assigned_user_name',
+        ),
+    );
 $xtpl->assign('encoded_users_popup_request_data', $json->encode($popup_request_data));
 
 //Campaigns popup
 $popup_request_data = array(
-		'call_back_function' => 'set_return',
-		'form_name' => 'WebToLeadCreation',
-		'field_to_name_array' => array(
-			'id' => 'campaign_id',
-			'name' => 'campaign_name',
-		),
+        'call_back_function' => 'set_return',
+        'form_name' => 'WebToLeadCreation',
+        'field_to_name_array' => array(
+            'id' => 'campaign_id',
+            'name' => 'campaign_name',
+        ),
 );
 $encoded_users_popup_request_data = $json->encode($popup_request_data);
 $xtpl->assign('encoded_campaigns_popup_request_data', $json->encode($popup_request_data));
@@ -169,4 +169,3 @@ function getListOfExtendingClasses($superclass)
     }
     return $subclasses;
 }
-

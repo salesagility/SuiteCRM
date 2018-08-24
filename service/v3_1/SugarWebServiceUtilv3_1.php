@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('service/v3/SugarWebServiceUtilv3.php');
 class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
@@ -50,7 +51,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 
         $tableName = $value->getTableName();
 
-        return Array('module_name'=>$module, 'table_name' => $tableName,
+        return array('module_name'=>$module, 'table_name' => $tableName,
                     'module_fields'=> $result['module_fields'],
                     'link_fields'=> $result['link_fields'],
                     );
@@ -74,7 +75,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
             $monitor->setValue('item_id', $seed->id);
             $monitor->setValue('item_summary', $seed->get_summary_text());
             $monitor->setValue('visible', true);
-            $trackerManager->saveMonitor($monitor, TRUE, TRUE);
+            $trackerManager->saveMonitor($monitor, true, true);
         }
     }
 
@@ -136,7 +137,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 
         $beanName = BeanFactory::getObjectName($moduleName);
 
-        $manager = new VardefManager ();
+        $manager = new VardefManager();
         $manager->loadVardef($moduleName, $beanName) ;
 
         // obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
@@ -163,7 +164,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
                 $field = 'phone' ;
             }
 
-            if (isset($def['unified_search']) && $def['unified_search'] && isset ($searchFields [ $moduleName ] [ $field ])) {
+            if (isset($def['unified_search']) && $def['unified_search'] && isset($searchFields [ $moduleName ] [ $field ])) {
                 $fields [ $field ] = $searchFields [ $moduleName ] [ $field ] ;
             }
         }
@@ -294,7 +295,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         if ($value->module_dir == 'Bugs') {
             require_once('modules/Releases/Release.php');
             $seedRelease = new Release();
-            $options = $seedRelease->get_releases(TRUE, "Active");
+            $options = $seedRelease->get_releases(true, "Active");
             $options_ret = array();
             foreach ($options as $name=>$value) {
                 $options_ret[] =  array('name'=> $name , 'value'=>$value);
@@ -346,7 +347,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      *
      * @return string - Contents base64'd.
      */
-    public function get_file_contents_base64($filename, $remove = FALSE)
+    public function get_file_contents_base64($filename, $remove = false)
     {
         $contents = "";
         if (file_exists($filename)) {
@@ -435,9 +436,8 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         $functionName = "metdataAclParser" . ucfirst($view_type) . ucfirst($view);
         if (method_exists($this, $functionName)) {
             return $this->$functionName($module_name, $metadata);
-        } else {
-            return $metadata;
         }
+        return $metadata;
     }
 
 

@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 <?php
 require('service/core/SugarSoapService.php');
@@ -111,23 +112,22 @@ abstract class PHP5Soap extends SugarSoapService
         } // if
     } // fn
 
-	public function getWSDLPath($generateWSDL)
-	{
-	    $wsdlURL = $this->getSoapURL().'?wsdl';
-	    $wsdlCacheFile = 'upload://wsdlcache-' . md5($wsdlURL);
+    public function getWSDLPath($generateWSDL)
+    {
+        $wsdlURL = $this->getSoapURL().'?wsdl';
+        $wsdlCacheFile = 'upload://wsdlcache-' . md5($wsdlURL);
 
-	    if ($generateWSDL) {
-	        $oldqs = $_SERVER['QUERY_STRING'];
-	        $_SERVER['QUERY_STRING'] = "wsdl";
-	        $this->nusoap_server->service($wsdlURL);
-	        $_SERVER['QUERY_STRING'] = $oldqs;
-	        file_put_contents($wsdlCacheFile, ob_get_contents());
-	        return $wsdlCacheFile;
-	    //ob_clean();
-	    } else {
-	        return $wsdlCacheFile;
-	    }
-	} // fn
+        if ($generateWSDL) {
+            $oldqs = $_SERVER['QUERY_STRING'];
+            $_SERVER['QUERY_STRING'] = "wsdl";
+            $this->nusoap_server->service($wsdlURL);
+            $_SERVER['QUERY_STRING'] = $oldqs;
+            file_put_contents($wsdlCacheFile, ob_get_contents());
+            return $wsdlCacheFile;
+            //ob_clean();
+        }
+        return $wsdlCacheFile;
+    } // fn
 
     public function getNameSpace()
     {

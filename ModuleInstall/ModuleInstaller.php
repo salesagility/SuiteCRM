@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /*
@@ -129,19 +130,19 @@ class ModuleInstaller
         $total_steps = 5; //minimum number of steps with no tasks
         $current_step = 0;
         $tasks = array(
-			'pre_execute',
-			'install_copy',
-		    'install_extensions',
-			'install_images',
-			'install_dcactions',
-			'install_dashlets',
-			'install_connectors',
-			'install_layoutfields',
-			'install_relationships',
+            'pre_execute',
+            'install_copy',
+            'install_extensions',
+            'install_images',
+            'install_dcactions',
+            'install_dashlets',
+            'install_connectors',
+            'install_layoutfields',
+            'install_relationships',
             'enable_manifest_logichooks',
-			'post_execute',
-			'reset_opcodes',
-		);
+            'post_execute',
+            'reset_opcodes',
+        );
 
         $total_steps += count($tasks);
         if (file_exists($this->base_dir . '/manifest.php')) {
@@ -149,7 +150,7 @@ class ModuleInstaller
                 $current_step++;
                 display_progress_bar('install', $current_step, $total_steps);
                 echo '<div id ="displayLoglink" ><a href="#" onclick="document.getElementById(\'displayLog\').style.display=\'\'">'
-						.$app_strings['LBL_DISPLAY_LOG'].'</a> </div><div id="displayLog" style="display:none">';
+                        .$app_strings['LBL_DISPLAY_LOG'].'</a> </div><div id="displayLog" style="display:none">';
             }
 
             include($this->base_dir . '/manifest.php');
@@ -166,7 +167,7 @@ class ModuleInstaller
                     }//fi
                 }//fi
             }//fi
-				$this->id_name = $installdefs['id'];
+                $this->id_name = $installdefs['id'];
             $this->installdefs = $installdefs;
             if (!$this->silent) {
                 $current_step++;
@@ -200,14 +201,14 @@ class ModuleInstaller
                 echo '</div>';
             }
             $selectedActions = array(
-			'clearTpls',
-			'clearJsFiles',
-			'clearDashlets',
-			'clearVardefs',
-			'clearJsLangFiles',
-			'rebuildAuditTables',
-			'repairDatabase',
-		);
+            'clearTpls',
+            'clearJsFiles',
+            'clearDashlets',
+            'clearVardefs',
+            'clearJsLangFiles',
+            'rebuildAuditTables',
+            'repairDatabase',
+        );
             VardefManager::clearVardef();
             global $beanList, $beanFiles, $moduleList;
             if (file_exists('custom/application/Ext/Include/modules.ext.php')) {
@@ -374,9 +375,8 @@ class ModuleInstaller
     {
         if ($module == 'application') {
             return "custom/Extension/application/Ext";
-        } else {
-            return "custom/Extension/modules/$module/Ext";
         }
+        return "custom/Extension/modules/$module/Ext";
     }
 
     /**
@@ -482,7 +482,7 @@ class ModuleInstaller
      * Disable generic extension
      * @param string $section Install file section name
      * @param string $extname Extension directory
- 	 * @param string $module This extension belongs to a specific module
+     * @param string $module This extension belongs to a specific module
      */
     public function disableExt($section, $extname, $module = '')
     {
@@ -525,7 +525,7 @@ class ModuleInstaller
      * Enable generic extension
      * @param string $section Install file section name
      * @param string $extname Extension directory
- 	 * @param string $module This extension belongs to a specific module
+     * @param string $module This extension belongs to a specific module
      */
     public function enableExt($section, $extname, $module = '')
     {
@@ -1143,7 +1143,7 @@ class ModuleInstaller
             $strings = $mod_strings;
         }
 
-        foreach ($uninstalLabes AS $label) {
+        foreach ($uninstalLabes as $label) {
             if (isset($strings[$label])) {
                 unset($strings[$label]);
             }
@@ -1184,7 +1184,7 @@ class ModuleInstaller
                 continue;
             }
 
-            foreach (array_keys($GLOBALS['sugar_config']['languages']) AS $language) {
+            foreach (array_keys($GLOBALS['sugar_config']['languages']) as $language) {
                 $pathDef = array(
                     'language' => $language,
                     'to_module' => $definition['module']
@@ -1206,7 +1206,7 @@ class ModuleInstaller
     protected function getLabelsToUninstall($labelDefinitions)
     {
         $labels = array();
-        foreach ($labelDefinitions AS $definition) {
+        foreach ($labelDefinitions as $definition) {
             $labels[] = $definition['system_label'];
         }
         return $labels;
@@ -1275,7 +1275,7 @@ class ModuleInstaller
                 //Merge contents of the sugar field extension if we copied one over
                 if (file_exists("custom/Extension/modules/{$field['module']}/Ext/Vardefs/sugarfield_{$field['name']}.php")) {
                     $dictionary = array();
-                    include ("custom/Extension/modules/{$field['module']}/Ext/Vardefs/sugarfield_{$field['name']}.php");
+                    include("custom/Extension/modules/{$field['module']}/Ext/Vardefs/sugarfield_{$field['name']}.php");
                     $obj = BeanFactory::getObjectName($field['module']);
                     if (!empty($dictionary[$obj]['fields'][$field['name']])) {
                         $field = array_merge($dictionary[$obj]['fields'][$field['name']], $field);
@@ -1324,45 +1324,45 @@ class ModuleInstaller
      */
     public function install_relationships()
     {
-        if (isset ($this->installdefs [ 'relationships' ])) {
-            $this->log (translate ('LBL_MI_IN_RELATIONSHIPS')) ;
+        if (isset($this->installdefs [ 'relationships' ])) {
+            $this->log(translate('LBL_MI_IN_RELATIONSHIPS')) ;
             $str = "<?php \n //WARNING: The contents of this file are auto-generated\n" ;
             $save_table_dictionary = false ;
 
-            if (! file_exists ("custom/Extension/application/Ext/TableDictionary")) {
-                mkdir_recursive ("custom/Extension/application/Ext/TableDictionary", true) ;
+            if (! file_exists("custom/Extension/application/Ext/TableDictionary")) {
+                mkdir_recursive("custom/Extension/application/Ext/TableDictionary", true) ;
             }
 
             foreach ($this->installdefs [ 'relationships' ] as $key => $relationship) {
-                $filename = basename ($relationship [ 'meta_data' ]) ;
-                $this->copy_path ($relationship [ 'meta_data' ], 'custom/metadata/' . $filename) ;
-                $this->install_relationship ('custom/metadata/' . $filename) ;
+                $filename = basename($relationship [ 'meta_data' ]) ;
+                $this->copy_path($relationship [ 'meta_data' ], 'custom/metadata/' . $filename) ;
+                $this->install_relationship('custom/metadata/' . $filename) ;
                 $save_table_dictionary = true ;
 
-                if (! empty ($relationship [ 'module_vardefs' ])) {
-                    $relationship [ 'module_vardefs' ] = str_replace ('<basepath>', $this->base_dir, $relationship [ 'module_vardefs' ]) ;
-                    $this->install_vardef ($relationship [ 'module_vardefs' ], $relationship [ 'module' ]) ;
+                if (! empty($relationship [ 'module_vardefs' ])) {
+                    $relationship [ 'module_vardefs' ] = str_replace('<basepath>', $this->base_dir, $relationship [ 'module_vardefs' ]) ;
+                    $this->install_vardef($relationship [ 'module_vardefs' ], $relationship [ 'module' ]) ;
                 }
 
-                if (! empty ($relationship [ 'module_layoutdefs' ])) {
-                    $relationship [ 'module_layoutdefs' ] = str_replace ('<basepath>', $this->base_dir, $relationship [ 'module_layoutdefs' ]) ;
-                    $this->install_layoutdef ($relationship [ 'module_layoutdefs' ], $relationship [ 'module' ]) ;
+                if (! empty($relationship [ 'module_layoutdefs' ])) {
+                    $relationship [ 'module_layoutdefs' ] = str_replace('<basepath>', $this->base_dir, $relationship [ 'module_layoutdefs' ]) ;
+                    $this->install_layoutdef($relationship [ 'module_layoutdefs' ], $relationship [ 'module' ]) ;
                 }
 
                 $relName = strpos($filename, "MetaData") !== false ? substr($filename, 0, strlen($filename) - 12) : $filename;
-                $out = sugar_fopen ("custom/Extension/application/Ext/TableDictionary/$relName.php", 'w') ;
-                fwrite ($out, $str . "include('custom/metadata/$filename');\n\n?>") ;
-                fclose ($out) ;
+                $out = sugar_fopen("custom/Extension/application/Ext/TableDictionary/$relName.php", 'w') ;
+                fwrite($out, $str . "include('custom/metadata/$filename');\n\n?>") ;
+                fclose($out) ;
             }
 
 
 
 
             Relationship::delete_cache();
-            $this->rebuild_vardefs () ;
-            $this->rebuild_layoutdefs () ;
+            $this->rebuild_vardefs() ;
+            $this->rebuild_layoutdefs() ;
             if ($save_table_dictionary) {
-                $this->rebuild_tabledictionary () ;
+                $this->rebuild_tabledictionary() ;
             }
             require_once("data/Relationships/RelationshipFactory.php");
             SugarRelationshipFactory::deleteCache();
@@ -1407,7 +1407,7 @@ class ModuleInstaller
 
     public function install_layoutfields()
     {
-        if (!empty ($this->installdefs [ 'layoutfields' ])) {
+        if (!empty($this->installdefs [ 'layoutfields' ])) {
             foreach ($this->installdefs [ 'layoutfields' ] as $fieldSet) {
                 if (!empty($fieldSet['additional_fields'])) {
                     $this->addFieldsToLayout($fieldSet['additional_fields']);
@@ -1418,7 +1418,7 @@ class ModuleInstaller
 
     public function uninstall_layoutfields()
     {
-        if (!empty ($this->installdefs [ 'layoutfields' ])) {
+        if (!empty($this->installdefs [ 'layoutfields' ])) {
             foreach ($this->installdefs [ 'layoutfields' ] as $fieldSet) {
                 if (!empty($fieldSet['additional_fields'])) {
                     $this->removeFieldsFromLayout($fieldSet['additional_fields']);
@@ -1457,9 +1457,9 @@ class ModuleInstaller
             // check to see if we have any vardef or layoutdef entries to remove - must have a relationship['module'] parameter if we do
             if (!isset($rel_data[ 'module' ])) {
                 $mods = array(
-					$rel_data['relationships'][$rel_name]['lhs_module'],
-					$rel_data['relationships'][$rel_name]['rhs_module'],
-				);
+                    $rel_data['relationships'][$rel_name]['lhs_module'],
+                    $rel_data['relationships'][$rel_name]['rhs_module'],
+                );
             } else {
                 $mods = array($rel_data[ 'module' ]);
             }
@@ -1542,7 +1542,7 @@ class ModuleInstaller
                 $field_defs = $dictionary[$bean]['fields'];
                 foreach ($field_defs as $field => $def) {
                     //Weed out most fields first
-                    if (isset ($def['type'])) {
+                    if (isset($def['type'])) {
                         //Custom relationships created in the relationship editor
                         if ($def['type'] == "link" && !empty($def['relationship']) && !empty($dictionary[$def['relationship']])) {
                             $rel_name = $def['relationship'];
@@ -1562,17 +1562,17 @@ class ModuleInstaller
                             foreach ($this->modulesInPackage as $removed_mod) {
                                 if ($def['module'] == $removed_mod) {
                                     require_once 'modules/ModuleBuilder/Module/StudioModule.php' ;
-                                    $studioMod = new StudioModule ($mod);
+                                    $studioMod = new StudioModule($mod);
                                     $studioMod->removeFieldFromLayouts($field);
                                     if (isset($def['custom_module'])) {
-                                        require_once ('modules/DynamicFields/DynamicField.php') ;
-                                        require_once ($beanFiles [ $bean ]) ;
-                                        $seed = new $bean () ;
-                                        $df = new DynamicField ($mod) ;
-                                        $df->setup ($seed) ;
+                                        require_once('modules/DynamicFields/DynamicField.php') ;
+                                        require_once($beanFiles [ $bean ]) ;
+                                        $seed = new $bean() ;
+                                        $df = new DynamicField($mod) ;
+                                        $df->setup($seed) ;
                                         //Need to load the entire field_meta_data for some field types
                                         $field_obj = $df->getFieldWidget($mod, $field);
-                                        $field_obj->delete ($df) ;
+                                        $field_obj->delete($df) ;
                                     }
                                 }
                             }
@@ -1591,7 +1591,7 @@ class ModuleInstaller
             $this->log(translate('LBL_MI_UN_RELATIONSHIPS'));
             foreach ($relationships as $relationship) {
                 // remove the metadata entry
-                $filename = basename ($relationship['meta_data']);
+                $filename = basename($relationship['meta_data']);
                 $pathname = (file_exists("custom/metadata/$filename")) ? "custom/metadata/$filename" : "metadata/$filename" ;
                 if (isset($GLOBALS['mi_remove_tables']) && $GLOBALS['mi_remove_tables']) {
                     $this->uninstall_relationship($pathname);
@@ -1622,18 +1622,18 @@ class ModuleInstaller
         $current_step = 0;
         $this->base_dir = $base_dir;
         $tasks = array(
-			'pre_uninstall',
-			'uninstall_relationships',
-			'uninstall_copy',
-			'uninstall_dcactions',
-			'uninstall_dashlets',
-			'uninstall_connectors',
-			'uninstall_layoutfields',
-		    'uninstall_extensions',
+            'pre_uninstall',
+            'uninstall_relationships',
+            'uninstall_copy',
+            'uninstall_dcactions',
+            'uninstall_dashlets',
+            'uninstall_connectors',
+            'uninstall_layoutfields',
+            'uninstall_extensions',
             'uninstall_global_search',
-			'disable_manifest_logichooks',
-			'post_uninstall',
-		);
+            'disable_manifest_logichooks',
+            'post_uninstall',
+        );
         $total_steps += count($tasks); //now the real number of steps
         if (file_exists($this->base_dir . '/manifest.php')) {
             if (!$this->silent) {
@@ -1770,8 +1770,8 @@ class ModuleInstaller
         global $current_user,$beanFiles,$dictionary;
         $this->log(translate('LBL_MI_REPAIR_INDICES'));
         $_REQUEST['silent'] = true; // local var flagging echo'd output in repair script
-		$_REQUEST['mode'] = 'execute'; // flag to just go ahead and run the script
-		include("modules/Administration/RepairIndex.php");
+        $_REQUEST['mode'] = 'execute'; // flag to just go ahead and run the script
+        include("modules/Administration/RepairIndex.php");
     }
 
     /**
@@ -1820,7 +1820,7 @@ class ModuleInstaller
                     $override = array();
                     while ($entry = $dir->read()) {
                         if ((empty($filter) || substr_count($entry, $filter) > 0) && is_file($module_install.'/'.$entry)
-						  && $entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == ".php") {
+                          && $entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == ".php") {
                             if (substr($entry, 0, 9) == '_override') {
                                 $override[] = $entry;
                             } else {
@@ -1863,7 +1863,7 @@ class ModuleInstaller
             while ($entry = $dir->read()) {
                 $shouldSave = true;
                 if ((empty($filter) || substr_count($entry, $filter) > 0) && is_file($module_install.'/'.$entry)
-								  && $entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == ".php") {
+                                  && $entry != '.' && $entry != '..' && strtolower(substr($entry, -4)) == ".php") {
                     $file = file_get_contents($module_install . '/' . $entry);
                     $extension .= "\n". str_replace(array('<?php', '?>', '<?PHP', '<?'), array('','', '' ,''), $file);
                 }
@@ -1980,10 +1980,10 @@ class ModuleInstaller
     {
         foreach ($beans as $bean) {
             $dirs = array(
-				'custom/modules/' . $bean,
-				'custom/Extension/modules/' . $bean,
+                'custom/modules/' . $bean,
+                'custom/Extension/modules/' . $bean,
                 'custom/working/modules/' . $bean
-			);
+            );
             foreach ($dirs as $dir) {
                 if (is_dir($dir)) {
                     rmdir_recursive($dir);
@@ -2011,39 +2011,35 @@ class ModuleInstaller
                         sugar_touch($dest, filemtime($source));
                     }
                     return(unlink($source));
-                } else {
-                    $GLOBALS['log']->debug("Can't restore file: " . $source);
-                    return true;
                 }
-            } else {
-                if (file_exists($dest)) {
-                    $rest = clean_path($backup_path."/$dest");
-                    if (!is_dir(dirname($rest))) {
-                        mkdir_recursive(dirname($rest), true);
-                    }
-
-                    $GLOBALS['log']->debug("Backup ... " . $dest.  " to " .$rest);
-                    if (copy($dest, $rest)) {
-                        if (is_writable($rest)) {
-                            sugar_touch($rest, filemtime($dest));
-                        }
-                    } else {
-                        $GLOBALS['log']->debug("Can't backup file: " . $dest);
-                    }
-                }
-                return(copy($source, $dest));
+                $GLOBALS['log']->debug("Can't restore file: " . $source);
+                return true;
             }
+            if (file_exists($dest)) {
+                $rest = clean_path($backup_path."/$dest");
+                if (!is_dir(dirname($rest))) {
+                    mkdir_recursive(dirname($rest), true);
+                }
+
+                $GLOBALS['log']->debug("Backup ... " . $dest.  " to " .$rest);
+                if (copy($dest, $rest)) {
+                    if (is_writable($rest)) {
+                        sugar_touch($rest, filemtime($dest));
+                    }
+                } else {
+                    $GLOBALS['log']->debug("Can't backup file: " . $dest);
+                }
+            }
+            return(copy($source, $dest));
         } elseif (!is_dir($source)) {
             if ($uninstall) {
                 if (is_file($dest)) {
                     return(unlink($dest));
-                } else {
-                    //don't do anything we already cleaned up the files using uninstall_new_files
-                    return true;
                 }
-            } else {
-                return false;
+                //don't do anything we already cleaned up the files using uninstall_new_files
+                return true;
             }
+            return false;
         }
 
         if (!is_dir($dest) && !$uninstall) {
@@ -2142,9 +2138,8 @@ class ModuleInstaller
             $errors = $_SESSION['MODULEINSTALLER_ERRORS'];
             unset($_SESSION['MODULEINSTALLER_ERRORS']);
             return $errors;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /*
@@ -2160,15 +2155,15 @@ class ModuleInstaller
         // these modules either lack editviews/detailviews or use custom mechanisms for the editview/detailview.
         // In either case, we don't want to attempt to add a relate field to them
         // would be better if GridLayoutMetaDataParser could handle this gracefully, so we don't have to maintain this list here
-        $invalidModules = array ( 'emails' , 'kbdocuments' ) ;
+        $invalidModules = array( 'emails' , 'kbdocuments' ) ;
 
         foreach ($layoutAdditions as $deployedModuleName => $fieldName) {
-            if (! in_array(strtolower ($deployedModuleName), $invalidModules)) {
-                foreach (array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view) {
-                    $GLOBALS [ 'log' ]->debug (get_class ($this) . ": adding $fieldName to $view layout for module $deployedModuleName") ;
-                    $parser = new GridLayoutMetaDataParser ($view, $deployedModuleName) ;
-                    $parser->addField (array ( 'name' => $fieldName )) ;
-                    $parser->handleSave (false) ;
+            if (! in_array(strtolower($deployedModuleName), $invalidModules)) {
+                foreach (array( MB_EDITVIEW , MB_DETAILVIEW ) as $view) {
+                    $GLOBALS [ 'log' ]->debug(get_class($this) . ": adding $fieldName to $view layout for module $deployedModuleName") ;
+                    $parser = new GridLayoutMetaDataParser($view, $deployedModuleName) ;
+                    $parser->addField(array( 'name' => $fieldName )) ;
+                    $parser->handleSave(false) ;
                 }
             }
         }
@@ -2181,15 +2176,15 @@ class ModuleInstaller
         // these modules either lack editviews/detailviews or use custom mechanisms for the editview/detailview.
         // In either case, we don't want to attempt to add a relate field to them
         // would be better if GridLayoutMetaDataParser could handle this gracefully, so we don't have to maintain this list here
-        $invalidModules = array ( 'emails' , 'kbdocuments' ) ;
+        $invalidModules = array( 'emails' , 'kbdocuments' ) ;
 
         foreach ($layoutAdditions as $deployedModuleName => $fieldName) {
-            if (! in_array(strtolower ($deployedModuleName), $invalidModules)) {
-                foreach (array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view) {
-                    $GLOBALS [ 'log' ]->debug (get_class ($this) . ": adding $fieldName to $view layout for module $deployedModuleName") ;
-                    $parser = new GridLayoutMetaDataParser ($view, $deployedModuleName) ;
-                    $parser->removeField ($fieldName) ;
-                    $parser->handleSave (false) ;
+            if (! in_array(strtolower($deployedModuleName), $invalidModules)) {
+                foreach (array( MB_EDITVIEW , MB_DETAILVIEW ) as $view) {
+                    $GLOBALS [ 'log' ]->debug(get_class($this) . ": adding $fieldName to $view layout for module $deployedModuleName") ;
+                    $parser = new GridLayoutMetaDataParser($view, $deployedModuleName) ;
+                    $parser->removeField($fieldName) ;
+                    $parser->handleSave(false) ;
                 }
             }
         }
@@ -2205,14 +2200,14 @@ class ModuleInstaller
         $total_steps = 3; //minimum number of steps with no tasks
         $current_step = 0;
         $tasks = array(
-								'enable_copy',
-								'enable_dashlets',
-								'enable_relationships',
-		                        'enable_extensions',
+                                'enable_copy',
+                                'enable_dashlets',
+                                'enable_relationships',
+                                'enable_extensions',
                                 'enable_global_search',
-		                        'enable_manifest_logichooks',
-								'reset_opcodes',
-		);
+                                'enable_manifest_logichooks',
+                                'reset_opcodes',
+        );
         $total_steps += count($tasks);
         if (file_exists($this->base_dir . '/manifest.php')) {
             if (!$this->silent) {
@@ -2235,7 +2230,7 @@ class ModuleInstaller
                     }//fi
                 }//fi
             }//fi
-				$this->id_name = $installdefs['id'];
+                $this->id_name = $installdefs['id'];
             $this->installdefs = $installdefs;
             $installed_modules = array();
             if (isset($installdefs['beans'])) {
@@ -2274,14 +2269,14 @@ class ModuleInstaller
         $current_step = 0;
         $this->base_dir = $base_dir;
         $tasks = array(
-							'disable_copy',
-							'disable_dashlets',
-							'disable_relationships',
-		                    'disable_extensions',
+                            'disable_copy',
+                            'disable_dashlets',
+                            'disable_relationships',
+                            'disable_extensions',
                             'disable_global_search',
-							'disable_manifest_logichooks',
-							'reset_opcodes',
-							);
+                            'disable_manifest_logichooks',
+                            'reset_opcodes',
+                            );
         $total_steps += count($tasks); //now the real number of steps
         if (file_exists($this->base_dir . '/manifest.php')) {
             if (!$this->silent) {

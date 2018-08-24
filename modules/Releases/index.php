@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,14 +37,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
 
 
 $header_text = '';
@@ -57,7 +58,7 @@ if ((!is_admin($GLOBALS['current_user']) && (!is_admin_for_module($GLOBALS['curr
 }
 
 $focus = new Release();
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_TITLE']), true); 
+echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_TITLE']), true);
 $is_edit = false;
 if (!empty($_REQUEST['record'])) {
     $result = $focus->retrieve($_REQUEST['record']);
@@ -109,7 +110,7 @@ if ($is_edit) {
     $edit_button .="<input type='hidden' name='record' value='$focus->id'>\n";
     $edit_button .="<input type='hidden' name='action'>\n";
     $edit_button .="<input type='hidden' name='edit'>\n";
-    $edit_button .="<input type='hidden' name='isDuplicate'>\n";			
+    $edit_button .="<input type='hidden' name='isDuplicate'>\n";
     $edit_button .="<input type='hidden' name='return_module' value='Releases'>\n";
     $edit_button .="<input type='hidden' name='return_action' value='index'>\n";
     $edit_button .="<input type='hidden' name='return_id' value=''>\n";
@@ -122,7 +123,7 @@ if ($is_edit) {
 
 
     $GLOBALS['log']->info("Releases edit view");
-    $xtpl=new XTemplate ('modules/Releases/EditView.html');
+    $xtpl=new XTemplate('modules/Releases/EditView.html');
     $xtpl->assign("MOD", $mod_strings);
     $xtpl->assign("APP", $app_strings);
 
@@ -143,7 +144,7 @@ if ($is_edit) {
 
 
     if (empty($focus->list_order)) {
-        $xtpl->assign('LIST_ORDER', count($focus->get_releases(FALSE, 'All'))+1);
+        $xtpl->assign('LIST_ORDER', count($focus->get_releases(false, 'All'))+1);
     } else {
         $xtpl->assign('LIST_ORDER', $focus->list_order);
     }
@@ -163,4 +164,3 @@ if ($is_edit) {
     $javascript->addAllFields('');
     echo $javascript->getScript();
 }
-

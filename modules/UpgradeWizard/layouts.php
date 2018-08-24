@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,11 +37,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/********************************************************************************* 
 
  * Description:
  * Portions created by SugarCRM are Copyright(C) SugarCRM, Inc. All Rights
@@ -66,14 +67,14 @@ error_reporting(E_ERROR);
 set_time_limit(0);
 set_upgrade_progress('layouts', 'in_progress');
 
-//If the user has seleceted which modules they want to merge, perform the filtering and 
+//If the user has seleceted which modules they want to merge, perform the filtering and
 //execute the merge.
 if (isset($_POST['layoutSelectedModules'])) {
     logThis('Layout Commits examining modules to revert');
     
     $mergedModules = $_SESSION['sugarMergeRunResults'];
     $selectedModules  = explode("^,^", $_POST['layoutSelectedModules']);
-    logThis('Layout Commits, selected modules by user: ' . print_r($selectedModules, TRUE));
+    logThis('Layout Commits, selected modules by user: ' . print_r($selectedModules, true));
     $rollBackList = array();
     $actualMergedList = array();
     
@@ -86,8 +87,8 @@ if (isset($_POST['layoutSelectedModules'])) {
         }
     }
     
-    logThis('Layout Commits will rollback the following modules: ' . print_r($rollBackList, TRUE));
-    logThis('Layout Commits merged the following modules: ' . print_r($actualMergedList, TRUE));
+    logThis('Layout Commits will rollback the following modules: ' . print_r($rollBackList, true));
+    logThis('Layout Commits merged the following modules: ' . print_r($actualMergedList, true));
     
     $layoutMergeData = $actualMergedList;
     
@@ -102,7 +103,7 @@ if (isset($_POST['layoutSelectedModules'])) {
     logThis('Layout Commits completed successfully');
     $smarty->assign("CONFIRM_LAYOUT_HEADER", $mod_strings['LBL_UW_CONFIRM_LAYOUT_RESULTS']);
     $smarty->assign("CONFIRM_LAYOUT_DESC", $mod_strings['LBL_UW_CONFIRM_LAYOUT_RESULTS_DESC']);
-    $showCheckBoxes = FALSE;
+    $showCheckBoxes = false;
     $GLOBALS['top_message'] = "<b>{$mod_strings['LBL_LAYOUT_MERGE_TITLE2']}</b>";
 } else {
     //Fist visit to the commit layout page.  Display the selection table to the user.
@@ -111,7 +112,7 @@ if (isset($_POST['layoutSelectedModules'])) {
     $smarty->assign("CONFIRM_LAYOUT_DESC", $mod_strings['LBL_LAYOUT_MERGE_DESC']);
     $layoutMergeData = cleanMergeData($_SESSION['sugarMergeRunResults']);
     $stepNext = $_REQUEST['step'];
-    $showCheckBoxes = TRUE;
+    $showCheckBoxes = true;
     $GLOBALS['top_message'] = "<b>{$mod_strings['LBL_LAYOUT_MERGE_TITLE']}</b>";
 }
 
@@ -123,10 +124,10 @@ $layoutMergeData = formatLayoutMergeDataForDisplay($layoutMergeData);
 $smarty->assign("METADATA_DATA", $layoutMergeData);
 $uwMain = $smarty->fetch('modules/UpgradeWizard/tpls/layoutsMerge.tpl');
     
-$showBack = FALSE;
-$showCancel = FALSE;
-$showRecheck = FALSE;
-$showNext = TRUE;
+$showBack = false;
+$showCancel = false;
+$showRecheck = false;
+$showNext = true;
 
 set_upgrade_progress('layouts', 'done');
 
@@ -134,7 +135,7 @@ $state->popErrorLevel();
 $state->popPHPConfigOptions();
 
 /**
- * Clean the merge data results, removing any emptys or blanks that should not be displayed 
+ * Clean the merge data results, removing any emptys or blanks that should not be displayed
  * to the user on the confirm layout screen.
  *
  * @param array $data
@@ -174,7 +175,7 @@ function rollBackMergedModules($data)
                         @unlink($srcFile);
                     }
                     $copyResult = @copy($srcBackupFile, $srcFile);
-                    if ($copyResult === TRUE) {
+                    if ($copyResult === true) {
                         @unlink($srcBackupFile);
                         logThis("Layout Commits, rollBackMergedModules successfully reverted file $srcFile");
                     } else {
@@ -226,7 +227,7 @@ function formatLayoutMergeDataForDisplay($layoutMergeData)
             $layouts[] = array('path' => $layoutPath, 'label' => $label);
         }
 
-        $results[$k]['layouts'] = $layouts; 
+        $results[$k]['layouts'] = $layouts;
         $results[$k]['moduleName'] = $app_list_strings['moduleList'][$k];
     }
 

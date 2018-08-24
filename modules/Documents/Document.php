@@ -87,15 +87,15 @@ class Document extends File
     public $object_name = "Document";
     public $user_preferences;
 
-    public $encodeFields = Array();
+    public $encodeFields = array();
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('revision');
+    public $additional_column_fields = array('revision');
 
     public $new_schema = true;
     public $module_dir = 'Documents';
 
-    public $relationship_fields = Array(
+    public $relationship_fields = array(
         'contract_id' => 'contracts',
     );
 
@@ -272,25 +272,37 @@ class Document extends File
             //if file is not found then default image file will be used.
             global $img_name;
             global $img_name_bare;
-            if (!empty ($row['file_ext'])) {
+            if (!empty($row['file_ext'])) {
                 $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($row['file_ext']) . "_image_inline.gif");
                 $img_name_bare = strtolower($row['file_ext']) . "_image_inline";
             }
         }
 
         //set default file name.
-        if (!empty ($img_name) && file_exists($img_name)) {
+        if (!empty($img_name) && file_exists($img_name)) {
             $img_name = $img_name_bare;
         } else {
             $img_name = "def_image_inline"; //todo change the default image.
         }
         if ($this->ACLAccess('DetailView')) {
             if (!empty($this->doc_type) && $this->doc_type != 'Sugar' && !empty($this->doc_url)) {
-                $file_url = "<a href='" . $this->doc_url . "' target='_blank'>" . SugarThemeRegistry::current()->getImage($this->doc_type . '_image_inline',
-                        'border="0"', null, null, '.png', $mod_strings['LBL_LIST_VIEW_DOCUMENT']) . "</a>";
+                $file_url = "<a href='" . $this->doc_url . "' target='_blank'>" . SugarThemeRegistry::current()->getImage(
+                    $this->doc_type . '_image_inline',
+                        'border="0"',
+                    null,
+                    null,
+                    '.png',
+                    $mod_strings['LBL_LIST_VIEW_DOCUMENT']
+                ) . "</a>";
             } else {
-                $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage($img_name,
-                        'border="0"', null, null, '.gif', $mod_strings['LBL_LIST_VIEW_DOCUMENT']) . "</a>";
+                $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage(
+                    $img_name,
+                        'border="0"',
+                    null,
+                    null,
+                    '.gif',
+                    $mod_strings['LBL_LIST_VIEW_DOCUMENT']
+                ) . "</a>";
             }
 
             $this->file_url = $file_url;
@@ -301,11 +313,13 @@ class Document extends File
         }
 
         //get last_rev_by user name.
-        if (!empty ($row)) {
+        if (!empty($row)) {
             $this->last_rev_created_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
 
-            $this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert($row['rev_date'],
-                'datetime'));
+            $this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert(
+                $row['rev_date'],
+                'datetime'
+            ));
             $this->last_rev_mime_type = $row['file_mime_type'];
         }
 
@@ -388,8 +402,8 @@ class Document extends File
             $appListStringDocumentCategoryDomForThisSubCategoryId = $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
         }
         
-        $document_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $appListStringDocumentCategoryDomForThisCategoryId;
-        $document_fields['SUBCATEGORY_ID'] = empty ($this->subcategory_id) ? "" : $appListStringDocumentCategoryDomForThisSubCategoryId;
+        $document_fields['CATEGORY_ID'] = empty($this->category_id) ? "" : $appListStringDocumentCategoryDomForThisCategoryId;
+        $document_fields['SUBCATEGORY_ID'] = empty($this->subcategory_id) ? "" : $appListStringDocumentCategoryDomForThisSubCategoryId;
         $document_fields['NAME'] = $this->document_name;
         $document_fields['DOCUMENT_NAME_JAVASCRIPT'] = DBManagerFactory::getInstance()->quote($document_fields['DOCUMENT_NAME']);
 
@@ -454,4 +468,3 @@ class Document extends File
 }
 
 require_once('modules/Documents/DocumentExternalApiDropDown.php');
-

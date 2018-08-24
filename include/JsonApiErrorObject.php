@@ -571,7 +571,7 @@ class JsonApiErrorObject
     }
     
     /**
-     * 
+     *
      * @param ServerRequestInterface $request
      * @return $this
      */

@@ -418,7 +418,7 @@ function deleteAndOverWriteSelectedFiles($unzip_dir, $zip_from_dir, $delete_dirs
 // to use this function to empty a directory, write:
 // recursive_remove_directory('path/to/full_directory');
 
-function recursive_empty_or_remove_directory($directory, $exclude_dirs=null, $exclude_files=null, $empty=TRUE)
+function recursive_empty_or_remove_directory($directory, $exclude_dirs=null, $exclude_files=null, $empty=true)
 {
     // if the path has a slash at the end we remove it here
     if (substr($directory, -1) == '/') {
@@ -428,60 +428,59 @@ function recursive_empty_or_remove_directory($directory, $exclude_dirs=null, $ex
     // if the path is not valid or is not a directory ...
     if (!file_exists($directory) || !is_dir($directory)) {
         // ... we return false and exit the function
-        return FALSE;
+        return false;
 
     // ... if the path is not readable
     } elseif (!is_readable($directory)) {
         // ... we return false and exit the function
-        return FALSE;
+        return false;
 
-    // ... else if the path is readable
-    } else {
-
-        // we open the directory
-        $handle = opendir($directory);
-
-        // and scan through the items inside
-        while (FALSE !== ($item = readdir($handle))) {
-            // if the filepointer is not the current directory
-            // or the parent directory
-            if ($item != '.' && $item != '..') {
-                // we build the new path to delete
-                $path = $directory.'/'.$item;
-
-                // if the new path is a directory
-                //add another check if the dir is in the list to exclude delete
-                if (is_dir($path) && $exclude_dirs != null && in_array($path, $exclude_dirs)) {
-                    //do nothing
-                } elseif (is_dir($path)) {
-                    // we call this function with the new path
-                    recursive_empty_or_remove_directory($path);
-                }
-                // if the new path is a file
-                else {
-                    // we remove the file
-                    if ($exclude_files != null && in_array($path, $exclude_files)) {
-                        //do nothing
-                    } else {
-                        unlink($path);
-                    }
-                }
-            }
-        }
-        // close the directory
-        closedir($handle);
-
-        // if the option to empty is not set to true
-        if ($empty == FALSE) {
-            // try to delete the now empty directory
-            if (!rmdir($directory)) {
-                // return false if not possible
-                return FALSE;
-            }
-        }
-        // return success
-        return TRUE;
+        // ... else if the path is readable
     }
+
+    // we open the directory
+    $handle = opendir($directory);
+
+    // and scan through the items inside
+    while (false !== ($item = readdir($handle))) {
+        // if the filepointer is not the current directory
+        // or the parent directory
+        if ($item != '.' && $item != '..') {
+            // we build the new path to delete
+            $path = $directory.'/'.$item;
+
+            // if the new path is a directory
+            //add another check if the dir is in the list to exclude delete
+            if (is_dir($path) && $exclude_dirs != null && in_array($path, $exclude_dirs)) {
+                //do nothing
+            } elseif (is_dir($path)) {
+                // we call this function with the new path
+                recursive_empty_or_remove_directory($path);
+            }
+            // if the new path is a file
+            else {
+                // we remove the file
+                if ($exclude_files != null && in_array($path, $exclude_files)) {
+                    //do nothing
+                } else {
+                    unlink($path);
+                }
+            }
+        }
+    }
+    // close the directory
+    closedir($handle);
+
+    // if the option to empty is not set to true
+    if ($empty == false) {
+        // try to delete the now empty directory
+        if (!rmdir($directory)) {
+            // return false if not possible
+            return false;
+        }
+    }
+    // return success
+    return true;
 }
 // ------------------------------------------------------------
 
@@ -719,9 +718,9 @@ function upgradeUWFiles($file)
     if (!file_exists("$cacheUploadUpgradesTemp/manifest.php")) {
         logThis("*** ERROR: no manifest file detected while bootstraping upgrade wizard files!");
         return;
-    } else {
-        include("$cacheUploadUpgradesTemp/manifest.php");
     }
+    include("$cacheUploadUpgradesTemp/manifest.php");
+    
 
     $allFiles = array();
     $from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
@@ -1050,9 +1049,8 @@ function updateVersions($version)
         if (!copy($_SESSION['sugar_version_file'], clean_path(getcwd().'/sugar_version.php'))) {
             logThis('*** ERROR: sugar_version.php could not be copied to destination! Cannot complete upgrade', $path);
             return false;
-        } else {
-            logThis('sugar_version.php successfully updated!', $path);
         }
+        logThis('sugar_version.php successfully updated!', $path);
     } else {
         logThis('*** ERROR: no sugar_version.php file location found! - cannot complete upgrade...', $path);
         return false;
@@ -1668,7 +1666,7 @@ eoq;
         return '';
     }
 
-    logThis ('is SugarConfig there '.file_exists(clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php")));
+    logThis('is SugarConfig there '.file_exists(clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php")));
     if (file_exists(clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php"))) {
         $file = clean_path($unzip_dir.'/'.$zip_from_dir."/include/SugarObjects/SugarConfig.php");
         $destFile = str_replace(clean_path($unzip_dir.'/'.$zip_from_dir), $cwd, $file);
@@ -2467,8 +2465,7 @@ function testThis()
         if ($relativePath == $priorPath) { // same dir, new file
             $out .= "<tr><td>".basename($relativeFile)."</td></tr>";
             $priorPath = $relativePath;
-        } else { // new dir
-        }
+        }   // new dir
     }
 
     $out .= "</table>";
@@ -2708,11 +2705,10 @@ function handleExecuteSqlKeys($db, $tableName, $disable)
     if (is_callable(array($db, "supports"))) {
         // new API
         return $disable?$db->disableKeys($tableName):$db->enableKeys($tableName);
-    } else {
-        // old api
-        $op = $disable?"DISABLE":"ENABLE";
-        return $db->query("ALTER TABLE $tableName $op KEYS");
     }
+    // old api
+    $op = $disable?"DISABLE":"ENABLE";
+    return $db->query("ALTER TABLE $tableName $op KEYS");
 }
 
 function parseAndExecuteSqlFile($sqlScript, $forStepQuery='', $resumeFromQuery='')
@@ -2813,9 +2809,8 @@ function getAlterTable($query)
         $sqlArray = explode(" ", $query);
         $key = array_search('table', $sqlArray);
         return $sqlArray[($key+1)];
-    } else {
-        return '';
     }
+    return '';
 }
 
 function set_upgrade_vars()
@@ -2839,7 +2834,7 @@ function set_upgrade_vars()
         $upgrade_config[1]['upgrade_vars'] = array();
     }
 
-    if (!isset($upgrade_vars) || $upgrade_vars == NULL) {
+    if (!isset($upgrade_vars) || $upgrade_vars == null) {
         $upgrade_vars = array();
     }
     if (isset($_SESSION['unzip_dir']) && !empty($_SESSION['unzip_dir']) && file_exists($_SESSION['unzip_dir'])) {
@@ -2868,8 +2863,11 @@ function set_upgrade_vars()
             }
         }
         ksort($upgrade_config);
-        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
-                $upgrade_progress_file)) {
+        if (is_writable($upgrade_progress_file) && write_array_to_file(
+            "upgrade_config",
+            $upgrade_config,
+                $upgrade_progress_file
+        )) {
             //writing to the file
         }
     }
@@ -2960,8 +2958,11 @@ function set_upgrade_progress($currStep, $currState, $currStepSub='', $currStepS
             $upgrade_config[sizeof($upgrade_config)+1][$currStep]= $currState;
         }
 
-        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
-                $upgrade_progress_file)) {
+        if (is_writable($upgrade_progress_file) && write_array_to_file(
+            "upgrade_config",
+            $upgrade_config,
+                $upgrade_progress_file
+        )) {
             //writing to the file
         }
     }
@@ -3107,8 +3108,11 @@ function post_install_progress($progArray='', $action='')
                 $upgrade_config[sizeof($upgrade_config)]['commit']['post_install'][$key]=$val;
             }
         }
-        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
-                $upgrade_progress_file)) {
+        if (is_writable($upgrade_progress_file) && write_array_to_file(
+            "upgrade_config",
+            $upgrade_config,
+                $upgrade_progress_file
+        )) {
             //writing to the file
         }
     }
@@ -3125,14 +3129,14 @@ function repairDBForUpgrade($execute=false, $path='')
     VardefManager::clearVardef();
     require_once('include/ListView/ListView.php');
     foreach ($beanFiles as $bean => $file) {
-        require_once ($file);
-        $focus = new $bean ();
+        require_once($file);
+        $focus = new $bean();
         $sql .= $db->repairTable($focus, $execute);
     }
     //echo $sql;
     $olddictionary = $dictionary;
-    unset ($dictionary);
-    include ('modules/TableDictionary.php');
+    unset($dictionary);
+    include('modules/TableDictionary.php');
     foreach ($dictionary as $meta) {
         $tablename = $meta['table'];
         $fielddefs = $meta['fields'];
@@ -3141,7 +3145,7 @@ function repairDBForUpgrade($execute=false, $path='')
     }
     $qry_str = "";
     foreach (explode("\n", $sql) as $line) {
-        if (!empty ($line) && substr($line, -2) != "*/") {
+        if (!empty($line) && substr($line, -2) != "*/") {
             $line .= ";";
         }
         $qry_str .= $line . "\n";
@@ -4007,19 +4011,19 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
             logThis('config.php file at (' . $config_location . ') could not be found.  Skip merging.', $path);
         }
         return false;
-    } else {
-        if ($write_to_upgrade_log) {
-            logThis('Loading config.php file at (' . $config_location . ') for merging.', $path);
-        }
-
-        include($config_location);
-        if (empty($sugar_config)) {
-            if ($write_to_upgrade_log) {
-                logThis('config.php contents are empty.  Skip merging.', $path);
-            }
-            return false;
-        }
     }
+    if ($write_to_upgrade_log) {
+        logThis('Loading config.php file at (' . $config_location . ') for merging.', $path);
+    }
+
+    include($config_location);
+    if (empty($sugar_config)) {
+        if ($write_to_upgrade_log) {
+            logThis('config.php contents are empty.  Skip merging.', $path);
+        }
+        return false;
+    }
+    
 
     if (!empty($config_si_location) && !file_exists($config_si_location)) {
         if ($write_to_upgrade_log) {
@@ -4041,19 +4045,19 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
             logThis('config_si.php file at (' . $config_si_location . ') could not be found.  Skip merging.', $path);
         }
         return false;
-    } else {
-        if ($write_to_upgrade_log) {
-            logThis('Loading config_si.php file at (' . $config_si_location . ') for merging.', $path);
-        }
-
-        include($config_si_location);
-        if (empty($sugar_config_si)) {
-            if ($write_to_upgrade_log) {
-                logThis('config_si.php contents are empty.  Skip merging.', $path);
-            }
-            return false;
-        }
     }
+    if ($write_to_upgrade_log) {
+        logThis('Loading config_si.php file at (' . $config_si_location . ') for merging.', $path);
+    }
+
+    include($config_si_location);
+    if (empty($sugar_config_si)) {
+        if ($write_to_upgrade_log) {
+            logThis('config_si.php contents are empty.  Skip merging.', $path);
+        }
+        return false;
+    }
+    
 
     //Now perform the merge operation
     $modified = false;
@@ -4230,7 +4234,7 @@ function repair_long_relationship_names($path='')
     $GLOBALS['mi_remove_tables'] = false;
     $touched = array();
     foreach ($GLOBALS['moduleList'] as $module) {
-        $relationships = new DeployedRelationships ($module) ;
+        $relationships = new DeployedRelationships($module) ;
         foreach ($relationships->getRelationshipList() as $rel_name) {
             if (strlen($rel_name) > 27 && empty($touched[$rel_name])) {
                 logThis("Rebuilding relationship fields for $rel_name", $path);
@@ -4241,7 +4245,7 @@ function repair_long_relationship_names($path='')
                 $relationships->save();
                 $relationships->add($rel_obj);
                 $relationships->save();
-                $relationships->build () ;
+                $relationships->build() ;
             }
         }
     }
@@ -4331,9 +4335,8 @@ function getSilentUpgradeVar($var)
 
     if (!isset($silent_upgrade_vars_loaded['vars'][$var])) {
         return null;
-    } else {
-        return $silent_upgrade_vars_loaded['vars'][$var];
     }
+    return $silent_upgrade_vars_loaded['vars'][$var];
 }
 
 
@@ -4363,9 +4366,9 @@ function upgradeSugarCache($file)
     if (!file_exists(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"))) {
         logThis("*** ERROR: no manifest file detected while bootstraping upgrade wizard files!");
         return;
-    } else {
-        include(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"));
     }
+    include(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"));
+    
 
     $from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
     $allFiles = array();
@@ -4492,18 +4495,18 @@ if (!function_exists("getValidDBName")) {
     function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
     {
         // first strip any invalid characters - all but alphanumerics and -
-        $name = preg_replace ('/[^\w-]+/i', '', $name) ;
-        $len = strlen ($name) ;
+        $name = preg_replace('/[^\w-]+/i', '', $name) ;
+        $len = strlen($name) ;
         $result = $name;
         if ($ensureUnique) {
             $md5str = md5($name);
-            $tail = substr ($name, -11) ;
+            $tail = substr($name, -11) ;
             $temp = substr($md5str, strlen($md5str)-4);
-            $result = substr ($name, 0, 10) . $temp . $tail ;
+            $result = substr($name, 0, 10) . $temp . $tail ;
         } elseif ($len > ($maxLen - 5)) {
-            $result = substr ($name, 0, 11) . substr ($name, 11 - $maxLen + 5);
+            $result = substr($name, 0, 11) . substr($name, 11 - $maxLen + 5);
         }
-        return strtolower ($result) ;
+        return strtolower($result) ;
     }
 }
 
@@ -4517,12 +4520,11 @@ function getUWDirs()
         // we're still running the old code
         global $sugar_config;
         return array($sugar_config['upload_dir'] . "/upgrades", $sugar_config['cache_dir'] . "upload/upgrades/temp");
-    } else {
-        if (!in_array("upload", stream_get_wrappers())) {
-            UploadStream::register(); // just in case file was copied, but not run
-        }
-        return array("upload://upgrades", sugar_cached("upgrades/temp"));
     }
+    if (!in_array("upload", stream_get_wrappers())) {
+        UploadStream::register(); // just in case file was copied, but not run
+    }
+    return array("upload://upgrades", sugar_cached("upgrades/temp"));
 }
 
 /**

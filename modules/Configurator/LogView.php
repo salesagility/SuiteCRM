@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -101,26 +102,26 @@ $lastMatch = false;
 $doaction =(!empty($_REQUEST['doaction']))?$_REQUEST['doaction']:'';
 
 switch ($doaction) {
-	case 'mark':
-		echo "<h3>{$mod_strings['LBL_MARKING_WHERE_START_LOGGING']}</h3><br>";
-		$_SESSION['log_file_size'] = filesize($logFile);
-		break;
-	case 'next':
-		if (!empty($_SESSION['last_log_file_size'])) {
-		    $_SESSION['log_file_size'] = $_SESSION['last_log_file_size'];
-		} else {
-		    $_SESSION['log_file_size'] = 0;
-		}
-		$_REQUEST['display'] = true;
-		break;
-	case 'all':
-		$_SESSION['log_file_size'] = 0;
-		$_REQUEST['display'] = true;
-		break;
+    case 'mark':
+        echo "<h3>{$mod_strings['LBL_MARKING_WHERE_START_LOGGING']}</h3><br>";
+        $_SESSION['log_file_size'] = filesize($logFile);
+        break;
+    case 'next':
+        if (!empty($_SESSION['last_log_file_size'])) {
+            $_SESSION['log_file_size'] = $_SESSION['last_log_file_size'];
+        } else {
+            $_SESSION['log_file_size'] = 0;
+        }
+        $_REQUEST['display'] = true;
+        break;
+    case 'all':
+        $_SESSION['log_file_size'] = 0;
+        $_REQUEST['display'] = true;
+        break;
 }
 
 
-if (!empty ($_REQUEST['display'])) {
+if (!empty($_REQUEST['display'])) {
     echo "<h3>{$mod_strings['LBL_DISPLAYING_LOG']}</h3>";
     $process_id =  getmypid();
 
@@ -129,7 +130,7 @@ if (!empty ($_REQUEST['display'])) {
     if ($ignore_self) {
         echo $mod_strings['LBL_IT_WILL_BE_IGNORED'];
     }
-    if (empty ($_SESSION['log_file_size'])) {
+    if (empty($_SESSION['log_file_size'])) {
         $_SESSION['log_file_size'] = 0;
     }
     $cur_size = filesize($logFile);

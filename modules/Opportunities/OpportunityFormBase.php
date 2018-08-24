@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -48,7 +49,7 @@ class OpportunityFormBase
     public function checkForDuplicates($prefix)
     {
         require_once('include/formbase.php');
-	
+    
         $focus = new Opportunity();
         $query = '';
         $baseQuery = 'select id, name, sales_stage,amount, date_closed  from opportunities where deleted!=1 and (';
@@ -70,7 +71,7 @@ class OpportunityFormBase
             if ($i==-1) {
                 return null;
             }
-		
+        
             return $rows;
         }
         return null;
@@ -207,7 +208,7 @@ EOQ;
         $json = getJSONobj();
         $prob_array = $json->encode($app_list_strings['sales_probability_dom']);
         //$prePopProb = '';
-        //if(empty($this->bean->id)) 
+        //if(empty($this->bean->id))
         $prePopProb = 'document.getElementsByName(\''.$prefix.'sales_stage\')[0].onchange();';
         $probability_script=<<<EOQ
 	<script>
@@ -375,13 +376,13 @@ EOQ;
             /// SETUP ACCOUNT POPUP
 
             $popup_request_data = array(
-	'call_back_function' => 'set_return',
-	'form_name' => "{$prefix}OppSave",
-	'field_to_name_array' => array(
-		'id' => 'account_id',
-		'name' => 'account_name',
-		),
-	);
+    'call_back_function' => 'set_return',
+    'form_name' => "{$prefix}OppSave",
+    'field_to_name_array' => array(
+        'id' => 'account_id',
+        'name' => 'account_name',
+        ),
+    );
 
             $json = getJSONobj();
             $encoded_popup_request_data = $json->encode($popup_request_data);
@@ -438,10 +439,10 @@ EOQ;
     public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $current_user;
-	
-	
+    
+    
         require_once('include/formbase.php');
-	
+    
         $focus = new Opportunity();
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -457,7 +458,7 @@ EOQ;
         if (!ACLController::checkAccess($focus->module_dir, 'edit', $focus->isOwner($current_user->id))) {
             ACLController::displayNoAccess(true);
         }
-        $check_notify = FALSE;
+        $check_notify = false;
         if (isset($GLOBALS['check_notify'])) {
             $check_notify = $GLOBALS['check_notify'];
         }
@@ -468,7 +469,7 @@ EOQ;
             clone_relationship($focus->db, array('opportunities_contacts'), 'opportunity_id', $_POST['duplicate_parent_id'], $focus->id);
         }
         $return_id = $focus->id;
-	
+    
         $GLOBALS['log']->debug("Saved record with id of ".$return_id);
         if ($redirect) {
             handleRedirect($return_id, "Opportunities");

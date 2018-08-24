@@ -229,7 +229,7 @@ class XML_HTMLSax3_StateParser
     {
         $start = $this->position;
         $this->position = strpos($this->rawtext, $string, $start);
-        if ($this->position === FALSE) {
+        if ($this->position === false) {
             $this->position = $this->length;
         }
         return substr($this->rawtext, $start, $this->position - $start);
@@ -269,7 +269,8 @@ class XML_HTMLSax3_StateParser
         if ($this->parser_options['XML_OPTION_TRIM_DATA_NODES']==1) {
             $decorator = new XML_HTMLSax3_Trim(
                 $this->handler_object_data,
-                $this->handler_method_data);
+                $this->handler_method_data
+            );
             $this->handler_object_data =& $decorator;
             $this->handler_method_data = 'trimData';
         }
@@ -277,7 +278,8 @@ class XML_HTMLSax3_StateParser
             $open_decor = new XML_HTMLSax3_CaseFolding(
                 $this->handler_object_element,
                 $this->handler_method_opening,
-                $this->handler_method_closing);
+                $this->handler_method_closing
+            );
             $this->handler_object_element =& $open_decor;
             $this->handler_method_opening ='foldOpen';
             $this->handler_method_closing ='foldClose';
@@ -285,28 +287,32 @@ class XML_HTMLSax3_StateParser
         if ($this->parser_options['XML_OPTION_LINEFEED_BREAK']==1) {
             $decorator = new XML_HTMLSax3_Linefeed(
                 $this->handler_object_data,
-                $this->handler_method_data);
+                $this->handler_method_data
+            );
             $this->handler_object_data =& $decorator;
             $this->handler_method_data = 'breakData';
         }
         if ($this->parser_options['XML_OPTION_TAB_BREAK']==1) {
             $decorator = new XML_HTMLSax3_Tab(
                 $this->handler_object_data,
-                $this->handler_method_data);
+                $this->handler_method_data
+            );
             $this->handler_object_data =& $decorator;
             $this->handler_method_data = 'breakData';
         }
         if ($this->parser_options['XML_OPTION_ENTITIES_UNPARSED']==1) {
             $decorator = new XML_HTMLSax3_Entities_Unparsed(
                 $this->handler_object_data,
-                $this->handler_method_data);
+                $this->handler_method_data
+            );
             $this->handler_object_data =& $decorator;
             $this->handler_method_data = 'breakData';
         }
         if ($this->parser_options['XML_OPTION_ENTITIES_PARSED']==1) {
             $decorator = new XML_HTMLSax3_Entities_Parsed(
                 $this->handler_object_data,
-                $this->handler_method_data);
+                $this->handler_method_data
+            );
             $this->handler_object_data =& $decorator;
             $this->handler_method_data = 'breakData';
         }
@@ -314,7 +320,8 @@ class XML_HTMLSax3_StateParser
         if ($this->parser_options['XML_OPTION_STRIP_ESCAPES']==1) {
             $decorator = new XML_HTMLSax3_Escape_Stripper(
                 $this->handler_object_escape,
-                $this->handler_method_escape);
+                $this->handler_method_escape
+            );
             $this->handler_object_escape =& $decorator;
             $this->handler_method_escape = 'strip';
         }
@@ -377,7 +384,7 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser
     public function scanUntilCharacters($string)
     {
         $startpos = $this->position;
-        while ($this->position < $this->length && strpos($string, $this->rawtext{$this->position}) === FALSE) {
+        while ($this->position < $this->length && strpos($string, $this->rawtext{$this->position}) === false) {
             $this->position++;
         }
         return substr($this->rawtext, $startpos, $this->position - $startpos);
@@ -391,7 +398,7 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser
     public function ignoreWhitespace()
     {
         while ($this->position < $this->length &&
-            strpos(" \n\r\t", $this->rawtext{$this->position}) !== FALSE) {
+            strpos(" \n\r\t", $this->rawtext{$this->position}) !== false) {
             $this->position++;
         }
     }
@@ -549,10 +556,9 @@ class XML_HTMLSax3
         if (is_object($object)) {
             $this->state_parser->handler_default =& $object;
             return true;
-        } else {
-            $GLOBALS['log']->info('XML_HTMLSax3::set_object requires '.
-                'an object instance');
         }
+        $GLOBALS['log']->info('XML_HTMLSax3::set_object requires '.
+                'an object instance');
     }
 
     /**
@@ -587,9 +593,8 @@ class XML_HTMLSax3
         if (array_key_exists($name, $this->state_parser->parser_options)) {
             $this->state_parser->parser_options[$name] = $value;
             return true;
-        } else {
-            $GLOBALS['log']->info('XML_HTMLSax3::set_option('.$name.') illegal');
         }
+        $GLOBALS['log']->info('XML_HTMLSax3::set_option('.$name.') illegal');
     }
 
     /**

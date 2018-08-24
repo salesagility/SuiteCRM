@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,16 +37,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description: view handler for step 3 of the import process
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
- ********************************************************************************/
+ */
 require_once('modules/Import/views/ImportView.php');
 require_once('modules/Import/sources/ImportFile.php');
 require_once('modules/Import/ImportFileSplitter.php');
@@ -122,7 +123,7 @@ class ImportViewStep3 extends ImportView
         $uploadFileName = $_REQUEST['file_name'];
 
         // Now parse the file and look for errors
-        $importFile = new ImportFile($uploadFileName, $delimiter, html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), FALSE);
+        $importFile = new ImportFile($uploadFileName, $delimiter, html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), false);
 
         if (!$importFile->fileExists()) {
             $this->_showImportError($mod_strings['LBL_CANNOT_OPEN'], $_REQUEST['import_module'], 'Step2');
@@ -172,7 +173,8 @@ class ImportViewStep3 extends ImportView
         $this->ss->assign('INSTRUCTION', $this->getInstruction());
 
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
-        $this->ss->assign("STEP4_TITLE",
+        $this->ss->assign(
+            "STEP4_TITLE",
             strip_tags(str_replace("\n", "", getClassicModuleTitle(
                 $mod_strings['LBL_MODULE_NAME'],
                 array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_STEP_4_TITLE']),
@@ -223,7 +225,7 @@ class ImportViewStep3 extends ImportView
                 // get field name
                 if (!empty($moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)])) {
                     $displayname = str_replace(":", "", $moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)]);
-                } elseif (!empty ($properties['vname'])) {
+                } elseif (!empty($properties['vname'])) {
                     $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
                 } else {
                     $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
@@ -316,7 +318,7 @@ class ImportViewStep3 extends ImportView
                 $defaultField = '';
                 foreach ($fields as $fieldname => $properties) {
                     // get field name
-                    if (!empty ($properties['vname'])) {
+                    if (!empty($properties['vname'])) {
                         $displayname = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
                     } else {
                         $displayname = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
@@ -331,8 +333,8 @@ class ImportViewStep3 extends ImportView
                     // see if we have a match
                     $selected = '';
                     if (strtolower($fieldname) == strtolower($field_name)
-							&& !in_array($fieldname, $mappedFields)
-							&& !in_array($fieldname, $ignored_fields)) {
+                            && !in_array($fieldname, $mappedFields)
+                            && !in_array($fieldname, $ignored_fields)) {
                         $selected = ' selected="selected" ';
                         $defaultField = $fieldname;
                         $mappedFields[] = $fieldname;
@@ -401,7 +403,7 @@ class ImportViewStep3 extends ImportView
         $required = array();
         foreach (array_keys($this->bean->get_import_required_fields()) as $name) {
             $properties = $this->bean->getFieldDefinition($name);
-            if (!empty ($properties['vname'])) {
+            if (!empty($properties['vname'])) {
                 $required[$name] = str_replace(":", "", translate($properties['vname'], $this->bean->module_dir));
             } else {
                 $required[$name] = str_replace(":", "", translate($properties['name'], $this->bean->module_dir));
@@ -479,7 +481,7 @@ class ImportViewStep3 extends ImportView
             case '\t':
                 $delimiter = "\t";
                 break;
-        }       
+        }
         return $delimiter;
     }
 

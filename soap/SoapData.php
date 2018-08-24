@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('soap/SoapRelationshipHelper.php');
 set_time_limit(360);
@@ -47,12 +48,13 @@ $server->register(
     'sync_get_modified_relationships',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string','related_module'=>'xsd:string', 'from_date'=>'xsd:string', 'to_date'=>'xsd:string','offset'=>'xsd:int', 'max_results'=>'xsd:int','deleted'=>'xsd:int', 'module_id'=>'xsd:string', 'select_fields'=>'tns:select_fields', 'ids'=>'tns:select_fields', 'relationship_name'=>'xsd:string', 'deletion_date'=>'xsd:string', 'php_serialize'=>'xsd:int'),
     array('return'=>'tns:get_entry_list_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 
 
 /**
- * Get a list of the relationship records that have been modified within a 
+ * Get a list of the relationship records that have been modified within a
  * specified date range.  This is used to perform a sync with a mobile client.
  * The results are paged.
  *
@@ -70,7 +72,7 @@ $server->register(
  * @param xsd:string $relationship_name
  * @param xsd:string $deletion_date
  * @param xsd:int $php_serialize
- * @return 
+ * @return
  */
 function sync_get_modified_relationships($session, $module_name, $related_module, $from_date, $to_date, $offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1)
 {
@@ -78,16 +80,16 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     $error = new SoapError();
     $output_list = array();
     if (!validate_authenticated($session)) {
-        $error->set_error('invalid_login');	
+        $error->set_error('invalid_login');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     if (empty($beanList[$module_name]) || empty($beanList[$related_module])) {
-        $error->set_error('no_module');	
+        $error->set_error('no_module');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     global $current_user;
     if (!check_modules_access($current_user, $module_name, 'read') || !check_modules_access($current_user, $related_module, 'read')) {
-        $error->set_error('no_access');	
+        $error->set_error('no_access');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     // Cast to integer
@@ -127,11 +129,11 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     }
     if ($related_module == 'Meetings' || $related_module == 'Calls') {
         $query = string_format($query, array('m1'));
-    }	
+    }
     $results = retrieve_modified_relationships($module_name, $related_module, $query, $deleted, $offset, $max_results, $select_fields, $relationship_name);
 
     $list = $results['result'];
-	
+    
     $xml = '<?xml version="1.0" encoding="utf-8"?><items>';
     foreach ($list as $value) {
         $val = array_get_return_value($value, $results['table_name']);
@@ -142,13 +144,13 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     }
     $xml .= '</items>';
     $next_offset = $offset + sizeof($output_list);
-	
+    
     if ($php_serialize == 0) {
         $myoutput = base64_encode($xml);
     } else {
         $myoutput = get_encoded($output_list);
     }
-	
+    
     return array('result_count'=>sizeof($output_list),'next_offset'=>0, 'total_count'=>sizeof($output_list), 'field_list'=>array(), 'entry_list'=>$myoutput , 'error'=>$error->get_soap_array());
 }
 
@@ -157,7 +159,8 @@ $server->register(
     'get_modified_entries',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'ids'=>'tns:select_fields', 'select_fields'=>'tns:select_fields'),
     array('return'=>'tns:get_sync_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 function get_modified_entries($session, $module_name, $ids, $select_fields)
 {
@@ -166,26 +169,26 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
     $field_list = array();
     $output_list = array();
     if (!validate_authenticated($session)) {
-        $error->set_error('invalid_login');	
+        $error->set_error('invalid_login');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     if (empty($beanList[$module_name])) {
-        $error->set_error('no_module');	
+        $error->set_error('no_module');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     global $current_user;
     if (!check_modules_access($current_user, $module_name, 'read')) {
-        $error->set_error('no_access');	
+        $error->set_error('no_access');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
-	
+    
     $class_name = $beanList[$module_name];
     require_once($beanFiles[$class_name]);
     $seed = new $class_name();
     //rsmith
     $in = '';
     $field_select ='';
-	
+    
     $table_name = $seed->table_name;
     if (isset($ids)) {
         foreach ($ids as $value) {
@@ -202,15 +205,15 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
             continue;
         }
         $field_select .= $table_name.".".$field;
-		
+        
         if ($index < (count($select_fields) - 1)) {
             $field_select .= ",";
             $index++;
         }
     }//end foreach
-	
+    
     $ids = array();
-	
+    
     //end rsmith
     if (!empty($in)) {
         $in .=')';
@@ -254,7 +257,7 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
     $xml .= "</items>";
 
     $xml = base64_encode($xml);
-	
+    
     return array('result'=>$xml, 'error'=>$error->get_soap_array());
 }
 
@@ -262,7 +265,8 @@ $server->register(
     'get_attendee_list',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'id'=>'xsd:string'),
     array('return'=>'tns:get_sync_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 function get_attendee_list($session, $module_name, $id)
 {
@@ -271,25 +275,25 @@ function get_attendee_list($session, $module_name, $id)
     $field_list = array();
     $output_list = array();
     if (!validate_authenticated($session)) {
-        $error->set_error('invalid_login');	
+        $error->set_error('invalid_login');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     if (empty($beanList[$module_name])) {
-        $error->set_error('no_module');	
+        $error->set_error('no_module');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
     global $current_user;
     if (!check_modules_access($current_user, $module_name, 'read')) {
-        $error->set_error('no_access');	
+        $error->set_error('no_access');
         return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
-	
+    
 
     $class_name = $beanList[$module_name];
     require_once($beanFiles[$class_name]);
     $seed = new $class_name();
-	
-	
+    
+    
     //rsmith
     $xml = '<?xml version="1.0" encoding="utf-8"?>';
     if ($module_name == 'Meetings' || $module_name == 'Calls') {
@@ -302,7 +306,7 @@ function get_attendee_list($session, $module_name, $id)
             $join_field = "call";
         }
         $xml .= '<attendees>';
-        $result = $seed->db->query("SELECT users.id, $table_name.date_modified, first_name, last_name FROM users INNER JOIN $table_name ON $table_name.user_id = users.id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND $table_name.deleted = 0"); 
+        $result = $seed->db->query("SELECT users.id, $table_name.date_modified, first_name, last_name FROM users INNER JOIN $table_name ON $table_name.user_id = users.id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND $table_name.deleted = 0");
         $user = new User();
         while ($row = $seed->db->fetchByAssoc($result)) {
             $user->id = $row['id'];
@@ -313,10 +317,10 @@ function get_attendee_list($session, $module_name, $id)
             $xml .= '<last_name>'.$row['last_name'].'</last_name>';
             $xml .= '<email1>'.$email.'</email1>';
             $xml .= '</attendee>';
-        }	
+        }
         //now get contacts
         $table_name = $l_module_name."_contacts";
-        $result = $seed->db->query("SELECT contacts.id, $table_name.date_modified, first_name, last_name FROM contacts INNER JOIN $table_name ON $table_name.contact_id = contacts.id INNER JOIN $seed->table_name ON ".$seed->table_name.".id = ".$table_name.".".$join_field."_id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND ".$table_name.".deleted = 0 AND (contacts.id != ".$seed->table_name.".parent_id OR ".$seed->table_name.".parent_id IS NULL)"); 
+        $result = $seed->db->query("SELECT contacts.id, $table_name.date_modified, first_name, last_name FROM contacts INNER JOIN $table_name ON $table_name.contact_id = contacts.id INNER JOIN $seed->table_name ON ".$seed->table_name.".id = ".$table_name.".".$join_field."_id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND ".$table_name.".deleted = 0 AND (contacts.id != ".$seed->table_name.".parent_id OR ".$seed->table_name.".parent_id IS NULL)");
         $contact = new Contact();
         while ($row = $seed->db->fetchByAssoc($result)) {
             $contact->id = $row['id'];
@@ -327,10 +331,9 @@ function get_attendee_list($session, $module_name, $id)
             $xml .= '<last_name>'.$row['last_name'].'</last_name>';
             $xml .= '<email1>'.$email.'</email1>';
             $xml .= '</attendee>';
-        }					
+        }
         $xml .= '</attendees>';
     }
     $xml = base64_encode($xml);
     return array('result'=>$xml, 'error'=>$error->get_soap_array());
 }
-

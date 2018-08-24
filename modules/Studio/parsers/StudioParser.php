@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -51,9 +52,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class StudioParser
 {
-    public $positions = array ();
-    public $rows = array ();
-    public $cols = array ();
+    public $positions = array();
+    public $rows = array();
+    public $cols = array();
     public $curFile = '';
     public $curText = '';
     public $form;
@@ -65,11 +66,11 @@ class StudioParser
     public function getFileType($type, $setType=true)
     {
         switch ($type) {
-			case 'EditView':$type = 'edit'; break;
-			case 'SearchForm': $type= 'search';break;
-			case 'ListView': $type= 'list';break;
-			default: $type= 'detail';
-		}
+            case 'EditView':$type = 'edit'; break;
+            case 'SearchForm': $type= 'search';break;
+            case 'ListView': $type= 'list';break;
+            default: $type= 'detail';
+        }
 
         if ($setType) {
             $this->curType = $type;
@@ -139,12 +140,12 @@ class StudioParser
     }
     public function positionCount($str)
     {
-        $result = array ();
+        $result = array();
         return preg_match_all("'<span[^>]*sugar=[\'\"]+([a-zA-Z\_]*)([0-9]+)([b]*)[\'\"]+[^>]*>(.*?)</span[ ]*sugar=[\'\"]+[a-zA-Z0-9\_]*[\'\"]+>'si", $str, $result, PREG_SET_ORDER)/2;
     }
     public function rowCount($str)
     {
-        $result = array ();
+        $result = array();
         return preg_match_all("'(<tr[^>]*>)(.*?)(</tr[^>]*>)'si", $str, $result);
     }
 
@@ -301,7 +302,7 @@ EOQ;
                         $slotLookup[$slot[2]]['b']['value'] = '&nbsp;';
                     } else {
 
-						//now handle the adding of custom fields
+                        //now handle the adding of custom fields
                         if (substr_count($swapValue, 'add:')) {
                             $addfield = explode('add:', $_REQUEST['slot_'.$slotCount], 2);
 
@@ -344,7 +345,7 @@ EOQ;
 
     public function saveFile($file = '', $contents = false)
     {
-        if (empty ($file)) {
+        if (empty($file)) {
             $file = $this->curFile;
         }
 
@@ -361,9 +362,11 @@ EOQ;
                     return  $matches[0];
                 };
                 //preg_replace_callback doesn't seem to work w/o anonymous method
-                $output = preg_replace_callback("/name\s*=\s*[\"']([^\"']*)[\"']/Us",
-				$function,
-	                                                      $fileparts[1]);
+                $output = preg_replace_callback(
+                    "/name\s*=\s*[\"']([^\"']*)[\"']/Us",
+                $function,
+                                                          $fileparts[1]
+                );
 
 
 
@@ -390,10 +393,10 @@ EOQ;
      */
     public function disableInputs($str)
     {
-        $match = array ("'(<input)([^>]*>)'si" => "\$1 disabled readonly $2",
+        $match = array("'(<input)([^>]*>)'si" => "\$1 disabled readonly $2",
     "'(<input)([^>]*?type[ ]*=[ ]*[\'\"]submit[\'\"])([^>]*>)'si" => "\$1 disabled readonly style=\"display:none\" $2",
      "'(<select)([^>]*)'si" => "\$1 disabled readonly $2",
-		// "'<a .*>(.*)</a[^>]*>'siU"=>"\$1",
+        // "'<a .*>(.*)</a[^>]*>'siU"=>"\$1",
 "'(href[\ ]*=[\ ]*)([\'])([^\']*)([\'])'si" => "href=\$2javascript:void(0);\$2 alt=\$2\$3\$2", "'(href[\ ]*=[\ ]*)([\"])([^\"]*)([\"])'si" => "href=\$2javascript:void(0)\$2 title=\$2\$3\$2");
         return preg_replace(array_keys($match), array_values($match), $str);
     }
@@ -402,7 +405,7 @@ EOQ;
     {
         global $mod_strings;
         $image = SugarThemeRegistry::current()->getImage('edit_inline', "onclick='studiojs.handleLabelClick(\"$2\", 1);' onmouseover='this.style.cursor=\"default\"'", null, null, '.gif', $mod_strings['LBL_EDIT']);
-        $match = array ("'>[^<]*\{(MOD.)([^\}]*)\}'si" => "$image<span id='label$2' onclick='studiojs.handleLabelClick(\"$2\", 2);' >{".'$1$2' . "}</span><span id='span$2' style='display:none'><input type='text' id='$2' name='$2' msi='label' value='{".'$1$2' . "}' onblur='studiojs.endLabelEdit(\"$2\")'></span>");
+        $match = array("'>[^<]*\{(MOD.)([^\}]*)\}'si" => "$image<span id='label$2' onclick='studiojs.handleLabelClick(\"$2\", 2);' >{".'$1$2' . "}</span><span id='span$2' style='display:none'><input type='text' id='$2' name='$2' msi='label' value='{".'$1$2' . "}' onblur='studiojs.endLabelEdit(\"$2\")'></span>");
         $keys = array_keys($match);
         $matches = array();
         preg_match_all($keys[0], $str, $matches, PREG_SET_ORDER);
@@ -438,7 +441,7 @@ EOQ;
 
     public function populateRequestFromBuffer($file)
     {
-        $results = array ();
+        $results = array();
         $temp = sugar_file_get_contents($file);
         preg_match_all("'name[\ ]*=[\ ]*[\']([^\']*)\''si", $buffer, $results);
         $res = $results[1];
@@ -478,7 +481,7 @@ EOQ;
         $form_string = "require_once('modules/".$module."/Forms.php');";
 
         if ($type == 'edit' || $type == 'detail') {
-            if (empty ($_REQUEST['record'])) {
+            if (empty($_REQUEST['record'])) {
                 $buffer = preg_replace('(\$xtpl[\ ]*=)', "\$focus->assign_display_fields('$module'); \$0", $buffer);
             } else {
                 $buffer = preg_replace('(\$xtpl[\ ]*=)', "\$focus->retrieve('".$_REQUEST['record']."');\n\$focus->assign_display_fields('$module');\n \$0", $buffer);
@@ -491,12 +494,12 @@ EOQ;
                 global $current_language, $beanFiles, $beanList;
                 $mods = return_module_language($current_language, 'DynamicLayout');
                 $class_name = $beanList[$module];
-                require_once ($beanFiles[$class_name]);
-                $mod = new $class_name ();
+                require_once($beanFiles[$class_name]);
+                $mod = new $class_name();
 
                 $this->populateRequestFromBuffer($file);
                 $mod->assign_display_fields($module);
-                $buffer = str_replace(array ('echo $lv->display();','$search_form->parse("advanced");', '$search_form->out("advanced");', '$search_form->parse("main");', '$search_form->out("main");'), '', $buffer);
+                $buffer = str_replace(array('echo $lv->display();','$search_form->parse("advanced");', '$search_form->out("advanced");', '$search_form->parse("main");', '$search_form->out("main");'), '', $buffer);
                 $buffer = str_replace('echo get_form_footer();', '$search_form->parse("main");'."\n".'$search_form->out("main");'."\necho '<br><b>".translate('LBL_ADVANCED', 'DynamicLayout')."</b><br>';".'$search_form->parse("advanced");'."\n".'$search_form->out("advanced");'."\n \$sugar_config['list_max_entries_per_page'] = 1;", $buffer);
             }
         } else {
@@ -616,7 +619,7 @@ EOQ;
         }
         $this->yahooSlotCount = $slotCount;
         $newView = $return_view.$view;
-        $newView = str_replace(array ('<span>', '</span>'), array ('', ''), $newView);
+        $newView = str_replace(array('<span>', '</span>'), array('', ''), $newView);
 
         return $newView;
     }
@@ -676,4 +679,3 @@ EOQ;
         return str_replace('{', '{$', $this->curText);
     }
 }
-

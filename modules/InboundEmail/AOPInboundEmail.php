@@ -1,10 +1,10 @@
 <?php
  /**
- * 
- * 
- * @package 
+ *
+ *
+ * @package
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -20,12 +20,14 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 require_once 'modules/InboundEmail/InboundEmail.php';
 require_once 'include/clean.php';
 class AOPInboundEmail extends InboundEmail
 {
+
+    public $job_name = 'function::pollMonitoredInboxesAOP';
 
     /**
      * Replaces embedded image links with links to the appropriate note in the CRM.

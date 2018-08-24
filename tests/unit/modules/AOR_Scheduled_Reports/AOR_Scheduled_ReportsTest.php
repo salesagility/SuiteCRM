@@ -22,7 +22,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $aorScheduledReports->name = "test";
         $aorScheduledReports->description = "test description";
-        $_POST['email_recipients']= Array('email_target_type'=> array('Email Address','all','Specify User')  ,'email' =>array('test@test.com','','1') );
+        $_POST['email_recipients']= array('email_target_type'=> array('Email Address','all','Specify User')  ,'email' =>array('test@test.com','','1') );
 
 
         //test save and test for record ID to verify that record is saved
@@ -55,7 +55,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
     public function testAOR_Scheduled_Reports()
     {
 
-		//execute the contructor and check for the Object type and  attributes
+        //execute the contructor and check for the Object type and  attributes
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $this->assertInstanceOf('AOR_Scheduled_Reports', $aorScheduledReports);
         $this->assertInstanceOf('Basic', $aorScheduledReports);
@@ -75,12 +75,12 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         
         
 
-		
+        
 
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $this->assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value
-		$this->assertEquals(false, $aorScheduledReports->bean_implements('test')); //test with invalid value
-		$this->assertEquals(true, $aorScheduledReports->bean_implements('ACL')); //test with valid value
+        $this->assertEquals(false, $aorScheduledReports->bean_implements('test')); //test with invalid value
+        $this->assertEquals(true, $aorScheduledReports->bean_implements('ACL')); //test with valid value
         
         // clean up
     }
@@ -95,7 +95,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
         //test without a last_run date
         //@todo: NEEDS FIXING - are we sure?
-		
+        
 
         //test without a older last_run date
         $aorScheduledReports->last_run = date("d-m-y H:i:s", mktime(0, 0, 0, 10, 3, 2014));

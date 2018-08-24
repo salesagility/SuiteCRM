@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
  
 require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
@@ -91,7 +92,7 @@ class TemplateRelatedTextField extends TemplateText
         }
         //return 'NOT AVAILABLE';
         return $this->get_html_edit();
-    }   
+    }
 
     public function get_xtpl_search()
     {
@@ -248,8 +249,8 @@ class TemplateRelatedTextField extends TemplateText
     {
         if ($df instanceof DynamicField) {
             require_once 'modules/ModuleBuilder/parsers/parser.label.php';
-            foreach (array_keys($GLOBALS['sugar_config']['languages']) AS $language) {
-                foreach (ModuleBuilder::getModuleAliases($df->module) AS $module) {
+            foreach (array_keys($GLOBALS['sugar_config']['languages']) as $language) {
+                foreach (ModuleBuilder::getModuleAliases($df->module) as $module) {
                     $mod_strings = return_module_language($language, $module);
                     if (isset($mod_strings[$fieldId->vname])) {
                         ParserLabel::removeLabel($language, $fieldId->vname, $mod_strings[$fieldId->vname], $module);
@@ -257,7 +258,7 @@ class TemplateRelatedTextField extends TemplateText
                 }
             }
         } elseif ($df instanceof MBModule) {
-            foreach (array_keys($GLOBALS['sugar_config']['languages']) AS $language) {
+            foreach (array_keys($GLOBALS['sugar_config']['languages']) as $language) {
                 $df->deleteLabel($language, $fieldId->vname);
                 $df->save();
             }
@@ -280,14 +281,14 @@ class TemplateRelatedTextField extends TemplateText
             $count = 0;
             $basename = strtolower(get_singular_bean_name($this->ext2)).'_id' ;
             $idName = $basename.'_c' ;
-	        
+            
             while ($df->fieldExists($idName, 'id')) {
                 $idName = $basename.++$count.'_c' ;
             }
             $id->name = $idName ;
-            $id->reportable = false;				
+            $id->reportable = false;
             $id->save($df);
-	        
+            
             // record the id field's name, and save
             $this->ext3 = $id->name;
             $this->id_name = $id->name;
@@ -322,7 +323,7 @@ class TemplateRelatedTextField extends TemplateText
             "label_{$idLabelName}" => $idLabelValue
         );
 
-        foreach (ModuleBuilder::getModuleAliases($module) AS  $moduleName) {
+        foreach (ModuleBuilder::getModuleAliases($module) as  $moduleName) {
             if ($df instanceof DynamicField) {
                 $parser = new ParserLabel($moduleName, $viewPackage);
                 $parser->handleSave($idFieldLabelArr, $GLOBALS['current_language']);

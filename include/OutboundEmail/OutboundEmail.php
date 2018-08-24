@@ -128,9 +128,8 @@ class OutboundEmail
             $oe->retrieve($row['id']);
 
             return $oe;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -528,8 +527,10 @@ class OutboundEmail
             foreach ($values as $k => $val) {
                 $updvalues[] = "{$cols[$k]} = $val";
             }
-            $q = "UPDATE outbound_email SET " . implode(', ',
-                    $updvalues) . " WHERE id = " . $this->db->quoted($this->id);
+            $q = "UPDATE outbound_email SET " . implode(
+                ', ',
+                    $updvalues
+            ) . " WHERE id = " . $this->db->quoted($this->id);
         }
 
         $this->db->query($q, true);
@@ -655,9 +656,8 @@ class OutboundEmail
             $oe = $this->getUsersMailerForSystemOverride($user->id);
             if (!empty($oe) && !empty($oe->id)) {
                 return $oe;
-            } else {
-                return $this->getSystemMailerSettings();
             }
+            return $this->getSystemMailerSettings();
         }
         $res = $this->db->query("SELECT id FROM outbound_email WHERE user_id = '{$user->id}' AND name='" . $this->db->quote($name) . "'");
         $a = $this->db->fetchByAssoc($res);

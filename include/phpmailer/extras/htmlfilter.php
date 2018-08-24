@@ -198,10 +198,10 @@ function tln_getnxtag($body, $offset)
                     $gt += 2;
                 }
                 return array(false, false, false, $lt, $gt);
-            } else {
+            }
                 $gt = tln_findnxstr($body, $pos, '>');
                 return array(false, false, false, $lt, $gt);
-            }
+            
         break;
     default:
         /**
@@ -452,9 +452,8 @@ function tln_deent(&$attvalue, $regex, $hex = false)
         }
         $attvalue = strtr($attvalue, $repl);
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 /**
@@ -693,9 +692,9 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
                          $newpos = $i + 1;
                          $bSucces = true;
                          break 2;
-                     } else {
-                         $content .= $sToken;
                      }
+                     $content .= $sToken;
+                     
                      $bEndTag = false;
                  } else {
                      $content .= $char;
@@ -724,8 +723,8 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
                 break;
         }
     }
-    if ($bSucces == FALSE) {
-        return array(FALSE, strlen($body));
+    if ($bSucces == false) {
+        return array(false, strlen($body));
     }
 
 
@@ -883,9 +882,10 @@ function tln_sanitize(
         if ($tagname == "style" && $tagtype == 1) {
             list($free_content, $curpos) =
                 tln_fixstyle($body, $gt+1, $trans_image_path, $block_external_images);
-            if ($free_content != FALSE) {
+            if ($free_content != false) {
                 if (!empty($attary)) {
-                    $attary = tln_fixatts($tagname,
+                    $attary = tln_fixatts(
+                        $tagname,
                                          $attary,
                                          $rm_attnames,
                                          $bad_attvals,

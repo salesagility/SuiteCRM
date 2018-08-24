@@ -90,7 +90,7 @@ class Zend_Gdata_Books extends Zend_Gdata
         $this->registerPackage('Zend_Gdata_Books_Extension');
         parent::__construct($client, $applicationId);
         $this->_httpClient->setParameterPost('service', self::AUTH_SERVICE_NAME);
-     }
+    }
 
     /**
      * Retrieves a feed of volumes.
@@ -187,7 +187,10 @@ class Zend_Gdata_Books extends Zend_Gdata
             $uri = $location;
         }
         return parent::insertEntry(
-            $entry, $uri, 'Zend_Gdata_Books_VolumeEntry');
+            $entry,
+            $uri,
+            'Zend_Gdata_Books_VolumeEntry'
+        );
     }
 
     /**
@@ -200,5 +203,4 @@ class Zend_Gdata_Books extends Zend_Gdata
     {
         $entry->delete();
     }
-
 }

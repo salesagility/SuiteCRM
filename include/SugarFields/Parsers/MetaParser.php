@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -362,7 +362,7 @@ class MetaParser
                 } //if
             } //foreach
 
-	$javascript = str_replace(array_keys($replace), array_values($replace), $javascript);
+    $javascript = str_replace(array_keys($replace), array_values($replace), $javascript);
         } //if
 
         if (!$addLiterals) {
@@ -598,9 +598,9 @@ class MetaParser
 
         /*
         $contents = file_get_contents($htmlFilePath);
-        
+
         $javascript = $this->getJavascript($contents, true);
-        
+
         if(!empty($javascript)) {
         	$javascript = str_replace("'", "\\'", $javascript);
         	$header .= "\n 'javascript' => '" . $javascript . "',\n";
@@ -666,7 +666,7 @@ class MetaParser
                     } //foreach
                 } //foreach
 
-	   	       	  // Now check against the $masterCopy
+                     // Now check against the $masterCopy
                 foreach ($masterpanel as $rowKey=>$row) {
                     $addRow = array();
 
@@ -683,7 +683,7 @@ class MetaParser
                             // 1) if it is a required field (as defined in metadata)
                             // 2) or if it has a customLabel and customCode (a very deep customization)
                             if ((is_array($column) && !empty($column['displayParams']['required'])) ||
-	   	       	  	 	      (is_array($column) && !empty($column['customCode']) && !empty($column['customLabel']))) {
+                                 (is_array($column) && !empty($column['customCode']) && !empty($column['customLabel']))) {
                                 $addRow[] = $column;
                             }
                         } else {
@@ -756,13 +756,13 @@ class MetaParser
         foreach ($panels as $panel) {
             if (!empty($panel) && !is_array($panel)) {
                 return false;
-            } else {
-                foreach ($panel as $row) {
-                    if (!empty($row) && !is_array($row)) {
-                        return false;
-                    } //if
-                } //foreach
-            } //if-else
+            }
+            foreach ($panel as $row) {
+                if (!empty($row) && !is_array($row)) {
+                    return false;
+                } //if
+            } //foreach
+             //if-else
         } //foreach
 
    return true;
@@ -852,4 +852,3 @@ class MetaParser
         return count($found) == 1 ? $found[0] : '';
     }
 }
-

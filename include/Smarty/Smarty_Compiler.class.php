@@ -247,8 +247,10 @@ class Smarty_Compiler extends Smarty
                     continue;
                 }
                 if ($prefilter[3] || is_callable($prefilter[0])) {
-                    $source_content = call_user_func_array($prefilter[0],
-                                                            array($source_content, &$this));
+                    $source_content = call_user_func_array(
+                        $prefilter[0],
+                                                            array($source_content, &$this)
+                    );
                     $this->_plugins['prefilter'][$filter_name][3] = true;
                 } else {
                     $this->_trigger_fatal_error("[plugin] prefilter '$filter_name' is not implemented");
@@ -375,7 +377,7 @@ class Smarty_Compiler extends Smarty
         $compiled_content = preg_replace("~(?<!')language\s*=\s*[\"\']?\s*php\s*[\"\']?~", "<?php echo 'language=php' ?>\n", $compiled_content);
 
         // recover legit tags
-        $compiled_content = str_replace($tag_guard, '<?', $compiled_content); 
+        $compiled_content = str_replace($tag_guard, '<?', $compiled_content);
         
         // remove \n from the end of the file, if any
         if (strlen($compiled_content) && (substr($compiled_content, -1) == "\n")) {
@@ -393,8 +395,10 @@ class Smarty_Compiler extends Smarty
                     continue;
                 }
                 if ($postfilter[3] || is_callable($postfilter[0])) {
-                    $compiled_content = call_user_func_array($postfilter[0],
-                                                              array($compiled_content, &$this));
+                    $compiled_content = call_user_func_array(
+                        $postfilter[0],
+                                                              array($compiled_content, &$this)
+                    );
                     $this->_plugins['postfilter'][$filter_name][3] = true;
                 } else {
                     $this->_trigger_fatal_error("Smarty plugin error: postfilter '$filter_name' is not implemented");
@@ -527,11 +531,10 @@ class Smarty_Compiler extends Smarty
                 $_open_tag = $this->_pop_tag('section');
                 if ($_open_tag == 'sectionelse') {
                     return "<?php endif; ?>";
-                } else {
-                    return "<?php endfor; endif; ?>";
                 }
+                    return "<?php endfor; endif; ?>";
+                
 
-                // no break
             case 'foreach':
                 $this->_push_tag('foreach');
                 return $this->_compile_foreach_start($tag_args);
@@ -545,9 +548,9 @@ class Smarty_Compiler extends Smarty
                 $_open_tag = $this->_pop_tag('foreach');
                 if ($_open_tag == 'foreachelse') {
                     return "<?php endif; unset(\$_from); ?>";
-                } else {
-                    return "<?php endforeach; endif; unset(\$_from); ?>";
                 }
+                    return "<?php endforeach; endif; unset(\$_from); ?>";
+                
                 break;
 
             case 'strip':
@@ -599,9 +602,9 @@ class Smarty_Compiler extends Smarty
                     return $output;
                 } elseif ($this->_compile_custom_tag($tag_command, $tag_args, $tag_modifier, $output)) {
                     return $output;
-                } else {
-                    $this->_syntax_error("unrecognized tag '$tag_command'", E_USER_ERROR, __FILE__, __LINE__);
                 }
+                    $this->_syntax_error("unrecognized tag '$tag_command'", E_USER_ERROR, __FILE__, __LINE__);
+                
 
         }
     }
@@ -669,9 +672,8 @@ class Smarty_Compiler extends Smarty
                 $this->_syntax_error($message, E_USER_WARNING, __FILE__, __LINE__);
             }
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
 
@@ -1055,7 +1057,7 @@ class Smarty_Compiler extends Smarty
 
         $arg_list = array();
         foreach ($attrs as $arg_name => $arg_value) {
-            if ($arg_name != 'file' AND $arg_name != 'once' AND $arg_name != 'assign') {
+            if ($arg_name != 'file' and $arg_name != 'once' and $arg_name != 'assign') {
                 if (is_bool($arg_value)) {
                     $arg_value = $arg_value ? 'true' : 'false';
                 }
@@ -1295,7 +1297,7 @@ class Smarty_Compiler extends Smarty
 
         if (empty($tokens)) {
             $_error_msg = $elseif ? "'elseif'" : "'if'";
-            $_error_msg .= ' statement requires arguments'; 
+            $_error_msg .= ' statement requires arguments';
             $this->_syntax_error($_error_msg, E_USER_ERROR, __FILE__, __LINE__);
         }
             
@@ -1444,9 +1446,8 @@ class Smarty_Compiler extends Smarty
 
         if ($elseif) {
             return '<?php elseif ('.implode(' ', $tokens).'): ?>';
-        } else {
-            return '<?php if ('.implode(' ', $tokens).'): ?>';
         }
+        return '<?php if ('.implode(' ', $tokens).'): ?>';
     }
 
 
@@ -2082,8 +2083,12 @@ class Smarty_Compiler extends Smarty
 
             case 'get':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_GET";
@@ -2091,8 +2096,12 @@ class Smarty_Compiler extends Smarty
 
             case 'post':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_POST";
@@ -2100,8 +2109,12 @@ class Smarty_Compiler extends Smarty
 
             case 'cookies':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_COOKIE";
@@ -2109,8 +2122,12 @@ class Smarty_Compiler extends Smarty
 
             case 'env':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_ENV";
@@ -2118,8 +2135,12 @@ class Smarty_Compiler extends Smarty
 
             case 'server':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_SERVER";
@@ -2127,8 +2148,12 @@ class Smarty_Compiler extends Smarty
 
             case 'session':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 $compiled_ref = "\$_SESSION";
@@ -2140,16 +2165,20 @@ class Smarty_Compiler extends Smarty
              */
             case 'request':
                 if ($this->security && !$this->security_settings['ALLOW_SUPER_GLOBALS']) {
-                    $this->_syntax_error("(secure mode) super global access not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) super global access not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 if ($this->request_use_auto_globals) {
                     $compiled_ref = "\$_REQUEST";
                     break;
-                } else {
-                    $this->_init_smarty_vars = true;
                 }
+                    $this->_init_smarty_vars = true;
+                
                 return null;
 
             case 'capture':
@@ -2167,8 +2196,12 @@ class Smarty_Compiler extends Smarty
 
             case 'const':
                 if ($this->security && !$this->security_settings['ALLOW_CONSTANTS']) {
-                    $this->_syntax_error("(secure mode) constants not permitted",
-                                         E_USER_WARNING, __FILE__, __LINE__);
+                    $this->_syntax_error(
+                        "(secure mode) constants not permitted",
+                                         E_USER_WARNING,
+                        __FILE__,
+                        __LINE__
+                    );
                     return;
                 }
                 array_shift($indexes);
@@ -2226,14 +2259,12 @@ class Smarty_Compiler extends Smarty
                         "\$this->_plugins['$type']['$name'][0][0]->"    /* method callback */
                         : (string)($this->_plugins[$type][$name][0][0]).'::'    /* class callback */
                        ). $this->_plugins[$type][$name][0][1];
-            } else {
-                /* function callback */
-                return $this->_plugins[$type][$name][0];
             }
-        } else {
-            /* plugin not loaded -> auto-loadable-plugin */
-            return 'smarty_'.$type.'_'.$name;
+            /* function callback */
+            return $this->_plugins[$type][$name][0];
         }
+        /* plugin not loaded -> auto-loadable-plugin */
+        return 'smarty_'.$type.'_'.$name;
     }
 
     /**
@@ -2374,8 +2405,12 @@ class Smarty_Compiler extends Smarty
             }
             $message = " expected {/$_open_tag} (opened line $_line_no).";
         }
-        $this->_syntax_error("mismatched tag {/$close_tag}.$message",
-                             E_USER_ERROR, __FILE__, __LINE__);
+        $this->_syntax_error(
+            "mismatched tag {/$close_tag}.$message",
+                             E_USER_ERROR,
+            __FILE__,
+            __LINE__
+        );
     }
 }
 

@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -487,7 +488,7 @@ class Call extends SugarBean
         }
         $this->email_reminder_checked = $this->email_reminder_time == -1 ? false : true;
 
-        if (isset ($_REQUEST['parent_type']) && empty($this->parent_type)) {
+        if (isset($_REQUEST['parent_type']) && empty($this->parent_type)) {
             $this->parent_type = $_REQUEST['parent_type'];
         } elseif (is_null($this->parent_type)) {
             $this->parent_type = $app_list_strings['record_type_default_key'];
@@ -612,7 +613,7 @@ class Call extends SugarBean
         $query = "SELECT calls_users.required, calls_users.accept_status, calls_users.user_id from calls_users where calls_users.call_id='$this->id' AND calls_users.deleted=0";
         $GLOBALS['log']->debug("Finding linked records $this->object_name: ".$query);
         $result = $this->db->query($query, true);
-        $list = Array();
+        $list = array();
 
         while ($row = $this->db->fetchByAssoc($result)) {
             $template = new User(); // PHP 5 will retrieve by reference, always over-writing the "old" one
@@ -640,7 +641,7 @@ class Call extends SugarBean
         $result = $this->db->query($query, true);
 
 
-        $list = Array();
+        $list = array();
 
 
         while ($row = $this->db->fetchByAssoc($result)) {
@@ -835,13 +836,13 @@ class Call extends SugarBean
         $def = $this->field_defs['status'];
         if (isset($def['default'])) {
             return $def['default'];
-        } else {
-            $app = return_app_list_strings_language($GLOBALS['current_language']);
-            if (isset($def['options']) && isset($app[$def['options']])) {
-                $keys = array_keys($app[$def['options']]);
-                return $keys[0];
-            }
         }
+        $app = return_app_list_strings_language($GLOBALS['current_language']);
+        if (isset($def['options']) && isset($app[$def['options']])) {
+            $keys = array_keys($app[$def['options']]);
+            return $keys[0];
+        }
+        
         return '';
     }
 

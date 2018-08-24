@@ -30,7 +30,7 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
     $html = '';
 
     if (!is_file('cache/jsLanguage/AOW_Actions/' . $GLOBALS['current_language'] . '.js')) {
-        require_once ('include/language/jsLanguage.php');
+        require_once('include/language/jsLanguage.php');
         jsLanguage::createModuleStringsCache('AOW_Actions', $GLOBALS['current_language']);
     }
     $html .= '<script src="cache/jsLanguage/AOW_Actions/'. $GLOBALS['current_language'] . '.js"></script>';

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -431,7 +432,7 @@ class UserViewHelper
         if (empty($email_reminder_time)) {
             $email_reminder_time = -1;
         }
-		
+        
         $this->ss->assign("REMINDER_TIME_OPTIONS", $app_list_strings['reminder_time_options']);
         $this->ss->assign("EMAIL_REMINDER_TIME_OPTIONS", $app_list_strings['reminder_time_options']);
         $this->ss->assign("REMINDER_TIME", $reminder_time);
@@ -440,7 +441,7 @@ class UserViewHelper
         $remindersDefaultPreferences = Reminder::loadRemindersDefaultValuesData();
         $this->ss->assign("REMINDER_CHECKED", $remindersDefaultPreferences['popup']);
         $this->ss->assign("EMAIL_REMINDER_CHECKED", $remindersDefaultPreferences['email']);
-		
+        
         $this->ss->assign("REMINDER_TABINDEX", "12");
         $publish_key = $this->bean->getPreference('calendar_publish_key');
         $this->ss->assign('CALENDAR_PUBLISH_KEY', $publish_key);
@@ -526,6 +527,10 @@ class UserViewHelper
             $this->ss->assign("SUBPANEL_TABS", $user_subpanel_tabs?'checked':'');
         } else {
             $this->ss->assign("SUBPANEL_TABS", $GLOBALS['sugar_config']['default_subpanel_tabs']?'checked':'');
+        }
+
+        if ($this->bean->getPreference('count_collapsed_subpanels')) {
+            $this->ss->assign("COUNT_COLLAPSED_SUBPANELS", 'checked');
         }
 
         /* Module Tab Chooser */

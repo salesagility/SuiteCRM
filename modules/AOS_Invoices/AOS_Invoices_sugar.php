@@ -21,7 +21,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 class AOS_Invoices_sugar extends Basic
 {
@@ -119,8 +119,8 @@ class AOS_Invoices_sugar extends Basic
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL': return true;
-		}
+            case 'ACL': return true;
+        }
         return false;
     }
 }

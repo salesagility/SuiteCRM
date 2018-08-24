@@ -838,12 +838,12 @@ abstract class DBManager
             if (isset($value['name']) == false || $value['name'] == false) {
                 $sql .= "/* NAME IS MISSING IN VARDEF $tablename::$name */\n";
                 continue;
-            } else {
-                if (isset($value['type']) == false || $value['type'] == false) {
-                    $sql .= "/* TYPE IS MISSING IN VARDEF $tablename::$name */\n";
-                    continue;
-                }
             }
+            if (isset($value['type']) == false || $value['type'] == false) {
+                $sql .= "/* TYPE IS MISSING IN VARDEF $tablename::$name */\n";
+                continue;
+            }
+            
 
             $name = strtolower($value['name']);
             // add or fix the field defs per what the DB is expected to give us back
@@ -1200,9 +1200,8 @@ abstract class DBManager
         }
         if (!empty($sqls)) {
             return join(";\n", $sqls) . ";";
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**
@@ -1912,9 +1911,8 @@ abstract class DBManager
                 }//switch
             }//foreach
             return $this->query($query);
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -1957,8 +1955,13 @@ abstract class DBManager
     public function insertSQL(SugarBean $bean)
     {
         // get column names and values
-        $sql = $this->insertParams($bean->getTableName(), $bean->getFieldDefinitions(), get_object_vars($bean),
-            isset($bean->field_name_map) ? $bean->field_name_map : null, false);
+        $sql = $this->insertParams(
+            $bean->getTableName(),
+            $bean->getFieldDefinitions(),
+            get_object_vars($bean),
+            isset($bean->field_name_map) ? $bean->field_name_map : null,
+            false
+        );
 
         return $sql;
     }
@@ -2199,9 +2202,8 @@ abstract class DBManager
                 }
 
                 return $this->emptyValue($type);
-            } else {
-                return "NULL";
             }
+            return "NULL";
         }
         if ($type == "datetimecombo") {
             $type = "datetime";
@@ -2299,17 +2301,14 @@ abstract class DBManager
         }
         if (stripos($string, " as ") !== false) { //"as" used for an alias
             return trim(substr($string, strripos($string, " as ") + 4));
-        } else {
-            if (strrpos($string, " ") != 0) { //Space used as a delimiter for an alias
-                return trim(substr($string, strrpos($string, " ")));
-            } else {
-                if (strpos($string, ".") !== false) { //No alias, but a table.field format was used
-                    return substr($string, strpos($string, ".") + 1);
-                } else { //Give up and assume the whole thing is the field name
-                    return $string;
-                }
-            }
         }
+        if (strrpos($string, " ") != 0) { //Space used as a delimiter for an alias
+            return trim(substr($string, strrpos($string, " ")));
+        }
+        if (strpos($string, ".") !== false) { //No alias, but a table.field format was used
+            return substr($string, strpos($string, ".") + 1);
+        }   //Give up and assume the whole thing is the field name
+        return $string;
     }
 
     /**
@@ -2522,9 +2521,8 @@ abstract class DBManager
             }
 
             return $return;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -2625,9 +2623,8 @@ abstract class DBManager
                 'auto_increment' => $auto_increment,
                 'full' => "$name $colType $default $required $auto_increment",
             );
-        } else {
-            return "$name $colType $default $required $auto_increment";
         }
+        return "$name $colType $default $required $auto_increment";
     }
 
     /**
@@ -2825,36 +2822,35 @@ abstract class DBManager
             }
 
             return $result;
-        } else {
-            if (strchr($name, ".")) {
-                // this is a compound name with dots, handle separately
-                $parts = explode(".", $name);
-                if (count($parts) > 2) {
-                    // some weird name, cut to table.name
-                    array_splice($parts, 0, count($parts) - 2);
-                }
-                $parts = $this->getValidDBName($parts, $ensureUnique, $type, $force);
-
-                return join(".", $parts);
-            }
-            // first strip any invalid characters - all but word chars (which is alphanumeric and _)
-            $name = preg_replace('/[^\w]+/i', '', $name);
-            $len = strlen($name);
-            $maxLen = empty($this->maxNameLengths[$type]) ? $this->maxNameLengths[$type]['column'] : $this->maxNameLengths[$type];
-            if ($len <= $maxLen && !$force) {
-                return strtolower($name);
-            }
-            if ($ensureUnique) {
-                $md5str = md5($name);
-                $tail = substr($name, -11);
-                $temp = substr($md5str, strlen($md5str) - 4);
-                $result = substr($name, 0, 10) . $temp . $tail;
-            } else {
-                $result = substr($name, 0, 11) . substr($name, 11 - $maxLen);
-            }
-
-            return strtolower($result);
         }
+        if (strchr($name, ".")) {
+            // this is a compound name with dots, handle separately
+            $parts = explode(".", $name);
+            if (count($parts) > 2) {
+                // some weird name, cut to table.name
+                array_splice($parts, 0, count($parts) - 2);
+            }
+            $parts = $this->getValidDBName($parts, $ensureUnique, $type, $force);
+
+            return join(".", $parts);
+        }
+        // first strip any invalid characters - all but word chars (which is alphanumeric and _)
+        $name = preg_replace('/[^\w]+/i', '', $name);
+        $len = strlen($name);
+        $maxLen = empty($this->maxNameLengths[$type]) ? $this->maxNameLengths[$type]['column'] : $this->maxNameLengths[$type];
+        if ($len <= $maxLen && !$force) {
+            return strtolower($name);
+        }
+        if ($ensureUnique) {
+            $md5str = md5($name);
+            $tail = substr($name, -11);
+            $temp = substr($md5str, strlen($md5str) - 4);
+            $result = substr($name, 0, 10) . $temp . $tail;
+        } else {
+            $result = substr($name, 0, 11) . substr($name, 11 - $maxLen);
+        }
+
+        return strtolower($result);
     }
 
     /**
@@ -2985,7 +2981,7 @@ abstract class DBManager
             $field_defs = array_intersect_key($field_defs, (array)$bean);
 
             foreach ($field_defs as $field => $properties) {
-                $before_value = $fetched_row[$field];
+                $before_value = from_html($fetched_row[$field]);
                 $after_value = $bean->$field;
                 if (isset($properties['type'])) {
                     $field_type = $properties['type'];
@@ -3007,8 +3003,10 @@ abstract class DBManager
                     $before_value = $this->fromConvert($before_value, $field_type);
                 }
                 //if the type and values match, do nothing.
-                if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue($after_value,
-                        $field_type))
+                if (!($this->_emptyValue($before_value, $field_type) && $this->_emptyValue(
+                    $after_value,
+                        $field_type
+                ))
                 ) {
                     $change = false;
                     if (trim($before_value) !== trim($after_value)) {
@@ -3480,9 +3478,8 @@ abstract class DBManager
                     $table = $this->extractTableName($query);
                     if (!in_array($table, $skipTables)) {
                         return call_user_func(array($this, $check), $table, $query);
-                    } else {
-                        $this->log->debug("Skipping table $table as blacklisted");
                     }
+                    $this->log->debug("Skipping table $table as blacklisted");
                 } else {
                     $this->log->debug("No verification for $qstart on {$this->dbType}");
                 }
@@ -3571,9 +3568,8 @@ abstract class DBManager
         $row = $this->fetchRow($result);
         if (!empty($row) && $encode && $this->encode) {
             return array_map('to_html', $row);
-        } else {
-            return $row;
         }
+        return $row;
     }
 
     /**
@@ -4049,4 +4045,15 @@ abstract class DBManager
      * @return string
      */
     abstract public function getGuidSQL();
+
+
+    /**
+     * Returns a string without line breaks.
+     * @param string $sql A SQL statement
+     * @return string
+     */
+    public function removeLineBreaks($sql)
+    {
+        return trim(str_replace(array("\r", "\n"), " ", $sql));
+    }
 }

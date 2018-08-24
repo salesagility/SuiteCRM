@@ -264,7 +264,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method with required data preset and verify it returns expected result
         $fields = array('label' => array('display' => 1, 'total' => 'SUM', 'label' => 'total'));
         $totals = array('label' => array(10, 20, 30));
-        $expected = "<thead class='fc-head'><tr><th>total Sum</td></tr></thead></body><tr class='oddListRowS1'><td>60</td></tr></body>";
+        $expected = "<table><thead class='fc-head'><tr><th>total Sum</th></tr></thead><tbody><tr class='oddListRowS1'><td>60</td></tr></tbody></table>";
 
         $aor_Report = new AOR_Report();
         $actual = $aor_Report->getTotalHTML($fields, $totals);
@@ -339,8 +339,14 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test with type custom and verify that it retunrs expected results
         $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `accounts_contacts` ON `accounts`.id = `contacts`.id_c '));
-        $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(),
-            'custom', array());
+        $actual = $aor_Report->build_report_query_join(
+            'contacts',
+            'accounts_contacts',
+            'accounts',
+            new Account(),
+            'custom',
+            array()
+        );
         $this->assertSame($expected, $actual);
 
         //test with type relationship and verify that it retunrs expected results
@@ -349,8 +355,14 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'id_select' => array('accounts_contacts' => '`accounts_contacts`.id AS \'accounts_contacts_id\''),
             'id_select_group' => array('accounts_contacts' => '`accounts_contacts`.id')
         );
-        $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(),
-            'relationship', array());
+        $actual = $aor_Report->build_report_query_join(
+            'contacts',
+            'accounts_contacts',
+            'accounts',
+            new Account(),
+            'relationship',
+            array()
+        );
         $this->assertSame($expected, $actual);
     }
 

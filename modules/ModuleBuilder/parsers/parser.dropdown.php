@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
@@ -67,7 +68,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
          $rawurldecode = rawurldecode($list_value);
          $htmldecode = html_entity_decode($rawurldecode, ENT_QUOTES);
          $temp = $json->decode($htmldecode);
-         $dropdown = array () ;
+         $dropdown = array() ;
          // dropdown is received as an array of (name,value) pairs - now extract to name=>value format preserving order
          // we rely here on PHP to preserve the order of the received name=>value pairs - associative arrays in PHP are ordered
          if (is_array($temp)) {
@@ -135,14 +136,14 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
      }
 
      /**
-	 * function synchDropDown
-	 * 	Ensures that the set of dropdown keys is consistant accross all languages.
-	 *
-	 * @param $dropdown_name The name of the dropdown to be synched
-	 * @param $dropdown array The dropdown currently being saved
-	 * @param $selected_lang String the language currently selected in Studio/MB
-	 * @param $saveLov String the path to the directory to save the new lang file in.
-	 */
+     * function synchDropDown
+     * 	Ensures that the set of dropdown keys is consistant accross all languages.
+     *
+     * @param $dropdown_name The name of the dropdown to be synched
+     * @param $dropdown array The dropdown currently being saved
+     * @param $selected_lang String the language currently selected in Studio/MB
+     * @param $saveLov String the path to the directory to save the new lang file in.
+     */
      public function synchDropDown($dropdown_name, $dropdown, $selected_lang, $saveLoc)
      {
          $allLanguages =  get_languages();
@@ -163,14 +164,14 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
      }
 
      /**
-	 * function synchMBDropDown
-	 * 	Ensures that the set of dropdown keys is consistant accross all languages in a ModuleBuilder Module
-	 *
-	 * @param $dropdown_name The name of the dropdown to be synched
-	 * @param $dropdown array The dropdown currently being saved
-	 * @param $selected_lang String the language currently selected in Studio/MB
-	 * @param $module MBModule the module to update the languages in
-	 */
+     * function synchMBDropDown
+     * 	Ensures that the set of dropdown keys is consistant accross all languages in a ModuleBuilder Module
+     *
+     * @param $dropdown_name The name of the dropdown to be synched
+     * @param $dropdown array The dropdown currently being saved
+     * @param $selected_lang String the language currently selected in Studio/MB
+     * @param $module MBModule the module to update the languages in
+     */
      public function synchMBDropDown($dropdown_name, $dropdown, $selected_lang, $module)
      {
          $selected_lang	= $selected_lang . '.lang.php';
@@ -193,7 +194,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
          //check for extra keys
          foreach ($sub as $key=>$value) {
              if (!isset($dom[$key])) {
-                 unset ($sub[$key]);
+                 unset($sub[$key]);
              }
          }
          //check for missing keys
@@ -208,7 +209,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
      public function getPatternMatch($dropdown_name)
      {
          return '/\s*\$GLOBALS\s*\[\s*\'app_list_strings\s*\'\s*\]\[\s*\''
-    		 . $dropdown_name.'\'\s*\]\s*=\s*array\s*\([^\)]*\)\s*;\s*/ism';
+             . $dropdown_name.'\'\s*\]\s*=\s*array\s*\([^\)]*\)\s*;\s*/ism';
      }
 
      public function getNewCustomContents($dropdown_name, $dropdown, $lang)

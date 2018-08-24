@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -85,7 +85,7 @@ class SugarpdfFactory
                 //it appears Sugar does have the proper logic for this file.
                 $sugarpdf = SugarpdfFactory::_buildFromFile($file, $bean, $sugarpdf_object_map, $type, $module);
             }
-        }    
+        }
         // Default to Sugarpdf if still nothing found/built
         if (!isset($sugarpdf)) {
             $sugarpdf = new Sugarpdf($bean, $sugarpdf_object_map);
@@ -108,7 +108,7 @@ class SugarpdfFactory
 //        if(!$sugarpdf_config){
 //            if(file_exists('custom/modules/'.$sugarpdf->module.'/sugarpdf/'.$config_file_name)){
 //                require_once('custom/modules/'.$sugarpdf->module.'/sugarpdf/'.$config_file_name);
-//            } 
+//            }
 //            if(file_exists('modules/'.$sugarpdf->module.'/sugarpdf/'.$config_file_name)){
 //                require_once('modules/'.$sugarpdf->module.'/sugarpdf/'.$config_file_name);
 //            }
@@ -117,18 +117,18 @@ class SugarpdfFactory
 //            }
 //            if(file_exists('include/Sugarpdf/sugarpdf/'.$config_file_name)){
 //                require_once('include/Sugarpdf/sugarpdf/'.$config_file_name);
-//            }    
+//            }
 //            if(file_exists('include/Sugarpdf/sugarpdf/sugarpdf.config.php')){
 //                require_once('include/Sugarpdf/sugarpdf/sugarpdf.config.php');
 //            }
 //        }
 //
-//    }    
+//    }
     
     /**
      * This is a private function which just helps the getSugarpdf function generate the
      * proper Tcpdf object
-     * 
+     *
      * @return a valid Sugarpdf
      */
     public function _buildFromFile($file, &$bean, $sugarpdf_object_map, $type, $module)
@@ -148,12 +148,12 @@ class SugarpdfFactory
     /**
      * instantiate the correct Tcpdf and call init to pass on any obejcts we need to
      * from the controller.
-     * 
+     *
      * @param string class - the name of the class to instantiate
      * @param object bean = the bean to pass to the Sugarpdf
      * @param array Sugarpdf_object_map - the array which holds obejcts to pass between the
      *                                controller and the tcpdf.
-     * 
+     *
      * @return Sugarpdf
      */
     public function _buildClass($class, &$bean, $sugarpdf_object_map)
@@ -162,8 +162,7 @@ class SugarpdfFactory
         //$sugarpdf->init($bean, $sugarpdf_object_map);
         if ($sugarpdf instanceof Sugarpdf) {
             return $sugarpdf;
-        } else {
-            return new Sugarpdf($bean, $sugarpdf_object_map);
         }
+        return new Sugarpdf($bean, $sugarpdf_object_map);
     }
 }

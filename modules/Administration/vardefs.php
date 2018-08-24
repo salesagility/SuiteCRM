@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,14 +37,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $dictionary['Administration'] = array('table' => 'config', 'comment' => 'System table containing system-wide definitions'
-                               ,'fields' => array (
+                               ,'fields' => array(
   'category' =>
-  array (
+  array(
     'name' => 'category',
     'vname' => 'LBL_LIST_SYMBOL',
     'type' => 'varchar',
@@ -51,7 +52,7 @@ $dictionary['Administration'] = array('table' => 'config', 'comment' => 'System 
     'comment' => 'Settings are grouped under this category; arbitraily defined based on requirements'
   ),
   'name' =>
-  array (
+  array(
     'name' => 'name',
     'vname' => 'LBL_LIST_NAME',
     'type' => 'varchar',
@@ -59,7 +60,7 @@ $dictionary['Administration'] = array('table' => 'config', 'comment' => 'System 
     'comment' => 'The name given to the setting'
   ),
   'value' =>
-  array (
+  array(
     'name' => 'value',
     'vname' => 'LBL_LIST_RATE',
     'type' => 'text',
@@ -71,65 +72,65 @@ $dictionary['Administration'] = array('table' => 'config', 'comment' => 'System 
 
 $dictionary['UpgradeHistory'] = array(
     'table'  => 'upgrade_history', 'comment' => 'Tracks Sugar upgrades made over time; used by Upgrade Wizard and Module Loader',
-    'fields' => array (
-        'id' => array (
+    'fields' => array(
+        'id' => array(
                 'name'       => 'id',
                 'type'       => 'id',
                 'required'   => true,
                 'reportable' => false,
                 'comment' => 'Unique identifier'
         ),
-        'filename' => array (
+        'filename' => array(
                 'name' => 'filename',
                 'type' => 'varchar',
                 'len' => '255',
                 'comment' => 'Cached filename containing the upgrade scripts and content'
         ),
-        'md5sum' => array (
+        'md5sum' => array(
                 'name' => 'md5sum',
                 'type' => 'varchar',
                 'len' => '32',
                 'comment' => 'The MD5 checksum of the upgrade file'
         ),
-        'type' => array (
+        'type' => array(
                 'name' => 'type',
                 'type' => 'varchar',
                 'len' => '30',
                 'comment' => 'The upgrade type (module, patch, theme, etc)'
         ),
-        'status' => array (
+        'status' => array(
                 'name' => 'status',
                 'type' => 'varchar',
                 'len' => '50',
                 'comment' => 'The status of the upgrade (ex:  "installed")',
         ),
-        'version' => array (
+        'version' => array(
                 'name' => 'version',
                 'type' => 'varchar',
                 'len' => '64',
                 'comment' => 'Version as contained in manifest file'
         ),
-        'name' => array (
+        'name' => array(
                 'name'  => 'name',
                 'type'  => 'varchar',
                 'len'   => '255',
         ),
-        'description' => array (
+        'description' => array(
                 'name'  => 'description',
                 'type'  => 'text',
         ),
-        'id_name' => array (
+        'id_name' => array(
                 'name' => 'id_name',
                 'type' => 'varchar',
                 'len' => '255',
                 'comment' => 'The unique id of the module'
         ),
-        'manifest' => array (
+        'manifest' => array(
                 'name' => 'manifest',
                 'type' => 'longtext',
                 'comment' => 'A serialized copy of the manifest file.'
         ),
-        'date_entered' => array (
+        'date_entered' => array(
                 'name' => 'date_entered',
                 'type' => 'datetime',
                 'required'=>true,

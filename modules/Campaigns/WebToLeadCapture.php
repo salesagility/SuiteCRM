@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/formbase.php');
 require_once('modules/Leads/LeadFormBase.php');
@@ -87,7 +88,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     if (isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id'])) {
         $current_user = new User();
         $current_user->retrieve($_REQUEST['assigned_user_id']);
-    } 
+    }
 
     if (isset($camp_data) && $camp_data != null) {
         $leadForm = new LeadFormBase();
@@ -140,7 +141,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
             if (isset($_POST['email1']) && $_POST['email1'] != null) {
                 $lead->email1 = $_POST['email1'];
-            } 
+            }
             //in case there are old forms used webtolead_email1
             elseif (isset($_POST['webtolead_email1']) && $_POST['webtolead_email1'] != null) {
                 $lead->email1 = $_POST['webtolead_email1'];
@@ -148,7 +149,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 
             if (isset($_POST['email2']) && $_POST['email2'] != null) {
                 $lead->email2 = $_POST['email2'];
-            } 
+            }
             //in case there are old forms used webtolead_email2
             elseif (isset($_POST['webtolead_email2']) && $_POST['webtolead_email2'] != null) {
                 $lead->email2 = $_POST['webtolead_email2'];
@@ -159,27 +160,27 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             if (!empty($GLOBALS['check_notify'])) {
                 $lead->save($GLOBALS['check_notify']);
             } else {
-                $lead->save(FALSE);
+                $lead->save(false);
             }
         }
 
         //in case there are forms out there still using email_opt_out
         if (isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out'])) {
-            if (isset ($lead->email1) && !empty($lead->email1)) {
+            if (isset($lead->email1) && !empty($lead->email1)) {
                 $sea = new SugarEmailAddress();
                 $sea->AddUpdateEmailAddress($lead->email1, 0, 1);
-            }   
-            if (isset ($lead->email2) && !empty($lead->email2)) {
+            }
+            if (isset($lead->email2) && !empty($lead->email2)) {
                 $sea = new SugarEmailAddress();
                 $sea->AddUpdateEmailAddress($lead->email2, 0, 1);
             }
-        }              
+        }
         if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
             // Get the redirect url, and make sure the query string is not too long
             $redirect_url = $_POST['redirect_url'];
             $query_string = '';
             $first_char = '&';
-            if (strpos($redirect_url, '?') === FALSE) {
+            if (strpos($redirect_url, '?') === false) {
                 $first_char = '?';
             }
             $first_iteration = true;
@@ -238,9 +239,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         sugar_cleanup();
         // die to keep code from running into redirect case below
         die();
-    } else {
-        echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
     }
+    echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
 }
 
 if (!empty($_POST['redirect'])) {

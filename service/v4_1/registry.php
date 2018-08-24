@@ -2,12 +2,13 @@
 if (!defined('sugarEntry')) {
     define('sugarEntry', true);
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry')) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry')) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('service/v4/registry.php');
@@ -47,12 +48,12 @@ class registry_v4_1 extends registry_v4
 {
 
 
-	/**
-	 * registerFunction
+    /**
+     * registerFunction
      *
      * Registers all the functions on the service class
-	 *
-	 */
+     *
+     */
     protected function registerFunction()
     {
         $GLOBALS['log']->info('Begin: registry->registerFunction');
@@ -62,27 +63,28 @@ class registry_v4_1 extends registry_v4
         $this->serviceClass->registerFunction(
             'get_relationships',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'module_id'=>'xsd:string', 'link_field_name'=>'xsd:string', 'related_module_query'=>'xsd:string', 'related_fields'=>'tns:select_fields', 'related_module_link_name_to_fields_array'=>'tns:link_names_to_fields_array', 'deleted'=>'xsd:int', 'order_by'=>'xsd:string', 'offset'=>'xsd:int' , 'limit'=>'xsd:int'),
-            array('return'=>'tns:get_entry_result_version2'));
+            array('return'=>'tns:get_entry_result_version2')
+        );
 
 
         //Add get_modified_relationship function
         $this->serviceClass->registerFunction(
             'get_modified_relationships',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string','related_module'=>'xsd:string', 'from_date'=>'xsd:string', 'to_date'=>'xsd:string','offset'=>'xsd:int', 'max_results'=>'xsd:int','deleted'=>'xsd:int', 'module_user_id'=>'xsd:string', 'select_fields'=>'tns:select_fields', 'relationship_name'=>'xsd:string', 'deletion_date'=>'xsd:string'),
-            array('return'=>'tns:modified_relationship_result'));
+            array('return'=>'tns:modified_relationship_result')
+        );
     }
 
 
     /**
-   	 * This method registers all the complex types
-   	 *
-   	 */
+     * This method registers all the complex types
+     *
+     */
     protected function registerTypes()
     {
         parent::registerTypes();
 
-        $this->serviceClass->registerType
-           (
+        $this->serviceClass->registerType(
                'error_value',
                'complexType',
                'struct',
@@ -112,8 +114,7 @@ class registry_v4_1 extends registry_v4
 
         //modified_relationship_entry
         //This type consists of id, module_name and name_value_list type
-        $this->serviceClass->registerType
-            (
+        $this->serviceClass->registerType(
                  'modified_relationship_entry',
                  'complexType',
                  'struct',
@@ -128,8 +129,7 @@ class registry_v4_1 extends registry_v4
 
         //modified_relationship_result
         //the top level result array
-        $this->serviceClass->registerType
-            (
+        $this->serviceClass->registerType(
                 'modified_relationship_result',
                 'complexType',
                 'struct',

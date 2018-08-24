@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -201,7 +201,15 @@ class campaign_charts
      * @param bool $is_dashlet
      * @param string $dashlet_id
      * @return string
-     */public function campaign_response_roi($datay= array(), $targets=array(), $campaign_id= null, $cache_file_name='a_file', $refresh=false, $marketing_id='', $is_dashlet=false, $dashlet_id=''
+     */public function campaign_response_roi(
+        $datay= array(),
+        $targets=array(),
+        $campaign_id= null,
+        $cache_file_name='a_file',
+        $refresh=false,
+        $marketing_id='',
+        $is_dashlet=false,
+        $dashlet_id=''
         ) {
         global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
 

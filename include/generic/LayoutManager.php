@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -93,9 +94,8 @@ class LayoutManager
     {
         if (isset($this->defs[$key])) {
             return $this->defs[$key];
-        } else {
-            return null;
         }
+        return null;
     }
 
     // Take the class name from the widget definition and use the class to look it up
@@ -103,13 +103,13 @@ class LayoutManager
     public function getClassFromWidgetDef($widget_def, $use_default = false)
     {
         static $class_map = array(
-			'SugarWidgetSubPanelTopCreateButton' => array(
-				'widget_class'=>'SugarWidgetSubPanelTopButton',
-				'title'=>'LBL_NEW_BUTTON_TITLE',
-				'access_key'=>'LBL_NEW_BUTTON_KEY',
-				'form_value'=>'LBL_NEW_BUTTON_LABEL',
-				'ACL'=>'edit',
-			),
+            'SugarWidgetSubPanelTopCreateButton' => array(
+                'widget_class'=>'SugarWidgetSubPanelTopButton',
+                'title'=>'LBL_NEW_BUTTON_TITLE',
+                'access_key'=>'LBL_NEW_BUTTON_KEY',
+                'form_value'=>'LBL_NEW_BUTTON_LABEL',
+                'ACL'=>'edit',
+            ),
             'SugarWidgetSubPanelTopButtonQuickCreate' => array(
                 'widget_class'=>'SugarWidgetSubPanelTopButtonQuickCreate',
                 'title'=>'LBL_NEW_BUTTON_TITLE',
@@ -124,106 +124,106 @@ class LayoutManager
                 'form_value'=>'LBL_NEW_BUTTON_LABEL',
                 'ACL'=>'edit',
             ),
-			'SugarWidgetSubPanelTopScheduleMeetingButton' => array(
-				'widget_class'=>'SugarWidgetSubPanelTopScheduleMeetingButton',
-				'module'=>'Meetings',
-				'title'=>'LBL_NEW_BUTTON_TITLE',
-				'access_key'=>'LBL_NEW_BUTTON_KEY',
-				'form_value'=>'LNK_NEW_MEETING',
-				'ACL'=>'edit',
-			),
-			'SugarWidgetSubPanelTopScheduleCallButton' => array(
-				'widget_class'=>'SugarWidgetSubPanelTopScheduleCallButton',
-				'module'=>'Calls',
-				'title'=>'LBL_NEW_BUTTON_TITLE',
-				'access_key'=>'LBL_NEW_BUTTON_KEY',
-				'form_value'=>'LNK_NEW_CALL',
-				'ACL'=>'edit',
-			),
-			'SugarWidgetSubPanelTopCreateTaskButton' => array(
-				'widget_class'=>'SugarWidgetSubPanelTopCreateTaskButton',
-				'module'=>'Tasks',
-				'title'=>'LBL_NEW_BUTTON_TITLE',
-				'access_key'=>'LBL_NEW_BUTTON_KEY',
-				'form_value'=>'LNK_NEW_TASK',
-				'ACL'=>'edit',
-			),
-			'SugarWidgetSubPanelTopCreateNoteButton' => array(
-				'widget_class'=>'SugarWidgetSubPanelTopCreateNoteButton',
-				'module'=>'Notes',
-				'title'=>'LBL_NEW_BUTTON_TITLE',
-				'access_key'=>'LBL_NEW_BUTTON_KEY',
-				'form_value'=>'LNK_NEW_NOTE',
-				'ACL'=>'edit',
-			),
-			'SugarWidgetSubPanelTopCreateContactAccountButton' => array(
-				'widget_class'=>'SugarWidgetSubPanelTopButton',
-				'module'=>'Contacts',
-				'title'=>'LBL_NEW_BUTTON_TITLE',
-				'access_key'=>'LBL_NEW_BUTTON_KEY',
-				'form_value'=>'LBL_NEW_BUTTON_LABEL',
-        		'additional_form_fields' => array(
-        			'primary_address_street' => 'shipping_address_street',
-					'primary_address_city' => 'shipping_address_city',
-					'primary_address_state' => 'shipping_address_state',
-					'primary_address_country' => 'shipping_address_country',
-					'primary_address_postalcode' => 'shipping_address_postalcode',
-					'to_email_addrs' => 'email1'
-					),
-				'ACL'=>'edit',
-			),
-			'SugarWidgetSubPanelTopCreateContact' => array(
-				'widget_class'=>'SugarWidgetSubPanelTopButton',
-				'module'=>'Contacts',
-				'title'=>'LBL_NEW_BUTTON_TITLE',
-				'access_key'=>'LBL_NEW_BUTTON_KEY',
-				'form_value'=>'LBL_NEW_BUTTON_LABEL',
-        		'additional_form_fields' => array(
-        			'account_id' => 'account_id',
-					'account_name' => 'account_name',
-				),
-				'ACL'=>'edit',
-			),
-			'SugarWidgetSubPanelTopCreateRevisionButton'=> array(
-				'widget_class'=>'SugarWidgetSubPanelTopButton',
-				'module'=>'DocumentRevisions',
-				'title'=>'LBL_NEW_BUTTON_TITLE',
-				'access_key'=>'LBL_NEW_BUTTON_KEY',
-				'form_value'=>'LBL_NEW_BUTTON_LABEL',
-        		'additional_form_fields' => array(
-        			'parent_name'=>'document_name',
-					'document_name' => 'document_name',
-					'document_revision' => 'latest_revision',
-					'document_filename' => 'filename',
-        			'document_revision_id' => 'document_revision_id',
-				),
-				'ACL'=>'edit',
-			),
+            'SugarWidgetSubPanelTopScheduleMeetingButton' => array(
+                'widget_class'=>'SugarWidgetSubPanelTopScheduleMeetingButton',
+                'module'=>'Meetings',
+                'title'=>'LBL_NEW_BUTTON_TITLE',
+                'access_key'=>'LBL_NEW_BUTTON_KEY',
+                'form_value'=>'LNK_NEW_MEETING',
+                'ACL'=>'edit',
+            ),
+            'SugarWidgetSubPanelTopScheduleCallButton' => array(
+                'widget_class'=>'SugarWidgetSubPanelTopScheduleCallButton',
+                'module'=>'Calls',
+                'title'=>'LBL_NEW_BUTTON_TITLE',
+                'access_key'=>'LBL_NEW_BUTTON_KEY',
+                'form_value'=>'LNK_NEW_CALL',
+                'ACL'=>'edit',
+            ),
+            'SugarWidgetSubPanelTopCreateTaskButton' => array(
+                'widget_class'=>'SugarWidgetSubPanelTopCreateTaskButton',
+                'module'=>'Tasks',
+                'title'=>'LBL_NEW_BUTTON_TITLE',
+                'access_key'=>'LBL_NEW_BUTTON_KEY',
+                'form_value'=>'LNK_NEW_TASK',
+                'ACL'=>'edit',
+            ),
+            'SugarWidgetSubPanelTopCreateNoteButton' => array(
+                'widget_class'=>'SugarWidgetSubPanelTopCreateNoteButton',
+                'module'=>'Notes',
+                'title'=>'LBL_NEW_BUTTON_TITLE',
+                'access_key'=>'LBL_NEW_BUTTON_KEY',
+                'form_value'=>'LNK_NEW_NOTE',
+                'ACL'=>'edit',
+            ),
+            'SugarWidgetSubPanelTopCreateContactAccountButton' => array(
+                'widget_class'=>'SugarWidgetSubPanelTopButton',
+                'module'=>'Contacts',
+                'title'=>'LBL_NEW_BUTTON_TITLE',
+                'access_key'=>'LBL_NEW_BUTTON_KEY',
+                'form_value'=>'LBL_NEW_BUTTON_LABEL',
+                'additional_form_fields' => array(
+                    'primary_address_street' => 'shipping_address_street',
+                    'primary_address_city' => 'shipping_address_city',
+                    'primary_address_state' => 'shipping_address_state',
+                    'primary_address_country' => 'shipping_address_country',
+                    'primary_address_postalcode' => 'shipping_address_postalcode',
+                    'to_email_addrs' => 'email1'
+                    ),
+                'ACL'=>'edit',
+            ),
+            'SugarWidgetSubPanelTopCreateContact' => array(
+                'widget_class'=>'SugarWidgetSubPanelTopButton',
+                'module'=>'Contacts',
+                'title'=>'LBL_NEW_BUTTON_TITLE',
+                'access_key'=>'LBL_NEW_BUTTON_KEY',
+                'form_value'=>'LBL_NEW_BUTTON_LABEL',
+                'additional_form_fields' => array(
+                    'account_id' => 'account_id',
+                    'account_name' => 'account_name',
+                ),
+                'ACL'=>'edit',
+            ),
+            'SugarWidgetSubPanelTopCreateRevisionButton'=> array(
+                'widget_class'=>'SugarWidgetSubPanelTopButton',
+                'module'=>'DocumentRevisions',
+                'title'=>'LBL_NEW_BUTTON_TITLE',
+                'access_key'=>'LBL_NEW_BUTTON_KEY',
+                'form_value'=>'LBL_NEW_BUTTON_LABEL',
+                'additional_form_fields' => array(
+                    'parent_name'=>'document_name',
+                    'document_name' => 'document_name',
+                    'document_revision' => 'latest_revision',
+                    'document_filename' => 'filename',
+                    'document_revision_id' => 'document_revision_id',
+                ),
+                'ACL'=>'edit',
+            ),
 
-			'SugarWidgetSubPanelTopCreateDirectReport' => array(
-				'widget_class'=>'SugarWidgetSubPanelTopButton',
-				'module'=>'Contacts',
-				'title'=>'LBL_NEW_BUTTON_TITLE',
-				'access_key'=>'LBL_NEW_BUTTON_KEY',
-				'form_value'=>'LBL_NEW_BUTTON_LABEL',
-        		'additional_form_fields' => array(
-        			'reports_to_name' => 'name',
-					'reports_to_id' => 'id',
-				),
-				'ACL'=>'edit',
-			),
-			'SugarWidgetSubPanelTopSelectFromReportButton' => array(
-				'widget_class'=>'SugarWidgetSubPanelTopSelectReportsButton',
-				'module'=>'Reports',
-				'title'=>'LBL_SELECT_REPORTS_BUTTON_LABEL',
-				'access_key'=>'LBL_SELECT_BUTTON_KEY',
-				'form_value'=>'LBL_SELECT_REPORTS_BUTTON_LABEL',
-				'ACL'=>'edit',
-				'add_to_passthru_data'=>array (
-					'return_type'=>'report',
-				)
-			),
-			 'SugarWidgetSubPanelTopCreateAccountNameButton' => array(
+            'SugarWidgetSubPanelTopCreateDirectReport' => array(
+                'widget_class'=>'SugarWidgetSubPanelTopButton',
+                'module'=>'Contacts',
+                'title'=>'LBL_NEW_BUTTON_TITLE',
+                'access_key'=>'LBL_NEW_BUTTON_KEY',
+                'form_value'=>'LBL_NEW_BUTTON_LABEL',
+                'additional_form_fields' => array(
+                    'reports_to_name' => 'name',
+                    'reports_to_id' => 'id',
+                ),
+                'ACL'=>'edit',
+            ),
+            'SugarWidgetSubPanelTopSelectFromReportButton' => array(
+                'widget_class'=>'SugarWidgetSubPanelTopSelectReportsButton',
+                'module'=>'Reports',
+                'title'=>'LBL_SELECT_REPORTS_BUTTON_LABEL',
+                'access_key'=>'LBL_SELECT_BUTTON_KEY',
+                'form_value'=>'LBL_SELECT_REPORTS_BUTTON_LABEL',
+                'ACL'=>'edit',
+                'add_to_passthru_data'=>array(
+                    'return_type'=>'report',
+                )
+            ),
+             'SugarWidgetSubPanelTopCreateAccountNameButton' => array(
                 'widget_class'=>'SugarWidgetSubPanelTopCreateAccountNameButton',
                 'module'=>'Contacts',
                 'title'=>'LBL_NEW_BUTTON_TITLE',
@@ -231,23 +231,23 @@ class LayoutManager
                 'form_value'=>'LBL_NEW_BUTTON_LABEL',
                 'ACL'=>'edit',
             ),
-			'SugarWidgetSubPanelAddToProspectListButton' => array(
-				'widget_class'=>'SugarWidgetSubPanelTopSelectButton',
-				'module'=>'ProspectLists',
-				'title'=>'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL',
-				'access_key'=>'LBL_ADD_TO_PROSPECT_LIST_BUTTON_KEY',
-				'form_value'=>'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL',
-				'ACL'=>'edit',
-				'add_to_passthru_data'=>array (
-					'return_type'=>'addtoprospectlist',
-					'parent_module'=>'ProspectLists',
-					'parent_type'=>'ProspectList',
-					'child_id'=>'target_id',
-					'link_attribute'=>'target_type',
-					'link_type'=>'polymorphic',	 //polymorphic or default
-				)
-			),
-		);
+            'SugarWidgetSubPanelAddToProspectListButton' => array(
+                'widget_class'=>'SugarWidgetSubPanelTopSelectButton',
+                'module'=>'ProspectLists',
+                'title'=>'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL',
+                'access_key'=>'LBL_ADD_TO_PROSPECT_LIST_BUTTON_KEY',
+                'form_value'=>'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL',
+                'ACL'=>'edit',
+                'add_to_passthru_data'=>array(
+                    'return_type'=>'addtoprospectlist',
+                    'parent_module'=>'ProspectLists',
+                    'parent_type'=>'ProspectList',
+                    'child_id'=>'target_id',
+                    'link_attribute'=>'target_type',
+                    'link_type'=>'polymorphic',	 //polymorphic or default
+                )
+            ),
+        );
 
         $fieldDef = $this->getFieldDef($widget_def);
         if (!empty($fieldDef) &&  !empty($fieldDef['type']) && strtolower(trim($fieldDef['type'])) == 'multienum') {
@@ -305,7 +305,7 @@ class LayoutManager
         // At this point, we have a class name and we do not have a valid class defined.
         if (!class_exists($class_name)) {
 
-			// The class does not exist.  Try including it.
+            // The class does not exist.  Try including it.
             if (file_exists('custom/include/generic/SugarWidgets/'.$class_name.'.php')) {
                 require_once('custom/include/generic/SugarWidgets/'.$class_name.'.php');
             } elseif (file_exists('include/generic/SugarWidgets/'.$class_name.'.php')) {

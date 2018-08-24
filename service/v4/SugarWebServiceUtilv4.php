@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('service/v3_1/SugarWebServiceUtilv3_1.php');
 
@@ -104,8 +105,17 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
             $params['favorites'] = true;
         }
 
-        $query = $seed->create_new_list_query($order_by, $where, array(), $params, $show_deleted, '', false, null,
-            $single_select);
+        $query = $seed->create_new_list_query(
+            $order_by,
+            $where,
+            array(),
+            $params,
+            $show_deleted,
+            '',
+            false,
+            null,
+            $single_select
+        );
 
         return $seed->process_list_query($query, $row_offset, $limit, $max, $where);
     }
@@ -142,7 +152,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
     {
         global $beanList, $beanFiles;
 
-        $fav = FALSE;
+        $fav = false;
         return $fav;
     }
 
@@ -260,7 +270,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         if ($value->module_dir == 'Bugs') {
             require_once('modules/Releases/Release.php');
             $seedRelease = new Release();
-            $options = $seedRelease->get_releases(TRUE, "Active");
+            $options = $seedRelease->get_releases(true, "Active");
             $options_ret = array();
             foreach ($options as $name=>$value) {
                 $options_ret[] =  array('name'=> $name , 'value'=>$value);
@@ -305,7 +315,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
     }
 
 
-    public function new_handle_set_entries($module_name, $name_value_lists, $select_fields = FALSE)
+    public function new_handle_set_entries($module_name, $name_value_lists, $select_fields = false)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->new_handle_set_entries');
         global $beanList, $beanFiles, $current_user, $app_list_strings;
@@ -433,7 +443,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
             }
 
             // if somebody is calling set_entries_detail() and wants fields returned...
-            if ($select_fields !== FALSE) {
+            if ($select_fields !== false) {
                 $ret_values[$count] = array();
 
                 foreach ($select_fields as $select_field) {
@@ -445,17 +455,16 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         }
 
         // handle returns for set_entries_detail() and set_entries()
-        if ($select_fields !== FALSE) {
+        if ($select_fields !== false) {
             $GLOBALS['log']->info('End: SoapHelperWebServices->new_handle_set_entries');
             return array(
                 'name_value_lists' => $ret_values,
             );
-        } else {
-            $GLOBALS['log']->info('End: SoapHelperWebServices->new_handle_set_entries');
-            return array(
+        }
+        $GLOBALS['log']->info('End: SoapHelperWebServices->new_handle_set_entries');
+        return array(
                 'ids' => $ids,
             );
-        }
     }
 
 
@@ -537,11 +546,11 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 
             case 'default':
             default:
-                if (file_exists ('modules/'.$module.'/metadata/subpaneldefs.php')) {
-                    require ('modules/'.$module.'/metadata/subpaneldefs.php');
+                if (file_exists('modules/'.$module.'/metadata/subpaneldefs.php')) {
+                    require('modules/'.$module.'/metadata/subpaneldefs.php');
                 }
                 if (file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php')) {
-                    require ('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
+                    require('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
                 }
         }
 

@@ -153,7 +153,7 @@ class OneLogin_Saml2_Settings
     private function _loadPaths()
     {
         $basePath = dirname(dirname(dirname(__FILE__))).'/';
-        $this->_paths = array (
+        $this->_paths = array(
             'base' => $basePath,
             'config' => $basePath,
             'cert' => $basePath.'certs/',
@@ -276,10 +276,9 @@ class OneLogin_Saml2_Settings
 
             $this->_addDefaultValues();
             return true;
-        } else {
-            $this->_errors = $errors;
-            return false;
         }
+        $this->_errors = $errors;
+        return false;
     }
 
     /**

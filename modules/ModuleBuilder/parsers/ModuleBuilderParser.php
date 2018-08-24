@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,21 +37,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
 class ModuleBuilderParser
 {
     public $_defMap; // private - mapping from view to variable name inside the viewdef file
-	public $_variables = array(); // private - set of additional variables (other than the viewdefs) found in the viewdef file that need to be added to the file again when it is saved - used by ModuleBuilder
+    public $_variables = array(); // private - set of additional variables (other than the viewdefs) found in the viewdef file that need to be added to the file again when it is saved - used by ModuleBuilder
 
-	public function __construct()
-	{
-	    $this->_defMap = array('listview'=>'listViewDefs','searchview'=>'searchdefs','editview'=>'viewdefs','detailview'=>'viewdefs','quickcreate'=>'viewdefs');
-	}
+    public function __construct()
+    {
+        $this->_defMap = array('listview'=>'listViewDefs','searchview'=>'searchdefs','editview'=>'viewdefs','detailview'=>'viewdefs','quickcreate'=>'viewdefs');
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
@@ -87,7 +88,7 @@ class ModuleBuilderParser
             $this->_fatalError("ModuleBuilderParser: required viewdef file {$file} does not exist");
         }
         $GLOBALS['log']->info('ModuleBuilderParser->_loadFromFile(): file='.$file);
-        require ($file); // loads in a $viewdefs
+        require($file); // loads in a $viewdefs
 
         // Check to see if we have the module name set as a variable rather than embedded in the $viewdef array
         // If we do, then we have to preserve the module variable when we write the file back out
@@ -131,7 +132,7 @@ class ModuleBuilderParser
             unlink($file);
         }
 
-        mkdir_recursive (dirname ($file)) ;
+        mkdir_recursive(dirname($file)) ;
         $GLOBALS['log']->debug("ModuleBuilderParser->_writeFile(): file=".$file);
         $useVariables = (count($variables)>0);
         if ($fh = @sugar_fopen($file, 'w')) {
@@ -145,13 +146,13 @@ class ModuleBuilderParser
 
             // write out the defs array itself
             switch (strtolower($view)) {
-                	case 'editview':
-                	case 'detailview':
-                	case 'quickcreate':
-                		$defs = array($view => $defs);
-                		break;
-                	default:
-                		break;
+                    case 'editview':
+                    case 'detailview':
+                    case 'quickcreate':
+                        $defs = array($view => $defs);
+                        break;
+                    default:
+                        break;
                 }
             $viewVariable = $this->_defMap[strtolower($view)];
             $out .= "\$$viewVariable = ";

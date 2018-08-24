@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,17 +34,17 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description: The primary Function of this file is to manage all the data
  * used by other files in this nodule. It should extend the SugarBean which implements
  * all the basic database operations. Any custom behaviors can be implemented here by
  * implementing functions available in the SugarBean.
- ********************************************************************************/
+ */
 
 
 
@@ -89,7 +90,7 @@ class CampaignTracker extends SugarBean
     /* $column_fields holds a list of columns that exist in this bean's table. This list is referenced
     * when fetching or saving data for the bean. As you modify a table you need to keep this up to date.
     */
-    public $column_fields = Array(
+    public $column_fields = array(
             'id'
             ,'tracker_key'
             ,'tracker_url'
@@ -98,8 +99,8 @@ class CampaignTracker extends SugarBean
     );
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('campaign_id');
-    public $relationship_fields = Array('campaing_id'=>'campaign');
+    public $additional_column_fields = array('campaign_id');
+    public $relationship_fields = array('campaing_id'=>'campaign');
 
     public $required_fields =  array('tracker_name'=>1,'tracker_url'=>1);
 
@@ -180,4 +181,3 @@ class CampaignTracker extends SugarBean
         }
     }
 }
-

@@ -35,7 +35,7 @@
          $SerieClose	= isset($Format["SerieClose"]) ? $Format["SerieClose"] : "Close";
          $SerieMin		= isset($Format["SerieMin"]) ? $Format["SerieMin"] : "Min";
          $SerieMax		= isset($Format["SerieMax"]) ? $Format["SerieMax"] : "Max";
-         $SerieMedian	= isset($Format["SerieMedian"]) ? $Format["SerieMedian"] : NULL;
+         $SerieMedian	= isset($Format["SerieMedian"]) ? $Format["SerieMedian"] : null;
          $LineWidth		= isset($Format["LineWidth"]) ? $Format["LineWidth"] : 1;
          $LineR		= isset($Format["LineR"]) ? $Format["LineR"] : 0;
          $LineG		= isset($Format["LineG"]) ? $Format["LineG"] : 0;
@@ -52,7 +52,7 @@
          $BoxUpG		= isset($Format["BoxUpG"]) ? $Format["BoxUpG"] : 224;
          $BoxUpB		= isset($Format["BoxUpB"]) ? $Format["BoxUpB"] : 46;
          $BoxUpAlpha	= isset($Format["BoxUpAlpha"]) ? $Format["BoxUpAlpha"] : 100;
-         $BoxUpSurrounding	= isset($Format["BoxUpSurrounding"]) ? $Format["BoxUpSurrounding"] : NULL;
+         $BoxUpSurrounding	= isset($Format["BoxUpSurrounding"]) ? $Format["BoxUpSurrounding"] : null;
          $BoxUpBorderR	= isset($Format["BoxUpBorderR"]) ? $Format["BoxUpBorderR"] : $BoxUpR-20;
          $BoxUpBorderG	= isset($Format["BoxUpBorderG"]) ? $Format["BoxUpBorderG"] : $BoxUpG-20;
          $BoxUpBorderB	= isset($Format["BoxUpBorderB"]) ? $Format["BoxUpBorderB"] : $BoxUpB-20;
@@ -61,17 +61,17 @@
          $BoxDownG		= isset($Format["BoxDownG"]) ? $Format["BoxDownG"] : 100;
          $BoxDownB		= isset($Format["BoxDownB"]) ? $Format["BoxDownB"] : 46;
          $BoxDownAlpha	= isset($Format["BoxDownAlpha"]) ? $Format["BoxDownAlpha"] : 100;
-         $BoxDownSurrounding= isset($Format["BoxDownSurrounding"]) ? $Format["BoxDownSurrounding"] : NULL;
+         $BoxDownSurrounding= isset($Format["BoxDownSurrounding"]) ? $Format["BoxDownSurrounding"] : null;
          $BoxDownBorderR	= isset($Format["BoxDownBorderR"]) ? $Format["BoxDownBorderR"] : $BoxDownR-20;
          $BoxDownBorderG	= isset($Format["BoxDownBorderG"]) ? $Format["BoxDownBorderG"] : $BoxDownG-20;
          $BoxDownBorderB	= isset($Format["BoxDownBorderB"]) ? $Format["BoxDownBorderB"] : $BoxDownB-20;
          $BoxDownBorderAlpha= isset($Format["BoxDownBorderAlpha"]) ? $Format["BoxDownBorderAlpha"] : 100;
-         $ShadowOnBoxesOnly	= isset($Format["ShadowOnBoxesOnly"]) ? $Format["ShadowOnBoxesOnly"] : TRUE;
+         $ShadowOnBoxesOnly	= isset($Format["ShadowOnBoxesOnly"]) ? $Format["ShadowOnBoxesOnly"] : true;
          $MedianR		= isset($Format["MedianR"]) ? $Format["MedianR"] : 255;
          $MedianG		= isset($Format["MedianG"]) ? $Format["MedianG"] : 0;
          $MedianB		= isset($Format["MedianB"]) ? $Format["MedianB"] : 0;
          $MedianAlpha	= isset($Format["MedianAlpha"]) ? $Format["MedianAlpha"] : 100;
-         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
+         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
          $ImageMapTitle	= isset($Format["ImageMapTitle"]) ? $Format["ImageMapTitle"] : "Stock Chart";
 
 
@@ -79,12 +79,12 @@
          $Data    = $this->pDataObject->getData();
          $Palette = $this->pDataObject->getPalette();
 
-         if ($BoxUpSurrounding != NULL) {
+         if ($BoxUpSurrounding != null) {
              $BoxUpBorderR = $BoxUpR + $BoxUpSurrounding;
              $BoxUpBorderG = $BoxUpG + $BoxUpSurrounding;
              $BoxUpBorderB = $BoxUpB + $BoxUpSurrounding;
          }
-         if ($BoxDownSurrounding != NULL) {
+         if ($BoxDownSurrounding != null) {
              $BoxDownBorderR = $BoxDownR + $BoxDownSurrounding;
              $BoxDownBorderG = $BoxDownG + $BoxDownSurrounding;
              $BoxDownBorderB = $BoxDownB + $BoxDownSurrounding;
@@ -108,7 +108,7 @@
              if (isset($Data["Series"][$SerieClose]["Data"][$Key]) || isset($Data["Series"][$SerieMin]["Data"][$Key]) || isset($Data["Series"][$SerieMax]["Data"][$Key])) {
                  $Point = array($Value,$Data["Series"][$SerieClose]["Data"][$Key],$Data["Series"][$SerieMin]["Data"][$Key],$Data["Series"][$SerieMax]["Data"][$Key]);
              }
-             if ($SerieMedian != NULL && isset($Data["Series"][$SerieMedian]["Data"][$Key])) {
+             if ($SerieMedian != null && isset($Data["Series"][$SerieMedian]["Data"][$Key])) {
                  $Point[] = $Data["Series"][$SerieMedian]["Data"][$Key];
              }
 
@@ -136,14 +136,14 @@
              $PosArray = $this->pChartObject->scaleComputeY($Points, array("AxisID"=>$AxisID));
 
              $Values = "Open :".$Data["Series"][$SerieOpen]["Data"][$Key]."<BR>Close : ".$Data["Series"][$SerieClose]["Data"][$Key]."<BR>Min : ".$Data["Series"][$SerieMin]["Data"][$Key]."<BR>Max : ".$Data["Series"][$SerieMax]["Data"][$Key]."<BR>";
-             if ($SerieMedian != NULL) {
+             if ($SerieMedian != null) {
                  $Values = $Values."Median : ".$Data["Series"][$SerieMedian]["Data"][$Key]."<BR>";
              }
              if ($PosArray[0] > $PosArray[1]) {
                  $ImageMapColor = $this->pChartObject->toHTMLColor($BoxUpR, $BoxUpG, $BoxUpB);
              } else {
                  $ImageMapColor = $this->pChartObject->toHTMLColor($BoxDownR, $BoxDownG, $BoxDownB);
-             } 
+             }
 
              if ($Data["Orientation"] == SCALE_POS_LEFTRIGHT) {
                  if ($YZero > $this->pChartObject->GraphAreaY2-1) {
@@ -161,7 +161,7 @@
 
                  if ($ShadowOnBoxesOnly) {
                      $RestoreShadow = $this->pChartObject->Shadow;
-                     $this->pChartObject->Shadow = FALSE;
+                     $this->pChartObject->Shadow = false;
                  }
 
                  if ($LineWidth == 1) {
@@ -223,7 +223,7 @@
 
                  if ($ShadowOnBoxesOnly) {
                      $RestoreShadow = $this->pChartObject->Shadow;
-                     $this->pChartObject->Shadow = FALSE;
+                     $this->pChartObject->Shadow = false;
                  }
 
                  if ($ExtremityWidth == 1) {

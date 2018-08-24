@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -211,14 +212,13 @@ class SchedulersJob extends Basic
         }
         curl_close($ch);
 
-        if ($result !== FALSE && $cInfo['http_code'] < 400) {
+        if ($result !== false && $cInfo['http_code'] < 400) {
             $GLOBALS['log']->debug("----->Firing was successful: $job");
             $GLOBALS['log']->debug('----->WTIH RESULT: '.strip_tags($result).' AND '.strip_tags(print_r($cInfo, true)));
             return true;
-        } else {
-            $GLOBALS['log']->fatal("Job failed: $job");
-            return false;
         }
+        $GLOBALS['log']->fatal("Job failed: $job");
+        return false;
     }
     ////	END SCHEDULERSJOB HELPER FUNCTIONS
     ///////////////////////////////////////////////////////////////////////////
@@ -544,13 +544,11 @@ class SchedulersJob extends Basic
                 if ($res) {
                     $this->resolveJob(self::JOB_SUCCESS);
                     return true;
-                } else {
-                    $this->resolveJob(self::JOB_FAILURE);
-                    return false;
                 }
-            } else {
-                return $this->resolution != self::JOB_FAILURE;
+                $this->resolveJob(self::JOB_FAILURE);
+                return false;
             }
+            return $this->resolution != self::JOB_FAILURE;
         } elseif ($exJob[0] == 'url') {
             if (function_exists('curl_init')) {
                 $GLOBALS['log']->debug('----->SchedulersJob firing URL job: '.$exJob[1]);
@@ -559,14 +557,12 @@ class SchedulersJob extends Basic
                     restore_error_handler();
                     $this->resolveJob(self::JOB_SUCCESS);
                     return true;
-                } else {
-                    restore_error_handler();
-                    $this->resolveJob(self::JOB_FAILURE);
-                    return false;
                 }
-            } else {
-                $this->resolveJob(self::JOB_FAILURE, translate('ERR_CURL', 'SchedulersJobs'));
+                restore_error_handler();
+                $this->resolveJob(self::JOB_FAILURE);
+                return false;
             }
+            $this->resolveJob(self::JOB_FAILURE, translate('ERR_CURL', 'SchedulersJobs'));
         } elseif ($exJob[0] == 'class') {
             $tmpJob = new $exJob[1]();
             if ($tmpJob instanceof RunnableSchedulerJob) {
@@ -582,16 +578,13 @@ class SchedulersJob extends Basic
                     if ($result) {
                         $this->resolveJob(self::JOB_SUCCESS);
                         return true;
-                    } else {
-                        $this->resolveJob(self::JOB_FAILURE);
-                        return false;
                     }
-                } else {
-                    return $this->resolution != self::JOB_FAILURE;
+                    $this->resolveJob(self::JOB_FAILURE);
+                    return false;
                 }
-            } else {
-                return $this->resolveJob(self::JOB_FAILURE, sprintf(translate('ERR_JOBTYPE', 'SchedulersJobs'), strip_tags($this->target)));
+                return $this->resolution != self::JOB_FAILURE;
             }
+            return $this->resolveJob(self::JOB_FAILURE, sprintf(translate('ERR_JOBTYPE', 'SchedulersJobs'), strip_tags($this->target)));
         } else {
             return $this->resolveJob(self::JOB_FAILURE, sprintf(translate('ERR_JOBTYPE', 'SchedulersJobs'), strip_tags($this->target)));
         }

@@ -32,7 +32,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-		
+        
 
         $project = new Project();
 
@@ -112,7 +112,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $project = new Project();
 
         //test without setting name
-        $this->assertEquals(Null, $project->get_summary_text());
+        $this->assertEquals(null, $project->get_summary_text());
 
         //test with name set
         $project->name = "test";
@@ -142,21 +142,21 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_list_view_data()
     {
         /*
-		$project = new Project();
+        $project = new Project();
 
-		$project->user_name = "tes user";
-		$project->assigned_user_name = "test assigned user";
+        $project->user_name = "tes user";
+        $project->assigned_user_name = "test assigned user";
 
-		$expected = array (
-			'DELETED' => '0',
-			'ASSIGNED_USER_NAME' => 'test assigned user',
-			'USER_NAME' => 'tes user'
-		);
+        $expected = array (
+            'DELETED' => '0',
+            'ASSIGNED_USER_NAME' => 'test assigned user',
+            'USER_NAME' => 'tes user'
+        );
 
-		$actual = $project->get_list_view_data();
+        $actual = $project->get_list_view_data();
 
-		$this->assertSame($expected, $actual);
-		*/
+        $this->assertSame($expected, $actual);
+        */
         $this->assertTrue(true, "NEEDS FIXING!");
     }
 
@@ -165,8 +165,8 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $project = new Project();
 
         $this->assertEquals(false, $project->bean_implements('')); //test with blank value
-		$this->assertEquals(false, $project->bean_implements('test')); //test with invalid value
-		$this->assertEquals(true, $project->bean_implements('ACL')); //test with valid value
+        $this->assertEquals(false, $project->bean_implements('test')); //test with invalid value
+        $this->assertEquals(true, $project->bean_implements('ACL')); //test with valid value
     }
 
     public function testcreate_export_query()

@@ -266,4 +266,3 @@ class Zend_Search_Lucene_Index_DictionaryLoader
         return array($termDictionary, $termInfos);
     }
 }
-

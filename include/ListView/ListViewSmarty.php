@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -211,7 +211,7 @@ class ListViewSmarty extends ListViewDisplay
             $this->ss->assign('multiSelectData', '<textarea style="display: none" name="uid"></textarea>');
         }
         // include button for Adding to Target List if in one of four applicable modules
-        if (isset ($_REQUEST['module']) && in_array ($_REQUEST['module'], array ( 'Contacts','Prospects','Leads','Accounts' ))
+        if (isset($_REQUEST['module']) && in_array($_REQUEST['module'], array( 'Contacts','Prospects','Leads','Accounts' ))
             && ACLController::checkAccess('ProspectLists', 'edit', true)) {
             $this->ss->assign('targetLink', $this->buildTargetList()) ;
         }
@@ -300,12 +300,12 @@ class ListViewSmarty extends ListViewDisplay
             'of' => $app_strings['LBL_LIST_OF']);
         $this->ss->assign('navStrings', $navStrings);
 
-        $displayEmptyDataMessages = TRUE;
+        $displayEmptyDataMessages = true;
         //TODO: Cleanup, better logic for which modules are exempt from the new messaging.
         $modulesExemptFromEmptyDataMessages = array('WorkFlow','ContractTypes', 'OAuthKeys', 'TimePeriods');
         if ((isset($GLOBALS['moduleTabMap'][$currentModule]) && $GLOBALS['moduleTabMap'][$currentModule] == 'Administration')
             || isset($GLOBALS['adminOnlyList'][$currentModule]) || in_array($currentModule, $modulesExemptFromEmptyDataMessages)) {
-            $displayEmptyDataMessages = FALSE;
+            $displayEmptyDataMessages = false;
         }
         $this->ss->assign('displayEmptyDataMesssages', $displayEmptyDataMessages);
 

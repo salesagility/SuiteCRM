@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -59,7 +60,7 @@ $subpanel_layout = array(
     'fill_in_additional_fields'=>true,
     'list_fields' => array(
 /*		'mass_update' => array (
-            
+
         ),
 */        'object_image'=>array(
             'widget_class' => 'SubPanelIcon',
@@ -85,12 +86,12 @@ $subpanel_layout = array(
             'force_exists'=>true,
         )	,
 /*		'parent_name'=>array(
-             'vname' => 'LBL_LIST_RELATED_TO',		
+             'vname' => 'LBL_LIST_RELATED_TO',
              'width' => '22%',
              'target_record_key' => 'parent_id',
              'target_module_key'=>'parent_type',
              'widget_class' => 'SubPanelDetailViewLink',
-              'sortable'=>false,	
+              'sortable'=>false,
         ),*/
         'date_modified'=>array(
             'vname' => 'LBL_DATE_MODIFIED',
@@ -113,7 +114,7 @@ $subpanel_layout = array(
         'filename'=>array(
             'usage'=>'query_only',
             'force_exists'=>true
-            ),		
-*/        
+            ),
+*/
     ),
-);		
+);

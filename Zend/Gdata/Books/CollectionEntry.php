@@ -50,7 +50,4 @@ class Zend_Gdata_Books_CollectionEntry extends Zend_Gdata_Entry
         $this->registerAllNamespaces(Zend_Gdata_Books::$namespaces);
         parent::__construct($element);
     }
-
-
 }
-

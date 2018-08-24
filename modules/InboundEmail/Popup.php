@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,20 +37,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
 // cn: bug 6078: zlib breaks test-settings
 $iniError = '';
 if (ini_get('zlib.output_compression') == 1) { // ini_get() returns 1/0, not value
-	if (!ini_set('zlib.output_compression', 'Off')) { // returns False on failure
-		$iniError = $mod_strings['ERR_INI_ZLIB'];
-	}
+    if (!ini_set('zlib.output_compression', 'Off')) { // returns False on failure
+        $iniError = $mod_strings['ERR_INI_ZLIB'];
+    }
 }
 
 // hack to allow "&", "%" and "+" through a $_GET var
@@ -130,19 +131,19 @@ if ($popupBoolean) {
 ////	COMMON CODE
 echo /*'
 <HTML>
-	<HEAD>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>SugarCRM - Commercial Open Source CRM</title>
-		'.SugarThemeRegistry::current()->getCSS().'
-		<script type="text/javascript">
-				function setMailbox(box) {
-					var mb = opener.document.getElementById("mailbox");
-					mb.value = box;
-				}
-		</script>
+    <HEAD>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>SugarCRM - Commercial Open Source CRM</title>
+        '.SugarThemeRegistry::current()->getCSS().'
+        <script type="text/javascript">
+                function setMailbox(box) {
+                    var mb = opener.document.getElementById("mailbox");
+                    mb.value = box;
+                }
+        </script>
 
-	</HEAD>
-	<body style="margin: 10px">*/'
+    </HEAD>
+    <body style="margin: 10px">*/'
 	<p>
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 			<tr>

@@ -228,9 +228,23 @@ EOQ;
         return $out;
     }
 
-    private function getFormItems($mod_strings, $app_list_strings, $sugarConfigDefaults, $drivers, $checked, $db, $errors, $supportedLanguages,
-        $current_language, $customSession, $customLog, $customId, $customSessionHidden, $customLogHidden, $customIdHidden)
-    {
+    private function getFormItems(
+        $mod_strings,
+        $app_list_strings,
+        $sugarConfigDefaults,
+        $drivers,
+        $checked,
+        $db,
+        $errors,
+        $supportedLanguages,
+        $current_language,
+        $customSession,
+        $customLog,
+        $customId,
+        $customSessionHidden,
+        $customLogHidden,
+        $customIdHidden
+    ) {
 
 
 
@@ -283,8 +297,8 @@ EOQ2;
                 if (!empty($value)) {
                     if (!empty($value['required'])) {
                         $form .= "<span class=\"required\">*</span>";
-                    } else {
                     }
+                    
                     if (!empty($_SESSION[$name])) {
                         $sessval = $_SESSION[$name];
                     } else {
@@ -1716,8 +1730,23 @@ EOQ;
                 $formId,
                 $formId,
                 $errs,
-                $this->getFormItems($mod_strings, $app_list_strings, $sugarConfigDefaults, $drivers, $checked, $db, $errors, $supportedLanguages,
-                    $current_language, $customSession, $customLog, $customId, $customSessionHidden, $customLogHidden, $customIdHidden),
+                $this->getFormItems(
+                    $mod_strings,
+                    $app_list_strings,
+                    $sugarConfigDefaults,
+                    $drivers,
+                    $checked,
+                    $db,
+                    $errors,
+                    $supportedLanguages,
+                    $current_language,
+                    $customSession,
+                    $customLog,
+                    $customId,
+                    $customSessionHidden,
+                    $customLogHidden,
+                    $customIdHidden
+                ),
                 $this->getFormControlls($mod_strings, $formId),
                 $this->getFormScripts($mod_strings, $next_step),
                 $next_step
@@ -1865,8 +1894,8 @@ if (is_file("config.php")) {
     }
     if (!empty($sugar_config['languages'])) {
         // We need to encode the languages in a way that can be retrieved later.
-        $language_keys = Array();
-        $language_values = Array();
+        $language_keys = array();
+        $language_values = array();
 
         foreach ($sugar_config['languages'] as $key=>$value) {
             $language_keys[] = $key;

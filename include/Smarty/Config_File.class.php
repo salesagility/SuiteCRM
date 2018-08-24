@@ -19,7 +19,7 @@
  *
  * For questions, help, comments, discussion, etc., please join the
  * Smarty mailing list. Send a blank e-mail to
- * smarty-discussion-subscribe@googlegroups.com 
+ * smarty-discussion-subscribe@googlegroups.com
  *
  * @link http://www.smarty.net/
  * @version 2.6.25-dev
@@ -74,7 +74,7 @@ class Config_File
      *
      * @param string $config_path (optional) path to the config files
      */
-    public function __construct($config_path = NULL)
+    public function __construct($config_path = null)
     {
         if (isset($config_path)) {
             $this->set_path($config_path);
@@ -111,39 +111,34 @@ class Config_File
      * @param string $var_name (optional) variable to get info for
      * @return string|array a value or array of values
      */
-    public function get($file_name, $section_name = NULL, $var_name = NULL)
+    public function get($file_name, $section_name = null, $var_name = null)
     {
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
             return;
-        } else {
-            $file_name = $this->_config_path . $file_name;
-            if (!isset($this->_config_data[$file_name])) {
-                $this->load_file($file_name, false);
-            }
         }
+        $file_name = $this->_config_path . $file_name;
+        if (!isset($this->_config_data[$file_name])) {
+            $this->load_file($file_name, false);
+        }
+        
 
         if (!empty($var_name)) {
             if (empty($section_name)) {
                 return $this->_config_data[$file_name]["vars"][$var_name];
-            } else {
-                if (isset($this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name])) {
-                    return $this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name];
-                } else {
-                    return array();
-                }
             }
-        } else {
-            if (empty($section_name)) {
-                return (array)$this->_config_data[$file_name]["vars"];
-            } else {
-                if (isset($this->_config_data[$file_name]["sections"][$section_name]["vars"])) {
-                    return (array)$this->_config_data[$file_name]["sections"][$section_name]["vars"];
-                } else {
-                    return array();
-                }
+            if (isset($this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name])) {
+                return $this->_config_data[$file_name]["sections"][$section_name]["vars"][$var_name];
             }
+            return array();
         }
+        if (empty($section_name)) {
+            return (array)$this->_config_data[$file_name]["vars"];
+        }
+        if (isset($this->_config_data[$file_name]["sections"][$section_name]["vars"])) {
+            return (array)$this->_config_data[$file_name]["sections"][$section_name]["vars"];
+        }
+        return array();
     }
 
 
@@ -197,7 +192,7 @@ class Config_File
      * @param string $section_name (optional) section to get info for
      * @return array an array of variables names from the specified file/section
      */
-    public function get_var_names($file_name, $section = NULL)
+    public function get_var_names($file_name, $section = null)
     {
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
@@ -209,9 +204,8 @@ class Config_File
 
         if (empty($section)) {
             return array_keys($this->_config_data[$file_name]["vars"]);
-        } else {
-            return array_keys($this->_config_data[$file_name]["sections"][$section]["vars"]);
         }
+        return array_keys($this->_config_data[$file_name]["sections"][$section]["vars"]);
     }
 
 
@@ -220,9 +214,9 @@ class Config_File
      *
      * @param string $file_name file to clear config data for
      */
-    public function clear($file_name = NULL)
+    public function clear($file_name = null)
     {
-        if ($file_name === NULL) {
+        if ($file_name === null) {
             $this->_config_data = array();
         } elseif (isset($this->_config_data[$file_name])) {
             $this->_config_data[$file_name] = array();
@@ -362,9 +356,8 @@ class Config_File
         if (substr($var_name, 0, 1) == '.') {
             if (!$this->read_hidden) {
                 return;
-            } else {
-                $var_name = substr($var_name, 1);
             }
+            $var_name = substr($var_name, 1);
         }
 
         if (!preg_match("/^[a-zA-Z_]\w*$/", $var_name)) {

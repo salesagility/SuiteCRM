@@ -1,11 +1,12 @@
 <?php
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +35,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
@@ -49,7 +50,7 @@ class SugarFieldInt extends SugarFieldBase
         if (!empty($vardef['disable_num_format'])) {
             return $rawField;
         }
-        if ($rawField === '' || $rawField === NULL) {
+        if ($rawField === '' || $rawField === null) {
             return '';
         }
             
@@ -58,7 +59,7 @@ class SugarFieldInt extends SugarFieldBase
 
     public function unformatField($formattedField, $vardef)
     {
-        if ($formattedField === '' || $formattedField === NULL) {
+        if ($formattedField === '' || $formattedField === null) {
             return '';
         }
         return (int)unformat_number($formattedField);
@@ -91,9 +92,8 @@ class SugarFieldInt extends SugarFieldBase
                     }
                 }
                 return $newVal;
-            } else {
-                return -1;
             }
+            return -1;
         }
         return $newVal;
     }
@@ -109,19 +109,19 @@ class SugarFieldInt extends SugarFieldBase
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         if ($this->isRangeSearchView($vardef)) {
             $id = isset($displayParams['idName']) ? $displayParams['idName'] : $vardef['name'];
-            $this->ss->assign('original_id', "{$id}");           
+            $this->ss->assign('original_id', "{$id}");
             $this->ss->assign('id_range', "range_{$id}");
             $this->ss->assign('id_range_start', "start_range_{$id}");
             $this->ss->assign('id_range_end', "end_range_{$id}");
             $this->ss->assign('id_range_choice', "{$id}_range_choice");
             if (file_exists('custom/include/SugarFields/Fields/Int/RangeSearchForm.tpl')) {
                 return $this->fetch('custom/include/SugarFields/Fields/Int/RangeSearchForm.tpl');
-            } 
+            }
             return $this->fetch('include/SugarFields/Fields/Int/RangeSearchForm.tpl');
-        }        
+        }
     
         return $this->fetch($this->findTemplate('SearchForm'));
-    }  
+    }
     
     /**
      * @see SugarFieldBase::importSanitize()

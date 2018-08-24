@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -105,7 +105,7 @@ class Popup_Picker
 
         $auditObject = new Audit();
         $audit_list =  $auditObject->get_audit_list();
-        $xtpl=new XTemplate ('modules/Audit/Popup_picker.html');
+        $xtpl=new XTemplate('modules/Audit/Popup_picker.html');
 
         $xtpl->assign('MOD', $mod_strings);
         $xtpl->assign('APP', $app_strings);
@@ -116,7 +116,7 @@ class Popup_Picker
                 
                 
         if (!isset($focus->module_dir)) {
-            LoggerManager::getLogger()->fatal("Popup picker needs module dir from focus bean but global focus is none.");    
+            LoggerManager::getLogger()->fatal("Popup picker needs module dir from focus bean but global focus is none.");
             throw new Exception('There is not selected focus bean for popup picker process page.');
         }
                 

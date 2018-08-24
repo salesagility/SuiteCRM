@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -66,7 +67,7 @@ class UpgradeHistory extends SugarBean
     public $tracker_visibility = false;
     public $table_name = "upgrade_history";
     public $object_name = "UpgradeHistory";
-    public $column_fields = Array( "id", "filename", "md5sum", "type", "version", "status", "date_entered" );
+    public $column_fields = array( "id", "filename", "md5sum", "type", "version", "status", "date_entered" );
     public $disable_custom_fields = true;
 
     public function delete()
@@ -148,21 +149,19 @@ class UpgradeHistory extends SugarBean
         $result = $this->db->query($query);
         if (empty($result)) {
             return null;
-        } else {
-            $temp_version = 0;
-            $id = '';
-            while ($row = $this->db->fetchByAssoc($result)) {
-                if (!$this->is_right_version_greater(explode('.', $row['version']), explode('.', $temp_version))) {
-                    $temp_version = $row['version'];
-                    $id = $row['id'];
-                }
-            }//end while
-            if ($this->is_right_version_greater(explode('.', $temp_version), explode('.', $version), false)) {
-                return array('id' => $id, 'version' => $temp_version);
-            } else {
-                return null;
-            }
         }
+        $temp_version = 0;
+        $id = '';
+        while ($row = $this->db->fetchByAssoc($result)) {
+            if (!$this->is_right_version_greater(explode('.', $row['version']), explode('.', $temp_version))) {
+                $temp_version = $row['version'];
+                $id = $row['id'];
+            }
+        }//end while
+        if ($this->is_right_version_greater(explode('.', $temp_version), explode('.', $version), false)) {
+            return array('id' => $id, 'version' => $temp_version);
+        }
+        return null;
     }
 
     public function getAll()
@@ -191,9 +190,8 @@ class UpgradeHistory extends SugarBean
                 //we have found a match
                 //if the patch_to_check version is greater than the found version
                 return ($this->is_right_version_greater(explode('.', $history_object->version), explode('.', $patch_to_check->version)));
-            } else {
-                return true;
             }
+            return true;
         }
         //we will only go through this loop if we have not found another UpgradeHistory object
         //with a matching unique_key in the database
@@ -224,9 +222,8 @@ class UpgradeHistory extends SugarBean
         if (is_file($check_path)) {
             if (file_exists($recent_path)) {
                 return true;
-            } else {
-                return false;
             }
+            return false;
         } elseif (is_dir($check_path)) {
             $status = false;
 
@@ -271,9 +268,8 @@ class UpgradeHistory extends SugarBean
             return $this->is_right_version_greater($left, $right, $equals_is_greater);
         } elseif ($left[0] < $right[0]) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

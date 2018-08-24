@@ -1052,7 +1052,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         //test with id and is_admin set
         $user->is_admin = 1;
-        $this->assertEquals(true, $user->isAdminForModule("Accounts")); 
+        $this->assertEquals(true, $user->isAdminForModule("Accounts"));
         
         
         // clean up
@@ -1164,5 +1164,37 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         //test with matching user email
         $user->email1 = "abc@abc.com";
         $this->assertEquals(true, $user->isPrimaryEmail("abc@abc.com"));
+    }
+    
+    public function testError()
+    {
+        global $app_strings;
+        
+        // setup
+        $this->assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
+        
+        // test if there is no error
+        
+        ob_start();
+        include __DIR__ . '/../../../../modules/Users/Error.php';
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $expected = '<span class=\'error\'><br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
+        $this->assertContains($expected, $contents);
+        
+        // test if there is an error
+        
+        $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
+        $request['error_string'] = 'TEST_ERROR_MESSAGE';
+        $this->assertEquals($request['error_string'], 'TEST_ERROR_MESSAGE');
+        ob_start();
+        include __DIR__ . '/../../../../modules/Users/Error.php';
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $expected = '<span class=\'error\'>Hello error<br><br>' . "\n"  . $app_strings['NTC_CLICK_BACK'] . '</span>';
+        $this->assertContains($expected, $contents);
+        
+        // clean up
+        unset($app_strings['TEST_ERROR_MESSAGE']);
     }
 }

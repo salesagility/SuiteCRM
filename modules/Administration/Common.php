@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -85,11 +86,11 @@ function &create_field_lang_pak_contents($old_contents, $key, $value, $language,
         $contents = str_replace("\n?>", "\n\$mod_strings['{$key}'] = '$value';\n?>", $old_contents);
     } else {
         $contents = "<?php\n"
-			. '// Creation date: ' . date('Y-m-d H:i:s') . "\n"
-			. "// Module: $module\n"
-			. "// Language: $language\n\n"
-			. "\$mod_strings['$key'] = '$value';"
-			. "\n?>";
+            . '// Creation date: ' . date('Y-m-d H:i:s') . "\n"
+            . "// Module: $module\n"
+            . "// Language: $language\n\n"
+            . "\$mod_strings['$key'] = '$value';"
+            . "\n?>";
     }
 
     return $contents;
@@ -165,8 +166,13 @@ function create_field_label($module, $language, $key, $value, $overwrite=false)
 
 
             if ($handle) {
-                $contents =create_field_lang_pak_contents($old_contents, $key,
-					$value, $language, $module);
+                $contents =create_field_lang_pak_contents(
+                    $old_contents,
+                    $key,
+                    $value,
+                    $language,
+                    $module
+                );
 
                 if (fwrite($handle, $contents)) {
                     $return_value = true;
@@ -270,8 +276,10 @@ function save_custom_app_list_strings(&$app_list_strings, $language)
         $handle = @sugar_fopen($filename, 'wt');
 
         if ($handle) {
-            $contents =create_dropdown_lang_pak_contents($app_list_strings,
-         					$language);
+            $contents =create_dropdown_lang_pak_contents(
+                $app_list_strings,
+                             $language
+            );
 
             if (fwrite($handle, $contents)) {
                 $return_value = true;
@@ -371,8 +379,11 @@ function dropdown_item_delete($dropdown_type, $language, $index)
     helper_dropdown_item_delete($dropdown_array, $index);
 
     $contents = return_custom_app_list_strings_file_contents($language);
-    $new_contents = replace_or_add_dropdown_type($dropdown_type, $dropdown_array,
-		$contents);
+    $new_contents = replace_or_add_dropdown_type(
+        $dropdown_type,
+        $dropdown_array,
+        $contents
+    );
 
     save_custom_app_list_strings_contents($new_contents, $language);
 }
@@ -411,8 +422,11 @@ function dropdown_item_move_up($dropdown_type, $language, $index)
 
         // get the contents of the custom app list strings file
         $contents = return_custom_app_list_strings_file_contents($language);
-        $new_contents = replace_or_add_dropdown_type($dropdown_type,
-			$dropdown_array, $contents);
+        $new_contents = replace_or_add_dropdown_type(
+            $dropdown_type,
+            $dropdown_array,
+            $contents
+        );
 
         save_custom_app_list_strings_contents($new_contents, $language);
     }
@@ -444,8 +458,11 @@ function dropdown_item_move_down($dropdown_type, $language, $index)
 
         // get the contents of the custom app list strings file
         $contents = return_custom_app_list_strings_file_contents($language);
-        $new_contents = replace_or_add_dropdown_type($dropdown_type,
-			$dropdown_array, $contents);
+        $new_contents = replace_or_add_dropdown_type(
+            $dropdown_type,
+            $dropdown_array,
+            $contents
+        );
 
         save_custom_app_list_strings_contents($new_contents, $language);
     }
@@ -459,8 +476,11 @@ function dropdown_item_insert($dropdown_type, $language, $index, $key, $value)
 
     // get the contents of the custom app list strings file
     $contents = return_custom_app_list_strings_file_contents($language);
-    $new_contents = replace_or_add_dropdown_type($dropdown_type,
-		$dropdown_array, $contents);
+    $new_contents = replace_or_add_dropdown_type(
+        $dropdown_type,
+        $dropdown_array,
+        $contents
+    );
 
     save_custom_app_list_strings_contents($new_contents, $language);
 }
@@ -490,26 +510,37 @@ function dropdown_item_edit($dropdown_type, $language, $key, $value)
     $contents = return_custom_app_list_strings_file_contents($language);
 
     // get the contents of the custom app list strings file
-    $new_contents = replace_or_add_dropdown_type($dropdown_type,
-		$dropdown_array, $contents);
+    $new_contents = replace_or_add_dropdown_type(
+        $dropdown_type,
+        $dropdown_array,
+        $contents
+    );
 
     save_custom_app_list_strings_contents($new_contents, $language);
 }
 
-function replace_or_add_dropdown_type($dropdown_type, &$dropdown_array,
-   &$file_contents)
-{
+function replace_or_add_dropdown_type(
+    $dropdown_type,
+    &$dropdown_array,
+   &$file_contents
+) {
     $new_contents = "<?php\n?>";
-    $new_entry = override_value_to_string('app_list_strings',
-		$dropdown_type, $dropdown_array);
+    $new_entry = override_value_to_string(
+        'app_list_strings',
+        $dropdown_type,
+        $dropdown_array
+    );
 
     if (empty($file_contents)) {
         // empty file, must create the php tags
         $new_contents = "<?php\n$new_entry\n?>";
     } else {
         // existing file, try to replace
-        $new_contents = replace_dropdown_type($dropdown_type,
-			$dropdown_array, $file_contents);
+        $new_contents = replace_dropdown_type(
+            $dropdown_type,
+            $dropdown_array,
+            $file_contents
+        );
 
         $new_contents = dropdown_duplicate_check($dropdown_type, $new_contents);
 
@@ -523,20 +554,28 @@ function replace_or_add_dropdown_type($dropdown_type, &$dropdown_array,
     return $new_contents;
 }
 
-function replace_or_add_app_string($name, $value,
-   &$file_contents)
-{
+function replace_or_add_app_string(
+    $name,
+    $value,
+   &$file_contents
+) {
     $new_contents = "<?php\n?>";
-    $new_entry = override_value_to_string('app_strings',
-		$name, $value);
+    $new_entry = override_value_to_string(
+        'app_strings',
+        $name,
+        $value
+    );
 
     if (empty($file_contents)) {
         // empty file, must create the php tags
         $new_contents = "<?php\n$new_entry\n?>";
     } else {
         // existing file, try to replace
-        $new_contents = replace_app_string($name,
-			$value, $file_contents);
+        $new_contents = replace_app_string(
+            $name,
+            $value,
+            $file_contents
+        );
 
         $new_contents = app_string_duplicate_check($name, $new_contents);
 
@@ -554,9 +593,9 @@ function replace_or_add_app_string($name, $value,
 function dropdown_duplicate_check($dropdown_type, &$file_contents)
 {
     if (!empty($dropdown_type) &&
-		!empty($file_contents)) {
+        !empty($file_contents)) {
         $pattern = '/\$app_list_strings\[\''. $dropdown_type .
-			'\'\][\ ]*=[\ ]*array[\ ]*\([^\)]*\)[\ ]*;/';
+            '\'\][\ ]*=[\ ]*array[\ ]*\([^\)]*\)[\ ]*;/';
 
         $result = array();
         preg_match_all($pattern, $file_contents, $result);
@@ -577,35 +616,45 @@ function dropdown_duplicate_check($dropdown_type, &$file_contents)
     return $file_contents;
 }
 
-function replace_dropdown_type($dropdown_type, &$dropdown_array,
-	&$file_contents)
-{
+function replace_dropdown_type(
+    $dropdown_type,
+    &$dropdown_array,
+    &$file_contents
+) {
     $new_contents = $file_contents;
 
     if (!empty($dropdown_type) &&
-		is_array($dropdown_array) &&
-		!empty($file_contents)) {
+        is_array($dropdown_array) &&
+        !empty($file_contents)) {
         $pattern = '/\$app_list_strings\[\''. $dropdown_type .
-			'\'\][\ ]*=[\ ]*array[\ ]*\([^\)]*\)[\ ]*;/';
-        $replacement = override_value_to_string('app_list_strings',
-			$dropdown_type, $dropdown_array);
+            '\'\][\ ]*=[\ ]*array[\ ]*\([^\)]*\)[\ ]*;/';
+        $replacement = override_value_to_string(
+            'app_list_strings',
+            $dropdown_type,
+            $dropdown_array
+        );
         $new_contents = preg_replace($pattern, $replacement, $file_contents, 1);
     }
 
     return $new_contents;
 }
 
-function replace_app_string($name, $value,
-	&$file_contents)
-{
+function replace_app_string(
+    $name,
+    $value,
+    &$file_contents
+) {
     $new_contents = $file_contents;
 
     if (!empty($name) &&
-		is_string($value) &&
-		!empty($file_contents)) {
+        is_string($value) &&
+        !empty($file_contents)) {
         $pattern = '/\$app_strings\[\''. $name .'\'\][\ ]*=[\ ]*\'[^\']*\'[\ ]*;/';
-        $replacement = override_value_to_string('app_strings',
-			$name, $value);
+        $replacement = override_value_to_string(
+            'app_strings',
+            $name,
+            $value
+        );
         $new_contents = preg_replace($pattern, $replacement, $file_contents, 1);
     }
 
@@ -615,7 +664,7 @@ function replace_app_string($name, $value,
 function app_string_duplicate_check($name, &$file_contents)
 {
     if (!empty($name) &&
-		!empty($file_contents)) {
+        !empty($file_contents)) {
         $pattern = '/\$app_strings\[\''. $name .'\'\][\ ]*=[\ ]*\'[^\']*\'[\ ]*;/';
 
         $result = array();

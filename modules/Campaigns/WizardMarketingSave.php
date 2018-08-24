@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -87,9 +88,9 @@ if (!$marketing->ACLAccess('Save')) {
 }
 
 if (!empty($_REQUEST['assigned_user_id']) && ($marketing->assigned_user_id != $_REQUEST['assigned_user_id']) && ($_POST['assigned_user_id'] != $current_user->id)) {
-    $check_notify = TRUE;
+    $check_notify = true;
 } else {
-    $check_notify = FALSE;
+    $check_notify = false;
 }
 
     foreach ($_REQUEST as $key => $val) {
@@ -168,7 +169,7 @@ if ($marketing->all_prospect_lists==1) {
 }
 
 //populate an array with marketing email id to use
-$mass[] = $marketing->id; 
+$mass[] = $marketing->id;
 //if sending an email was chosen, set all the needed variables for queuing campaign
 
 if ($master !='save') {
@@ -177,7 +178,7 @@ if ($master !='save') {
     $_REQUEST['record'] =$marketing->campaign_id;
     $_POST['record']=$marketing->campaign_id;
     $_REQUEST['mode'] = $master;
-    $_POST['mode'] = $master; 
+    $_POST['mode'] = $master;
     $_REQUEST['from_wiz']= 'true';
     require_once('modules/Campaigns/QueueCampaign.php');
 }

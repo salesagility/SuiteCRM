@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -114,11 +115,11 @@ class Bug extends SugarBean
     public $object_name = "Bug";
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'case_id', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
+    public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'case_id', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
 
-    public $relationship_fields = Array('case_id'=>'cases', 'account_id' => 'accounts', 'contact_id'=>'contacts',
-									'task_id'=>'tasks', 'note_id'=>'notes', 'meeting_id'=>'meetings',
-									'call_id'=>'calls', 'email_id'=>'emails');
+    public $relationship_fields = array('case_id'=>'cases', 'account_id' => 'accounts', 'contact_id'=>'contacts',
+                                    'task_id'=>'tasks', 'note_id'=>'notes', 'meeting_id'=>'meetings',
+                                    'call_id'=>'calls', 'email_id'=>'emails');
 
     public function __construct()
     {
@@ -240,7 +241,7 @@ class Bug extends SugarBean
     {
         parent::fill_in_additional_list_fields();
         // Fill in the assigned_user_name
-		//$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
+        //$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
 
 //	   $this->set_fixed_in_release();
     }
@@ -248,9 +249,9 @@ class Bug extends SugarBean
     public function fill_in_additional_detail_fields()
     {
 
-	    /*
-		// Fill in the assigned_user_name
-		$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
+        /*
+        // Fill in the assigned_user_name
+        $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
         */
         parent::fill_in_additional_detail_fields();
         //$this->created_by_name = get_assigned_user_name($this->created_by);
@@ -347,7 +348,7 @@ class Bug extends SugarBean
     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
         array_push($where_clauses, "bugs.name like '$the_query_string%'");
         if (is_numeric($the_query_string)) {
@@ -386,12 +387,12 @@ class Bug extends SugarBean
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         return parent::save($check_notify);
     }
@@ -402,7 +403,7 @@ function getReleaseDropDown()
     static $releases = null;
     if (!$releases) {
         $seedRelease = new Release();
-        $releases = $seedRelease->get_releases(TRUE, "Active");
+        $releases = $seedRelease->get_releases(true, "Active");
     }
     return $releases;
 }

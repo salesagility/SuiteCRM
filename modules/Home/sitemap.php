@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $sm = sm_build_array();
 $sm_smarty = new Sugar_Smarty();
@@ -82,7 +83,7 @@ function sm_build_array()
     //if the sitemap array is already stored, then pass it back
     if (isset($_SESSION['SM_ARRAY']) && !empty($_SESSION['SM_ARRAY'])) {
         return $_SESSION['SM_ARRAY'];
-    }   
+    }
 
 
     include("include/modules.php");
@@ -113,26 +114,25 @@ function sm_build_array()
     foreach ($modListHeader as $key=>$val) {
         if (!empty($exclusion_array) && in_array($val, $exclude)) {
             continue;
-        } else {
-            if (file_exists('modules/'.$val.'/Menu.php')) {
-                $mod_strings = return_module_language($current_language, $val);
-                $module_menu = array();
-                include('modules/'.$val.'/Menu.php');
+        }
+        if (file_exists('modules/'.$val.'/Menu.php')) {
+            $mod_strings = return_module_language($current_language, $val);
+            $module_menu = array();
+            include('modules/'.$val.'/Menu.php');
 
-                $tmp_menu_items = array();
-                foreach ($module_menu as $menu) {
-                    if (isset($menu[0]) && !empty($menu[0]) && isset($menu[1]) && !empty($menu[1]) && trim($menu[0]) !='#') {
-                        $tmp_menu_items[$menu[1]] =$menu[0];
-                    }
+            $tmp_menu_items = array();
+            foreach ($module_menu as $menu) {
+                if (isset($menu[0]) && !empty($menu[0]) && isset($menu[1]) && !empty($menu[1]) && trim($menu[0]) !='#') {
+                    $tmp_menu_items[$menu[1]] =$menu[0];
                 }
-                $mstr_array[$val] = $tmp_menu_items;
             }
+            $mstr_array[$val] = $tmp_menu_items;
         }
     }
 
     //reset the modstrings to current module
     $mod_strings = $orig_modstrings ;
     //store master array into session variable
-    $_SESSION['SM_ARRAY'] = $mstr_array; 
+    $_SESSION['SM_ARRAY'] = $mstr_array;
     return $mstr_array;
 }

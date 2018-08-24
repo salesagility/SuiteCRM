@@ -13,7 +13,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -659,7 +659,7 @@ class wsdl extends nusoap_base
                     //$this->debug("bindings: " . $this->varDump($this->bindings[ $portData['binding'] ]));
                     // merge bindings
                     if (isset($this->bindings[ $portData['binding'] ]['operations'])) {
-                        $ops = array_merge ($ops, $this->bindings[ $portData['binding'] ]['operations']);
+                        $ops = array_merge($ops, $this->bindings[ $portData['binding'] ]['operations']);
                     }
                 }
             }
@@ -1492,13 +1492,13 @@ class wsdl extends nusoap_base
             $this->setError("$type ($uqType) is not a supported type.");
             $this->debug("in serializeType: $type ($uqType) is not a supported type.");
             return false;
-        } else {
-            $this->debug("in serializeType: found typeDef");
-            $this->appendDebug('typeDef=' . $this->varDump($typeDef));
-            if (substr($uqType, -1) == '^') {
-                $uqType = substr($uqType, 0, -1);
-            }
         }
+        $this->debug("in serializeType: found typeDef");
+        $this->appendDebug('typeDef=' . $this->varDump($typeDef));
+        if (substr($uqType, -1) == '^') {
+            $uqType = substr($uqType, 0, -1);
+        }
+        
         if (!isset($typeDef['phpType'])) {
             $this->setError("$type ($uqType) has no phpType.");
             $this->debug("in serializeType: $type ($uqType) has no phpType.");

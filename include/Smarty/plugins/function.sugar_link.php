@@ -14,7 +14,7 @@ r54347 - 2010-02-08 09:41:14 -0800 (Mon, 08 Feb 2010) - jmertic - Bug 35509 - Ha
 
 r53116 - 2009-12-09 17:24:37 -0800 (Wed, 09 Dec 2009) - mitani - Merge Kobe into Windex Revision 51633 to 53087
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -36,12 +36,13 @@ r42268 - 2008-12-02 13:29:54 -0800 (Tue, 02 Dec 2008) - rob - Get some tweaks to
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -52,7 +53,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -70,9 +71,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -89,10 +90,10 @@ function smarty_function_sugar_link($params, &$smarty)
         $link_url .= '&tab=true';
     } else {
         $action = (!empty($params['action']))?$params['action']:'index';
-	    
+        
         $link_url = 'index.php?';
         $link_url .= 'module='.$params['module'].'&action='.$action;
-	
+    
         if (!empty($params['record'])) {
             $link_url .= "&record=".$params['record'];
         }
@@ -100,12 +101,12 @@ function smarty_function_sugar_link($params, &$smarty)
             $link_url .= '&'.$params['extraparams'];
         }
     }
-	
+    
     if (isset($params['link_only']) && $params['link_only'] == 1) {
         // Let them just get the url, they want to put it someplace
         return ajaxLink($link_url);
     }
-	
+    
     $id = (!empty($params['id']))?' id="'.$params['id'].'"':'';
     $class = (!empty($params['class']))?' class="'.$params['class'].'"':'';
     $style = (!empty($params['style']))?' style="'.$params['style'].'"':'';

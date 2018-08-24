@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 function installStatus($msg, $cmd = null, $overwrite = false, $before = '[ok]<br>')
 {
@@ -107,12 +108,12 @@ $setup_site_log_level				='fatal';
 
 /*sugar_cache_clear('TeamSetsCache');
 if ( file_exists($cache_dir .'modules/Teams/TeamSetCache.php') ) {
-	unlink($cache_dir.'modules/Teams/TeamSetCache.php');
+    unlink($cache_dir.'modules/Teams/TeamSetCache.php');
 }
 
 sugar_cache_clear('TeamSetsMD5Cache');
 if ( file_exists($cache_dir.'modules/Teams/TeamSetMD5Cache.php') ) {
-	unlink($cache_dir.'modules/Teams/TeamSetMD5Cache.php');
+    unlink($cache_dir.'modules/Teams/TeamSetMD5Cache.php');
 }*/
 $langHeader = get_language_header();
 $out =<<<EOQ
@@ -221,7 +222,7 @@ $new_config         = 1;
 $new_report     = 1;
 
 // add non-module Beans to this array to keep the installer from erroring.
-$nonStandardModules = array (
+$nonStandardModules = array(
     //'Tracker',
 );
 
@@ -384,8 +385,8 @@ enableSugarFeeds();
 
     //require_once('modules/Connectors/InstallDefaultConnectors.php');
 
-	///////////////////////////////////////////////////////////////////////////////
-	////    INSTALL PASSWORD TEMPLATES
+    ///////////////////////////////////////////////////////////////////////////////
+    ////    INSTALL PASSWORD TEMPLATES
     include('install/seed_data/Advanced_Password_SeedData.php');
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -32,23 +32,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 $module_name = 'AOS_Invoices';
 $_module_name = 'aos_invoices';
 $popupMeta = array('moduleMain' => $module_name,
-						'varName' => $module_name,
-						'orderBy' => $_module_name.'.name',
-						'whereClauses' => 
-							array('name' => $_module_name.'.name', 
-									'billing_address_city' => $_module_name.'.billing_address_city',
-									'phone_office' => $_module_name.'.phone_office'),
-						'searchInputs' =>
-							array('name', 
-								  'billing_address_city',
-								  'phone_office',
-								  'industry'
-								  
-							),
-						);
+                        'varName' => $module_name,
+                        'orderBy' => $_module_name.'.name',
+                        'whereClauses' =>
+                            array('name' => $_module_name.'.name',
+                                    'billing_address_city' => $_module_name.'.billing_address_city',
+                                    'phone_office' => $_module_name.'.phone_office'),
+                        'searchInputs' =>
+                            array('name',
+                                  'billing_address_city',
+                                  'phone_office',
+                                  'industry'
+                                  
+                            ),
+                        );

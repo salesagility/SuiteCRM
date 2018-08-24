@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
  
 require_once('include/EditView/QuickCreate.php');
@@ -84,7 +85,7 @@ class MeetingsQuickCreate extends QuickCreate
         if (is_null($focus->time_start)) {
             $focus->time_start = $timedate->to_display_time(TimeDate::getInstance()->nowDb(), true);
         }
-        if (!isset ($focus->duration_hours)) {
+        if (!isset($focus->duration_hours)) {
             $focus->duration_hours = "1";
         }
 
@@ -113,7 +114,7 @@ class MeetingsQuickCreate extends QuickCreate
         
         
         // We default the to assume that the time preference is set to 11:00 (i.e. without meridiem)
-        $hours_arr = array ();
+        $hours_arr = array();
         $num_of_hours = 24;
         $start_at = 0;
 
@@ -121,7 +122,7 @@ class MeetingsQuickCreate extends QuickCreate
         if (strpos($time_pref, 'a') || strpos($time_pref, 'A')) {
             $num_of_hours = 13;
             $start_at = 1;
-        } 
+        }
         
         /*
         // Seems to be problematic... $time_meridiem is always empty
@@ -143,12 +144,12 @@ class MeetingsQuickCreate extends QuickCreate
         $this->ss->assign("TIME_START_MINUTE_OPTIONS", get_select_options_with_id($focus->minutes_values, $time_start_minutes));
         $this->ss->assign("DURATION_HOURS", $focus->duration_hours);
         $this->ss->assign("DURATION_MINUTES_OPTIONS", get_select_options_with_id($focus->minutes_values, $focus->duration_minutes));
-        // Test to see if time format is 11:00am; otherwise it's 11:00AM 
+        // Test to see if time format is 11:00am; otherwise it's 11:00AM
         if ($num_of_hours == 13) {
             if (strpos($time_pref, 'a')) {
                 if (!isset($focus->meridiem_am_values)) {
                     $focus->meridiem_am_values = array('am'=>'am', 'pm'=>'pm');
-                } 		
+                }
                
                 $this->ss->assign("TIME_MERIDIEM", get_select_options_with_id($focus->meridiem_am_values, $time_start_hour < 12 ? 'am' : 'pm'));
             } else {
@@ -163,4 +164,3 @@ class MeetingsQuickCreate extends QuickCreate
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
     }
 }
-

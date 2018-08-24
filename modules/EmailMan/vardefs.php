@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,11 +37,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-$dictionary['EmailMan'] = 
+$dictionary['EmailMan'] =
 array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => array(
     'date_entered' => array(
         'name' => 'date_entered',
@@ -61,15 +62,15 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
         'reportable' =>false,
         'comment' => 'User ID representing assigned-to user',
     ),
-    'id' => 
-    array (
+    'id' =>
+    array(
         'name' => 'id',
         'vname' => 'LBL_ID',
         'type' => 'int',
         'len' => '11',
         'auto_increment'=>true,
         'comment' => 'Unique identifier',
-    ),	
+    ),
     'campaign_id' => array(
         'name' => 'campaign_id',
         'vname' => 'LBL_CAMPAIGN_ID',
@@ -183,11 +184,10 @@ array( 'table' => 'emailman', 'comment' => 'Email campaign queue', 'fields' => a
         'source'=>'non-db',
     ),
 
-), 'indices' => array (
+), 'indices' => array(
                     array('name' => 'emailmanpk', 'type' => 'primary', 'fields' => array('id')),
                     array('name' => 'idx_eman_list', 'type' => 'index', 'fields' => array('list_id','user_id','deleted')),
                     array('name' => 'idx_eman_campaign_id', 'type' => 'index', 'fields' => array('campaign_id')),
                     array('name' => 'idx_eman_relid_reltype_id', 'type' => 'index', 'fields'=> array('related_id', 'related_type', 'campaign_id')),
                     )
 );
-

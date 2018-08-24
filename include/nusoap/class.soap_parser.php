@@ -13,7 +13,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -88,10 +88,10 @@ class nusoap_parser extends nusoap_base
     public $fault_detail = '';
     public $depth_array = array();
     public $debug_flag = true;
-    public $soapresponse = NULL;	// parsed SOAP Body
-	public $soapheader = NULL;		// parsed SOAP Header
-	public $responseHeaders = '';	// incoming SOAP headers (text)
-	public $body_position = 0;
+    public $soapresponse = null;	// parsed SOAP Body
+    public $soapheader = null;		// parsed SOAP Header
+    public $responseHeaders = '';	// incoming SOAP headers (text)
+    public $body_position = 0;
     // for multiref parsing:
     // array of id => pos
     public $ids = array();
@@ -121,7 +121,7 @@ class nusoap_parser extends nusoap_base
         if (!empty($xml)) {
             // Check XML encoding
             $pos_xml = strpos($xml, '<?xml');
-            if ($pos_xml !== FALSE) {
+            if ($pos_xml !== false) {
                 $xml_decl = substr($xml, $pos_xml, strpos($xml, '?>', $pos_xml + 2) - $pos_xml + 1);
                 if (preg_match("/encoding=[\"']([^\"']*)[\"']/", $xml_decl, $res)) {
                     $xml_encoding = $res[1];
@@ -158,9 +158,11 @@ class nusoap_parser extends nusoap_base
             // Parse the XML file.
             if (!xml_parse($this->parser, $xml, true)) {
                 // Display an error message.
-                $err = sprintf('XML error parsing SOAP payload on line %d: %s',
-			    xml_get_current_line_number($this->parser),
-			    xml_error_string(xml_get_error_code($this->parser)));
+                $err = sprintf(
+                    'XML error parsing SOAP payload on line %d: %s',
+                xml_get_current_line_number($this->parser),
+                xml_error_string(xml_get_error_code($this->parser))
+                );
                 $this->debug($err);
                 $this->debug("XML payload:\n" . $xml);
                 $this->setError($err);
@@ -372,7 +374,7 @@ class nusoap_parser extends nusoap_base
             // get unqualified name
             $name = substr(strstr($name, ':'), 1);
         }
-		
+        
         // build to native type
         if (isset($this->body_position) && $pos > $this->body_position) {
             // deal w/ multirefs
@@ -434,7 +436,7 @@ class nusoap_parser extends nusoap_base
                 */
             }
         }
-		
+        
         // for doclit
         if ($this->status == 'header') {
             if ($this->root_header != $pos) {
@@ -565,9 +567,9 @@ class nusoap_parser extends nusoap_base
         }
         // obscure numeric types
         if ($type == 'nonPositiveInteger' || $type == 'negativeInteger'
-			|| $type == 'nonNegativeInteger' || $type == 'positiveInteger'
-			|| $type == 'unsignedInt'
-			|| $type == 'unsignedShort' || $type == 'unsignedByte') {
+            || $type == 'nonNegativeInteger' || $type == 'positiveInteger'
+            || $type == 'unsignedInt'
+            || $type == 'unsignedShort' || $type == 'unsignedByte') {
             return (int) $value;
         }
         // bogus: parser treats array with no elements as a simple type
@@ -600,16 +602,16 @@ class nusoap_parser extends nusoap_base
             // md array
             if (isset($this->message[$pos]['arrayCols']) && $this->message[$pos]['arrayCols'] != '') {
                 $r=0; // rowcount
-            	$c=0; // colcount
-            	foreach ($children as $child_pos) {
-            	    $this->debug("in buildVal, got an MD array element: $r, $c");
-            	    $params[$r][] = $this->message[$child_pos]['result'];
-            	    $c++;
-            	    if ($c == $this->message[$pos]['arrayCols']) {
-            	        $c = 0;
-            	        $r++;
-            	    }
-            	}
+                $c=0; // colcount
+                foreach ($children as $child_pos) {
+                    $this->debug("in buildVal, got an MD array element: $r, $c");
+                    $params[$r][] = $this->message[$child_pos]['result'];
+                    $c++;
+                    if ($c == $this->message[$pos]['arrayCols']) {
+                        $c = 0;
+                        $r++;
+                    }
+                }
                 // array
             } elseif ($this->message[$pos]['type'] == 'array' || $this->message[$pos]['type'] == 'Array') {
                 $this->debug('in buildVal, adding array '.$this->message[$pos]['name']);
@@ -674,24 +676,23 @@ class nusoap_parser extends nusoap_base
             $this->debug('in buildVal, return:');
             $this->appendDebug($this->varDump($ret));
             return $ret;
-        } else {
-            $this->debug('in buildVal, no children, building scalar');
-            $cdata = isset($this->message[$pos]['cdata']) ? $this->message[$pos]['cdata'] : '';
-            if (isset($this->message[$pos]['type'])) {
-                $ret = $this->decodeSimple($cdata, $this->message[$pos]['type'], isset($this->message[$pos]['type_namespace']) ? $this->message[$pos]['type_namespace'] : '');
-                $this->debug("in buildVal, return: $ret");
-                return $ret;
-            }
-            $parent = $this->message[$pos]['parent'];
-            if (isset($this->message[$parent]['type']) && ($this->message[$parent]['type'] == 'array') && isset($this->message[$parent]['arrayType'])) {
-                $ret = $this->decodeSimple($cdata, $this->message[$parent]['arrayType'], isset($this->message[$parent]['arrayTypeNamespace']) ? $this->message[$parent]['arrayTypeNamespace'] : '');
-                $this->debug("in buildVal, return: $ret");
-                return $ret;
-            }
-            $ret = $this->message[$pos]['cdata'];
+        }
+        $this->debug('in buildVal, no children, building scalar');
+        $cdata = isset($this->message[$pos]['cdata']) ? $this->message[$pos]['cdata'] : '';
+        if (isset($this->message[$pos]['type'])) {
+            $ret = $this->decodeSimple($cdata, $this->message[$pos]['type'], isset($this->message[$pos]['type_namespace']) ? $this->message[$pos]['type_namespace'] : '');
             $this->debug("in buildVal, return: $ret");
             return $ret;
         }
+        $parent = $this->message[$pos]['parent'];
+        if (isset($this->message[$parent]['type']) && ($this->message[$parent]['type'] == 'array') && isset($this->message[$parent]['arrayType'])) {
+            $ret = $this->decodeSimple($cdata, $this->message[$parent]['arrayType'], isset($this->message[$parent]['arrayTypeNamespace']) ? $this->message[$parent]['arrayTypeNamespace'] : '');
+            $this->debug("in buildVal, return: $ret");
+            return $ret;
+        }
+        $ret = $this->message[$pos]['cdata'];
+        $this->debug("in buildVal, return: $ret");
+        return $ret;
     }
 }
 
