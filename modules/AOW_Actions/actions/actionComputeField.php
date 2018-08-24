@@ -750,7 +750,7 @@ class actionComputeField extends actionBase
      */
     private function getOtherModuleForRelationship($relationship_name, $module)
     {
-        $db = $GLOBALS['db'];
+        $db = DBManagerFactory::getInstance();
 
         $query =
             "SELECT relationship_name, rhs_module, lhs_module FROM relationships WHERE deleted=0 AND relationship_name = '" .

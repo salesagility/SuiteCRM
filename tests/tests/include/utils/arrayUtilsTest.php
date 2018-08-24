@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/utils/array_utils.php';
-class array_utilsTest extends PHPUnit_Framework_TestCase
+class array_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testvar_export_helper()
     {

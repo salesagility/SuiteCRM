@@ -179,7 +179,7 @@ class BreadCrumbStack {
    	    } else {
    		  $query = "UPDATE tracker SET visible = 0 WHERE id = '{$id}'";
    	    }
-        $GLOBALS['db']->query($query, true);
+        DBManagerFactory::getInstance()->query($query, true);
    }
 
    /**

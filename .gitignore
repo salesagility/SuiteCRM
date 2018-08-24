@@ -6,6 +6,7 @@ cache/*
 upload/*
 !upload/index.html
 # Ignore some files and directories from the custom directory.
+custom/
 custom/history/*
 custom/blowfish/*
 custom/modulebuilder/*
@@ -74,6 +75,7 @@ vendor/
 public/
 
 
+
 #Ignore Sass Generated files in SuiteP
 themes/SuiteP/studio.css
 themes/SuiteP/studio.css.map
@@ -107,3 +109,4 @@ themes/SuiteP/calendar.css
 themes/SuiteP/calendar.css.map
 themes/SuiteP/admin.css
 themes/SuiteP/admin.css.map
+/.php_cs.cache

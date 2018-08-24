@@ -20,6 +20,13 @@ foreach($focus->additional_column_fields as $field)
     safe_map($field, $focus, true);
 }
 
+if (!is_admin($GLOBALS['current_user']) && (empty($focus->fetched_row['id'])
+        || $focus->fetched_row['securitygroup_id'] != $focus->securitygroup_id
+        || $focus->fetched_row['user_id'] != $focus->user_id))
+{
+    sugar_die('Access denied');
+}
+
 // send them to the edit screen.
 if(isset($_REQUEST['record']) && $_REQUEST['record'] != "")
 {
@@ -35,7 +42,7 @@ if(isset($_REQUEST['record']) && $_REQUEST['record'] != "")
     if( isset($_POST['primary_group']) && $_POST['primary_group'] == '1') {
         $focus->primary_group = 1;
         //unset all other primary groups for this user
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $query = "update securitygroups_users set primary_group = 0 where user_id = '".$focus->user_id."' and id != '".$focus->id."' and primary_group = 1 and deleted = 0";
         $db->query($query);
     } else {

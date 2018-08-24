@@ -43,7 +43,9 @@ include ('include/modules.php') ;
 
 
 
-global $db, $mod_strings ;
+global $mod_strings ;
+$db = DBManagerFactory::getInstance();
+
 $log = & $GLOBALS [ 'log' ] ;
 
 $query = "DELETE FROM relationships" ;
