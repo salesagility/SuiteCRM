@@ -379,4 +379,21 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $sqlOperator = $method->invoke($aow, 'Anniversary');
         $this->assertRegExp("^LIKE '_____[0-9]{2}_[0-9]{2}%'^", $sqlOperator);
     }
+
+    /**
+     *
+     */
+    public function testBuildQueryWhereAnniversary()
+    {
+        $condition = new AOW_Condition();
+        $aow = new AOW_WorkFlow();
+        $module = new Meeting();
+        $condition->operator = 'Anniversary';
+        $condition->field = 'date_end';
+        $query = $aow->build_query_where($condition, $module, []);
+        $this->assertInternalType('array', $query);
+        $this->assertArrayHasKey('where', $query);
+        $this->assertInternalType('array', $query['where']);
+        $this->assertRegExp("^(meetings.date_end LIKE '_____[0-9]{2}_[0-9]{2}%')^", $query['where'][0]);
+    }
 }
