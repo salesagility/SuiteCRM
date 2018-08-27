@@ -367,4 +367,16 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('tracker');
         $state->popTable('aow_processed');
     }
+
+    /**
+     *
+     */
+    public function testGetAnniversarySQLOperator()
+    {
+        $aow = new AOW_WorkFlow();
+        $method = new ReflectionMethod('AOW_WorkFlow', 'getSQLOperator');
+        $method->setAccessible(true);
+        $sqlOperator = $method->invoke($aow, 'Anniversary');
+        $this->assertRegExp("^LIKE '_____[0-9]{2}_[0-9]{2}%'^", $sqlOperator);
+    }
 }
