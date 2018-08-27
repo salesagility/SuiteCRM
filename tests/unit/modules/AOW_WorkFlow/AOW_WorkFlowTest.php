@@ -297,6 +297,8 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcompare_condition()
     {
+        global $timedate;
+
         $aowWorkFlow = new AOW_WorkFlow();
 
         //execute the method and verify that it returns valid values for all operators
@@ -310,6 +312,9 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($aowWorkFlow->compare_condition('', '', 'is_null'));
         $this->assertTrue($aowWorkFlow->compare_condition('test2', array('test1', 'test2'), 'One_of'));
         $this->assertTrue($aowWorkFlow->compare_condition('test', array('test1', 'test2'), 'Not_One_of'));
+        $today = $timedate->getNow()->getTimestamp();
+        $this->assertTrue($aowWorkFlow->compare_condition($today, 0, 'Anniversary'));
+        $this->assertFalse($aowWorkFlow->compare_condition(0, 0, 'Anniversary'));
 
         //These do not return bool but 'strpos' result
         
