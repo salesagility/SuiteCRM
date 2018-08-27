@@ -47,6 +47,11 @@ class AOW_WorkFlow extends Basic
     public $importable = false;
     public $disable_row_level_security = true;
 
+    /**
+     * @var bool
+     */
+    private $isAnniversaryWf = false;
+
     public $id;
     public $name;
     public $date_entered;
@@ -379,6 +384,7 @@ class AOW_WorkFlow extends Basic
             }
 
             if ($condition->operator === 'Anniversary') {
+                $this->isAnniversaryWf = true;
                 $where = '('.$field.' '.$this->getSQLOperator($condition->operator);
                 $leapYearQuery = '';
                 if ($timedate->getNow()->format('m-d') === '02-28' && !$timedate->getNow()->format('L')) {
@@ -878,6 +884,11 @@ class AOW_WorkFlow extends Basic
                 return true;
             }
         }
+
+        if ($this->isAnniversaryWf && $this->hasAlreadyRunToday($bean)) {
+            return false;
+        }
+
         $processed->aow_workflow_id = $this->id;
         $processed->parent_id = $bean->id;
         $processed->parent_type = $bean->module_dir;
