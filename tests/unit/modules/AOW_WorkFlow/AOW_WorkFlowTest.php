@@ -396,4 +396,38 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertInternalType('array', $query['where']);
         $this->assertRegExp("^(meetings.date_end LIKE '_____[0-9]{2}_[0-9]{2}%')^", $query['where'][0]);
     }
+
+    /**
+     * @throws \SuiteCRM\StateSaverException
+     */
+    public function testHasAlreadyRunToday()
+    {
+        global $timedate;
+
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aow_processed');
+        $state->pushTable('tracker');
+
+        $aow = new AOW_WorkFlow();
+        $aow->id ='123';
+        $method = new ReflectionMethod('AOW_WorkFlow', 'hasAlreadyRunToday');
+        $meeting = new Meeting();
+        $meeting->id = '456';
+        $method->setAccessible(true);
+
+        $result = $method->invoke($aow, $meeting);
+        $this->assertFalse($result);
+
+        $processed = new AOW_Processed();
+        $processed->parent_id = $meeting->id;
+        $processed->aow_workflow_id = $aow->id;
+        $processed->date_entered = $timedate->getNow()->format('Y-m-d') . ' 00:00:00';
+        $processed->status = 'Complete';
+        $processed->save();
+        $result = $method->invoke($aow, $meeting);
+        $state->popTable('tracker');
+        $state->popTable('aow_processed');
+
+        $this->assertTrue($result);
+    }
 }
