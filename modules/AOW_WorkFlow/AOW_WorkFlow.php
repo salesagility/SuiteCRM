@@ -383,9 +383,9 @@ class AOW_WorkFlow extends Basic
                 return $query;
             }
 
-            if ($condition->operator === 'Anniversary') {
+            if ($condition->isDateAnniversaryCondition()) {
                 $this->isAnniversaryWf = true;
-                $where = '('.$field.' '.$this->getSQLOperator($condition->operator);
+                $where = '('.$field.' '.$this->getSQLOperator('Anniversary');
                 $leapYearQuery = '';
                 if ($timedate->getNow()->format('m-d') === '02-28' && !$timedate->getNow()->format('L')) {
                     // If we're not in a leap year then the 29th feb is also celebrated on the 28th
@@ -616,8 +616,12 @@ class AOW_WorkFlow extends Basic
             $field = $condition->field;
             $value = $condition->value;
 
-            if ($condition->operator === 'Anniversary' && $this->hasAlreadyRunToday($bean)) {
-                return false;
+            if ($condition->isDateAnniversaryCondition()) {
+                if ($this->hasAlreadyRunToday($bean)) {
+                    return false;
+                }
+                $this->isAnniversaryWf = true;
+                $condition->operator = 'Anniversary';
             }
 
             $dateFields = array('date','datetime', 'datetimecombo');

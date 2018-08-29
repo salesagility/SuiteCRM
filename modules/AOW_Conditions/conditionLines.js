@@ -177,7 +177,7 @@ function showModuleField(ln, operator_value, type_value, field_value){
         document.getElementById('aow_conditions_fieldInput'+ln).innerHTML = '';
     }
 
-    if(operator_value == 'is_null' || operator_value == 'Anniversary'){
+    if(operator_value == 'is_null'){
         hideElem('aow_conditions_fieldTypeInput' + ln);
         hideElem('aow_conditions_fieldInput' + ln);
     } else {
@@ -310,7 +310,7 @@ function changeOperator(ln){
 
     var aow_operator = document.getElementById("aow_conditions_operator["+ln+"]").value;
 
-    if(aow_operator == 'is_null' || aow_operator == 'Anniversary'){
+    if(aow_operator == 'is_null'){
         showModuleField(ln,aow_operator);
     } else {
         showElem('aow_conditions_fieldTypeInput' + ln);

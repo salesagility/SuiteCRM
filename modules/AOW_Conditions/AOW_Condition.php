@@ -141,4 +141,16 @@ class AOW_Condition extends Basic
             }
         }
     }
+
+    /**
+     * @return bool
+     */
+    public function isDateAnniversaryCondition()
+    {
+        if ($this->value_type !== 'Date') {
+            return false;
+        }
+        $value = unserialize(base64_decode($this->value));
+        return strtolower($value[0]) === 'anniversary';
+    }
 }

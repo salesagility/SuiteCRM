@@ -122,7 +122,7 @@ class AOW_WorkFlowController extends SugarController
                 case 'date':
                 case 'datetime':
                 case 'datetimecombo':
-                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To','is_null','Anniversary');
+                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To','is_null');
                     break;
                 case 'enum':
                 case 'multienum':
