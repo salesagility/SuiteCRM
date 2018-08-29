@@ -437,4 +437,17 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue($result);
     }
+
+    /**
+     *
+     */
+    public function testConditionIsAnniversary()
+    {
+        $condition = new AOW_Condition();
+        $condition->value_type = 'Date';
+        $condition->value = 'YTo0OntpOjA7czoxMToiYW5uaXZlcnNhcnkiO2k6MTtzOjM6Im5vdyI7aToyO3M6MDoiIjtpOjM7czowOiIiO30=';
+        $this->assertTrue($condition->isDateAnniversaryCondition());
+        $condition->value = 'YTo0OntpOjA7czozOiJub3ciO2k6MTtzOjM6Im5vdyI7aToyO3M6MDoiIjtpOjM7czowOiIiO30=';
+        $this->assertFalse($condition->isDateAnniversaryCondition());
+    }
 }
