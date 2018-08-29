@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -55,39 +53,39 @@ require_once('modules/Trackers/store/Store.php');
  * the configured database instance as defined in DBManagerFactory::getInstance() method
  *
  */
-class DatabaseStore implements Store
-{
-    public function flush($monitor)
-    {
-        $metrics = $monitor->getMetrics();
-        $columns = array();
-        $values = array();
-        foreach ($metrics as $name=>$metric) {
-            if (!empty($monitor->$name)) {
-                $columns[] = $name;
-                if ($metrics[$name]->_type == 'int') {
-                    $values[] = intval($monitor->$name);
-                } elseif ($metrics[$name]->_type == 'double') {
-                    $values[] = floatval($monitor->$name);
-                } elseif ($metrics[$name]->_type == 'datetime') {
-                    $values[] = DBManagerFactory::getInstance()->convert(DBManagerFactory::getInstance()->quoted($monitor->$name), "datetime");
-                } else {
-                    $values[] = DBManagerFactory::getInstance()->quoted($monitor->$name);
-                }
-            }
-        } //foreach
+class DatabaseStore implements Store {
 
-        if (empty($values)) {
-            return;
-        }
+    public function flush($monitor) {
 
-        $id = DBManagerFactory::getInstance()->getAutoIncrementSQL($monitor->table_name,'id');
-        if (!empty($id)) {
-            $columns[] = 'id';
-            $values[] = $id;
-        }
+       $metrics = $monitor->getMetrics();
+       $columns = array();
+       $values = array();
+       foreach($metrics as $name=>$metric) {
+       	  if(!empty($monitor->$name)) {
+       	  	 $columns[] = $name;
+       	  	 if($metrics[$name]->_type == 'int') {
+       	  	    $values[] = intval($monitor->$name);
+       	  	 } else if($metrics[$name]->_type == 'double') {
+                $values[] = floatval($monitor->$name);
+             } else if ($metrics[$name]->_type == 'datetime') {
+             	$values[] = DBManagerFactory::getInstance()->convert(DBManagerFactory::getInstance()->quoted($monitor->$name), "datetime");
+       	  	 } else {
+                $values[] = DBManagerFactory::getInstance()->quoted($monitor->$name);
+             }
+       	  }
+       } //foreach
 
-        $query = "INSERT INTO $monitor->table_name (" .implode("," , $columns). " ) VALUES ( ". implode("," , $values). ')';
-        DBManagerFactory::getInstance()->query($query);
+       if(empty($values)) {
+       	  return;
+       }
+
+       $id = DBManagerFactory::getInstance()->getAutoIncrementSQL($monitor->table_name,'id');
+       if(!empty($id)) {
+       	  $columns[] = 'id';
+       	  $values[] = $id;
+       }
+
+       $query = "INSERT INTO $monitor->table_name (" .implode("," , $columns). " ) VALUES ( ". implode("," , $values). ')';
+	   DBManagerFactory::getInstance()->query($query);
     }
 }

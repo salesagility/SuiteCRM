@@ -68,13 +68,13 @@ class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Excepti
      * @param int $code
      * @param Exception|null $previous
      */
-    public function __construct($message = "", $code = 0, \Exception $previous = null)
-    {
+    public function __construct($message = "", $code = 0, \Exception $previous = null) {
         parent::__construct(
             ($message ? $message . " - " : "") .
             "An action called with wrong parameters, incorrectly called action was: " .
             $this->getCallerMethod(), $code, $previous
         );
+
     }
 
     /**
@@ -87,11 +87,12 @@ class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Excepti
      * @param int $step
      * @return mixed
      */
-    protected function getCallerMethod($step = 2)
-    {
+    protected function getCallerMethod($step = 2) {
+
         $trace = debug_backtrace();
         $function = $trace[$step ? $step : $this->callerMethodDistance]['function'];
 
         return $function;
     }
+
 }

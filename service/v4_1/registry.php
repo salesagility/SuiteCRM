@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry')) {
-    define('sugarEntry', true);
-}
+if(!defined('sugarEntry'))define('sugarEntry', true);
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,8 +41,7 @@ if (!defined('sugarEntry')) {
 
 require_once('service/v4/registry.php');
 
-class registry_v4_1 extends registry_v4
-{
+class registry_v4_1 extends registry_v4 {
 
 
 	/**
@@ -53,10 +50,10 @@ class registry_v4_1 extends registry_v4
      * Registers all the functions on the service class
 	 *
 	 */
-    protected function registerFunction()
-    {
-        $GLOBALS['log']->info('Begin: registry->registerFunction');
-        parent::registerFunction();
+	protected function registerFunction()
+	{
+		$GLOBALS['log']->info('Begin: registry->registerFunction');
+		parent::registerFunction();
 
         //Add get_relationships with "pagination" support
         $this->serviceClass->registerFunction(
@@ -70,18 +67,19 @@ class registry_v4_1 extends registry_v4
             'get_modified_relationships',
             array('session'=>'xsd:string', 'module_name'=>'xsd:string','related_module'=>'xsd:string', 'from_date'=>'xsd:string', 'to_date'=>'xsd:string','offset'=>'xsd:int', 'max_results'=>'xsd:int','deleted'=>'xsd:int', 'module_user_id'=>'xsd:string', 'select_fields'=>'tns:select_fields', 'relationship_name'=>'xsd:string', 'deletion_date'=>'xsd:string'),
             array('return'=>'tns:modified_relationship_result'));
-    }
+
+	}
 
 
     /**
    	 * This method registers all the complex types
    	 *
    	 */
-    protected function registerTypes()
-    {
-        parent::registerTypes();
+   	protected function registerTypes() {
 
-        $this->serviceClass->registerType
+           parent::registerTypes();
+
+           $this->serviceClass->registerType
            (
                'error_value',
                'complexType',
@@ -95,9 +93,9 @@ class registry_v4_1 extends registry_v4
                )
            );
 
-        //modified_relationship_entry_list
-        //This type holds the array of modified_relationship_entry types
-        $this->serviceClass->registerType(
+            //modified_relationship_entry_list
+            //This type holds the array of modified_relationship_entry types
+            $this->serviceClass->registerType(
                 'modified_relationship_entry_list',
                 'complexType',
                 'array',
@@ -110,9 +108,9 @@ class registry_v4_1 extends registry_v4
                 'tns:modified_relationship_entry'
             );
 
-        //modified_relationship_entry
-        //This type consists of id, module_name and name_value_list type
-        $this->serviceClass->registerType
+            //modified_relationship_entry
+            //This type consists of id, module_name and name_value_list type
+            $this->serviceClass->registerType
             (
                  'modified_relationship_entry',
                  'complexType',
@@ -126,9 +124,9 @@ class registry_v4_1 extends registry_v4
                  )
             );
 
-        //modified_relationship_result
-        //the top level result array
-        $this->serviceClass->registerType
+            //modified_relationship_result
+            //the top level result array
+            $this->serviceClass->registerType
             (
                 'modified_relationship_result',
                 'complexType',
@@ -142,5 +140,7 @@ class registry_v4_1 extends registry_v4
                    'error' => array('name' =>'error', 'type'=>'tns:error_value'),
                 )
            );
-    }
+
+}
+
 }

@@ -120,12 +120,14 @@ class Popup_Picker
         }
         foreach ($focus->get_linked_fields() as $field => $def) {
             if ($focus->load_relationship($field)) {
+
                 $relTable = BeanFactory::getBean($focus->$field->getRelatedModuleName())->table_name;
                 if (array_key_exists($relTable, $activitiesRels)) {
                     $varname = 'focus_' . $relTable . '_list';
                     $$varname =
                         sugarArrayMerge($$varname, $focus->get_linked_beans($field, $activitiesRels[$relTable]));
                 }
+
             }
         }
 
@@ -182,6 +184,7 @@ class Popup_Picker
         } // end Tasks
 
         foreach ($focus_meetings_list as $meeting) {
+
             if (empty($meeting->contact_id) && empty($meeting->contact_name)) {
                 $meeting_contacts = $meeting->get_linked_beans('contacts', 'Contact');
                 if (!empty($meeting_contacts[0]->id) && !empty($meeting_contacts[0]->name)) {
@@ -209,6 +212,7 @@ class Popup_Picker
                     'sort_value' => $timedate->fromDb($meeting->fetched_row['date_start'])->ts,
                     'image' => SugarThemeRegistry::current()->getImageURL('Meetings.svg')
                 );
+
             } else {
                 $open_activity_list[] = array(
                     'name' => $meeting->name,
@@ -230,6 +234,7 @@ class Popup_Picker
         } // end Meetings
 
         foreach ($focus_calls_list as $call) {
+
             if (empty($call->contact_id) && empty($call->contact_name)) {
                 $call_contacts = $call->get_linked_beans('contacts', 'Contact');
                 if (!empty($call_contacts[0]->id) && !empty($call_contacts[0]->name)) {
@@ -257,6 +262,7 @@ class Popup_Picker
                     'sort_value' => $timedate->fromDb($call->fetched_row['date_start'])->ts,
                     'image' => SugarThemeRegistry::current()->getImageURL('Calls.svg')
                 );
+
             } else {
                 $open_activity_list[] = array(
                     'name' => $call->name,
@@ -278,6 +284,7 @@ class Popup_Picker
         } // end Calls
 
         foreach ($focus_emails_list as $email) {
+
             if (empty($email->contact_id) && empty($email->contact_name)) {
                 $email_contacts = $email->get_linked_beans('contacts', 'Contact');
                 if (!empty($email_contacts[0]->id) && !empty($email_contacts[0]->name)) {
@@ -311,6 +318,7 @@ class Popup_Picker
                 'sort_value' => $ts,
                 'image' => SugarThemeRegistry::current()->getImageURL('Emails.svg')
             );
+
         } //end Emails
 
         // Bug 46439 'No email archived when clicking on View Summary' (All condition)
@@ -356,6 +364,7 @@ class Popup_Picker
 
         foreach ($focus_notes_list as $note) {
             if ($note->ACLAccess('view')) {
+
                 $summary_list[] = array(
                     'name' => $note->name,
                     'id' => $note->id,
@@ -381,6 +390,7 @@ class Popup_Picker
                     $summary_list[$count]['fileurl'] = UploadFile::get_url($note->filename, $note->id);
                 }
             }
+
         } // end Notes
 
 
@@ -434,6 +444,7 @@ class Popup_Picker
 
 
         return $template->fetch('modules/Activities/tpls/PopupBody.tpl');
+
     }
 
     /**

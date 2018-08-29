@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 class AM_TaskTemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {

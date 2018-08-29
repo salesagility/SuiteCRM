@@ -62,7 +62,7 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aclRole = new ACLRole();
 
@@ -74,6 +74,8 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertLessThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
         
         // clean up
+        
+        
     }
 
     public function testgetUserRoles()
@@ -81,7 +83,7 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aclRole = new ACLRole();
 
@@ -94,6 +96,8 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
         
         // clean up
+        
+        
     }
 
     public function testgetUserRoleNames()

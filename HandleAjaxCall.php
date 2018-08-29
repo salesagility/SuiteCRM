@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,15 +43,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
  require_once('include/entryPoint.php');
  require_once('ModuleInstall/PackageManager/PackageController.php');
-if (!is_admin($GLOBALS['current_user'])) {
-    sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
+if(!is_admin($GLOBALS['current_user'])){
+	sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }	
     $requestedMethod = $_REQUEST['method'];
     $pmc = new PackageController();
   
-    if (method_exists($pmc, $requestedMethod)) {
-        echo $pmc->$requestedMethod();
-    } else {
+    if(method_exists($pmc, $requestedMethod)) { 
+        echo $pmc->$requestedMethod();    
+    } 
+    else {
         echo 'no method';
     }
    // sugar_cleanup();

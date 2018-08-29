@@ -40,49 +40,55 @@ r33968 - 2008-04-10 11:30:04 -0700 (Thu, 10 Apr 2008) - dwheeler - bug 20936: Ad
  */
 function smarty_function_sugar_replace_vars($params, &$smarty)
 {
-    if (empty($params['subject'])) {
-        $smarty->trigger_error("sugarvar: missing 'subject' parameter");
-        return;
-    } 
-    $fields = empty($params['fields']) ? $smarty->get_template_vars('fields') : $params['fields'];
-    $lDelim = "[";
+	if(empty($params['subject']))  {
+	    $smarty->trigger_error("sugarvar: missing 'subject' parameter");
+	    return;
+	} 
+	$fields = empty($params['fields']) ? $smarty->get_template_vars('fields') : $params['fields'];
+	$lDelim = "[";
     $rDelim = "]";
-    if ($params['use_curly']) {
+    if ($params['use_curly'])
+    {
         $lDelim = "{";
         $rDelim = "}";
     }
     $subject = $params['subject'];
-    $matches = array();
-    $count = preg_match_all('/\\' . $lDelim . '([^\\' . $rDelim . ']*)\\' . $rDelim . '/', $subject, $matches);
-    for ($i = 0; $i < $count; $i++) {
-        $match = $matches[1][$i];
+	$matches = array();
+	$count = preg_match_all('/\\' . $lDelim . '([^\\' . $rDelim . ']*)\\' . $rDelim . '/', $subject, $matches);
+    for($i = 0; $i < $count; $i++) {
+		$match = $matches[1][$i];
         //List views will have fields be an array where all the keys are upper case and the values are jsut strings
-        if (!isset($fields[$match]) && isset($fields[strtoupper($match)])) {
+        if (!isset($fields[$match]) && isset($fields[strtoupper($match)]))
             $match = strtoupper($match);
-        }
 
         $value = isset($fields[$match]) ? $fields[$match] : null;
         if (!is_null($value)) {
-            if (isset($value['function']['returns']) && $value['function']['returns'] == 'html') {
+            if (isset($value['function']['returns']) && $value['function']['returns'] == 'html')
+            {
                 $bean  = $smarty->get_template_vars('bean');
                 $value = $bean->$match;
-            } elseif (is_array($value) && isset($value['value'])) {
+            }
+            else if (is_array($value) && isset($value['value']))
+            {
                 $value = $value['value'];
             }
 
             if (isset($fields[$match]['type']) && $fields[$match]['type']=='enum'
-				&& isset($fields[$match]['options']) && isset($fields[$match]['options'][$value])) {
-                $subject = str_replace($matches[0][$i], $fields[$match]['options'][$value], $subject);
-            } else {
-                $subject = str_replace($matches[0][$i], $value, $subject);
-            }
-        }
-    }
+				&& isset($fields[$match]['options']) && isset($fields[$match]['options'][$value]))
+			{
+				$subject = str_replace($matches[0][$i], $fields[$match]['options'][$value], $subject);
+			} else 
+			{
+				$subject = str_replace($matches[0][$i], $value, $subject);
+			}
+		}
+	}
 		
-    if (!empty($params['assign'])) {
-        $smarty->assign($params['assign'], $subject);
-        return '';
-    }
+	if (!empty($params['assign']))
+	{
+		$smarty->assign($params['assign'], $subject);
+		return '';
+	}
 	
-    return $subject;
+	return $subject;
 }

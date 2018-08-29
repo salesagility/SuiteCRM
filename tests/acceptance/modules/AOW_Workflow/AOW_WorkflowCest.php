@@ -1,7 +1,6 @@
 <?php
 
 use \Faker\Factory;
-
 /**
  * Class LoginCest
  *
@@ -24,7 +23,7 @@ class AOW_WorkflowCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if (!$this->fakeData) {
+        if(!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeData->addProvider(new Faker\Provider\en_US\Address($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\PhoneNumber($this->fakeData));

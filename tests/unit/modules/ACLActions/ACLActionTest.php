@@ -3,6 +3,7 @@
 
 class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    
     public function setUp()
     {
         parent::setUp();
@@ -12,8 +13,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
     
-    public function tearDown()
-    {
+    public function tearDown() {
         parent::tearDown();
     }
 
@@ -25,7 +25,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('acl_actions');
         $state->pushGlobals();
         
-        $_POST['foo'] = 'bar123ase';
+$_POST['foo'] = 'bar123ase';
         //execute the contructor and check for the Object type and type attribute
         $aclAction = new ACLAction();
         $this->assertInstanceOf('ACLAction', $aclAction);
@@ -51,7 +51,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('acl_actions');
         $state->pushTable('aod_index');
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         //take count of actions initially and then after method execution and test if action count increases
         $action_count = count(ACLAction::getDefaultActions());
@@ -80,12 +80,14 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $this->assertFalse(ACLAction::AccessName('')); //test with invalid value
         $this->assertEquals('All', ACLAction::AccessName(90)); //test with a valid value
         
         // clean up
+        
+        
     }
 
     public function testgetDefaultActions()
@@ -112,6 +114,9 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         self::markTestIncomplete('Need to implement: verify that all three results retunred are different.');
         //verify that all three results retunred are different
+        //$this->assertNotSame($result1, $result2);
+        //$this->assertNotSame($result1, $result3);
+        //$this->assertNotSame($result2, $result3);
     }
 
     public function testhasAccess()
@@ -140,11 +145,10 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testuserHasAccess()
     {
-        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
+        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
         $this->assertFalse(ACLAction::userHasAccess('', '', '')); //test with empty module and action
         $this->assertTrue(ACLAction::userHasAccess('', 'Accounts', 'list')); //test with e,pty user and valid module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Accounts', 'list')); //test with valid User, module and action

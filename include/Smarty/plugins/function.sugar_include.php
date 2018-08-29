@@ -56,35 +56,36 @@ function smarty_function_sugar_include($params, &$smarty)
 {
     global $app_strings;
 
-    if (isset($params['type']) && $params['type'] == 'php') {
-        if (!isset($params['file'])) {
-            $smarty->trigger_error($app_strings['ERR_MISSING_REQUIRED_FIELDS'] . 'include');
-        } 
+    if(isset($params['type']) && $params['type'] == 'php') {
+		if(!isset($params['file'])) {
+		   $smarty->trigger_error($app_strings['ERR_MISSING_REQUIRED_FIELDS'] . 'include');
+		} 
 		
-        $includeFile = $params['file'];
-        if (!file_exists($includeFile)) {
-            $smarty->trigger_error($app_strings['ERR_NO_SUCH_FILE'] . ': ' . $includeFile);
-        }
+		$includeFile = $params['file'];
+		if(!file_exists($includeFile)) {
+		   $smarty->trigger_error($app_strings['ERR_NO_SUCH_FILE'] . ': ' . $includeFile);
+		}
 		
-        ob_start();
-        require($includeFile);
-        $output_html = ob_get_contents();
-        ob_end_clean();
-        echo $output_html;
-    } elseif (isset($params['type']) && $params['type'] == 'smarty') {
-        return $smarty->fetch($params['file']);
-    } elseif (is_array($params['include'])) {
-        $code = '';
-        foreach ($params['include'] as $include) {
-            if (isset($include['file'])) {
-                $file = $include['file'];
-                if (preg_match('/[\.]js$/si',$file)) {
-                    $code .= "<script src=\"". getJSPath($include['file']) ."\"></script>";
-                } elseif (preg_match('/[\.]php$/si', $file)) {
-                    require_once($file);
-                }
-            }
-        } //foreach
-        return $code;
-    } //if
+	    ob_start();
+	    require($includeFile);
+	    $output_html = ob_get_contents();
+	    ob_end_clean();
+	    echo $output_html; 
+    } else if(isset($params['type']) && $params['type'] == 'smarty') {
+		return $smarty->fetch($params['file']);
+	} else if(is_array($params['include'])) {
+	   	  $code = '';
+	   	  foreach($params['include'] as $include) {
+	   	  	      if(isset($include['file'])) {
+	   	  	         $file = $include['file'];
+	   	  	         if(preg_match('/[\.]js$/si',$file)) {
+	   	  	            $code .= "<script src=\"". getJSPath($include['file']) ."\"></script>";
+	   	  	         } else if(preg_match('/[\.]php$/si', $file)) {
+	   	  	            require_once($file);	
+	   	  	         }
+	   	  	      } 
+	   	  } //foreach
+	      return $code;
+   	} //if
 }
+?>

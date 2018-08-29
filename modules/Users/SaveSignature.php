@@ -41,20 +41,21 @@ require_once('modules/Users/UserSignature.php');
 global $current_user;
 
 $us = new UserSignature();
-if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
-    $us->retrieve($_REQUEST['record']);
+if(isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
+	$us->retrieve($_REQUEST['record']);
 } else {
-    $us->id = create_guid();
-    $us->new_with_id = true;
+	$us->id = create_guid();
+	$us->new_with_id = true;
 }
 
 $us->name = $_REQUEST['name'];
 $us->signature = strip_tags(br2nl(from_html($_REQUEST['description'])));
 $us->signature_html = $_REQUEST['description'];
-if (empty($us->user_id) && isset($_REQUEST['the_user_id'])) {
-    $us->user_id = $_REQUEST['the_user_id'];
-} else {
-    $us->user_id = $current_user->id;
+if(empty($us->user_id) && isset($_REQUEST['the_user_id'])){
+	$us->user_id = $_REQUEST['the_user_id'];
+}
+else{
+	$us->user_id = $current_user->id;
 }
 //_pp($_REQUEST);
 //_pp($us);

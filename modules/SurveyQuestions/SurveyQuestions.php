@@ -38,6 +38,7 @@
  ********************************************************************************/
 class SurveyQuestions extends Basic
 {
+
     var $new_schema = true;
     var $module_dir = 'SurveyQuestions';
     var $object_name = 'SurveyQuestions';
@@ -78,4 +79,7 @@ class SurveyQuestions extends Basic
 
         return false;
     }
+
 }
+
+?>

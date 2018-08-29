@@ -84,19 +84,18 @@ function smarty_function_html_select_time($params, &$smarty)
     if ($display_hours) {
         $hours       = $use_24_hours ? range(0, 23) : range(1, 12);
         $hour_fmt = $use_24_hours ? '%H' : '%I';
-        for ($i = 0, $for_max = count($hours); $i < $for_max; $i++) {
+        for ($i = 0, $for_max = count($hours); $i < $for_max; $i++)
             $hours[$i] = sprintf('%02d', $hours[$i]);
-        }
         $html_result .= '<select name=';
         if (null !== $field_array) {
             $html_result .= '"' . $field_array . '[' . $prefix . 'Hour]"';
         } else {
             $html_result .= '"' . $prefix . 'Hour"';
         }
-        if (null !== $hour_extra) {
+        if (null !== $hour_extra){
             $html_result .= ' ' . $hour_extra;
         }
-        if (null !== $all_extra) {
+        if (null !== $all_extra){
             $html_result .= ' ' . $all_extra;
         }
         $html_result .= '>'."\n";
@@ -110,9 +109,8 @@ function smarty_function_html_select_time($params, &$smarty)
 
     if ($display_minutes) {
         $all_minutes = range(0, 59);
-        for ($i = 0, $for_max = count($all_minutes); $i < $for_max; $i+= $minute_interval) {
+        for ($i = 0, $for_max = count($all_minutes); $i < $for_max; $i+= $minute_interval)
             $minutes[] = sprintf('%02d', $all_minutes[$i]);
-        }
         $selected = intval(floor(strftime('%M', $time) / $minute_interval) * $minute_interval);
         $html_result .= '<select name=';
         if (null !== $field_array) {
@@ -120,10 +118,10 @@ function smarty_function_html_select_time($params, &$smarty)
         } else {
             $html_result .= '"' . $prefix . 'Minute"';
         }
-        if (null !== $minute_extra) {
+        if (null !== $minute_extra){
             $html_result .= ' ' . $minute_extra;
         }
-        if (null !== $all_extra) {
+        if (null !== $all_extra){
             $html_result .= ' ' . $all_extra;
         }
         $html_result .= '>'."\n";
@@ -138,9 +136,8 @@ function smarty_function_html_select_time($params, &$smarty)
 
     if ($display_seconds) {
         $all_seconds = range(0, 59);
-        for ($i = 0, $for_max = count($all_seconds); $i < $for_max; $i+= $second_interval) {
+        for ($i = 0, $for_max = count($all_seconds); $i < $for_max; $i+= $second_interval)
             $seconds[] = sprintf('%02d', $all_seconds[$i]);
-        }
         $selected = intval(floor(strftime('%S', $time) / $second_interval) * $second_interval);
         $html_result .= '<select name=';
         if (null !== $field_array) {
@@ -149,10 +146,10 @@ function smarty_function_html_select_time($params, &$smarty)
             $html_result .= '"' . $prefix . 'Second"';
         }
         
-        if (null !== $second_extra) {
+        if (null !== $second_extra){
             $html_result .= ' ' . $second_extra;
         }
-        if (null !== $all_extra) {
+        if (null !== $all_extra){
             $html_result .= ' ' . $all_extra;
         }
         $html_result .= '>'."\n";
@@ -173,10 +170,10 @@ function smarty_function_html_select_time($params, &$smarty)
             $html_result .= '"' . $prefix . 'Meridian"';
         }
         
-        if (null !== $meridian_extra) {
+        if (null !== $meridian_extra){
             $html_result .= ' ' . $meridian_extra;
         }
-        if (null !== $all_extra) {
+        if (null !== $all_extra){
             $html_result .= ' ' . $all_extra;
         }
         $html_result .= '>'."\n";
@@ -193,3 +190,5 @@ function smarty_function_html_select_time($params, &$smarty)
 }
 
 /* vim: set expandtab: */
+
+?>

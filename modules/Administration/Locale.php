@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,9 +39,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 global $current_user, $sugar_config;
-if (!is_admin($current_user)) {
-    sugar_die("Unauthorized access to administration.");
-}
+if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
 
 require_once('modules/Configurator/Configurator.php');
 
@@ -63,32 +59,32 @@ $errors			= array();
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	HANDLE CHANGES
-if (isset($_REQUEST['process']) && $_REQUEST['process'] == 'true') {
-    if (isset($_REQUEST['collation']) && !empty($_REQUEST['collation'])) {
-        //kbrill Bug #14922
-        if (array_key_exists('collation', $sugar_config['dbconfigoption']) && $_REQUEST['collation'] != $sugar_config['dbconfigoption']['collation']) {
-            DBManagerFactory::getInstance()->disconnect();
-            DBManagerFactory::getInstance()->connect();
-        }
+if(isset($_REQUEST['process']) && $_REQUEST['process'] == 'true') {
+	if(isset($_REQUEST['collation']) && !empty($_REQUEST['collation'])) {
+		//kbrill Bug #14922
+		if(array_key_exists('collation', $sugar_config['dbconfigoption']) && $_REQUEST['collation'] != $sugar_config['dbconfigoption']['collation']) {
+			DBManagerFactory::getInstance()->disconnect();
+			DBManagerFactory::getInstance()->connect();
+		}
 
-        $cfg->config['dbconfigoption']['collation'] = $_REQUEST['collation'];
-    }
-    $cfg->populateFromPost();
-    $cfg->handleOverride();
+		$cfg->config['dbconfigoption']['collation'] = $_REQUEST['collation'];
+	}
+	$cfg->populateFromPost();
+	$cfg->handleOverride();
     if ($locale->invalidLocaleNameFormatUpgrade()) {
         $locale->removeInvalidLocaleNameFormatUpgradeNotice();
     }
-    header('Location: index.php?module=Administration&action=index');
+	header('Location: index.php?module=Administration&action=index');
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	DB COLLATION
 $collationOptions = DBManagerFactory::getInstance()->getCollationList();
-if (!empty($collationOptions)) {
-    if (!isset($sugar_config['dbconfigoption']['collation'])) {
-        $sugar_config['dbconfigoption']['collation'] = DBManagerFactory::getInstance()->getDefaultCollation();
-    }
-    $sugar_smarty->assign('collationOptions', get_select_options_with_id(array_combine($collationOptions, $collationOptions), $sugar_config['dbconfigoption']['collation']));
+if(!empty($collationOptions)) {
+	if(!isset($sugar_config['dbconfigoption']['collation'])) {
+		$sugar_config['dbconfigoption']['collation'] = DBManagerFactory::getInstance()->getDefaultCollation();
+	}
+	$sugar_smarty->assign('collationOptions', get_select_options_with_id(array_combine($collationOptions, $collationOptions), $sugar_config['dbconfigoption']['collation']));
 }
 ////	END DB COLLATION
 ///////////////////////////////////////////////////////////////////////////////

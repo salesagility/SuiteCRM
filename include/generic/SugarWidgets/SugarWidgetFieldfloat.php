@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,44 +41,47 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldFloat extends SugarWidgetFieldInt
 {
-    function displayList(&$layout_def)
-    {
-        $vardef = $this->getVardef($layout_def);
+ function displayList(&$layout_def)
+ {
+ 	
+    $vardef = $this->getVardef($layout_def);
 
-        if (isset($vardef['precision'])) {
-            $precision = $vardef['precision'];
-        } else {
-            $precision = null;
-        }
-        return format_number(parent::displayListPlain($layout_def), $precision, $precision);
+    if ( isset($vardef['precision']) ) {
+        $precision = $vardef['precision'];
+    } else {
+        $precision = null;
     }
+	return format_number(parent::displayListPlain($layout_def), $precision, $precision);
+ }
 
-    function displayListPlain($layout_def)
-    {
-        return $this->displayList($layout_def);
-    }
-    function queryFilterEquals(&$layout_def)
-    {
-        return $this->_get_column_select($layout_def)."= ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
-    }
+ function displayListPlain($layout_def)
+ {
+     return $this->displayList($layout_def);
+ }
+ function queryFilterEquals(&$layout_def)
+ {	
+    return $this->_get_column_select($layout_def)."= ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
+ }
                                                                                  
-    function queryFilterNot_Equals(&$layout_def)
-    {
-        return $this->_get_column_select($layout_def)."!=".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
-    }
+ function queryFilterNot_Equals(&$layout_def)
+ {
+	return $this->_get_column_select($layout_def)."!=".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
+ }
                                                                                  
-    function queryFilterGreater(&$layout_def)
-    {
-        return $this->_get_column_select($layout_def)." > ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
-    }
+ function queryFilterGreater(&$layout_def)
+ {
+    return $this->_get_column_select($layout_def)." > ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
+ }
                                                                                  
-    function queryFilterLess(&$layout_def)
-    {
-        return $this->_get_column_select($layout_def)." < ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
-    }
+ function queryFilterLess(&$layout_def)
+ {
+	return $this->_get_column_select($layout_def)." < ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
+ }
 
-    function queryFilterBetween(&$layout_def)
-    {
-        return $this->_get_column_select($layout_def)." BETWEEN ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])). " AND " . DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name1'])) . "\n";
-    }
+ function queryFilterBetween(&$layout_def)
+ {
+	return $this->_get_column_select($layout_def)." BETWEEN ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])). " AND " . DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name1'])) . "\n";
+ }
+
+
 }

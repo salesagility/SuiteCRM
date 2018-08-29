@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -125,11 +123,15 @@ class ImportCacheFiles
      */
     public static function ensureWritable()
     {
-        foreach (self::$all_files as $type) {
+        foreach (self::$all_files as $type)
+        {
             $filename = self::_createFileName($type);
-            if (file_exists($filename) && !is_writable($filename)) {
+            if (file_exists($filename) && !is_writable($filename))
+            {
                 return false;
-            } elseif (!is_writable(dirname($filename))) {
+            }
+            elseif (!is_writable(dirname($filename)))
+            {
                 return false;
             }
         }
@@ -203,12 +205,11 @@ class ImportCacheFiles
     {
         global $sugar_config;
         $importdir = self::getImportDir();
-        if (is_dir($importdir)) {
+        if ( is_dir($importdir) ) {
             $files = dir($importdir);
             while (false !== ($file = $files->read())) {
-                if (!is_dir($file) && stristr($file,'.csv')) {
+                if ( !is_dir($file) && stristr($file,'.csv') )
                     unlink("$importdir/$file");
-                }
             }
         }
     }

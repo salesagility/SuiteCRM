@@ -38,26 +38,23 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
+if(!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 $js_loaded = false;
 require_once("include/templates/Template.php");
 
-class TemplateGroupChooser extends Template
-{
+class TemplateGroupChooser extends Template {
     var $args;
     var $js_loaded = false;
     var $display_hide_tabs = true;
     var $display_third_tabs = false;
 
-    function __construct()
-    {
+    function __construct() {
     }
 
-    function display()
-    {
+    function display() {
         global $app_strings, $mod_strings, $js_loaded;
 
         $left_size = (empty($this->args['left_size']) ? '10' : $this->args['left_size']);
@@ -70,20 +67,19 @@ class TemplateGroupChooser extends Template
         $alt_tip_right = $app_strings['LBL_ALT_MOVE_COLUMN_RIGHT'];
 
         $str = '';
-        if ($js_loaded == false) {
+        if($js_loaded == false) {
 //            $this->template_groups_chooser_js();
             $js_loaded = true;
         }
-        if (!isset($this->args['display'])) {
+        if(!isset($this->args['display'])) {
             $table_style = "";
-        } else {
+        }
+        else {
             $table_style = "display: ".$this->args['display'];
         }
 
         $str .= "<div id=\"{$this->args['id']}\" style=\"{$table_style}\">";
-        if (!empty($this->args['title'])) {
-            $str .= "<h4>{$this->args['title']}</h4>";
-        }
+        if(!empty($this->args['title'])) $str .= "<h4>{$this->args['title']}</h4>";
         $str .= <<<EOQ
         <table cellpadding="0" cellspacing="0" border="0">
 
@@ -92,14 +88,14 @@ class TemplateGroupChooser extends Template
             <td scope="row" id="chooser_{$this->args['left_name']}_text" align="center"><nobr>{$this->args['left_label']}</nobr></td>
 EOQ;
 
-        if ($this->display_hide_tabs == true) {
+        if($this->display_hide_tabs == true) {
             $str .= <<<EOQ
             <td>&nbsp;</td>
             <td scope="row" id="chooser_{$this->args['right_name']}" align="center"><nobr>{$this->args['right_label']}</nobr></td>
 EOQ;
         }
 
-        if ($this->display_third_tabs == true) {
+        if($this->display_third_tabs == true) {
             $str .= <<<EOQ
             <td>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -108,7 +104,7 @@ EOQ;
         }
 
         $str .= '<td>&nbsp;</td></tr><tr><td valign="top" style="padding-right: 2px; padding-left: 2px;" align="center">';
-        if (!isset($this->args['disable'])) {
+        if(!isset($this->args['disable'])) {
             $str .= "<a id='chooser_{$this->args['left_name']}_up_arrow' onclick=\"return SUGAR.tabChooser.up('{$this->args['left_name']}','{$this->args['left_name']}','{$this->args['right_name']}');\">" .  SugarThemeRegistry::current()->getImage('uparrow_big','border="0" style="margin-bottom: 1px;"',null,null,'.gif',$alt_tip_up) . "</a><br>
                      <a id='chooser_{$this->args['right_name']}_down_arrow' onclick=\"return SUGAR.tabChooser.down('{$this->args['left_name']}','{$this->args['left_name']}','{$this->args['right_name']}');\">" . SugarThemeRegistry::current()->getImage('downarrow_big','border="0" style="margin-top: 1px;"',null,null,'.gif',$alt_tip_down) . "</a>";
         }
@@ -123,7 +119,7 @@ EOQ;
 EOQ;
         $str .=  '"' . (empty($this->args['left_size']) ? '10' : $this->args['left_size']) . '" multiple="multiple" ' . (isset($this->args['disable']) ?  "DISABLED" : '') . 'class="templateGroupChooser">';
 
-        foreach ($this->args['values_array'][0] as $key=>$value) {
+        foreach($this->args['values_array'][0] as $key=>$value) {
             $str .= "<option value='{$key}'>{$value}</option>";
         }
         $str .= "</select></td>
@@ -132,13 +128,13 @@ EOQ;
             </td>";
         if ($this->display_hide_tabs == true) {
             $str .= '<td valign="top" style="padding-right: 2px; padding-left: 2px;" align="center">';
-            if (!isset($this->args['disable'])) {
+            if(!isset($this->args['disable'])) {
                 $str .= "<a id='chooser_{$this->args['left_name']}_left_arrow' onclick=\"return SUGAR.tabChooser.right_to_left('{$this->args['left_name']}','{$this->args['right_name']}', '{$left_size}', '{$right_size}', '{$max_left}');\">" . SugarThemeRegistry::current()->getImage('leftarrow_big','border="0" style="margin-right: 1px;"',null,null,'.gif',$alt_tip_left) . "</a><a id='chooser_{$this->args['left_name']}_left_to_right' onclick=\"return SUGAR.tabChooser.left_to_right('{$this->args['left_name']}','{$this->args['right_name']}', '{$left_size}', '{$right_size}');\">" . SugarThemeRegistry::current()->getImage('rightarrow_big','border="0" style="margin-left: 1px;"',null,null,'.gif',$alt_tip_right) . "</a>";
             }
             $str .= "</td>
                 <td id=\"{$this->args['right_name']}_td\" align=\"center\">
                 <select id=\"{$this->args['right_name']}\" name=\"{$this->args['right_name']}[]\" size=\"" . (empty($this->args['right_size']) ? '10' : $this->args['right_size']) . "\" multiple=\"multiple\" " . (isset($this->args['disable']) ? "DISABLED" : '') . 'class="groupChooser">';
-            foreach ($this->args['values_array'][1] as $key=>$value) {
+            foreach($this->args['values_array'][1] as $key=>$value) {
                 $str .= "<option value=\"{$key}\">{$value}</option>";
             }
             $str .= "</select></td><td valign=\"top\" style=\"padding-right: 2px; padding-left: 2px;\" align=\"center\">"
@@ -147,13 +143,13 @@ EOQ;
 
         if ($this->display_third_tabs == true) {
             $str .= '<td valign="top" style="padding-right: 2px; padding-left: 2px;" align="center">';
-            if (!isset($this->args['disable'])) {
+            if(!isset($this->args['disable'])) {
                 $str .= "<a id='chooser_{$this->args['right_name']}_right_arrow' onclick=\"return SUGAR.tabChooser.right_to_left('{$this->args['right_name']}','{$this->args['third_name']}', '{$right_size}', '{$third_size}');\">" . SugarThemeRegistry::current()->getImage('leftarrow_big','border="0" style="margin-right: 1px;"',null,null,'.gif',$alt_tip_left) . "</a><a id='chooser_{$this->args['right_name']}_left_to_right' onclick=\"return SUGAR.tabChooser.left_to_right('{$this->args['right_name']}','{$this->args['third_name']}', '{$right_size}', '{$third_size}');\">" . SugarThemeRegistry::current()->getImage('rightarrow_big','border="0" style="margin-left: 1px;"',null,null,'.gif',$alt_tip_right) . "</a>";
             }
             $str .= "</td>
                 <td id=\"{$this->args['third_name']}_td\" align=\"center\">
                 <select id=\"{$this->args['third_name']}\" name=\"{$this->args['third_name']}[]\" size=\"" . (empty($this->args['third_size']) ? '10' : $this->args['third_size']) . "\" multiple=\"multiple\" " . (isset($this->args['disable']) ? "DISABLED" : '') . 'class="templateGroupChooser">';
-            foreach ($this->args['values_array'][2] as $key=>$value) {
+            foreach($this->args['values_array'][2] as $key=>$value) {
                 $str .= "<option value=\"{$key}\">{$value}</option>";
             }
             $str .= "</select>
@@ -178,8 +174,8 @@ EOQ;
      * All Moved to sugar_3.js in class tabChooser;
      * Please follow style that Dashlet configuration is done.
      */
-    function template_groups_chooser_js()
-    {
+    function template_groups_chooser_js() {
         //return '<script>var object_refs = new Object();</script>';
     }
+
 }

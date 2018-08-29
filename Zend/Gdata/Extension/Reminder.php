@@ -105,11 +105,11 @@ class Zend_Gdata_Extension_Reminder extends Zend_Gdata_Extension
         $s = '';
         if ($this->_absoluteTime)
             $s = " at " . $this->_absoluteTime;
-        elseif ($this->_days)
+        else if ($this->_days)
             $s = " in " . $this->_days . " days";
-        elseif ($this->_hours)
+        else if ($this->_hours)
             $s = " in " . $this->_hours . " hours";
-        elseif ($this->_minutes)
+        else if ($this->_minutes)
             $s = " in " . $this->_minutes . " minutes";
         return $this->_method . $s;
     }

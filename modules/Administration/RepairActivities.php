@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,9 +38,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-if (!is_admin($current_user)) {
-    sugar_die("Unauthorized access to administration.");
-}
+if(!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
 
 global $timedate;
 
@@ -54,7 +50,7 @@ $row = $callBean->db->fetchByAssoc($result);
 while ($row != null) {
     $date_end = $timedate->fromDb($row['date_start'])->modify("+{$row['duration_hours']} hours {$row['duration_minutes']} mins")->asDb();
     $updateQuery = "UPDATE calls set calls.date_end='{$date_end}' where calls.id='{$row['id']}'";
-    $call = new Call();
+	$call = new Call();
     $call->db->query($updateQuery);
     $row = $callBean->db->fetchByAssoc($result);
 }
@@ -66,8 +62,8 @@ $result = $meetingBean->db->query($meetingQuery, true, "");
 $row = $meetingBean->db->fetchByAssoc($result);
 while ($row != null) {
     $date_end = $timedate->fromDb($row['date_start'])->modify("+{$row['duration_hours']} hours {$row['duration_minutes']} mins")->asDb();
-    $updateQuery = "UPDATE meetings set meetings.date_end='{$date_end}' where meetings.id='{$row['id']}'";
-    $call = new Call();
+	$updateQuery = "UPDATE meetings set meetings.date_end='{$date_end}' where meetings.id='{$row['id']}'";
+	$call = new Call();
     $call->db->query($updateQuery);
     $row = $callBean->db->fetchByAssoc($result);
 }

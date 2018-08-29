@@ -58,19 +58,24 @@ global $mod_strings, $app_list_strings, $app_strings, $current_user, $import_bea
 $xtpl=new XTemplate ('modules/Campaigns/WebToLeadCreation.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
-if (isset($_REQUEST['module'])) {
+if(isset($_REQUEST['module']))
+{
     $xtpl->assign("MODULE", $_REQUEST['module']);
 }
-if (isset($_REQUEST['return_module'])) {
+if(isset($_REQUEST['return_module']))
+{
     $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
 }
-if (isset($_REQUEST['return_id'])) {
+if(isset($_REQUEST['return_id']))
+{
     $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
 }
-if (isset($_REQUEST['return_id'])) {
+if(isset($_REQUEST['return_id']))
+{
     $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
 }
-if (isset($_REQUEST['record'])) {
+if(isset($_REQUEST['record']))
+{
     $xtpl->assign("RECORD", $_REQUEST['record']);
 }
 
@@ -86,13 +91,17 @@ $beanList = filterFieldsFromBeans($subclasses);
 $xtpl->assign("BEAN_LIST",json_encode($beanList));
 
 $personTypeList = "<select id='personTypeSelect'>";
-if (count($beanList) > 0) {
+if(count($beanList) > 0)
+{
     $count=0;
-    foreach ($beanList as $b) {
+    foreach($beanList as $b)
+    {
         $personTypeList.="<option value='".$count."'>".$b->name."</option>";
         $count++;
     }
-} else {
+}
+else
+{
     $personTypeList.="<option value='noPerson'>No matching types</option>";
 }
 
@@ -143,9 +152,9 @@ if (!empty($focus)) {
 
 $xtpl->assign("REDIRECT_URL_DEFAULT",'http://');
 
-if (isset($_REQUEST['campaign_id']) && isValidId($_REQUEST['campaign_id'])) {
+if(isset($_REQUEST['campaign_id']) && isValidId($_REQUEST['campaign_id'])) {
     $campaign = new Campaign();
-    if ($campaign) {
+    if($campaign) {
         $campaign->retrieve($_REQUEST['campaign_id']);
         $xtpl->assign('CAMPAIGN_ID', $campaign->id);
         $xtpl->assign('CAMPAIGN_NAME', $campaign->name);
@@ -161,11 +170,11 @@ $xtpl->out("main");
 function getListOfExtendingClasses($superclass)
 {
     $subclasses = array();
-    foreach ($GLOBALS['moduleList'] as $mod) {
+    foreach($GLOBALS['moduleList'] as $mod)
+    {
         $item = BeanFactory::getBean($mod);
-        if ($item && is_subclass_of($item,$superclass)) {
+        if($item && is_subclass_of($item,$superclass))
             $subclasses[] = $item;
-        }
     }
     return $subclasses;
 }

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -72,9 +70,11 @@ class JSON
     {
         $encodedString = json_encode($string);
 
-        if ($encodeSpecial) {
+        if ($encodeSpecial)
+        {
             $charMap = array('<' => '\u003C', '>' => '\u003E', "'" => '\u0027', '&' => '\u0026');
-            foreach ($charMap as $c => $enc) {
+            foreach($charMap as $c => $enc)
+            {
                 $encodedString = str_replace($c, $enc, $encodedString);
             }
         }

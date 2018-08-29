@@ -91,4 +91,5 @@ class EmailAddress extends SugarEmailAddress
             return SugarBean::save($id);
         }
     }
+    
 }

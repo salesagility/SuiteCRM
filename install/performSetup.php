@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,10 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function installStatus($msg, $cmd = null, $overwrite = false, $before = '[ok]<br>')
-{
+function installStatus($msg, $cmd = null, $overwrite = false, $before = '[ok]<br>') {
     $fname = 'install/status.json';
-    if (!$overwrite && file_exists($fname)) {
+    if(!$overwrite && file_exists($fname)) {
         $stat = json_decode(file_get_contents($fname));
         //$msg = json_encode($stat);
         $msg = $stat->message . $before . $msg;
@@ -58,7 +55,7 @@ installStatus($mod_strings['LBL_START'], null, true, '');
 // This file will load the configuration settings from session data,
 // write to the config file, and execute any necessary database steps.
 $GLOBALS['installing'] = true;
-if (!isset($install_script) || !$install_script) {
+if( !isset( $install_script ) || !$install_script ){
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 ini_set("output_buffering","0");
@@ -156,7 +153,8 @@ $bottle = handleSugarConfig();
 //handleLog4Php();
 
 $server_software = $_SERVER["SERVER_SOFTWARE"];
-if (strpos($server_software,'Microsoft-IIS') !== false) {
+if(strpos($server_software,'Microsoft-IIS') !== false)
+{
     installLog("calling handleWebConfig()");
     handleWebConfig();
 } else {
@@ -171,7 +169,7 @@ echo "<b>{$mod_strings['LBL_PERFORM_TABLES']}</b>";
 echo "<br>";
 
 // create the SugarCRM database
-if ($setup_db_create_database) {
+if($setup_db_create_database) {
     installLog("calling handleDbCreateDatabase()");
     installerHook('pre_handleDbCreateDatabase');
     handleDbCreateDatabase();
@@ -195,19 +193,19 @@ $ModuleInstaller->rebuild_extensions();
 $ModuleInstaller->rebuild_tabledictionary();*/
 
 // create the SugarCRM database user
-if ($setup_db_create_sugarsales_user) {
+if($setup_db_create_sugarsales_user){
     installerHook('pre_handleDbCreateSugarUser');
     handleDbCreateSugarUser();
     installerHook('post_handleDbCreateSugarUser');
 }
 
-foreach ($beanFiles as $bean => $file) {
-    require_once($file);
+foreach( $beanFiles as $bean => $file ){
+    require_once( $file );
 }
 echo "<br>";
 // load up the config_override.php file.
 // This is used to provide default user settings
-if (is_file("config_override.php")) {
+if( is_file("config_override.php") ){
     require_once("config_override.php");
 }
 
@@ -236,34 +234,33 @@ installStatus($mod_strings['STAT_CREATE_DB']);
 installerHook('pre_createAllModuleTables');
 
 
-foreach ($beanFiles as $bean => $file) {
-    $doNotInit = array('Scheduler', 'SchedulersJob', 'ProjectTask','jjwg_Maps','jjwg_Address_Cache','jjwg_Areas','jjwg_Markers');
+foreach( $beanFiles as $bean => $file ) {
+	$doNotInit = array('Scheduler', 'SchedulersJob', 'ProjectTask','jjwg_Maps','jjwg_Address_Cache','jjwg_Areas','jjwg_Markers');
 
-    if (in_array($bean, $doNotInit)) {
-        $focus = new $bean(false);
-    } else {
-        $focus = new $bean();
-    }
+	if(in_array($bean, $doNotInit)) {
+		$focus = new $bean(false);
+	} else {
+	    $focus = new $bean();
+	}
 
-    if ($bean == 'Configurator') {
-        continue;
-    }
+	if ( $bean == 'Configurator' )
+	    continue;
 
     $table_name = $focus->table_name;
     //installStatus(sprintf($mod_strings['STAT_CREATE_DB_TABLE'], $focus->table_name ));
-    installLog("processing table ".$focus->table_name);
+     installLog("processing table ".$focus->table_name);
     // check to see if we have already setup this table
-    if (!in_array($table_name, $processed_tables)) {
-        if (!file_exists("modules/".$focus->module_dir."/vardefs.php")) {
+    if(!in_array($table_name, $processed_tables)) {
+        if(!file_exists("modules/".$focus->module_dir."/vardefs.php")){
             continue;
         }
-        if (!in_array($bean, $nonStandardModules)) {
+        if(!in_array($bean, $nonStandardModules)) {
             require_once("modules/".$focus->module_dir."/vardefs.php"); // load up $dictionary
-            if ($dictionary[$focus->object_name]['table'] == 'does_not_exist') {
+            if($dictionary[$focus->object_name]['table'] == 'does_not_exist') {
                 continue; // support new vardef definitions
             }
         } else {
-            continue; //no further processing needed for ignored beans.
+        	continue; //no further processing needed for ignored beans.
         }
 
         // table has not been setup...we will do it now and remember that
@@ -271,26 +268,28 @@ foreach ($beanFiles as $bean => $file) {
 
         $focus->db->database = $db->database; // set db connection so we do not need to reconnect
 
-        if ($setup_db_drop_tables) {
+        if($setup_db_drop_tables) {
             drop_table_install($focus);
             installLog("dropping table ".$focus->table_name);
         }
 
-        if (create_table_if_not_exist($focus)) {
+        if(create_table_if_not_exist($focus)) {
             installLog("creating table ".$focus->table_name);
-            if ($bean == "User") {
+            if( $bean == "User" ){
                 $new_tables = 1;
             }
-            if ($bean == "Administration") {
+            if($bean == "Administration")
                 $new_config = 1;
-            }
+
+
         }
 
         installLog("creating Relationship Meta for ".$focus->getObjectName());
         installerHook('pre_createModuleTable', array('module' => $focus->getObjectName()));
         SugarBean::createRelationshipMeta($focus->getObjectName(), $db, $table_name, $empty, $focus->module_dir);
         installerHook('post_createModuleTable', array('module' => $focus->getObjectName()));
-        echo ".";
+		echo ".";
+
     } // end if()
 }
 
@@ -304,16 +303,16 @@ echo "<br>";
 ////    START RELATIONSHIP CREATION
 
     ksort($rel_dictionary);
-    foreach ($rel_dictionary as $rel_name => $rel_data) {
+    foreach( $rel_dictionary as $rel_name => $rel_data ){
         $table = $rel_data['table'];
 
-        if ($setup_db_drop_tables) {
-            if ($db->tableExists($table)) {
+        if( $setup_db_drop_tables ){
+            if( $db->tableExists($table) ){
                 $db->dropTableName($table);
             }
         }
 
-        if (!$db->tableExists($table)) {
+        if( !$db->tableExists($table) ){
             $db->createTableParams($table, $rel_data['fields'], $rel_data['indices']);
         }
 
@@ -377,7 +376,7 @@ enableSugarFeeds();
 
 ///////////////////////////////////////////////////////////////////////////
 ////    FINALIZE LANG PACK INSTALL
-    if (isset($_SESSION['INSTALLED_LANG_PACKS']) && is_array($_SESSION['INSTALLED_LANG_PACKS']) && !empty($_SESSION['INSTALLED_LANG_PACKS'])) {
+    if(isset($_SESSION['INSTALLED_LANG_PACKS']) && is_array($_SESSION['INSTALLED_LANG_PACKS']) && !empty($_SESSION['INSTALLED_LANG_PACKS'])) {
         updateUpgradeHistory();
     }
 
@@ -405,9 +404,8 @@ installLog("Installation has completed *********");
     }
     if ($fp && (!isset($_SESSION['oc_install']) || $_SESSION['oc_install'] == false)) {
         @fclose($fp);
-        if ($next_step == 9999) {
+        if ($next_step == 9999)
             $next_step = 8;
-        }
         $fpResult = <<<FP
      <form action="install.php" method="post" name="form" id="form">
      <input type="hidden" name="current_step" value="{$next_step}">
@@ -423,12 +421,12 @@ FP;
 FP;
     }
 
-    if (isset($_SESSION['setup_site_sugarbeet_automatic_checks']) && $_SESSION['setup_site_sugarbeet_automatic_checks'] == true) {
+    if( isset($_SESSION['setup_site_sugarbeet_automatic_checks']) && $_SESSION['setup_site_sugarbeet_automatic_checks'] == true){
         set_CheckUpdates_config_setting('automatic');
-    } else {
+    }else{
         set_CheckUpdates_config_setting('manual');
     }
-    if (!empty($_SESSION['setup_system_name'])) {
+    if(!empty($_SESSION['setup_system_name'])){
         $admin=new Administration();
         $admin->saveSetting('system','name',$_SESSION['setup_system_name']);
     }
@@ -477,28 +475,28 @@ FP;
 //Beginning of the scenario implementations
 //We need to load the tabs so that we can remove those which are scenario based and un-selected
 //Remove the custom tabConfig as this overwrites the complete list containined in the include/tabConfig.php
-if (file_exists('custom/include/tabConfig.php')) {
+if(file_exists('custom/include/tabConfig.php')){
     unlink('custom/include/tabConfig.php');
 }
 require_once('include/tabConfig.php');
 
 //Remove the custom dashlet so that we can use the complete list of defaults to filter by category
-if (file_exists('custom/modules/Home/dashlets.php')) {
+if(file_exists('custom/modules/Home/dashlets.php')){
     unlink('custom/modules/Home/dashlets.php');
 }
 //Check if the folder is in place
-if (!file_exists('custom/modules/Home')) {
+if(!file_exists('custom/modules/Home')){
     sugar_mkdir('custom/modules/Home', 0775);
 }
 //Check if the folder is in place
-if (!file_exists('custom/include')) {
+if(!file_exists('custom/include')){
     sugar_mkdir('custom/include', 0775);
 }
 
 
 require_once('modules/Home/dashlets.php');
 
-if (isset($_SESSION['installation_scenarios'])) {
+if(isset($_SESSION['installation_scenarios'])) {
     foreach ($_SESSION['installation_scenarios'] as $scenario) {
         //If the item is not in $_SESSION['scenarios'], then unset them as they are not required
         if (!in_array($scenario['key'], $_SESSION['scenarios'])) {
@@ -513,21 +511,22 @@ if (isset($_SESSION['installation_scenarios'])) {
                 //if (($removeKey = array_search($dashlet, $defaultDashlets)) !== false) {
                 //    unset($defaultDashlets[$removeKey]);
                 // }
-                if (isset($defaultDashlets[$dashlet])) {
+                if (isset($defaultDashlets[$dashlet]))
                     unset($defaultDashlets[$dashlet]);
-                }
             }
 
             //If the scenario has an associated group tab, remove accordingly (by not adding to the custom tabconfig.php
             if (isset($scenario['groupedTabs'])) {
                 unset($GLOBALS['tabStructure'][$scenario['groupedTabs']]);
             }
+
         }
     }
 }
 
 //Have a 'core' options, with accounts / contacts if no other scenario is selected
-if (!is_null($_SESSION['scenarios'])) {
+if(!is_null($_SESSION['scenarios']))
+{
     unset($GLOBALS['tabStructure']['LBL_TABGROUP_DEFAULT']);
 }
 
@@ -569,16 +568,16 @@ post_install_modules();
 
 // populating the db with seed data
 installLog("populating the db with seed data");
-if ($_SESSION['demoData'] != 'no') {
+if( $_SESSION['demoData'] != 'no' ){
     installerHook('pre_installDemoData');
-    set_time_limit(301);
+    set_time_limit( 301 );
 
     echo "<br>";
     echo "<b>{$mod_strings['LBL_PERFORM_DEMO_DATA']}</b>";
     echo "<br><br>";
 
-    print($render_table_close);
-    print($render_table_open);
+    print( $render_table_close );
+    print( $render_table_open );
 
     global $current_user;
     $current_user = new User();
@@ -633,18 +632,10 @@ $configurator->populateFromPost();
 
 installLog('handleOverride');
 // add local settings to config overrides
-if (!empty($_SESSION['default_date_format'])) {
-    $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
-}
-if (!empty($_SESSION['default_time_format'])) {
-    $sugar_config['default_time_format'] = $_SESSION['default_time_format'];
-}
-if (!empty($_SESSION['default_language'])) {
-    $sugar_config['default_language'] = $_SESSION['default_language'];
-}
-if (!empty($_SESSION['default_locale_name_format'])) {
-    $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
-}
+if(!empty($_SESSION['default_date_format'])) $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
+if(!empty($_SESSION['default_time_format'])) $sugar_config['default_time_format'] = $_SESSION['default_time_format'];
+if(!empty($_SESSION['default_language'])) $sugar_config['default_language'] = $_SESSION['default_language'];
+if(!empty($_SESSION['default_locale_name_format'])) $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
 //$configurator->handleOverride();
 
 
@@ -670,9 +661,9 @@ installLog('new Currency');
 $currency = new Currency;
 installLog('retrieve');
 $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
-if (!empty($currency->id)
+if ( !empty($currency->id)
     && $currency->symbol == $_REQUEST['default_currency_symbol']
-    && $currency->iso4217 == $_REQUEST['default_currency_iso4217']) {
+    && $currency->iso4217 == $_REQUEST['default_currency_iso4217'] ) {
     $currency->deleted = 1;
     installLog('DBG: save currency');
     $currency->save();
@@ -695,7 +686,7 @@ $current_user->is_admin = '1';
 $sugar_config = get_sugar_config_defaults();
 
 // set local settings -  if neccessary you can set here more fields as named in User module / EditView form...
-if (isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {
+if(isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {
     $current_user->setPreference('timezone', $_REQUEST['timezone']);
 }
 
@@ -714,7 +705,7 @@ $_POST['dateformat'] = $_REQUEST['default_date_format'];
 //$_POST[''] = $_REQUEST['export_delimiter'];
 
 $_POST['record'] = $current_user->id;
-$_POST['is_admin'] = ($current_user->is_admin ? 'on' : '');
+$_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
 $_POST['use_real_names'] = true;
 $_POST['reminder_checked'] = '1';
 $_POST['reminder_time'] = 1800;
@@ -731,9 +722,7 @@ require('modules/Users/Save.php');
 
 // restore superglobals and vars
 $GLOBALS = $varStack['GLOBALS'];
-foreach ($varStack['defined_vars'] as $__key => $__value) {
-    $$__key = $__value;
-}
+foreach($varStack['defined_vars'] as $__key => $__value) $$__key = $__value;
 
 
 
@@ -746,8 +735,8 @@ if (!is_array($bottle) || !is_object($bottle)) {
 }
 
 
-if (count($bottle) > 0) {
-    foreach ($bottle as $bottle_message) {
+if( count( $bottle ) > 0 ){
+    foreach( $bottle as $bottle_message ){
         $bottleMsg .= "{$bottle_message}\n";
     }
 } else {
@@ -777,4 +766,4 @@ EOQ;
 echo $out;
 
 $loginURL = str_replace('install.php', 'index.php', "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
-installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], $loginURL) , array('function' => 'redirect', 'arguments' => $loginURL));
+installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], $loginURL ) , array('function' => 'redirect', 'arguments' => $loginURL) );

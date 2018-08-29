@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -63,18 +61,18 @@ class ViewAdminwizard extends SugarView
         $this->options['show_javascript'] = false;
     }
     
-    /**
-     * @see SugarView::display()
-     */
-    public function display()
-    {
-        global $current_user, $mod_strings, $app_list_strings, $sugar_config, $locale, $sugar_version;
+        /**
+         * @see SugarView::display()
+         */
+        public function display()
+        {
+            global $current_user, $mod_strings, $app_list_strings, $sugar_config, $locale, $sugar_version;
             
-        if (!is_admin($current_user)) {
-            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
+            if(!is_admin($current_user)){
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']); 
         }
                 
-        $themeObject = SugarThemeRegistry::current();
+                $themeObject = SugarThemeRegistry::current();
         
         $configurator = new Configurator();
         $sugarConfig = SugarConfig::getInstance();
@@ -82,15 +80,15 @@ class ViewAdminwizard extends SugarView
         $focus->retrieveSettings();
         
         $ut = $GLOBALS['current_user']->getPreference('ut');
-        if (empty($ut)) {
+        if(empty($ut))
             $this->ss->assign('SKIP_URL','index.php?module=Users&action=Wizard&skipwelcome=1');
-        } else {
+        else
             $this->ss->assign('SKIP_URL','index.php?module=Home&action=index');
-        }
 
         $silentInstall = $GLOBALS['current_user']->getPreference('silentInstall');
         //If not set, show the configuration
-        if ($silentInstall === NULL) {
+        if($silentInstall === NULL)
+        {
             $silentInstall = false;
         }
 
@@ -136,17 +134,22 @@ class ViewAdminwizard extends SugarView
 
         //Start of scenario block
         require_once('install/suite_install/scenarios.php');
-        if (isset($installation_scenarios)) {
-            for ($i = 0; $i < count($installation_scenarios); $i++) {
+        if(isset($installation_scenarios))
+        {
+
+            for($i = 0; $i < count($installation_scenarios); $i++)
+            {
                 $installation_scenarios[$i]['moduleOverview']='( '.implode(', ',$installation_scenarios[$i]['modules']).')';
             }
 
             $this->ss->assign('scenarios', $installation_scenarios);
-        } else {
+        }
+        else
+        {
             $this->ss->assign('scenarios', []);
         }
         //End of scenario block
                 
         $this->ss->display('modules/Configurator/tpls/adminwizard.tpl');
-    }
+        }
 }

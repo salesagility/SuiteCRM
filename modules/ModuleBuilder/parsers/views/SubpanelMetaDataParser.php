@@ -75,7 +75,7 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
         if (empty ($packageName)) {
             require_once 'modules/ModuleBuilder/parsers/views/DeployedSubpanelImplementation.php';
             $this->implementation = new DeployedSubpanelImplementation ($subpanelName, $moduleName);
-        //$this->originalViewDef = $this->implementation->getOriginalDefs ();
+            //$this->originalViewDef = $this->implementation->getOriginalDefs ();
         } else {
             require_once 'modules/ModuleBuilder/parsers/views/UndeployedSubpanelImplementation.php';
             $this->implementation = new UndeployedSubpanelImplementation ($subpanelName, $moduleName, $packageName);
@@ -212,4 +212,5 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
 
         return $defs;
     }
+
 }

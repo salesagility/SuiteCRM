@@ -80,6 +80,7 @@ if (file_exists($htaccess_file)) {
     $fp = fopen($htaccess_file, 'r');
     $skip = false;
     while ($line = fgets($fp)) {
+
         if (preg_match('/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i', $line)) {
             $skip = true;
         }

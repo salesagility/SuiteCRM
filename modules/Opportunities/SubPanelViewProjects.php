@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -102,13 +100,13 @@ $button .= "<input title='".$app_strings['LBL_SELECT_BUTTON_TITLE']
 	."  ' name='button' onclick='open_popup(\"Opportunities\", 600, 400, \"\", false, true, {$encoded_popup_request_data});'>\n";
 $button .= "</form>\n";
 $header_text = '';
-if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
-    $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=SubPanelView&from_module=Opportunities&record=". $_REQUEST['record']."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
+if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){	
+		$header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=SubPanelView&from_module=Opportunities&record=". $_REQUEST['record']."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
 $ListView = new ListView();
 $ListView->initNewXTemplate('modules/Opportunities/SubPanelViewProjects.html',$current_module_strings);
 $ListView->xTemplateAssign("RETURN_URL", "&return_module=".$currentModule."&return_action=DetailView&return_id={$_REQUEST['record']}");
 $ListView->xTemplateAssign("REMOVE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_REMOVE']));
-$ListView->setHeaderTitle($project_module_strings['LBL_OPPORTUNITY_SUBPANEL_TITLE']. $header_text);
+$ListView->setHeaderTitle($project_module_strings['LBL_OPPORTUNITY_SUBPANEL_TITLE']. $header_text );
 $ListView->setHeaderText($button);
 $ListView->processListView($focus_list, "main", "OPPORTUNITY");

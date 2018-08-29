@@ -66,16 +66,19 @@ script:
   - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d
   - ./build/push_output.sh
 
-  # set the log level to error
-  - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
+  # Run the unit tests
+  - ./vendor/bin/codecept run unit --steps
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
   # Install demo user data
   - mysql -u root -D automated_tests -v -e "source tests/_data/demo_users.sql"
-  # Run the unit tests
+  # set the log level to error
+  - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
   # Run API functional tests
+  - ./vendor/bin/codecept run api --steps
   # RUN Basic Acceptance test
-  - ./vendor/bin/codecept run -f unit --steps -v && ./vendor/bin/codecept run api --steps -f -v && sudo chmod -R 777 . && ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -v;
+  - sudo chmod -R 777 .
+  - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d;
 
 after_script:
   - ./build/push_output.sh

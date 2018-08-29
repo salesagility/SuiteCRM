@@ -45,4 +45,5 @@ class Zend_Search_Lucene_Index_TermsPriorityQueue extends Zend_Search_Lucene_Pri
     {
         return strcmp($termsStream1->currentTerm()->key(), $termsStream2->currentTerm()->key()) < 0;
     }
+
 }

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2011 SugarCRM Inc.
@@ -37,20 +35,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * "Powered by SugarCRM".
  ********************************************************************************/
 
- if (!defined('ACL_ALLOW_NONE')) {
-     define('ACL_ALLOW_ADMIN_DEV', 100);
-     define('ACL_ALLOW_ADMIN', 99);
-     define('ACL_ALLOW_ALL', 90);                        
-     define('ACL_ALLOW_ENABLED', 89);
-     /* BEGIN - SECURITY GROUPS */ 
-     define('ACL_ALLOW_GROUP', 80); //securitygroup
-     /* END - SECURITY GROUPS */ 
-     define('ACL_ALLOW_OWNER', 75);
-     define('ACL_ALLOW_NORMAL', 1);
-     define('ACL_ALLOW_DEFAULT', 0);
-     define('ACL_ALLOW_DISABLED', -98);
-     define('ACL_ALLOW_NONE', -99);
-     define('ACL_ALLOW_DEV', 95);
+ if(!defined('ACL_ALLOW_NONE')){   
+ 	define('ACL_ALLOW_ADMIN_DEV', 100);
+ 	define('ACL_ALLOW_ADMIN', 99);
+ 	define('ACL_ALLOW_ALL', 90);                        
+ 	define('ACL_ALLOW_ENABLED', 89);
+ 	/* BEGIN - SECURITY GROUPS */ 
+ 	define('ACL_ALLOW_GROUP', 80); //securitygroup
+ 	/* END - SECURITY GROUPS */ 
+ 	define('ACL_ALLOW_OWNER', 75);
+ 	define('ACL_ALLOW_NORMAL', 1);
+ 	define('ACL_ALLOW_DEFAULT', 0);
+ 	define('ACL_ALLOW_DISABLED', -98);
+ 	define('ACL_ALLOW_NONE', -99);
+ 	define('ACL_ALLOW_DEV', 95);
  }
  /**
   * $GLOBALS['ACLActionAccessLevels

@@ -56,6 +56,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php';
  */
 class DeployedSubpanelImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
+
     const HISTORYFILENAME = 'restored.php';
     const HISTORYVARIABLENAME = 'layout_defs';
 
@@ -166,6 +167,7 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
                 $this->_mergeFielddefs($this->_fielddefs, $this->_viewdefs);
             }
         }
+
     }
 
     /**
@@ -195,6 +197,7 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
         // now clear the cache so that the results are immediately visible
         include_once('include/TemplateHandler/TemplateHandler.php');
         TemplateHandler::clearCache($this->_moduleName);
+
     }
 
     /**
@@ -235,6 +238,7 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
             if (!empty($def['view'])) {
                 $filenames[$def['view']] = substr($file, 0, strlen($file) - 4);
             }
+
         }
 
         // BEGIN ASSERTIONS
@@ -250,4 +254,5 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
         // Construct filename
         return $pathMap [$type] . 'modules/' . $moduleName . '/metadata/' . $filenames [$view] . '.php';
     }
+
 }

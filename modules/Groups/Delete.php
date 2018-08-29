@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,10 +38,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
-    $focus = new Group();
-    $focus->retrieve($_REQUEST['record']);
-    $focus->mark_deleted($focus->id);
+if(isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
+	
+	$focus = new Group();
+	$focus->retrieve($_REQUEST['record']);
+	$focus->mark_deleted($focus->id);
 }
 
 header("Location: index.php?module=Groups&action=index");

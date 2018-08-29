@@ -44,28 +44,29 @@ function smarty_function_sugar_run_helper($params, &$smarty)
 {
     $error = false;
     
-    if (!isset($params['func'])) {
+    if(!isset($params['func'])) {
         $error = true;
         $smarty->trigger_error("sugar_field: missing 'func' parameter");
     }
-    if (!isset($params['displayType'])) {
+    if(!isset($params['displayType'])) {
         $error = true;
         $smarty->trigger_error("sugar_field: missing 'displayType' parameter");
     }
-    if (!isset($params['bean'])) {
+    if(!isset($params['bean'])) {
         $params['bean'] = $GLOBALS['focus'];
     }
 
-    if ($error) {
+    if ( $error ) {
         return;
     }
 
     $funcName = $params['func'];
 
-    if (!empty($params['include'])) {
+    if ( !empty($params['include']) ) {
         require_once($params['include']);
     }
 
     $_contents = $funcName($params['bean'],$params['field'],$params['value'],$params['displayType'],$params['tabindex']);
     return $_contents;
 }
+?>

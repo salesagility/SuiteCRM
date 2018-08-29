@@ -15,7 +15,8 @@ class ViewModulelistmenuTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
 
     public function testdisplay()
     {
-        if (isset($_SESSION)) {
+        
+        if(isset($_SESSION)) {
             $session = $_SESSION;
         }
         
@@ -32,7 +33,7 @@ class ViewModulelistmenuTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals(false, is_array($renderedContent));
         
-        if (isset($session)) {
+        if(isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);

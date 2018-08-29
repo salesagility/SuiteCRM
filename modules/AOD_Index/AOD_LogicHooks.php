@@ -22,53 +22,51 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-class AOD_LogicHooks
-{
-    function saveModuleChanges(SugarBean $bean, $event, $arguments)
-    {
-        if ($bean->module_name == 'AOD_Index') {
+class AOD_LogicHooks{
+
+    function saveModuleChanges(SugarBean $bean, $event, $arguments){
+        if($bean->module_name == 'AOD_Index'){
             return;
         }
-        if (defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')) {
+        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
             return;
         }
-        try {
+        try{
             $index = BeanFactory::getBean("AOD_Index")->getIndex();
             $index->index($bean->module_name,$bean->id);
-        } catch (Exception $ex) {
+        }catch(Exception $ex){
             $GLOBALS['log']->error($ex->getMessage());
         }
     }
 
-    function saveModuleDelete(SugarBean $bean, $event, $arguments)
-    {
-        if ($bean->module_name == 'AOD_Index') {
+    function saveModuleDelete(SugarBean $bean, $event, $arguments){
+        if($bean->module_name == 'AOD_Index'){
             return;
         }
-        if (defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')) {
+        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
             return;
         }
-        try {
+        try{
             $index = BeanFactory::getBean("AOD_Index")->getIndex();
             $index->remove($bean->module_name,$bean->id);
-        } catch (Exception $ex) {
+        }catch(Exception $ex){
             $GLOBALS['log']->error($ex->getMessage());
         }
     }
 
-    function saveModuleRestore(SugarBean $bean, $event, $arguments)
-    {
-        if ($bean->module_name == 'AOD_Index') {
+    function saveModuleRestore(SugarBean $bean, $event, $arguments){
+        if($bean->module_name == 'AOD_Index'){
             return;
         }
-        if (defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')) {
+        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
             return;
         }
-        try {
+        try{
             $index = BeanFactory::getBean("AOD_Index")->getIndex();
             $index->index($bean->module_name,$bean->id);
-        } catch (Exception $ex) {
+        }catch(Exception $ex){
             $GLOBALS['log']->error($ex->getMessage());
         }
     }
+
 }

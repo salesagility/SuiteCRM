@@ -1,7 +1,6 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry)
+	die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,16 +39,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function getDocumentsExternalApiDropDown($focus = null, $name = null, $value = null, $view = null)
-{
+function getDocumentsExternalApiDropDown($focus = null, $name = null, $value = null, $view = null) {
     require_once('include/externalAPI/ExternalAPIFactory.php');
 
     $apiList = ExternalAPIFactory::getModuleDropDown('Documents');
 
     $apiList = array_merge(array('Sugar'=>$GLOBALS['app_list_strings']['eapm_list']['Sugar']),$apiList);
-    if (!empty($value) && empty($apiList[$value])) {
+    if(!empty($value) && empty($apiList[$value])){
         $apiList[$value] = $value;
     }
     return $apiList;
+
 }
  

@@ -40,6 +40,7 @@ require_once 'modules/AOP_Case_Updates/util.php';
 
 class SurveyResponses extends Basic
 {
+
     var $new_schema = true;
     var $module_dir = 'SurveyResponses';
     var $object_name = 'SurveyResponses';
@@ -222,4 +223,7 @@ class SurveyResponses extends Basic
         $emailObj->status = 'sent';
         $emailObj->save();
     }
+
 }
+
+?>

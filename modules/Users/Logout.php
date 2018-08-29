@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -54,16 +52,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $current_user->setPreference('lastTheme',$theme);
 $GLOBALS['current_user']->call_custom_logic('before_logout');
 
-if (method_exists($authController->authController, 'preLogout')) {
-    $authController->authController->preLogout();
+if(method_exists($authController->authController, 'preLogout')) {
+	$authController->authController->preLogout();
 }
 
 // submitted by Tim Scott from SugarCRM forums
-foreach ($_SESSION as $key => $val) {
-    $_SESSION[$key] = ''; // cannot just overwrite session data, causes segfaults in some versions of PHP
+foreach($_SESSION as $key => $val) {
+	$_SESSION[$key] = ''; // cannot just overwrite session data, causes segfaults in some versions of PHP	
 }
-if (isset($_COOKIE[session_name()])) {
-    setcookie(session_name(), '', time()-42000, '/',null,false,true);
+if(isset($_COOKIE[session_name()])) {
+	setcookie(session_name(), '', time()-42000, '/',null,false,true);
 }
 
 //Update the tracker_sessions table

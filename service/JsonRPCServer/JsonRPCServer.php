@@ -169,5 +169,6 @@ class JsonRPCServer
         $response['error'] = array('error_msg' => 'method:' . $request['method'] . ' not supported');
 
         return $response;
+
     }
 }

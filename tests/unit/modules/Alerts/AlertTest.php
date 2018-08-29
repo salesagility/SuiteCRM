@@ -34,7 +34,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $alert = new Alert();
 
@@ -43,5 +43,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $alert->bean_implements('ACL')); //test with valid value
         
         // clean up
+        
+        
     }
 }

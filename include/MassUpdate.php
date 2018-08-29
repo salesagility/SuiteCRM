@@ -76,6 +76,7 @@ class MassUpdate
      */
     function getDisplayMassUpdateForm($bool, $multi_select_popup = false)
     {
+
         require_once('include/formbase.php');
 
         if (!$multi_select_popup) {
@@ -159,8 +160,9 @@ eoq;
      */
     function handleMassUpdate()
     {
-        require_once('include/formbase.php');
-        global $current_user, $db, $disable_date_format, $timedate, $app_list_strings;
+
+		require_once('include/formbase.php');
+		global $current_user, $db, $disable_date_format, $timedate, $app_list_strings;
 
         foreach ($_POST as $post => $value) {
             if (is_array($value)) {
@@ -261,6 +263,7 @@ eoq;
                             $this->sugarbean->retrieve($id);
                             if ($this->sugarbean->ACLAccess('Save')) {
                                 if ($this->sugarbean->object_name == 'Contact') {
+
                                     $this->sugarbean->contacts_users_id = $current_user->id;
                                     $this->sugarbean->save(false);
                                 }
@@ -332,6 +335,7 @@ eoq;
                                     } // if
                                 } // foreach
                             } // if
+
                         } // if
 
                         $setOptOutPrimaryEmailAddress = false;
@@ -366,21 +370,21 @@ eoq;
                                     // Dynamic field set value.
                                     list($dynamic_field_value) = explode('_', $newbean->$dynamic_field_name);
 
-                                    if ($parentenum_value != $dynamic_field_value) {
+									if($parentenum_value != $dynamic_field_value) {
 
 										// Change to the default value of the correct value set.
-                                        $defaultValue = '';
-                                        foreach ($app_list_strings[$field_name['options']] as $key => $value) {
-                                            if (strpos($key, $parentenum_value) === 0) {
-                                                $defaultValue = $key;
-                                                break;
-                                            }
-                                        }
-                                        $newbean->$dynamic_field_name = $defaultValue;
-                                    }
-                                }
-                            }
-                        }
+                      $defaultValue = '';
+                      foreach ($app_list_strings[$field_name['options']] as $key => $value) {
+                          if (strpos($key, $parentenum_value) === 0) {
+                              $defaultValue = $key;
+                              break;
+                          }
+                      }
+                      $newbean->$dynamic_field_name = $defaultValue;
+									}
+								}
+							}
+						}
 
                         $newbean->save($check_notify);
                         if (!empty($email_address_id)) {
@@ -406,6 +410,7 @@ eoq;
                     }
                 }
             }
+
         }
         $disable_date_format = $old_value;
     }
@@ -593,6 +598,7 @@ eoq;
             $this->sugarbean->object_name == 'Lead' ||
             $this->sugarbean->object_name == 'Prospect'
         ) {
+
             $optOutPrimaryEmail =
                 "<tr>"
                 . "<td width='15%'  scope='row' class='dataLabel'>$lang_optout_primaryemail</td>"
@@ -628,10 +634,10 @@ eoq;
 
         $html .= "<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td class='buttons'><input onclick='return sListView.send_mass_update(\"selected\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\")' type='submit' id='update_button' name='Update' value='{$lang_update}' class='button'>&nbsp;<input onclick='javascript:toggleMassUpdateForm();' type='button' id='cancel_button' name='Cancel' value='{$GLOBALS['app_strings']['LBL_CANCEL_BUTTON_LABEL']}' class='button'>";
         // TODO: allow ACL access for Delete to be set false always for users
-        //		if($this->sugarbean->ACLAccess('Delete', true) && $this->sugarbean->object_name != 'User') {
-        //			global $app_list_strings;
-        //			$html .=" <input id='delete_button' type='submit' name='Delete' value='{$lang_delete}' onclick='return confirm(\"{$lang_confirm}\") && sListView.send_mass_update(\"selected\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\", 1)' class='button'>";
-        //		}
+//		if($this->sugarbean->ACLAccess('Delete', true) && $this->sugarbean->object_name != 'User') {
+//			global $app_list_strings;
+//			$html .=" <input id='delete_button' type='submit' name='Delete' value='{$lang_delete}' onclick='return confirm(\"{$lang_confirm}\") && sListView.send_mass_update(\"selected\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\", 1)' class='button'>";
+//		}
 
         // only for My Inbox views - to allow CSRs to have an "Archive" emails feature to get the email "out" of their inbox.
         if ($this->sugarbean->object_name == 'Email'
@@ -867,6 +873,7 @@ EOHTML;
 EOQ;
 
         return $html;
+
     }
 
     /**
@@ -1179,8 +1186,7 @@ EOQ;
             }
             $options = $new_options;
         }
-        $options = get_select_options_with_id_separate_key($options, $options, '', true);
-        ;
+        $options = get_select_options_with_id_separate_key($options, $options, '', true);;
 
         // cn: added "mass_" to the id tag to differentiate from the status id in StoreQuery
         $html = '<td scope="row" width="15%">' . $displayname . '</td>
@@ -1219,6 +1225,7 @@ EOQ;
 EOQ;
 
         return $html;
+
     }
 
     function addRadioenumItem($name, $value, $output)

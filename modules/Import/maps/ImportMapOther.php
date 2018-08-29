@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,11 +47,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class ImportMapOther
 {
-    /**
+	/**
      * String identifier for this import
      */
     public $name = 'other';
-    /**
+	/**
      * Field delimiter
      */
     public $delimiter;
@@ -61,20 +59,21 @@ class ImportMapOther
      * Field enclosure
      */
     public $enclosure;
-    /**
+	/**
      * Do we have a header?
      */
     public $has_header = true;
 
-    /**
+	/**
      * Gets the default mapping for a module
      *
      * @param  string $module
      * @return array field mappings
      */
-    public function getMapping(
+	public function getMapping(
         $module
-        ) {
+        )
+    {
         switch ($module) {
         case 'Contacts':
         case 'Leads':
@@ -143,15 +142,16 @@ class ImportMapOther
         }
     }
 	
-    /**
+	/**
      * Returns a list of fields that should be ignorred for the module during import
      *
      * @param  string $module
      * @return array of fields to ignor
      */
-    public function getIgnoredFields(
+	public function getIgnoredFields(
 		$module
-		) {
-        return array();
-    }
+		)
+	{
+		return array();
+	}
 }

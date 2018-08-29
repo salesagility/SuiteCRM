@@ -1,7 +1,6 @@
 <?php
 
-class wmf
-{
+class wmf {
 
 var $mpdf = null;
 var $gdiObjectArray;
@@ -149,7 +148,7 @@ function _getWMFimage($data) {
 					   else { $wmfdata .= $this->_MoveTo($px, $py); }
 					}
 					if ($func == 0x0325) { $op = 's'; }
-					elseif ($func == 0x0324) {
+					else if ($func == 0x0324) {
 						if ($nullPen) {
 							if ($nullBrush) { $op = 'n'; } // no op
 							else { $op = 'f'; } // fill

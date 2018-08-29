@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -56,11 +54,12 @@ $focus = new SugarFolder();
 $javascript = new Javascript();
 /* Start standard EditView setup logic */
 
-if (isset($_REQUEST['record'])) {
-    $GLOBALS['log']->debug("In EditGroupFolder view, about to retrieve record: ".$_REQUEST['record']);
-    $result = $focus->retrieve($_REQUEST['record']);
-    if ($result == null) {
-        sugar_die($app_strings['ERROR_NO_RECORD']);
+if(isset($_REQUEST['record'])) {
+	$GLOBALS['log']->debug("In EditGroupFolder view, about to retrieve record: ".$_REQUEST['record']);
+	$result = $focus->retrieve($_REQUEST['record']);
+    if($result == null)
+    {
+    	sugar_die($app_strings['ERROR_NO_RECORD']);
     }
 }
 
@@ -85,29 +84,29 @@ $smarty->assign('ID', $focus->id);
 $ret = $focus->getFoldersForSettings($current_user);
 $groupFolders = Array();
 $groupFoldersOrig = array();
-foreach ($ret['groupFolders'] as $key => $value) {
-    if (!empty($focus->id)) {
-        if ($value['id'] == $focus->id) {
-            continue;
-        }
-    } // if
-    $groupFolders[$value['id']] = $value['name'];
-    $groupFoldersOrig[] = $value['origName'];
+foreach($ret['groupFolders'] as $key => $value) {
+	if(!empty($focus->id)) {
+		if ($value['id'] == $focus->id) {
+			continue;
+		}
+	} // if
+	$groupFolders[$value['id']] = $value['name'];
+	$groupFoldersOrig[] = $value['origName'];
 } // foreach
 $groupFolderName = "";
 $addToGroupFolder = "";
 $createGroupFolderStyle = "display:''";
 $editGroupFolderStyle = "display:''";
-if (!empty($focus->id)) {
-    $groupFolderName = 	$focus->name;
+if(!empty($focus->id)) {
+	$groupFolderName = 	$focus->name;
 }
-if (!empty($focus->id)) {
-    $addToGroupFolder = $focus->parent_folder;
+if(!empty($focus->id)) {
+	$addToGroupFolder = $focus->parent_folder;
 }
-if (!empty($focus->id)) {
-    $createGroupFolderStyle = "display:none;";
+if(!empty($focus->id)) {
+	$createGroupFolderStyle = "display:none;";
 } else {
-    $editGroupFolderStyle = "display:none;";
+	$editGroupFolderStyle = "display:none;";
 } // else
 $smarty->assign('createGroupFolderStyle', $createGroupFolderStyle);
 $smarty->assign('editGroupFolderStyle', $editGroupFolderStyle);

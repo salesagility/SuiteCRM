@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,10 +45,9 @@ class ConfiguratorController extends SugarController
     /**
      * Go to the font manager view
      */
-    function action_FontManager()
-    {
+    function action_FontManager(){
         global $current_user;
-        if (!is_admin($current_user)) {
+        if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         $this->view = 'fontmanager';
@@ -59,28 +56,26 @@ class ConfiguratorController extends SugarController
     /**
      * Delete a font and go back to the font manager
      */
-    function action_deleteFont()
-    {
+    function action_deleteFont(){
         global $current_user;
-        if (!is_admin($current_user)) {
+        if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         $urlSTR = 'index.php?module=Configurator&action=FontManager';
-        if (!empty($_REQUEST['filename'])) {
+        if(!empty($_REQUEST['filename'])){
             require_once('include/Sugarpdf/FontManager.php');
             $fontManager = new FontManager();
             $fontManager->filename = $_REQUEST['filename'];
-            if (!$fontManager->deleteFont()) {
+            if(!$fontManager->deleteFont()){
                 $urlSTR .='&error='.urlencode(implode("<br>",$fontManager->errors));
             }
         }
         header("Location: $urlSTR");
     }
 
-    function action_listview()
-    {
+    function action_listview(){
         global $current_user;
-        if (!is_admin($current_user)) {
+        if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         $this->view = 'edit';
@@ -88,10 +83,9 @@ class ConfiguratorController extends SugarController
     /**
      * Show the addFont view
      */
-    function action_addFontView()
-    {
+    function action_addFontView(){
         global $current_user;
-        if (!is_admin($current_user)) {
+        if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         $this->view = 'addFontView';
@@ -99,39 +93,38 @@ class ConfiguratorController extends SugarController
     /**
      * Add a new font and show the addFontResult view
      */
-    function action_addFont()
-    {
+    function action_addFont(){
         global $current_user, $mod_strings;
-        if (!is_admin($current_user)) {
+        if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
-        if (empty($_FILES['pdf_metric_file']['name'])) {
+        if(empty($_FILES['pdf_metric_file']['name'])){
             $this->errors[]=translate("ERR_MISSING_REQUIRED_FIELDS")." ".translate("LBL_PDF_METRIC_FILE", "Configurator");
             $this->view = 'addFontView';
             return;
         }
-        if (empty($_FILES['pdf_font_file']['name'])) {
+        if(empty($_FILES['pdf_font_file']['name'])){
             $this->errors[]=translate("ERR_MISSING_REQUIRED_FIELDS")." ".translate("LBL_PDF_FONT_FILE", "Configurator");
             $this->view = 'addFontView';
             return;
         }
         $path_info = pathinfo($_FILES['pdf_font_file']['name']);
         $path_info_metric = pathinfo($_FILES['pdf_metric_file']['name']);
-        if (($path_info_metric['extension']!="afm" && $path_info_metric['extension']!="ufm") ||
-        ($path_info['extension']!="ttf" && $path_info['extension']!="otf" && $path_info['extension']!="pfb")) {
+        if(($path_info_metric['extension']!="afm" && $path_info_metric['extension']!="ufm") ||
+        ($path_info['extension']!="ttf" && $path_info['extension']!="otf" && $path_info['extension']!="pfb")){
             $this->errors[]=translate("JS_ALERT_PDF_WRONG_EXTENSION", "Configurator");
             $this->view = 'addFontView';
             return;
         }
 
-        if ($_REQUEST['pdf_embedded'] == "false") {
-            if (empty($_REQUEST['pdf_cidinfo'])) {
+        if($_REQUEST['pdf_embedded'] == "false"){
+            if(empty($_REQUEST['pdf_cidinfo'])){
                 $this->errors[]=translate("ERR_MISSING_CIDINFO", "Configurator");
                 $this->view = 'addFontView';
                 return;
             }
             $_REQUEST['pdf_embedded']=false;
-        } else {
+        }else{
             $_REQUEST['pdf_embedded']=true;
             $_REQUEST['pdf_cidinfo']="";
         }
@@ -140,7 +133,7 @@ class ConfiguratorController extends SugarController
     function action_saveadminwizard()
     {
         global $current_user;
-        if (!is_admin($current_user)) {
+        if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         $focus = new Administration();
@@ -155,71 +148,78 @@ class ConfiguratorController extends SugarController
 
         //The save of the admin wizard stops the post silent install from re-showing the admin wizard on each login
         $postSilentInstallAdminWizardCompleted = $current_user->getPreference('postSilentInstallAdminWizardCompleted');
-        if (isset($postSilentInstallAdminWizardCompleted) && !$postSilentInstallAdminWizardCompleted) {
+        if(isset($postSilentInstallAdminWizardCompleted) && !$postSilentInstallAdminWizardCompleted)
+        {
             $current_user->setPreference('postSilentInstallAdminWizardCompleted',true);
         }
 
         // Bug 37310 - Delete any existing currency that matches the one we've just set the default to during the admin wizard
         $currency = new Currency;
         $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
-        if (!empty($currency->id)
+        if ( !empty($currency->id)
                 && $currency->symbol == $_REQUEST['default_currency_symbol']
-                && $currency->iso4217 == $_REQUEST['default_currency_iso4217']) {
+                && $currency->iso4217 == $_REQUEST['default_currency_iso4217'] ) {
             $currency->deleted = 1;
             $currency->save();
         }
 
         //Only process the scenario item for admin users!
-        if ($current_user->isAdmin()) {
+        if($current_user->isAdmin())
+        {
             //Process the scenarios selected in the wizard
             require_once 'install/suite_install/enabledTabs.php';
             //We need to load the tabs so that we can remove those which are scenario based and un-selected
             //Remove the custom tabConfig as this overwrites the complete list containined in the include/tabConfig.php
-            if (file_exists('custom/include/tabConfig.php')) {
+            if(file_exists('custom/include/tabConfig.php')){
                 unlink('custom/include/tabConfig.php');
             }
             require_once('include/tabConfig.php');
             //Remove the custom dashlet so that we can use the complete list of defaults to filter by category
-            if (file_exists('custom/modules/Home/dashlets.php')) {
+            if(file_exists('custom/modules/Home/dashlets.php')){
                 unlink('custom/modules/Home/dashlets.php');
             }
             //Check if the folder is in place
-            if (!file_exists('custom/modules/Home')) {
+            if(!file_exists('custom/modules/Home')){
                 sugar_mkdir('custom/modules/Home', 0775);
             }
             //Check if the folder is in place
-            if (!file_exists('custom/include')) {
+            if(!file_exists('custom/include')){
                 sugar_mkdir('custom/include', 0775);
             }
             require_once 'modules/Home/dashlets.php';
 
             require_once 'install/suite_install/scenarios.php';
 
-            foreach ($installation_scenarios as $scenario) {
+            foreach($installation_scenarios as $scenario)
+            {
                 //If the item is not in $_SESSION['scenarios'], then unset them as they are not required
-                if (!in_array($scenario['key'],$_REQUEST['scenarios'])) {
-                    foreach ($scenario['modules'] as $module) {
+                if(!in_array($scenario['key'],$_REQUEST['scenarios']))
+                {
+                    foreach($scenario['modules'] as $module)
+                    {
                         if (($removeKey = array_search($module, $enabled_tabs)) !== false) {
                             unset($enabled_tabs[$removeKey]);
                         }
                     }
                     //Loop through the dashlets to remove from the default home page based on this scenario
-                    foreach ($scenario['dashlets'] as $dashlet) {
+                    foreach($scenario['dashlets'] as $dashlet)
+                    {
                         //if (($removeKey = array_search($dashlet, $defaultDashlets)) !== false) {
                         //    unset($defaultDashlets[$removeKey]);
                         // }
-                        if (isset($defaultDashlets[$dashlet])) {
+                        if(isset($defaultDashlets[$dashlet]))
                             unset($defaultDashlets[$dashlet]);
-                        }
                     }
                     //If the scenario has an associated group tab, remove accordingly (by not adding to the custom tabconfig.php
-                    if (isset($scenario['groupedTabs'])) {
+                    if(isset($scenario['groupedTabs']))
+                    {
                         unset($GLOBALS['tabStructure'][$scenario['groupedTabs']]);
                     }
                 }
             }
             //Have a 'core' options, with accounts / contacts if no other scenario is selected
-            if (!is_null($_SESSION['scenarios'])) {
+            if(!is_null($_SESSION['scenarios']))
+            {
                 unset($GLOBALS['tabStructure']['LBL_TABGROUP_DEFAULT']);
             }
             //Write the tabstructure to custom so that the grouping are not shown for the un-selected scenarios
@@ -242,11 +242,12 @@ class ConfiguratorController extends SugarController
     {
         require_once('modules/Administration/QuickRepairAndRebuild.php');
         global $current_user;
-        if (!is_admin($current_user)) {
+        if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         $configurator = new Configurator();
-        if ($configurator->saveConfig() === false) {
+        if ($configurator->saveConfig() === false)
+        {
             $this->errors = array(
                 'company_logo' => $configurator->getError(),
             );
@@ -269,7 +270,7 @@ class ConfiguratorController extends SugarController
     function action_detail()
     {
         global $current_user;
-        if (!is_admin($current_user)) {
+        if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         $this->view = 'edit';

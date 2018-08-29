@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,8 +43,8 @@ if (!is_admin($GLOBALS['current_user'])) {
 }
 
 if (empty($_FILES)) {
-    echo $mod_strings['LBL_IMPORT_CUSTOM_FIELDS_DESC'];
-    echo <<<EOQ
+	echo $mod_strings['LBL_IMPORT_CUSTOM_FIELDS_DESC'];
+	echo <<<EOQ
 <br>
 <br>
 <form enctype="multipart/form-data" action="index.php" method="POST">
@@ -71,6 +69,7 @@ EOQ;
             $fmd->save(false);
             $fmd = BeanFactory::getBean('EditCustomFields');
         } else {
+
             $ln = explode(':::', $line, 2);
             if (sizeof($ln) == 2) {
                 $KEY = trim($ln[0]);
@@ -81,9 +80,9 @@ EOQ;
             }
         }
     }
-    $_REQUEST['run'] = true;
-    $result = $fmd->db->query("SELECT count(*) field_count FROM $fmd->table_name");
-    $row = $fmd->db->fetchByAssoc($result);
-    echo 'Total Custom Fields :' . $row['field_count'] . '<br>';
-    include('modules/Administration/UpgradeFields.php');
+	$_REQUEST['run'] = true;
+	$result = $fmd->db->query("SELECT count(*) field_count FROM $fmd->table_name");
+	$row = $fmd->db->fetchByAssoc($result);
+	echo 'Total Custom Fields :' . $row['field_count'] . '<br>';
+	include('modules/Administration/UpgradeFields.php');
 }

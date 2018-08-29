@@ -137,6 +137,7 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
                     true));
         } // if
         if ($result) {
+
             $list = $result['rows'];
             $filterFields = $result['fields_set_on_rows'];
 
@@ -160,8 +161,10 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
                         $linkoutput_list[] = self::$helperObject->get_return_value_for_link_fields($submoduleobject,
                             $submodulename, $related_module_link_name_to_fields_array);
                     } // if
+
                 } // foreach
             }
+
         } // if
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
@@ -315,4 +318,5 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
             'error' => $error->get_soap_array()
         );
     }
+
 }

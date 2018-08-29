@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class formLetter
 {
+
     static function LVSmarty()
     {
         global $app_strings, $sugar_config;

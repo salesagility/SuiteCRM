@@ -128,15 +128,16 @@ function displaySurvey($survey, $contactId, $trackerId)
         <input type="hidden" name="tracker" value="<?= $trackerId ?>">
         <?php
         $questions = $survey->get_linked_beans('surveys_surveyquestions', 'SurveyQuestions');
-    usort(
+        usort(
             $questions,
             function ($a, $b) {
                 return $a->sort_order - $b->sort_order;
             }
         );
-    foreach ($questions as $question) {
-        displayQuestion($survey, $question);
-    } ?>
+        foreach ($questions as $question) {
+            displayQuestion($survey, $question);
+        }
+        ?>
         <button class="btn btn-primary" type="submit"><?php echo $survey->getSubmitText(); ?></button>
     </form>
     <?php
@@ -153,17 +154,17 @@ function displayQuestion($survey, $question)
             <div class="form-group">
                 <?php
                 $options = array();
-    foreach ($question->get_linked_beans(
+                foreach ($question->get_linked_beans(
                     'surveyquestions_surveyquestionoptions',
                     'SurveyQuestionOptions',
                     'sort_order'
                 ) as $option) {
-        $optionArr = array();
-        $optionArr['id'] = $option->id;
-        $optionArr['name'] = $option->name;
-        $options[] = $optionArr;
-    }
-    switch ($question->type) {
+                    $optionArr = array();
+                    $optionArr['id'] = $option->id;
+                    $optionArr['name'] = $option->name;
+                    $options[] = $optionArr;
+                }
+                switch ($question->type) {
 
                     case "Textbox":
                         echo "<textarea class=\"form-control\" id='question" .
@@ -228,7 +229,8 @@ function displayQuestion($survey, $question)
                     default:
                         displayTextField($question);
                         break;
-                } ?>
+                }
+                ?>
             </div>
         </div>
     </div>

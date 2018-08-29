@@ -17,7 +17,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        
+        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
         $SugarView = new SugarView();
 
@@ -32,19 +32,21 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         // clean up
+        
+        
     }
 
     public function testprocess()
     {
-        // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-        // test
+	// test
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
@@ -76,7 +78,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $SugarView = new SugarView();
@@ -92,6 +94,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testpreDisplay()
@@ -99,7 +103,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $SugarView = new SugarView();
@@ -114,6 +118,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testdisplay()
@@ -121,7 +127,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $SugarView = new SugarView();
@@ -136,6 +142,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testdisplayHeader()
@@ -143,7 +151,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $SugarView = new SugarView();
@@ -166,6 +174,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testgetModuleMenuHTML()
@@ -173,7 +183,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $SugarView = new SugarView();
@@ -188,6 +198,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testincludeClassicFile()
@@ -195,7 +207,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $SugarView = new SugarView();
@@ -211,6 +223,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testgetJavascriptValidation()
@@ -225,7 +239,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         $SugarView = new SugarView();
 
@@ -245,6 +259,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testrenderJavascript()
@@ -252,7 +268,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $SugarView = new SugarView();
@@ -273,10 +289,15 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testgetMenu()
     {
+
+        ////error_reporting(E_ALL);
+
         $SugarView = new SugarView();
 
         //execute the method and check if it works and throws an exception if no module is provided
@@ -285,11 +306,11 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     	try {
     		//check first with invalid value and test if it throws an exception
     		$menu = $SugarView->getMenu();
-    		
+    		//$this->assertTrue(is_array($menu));
     		 
     	} catch (Exception $e) {
     		$this->assertTrue(TRUE);
-    		
+    		//$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
     	} */
 
         //check with valid value and check if it returns an array.
@@ -350,9 +371,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcheckPostMaxSizeError()
     {
-        global $sugar_config;
-        $SugarView = new SugarView();        
-        $this->assertFalse($sugar_config['developerMode']);
+        $SugarView = new SugarView();
+
         //execute the method. it should return False because Request parameters are not available.
         $postMaxSizeError = $SugarView->checkPostMaxSizeError();
         $this->assertFalse($postMaxSizeError);

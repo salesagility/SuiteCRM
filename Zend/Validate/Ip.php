@@ -63,7 +63,7 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
     {
         if ($options instanceof Zend_Config) {
             $options = $options->toArray();
-        } elseif (!is_array($options)) {
+        } else if (!is_array($options)) {
             $options = func_get_args();
             $temp['allowipv6'] = array_shift($options);
             if (!empty($options)) {

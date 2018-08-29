@@ -199,6 +199,7 @@ LOGOUTREQUEST;
             $seckey->loadKey($key);
 
             $nameId = OneLogin_Saml2_Utils::decryptElement($encryptedData, $seckey);
+
         } else {
             $entries = OneLogin_Saml2_Utils::query($dom, '/samlp:LogoutRequest/saml:NameID');
             if ($entries->length == 1) {

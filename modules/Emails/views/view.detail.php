@@ -83,4 +83,5 @@ class EmailsViewDetail extends ViewDetail
         }
         parent::display();
     }
+
 }

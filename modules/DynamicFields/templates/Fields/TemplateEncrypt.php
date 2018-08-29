@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,19 +45,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
-class TemplateEncrypt extends TemplateField
-{
-    var $type='encrypt';
-    function save($df)
-    {
-        $this->type = 'encrypt';
-        $this->ext3 = 'varchar';
-        parent::save($df);
-    }
-    function get_field_def()
-    {
-        $vardef = parent::get_field_def();
-        $vardef['dbType'] = $this->ext3;
-        return $vardef;
-    }
+class TemplateEncrypt extends TemplateField{
+
+	var $type='encrypt';
+	function save($df){
+		$this->type = 'encrypt';
+		$this->ext3 = 'varchar';
+		parent::save($df);
+
+	}
+	function get_field_def(){
+		$vardef = parent::get_field_def();
+		$vardef['dbType'] = $this->ext3;
+		return $vardef;
+	}
 }

@@ -46,24 +46,23 @@ r21722 - 2007-04-11 14:18:45 -0700 (Wed, 11 Apr 2007) - wayne - sugar variable c
 function smarty_function_sugar_variable_constructor($params, &$smarty)
 {
     if (!isset($params['objectName']) || !isset($params['memberName']) || !isset($params['key'])) {
-        if (!isset($params['objectName'])) {
+        if(!isset($params['objectName']))  
             $smarty->trigger_error("sugar_variable_constructor: missing 'objectName' parameter");
-        }
-        if (!isset($params['memberName'])) {
+        if(!isset($params['memberName']))  
             $smarty->trigger_error("sugar_variable_constructor: missing 'memberName' parameter");
-        }
-        if (!isset($params['key'])) {
+        if(!isset($params['key']))  
             $smarty->trigger_error("sugar_variable_constructor: missing 'key' parameter");
-        }
                 
         return;
     }
 
-    if (isset($params['stringFormat'])) {
+    if(isset($params['stringFormat'])) {
         $_contents =  '$'. $params['objectName'] . '.' . $params['memberName'] . '.' . $params['key'];
-    } else {
+    }
+    else {
         $_contents = '{$' . $params['objectName'] . '.' . $params['memberName'] . '.' . $params['key'] . '}';
     }
     
     return $_contents;
 }
+?>

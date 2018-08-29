@@ -41,8 +41,7 @@
  * Reminder_Invitee class
  *
  */
-class Reminder_Invitee extends Basic
-{
+class Reminder_Invitee extends Basic {
     var $name;
 
     var $new_schema = true;
@@ -57,27 +56,25 @@ class Reminder_Invitee extends Basic
     var $related_invitee_module;
     var $related_invitee_module_id;
 
-    /**
-     * Save multiple reminders invitees data.
-     *
-     * @param string $reminderId Related Reminder GUID
-     * @param array $inviteesData Invitees Data
-     */
-    public static function saveRemindersInviteesData($reminderId, $inviteesData)
-    {
+	/**
+	 * Save multiple reminders invitees data.
+	 *
+	 * @param string $reminderId Related Reminder GUID
+	 * @param array $inviteesData Invitees Data
+	 */
+    public static function saveRemindersInviteesData($reminderId, $inviteesData) {
         $savedInviteeIds = array();
-        foreach ($inviteesData as $k => $inviteeData) {
-            if (isset($_POST['isDuplicate']) && $_POST['isDuplicate']) {
-                $inviteeData->id = '';
-            }
+        foreach($inviteesData as $k => $inviteeData) {
+            if(isset($_POST['isDuplicate']) && $_POST['isDuplicate']) $inviteeData->id = '';
             $reminderInviteeBean = BeanFactory::getBean('Reminders_Invitees', $inviteeData->id);
             $reminderInviteeBean->reminder_id = $reminderId;
             $reminderInviteeBean->related_invitee_module = $inviteeData->module;
             $reminderInviteeBean->related_invitee_module_id = $inviteeData->module_id;
-            if (!$inviteeData->id) {
+            if(!$inviteeData->id) {
                 $reminderInviteeBean->save();
                 $savedInviteeIds[] = $reminderInviteeBean->id;
-            } else {
+            }
+            else {
                 $addedInvitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list("", "reminders_invitees.id != '{$inviteeData->id}' AND reminders_invitees.reminder_id = '{$reminderInviteeBean->reminder_id}' AND reminders_invitees.related_invitee_module = '{$reminderInviteeBean->related_invitee_module}' AND reminders_invitees.related_invitee_module_id = '{$reminderInviteeBean->related_invitee_module_id}'");
                 if (!$addedInvitees) {
                     $reminderInviteeBean->save();
@@ -90,18 +87,17 @@ class Reminder_Invitee extends Basic
         self::deleteRemindersInviteesMultiple($reminderId, $savedInviteeIds);
     }
 
-    /**
-     * Load reminders invitees data.
-     *
-     * @param string $reminderId Related Reminder GUID
-     * @return array Invitees data
-     */
-    public static function loadRemindersInviteesData($reminderId, $isDuplicate = false)
-    {
-        $ret = array();
-        $reminderInviteeBeen = new Reminder_Invitee();
-        $reminderInvitees = $reminderInviteeBeen->get_full_list("reminders_invitees.date_entered", "reminders_invitees.reminder_id = '$reminderId'");
-        if ($reminderInvitees) {
+	/**
+	 * Load reminders invitees data.
+	 *
+	 * @param string $reminderId Related Reminder GUID
+	 * @return array Invitees data
+	 */
+	public static function loadRemindersInviteesData($reminderId, $isDuplicate = false) {
+		$ret = array();
+		$reminderInviteeBeen = new Reminder_Invitee();
+		$reminderInvitees = $reminderInviteeBeen->get_full_list("reminders_invitees.date_entered", "reminders_invitees.reminder_id = '$reminderId'");
+        if($reminderInvitees) {
             foreach ($reminderInvitees as $reminderInvitee) {
                 $ret[] = array(
                     'id' => $isDuplicate ? null : $reminderInvitee->id,
@@ -111,27 +107,28 @@ class Reminder_Invitee extends Basic
                 );
             }
         }
-        return $ret;
-    }
+		return $ret;
+	}
 
-    private static function getInviteeName($module, $moduleId)
-    {
+    private static function getInviteeName($module, $moduleId) {
         $retValue = "unknown";
 
         $bean = BeanFactory::getBean($module, $moduleId);
-        switch ($module) {
+        switch($module) {
             case 'Users':
             case 'Contacts':
             case 'Leads':
             default:
-                if (isset($bean->first_name) && isset($bean->last_name)) {
+                if(isset($bean->first_name) && isset($bean->last_name)) {
                     $retValue = "{$bean->first_name} {$bean->last_name}";
-                } elseif (isset($bean->name)) {
+                }
+                else if(isset($bean->name)) {
                     $retValue = $bean->name;
-                } elseif (isset($bean->email)) {
+                }
+                else if(isset($bean->email)) {
                     $retValue = $bean->email;
                 }
-                if (!$retValue) {
+                if(!$retValue) {
                     $retValue = "$module ($moduleId)";
                 }
                 break;
@@ -139,16 +136,15 @@ class Reminder_Invitee extends Basic
         return $retValue;
     }
 
-    /**
-     * Delete reminders invitees multiple.
-     *
-     * @param string $reminderId Related Reminder GUID
-     * @param array $inviteeIds (optional) Exluded Invitees GUIDs, the invitee will not deleted if this argument contains that. Default is empty array.
-     */
-    public static function deleteRemindersInviteesMultiple($reminderId, $inviteeIds = array())
-    {
+	/**
+	 * Delete reminders invitees multiple.
+	 *
+	 * @param string $reminderId Related Reminder GUID
+	 * @param array $inviteeIds (optional) Exluded Invitees GUIDs, the invitee will not deleted if this argument contains that. Default is empty array.
+	 */
+    public static function deleteRemindersInviteesMultiple($reminderId, $inviteeIds = array()) {
         $invitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list("", "reminders_invitees.reminder_id = '$reminderId'");
-        if ($invitees) {
+        if($invitees) {
             foreach ($invitees as $invitee) {
                 if (!in_array($invitee->id, $inviteeIds)) {
                     $invitee->mark_deleted($invitee->id);
@@ -157,4 +153,5 @@ class Reminder_Invitee extends Basic
             }
         }
     }
+
 }

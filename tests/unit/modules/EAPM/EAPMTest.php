@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -47,7 +47,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $eapm = new EAPM();
         $this->assertEquals(false, $eapm->bean_implements('')); //test with blank value
@@ -154,7 +154,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //retrieve back to test if validated attribute is updated in db
         $eapmValidated = $eapm->retrieve($eapm->id);
-        
+        //$this->assertEquals(1, $eapmValidated->validated);
         $this->markTestSkipped('Validated column never gets updated in Db ');
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
@@ -171,12 +171,13 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
+        
         $state = new SuiteCRM\StateSaver();
         $eapmTable = $state->pushTable('eapm');
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $eapm = new EAPM();
@@ -208,7 +209,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $eapm = new EAPM();
@@ -264,7 +265,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $eapm = new EAPM();
@@ -285,7 +286,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     public function testgetEAPMExternalApiDropDown()
-    {
+    {        
         // store state
         
         $state = new SuiteCRM\StateSaver();

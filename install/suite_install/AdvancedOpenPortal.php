@@ -64,6 +64,7 @@ function install_aop()
     write_array_to_file('sugar_config', $sugar_config, 'config.php');
 
     installAOPHooks();
+
 }
 
 /**

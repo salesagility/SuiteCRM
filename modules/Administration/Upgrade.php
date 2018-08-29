@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -53,10 +51,11 @@ global $gridline;
 echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_UPGRADE_TITLE']), false);
 $str1="";
 if (DBManagerFactory::getInstance()->supports('fulltext')) {
-    $str1='<tr><td scope="row">';
-    $str1.=SugarThemeRegistry::current()->getImage('Repair','align="absmiddle" border="0"',null,null,'.gif',$mod_strings['LBL_REPAIR_ORACLE_FULLTEXT']);
-    $str1.='&nbsp;<a href="./index.php?module=Administration&action=RebuildFulltextIndices">' . $mod_strings['LBL_REPAIR_ORACLE_FULLTEXT'] .'</a></td>';
-    $str1.='<td>' .$mod_strings['LBL_REPAIR_ORACLE_FULLTEXT_DESC'] . '</td></tr>';
+
+	$str1='<tr><td scope="row">';
+	$str1.=SugarThemeRegistry::current()->getImage('Repair','align="absmiddle" border="0"',null,null,'.gif',$mod_strings['LBL_REPAIR_ORACLE_FULLTEXT']);
+	$str1.='&nbsp;<a href="./index.php?module=Administration&action=RebuildFulltextIndices">' . $mod_strings['LBL_REPAIR_ORACLE_FULLTEXT'] .'</a></td>';
+	$str1.='<td>' .$mod_strings['LBL_REPAIR_ORACLE_FULLTEXT_DESC'] . '</td></tr>';
 }
 ?>
 <p>
@@ -72,17 +71,17 @@ if (DBManagerFactory::getInstance()->supports('fulltext')) {
 <tr>
 <?php
 $server_software = $_SERVER["SERVER_SOFTWARE"];
-if (strpos($server_software,'Microsoft-IIS') === false) {
-    ?>
+if(strpos($server_software,'Microsoft-IIS') === false) {
+?>
     <td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Rebuild','align="absmiddle" border="0"',null,null,'.gif',$mod_strings['LBL_REBUILD_HTACCESS']); ?>&nbsp;<a href="./index.php?module=Administration&action=UpgradeAccess"><?php echo $mod_strings['LBL_REBUILD_HTACCESS']; ?></a></td>
     <td> <?php echo $mod_strings['LBL_REBUILD_HTACCESS_DESC'] ; ?> </td>
 <?php
 } else {
-        ?>
+?>
     <td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Rebuild','align="absmiddle" border="0"',null,null,'.gif',$mod_strings['LBL_REBUILD_WEBCONFIG']); ?>&nbsp;<a href="./index.php?module=Administration&action=UpgradeIISAccess"><?php echo $mod_strings['LBL_REBUILD_WEBCONFIG']; ?></a></td>
     <td> <?php echo $mod_strings['LBL_REBUILD_WEBCONFIG_DESC'] ; ?> </td>
 <?php
-    }
+}
 ?>
 </tr>
 <tr>
@@ -117,14 +116,12 @@ if (strpos($server_software,'Microsoft-IIS') === false) {
     <td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Rebuild','align="absmiddle" border="0"', null,null,'.gif',$mod_strings['LBL_REBUILD_JS_MINI_FILES_TITLE']); ?>&nbsp;<a href="./index.php?module=Administration&action=RepairJSFile&type=mini"   onclick="return confirm('<?php echo $mod_strings['WARN_POSSIBLE_JS_OVERWRITE']; ?>');"><?php echo $mod_strings['LBL_REBUILD_JS_MINI_FILES_TITLE']; ?></a></td>
     <td> <?php echo $mod_strings['LBL_REBUILD_JS_MINI_FILES_DESC_SHORT'] ; ?> </td>
 </tr>
-<?php if (!empty($GLOBALS['sugar_config']['use_sprites']) && $GLOBALS['sugar_config']['use_sprites']) {
-    ?>
+<?php if(!empty($GLOBALS['sugar_config']['use_sprites']) && $GLOBALS['sugar_config']['use_sprites']) { ?>
 <tr>
     <td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Rebuild','align="absmiddle" border="0"', null,null,'.gif',$mod_strings['LBL_REBUILD_SPRITES_TITLE']); ?>&nbsp;<a href="./index.php?module=Administration&action=RebuildSprites"><?php echo $mod_strings['LBL_REBUILD_SPRITES_TITLE']; ?></a></td>
     <td> <?php echo $mod_strings['LBL_REBUILD_SPRITES_DESC_SHORT'] ; ?> </td>
 </tr>
-<?php
-} ?>
+<?php } ?>
 <tr>
     <td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Repair','align="absmiddle" border="0"', null,null,'.gif',$mod_strings['LBL_REPAIR_JS_FILES_TITLE']); ?>&nbsp;<a href="./index.php?module=Administration&action=RepairJSFile&type=repair"><?php echo $mod_strings['LBL_REPAIR_JS_FILES_TITLE']; ?></a></td>
     <td> <?php echo $mod_strings['LBL_REPAIR_JS_FILES_DESC_SHORT'] ; ?> </td>

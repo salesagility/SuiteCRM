@@ -44,48 +44,42 @@ class OperatingSystem
     /**
      * @return bool true when operating system is BSD
      */
-    public function isOsBSD()
-    {
+    public function isOsBSD() {
         return stristr(php_uname('s'), 'BSD') !== FALSE;
     }
 
     /**
      * @return bool true when operating system is Linux
      */
-    public function isOsLinux()
-    {
+    public function isOsLinux() {
         return stristr(php_uname('s'), 'Linux') !== FALSE;
     }
 
     /**
      * @return bool true when operating system is Mac OS X
      */
-    public function isOsMacOSX()
-    {
+    public function isOsMacOSX() {
         return stristr(php_uname('s'), 'Darwin') !== FALSE;
     }
 
     /**
      * @return bool true when operating system is Solaris
      */
-    public function isOsSolaris()
-    {
+    public function isOsSolaris() {
         return stristr(php_uname('s'), 'Solaris') !== FALSE;
     }
 
     /**
      * @return bool true when operating system is Unknown
      */
-    public function isOsUnknown()
-    {
+    public function isOsUnknown() {
         return php_uname('s') === 'Unknown';
     }
 
     /**
      * @return bool true when operating system is Windows
      */
-    public function isOsWindows()
-    {
+    public function isOsWindows() {
         return stristr(php_uname('s'), 'Windows') !== FALSE;
     }
 

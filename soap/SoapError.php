@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,65 +39,61 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 require_once('soap/SoapErrorDefinitions.php');
-class SoapError
-{
-    var $name;
-    var $number;
-    var $description;
+class SoapError{
+	var $name;
+	var $number;
+	var $description;
 
-    function __construct()
-    {
-        $this->set_error('no_error');
-    }
+	function __construct(){
+		$this->set_error('no_error');
+	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SoapError()
-    {
+    function SoapError(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function set_error($error_name)
-    {
-        global $error_defs;
-        if (!isset($error_defs[$error_name])) {
-            $this->name = 'An Undefined Error - ' . $error_name . ' occurred';
-            $this->number = '-1';
-            $this->description = 'There is no error definition for ' . 	$error_name;
-        } else {
-            $this->name = $error_defs[$error_name]['name'];
-            $this->number = $error_defs[$error_name]['number'];
-            $this->description = $error_defs[$error_name]['description'];
-        }
-    }
+	function set_error($error_name){
+		global $error_defs;
+		if(!isset($error_defs[$error_name])){
+			$this->name = 'An Undefined Error - ' . $error_name . ' occurred';
+			$this->number = '-1';
+			$this->description = 'There is no error definition for ' . 	$error_name;
+		}else{
+			$this->name = $error_defs[$error_name]['name'];
+			$this->number = $error_defs[$error_name]['number'];
+			$this->description = $error_defs[$error_name]['description'];
+		}
+	}
 
-    function get_soap_array()
-    {
-        return Array('number'=>$this->number,
+	function get_soap_array(){
+		return Array('number'=>$this->number,
 					 'name'=>$this->name,
 					 'description'=>$this->description);
-    }
 
-    function getName()
-    {
-        return $this->name;
-    } // fn
+	}
 
-    function getFaultCode()
-    {
-        return $this->number;
-    } // fn
+	function getName() {
+		return $this->name;
+	} // fn
 
-    function getDescription()
-    {
-        return $this->description;
-    } // fn
+	function getFaultCode() {
+		return $this->number;
+	} // fn
+
+	function getDescription() {
+		return $this->description;
+	} // fn
+
+
 }

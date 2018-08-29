@@ -44,15 +44,15 @@
  * @deprecated use DBManager::convert() instead.
  */
 function db_convert($string, $type, $additional_parameters=array(),$additional_parameters_oracle_only=array())
-{
+	{
     return DBManagerFactory::getInstance()->convert($string, $type, $additional_parameters, $additional_parameters_oracle_only);
-}
+            }
 
 /**
  * @deprecated use DBManager::concat() instead.
  */
 function db_concat($table, $fields)
-{
+	{
     $db = DBManagerFactory::getInstance();
     return $db->concat($table, $fields);
 }
@@ -61,9 +61,9 @@ function db_concat($table, $fields)
  * @deprecated use DBManager::fromConvert() instead.
  */
 function from_db_convert($string, $type)
-{
+	{
     return DBManagerFactory::getInstance()->fromConvert($string, $type);
-}
+	}
 
 $toHTML = array(
 	'"' => '&quot;',
@@ -86,21 +86,21 @@ $GLOBALS['toHTML_keys_set'] = implode("", $GLOBALS['toHTML_keys']);
  * Bug 49489 - removed caching of to_html strings as it was consuming memory and
  * never releasing it
  */
-function to_html($string, $encode=true)
-{
-    if (empty($string)) {
-        return $string;
-    }
+function to_html($string, $encode=true){
+	if (empty($string)) {
+		return $string;
+	}
 
-    global $toHTML;
+	global $toHTML;
 
-    if ($encode && is_string($string)) {
-        if (is_array($toHTML)) {
+	if($encode && is_string($string)){
+		if(is_array($toHTML))
+        {
             $string = str_ireplace($GLOBALS['toHTML_keys'],$GLOBALS['toHTML_values'],$string);
-        } else {
-            $string = htmlentities($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
+		} else {
+		    $string = htmlentities($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
         }
-    }
+	}
 
     return $string;
 }
@@ -112,13 +112,12 @@ function to_html($string, $encode=true)
  * @param bool $encode Default true
  * @return string
  */
-function from_html($string, $encode=true)
-{
+function from_html($string, $encode=true) {
     if (!is_string($string) || !$encode) {
         return $string;
     }
 
-    global $toHTML;
+	global $toHTML;
     static $toHTML_values = null;
     static $toHTML_keys = null;
     static $cache = array();
@@ -128,7 +127,7 @@ function from_html($string, $encode=true)
     }
 
     // Bug 36261 - Decode &amp; so we can handle double encoded entities
-    $string = html_entity_decode($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
+	$string = html_entity_decode($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
 
     if (!isset($cache[$string])) {
         $cache[$string] = str_ireplace($toHTML_values, $toHTML_keys, $string);
@@ -144,7 +143,7 @@ function from_html($string, $encode=true)
  * @param int $maxlen Deprecated and ignored
  * @return string Valid column name trimmed to right length and with invalid characters removed
  */
-function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
+function getValidDBName ($name, $ensureUnique = false, $maxLen = 30)
 {
     return DBManagerFactory::getInstance()->getValidDBName($name, $ensureUnique);
 }

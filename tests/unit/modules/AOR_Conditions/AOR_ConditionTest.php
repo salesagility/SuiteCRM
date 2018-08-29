@@ -29,7 +29,7 @@ class AOR_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aor_Condition = new AOR_Condition();
 

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -61,9 +59,7 @@ $role = new ACLRole();
 $role->retrieve($_REQUEST['record']);
 $categories = ACLRole::getRoleActions($_REQUEST['record']);
 $names = ACLAction::setupCategoriesMatrix($categories);
-if (!empty($names)) {
-    $tdwidth = 100 / sizeof($names);
-}
+if(!empty($names))$tdwidth = 100 / sizeof($names);
 $sugar_smarty->assign('ROLE', $role->toArray());
 $sugar_smarty->assign('CATEGORIES', $categories);
 $sugar_smarty->assign('TDWIDTH', $tdwidth);

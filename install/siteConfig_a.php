@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,67 +41,60 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-if (!isset($install_script) || !$install_script) {
+if( !isset( $install_script ) || !$install_script ){
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 
-if (is_file("config.php")) {
-    if (!empty($sugar_config['default_theme'])) {
-        $_SESSION['site_default_theme'] = $sugar_config['default_theme'];
-    }
+if( is_file("config.php") ){
+	if(!empty($sugar_config['default_theme']))
+      $_SESSION['site_default_theme'] = $sugar_config['default_theme'];
 
-    if (!empty($sugar_config['disable_persistent_connections'])) {
-        $_SESSION['disable_persistent_connections'] =
+	if(!empty($sugar_config['disable_persistent_connections']))
+		$_SESSION['disable_persistent_connections'] =
 		$sugar_config['disable_persistent_connections'];
-    }
-    if (!empty($sugar_config['default_language'])) {
-        $_SESSION['default_language'] = $sugar_config['default_language'];
-    }
-    if (!empty($sugar_config['translation_string_prefix'])) {
-        $_SESSION['translation_string_prefix'] = $sugar_config['translation_string_prefix'];
-    }
-    if (!empty($sugar_config['default_charset'])) {
-        $_SESSION['default_charset'] = $sugar_config['default_charset'];
-    }
+	if(!empty($sugar_config['default_language']))
+		$_SESSION['default_language'] = $sugar_config['default_language'];
+	if(!empty($sugar_config['translation_string_prefix']))
+		$_SESSION['translation_string_prefix'] = $sugar_config['translation_string_prefix'];
+	if(!empty($sugar_config['default_charset']))
+		$_SESSION['default_charset'] = $sugar_config['default_charset'];
 
-    if (!empty($sugar_config['default_currency_name'])) {
-        $_SESSION['default_currency_name'] = $sugar_config['default_currency_name'];
-    }
-    if (!empty($sugar_config['default_currency_symbol'])) {
-        $_SESSION['default_currency_symbol'] = $sugar_config['default_currency_symbol'];
-    }
-    if (!empty($sugar_config['default_currency_iso4217'])) {
-        $_SESSION['default_currency_iso4217'] = $sugar_config['default_currency_iso4217'];
-    }
+	if(!empty($sugar_config['default_currency_name']))
+		$_SESSION['default_currency_name'] = $sugar_config['default_currency_name'];
+	if(!empty($sugar_config['default_currency_symbol']))
+		$_SESSION['default_currency_symbol'] = $sugar_config['default_currency_symbol'];
+	if(!empty($sugar_config['default_currency_iso4217']))
+		$_SESSION['default_currency_iso4217'] = $sugar_config['default_currency_iso4217'];
 
-    if (!empty($sugar_config['rss_cache_time'])) {
-        $_SESSION['rss_cache_time'] = $sugar_config['rss_cache_time'];
-    }
-    if (!empty($sugar_config['languages'])) {
-        // We need to encode the languages in a way that can be retrieved later.
-        $language_keys = Array();
-        $language_values = Array();
+	if(!empty($sugar_config['rss_cache_time']))
+		$_SESSION['rss_cache_time'] = $sugar_config['rss_cache_time'];
+	if(!empty($sugar_config['languages']))
+	{
+		// We need to encode the languages in a way that can be retrieved later.
+		$language_keys = Array();
+		$language_values = Array();
 
-        foreach ($sugar_config['languages'] as $key=>$value) {
-            $language_keys[] = $key;
-            $language_values[] = $value;
-        }
+		foreach($sugar_config['languages'] as $key=>$value)
+		{
+			$language_keys[] = $key;
+			$language_values[] = $value;
+		}
 
-        $_SESSION['language_keys'] = urlencode(implode(",",$language_keys));
-        $_SESSION['language_values'] = urlencode(implode(",",$language_values));
-    }
+		$_SESSION['language_keys'] = urlencode(implode(",",$language_keys));
+		$_SESSION['language_values'] = urlencode(implode(",",$language_values));
+	}
 }
 
 ////	errors
 $errors = '';
-if (isset($validation_errors) && is_array($validation_errors)) {
-    if (count($validation_errors) > 0) {
+if( isset($validation_errors) && is_array($validation_errors)){
+    if( count($validation_errors) > 0 ){
         $errors  = '<div id="errorMsgs">';
         $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
-        foreach ($validation_errors as $error) {
-            $errors .= '<li>' . $error . '</li>';
+        foreach( $validation_errors as $error ){
+			$errors .= '<li>' . $error . '</li>';
         }
-        $errors .= '</ul></div>';
+		$errors .= '</ul></div>';
     }
 }
 
@@ -153,7 +144,7 @@ $out =<<<EOQ
 EOQ;
 
 //hide this in typical mode
-if (!empty($_SESSION['install_type'])  && strtolower($_SESSION['install_type'])=='custom') {
+if(!empty($_SESSION['install_type'])  && strtolower($_SESSION['install_type'])=='custom'){
     $out .=<<<EOQ
 <div class='install_block'>
     {$mod_strings['LBL_SITECFG_URL_MSG']}
@@ -167,11 +158,11 @@ if (!empty($_SESSION['install_type'])  && strtolower($_SESSION['install_type'])=
 </div>
 EOQ;
     $db = getDbConnection();
-    if ($db->supports("collation")) {
+    if($db->supports("collation")) {
         $collationOptions = $db->getCollationList();
     }
-    if (!empty($collationOptions)) {
-        if (isset($_SESSION['setup_db_options']['collation'])) {
+    if(!empty($collationOptions)) {
+        if(isset($_SESSION['setup_db_options']['collation'])) {
             $default = $_SESSION['setup_db_options']['collation'];
         } else {
             $default = $db->getDefaultCollation();
@@ -185,7 +176,7 @@ EOQ;
         <select name="setup_db_collation" id="setup_db_collation">$options</select><br>
      </div>
 EOQ;
-    }
+   }
 }
 
 $out .=<<<EOQ

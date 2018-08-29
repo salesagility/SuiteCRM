@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,15 +43,14 @@ require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
 
 class TemplateDate extends TemplateRange
 {
-    var $type = 'date';
-    var $len = '';
-    var $dateStrings;
+	var $type = 'date';
+	var $len = '';
+	var $dateStrings;
 
-    function __construct()
-    {
-        parent::__construct();
-        global $app_strings;
-        $this->dateStrings = array(
+function __construct() {
+	parent::__construct();
+	global $app_strings;
+	$this->dateStrings = array(
 			$app_strings['LBL_NONE']=>'',
             $app_strings['LBL_YESTERDAY']=> '-1 day',
             $app_strings['LBL_TODAY']=>'now',
@@ -68,43 +65,40 @@ class TemplateDate extends TemplateRange
             $app_strings['LBL_SIXMONTHS']=> '+6 months',
             $app_strings['LBL_NEXT_YEAR']=> '+1 year',
         );
-    }
+}
 
 
-    function get_db_default($modify=false)
-    {
-        return '';
-    }
+function get_db_default($modify=false){
+		return '';
+}
 
-    //BEGIN BACKWARDS COMPATABILITY
-    function get_xtpl_edit()
-    {
-        global $timedate;
-        $name = $this->name;
-        $returnXTPL = array();
-        if (!empty($this->help)) {
-            $returnXTPL[strtoupper($this->name . '_help')] = translate($this->help, $this->bean->module_dir);
-        }
-        $returnXTPL['USER_DATEFORMAT'] = $timedate->get_user_date_format();
-        $returnXTPL['CALENDAR_DATEFORMAT'] = $timedate->get_cal_date_format();
-        if (isset($this->bean->$name)) {
-            $returnXTPL[strtoupper($this->name)] = $this->bean->$name;
-        } else {
-            if (empty($this->bean->id) && !empty($this->default_value) && !empty($this->dateStrings[$this->default_value])) {
-                $returnXTPL[strtoupper($this->name)] = $timedate->asUserDate($timedate->getNow(true)->modify($this->dateStrings[$this->default_value]), false);
-            }
-        }
-        return $returnXTPL;
-    }
+//BEGIN BACKWARDS COMPATABILITY
+function get_xtpl_edit(){
+		global $timedate;
+		$name = $this->name;
+		$returnXTPL = array();
+		if(!empty($this->help)){
+		    $returnXTPL[strtoupper($this->name . '_help')] = translate($this->help, $this->bean->module_dir);
+		}
+		$returnXTPL['USER_DATEFORMAT'] = $timedate->get_user_date_format();
+		$returnXTPL['CALENDAR_DATEFORMAT'] = $timedate->get_cal_date_format();
+		if(isset($this->bean->$name)){
+			$returnXTPL[strtoupper($this->name)] = $this->bean->$name;
+		}else{
+		    if(empty($this->bean->id) && !empty($this->default_value) && !empty($this->dateStrings[$this->default_value])){
+		        $returnXTPL[strtoupper($this->name)] = $timedate->asUserDate($timedate->getNow(true)->modify($this->dateStrings[$this->default_value]), false);
+		    }
+		}
+		return $returnXTPL;
+	}
 
-    function get_field_def()
-    {
-        $def = parent::get_field_def();
-        if (!empty($def['default'])) {
-            $def['display_default'] = $def['default'];
-            $def['default'] = '';
-        }
-        return $def;
-    }
+function get_field_def(){
+		$def = parent::get_field_def();
+		if(!empty($def['default'])){
+			$def['display_default'] = $def['default'];
+			$def['default'] = '';
+		}
+		return $def;
+	}
 }
 

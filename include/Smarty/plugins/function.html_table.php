@@ -161,9 +161,8 @@ function smarty_function_html_table($params, &$smarty)
     return $output;
 }
 
-function smarty_function_html_table_cycle($name, $var, $no)
-{
-    if (!is_array($var)) {
+function smarty_function_html_table_cycle($name, $var, $no) {
+    if(!is_array($var)) {
         $ret = $var;
     } else {
         $ret = $var[$no % count($var)];
@@ -174,3 +173,5 @@ function smarty_function_html_table_cycle($name, $var, $no)
 
 
 /* vim: set expandtab: */
+
+?>

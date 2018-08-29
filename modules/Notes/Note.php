@@ -136,6 +136,7 @@ class Note extends File
                 break; // no need to look for more
             }
         }
+
     }
 
     /**
@@ -249,6 +250,7 @@ class Note extends File
         $this->getRelatedFields('Contacts', $this->contact_id,
             array('name' => 'contact_name', 'phone_work' => 'contact_phone'));
         if (!empty($this->contact_name)) {
+
             $emailAddress = new SugarEmailAddress();
             $this->contact_email = $emailAddress->getPrimaryAddress(false, $this->contact_id, 'Contacts');
         }
@@ -376,7 +378,7 @@ class Note extends File
         switch ($interface) {
             case 'ACL':
                 return true;
-            case 'FILE':
+            case 'FILE' :
                 return true;
         }
 

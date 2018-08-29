@@ -91,7 +91,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             $this->_signs = null;
             // Check if all subqueries are required
             if (is_array($signs)) {
-                foreach ($signs as $sign) {
+                foreach ($signs as $sign ) {
                     if ($sign !== true) {
                         $this->_signs = $signs;
                         break;
@@ -114,8 +114,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
      * @param  boolean|null $sign
      * @return void
      */
-    public function addSubquery(Zend_Search_Lucene_Search_Query $subquery, $sign=null)
-    {
+    public function addSubquery(Zend_Search_Lucene_Search_Query $subquery, $sign=null) {
         if ($sign !== true || $this->_signs !== null) {       // Skip, if all subqueries are required
             if ($this->_signs === null) {                     // Check, If all previous subqueries are required
                 $this->_signs = array();
@@ -263,7 +262,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                 // remove subquery from a subqueries list
                 unset($subqueries[$id]);
                 unset($signs[$id]);
-            } elseif ($subquery instanceof Zend_Search_Lucene_Search_Query_MultiTerm) {
+           } else if ($subquery instanceof Zend_Search_Lucene_Search_Query_MultiTerm) {
                 $subTerms = $subquery->getTerms();
                 $subSigns = $subquery->getSigns();
 
@@ -285,7 +284,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                         foreach ($subSigns as $sign) {
                             if ($sign === true) {
                                 $hasRequired   = true;
-                            } elseif ($sign === false) {
+                            } else if ($sign === false) {
                                 $hasProhibited = true;
                                 break;
                             }
@@ -305,6 +304,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                     // remove subquery from a subqueries list
                     unset($subqueries[$id]);
                     unset($signs[$id]);
+
                 } else { // $signs[$id] === null  ||  $signs[$id] === false
                     // It's an optional or prohibited multi-term subquery.
                     // Something like '... (+term1 -term2 term3 ...) ...'
@@ -349,7 +349,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
 
         // Check, if there are no decomposed subqueries
-        if (count($terms) == 0) {
+        if (count($terms) == 0 ) {
             // return prepared candidate
             return $optimizedQuery;
         }
@@ -390,7 +390,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
             // Clear terms list
             $terms = array();
-        } elseif (count($terms) > 1  &&  count(array_unique($boostFactors)) == 1) {
+        } else if (count($terms) > 1  &&  count(array_unique($boostFactors)) == 1) {
             require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
             $clause = new Zend_Search_Lucene_Search_Query_MultiTerm($terms, $tsigns);
             $clause->setBoost(reset($boostFactors));
@@ -411,7 +411,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
             // Clear prohibited terms list
             $prohibitedTerms = array();
-        } elseif (count($prohibitedTerms) > 1) {
+        } else if (count($prohibitedTerms) > 1) {
             // prepare signs array
             $prohibitedSigns = array();
             foreach ($prohibitedTerms as $id => $term) {
@@ -503,7 +503,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                         $resVectors);
 
         foreach ($resVectors as $nextResVector) {
-            if ($this->_resVector === null) {
+            if($this->_resVector === null) {
                 $this->_resVector = $nextResVector;
             } else {
                 //$this->_resVector = array_intersect_key($this->_resVector, $nextResVector);
@@ -568,7 +568,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
         $required = null;
         foreach ($requiredVectors as $nextResVector) {
-            if ($required === null) {
+            if($required === null) {
                 $required = $nextResVector;
             } else {
                 //$required = array_intersect_key($required, $nextResVector);
@@ -613,7 +613,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
     {
         if ($this->_coord === null) {
             $this->_coord = $reader->getSimilarity()->coord(count($this->_subqueries),
-                                                            count($this->_subqueries));
+                                                            count($this->_subqueries) );
         }
 
         $score = 0;
@@ -798,7 +798,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
             if ($this->_signs === null || $this->_signs[$id] === true) {
                 $query .= '+';
-            } elseif ($this->_signs[$id] === false) {
+            } else if ($this->_signs[$id] === false) {
                 $query .= '-';
             }
 

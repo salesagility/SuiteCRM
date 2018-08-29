@@ -42,6 +42,7 @@ require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups_sugar.php');
 
 class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
 {
+
     function __construct()
     {
         parent::__construct();
@@ -50,12 +51,12 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Line_Item_Groups()
-    {
+    function AOS_Line_Item_Groups(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -64,10 +65,12 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
 
     function save_groups($post_data, $parent, $key = '')
     {
+
         $groups = array();
         $group_count = isset($post_data[$key . 'group_number']) ? count($post_data[$key . 'group_number']) : 0;
         $j = 0;
         for ($i = 0; $i < $group_count; ++$i) {
+
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
@@ -92,6 +95,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
                 if (isset($post_data[$key . 'group_number'][$i])) {
                     $groups[$post_data[$key . 'group_number'][$i]] = $product_quote_group->id;
                 }
+
             }
         }
 

@@ -47,9 +47,11 @@ $app->group('/v8/modules', function () use ($app) {
         $app->get('/menu/modules', 'ModuleController:getModulesMetaMenuModules');
         $app->get('/menu/filters', 'ModuleController:getModulesMetaMenuFilters');
         $app->get('/languages', 'ModuleController:getApplicationMetaLanguages');
+
     });
 
     $app->group('/{module}', function () use ($app) {
+
         $app->get('', 'ModuleController:getModuleRecords');
         $app->post('', 'ModuleController:createModuleRecord');
         $app->get('/viewed', 'ModuleController:getModuleRecordsViewed');

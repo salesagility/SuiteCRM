@@ -294,7 +294,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
             $where->transferFromDOM($child);
             $this->_where = $where;
             break;
-        case $this->lookupNamespace('atom') . ':' . 'link':
+        case $this->lookupNamespace('atom') . ':' . 'link';
             $link = new Zend_Gdata_YouTube_Extension_Link();
             $link->transferFromDOM($child);
             $this->_link[] = $link;

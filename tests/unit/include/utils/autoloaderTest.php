@@ -25,7 +25,7 @@ class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
 
@@ -39,5 +39,7 @@ class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 }

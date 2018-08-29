@@ -20,12 +20,13 @@
  */
 function smarty_function_eval($params, &$smarty)
 {
+
     if (!isset($params['var'])) {
         $smarty->trigger_error("eval: missing 'var' parameter");
         return;
     }
 
-    if ($params['var'] == '') {
+    if($params['var'] == '') {
         return;
     }
 
@@ -44,3 +45,5 @@ function smarty_function_eval($params, &$smarty)
 }
 
 /* vim: set expandtab: */
+
+?>

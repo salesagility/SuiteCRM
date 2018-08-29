@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,10 +47,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 	
-if (!empty($_REQUEST['saved_search_action'])) {
-    $ss = new SavedSearch();
+if(!empty($_REQUEST['saved_search_action'])) {
+
+	$ss = new SavedSearch();
 	
-    switch ($_REQUEST['saved_search_action']) {
+	switch($_REQUEST['saved_search_action']) {
         case 'update': // save here
         	$savedSearchBean = loadBean($_REQUEST['search_module']);
             $ss->handleSave('', true, false, $_REQUEST['saved_search_select'], $savedSearchBean);
@@ -65,27 +64,28 @@ if (!empty($_REQUEST['saved_search_action'])) {
 			$ss->handleDelete($_REQUEST['saved_search_select']);
 			break;			
 	}
-} elseif (!empty($_REQUEST['saved_search_select'])) { // requesting a search here.
-    if (!empty($_REQUEST['searchFormTab'])) { // where is the request from  
+}
+elseif(!empty($_REQUEST['saved_search_select'])) { // requesting a search here.
+    if(!empty($_REQUEST['searchFormTab'])) // where is the request from  
         $searchFormTab = $_REQUEST['searchFormTab'];
-    } else {
+    else 
         $searchFormTab = 'saved_views';
-    }
 
-    if ($_REQUEST['saved_search_select'] == '_none') { // none selected
-        $_SESSION['LastSavedView'][$_REQUEST['search_module']] = '';
+	if($_REQUEST['saved_search_select'] == '_none') { // none selected
+		$_SESSION['LastSavedView'][$_REQUEST['search_module']] = '';
         $current_user->setPreference('ListViewDisplayColumns', array(), 0, $_REQUEST['search_module']);
         $ajaxLoad = empty($_REQUEST['ajax_load']) ? "" : "&ajax_load=" . $_REQUEST['ajax_load'];
         header("Location: index.php?action=index&module={$_REQUEST['search_module']}&searchFormTab={$searchFormTab}&query=true&clear_query=true$ajaxLoad");
-        die();
-    } else {
-        $ss = new SavedSearch();
+		die();
+	}
+	else {
+		
+		$ss = new SavedSearch();
         $show='no';
-        if (isset($_REQUEST['showSSDIV'])) {
-            $show = $_REQUEST['showSSDIV'];
-        }
-        $ss->returnSavedSearch($_REQUEST['saved_search_select'], $searchFormTab, $show);
-    }
-} else {
-    include('modules/SavedSearch/ListView.php');
+        if(isset($_REQUEST['showSSDIV'])){$show = $_REQUEST['showSSDIV'];}
+		$ss->returnSavedSearch($_REQUEST['saved_search_select'], $searchFormTab, $show);
+	}
+}
+else {
+	include('modules/SavedSearch/ListView.php');
 }

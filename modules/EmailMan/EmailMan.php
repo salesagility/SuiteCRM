@@ -273,7 +273,7 @@ class EmailMan extends SugarBean
         return $query['select'] . $query['from'] . $query['where'] . $query['order_by'];
     }
 
-    // if
+// if
 
     /**
      * @param $order_by
@@ -584,9 +584,11 @@ class EmailMan extends SugarBean
                 $retId = $this->ref_email->save();
 
                 foreach ((array)$notes as $note) {
+                    
                     if (!is_object($note)) {
                         LoggerManager::getLogger()->warn('EmailMan create a reference email but given note is not an object. Type of note was: "' . gettype($note) . '"');
                     } else {
+                    
                         if ($note->object_name == 'Note') {
                             if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) {
                                 $file_location = $note->file->temp_file_location;
@@ -602,6 +604,7 @@ class EmailMan extends SugarBean
                             $file_location = "upload://$filename";
                             $mime_type = $note->file_mime_type;
                         }
+                    
                     }
 
                     $noteAudit = new Note();

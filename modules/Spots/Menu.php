@@ -44,11 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings, $app_strings, $sugar_config;
 
-if (ACLController::checkAccess('Spots', 'edit', true)) {
-    $module_menu[]=Array("index.php?module=Spots&action=EditView", $mod_strings['LNK_SPOT_CREATE'],"Create", 'Spots');
-}
-if (ACLController::checkAccess('Spots', 'list', true)) {
-    $module_menu[]=Array("index.php?module=Spots&action=index", $mod_strings['LNK_SPOT_LIST'],"List", 'Spots');
-}
+if(ACLController::checkAccess('Spots', 'edit', true))$module_menu[]=Array("index.php?module=Spots&action=EditView", $mod_strings['LNK_SPOT_CREATE'],"Create", 'Spots');
+if(ACLController::checkAccess('Spots', 'list', true))$module_menu[]=Array("index.php?module=Spots&action=index", $mod_strings['LNK_SPOT_LIST'],"List", 'Spots');
 
 ;

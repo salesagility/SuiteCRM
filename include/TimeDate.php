@@ -709,6 +709,7 @@ class TimeDate
      */
     public function fromDb($date)
     {
+        
         if ($date instanceof DateTime) {
             $date = $date->format(self::DB_DATETIME_FORMAT);
         }
@@ -1681,6 +1682,7 @@ class TimeDate
             } else {
                 $ignoreNextChar = false;
                 $newFormat .= $char;
+
             }
             if ($char == "\\") {
                 $ignoreNextChar = true;
@@ -2076,4 +2078,5 @@ class TimeDate
 
         return '23:00'; //default
     }
+
 }

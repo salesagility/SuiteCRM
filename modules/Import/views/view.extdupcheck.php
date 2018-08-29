@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -55,10 +53,10 @@ class ImportViewExtdupcheck extends ImportView
 {
     protected $pageTitleKey = 'LBL_STEP_DUP_TITLE';
 
-    /**
+ 	/**
      * @see SugarView::display()
      */
-    public function display()
+ 	public function display()
     {
         global $mod_strings, $app_strings, $current_user;
         global $sugar_config;
@@ -77,8 +75,8 @@ class ImportViewExtdupcheck extends ImportView
 
         $dupe_disabled =  array();
 
-        foreach ($dupe_indexes as $dk=>$dv) {
-            $dupe_disabled[] =  array("dupeVal" => $dk, "label" => $dv);
+        foreach($dupe_indexes as $dk=>$dv){
+                $dupe_disabled[] =  array("dupeVal" => $dk, "label" => $dv);
         }
 
 

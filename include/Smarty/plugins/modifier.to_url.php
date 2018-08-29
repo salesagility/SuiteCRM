@@ -77,8 +77,10 @@ r36643 - 2008-06-11 14:28:43 -0700 (Wed, 11 Jun 2008) - dwheeler - bug 20270: Ad
 function smarty_modifier_to_url($string)
 {
     if (preg_match('/^[^:\/]*:\/\/.*/', $string)) {
-        return $string;
+    	return $string;
     } else {
-        return 'http://' . $string;
+    	return 'http://' . $string;
     }
 }
+
+?>

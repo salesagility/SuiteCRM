@@ -364,6 +364,7 @@ class StudioModule
         }
 
         return $layouts;
+
     }
 
     /**
@@ -471,6 +472,7 @@ class StudioModule
         }
 
         return $nodes;
+
     }
 
     /**

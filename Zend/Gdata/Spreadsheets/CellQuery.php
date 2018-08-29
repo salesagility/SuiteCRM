@@ -333,7 +333,7 @@ class Zend_Gdata_Spreadsheets_CellQuery extends Zend_Gdata_Query
     {
         if (is_bool($value)) {
             $this->_params['return-empty'] = ($value?'true':'false');
-        } elseif ($value != null) {
+        } else if ($value != null) {
             $this->_params['return-empty'] = $value;
         } else {
             unset($this->_params['return-empty']);

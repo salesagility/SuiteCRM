@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $app_strings;
 
 $dashletMeta['AORReportsDashlet'] = array('module'		=> 'AOR_Reports',

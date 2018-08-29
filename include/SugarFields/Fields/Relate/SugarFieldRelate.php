@@ -54,7 +54,7 @@ class SugarFieldRelate extends SugarFieldBase
      * @param integer $tabindex
      * @return string
      */
-    public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+   public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $nolink = array('Users', 'Teams');
         if (in_array($vardef['module'], $nolink)) {
@@ -101,6 +101,7 @@ class SugarFieldRelate extends SugarFieldBase
         if (isset($vardef['module']) && preg_match('/Accounts/si', $vardef['module'])
             && isset($displayParams['key']) && isset($displayParams['copy'])
         ) {
+
             if (isset($displayParams['key']) && is_array($displayParams['key'])) {
                 $database_key = $displayParams['key'];
             } else {
@@ -228,6 +229,7 @@ class SugarFieldRelate extends SugarFieldBase
         if (isset($vardef['module']) && preg_match('/Accounts/si', $vardef['module'])
             && isset($displayParams['key']) && isset($displayParams['copy'])
         ) {
+
             if (isset($displayParams['key']) && is_array($displayParams['key'])) {
                 $database_key = $displayParams['key'];
             } else {

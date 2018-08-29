@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,17 +49,20 @@ $sugarbean = new ProjectTask();
 
 // perform the delete if given a record to delete
 
-if (empty($_REQUEST['record'])) {
-    $GLOBALS['log']->info('delete called without a record id specified');
-} else {
-    $record = $_REQUEST['record'];
-    $sugarbean->retrieve($record);
-    if (!$sugarbean->ACLAccess('Delete')) {
-        ACLController::displayNoAccess(true);
-        sugar_cleanup(true);
-    }
-    $GLOBALS['log']->info("deleting record: $record");
-    $sugarbean->mark_deleted($record);
+if(empty($_REQUEST['record']))
+{
+	$GLOBALS['log']->info('delete called without a record id specified');
+}
+else
+{
+	$record = $_REQUEST['record'];
+	$sugarbean->retrieve($record);
+	if(!$sugarbean->ACLAccess('Delete')){
+		ACLController::displayNoAccess(true);
+		sugar_cleanup(true);
+	}
+	$GLOBALS['log']->info("deleting record: $record");
+	$sugarbean->mark_deleted($record);
 }
 
 // handle the return location variables
@@ -79,8 +80,9 @@ $return_location = "index.php?module=$return_module&action=$return_action";
 
 // append the return_id if given
 
-if (!empty($return_id)) {
-    $return_location .= "&record=$return_id";
+if(!empty($return_id))
+{
+	$return_location .= "&record=$return_id";
 }
 
 // now that the delete has been performed, return to given location

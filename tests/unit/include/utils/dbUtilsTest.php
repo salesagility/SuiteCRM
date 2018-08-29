@@ -50,7 +50,7 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns expected values
 
@@ -61,6 +61,8 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
+        
+        
     }
 
     public function testfrom_db_convert()

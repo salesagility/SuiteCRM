@@ -77,7 +77,7 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         // execute the method and test it returns 1 role
         // if the test suite run runs RolesTest first.
@@ -89,6 +89,8 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
+        
+        
     }
 
     public function testget_user_allowed_modules()
@@ -102,6 +104,7 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_user_disallowed_modules()
     {
+        
         self::markTestIncomplete('Test fails only in travis and php7, Test has environment specific issue.');
         
         //execute the method and test it it returns expected contents

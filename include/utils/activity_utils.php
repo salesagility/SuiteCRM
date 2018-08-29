@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,11 +39,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-function build_related_list_by_user_id($bean, $user_id,$where)
-{
+function build_related_list_by_user_id($bean, $user_id,$where) {
     $bean_id_name = strtolower($bean->object_name).'_id';
 
-    if (isset($bean->rel_users_table) && !empty($bean->rel_users_table)) {
+    if(isset($bean->rel_users_table) && !empty($bean->rel_users_table)) {
         $select = "SELECT {$bean->table_name}.* from {$bean->rel_users_table},{$bean->table_name} ";
 
         $auto_where = ' WHERE ';
@@ -92,7 +89,7 @@ function build_related_list_by_user_id($bean, $user_id,$where)
         }
 
         return $list;
-    } else {
+    }else{
         $select = "SELECT {$bean->table_name}.* from {$bean->table_name} ";
 
         $auto_where = ' WHERE ';

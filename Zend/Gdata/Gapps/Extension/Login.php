@@ -205,7 +205,7 @@ class Zend_Gdata_Gapps_Extension_Login extends Zend_Gdata_Extension
             if ($attribute->nodeValue == "true") {
                 $this->_admin = true;
             }
-            elseif ($attribute->nodeValue == "false") {
+            else if ($attribute->nodeValue == "false") {
                 $this->_admin = false;
             }
             else {
@@ -217,7 +217,7 @@ class Zend_Gdata_Gapps_Extension_Login extends Zend_Gdata_Extension
             if ($attribute->nodeValue == "true") {
                 $this->_agreedToTerms = true;
             }
-            elseif ($attribute->nodeValue == "false") {
+            else if ($attribute->nodeValue == "false") {
                 $this->_agreedToTerms = false;
             }
             else {
@@ -229,7 +229,7 @@ class Zend_Gdata_Gapps_Extension_Login extends Zend_Gdata_Extension
             if ($attribute->nodeValue == "true") {
                 $this->_suspended = true;
             }
-            elseif ($attribute->nodeValue == "false") {
+            else if ($attribute->nodeValue == "false") {
                 $this->_suspended = false;
             }
             else {
@@ -241,7 +241,7 @@ class Zend_Gdata_Gapps_Extension_Login extends Zend_Gdata_Extension
             if ($attribute->nodeValue == "true") {
                 $this->_changePasswordAtNextLogin = true;
             }
-            elseif ($attribute->nodeValue == "false") {
+            else if ($attribute->nodeValue == "false") {
                 $this->_changePasswordAtNextLogin = false;
             }
             else {

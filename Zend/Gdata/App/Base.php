@@ -477,7 +477,7 @@ abstract class Zend_Gdata_App_Base
         $method = 'get'.ucfirst($name);
         if (method_exists($this, $method)) {
             return call_user_func(array(&$this, $method));
-        } elseif (property_exists($this, "_${name}")) {
+        } else if (property_exists($this, "_${name}")) {
             return $this->{'_' . $name};
         } else {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
@@ -503,7 +503,7 @@ abstract class Zend_Gdata_App_Base
         $method = 'set'.ucfirst($name);
         if (method_exists($this, $method)) {
             return call_user_func(array(&$this, $method), $val);
-        } elseif (isset($this->{'_' . $name}) || ($this->{'_' . $name} === null)) {
+        } else if (isset($this->{'_' . $name}) || ($this->{'_' . $name} === null)) {
             $this->{'_' . $name} = $val;
         } else {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';

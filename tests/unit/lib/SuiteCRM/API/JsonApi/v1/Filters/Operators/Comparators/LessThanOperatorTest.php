@@ -23,7 +23,7 @@ class LessThanOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][Comparators][LessThanOperator][isValid][expected type to be string] $operator'),
-            function () {
+            function() {
                 self::$operator->isValid(array());
             }
         );
@@ -31,7 +31,7 @@ class LessThanOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testIsValidTagWithInvalidName()
     {
-        $this->assertFalse(self::$operator->isValid(self::$operator->toFilterTag('eq2')));
+        $this->assertFalse(self::$operator->isValid( self::$operator->toFilterTag('eq2')));
     }
 
     public function testToFilterOperator()

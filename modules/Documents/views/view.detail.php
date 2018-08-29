@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -44,30 +42,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class DocumentsViewDetail extends ViewDetail
+class DocumentsViewDetail extends ViewDetail 
 {
-    /**
+ 	/**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        $params = array();
-        $params[] = $this->_getModuleTitleListParam($browserTitle);
-        $params[] = $this->bean->document_name;
+	protected function _getModuleTitleParams($browserTitle = false)
+	{
+    	$params = array();
+    	$params[] = $this->_getModuleTitleListParam($browserTitle);
+    	$params[] = $this->bean->document_name;
     	
-        return $params;
+		return $params;
     }
 
     public function display()
-    {
-        //check to see if the file field is empty.  This should not occur and would only happen when an error has ocurred during upload, or from db manipulation of record.
-        if (empty($this->bean->filename)) {
-            //print error to screen
+ 	{
+	//check to see if the file field is empty.  This should not occur and would only happen when an error has ocurred during upload, or from db manipulation of record.
+         if(empty($this->bean->filename)){
+	    //print error to screen
             $this->errors[] = $GLOBALS['mod_strings']['ERR_MISSING_FILE'];
             $this->displayErrors();
-        }
+         }
 
 
         parent::display();
     }
+    
 }

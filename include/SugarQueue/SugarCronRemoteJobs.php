@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -70,7 +68,7 @@ class SugarCronRemoteJobs extends SugarCronJobs
     public function __construct()
     {
         parent::__construct();
-        if (!empty($GLOBALS['sugar_config']['job_server'])) {
+        if(!empty($GLOBALS['sugar_config']['job_server'])) {
             $this->jobserver = $GLOBALS['sugar_config']['job_server'];
         }
         $this->setClient(new SugarHttpClient());
@@ -103,9 +101,9 @@ class SugarCronRemoteJobs extends SugarCronJobs
     {
         $data = http_build_query(array("data" => json_encode(array("job" => $job->id, "client" => $this->getMyId(), "instance" => $GLOBALS['sugar_config']['site_url']))));
         $response = $this->client->callRest($this->jobserver.$this->submitURL, $data);
-        if (!empty($response)) {
+        if(!empty($response)) {
             $result = json_decode($response, true);
-            if (empty($result) || empty($result['ok']) || $result['ok'] != $job->id) {
+            if(empty($result) || empty($result['ok']) || $result['ok'] != $job->id) {
                 $GLOBALS['log']->debug("CRON Remote: Job {$job->id} not accepted by server: $response");
                 $this->jobFailed($job);
                 $job->failJob("Job not accepted by server: $response");
@@ -116,5 +114,6 @@ class SugarCronRemoteJobs extends SugarCronJobs
             $job->failJob("Could not connect to job server");
         }
     }
+
 }
 

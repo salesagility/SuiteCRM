@@ -104,16 +104,16 @@ class EAPM extends Basic
             }
             $eapmBean = $eapmBean->retrieve_by_string_fields($queryArray, false);
 
-            // Don't cache the include inactive results
-            if (!$includeInactive) {
-                if ($eapmBean != null) {
-                    $_SESSION['EAPM'][$application] = $eapmBean->toArray();
-                } else {
-                    $_SESSION['EAPM'][$application] = '';
+           // Don't cache the include inactive results
+           if (!$includeInactive) {
+               if ($eapmBean != null) {
+                   $_SESSION['EAPM'][$application] = $eapmBean->toArray();
+               } else {
+                   $_SESSION['EAPM'][$application] = '';
 
-                    return;
-                }
-            }
+                   return;
+               }
+           }
         }
 
         if (isset($eapmBean->password)) {
@@ -155,10 +155,10 @@ class EAPM extends Basic
 
         $parentRet = parent::save($check_notify);
 
-        // Nuke the EAPM cache for this record
-        if (isset($_SESSION['EAPM'][$this->application])) {
-            unset($_SESSION['EAPM'][$this->application]);
-        }
+       // Nuke the EAPM cache for this record
+       if (isset($_SESSION['EAPM'][$this->application])) {
+           unset($_SESSION['EAPM'][$this->application]);
+       }
 
         return $parentRet;
     }
@@ -166,9 +166,9 @@ class EAPM extends Basic
     public function mark_deleted($id)
     {
         // Nuke the EAPM cache for this record
-        if (isset($_SESSION['EAPM'][$this->application])) {
-            unset($_SESSION['EAPM'][$this->application]);
-        }
+       if (isset($_SESSION['EAPM'][$this->application])) {
+           unset($_SESSION['EAPM'][$this->application]);
+       }
 
         return parent::mark_deleted($id);
     }
@@ -179,18 +179,18 @@ class EAPM extends Basic
             return false;
         }
         // Don't use save, it will attempt to revalidate
-        $adata = DBManagerFactory::getInstance()->quote(isset($this->api_data) ? $this->api_data : null);
+       $adata = DBManagerFactory::getInstance()->quote(isset($this->api_data) ? $this->api_data : null);
         DBManagerFactory::getInstance()->query("UPDATE eapm SET validated=1,api_data='$adata'  WHERE id = '{$this->id}' AND deleted = 0");
         if (!$this->deleted && !empty($this->application)) {
             // deactivate other EAPMs with same app
-            $sql = "UPDATE eapm SET deleted=1 WHERE application = '{$this->application}' AND id != '{$this->id}' AND deleted = 0 AND assigned_user_id = '{$this->assigned_user_id}'";
+           $sql = "UPDATE eapm SET deleted=1 WHERE application = '{$this->application}' AND id != '{$this->id}' AND deleted = 0 AND assigned_user_id = '{$this->assigned_user_id}'";
             DBManagerFactory::getInstance()->query($sql, true);
         }
 
-        // Nuke the EAPM cache for this record
-        if (isset($_SESSION['EAPM'][$this->application])) {
-            unset($_SESSION['EAPM'][$this->application]);
-        }
+       // Nuke the EAPM cache for this record
+       if (isset($_SESSION['EAPM'][$this->application])) {
+           unset($_SESSION['EAPM'][$this->application]);
+       }
     }
 
     protected function fillInName()

@@ -13,7 +13,8 @@ class ViewImportvcardTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
-        if (isset($_REQUEST)) {
+        
+        if(isset($_REQUEST)) {
             $request = $_REQUEST;
         }
 
@@ -30,7 +31,7 @@ class ViewImportvcardTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
          
         // cleanup
         
-        if (isset($request)) {
+        if(isset($request)) {
             $_REQUEST = $request;
         } else {
             unset($_REQUEST);

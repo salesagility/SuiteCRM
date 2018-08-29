@@ -54,9 +54,7 @@ class SugarCache
      */
     public static $isCacheReset = false;
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * initializes the cache in question
@@ -65,22 +63,21 @@ class SugarCache
     {
         $lastPriority = 1000;
         $locations = array('include/SugarCache','custom/include/SugarCache');
-        foreach ($locations as $location) {
+ 	    foreach ( $locations as $location ) {
             if (is_dir($location) && $dir = opendir($location)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
                             || $file == "."
                             || !is_file("$location/$file")
-                            ) {
+                            )
                         continue;
-                    }
                     require_once("$location/$file");
                     $cacheClass = basename($file, ".php");
-                    if (class_exists($cacheClass) && is_subclass_of($cacheClass,'SugarCacheAbstract')) {
+                    if ( class_exists($cacheClass) && is_subclass_of($cacheClass,'SugarCacheAbstract') ) {
                         $GLOBALS['log']->debug("Found cache backend $cacheClass");
                         $cacheInstance = new $cacheClass();
-                        if ($cacheInstance->useBackend()
-                                && $cacheInstance->getPriority() < $lastPriority) {
+                        if ( $cacheInstance->useBackend()
+                                && $cacheInstance->getPriority() < $lastPriority ) {
                             $GLOBALS['log']->debug("Using cache backend $cacheClass, since ".$cacheInstance->getPriority()." is less than ".$lastPriority);
                             self::$_cacheInstance = $cacheInstance;
                             $lastPriority = $cacheInstance->getPriority();
@@ -97,9 +94,8 @@ class SugarCache
      */
     public static function instance()
     {
-        if (!is_subclass_of(self::$_cacheInstance,'SugarCacheAbstract')) {
+        if ( !is_subclass_of(self::$_cacheInstance,'SugarCacheAbstract') )
             self::_init();
-        }
 
         return self::$_cacheInstance;
     }
@@ -112,23 +108,23 @@ class SugarCache
     public static function cleanOpcodes()
     {
         // APC
-        if (function_exists('apc_clear_cache') && ini_get('apc.stat') == 0) {
+        if ( function_exists('apc_clear_cache') && ini_get('apc.stat') == 0 ) {
             apc_clear_cache();
         }
         // Wincache
-        if (function_exists('wincache_refresh_if_changed')) {
+        if ( function_exists('wincache_refresh_if_changed') ) {
             wincache_refresh_if_changed();
         }
         // Zend
-        if (function_exists('accelerator_reset')) {
+        if ( function_exists('accelerator_reset') ) {
             accelerator_reset();
         }
         // eAccelerator
-        if (function_exists('eaccelerator_clear')) {
+        if ( function_exists('eaccelerator_clear') ) {
             eaccelerator_clear();
         }
         // XCache
-        if (function_exists('xcache_clear_cache') && !ini_get('xcache.admin.enable_auth')) {
+        if ( function_exists('xcache_clear_cache') && !ini_get('xcache.admin.enable_auth') ) {
             $max = xcache_count(XC_TYPE_PHP);
             for ($i = 0; $i < $max; $i++) {
                 if (!xcache_clear_cache(XC_TYPE_PHP, $i)) {
@@ -137,7 +133,7 @@ class SugarCache
             }
         }
         // Zend OPcache
-        if (function_exists('opcache_reset')) {
+        if ( function_exists('opcache_reset') ) {
             opcache_reset();
         }
     }
@@ -145,11 +141,12 @@ class SugarCache
     /**
      * Try to reset file from caches
      */
-    public static function cleanFile($file)
+    public static function cleanFile( $file )
     {
         // APC
-        if (function_exists('apc_delete_file') && ini_get('apc.stat') == 0) {
-            apc_delete_file($file);
+        if ( function_exists('apc_delete_file') && ini_get('apc.stat') == 0 )
+        {
+            apc_delete_file( $file );
         }
     }
 }

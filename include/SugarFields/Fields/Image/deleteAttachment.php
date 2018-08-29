@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,10 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
     $bean = BeanFactory::getBean($_REQUEST['module'], $_REQUEST[$field . "_record_id"]);
 
 
-if (file_exists($removeFile)) {
-    if (!unlink($removeFile)) {
+if(file_exists($removeFile)) {
+    if(!unlink($removeFile)) {
         $GLOBALS['log']->error("*** Could not unlink() file: [ {$removeFile} ]");
-    } else {
+    }else{
         $bean->$field = '';
         $bean->save();
         echo "true";

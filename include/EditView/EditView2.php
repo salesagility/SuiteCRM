@@ -451,6 +451,7 @@ class EditView
                         }
 
                         $itemCount++;
+
                     }
                 }
 
@@ -935,6 +936,7 @@ class EditView
 
                 $group_count = $groupFocus->getMembershipCount($current_user->id);
                 if ($group_count > 1) {
+
                     $groups = $groupFocus->getUserSecurityGroups($current_user->id);
                     $group_options = '';
                     foreach ($groups as $group) {

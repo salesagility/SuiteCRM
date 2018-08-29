@@ -764,7 +764,6 @@ class FormulaCalculator
                 } else {
                     return 0;
                 }
-                // no break
             case 'DailyCounterPerUser':
                 if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] ===
                     date('Y-m-d')
@@ -773,7 +772,6 @@ class FormulaCalculator
                 } else {
                     return 0;
                 }
-                // no break
             case 'DailyCounterPerModule':
                 if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] ===
                     date('Y-m-d')
@@ -782,7 +780,6 @@ class FormulaCalculator
                 } else {
                     return 0;
                 }
-                // no break
             case 'DailyCounterPerUserPerModule':
                 if ($this->configurator->config[FormulaCalculator::CONFIGURATOR_NAME]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] ===
                     date('Y-m-d')

@@ -33,7 +33,7 @@ class AOW_ProcessedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aowProcessed = new AOW_Processed();
         $this->assertEquals(false, $aowProcessed->bean_implements('')); //test with blank value
@@ -41,5 +41,7 @@ class AOW_ProcessedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $aowProcessed->bean_implements('ACL')); //test with valid value
         
         // clean up
+        
+        
     }
 }

@@ -98,7 +98,7 @@ $dictionary['AOR_Chart'] = array(
 	'unified_search'=>true,
 );
 
-if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
 }
 VardefManager::createVardef('AOR_Charts','AOR_Chart', array('basic'));

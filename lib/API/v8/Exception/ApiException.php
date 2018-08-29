@@ -107,7 +107,7 @@ class ApiException extends LangException
      */
     public function setSource($source)
     {
-        if (is_string($source)) {
+        if(is_string($source)) {
             $source = ['pointer' => $source];
         }
         $this->source = $source;
@@ -117,8 +117,7 @@ class ApiException extends LangException
      * 
      * @return array
      */
-    public function getSource()
-    {
+    public function getSource() {
         return $this->source;
     }
 

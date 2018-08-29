@@ -81,12 +81,12 @@ class AOR_Field extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Field()
-    {
+    function AOR_Field(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -95,14 +95,18 @@ class AOR_Field extends Basic
 
     function save_lines($post_data, $parent, $key = '')
     {
+
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         $line_count = count($post_data[$key . 'field']);
         for ($i = 0; $i < $line_count; ++$i) {
+
+            
             if (!isset($post_data[$key . 'deleted'][$i])) {
                 LoggerManager::getLogger()->warn('AOR field save line error: Post data deleted key not found at index. Key and index were: [' . $key . '], [' . $i . ']');
                 $postDataKeyDeleted = null;
-            } else {
+            }
+            else {
                 $postDataKeyDeleted = $post_data[$key . 'deleted'][$i];
             }
             
@@ -128,7 +132,7 @@ class AOR_Field extends Basic
                         if ($field_name != 'group_display' && isset($postField[$i])) {
                             if (is_array($postField[$i])) {
                                 $postField[$i] = base64_encode(serialize($postField[$i]));
-                            } elseif ($field_name == 'value') {
+                            } else if ($field_name == 'value') {
                                 $postField[$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $postField[$i]);
                             }
                             if ($field_name == 'module_path') {
@@ -136,11 +140,12 @@ class AOR_Field extends Basic
                             }
                             $field->$field_name = $postField[$i];
                         }
-                    } elseif (is_null($postField)) {
+                    } else if (is_null($postField)) {
                         // do nothing
                     } else {
                         throw new Exception('illegal type in post data at key ' . $key . $field_name . ' ' . gettype($postField));
                     }
+
                 }
                 if (trim($field->field) != '') {
                     $field->aor_report_id = $parent->id;
@@ -149,4 +154,5 @@ class AOR_Field extends Basic
             }
         }
     }
+
 }

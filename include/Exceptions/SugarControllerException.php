@@ -48,4 +48,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarControllerException extends Exception
 {
+
 }

@@ -38,7 +38,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $document = new Document();
 
@@ -72,6 +72,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('documents');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
+        
     }
 
     public function testget_summary_text()
@@ -126,7 +127,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $document = new Document();
@@ -144,6 +145,8 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popGlobals();
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -181,7 +184,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushTable('cron_remove_documents');
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $document = new Document();
@@ -200,6 +203,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('cron_remove_documents');
+        
     }
 
     public function testcreate_export_query()
@@ -270,7 +274,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $document = new Document();
@@ -284,6 +288,8 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testbean_implements()

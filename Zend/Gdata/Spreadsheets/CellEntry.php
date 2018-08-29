@@ -70,7 +70,7 @@ class Zend_Gdata_Spreadsheets_CellEntry extends Zend_Gdata_Entry
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-        case $this->lookupNamespace('gs') . ':' . 'cell':
+        case $this->lookupNamespace('gs') . ':' . 'cell';
             $cell = new Zend_Gdata_Spreadsheets_Extension_Cell();
             $cell->transferFromDOM($child);
             $this->_cell = $cell;

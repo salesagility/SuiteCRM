@@ -62,15 +62,15 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testexecute()
     {
-        // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        // test
+	// test
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $SugarController = new SugarController();
@@ -109,7 +109,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $SugarController = new SugarController();
@@ -124,11 +124,13 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testpre_save()
     {
-        if (isset($_SESSION)) {
+        if(isset($_SESSION)) {
             $session = $_SESSION;
         }
         
@@ -156,7 +158,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // cleanup
         
-        if (isset($session)) {
+        if(isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);
@@ -168,11 +170,12 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testaction_save()
     {
+        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
-        if (isset($_SESSION)) {
+        if(isset($_SESSION)) {
             $session = $_SESSION;
         }
         
@@ -201,7 +204,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // cleanup
         
-        if (isset($session)) {
+        if(isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -54,17 +52,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  
 require_once('include/MVC/View/SugarView.php');
 
-class ContactsViewValidPortalUsername extends SugarView
+class ContactsViewValidPortalUsername extends SugarView 
 {
-    /**
+ 	/**
      * @see SugarView::process()
      */
-    public function process()
-    {
-        $this->display();
-    }
+    public function process() 
+ 	{
+		$this->display();
+ 	}
 
-    /**
+ 	/**
      * @see SugarView::display()
      */
     public function display()
@@ -73,12 +71,11 @@ class ContactsViewValidPortalUsername extends SugarView
             $portalUsername = $this->bean->db->quote($_REQUEST['portal_name']);
             $result = $this->bean->db->query("Select count(id) as total from contacts where portal_name = '$portalUsername' and deleted='0'");
             $total = 0;
-            while ($row = $this->bean->db->fetchByAssoc($result)) {
+            while($row = $this->bean->db->fetchByAssoc($result))
                 $total = $row['total'];
-            }
             echo $total;
-        } else {
-            echo '0';
         }
-    }
+        else
+           echo '0';
+ 	}	
 }

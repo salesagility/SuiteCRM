@@ -63,6 +63,7 @@ class AlertsViewDefault extends SugarView
      */
     public function preDisplay()
     {
+
     }
 
     /**

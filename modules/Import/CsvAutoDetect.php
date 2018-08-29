@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -87,8 +85,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/parsecsv.lib.php');
 
-class CsvAutoDetect
-{
+class CsvAutoDetect {
+
     protected $_parser = null;
 
     protected $_csv_file = null;
@@ -129,8 +127,7 @@ class CsvAutoDetect
      * @param string $csv_filename
      * @param int $max_depth
      */
-    public function __construct($csv_filename, $max_depth = 2)
-    {
+    public function __construct($csv_filename, $max_depth = 2) {
         $this->_csv_file = $csv_filename;
 
         $this->_parser = new parseCSV();
@@ -151,8 +148,7 @@ class CsvAutoDetect
      * @param string $enclosure
      * @return bool true if settings are found, false otherwise
      */
-    public function getCsvSettings(&$delimiter, &$enclosure)
-    {
+    public function getCsvSettings(&$delimiter, &$enclosure) {
         // try parsing the file to find possible delimiter and enclosure
         $this->_parser->heading = false;
 
@@ -233,7 +229,7 @@ class CsvAutoDetect
                 $delimiter = $delimiter1;
                 $enclosure = "\"";
                 $found_setting = true;
-            } elseif ($singleQuoteParsedOK) {
+            } else if ($singleQuoteParsedOK) {
                 // otherwise, if single quote parsed ok, let's use it
                 $delimiter = $delimiter2;
                 $enclosure = "'";
@@ -256,8 +252,8 @@ class CsvAutoDetect
      * @param bool $heading true of it has header, false if not
      * @return bool true if header is found, false if error
      */
-    public function hasHeader(&$heading, $module, $encoding = null)
-    {
+    public function hasHeader(&$heading, $module, $encoding = null) {
+
         if (!$this->_parsed) {
             return false;
         }
@@ -279,15 +275,18 @@ class CsvAutoDetect
 
         global $locale;
         // process only the first row
-        foreach ($this->_parser->data[0] as $val) {
-            if (!empty($encoding)) {
+        foreach ($this->_parser->data[0] as $val)
+        {
+            if (!empty($encoding))
+            {
                 // Convert all values to UTF-8
                 $val = $locale->translateCharset($val, $encoding);
             }
             
             // bug51433 - everything relies on $val having a value so if it's empty,
             // we can skip this iteration and not get warnings
-            if (!empty($val)) {
+            if( !empty( $val ) )
+            {
                 foreach ($bean->field_defs as $field_name=>$defs) {
 
                     // check if the CSV item matches field name
@@ -296,12 +295,13 @@ class CsvAutoDetect
                         break;
                     }
                     // check if the CSV item is part of the label or vice versa
-                    elseif (isset($defs['vname']) && isset($mod_strings[$defs['vname']])) {
+                    else if (isset($defs['vname']) && isset($mod_strings[$defs['vname']])) {
                         if (stripos(trim($mod_strings[$defs['vname']],':'), $val) !== false || stripos($val, trim($mod_strings[$defs['vname']],':')) !== false) {
                             $match_count++;
                             break;
                         }
-                    } elseif (isset($defs['vname']) && isset($GLOBALS['app_strings'][$defs['vname']])) {
+                    }
+                    else if (isset($defs['vname']) && isset($GLOBALS['app_strings'][$defs['vname']])) {
                         if (stripos(trim($GLOBALS['app_strings'][$defs['vname']],':'), $val) !== false || stripos($val, trim($GLOBALS['app_strings'][$defs['vname']],':')) !== false) {
                             $match_count++;
                             break;
@@ -328,8 +328,8 @@ class CsvAutoDetect
      * @param array $formats
      * @return mixed possible format if found, false otherwise
      */
-    protected function getFormat(&$formats)
-    {
+    protected function getFormat(&$formats) {
+
         if (!$this->_parsed) {
             return false;
         }
@@ -337,8 +337,11 @@ class CsvAutoDetect
         $depth = 1;
 
         foreach ($this->_parser->data as $row) {
+
             foreach ($row as $val) {
+
                 foreach ($formats as $format=>$regex) {
+
                     $ret = preg_match($regex, $val);
                     if ($ret) {
                         return $format;
@@ -362,8 +365,8 @@ class CsvAutoDetect
      *
      * @return mixed possible date format if found, false otherwise
      */
-    public function getDateFormat()
-    {
+    public function getDateFormat() {
+
         $format = $this->getFormat(self::$_date_formats);
 
         return $format;
@@ -375,11 +378,12 @@ class CsvAutoDetect
      *
      * @return mixed possible time format if found, false otherwise
      */
-    public function getTimeFormat()
-    {
+    public function getTimeFormat() {
+
         $format = $this->getFormat(self::$_time_formats);
 
         return $format;
     }
+
 }
 

@@ -121,6 +121,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
                                      . iconv($defaultEncoding, 'UTF-8//IGNORE', $htmlData)
                                      . '</body></html>');
             }
+
         }
         /** @todo Add correction of wrong HTML encoding recognition processing
          * The case is:
@@ -160,7 +161,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         $linkNodes = $this->_doc->getElementsByTagName('a');
         foreach ($linkNodes as $linkNode) {
             if (($href = $linkNode->getAttribute('href')) != '' &&
-                (!self::$_excludeNoFollowLinks  ||  strtolower($linkNode->getAttribute('rel')) != 'nofollow')
+                (!self::$_excludeNoFollowLinks  ||  strtolower($linkNode->getAttribute('rel')) != 'nofollow' )
                ) {
                 $this->_links[] = $href;
             }
@@ -168,7 +169,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         $linkNodes = $this->_doc->getElementsByTagName('area');
         foreach ($linkNodes as $linkNode) {
             if (($href = $linkNode->getAttribute('href')) != '' &&
-                (!self::$_excludeNoFollowLinks  ||  strtolower($linkNode->getAttribute('rel')) != 'nofollow')
+                (!self::$_excludeNoFollowLinks  ||  strtolower($linkNode->getAttribute('rel')) != 'nofollow' )
                ) {
                 $this->_links[] = $href;
             }
@@ -216,10 +217,10 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     {
         if ($node->nodeType == XML_TEXT_NODE) {
             $text .= $node->nodeValue;
-            if (!in_array($node->parentNode->tagName, $this->_inlineTags)) {
+            if(!in_array($node->parentNode->tagName, $this->_inlineTags)) {
                 $text .= ' ';
             }
-        } elseif ($node->nodeType == XML_ELEMENT_NODE  &&  $node->nodeName != 'script') {
+        } else if ($node->nodeType == XML_ELEMENT_NODE  &&  $node->nodeName != 'script') {
             foreach ($node->childNodes as $childNode) {
                 $this->_retrieveNodeText($childNode, $text);
             }

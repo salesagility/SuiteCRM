@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -181,7 +179,10 @@ $layout_defs['UserRoles']['subpanel_setup']['securitygroups'] = array(
 
 
 if (is_admin($current_user)) {
+
     $layout_defs['Users']['subpanel_setup']['securitygroups']['subpanel_name'] = 'ForUsers';
 } else {
+
     $layout_defs['Users']['subpanel_setup']['securitygroups']['top_buttons'] = array();
+
 }

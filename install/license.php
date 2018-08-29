@@ -41,12 +41,12 @@
 
 
 global $sugar_version, $js_custom_version;
-if (!isset($install_script) || !$install_script) {
+if( !isset( $install_script ) || !$install_script ){
     die('Unable to process script directly.');
 }
 
 // setup session variables (and their defaults) if this page has not yet been submitted
-if (!isset($_SESSION['license_submitted']) || !$_SESSION['license_submitted']) {
+if(!isset($_SESSION['license_submitted']) || !$_SESSION['license_submitted']){
     $_SESSION['setup_license_accept'] = false;
 }
 

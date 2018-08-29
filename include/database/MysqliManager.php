@@ -132,11 +132,11 @@ class MysqliManager extends MysqlManager
         $this->checkConnection();
         $this->query_time = microtime(true);
         $this->lastsql = $sql;
-        if (!empty($sql)) {
+        if(!empty($sql)) {
             if ($this->database instanceof mysqli) {
                 $result = $suppress ? @mysqli_query($this->database, $sql) : mysqli_query($this->database, $sql);
-                if ($result === false && !$suppress) {
-                    if (inDeveloperMode()) {
+                if($result === false && !$suppress) {
+                    if(inDeveloperMode()) {
                         LoggerManager::getLogger()->debug('Mysqli_query failed, error was: ' . $this->lastDbError() . ', query was: ');
                     }
                     LoggerManager::getLogger()->fatal('Mysqli_query failed.');
@@ -216,7 +216,7 @@ class MysqliManager extends MysqlManager
         }
         if (!empty($this->database)) {
             $this->freeResult();
-            if (!@mysqli_close($this->database)) {
+            if(!@mysqli_close($this->database)) {
                 $GLOBALS['log']->fatal('mysqli_close() failed');
             }
             $this->database = null;

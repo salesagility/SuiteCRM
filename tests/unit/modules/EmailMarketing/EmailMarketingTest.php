@@ -24,7 +24,7 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $emailMarketing = new EmailMarketing();
 
@@ -32,6 +32,8 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertInstanceOf('EmailMarketing', $result);
         
         // clean up
+        
+        
     }
 
     public function testget_summary_text()
@@ -48,7 +50,7 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
-        // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();

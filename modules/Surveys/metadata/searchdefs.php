@@ -64,3 +64,4 @@ $searchdefs[$module_name] = array(
         ),
     ),
 );
+?>

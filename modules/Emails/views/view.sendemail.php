@@ -66,7 +66,7 @@ class EmailsViewSendEmail extends ViewAjax
         global $app_strings;
         $response = array();
 
-        if (empty($this->bean->status)) {
+        if(empty($this->bean->status)) {
             $this->bean->status = $_REQUEST['status'];
         }
 
@@ -98,4 +98,5 @@ class EmailsViewSendEmail extends ViewAjax
 
         echo json_encode($response);
     }
+
 }

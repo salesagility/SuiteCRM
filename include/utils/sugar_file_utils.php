@@ -425,7 +425,7 @@ function sugar_cached($file)
  */
 function sugar_is_dir($path)
 {
-    if (isset($GLOBALS['log'])) {
+    if(isset($GLOBALS['log'])) {
         $GLOBALS['log']->deprecated('sugar_file_utils.php: sugar_is_dir() is deprecated');
     }
     return is_dir($path);
@@ -440,7 +440,7 @@ function sugar_is_dir($path)
  */
 function sugar_is_file($path)
 {
-    if (isset($GLOBALS['log'])) {
+    if(isset($GLOBALS['log'])) {
         $GLOBALS['log']->deprecated('sugar_file_utils.php: sugar_is_file() is deprecated');
     }
     return is_file($path);

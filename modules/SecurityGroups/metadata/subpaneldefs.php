@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $modules_exempt_from_availability_check;
 $modules_exempt_from_availability_check['ACLRoles'] = 'ACLRoles';
@@ -57,11 +55,12 @@ $layout_defs['SecurityGroupRoles'] = array(
 	),
 	);
 global $current_user;
-if (is_admin($current_user)) {
-    $layout_defs['SecurityGroups']['subpanel_setup']['aclroles']['subpanel_name'] = 'admin';
-    $layout_defs['SecurityGroupRoles']['subpanel_setup']['aclroles']['subpanel_name'] = 'admin';
-} else {
-    $layout_defs['SecurityGroups']['subpanel_setup']['aclroles']['top_buttons'] = array();
+if(is_admin($current_user)){
+	$layout_defs['SecurityGroups']['subpanel_setup']['aclroles']['subpanel_name'] = 'admin';
+	$layout_defs['SecurityGroupRoles']['subpanel_setup']['aclroles']['subpanel_name'] = 'admin';
+}else{
 	
-    $layout_defs['SecurityGroupRoles']['subpanel_setup']['aclroles']['top_buttons'] = array();
+	$layout_defs['SecurityGroups']['subpanel_setup']['aclroles']['top_buttons'] = array();
+	
+	$layout_defs['SecurityGroupRoles']['subpanel_setup']['aclroles']['top_buttons'] = array();
 }

@@ -52,6 +52,7 @@ require_once('SugarWebServiceUtilv3_1.php');
 
 class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
 {
+
     public function __construct()
     {
         self::$helperObject = new SugarWebServiceUtilv3_1();
@@ -90,6 +91,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
      */
     function get_module_fields_md5($session, $module_name)
     {
+
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_fields_md5(v3_1) for module: ' . print_r($module_name,
                 true));
 
@@ -241,6 +243,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
                 $seed->retrieve($value['value']);
                 break;
             } elseif ($name === 'id') {
+
                 $seed->retrieve($value);
             }
         }
@@ -592,6 +595,7 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3
         $deleted,
         $favorites = false
     ) {
+
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_entry_list');
         global $beanList, $beanFiles;
         $error = new SoapError();

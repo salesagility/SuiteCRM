@@ -99,6 +99,7 @@ if (isset($_REQUEST['guid'])) {
             // if the form is filled and we want to login
             if (isset($_REQUEST['login']) && $_REQUEST['login'] == '1') {
                 if ($row['username'] == $_POST['user_name']) {
+
                     $password = $_POST['new_password'];
                     $usr = new user();
                     $errors = $usr->passwordValidationCheck($password);

@@ -117,7 +117,7 @@ class Zend_Gdata_Gbase extends Zend_Gdata
     {
         if ($location === null) {
             $uri = self::GBASE_ITEM_FEED_URI;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -137,7 +137,7 @@ class Zend_Gdata_Gbase extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -199,7 +199,7 @@ class Zend_Gdata_Gbase extends Zend_Gdata
     {
         if ($location === null) {
             $uri = self::GBASE_SNIPPET_FEED_URI;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;

@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,42 +41,42 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class NotesParseRule extends BaseRule
-{
-    function __construct()
-    {
-    }
+class NotesParseRule extends BaseRule {
+
+function __construct() {
+
+}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function NotesParseRule()
-    {
+    function NotesParseRule(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function preParse($panels, $view)
-    {
-        foreach ($panels as $name=>$panel) {
-            foreach ($panel as $rowCount=>$row) {
-                foreach ($row as $key=>$column) {
-                    if ($this->matches($column, '/^related_doc_id$/')) {
-                        $panels[$name][$rowCount][$key] = 'related_doc_name';
-                    } elseif ($this->matches($column, '/^related_doc_rev_id$/')) {
-                        $panels[$name][$rowCount][$key] = ($view == 'EditView') ? 'related_doc_rev_number' : 'related_doc_name';
-                    } elseif ($this->matches($column, '/^filelink$/')) {
-                        $panels[$name][$rowCount][$key] = 'filename';
-                    }
-                } //foreach
-            } //foreach
-        } //foreach
+function preParse($panels, $view) {
+	foreach($panels as $name=>$panel) {
+	   	foreach($panel as $rowCount=>$row) {
+	   	  	 foreach($row as $key=>$column) {
+	   	  	     if($this->matches($column, '/^related_doc_id$/')) {
+	   	  	 	 	$panels[$name][$rowCount][$key] = 'related_doc_name';
+	   	  	 	 } else if($this->matches($column, '/^related_doc_rev_id$/')) {
+	   	  	 	 	$panels[$name][$rowCount][$key] = ($view == 'EditView') ? 'related_doc_rev_number' : 'related_doc_name';
+	   	  	 	 } else if($this->matches($column, '/^filelink$/')) {
+	   	  	 	 	$panels[$name][$rowCount][$key] = 'filename';
+	   	  	 	 }
+	   	  	 } //foreach
+	   	} //foreach
+	} //foreach
     return $panels;
-    }
+}
+
 }

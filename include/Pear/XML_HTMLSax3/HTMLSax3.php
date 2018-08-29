@@ -41,8 +41,7 @@ require_once(XML_HTMLSAX3 . 'HTMLSax3/Decorators.php');
 * @access protected
 * @abstract
 */
-class XML_HTMLSax3_StateParser
-{
+class XML_HTMLSax3_StateParser {
     /**
     * Instance of user front end class to be passed to callbacks
     * @var XML_HTMLSax3
@@ -157,8 +156,7 @@ class XML_HTMLSax3_StateParser
     * @var XML_HTMLSax3 instance of user front end class
     * @access protected
     */
-    function __construct(& $htmlsax)
-    {
+    function __construct (& $htmlsax) {
         $this->htmlsax = & $htmlsax;
         $this->State[XML_HTMLSAX3_STATE_START] = new XML_HTMLSax3_StartingState();
 
@@ -174,15 +172,15 @@ class XML_HTMLSax3_StateParser
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function XML_HTMLSax3_StateParser(& $htmlsax)
-    {
+    function XML_HTMLSax3_StateParser(& $htmlsax){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        self::__construct($htmlsax);
+        self::__construct( $htmlsax);
     }
 
 
@@ -191,8 +189,7 @@ class XML_HTMLSax3_StateParser
     * @access protected
     * @return void
     */
-    function unscanCharacter()
-    {
+    function unscanCharacter() {
         $this->position -= 1;
     }
 
@@ -201,8 +198,7 @@ class XML_HTMLSax3_StateParser
     * @access protected
     * @return void
     */
-    function ignoreCharacter()
-    {
+    function ignoreCharacter() {
         $this->position += 1;
     }
 
@@ -211,8 +207,7 @@ class XML_HTMLSax3_StateParser
     * @access protected
     * @return mixed
     */
-    function scanCharacter()
-    {
+    function scanCharacter() {
         if ($this->position < $this->length) {
             return $this->rawtext{$this->position++};
         }
@@ -225,8 +220,7 @@ class XML_HTMLSax3_StateParser
     * @access protected
     * @return string
     */
-    function scanUntilString($string)
-    {
+    function scanUntilString($string) {
         $start = $this->position;
         $this->position = strpos($this->rawtext, $string, $start);
         if ($this->position === FALSE) {
@@ -243,9 +237,7 @@ class XML_HTMLSax3_StateParser
     * @return string
     * @abstract
     */
-    function scanUntilCharacters($string)
-    {
-    }
+    function scanUntilCharacters($string) {}
 
     /**
     * Moves the position forward past any whitespace characters
@@ -253,9 +245,7 @@ class XML_HTMLSax3_StateParser
     * @return void
     * @abstract
     */
-    function ignoreWhitespace()
-    {
-    }
+    function ignoreWhitespace() {}
 
     /**
     * Begins the parsing operation, setting up any decorators, depending on
@@ -264,8 +254,7 @@ class XML_HTMLSax3_StateParser
     * @access protected
     * @return void
     */
-    function parse($data)
-    {
+    function parse($data) {
         if ($this->parser_options['XML_OPTION_TRIM_DATA_NODES']==1) {
             $decorator = new XML_HTMLSax3_Trim(
                 $this->handler_object_data,
@@ -331,8 +320,7 @@ class XML_HTMLSax3_StateParser
     * @access protected
     * @return void
     */
-    function _parse($state = XML_HTMLSAX3_STATE_START)
-    {
+    function _parse($state = XML_HTMLSAX3_STATE_START) {
         do {
             $state = $this->State[$state]->parse($this);
         } while ($state != XML_HTMLSAX3_STATE_STOP &&
@@ -347,16 +335,14 @@ class XML_HTMLSax3_StateParser
 * @access protected
 * @see XML_HTMLSax3_StateParser_Gtet430
 */
-class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser
-{
+class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser {
     /**
     * Constructs XML_HTMLSax3_StateParser_Lt430 defining available
     * parser options
     * @var XML_HTMLSax3 instance of user front end class
     * @access protected
     */
-    function __construct(& $htmlsax)
-    {
+    function __construct(& $htmlsax) {
         parent::__construct($htmlsax);
         $this->parser_options['XML_OPTION_TRIM_DATA_NODES'] = 0;
         $this->parser_options['XML_OPTION_CASE_FOLDING'] = 0;
@@ -374,8 +360,7 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser
     * @access protected
     * @return string
     */
-    function scanUntilCharacters($string)
-    {
+    function scanUntilCharacters($string) {
         $startpos = $this->position;
         while ($this->position < $this->length && strpos($string, $this->rawtext{$this->position}) === FALSE) {
             $this->position++;
@@ -388,8 +373,7 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser
     * @access protected
     * @return void
     */
-    function ignoreWhitespace()
-    {
+    function ignoreWhitespace() {
         while ($this->position < $this->length &&
             strpos(" \n\r\t", $this->rawtext{$this->position}) !== FALSE) {
             $this->position++;
@@ -403,8 +387,7 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser
     * @access protected
     * @return void
     */
-    function parse($data)
-    {
+    function parse($data) {
         parent::parse($data);
     }
 }
@@ -416,16 +399,14 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser
 * @access protected
 * @see XML_HTMLSax3_StateParser_Lt430
 */
-class XML_HTMLSax3_StateParser_Gtet430 extends XML_HTMLSax3_StateParser
-{
+class XML_HTMLSax3_StateParser_Gtet430 extends XML_HTMLSax3_StateParser {
     /**
     * Constructs XML_HTMLSax3_StateParser_Gtet430 defining available
     * parser options
     * @var XML_HTMLSax3 instance of user front end class
     * @access protected
     */
-    function __construct(& $htmlsax)
-    {
+    function __construct(& $htmlsax) {
         parent::__construct($htmlsax);
         $this->parser_options['XML_OPTION_TRIM_DATA_NODES'] = 0;
         $this->parser_options['XML_OPTION_CASE_FOLDING'] = 0;
@@ -442,8 +423,7 @@ class XML_HTMLSax3_StateParser_Gtet430 extends XML_HTMLSax3_StateParser
     * @access protected
     * @return string
     */
-    function scanUntilCharacters($string)
-    {
+    function scanUntilCharacters($string) {
         $startpos = $this->position;
         $length = strcspn($this->rawtext, $string, $startpos);
         $this->position += $length;
@@ -455,8 +435,7 @@ class XML_HTMLSax3_StateParser_Gtet430 extends XML_HTMLSax3_StateParser
     * @access protected
     * @return void
     */
-    function ignoreWhitespace()
-    {
+    function ignoreWhitespace() {
         $this->position += strspn($this->rawtext, " \n\r\t", $this->position);
     }
 
@@ -468,8 +447,7 @@ class XML_HTMLSax3_StateParser_Gtet430 extends XML_HTMLSax3_StateParser
     * @access protected
     * @return void
     */
-    function parse($data)
-    {
+    function parse($data) {
         parent::parse($data);
     }
 }
@@ -479,15 +457,13 @@ class XML_HTMLSax3_StateParser_Gtet430 extends XML_HTMLSax3_StateParser
 * @package XML_HTMLSax3
 * @access protected
 */
-class XML_HTMLSax3_NullHandler
-{
+class XML_HTMLSax3_NullHandler {
     /**
     * Generic handler method which does nothing
     * @access protected
     * @return void
     */
-    function DoNothing()
-    {
+    function DoNothing() {
     }
 }
 
@@ -496,8 +472,7 @@ class XML_HTMLSax3_NullHandler
 * @package XML_HTMLSax3
 * @access public
 */
-class XML_HTMLSax3
-{
+class XML_HTMLSax3 {
     /**
     * Instance of concrete subclass of XML_HTMLSax3_StateParser
     * @var XML_HTMLSax3_StateParser
@@ -521,8 +496,7 @@ class XML_HTMLSax3
     * </pre>
     * @access public
     */
-    function XML_HTMLSax3()
-    {
+    function XML_HTMLSax3() {
         if (version_compare(phpversion(), '4.3', 'ge')) {
             $this->state_parser = new XML_HTMLSax3_StateParser_Gtet430($this);
         } else {
@@ -544,9 +518,8 @@ class XML_HTMLSax3
     * @access public
     * @return mixed
     */
-    function set_object(&$object)
-    {
-        if (is_object($object)) {
+    function set_object(&$object) {
+        if ( is_object($object) ) {
             $this->state_parser->handler_default =& $object;
             return true;
         } else {
@@ -582,9 +555,8 @@ class XML_HTMLSax3
     * @access public
     * @return boolean
     */
-    function set_option($name, $value=1)
-    {
-        if (array_key_exists($name,$this->state_parser->parser_options)) {
+    function set_option($name, $value=1) {
+        if ( array_key_exists($name,$this->state_parser->parser_options) ) {
             $this->state_parser->parser_options[$name] = $value;
             return true;
         } else {
@@ -606,8 +578,7 @@ class XML_HTMLSax3
     * @return void
     * @see set_object
     */
-    function set_data_handler($data_method)
-    {
+    function set_data_handler($data_method) {
         $this->state_parser->handler_object_data =& $this->state_parser->handler_default;
         $this->state_parser->handler_method_data = $data_method;
     }
@@ -630,8 +601,7 @@ class XML_HTMLSax3
     * @return void
     * @see set_object
     */
-    function set_element_handler($opening_method, $closing_method)
-    {
+    function set_element_handler($opening_method, $closing_method) {
         $this->state_parser->handler_object_element =& $this->state_parser->handler_default;
         $this->state_parser->handler_method_opening = $opening_method;
         $this->state_parser->handler_method_closing = $closing_method;
@@ -650,8 +620,7 @@ class XML_HTMLSax3
     * @return void
     * @see set_object
     */
-    function set_pi_handler($pi_method)
-    {
+    function set_pi_handler($pi_method) {
         $this->state_parser->handler_object_pi =& $this->state_parser->handler_default;
         $this->state_parser->handler_method_pi = $pi_method;
     }
@@ -669,8 +638,7 @@ class XML_HTMLSax3
     * @return void
     * @see set_object
     */
-    function set_escape_handler($escape_method)
-    {
+    function set_escape_handler($escape_method) {
         $this->state_parser->handler_object_escape =& $this->state_parser->handler_default;
         $this->state_parser->handler_method_escape = $escape_method;
     }
@@ -687,8 +655,7 @@ class XML_HTMLSax3
     * @return void
     * @see set_object
     */
-    function set_jasp_handler($jasp_method)
-    {
+    function set_jasp_handler ($jasp_method) {
         $this->state_parser->handler_object_jasp =& $this->state_parser->handler_default;
         $this->state_parser->handler_method_jasp = $jasp_method;
     }
@@ -707,8 +674,7 @@ class XML_HTMLSax3
     * @return int
     * @see get_length
     */
-    function get_current_position()
-    {
+    function get_current_position() {
         return $this->state_parser->position;
     }
 
@@ -717,8 +683,7 @@ class XML_HTMLSax3
     * @access public
     * @return int
     */
-    function get_length()
-    {
+    function get_length() {
         return $this->state_parser->length;
     }
 
@@ -728,8 +693,8 @@ class XML_HTMLSax3
     * @access public
     * @return void
     */
-    function parse($data)
-    {
+    function parse($data) {
         $this->state_parser->parse($data);
     }
 }
+?>

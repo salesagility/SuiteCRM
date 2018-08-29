@@ -29,3 +29,5 @@ function smarty_modifier_count_words($string)
 }
 
 /* vim: set expandtab: */
+
+?>

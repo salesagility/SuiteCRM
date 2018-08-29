@@ -253,7 +253,7 @@ class aCase extends Basic
         $query_array=$this->contacts->getQuery();
 
         //update the select clause in the returned query.
-        if (!is_array($query_array)) {
+        if(!is_array($query_array)) {
             LoggerManager::getLogger()->fatal('Building database selection for contacts but the query information format is not an array.');
             return false;
         }

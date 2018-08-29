@@ -82,6 +82,7 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
      */
     public function __construct($view, $moduleName, $packageName = '')
     {
+
         $this->search = ($view == MB_DASHLETSEARCH) ? true : false;
         $this->_moduleName = $moduleName;
         $this->_packageName = $packageName;

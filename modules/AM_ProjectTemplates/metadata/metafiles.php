@@ -49,3 +49,4 @@ $module_name = 'AM_ProjectTemplates';
  	'popupdefs'	      =>    'modules/' . $module_name . '/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/' . $module_name . '/metadata/SearchFields.php',
  );
+?>

@@ -61,7 +61,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         //test without name setting attribute
         $Account = new Account();
@@ -74,6 +74,8 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('test account', $name);
         
         // clean up
+        
+        
     }
 
     public function testget_contacts()
@@ -100,7 +102,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $Account = new Account();
@@ -114,6 +116,8 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testfill_in_additional_list_fields()
@@ -121,7 +125,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $Account = new Account('');
@@ -135,6 +139,8 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -142,7 +148,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $Account = new Account('');
@@ -156,6 +162,8 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testget_list_view_data()
@@ -264,6 +272,7 @@ WHERE ( accounts.deleted IS NULL
 
     public function testget_unlinked_email_query()
     {
+        
         $Account = new Account();
 
         //without setting type parameter

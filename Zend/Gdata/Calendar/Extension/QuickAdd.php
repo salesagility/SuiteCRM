@@ -86,7 +86,7 @@ class Zend_Gdata_Calendar_Extension_QuickAdd extends Zend_Gdata_Extension
             if ($attribute->nodeValue == "true") {
                 $this->_value = true;
             }
-            elseif ($attribute->nodeValue == "false") {
+            else if ($attribute->nodeValue == "false") {
                 $this->_value = false;
             }
             else {

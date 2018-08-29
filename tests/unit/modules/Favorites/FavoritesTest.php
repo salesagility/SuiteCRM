@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -22,7 +22,7 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $favorites = new Favorites();
 
@@ -31,6 +31,8 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(false, $result);
         
         // clean up
+        
+        
     }
 
     public function testgetFavoriteID()

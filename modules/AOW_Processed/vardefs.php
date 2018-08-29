@@ -185,7 +185,7 @@ $dictionary['AOW_Processed'] = array(
 	'optimistic_locking'=>true,
 		'unified_search'=>true,
 	);
-if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
 }
 VardefManager::createVardef('AOW_Processed','AOW_Processed', array('basic'));

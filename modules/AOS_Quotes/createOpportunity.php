@@ -22,7 +22,7 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-    if (!(ACLController::checkAccess('Opportunities', 'edit', true))) {
+    if(!(ACLController::checkAccess('Opportunities', 'edit', true))){
         ACLController::displayNoAccess();
         die;
     }

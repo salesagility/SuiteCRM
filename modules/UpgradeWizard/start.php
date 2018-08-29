@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -55,11 +53,11 @@ set_upgrade_progress('start','in_progress');
 unlinkUWTempFiles();
 resetUwSession();
 
-if (isset($_REQUEST['showUpdateWizardMessage']) && $_REQUEST['showUpdateWizardMessage'] == true) {
-    // set a flag to skip the upload screen
-    $_SESSION['skip_zip_upload'] = true;
+if(isset($_REQUEST['showUpdateWizardMessage']) && $_REQUEST['showUpdateWizardMessage'] == true) {
+	// set a flag to skip the upload screen
+	$_SESSION['skip_zip_upload'] = true;
 
-    $newUWMsg =<<<eoq
+	$newUWMsg =<<<eoq
 	<table cellspacing="0" cellpadding="3" border="0">
 		<tr>
 			<th>
@@ -73,7 +71,7 @@ if (isset($_REQUEST['showUpdateWizardMessage']) && $_REQUEST['showUpdateWizardMe
 		</tr>
 	</table>
 eoq;
-    echo $newUWMsg;
+	echo $newUWMsg;
 }
 
 

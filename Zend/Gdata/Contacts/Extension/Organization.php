@@ -66,13 +66,13 @@ class Zend_Gdata_Contacts_Extension_Organization extends Zend_Gdata_Extension
 
         switch ($absoluteNodeName)
         {
-            case $this->lookupNamespace('gd') . ':' . 'orgName':
+            case $this->lookupNamespace('gd') . ':' . 'orgName';
                 $entry = new Zend_Gdata_Entry();
                 $entry->transferFromDOM($child);
                 $this->_orgName = $entry;
                 break;
 
-            case $this->lookupNamespace('gd') . ':' . 'orgTitle':
+            case $this->lookupNamespace('gd') . ':' . 'orgTitle';
                 $entry = new Zend_Gdata_Entry();
                 $entry->transferFromDOM($child);
                 $this->_orgTitle = $entry;

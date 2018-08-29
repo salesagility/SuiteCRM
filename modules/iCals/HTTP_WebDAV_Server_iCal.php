@@ -256,4 +256,5 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
         header("HTTP/$this->http_spec $status");
         header("X-WebDAV-Status: $status", true);
     }
-}
+
+    }

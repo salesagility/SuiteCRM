@@ -97,7 +97,7 @@ class Basic extends SugarBean
         /** @var EmailAddress $emailAddressBean */
         $emailAddressBean = BeanFactory::getBean('EmailAddresses');
         
-        // Fixed #5657: Only update state if email address is exist
+          // Fixed #5657: Only update state if email address is exist
         $emailAddressId = $this->getEmailAddressId($emailField);
         $emailAddressBean->retrieve($emailAddressId);
         
@@ -123,12 +123,13 @@ class Basic extends SugarBean
         $emailAddress = $this->cleanUpEmailAddress($this->{$emailField});
 
         if (!$emailAddress) {
+
             $log->warn('Trying to get an empty email address.');
             return null;
         }
 
         // List view requires us to retrieve the mail so we can see the email addresses
-        if (!$this->retrieve()) {
+        if(!$this->retrieve()) {
             $log->fatal('A Basic can not retrive.');
             return null;
         }

@@ -39,30 +39,28 @@
 
 require_once('include/MVC/View/SugarView.php');
 
-class CalendarViewGetGR extends SugarView
-{
-    function CalendarViewGetGR()
-    {
-        parent::SugarView();
-    }
+class CalendarViewGetGR extends SugarView {
+
+	function CalendarViewGetGR(){
+ 		parent::SugarView();
+	}
 	
-    function process()
-    {
-        $this->display();
-    }
+	function process(){
+		$this->display();
+	}
 	
-    function display()
-    {
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
-        error_reporting(0);
-        require_once('include/json_config.php');
-        $state->popErrorLevel();
-        global $json;
-        $json = getJSONobj();
-        $json_config = new json_config();
-        $GRjavascript = $json_config->getFocusData($_REQUEST['type'], $_REQUEST['record']);
-        ob_clean();
-        echo $GRjavascript;
-    }
+	function display(){
+		$state = new \SuiteCRM\StateSaver();
+                $state->pushErrorLevel();
+                error_reporting(0);
+		require_once('include/json_config.php');
+                $state->popErrorLevel();
+		global $json;
+        	$json = getJSONobj();
+        	$json_config = new json_config();
+        	$GRjavascript = $json_config->getFocusData($_REQUEST['type'], $_REQUEST['record']);
+        	ob_clean();
+        	echo $GRjavascript;
+	}	
+
 }

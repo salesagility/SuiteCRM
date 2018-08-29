@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -55,9 +53,8 @@ $default = 'index.php?module=Emails&action=ListView&assigned_user_id='.$current_
 $e = new Email();
 
 // my inbox
-if (ACLController::checkAccess('Emails', 'edit', true)) {
-    $module_menu[]=Array("index.php?module=Emails&action=ComposeView&return_module=Emails&return_action=index", $mod_strings['LNK_NEW_SEND_EMAIL'],"Create", 'Emails');
-}
-if (ACLController::checkAccess('Emails', 'list', true)) {
-    $module_menu[]=Array("index.php?module=Emails&action=index&return_module=Emails&return_action=DetailView", $mod_strings['LNK_VIEW_MY_INBOX'],"List", 'Emails');
-}
+if(ACLController::checkAccess('Emails', 'edit', true))$module_menu[]=Array("index.php?module=Emails&action=ComposeView&return_module=Emails&return_action=index", $mod_strings['LNK_NEW_SEND_EMAIL'],"Create", 'Emails');
+if(ACLController::checkAccess('Emails', 'list', true))$module_menu[]=Array("index.php?module=Emails&action=index&return_module=Emails&return_action=DetailView", $mod_strings['LNK_VIEW_MY_INBOX'],"List", 'Emails');
+
+
+?>

@@ -4,7 +4,7 @@ namespace Step\Acceptance;
 
 use \AcceptanceTester as Tester;
 
-class ListView extends Tester
+class ListView  extends Tester
 {
 
     /**

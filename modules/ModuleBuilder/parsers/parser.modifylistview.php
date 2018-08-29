@@ -155,7 +155,8 @@ class ParserModifyListView extends ModuleBuilderParser
             if (!empty ($def ['default'])) {
                 if (!isset($def['studio']) || $def['studio'] === true) {
                     $this->defaults [$key] = $def;
-                } else { // anything which doesn't go into the defaults is a reserved field - this makes sure we don't miss anything
+                } else // anything which doesn't go into the defaults is a reserved field - this makes sure we don't miss anything
+                {
                     $this->reserved [$key] = $def;
                 }
             }
@@ -201,7 +202,8 @@ class ParserModifyListView extends ModuleBuilderParser
             if ($fieldName == 'currency_id') {
                 continue;
             }
-            if (!isset ($lowerFieldList [$fieldName])) { // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
+            if (!isset ($lowerFieldList [$fieldName])) // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
+            {
                 // bug 19656: this test changed after 5.0.0b - we now remove all ID type fields - whether set as type, or dbtype, from the fielddefs
                 if ($this->isValidField($key, $def)) {
                     $label = (isset ($def ['vname'])) ? $def ['vname'] : (isset($def ['label']) ? $def['label'] : $def['name']);

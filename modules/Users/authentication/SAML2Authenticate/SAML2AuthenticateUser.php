@@ -60,8 +60,7 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
      * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (SAML2 default is false)
      * @return STRING id - used for loading the user
      */
-    public function authenticateUser($name, $password, $fallback=false, $checkPasswordMD5 = false)
-    {
+    public function authenticateUser($name, $password, $fallback=false, $checkPasswordMD5 = false) {
         $row = User::findUserPassword($name, null, "(portal_only IS NULL OR portal_only !='1') AND (is_group IS NULL OR is_group !='1') AND status !='Inactive'", $checkPasswordMD5);
 
         // set the ID in the seed user.  This can be used for retrieving the full user record later
@@ -81,15 +80,16 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
      * @param STRING $fallback - is this authentication a fallback from a failed authentication
      * @return boolean
      */
-    public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = array())
-    {
+    public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = array()) {
         $GLOBALS['log']->debug("Starting user load for ". $name);
         $user_id = $this->authenticateUser($name, null, $fallback);
-        if (empty($user_id)) {
+        if(empty($user_id)) {
             $GLOBALS['log']->fatal('SECURITY: User authentication for '.$name.' failed');
             return false;
         }
         $this->loadUserOnSession($user_id);
         return true;
     }
+
+
 }

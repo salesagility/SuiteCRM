@@ -59,7 +59,7 @@ function handleSubs($subs, $email, $json, $user = null)
     $db = DBManagerFactory::getInstance();
     global $current_user;
     
-    if (!$user) {
+    if(!$user) {
         $user = $current_user;
     }
     
@@ -110,6 +110,7 @@ $json = getJSONobj();
 $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 if (isset($_REQUEST['emailUIAction'])) {
+
     if (isset($_REQUEST['user']) && $_REQUEST['user']) {
         $cid = $current_user->id;
         $current_user = BeanFactory::getBean('Users', $_REQUEST['user']);
@@ -276,24 +277,22 @@ if (isset($_REQUEST['emailUIAction'])) {
 
     case "deleteSignature":
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: deleteSignature");
-        if (isset($_REQUEST['id'])) {
-            require_once("modules/Users/UserSignature.php");
-            $us = new UserSignature();
-            $us->mark_deleted($_REQUEST['id']);
+        if(isset($_REQUEST['id'])) {
+  			require_once("modules/Users/UserSignature.php");
+        	$us = new UserSignature();
+        	$us->mark_deleted($_REQUEST['id']);
             $signatureArray = $current_user->getSignaturesArray();
-            // clean "none"
-            foreach ($signatureArray as $k => $v) {
-                if ($k == "") {
-                    $sigs[$k] = $app_strings['LBL_NONE'];
-                } else {
-                    if (is_array($v) && isset($v['name'])) {
-                        $sigs[$k] = $v['name'];
-                    } else {
-                        $sigs[$k] = $v;
-                    }
-                }
-            }
-            $out['signatures'] = $signatureArray;
+	        // clean "none"
+	        foreach($signatureArray as $k => $v) {
+	            if($k == "") {
+                 $sigs[$k] = $app_strings['LBL_NONE'];
+	            } else {if (is_array($v) && isset($v['name'])){
+	                $sigs[$k] = $v['name'];
+	            } else{
+	                $sigs[$k] = $v;}
+	            }
+	        }
+	        $out['signatures'] = $signatureArray;
             $ret = $json->encode($out);
             echo $ret;
         } else {
@@ -302,8 +301,7 @@ if (isset($_REQUEST['emailUIAction'])) {
     	break;
     case 'getTemplateAttachments':
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
-        if (isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
-            $db = DBManagerFactory::getInstance();
+        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {$db = DBManagerFactory::getInstance();
 
 
             $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
@@ -316,11 +314,11 @@ if (isset($_REQUEST['emailUIAction'])) {
 
             $i=1; // js doesn't like 0 index?
             if (!empty($fullList)) {
-                foreach ($fullList as $note) {
+                foreach($fullList as $note) {
                     $js_fields_arr[$i] = array();
 
-                    foreach ($all_fields as $field) {
-                        if (isset($note->$field)) {
+                    foreach($all_fields as $field) {
+                        if(isset($note->$field)) {
                             $note->$field = from_html($note->$field);
                             $note->$field = preg_replace('/\r\n/','<BR>',$note->$field);
                             $note->$field = preg_replace('/\n/','<BR>',$note->$field);
@@ -498,6 +496,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 } else {
                     echo $ret['html'];
                 }
+
             }
             break;
 
@@ -919,7 +918,7 @@ eoq;
                 ob_start();
                 echo $out;
                 ob_end_flush();
-            //die();
+                //die();
             } else {
                 echo $msg = 'error: no ieID';
                 $GLOBALS['log']->error($msg);
@@ -1017,6 +1016,7 @@ eoq;
                 $email->et->folder->setSubscriptions($subs);
 
                 $out = handleSubs($subs, $email, $json);
+
             } elseif (empty($_REQUEST['subscriptions'])) {
                 $email->et->folder->clearSubscriptions();
             } else {
@@ -1147,7 +1147,6 @@ eoq;
                     echo "NOOP - not a Sugar Folder";
                 }
             }
-            // no break
         case "moveFolder":
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: moveFolder");
             if (isset($_REQUEST['folderId']) && !empty($_REQUEST['folderId']) && isset($_REQUEST['newParentId']) && !empty($_REQUEST['newParentId']) && $_REQUEST['newParentId'] != $_REQUEST['folderId']) {
@@ -1228,6 +1227,7 @@ eoq;
 
                 $out = $json->encode($ret, true);
                 echo $out;
+
             } else {
                 echo "NOOP";
             }
@@ -1438,6 +1438,7 @@ eoq;
                     $oe->mail_smtppass = $outboundMailPass;
                     $oe->save();
                 }
+
             } else {
                 echo "NOOP";
             }
@@ -1606,14 +1607,12 @@ eoq;
             }
             $email->et->removeContacts($removeIds);
 
-            // no break
         case "saveContactEdit":
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveContactEdit");
             if (isset($_REQUEST['args']) && !empty($_REQUEST['args'])) {
                 $email->et->saveContactEdit($_REQUEST['args']);
             }
         // flow into getUserContacts();
-        // no break
         case "addContact":
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: addContacts");
             $contacts = array();
@@ -1626,7 +1625,6 @@ eoq;
                 $email->et->setContacts($contacts);
             }
 
-            // no break
         case "addContactsMultiple":
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: addContacts");
             if (isset($_REQUEST['contactData'])) {
@@ -1637,7 +1635,6 @@ eoq;
                 }
             }
 
-            // no break
         case "getUserContacts":
             $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getUserContacts");
             $contacts = $email->et->getContacts();
@@ -1770,4 +1767,5 @@ eoq;
         $current_user->savePreferencesToDB();
         $current_user = BeanFactory::getBean('Users', $cid);
     }
+
 } // if

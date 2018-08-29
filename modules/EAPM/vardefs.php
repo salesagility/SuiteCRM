@@ -199,7 +199,7 @@ $dictionary['EAPM'] = array(
 ),
 	'optimistic_locking'=>true,
 );
-if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
 }
 VardefManager::createVardef('EAPM','EAPM', array('basic','assignable'));

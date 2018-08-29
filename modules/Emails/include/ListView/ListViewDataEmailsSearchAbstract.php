@@ -45,8 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Class ListViewDataEmailsSearchAbstract
  */
-abstract class ListViewDataEmailsSearchAbstract
-{
+abstract class ListViewDataEmailsSearchAbstract {
 
     /**
      * @var ListViewDataEmails
@@ -58,8 +57,8 @@ abstract class ListViewDataEmailsSearchAbstract
      */
     public $seed;
 
-    public function __construct($listViewDataEmails)
-    {
+    public function __construct($listViewDataEmails) {
         $this->lvde = $listViewDataEmails;
     }
+
 }

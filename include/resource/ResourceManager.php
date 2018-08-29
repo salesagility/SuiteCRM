@@ -60,6 +60,7 @@ class ResourceManager
      */
     private function __construct()
     {
+
     }
 
     /**
@@ -122,6 +123,7 @@ class ResourceManager
             } //if
 
             if ($limit) {
+
                 $db = DBManagerFactory::getInstance();
                 $db->setQueryLimit($limit);
                 $observer->setLimit($limit);
@@ -141,6 +143,7 @@ class ResourceManager
      */
     public function notifyObservers($msg)
     {
+
         if (empty($this->_observers)) {
             return;
         }
@@ -170,4 +173,5 @@ class ResourceManager
     {
         return $this->_observers;
     }
+
 }

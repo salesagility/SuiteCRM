@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,17 +41,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user;
 global $sugar_config;
 
-if (isset($_POST['timezone']) || isset($_GET['timezone'])) {
-    if (isset($_POST['timezone'])) {
-        $timezone = $_POST['timezone'];
+if(isset($_POST['timezone']) || isset($_GET['timezone'])) {
+    if(isset($_POST['timezone'])) { 
+    	$timezone = $_POST['timezone'];
     } else {
-        $timezone = $_GET['timezone'];
+    	$timezone = $_GET['timezone'];
     }
 
-    $current_user->setPreference('timezone', $timezone);
-    $current_user->setPreference('ut', 1);
-    $current_user->savePreferencesToDB();
-    session_write_close();
-    header('Location: index.php?action=index&module=Home');
-    exit();
+	$current_user->setPreference('timezone', $timezone);
+	$current_user->setPreference('ut', 1);
+	$current_user->savePreferencesToDB();
+	session_write_close();
+	   header('Location: index.php?action=index&module=Home');
+   exit();
 }

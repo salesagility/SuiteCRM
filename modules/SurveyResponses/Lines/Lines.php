@@ -107,7 +107,6 @@ function convertQuestionResponseForDisplay($responseArr, $type)
 
                 return $timedate->asUserDate($date);
             }
-            // no break
         case "Rating":
             return str_repeat('<img width=20 src="modules/Surveys/imgs/star.png"/>', $responseArr[0]->answer);
         case "Scale":

@@ -43,18 +43,19 @@ r31615 - 2008-02-05 10:52:49 -0800 (Tue, 05 Feb 2008) - dwheeler - Added Ext the
 
 function smarty_function_ext_includes($params, &$smarty)
 {
-    $ret = '<link rel="stylesheet" type="text/css" href="' . getJSPath("themes/default/ext/resources/css/ext-all.css") . '" />'
+	$ret = '<link rel="stylesheet" type="text/css" href="' . getJSPath("themes/default/ext/resources/css/ext-all.css") . '" />'
 		 . '<link rel="stylesheet" type="text/css" href="' . getJSPath("themes/default/ext/resources/css/xtheme-gray.css") . '" />';
 		 
-    global $theme;
-    if (is_dir("themes/$theme/ext/resources/css")) {
-        $cssDir = opendir("themes/$theme/ext/resources/css");
-        while (($file = readdir($cssDir)) !== false) {
-            if (strcasecmp(substr($file, -4), '.css' == 0)) {
-                $ret .= "<link rel='stylesheet' type='text/css' href='" . getJSPath("themes/$theme/ext/resources/css/$file") . "' />";
-            }
-        }
-    }
+	global $theme;
+	if (is_dir("themes/$theme/ext/resources/css")) {
+			$cssDir = opendir("themes/$theme/ext/resources/css");
+			while (($file = readdir($cssDir)) !== false) {
+				if (strcasecmp(substr($file, -4), '.css' == 0)) {
+            		$ret .= "<link rel='stylesheet' type='text/css' href='" . getJSPath("themes/$theme/ext/resources/css/$file") . "' />";
+				}
+        	}
+	}
 			
-    return $ret;
+	return $ret;
+	
 }

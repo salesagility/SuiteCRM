@@ -30,7 +30,7 @@ class InstallTester extends \Codeception\Actor
         $I = $this;
         $scenario = $I->getScenario();
 
-        if (!$this->isOldPhpVersionDetected()) {
+        if(!$this->isOldPhpVersionDetected()) {
             $scenario->comment('PHP Version '. PHP_VERSION .' meets the recommended requirements.');
         } else {
             $scenario->comment('PHP Version '. PHP_VERSION .' does not meet the recommended requirements.');
@@ -90,7 +90,8 @@ class InstallTester extends \Codeception\Actor
         // TODO: TASK: UNDEFINED - Add tests for form validation
 
         // Select Database type
-        switch ($webDriverHelper->getDatabaseDriver()) {
+        switch ($webDriverHelper->getDatabaseDriver())
+        {
             case \SuiteCRM\Enumerator\DatabaseDriver::MYSQL:
                 $I->checkOption('#setup_db_type[value=mysql]');
                 break;

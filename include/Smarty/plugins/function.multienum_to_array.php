@@ -65,28 +65,29 @@ trunk/include/EditView/EditView2.php (removed comments)
  */
 function smarty_function_multienum_to_array($params, &$smarty)
 {
-    $ret = "";
-    if (empty($params['string'])) {
-        if (empty($params['default'])) {
+	$ret = "";
+	if(empty($params['string'])) {
+        if (empty($params['default']))
             $ret = array();
-        } elseif (is_array($params['default'])) {
+        else if(is_array($params['default']))
             $ret = $params['default'];
-        } else {
-            $ret = unencodeMultienum($params['default']);
-        }
+        else
+           $ret = unencodeMultienum($params['default']);
     } else {
-        if (is_array($params['string'])) {
-            $ret = $params['string'];
-        } else {
-            $ret = unencodeMultienum($params['string']);
-        }
+    	if (is_array($params['string']))
+    	  $ret = $params['string'];
+    	else
+    	  $ret = unencodeMultienum($params['string']);
     }
 	
     
-    if (!empty($params['assign'])) {
-        $smarty->assign($params['assign'], $ret);
-        return "";
-    }
+	if (!empty($params['assign']))
+	{
+		$smarty->assign($params['assign'], $ret);
+		return "";
+	}
 	
-    return ($ret);
+	return ($ret);
 }
+
+?>

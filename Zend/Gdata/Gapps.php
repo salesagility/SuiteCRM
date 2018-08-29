@@ -338,7 +338,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      {
          if ($domain !== null) {
              return self::APPS_BASE_FEED_URI . '/' . $domain;
-         } elseif ($this->_domain !== null) {
+         } else if ($this->_domain !== null) {
              return self::APPS_BASE_FEED_URI . '/' . $this->_domain;
          } else {
              require_once 'Zend/Gdata/App/InvalidArgumentException.php';
@@ -361,7 +361,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
     {
         if ($location === null) {
             $uri = $this->getBaseUrl() . self::APPS_USER_PATH;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -383,7 +383,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
     {
         if ($location === null) {
             $uri = $this->getBaseUrl() . self::APPS_NICKNAME_PATH;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -407,7 +407,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
         if ($location === null) {
             $uri  = self::APPS_BASE_FEED_URI . self::APPS_GROUP_PATH . '/';
             $uri .= $this->getDomain();
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -432,7 +432,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -457,7 +457,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -480,7 +480,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
     {
         if ($location === null) {
             $uri = $this->getBaseUrl() . self::APPS_NICKNAME_PATH;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -504,7 +504,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -527,7 +527,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -550,7 +550,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -573,7 +573,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -596,7 +596,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -619,7 +619,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -642,7 +642,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -665,7 +665,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Location must not be null');
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;

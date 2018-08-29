@@ -401,7 +401,7 @@ abstract class Zend_Search_Lucene_Search_Similarity
      */
     static function encodeNorm($f)
     {
-        return self::_floatToByte($f);
+      return self::_floatToByte($f);
     }
 
     /**
@@ -436,7 +436,7 @@ abstract class Zend_Search_Lucene_Search_Similarity
 
         // round to closest value
         if ($highIndex != 255 &&
-            $f - self::$_normTable[$highIndex] > self::$_normTable[$highIndex+1] - $f) {
+            $f - self::$_normTable[$highIndex] > self::$_normTable[$highIndex+1] - $f ) {
             return $highIndex + 1;
         } else {
             return $highIndex;

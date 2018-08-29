@@ -649,7 +649,6 @@ class MysqlManager extends DBManager
 
                     return "DATE_FORMAT($string,$format)";
                 }
-                // no break
             case 'ifnull':
                 if (empty($additional_parameters) && !strstr($all_strings, ",")) {
                     $all_strings .= ",''";
@@ -668,7 +667,7 @@ class MysqlManager extends DBManager
                 return "DATE_ADD($string, INTERVAL {$additional_parameters[0]} {$additional_parameters[1]})";
             case 'add_time':
                 return "DATE_ADD($string, INTERVAL + CONCAT({$additional_parameters[0]}, ':', {$additional_parameters[1]}) HOUR_MINUTE)";
-            case 'add_tz_offset':
+            case 'add_tz_offset' :
                 $getUserUTCOffset = $GLOBALS['timedate']->getUserUTCOffset();
                 $operation = $getUserUTCOffset < 0 ? '-' : '+';
 
@@ -1511,6 +1510,7 @@ class MysqlManager extends DBManager
     {
         $db->query("ALTER DATABASE `{$setup_db_database_name}` DEFAULT CHARACTER SET utf8", true);
         $db->query("ALTER DATABASE `{$setup_db_database_name}` DEFAULT COLLATE utf8_general_ci", true);
+
     }
 
     /**

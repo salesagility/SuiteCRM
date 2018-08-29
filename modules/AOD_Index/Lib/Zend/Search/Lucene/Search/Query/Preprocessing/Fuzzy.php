@@ -117,8 +117,8 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
 
                 $rewrittenSubquery = $subquery->rewrite($index);
 
-                if (!($rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Insignificant  ||
-                       $rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Empty)) {
+                if ( !($rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Insignificant  ||
+                       $rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Empty) ) {
                     $query->addSubquery($rewrittenSubquery);
                 }
 

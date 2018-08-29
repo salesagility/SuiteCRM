@@ -77,13 +77,13 @@ class FieldOperator extends Operator
      */
     public function isValid($operator)
     {
-        if (!is_string($operator)) {
+        if(!is_string($operator)) {
             throw new InvalidArgumentException(
                 '[JsonApi][v1][Filters][Operators][FieldOperator][isValid][expected type to be string] $operator'
             );
         }
 
-        return parent::isValid($operator);
+      return parent::isValid($operator);
     }
 
     /**
@@ -93,7 +93,7 @@ class FieldOperator extends Operator
      */
     public function isOperator($operator)
     {
-        if (!is_string($operator)) {
+        if(!is_string($operator)) {
             throw new InvalidArgumentException('[JsonApi][v1][Filters][Operators][FieldOperator][isOperator][expected type to be string] $operator');
         }
 

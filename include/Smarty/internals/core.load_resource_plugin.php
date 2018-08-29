@@ -70,3 +70,5 @@ function smarty_core_load_resource_plugin($params, &$smarty)
 }
 
 /* vim: set expandtab: */
+
+?>

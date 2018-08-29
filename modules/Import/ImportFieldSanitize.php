@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -85,28 +83,27 @@ class ImportFieldSanitize
     public function __call(
         $name,
         $params
-        ) {
+        )
+    {
         static $sfh;
         
-        if (!isset($sfh)) {
+        if(!isset($sfh)) {
             require_once('include/SugarFields/SugarFieldHandler.php');
             $sfh = new SugarFieldHandler();
         }
         $value = $params[0];
         $vardef = $params[1];
-        if (isset($params[2])) {
+        if ( isset($params[2]) )
             $focus = $params[2];
-        } else {
+        else
             $focus = null;
-        }
-        if ($name == 'relate' && !empty($params[3])) {
+        if ( $name == 'relate' && !empty($params[3]) )
             $this->addRelatedBean = true;
-        } else {
+        else
             $this->addRelatedBean = false;
-        }
         
         $field = $sfh::getSugarField(ucfirst($name));
-        if ($field instanceOf SugarFieldBase) {
+        if ( $field instanceOf SugarFieldBase ) {
             $value = $field->importSanitize($value,$vardef,$focus,$this);
         }
         
@@ -125,18 +122,17 @@ class ImportFieldSanitize
         $value,
         $vardef,
         &$focus
-        ) {
+        )
+    {
         global $timedate;
 
         $format = $this->dateformat;
 
-        if (!$timedate->check_matching_format($value, $format)) {
+        if ( !$timedate->check_matching_format($value, $format) )
             return false;
-        }
 
-        if (!$this->isValidTimeDate($value, $format)) {
+        if ( !$this->isValidTimeDate($value, $format) )
             return false;
-        }
 
         $value = $timedate->swap_formats(
             $value, $format, $timedate->get_date_format());
@@ -155,15 +151,16 @@ class ImportFieldSanitize
     public function email(
         $value,
         $vardef
-        ) {
+        )
+    {
         // cache $sea instance
         static $sea;
         
-        if (!($sea instanceof SugarEmailAddress)) {
+        if ( !($sea instanceof SugarEmailAddress) ) {
             $sea = new SugarEmailAddress;
         }
         
-        if (!empty($value) && !preg_match($sea->regex,$value)) {
+        if ( !empty($value) && !preg_match($sea->regex,$value) ) {
             return false;
         }
 
@@ -182,31 +179,34 @@ class ImportFieldSanitize
         $value,
         $vardef,
         &$bad_names
-        ) {
+        )
+    {
         static $focus_user;
 
         // cache this object since we'll be reusing it a bunch
-        if (!($focus_user instanceof User)) {
+        if ( !($focus_user instanceof User) ) {
+
             $focus_user = new User();
         }
 
 
-        if (!empty($value) && strtolower($value) != "all") {
+        if ( !empty($value) && strtolower($value) != "all" ) {
             $theList   = explode(",",$value);
             $isValid   = true;
             $bad_names = array();
             foreach ($theList as $eachItem) {
-                if ($focus_user->retrieve_user_id($eachItem)
+                if ( $focus_user->retrieve_user_id($eachItem)
                         || $focus_user->retrieve($eachItem)
                 ) {
                     // all good
-                } else {
+                }
+                else {
                     $isValid     = false;
                     $bad_names[] = $eachItem;
                     continue;
                 }
             }
-            if (!$isValid) {
+            if(!$isValid) {
                 return false;
             }
         }
@@ -226,18 +226,17 @@ class ImportFieldSanitize
         $value,
         $vardef,
         $focus
-        ) {
+        )
+    {
         global $timedate;
 
         $format = $this->timeformat;
 
-        if (!$timedate->check_matching_format($value, $format)) {
+        if ( !$timedate->check_matching_format($value, $format) )
             return false;
-        }
 
-        if (!$this->isValidTimeDate($value, $format)) {
+        if ( !$this->isValidTimeDate($value, $format) )
             return false;
-        }
 
         $value = $timedate->swap_formats(
             $value, $format, $timedate->get_time_format());
@@ -259,65 +258,57 @@ class ImportFieldSanitize
     public function isValidTimeDate(
         $value,
         $format
-        ) {
+        )
+    {
         global $timedate;
 
         $dateparts = array();
         $reg = $timedate->get_regular_expression($format);
         preg_match('@'.$reg['format'].'@', $value, $dateparts);
 
-        if (empty($dateparts)) {
+        if ( empty($dateparts) )
             return false;
-        }
-        if (isset($reg['positions']['a'])
-                && !in_array($dateparts[$reg['positions']['a']], array('am','pm'))) {
+        if ( isset($reg['positions']['a'])
+                && !in_array($dateparts[$reg['positions']['a']], array('am','pm')) )
             return false;
-        }
-        if (isset($reg['positions']['A'])
-                && !in_array($dateparts[$reg['positions']['A']], array('AM','PM'))) {
+        if ( isset($reg['positions']['A'])
+                && !in_array($dateparts[$reg['positions']['A']], array('AM','PM')) )
             return false;
-        }
-        if (isset($reg['positions']['h']) && (
+        if ( isset($reg['positions']['h']) && (
                 !is_numeric($dateparts[$reg['positions']['h']])
                 || $dateparts[$reg['positions']['h']] < 1
-                || $dateparts[$reg['positions']['h']] > 12)) {
+                || $dateparts[$reg['positions']['h']] > 12 ) )
             return false;
-        }
-        if (isset($reg['positions']['H']) && (
+        if ( isset($reg['positions']['H']) && (
                 !is_numeric($dateparts[$reg['positions']['H']])
                 || $dateparts[$reg['positions']['H']] < 0
-                || $dateparts[$reg['positions']['H']] > 23)) {
+                || $dateparts[$reg['positions']['H']] > 23 ) )
             return false;
-        }
-        if (isset($reg['positions']['i']) && (
+        if ( isset($reg['positions']['i']) && (
                 !is_numeric($dateparts[$reg['positions']['i']])
                 || $dateparts[$reg['positions']['i']] < 0
-                || $dateparts[$reg['positions']['i']] > 59)) {
+                || $dateparts[$reg['positions']['i']] > 59 ) )
             return false;
-        }
-        if (isset($reg['positions']['s']) && (
+        if ( isset($reg['positions']['s']) && (
                 !is_numeric($dateparts[$reg['positions']['s']])
                 || $dateparts[$reg['positions']['s']] < 0
-                || $dateparts[$reg['positions']['s']] > 59)) {
+                || $dateparts[$reg['positions']['s']] > 59 ) )
             return false;
-        }
-        if (isset($reg['positions']['d']) && (
+        if ( isset($reg['positions']['d']) && (
                 !is_numeric($dateparts[$reg['positions']['d']])
                 || $dateparts[$reg['positions']['d']] < 1
-                || $dateparts[$reg['positions']['d']] > 31)) {
+                || $dateparts[$reg['positions']['d']] > 31 ) )
             return false;
-        }
-        if (isset($reg['positions']['m']) && (
+        if ( isset($reg['positions']['m']) && (
                 !is_numeric($dateparts[$reg['positions']['m']])
                 || $dateparts[$reg['positions']['m']] < 1
-                || $dateparts[$reg['positions']['m']] > 12)) {
+                || $dateparts[$reg['positions']['m']] > 12 ) )
             return false;
-        }
-        if (isset($reg['positions']['Y']) &&
-                !is_numeric($dateparts[$reg['positions']['Y']])) {
+        if ( isset($reg['positions']['Y']) &&
+                !is_numeric($dateparts[$reg['positions']['Y']]) )
             return false;
-        }
 
         return true;
     }
+
 }

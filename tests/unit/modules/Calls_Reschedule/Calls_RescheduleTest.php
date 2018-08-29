@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 class Calls_RescheduleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {

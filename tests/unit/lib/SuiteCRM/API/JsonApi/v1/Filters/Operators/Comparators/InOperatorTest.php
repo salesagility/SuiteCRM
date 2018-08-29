@@ -22,7 +22,7 @@ class InOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][Comparators][InOperator][isValid][expected type to be string] $operator'),
-            function () {
+            function() {
                 self::$operator->isValid(array());
             }
         );

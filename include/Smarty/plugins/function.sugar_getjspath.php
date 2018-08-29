@@ -43,8 +43,9 @@ r42807 - 2008-12-29 11:16:59 -0800 (Mon, 29 Dec 2008) - dwong - Branch from trun
  */
 function smarty_function_sugar_getjspath($params, &$smarty)
 {
-    if (!isset($params['file'])) {
-        $smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'file');
-    }
-    return getJSPath($params['file']);
+	if(!isset($params['file'])) {
+		   $smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'file');
+	}
+ 	return getJSPath($params['file']);
 }
+?>

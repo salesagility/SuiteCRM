@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,33 +39,30 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-class jsLanguage
-{
+class jsLanguage {
 
     /**
      * Creates javascript versions of language files
      */
-    function __construct()
-    {
+    function __construct() {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function jsLanguage()
-    {
+    function jsLanguage(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    static function createAppStringsCache($lang = 'en_us')
-    {
+    static function createAppStringsCache($lang = 'en_us') {
         // cn: bug 8242 - non-US langpack chokes
         $app_strings = return_application_language($lang);
         $app_list_strings = return_app_list_strings_language($lang);
@@ -82,14 +77,13 @@ SUGAR.language.setLanguage('app_list_strings', $app_list_strings_encoded);
 EOQ;
 
         $cacheDir = create_cache_directory('jsLanguage/');
-        if ($fh = @sugar_fopen($cacheDir . $lang . '.js', "w")) {
+        if($fh = @sugar_fopen($cacheDir . $lang . '.js', "w")){
             fputs($fh, $str);
             fclose($fh);
         }
     }
 
-    static function createModuleStringsCache($moduleDir, $lang = 'en_us', $return = false)
-    {
+    static function createModuleStringsCache($moduleDir, $lang = 'en_us', $return = false) {
         $json = getJSONobj();
 
         // cn: bug 8242 - non-US langpack chokes
@@ -99,13 +93,14 @@ EOQ;
 
         $cacheDir = create_cache_directory('jsLanguage/' . $moduleDir . '/');
 
-        if ($fh = @fopen($cacheDir . $lang . '.js', "w")) {
+        if($fh = @fopen($cacheDir . $lang . '.js', "w")){
             fputs($fh, $str);
             fclose($fh);
         }
 
-        if ($return) {
+        if($return) {
             return $str;
         }
     }
+
 }

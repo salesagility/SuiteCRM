@@ -119,17 +119,17 @@ class Zend_Gdata_Photos_UserFeed extends Zend_Gdata_Feed
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gphoto') . ':' . 'user':
+            case $this->lookupNamespace('gphoto') . ':' . 'user';
                 $user = new Zend_Gdata_Photos_Extension_User();
                 $user->transferFromDOM($child);
                 $this->_gphotoUser = $user;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'nickname':
+            case $this->lookupNamespace('gphoto') . ':' . 'nickname';
                 $nickname = new Zend_Gdata_Photos_Extension_Nickname();
                 $nickname->transferFromDOM($child);
                 $this->_gphotoNickname = $nickname;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'thumbnail':
+            case $this->lookupNamespace('gphoto') . ':' . 'thumbnail';
                 $thumbnail = new Zend_Gdata_Photos_Extension_Thumbnail();
                 $thumbnail->transferFromDOM($child);
                 $this->_gphotoThumbnail = $thumbnail;

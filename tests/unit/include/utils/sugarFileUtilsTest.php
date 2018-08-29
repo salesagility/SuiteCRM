@@ -6,8 +6,7 @@ class sugar_file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     //@todo: check this - vfs does not seem to be working...
 
-    public function testsugar_dosomething()
-    {
+    public function testsugar_dosomething() {
         $this->assertTrue(true, "Needs checking!");
     }
 
@@ -175,4 +174,5 @@ class sugar_file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 	}
     */
+
 }

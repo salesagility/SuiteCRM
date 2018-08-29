@@ -27,7 +27,7 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $jjwgMarkers = new jjwg_Markers();
 
@@ -38,6 +38,8 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, count($jjwgMarkers->settings));
         
         // clean up
+        
+        
     }
 
     public function testdefine_loc()

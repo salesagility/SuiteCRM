@@ -32,7 +32,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $employee = new Employee();
 
@@ -44,6 +44,8 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Administrator', $employee->get_summary_text());
         
         // clean up
+        
+        
     }
 
 
@@ -52,7 +54,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $employee = new Employee();
@@ -66,6 +68,8 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -87,7 +91,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testretrieve_employee_id()
     {
         $employee = new Employee();
-        
+        //$this->assertEquals('1' ,$employee->retrieve_employee_id('admin'));
 
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
     }
@@ -101,7 +105,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-        // test
+	// test
         
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
@@ -160,7 +164,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $employee = new Employee();
@@ -175,6 +179,8 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
 
@@ -199,7 +205,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
         
         
         $employee = new Employee();
@@ -213,6 +219,8 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
+        
+        
     }
 
     /**
@@ -240,12 +248,12 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testhasCustomFields()
     {
-        // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-        // test
+	// test
         
         
         $employee = new Employee();

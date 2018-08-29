@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
@@ -30,9 +28,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings, $app_strings, $sugar_config;
 
-if (ACLController::checkAccess('AOR_Scheduled_Reports', 'edit', true)) {
-    $module_menu[]=Array("index.php?module=AOR_Scheduled_Reports&action=EditView&return_module=AOR_Scheduled_Reports&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create", 'AOR_Scheduled_Reports');
-}
-if (ACLController::checkAccess('AOR_Scheduled_Reports', 'list', true)) {
-    $module_menu[]=Array("index.php?module=AOR_Scheduled_Reports&action=index", $mod_strings['LNK_LIST'],"List", 'AOR_Scheduled_Reports');
-}
+if(ACLController::checkAccess('AOR_Scheduled_Reports', 'edit', true))$module_menu[]=Array("index.php?module=AOR_Scheduled_Reports&action=EditView&return_module=AOR_Scheduled_Reports&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create", 'AOR_Scheduled_Reports');
+if(ACLController::checkAccess('AOR_Scheduled_Reports', 'list', true))$module_menu[]=Array("index.php?module=AOR_Scheduled_Reports&action=index", $mod_strings['LNK_LIST'],"List", 'AOR_Scheduled_Reports');

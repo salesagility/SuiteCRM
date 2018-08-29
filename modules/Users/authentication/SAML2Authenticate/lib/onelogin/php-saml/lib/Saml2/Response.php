@@ -162,6 +162,7 @@ class OneLogin_Saml2_Response
                             );
                         }
                     }
+
                 }
 
                 $currentURL = OneLogin_Saml2_Utils::getSelfRoutedURLNoQuery();
@@ -469,11 +470,11 @@ class OneLogin_Saml2_Response
         }
     }
 
-    /**
-     * Checks that the samlp:Response/saml:Assertion/saml:Conditions element exists and is unique.
-     *
-     * @return boolean true if the Conditions element exists and is unique
-     */
+   /**
+    * Checks that the samlp:Response/saml:Assertion/saml:Conditions element exists and is unique.
+    *
+    * @return boolean true if the Conditions element exists and is unique
+    */
     public function checkOneCondition()
     {
         $entries = $this->_queryAssertion("/saml:Conditions");
@@ -484,11 +485,11 @@ class OneLogin_Saml2_Response
         }
     }
 
-    /**
-     * Checks that the samlp:Response/saml:Assertion/saml:AuthnStatement element exists and is unique.
-     *
-     * @return boolean true if the AuthnStatement element exists and is unique
-     */
+   /**
+    * Checks that the samlp:Response/saml:Assertion/saml:AuthnStatement element exists and is unique.
+    *
+    * @return boolean true if the AuthnStatement element exists and is unique
+    */
     public function checkOneAuthnStatement()
     {
         $entries = $this->_queryAssertion("/saml:AuthnStatement");
@@ -570,6 +571,7 @@ class OneLogin_Saml2_Response
             $seckey->loadKey($key);
 
             $nameId = OneLogin_Saml2_Utils::decryptElement($encryptedData, $seckey);
+
         } else {
             $entries = $this->_queryAssertion('/saml:Subject/saml:NameID');
             if ($entries->length == 1) {
@@ -1076,7 +1078,7 @@ class OneLogin_Saml2_Response
               ) {
                 if (strpos($encryptedAssertion->tagName, 'saml2:') !== false) {
                     $ns = 'xmlns:saml2';
-                } elseif (strpos($encryptedAssertion->tagName, 'saml:') !== false) {
+                } else if (strpos($encryptedAssertion->tagName, 'saml:') !== false) {
                     $ns = 'xmlns:saml';
                 } else {
                     $ns = 'xmlns';

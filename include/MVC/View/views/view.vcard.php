@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -52,15 +50,15 @@ require_once('include/vCard.php');
 
 class ViewVcard extends SugarView
 {
-    public $type = 'detail';
+	public $type = 'detail';
 	
-    /**
+	/**
      * @see SugarView::display()
      */
-    public function display()
+	public function display()
     {
-        $vcard = new vCard();		
-        $vcard->loadContact($this->bean->id, $this->module);
-        $vcard->saveVCard();
-    }
+		$vcard = new vCard();		
+		$vcard->loadContact($this->bean->id, $this->module);
+		$vcard->saveVCard();
+ 	}
 }

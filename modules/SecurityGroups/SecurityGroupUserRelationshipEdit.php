@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('XTemplate/xtpl.php');
 require_once('modules/SecurityGroups/SecurityGroupUserRelationship.php');
@@ -15,11 +13,11 @@ global $sugar_version, $sugar_config;
 
 $focus = new SecurityGroupUserRelationship();
 
-if (isset($_REQUEST['record'])) {
+if(isset($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
 }
 
-if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
+if(isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
     $focus->id = "";
 }
 
@@ -66,14 +64,14 @@ echo "\n</p>\n";
 
 // noninheritable
 $noninheritable = '';
-if (isset($focus->noninheritable) && $focus->noninheritable == true) {
+if(isset($focus->noninheritable) && $focus->noninheritable == true) {
     $noninheritable = 'CHECKED';
 } 
 $xtpl->assign('noninheritable', $noninheritable);
 
 // primary_group
 $primary_group = '';
-if (isset($focus->primary_group) && $focus->primary_group == true) {
+if(isset($focus->primary_group) && $focus->primary_group == true) {
     $primary_group = 'CHECKED';
 } 
 $xtpl->assign('primary_group', $primary_group);

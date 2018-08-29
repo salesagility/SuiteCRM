@@ -114,9 +114,8 @@ class FilterInterpreter
      * @return bool
      * @throws InvalidArgumentException
      */
-    public function isFilterByPreMadeName(array $filterStructure)
-    {
-        if (is_array($filterStructure) === false) {
+    public function isFilterByPreMadeName(array $filterStructure) {
+        if(is_array($filterStructure) === false) {
             throw new InvalidArgumentException('[JsonApi][v1][Filters][Interpreters][isFilterByPreMadeName][expected type to be array]');
         }
 
@@ -128,9 +127,8 @@ class FilterInterpreter
      * @return bool
      * @throws InvalidArgumentException
      */
-    public function isFilterById(array $filterStructure)
-    {
-        if (is_array($filterStructure) === false) {
+    public function isFilterById(array $filterStructure) {
+        if(is_array($filterStructure) === false) {
             throw new InvalidArgumentException('[JsonApi][v1][Filters][Interpreters][isFilterById][expected type to be array]');
         }
 
@@ -144,9 +142,8 @@ class FilterInterpreter
      * @return bool
      * @throws Exception
      */
-    public function isFilterByAttributes(array $filterStructure)
-    {
-        if (is_array($filterStructure) === false) {
+    public function isFilterByAttributes(array $filterStructure) {
+        if(is_array($filterStructure) === false) {
             throw new Exception('[JsonApi][v1][Filters][Interpreters][isFilterByAttributes][expected type to be array]');
         }
 
@@ -171,12 +168,12 @@ class FilterInterpreter
 
         /** @var  \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\ByPreMadeFilterInterpreter $interpreter */
         foreach ($interpreters as $interpreter) {
-            if ($interpreter->hasByPreMadeFilter($filterName)) {
+            if($interpreter->hasByPreMadeFilter($filterName)) {
                 $filter = $interpreter->getByPreMadeFilter();
             }
         }
 
-        if (empty($filter)) {
+        if(empty($filter)) {
             throw new Exception('[JsonApi][v1][Filters][Interpreters][getFilterByPreMadeName][cannot find filter]');
         }
 
@@ -196,8 +193,8 @@ class FilterInterpreter
         $interpreter = $this->containers->get('ByIdFilterInterpreter');
         $filter = $interpreter->getByIdFilter($filterStructure);
 
-        if (empty($filter)) {
-            if (is_array($filterStructure) === false) {
+        if(empty($filter)) {
+            if(is_array($filterStructure) === false) {
                 throw new Exception('[JsonApi][v1][Filters][Interpreters][getFilterById][cannot find filter]');
             }
         }
@@ -228,7 +225,8 @@ class FilterInterpreter
             $tableName = $module->table_name;
 
             // Process fields
-            foreach ($filterFields as $field => $fieldOperations) {
+            foreach ($filterFields as $field => $fieldOperations)
+            {
                 // Get next field
                 if ($filterOperator->isValid($field) === false) {
                     throw new BadRequestException('[getFilterByAttributes][invalid field]');
@@ -238,7 +236,7 @@ class FilterInterpreter
                     throw new BadRequestException('[getFilterByAttributes][field does not exist] "'.$fieldName.'"');
                 }
 
-                if (is_array($fieldOperations) === false) {
+                if(is_array($fieldOperations) === false) {
                     throw new BadRequestException('[getFilterByAttributes][operations does not exist]');
                 }
 
@@ -320,7 +318,7 @@ class FilterInterpreter
     private function toSqlFilter($tableName, $filterOperator, $lastOperator, $field, array $operands, array $args)
     {
         // detect custom field and change table to {table}_cstm
-        if ($this->isCustomField($filterOperator->stripFilterTag($field), $args)) {
+        if($this->isCustomField($filterOperator->stripFilterTag($field), $args)) {
             $tableName = $this->toCustomTable($tableName);
         }
 
@@ -330,7 +328,7 @@ class FilterInterpreter
         $sqlOperands = $lastOperator->toSqlOperands($operands);
 
         // Here's where the real magic happens
-        return implode(' ', array($sqlField, $sqlOperator, $sqlOperands));
+       return implode(' ', array($sqlField, $sqlOperator, $sqlOperands));
     }
 
 
@@ -343,10 +341,10 @@ class FilterInterpreter
     {
 
         //
-        $isInOperatorsArray = function ($operatorNeedle, $operatorsHaystack) {
+        $isInOperatorsArray = function($operatorNeedle, $operatorsHaystack) {
             foreach ($operatorsHaystack as $operator) {
                 /** @var OperatorInterface $operator */
-                if ($operator->isOperator($operatorNeedle)) {
+                if($operator->isOperator($operatorNeedle)) {
                     return $operator;
                 }
             }
@@ -380,11 +378,11 @@ class FilterInterpreter
      */
     protected function isCustomField($field, array $args)
     {
-        if (!is_string($field)) {
+        if(!is_string($field)) {
             throw new \InvalidArgumentException('isCustomField requires $field to be a string');
         }
 
-        if (empty($args) || !isset($args['module'])) {
+        if(empty($args) || !isset($args['module'])) {
             return false;
         }
 
@@ -401,11 +399,11 @@ class FilterInterpreter
      */
     protected function toCustomTable($table)
     {
-        if (!is_string($table)) {
+        if(!is_string($table)) {
             throw new \InvalidArgumentException('toCustom requires $table to be a string');
         }
 
-        if (StringValidator::endsWith($table, '_cstm')) {
+        if(StringValidator::endsWith($table, '_cstm')) {
             return $table;
         }
 

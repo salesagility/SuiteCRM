@@ -26,15 +26,13 @@
 require_once('include/MVC/View/views/view.edit.php');
 require_once 'modules/AOW_WorkFlow/aow_utils.php';
 require_once 'modules/AOR_Reports/aor_utils.php';
-class AOR_ReportsViewEdit extends ViewEdit
-{
-    public function __construct()
-    {
+class AOR_ReportsViewEdit extends ViewEdit {
+
+    public function __construct() {
         parent::__construct();
     }
 
-    public function preDisplay()
-    {
+    public function preDisplay() {
         global $app_list_strings;
         echo "<style type='text/css'>";
         //readfile('modules/AOR_Reports/css/edit.css');
@@ -71,9 +69,8 @@ class AOR_ReportsViewEdit extends ViewEdit
         parent::preDisplay();
     }
 
-    private function getConditionLines()
-    {
-        if (!$this->bean->id) {
+    private function getConditionLines(){
+        if(!$this->bean->id){
             return array();
         }
         $sql = "SELECT id FROM aor_conditions WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY condition_order ASC";
@@ -82,31 +79,31 @@ class AOR_ReportsViewEdit extends ViewEdit
         while ($row = $this->bean->db->fetchByAssoc($result)) {
             $condition_name = new AOR_Condition();
             $condition_name->retrieve($row['id']);
-            if (!$condition_name->parenthesis) {
+            if(!$condition_name->parenthesis) {
                 $condition_name->module_path = implode(":", unserialize(base64_decode($condition_name->module_path)));
             }
-            if ($condition_name->value_type == 'Date') {
+            if($condition_name->value_type == 'Date'){
                 $condition_name->value = unserialize(base64_decode($condition_name->value));
             }
             $condition_item = $condition_name->toArray();
 
-            if (!$condition_name->parenthesis) {
+            if(!$condition_name->parenthesis) {
                 $display = getDisplayForField($condition_name->module_path, $condition_name->field, $this->bean->report_module);
                 $condition_item['module_path_display'] = $display['module'];
                 $condition_item['field_label'] = $display['field'];
             }
-            if (isset($conditions[$condition_item['condition_order']])) {
+            if(isset($conditions[$condition_item['condition_order']])) {
                 $conditions[] = $condition_item;
-            } else {
+            }
+            else {
                 $conditions[$condition_item['condition_order']] = $condition_item;
             }
         }
         return $conditions;
     }
 
-    private function getFieldLines()
-    {
-        if (!$this->bean->id) {
+    private function getFieldLines(){
+        if(!$this->bean->id){
             return array();
         }
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY field_order ASC";
@@ -130,15 +127,15 @@ class AOR_ReportsViewEdit extends ViewEdit
         return $fields;
     }
 
-    private function getChartLines()
-    {
+    private function getChartLines(){
         $charts = array();
-        if (!$this->bean->id) {
+        if(!$this->bean->id){
             return array();
         }
-        foreach ($this->bean->get_linked_beans('aor_charts','AOR_Charts') as $chart) {
+        foreach($this->bean->get_linked_beans('aor_charts','AOR_Charts') as $chart){
             $charts[] = $chart->toArray();
         }
         return $charts;
     }
+
 }

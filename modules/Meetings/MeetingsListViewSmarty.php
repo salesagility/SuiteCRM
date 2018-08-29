@@ -4,20 +4,22 @@ require_once('include/ListView/ListViewSmarty.php');
 
 class MeetingsListViewSmarty extends ListViewSmarty
 {
+
     function __construct()
     {
+
         parent::__construct();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MeetingsListViewSmarty()
-    {
+    function MeetingsListViewSmarty(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -26,6 +28,7 @@ class MeetingsListViewSmarty extends ListViewSmarty
 
     function buildExportLink($id = 'export_link')
     {
+
         global $app_strings;
 
         $script = "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id='export_listview_top' " .
@@ -40,4 +43,5 @@ class MeetingsListViewSmarty extends ListViewSmarty
 
         return $script;
     }
+
 }

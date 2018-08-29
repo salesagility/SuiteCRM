@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -31,6 +31,7 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
+        
         self::markTestIncomplete('environment dependency');
         
         $state = new SuiteCRM\StateSaver();
@@ -40,7 +41,7 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aop_case_updates');
         $state->pushGlobals();
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aopCaseUpdates = new AOP_Case_Updates();
         $aopCaseUpdates->name = 'test name';

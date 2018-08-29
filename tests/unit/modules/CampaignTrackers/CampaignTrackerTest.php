@@ -17,7 +17,7 @@ class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
         $campaignTracker = new CampaignTracker();
@@ -36,14 +36,14 @@ class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('campaign_trkrs');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
 
-        // test
+	// test
         
         $campaignTracker = new CampaignTracker();
 

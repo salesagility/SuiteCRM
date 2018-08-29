@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,58 +41,54 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-class Group extends User
-{
-    // User attribute overrides
-    var $status			= 'Group';
-    var $password		= ''; // to disallow logins
-    var $default_team;
-    var $importable = false;
+class Group extends User {
+	// User attribute overrides
+	var $status			= 'Group';
+	var $password		= ''; // to disallow logins
+	var $default_team;
+	var $importable = false;
 
 
-    function __construct()
-    {
-        parent::__construct();
-    }
+	function __construct() {
+		parent::__construct();
+	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Group()
-    {
+    function Group(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    /**
-     * overrides SugarBean method
-     */
-    function mark_deleted($id)
-    {
-        SugarBean::mark_deleted($id);
-    }
+	/**
+	 * overrides SugarBean method
+	 */
+	function mark_deleted($id) {
+		SugarBean::mark_deleted($id);
+	}
 
-    function create_export_query($order_by, $where, $relate_link_join = '')
-    {
-        $query = "SELECT users.*";
-        $query .= " FROM users ";
-        $where_auto = " users.deleted = 0";
-        if ($where != "") {
-            $query .= " WHERE $where AND " . $where_auto;
-        } else {
-            $query .= " WHERE " . $where_auto;
-        }
-        if ($order_by != "") {
-            $query .= " ORDER BY $order_by";
-        } else {
-            $query .= " ORDER BY users.user_name";
-        }
-        return $query;
-    }
+	function create_export_query($order_by, $where, $relate_link_join = '')
+	{
+		$query = "SELECT users.*";
+		$query .= " FROM users ";
+		$where_auto = " users.deleted = 0";
+		if($where != "")
+			$query .= " WHERE $where AND " . $where_auto;
+		else
+			$query .= " WHERE " . $where_auto;
+		if($order_by != "")
+			$query .= " ORDER BY $order_by";
+		else
+			$query .= " ORDER BY users.user_name";
+		return $query;
+	}
+
 } // end class def

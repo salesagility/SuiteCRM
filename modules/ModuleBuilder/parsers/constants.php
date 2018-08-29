@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,8 +47,8 @@ define('MB_GRIDLAYOUTMETADATA','gridLayoutMetaData');
 define('MB_LISTLAYOUTMETADATA','listLayoutMetaData');
 define('MB_LISTVIEW','listview');
 define('MB_SEARCHVIEW','searchview');
-define('MB_BASICSEARCH','basic_search');
-define('MB_ADVANCEDSEARCH','advanced_search');
+define('MB_BASICSEARCH','basic_search' );
+define('MB_ADVANCEDSEARCH','advanced_search' );
 define('MB_DASHLET','dashlet');
 define('MB_DASHLETSEARCH','dashletsearch');
 define('MB_EDITVIEW','editview');
@@ -69,6 +67,6 @@ define('MB_VISIBILITY','visibility');
 
 class MBConstants
 {
-    static $EMPTY = array ( 'name' => '(empty)' , 'label' => '(empty)' ) ;
-    static $FILLER = array ( 'name' => '(filler)' , 'label' => 'LBL_FILLER' ) ; // would prefer to have label => translate('LBL_FILLER') but can't be done in a static, and don't want to require instantiating a new object to get these constants
+	static $EMPTY = array ( 'name' => '(empty)' , 'label' => '(empty)' ) ;
+	static $FILLER = array ( 'name' => '(filler)' , 'label' => 'LBL_FILLER' ) ; // would prefer to have label => translate('LBL_FILLER') but can't be done in a static, and don't want to require instantiating a new object to get these constants
 }

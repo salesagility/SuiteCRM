@@ -111,7 +111,7 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
             }
 
             return substr($word, 0, $questionMarkPosition);
-        } elseif ($astrericPosition !== false) {
+        } else if ($astrericPosition !== false) {
             return substr($word, 0, $astrericPosition);
         }
 
@@ -197,7 +197,7 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
         if (count($this->_matches) == 0) {
             require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
             return new Zend_Search_Lucene_Search_Query_Empty();
-        } elseif (count($this->_matches) == 1) {
+        } else if (count($this->_matches) == 1) {
             require_once 'Zend/Search/Lucene/Search/Query/Term.php';
             return new Zend_Search_Lucene_Search_Query_Term(reset($this->_matches));
         } else {

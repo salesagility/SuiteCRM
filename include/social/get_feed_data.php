@@ -56,6 +56,7 @@ $html = '';
 $twitter_enabled = check_enabled($db, 'twitter');
 
 if ($twitter_enabled) {
+
     require_once('modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
     /*
@@ -105,6 +106,8 @@ if ($twitter_enabled) {
 
     if (empty($tweets['errors'])) {
         while ($i < count($tweets)) {
+
+
             $limit = 104;
 
             $tweets[$i]['text'] = format_feed_tweets($db, $tweets[$i],$limit);
@@ -122,6 +125,7 @@ if ($twitter_enabled) {
             $duplicate_found = duplicate_check($db, $tweets[$i]['text'], $date);
 
             if (!$duplicate_found) {
+
                 $id = create_guid();
 
                 $sql = "INSERT INTO sugarfeed (id, name, date_entered, date_modified, modified_user_id, created_by, description, deleted, assigned_user_id, related_module, related_id, link_url, link_type)
@@ -147,11 +151,13 @@ if ($twitter_enabled) {
             }
         }
     }
+
 }
 
 $facebook_enabled = check_enabled($db, 'facebook');
 
 if ($facebook_enabled) {
+
     require_once("include/social/facebook/facebook.class.php");
 
     $facebook_helper = new facebook_helper();
@@ -168,9 +174,8 @@ if ($facebook_enabled) {
     }
 
     if ($user) {
-        // $log = '<a class="button" href="' . $logoutUrl . '">Facebook Logout</a>';
-    } else {
-        ;
+       // $log = '<a class="button" href="' . $logoutUrl . '">Facebook Logout</a>';
+    } else {;
         $log = '<a class="button" href="' . $loginUrl . '">Facebook Login</a>';
     }
 
@@ -183,12 +188,14 @@ if ($facebook_enabled) {
             data_insert($single, "facebook");
         }
     }
+
 }
     function check_facebook_login($facebook_helper)
     {
         $user = $facebook_helper->facebook->getUser();
 
         if ($user) {
+
             $user_profile = $facebook_helper->get_my_user(); //get my user details
 
             $user_home = $facebook_helper->get_my_newsfeed(); //gets my newsfeed,
@@ -276,9 +283,10 @@ if ($facebook_enabled) {
             case "":
                 $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 100);
                 break;
-            case "link":
+            case "link";
                 $string[0] = "<img style=float:left;padding-right:5px;padding-bottom:5px; src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture />";
                 if (!empty($stream['name'])) {
+
                     $string[1] = '<b>' . $stream['from']['name']. '</b><p style=line-height:30px;>' .  $stream['name']  . '</p>' . '<a href=' . $stream['link'] . '>View article</a>';
                 } else {
                     //must be an article

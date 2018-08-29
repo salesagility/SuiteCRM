@@ -26,30 +26,31 @@
 
 require_once 'modules/AOS_PDF_Templates/templateParser.php';
  
-class aowTemplateParser extends templateParser
-{
-    static function parse_template($string, $bean_arr)
-    {
-        global $beanList;
+class aowTemplateParser extends templateParser {
 
-        $person = array();
+		static function parse_template($string, $bean_arr) {
+			global $beanList;
+
+            $person = array();
 	
-        foreach ($bean_arr as $bean_name => $bean_id) {
-            $focus = BeanFactory::getBean($bean_name, $bean_id);
-            $string = aowTemplateParser::parse_template_bean($string, strtolower($beanList[$bean_name]), $focus);
+			foreach($bean_arr as $bean_name => $bean_id) {
 
-            if ($focus instanceof Person) {
-                $person[] = $focus;
+				$focus = BeanFactory::getBean($bean_name, $bean_id);
+				$string = aowTemplateParser::parse_template_bean($string, strtolower($beanList[$bean_name]), $focus);
+
+                if($focus instanceof Person){
+                    $person[] = $focus;
+                }
+				
+			}
+
+            if(!empty($person)){
+                $focus = $person[0];
+            } else {
+                $focus = new Contact();
             }
-        }
+            $string = aowTemplateParser::parse_template_bean($string, 'contact', $focus);
 
-        if (!empty($person)) {
-            $focus = $person[0];
-        } else {
-            $focus = new Contact();
-        }
-        $string = aowTemplateParser::parse_template_bean($string, 'contact', $focus);
-
-        return $string;
-    }
-}
+			return $string;
+		}
+	}

@@ -104,7 +104,7 @@ class Zend_Gdata_Photos_TagEntry extends Zend_Gdata_Entry
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
 
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gphoto') . ':' . 'weight':
+            case $this->lookupNamespace('gphoto') . ':' . 'weight';
                 $weight = new Zend_Gdata_Photos_Extension_Weight();
                 $weight->transferFromDOM($child);
                 $this->_gphotoWeight = $weight;

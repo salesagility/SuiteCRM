@@ -255,7 +255,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     {
         if ($location == null) {
             $uri = self::VIDEO_URI;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -285,7 +285,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
             } else {
                 $uri = self::VIDEO_URI . "/" . $videoId;
             }
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -323,7 +323,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         if ($videoId !== null) {
             $uri = self::VIDEO_URI . "/" . $videoId . "/" .
                 self::RELATED_URI_SUFFIX;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -345,7 +345,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         if ($videoId !== null) {
             $uri = self::VIDEO_URI . "/" . $videoId . "/" .
                 self::RESPONSES_URI_SUFFIX;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -366,7 +366,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     {
         if ($videoId !== null) {
             $uri = self::VIDEO_URI . "/" . $videoId . "/comments";
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -392,7 +392,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
 
         if ($location == null) {
             $uri = $standardFeedUri;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             if ($location instanceof Zend_Gdata_YouTube_VideoQuery) {
                 if (!isset($location->url)) {
                     $location->setFeedType('top rated');
@@ -424,7 +424,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
 
         if ($location == null) {
             $uri = $standardFeedUri;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             if ($location instanceof Zend_Gdata_YouTube_VideoQuery) {
                 if (!isset($location->url)) {
                     $location->setFeedType('most viewed');
@@ -455,7 +455,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
 
         if ($location == null) {
             $uri = $standardFeedUri;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             if ($location instanceof Zend_Gdata_YouTube_VideoQuery) {
                 if (!isset($location->url)) {
                     $location->setFeedType('recently featured');
@@ -487,7 +487,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
 
         if ($location == null) {
             $uri = $standardFeedUri;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             if ($location instanceof Zend_Gdata_YouTube_VideoQuery) {
                 if (!isset($location->url)) {
                     $location->setFeedType('watch on mobile');
@@ -512,7 +512,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     {
         if ($user !== null) {
             $uri = self::USER_URI . '/' . $user . '/playlists';
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -550,7 +550,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     {
         if ($user !== null) {
             $uri = self::USER_URI . '/' . $user . '/subscriptions';
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -570,7 +570,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     {
         if ($user !== null) {
             $uri = self::USER_URI . '/' . $user . '/contacts';
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -591,7 +591,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         if ($user !== null) {
             $uri = self::USER_URI . '/' . $user . '/' .
                    self::UPLOADS_URI_SUFFIX;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -612,7 +612,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         if ($user !== null) {
             $uri = self::USER_URI . '/' . $user . '/' .
                    self::FAVORITES_URI_SUFFIX;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -632,7 +632,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     {
         if ($user !== null) {
             $uri = self::USER_URI . '/' . $user;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;

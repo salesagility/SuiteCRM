@@ -1,6 +1,6 @@
 <?php
-function install_aod()
-{
+function install_aod() {
+
     require_once('modules/Administration/Administration.php');
 
     global $sugar_config;
@@ -11,6 +11,7 @@ function install_aod()
     write_array_to_file('sugar_config', $sugar_config, 'config.php');
 
     installAODHooks();
+
 }
 
 function installAODHooks()
@@ -50,4 +51,5 @@ function installAODHooks()
     foreach ($hooks as $hook) {
         check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
     }
+
 }

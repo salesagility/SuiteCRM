@@ -6,7 +6,7 @@ use \AcceptanceTester as Tester;
 use Page\Design;
 use SuiteCRM\Enumerator\DesignBreakPoint;
 
-class NavigationBar extends Tester
+class NavigationBar extends  Tester
 {
     /**
      * Click on the home buton / navbar brand
@@ -16,7 +16,8 @@ class NavigationBar extends Tester
         $I = $this;
         $design = new Design($I);
         $breakpoint = $design->getBreakpointString();
-        switch ($breakpoint) {
+        switch ($breakpoint)
+        {
             // The home button is only available on the large desktop
             // We need to select the home module from the all menu for tablet and mobile.
             case DesignBreakPoint::lg:
@@ -47,7 +48,8 @@ class NavigationBar extends Tester
         $I = $this;
         $design = new Design($I);
         $breakpoint = $design->getBreakpointString();
-        switch ($breakpoint) {
+        switch ($breakpoint)
+        {
             case DesignBreakPoint::lg:
                 $I->moveMouseOver('.desktop-bar #toolbar .globalLinks-desktop');
                 $I->click($link, '.desktop-bar #toolbar .globalLinks-desktop');
@@ -85,7 +87,8 @@ class NavigationBar extends Tester
         $I = $this;
         $design = new Design($I);
         $breakpoint = $design->getBreakpointString();
-        switch ($breakpoint) {
+        switch ($breakpoint)
+        {
             case DesignBreakPoint::lg:
                 $allMenuButton = '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav.all';
                 $I->waitForElementVisible($allMenuButton, 30);
@@ -143,7 +146,8 @@ class NavigationBar extends Tester
         $I = $this;
         $design = new Design($I);
         $breakpoint = $design->getBreakpointString();
-        switch ($breakpoint) {
+        switch ($breakpoint)
+        {
             case DesignBreakPoint::lg:
                 $I->moveMouseOver('//*[@id="toolbar"]/ul/li[2]/span[2]/a');
                 $I->waitForElementVisible('#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links > ul', 30);

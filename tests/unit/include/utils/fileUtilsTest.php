@@ -295,6 +295,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgenerateMD5array()
     {
+        
         self::markTestIncomplete('environment dependency');
         
         //execute the method and test if it returns expected values
@@ -430,7 +431,8 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfileToHash()
     {
-        if (isset($_SESSION)) {
+        
+        if(isset($_SESSION)) {
             $_session = $_SESSION;
         }
         
@@ -450,7 +452,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // clean up
 
-        if (isset($_session)) {
+        if(isset($_session)) {
             $_SESSION = $_session;
         } else {
             unset($_SESSION);
@@ -459,7 +461,8 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testhashToFile()
     {
-        if (isset($_SESSION)) {
+        
+        if(isset($_SESSION)) {
             $_session = $_SESSION;
         }
         
@@ -476,7 +479,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // clean up
 
-        if (isset($_session)) {
+        if(isset($_session)) {
             $_SESSION = $_session;
         } else {
             unset($_SESSION);

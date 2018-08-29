@@ -105,7 +105,7 @@ class Zend_Gdata_Books extends Zend_Gdata
     {
         if ($location == null) {
             $uri = self::VOLUME_FEED_URI;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
@@ -127,7 +127,7 @@ class Zend_Gdata_Books extends Zend_Gdata
     {
         if ($volumeId !== null) {
             $uri = self::VOLUME_FEED_URI . "/" . $volumeId;
-        } elseif ($location instanceof Zend_Gdata_Query) {
+        } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;

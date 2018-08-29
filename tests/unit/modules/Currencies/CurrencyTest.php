@@ -30,7 +30,7 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $currency = new Currency();
 
@@ -42,6 +42,8 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(62.5, $currency->convertToDollar(100, 2));
         
         // clean up
+        
+        
     }
 
     public function testconvertFromDollar()
@@ -153,6 +155,7 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
+        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('currencies');
@@ -295,23 +298,11 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         //test with view = Default / DetailView
         $this->assertEquals('US Dollars', getCurrencyNameDropDown(null));
-        
-        // get currencies name
-        include_once 'modules/Currencies/ListCurrency.php';
-        $currency = new ListCurrency();
-        $currency->lookupCurrencies();
-        $currencies = [];
-        foreach ($currency->list as $curr) {
-            $this->assertNotEmpty($curr->name);
-            $currencies[] = $curr->name;
-        }
 
-        // test if these all shows up on EditView
         //test with view = EditView
+        $expected = $expected = "<select name=\"currency_name\" id=\"currency_name\" />\n<OPTION value='US Dollars'>US Dollars</OPTION></select>";
         $actual = getCurrencyNameDropDown(null, 'currency_name', '', 'EditView');
-        foreach ($currencies as $curr) {
-            $this->assertContains($curr, $actual);
-        }
+        $this->assertSame($expected, $actual);
         
         // clean up
         
@@ -324,24 +315,13 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('currencies');
         
         //test with view = Default / DetailView
-        $this->assertEquals('US Dollars', getCurrencyNameDropDown(null));
-        
-        // get currencies name
-        include_once 'modules/Currencies/ListCurrency.php';
-        $currency = new ListCurrency();
-        $currency->lookupCurrencies();
-        $currencies = [];
-        foreach ($currency->list as $curr) {
-            $this->assertNotEmpty($curr->symbol);
-            $currencies[] = $curr->symbol;
-        }
+        $this->assertEquals('US Dollars', getCurrencySymbolDropDown(null));
 
-        // test if these all shows up on EditView
         //test with view = EditView
+        $expected = $expected = "<select name=\"currency_name\" id=\"currency_name\" />\n<OPTION value='\$'>\$</OPTION></select>";
         $actual = getCurrencySymbolDropDown(null, 'currency_name', '', 'EditView');
-        foreach ($currencies as $curr) {
-            $this->assertContains($curr, $actual);
-        }
+        $this->assertSame($expected, $actual);
+        
         
         // clean up
         

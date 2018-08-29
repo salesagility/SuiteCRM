@@ -112,7 +112,7 @@ class SuiteLogger extends AbstractLogger
     {
         $replace = array();
 
-        if (empty($context)) {
+        if(empty($context)) {
             return $message;
         }
 

@@ -62,28 +62,27 @@ r15131 - 2006-07-29 15:46:10 -0700 (Sat, 29 Jul 2006) - majed - translate functi
  */
 function smarty_function_sugar_translate($params, &$smarty)
 {
-    if (!isset($params['label'])) {
-        $smarty->trigger_error("sugar_translate: missing 'label' parameter");
-        return '';
-    }
+	if (!isset($params['label'])){
+		$smarty->trigger_error("sugar_translate: missing 'label' parameter");
+		return '';
+	}
 
-    $module = (isset($params['module']))? $params['module']: '';
-    if (isset($params['select'])) {
-        if (empty($params['select'])) {
-            $value = "";
-        } else {
-            $value = translate($params['label'] , $module, $params['select']);
-        }
-    } else {
-        $value = translate($params['label'] , $module);
+	$module = (isset($params['module']))? $params['module']: '';
+    if(isset($params['select'])){
+    	if(empty($params['select']))
+		    $value = "";
+		else
+		    $value = translate($params['label'] , $module, $params['select']);
+	}else{
+		$value = translate($params['label'] , $module);
     }
     if (!empty($params['for_js']) && $params['for_js']) {
         $value = addslashes($value);
         $value = str_replace(array('&#039;', '&#39;'), "\'", $value);
     }
-    if (isset($params['trimColon']) && !$params['trimColon']) {
+    if(isset($params['trimColon']) && !$params['trimColon']) {
         return $value;
-    } elseif ($params['label'] == '0') {
+    } elseif($params['label'] == '0') {
         return translate("DEFAULT", $module);
     } else {
         return preg_replace("/([:]|\xEF\xBC\x9A)[\\s]*$/", "", $value);
