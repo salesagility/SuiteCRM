@@ -27,6 +27,37 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
     }
     
+    public function testderiveDBDateTimes()
+    {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
+        $scheduler = new Scheduler();
+
+        $scheduler->id = 1;
+        $scheduler->date_time_start = '2016-01-01 10:30:01';
+
+        //execute the method with different job intervals
+
+        $scheduler->job_interval = '*::*::*::*::3';
+        $result = $scheduler->deriveDBDateTimes($scheduler);
+        $this->assertTrue(is_array($result));
+
+        $scheduler->job_interval = '0::3::3::*::*';
+        $result = $scheduler->deriveDBDateTimes($scheduler);
+        $this->assertEquals(false, $result);
+
+        $scheduler->job_interval = '0::*::3::*::*';
+        $result = $scheduler->deriveDBDateTimes($scheduler);
+        $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
+    }
     public function test__construct()
     {
         // save state
@@ -141,37 +172,6 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
     }
 
-    public function testderiveDBDateTimes()
-    {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
-        $scheduler = new Scheduler();
-
-        $scheduler->id = 1;
-        $scheduler->date_time_start = '2016-01-01 10:30:01';
-
-        //execute the method with different job intervals
-
-        $scheduler->job_interval = '0::3::3::*::*';
-        $result = $scheduler->deriveDBDateTimes($scheduler);
-        $this->assertEquals(false, $result);
-
-        $scheduler->job_interval = '*::*::*::*::3';
-        $result = $scheduler->deriveDBDateTimes($scheduler);
-        $this->assertEquals(false, $result);
-
-        $scheduler->job_interval = '0::*::3::*::*';
-        $result = $scheduler->deriveDBDateTimes($scheduler);
-        $this->assertEquals(false, $result);
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
-    }
 
     public function testhandleIntervalType()
     {
