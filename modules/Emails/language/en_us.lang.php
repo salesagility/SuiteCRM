@@ -255,6 +255,7 @@ $mod_strings = array(
     'LBL_ASSIGNED_TO' => 'Assigned To:',
     'LBL_MEMBER_OF' => 'Parent',
     'LBL_QUICK_CREATE' => 'Quick Create',
+    'LBL_CREATE' => 'Create',
     'LBL_STATUS' => 'Email Status:',
     'LBL_EMAIL_FLAGGED' => 'Flagged:',
     'LBL_EMAIL_REPLY_TO_STATUS' => 'Reply To Status:',
