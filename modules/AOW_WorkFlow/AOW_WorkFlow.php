@@ -264,30 +264,26 @@ class AOW_WorkFlow extends Basic
         return null;
     }
 
-    function build_flow_query_join($name, SugarBean $module, $type, $query = array()){
+    function build_flow_custom_query_join($name, $custom_name, SugarBean $module,
+            $query = array()) {
+        if(!isset($query['join'][$custom_name])) {
+            $query['join'][$custom_name] = 'LEFT JOIN '.$module->get_custom_table_name()
+                    .' '.$custom_name.' ON '.$name.'.id = '. $custom_name.'.id_c ';
+        }
+        return $query;
+    }
 
-        if(!isset($query['join'][$name])){
+    function build_flow_relationship_query_join($name, SugarBean $module,
+            $query = array()) {
+        if(!isset($query['join'][$name])) {
+            if($module->load_relationship($name)) {
+                $params['join_type'] = 'LEFT JOIN';
+                $params['join_table_alias'] = $name;
+                $join = $module->$name->getJoin($params, true);
 
-            switch ($type){
-                case 'custom':
-                    $query['join'][$name] = 'LEFT JOIN '.$module->get_custom_table_name().' '.$name.' ON '.$module->table_name.'.id = '. $name.'.id_c ';
-                    break;
-
-                case 'relationship':
-                    if($module->load_relationship($name)){
-                        $params['join_type'] = 'LEFT JOIN';
-                        $params['join_table_alias'] = $name;
-                        $join = $module->$name->getJoin($params, true);
-
-                        $query['join'][$name] = $join['join'];
-                        $query['select'][] = $join['select']." AS '".$name."_id'";
-                    }
-                    break;
-                default:
-                    break;
-
+                $query['join'][$name] = $join['join'];
+                $query['select'][] = $join['select']." AS '".$name."_id'";
             }
-
         }
         return $query;
     }
@@ -362,7 +358,8 @@ class AOW_WorkFlow extends Basic
         $table_alias = $condition_module->table_name;
         if(isset($path[0]) && $path[0] != $module->module_dir){
             foreach($path as $rel){
-                $query = $this->build_flow_query_join($rel, $condition_module, 'relationship', $query);
+                $query = $this->build_flow_relationship_query_join($rel,
+                        $condition_module, $query);
                 $condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
                 $table_alias = $rel;
             }
@@ -378,7 +375,8 @@ class AOW_WorkFlow extends Basic
             }
             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                 $field = $table_alias.'_cstm.'.$condition->field;
-                $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
+                $query = $this->build_flow_custom_query_join($table_alias,
+                    $table_alias.'_cstm', $condition_module, $query);
             } else {
                 $field = $table_alias.'.'.$condition->field;
             }
@@ -403,7 +401,9 @@ class AOW_WorkFlow extends Basic
                     }
                     if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $value = $module->table_name.'_cstm.'.$condition->value;
-                        $query = $this->build_flow_query_join($module->table_name.'_cstm', $module, 'custom', $query);
+                        $query = $this->build_flow_custom_query_join(
+                                $module->table_name, $module->table_name.'_cstm',
+                                $module, $query);
                     } else {
                         $value = $module->table_name.'.'.$condition->value;
                     }
@@ -444,7 +444,9 @@ class AOW_WorkFlow extends Basic
                         
                         if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                             $value = $module->table_name.'_cstm.'.$params[0];
-                            $query = $this->build_flow_query_join($module->table_name.'_cstm', $module, 'custom', $query);
+                            $query = $this->build_flow_custom_query_join(
+                                    $module->table_name, $module->table_name.'_cstm',
+                                    $module, $query);
                         } else {
                             $value = $module->table_name.'.'.$params[0];
                         }

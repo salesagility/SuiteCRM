@@ -5433,6 +5433,23 @@ function isValidId($id) {
     return $valid;
 }
 
+function getAppString($key) {
+
+    global $app_strings;
+
+    if (!isset($app_strings[$key])) {
+        LoggerManager::getLogger()->warn('Language key not found: ' . $key);
+        return $key;
+    }
+
+    if (!$app_strings[$key]) {
+        LoggerManager::getLogger()->warn('Language string is empty at key: ' . $key);
+        return $key;
+    }
+
+    return $app_strings[$key];
+}
+
 /**
  * @param string $className
  * @return mixed

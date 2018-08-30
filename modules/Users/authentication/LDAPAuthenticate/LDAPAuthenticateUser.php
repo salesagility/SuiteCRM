@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,10 +36,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * This file is where the user authentication occurs. No redirection should happen in this file.
@@ -51,47 +52,50 @@ require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticateUs
 define('DEFAULT_PORT', 389);
 class LDAPAuthenticateUser extends SugarAuthenticateUser{
 
-	/**
-	 * Does the actual authentication of the user and returns an id that will be used
-	 * to load the current user (loadUserOnSession)
-	 *
-	 * @param STRING $name
-	 * @param STRING $password
-	 * @return STRING id - used for loading the user
-	 *
-	 * Contributions by Erik Mitchell erikm@logicpd.com
-	 */
-	function authenticateUser($name, $password) {
+    /**
+     * Does the actual authentication of the user and returns an id that will be used
+     * to load the current user (loadUserOnSession)
+     *
+     * @param STRING $name
+     * @param STRING $password
+     * @param bool $fallback
+     * @return STRING id - used for loading the user
+     *
+     * Contributions by Erik Mitchell erikm@logicpd.com
+     */
+    public function authenticateUser($name, $password, $fallback = false)
+    {
 
-		$server = $GLOBALS['ldap_config']->settings['ldap_hostname'];
-		$port = $GLOBALS['ldap_config']->settings['ldap_port'];
-		if(!$port)
-			$port = DEFAULT_PORT;
-		$GLOBALS['log']->debug("ldapauth: Connecting to LDAP server: $server");
-		$ldapconn = ldap_connect($server, $port);
-		 $error = ldap_errno($ldapconn);
-		if($this->loginError($error)){
-        		return '';
-		}
-		@ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
-		@ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0); // required for AD
-		// If constant is defined, set the timeout (PHP >= 5.3)
-		if (defined('LDAP_OPT_NETWORK_TIMEOUT'))
-		{
-			// Network timeout, lower than PHP and DB timeouts
-			@ldap_set_option($ldapconn, LDAP_OPT_NETWORK_TIMEOUT, 60);
-		}
+        $server = $GLOBALS['ldap_config']->settings['ldap_hostname'];
+        $port = $GLOBALS['ldap_config']->settings['ldap_port'];
+        if (!$port) {
+            $port = DEFAULT_PORT;
+        }
+        $GLOBALS['log']->debug("ldapauth: Connecting to LDAP server: $server");
+        $ldapconn = ldap_connect($server, $port);
+        $error = ldap_errno($ldapconn);
+        if ($this->loginError($error)) {
+            return '';
+        }
+        @ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+        @ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0); // required for AD
+        // If constant is defined, set the timeout (PHP >= 5.3)
+        if (defined('LDAP_OPT_NETWORK_TIMEOUT')) {
+            // Network timeout, lower than PHP and DB timeouts
+            @ldap_set_option($ldapconn, LDAP_OPT_NETWORK_TIMEOUT, 60);
+        }
 
-		$bind_user = $this->ldap_rdn_lookup($name, $password);
-		$GLOBALS['log']->debug("ldapauth.ldap_authenticate_user: ldap_rdn_lookup returned bind_user=" . $bind_user);
-		if (!$bind_user) {
-			$GLOBALS['log']->fatal("SECURITY: ldapauth: failed LDAP bind (login) by " .
-									$name . ", could not construct bind_user");
-			return '';
-		}
+        $bind_user = $this->ldap_rdn_lookup($name, $password);
+        $GLOBALS['log']->debug("ldapauth.ldap_authenticate_user: ldap_rdn_lookup returned bind_user=" . $bind_user);
+        if (!$bind_user) {
+            $GLOBALS['log']->fatal("SECURITY: ldapauth: failed LDAP bind (login) by " .
+                $name . ", could not construct bind_user");
 
-		// MRF - Bug #18578 - punctuation was being passed as HTML entities, i.e. &amp;
-		$bind_password = html_entity_decode($password,ENT_QUOTES);
+            return '';
+        }
+
+        // MRF - Bug #18578 - punctuation was being passed as HTML entities, i.e. &amp;
+        $bind_password = html_entity_decode($password, ENT_QUOTES);
 
         $GLOBALS['log']->info("ldapauth: Binding user " . $bind_user);
         $bind = ldap_bind($ldapconn, $bind_user, $bind_password);
@@ -108,18 +112,19 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
             }
         }
 
-		$GLOBALS['log']->info("ldapauth: Bind attempt complete.");
+        $GLOBALS['log']->info("ldapauth: Bind attempt complete.");
 
-		if ($bind) {
-			// Authentication succeeded, get info from LDAP directory
-			$attrs = array_keys($GLOBALS['ldapConfig']['users']['fields']);
-			$base_dn = $GLOBALS['ldap_config']->settings['ldap_base_dn'];
-			$name_filter = $this->getUserNameFilter($name);
+        if ($bind) {
+            // Authentication succeeded, get info from LDAP directory
+            $attrs = array_keys($GLOBALS['ldapConfig']['users']['fields']);
+            $base_dn = $GLOBALS['ldap_config']->settings['ldap_base_dn'];
+            $name_filter = $this->getUserNameFilter($name);
 
-			//add the group user attribute that we will compare to the group attribute for membership validation if group membership is turned on
+            //add the group user attribute that we will compare to the group attribute for membership validation if group membership is turned on
             if (!empty($GLOBALS['ldap_config']->settings['ldap_group'])
                 && !empty($GLOBALS['ldap_config']->settings['ldap_group_user_attr'])
-                && !empty($GLOBALS['ldap_config']->settings['ldap_group_attr'])) {
+                && !empty($GLOBALS['ldap_config']->settings['ldap_group_attr'])
+            ) {
 
                 if (!in_array($attrs, $GLOBALS['ldap_config']->settings['ldap_group_user_attr'])) {
                     $attrs[] = $GLOBALS['ldap_config']->settings['ldap_group_user_attr'];
@@ -131,12 +136,12 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
                 . $base_dn . ", name_filter: " . $name_filter . ", attrs: " . var_export($attrs, true)
             );
 
-			$result = @ldap_search($ldapconn, $base_dn, $name_filter, $attrs);
-			$error = ldap_errno($ldapconn);
+            $result = @ldap_search($ldapconn, $base_dn, $name_filter, $attrs);
+            $error = ldap_errno($ldapconn);
             if ($this->loginError($error)) {
-        		return '';
-			}
-			$GLOBALS['log']->debug("ldapauth: ldap_search complete.");
+                return '';
+            }
+            $GLOBALS['log']->debug("ldapauth: ldap_search complete.");
 
             $info = @ldap_get_entries($ldapconn, $result);
             $error = ldap_errno($ldapconn);
@@ -145,72 +150,73 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
             }
 
 
+            $GLOBALS['log']->debug("ldapauth: User info from Directory fetched.");
 
-			$GLOBALS['log']->debug("ldapauth: User info from Directory fetched.");
+            // some of these don't seem to work
+            $this->ldapUserInfo = array();
+            foreach ($GLOBALS['ldapConfig']['users']['fields'] as $key => $value) {
+                //MRF - BUG:19765
+                $key = strtolower($key);
+                if (isset($info[0]) && isset($info[0][$key]) && isset($info[0][$key][0])) {
+                    $this->ldapUserInfo[$value] = $info[0][$key][0];
+                }
+            }
 
-			// some of these don't seem to work
-			$this->ldapUserInfo = array();
-			foreach($GLOBALS['ldapConfig']['users']['fields'] as $key=>$value){
-				//MRF - BUG:19765
-				$key = strtolower($key);
-				if(isset($info[0]) && isset($info[0][$key]) && isset($info[0][$key][0])){
-					$this->ldapUserInfo[$value] = $info[0][$key][0];
-				}
-			}
+            //we should check that a user is a member of a specific group
+            if (!empty($GLOBALS['ldap_config']->settings['ldap_group'])) {
+                $GLOBALS['log']->debug("LDAPAuth: scanning group for user membership");
+                $group_user_attr = $GLOBALS['ldap_config']->settings['ldap_group_user_attr'];
+                $group_attr = $GLOBALS['ldap_config']->settings['ldap_group_attr'];
+                if (!isset($info[0][$group_user_attr])) {
+                    $GLOBALS['log']->fatal("ldapauth: $group_user_attr not found for user $name cannot authenticate against an LDAP group");
+                    ldap_close($ldapconn);
 
-			//we should check that a user is a member of a specific group
-			if(!empty($GLOBALS['ldap_config']->settings['ldap_group'])){
-				$GLOBALS['log']->debug("LDAPAuth: scanning group for user membership");
-				$group_user_attr = $GLOBALS['ldap_config']->settings['ldap_group_user_attr'];
-				$group_attr = $GLOBALS['ldap_config']->settings['ldap_group_attr'];
-				if(!isset($info[0][$group_user_attr])){
-					$GLOBALS['log']->fatal("ldapauth: $group_user_attr not found for user $name cannot authenticate against an LDAP group");
-					ldap_close($ldapconn);
-					return '';
-				}else{
-					$user_uid = $info[0][$group_user_attr];
-                    if (is_array($user_uid)){
+                    return '';
+                } else {
+                    $user_uid = $info[0][$group_user_attr];
+                    if (is_array($user_uid)) {
                         $user_uid = $user_uid[0];
                     }
                     // If user_uid contains special characters (for LDAP) we need to escape them !
                     $user_uid = str_replace(array("(", ")"), array("\(", "\)"), $user_uid);
 
-				}
+                }
 
-				// build search query and determine if we are searching for a bare id or the full dn path
+                // build search query and determine if we are searching for a bare id or the full dn path
                 $group_name = $GLOBALS['ldap_config']->settings['ldap_group_name'] . ","
                     . $GLOBALS['ldap_config']->settings['ldap_group_dn'];
-				$GLOBALS['log']->debug("ldapauth: Searching for group name: " . $group_name);
-				$user_search = "";
+                $GLOBALS['log']->debug("ldapauth: Searching for group name: " . $group_name);
+                $user_search = "";
                 if (!empty($GLOBALS['ldap_config']->settings['ldap_group_attr_req_dn'])
-                    && $GLOBALS['ldap_config']->settings['ldap_group_attr_req_dn'] == 1) {
+                    && $GLOBALS['ldap_config']->settings['ldap_group_attr_req_dn'] == 1
+                ) {
 
-					$GLOBALS['log']->debug("ldapauth: Checking for group membership using full user dn");
-					$user_search = "($group_attr=" . $group_user_attr . "=" . $user_uid . "," . $base_dn . ")";
-				} else {
-					$user_search = "($group_attr=" . $user_uid . ")";
-				}
-				$GLOBALS['log']->debug("ldapauth: Searching for user: " . $user_search);
+                    $GLOBALS['log']->debug("ldapauth: Checking for group membership using full user dn");
+                    $user_search = "($group_attr=" . $group_user_attr . "=" . $user_uid . "," . $base_dn . ")";
+                } else {
+                    $user_search = "($group_attr=" . $user_uid . ")";
+                }
+                $GLOBALS['log']->debug("ldapauth: Searching for user: " . $user_search);
 
-				//user is not a member of the group if the count is zero get the logs and return no id so it fails login        
+                //user is not a member of the group if the count is zero get the logs and return no id so it fails login
                 if (!isset($user_uid)
-                    || ldap_count_entries($ldapconn, ldap_search($ldapconn, $group_name, $user_search)) ==  0) {
+                    || ldap_count_entries($ldapconn, ldap_search($ldapconn, $group_name, $user_search)) == 0
+                ) {
 
-					$GLOBALS['log']->fatal("ldapauth: User ($name) is not a member of the LDAP group");
-					$user_id = var_export($user_uid, true);
+                    $GLOBALS['log']->fatal("ldapauth: User ($name) is not a member of the LDAP group");
+                    $user_id = var_export($user_uid, true);
                     $GLOBALS['log']->debug(
                         "ldapauth: Group DN:{$GLOBALS['ldap_config']->settings['ldap_group_dn']}"
                         . " Group Name: " . $GLOBALS['ldap_config']->settings['ldap_group_name']
                         . " Group Attribute: $group_attr  User Attribute: $group_user_attr :(" . $user_uid . ")"
                     );
 
-					ldap_close($ldapconn);
-					return '';
-				}
-			}
+                    ldap_close($ldapconn);
 
-
-
+                    return '';
+                }
+            }
+          
 			ldap_close($ldapconn);
 			$dbresult = DBManagerFactory::getInstance()->query("SELECT id, status FROM users WHERE user_name='" . $name . "' AND deleted = 0");
 
@@ -222,20 +228,22 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 					return '';
 			}
 
-			//create a new user and return the user
-			if($GLOBALS['ldap_config']->settings['ldap_auto_create_users']){
-				return $this->createUser($name);
+            //create a new user and return the user
+            if ($GLOBALS['ldap_config']->settings['ldap_auto_create_users']) {
+                return $this->createUser($name);
 
-			}
-			return '';
+            }
 
-		} else {
-			$GLOBALS['log']->fatal("SECURITY: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
-			$GLOBALS['log']->fatal("ldapauth: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
-			ldap_close($ldapconn);
-			return '';
-		}
-	}
+            return '';
+
+        } else {
+            $GLOBALS['log']->fatal("SECURITY: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
+            $GLOBALS['log']->fatal("ldapauth: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
+            ldap_close($ldapconn);
+
+            return '';
+        }
+    }
 
 	/**
 	 * takes in a name and creates the appropriate search filter for that user name including any additional filters specified in the system settings page
@@ -277,41 +285,50 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 			return $user->id;
 
 	}
-	/**
-	 * this is called when a user logs in
-	 *
-	 * @param STRING $name
-	 * @param STRING $password
-	 * @return boolean
-	 */
-	function loadUserOnLogin($name, $password) {
 
-	    global $mod_strings;
+    /**
+     * this is called when a user logs in
+     *
+     * @param STRING $name
+     * @param STRING $password
+     * @param bool $fallback
+     * @param array $PARAMS
+     * @return bool
+     */
+    public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = Array())
+    {
 
-	    // Check if the LDAP extensions are loaded
-	    if(!function_exists('ldap_connect')) {
-	       $error = $mod_strings['LBL_LDAP_EXTENSION_ERROR'];
-	       $GLOBALS['log']->fatal($error);
-	       $_SESSION['login_error'] = $error;
-	       return false;
-	    }
+        global $mod_strings;
 
-		global $login_error;
-		$GLOBALS['ldap_config']  = new Administration();
-		$GLOBALS['ldap_config']->retrieveSettings('ldap');
-		$GLOBALS['log']->debug("Starting user load for ". $name);
-		if(empty($name) || empty($password)) return false;
-		checkAuthUserStatus();
+        // Check if the LDAP extensions are loaded
+        if (!function_exists('ldap_connect')) {
+            $error = $mod_strings['LBL_LDAP_EXTENSION_ERROR'];
+            $GLOBALS['log']->fatal($error);
+            $_SESSION['login_error'] = $error;
 
-		$user_id = $this->authenticateUser($name, $password);
-		if(empty($user_id)) {
-			//check if the user can login as a normal sugar user
-			$GLOBALS['log']->fatal('SECURITY: User authentication for '.$name.' failed');
-			return false;
-		}
-		$this->loadUserOnSession($user_id);
-		return true;
-	}
+            return false;
+        }
+
+        global $login_error;
+        $GLOBALS['ldap_config'] = new Administration();
+        $GLOBALS['ldap_config']->retrieveSettings('ldap');
+        $GLOBALS['log']->debug("Starting user load for " . $name);
+        if (empty($name) || empty($password)) {
+            return false;
+        }
+        checkAuthUserStatus();
+
+        $user_id = $this->authenticateUser($name, $password);
+        if (empty($user_id)) {
+            //check if the user can login as a normal sugar user
+            $GLOBALS['log']->fatal('SECURITY: User authentication for ' . $name . ' failed');
+
+            return false;
+        }
+        $this->loadUserOnSession($user_id);
+
+        return true;
+    }
 
 
 	/**
@@ -441,5 +458,3 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 
 
 }
-
-?>
