@@ -1,7 +1,7 @@
 <?php
 
 
-class jjwg_AreasTest extends PHPUnit_Framework_TestCase
+class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testjjwg_Areas()
     {
@@ -29,7 +29,6 @@ class jjwg_AreasTest extends PHPUnit_Framework_TestCase
 
     public function testconfiguration()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $jjwgAreas = new jjwg_Areas();
         $jjwgAreas->configuration();

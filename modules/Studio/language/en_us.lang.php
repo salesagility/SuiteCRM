@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -64,7 +64,7 @@ $mod_strings = array (
 'LBL_VIEW_SUGAR_BIN' => 'View SuiteCRM Bin',
 'LBL_FAILED_TO_SAVE' => 'Failed To Save',
 'LBL_CONFIRM_UNSAVE' => 'Any changes will go unsaved. Are you sure you would like to continue?',
-'LBL_PUBLISHING' => 'Publishing ...',
+'LBL_PUBLISHING' => 'Publishing...',
 'LBL_PUBLISHED' => 'Published',
 'LBL_FAILED_PUBLISHED' => 'Failed to Publish',
 'LBL_DROP_HERE' => '[Drop Here]',
@@ -158,7 +158,7 @@ $mod_strings = array (
 'LBL_GROUP_TAB_WELCOME'=>'The filters below will be displayed in the More list in the module menu for users to use to view groups of modules within the menu. Drag and drop modules to and from the filters. Note: Empty filters will not be displayed in the menu.',
 'LBL_RENAME_TAB_WELCOME'=>'Click on any tab\'s Display Value in the table below to rename the tab.',
 'LBL_DELETE_MODULE'=>'Remove&nbsp;module<br />from&nbsp;filter',
-'LBL_DISPLAY_OTHER_TAB_HELP' => 'Select to display the "Other" tab in the navigation bar.  By default, the "Other" tab displays any modules not already included in other groups.',
+'LBL_DISPLAY_OTHER_TAB_HELP' => 'Select to display the "Other" tab in the navigation bar. By default, the "Other" tab displays any modules not already included in other groups.',
 'LBL_TAB_GROUP_LANGUAGE_HELP' => 'Select an available language, edit the Group labels and click Save & Deploy to apply the labels in the selected language.',
 'LBL_ADD_GROUP'=>'Add Filter',
 'LBL_NEW_GROUP'=>'New Group',

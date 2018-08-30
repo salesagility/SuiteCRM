@@ -114,7 +114,8 @@
             $ical_array = array();
             // First, get the list of IDs.
             $query = "SELECT id from vcals where user_id='{$user_bean->id}' AND type='vfb' AND deleted=0";
-            $vcal_arr = $this->build_related_list($query, new vCal());
+            $vCal = new vCal();
+            $vcal_arr = $this->build_related_list($query, $vCal);
 
             foreach ($vcal_arr as $focus) {
                 if (empty($focus->content)) {

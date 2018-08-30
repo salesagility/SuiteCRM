@@ -59,23 +59,21 @@ class CasesViewEdit extends ViewEdit {
         self::__construct();
     }
 
-    function display(){
+    public function display()
+    {
         parent::display();
-        global $sugar_config;
-        $new = empty($this->bean->id);
-        if($new){
-            ?>
-            <script>
-                $(document).ready(function(){
-                    $('#update_text').closest('.edit-view-row-item').html('');
-                    $('#update_text_label').closest('.edit-view-row-item').html('');
-                    $('#internal').closest('.edit-view-row-item').html('');
-                    $('#internal_label').closest('.edit-view-row-item').html('');
-                    $('#addFileButton').closest('.edit-view-row-item').html('');
-                    $('#case_update_form_label').closest('.edit-view-row-item').html('');
-                });
-            </script>
-        <?php
+
+        if (empty($this->bean->id)) {
+            $script = "
+                    $('#update_text').closest('.edit-view-row-item').hide();
+                    $('#update_text_label').closest('.edit-view-row-item').hide();
+                    $('#internal').closest('.edit-view-row-item').hide();
+                    $('#internal_label').closest('.edit-view-row-item').hide();
+                    $('#addFileButton').closest('.edit-view-row-item').hide();
+                    $('#case_update_form_label').closest('.edit-view-row-item').hide();";
+            $script .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('description'));";
+
+            echo '<script>$(document).ready(function(){' . $script . '})</script>';
         }
     }
 }

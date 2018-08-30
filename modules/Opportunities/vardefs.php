@@ -181,7 +181,7 @@ $dictionary['Opportunity'] = array('table' => 'opportunities', 'audited' => true
                 'type' => 'id',
                 'group' => 'currency_id',
                 'vname' => 'LBL_CURRENCY',
-                'function' => array('name' => 'getCurrencyDropDown', 'returns' => 'html'),
+                'function' => array('name' => 'getCurrencyDropDown', 'returns' => 'html', 'onListView' => true),
                 'reportable' => false,
                 'comment' => 'Currency used for display purposes'
             ),
@@ -382,6 +382,7 @@ $dictionary['Opportunity'] = array('table' => 'opportunities', 'audited' => true
         'aos_quotes' =>
             array(
                 'name' => 'aos_quotes',
+                'vname' => 'LBL_AOS_QUOTES',
                 'type' => 'link',
                 'relationship' => 'opportunity_aos_quotes',
                 'module' => 'AOS_Quotes',
@@ -391,6 +392,7 @@ $dictionary['Opportunity'] = array('table' => 'opportunities', 'audited' => true
         'aos_contracts' =>
             array(
                 'name' => 'aos_contracts',
+                'vname' => 'LBL_AOS_CONTRACTS',
                 'type' => 'link',
                 'relationship' => 'opportunity_aos_contracts',
                 'module' => 'AOS_Contracts',

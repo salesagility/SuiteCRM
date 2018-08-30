@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -111,7 +111,6 @@ $mod_strings = array(
     'LBL_FP_EVENTS_LEADS_1_FROM_LEADS_TITLE' => 'Leads',
     'LBL_FP_EVENTS_PROSPECTS_1_FROM_PROSPECTS_TITLE' => 'Targets',
     'LBL_FP_EVENTS_FP_EVENT_DELEGATES_1_FROM_FP_EVENT_DELEGATES_TITLE' => 'Delegates',
-	// 2 lines bellow doesnt appear in git version
 	'LBL_HOURS_ABBREV' => 'h',
 	'LBL_MINSS_ABBREV' => 'm',
 
@@ -134,5 +133,6 @@ $mod_strings = array(
 	'LBL_NAME_SECOND' => 'Last Name',
      
 	'LBL_ACTIVITY_STATUS' => 'Activity Status',
+	'LBL_FP_EVENT_LOCATIONS_FP_EVENTS_1_FROM_FP_EVENTS_TITLE' => 'Event Locations from Events Title',
 );
 //LBL_ERROR_MSG_4 Begins with a number (controller.php line 581) for example 10 emails have failed to send. 

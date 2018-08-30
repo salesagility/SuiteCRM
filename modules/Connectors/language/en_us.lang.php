@@ -4,7 +4,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -50,7 +50,7 @@ $mod_strings = array(
     'LBL_AVAILABLE' => 'Available',
     'LBL_BACK' => '< Back',
     'LBL_COMPANY_ID' => 'Company Id',
-    'LBL_CONFIRM_CONTINUE_SAVE' => 'Some required fields have been left blank.  Proceed to save changes?',
+    'LBL_CONFIRM_CONTINUE_SAVE' => 'Some required fields have been left blank. Proceed to save changes?',
     'LBL_CONNECTOR' => 'Connector',
     'LBL_CONNECTOR_FIELDS' => 'Connector Fields',
     'LBL_DATA' => 'Data',
@@ -109,14 +109,14 @@ $mod_strings = array(
     'ERROR_EMPTY_SOURCE_ID' => 'Error: Source Id not specified or empty.',
     'ERROR_EMPTY_RECORD_ID' => 'Error: Record Id not specified or empty.',
     'ERROR_NO_ADDITIONAL_DETAIL' => 'Error: No additional details were found for the record.',
-    'ERROR_NO_SEARCHDEFS_DEFINED' => 'No modules have been enabled for this connector.  Select a module for this connector in the Enable Connectors page.',
+    'ERROR_NO_SEARCHDEFS_DEFINED' => 'No modules have been enabled for this connector. Select a module for this connector in the Enable Connectors page.',
     'ERROR_NO_SEARCHDEFS_MAPPED' => 'Error: There are no connectors enabled that have search fields defined.',
     'ERROR_NO_SOURCEDEFS_FILE' => 'Error: No sourcedefs.php file could be found.',
     'ERROR_NO_SOURCEDEFS_SPECIFIED' => 'Error: No sources were specified from which to retrieve data.',
     'ERROR_NO_CONNECTOR_DISPLAY_CONFIG_FILE' => 'Error: There are no connectors mapped to this module.',
-    'ERROR_NO_SEARCHDEFS_MAPPING' => 'Error: There are no search fields defined for the module and connector.  Please contact the system administrator.',
+    'ERROR_NO_SEARCHDEFS_MAPPING' => 'Error: There are no search fields defined for the module and connector. Please contact the system administrator.',
     'ERROR_NO_FIELDS_MAPPED' => 'Error: You must map at least one Connector field to a module field for each module entry.',
-    'ERROR_NO_DISPLAYABLE_MAPPED_FIELDS' => 'Error: There are no module fields that have been mapped for display in the results.  Please contact the system administrator.',
+    'ERROR_NO_DISPLAYABLE_MAPPED_FIELDS' => 'Error: There are no module fields that have been mapped for display in the results. Please contact the system administrator.',
     'LBL_TWITTER_USER' => 'Twitter User',
     'LBL_FACEBOOK_USER' => 'Facebook User',
     'LBL_INFO_INLINE' => 'Info' /*for 508 compliance fix*/,

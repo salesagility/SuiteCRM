@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -58,7 +58,7 @@ $mod_strings = array (
     'LBL_DATE_RANGE' => 'Date range is',
     'LBL_DATE_START' => 'Begin Date:',
     'LBL_EDIT' => 'Edit',
-    'LBL_LEAD_SOURCE_BY_OUTCOME_DESC' => 'Shows cumulative opportunity amounts by selected lead source by outcome for selected users.  Outcome is based on whether the sales stage is Closed Won, Closed Lost, or any other value.',
+    'LBL_LEAD_SOURCE_BY_OUTCOME_DESC' => 'Shows cumulative opportunity amounts by selected lead source by outcome for selected users. Outcome is based on whether the sales stage is Closed Won, Closed Lost, or any other value.',
     'LBL_LEAD_SOURCE_BY_OUTCOME' => 'All Opportunities By Lead Source By Outcome',
     'LBL_LEAD_SOURCE_FORM_DESC' => 'Shows cumulative opportunity amounts by selected lead source for selected users.',
     'LBL_LEAD_SOURCE_FORM_TITLE' => 'All Opportunities By Lead Source',
@@ -66,7 +66,7 @@ $mod_strings = array (
     'LBL_LEAD_SOURCES' => 'Lead Sources:',
     'LBL_MODULE_NAME' => 'Dashboard',
     'LBL_MODULE_TITLE' => 'Dashboard: Home',
-    'LBL_MONTH_BY_OUTCOME_DESC' => 'Shows cumulative opportunity amounts by month by outcome for selected users where the expected closed date is within the specified date range.  Outcome is based on whether the sales stage is Closed Won, Closed Lost, or any other value.',
+    'LBL_MONTH_BY_OUTCOME_DESC' => 'Shows cumulative opportunity amounts by month by outcome for selected users where the expected closed date is within the specified date range. Outcome is based on whether the sales stage is Closed Won, Closed Lost, or any other value.',
     'LBL_NUMBER_OF_OPPS' => 'Number of Opportunities',
     'LBL_OPP_SIZE' => 'Opportunity size in',
     'LBL_OPP_THOUSANDS'=> 'K',

@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $dictionary['Email'] = array(
     'table' => 'emails',
@@ -58,6 +61,9 @@ $dictionary['Email'] = array(
             'type' => 'datetime',
             'required' => true,
             'comment' => 'Date record created',
+            'enable_range_search' => true,
+            'options' => 'date_range_search_dom',
+            'inline_edit' => false,
         ),
         'date_modified' => array(
             'name' => 'date_modified',
@@ -65,6 +71,9 @@ $dictionary['Email'] = array(
             'type' => 'datetime',
             'required' => true,
             'comment' => 'Date record last modified',
+            'enable_range_search' => true,
+            'options' => 'date_range_search_dom',
+            'inline_edit' => false,
         ),
         'assigned_user_id' => array(
             'name' => 'assigned_user_id',
@@ -114,41 +123,6 @@ $dictionary['Email'] = array(
             'reportable' => false,
             'comment' => 'Record deletion indicator',
         ),
-        /**
-         * DEPRECATED FOR 5.0
-         * 'from_addr' => array (
-         * 'name' => 'from_addr',
-         * 'vname' => 'LBL_FROM',
-         * 'type' => 'id',
-         * 'comment' => 'Email address of the person sending the email',
-         * ),
-         * 'reply_to_addr' => array (
-         * 'name' => 'reply_to_addr',
-         * 'vname' => 'LBL_REPLY_TO_ADDRESS',
-         * 'type' => 'id',
-         * 'comment' => 'Email address of person indicated in the Reply-to email field',
-         * ),
-         * 'to_addrs' => array (
-         * 'name' => 'to_addrs',
-         * 'vname' => 'LBL_TO',
-         * 'type' => 'id',
-         * 'comment' => 'Email address(es) of person(s) to receive the email',
-         * ),
-         * 'cc_addrs' => array (
-         * 'name' => 'cc_addrs',
-         * 'vname' => 'LBL_CC',
-         * 'type' => 'id',
-         * 'comment' => 'Email address(es) of person(s) to receive a carbon copy of the email',
-         * ),
-         * 'bcc_addrs' => array (
-         * 'name' => 'bcc_addrs',
-         * 'vname' => 'LBL_BCC',
-         * 'type' => 'id',
-         * 'comment' => 'Email address(es) of person(s) to receive a blind carbon copy of the email',
-         * ),
-         */
-
-
         'from_addr_name' => array(
             'name' => 'from_addr_name',
             'type' => 'varchar',
@@ -200,7 +174,6 @@ $dictionary['Email'] = array(
         'date_sent' => array(
             'name' => 'date_sent',
             'vname' => 'LBL_DATE_SENT',
-            'type' => 'datetime',
             'type' => 'datetime',
         ),
         'message_id' => array(
@@ -306,6 +279,7 @@ $dictionary['Email'] = array(
         ),
         'parent_type' => array(
             'name' => 'parent_type',
+            'vname' => 'LBL_PARENT_TYPE',
             'type' => 'varchar',
             'reportable' => false,
             'len' => 100,
@@ -313,6 +287,7 @@ $dictionary['Email'] = array(
         ),
         'parent_id' => array(
             'name' => 'parent_id',
+            'vname' => 'LBL_PARENT_ID',
             'type' => 'id',
             'len' => '36',
             'reportable' => false,
@@ -460,7 +435,7 @@ $dictionary['Email'] = array(
             'rhs_module' => 'Emails',
             'rhs_table' => 'emails',
             'rhs_key' => 'assigned_user_id',
-            'relationship_type' => 'one-to-many'
+            'relationship_type' => 'one-to-many',
         ),
         'emails_modified_user' => array(
             'lhs_module' => 'Users',
@@ -469,7 +444,7 @@ $dictionary['Email'] = array(
             'rhs_module' => 'Emails',
             'rhs_table' => 'emails',
             'rhs_key' => 'modified_user_id',
-            'relationship_type' => 'one-to-many'
+            'relationship_type' => 'one-to-many',
         ),
         'emails_created_by' => array(
             'lhs_module' => 'Users',
@@ -478,7 +453,7 @@ $dictionary['Email'] = array(
             'rhs_module' => 'Emails',
             'rhs_table' => 'emails',
             'rhs_key' => 'created_by',
-            'relationship_type' => 'one-to-many'
+            'relationship_type' => 'one-to-many',
         ),
         'emails_notes_rel' => array(
             'lhs_module' => 'Emails',
@@ -565,25 +540,26 @@ $dictionary['Email'] = array(
         array(
             'name' => 'idx_email_name',
             'type' => 'index',
-            'fields' => array('name')
+            'fields' => array('name'),
         ),
         array(
             'name' => 'idx_message_id',
             'type' => 'index',
-            'fields' => array('message_id')
+            'fields' => array('message_id'),
         ),
         array(
             'name' => 'idx_email_parent_id',
             'type' => 'index',
-            'fields' => array('parent_id')
+            'fields' => array('parent_id'),
         ),
         array(
             'name' => 'idx_email_assigned',
             'type' => 'index',
-            'fields' => array('assigned_user_id', 'type', 'status')
+            'fields' => array('assigned_user_id', 'type', 'status'),
         ),
     ) // end indices
 );
 
-VardefManager::createVardef('Emails', 'Email', array('security_groups',
+VardefManager::createVardef('Emails', 'Email', array(
+    'security_groups',
 ));

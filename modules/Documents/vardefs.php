@@ -419,6 +419,7 @@ $dictionary['Document'] = array('table' => 'documents',
 //END fields used for contract documents subpanel.
         'aos_contracts' => array(
             'name' => 'aos_contracts',
+            'vname' => 'LBL_AOS_CONTRACTS',
             'type' => 'link',
             'relationship' => 'aos_contracts_documents',
             'source' => 'non-db',

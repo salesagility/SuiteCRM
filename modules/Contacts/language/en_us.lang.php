@@ -5,7 +5,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -257,6 +257,11 @@ $mod_strings = array(
     'LBL_PORTAL_USER_TYPE' => 'Portal User Type',
     'LBL_PORTAL_ACCOUNT_DISABLED' => 'Account Disabled',
     'LBL_JOOMLA_ACCOUNT_ID' => 'Joomla Account ID',
+
+    'LBL_AOS_CONTRACTS' => 'Contracts',
+    'LBL_AOS_INVOICES' => 'Invoices',
+    'LBL_AOS_QUOTES' => 'Quotes',
+    'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE' => 'Project Contacts from Project Title',
 );
 
 ?>

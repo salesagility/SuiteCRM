@@ -112,8 +112,7 @@ class EmailUI {
 	 * Renders the frame for emails
 	 */
 	function displayEmailFrame() {
-
-		require_once("include/OutboundEmail/OutboundEmail.php");
+        require_once("include/OutboundEmail/OutboundEmail.php");
 
 		global $app_strings, $app_list_strings;
 		global $mod_strings;
@@ -1149,7 +1148,7 @@ eoq;
 	 * @return array
 	 */
 	function getDraftAttachments($ret) {
-		global $db;
+		$db = DBManagerFactory::getInstance();
 
 		// $ret['uid'] is the draft Email object's GUID
 		$ret['attachments'] = array();
@@ -1826,7 +1825,6 @@ function setLastRobin($ie, $lastRobin) {
 	 * @return array
 	 */
 function getSingleMessage($ie) {
-
 		global $timedate;
 		global $app_strings,$mod_strings;
 		$ie->retrieve($_REQUEST['ieId']);
@@ -1897,14 +1895,21 @@ function getSingleMessage($ie) {
 eoq;
 		}
 
-		 if(empty($out['meta']['email']['description']))
-                $out['meta']['email']['description'] = $mod_strings['LBL_EMPTY_EMAIL_BODY'];
+		 if(empty($out['meta']['email']['description'])) {
+             $out['meta']['email']['description'] = $mod_strings['LBL_EMPTY_EMAIL_BODY'];
+         } else {
+             // clean html
+             $sugarCleaner = new SugarCleaner();
+             $out['meta']['email']['description'] = $sugarCleaner::cleanHtml($out['meta']['email']['description'], true);
+         }
 
 		if($noCache) {
 			$GLOBALS['log']->debug("EMAILUI: getSingleMessage() NOT using cache file");
 		} else {
 			$GLOBALS['log']->debug("EMAILUI: getSingleMessage() using cache file [ ".$_REQUEST['mbox'].$_REQUEST['uid'].".php ]");
 		}
+
+
 
 		$this->setReadFlag($_REQUEST['ieId'], $_REQUEST['mbox'], $_REQUEST['uid']);
 		return $out;
@@ -2081,7 +2086,7 @@ eoq;
 	 */
 	function _getPeopleUnionQuery($whereArr , $person) {
 		global $current_user , $app_strings;
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		if(!isset($person) || $person === 'LBL_DROPDOWN_LIST_ALL'){
 			$peopleTables = array("users",
 			                      "contacts",
@@ -2405,7 +2410,7 @@ eoq;
         $q = "SELECT * FROM folders f WHERE f.created_by = '{$user->id}' AND f.deleted = 0 AND coalesce(" . $user->db->convert("f.folder_type", "length") . ",0) > 0";
         $r = $user->db->query($q);
 
-        while ($row = $GLOBALS['db']->fetchByAssoc($r)) {
+        while ($row = DBManagerFactory::getInstance()->fetchByAssoc($r)) {
             if ($row['folder_type'] == 'inbound') {
                 $parent_id = $row['id'];
             }

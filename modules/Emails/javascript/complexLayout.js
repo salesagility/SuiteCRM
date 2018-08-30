@@ -49,12 +49,18 @@ function complexLayoutInit() {
 	    		border:true,
 	            hideOnLayout: true,
 	            height: 400,
-				units: [{
-					position: "center",
-				    scroll:false, // grid should autoScroll itself
-				    split:true,
-				    body: "<div id='emailGrid'></div><div id='dt-pag-nav'></div> "
-				},{
+            units: [{
+              position: "top",
+              height: '64',
+              scroll: false,
+              split: true,
+              body: "<div id='dt-pag-nav'></div> "
+            }, {
+              position: "center",
+              scroll: false, // grid should autoScroll itself
+              split: true,
+              body: "<div id='emailGrid'></div>"
+            }, {
 					position: "bottom",
 				    scroll:true,
 				    collapse: false,
@@ -107,11 +113,12 @@ function complexLayoutInit() {
             // initialize state manager, we will use cookies
         	var viewHeight = document.documentElement ? document.documentElement.clientHeight : self.innerHeight;
             var heightOffset = $('#dcmenu').length > 0 ? $('#dcmenu').height() : $('#header').height();
+            var availableWidth = Dom.getViewportWidth() - 40 - getSideBarCurrentWidth();
         	se.complexLayout = new YAHOO.widget.Layout("container", {
         		border:true,
                 hideOnLayout: true,
                 height: Dom.getViewportHeight() - heightOffset - 65,
-                width: Dom.getViewportWidth() - 40,
+                width: availableWidth,
                 units: [{
                 	position: "center",
                     scroll:false,
@@ -277,4 +284,18 @@ myBufferedListenerObject.refit = function() {
     if(SUGAR.email2.grid) {
         SUGAR.email2.grid.autoSize();
     }
+}
+
+function getSideBarCurrentWidth() {
+  var $sideBarContainer = $('#sidebar_container');
+  if (!$sideBarContainer.length) {
+    return 0;
+  }
+
+  var $firstDivChild = $sideBarContainer.children('div:first');
+  if (!$firstDivChild.length || !$firstDivChild.is(':visible')) {
+    return 0;
+  }
+
+  return $firstDivChild.width();
 }

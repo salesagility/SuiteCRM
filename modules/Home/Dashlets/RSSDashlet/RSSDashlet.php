@@ -1,12 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 require_once('include/Dashlets/Dashlet.php');
@@ -45,7 +48,7 @@ require_once('include/Sugar_Smarty.php');
 
 class RSSDashlet extends Dashlet
 {
-    protected $url = 'http://www.sugarcrm.com/crm/aggregator/rss/1';
+    protected $url = 'https://salesagility.com/component/easyblog/tags/suitecrm?format=feed&type=rss';
     protected $height = '200'; // height of the pad
     protected $images_dir = 'modules/Home/Dashlets/RSSDashlet/images';
 
@@ -93,7 +96,9 @@ class RSSDashlet extends Dashlet
         $ss->assign('height', $this->height);
         $ss->assign('rss_output', $this->getRSSOutput($this->url));
         $str = $ss->fetch('modules/Home/Dashlets/RSSDashlet/RSSDashlet.tpl');
-        return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . $str; // return parent::display for title and such
+
+        // Return parent::display for title and such
+        return parent::display() . $str . '<br />';
     }
 
     /**
@@ -177,8 +182,8 @@ class RSSDashlet extends Dashlet
                         $output .= <<<EOHTML
 <tr>
 <td>
-    <h3><a href="{$link}" target="_child">{$title}</a></h3>
-    {$description}
+    <h3><a href="{$item->link}" target="_child">{$item->title}</a></h3>
+    {$item->description}
 </td>
 </tr>
 EOHTML;
@@ -198,8 +203,8 @@ EOHTML;
                 $output .= <<<EOHTML
 <tr>
 <td>
-    <h3><a href="{$link}" target="_child">{$title}</a></h3>
-    {$summary}
+    <h3><a href="{$link}" target="_child">{$entry->title}</a></h3>
+    {$entry->summary}
 </td>
 </tr>
 EOHTML;

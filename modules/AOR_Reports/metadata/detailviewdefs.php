@@ -46,10 +46,10 @@ $viewdefs['AOR_Reports']['DetailView'] = array(
                 'DUPLICATE',
                 'DELETE',
                 array(
-                    'customCode' => '<input type="button" class="button" id="download_csv_button_old" value="{$MOD.LBL_EXPORT}">',
+                    'customCode' => '{if $can_export}<input type="button" class="button" id="download_csv_button_old" value="{$MOD.LBL_EXPORT}">{/if}',
                 ),
                 array(
-                    'customCode' => '<input type="button" class="button" id="download_pdf_button_old" value="{$MOD.LBL_DOWNLOAD_PDF}">',
+                    'customCode' => '{if $can_export}<input type="button" class="button" id="download_pdf_button_old" value="{$MOD.LBL_DOWNLOAD_PDF}">{/if}',
                 ),
                 array(
                     'customCode' => '<input type="button" class="button" onClick="openProspectPopup();" value="{$MOD.LBL_ADD_TO_PROSPECT_LIST}">',

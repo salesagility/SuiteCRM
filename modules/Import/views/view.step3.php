@@ -518,6 +518,7 @@ class ImportViewStep3 extends ImportView
                     background: transparent url('index.php?entryPoint=getImage&themeName=Sugar&themeName=Sugar&imageName=sugar-yui-sprites.png') no-repeat 0 -90px;
                     padding-left: 10px;
                     cursor: pointer;
+		    display: inline; 
                 }
 
                 span.expand{

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'include/HTMLPurifier/HTMLPurifier.standalone.php';
 require_once 'include/HTMLPurifier/HTMLPurifier.autoload.php';
@@ -77,7 +81,7 @@ class SugarCleaner
      * Singleton instance
      * @var SugarCleaner
      */
-    static public $instance;
+    private static $instance;
 
     /**
      * HTMLPurifier instance
@@ -102,7 +106,7 @@ class SugarCleaner
         $config->set('CSS.Proprietary', true);
         $config->set('HTML.TidyLevel', 'light');
         $config->set('HTML.ForbiddenElements', array('body' => true, 'html' => true));
-        $config->set('AutoFormat.RemoveEmpty', false);
+        $config->set('AutoFormat.RemoveEmpty', true);
         $config->set('Cache.SerializerPermissions', 0775);
         // for style
         //$config->set('Filter.ExtractStyleBlocks', true);
@@ -167,40 +171,34 @@ class SugarCleaner
      */
     public static function getInstance()
     {
-        if(is_null(self::$instance)) {
-            self::$instance = new self;
-        }
-        return self::$instance;
+        return self::$instance instanceof self ? self::$instance : (self::$instance = new self());
     }
 
     /**
      * Clean string from potential XSS problems
-     * @param string $html
-     * @param bool $encoded Was it entity-encoded?
+     * @param string $dirty_html
+     * @param bool $remove_html - encodes html
      * @return string
      */
-    static public function cleanHtml($html, $encoded = false)
+    public static function cleanHtml($dirty_html, $remove_html = false)
     {
-        if(empty($html)) return $html;
 
-        if($encoded) {
-            $html = from_html($html);
-        }
-        if(!preg_match('<[^-A-Za-z0-9 `~!@#$%^&*()_=+{}\[\];:\'",./\\?\r\n|\x80-\xFF]>', $html)) {
-            /* if it only has "safe" chars, don't bother */
-            $cleanhtml = $html;
+        // $encode_html previously effected the decoding process.
+        // we should decode regardless, just in case, the calling method passing encoded html
+        $dirty_html_decoded = html_entity_decode($dirty_html);
+
+        // Re-encode html
+        if ($remove_html === true) {
+            // remove all HTML tags
+            $sugarCleaner = new SugarCleaner();
+            $purifier = $sugarCleaner->purifier;
+            $clean_html = $purifier->purify($dirty_html_decoded);
         } else {
-            $purifier = self::getInstance()->purifier;
-            $cleanhtml = $purifier->purify($html);
-//            $styles = $purifier->context->get('StyleBlocks');
-//            if(count($styles) > 0) {
-//                $cleanhtml = "<style>".join("</style><style>", $styles)."</style>".$cleanhtml;
-//            }
+            // encode all HTML tags
+            $clean_html = $dirty_html_decoded;
         }
-        if($encoded) {
-            $cleanhtml = to_html($cleanhtml);
-        }
-        return $cleanhtml;
+
+        return $clean_html;
     }
 
     static public function stripTags($string, $encoded = true)

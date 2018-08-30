@@ -5,7 +5,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -186,13 +186,13 @@ $mod_strings = array(
 	'LBL_LAST_NAME' => 'Last Name',
 	'LBL_SEARCH_BUTTON'=> 'Search',
 	'LBL_EMPTY_SEARCH_RESULT' => 'Sorry, no results were found. Please create an invitee below.',
-	'LBL_CREATE_INVITEE' => 'Create an Resource',
+	'LBL_CREATE_INVITEE' => 'Create a Resource',
 	'LBL_CREATE_CONTACT' => 'As Contact',
 	'LBL_CREATE_AND_ADD' => 'Create & Add',
 	'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
 	'LBL_NO_ACCESS' => 'You have no access to create $module',
 	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
-	'LBL_REMOVE' => 'rem',
+	'LBL_REMOVE' => 'Remove',
 	'LBL_VIEW_DETAIL' => 'View Details',
 	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Consider Working days',
 
@@ -209,6 +209,10 @@ $mod_strings = array(
 	'LBL_RESOURCE_CHART_MONTH' => 'Month',
 	'LBL_RESOURCE_CHART_QUARTER' => 'Quarter',
  	'LBL_ALL_RESOURCES' => 'All Resources',
+
+ 	'LBL_PROJECT_CONTACTS_1_FROM_CONTACTS_TITLE' => 'Project Contacts from Contacts Title',
+ 	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates: Project from Project Title',
+ 	'LBL_AOS_QUOTES_PROJECT' => 'Quotes: Project',
 
 );
 ?>

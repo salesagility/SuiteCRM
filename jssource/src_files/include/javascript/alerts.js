@@ -82,9 +82,6 @@ Alerts.prototype.show = function (AlertObj) {
             window.open(AlertObj.options.url_redirect);
           }
         }
-        notification.onclose = function () {
-          Alerts.prototype.addToManager(AlertObj);
-        }
       }
     }
     else {
@@ -100,9 +97,6 @@ Alerts.prototype.show = function (AlertObj) {
               window.location = AlertObj.options.url_redirect;
             }
           }
-        }
-        else {
-          Alerts.prototype.addToManager(AlertObj);
         }
       }
     }
@@ -124,6 +118,9 @@ Alerts.prototype.addToManager = function (AlertObj) {
     if (typeof AlertObj.options.type !== "undefined") {
       type = AlertObj.options.type
     }
+    if (typeof AlertObj.options.reminder_id !== "undefined") {
+      reminder_id = AlertObj.options.reminder_id
+    }
   }
   $.post(url, {
     module: 'Alerts',
@@ -133,10 +130,14 @@ Alerts.prototype.addToManager = function (AlertObj) {
     url_redirect: url_redirect,
     is_read: is_read,
     target_module: target_module,
+    reminder_id: reminder_id,
     type: type
-  }).done(function (data) {
+  }).done(function (jsonData) {
+    data = JSON.parse(jsonData);
+    if (typeof data !== 'undefined' && typeof data.result !== 'undefined' && data.result === 1) {
+      Alerts.prototype.show(AlertObj);
+    }
   }).fail(function (data) {
-    console.log(data);
   }).always(function () {
     Alerts.prototype.updateManager();
   });

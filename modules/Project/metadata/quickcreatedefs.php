@@ -64,7 +64,6 @@ array (
   array('assigned_user_name',
   ),
 
-
 ),
 
 );

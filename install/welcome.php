@@ -164,7 +164,7 @@ $out = <<<EOQ
         <!-- </td></tr></table> -->
     </div>
 	<footer id="install_footer">
-        <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+        <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
     </footer>
     </div>
 <script>
@@ -328,12 +328,12 @@ function onLangSelect(e) {
 </body>
 </html>
 EOQ;
-if (version_compare(phpversion(),'5.2.2') < 0) {
-	if(empty($mod_strings['LBL_MINIMUM_PHP_VERSION'])){
-		$mod_strings['LBL_MINIMUM_PHP_VERSION'] = 'The minimum PHP version required is 5.2.2.';
-	}
+if (check_php_version() === -1) {
+    if(empty($mod_strings['LBL_MINIMUM_PHP_VERSION'])){
+        $mod_strings['LBL_MINIMUM_PHP_VERSION'] = 'The minimum PHP version required is '.constant('SUITECRM_PHP_MIN_VERSION');
+    }
 
-$php_verison_warning =<<<eoq
+    $php_verison_warning =<<<eoq
 	    <table width="100%" cellpadding="0" cellpadding="0" border="0" class="Welcome">
 			<tr>
 		      <td colspan="2"  align="center" id="ready_image"><IMG src="include/images/install_themes.jpg" width="698" height="190" alt="Sugar Themes" border="0"></td>
@@ -346,7 +346,6 @@ $php_verison_warning =<<<eoq
 		    </tr>
 	</table>
 eoq;
-	$out = $php_verison_warning;
+    $out = $php_verison_warning;
 }
 echo $out;
-?>

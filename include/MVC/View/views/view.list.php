@@ -89,7 +89,12 @@ class ViewList extends SugarView
 
     function listViewPrepare()
     {
-        $module = $GLOBALS['module'];
+        if (!isset($GLOBALS['module'])) {
+            $module = null;
+            LoggerManager::getLogger()->warn('Undefined index: module');
+        } else {
+            $module = $GLOBALS['module'];
+        }
 
         $metadataFile = $this->getMetaDataFile();
 
@@ -148,6 +153,13 @@ class ViewList extends SugarView
         if (!isset($_REQUEST['query'])) {
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
+        } elseif (!empty($_REQUEST['update_stored_query'])) {
+            $updateKey = $_REQUEST['update_stored_query_key'];
+            $updateValue = $_REQUEST[$updateKey];
+            $this->storeQuery->loadQuery($this->module);
+            $this->storeQuery->populateRequest();
+            $_REQUEST[$updateKey] = $updateValue;
+            $this->storeQuery->saveFromRequest($this->module);
         } else {
             $this->storeQuery->saveFromRequest($this->module);
         }
@@ -161,9 +173,13 @@ class ViewList extends SugarView
                     $displayColumns[$col] = $this->listViewDefs[$module][$col];
             }
         } else {
-            foreach ($this->listViewDefs[$module] as $col => $this->params) {
-                if (!empty($this->params['default']) && $this->params['default'])
-                    $displayColumns[$col] = $this->params;
+            if (!isset($this->listViewDefs[$module])) {
+                LoggerManager::getLogger()->warn('Undefined index: ' . $module);
+            } else {
+                foreach ($this->listViewDefs[$module] as $col => $this->params) {
+                    if (!empty($this->params['default']) && $this->params['default'])
+                        $displayColumns[$col] = $this->params;
+                }
             }
         }
         $this->params = array('massupdate' => true);
@@ -172,6 +188,12 @@ class ViewList extends SugarView
             $this->params['overrideOrder'] = true;
             if (!empty($_REQUEST['sortOrder'])) $this->params['sortOrder'] = $_REQUEST['sortOrder'];
         }
+        
+        if (!isset($this->lv)) {
+            $this->lv = new stdClass();
+            LoggerManager::getLogger()->warn('List view is not defined');
+        }
+        
         $this->lv->displayColumns = $displayColumns;
 
         $this->module = $module;
@@ -179,7 +201,15 @@ class ViewList extends SugarView
         $this->prepareSearchForm();
 
         if (isset($this->options['show_title']) && $this->options['show_title']) {
-            $moduleName = isset($this->seed->module_dir) ? $this->seed->module_dir : $GLOBALS['mod_strings']['LBL_MODULE_NAME'];
+            
+            $modStrings = null;
+            if (isset($GLOBALS['mod_strings'])) {
+                $modStrings = $GLOBALS['mod_strings'];
+            } else {
+                LoggerManager::getLogger()->warn('Undefined index: mod_strings');
+            }
+            
+            $moduleName = isset($this->seed->module_dir) ? $this->seed->module_dir : $modStrings['LBL_MODULE_NAME'];
             echo $this->getModuleTitle(true);
         }
     }
@@ -256,6 +286,12 @@ class ViewList extends SugarView
             $GLOBALS['log']->info("List View Where Clause: $this->where");
         }
         if ($this->use_old_search) {
+            
+            if (!isset($view)) {
+                $view = null;
+                LoggerManager::getLogger()->warn('view is not defined');
+            }
+            
             switch ($view) {
                 case 'basic_search':
                     $this->searchForm->setup();

@@ -52,64 +52,9 @@ global $mod_strings;
 
 $curr_lang = 'en_us';
 if(isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)){
-    $curr_lang = $GLOBALS['current_language'];
+	$curr_lang = $GLOBALS['current_language'];
 }
 $mod_strings = return_module_language($curr_lang, 'UpgradeWizard',true);
-
-function check_php($sys_php_version = '')
-{
-    $min_considered_php_version = '5.2.2';
-
-    $supported_php_versions = array (
-    '5.2.2', '5.2.3', '5.2.4', '5.2.5', '5.2.6', '5.2.8', '5.3.0'
-    );
-    //Find out what Database the system is using.
-    global $sugar_config;
-    $dbType = '';
-    if (isset ($sugar_config['dbconfig']) && isset ($sugar_config['dbconfig']['db_type'])) {
-        $dbType = $sugar_config['dbconfig']['db_type'];
-    }
-
-    // invalid versions above the $min_considered_php_version,
-    // should be mutually exclusive with $supported_php_versions
-
-    // SugarCRM prohibits install on PHP 5.2.x on all platforms
-    $invalid_php_versions = array('5.2.7');
-
-    // default unsupported
-    $retval = 0;
-
-    // versions below $min_considered_php_version are invalid
-    if(1 == version_compare($sys_php_version, $min_considered_php_version, '<')) {
-        $retval = -1;
-    }
-
-    // supported version check overrides default unsupported
-    foreach($supported_php_versions as $ver) {
-        if(1 == version_compare($sys_php_version, $ver, 'eq') || strpos($sys_php_version,$ver) !== false) {
-            $retval = 1;
-            break;
-        }
-    }
-
-    // invalid version check overrides default unsupported
-    foreach($invalid_php_versions as $ver) {
-        if(1 == version_compare($sys_php_version, $ver, 'eq') || strpos($sys_php_version,$ver) !== false) {
-            $retval = -1;
-            break;
-        }
-    }
-
-    //allow a redhat distro to install, regardless of version.  We are assuming the redhat naming convention is followed
-    //and the php version contains 'rh' characters
-    if(strpos($sys_php_version, 'rh') !== false) {
-        $retval = 1;
-    }
-
-    return $retval;
-}
-
-
 
 $curr_lang = 'en_us';
 if(isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)){
@@ -129,23 +74,21 @@ if (version_compare(phpversion(),'5.2.0') >=0) {
 
 	$errors = preflightCheck();
 
-	$php_version = constant('PHP_VERSION');
-    if(check_php($php_version) == -1)
-    {
-        $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} {$php_version} </span></b>";
-        $error_txt = '<span class="error">'.$phpVersion.'</span>';
-        if(count($errors) == 0)
-        $errors[] = '';
-        $errors[] = $error_txt;
-        logThis($error_txt);
-    }
+	if (check_php_version() === -1) {
+		$phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." </span></b>";
+		$error_txt = '<span class="error">'.$phpVersion.'</span>';
+		if(count($errors) == 0)
+			$errors[] = '';
+		$errors[] = $error_txt;
+		logThis($error_txt);
+	}
 	$diffs = '';
 	$schema = '';
 	$anyScriptChanges = '';
 	$db = DBManagerFactory::getInstance();
 
 	//Quickcreatedefs on the basis of editviewdefs
-    updateQuickCreateDefs();
+	updateQuickCreateDefs();
 	upgradeSugarCache($_SESSION['install_file']);
 
 	if((count($errors) == 1)) { // only diffs
@@ -159,7 +102,7 @@ if (version_compare(phpversion(),'5.2.0') >=0) {
 		if(count($errors['manual']) > 0) {
 			$preserveFiles = array();
 
-		$diffs =<<<eoq
+			$diffs =<<<eoq
 			<script type="text/javascript" language="Javascript">
 				function preflightToggleAll(cb) {
 					var checkAll = false;
@@ -214,114 +157,114 @@ if (version_compare(phpversion(),'5.2.0') >=0) {
 						</td>
 					</tr>
 eoq;
-		foreach($errors['manual'] as $diff) {
-			$diff = clean_path($diff);
-			$_SESSION['files']['manual'][] = $diff;
+			foreach($errors['manual'] as $diff) {
+				$diff = clean_path($diff);
+				$_SESSION['files']['manual'][] = $diff;
 
-			$checked = (isAutoOverwriteFile($diff)) ? 'CHECKED' : '';
+				$checked = (isAutoOverwriteFile($diff)) ? 'CHECKED' : '';
 
-			if(empty($checked)) {
-				$preserveFiles[] = $diff;
+				if(empty($checked)) {
+					$preserveFiles[] = $diff;
+				}
+
+				$diffs .= "<tr><td valign='top'>";
+				$diffs .= "<input type='checkbox' name='diff_files[]' value='{$diff}' $checked>";
+				$diffs .= "</td><td valign='top'>";
+				$diffs .= str_replace(getcwd(), '.', $diff);
+				$diffs .= "</td></tr>";
 			}
+			$diffs .= "</table>";
+			$diffs .= "</div></p>";
+			$diffs .= "</form>";
 
-			$diffs .= "<tr><td valign='top'>";
-			$diffs .= "<input type='checkbox' name='diff_files[]' value='{$diff}' $checked>";
-			$diffs .= "</td><td valign='top'>";
-			$diffs .= str_replace(getcwd(), '.', $diff);
-			$diffs .= "</td></tr>";
-		}
-		$diffs .= "</table>";
-		$diffs .= "</div></p>";
-		$diffs .= "</form>";
-
-		// list preserved files (templates, etc.)
-		$preserve = '';
-		foreach($preserveFiles as $pf) {
-			if(empty($preserve)) {
-				$preserve .= "<table cellpadding='0' cellspacing='0' border='0'><tr><td><b>";
-				$preserve .= $mod_strings['LBL_UW_PREFLIGHT_PRESERVE_FILES'];
-				$preserve .= "</b></td></tr>";
+			// list preserved files (templates, etc.)
+			$preserve = '';
+			foreach($preserveFiles as $pf) {
+				if(empty($preserve)) {
+					$preserve .= "<table cellpadding='0' cellspacing='0' border='0'><tr><td><b>";
+					$preserve .= $mod_strings['LBL_UW_PREFLIGHT_PRESERVE_FILES'];
+					$preserve .= "</b></td></tr>";
+				}
+				$preserve .= "<tr><td valign='top'><i>".str_replace(getcwd(), '.', $pf)."</i></td></tr>";
 			}
-			$preserve .= "<tr><td valign='top'><i>".str_replace(getcwd(), '.', $pf)."</i></td></tr>";
+			if(!empty($preserve)) {
+				$preserve .= '</table><br>';
+			}
+			$diffs = $preserve.$diffs;
+		} else { // NO FILE DIFFS REQUIRED
+			$diffs = $mod_strings['LBL_UW_PREFLIGHT_NO_DIFFS'];
 		}
-		if(!empty($preserve)) {
-			$preserve .= '</table><br>';
-		}
-		$diffs = $preserve.$diffs;
-	} else { // NO FILE DIFFS REQUIRED
-		$diffs = $mod_strings['LBL_UW_PREFLIGHT_NO_DIFFS'];
-	}
-} else {
-	logThis('*** ERROR: found too many preflight errors - displaying errors and stopping execution.');
-	$out = "<b>{$mod_strings['ERR_UW_PREFLIGHT_ERRORS']}:</b><hr />";
-	$out .= "<span class='error'>";
+	} else {
+		logThis('*** ERROR: found too many preflight errors - displaying errors and stopping execution.');
+		$out = "<b>{$mod_strings['ERR_UW_PREFLIGHT_ERRORS']}:</b><hr />";
+		$out .= "<span class='error'>";
 
-	foreach($errors as $error) {
-		if(is_array($error)) { // manual diff files
-			continue;
-		} else {
-			$out .= "{$error}<br />";
+		foreach($errors as $error) {
+			if(is_array($error)) { // manual diff files
+				continue;
+			} else {
+				$out .= "{$error}<br />";
+			}
 		}
+		$out .= "</span><br />";
 	}
-	$out .= "</span><br />";
-}
 
-$diffs ='';
+	$diffs ='';
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	SCHEMA SCRIPT HANDLING
 	logThis('starting schema preflight check...');
 	//Check the current and target versions and store them in session variables
-    if (empty($sugar_db_version))
-    {
-        include('sugar_version.php');
-    }
+	if (empty($sugar_db_version))
+	{
+		include('sugar_version.php');
+	}
 	if(!isset($manifest['version']) || empty($manifest['version'])) {
 		include($_SESSION['unzip_dir'].'/manifest.php');
 	}
 
-    $origVersion = implodeVersion($sugar_db_version, 3, '0');
-    $destVersion = implodeVersion($manifest['version'], 3, '0');
+	$origVersion = implodeVersion($sugar_db_version, 3, '0');
+	$destVersion = implodeVersion($manifest['version'], 3, '0');
 
 	//save the versions as session variables
-    $_SESSION['current_db_version'] = $sugar_db_version;
-    $_SESSION['target_db_version']  = $manifest['version'];
+	$_SESSION['current_db_version'] = $sugar_db_version;
+	$_SESSION['target_db_version']  = $manifest['version'];
 	$_SESSION['upgrade_from_flavor']  = $manifest['name'];
 	// aw: BUG 10161: check flavor conversion sql files
 	$sqlFile = ''; // cn: bug
-    if (version_compare($sugar_db_version, $manifest['version'], '='))
-    {
-	    $type = $db->getScriptName();
+	if (version_compare($sugar_db_version, $manifest['version'], '='))
+	{
+		$type = $db->getScriptName();
 
-        switch($manifest['name'])
-        {
-            case 'SugarCE to SugarPro':
-                $sqlFile = $origVersion . '_ce_to_pro_' . $type;
-                break;
-            case 'SugarCE to SugarEnt':
-                $sqlFile = $origVersion . '_ce_to_ent_' . $type;
-                break;
-            case 'SugarCE to SugarCorp':
-                $sqlFile = $origVersion . '_ce_to_corp_' . $db->dbType;
-                break;
-            case 'SugarCE to SugarUlt':
-                $sqlFile = $origVersion . '_ce_to_ult_' . $db->dbType;
-                break;
-            case 'SugarPro to SugarEnt':
-                $sqlFile = $origVersion . '_pro_to_ent_' . $type;
-                break;
-            default:
-                break;
-        }
+		switch($manifest['name'])
+		{
+			case 'SugarCE to SugarPro':
+				$sqlFile = $origVersion . '_ce_to_pro_' . $type;
+				break;
+			case 'SugarCE to SugarEnt':
+				$sqlFile = $origVersion . '_ce_to_ent_' . $type;
+				break;
+			case 'SugarCE to SugarCorp':
+				$sqlFile = $origVersion . '_ce_to_corp_' . $db->dbType;
+				break;
+			case 'SugarCE to SugarUlt':
+				$sqlFile = $origVersion . '_ce_to_ult_' . $db->dbType;
+				break;
+			case 'SugarPro to SugarEnt':
+				$sqlFile = $origVersion . '_pro_to_ent_' . $type;
+				break;
+			default:
+				break;
+		}
 	} else {
-	    $type = $db->dbType;
-        if($type == 'oci8') $type = 'oracle';
-        $sqlFile = $origVersion . '_to_' . $destVersion . '_' . $type;
+		$type = $db->dbType;
+		if($type == 'oci8') $type = 'oracle';
+		$sqlFile = $origVersion . '_to_' . $destVersion . '_' . $type;
 	}
 
 	$newTables = array();
 
-    $sqlScript = $_SESSION['unzip_dir'].'/scripts/'.$sqlFile.'.sql';
+	$sqlScript = $_SESSION['unzip_dir'].'/scripts/'.$sqlFile.'.sql';
 
 	logThis('looking for schema script at: '.$sqlScript);
 	if(is_file($sqlScript)) {
@@ -335,7 +278,7 @@ $diffs ='';
 			$fp = fopen($sqlScript, 'r');
 		}
 		$contents = stream_get_contents($fp);
-	    $anyScriptChanges =$contents;
+		$anyScriptChanges =$contents;
 
 		fclose($fp);
 
@@ -360,27 +303,27 @@ $diffs ='';
 			}
 			$out .= "</div><hr />";
 		}
-} else {
-	$customTableSchema = '';
-	logThis('no schema script found - all schema preflight skipped');
-}
+	} else {
+		$customTableSchema = '';
+		logThis('no schema script found - all schema preflight skipped');
+	}
 	logThis('schema preflight done.');
 ////	END SCHEMA SCRIPT HANDLING
 ///////////////////////////////////////////////////////////////////////////////
 //php version suggestion
-    $php_suggested_ver = '';
-	if(version_compare(phpversion(),'5.2.2') < 0){
-		$php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION'].phpversion().$mod_strings['LBL_RECOMMENDED_PHP_VERSION'];
+	$php_suggested_ver = '';
+	if(check_php_version() === 0){
+		$php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION'].phpversion().". ".$mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'];
 	}
 	if(empty($mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'])){
 		$mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'] = 'Upgrade may take some time';
 	}
 
-$style_for_out = empty($out)?'style=\'display:none\'':'';
-$style_for_dif = empty($diffs)?'style=\'display:none\'':'';
-$style_for_schemaChange = empty($schema)?'style=\'display:none\'':'';
+	$style_for_out = empty($out)?'style=\'display:none\'':'';
+	$style_for_dif = empty($diffs)?'style=\'display:none\'':'';
+	$style_for_schemaChange = empty($schema)?'style=\'display:none\'':'';
 
-$final =<<<eoq
+	$final =<<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
     <tr {$style_for_out}>
         <td colspan="2" align="left" valign="top">
@@ -426,7 +369,7 @@ $final =<<<eoq
 
 eoq;
 
-$form5 =<<<eoq5
+	$form5 =<<<eoq5
 <br>
 <div id="upgradeDiv" style="display:none">
     <table cellspacing="0" cellpadding="0" border="0">
@@ -449,7 +392,7 @@ else{
 		$mod_strings['LBL_INCOMPATIBLE_PHP_VERSION'] = 'Php version 5.2.2 or above is required.';
 	}
 
-$php_verison_warning =<<<eoq
+	$php_verison_warning =<<<eoq
 	<table cellpadding="3" cellspacing="0" border="0">
 		<tr>
 			<th colspan="2" align="left">
@@ -469,7 +412,7 @@ if(ini_get("zend.ze1_compatibility_mode")) {
 		$mod_strings['LBL_BACKWARD_COMPATIBILITY_ON'] = 'Php Backward Compatibility mode is turned on. Set zend.ze1_compatibility_mode to Off for proceeding further';
 	}
 
-$php_compatibility_warning =<<<eoq
+	$php_compatibility_warning =<<<eoq
 	<table cellpadding="3" cellspacing="0" border="0">
 		<tr>
 			<th colspan="2" align="left">
@@ -478,7 +421,7 @@ $php_compatibility_warning =<<<eoq
 		</tr>
 	</table>
 eoq;
-$php_warnings .= $php_compatibility_warning;
+	$php_warnings .= $php_compatibility_warning;
 }
 if($php_warnings != null){
 	$uwMain = $php_warnings;

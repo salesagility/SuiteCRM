@@ -179,12 +179,20 @@ class EAPM extends Basic
             return false;
         }
         // Don't use save, it will attempt to revalidate
-       $adata = $GLOBALS['db']->quote($this->api_data);
-        $GLOBALS['db']->query("UPDATE eapm SET validated=1,api_data='$adata'  WHERE id = '{$this->id}' AND deleted = 0");
+        
+        $apiData = null;
+        if (isset($this->api_data)) {
+            $apiData = $this->api_data;
+        } else {
+            LoggerManager::getLogger()->warn('EAPM::validated: API data is not set to ');
+        }
+        
+       $adata = DBManagerFactory::getInstance()->quote($apiData);
+        DBManagerFactory::getInstance()->query("UPDATE eapm SET validated=1,api_data='$adata'  WHERE id = '{$this->id}' AND deleted = 0");
         if (!$this->deleted && !empty($this->application)) {
             // deactivate other EAPMs with same app
            $sql = "UPDATE eapm SET deleted=1 WHERE application = '{$this->application}' AND id != '{$this->id}' AND deleted = 0 AND assigned_user_id = '{$this->assigned_user_id}'";
-            $GLOBALS['db']->query($sql, true);
+            DBManagerFactory::getInstance()->query($sql, true);
         }
 
        // Nuke the EAPM cache for this record
@@ -230,7 +238,7 @@ class EAPM extends Basic
     public function delete_user_accounts($user_id)
     {
         $sql = "DELETE FROM {$this->table_name} WHERE assigned_user_id = '{$user_id}'";
-        $GLOBALS['db']->query($sql, true);
+        DBManagerFactory::getInstance()->query($sql, true);
     }
 }
 

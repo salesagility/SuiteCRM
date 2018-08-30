@@ -74,7 +74,7 @@
 	
 	//Setting invoice quote relationship
 	require_once('modules/Relationships/Relationship.php');
-	$key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Invoices', $GLOBALS['db']);
+	$key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Invoices', DBManagerFactory::getInstance());
 	if (!empty($key)) {
 		$quote->load_relationship($key);
 		$quote->$key->add($invoice->id);
@@ -83,7 +83,9 @@
 	//Setting Group Line Items
 	$sql = "SELECT * FROM aos_line_item_groups WHERE parent_type = 'AOS_Quotes' AND parent_id = '".$quote->id."' AND deleted = 0";
   	$result = $this->bean->db->query($sql);
+  	$quoteToInvoiceGroupIds = array();
 	while ($row = $this->bean->db->fetchByAssoc($result)) {
+        $quoteGroupId = $row['id'];
 		$row['id'] = '';
 		$row['parent_id'] = $invoice->id;
 		$row['parent_type'] = 'AOS_Invoices';
@@ -96,6 +98,7 @@
 		$group_invoice = new AOS_Line_Item_Groups();
 		$group_invoice->populateFromRow($row);
 		$group_invoice->save();
+        $quoteToInvoiceGroupIds[$quoteGroupId] = $group_invoice->id;
 	}
 	
 	//Setting Line Items
@@ -105,6 +108,7 @@
 		$row['id'] = '';
 		$row['parent_id'] = $invoice->id;
 		$row['parent_type'] = 'AOS_Invoices';
+        $row['group_id'] = $quoteToInvoiceGroupIds[$row['group_id']];
 		if($row['product_cost_price'] != null)
 		{
 			$row['product_cost_price'] = format_number($row['product_cost_price']);

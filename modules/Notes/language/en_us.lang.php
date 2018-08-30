@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -98,7 +98,7 @@ $mod_strings = array (
     'ERR_REMOVING_ATTACHMENT'=>'Failed to remove attachment...',
     'LBL_CREATED_BY'=>'Created By',
     'LBL_MODIFIED_BY'=>'Modified By',
-    'LBL_SEND_ANYWAYS'=> 'This email has no subject.  Send/save anyway?',
+    'LBL_SEND_ANYWAYS'=> 'This email has no subject. Send/save anyway?',
 	'LBL_LIST_EDIT_BUTTON' => 'Edit',
 	'LBL_ACTIVITIES_REPORTS' => 'Activities Report',
 	'LBL_PANEL_DETAILS' => 'Details',

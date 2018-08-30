@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -153,7 +153,7 @@ $mod_strings = array (
 	'ERR_DELETE_LATEST_VERSION'=> 'You are not allowed to delete the latest revision of a document.',
 	'LNK_NEW_MAIL_MERGE' => 'Mail Merge',
 	'LBL_MAIL_MERGE_DOCUMENT' => 'Mail Merge Template:',
-	'ERR_MISSING_FILE' => 'This document is missing a file, most likely due to  an error during upload.  Please retry uploading the file or contact your administrator.',
+	'ERR_MISSING_FILE' => 'This document is missing a file, most likely due to  an error during upload. Please retry uploading the file or contact your administrator.',
 
 	'LBL_TREE_TITLE' => 'Documents',
 	//sub-panel vardefs.
@@ -188,6 +188,8 @@ $mod_strings = array (
     'LBL_BUGS_SUBPANEL_TITLE' => 'Bugs',
     'LBL_QUOTES_SUBPANEL_TITLE' => 'Quotes',
 	'LBL_PRODUCTS_SUBPANEL_TITLE' => 'Products',
+
+	'LBL_AOS_CONTRACTS' => 'Contracts',
 );
 
 

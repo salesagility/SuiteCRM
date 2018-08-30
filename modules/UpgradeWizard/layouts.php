@@ -55,7 +55,6 @@ if(isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)
 	$curr_lang = $GLOBALS['current_language'];
 
 return_module_language($curr_lang, 'UpgradeWizard');
-error_reporting(E_ERROR);
 set_time_limit(0);
 set_upgrade_progress('layouts','in_progress');
 

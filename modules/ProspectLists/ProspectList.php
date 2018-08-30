@@ -181,6 +181,8 @@ class ProspectList extends SugarBean {
 
 	function create_export_members_query($record_id)
 	{
+		global $beanList, $beanFiles;
+
 		$members = array(	'Accounts' 	=> array('has_custom_fields' => false, 'fields' => array()),
 					'Contacts' 	=> array('has_custom_fields' => false, 'fields' => array()),
 					'Users' 	=> array('has_custom_fields' => false, 'fields' => array()),
@@ -204,11 +206,14 @@ class ProspectList extends SugarBean {
 
 			foreach($members as $membername => &$memberarr)
 			{
+				$module_name = $beanList[$membername];
+				require_once($beanFiles[$module_name]);
+				$relatedBean = BeanFactory::getBean($membername);
 				// if the field belongs to this module, then query it in the cstm table
-				if ($membername == $val['custom_module'])
+				if ($membername === $val['custom_module'] && $relatedBean->field_defs[$val['name']]['source'] !== 'non-db')
 				{
 					$memberarr['has_custom_fields'] = true;
-					if($val['type']=='relate') {
+					if($val['type'] === 'relate') {
 						// show related value in report..
 						$memberarr['fields'][$fieldname] = "'{{$val['type']} from=\"{$val['custom_module']}.{$val['name']}\" to=\"{$val['ext2']}.{$val['ext3']}\"}' AS " . $fieldname;
 					}
@@ -390,7 +395,7 @@ FROM prospect_lists_prospects plp
 	function build_generic_where_clause ($the_query_string)
 	{
 		$where_clauses = Array();
-		$the_query_string = $GLOBALS['db']->quote($the_query_string);
+		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 		array_push($where_clauses, "prospect_lists.name like '$the_query_string%'");
 
 		$the_where = "";

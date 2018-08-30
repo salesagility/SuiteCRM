@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -77,11 +77,11 @@ $mod_strings = array(
     'LNK_NEW_TASK' => 'Create Task',
     'LNK_NEW_BUG' => 'Report Bug',
     'LBL_ADD_BUSINESSCARD' => 'Enter Business Card',
-    'ERR_ONE_CHAR' => 'Please enter at least one letter or number for your search ...',
+    'ERR_ONE_CHAR' => 'Please enter at least one letter or number for your search...',
     'LBL_OPEN_TASKS' => 'My Open Tasks',
     'LBL_SEARCH_RESULTS_IN' => 'in',
     'LNK_NEW_SEND_EMAIL' => 'Compose Email',
-    'LBL_NO_ACCESS' => 'You do not have access to this area.  Contact your site administrator to obtain access',
+    'LBL_NO_ACCESS' => 'You do not have access to this area. Contact your site administrator to obtain access',
     'LBL_NO_RESULTS_IN_MODULE' => '-- No Results --',
     'LBL_NO_RESULTS' => '<h2>There were no results found. Please search again.</h2><br>',
     'LBL_NO_RESULTS_TIPS' => '<h3>Search Tips:</h3><ul><li>Make sure you have the proper categories selected above.</li><li>Broaden your search criteria.</li><li>If you still cannot find any results try the advanced search option.</li></ul>',
@@ -130,10 +130,10 @@ $mod_strings = array(
         'Tools' => 'Tools',
         'Miscellaneous' => 'Miscellaneous'),
     'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your administrator has set. Please remove a SuiteCRM Dashlet to add a new one.',
-    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet ...',
+    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet...',
     'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
     'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
-    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet ...',
+    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet...',
     'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
     'LBL_DASHLET_CONFIGURE_GENERAL' => 'General',
     'LBL_DASHLET_CONFIGURE_FILTERS' => 'Filters',
@@ -228,7 +228,7 @@ $mod_strings = array(
     'LBL_SOURCE_TCPDF' => 'TCPDF - A PHP class for generating PDF documents.',
     'LBL_SOURCE_CSSMIN' => 'CssMin - A css parser and minifier.',
     'LBL_SOURCE_PHPSAML' => 'PHP-SAML - A simple SAML toolkit for PHP.',
-    'LBL_SOURCE_ISCROLL' => 'iScroll - The overflow:scroll for mobile webkit.  Native scrolling inside a fixed width/height element.',
+    'LBL_SOURCE_ISCROLL' => 'iScroll - The overflow:scroll for mobile webkit. Native scrolling inside a fixed width/height element.',
     'LBL_SOURCE_FLASHCANVAS' => 'FlashCanvas - FlashCanvas is a JavaScript library which adds the HTML5 Canvas support to Internet Explorer. It renders shapes and images via Flash drawing API. It supports almost all Canvas APIs and, in many cases, runs faster than other similar libraries which use VML or Silverlight.',
     'LBL_SOURCE_JIT' => 'JavaScript InfoVis Toolkit - The JavaScript InfoVis Toolkit provides tools for creating Interactive Data Visualizations for the Web.',
     'LBL_SOURCE_ZEND' => 'Zend Framework - An open source, object oriented web application framework for PHP5.',

@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -53,4 +53,10 @@ $mod_strings = array (
     'LBL_LIST_DELETE' => 'Delete Token',
     'LBL_CONSUMER' => 'Consumer Name',
     'LBL_OAUTH_DISABLED' => 'OAuth support not enabled. PHP oauth extension may be missing. Please contact your administrator.',
+
+    'LBL_TOKEN_TS' => 'Token TS',
+    'LBL_CALLBACK_URL' => 'Callback URL',
+    'LBL_SECRET' => 'Secret',
+    'LBL_TSTATE' => 'TState',
+    'LBL_VERIFY' => 'Verify',
 );
