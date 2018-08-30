@@ -135,7 +135,7 @@ class AOW_WorkFlow extends Basic
             unset($_POST['aow_actions_id']);
         }
 
-        parent::save($check_notify);
+        $return_id = parent::save($check_notify);
 
         require_once('modules/AOW_Conditions/AOW_Condition.php');
         $condition = new AOW_Condition();
@@ -144,6 +144,8 @@ class AOW_WorkFlow extends Basic
         require_once('modules/AOW_Actions/AOW_Action.php');
         $action = new AOW_Action();
         $action->save_lines($_POST, $this, 'aow_actions_');
+
+        return $return_id;
     }
 
     public function load_flow_beans()
