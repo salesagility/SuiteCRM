@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -656,22 +656,20 @@ class EmailsController extends SugarController
         $_REQUEST['return_module'] = 'Emails';
         $_REQUEST['return_Action'] = 'index';
 
+        if (isset($parent_name)) {
+            $this->bean->parent_name = $parent_name;
+        }
+
         if ($mode === self::COMPOSE_BEAN_MODE_REPLY_TO || $mode === self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
             // Move email addresses from the "from" field to the "to" field
             $this->bean->to_addrs = $this->bean->from_addr;
             $this->bean->to_addrs_names = $this->bean->from_addr_name;
-            $this->bean->parent_name = $parent_name;
-        } else {
-            if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
-                $this->bean->to_addrs = '';
-                $this->bean->to_addrs_names = '';
-                $this->bean->parent_name = $parent_name;
-            } else {
-                if ($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
-                    // Get Related To Field
-                    // Populate to
-                }
-            }
+        } elseif ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
+            $this->bean->to_addrs = '';
+            $this->bean->to_addrs_names = '';
+        } elseif ($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
+            // Get Related To Field
+            // Populate to
         }
 
         if ($mode !== self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
