@@ -644,6 +644,7 @@ class EmailsController extends SugarController
         global $mod_strings;
 
         if (isset($request['record']) && !empty($request['record'])) {
+            $parent_name = $this->bean->parent_name;
             $this->bean->retrieve($request['record']);
         } else {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($request['inbound_email_record']));
@@ -659,10 +660,12 @@ class EmailsController extends SugarController
             // Move email addresses from the "from" field to the "to" field
             $this->bean->to_addrs = $this->bean->from_addr;
             $this->bean->to_addrs_names = $this->bean->from_addr_name;
+            $this->bean->parent_name = $parent_name;
         } else {
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 $this->bean->to_addrs = '';
                 $this->bean->to_addrs_names = '';
+                $this->bean->parent_name = $parent_name;
             } else {
                 if ($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
                     // Get Related To Field
