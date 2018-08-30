@@ -106,7 +106,7 @@
                                 true
                                 );'>
                     {/literal}
-                    <img src="{sugar_getimagepath file="id-ff-select.gif"}" alt=$mod_strings.LBL_EMAIL_SELECTOR>
+                    <img src="{sugar_getimagepath file="id-ff-select.png"}" alt=$mod_strings.LBL_EMAIL_SELECTOR>
                 </button>
             </td>
         </tr>
@@ -127,7 +127,7 @@
                 <button type="button" name="btn_data_parent_id_search" id="btn_data_parent_id_search" tabindex="0"
                         title="Select" class="button secondChild" value="Select"
                         onclick="SUGAR.email2.composeLayout.callopenpopupForEmail2('_search',{ldelim}'form_name':'advancedSearchForm'{rdelim} );">
-                    <img src="{sugar_getimagepath file='id-ff-select.gif'}" alt=$mod_strings.LBL_EMAIL_SELECTOR
+                    <img src="{sugar_getimagepath file='id-ff-select.png'}" alt=$mod_strings.LBL_EMAIL_SELECTOR
             </td>
         </tr>
         <tr class="toggleClass yui-hidden">
