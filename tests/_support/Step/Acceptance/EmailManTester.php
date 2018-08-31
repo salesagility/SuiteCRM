@@ -24,7 +24,16 @@ class EmailManTester extends \AcceptanceTester
      */
     public function createEmailSettings()
     {
-        return ; // using different email settings in the future..
+//        
+//        $I = new AcceptanceTester($scenario);
+//        $I->amOnPage('/SuiteCRM/index.php');
+//        $I->click('Gmail');
+//        $I->fillField('mail_smtpuser', 'sa.tester2@gmail.com');
+//        $I->fillField('mail_smtppass', 'chilisauce');
+//        $I->checkOption('notify_allow_default_outbound');
+//        $I->click('button');
+//        $I->seeCurrentURLEquals('/SuiteCRM/index.php');
+//        return ; // using different email settings in the future..
         
         $I = new NavigationBar($this->getScenario());
         $EditView = new EditView($this->getScenario());
