@@ -337,7 +337,6 @@ class Project extends SugarBean
     public function save($check_notify = false)
     {
         global $current_user, $db;
-        
         $focus = $this;
 
         //--- check if project template is same or changed.
@@ -513,7 +512,7 @@ class Project extends SugarBean
                     if ($bh->open) {
                         $open_h = $bh ? $bh->opening_hours : 9;
                         $close_h = $bh ? $bh->closing_hours : 17;
-                        
+                      
                         $start_time = DateTime::createFromFormat('Y-m-d', $start);
 
                         $start_time = $start_time->modify('+'.$open_h.' Hours');
@@ -540,7 +539,7 @@ class Project extends SugarBean
                 $bhours = array('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
             }
             //---------------------------
-            
+
             //copy all resources from template to project
             $template->load_relationship('am_projecttemplates_users_1');
             $template_users = $template->get_linked_beans('am_projecttemplates_users_1', 'User');
@@ -655,5 +654,6 @@ class Project extends SugarBean
         }
         /// End Template Selection handling
         ////////////////////////////////////////////////////////////
+        return $return_id;
     }
 }
