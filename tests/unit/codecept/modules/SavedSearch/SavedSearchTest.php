@@ -1,6 +1,6 @@
 <?php
 
-class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class SavedSearchTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

@@ -1,6 +1,6 @@
 <?php
 
-class AOR_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class AOR_ConditionTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function testAOR_Condition()
     {

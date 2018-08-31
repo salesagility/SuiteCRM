@@ -1,6 +1,6 @@
 <?php
 
-class ViewImportvcardTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ViewImportvcardTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function test__construct()
     {

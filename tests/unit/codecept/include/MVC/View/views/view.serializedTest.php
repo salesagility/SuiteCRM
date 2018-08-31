@@ -1,6 +1,6 @@
 <?php
 
-class ViewSerializedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ViewSerializedTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function testViewSerialized()
     {

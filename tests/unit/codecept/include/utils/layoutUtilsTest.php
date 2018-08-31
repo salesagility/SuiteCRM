@@ -2,7 +2,7 @@
 
 
 require_once 'include/utils/layout_utils.php';
-class layout_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class layout_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function testget_form_header()
     {

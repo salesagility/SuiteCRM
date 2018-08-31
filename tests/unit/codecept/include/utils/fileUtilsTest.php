@@ -3,7 +3,7 @@
 use org\bovigo\vfs\vfsStream;
 
 require_once 'include/utils/file_utils.php';
-class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class file_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

@@ -1,6 +1,6 @@
 <?php
 
- class ViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+ class ViewEditTest extends SuiteCRM\StateCheckerUnitAbstract
  {
      public function setUp()
     {

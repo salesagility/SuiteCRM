@@ -1,7 +1,7 @@
 <?php
 
 
-class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class DocumentTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

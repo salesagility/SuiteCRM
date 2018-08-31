@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/utils/encryption_utils.php';
-class encryption_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class encryption_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function testsugarEncode()
     {

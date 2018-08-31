@@ -1,6 +1,6 @@
 <?PHP
 
-class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class FP_eventsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function testFP_events()
     {

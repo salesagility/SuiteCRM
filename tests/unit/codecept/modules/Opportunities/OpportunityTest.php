@@ -1,6 +1,6 @@
 <?php
 
-class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

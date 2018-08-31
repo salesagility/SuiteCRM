@@ -1,7 +1,7 @@
 <?php
 
 
-class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function testjjwg_Address_Cache()
     {

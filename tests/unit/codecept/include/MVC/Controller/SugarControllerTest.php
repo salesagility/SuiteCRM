@@ -2,7 +2,7 @@
 
 use SuiteCRM\Test\TestLogger;
 
-class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class SugarControllerTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

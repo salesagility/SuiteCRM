@@ -1,6 +1,6 @@
 <?PHP
 
-class AM_TaskTemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class AM_TaskTemplatesTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function testAM_TaskTemplates()
     {

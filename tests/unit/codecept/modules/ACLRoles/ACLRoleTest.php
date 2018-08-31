@@ -1,6 +1,6 @@
 <?php
 
-class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ACLRoleTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

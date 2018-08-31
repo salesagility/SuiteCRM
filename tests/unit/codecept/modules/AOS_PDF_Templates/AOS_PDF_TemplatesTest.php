@@ -1,6 +1,6 @@
 <?PHP
 
-class AOS_PDF_TemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class AOS_PDF_TemplatesTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

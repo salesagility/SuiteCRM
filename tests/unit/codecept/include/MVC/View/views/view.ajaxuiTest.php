@@ -1,6 +1,6 @@
 <?php
 
-class ViewAjaxUITest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ViewAjaxUITest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function test__construct()
     {

@@ -1,7 +1,7 @@
 <?php
 
 
-class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     
     protected function storeStateAll() 

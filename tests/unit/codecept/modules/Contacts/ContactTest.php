@@ -1,6 +1,6 @@
 <?php
 
-class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ContactTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

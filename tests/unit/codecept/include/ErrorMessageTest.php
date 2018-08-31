@@ -52,7 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class ErrorMessageTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ErrorMessageTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

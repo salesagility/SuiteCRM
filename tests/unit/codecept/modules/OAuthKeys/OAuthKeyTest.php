@@ -1,7 +1,7 @@
 <?php
 
 
-class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class OAuthKeyTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

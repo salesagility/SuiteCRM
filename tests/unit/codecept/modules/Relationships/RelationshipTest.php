@@ -1,6 +1,6 @@
 <?php
 
-class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function testRelationship()
     {

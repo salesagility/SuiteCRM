@@ -1,7 +1,7 @@
 <?php
 
 
-class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class CampaignTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

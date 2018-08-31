@@ -1,6 +1,6 @@
 <?php
 
-class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class AOS_ContractsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

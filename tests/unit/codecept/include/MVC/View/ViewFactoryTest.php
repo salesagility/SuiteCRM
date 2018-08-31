@@ -1,7 +1,7 @@
 <?php
 
 
-class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ViewFactoryTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function testloadView()
     {

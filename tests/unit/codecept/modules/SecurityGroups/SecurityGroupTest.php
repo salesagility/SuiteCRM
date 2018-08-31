@@ -1,7 +1,7 @@
 <?php
 
 
-class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class SecurityGroupTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

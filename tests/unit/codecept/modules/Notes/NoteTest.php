@@ -1,6 +1,6 @@
 <?php
 
-class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class NoteTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

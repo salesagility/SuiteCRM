@@ -3,7 +3,7 @@
 /*
  * Incomplete test. this view's module is excluded from sugarcrm CE and has missing class files
 */
-class ViewFavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ViewFavoritesTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function test__construct()
     {

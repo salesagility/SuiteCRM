@@ -52,7 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class JsonApiErrorObjectTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class JsonApiErrorObjectTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {

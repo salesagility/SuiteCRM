@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/utils/progress_bar_utils.php';
-class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class progress_bar_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function testprogress_bar_flush()
     {

@@ -2,7 +2,7 @@
 
 require_once 'include/utils/activity_utils.php';
 
-class activity_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class activity_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
 
     public function setUp()

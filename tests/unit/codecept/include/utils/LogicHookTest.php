@@ -1,7 +1,7 @@
 <?php
 
 
-class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class LogicHookTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     
     protected $stateSaver;

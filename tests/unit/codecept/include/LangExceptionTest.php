@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class LangExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class LangExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {
