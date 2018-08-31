@@ -40,15 +40,11 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+require_once 'include/utils.php';
 
 global $current_user, $timedate;
 $db = DBManagerFactory::getInstance();
 
-function displayAdminError($errorString)
-{
-    $output = '<p class="error">'.$errorString.'</p>';
-    echo $output;
-}
 
 if (isset($_SESSION['rebuild_relationships'])) {
     displayAdminError(translate('MSG_REBUILD_RELATIONSHIPS', 'Administration'));
