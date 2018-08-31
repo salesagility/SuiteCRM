@@ -3,7 +3,7 @@
 namespace Step\Acceptance;
 
 
-class EmailMan extends \AcceptanceTester
+class EmailManTester extends \AcceptanceTester
 {
     /**
      * Go to email settings
@@ -22,6 +22,8 @@ class EmailMan extends \AcceptanceTester
      */
     public function createEmailSettings()
     {
+        return ; // using different email settings in the future..
+        
         $I = new NavigationBar($this->getScenario());
         $EditView = new EditView($this->getScenario());
         $faker = $this->getFaker();
