@@ -99,12 +99,14 @@ class AOR_Field extends Basic
 
         $line_count = count($post_data[$key . 'field']);
         for ($i = 0; $i < $line_count; ++$i) {
-
             if (!isset($post_data[$key . 'deleted'][$i])) {
-                LoggerManager::getLogger()->warn('AOR Field trying to save lines but POST data does not contains the key "' . $key . 'deleted' . '" at index: ' . $i);
+                LoggerManager::getLogger()->warn('AOR field save line error: Post data deleted key not found at index. Key and index were: [' . $key . '], [' . $i . ']');
+                $postDataKeyDeleted = null;
+            } else {
+                $postDataKeyDeleted = $post_data[$key . 'deleted'][$i];
             }
 
-            if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
+            if ($postDataKeyDeleted == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
                 $field = new AOR_Field();
@@ -121,26 +123,21 @@ class AOR_Field extends Basic
 
                 foreach ($this->field_defs as $field_def) {
                     $field_name = $field_def['name'];
-
-                    if (!isset($post_data[$key . $field_name])) {
-                        LoggerManager::getLogger()->warn('AOR Field trying to save lines but POST data does not contains a key "' . $key . $field_name . '" at index: ' . $i);
-                    }
-
-                    if (isset($post_data[$key . $field_name]) && is_array($post_data[$key . $field_name])) {
-                        if ($field_name != 'group_display' && isset($post_data[$key . $field_name][$i])) {
-                            if (is_array($post_data[$key . $field_name][$i])) {
-                                $post_data[$key . $field_name][$i] = base64_encode(serialize($post_data[$key . $field_name][$i]));
-                            } else if ($field_name == 'value') {
-                                $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $post_data[$key . $field_name][$i]);
+                    $postField = isset($post_data[$key . $field_name]) ? $post_data[$key . $field_name] : null;
+                    if (is_array($postField)) {
+                        if ($field_name != 'group_display' && isset($postField[$i])) {
+                            if (is_array($postField[$i])) {
+                                $postField[$i] = base64_encode(serialize($postField[$i]));
+                            } elseif ($field_name == 'value') {
+                                $postField[$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $postField[$i]);
                             }
                             if ($field_name == 'module_path') {
                                 $postField[$i] = base64_encode(serialize(explode(":", $postField[$i])));
                             }
                             $field->$field_name = $postField[$i];
                         }
-                    } elseif (!isset($post_data[$key . $field_name]) || is_null($post_data[$key . $field_name])) {
-                        // DO LOG IT!!
-                        LoggerManager::getLogger()->warn('Illegal type in post data at key');
+                    } elseif (is_null($postField)) {
+                        // do nothing
                     } else {
                         throw new Exception('illegal type in post data at key ' . $key . $field_name . ' ' . gettype($postField));
                     }
