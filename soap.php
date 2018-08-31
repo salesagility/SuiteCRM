@@ -54,7 +54,6 @@ require_once('modules/Opportunities/Opportunity.php');
 require_once('service/core/SoapHelperWebService.php');
 require_once('modules/Cases/Case.php');
 //ignore notices
-error_reporting(E_ALL ^ E_NOTICE);
 
 
 global $HTTP_RAW_POST_DATA;

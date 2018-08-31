@@ -38,22 +38,47 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 namespace SuiteCRM;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/**
- * StateCheckerCestAbstract
- *
- * Implementation of state checker Codeception tests.
- *
- * @author SalesAgility
- */
-abstract class StateCheckerCestAbstract
+
+use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+
+include_once __DIR__ . '/../../../include/utils.php';
+
+class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
 {
-    use StateCheckerTrait;
-    use StateCheckerCodeceptionTrait;
+    
+    public function testGetAppString()
+    {
+        global $app_strings;
+        
+        // setup: test works only if it is not exists
+        $this->assertTrue(!isset($app_strings['TEST_NONEXISTS_LABEL']));
+        
+        // test if label is not set
+        
+        $result = getAppString('TEST_NONEXISTS_LABEL');
+        $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
+        
+        // test if label is empty (bool:false)
+        
+        $app_strings['TEST_NONEXISTS_LABEL'] = '';
+        
+        $result = getAppString('TEST_NONEXISTS_LABEL');
+        $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
+        
+        // test if it founds
+        
+        $app_strings['TEST_NONEXISTS_LABEL'] = 'Hello test';
+        
+        $result = getAppString('TEST_NONEXISTS_LABEL');
+        $this->assertEquals('Hello test', $result);
+        
+        // clean up
+        unset($app_strings['TEST_NONEXISTS_LABEL']);
+    }
 }

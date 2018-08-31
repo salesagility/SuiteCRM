@@ -153,6 +153,7 @@ $dictionary['FP_events'] = array(
                     array(
                         'name' => 'getCurrencyDropDown',
                         'returns' => 'html',
+                        'onListView' => true,
                     ),
             ),
         'duration' =>

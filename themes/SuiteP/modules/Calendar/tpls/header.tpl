@@ -91,9 +91,9 @@
 {/if}
 
 
-<div class="row {if $controls}monthHeader{/if}">
-	<div class="col-xs-1">{$previous}</div>
-	<div class="col-xs-10 text-center"><h3>{$date_info}</h3></div>
-	<div class="col-xs-1 text-right">{$next}</div>
-	<br>
+<div class="row monthHeader">
+    <div class="col-xs-1">{$previous}</div>
+    <div class="col-xs-10 text-center"><h3>{$date_info}</h3></div>
+    <div class="col-xs-1 text-right">{$next}</div>
+    <br>
 </div>

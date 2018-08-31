@@ -730,10 +730,11 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
                 include($newtemplate_path.'/modules/Administration/upgradeTeams.php');
                 logThis(" Finish {$newtemplate_path}/modules/Administration/upgradeTeams.php", $path);
 
-                //update the users records to have default team
-                logThis('running query to populate default_team on users table', $path);
-                DBManagerFactory::getInstance()->query("update users set default_team = (select teams.id from teams where teams.name = concat('(',users.user_name, ')') or team.associated_user_id = users.id)");
-            }
+				//update the users records to have default team
+				logThis('running query to populate default_team on users table',$path);
+				DBManagerFactory::getInstance()->query("update users set default_team = (select teams.id from teams where teams.name = concat('(',users.user_name, ')') or team.associated_user_id = users.id)");
+
+			}
 
             //run upgrade script for dashlets to include sales/marketing
             if (function_exists('upgradeDashletsForSalesAndMarketing')) {

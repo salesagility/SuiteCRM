@@ -563,14 +563,14 @@ class Meeting extends SugarBean
         global $timedate;
         $today = $timedate->nowDb();
         $nextday = $timedate->asDbDate($timedate->getNow()->get("+1 day"));
-                
+
         if (!isset($meeting_fields['DATE_START'])) {
             LoggerManager::getLogger()->warn('Meeting get list view data: Undefined index: DATE_START');
             $meetingFieldsDateStart = null;
         } else {
             $meetingFieldsDateStart = $meeting_fields['DATE_START'];
         }
-                
+
         $mergeTime = $meetingFieldsDateStart; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
         $date_db = $timedate->to_db($mergeTime);
         if ($date_db	< $today) {
@@ -624,27 +624,27 @@ class Meeting extends SugarBean
         $notifyUser = ($meetingCurrentNotifyUserObjectName == 'User') ?
                         $meeting->current_notify_user :
                         $current_user;
-                
+
         // cn: bug 8078 - fixed call to $timedate
-                
+
         if (!isset($meeting->id)) {
             LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingId)');
             $meetingId = null;
         } else {
             $meetingId = $meeting->id;
         }
-                
+
         if (!isset($meeting->current_notify_user->id)) {
             LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingCurrentNotifyUserId)');
             $meetingCurrentNotifyUserId = null;
         } else {
             $meetingCurrentNotifyUserId = $meeting->current_notify_user->id;
         }
-                
+
         if (!is_object($meeting->current_notify_user)) {
             LoggerManager::getLogger()->warn('Meeting try to set notification body but the current notify user is not an object');
         }
-                
+
         if (is_object($meeting->current_notify_user) && strtolower(get_class($meeting->current_notify_user)) == 'contact') {
             $xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
                             '/index.php?entryPoint=acceptDecline&module=Meetings&contact_id='.
@@ -661,15 +661,15 @@ class Meeting extends SugarBean
                                 $meetingCurrentNotifyUserId.'&record='.
                                 $meetingId);
         }
-                
-                
+
+
         if (!isset($meeting->current_notify_user->new_assigned_user_name)) {
             LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingCurrentNotifyUserNewAssingnedUserName)');
             $meetingCurrentNotifyUserNewAssingnedUserName = null;
         } else {
             $meetingCurrentNotifyUserNewAssingnedUserName = $meeting->current_notify_user->new_assigned_user_name;
         }
-                
+
         $xtpl->assign("MEETING_TO", $meetingCurrentNotifyUserNewAssingnedUserName);
         $xtpl->assign("MEETING_SUBJECT", trim($meeting->name));
         $xtpl->assign("MEETING_STATUS", (isset($meeting->status)? $app_list_strings['meeting_status_dom'][$meeting->status]:""));
@@ -734,12 +734,12 @@ class Meeting extends SugarBean
         parent::send_assignment_notifications($notify_user, $admin);
 
         $path = SugarConfig::getInstance()->get('upload_dir', 'upload/') . $this->id;
-                
+
         if (is_dir($path)) {
             LoggerManager::getLogger()->warn('Meeting send_assignment_notifications: unlink(' . $path . '): Is a directory');
             return false;
         }
-                
+
         return unlink($path);
     }
 
@@ -992,7 +992,7 @@ class Meeting extends SugarBean
             $keys = array_keys($app[$def['options']]);
             return $keys[0];
         }
-        
+
         return '';
     }
 } // end class def
@@ -1018,14 +1018,14 @@ function getMeetingsExternalApiDropDown($focus = null, $name = null, $value = nu
         $apiList[$value] = $value;
     }
     //bug 46294: adding list of options to dropdown list (if it is not the default list)
-    
+
     if (!isset($dictionary['Meeting'])) {
         LoggerManager::getLogger()->warn('Meeting getMeetingsExternalApiDropDown: Undefined index: Meeting ($dictionaryMeeting)');
         $dictionaryMeeting = null;
     } else {
         $dictionaryMeeting = $dictionary['Meeting'];
     }
-    
+
     if ($dictionaryMeeting['fields']['type']['options'] != "eapm_list") {
         $apiList = array_merge(getMeetingTypeOptions($dictionary, $app_list_strings), $apiList);
     }

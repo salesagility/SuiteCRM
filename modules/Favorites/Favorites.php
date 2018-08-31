@@ -89,11 +89,11 @@ class Favorites extends Basic
     {
         global $current_user;
         $db = DBManagerFactory::getInstance();
-        
+
         $recordIdQuote = $db->quote($record_id);
         $moduleQuote = $db->quote($module);
         $currentUserIdQuote = $db->quote($current_user->id);
-        
+
         $query = "SELECT id FROM favorites WHERE parent_id= '" . $recordIdQuote .
                 "' AND parent_type = '" . $moduleQuote . "' AND assigned_user_id = '" .
                 $currentUserIdQuote . "' AND deleted = 0 ORDER BY date_entered DESC";
@@ -111,7 +111,7 @@ class Favorites extends Basic
         $db = DBManagerFactory::getInstance();
 
         $return_array = array();
-        
+
         $currentUserIdQuote = $db->quote($current_user->id);
         if ($id) {
             $idQuote = $db->quote($id);

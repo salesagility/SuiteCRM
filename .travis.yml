@@ -36,7 +36,7 @@ install:
 
 before_script:
   # Set up MySQL
-  - mysql -e "CREATE DATABASE automated_tests;"
+  - mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
   # Install apache - images with PHP 7 or above
