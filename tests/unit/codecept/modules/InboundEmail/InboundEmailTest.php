@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../../../../../modules/InboundEmail/InboundEmail.php';
 
 class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 {
@@ -35,6 +36,18 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->popTable('inbound_email_cache_ts');
         
     }
+    
+     
+    public function testThisCallback() {
+        $str = ['nope', '%foo', 'bar%', '%bazz%'];
+        $ret = this_callback($str);
+        $result = [];
+        for ($i = 0; $i < strlen($ret); $i++) {
+            $result[] = ord($ret[$i]);
+        }
+        $this->assertEquals([14, 15, 186, 186], $result);
+    }
+    
     
     public function testInboundEmail()
     {
@@ -315,11 +328,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->retrieve($id);
+        $this->assertFalse((bool)$inboundEmail->conn);
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $inboundEmail->renameFolder('mailbox1', 'new_mailbox');
-            $this->assertTrue(true);
+            $success = $inboundEmail->renameFolder('mailbox1', 'new_mailbox');
+            $this->assertFalse((bool)$success);
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }

@@ -49,6 +49,7 @@ require_once('modules/InboundEmail/temp.php');
 
 function this_callback($str)
 {
+    $ret = '';
     foreach ($str as $match) {
         $ret .= chr(hexdec(str_replace("%", "", $match)));
     }
@@ -309,6 +310,8 @@ class InboundEmail extends SugarBean
                 $sessionFoldersString
             );
         }
+        
+        return $imapRenameMailbox;
     }
 
 
