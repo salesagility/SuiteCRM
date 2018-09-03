@@ -81,7 +81,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddrBeanRel = $rows;
         
         
@@ -155,7 +155,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
      */
     public function testHandleLegacySave()
     {
-        
+
         if(isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
@@ -286,7 +286,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddrBeanRel = $rows;
         
         $query = "SELECT * FROM contacts";
@@ -294,7 +294,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableContacts = $rows;
         
         $query = "SELECT * FROM email_addresses";
@@ -302,7 +302,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddresses = $rows;
         
         
@@ -514,7 +514,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddresses = $rows;
         
         $c = BeanFactory::getBean('Contacts');
@@ -738,7 +738,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
      */
     public function testPopulateAddresses()
     {
-        
+
         if (!empty($_REQUEST)) {
             $req = $_REQUEST;
         }
@@ -916,31 +916,33 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
             "UPDATE email_addresses SET opt_out = 0, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
         $db->query($q);
         $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
-        $this->markTestIncomplete('We need to clear the emails after each test');
-//        self::assertEquals(false, $results);
-//        self::assertSame(array(
-//            1 => array(
-//                'email_address' => 'test@email.com',
-//                'primary_address' => '0',
-//                'reply_to_address' => '0',
-//                'invalid_email' => '1',
-//                'opt_out' => '0',
-//                'email_address_id' => null,
-//            ),
-//        ), $this->ea->addresses);
+
+        self::assertEquals(false, $results);
+        self::assertSame(array(
+            0 => array(
+                'email_address' => 'test@email.com',
+                'primary_address' => '0',
+                'reply_to_address' => '0',
+                'invalid_email' => '0',
+                'opt_out' => '0',
+                'email_address_id' => null,
+                'confirm_opt_in_flag' => '0',
+            ),
+        ), $this->ea->addresses);
 
         $q = /** @lang sql */
             "UPDATE email_addresses SET opt_out = 1, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
         $db->query($q);
         $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
         self::assertSame(array(
-            2 => array(
+            0 => array(
                 'email_address' => 'test@email.com',
                 'primary_address' => '0',
                 'reply_to_address' => '0',
-                'invalid_email' => '1',
-                'opt_out' => '1',
+                'invalid_email' => '0',
+                'opt_out' => '0',
                 'email_address_id' => null,
+                'confirm_opt_in_flag' => '0',
             ),
         ), $this->ea->addresses);
 
@@ -984,7 +986,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddrBeanRel = $rows;
         
         $query = "SELECT * FROM contacts";
@@ -992,7 +994,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableContacts = $rows;
         
         $query = "SELECT * FROM email_addresses";
@@ -1000,7 +1002,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddresses = $rows;
         
         
@@ -1243,7 +1245,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddrBeanRel = $rows;
         
         $query = "SELECT * FROM contacts";
@@ -1251,7 +1253,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableContacts = $rows;
         
         $query = "SELECT * FROM email_addresses";
@@ -1259,7 +1261,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableEmailAddresses = $rows;
         
         
@@ -1546,13 +1548,13 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
      */
     public function testGetEmailAddressWidgetEditView()
     {
-        
+
         $query = "SELECT * FROM accounts_cstm";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableAccountsCstm = $rows;
         
         
@@ -2158,7 +2160,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableAccountsCstm = $rows;
         
         
