@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 /**
@@ -711,8 +711,10 @@ class SugarView
             }
 
             foreach ($groupTabs as $key => $tabGroup) {
-                if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array($tabGroup['modules'][$moduleTab],
-                        $tabGroup['extra'])
+                if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array(
+                    $tabGroup['modules'][$moduleTab],
+                        $tabGroup['extra']
+                )
                 ) {
                     unset($groupTabs[$key]['modules'][$moduleTab]);
                 }
@@ -796,23 +798,22 @@ class SugarView
 
         if ($retModTabs) {
             return $ss->fetch($themeObject->getTemplate('_headerModuleList.tpl'));
-        } else {
-            $ss->display($headerTpl);
+        }
+        $ss->display($headerTpl);
 
-            $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
+        $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
 
-            $messages = SugarApplication::getErrorMessages();
-            if (!empty($messages)) {
-                foreach ($messages as $message) {
-                    echo '<p class="error">' . $message . '</p>';
-                }
+        $messages = SugarApplication::getErrorMessages();
+        if (!empty($messages)) {
+            foreach ($messages as $message) {
+                echo '<p class="error">' . $message . '</p>';
             }
+        }
 
-            $messages = SugarApplication::getSuccessMessages();
-            if (!empty($messages)) {
-                foreach ($messages as $message) {
-                    echo '<p class="success">' . $message . '</p>';
-                }
+        $messages = SugarApplication::getSuccessMessages();
+        if (!empty($messages)) {
+            foreach ($messages as $message) {
+                echo '<p class="success">' . $message . '</p>';
             }
         }
     }
@@ -866,9 +867,6 @@ class SugarView
         $template->assign('SUGAR_GRP1', getVersionedPath('cache/include/javascript/sugar_grp1.js'));
         $template->assign('CALENDAR', getVersionedPath('include/javascript/calendar.js'));
 
-        if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
-            $template->assign('HEADERSYNC', getVersionedPath('modules/Sync/headersync.js'));
-        }
         echo $template->fetch('include/MVC/View/tpls/displayLoginJS.tpl');
     }
 
@@ -986,10 +984,6 @@ EOHTML;
             );
 
             echo $this->_getModLanguageJS();
-
-            if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
-                echo getVersionedScript('modules/Sync/headersync.js');
-            }
 
             //echo out the $js_vars variables as javascript variables
             echo "<script type='text/javascript'>\n";
@@ -1217,9 +1211,8 @@ EOHTML;
             return $this->options['show_all'];
         } elseif (!empty($this->options) && isset($this->options[$option])) {
             return $this->options[$option];
-        } else {
-            return $default;
         }
+        return $default;
     }
 
     /**
@@ -1465,9 +1458,8 @@ EOHTML;
             return $defaultTab;
         } elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == "ajaxui") {
             return $defaultTab;
-        } else {
-            return $this->module;
         }
+        return $this->module;
     }
 
     /**
@@ -1646,18 +1638,15 @@ EOHTML;
                 if (SugarThemeRegistry::current()->directionality == "ltr") {
                     return $app_strings['LBL_SEARCH_ALT'] . "&nbsp;"
                         . "$firstParam";
-                } else {
-                    return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
                 }
-            } else {
-                return $firstParam;
+                return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
             }
+            return $firstParam;
+        }
+        if (!empty($iconPath) && !$browserTitle) {
+            //return "<a href='index.php?module={$this->module}&action=index'>$this->module</a>";
         } else {
-            if (!empty($iconPath) && !$browserTitle) {
-                //return "<a href='index.php?module={$this->module}&action=index'>$this->module</a>";
-            } else {
-                return $firstParam;
-            }
+            return $firstParam;
         }
     }
 
@@ -1711,9 +1700,8 @@ EOHTML;
     {
         if (SugarThemeRegistry::current()->directionality == "ltr") {
             return "<span class='pointer'>&raquo;</span>";
-        } else {
-            return "<span class='pointer'>&laquo;</span>";
         }
+        return "<span class='pointer'>&laquo;</span>";
     }
 
     /**

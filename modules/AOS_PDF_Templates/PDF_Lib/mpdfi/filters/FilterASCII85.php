@@ -26,7 +26,8 @@ if (!defined('ORD_u'))
 if (!defined('ORD_tilde'))
 	define('ORD_tilde', ord('~'));
 
-class FilterASCII85 {
+class FilterASCII85
+{
     
     function error($msg) {
         die($msg);
@@ -77,12 +78,12 @@ class FilterASCII85 {
             $r = $chn[0] * 85 * 85 * 85 * 85 + ($chn[1]+1) * 85 * 85 * 85;
             $out .= chr($r >> 24);
         }
-        else if ($state == 3) {
+        elseif ($state == 3) {
             $r = $chn[0] * 85 * 85 * 85 * 85 + $chn[1] * 85 * 85 * 85  + ($chn[2]+1) * 85 * 85;
             $out .= chr($r >> 24);
             $out .= chr($r >> 16);
         }
-        else if ($state == 4) {
+        elseif ($state == 4) {
             $r = $chn[0] * 85 * 85 * 85 * 85 + $chn[1] * 85 * 85 * 85  + $chn[2] * 85 * 85  + ($chn[3]+1) * 85 ;
             $out .= chr($r >> 24);
             $out .= chr($r >> 16);

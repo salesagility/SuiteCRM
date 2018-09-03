@@ -47,12 +47,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * StateCheckerCodeceptionTrait
- * 
+ *
  * Using in state checker Codeception tests.
  *
  * @author SalesAgility
  */
-trait StateCheckerCodeceptionTrait {
+trait StateCheckerCodeceptionTrait
+{
 
     
     /**

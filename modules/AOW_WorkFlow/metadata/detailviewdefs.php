@@ -23,15 +23,15 @@
  */
 
 $viewdefs ['AOW_WorkFlow'] =
-    array (
+    array(
         'DetailView' =>
-        array (
+        array(
             'templateMeta' =>
-            array (
+            array(
                 'form' =>
-                array (
+                array(
                     'buttons' =>
-                    array (
+                    array(
                         0 => 'EDIT',
                         1 => 'DUPLICATE',
                         2 => 'DELETE',
@@ -40,98 +40,98 @@ $viewdefs ['AOW_WorkFlow'] =
                 ),
                 'maxColumns' => '2',
                 'widths' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         'label' => '10',
                         'field' => '30',
                     ),
                     1 =>
-                    array (
+                    array(
                         'label' => '10',
                         'field' => '30',
                     ),
                 ),
                 'useTabs' => false,
                 'tabDefs' =>
-                array (
+                array(
                     'DEFAULT' =>
-                    array (
+                    array(
                         'newTab' => false,
                         'panelDefault' => 'expanded',
                     ),
                     'CONDITIONS' =>
-                    array (
+                    array(
                         'newTab' => false,
                         'panelDefault' => 'expanded',
                     ),
                     'ACTIONS' =>
-                    array (
+                    array(
                         'newTab' => false,
                         'panelDefault' => 'expanded',
                     ),
                 ),
             ),
             'panels' =>
-            array (
+            array(
                 'default' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         0 => 'name',
                         1 => 'assigned_user_name',
                     ),
                     1 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'flow_module',
                             'studio' => 'visible',
                             'label' => 'LBL_FLOW_MODULE',
                         ),
                         1 =>
-                        array (
+                        array(
                             'name' => 'status',
                             'studio' => 'visible',
                             'label' => 'LBL_STATUS',
                         ),
                     ),
                     2 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'run_when',
                             'label' => 'LBL_RUN_WHEN',
                         ),
                         1 =>
-                            array (
+                            array(
                                 'name' => 'flow_run_on',
                                 'studio' => 'visible',
                                 'label' => 'LBL_FLOW_RUN_ON',
                             ),
                     ),
                     3 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'multiple_runs',
                             'label' => 'LBL_MULTIPLE_RUNS',
                         ),
                     ),
                     4 =>
-                    array (
+                    array(
                         0 => 'description',
                     ),
                     5 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'date_entered',
                             'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
                             'label' => 'LBL_DATE_ENTERED',
                         ),
                         1 =>
-                        array (
+                        array(
                             'name' => 'date_modified',
                             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
                             'label' => 'LBL_DATE_MODIFIED',
@@ -139,16 +139,16 @@ $viewdefs ['AOW_WorkFlow'] =
                     ),
                 ),
                 'LBL_CONDITION_LINES' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         0 => 'condition_lines',
                     ),
                 ),
                 'LBL_ACTION_LINES' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         0 => 'action_lines',
                     ),
                 ),

@@ -33,7 +33,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertEquals(false, $aowWorkFlow->bean_implements('')); //test with blank value
@@ -41,8 +41,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $aowWorkFlow->bean_implements('ACL')); //test with valid value
         
         // clean up
-        
-        
     }
 
     public function testsave()
@@ -87,7 +85,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aowWorkFlow = new AOW_WorkFlow();
@@ -101,8 +99,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testrun_flows()
@@ -126,7 +122,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aowWorkFlow = new AOW_WorkFlow();
@@ -140,8 +136,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testrun_bean_flows()
@@ -158,8 +152,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     public function testget_flow_beans()
-    {        
-        
+    {
         $aowWorkFlow = new AOW_WorkFlow();
         
         //test for AOS_Quotes. it will return null as no test data is available
@@ -271,11 +264,11 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
         
         
-//        $tmpstate = new SuiteCRM\StateSaver();
-//        $tmpstate->pushErrorLevel();
-//        error_reporting(E_ERROR | E_PARSE);
+
+
+
         $query = $aowWorkFlow->build_query_where($aowCondition, $call);
-//        $tmpstate->popErrorLevel();
+
         
         $this->assertEquals($expected, $query);
 
@@ -319,13 +312,13 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($aowWorkFlow->compare_condition('test', array('test1', 'test2'), 'Not_One_of'));
 
         //These do not return bool but 'strpos' result
-        //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
+        
         $this->assertEquals(0, $aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
 
-        //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
+        
         $this->assertEquals(0, $aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
 
-        //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
+        
         $this->assertEquals(4, $aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
     }
 

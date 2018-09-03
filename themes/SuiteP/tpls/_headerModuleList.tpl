@@ -726,9 +726,6 @@
 
         <a id="buttontoggle" class="buttontoggle"><span></span></a>
                 
-        <!--<div class="row">-->
-            <!--<div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
-                 class="col-sm-3 col-md-2 sidebar">-->
              <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
              class="sidebar">
                 

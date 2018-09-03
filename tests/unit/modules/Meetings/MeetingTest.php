@@ -16,7 +16,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //execute the contructor and check for the Object type and  attributes
         $meeting = new Meeting();
@@ -41,18 +41,16 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(false, 'date_changed', $meeting);
         
         // clean up
-        
-        
     }
 
     public function testACLAccess()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $meeting = new Meeting();
 
@@ -72,7 +70,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-
     }
 
     public function testhasIntegratedMeeting()
@@ -85,7 +82,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSaveAndMarkdeletedAndSetAcceptStatus()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -99,7 +96,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-	// test
+        // test
         
         $meeting = new Meeting();
 
@@ -153,7 +150,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('meetings');
         $state->popTable('aod_indexevent');
         $state->popTable('aod_index');
-
     }
 
     public function testget_summary_text()
@@ -170,17 +166,17 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
-       $this->markTestIncomplete('export query produces queries which fields chagne order in different enironments');
+        $this->markTestIncomplete('export query produces queries which fields chagne order in different enironments');
     }
 
     public function testfill_in_additional_detail_fields()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $meeting = new Meeting();
 
@@ -211,18 +207,17 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-
     }
 
     public function testget_list_view_data()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $meeting = new Meeting();
         $current_theme = SugarThemeRegistry::current();
@@ -256,7 +251,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $actual = $meeting->get_list_view_data();
 
-        //$this->assertSame($expected, $actual);
+        
         $this->assertEquals($expected['PARENT_TYPE'], $actual['PARENT_TYPE']);
         $this->assertEquals($expected['STATUS'], $actual['STATUS']);
         $this->assertEquals($expected['TYPE'], $actual['TYPE']);
@@ -271,7 +266,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-
     }
 
     public function testset_notification_body()
@@ -322,7 +316,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $meeting = new Meeting();
@@ -345,8 +339,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testget_meeting_users()
@@ -391,12 +383,12 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $meeting = new Meeting();
 
@@ -407,7 +399,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-
     }
 
     public function testsave_relationship_changes()
@@ -415,7 +406,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $meeting = new Meeting();
@@ -429,8 +420,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     /**
@@ -441,7 +430,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         require_once 'data/Link.php';
@@ -466,8 +455,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetDefaultStatus()

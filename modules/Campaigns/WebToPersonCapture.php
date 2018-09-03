@@ -62,7 +62,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $_POST['client_id_address'] = query_client_ip();
     $campaign = new Campaign();
     $campaign_id = $campaign->db->quote($_POST['campaign_id']);
-    if(!isValidId($campaign_id)) {
+    if (!isValidId($campaign_id)) {
         throw new RuntimeException('Invalid ID requested in Person Capture');
     }
     $camp_query = "select name,id from campaigns where id='$campaign_id'";
@@ -86,7 +86,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     }
 
     if (isset($camp_data) && $camp_data != null) {
-        //$personForm = new $formBase();
+        /** @var Person $person */
         $person = BeanFactory::getBean($moduleDir);
         $prefix = '';
         if (!empty($_POST['prefix'])) {
@@ -123,7 +123,6 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         $optInPrefix = 'opt_in_';
 
         if (!empty($person)) {
-
             $filteredFieldsFromPersonBean = filterFieldsFromBeans(array($person));
             $possiblePersonCaptureFields = array('campaign_id', 'assigned_user_id');
             foreach ($filteredFieldsFromPersonBean[0]->fields as $field) {
@@ -214,7 +213,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 if (stristr($optInEmailField, '_default') !== false) {
                     $emailField = str_replace('_default', '', $optInEmailField);
 
-                    if(!in_array($emailField, $optInEmailFields)) {
+                    if (!in_array($emailField, $optInEmailFields)) {
                         $optedOut[] = $emailField;
                     }
 
@@ -229,27 +228,35 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                     $sea = new EmailAddress();
                     $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
                     if ($sea->retrieve($emailId)) {
-                        if(in_array($optInEmailField, $optedOut)) {
+                        if (in_array($optInEmailField, $optedOut)) {
                             $sea->resetOptIn();
                             continue;
-                        } else {
-                            $sea->optIn();
                         }
+                        $sea->optIn();
+                        
 
                         $configurator = new Configurator();
-                        if($configurator->isConfirmOptInEnabled()) {
+                        if ($configurator->isConfirmOptInEnabled()) {
                             $emailman = new EmailMan();
                             $date = new DateTime();
                             $now = $date->format($timedate::DB_DATETIME_FORMAT);
                             
-                            if(!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
+                            if (!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
                                 $errors[] = 'Confirm Opt In email sending failed, please check email address is correct: ' . $sea->email_address;
                                 $sea->confirm_opt_in_fail_date = $now;
                             } else {
                                 $sea->confirm_opt_in_sent_date = $now;
                             }
-                            
                         }
+                        if ($configurator->isOptInEnabled()) {
+                            $date = TimeDate::getInstance()->nowDb();
+                            $date_test = $timedate->to_display_date($date, false);
+                            $person->lawful_basis = '^consent^';
+                            $person->date_reviewed = $date_test;
+                            $person->lawful_basis_source = 'website';
+                            $person->save();
+                        }
+
                         $savedRequest = $_REQUEST;
                         $_REQUEST['action'] = 'ConvertLead';
                         $sea->saveEmail($person->id, $moduleDir);
@@ -331,24 +338,21 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             if (isset($mod_strings['LBL_THANKS_FOR_SUBMITTING'])) {
                 echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
             } else {
-                
-                if(isset($errors) && $errors) {
+                if (isset($errors) && $errors) {
                     $log = LoggerManager::getLogger();
-                    $log->error('Success but some error occured: ' . implode(', ', $errors)); 
+                    $log->error('Success but some error occured: ' . implode(', ', $errors));
                 }
                 
                 //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
                 echo $app_strings['LBL_THANKS_FOR_SUBMITTING'];
-                
             }
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
         }
         sugar_cleanup();
         // die to keep code from running into redirect case below
         die();
-    } else {
-        echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
     }
+    echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
 }
 
 if (!empty($_POST['redirect'])) {

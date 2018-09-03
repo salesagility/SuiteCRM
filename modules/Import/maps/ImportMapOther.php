@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,24 +37,24 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description: Holds import setting for standard delimited files
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
- ********************************************************************************/
+ */
 
 class ImportMapOther
 {
-	/**
+    /**
      * String identifier for this import
      */
     public $name = 'other';
-	/**
+    /**
      * Field delimiter
      */
     public $delimiter;
@@ -59,21 +62,20 @@ class ImportMapOther
      * Field enclosure
      */
     public $enclosure;
-	/**
+    /**
      * Do we have a header?
      */
     public $has_header = true;
 
-	/**
+    /**
      * Gets the default mapping for a module
      *
      * @param  string $module
      * @return array field mappings
      */
-	public function getMapping(
+    public function getMapping(
         $module
-        )
-    {
+        ) {
         switch ($module) {
         case 'Contacts':
         case 'Leads':
@@ -141,17 +143,16 @@ class ImportMapOther
             return array();
         }
     }
-	
-	/**
+    
+    /**
      * Returns a list of fields that should be ignorred for the module during import
      *
      * @param  string $module
      * @return array of fields to ignor
      */
-	public function getIgnoredFields(
-		$module
-		)
-	{
-		return array();
-	}
+    public function getIgnoredFields(
+        $module
+        ) {
+        return array();
+    }
 }

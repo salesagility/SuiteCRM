@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('include/SugarCache/SugarCacheAbstract.php');
@@ -67,10 +68,11 @@ class SugarCacheMemcached extends SugarCacheAbstract
      */
     public function useBackend()
     {
-        if ( extension_loaded('memcached')
+        if (extension_loaded('memcached')
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_memcached'])
-                && $this->_getMemcachedObject() )
+                && $this->_getMemcachedObject()) {
             return true;
+        }
             
         return false;
     }
@@ -88,11 +90,11 @@ class SugarCacheMemcached extends SugarCacheAbstract
      */
     protected function _getMemcachedObject()
     {
-        if ( !($this->_memcached instanceOf Memcached) ) {
+        if (!($this->_memcached instanceof Memcached)) {
             $this->_memcached = new Memcached();
             $this->_host = SugarConfig::getInstance()->get('external_cache.memcache.host', $this->_host);
             $this->_port = SugarConfig::getInstance()->get('external_cache.memcache.port', $this->_port);
-            if ( !@$this->_memcached->addServer($this->_host,$this->_port) ) {
+            if (!@$this->_memcached->addServer($this->_host, $this->_port)) {
                 return false;
             }
         }
@@ -106,8 +108,7 @@ class SugarCacheMemcached extends SugarCacheAbstract
     protected function _setExternal(
         $key,
         $value
-        )
-    {
+        ) {
         $this->_getMemcachedObject()->set($key, $value, $this->_expireTimeout);
     }
     
@@ -116,10 +117,9 @@ class SugarCacheMemcached extends SugarCacheAbstract
      */
     protected function _getExternal(
         $key
-        )
-    {
+        ) {
         $returnValue = $this->_getMemcachedObject()->get($key);
-        if ( $this->_getMemcachedObject()->getResultCode() != Memcached::RES_SUCCESS ) {
+        if ($this->_getMemcachedObject()->getResultCode() != Memcached::RES_SUCCESS) {
             return null;
         }
 
@@ -131,8 +131,7 @@ class SugarCacheMemcached extends SugarCacheAbstract
      */
     protected function _clearExternal(
         $key
-        )
-    {
+        ) {
         $this->_getMemcachedObject()->delete($key);
     }
     

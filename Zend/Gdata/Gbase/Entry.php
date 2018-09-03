@@ -115,9 +115,9 @@ class Zend_Gdata_Gbase_Entry extends Zend_Gdata_Entry
     {
         $itemType = $this->getGbaseAttribute('item_type');
         if (is_object($itemType[0])) {
-          return $itemType[0];
+            return $itemType[0];
         } else {
-          return null;
+            return null;
         }
     }
 
@@ -125,7 +125,8 @@ class Zend_Gdata_Gbase_Entry extends Zend_Gdata_Entry
      * Return all the Base attributes
      * @return Zend_Gdata_Gbase_Extension_BaseAttribute
      */
-    public function getGbaseAttributes() {
+    public function getGbaseAttributes()
+    {
         return $this->_baseAttributes;
     }
 
@@ -147,5 +148,4 @@ class Zend_Gdata_Gbase_Entry extends Zend_Gdata_Entry
         }
         return $matches;
     }
-
 }

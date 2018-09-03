@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,15 +34,16 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-function display_email_lines($focus, $field, $value, $view){
+function display_email_lines($focus, $field, $value, $view)
+{
     global $app_list_strings;
     $params = unserialize(base64_decode($value));
 
-    if($view == 'EditView') {
+    if ($view == 'EditView') {
         $html = '<script src="modules/AOR_Scheduled_Reports/emailRecipients.js"></script>';
         $html .= '<input type="hidden" name="aor_email_type_list" id="aor_email_type_list" value="' . get_select_options_with_id($app_list_strings['aor_email_type_list'], '') . '">
 				  <input type="hidden" name="aor_email_to_list" id="aor_email_to_list" value="' . get_select_options_with_id($app_list_strings['aor_email_to_list'], '') . '">';
@@ -53,7 +55,9 @@ function display_email_lines($focus, $field, $value, $view){
 
         if (isset($params['email_target_type'])) {
             foreach ($params['email_target_type'] as $key => $field) {
-                if (is_array($params['email'][$key])) $params['email'][$key] = json_encode($params['email'][$key]);
+                if (is_array($params['email'][$key])) {
+                    $params['email'][$key] = json_encode($params['email'][$key]);
+                }
                 $html .= "load_emailline('" . $params['email_to_type'][$key] . "','" . $params['email_target_type'][$key] . "','" . $params['email'][$key] . "');";
             }
         }

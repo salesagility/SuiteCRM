@@ -32,7 +32,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $employee = new Employee();
 
@@ -44,8 +44,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Administrator', $employee->get_summary_text());
         
         // clean up
-        
-        
     }
 
 
@@ -54,7 +52,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $employee = new Employee();
@@ -68,8 +66,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -91,7 +87,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testretrieve_employee_id()
     {
         $employee = new Employee();
-        //$this->assertEquals('1' ,$employee->retrieve_employee_id('admin'));
+        
 
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
     }
@@ -100,12 +96,12 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testverify_data()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-	// test
+        // test
         
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
@@ -119,7 +115,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_list_view_data()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -164,7 +160,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $employee = new Employee();
@@ -179,8 +175,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
 
@@ -205,7 +199,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $employee = new Employee();
@@ -219,8 +213,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     /**
@@ -248,12 +240,12 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testhasCustomFields()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-	// test
+        // test
         
         
         $employee = new Employee();
@@ -264,5 +256,37 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('email_addresses');
+    }
+    
+    public function testError()
+    {
+        global $app_strings;
+        
+        // setup
+        $this->assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
+        
+        // test if there is no error
+        
+        ob_start();
+        include __DIR__ . '/../../../../modules/Employees/Error.php';
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $expected = '<span class=\'error\'><br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
+        $this->assertContains($expected, $contents);
+        
+        // test if there is an error
+        
+        $app_strings['TEST_ERROR_MESSAGE'] = 'Hello error';
+        $request['error_string'] = 'TEST_ERROR_MESSAGE';
+        $this->assertEquals($request['error_string'], 'TEST_ERROR_MESSAGE');
+        ob_start();
+        include __DIR__ . '/../../../../modules/Employees/Error.php';
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $expected = '<span class=\'error\'>Hello error<br><br>' . "\n" . $app_strings['NTC_CLICK_BACK'] . '</span>';
+        $this->assertContains($expected, $contents);
+        
+        // clean up
+        unset($app_strings['TEST_ERROR_MESSAGE']);
     }
 }

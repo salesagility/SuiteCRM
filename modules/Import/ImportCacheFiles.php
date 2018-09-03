@@ -1,12 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +20,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,17 +38,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description: Static class to that is used to get the filenames for the various
  * cache files used
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
- ********************************************************************************/
+ */
 
 class ImportCacheFiles
 {
@@ -63,7 +66,7 @@ class ImportCacheFiles
 
     /**
      * List of all cache file names
-     * 
+     *
      * @var array
      */
     protected static $all_files = array(
@@ -118,20 +121,16 @@ class ImportCacheFiles
 
     /**
      * Ensure that all cache files are writable or can be created
-     * 
+     *
      * @return bool
      */
     public static function ensureWritable()
     {
-        foreach (self::$all_files as $type)
-        {
+        foreach (self::$all_files as $type) {
             $filename = self::_createFileName($type);
-            if (file_exists($filename) && !is_writable($filename))
-            {
+            if (file_exists($filename) && !is_writable($filename)) {
                 return false;
-            }
-            elseif (!is_writable(dirname($filename)))
-            {
+            } elseif (!is_writable(dirname($filename))) {
                 return false;
             }
         }
@@ -205,11 +204,12 @@ class ImportCacheFiles
     {
         global $sugar_config;
         $importdir = self::getImportDir();
-        if ( is_dir($importdir) ) {
+        if (is_dir($importdir)) {
             $files = dir($importdir);
             while (false !== ($file = $files->read())) {
-                if ( !is_dir($file) && stristr($file,'.csv') )
+                if (!is_dir($file) && stristr($file, '.csv')) {
                     unlink("$importdir/$file");
+                }
             }
         }
     }

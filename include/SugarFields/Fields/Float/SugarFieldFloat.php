@@ -1,11 +1,12 @@
 <?php
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,31 +35,33 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('include/SugarFields/Fields/Int/SugarFieldInt.php');
 
-class SugarFieldFloat extends SugarFieldInt 
+class SugarFieldFloat extends SugarFieldInt
 {
-    public function formatField($rawField, $vardef){
+    public function formatField($rawField, $vardef)
+    {
         // A null precision uses the user prefs / system prefs by default
         $precision = null;
-        if ( isset($vardef['precision']) ) {
+        if (isset($vardef['precision'])) {
             $precision = $vardef['precision'];
         }
         
-        if ( $rawField === '' || $rawField === NULL ) {
+        if ($rawField === '' || $rawField === null) {
             return '';
         }
 
-        return format_number($rawField,$precision,$precision);
+        return format_number($rawField, $precision, $precision);
     }
     
-    public function unformatField($formattedField, $vardef){
-        if ( $formattedField === '' || $formattedField === NULL ) {
+    public function unformatField($formattedField, $vardef)
+    {
+        if ($formattedField === '' || $formattedField === null) {
             return '';
         }
         return (float)unformat_number($formattedField);
@@ -72,14 +75,13 @@ class SugarFieldFloat extends SugarFieldInt
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        )
-    {
-        $value = str_replace($settings->num_grp_sep,"",$value);
+        ) {
+        $value = str_replace($settings->num_grp_sep, "", $value);
         $dec_sep = $settings->dec_sep;
-        if ( $dec_sep != '.' ) {
-            $value = str_replace($dec_sep,".",$value);
+        if ($dec_sep != '.') {
+            $value = str_replace($dec_sep, ".", $value);
         }
-        if ( !is_numeric($value) ) {
+        if (!is_numeric($value)) {
             return false;
         }
         

@@ -518,6 +518,12 @@
                     <td width="83%" colspan="3"><input type="checkbox" name="user_subpanel_tabs" {$SUBPANEL_TABS}
                                                        tabindex='13'></td>
                 </tr>
+                <tr>
+                    <td width="17%" scope="row"><span>{$MOD.LBL_COUNT_COLLAPSED_SUBPANELS}
+                            :</span>&nbsp;{sugar_help text=$MOD.LBL_COUNT_COLLAPSED_SUBPANELS_DESCRIPTION }</td>
+                    <td width="83%" colspan="3"><input type="checkbox" name="user_count_collapsed_subpanels" {$COUNT_COLLAPSED_SUBPANELS}
+                                                       tabindex='13'></td>
+                </tr>
             </tbody>
         </table>
     </div>

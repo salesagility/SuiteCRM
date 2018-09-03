@@ -119,7 +119,7 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
      */
     public function close()
     {
-        if ($this->_fileHandle !== null ) {
+        if ($this->_fileHandle !== null) {
             @fclose($this->_fileHandle);
             $this->_fileHandle = null;
         }
@@ -135,7 +135,7 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
         $position = ftell($this->_fileHandle);
         fseek($this->_fileHandle, 0, SEEK_END);
         $size = ftell($this->_fileHandle);
-        fseek($this->_fileHandle,$position);
+        fseek($this->_fileHandle, $position);
 
         return $size;
     }
@@ -161,7 +161,7 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
             $nextBlock = fread($this->_fileHandle, $length);
             if ($nextBlock === false) {
                 require_once 'Zend/Search/Lucene/Exception.php';
-                throw new Zend_Search_Lucene_Exception( "Error occured while file reading." );
+                throw new Zend_Search_Lucene_Exception("Error occured while file reading.");
             }
 
             $data .= $nextBlock;
@@ -169,7 +169,7 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
         }
         if ($length != 0) {
             require_once 'Zend/Search/Lucene/Exception.php';
-            throw new Zend_Search_Lucene_Exception( "Error occured while file reading." );
+            throw new Zend_Search_Lucene_Exception("Error occured while file reading.");
         }
 
         return $data;
@@ -185,7 +185,7 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
      */
     protected function _fwrite($data, $length=null)
     {
-        if ($length === null ) {
+        if ($length === null) {
             fwrite($this->_fileHandle, $data);
         } else {
             fwrite($this->_fileHandle, $data, $length);
@@ -205,9 +205,8 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
     {
         if ($nonBlockingLock) {
             return flock($this->_fileHandle, $lockType | LOCK_NB);
-        } else {
-            return flock($this->_fileHandle, $lockType);
         }
+        return flock($this->_fileHandle, $lockType);
     }
 
     /**
@@ -219,11 +218,9 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
      */
     public function unlock()
     {
-        if ($this->_fileHandle !== null ) {
+        if ($this->_fileHandle !== null) {
             return flock($this->_fileHandle, LOCK_UN);
-        } else {
-            return true;
         }
+        return true;
     }
 }
-

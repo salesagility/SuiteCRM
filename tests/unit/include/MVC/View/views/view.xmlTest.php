@@ -18,11 +18,11 @@ class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
 
-        //execute the method and check for rexcetions. it should return some html. 
+        //execute the method and check for rexcetions. it should return some html.
         $view = new ViewXML();
 
         try {
@@ -39,7 +39,5 @@ class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 }

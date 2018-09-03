@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/App/Extension.php';
  */
 class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
 {
-
     protected $_rootElement = 'category';
     protected $_term = null;
     protected $_scheme = null;
@@ -136,5 +135,4 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
         $this->_label = $value;
         return $this;
     }
-
 }

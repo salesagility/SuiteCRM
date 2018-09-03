@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 *}
@@ -95,21 +95,21 @@
                         <table id='type_{$type}' onclick='ModuleBuilder.buttonDown(this,"{$type}", "type"); ModuleBuilder.buttonToForm("CreateModule", "type", "type");' class='wizardButton' onmousedown='return false;' onmouseout='ModuleBuilder.buttonOut(this,"{$type}", "type");'>
 							<tr>
 							  <td  align='center'>
-								  <a href="#">
+								  <a href="javascript:void(0)">
 									  <span class="suitepicon suitepicon-module-{$type}"></span>
 								  </a>
 							  </td>
 							</tr>
 							<tr>
 								<td>
-									<a href="#">{$name}</a>
+									<a href="javascript:void(0)">{$name}</a>
 								</td>
 							</tr>
 					    </table>
 						<script>ModuleBuilder.buttonAdd('type_{$type}', '{$type}', 'type');</script>
 					</td>
                     {else}
-                    <td align='center'><span class="suitepicon suitepicon-module-{$type}"></span>}<br>{$name}
+                    <td align='center'><span class="suitepicon suitepicon-module-{$type}"></span><br>{$name}
                     {/if}
                     </td>
                     {/if}

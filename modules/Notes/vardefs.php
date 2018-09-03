@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,19 +37,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $dictionary['Note'] = array(
 
     'table' => 'notes',
-	'unified_search' => true, 'full_text_search' => true, 'unified_search_default_enabled' => true,
+    'unified_search' => true, 'full_text_search' => true, 'unified_search_default_enabled' => true,
 
-	'comment' => 'Notes and Attachments'
-                               ,'fields' => array (
+    'comment' => 'Notes and Attachments'
+                               ,'fields' => array(
   'id' =>
-  array (
+  array(
     'name' => 'id',
     'vname' => 'LBL_ID',
     'type' => 'id',
@@ -55,7 +58,7 @@ $dictionary['Note'] = array(
     'comment' => 'Unique identifier'
   ),
    'date_entered' =>
-  array (
+  array(
     'name' => 'date_entered',
     'vname' => 'LBL_DATE_ENTERED',
     'type' => 'datetime',
@@ -64,7 +67,7 @@ $dictionary['Note'] = array(
     'options' => 'date_range_search_dom',
   ),
   'date_modified' =>
-  array (
+  array(
     'name' => 'date_modified',
     'vname' => 'LBL_DATE_MODIFIED',
     'type' => 'datetime',
@@ -72,75 +75,75 @@ $dictionary['Note'] = array(
     'enable_range_search' => true,
   ),
    'modified_user_id' =>
-	  array (
-	    'name' => 'modified_user_id',
-	    'rname' => 'user_name',
-	    'id_name' => 'modified_user_id',
-	    'vname' => 'LBL_MODIFIED',
-	    'type' => 'assigned_user_name',
-	    'table' => 'users',
-	    'isnull' => 'false',
-	     'group'=>'modified_by_name',
-	    'dbType' => 'id',
-	    'reportable'=>true,
-	    'comment' => 'User who last modified record',
-	  ),
-	  'modified_by_name' =>
-	  array (
-	    'name' => 'modified_by_name',
+      array(
+        'name' => 'modified_user_id',
+        'rname' => 'user_name',
+        'id_name' => 'modified_user_id',
+        'vname' => 'LBL_MODIFIED',
+        'type' => 'assigned_user_name',
+        'table' => 'users',
+        'isnull' => 'false',
+         'group'=>'modified_by_name',
+        'dbType' => 'id',
+        'reportable'=>true,
+        'comment' => 'User who last modified record',
+      ),
+      'modified_by_name' =>
+      array(
+        'name' => 'modified_by_name',
     'vname' => 'LBL_MODIFIED_BY',
-	    'type' => 'relate',
-	    'reportable'=>false,
-	    'source'=>'non-db',
-	    'rname'=>'user_name',
-	    'table' => 'users',
-	    'id_name' => 'modified_user_id',
-	    'module'=>'Users',
-	    'link'=>'modified_user_link',
-	    'duplicate_merge'=>'disabled'
-	  ),
-	  'created_by' =>
-	  array (
-	    'name' => 'created_by',
-	    'rname' => 'user_name',
-	    'id_name' => 'modified_user_id',
-   		'vname' => 'LBL_CREATED_BY',
-	    'type' => 'assigned_user_name',
-	    'table' => 'users',
-	    'isnull' => 'false',
-	    'dbType' => 'id',
+        'type' => 'relate',
+        'reportable'=>false,
+        'source'=>'non-db',
+        'rname'=>'user_name',
+        'table' => 'users',
+        'id_name' => 'modified_user_id',
+        'module'=>'Users',
+        'link'=>'modified_user_link',
+        'duplicate_merge'=>'disabled'
+      ),
+      'created_by' =>
+      array(
+        'name' => 'created_by',
+        'rname' => 'user_name',
+        'id_name' => 'modified_user_id',
+        'vname' => 'LBL_CREATED_BY',
+        'type' => 'assigned_user_name',
+        'table' => 'users',
+        'isnull' => 'false',
+        'dbType' => 'id',
     'comment' => 'User who created record'
-	  ),
-	  	'created_by_name' =>
-	  array (
-	    'name' => 'created_by_name',
-		'vname' => 'LBL_CREATED_BY',
-		'type' => 'relate',
-		'reportable'=>false,
-	    'link' => 'created_by_link',
-	    'rname' => 'user_name',
-		'source'=>'non-db',
-		'table' => 'users',
-		'id_name' => 'created_by',
-		'module'=>'Users',
-		'duplicate_merge'=>'disabled',
+      ),
+        'created_by_name' =>
+      array(
+        'name' => 'created_by_name',
+        'vname' => 'LBL_CREATED_BY',
+        'type' => 'relate',
+        'reportable'=>false,
+        'link' => 'created_by_link',
+        'rname' => 'user_name',
+        'source'=>'non-db',
+        'table' => 'users',
+        'id_name' => 'created_by',
+        'module'=>'Users',
+        'duplicate_merge'=>'disabled',
         'importable' => 'false',
-	),
+    ),
   'name' =>
-  array (
+  array(
     'name' => 'name',
     'vname' => 'LBL_NOTE_SUBJECT',
     'dbType' => 'varchar',
     'type' => 'name',
     'len' => '255',
-	'unified_search' => true,
-	'full_text_search' => array('boost' => 3),
+    'unified_search' => true,
+    'full_text_search' => array('boost' => 3),
     'comment' => 'Name of the note',
     'importable' => 'required',
     'required' => true,
   ),
   'file_mime_type' =>
-  array (
+  array(
     'name' => 'file_mime_type',
     'vname' => 'LBL_FILE_MIME_TYPE',
     'type' => 'varchar',
@@ -150,19 +153,19 @@ $dictionary['Note'] = array(
   ),
   'file_url'=>
   array(
-  	'name'=>'file_url',
+    'name'=>'file_url',
     'vname' => 'LBL_FILE_URL',
-  	'type'=>'function',
-  	'function_class'=>'UploadFile',
-  	'function_name'=>'get_upload_url',
-  	'function_params'=> array('$this'),
-  	'source'=>'function',
-  	'reportable'=>false,
-  	'comment' => 'Path to file (can be URL)',
+    'type'=>'function',
+    'function_class'=>'UploadFile',
+    'function_name'=>'get_upload_url',
+    'function_params'=> array('$this'),
+    'source'=>'function',
+    'reportable'=>false,
+    'comment' => 'Path to file (can be URL)',
     'importable' => false,
-  	),
+    ),
   'filename' =>
-  array (
+  array(
     'name' => 'filename',
     'vname' => 'LBL_FILENAME',
     'type' => 'file',
@@ -174,51 +177,51 @@ $dictionary['Note'] = array(
   ),
   'parent_type'=>
   array(
-  	'name'=>'parent_type',
-  	'vname'=>'LBL_PARENT_TYPE',
-  	'type' =>'parent_type',
+    'name'=>'parent_type',
+    'vname'=>'LBL_PARENT_TYPE',
+    'type' =>'parent_type',
     'dbType' => 'varchar',
     'group'=>'parent_name',
     'options'=> 'parent_type_display',
-  	'len'=> '255',
-  	'comment' => 'Sugar module the Note is associated with'
+    'len'=> '255',
+    'comment' => 'Sugar module the Note is associated with'
   ),
   'parent_id'=>
   array(
-  	'name'=>'parent_id',
-  	'vname'=>'LBL_PARENT_ID',
-  	'type'=>'id',
-  	'required'=>false,
-  	'reportable'=>true,
-  	'comment' => 'The ID of the Sugar item specified in parent_type'
+    'name'=>'parent_id',
+    'vname'=>'LBL_PARENT_ID',
+    'type'=>'id',
+    'required'=>false,
+    'reportable'=>true,
+    'comment' => 'The ID of the Sugar item specified in parent_type'
   ),
   'contact_id'=>
   array(
-  	'name'=>'contact_id',
-  	'vname'=>'LBL_CONTACT_ID',
-  	'type'=>'id',
-  	'required'=>false,
-  	'reportable'=>false,
-  	'comment' => 'Contact ID note is associated with'
+    'name'=>'contact_id',
+    'vname'=>'LBL_CONTACT_ID',
+    'type'=>'id',
+    'required'=>false,
+    'reportable'=>false,
+    'comment' => 'Contact ID note is associated with'
   ),
   'portal_flag' =>
-  array (
+  array(
     'name' => 'portal_flag',
     'vname' => 'LBL_PORTAL_FLAG',
     'type' => 'bool',
-	'required' => true,
-	'comment' => 'Portal flag indicator determines if note created via portal'
+    'required' => true,
+    'comment' => 'Portal flag indicator determines if note created via portal'
   ),
   'embed_flag' =>
-  array (
+  array(
     'name' => 'embed_flag',
     'vname' => 'LBL_EMBED_FLAG',
     'type' => 'bool',
     'default' => 0,
-	'comment' => 'Embed flag indicator determines if note embedded in email'
+    'comment' => 'Embed flag indicator determines if note embedded in email'
   ),
   'description' =>
-  array (
+  array(
     'name' => 'description',
     'vname' => 'LBL_DESCRIPTION',
     'type' => 'text',
@@ -227,7 +230,7 @@ $dictionary['Note'] = array(
     'cols' => 90,
   ),
   'deleted' =>
-  array (
+  array(
     'name' => 'deleted',
     'vname' => 'LBL_DELETED',
     'type' => 'bool',
@@ -240,32 +243,32 @@ $dictionary['Note'] = array(
 
 
  'parent_name'=>
- 	array(
-		'name'=> 'parent_name',
-		'parent_type'=>'record_type_display' ,
-		'type_name'=>'parent_type',
-		'id_name'=>'parent_id',
-		'vname'=>'LBL_RELATED_TO',
-		'type'=>'parent',
-		'source'=>'non-db',
-		'options'=> 'record_type_display_notes',
-		),
+    array(
+        'name'=> 'parent_name',
+        'parent_type'=>'record_type_display' ,
+        'type_name'=>'parent_type',
+        'id_name'=>'parent_id',
+        'vname'=>'LBL_RELATED_TO',
+        'type'=>'parent',
+        'source'=>'non-db',
+        'options'=> 'record_type_display_notes',
+        ),
 
  'contact_name'=>
- 	array(
-		'name'=>'contact_name',
-		'rname'=>'name',
-		'id_name'=>'contact_id',
-		'vname'=>'LBL_CONTACT_NAME',
+    array(
+        'name'=>'contact_name',
+        'rname'=>'name',
+        'id_name'=>'contact_id',
+        'vname'=>'LBL_CONTACT_NAME',
         'table'=>'contacts',
-		'type'=>'relate',
-		'link'=>'contact',
-		'join_name'=>'contacts',
+        'type'=>'relate',
+        'link'=>'contact',
+        'join_name'=>'contacts',
         'db_concat_fields'=> array(0=>'first_name', 1=>'last_name'),
-		'isnull'=>'true',
-		'module'=>'Contacts',
-		'source'=>'non-db',
-		),
+        'isnull'=>'true',
+        'module'=>'Contacts',
+        'source'=>'non-db',
+        ),
 
   'contact_phone'=>
     array(
@@ -279,46 +282,46 @@ $dictionary['Note'] = array(
     array(
         'name'=>'contact_email',
         'type'=>'varchar',
-		'vname' => 'LBL_EMAIL_ADDRESS',
-		'source' => 'non-db',
+        'vname' => 'LBL_EMAIL_ADDRESS',
+        'source' => 'non-db',
         'studio' => false
     ),
 
   'account_id' =>
-  array (
+  array(
     'name' => 'account_id',
     'vname' => 'LBL_ACCOUNT_ID',
     'type' => 'id',
     'reportable'=>false,
-	'source'=>'non-db',
+    'source'=>'non-db',
   ),
   'opportunity_id' =>
-  array (
+  array(
     'name' => 'opportunity_id',
     'vname' => 'LBL_OPPORTUNITY_ID',
     'type' => 'id',
     'reportable'=>false,
-	'source'=>'non-db',
+    'source'=>'non-db',
   ),
   'acase_id' =>
-  array (
+  array(
     'name' => 'acase_id',
     'vname' => 'LBL_CASE_ID',
     'type' => 'id',
     'reportable'=>false,
-	'source'=>'non-db',
+    'source'=>'non-db',
   ),
   'lead_id' =>
-  array (
+  array(
     'name' => 'lead_id',
     'vname' => 'LBL_LEAD_ID',
     'type' => 'id',
     'reportable'=>false,
-	'source'=>'non-db',
+    'source'=>'non-db',
   ),
 
   'created_by_link' =>
-  array (
+  array(
         'name' => 'created_by_link',
     'type' => 'link',
     'relationship' => 'notes_created_by',
@@ -329,7 +332,7 @@ $dictionary['Note'] = array(
     'source'=>'non-db',
   ),
   'modified_user_link' =>
-  array (
+  array(
         'name' => 'modified_user_link',
     'type' => 'link',
     'relationship' => 'notes_modified_user',
@@ -341,7 +344,7 @@ $dictionary['Note'] = array(
   ),
 
   'contact' =>
-  array (
+  array(
     'name' => 'contact',
     'type' => 'link',
     'relationship' => 'contact_notes',
@@ -349,7 +352,7 @@ $dictionary['Note'] = array(
     'source'=>'non-db',
   ),
   'cases' =>
-  array (
+  array(
     'name' => 'cases',
     'type' => 'link',
     'relationship' => 'case_notes',
@@ -357,7 +360,7 @@ $dictionary['Note'] = array(
     'source'=>'non-db',
   ),
   'accounts' =>
-  array (
+  array(
     'name' => 'accounts',
     'type' => 'link',
     'relationship' => 'account_notes',
@@ -365,7 +368,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_ACCOUNTS',
   ),
   'opportunities' =>
-  array (
+  array(
     'name' => 'opportunities',
     'type' => 'link',
     'relationship' => 'opportunity_notes',
@@ -373,7 +376,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_OPPORTUNITIES',
   ),
   'leads' =>
-  array (
+  array(
     'name' => 'leads',
     'type' => 'link',
     'relationship' => 'lead_notes',
@@ -381,7 +384,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_LEADS',
   ),
   'bugs' =>
-  array (
+  array(
     'name' => 'bugs',
     'type' => 'link',
     'relationship' => 'bug_notes',
@@ -389,12 +392,12 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_BUGS',
   ),
   'aos_contracts' =>
-  array (
-	'name' => 'aos_contracts',
-	'type' => 'link',
-	'relationship' => 'aos_contracts_notes',
-	'source'=>'non-db',
-	'vname'=>'LBL_CONTRACT',
+  array(
+    'name' => 'aos_contracts',
+    'type' => 'link',
+    'relationship' => 'aos_contracts_notes',
+    'source'=>'non-db',
+    'vname'=>'LBL_CONTRACT',
   ),
   'emails' =>
   array(
@@ -405,7 +408,7 @@ $dictionary['Note'] = array(
     'source'=> 'non-db',
   ),
   'projects' =>
-  array (
+  array(
     'name' => 'projects',
     'type' => 'link',
     'relationship' => 'projects_notes',
@@ -413,7 +416,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_PROJECTS',
   ),
   'project_tasks' =>
-  array (
+  array(
     'name' => 'project_tasks',
     'type' => 'link',
     'relationship' => 'project_tasks_notes',
@@ -421,7 +424,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_PROJECT_TASKS',
   ),
   'meetings' =>
-  array (
+  array(
     'name' => 'meetings',
     'type' => 'link',
     'relationship' => 'meetings_notes',
@@ -429,7 +432,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_MEETINGS',
   ),
   'calls' =>
-  array (
+  array(
     'name' => 'calls',
     'type' => 'link',
     'relationship' => 'calls_notes',
@@ -437,7 +440,7 @@ $dictionary['Note'] = array(
     'vname'=>'LBL_CALLS',
   ),
   'tasks' =>
-  array (
+  array(
     'name' => 'tasks',
     'type' => 'link',
     'relationship' => 'tasks_notes',
@@ -458,7 +461,7 @@ $dictionary['Note'] = array(
 
 
 )
-                                                      , 'indices' => array (
+                                                      , 'indices' => array(
        array('name' =>'notespk', 'type' =>'primary', 'fields'=>array('id')),
        array('name' =>'idx_note_name', 'type'=>'index', 'fields'=>array('name')),
        array('name' =>'idx_notes_parent', 'type'=>'index', 'fields'=>array('parent_id', 'parent_type')),
@@ -468,8 +471,8 @@ $dictionary['Note'] = array(
 
 
                                                       //This enables optimistic locking for Saves From EditView
-	,'optimistic_locking'=>true,
+    ,'optimistic_locking'=>true,
                             );
 
-VardefManager::createVardef('Notes','Note', array('assignable', 'security_groups',
+VardefManager::createVardef('Notes', 'Note', array('assignable', 'security_groups',
 ));

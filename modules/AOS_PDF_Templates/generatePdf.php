@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -54,7 +54,7 @@ global $mod_strings, $sugar_config;
 
 $bean = BeanFactory::getBean($_REQUEST['module'], $_REQUEST['uid']);
 
-if(!$bean){
+if (!$bean) {
     sugar_die("Invalid Record");
 }
 
@@ -68,7 +68,6 @@ $res = $bean->db->query($sql);
 while ($row = $bean->db->fetchByAssoc($res)) {
     $lineItemsGroups[$row['group_id']][$row['id']] = $row['product_id'];
     $lineItems[$row['id']] = $row['product_id'];
-
 }
 
 
@@ -116,11 +115,13 @@ $header = preg_replace($search, $replace, $template->pdfheader);
 $footer = preg_replace($search, $replace, $template->pdffooter);
 $text = preg_replace($search, $replace, $template->description);
 $text = str_replace("<p><pagebreak /></p>", "<pagebreak />", $text);
-$text = preg_replace_callback('/\{DATE\s+(.*?)\}/',
+$text = preg_replace_callback(
+    '/\{DATE\s+(.*?)\}/',
     function ($matches) {
         return date($matches[1]);
     },
-    $text);
+    $text
+);
 $text = str_replace("\$aos_quotes", "\$" . $variableName, $text);
 $text = str_replace("\$aos_invoices", "\$" . $variableName, $text);
 $text = str_replace("\$total_amt", "\$" . $variableName . "_total_amt", $text);
@@ -169,7 +170,6 @@ if ($task == 'pdf' || $task == 'emailpdf') {
 
 function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 'table')
 {
-
     $firstValue = '';
     $firstNum = 0;
 
@@ -183,7 +183,6 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
     $groups = new AOS_Line_Item_Groups();
     foreach ($groups->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_line_item_groups_' . $name);
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
@@ -255,7 +254,6 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
 
 
     return $text;
-
 }
 
 function populate_product_lines($text, $lineItems, $element = 'tr')
@@ -273,19 +271,16 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
     $product_quote = new AOS_Products_Quotes();
     foreach ($product_quote->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_products_quotes_' . $name);
 
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
                     $firstValue = '$aos_products_quotes_' . $name;
                     $firstNum = $curNum;
-
                 }
                 if ($curNum > $lastNum) {
                     $lastValue = '$aos_products_quotes_' . $name;
                     $lastNum = $curNum;
-
                 }
             }
         }
@@ -294,7 +289,6 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
     $product = new AOS_Products();
     foreach ($product->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_products_' . $name);
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
@@ -351,8 +345,9 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
             }
         }
 
-for ($i = 1; $i < count($parts); $i++) {        $text .= $parts[$i];
-	}
+        for ($i = 1; $i < count($parts); $i++) {
+            $text .= $parts[$i];
+        }
     }
     return $text;
 }
@@ -374,7 +369,6 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
     $product_quote = new AOS_Products_Quotes();
     foreach ($product_quote->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_services_quotes_' . $name);
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
@@ -428,8 +422,9 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
             }
         }
 
-for ($i = 1; $i < count($parts); $i++) {        $text .= $parts[$i];
-	}
+        for ($i = 1; $i < count($parts); $i++) {
+            $text .= $parts[$i];
+        }
     }
     return $text;
 }

@@ -1,15 +1,17 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-$popupMeta = array (
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+$popupMeta = array(
     'moduleMain' => 'Documents',
     'varName' => 'DOCUMENTS',
     'orderBy' => 'name',
-    'whereClauses' => array (
+    'whereClauses' => array(
     ),
-    'searchInputs' => array (
+    'searchInputs' => array(
     ),
-    'searchdefs' => array (
+    'searchdefs' => array(
     ),
-    'listviewdefs' => array (
+    'listviewdefs' => array(
     ),
 );
