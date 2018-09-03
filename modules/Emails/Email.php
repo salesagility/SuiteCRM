@@ -2815,7 +2815,7 @@ class Email extends Basic
         $ieId = $this->mailbox_id;
         $mail = $this->setMailer($mail, '', $ieId);
         
-        if (($mail->oe->type === 'system') && (!isset($sugar_config['email_allow_send_as_user']) && (!$sugar_config['email_allow_send_as_user']))) {
+        if (($mail->oe->type === 'system') && (!isset($sugar_config['email_allow_send_as_user']) || (!$sugar_config['email_allow_send_as_user']))) {
             $mail->From = 
             $sender = 
             $ReplyToAddr = $mail->oe->smtp_from_addr;
