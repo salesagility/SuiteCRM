@@ -390,7 +390,7 @@ FROM prospect_lists_prospects plp
     }
 
 
-	function get_list_view_data(){
+	public function get_list_view_data(){
 		$temp_array = $this->get_list_view_array();
 		$temp_array["ENTRY_COUNT"] = $this->get_entry_count();
 		return $temp_array;

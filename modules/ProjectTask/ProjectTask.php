@@ -258,7 +258,7 @@ class ProjectTask extends SugarBean
 	/*
 	 *
 	 */
-	function build_generic_where_clause ($the_query_string)
+	public function build_generic_where_clause ($the_query_string)
 	{
 		$where_clauses = array();
 		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
