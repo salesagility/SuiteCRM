@@ -121,17 +121,6 @@ class ViewList extends SugarView
         self::__construct();
     }
 
-
-    function oldSearch()
-    {
-
-    }
-
-    function newSearch()
-    {
-
-    }
-
     /**
      * Prepare List View
      */
