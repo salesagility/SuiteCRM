@@ -166,33 +166,32 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreate_indiv_email()
     {
         // save state
-        
-        $state = new SuiteCRM\StateSaver();
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('eapm');
         $state->pushTable('campaign_log');
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
         $state->pushTable('emails_text');
-        $state->pushTable('tracker');
-        
+
         // test
-        
+
         $emailMan = new EmailMan();
-
         $result = $emailMan->create_indiv_email(new Contact(), new Email());
-
         //test for record ID to verify that record is saved
         $this->assertEquals(36, strlen($result));
-
         $email = new Email();
         $email->mark_deleted($result);
-        
+
         // clean up
-        
-        $state->popTable('tracker');
+
         $state->popTable('emails_text');
         $state->popTable('emails_email_addr_rel');
         $state->popTable('emails');
         $state->popTable('campaign_log');
+        $state->popTable('eapm');
+        $state->popTable('aod_indexevent');
     }
 
     public function testverify_campaign()
