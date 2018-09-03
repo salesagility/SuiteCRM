@@ -737,16 +737,8 @@ class EmailMan extends SugarBean
             $email->description = $mail->Body;
             $email->description_html = null;
         } else {
-            $email->description_html = $mailBody;
-
-            $mailAltBody = null;
-            if (isset($mail->AltBody)) {
-                $mailAltBody = $mail->AltBody;
-            } else {
-                LoggerManager::getLogger()->warn('EmailMan::create_indiv_email: mail alt body is undefined');
-            }
-
-            $email->description = $mailAltBody;
+            $email->description_html = $mail->Body;
+            $email->description = $mail->AltBody;
         }
         $email->from_addr = $mail->From;
         isValidEmailAddress($email->from_addr);
