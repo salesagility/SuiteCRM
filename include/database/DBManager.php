@@ -843,7 +843,7 @@ abstract class DBManager
                 $sql .= "/* TYPE IS MISSING IN VARDEF $tablename::$name */\n";
                 continue;
             }
-            
+
 
             $name = strtolower($value['name']);
             // add or fix the field defs per what the DB is expected to give us back

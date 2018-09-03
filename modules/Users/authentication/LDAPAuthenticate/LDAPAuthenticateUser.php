@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,8 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * This file is where the user authentication occurs. No redirection should happen in this file.
@@ -178,7 +176,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
                 }
                 // If user_uid contains special characters (for LDAP) we need to escape them !
                 $user_uid = str_replace(array("(", ")"), array("\(", "\)"), $user_uid);
-                
+
 
                 // build search query and determine if we are searching for a bare id or the full dn path
                 $group_name = $GLOBALS['ldap_config']->settings['ldap_group_name'] . ","

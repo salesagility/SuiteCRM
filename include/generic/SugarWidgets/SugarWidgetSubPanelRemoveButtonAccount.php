@@ -55,7 +55,7 @@ class SugarWidgetSubPanelRemoveButtonAccount extends SugarWidgetSubPanelRemoveBu
      */
     public function displayList(&$layout_def)
     {
-        if (!$layout_def['EditView']) {
+        if (!$layout_def['EditView'])
             return false;
         }
         return parent::displayList($layout_def);

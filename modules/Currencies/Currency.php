@@ -538,8 +538,8 @@ function get_number_seperators($reset_sep = false)
 function toString($echo = true)
 {
     LoggerManager::getLogger()->fatal('Wrong or incomplete implementation for currency to string convertation.');
-    
-    
+
+
     $s = "\$m_currency_round=" . (isset($m_currency_round) ? $m_currency_round : null) . " \n" .
      "\$m_currency_decimal=" . (isset($m_currency_decimal) ? $m_currency_decimal : null) . " \n" .
      "\$m_currency_symbol=" . (isset($m_currency_symbol) ? $m_currency_symbol : null) . " \n" .
@@ -549,7 +549,6 @@ function toString($echo = true)
     if ($echo) {
         echo $s;
     }
-
     return $s;
 }
 
@@ -569,7 +568,7 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
         require_once('modules/Currencies/ListCurrency.php');
         $currency_fields = array();
         //Bug 18276 - Fix for php 5.1.6
-                
+
         if (!isset($focus)) {
             LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus not defined.');
             $defs = null;
@@ -582,7 +581,7 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
         } else {
             $defs = isset($focus->field_defs) ? $focus->field_defs : null;
         }
-                
+
         //
         foreach ((array)$defs as $name=>$key) {
             if ($key['type'] == 'currency') {
@@ -619,7 +618,7 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
         require_once('modules/Currencies/ListCurrency.php');
         $currency_fields = array();
         //Bug 18276 - Fix for php 5.1.6
-                
+
         if (!isset($focus)) {
             LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus not defined.');
             $defs = null;
@@ -632,7 +631,7 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
         } else {
             $defs = isset($focus->field_defs) ? $focus->field_defs : null;
         }
-                
+
         //
         foreach ((array)$defs as $name=>$key) {
             if ($key['type'] == 'currency') {
@@ -664,7 +663,7 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
         require_once('modules/Currencies/ListCurrency.php');
         $currency_fields = array();
         //Bug 18276 - Fix for php 5.1.6
-                
+
         if (!isset($focus)) {
             LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus not defined.');
             $defs = null;
@@ -677,7 +676,7 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
         } else {
             $defs = isset($focus->field_defs) ? $focus->field_defs : null;
         }
-                
+
         //
         foreach ((array)$defs as $name=>$key) {
             if ($key['type'] == 'currency') {

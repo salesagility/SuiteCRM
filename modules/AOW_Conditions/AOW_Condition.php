@@ -98,16 +98,22 @@ class AOW_Condition extends Basic
     {
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
-        if (!isset($post_data[$key . 'field'])) {
-            LoggerManager::getLogger()->warn('Post data not found at key field. Key was: ' . $key);
-            $postDataAtKeyField = null;
+        $field = $key . 'field';
+        $postedField = null;
+        if (isset($post_data[$field])) {
+            $postedField = $post_data[$field];
         } else {
-            $postDataAtKeyField = $post_data[$key . 'field'];
+            LoggerManager::getLogger()->warn('Posted field is undefined: ' . $field);
         }
-        
-        $line_count = count((array)$postDataAtKeyField);
+
+        $line_count = count((array)$postedField);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
+
+            if (!isset($post_data[$key . 'deleted'][$i])) {
+                LoggerManager::getLogger()->warn('AOR Condition trying to save lines but POST data does not contains the key "' . $key . 'deleted' . '" at index: ' . $i);
+            }
+
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {

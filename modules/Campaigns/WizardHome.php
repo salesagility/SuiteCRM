@@ -175,8 +175,7 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
         return $_REQUEST['action'] == 'WizardHome';
     }
 
-    function getFirstMarketingId($campaignId)
-    {
+    function getFirstMarketingId($campaignId) {
         $db = DBManagerFactory::getInstance();
         $campaignId = $db->quote($campaignId);
         $emailMarketings = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '$campaignId'");

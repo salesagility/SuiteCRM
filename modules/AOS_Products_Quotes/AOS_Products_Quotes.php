@@ -76,7 +76,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
                 } else {
                     $postDataKeyIdI = $post_data[$key . 'id'][$i];
                 }
-                
+
                 $product_quote = BeanFactory::getBean('AOS_Products_Quotes', $postDataKeyIdI);
                 if (!$product_quote) {
                     $product_quote = BeanFactory::newBean('AOS_Products_Quotes');
@@ -105,14 +105,14 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
                     $product_quote->number = ++$j;
                     $product_quote->assigned_user_id = $parent->assigned_user_id;
                     $product_quote->parent_id = $parent->id;
-                    
+
                     if (!isset($parent->currency_id)) {
                         LoggerManager::getLogger()->warn('Paren Currency ID is not defined for AOD Product Quotes / save lines.');
                         $parentCurrencyId = null;
                     } else {
                         $parentCurrencyId = $parent->currency_id;
                     }
-                    
+
                     $product_quote->currency_id = $parentCurrencyId;
                     $product_quote->parent_type = $parent->object_name;
                     $product_quote->save();
@@ -126,7 +126,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
     {
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
         perform_aos_save($this);
-        parent::save($check_notify);
+        return parent::save($check_notify);
     }
 
     /**

@@ -123,22 +123,32 @@ class ListViewDisplay
 
     /**
      * Setup the class
-     * @param seed SugarBean Seed SugarBean to use
-     * @param file File Template file to use
+     * @param SugarBean $seed  Seed SugarBean to use
+     * @param File $file Template file to use
      * @param string $where
-     * @param offset:0 int offset to start at
-     * @param int:-1 $limit
-     * @param string[]:array() $filter_fields
-     * @param array:array() $params
-     * 	Potential $params are
-    	$params['distinct'] = use distinct key word
-    	$params['include_custom_fields'] = (on by default)
-    	$params['massupdate'] = true by default;
-        $params['handleMassupdate'] = true by default, have massupdate.php handle massupdates?
-     * @param string:'id' $id_field
+     * @param int $offset :0 offset to start at
+     * @param int :-1 $limit
+     * @param string []:array() $filter_fields
+     * @param array :array() $params Array
+     *     $params = [
+     *         'distinct' => bool Whether to use distinct key word,
+     *         'include_custom_fields' => bool :true,
+     *         'massupdate'  => bool :true Whether a mass update, true by default,
+     *         'handleMassupdate' => string :true Have massupdate.php handle massupdates?,
+     *    ]
+     * @param string :'id' $id_field
      */
-    public function setup($seed, $file, $where, $params = array(), $offset = 0, $limit = -1, $filter_fields = array(), $id_field = 'id', $id = null)
-    {
+    public function setup(
+        $seed,
+        $file,
+        $where,
+        $params = array(),
+        $offset = 0,
+        $limit = -1,
+        $filter_fields = array(),
+        $id_field = 'id',
+        $id = null
+    ) {
         $this->should_process = true;
         if (isset($seed->module_dir) && !$this->shouldProcess($seed->module_dir)) {
             return false;
@@ -161,20 +171,37 @@ class ListViewDisplay
 
         $filter_fields = $this->setupFilterFields($filter_fields);
 
-        $data = $this->lvd->getListViewData($seed, $where, $offset, $limit, $filter_fields, $params, $id_field, true, $id);
+        $data = $this->lvd->getListViewData(
+            $seed,
+            $where,
+            $offset,
+            $limit,
+            $filter_fields,
+            $params,
+            $id_field,
+            true,
+            $id
+        );
 
         $this->fillDisplayColumnsWithVardefs();
 
         $this->process($file, $data, $seed->object_name);
+
         return true;
     }
 
-    public function setupFilterFields($filter_fields = array())
-    {
-        // create filter fields based off of display columns
-        if (empty($filter_fields) || $this->mergeDisplayColumns) {
-            foreach ((array)$this->displayColumns as $columnName => $def) {
-                $filter_fields[strtolower($columnName)] = true;
+	public function setupFilterFields($filter_fields = array())
+	{
+		// create filter fields based off of display columns
+        if(empty($filter_fields) || $this->mergeDisplayColumns) {
+
+            if (!is_array($this->displayColumns)) {
+                LoggerManager::getLogger()->warn('displayColumns is not an array');
+            }
+
+            foreach((array)$this->displayColumns as $columnName => $def) {
+
+               $filter_fields[strtolower($columnName)] = true;
 
                 if (isset($this->seed->field_defs[strtolower($columnName)]['type']) &&
                strtolower($this->seed->field_defs[strtolower($columnName)]['type']) == 'currency' &&
@@ -709,6 +736,10 @@ EOF;
      */
     protected function fillDisplayColumnsWithVardefs()
     {
+        if (!is_array($this->displayColumns)) {
+            LoggerManager::getLogger()->warn('displayColumns is not an array');
+        }
+
         foreach ((array)$this->displayColumns as $columnName => $def) {
             $seedName =  strtolower($columnName);
             if (!empty($this->lvd->seed->field_defs[$seedName])) {

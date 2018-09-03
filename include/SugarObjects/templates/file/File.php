@@ -112,7 +112,7 @@ class File extends Basic
         // Bug 41453 - Make sure we call the parent method as well
         parent::fill_in_additional_detail_fields();
 
-        if (!$this->file_ext) {
+        if (!empty($this->file_ext)) {
             $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($this->file_ext) . '_image_inline.gif');
             $img_name_bare = strtolower($this->file_ext) . '_image_inline';
         }

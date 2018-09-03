@@ -444,14 +444,14 @@ eoq;
         global $focus;
         $myBean = $focus;
         $configurator = new Configurator();
-        
+
         $enableConfirmedOptIn = null;
         if (isset($configurator->config['email_enable_confirm_opt_in'])) {
             $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
         } else {
             LoggerManager::getLogger()->warn('EmailUI::populateComposeViewFields: $configurator->config[email_enable_confirm_opt_in] is not set');
         }
-        
+
         if (!empty($bean)) {
             $myBean = $bean;
         } else {
@@ -1619,7 +1619,7 @@ eoq;
             $address = str_replace(array("<", ">", "&lt;", "&gt;"), "", $address);
 
             isValidEmailAddress($address);
-            
+
             $emailAddress[] = array(
                 'email_address' => $address,
                 'primary_address' => 1,

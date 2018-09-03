@@ -49,9 +49,9 @@ class AssignGroups
             //$_REQUEST['return_module'] = $bean->module_dir;
             //$_REQUEST['return_action'] = "DetailView";
             //$_REQUEST['return_id'] = $bean->id;
-        
+
             //$_SESSION['securitygroups_popup_'.$bean->module_dir] = $bean->id;
-        
+
             if (!isset($_SESSION['securitygroups_popup'])) {
                 $_SESSION['securitygroups_popup'] = array();
             }
@@ -75,8 +75,20 @@ class AssignGroups
         */
         global $sugar_config;
 
-        $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
-        $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+        $action = null;
+        if (isset($_REQUEST['action'])) {
+            $action = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined action in request');
+        }
+
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined module in request');
+        }
+
 
         if (isset($action) && ($action == "Save" || $action == "SetTimezone")) {
             return;
@@ -87,7 +99,7 @@ class AssignGroups
             //||
             ($module == "Users" && isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true)
         )
-    
+
         //&& isset($_SESSION['securitygroups_popup_'.$module]) && !empty($_SESSION['securitygroups_popup_'.$module])
         && !empty($_SESSION['securitygroups_popup'])
     ) {
@@ -95,7 +107,7 @@ class AssignGroups
                 $record_id = $popup['id'];
                 $module = $popup['module'];
                 unset($_SESSION['securitygroups_popup'][$popup_index]);
-            
+
                 require_once('modules/SecurityGroups/SecurityGroup.php');
                 $groupFocus = new SecurityGroup();
                 if ($module == 'Users') {
@@ -118,10 +130,24 @@ EOQ;
         }
     }
 
-    public function mass_assign($event, $arguments)
-    {
-        $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
-        $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+public function mass_assign($event, $arguments)
+{
+
+
+        $action = null;
+        if (isset($_REQUEST['action'])) {
+            $action = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined action in request');
+        }
+
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined module in request');
+        }
+
   
         $no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
         //check if security suite enabled

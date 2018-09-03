@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/ListView/ListViewSmarty.php');
 
@@ -302,8 +303,10 @@ class PopupSmarty extends ListViewSmarty
         return $str;
     }
 
-    /*
+    /**
      * Setup up the smarty template. we added an extra step here to add the order by from the popupdefs.
+     *
+     * @see ListViewDisplay::setup
      */
     public function setup(
         $seed,
@@ -316,25 +319,27 @@ class PopupSmarty extends ListViewSmarty
         $id_field = 'id',
         $id = null
     ) {
-        $args = func_get_args();
-        return call_user_func_array(array($this, '_setup'), $args);
-    }
-    public function _setup($file)
-    {
-        if (isset($this->_popupMeta)) {
-            if (isset($this->_popupMeta['create']['formBase'])) {
-                require_once('modules/' . $this->seed->module_dir . '/' . $this->_popupMeta['create']['formBase']);
-                $this->_create = true;
-            }
-        }
-        if (!empty($this->_popupMeta['create'])) {
-            $formBase = new $this->_popupMeta['create']['formBaseClass']();
-            if (isset($_REQUEST['doAction']) && $_REQUEST['doAction'] == 'save') {
-                //If it's a new record, set useRequired to false
-                $useRequired = empty($_REQUEST['id']) ? false : true;
-                $formBase->handleSave('', false, $useRequired);
-            }
-        }
+		$args = func_get_args();
+		return call_user_func_array(array($this, '_setup'), $args);
+	}
+
+	function _setup($file) {
+
+	    if(isset($this->_popupMeta)){
+			if(isset($this->_popupMeta['create']['formBase'])) {
+				require_once('modules/' . $this->seed->module_dir . '/' . $this->_popupMeta['create']['formBase']);
+				$this->_create = true;
+			}
+		}
+	    if(!empty($this->_popupMeta['create'])){
+			$formBase = new $this->_popupMeta['create']['formBaseClass']();
+			if(isset($_REQUEST['doAction']) && $_REQUEST['doAction'] == 'save')
+			{
+				//If it's a new record, set useRequired to false
+				$useRequired = empty($_REQUEST['id']) ? false : true;
+				$formBase->handleSave('', false, $useRequired);
+			}
+		}
 
         $params = array();
         if (!empty($this->_popupMeta['orderBy'])) {

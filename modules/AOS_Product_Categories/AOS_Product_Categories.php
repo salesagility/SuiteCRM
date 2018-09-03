@@ -88,6 +88,6 @@ class AOS_Product_Categories extends AOS_Product_Categories_sugar
             }
         }
 
-        parent::save($check_notify);
+        return parent::save($check_notify);
     }
 }

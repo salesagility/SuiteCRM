@@ -629,6 +629,7 @@ $dictionary['AOS_Quotes'] = array(
                     array(
                         'name' => 'getCurrencyDropDown',
                         'returns' => 'html',
+                        'onListView' => true,
                     ),
             ),
         'stage' =>

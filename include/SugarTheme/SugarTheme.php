@@ -937,7 +937,7 @@ EOHTML;
             $imagePath = false;
         }
 
-        
+
         if ($imagePath) {
             $this->_imageCache[$imageName] = $imagePath;
 
@@ -945,7 +945,7 @@ EOHTML;
                 return getJSPath($imagePath);
             }
         }
-        
+
         return $imagePath;
     }
 
@@ -1198,14 +1198,14 @@ EOHTML;
 
         return $config;
     }
-    
-    
+
+
     public function getSubThemes()
     {
         $subThemes = SugarThemeRegistry::getSubThemes();
         return $subThemes;
     }
-    
+
     public function getSubThemeDefault()
     {
         $subThemeDefault = SugarThemeRegistry::getSubThemeDefault();

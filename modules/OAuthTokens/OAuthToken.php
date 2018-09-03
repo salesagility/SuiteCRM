@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,7 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'Zend/Oauth/Provider.php';
 require_once 'modules/OAuthKeys/OAuthKey.php';
@@ -142,7 +141,7 @@ class OAuthToken extends SugarBean
             $this->new_with_id = true;
             $this->id = $this->token;
         }
-        parent::save();
+        return parent::save();
     }
 
     /**

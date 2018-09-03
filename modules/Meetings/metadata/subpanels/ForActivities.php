@@ -90,9 +90,11 @@ $subpanel_layout = array(
             'usage'=>'query_only',
             'force_exists'=>true
         ),
-        'date_start'=>array(
-             'vname' => 'LBL_LIST_DUE_DATE',
-             'width' => '10%',
+        'date_end'=>array(
+            'vname' => 'LBL_LIST_DUE_DATE',
+            'width' => '10%',
+            'alias' => 'date_due',
+            'sort_by' => 'date_due'
         ),
         'assigned_user_name' => array(
             'name' => 'assigned_user_name',

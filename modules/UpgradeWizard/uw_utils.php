@@ -720,7 +720,7 @@ function upgradeUWFiles($file)
         return;
     }
     include("$cacheUploadUpgradesTemp/manifest.php");
-    
+
 
     $allFiles = array();
     $from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
@@ -4023,7 +4023,7 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
         }
         return false;
     }
-    
+
 
     if (!empty($config_si_location) && !file_exists($config_si_location)) {
         if ($write_to_upgrade_log) {
@@ -4057,7 +4057,7 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
         }
         return false;
     }
-    
+
 
     //Now perform the merge operation
     $modified = false;
@@ -4368,7 +4368,7 @@ function upgradeSugarCache($file)
         return;
     }
     include(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"));
-    
+
 
     $from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
     $allFiles = array();

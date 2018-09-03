@@ -97,7 +97,7 @@ class Reminder extends Basic
 
     private static function saveRemindersData($eventModule, $eventModuleId, $remindersData)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $savedReminderIds = array();
         foreach ($remindersData as $reminderData) {
