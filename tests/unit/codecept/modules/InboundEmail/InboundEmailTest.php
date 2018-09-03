@@ -2192,7 +2192,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $inboundEmail->template_id = 1;
         $email = new Email();
         $email->name = 'test';
-
+        $email->from_addr = 'test@email.com';
         $contactAddr = 'test@email.com';
 
         //execute the method and test if it works and does not throws an exception.
