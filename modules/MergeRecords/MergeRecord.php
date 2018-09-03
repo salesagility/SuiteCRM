@@ -286,8 +286,16 @@ class MergeRecord extends SugarBean
             $searchTypeString = $key.'SearchType';
 
             if (isset($search_params[$searchFieldString])) {
+                
+                $searchParamSearchTypeString = null;
+                if (isset($search_params[$searchTypeString])) {
+                    $searchParamSearchTypeString = $search_params[$searchTypeString];
+                } else {
+                    LoggerManager::getLogger('MergeRecord::get_inputs_for_search_params: search params type string is not defined');
+                }
+                
                 $returnString .= "<input type='hidden' name='$searchFieldString' value='{$search_params[$searchFieldString]}' />\n";
-                $returnString .= "<input type='hidden' name='$searchTypeString' value='{$search_params[$searchTypeString]}' />\n";
+                $returnString .= "<input type='hidden' name='$searchTypeString' value='{$searchParamSearchTypeString}' />\n";
             }
         }
 

@@ -352,7 +352,7 @@ function hashToFile($hash)
 function get_file_extension($filename, $string_to_lower=true)
 {
     $ret = '';
-    
+
     if (strpos($filename, '.') !== false) {
         if ($string_to_lower) {
             $exp = explode('.', $filename);

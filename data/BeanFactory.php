@@ -233,4 +233,24 @@ class BeanFactory
 
         return true;
     }
+
+    /*
+     * Clears a bean from cache so that it will be retrieved from DB next time
+     *
+     * @param $beanId
+     */
+    public static function unregisterBean($module, $id)
+    {
+        if (empty($id)) {
+            return false;
+        }
+        if (!isset(self::$loadedBeans[$module][$id])) {
+            return false;
+        }
+
+        unset(self::$loadedBeans[$module][$id]);
+        unset(self::$touched[$module][$id]);
+
+        return true;
+    }
 }

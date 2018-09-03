@@ -148,8 +148,9 @@ if (isset($_REQUEST['record']) and !empty($_REQUEST['record'])) {
 } else {
     if (!isset($mrkt_lists) || !$mrkt_lists) {
         unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
-    } elseif (count($mrkt_lists) == 1) {
-        if (empty($_REQUEST['func']) && isset($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing') {
+    }
+    elseif(count($mrkt_lists) == 1) {
+        if(empty($_REQUEST['func']) || (isset($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing')) {
             $mrkt_focus->retrieve($mrkt_lists[0]);
             $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_lists[0];
         } else {

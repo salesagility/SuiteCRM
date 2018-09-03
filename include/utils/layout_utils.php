@@ -207,11 +207,14 @@ function getClassicModuleTitle($module, $params, $show_create=false, $index_url_
     $iconPath = "";
     $the_title = "<div class='moduleTitle'>\n";
 
-    if (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png', false))) {
-        $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png');
-    } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png', false))) {
-        $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png');
+    if (!empty($module)) {
+        if (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.png', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.png');
+        } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png');
+        }
     }
+
     if (!empty($iconPath)) {
         $url = (!empty($index_url_override)) ? $index_url_override : "index.php?module={$module}&action=index";
         array_unshift($params, "<a href='{$url}'><img src='{$iconPath}' ". "alt='".$module."' title='".$module."' align='absmiddle'></a>");

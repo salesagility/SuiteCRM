@@ -116,13 +116,13 @@ abstract class PersonFormBase extends FormBase
         if (isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') {
             $_POST['return_action'] = 'DetailView';
         }
-    
+
         if (isset($_POST['return_action']) && $_POST['return_action'] == 'DetailView' && empty($_REQUEST['return_id'])) {
             unset($_POST['return_action']);
         }
-        
+
         $form .= getPostToForm();
-    
+
         if (isset($rows[0])) {
             foreach ($rows[0] as $key=>$value) {
                 if ($key != 'id') {
@@ -202,8 +202,8 @@ abstract class PersonFormBase extends FormBase
 
         $rows = array();
 
-        $db = DBManagerFactory::getInstance();
-        $result = $db->query($query);
+    $db = DBManagerFactory::getInstance();
+	$result = $db->query($query);
 
         //Loop through the results and store
         while (($row = $db->fetchByAssoc($result)) != null) {

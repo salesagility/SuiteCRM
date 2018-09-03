@@ -174,16 +174,16 @@ class Scheduler extends SugarBean
         $job->scheduler_id = $this->id;
         $job->name = $this->name;
         $job->execute_time = $GLOBALS['timedate']->nowDb();
-        
+
         $user = $this->getUser();
-        
+
         if (!is_object($user)) {
             LoggerManager::getLogger()->warn('Scheduler / create job: User object not found.');
             $job->assigned_user_id = null;
         } else {
             $job->assigned_user_id = $user->id;
         }
-        
+
         $job->target = $this->job;
         return $job;
     }
@@ -1067,12 +1067,12 @@ class Scheduler extends SugarBean
             global $mod_strings;
             include_once('modules/Schedulers/_AddJobsHere.php');
 
-            // job functions
-            self::$job_strings = array('url::' => 'URL');
-            foreach ($job_strings as $k=>$v) {
-                self::$job_strings['function::' . $v] = $mod_strings['LBL_'.strtoupper($v)];
-            }
-        }
-        return self::$job_strings;
-    }
+			// job functions
+			self::$job_strings = array('url::' => 'URL');
+			foreach(self::$job_strings as $k=>$v){
+				self::$job_strings['function::' . $v] = $mod_strings['LBL_'.strtoupper($v)];
+			}
+		}
+		return self::$job_strings;
+	}
 } // end class definition

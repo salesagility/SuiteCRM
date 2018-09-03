@@ -531,7 +531,7 @@ enableQS(false);
         };
 
         $listview = preg_replace_callback('/\{([^\^ }]+)\.([^\}]+)\}/', $function, $listview);
-                
+
 
         //grab each token and store the module for later processing
         preg_match_all('/\[(\w+)\:/', $listview, $alt_modules);
@@ -544,14 +544,14 @@ enableQS(false);
         $altStrings = array();
         foreach ($alt_modules[1] as $alt) {
             //create the alt string and replace the alt token
-            
+
             $moduleListSingularAlt = null;
             if (isset($GLOBALS['app_list_strings']['moduleListSingular'][$alt])) {
                 $moduleListSingularAlt = $GLOBALS['app_list_strings']['moduleListSingular'][$alt];
             } else {
                 LoggerManager::getLogger()->warn('SugarFeedDashlet::display error: $GLOBALS[app_list_strings][moduleListSingular][$alt] is undefined');
             }
-            
+
             $altString = 'alt="'.translate('LBL_VIEW', 'SugarFeed').' '.$moduleListSingularAlt.'"';
             $listview = preg_replace('/REPLACE_ALT/', $altString, $listview, 1);
         }
@@ -645,8 +645,7 @@ enableQS(false);
         return true;
     }
 
-    public function check_enabled($type)
-    {
+    function check_enabled($type){
         $db = DBManagerFactory::getInstance();
         $query = "SELECT * FROM config where name = 'module_" .$type . "' and value =  1;";
         $results = $db->query($query);

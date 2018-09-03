@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>admin_upgrade_wizard</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="admin_upgrade_wizard">
+            <circle id="Oval-7" stroke="#534D64" cx="14" cy="14" r="13"></circle>
+            <g id="Page-1" transform="translate(7.519531, 6.000000)" fill="#5C566C">
+                <polygon id="Fill-1" points="5.84691789 2.04898277 5.84691789 16.1486304 6.84924667 16.1486304 6.84924667 2.04898277 7.98566477 3.18540087 8.70333218 2.46661976 6.34808228 0.111369865 3.99283238 2.46661976 4.71049979 3.18540087"></polygon>
+                <polygon id="Fill-2" points="8.68684944 10.5522947 9.82326754 9.41587657 9.82326754 13.1086785 10.8420791 13.1086785 10.8420791 9.41587657 11.9773835 10.5522947 12.6961646 9.83351356 10.3244319 7.47826367 7.96806833 9.83351356"></polygon>
+                <polygon id="Fill-3" points="0.718781106 7.51234285 1.85408551 6.37592475 1.85408551 13.1086785 2.87289703 13.1086785 2.87289703 6.37592475 4.00931512 7.51234285 4.72809623 6.79356174 2.37173264 4.4218291 0 6.79356174"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

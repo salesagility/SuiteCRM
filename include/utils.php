@@ -2990,7 +2990,7 @@ function skype_formatted($number)
         return false;
     }
     return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 3) == '011';
-    
+
     //	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
 }
 
@@ -4636,7 +4636,7 @@ function chartColors()
  */
 function ajaxInit()
 {
-    ini_set('display_errors', 'false');
+    //ini_set('display_errors', 'false');
 }
 
 /**
@@ -5558,18 +5558,18 @@ function displayAdminError($errorString)
 }
 
 function getAppString($key) {
-    
+
     global $app_strings;
-    
+
     if (!isset($app_strings[$key])) {
         LoggerManager::getLogger()->warn('Language key not found: ' . $key);
         return $key;
     }
-    
+
     if (!$app_strings[$key]) {
         LoggerManager::getLogger()->warn('Language string is empty at key: ' . $key);
         return $key;
     }
-    
+
     return $app_strings[$key];
 }

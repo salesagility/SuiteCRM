@@ -15,8 +15,7 @@ class Workflow extends Tester
         $this->see('WORKFLOW');
     }
 
-    public function selectWorkflowModule($module)
-    {
+    public function selectWorkflowModule($module) {
         $this->selectOption('#flow_module', $module);
     }
 
@@ -34,7 +33,7 @@ class Workflow extends Tester
 
     public function setConditionOperator($row, $operator, $type)
     {
-        $this->waitForElementVisible('#aow_conditions_operator[' . $row . ']', 10);
+        $this->waitForElementVisible('#aow_conditions_operator[' . $row . ']',10);
         $this->selectOption('#aow_conditions_operator[' . $row . ']', $operator);
 
         $this->waitForElementVisible('#aow_conditions_value_type[' . $row . ']', 10);

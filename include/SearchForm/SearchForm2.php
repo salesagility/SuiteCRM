@@ -293,18 +293,44 @@ class SearchForm
         $searchFormInPopup = !in_array($this->module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
         $this->th->ss->assign('searchFormInPopup', $searchFormInPopup);
 
-        if (!isset($this->seed)) {
-            LoggerManager::getLogger()->warn('Undefined seed for display search form while trying to get module_dir');
-            $this->seed = new stdClass();
-            $this->seed->module_dir = null;
+        if (isset($this->th)) {
+
+            $moduleDir = null;
+            if (isset($this->seed->module_dir)) {
+                $moduleDir = $this->seed->module_dir;
+            } else {
+                LoggerManager::getLogger()->warn('Trying to get property of non-object (module_dir)');
+            }
+
+            $return_txt = $this->th->displayTemplate($moduleDir, 'SearchForm_' . $this->parsedView, $this->locateFile($this->tpl));
+        } else {
+            $return_txt = null;
+            LoggerManager::getLogger()->warn('Trying to get property of non-object for return_txt from th');
         }
-        $return_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchForm_' . $this->parsedView, $this->locateFile($this->tpl));
 
         if ($header) {
             $this->th->ss->assign('return_txt', $return_txt);
-            $header_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchFormHeader', $this->locateFile('header.tpl'));
+
+            $moduleDir = null;
+            if (isset($this->seed->module_dir)) {
+                $moduleDir = $this->seed->module_dir;
+            } else {
+                LoggerManager::getLogger()->warn('Trying to get property of non-object (module_dir)');
+            }
+
+            $header_txt = $this->th->displayTemplate($moduleDir, 'SearchFormHeader', $this->locateFile('header.tpl'));
             //pass in info to render the select dropdown below the form
-            $footer_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchFormFooter', $this->locateFile('footer.tpl'));
+
+
+
+            $moduleDir = null;
+            if (isset($this->seed->module_dir)) {
+                $moduleDir = $this->seed->module_dir;
+            } else {
+                LoggerManager::getLogger()->warn('Trying to get property of non-object (module_dir)');
+            }
+
+            $footer_txt = $this->th->displayTemplate($moduleDir, 'SearchFormFooter', $this->locateFile('footer.tpl'));
             $return_txt = $header_txt . $footer_txt;
         }
 
@@ -330,6 +356,11 @@ class SearchForm
         global $app_strings, $mod_strings;
         $data = array();
         $fields = array_merge($this->fieldDefs, (array)$this->customFieldDefs);
+
+        if (!is_array($this->searchFields)) {
+            LoggerManager::getLogger()->warn('search fields is not an array');
+        }
+
         $fields = array_merge($fields, (array)$this->searchFields);
         foreach ($fields as $name => $defs) {
             if (preg_match('/(.*)_basic$/', $name, $match)) {
@@ -343,6 +374,11 @@ class SearchForm
                 }
             }
         }
+
+        if (!is_array($this->searchFields)) {
+            LoggerManager::getLogger()->warn('search fields is not an array');
+        }
+
         $searchFieldsKeys = array_keys((array)$this->searchFields);
         foreach ($fields as $name => $defs) {
             $searchTypeKey = false;
@@ -503,11 +539,28 @@ class SearchForm
 
     public function displaySavedSearchSelect()
     {
-        $savedSearch = new SavedSearch(
-            $this->listViewDefs[$this->module],
-            isset($this->lv->data['pageData']['ordering']['orderBy']) ? $this->lv->data['pageData']['ordering']['orderBy'] : null,
-            isset($this->lv->data['pageData']['ordering']['sortOrder']) ? $this->lv->data['pageData']['ordering']['sortOrder'] : null
-        );
+        if (!isset($this->listViewDefs[$this->module])) {
+            LoggerManager::getLogger()->warn('Undefined index (displaySavedSearchSelect)');
+            $listViewDefsModule = null;
+        } else {
+            $listViewDefsModule = $this->listViewDefs[$this->module];
+        }
+
+        $orderBy = null;
+        if (isset($this->lv->data['pageData']['ordering']['orderBy'])) {
+            $orderBy = $this->lv->data['pageData']['ordering']['orderBy'];
+        } else {
+            LoggerManager::getLogger()->warn('Trying to get property of non-object: list view data "order by" is not defined');
+        }
+
+        $sortOrder = null;
+        if (isset($this->lv->data['pageData']['ordering']['sortOrder'])) {
+            $sortOrder = $this->lv->data['pageData']['ordering']['sortOrder'];
+        } else {
+            LoggerManager::getLogger()->warn('Trying to get property of non-object: list view data "sort order" is not defined');
+        }
+
+        $savedSearch = new SavedSearch($listViewDefsModule, $orderBy, $sortOrder);
         $savedSearchSelect = $savedSearch->getSelect($this->module, $savedSearchData);
         $this->savedSearchData = $savedSearchData;
 

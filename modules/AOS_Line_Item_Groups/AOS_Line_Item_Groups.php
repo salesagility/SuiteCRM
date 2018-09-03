@@ -68,7 +68,15 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
         $group_count = isset($post_data[$key . 'group_number']) ? count($post_data[$key . 'group_number']) : 0;
         $j = 0;
         for ($i = 0; $i < $group_count; ++$i) {
-            if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
+
+            $postData = null;
+            if (isset($post_data[$key . 'deleted'][$i])) {
+                $postData = $post_data[$key . 'deleted'][$i];
+            } else {
+                LoggerManager::getLogger()->warn('AOS Line Item Group deleted field is not set in requested POST data at key: ' . $key . '['. $i .']');
+            }
+
+            if ($postData == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
                 $product_quote_group = new AOS_Line_Item_Groups();
@@ -80,10 +88,15 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
                 }
                 $product_quote_group->number = ++$j;
                 $product_quote_group->assigned_user_id = $parent->assigned_user_id;
-                if (!isset($parent->currency_id)) {
-                    LoggerManager::getLogger()->warn('AOS Line Item Group saving error: undefined Curency ID');
+
+                $parentCurrencyId = null;
+                if (isset($parent->currency_id)) {
+                    $parentCurrencyId = $parent->currency_id;
+                } else {
+                    LoggerManager::getLogger()->warn('AOS Line Item Group trying to save group nut Parent currency ID is not set');
                 }
-                $product_quote_group->currency_id = isset($parent->currency_id) ? $parent->currency_id : null;
+
+                $product_quote_group->currency_id = $parentCurrencyId;
                 $product_quote_group->parent_id = $parent->id;
                 $product_quote_group->parent_type = $parent->object_name;
                 $product_quote_group->save();

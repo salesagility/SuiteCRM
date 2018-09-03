@@ -20,7 +20,7 @@ class DemoTester extends \Codeception\Actor
 {
     use _generated\DemoTesterActions;
 
-    /**
-     * Define custom actions here
-     */
+   /**
+    * Define custom actions here
+    */
 }

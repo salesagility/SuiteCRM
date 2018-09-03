@@ -96,7 +96,7 @@ function parseAcceptLanguage()
     if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
         return strtolower(str_replace('-', '_', $match[0]));
     }
-    
+
     return '';
 }
 
@@ -1883,7 +1883,7 @@ function langPackUnpack($unpack_type, $full_file)
         return "There was an error uploading the file, please try again!<br>\n";
     }
     die("The zip file is missing a manifest.php file.  Cannot proceed.");
-    
+
     unlinkTempFiles($manifest_file, '');
 }
 

@@ -695,7 +695,9 @@ function aodOptimiseIndex()
 
 function performLuceneIndexing()
 {
-    global $db, $sugar_config;
+    global $sugar_config;
+    $db = DBManagerFactory::getInstance();
+    
     if (empty($sugar_config['aod']['enable_aod'])) {
         return;
     }

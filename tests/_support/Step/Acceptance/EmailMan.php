@@ -2,6 +2,7 @@
 
 namespace Step\Acceptance;
 
+
 class EmailMan extends \AcceptanceTester
 {
     /**
