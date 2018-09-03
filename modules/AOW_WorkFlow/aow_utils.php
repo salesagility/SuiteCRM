@@ -431,6 +431,10 @@ function getModuleField(
             $vardef['name'] = 'aow_temp_date';
         }
 
+        if(!$vardef) {
+            $vardef['name'] = $fieldname;
+        }
+
         // load SugarFieldHandler to render the field tpl file
         static $sfh;
 
