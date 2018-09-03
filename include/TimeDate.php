@@ -1656,9 +1656,6 @@ class TimeDate
         }
 
         return $now->setDate($year, $month, $day)->setTime($hour, $min, $sec)->setTimeZone(self::$gmtTimezone);
-
-
-        return null;
     }
 
     /**
