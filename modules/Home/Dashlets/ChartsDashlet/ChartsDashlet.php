@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,29 +37,31 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('include/Dashlets/Dashlet.php');
 
 
-class ChartsDashlet extends Dashlet {
-    var $width = '400';
-    var $height = '480';
-    var $report_id;
+class ChartsDashlet extends Dashlet
+{
+    public $width = '400';
+    public $height = '480';
+    public $report_id;
 
     /**
      * Constructor
      *
      * @global string current language
      * @param guid $id id for the current dashlet (assigned from Home module)
-	 * @param report_id $report_id id of the saved report
+     * @param report_id $report_id id of the saved report
      * @param array $def options saved for this dashlet
      */
-    function __construct($id, $report_id, $def) {
-    	$this->report_id = $report_id;
+    public function __construct($id, $report_id, $def)
+    {
+        $this->report_id = $report_id;
 
         $this->loadLanguage('ChartsDashlet'); // load the language strings here
 
@@ -70,12 +75,12 @@ class ChartsDashlet extends Dashlet {
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ChartsDashlet($id, $report_id, $def){
+    public function ChartsDashlet($id, $report_id, $def)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $report_id, $def);
@@ -87,43 +92,44 @@ class ChartsDashlet extends Dashlet {
      *
      * @return string html to display dashlet
      */
-    function display() {
-    	require_once("modules/Reports/Report.php");
+    public function display()
+    {
+        require_once("modules/Reports/Report.php");
 
-//		ini_set('display_errors', 'false');
+        //		ini_set('display_errors', 'false');
 
-		$chartReport = new SavedReport();
-		$chartExists = $chartReport->retrieve($this->report_id, false);
+        $chartReport = new SavedReport();
+        $chartExists = $chartReport->retrieve($this->report_id, false);
 
-		if (!is_null($chartExists)){
-			$title = getReportNameTranslation($chartReport->name);
-	        $this->title = $title;
+        if (!is_null($chartExists)) {
+            $title = getReportNameTranslation($chartReport->name);
+            $this->title = $title;
 
-			$reporter = new Report($chartReport->content);
-			$reporter->is_saved_report = true;
-			$reporter->saved_report_id = $chartReport->id;
+            $reporter = new Report($chartReport->content);
+            $reporter->is_saved_report = true;
+            $reporter->saved_report_id = $chartReport->id;
             $reporter->get_total_header_row();
-			$reporter->run_chart_queries();
+            $reporter->run_chart_queries();
 
-			require_once("modules/Reports/templates/templates_chart.php");
+            require_once("modules/Reports/templates/templates_chart.php");
 
-			ob_start();
-			template_chart($reporter, true, true, $this->id);
-			$str = ob_get_contents();
-			ob_end_clean();
+            ob_start();
+            template_chart($reporter, true, true, $this->id);
+            $str = ob_get_contents();
+            ob_end_clean();
 
-			$xmlFile = get_cache_file_name($reporter);
+            $xmlFile = get_cache_file_name($reporter);
 
-			$html = parent::display() . "<div align='center'>" . $str . "</div>" . "<br />"; // return parent::display for title and such
+            $html = parent::display() . "<div align='center'>" . $str . "</div>" . "<br />"; // return parent::display for title and such
 
-			$ss = new Sugar_Smarty();
-	        $ss->assign('chartName', $this->id);
-	        $ss->assign('chartXMLFile', $xmlFile);
-	        $script = $ss->fetch('modules/Home/Dashlets/ChartsDashlet/ChartsDashletScript.tpl');
-			$json = getJSONobj();
+            $ss = new Sugar_Smarty();
+            $ss->assign('chartName', $this->id);
+            $ss->assign('chartXMLFile', $xmlFile);
+            $script = $ss->fetch('modules/Home/Dashlets/ChartsDashlet/ChartsDashletScript.tpl');
+            $json = getJSONobj();
 
-	        return parent::display() . "<div align='center'>" . $str . "</div>" . "<br />"; // return parent::display for title and such
-		}
+            return parent::display() . "<div align='center'>" . $str . "</div>" . "<br />"; // return parent::display for title and such
+        }
     }
 
     /**
@@ -131,30 +137,31 @@ class ChartsDashlet extends Dashlet {
      *
      * @return string javascript to use with this dashlet
      */
-    function displayScript() {
-    	require_once("modules/Reports/Report.php");
+    public function displayScript()
+    {
+        require_once("modules/Reports/Report.php");
 
 
-		$chartReport = new SavedReport();
-		$chartExists = $chartReport->retrieve($this->report_id, false);
+        $chartReport = new SavedReport();
+        $chartExists = $chartReport->retrieve($this->report_id, false);
 
-		if (!is_null($chartExists)){
-	        $this->title = $chartReport->name;
+        if (!is_null($chartExists)) {
+            $this->title = $chartReport->name;
 
-			require_once("modules/Reports/templates/templates_chart.php");
-			require_once('include/SugarCharts/SugarChartFactory.php');
+            require_once("modules/Reports/templates/templates_chart.php");
+            require_once('include/SugarCharts/SugarChartFactory.php');
 
-			$sugarChart = SugarChartFactory::getInstance();
+            $sugarChart = SugarChartFactory::getInstance();
 
 
-			$reporter = new Report($chartReport->content);
-			$reporter->is_saved_report = true;
-			$reporter->saved_report_id = $chartReport->id;
-			$xmlFile = get_cache_file_name($reporter);
+            $reporter = new Report($chartReport->content);
+            $reporter->is_saved_report = true;
+            $reporter->saved_report_id = $chartReport->id;
+            $xmlFile = get_cache_file_name($reporter);
 
-	        $str = $sugarChart->getDashletScript($this->id,$xmlFile);
-	        return $str;
-		}
+            $str = $sugarChart->getDashletScript($this->id, $xmlFile);
+            return $str;
+        }
     }
 
     /**
@@ -162,7 +169,8 @@ class ChartsDashlet extends Dashlet {
      *
      * @return string html to display form
      */
-    function displayOptions() {
+    public function displayOptions()
+    {
     }
 
     /**
@@ -171,28 +179,28 @@ class ChartsDashlet extends Dashlet {
      * @param array $req $_REQUEST
      * @return array filtered options to save
      */
-    function saveOptions($req) {
+    public function saveOptions($req)
+    {
     }
 
-    function setConfigureIcon(){
-
-
-        if($this->isConfigurable)
+    public function setConfigureIcon()
+    {
+        if ($this->isConfigurable) {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet"><a href="index.php?module=Reports&record=' . $this->report_id . '&action=ReportCriteriaResults&page=report">'
-                               . SugarThemeRegistry::current()->getImage('dashlet-header-edit','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')).'</a>'
+                               . SugarThemeRegistry::current()->getImage('dashlet-header-edit', 'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null, null, '.gif', translate('LBL_DASHLET_EDIT', 'Home')).'</a>'
 
                                . '';
-        else
+        } else {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet">';
+        }
 
-    	return $additionalTitle;
+        return $additionalTitle;
     }
 
-   function setRefreshIcon(){
-
-
-    	$additionalTitle = '';
-        if($this->isRefreshable)
+    public function setRefreshIcon()
+    {
+        $additionalTitle = '';
+        if ($this->isRefreshable) {
             $additionalTitle .= '<a href="#" onclick="SUGAR.mySugar.retrieveDashlet(\''
                                 . $this->id . '\', \'chart\'); return false;"><!--not_in_theme!-->'
                                 . SugarThemeRegistry::current()->getImage(
@@ -203,7 +211,7 @@ class ChartsDashlet extends Dashlet {
                     '.gif',
                     translate('LBL_DASHLET_REFRESH', 'Home')
                 ) .'</a>';
+        }
         return $additionalTitle;
     }
 }
-

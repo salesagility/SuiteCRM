@@ -162,4 +162,3 @@ $mod_strings = array(
     'LBL_AOS_INVOICES' => 'Invoices',
     'LBL_AOS_QUOTES' => 'Quotes',
 );
-

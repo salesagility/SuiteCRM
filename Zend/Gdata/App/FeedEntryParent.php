@@ -95,7 +95,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      *
      * @var string|null
      */
-    protected $_etag = NULL;
+    protected $_etag = null;
 
     protected $_author = array();
     protected $_category = array();
@@ -567,7 +567,8 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      * @param string|null $value
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */
-    public function setEtag($value) {
+    public function setEtag($value)
+    {
         $this->_etag = $value;
         return $this;
     }
@@ -577,7 +578,8 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      *
      * @return string|null
      */
-    public function getEtag() {
+    public function getEtag()
+    {
         return $this->_etag;
     }
 
@@ -595,7 +597,8 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
         if (!($value >= 1) && ($value !== null)) {
             require_once('Zend/Gdata/App/InvalidArgumentException.php');
             throw new Zend_Gdata_App_InvalidArgumentException(
-                    'Major protocol version must be >= 1');
+                    'Major protocol version must be >= 1'
+            );
         }
         $this->_majorProtocolVersion = $value;
     }
@@ -625,7 +628,8 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
         if (!($value >= 0)) {
             require_once('Zend/Gdata/App/InvalidArgumentException.php');
             throw new Zend_Gdata_App_InvalidArgumentException(
-                    'Minor protocol version must be >= 0 or null');
+                    'Minor protocol version must be >= 0 or null'
+            );
         }
         $this->_minorProtocolVersion = $value;
     }
@@ -662,10 +666,11 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      *        Defaults to null (auto-select).
      * @return string
      */
-    public function lookupNamespace($prefix,
+    public function lookupNamespace(
+        $prefix,
                                     $majorVersion = null,
-                                    $minorVersion = null)
-    {
+                                    $minorVersion = null
+    ) {
         // Auto-select current version
         if ($majorVersion === null) {
             $majorVersion = $this->getMajorProtocolVersion();
@@ -677,5 +682,4 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
         // Perform lookup
         return parent::lookupNamespace($prefix, $majorVersion, $minorVersion);
     }
-
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Faker\Factory;
 
 /**
  * Inherited Methods
@@ -24,6 +25,14 @@ class AcceptanceTester extends \Codeception\Actor
     */
 
     /**
+     * @return \Faker\Generator
+     */
+    public function getFaker()
+    {
+        return Factory::create();
+    }
+
+    /**
      * @param string $username
      * @param string $password
      */
@@ -36,7 +45,7 @@ class AcceptanceTester extends \Codeception\Actor
         // Log In
         $I->seeElement('#loginform');
         $I->fillField('#user_name', $username);
-        $I->fillField('#user_password', $password);
+        $I->fillField('#username_password', $password);
         $I->click('Log In');
         $I->waitForElementNotVisible('#loginform', 120);
         $I->saveSessionSnapshot('login');
@@ -60,4 +69,21 @@ class AcceptanceTester extends \Codeception\Actor
         $I = $this;
         $I->clickUserMenuItem('#logout_link');
     }
+
+    public function dontSeeMissingLabels()
+    {
+        $I = $this;
+        $I->dontSee('LBL_');
+    }
+
+    public function dontSeeErrors()
+    {
+        $I = $this;
+        $I->dontSee('Warning');
+        $I->dontSee('Notice');
+        $I->dontSee('Error');
+        $I->dontSee('error');
+        $I->dontSee('PHP');
+    }
+
 }

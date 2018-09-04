@@ -47,7 +47,6 @@ require_once 'Zend/Gdata/Extension/OriginalEvent.php';
  */
 class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'recurrenceException';
     protected $_specialized = null;
     protected $_entryLink = null;
@@ -59,9 +58,11 @@ class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
      * @param Zend_Gdata_EntryLink (optional) An Event entry with details about the exception.
      * @param Zend_Gdata_OriginalEvent (optional) The origianl recurrent event this is an exeption to.
      */
-    public function __construct($specialized = null, $entryLink = null,
-            $originalEvent = null)
-    {
+    public function __construct(
+        $specialized = null,
+        $entryLink = null,
+            $originalEvent = null
+    ) {
         parent::__construct();
         $this->_specialized = $specialized;
         $this->_entryLink = $entryLink;
@@ -106,11 +107,9 @@ class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
         case 'specialized':
             if ($attribute->nodeValue == "true") {
                 $this->_specialized = true;
-            }
-            else if ($attribute->nodeValue == "false") {
+            } elseif ($attribute->nodeValue == "false") {
                 $this->_specialized = false;
-            }
-            else {
+            } else {
                 throw new Zend_Gdata_App_InvalidArgumentException("Expected 'true' or 'false' for gCal:selected#value.");
             }
             break;
@@ -210,6 +209,4 @@ class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
         $this->_originalEvent = $value;
         return $this;
     }
-
 }
-

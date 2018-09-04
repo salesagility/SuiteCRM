@@ -6,6 +6,7 @@ cache/*
 upload/*
 !upload/index.html
 # Ignore some files and directories from the custom directory.
+custom/
 custom/history/*
 custom/blowfish/*
 custom/modulebuilder/*
@@ -101,3 +102,6 @@ cache/
 custom/**/
 .sass-cache/
 .php_cs.cache
+
+# Ignore testing environment
+build/tmp/

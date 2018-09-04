@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -66,53 +66,53 @@ require_once('include/formbase.php');
  $bean_name = $beanList[$_REQUEST['module']];
  require_once($beanFiles[$bean_name]);
  $focus = new $bean_name();
- if (  empty($_REQUEST['linked_id']) || empty($_REQUEST['linked_field'])  || empty($_REQUEST['record'])){
-
-	die("need linked_field, linked_id and record fields");
+ if (empty($_REQUEST['linked_id']) || empty($_REQUEST['linked_field'])  || empty($_REQUEST['record'])) {
+     die("need linked_field, linked_id and record fields");
  }
  $linked_field = $_REQUEST['linked_field'];
  $record = $_REQUEST['record'];
  $linked_id = $_REQUEST['linked_id'];
  if ($linked_field === 'aclroles') {
-    if (!ACLController::checkAccess($bean_name, 'edit', true)) {
-        ACLController::displayNoAccess();
-        sugar_cleanup(true);
-    }
-}if($linked_field === 'aclroles') {
-    if (!ACLController::checkAccess($bean_name , 'edit', true)) {
- ACLController::displayNoAccess();
-        sugar_cleanup(true);
-    }
-}
-
-if ($bean_name === 'Team'){
- 	$focus->retrieve($record);
- 	$focus->remove_user_from_team($linked_id);
+     if (!ACLController::checkAccess($bean_name, 'edit', true)) {
+         ACLController::displayNoAccess();
+         sugar_cleanup(true);
+     }
+ } if ($linked_field === 'aclroles') {
+     if (!ACLController::checkAccess($bean_name, 'edit', true)) {
+         ACLController::displayNoAccess();
+         sugar_cleanup(true);
+     }
  }
- else{
 
- 	// cut it off:
- 	$focus->load_relationship($linked_field);
- 	if($focus->$linked_field->_relationship->relationship_name === 'quotes_contacts_shipto'){
- 		unset($focus->$linked_field->_relationship->relationship_role_column);}
- 	$focus->$linked_field->delete($record,$linked_id);
- }
- if ($bean_name === 'Campaign' and $linked_field==='prospectlists' ) {
+if ($bean_name === 'Team') {
+    $focus->retrieve($record);
+    $focus->remove_user_from_team($linked_id);
+} else {
 
-    $query = "SELECT email_marketing_prospect_lists.id from email_marketing_prospect_lists ";
-    $query .= " left join email_marketing on email_marketing.id=email_marketing_prospect_lists.email_marketing_id";
-    $query .= " where email_marketing.campaign_id='$record'";
-    $query .= " and email_marketing_prospect_lists.prospect_list_id='$linked_id'";
-
-    $result = $focus->db->query($query);
-    while (($row = $focus->db->fetchByAssoc($result)) != null) {
-        $del_query = " update email_marketing_prospect_lists set email_marketing_prospect_lists.deleted=1, email_marketing_prospect_lists.date_modified=" . $focus->db->convert("'" . TimeDate::getInstance()->nowDb() . "'",
-                'datetime');
-        $del_query .= " WHERE  email_marketing_prospect_lists.id='{$row['id']}'";
-        $focus->db->query($del_query);
+    // cut it off:
+    $focus->load_relationship($linked_field);
+    if ($focus->$linked_field->_relationship->relationship_name === 'quotes_contacts_shipto') {
+        unset($focus->$linked_field->_relationship->relationship_role_column);
     }
-    $focus->db->query($query);
+    $focus->$linked_field->delete($record, $linked_id);
 }
+ if ($bean_name === 'Campaign' and $linked_field==='prospectlists') {
+     $query = "SELECT email_marketing_prospect_lists.id from email_marketing_prospect_lists ";
+     $query .= " left join email_marketing on email_marketing.id=email_marketing_prospect_lists.email_marketing_id";
+     $query .= " where email_marketing.campaign_id='$record'";
+     $query .= " and email_marketing_prospect_lists.prospect_list_id='$linked_id'";
+
+     $result = $focus->db->query($query);
+     while (($row = $focus->db->fetchByAssoc($result)) != null) {
+         $del_query = " update email_marketing_prospect_lists set email_marketing_prospect_lists.deleted=1, email_marketing_prospect_lists.date_modified=" . $focus->db->convert(
+             "'" . TimeDate::getInstance()->nowDb() . "'",
+                'datetime'
+         );
+         $del_query .= " WHERE  email_marketing_prospect_lists.id='{$row['id']}'";
+         $focus->db->query($del_query);
+     }
+     $focus->db->query($query);
+ }
 if ($bean_name === "Meeting") {
     $focus->retrieve($record);
     $user = new User();

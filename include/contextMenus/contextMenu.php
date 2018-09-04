@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,35 +34,38 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
-class contextMenu {
-    var $menuItems;
-    var $objectName;
+class contextMenu
+{
+    public $menuItems;
+    public $objectName;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->menuItems = array();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function contextMenu(){
+    public function contextMenu()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function getScript() {
+    public function getScript()
+    {
         $json = getJSONobj();
         return "SUGAR.contextMenu.registerObjectType('{$this->objectName}', " . $json->encode($this->menuItems) . ");\n";
     }
@@ -84,13 +88,16 @@ class contextMenu {
      *      submenu - Appends / removes a menu (and it's associated DOM elements) to / from the MenuItem.
      *      checked - If set to true the MenuItem will be rendered with a checkmark.
      */
-    function addMenuItem($text, $action, $module = null, $aclAction = null, $params = null) {
+    public function addMenuItem($text, $action, $module = null, $aclAction = null, $params = null)
+    {
         // check ACLs if module and aclAction set otherwise no ACL check
-        if(((!empty($module) && !empty($aclAction)) && ACLController::checkAccess($module, $aclAction)) || (empty($module) || empty($aclAction))) {
+        if (((!empty($module) && !empty($aclAction)) && ACLController::checkAccess($module, $aclAction)) || (empty($module) || empty($aclAction))) {
             $item = array('text' => translate($text),
                           'action' => $action);
-            foreach(array('url', 'target', 'helptext', 'emphasis', 'strongemphasis', 'disabled', 'selected', 'submenu', 'checked') as $param) {
-                if(!empty($params[$param])) $item[$param] = $params[$param];
+            foreach (array('url', 'target', 'helptext', 'emphasis', 'strongemphasis', 'disabled', 'selected', 'submenu', 'checked') as $param) {
+                if (!empty($params[$param])) {
+                    $item[$param] = $params[$param];
+                }
             }
             array_push($this->menuItems, $item);
         }
@@ -100,9 +107,10 @@ class contextMenu {
      * Loads up menu items from files located in include/contextMenus/menuDefs
      * @param string $name name of the object
      */
-    function loadFromFile($name) {
+    public function loadFromFile($name)
+    {
         global $menuDef;
-    	clean_string($name, 'FILE');
+        clean_string($name, 'FILE');
         require_once('include/contextMenus/menuDefs/' . $name . '.php');
         $this->loadFromDef($name, $menuDef[$name]);
     }
@@ -112,13 +120,17 @@ class contextMenu {
      * @param string $name name of the object type
      * @param array $defs menu item definitions
      */
-    function loadFromDef($name, $defs) {
+    public function loadFromDef($name, $defs)
+    {
         $this->objectName = $name;
-        foreach($defs as $def) {
-            $this->addMenuItem($def['text'], $def['action'],
+        foreach ($defs as $def) {
+            $this->addMenuItem(
+                $def['text'],
+                $def['action'],
                                (empty($def['module']) ? null : $def['module']),
                                (empty($def['aclAction']) ? null : $def['aclAction']),
-                               (empty($def['params']) ? null : $def['params']));
+                               (empty($def['params']) ? null : $def['params'])
+            );
         }
     }
 }

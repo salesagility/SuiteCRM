@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -213,7 +213,6 @@ class UploadFile
         if (is_dir($source)) {
             LoggerManager::getLogger()->warn('Upload File error: Argument cannot be a directory. Argument was: "' . $source . '"');
         } else {
-        
             if (!copy($source, $destination)) {
                 $GLOBALS['log']->error("upload_file could not copy [ {$source} ] to [ {$destination} ]");
             } else {
@@ -312,7 +311,6 @@ class UploadFile
      */
     public function getMimeSoap($filename)
     {
-
         if (function_exists('ext2mime')) {
             $mime = ext2mime($filename);
         } else {
@@ -320,7 +318,6 @@ class UploadFile
         }
 
         return $mime;
-
     }
 
     /**
@@ -461,12 +458,12 @@ class UploadFile
                 return false;
             }
         } elseif (!UploadStream::move_uploaded_file($_FILES[$this->field_name]['tmp_name'], $destination)) {
-                $log->fatal(
+            $log->fatal(
                     'Unable to move move_uploaded_file to ' . $destination .
                     ' You should try making the directory writable by the webserver'
                 );
 
-                return false;
+            return false;
         }
 
         return true;
@@ -520,12 +517,10 @@ class UploadFile
                 $error_message = isset($result['errorMessage']) ? $result['errorMessage'] :
                     $GLOBALS['app_strings']['ERR_EXTERNAL_API_SAVE_FAIL'];
                 $_SESSION['user_error_message'][] = $error_message;
-
             } else {
                 unlink($new_destination);
             }
         }
-
     }
 
     /**

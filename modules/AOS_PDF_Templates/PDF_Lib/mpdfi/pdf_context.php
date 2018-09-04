@@ -17,7 +17,8 @@
 //  limitations under the License.
 //
 
-class pdf_context {
+class pdf_context
+{
 
 	var $file;
 	var $buffer;

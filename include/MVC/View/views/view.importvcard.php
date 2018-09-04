@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -51,25 +54,23 @@ require_once __DIR__ . '/../../../../include/utils/layout_utils.php';
 
 class ViewImportvcard extends SugarView
 {
-	var $type = 'edit';
+    public $type = 'edit';
 
     public function __construct()
     {
- 		parent::__construct();
- 	}
+        parent::__construct();
+    }
 
-	/**
+    /**
      * @see SugarView::display()
      */
-	public function display()
+    public function display()
     {
         global $mod_strings, $app_strings, $app_list_strings;
 
         $this->ss->assign("ERROR_TEXT", $app_strings['LBL_EMPTY_VCARD']);
-        if (isset($_REQUEST['error']))
-        {
-            switch ($_REQUEST['error'])
-            {
+        if (isset($_REQUEST['error'])) {
+            switch ($_REQUEST['error']) {
                 case 'vcardErrorFilesize':
                     $error = 'LBL_VCARD_ERROR_FILESIZE';
                     break;
@@ -87,7 +88,7 @@ class ViewImportvcard extends SugarView
         $params = array();
         $params[] = "<a href='index.php?module={$_REQUEST['module']}&action=index'>{$mod_strings['LBL_MODULE_NAME']}</a>";
         $params[] = $app_strings['LBL_IMPORT_VCARD_BUTTON_LABEL'];
-		echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], $params, true);
+        echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], $params, true);
         $this->ss->display($this->getCustomFilePathIfExists('include/MVC/View/tpls/Importvcard.tpl'));
- 	}
+    }
 }

@@ -1,34 +1,89 @@
 language: php
 php:
-  - '5.5'
-  - '5.6'
-  - '7.0'
-  - '7.1'
-  - '7.2'
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+
 matrix:
   fast_finish: true
+jobs:
+  include:
+      - stage: codecoverage
+        if: type IN (pull_request) OR branch in (master, develop, hotfix)
+        php: 7.0
+        script: ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
 sudo: required
 dist: trusty
 services:
   - mysql
+addons:
+  chrome: stable
+
+env:
+  - INSTANCE_URL=http://localhost/ DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1
+
+before_install:
+  # Install chrome driver#
+  - whereis google-chrome-stable
+  - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
+  - unzip -o chromedriver_linux64.zip
+  - ./chromedriver --url-base=/wd/hub &
 
 install:
   - composer self-update && composer --version
 
 before_script:
-  - mysql -e "CREATE DATABASE automated_tests;"
+  # Set up MySQL
+  - mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
-  - phpenv config-rm xdebug.ini
+  # Install apache - images with PHP 7 or above
+  - sudo apt-get update
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
+  # Enable php-fpm  - images with PHP 7 or above
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf 2>/dev/null || true
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
+  - sudo chown -R travis:travis /var/lib/apache2/fastcgi
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  # Configure apache virtual hosts - images with PHP 7 or above
+  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+  - sudo service apache2 restart
+  # Install composer
   - composer install
+  - ./vendor/bin/codecept build
+  # Additional PHP config
+  - phpenv config-add travis.php.ini
 
 script:
-  - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
-  - php tests/testinstall.php
-  - ./vendor/bin/codecept run -f unit --steps -vvv --debug 
+  # Run the wizard installer ?
+  - echo "using install wizard"
+  - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d
+  - ./build/push_output.sh
+  
+  
+
+  # set the log level to error
+  - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
+  # Install OAuth2 demo data
+  - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
+  # Install demo user data
+  - mysql -u root -D automated_tests -v -e "source tests/_data/demo_users.sql"
+  # Run the unit tests
+  # Run API functional tests
+  # RUN Basic Acceptance test
+  - ./vendor/bin/codecept run -f unit --steps -v && ./vendor/bin/codecept run api --steps -f -v && sudo chmod -R 777 . && ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -v;
 
 after_script:
+  - ./build/push_output.sh
   - cat suitecrm.log
+  - sudo cat /var/log/apache2/error.log
+  - echo $TRAVIS_COMMIT_RANGE
 
 branches:
   only:

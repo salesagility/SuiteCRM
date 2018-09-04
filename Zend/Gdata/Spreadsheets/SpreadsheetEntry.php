@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/Entry.php';
  */
 class Zend_Gdata_Spreadsheets_SpreadsheetEntry extends Zend_Gdata_Entry
 {
-
     protected $_entryClassName = 'Zend_Gdata_Spreadsheets_SpreadsheetEntry';
 
     /**
@@ -60,5 +59,4 @@ class Zend_Gdata_Spreadsheets_SpreadsheetEntry extends Zend_Gdata_Entry
         $service = new Zend_Gdata_Spreadsheets($this->getHttpClient());
         return $service->getWorksheetFeed($this);
     }
-
 }

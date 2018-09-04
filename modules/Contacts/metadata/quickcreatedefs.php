@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -44,17 +47,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$viewdefs = array (
-  'Contacts' => 
-  array (
-    'QuickCreate' => 
-    array (
-      'templateMeta' => 
-      array (
-        'form' => 
-        array (
-          'hidden' => 
-          array (
+$viewdefs = array(
+  'Contacts' =>
+  array(
+    'QuickCreate' =>
+    array(
+      'templateMeta' =>
+      array(
+        'form' =>
+        array(
+          'hidden' =>
+          array(
             '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
             '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
             '<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
@@ -65,82 +68,82 @@ $viewdefs = array (
           ),
         ),
         'maxColumns' => '2',
-        'widths' => 
-        array (
-          array (
+        'widths' =>
+        array(
+          array(
             'label' => '10',
             'field' => '30',
           ),
-          array (
+          array(
             'label' => '10',
             'field' => '30',
           ),
         ),
       ),
-      'panels' => 
-      array (
-        'default' => 
-        array (
+      'panels' =>
+      array(
+        'default' =>
+        array(
 
-          array (
+          array(
 
-            array (
+            array(
               'name' => 'first_name',
                 'customCode' => '{html_options name="salutation" id="salutation" options=$fields.salutation.options selected=$fields.salutation.value}'
                 . '&nbsp;<input name="first_name" id="first_name" size="25" maxlength="25" type="text" value="{$fields.first_name.value}">',
             ),
 
-            array (
+            array(
               'name' => 'account_name',
             ),
           ),
 
-          array (
+          array(
 
-            array (
+            array(
               'name' => 'last_name',
               'displayParams'=>array('required'=>true),
             ),
 
-            array (
+            array(
               'name' => 'phone_work',
             ),
           ),
 
-          array (
+          array(
 
-            array (
+            array(
               'name' => 'title',
             ),
 
-            array (
+            array(
               'name' => 'phone_mobile',
             ),
           ),
 
-          array (
+          array(
 
-            array (
+            array(
               'name' => 'phone_fax',
             ),
 
-            array (
+            array(
               'name' => 'do_not_call',
             ),
           ),
 
-          array (
-            array (
+          array(
+            array(
               'name' => 'email1',
             ),
-            array (
+            array(
               'name' => 'lead_source',
             ),
           ),
 
-          array (
+          array(
 
-            array (
+            array(
               'name' => 'assigned_user_name',
             ),
           ),
@@ -149,4 +152,3 @@ $viewdefs = array (
     ),
   ),
 );
-

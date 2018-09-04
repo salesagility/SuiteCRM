@@ -23,28 +23,29 @@
  */
 
 require_once('modules/AOS_Quotes/AOS_Quotes_sugar.php');
-class AOS_Quotes extends AOS_Quotes_sugar {
-
-	function __construct(){
-		parent::__construct();
-	}
+class AOS_Quotes extends AOS_Quotes_sugar
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Quotes(){
+    public function AOS_Quotes()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         global $sugar_config;
 
@@ -60,13 +61,13 @@ class AOS_Quotes extends AOS_Quotes_sugar {
                 unset($_POST['service_id']);
             }
 
-            if($sugar_config['dbconfig']['db_type'] == 'mssql'){
+            if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                 $this->number = $this->db->getOne("SELECT MAX(CAST(number as INT))+1 FROM aos_quotes");
             } else {
                 $this->number = $this->db->getOne("SELECT MAX(CAST(number as UNSIGNED))+1 FROM aos_quotes");
             }
 
-            if($this->number < $sugar_config['aos']['quotes']['initialNumber']){
+            if ($this->number < $sugar_config['aos']['quotes']['initialNumber']) {
                 $this->number = $sugar_config['aos']['quotes']['initialNumber'];
             }
         }
@@ -75,17 +76,19 @@ class AOS_Quotes extends AOS_Quotes_sugar {
 
         perform_aos_save($this);
 
-		parent::save($check_notify);
+        $return_id = parent::save($check_notify);
 
-		require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
-		$productQuoteGroup = new AOS_Line_Item_Groups();
-		$productQuoteGroup->save_groups($_POST, $this, 'group_');
-	}
+        require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
+        $productQuoteGroup = new AOS_Line_Item_Groups();
+        $productQuoteGroup->save_groups($_POST, $this, 'group_');
 
-	function mark_deleted($id)
-	{
-		$productQuote = new AOS_Products_Quotes();
-		$productQuote->mark_lines_deleted($this);
-		parent::mark_deleted($id);
-	}
+        return $return_id;
+    }
+
+    public function mark_deleted($id)
+    {
+        $productQuote = new AOS_Products_Quotes();
+        $productQuote->mark_lines_deleted($this);
+        parent::mark_deleted($id);
+    }
 }

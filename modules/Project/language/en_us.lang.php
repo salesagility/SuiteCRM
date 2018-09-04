@@ -153,7 +153,7 @@ $mod_strings = array(
     'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
     'LBL_NO_ACCESS' => 'You have no access to create $module',
     'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
-    'LBL_REMOVE' => 'rem',
+    'LBL_REMOVE' => 'Remove',
     'LBL_VIEW_DETAIL' => 'View Details',
     'LBL_OVERRIDE_BUSINESS_HOURS' => 'Consider Working days',
 

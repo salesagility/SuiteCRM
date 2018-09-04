@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,38 +37,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('modules/Trackers/monitor/Monitor.php');
 require_once('modules/Trackers/Metric.php');
 require_once('modules/Trackers/Trackable.php');
 
-class BlankMonitor extends Monitor implements Trackable {
+class BlankMonitor extends Monitor implements Trackable
+{
 
     /**
      * BlankMonitor constructor
      */
-    function __construct() {
-
+    public function __construct()
+    {
     }
 
 
-	/**
-	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-	 */
-	public function BlankMonitor(){
-		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-		if(isset($GLOBALS['log'])) {
-			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
-			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-		}
-		self::__construct();
-	}
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function BlankMonitor()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
 
     /**
      * setValue
@@ -74,8 +78,8 @@ class BlankMonitor extends Monitor implements Trackable {
      * @param $value Mixed value
      * @throws Exception Thrown if metric name is not configured for monitor instance
      */
-    function setValue($name, $value) {
-
+    public function setValue($name, $value)
+    {
     }
 
     /**
@@ -83,7 +87,8 @@ class BlankMonitor extends Monitor implements Trackable {
      * Returns Array of store names defined for monitor instance
      * @return Array of store names defined for monitor instance
      */
-    function getStores() {
+    public function getStores()
+    {
         return null;
     }
 
@@ -92,8 +97,9 @@ class BlankMonitor extends Monitor implements Trackable {
      * Returns Array of metric instances defined for monitor instance
      * @return Array of metric instances defined for monitor instance
      */
-    function getMetrics() {
-    	return null;
+    public function getMetrics()
+    {
+        return null;
     }
 
     /**
@@ -102,30 +108,31 @@ class BlankMonitor extends Monitor implements Trackable {
      * the flush method passing with the montior ($this) instance.
      *
      */
-    public function save() {
-
+    public function save()
+    {
     }
 
 
-	/**
-	 * getStore
-	 * This method checks if the Store implementation has already been instantiated and
-	 * will return the one stored; otherwise it will create the Store implementation and
-	 * save it to the Array of Stores.
-	 * @param $store The name of the store as defined in the 'modules/Trackers/config.php' settings
-	 * @return An instance of a Store implementation
-	 * @throws Exception Thrown if $store class cannot be loaded
-	 */
-	protected function getStore($store) {
-		return null;
-	}
+    /**
+     * getStore
+     * This method checks if the Store implementation has already been instantiated and
+     * will return the one stored; otherwise it will create the Store implementation and
+     * save it to the Array of Stores.
+     * @param $store The name of the store as defined in the 'modules/Trackers/config.php' settings
+     * @return An instance of a Store implementation
+     * @throws Exception Thrown if $store class cannot be loaded
+     */
+    protected function getStore($store)
+    {
+        return null;
+    }
 
 
-	/**
-	 * clear
-	 * This function clears the metrics data in the monitor instance
-	 */
-	public function clear() {
-
-	}
+    /**
+     * clear
+     * This function clears the metrics data in the monitor instance
+     */
+    public function clear()
+    {
+    }
 }

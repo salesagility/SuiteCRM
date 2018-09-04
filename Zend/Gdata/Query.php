@@ -414,5 +414,4 @@ class Zend_Gdata_Query
             throw new Zend_Gdata_App_Exception('Property ' . $name . '  does not exist');
         }
     }
-
 }

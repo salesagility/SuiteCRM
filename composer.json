@@ -17,6 +17,7 @@
     "ext-gd": "*",
     "ext-curl": "*",
     "ext-openssl": "*",
+    "ext-zip": "*",
     "slim/slim": "^3.8",
     "tuupola/slim-jwt-auth": "^2.0",
     "league/url": "^3.3",
@@ -24,11 +25,12 @@
     "league/oauth2-server": "^5.1",
     "justinrainbow/json-schema": "^5.2",
     "onelogin/php-saml": "3.0.0.x-dev as 3.0.0",
-    "google/recaptcha": "^1.1"
+    "google/recaptcha": "^1.1",
+    "ezyang/htmlpurifier": "^4.10"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
-    "mikey179/vfsStream": "1.4.*",
+    "mikey179/vfsStream": "1.6.*",
     "codeception/codeception": "^2.0",
     "fzaninotto/Faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",

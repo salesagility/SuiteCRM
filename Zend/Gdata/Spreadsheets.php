@@ -138,7 +138,7 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     {
         if ($location == null) {
             $uri = self::SPREADSHEETS_FEED_URI;
-        } else if ($location instanceof Zend_Gdata_Spreadsheets_DocumentQuery) {
+        } elseif ($location instanceof Zend_Gdata_Spreadsheets_DocumentQuery) {
             if ($location->getDocumentType() == null) {
                 $location->setDocumentType('spreadsheets');
             }
@@ -183,7 +183,7 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
                 $location->setDocumentType('worksheets');
             }
             $uri = $location->getQueryUrl();
-        } else if ($location instanceof Zend_Gdata_Spreadsheets_SpreadsheetEntry) {
+        } elseif ($location instanceof Zend_Gdata_Spreadsheets_SpreadsheetEntry) {
             $uri = $location->getLink(self::WORKSHEETS_FEED_LINK_URI)->href;
         } else {
             $uri = $location;
@@ -222,7 +222,7 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     {
         if ($location instanceof Zend_Gdata_Spreadsheets_CellQuery) {
             $uri = $location->getQueryUrl();
-        } else if ($location instanceof Zend_Gdata_Spreadsheets_WorksheetEntry) {
+        } elseif ($location instanceof Zend_Gdata_Spreadsheets_WorksheetEntry) {
             $uri = $location->getLink(self::CELL_FEED_LINK_URI)->href;
         } else {
             $uri = $location;
@@ -257,7 +257,7 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     {
         if ($location instanceof Zend_Gdata_Spreadsheets_ListQuery) {
             $uri = $location->getQueryUrl();
-        } else if ($location instanceof Zend_Gdata_Spreadsheets_WorksheetEntry) {
+        } elseif ($location instanceof Zend_Gdata_Spreadsheets_WorksheetEntry) {
             $uri = $location->getLink(self::LIST_FEED_LINK_URI)->href;
         } else {
             $uri = $location;
@@ -405,7 +405,7 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         $cellQuery = null;
         if ($location instanceof Zend_Gdata_Spreadsheets_CellQuery) {
             $cellQuery = $location;
-        } else if ($location instanceof Zend_Gdata_Spreadsheets_WorksheetEntry) {
+        } elseif ($location instanceof Zend_Gdata_Spreadsheets_WorksheetEntry) {
             $url = $location->getLink(self::CELL_FEED_LINK_URI)->href;
             $cellQuery = new Zend_Gdata_Spreadsheets_CellQuery($url);
         } else {
@@ -441,5 +441,4 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     {
         return $this->getSpreadsheetFeed($location = null);
     }
-
 }

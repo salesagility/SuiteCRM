@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,18 +37,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('include/SearchForm/SearchForm2.php');
 
-class EmployeesSearchForm extends SearchForm {
+class EmployeesSearchForm extends SearchForm
+{
     /**
      * This builds an EmployeesSearchForm from a classic search form.
      */
-    function __construct( SearchForm $oldSearchForm ) {
+    public function __construct(SearchForm $oldSearchForm)
+    {
         parent::__construct($oldSearchForm->seed, $oldSearchForm->module, $oldSearchForm->action);
         $this->setup(
             // $searchdefs
@@ -57,23 +62,24 @@ class EmployeesSearchForm extends SearchForm {
             // $displayView
             $oldSearchForm->displayView,
             // listViewDefs
-            $oldSearchForm->listViewDefs);
+            $oldSearchForm->listViewDefs
+        );
         
         $this->lv = $oldSearchForm->lv;
-                     
     }
     
-    public function generateSearchWhere($add_custom_fields = false, $module = '') {
+    public function generateSearchWhere($add_custom_fields = false, $module = '')
+    {
         $onlyActive = false;
         if (isset($this->searchFields['open_only_active_users']['value'])) {
-            if ( $this->searchFields['open_only_active_users']['value'] == 1) {
+            if ($this->searchFields['open_only_active_users']['value'] == 1) {
                 $onlyActive = true;
             }
             unset($this->searchFields['open_only_active_users']['value']);
         }
         $where_clauses = parent::generateSearchWhere($add_custom_fields, $module);
         
-        if ( $onlyActive ) {
+        if ($onlyActive) {
             $where_clauses[] = "users.employee_status = 'Active'";
         }
         
