@@ -42,7 +42,8 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //execute the method with different job intervals
 
-        $scheduler->job_interval = '*::*::*::*::3';
+        $now = TimeDate::getInstance()->getNow();
+        $scheduler->job_interval = $now->setTime('00', '00', '00')->asDb();
         $result = $scheduler->deriveDBDateTimes($scheduler);
         $this->assertTrue(is_array($result));
 
