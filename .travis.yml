@@ -11,7 +11,7 @@ matrix:
 jobs:
   include:
       - stage: codecoverage
-        if: type IN (pull_request) OR branch in (master, develop)
+        if: type IN (pull_request) OR branch in (master, develop, hotfix)
         php: 7.0
         script: ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
 sudo: required
@@ -22,7 +22,7 @@ addons:
   chrome: stable
 
 env:
-  - INSTANCE_URL=http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1
+  - INSTANCE_URL=http://localhost/ DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1
 
 before_install:
   # Install chrome driver#
@@ -36,7 +36,7 @@ install:
 
 before_script:
   # Set up MySQL
-  - mysql -e "CREATE DATABASE automated_tests;"
+  - mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
   # Install apache - images with PHP 7 or above
@@ -61,11 +61,11 @@ before_script:
   - ./vendor/bin/codecept build
 
 script:
-  # Run the silent installer or the wizard installer ?
+  # Run the wizard installer
   - echo "using install wizard"
   - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d
   - ./build/push_output.sh
-
+  
   # Run the unit tests
   - ./vendor/bin/codecept run unit --steps -f -vvv -d
   # Install OAuth2 demo data

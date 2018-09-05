@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -47,31 +50,31 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/Trackers/store/Store.php');
 
-class TrackerQueriesDatabaseStore implements Store {
-
+class TrackerQueriesDatabaseStore implements Store
+{
     public function flush($monitor)
     {
-        if($monitor->run_count > 1) {
+        if ($monitor->run_count > 1) {
             $query = "UPDATE $monitor->table_name set run_count={$monitor->run_count}, sec_avg={$monitor->sec_avg}, sec_total={$monitor->sec_total}, date_modified='{$monitor->date_modified}' where query_hash = '{$monitor->query_hash}'";
             DBManagerFactory::getInstance()->query($query);
             return;
         }
 
-       $metrics = $monitor->getMetrics();
-       $values = array();
-       foreach($metrics as $name=>$metric) {
-       	  if(!empty($monitor->$name)) {
-       	  	 $columns[] = $name;
-       	  	 $fields[$name] = array('name' => $name, 'type' => $metrics[$name]->_type);
-       	  	 $values[$name] = $monitor->$name;
-           }
-       } //foreach
+        $metrics = $monitor->getMetrics();
+        $values = array();
+        foreach ($metrics as $name=>$metric) {
+            if (!empty($monitor->$name)) {
+                $columns[] = $name;
+                $fields[$name] = array('name' => $name, 'type' => $metrics[$name]->_type);
+                $values[$name] = $monitor->$name;
+            }
+        } //foreach
 
-       if(empty($values)) {
-       	  return;
-       }
+        if (empty($values)) {
+            return;
+        }
 
-       $fields['id'] = array('auto_increment' => true, "name" => "id", "type" => "int");
-       DBManagerFactory::getInstance()->insertParams($monitor->table_name, $fields, $values);
+        $fields['id'] = array('auto_increment' => true, "name" => "id", "type" => "int");
+        DBManagerFactory::getInstance()->insertParams($monitor->table_name, $fields, $values);
     }
 }

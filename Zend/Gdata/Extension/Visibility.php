@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_Extension_Visibility extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'visibility';
     protected $_value = null;
 
@@ -118,6 +117,4 @@ class Zend_Gdata_Extension_Visibility extends Zend_Gdata_Extension
     {
         return $this->getValue();
     }
-
 }
-

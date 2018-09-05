@@ -33,12 +33,12 @@ $JpgUseSVGFormat = true;
 
 
 //======================================================================================================
-//*****************************************************************************************************
-//*****************************************************************************************************
-//*****************************************************************************************************
-//*****************************************************************************************************
-//*****************************************************************************************************
-//*****************************************************************************************************
+//**********************
+//**********************
+//**********************
+//**********************
+//**********************
+//**********************
 //======================================================================================================
 //======================================================================================================
 
@@ -73,8 +73,8 @@ function print_graph($g,$pgwidth) {
 	// Antialias: If true - better quality curves, but graph line will only be 1px even in PDF 300dpi 
 	// default=true for most except line and radar
 	if (isset($g['attr']['ANTIALIAS']) && ($g['attr']['ANTIALIAS']=='' || $g['attr']['ANTIALIAS']==0)) { $antialias = false; }
-	else if (isset($g['attr']['ANTIALIAS']) && $g['attr']['ANTIALIAS'] > 0) { $antialias = true; }
-	else if ($type=='line' || $type=='radar') { $antialias = false; }
+	elseif (isset($g['attr']['ANTIALIAS']) && $g['attr']['ANTIALIAS'] > 0) { $antialias = true; }
+	elseif ($type=='line' || $type=='radar') { $antialias = false; }
 	else { $antialias = true; }
 
 	if ($g['attr']['DPI']) { $dpi = intval($g['attr']['DPI']); }
@@ -141,10 +141,10 @@ function print_graph($g,$pgwidth) {
 		$nc = max($nc,$cc);
 	}
 	if ($colend == 0) { $colend = $nc; }
-	else if ($colend < 0) { $colend = $nc+$colend; }
+	elseif ($colend < 0) { $colend = $nc+$colend; }
 
 	if ($rowend == 0) { $rowend = $nr; }
-	else if ($rowend < 0) { $rowend = $nr+$rowend; }
+	elseif ($rowend < 0) { $rowend = $nr+$rowend; }
 
 	if ($colend < $colbegin) { $colend = $colbegin; }
 	if ($rowend < $rowbegin) { $rowend = $rowbegin; }
@@ -196,7 +196,7 @@ function print_graph($g,$pgwidth) {
 			}
 		}
 	}
-	else if ($dataseries=='rows') { 
+	elseif ($dataseries=='rows') { 
 		if ($colbegin>1) {
 			for ($r=($rowbegin-1);$r<$rowend;$r++) { 
 				$labels[($r+1-$rowbegin)] = $g['data'][$r][0] ; 
@@ -240,7 +240,7 @@ function print_graph($g,$pgwidth) {
 	if ($type == 'pie' || $type == 'pie3d') { 
 		$graph = new PieGraph (($w*$k),($h*$k));  
 	}
-	else if ($type == 'radar') { 
+	elseif ($type == 'radar') { 
 		$graph = new RadarGraph(($w*$k),($h*$k));
 	}
 	else {
@@ -273,7 +273,7 @@ function print_graph($g,$pgwidth) {
 		$pposx = ($pposxabs / $w);
 		$graph->legend->Pos(0.02,0.5,'right','center'); 
 	}
-	else if ($type == 'radar') { 
+	elseif ($type == 'radar') { 
 		$psize = 0.5;
 		$pposxabs = ($w/2);
 		$pposy = 0.55;
@@ -283,7 +283,7 @@ function print_graph($g,$pgwidth) {
 		$pposx = ($pposxabs / $w);
 		$graph->legend->Pos(0.02,0.5,'right','center'); 
 	}
-	else if ($type == 'xy' || $type == 'scatter') {
+	elseif ($type == 'xy' || $type == 'scatter') {
 		$pml = 50;
 		$pmr = 20;
 		$pmt = 60;
@@ -292,7 +292,7 @@ function print_graph($g,$pgwidth) {
 		$yaxislblmargin = $pml - 15;
 		$graph->legend->Pos(0.02,0.1,'right','top'); 
 	}
-	else if ($type == 'line' || $type == 'bar') {
+	elseif ($type == 'line' || $type == 'bar') {
 		$pml = 50;
 		$pmr = 20;
 		$pmt = 60;
@@ -310,7 +310,7 @@ function print_graph($g,$pgwidth) {
 		}
 		$graph->legend->Pos(0.02,0.1,'right','top'); 
 	}
-	else if ($type == 'horiz_bar') {
+	elseif ($type == 'horiz_bar') {
 		$pml = 50;
 		$pmr = 20;
 		$pmt = 50;
@@ -353,7 +353,7 @@ function print_graph($g,$pgwidth) {
 			}
 			$graph->Add($p1);
 	}
-	else if ($type == 'pie3d') { 
+	elseif ($type == 'pie3d') { 
 			$p1 = new PiePlot3d($data[0]); 
 			$p1->SetSliceColors($colours); 
 			if ($show_values) {
@@ -379,7 +379,7 @@ function print_graph($g,$pgwidth) {
 			$graph->Add( $p1); 
 	}
 	// RADAR
-	else if ($type == 'radar') { 
+	elseif ($type == 'radar') { 
 			$graph->SetSize($psize);
 			$graph->SetPos($pposx, $pposy);
 
@@ -412,7 +412,7 @@ function print_graph($g,$pgwidth) {
 			}
 	}
 	// LINE
-	else if ($type == 'line') {
+	elseif ($type == 'line') {
 			// Setup the graph. 
 			$graph->img->SetMargin($pml*$k,$pmr*$k,$pmt*$k,$pmb*$k);	// LRTB
 			$graph->SetScale($axes);
@@ -468,7 +468,7 @@ function print_graph($g,$pgwidth) {
 
 	}
 	// XY or SCATTER
-	else if ($type == 'xy' || $type == 'scatter') {
+	elseif ($type == 'xy' || $type == 'scatter') {
 			// Setup the graph. 
 			$graph->img->SetMargin($pml*$k,$pmr*$k,$pmt*$k,$pmb*$k);	// LRTB
 			$graph->SetScale($axes);
@@ -551,7 +551,7 @@ function print_graph($g,$pgwidth) {
 
 	}
 	// BAR
-	else if ($type == 'bar') {
+	elseif ($type == 'bar') {
 			// Setup the graph. 
 			$graph->img->SetMargin($pml*$k,$pmr*$k,$pmt*$k,$pmb*$k);	// LRTB
 			$graph->SetScale($axes);
@@ -620,7 +620,7 @@ function print_graph($g,$pgwidth) {
 				$graph->Add($gbplot);
 			}
 	}
-	else if ($type == 'horiz_bar') {
+	elseif ($type == 'horiz_bar') {
 			$graph->SetScale($axes);
 			$graph->Set90AndMargin($pml*$k,$pmr*$k,$pmt*$k,$pmb*$k);	// LRTB
 

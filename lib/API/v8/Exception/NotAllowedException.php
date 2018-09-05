@@ -51,5 +51,4 @@ class NotAllowedException extends ApiException
     const MSG_PREFIX = '[Not Allowed]';
     const DEFAULT_CODE = 8005;
     const HTTP_STATUS = 403;
-    
 }

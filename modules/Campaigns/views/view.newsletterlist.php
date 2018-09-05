@@ -1,12 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +20,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,29 +38,30 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
- ********************************************************************************/
+/**
+ */
 
 require_once('include/MVC/View/views/view.list.php');
 
-class ViewNewsLetterList extends ViewList 
-{    
-    function processSearchForm()
+class ViewNewsLetterList extends ViewList
+{
+    public function processSearchForm()
     {
         // we have a query
-        if(!empty($_SERVER['HTTP_REFERER']) && preg_match('/action=EditView/', $_SERVER['HTTP_REFERER'])) { // from EditView cancel
+        if (!empty($_SERVER['HTTP_REFERER']) && preg_match('/action=EditView/', $_SERVER['HTTP_REFERER'])) { // from EditView cancel
             $this->searchForm->populateFromArray($this->storeQuery->query);
-        }
-        else {
+        } else {
             $this->searchForm->populateFromRequest();
-        }   
+        }
         $where_clauses = $this->searchForm->generateSearchWhere(true, $this->seed->module_dir);
         $where_clauses[] = "campaigns.campaign_type in ('NewsLetter')";
-        if (count($where_clauses) > 0 )$this->where = '('. implode(' ) AND ( ', $where_clauses) . ')';
+        if (count($where_clauses) > 0) {
+            $this->where = '('. implode(' ) AND ( ', $where_clauses) . ')';
+        }
         $GLOBALS['log']->info("List View Where Clause: $this->where");
 
 
@@ -65,14 +69,13 @@ class ViewNewsLetterList extends ViewList
     }
     
     /**
-	 * @see SugarView::preDisplay()
-	 */
-	public function preDisplay() 
-	{
+     * @see SugarView::preDisplay()
+     */
+    public function preDisplay()
+    {
         global $mod_strings;
         $mod_strings['LBL_MODULE_TITLE'] = $mod_strings['LBL_NEWSLETTER_TITLE'];
         $mod_strings['LBL_LIST_FORM_TITLE'] = $mod_strings['LBL_NEWSLETTER_LIST_FORM_TITLE'];
         parent::preDisplay();
-
-    }        
+    }
 }

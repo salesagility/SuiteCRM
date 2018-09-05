@@ -1,12 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +20,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,43 +38,47 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/MVC/View/SugarView.php');
 require_once('include/Sugarpdf/FontManager.php');
-class ConfiguratorViewAddFontView extends SugarView {
+class ConfiguratorViewAddFontView extends SugarView
+{
    
     /**
      * Constructor
      */
-    public function AddFontView(){
+    public function AddFontView()
+    {
         parent::__construct();
     }
-    /** 
+    /**
      * display the form
      */
-    public function display(){
+    public function display()
+    {
         global $mod_strings, $app_list_strings, $app_strings, $current_user;
-        if(!is_admin($current_user)){
-            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);  
+        if (!is_admin($current_user)) {
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
-        $this->ss->assign("MODULE_TITLE", 
+        $this->ss->assign(
+            "MODULE_TITLE",
             getClassicModuleTitle(
-                $mod_strings['LBL_MODULE_ID'], 
-                array($mod_strings['LBL_ADDFONT_TITLE']), 
+                $mod_strings['LBL_MODULE_ID'],
+                array($mod_strings['LBL_ADDFONT_TITLE']),
                 true
                 )
             );
-        if(!empty($_REQUEST['error'])){
+        if (!empty($_REQUEST['error'])) {
             $this->ss->assign("error", $_REQUEST['error']);
         }
         $this->ss->assign("MOD", $mod_strings);
         $this->ss->assign("APP", $app_strings);
-        if(isset($_REQUEST['return_action'])){
+        if (isset($_REQUEST['return_action'])) {
             $this->ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
-        }else{
+        } else {
             $this->ss->assign("RETURN_ACTION", 'FontManager');
         }
         $this->ss->assign("STYLE_LIST", array(
@@ -80,10 +87,9 @@ class ConfiguratorViewAddFontView extends SugarView {
                 "bold"=>$mod_strings["LBL_FONT_BOLD"],
                 "boldItalic"=>$mod_strings["LBL_FONT_BOLDITALIC"]
          ));
-         $this->ss->assign("ENCODING_TABLE", array_combine(explode(",",PDF_ENCODING_TABLE_LIST), explode(",",PDF_ENCODING_TABLE_LABEL_LIST)));
+        $this->ss->assign("ENCODING_TABLE", array_combine(explode(",", PDF_ENCODING_TABLE_LIST), explode(",", PDF_ENCODING_TABLE_LABEL_LIST)));
         
-//display
+        //display
         $this->ss->display('modules/Configurator/tpls/addFontView.tpl');
     }
 }
-    

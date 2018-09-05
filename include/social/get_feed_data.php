@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 /*
  *
  * This file requires each user to log into their twitter account and authorise SuiteCRM to access it.
@@ -56,7 +57,6 @@ $html = '';
 $twitter_enabled = check_enabled($db, 'twitter');
 
 if ($twitter_enabled) {
-
     require_once('modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
     /*
@@ -106,11 +106,9 @@ if ($twitter_enabled) {
 
     if (empty($tweets['errors'])) {
         while ($i < count($tweets)) {
-
-
             $limit = 104;
 
-            $tweets[$i]['text'] = format_feed_tweets($db, $tweets[$i],$limit);
+            $tweets[$i]['text'] = format_feed_tweets($db, $tweets[$i], $limit);
 
             if (count($tweets[$i]['entities']['hashtags']) > 0) {
                 $tweets[$i]['text'] = replace_hashtags($db, $tweets[$i]);
@@ -125,7 +123,6 @@ if ($twitter_enabled) {
             $duplicate_found = duplicate_check($db, $tweets[$i]['text'], $date);
 
             if (!$duplicate_found) {
-
                 $id = create_guid();
 
                 $sql = "INSERT INTO sugarfeed (id, name, date_entered, date_modified, modified_user_id, created_by, description, deleted, assigned_user_id, related_module, related_id, link_url, link_type)
@@ -151,13 +148,11 @@ if ($twitter_enabled) {
             }
         }
     }
-
 }
 
 $facebook_enabled = check_enabled($db, 'facebook');
 
 if ($facebook_enabled) {
-
     require_once("include/social/facebook/facebook.class.php");
 
     $facebook_helper = new facebook_helper();
@@ -174,8 +169,9 @@ if ($facebook_enabled) {
     }
 
     if ($user) {
-       // $log = '<a class="button" href="' . $logoutUrl . '">Facebook Logout</a>';
-    } else {;
+        // $log = '<a class="button" href="' . $logoutUrl . '">Facebook Logout</a>';
+    } else {
+        ;
         $log = '<a class="button" href="' . $loginUrl . '">Facebook Login</a>';
     }
 
@@ -188,14 +184,12 @@ if ($facebook_enabled) {
             data_insert($single, "facebook");
         }
     }
-
 }
     function check_facebook_login($facebook_helper)
     {
         $user = $facebook_helper->facebook->getUser();
 
         if ($user) {
-
             $user_profile = $facebook_helper->get_my_user(); //get my user details
 
             $user_home = $facebook_helper->get_my_newsfeed(); //gets my newsfeed,
@@ -256,19 +250,18 @@ if ($facebook_enabled) {
     {
         if (function_exists('com_create_guid')) {
             return com_create_guid();
-        } else {
-            mt_srand((double)microtime() * 10000); //optional for php 4.2.0 and up.
-            $charid = strtoupper(md5(uniqid(rand(), true)));
-            $hyphen = chr(45);
-            $uuid = chr(123)
+        }
+        mt_srand((double)microtime() * 10000); //optional for php 4.2.0 and up.
+        $charid = strtoupper(md5(uniqid(rand(), true)));
+        $hyphen = chr(45);
+        $uuid = chr(123)
                 . substr($charid, 0, 8) . $hyphen
                 . substr($charid, 8, 4) . $hyphen
                 . substr($charid, 12, 4) . $hyphen
                 . substr($charid, 16, 4) . $hyphen
                 . substr($charid, 20, 12)
                 . chr(125);
-            return $uuid;
-        }
+        return $uuid;
     }
 
     function generate_stream($stream)
@@ -283,10 +276,9 @@ if ($facebook_enabled) {
             case "":
                 $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 100);
                 break;
-            case "link";
+            case "link":
                 $string[0] = "<img style=float:left;padding-right:5px;padding-bottom:5px; src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture />";
                 if (!empty($stream['name'])) {
-
                     $string[1] = '<b>' . $stream['from']['name']. '</b><p style=line-height:30px;>' .  $stream['name']  . '</p>' . '<a href=' . $stream['link'] . '>View article</a>';
                 } else {
                     //must be an article
@@ -308,4 +300,3 @@ if ($facebook_enabled) {
         }
         return $string;
     }
-

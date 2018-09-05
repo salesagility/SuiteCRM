@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,51 +34,57 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once 'modules/ModuleBuilder/Module/StudioModuleFactory.php' ;
 
-function cmp($a,$b)
+function cmp($a, $b)
 {
-	return strcasecmp($a,$b);
+    return strcasecmp($a, $b);
 }
 
-class StudioBrowser{
-	var $modules = array();
-	
-	function loadModules(){
-	    global $current_user;
-		$access = $current_user->getDeveloperModules();
-	    $d = dir('modules');
-		while($e = $d->read()){
-			if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e))continue;
-			if(file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e]) && (in_array($e, $access) || $current_user->isAdmin())) // installed modules must also exist in the beanList
-			{
-				$this->modules[$e] =  StudioModuleFactory::getStudioModule( $e ) ;
-			}
-		}
-	}
-	
-    function loadRelatableModules(){
+class StudioBrowser
+{
+    public $modules = array();
+    
+    public function loadModules()
+    {
+        global $current_user;
+        $access = $current_user->getDeveloperModules();
         $d = dir('modules');
-        while($e = $d->read()){
-        	if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e))continue;
-            if(file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e])) // installed modules must also exist in the beanList
-            {
-                $this->modules[$e] = StudioModuleFactory::getStudioModule( $e ) ;
+        while ($e = $d->read()) {
+            if (substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
+                continue;
+            }
+            if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e]) && (in_array($e, $access) || $current_user->isAdmin())) { // installed modules must also exist in the beanList
+                $this->modules[$e] =  StudioModuleFactory::getStudioModule($e) ;
             }
         }
     }
-		
-	function getNodes(){
+    
+    public function loadRelatableModules()
+    {
+        $d = dir('modules');
+        while ($e = $d->read()) {
+            if (substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
+                continue;
+            }
+            if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e])) { // installed modules must also exist in the beanList
+                $this->modules[$e] = StudioModuleFactory::getStudioModule($e) ;
+            }
+        }
+    }
+        
+    public function getNodes()
+    {
         $this->loadModules();
-	    $nodes = array();
-		foreach($this->modules as $module){
-			$nodes[$module->name] = $module->getNodes();
-		}
-		uksort($nodes,'cmp'); // bug 15103 - order is important - this array is later looped over by foreach to generate the module list
-		return $nodes;
-	}
+        $nodes = array();
+        foreach ($this->modules as $module) {
+            $nodes[$module->name] = $module->getNodes();
+        }
+        uksort($nodes, 'cmp'); // bug 15103 - order is important - this array is later looped over by foreach to generate the module list
+        return $nodes;
+    }
 }

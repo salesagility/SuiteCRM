@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_DublinCore_Extension_Rights extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'dc';
     protected $_rootElement = 'rights';
 
@@ -54,5 +53,4 @@ class Zend_Gdata_DublinCore_Extension_Rights extends Zend_Gdata_Extension
         parent::__construct();
         $this->_text = $value;
     }
-
 }
