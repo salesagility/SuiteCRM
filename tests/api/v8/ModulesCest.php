@@ -1456,7 +1456,6 @@ class ModulesCest
         $I->assertEquals(self::$PRODUCT_RECORD_TYPE, $responseProducts['data'][0]['type']);
     }
 
-
     public function TestScenarioCreateMeetingsWithUsersAndMiddleTableFields(ApiTester $I)
     {
         // Temporary removing this. The API seems does not save correctly the relations on meetings but other problem blocking to solve this
