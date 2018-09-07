@@ -91,4 +91,3 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer_Common extends Zend_Search_L
         return $token;
     }
 }
-

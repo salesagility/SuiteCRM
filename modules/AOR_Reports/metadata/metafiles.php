@@ -23,10 +23,10 @@
  */
  
  $metafiles['AOR_Reports'] = array(
-	'detailviewdefs'  => 	'modules/AOR_Reports/metadata/detailviewdefs.php', 	
-	'editviewdefs'    => 	'modules/AOR_Reports/metadata/editviewdefs.php',
- 	'listviewdefs'    => 	'modules/AOR_Reports/metadata/listviewdefs.php',
- 	'searchdefs'      =>    'modules/AOR_Reports/metadata/searchdefs.php',
- 	'popupdefs'	      =>    'modules/AOR_Reports/metadata/popupdefs.php',
- 	'searchfields'	  =>    'modules/AOR_Reports/metadata/SearchFields.php',
+    'detailviewdefs'  => 	'modules/AOR_Reports/metadata/detailviewdefs.php',
+    'editviewdefs'    => 	'modules/AOR_Reports/metadata/editviewdefs.php',
+    'listviewdefs'    => 	'modules/AOR_Reports/metadata/listviewdefs.php',
+    'searchdefs'      =>    'modules/AOR_Reports/metadata/searchdefs.php',
+    'popupdefs'	      =>    'modules/AOR_Reports/metadata/popupdefs.php',
+    'searchfields'	  =>    'modules/AOR_Reports/metadata/SearchFields.php',
  );

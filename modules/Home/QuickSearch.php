@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('include/SugarObjects/templates/person/Person.php');
@@ -132,7 +133,7 @@ class quicksearchQuery
             $api = ExternalAPIFactory::loadAPI($args['api']);
             $data['fields']     = $api->searchDoc($_REQUEST['query']);
             $data['totalCount'] = count($data['fields']);
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             $GLOBALS['log']->error($ex->getMessage());
         }
 
@@ -149,7 +150,8 @@ class quicksearchQuery
      */
     protected function constructWhere($focus, $args)
     {
-        global $db, $locale, $current_user;
+        global $locale, $current_user;
+        $db = DBManagerFactory::getInstance();
 
         $table = $focus->getTableName();
         if (!empty($table)) {
@@ -163,24 +165,25 @@ class quicksearchQuery
             $args['conditions'] = array();
         }
 
-        foreach($args['conditions'] as $condition)
-        {
+        foreach ($args['conditions'] as $condition) {
             if (isset($condition['op'])) {
                 $operator = $condition['op'];
             } else {
                 $operator = null;
             }
 
-            switch ($operator)
-            {
+            switch ($operator) {
                 case self::CONDITION_CONTAINS:
                     array_push(
                         $conditionArray,
                         sprintf(
                             "%s like '%%%s%%'",
                             $table_prefix . $db->getValidDBName($condition['name']),
-                            $db->quote($condition['value']
-                    )));
+                            $db->quote(
+                                $condition['value']
+                    )
+                        )
+                    );
                     break;
 
                 case self::CONDITION_LIKE_CUSTOM:
@@ -194,10 +197,10 @@ class quicksearchQuery
                         $like .= $db->quote($condition['end']);
                     }
 
-                    if ($focus instanceof Person){
+                    if ($focus instanceof Person) {
                         $nameFormat = $locale->getLocaleFormatMacro($current_user);
 
-                        if (strpos($nameFormat,'l') > strpos($nameFormat,'f')) {
+                        if (strpos($nameFormat, 'l') > strpos($nameFormat, 'f')) {
                             array_push(
                                 $conditionArray,
                                 $db->concat($table, array('first_name','last_name')) . " like '$like'"
@@ -208,8 +211,7 @@ class quicksearchQuery
                                 $db->concat($table, array('last_name','first_name')) . " like '$like'"
                             );
                         }
-                    }
-                    else {
+                    } else {
                         array_push(
                             $conditionArray,
                             $table_prefix . $db->getValidDBName($condition['name']) . sprintf(" like '%s'", $like)
@@ -238,7 +240,7 @@ class quicksearchQuery
         if (!empty($conditionArray)) {
             $whereClauseArray[] = sprintf('(%s)', implode(" {$args['group']} ", $conditionArray));
         }
-        if(!empty($this->extra_where)) {
+        if (!empty($this->extra_where)) {
             $whereClauseArray[] = "({$this->extra_where})";
         }
 
@@ -269,8 +271,7 @@ class quicksearchQuery
             $data['fields'][$i]['module'] = $results[$i]->object_name;
 
             //C.L.: Bug 43395 - For Quicksearch, do not return values with salutation and title formatting
-            if($results[$i] instanceof Person)
-            {
+            if ($results[$i] instanceof Person) {
                 $results[$i]->createLocaleFormattedName = false;
             }
             $listData = $results[$i]->get_list_view_data();
@@ -284,14 +285,17 @@ class quicksearchQuery
                     || (isset($results[$i]->field_name_map[$field]['custom_type']) && $results[$i]->field_name_map[$field]['custom_type'] == 'enum')) {
 
                     // get fields to match enum vals
-                    if(empty($app_list_strings)) {
-                        if(isset($_SESSION['authenticated_user_language']) && $_SESSION['authenticated_user_language'] != '') $current_language = $_SESSION['authenticated_user_language'];
-                        else $current_language = $sugar_config['default_language'];
+                    if (empty($app_list_strings)) {
+                        if (isset($_SESSION['authenticated_user_language']) && $_SESSION['authenticated_user_language'] != '') {
+                            $current_language = $_SESSION['authenticated_user_language'];
+                        } else {
+                            $current_language = $sugar_config['default_language'];
+                        }
                         $app_list_strings = return_app_list_strings_language($current_language);
                     }
 
                     // match enum vals to text vals in language pack for return
-                    if(!empty($app_list_strings[$results[$i]->field_name_map[$field]['options']])) {
+                    if (!empty($app_list_strings[$results[$i]->field_name_map[$field]['options']])) {
                         $results[$i]->$field = $app_list_strings[$results[$i]->field_name_map[$field]['options']][$results[$i]->$field];
                     }
                 }
@@ -299,7 +303,7 @@ class quicksearchQuery
 
                 if (isset($listData[$field])) {
                     $data['fields'][$i][$field] = $listData[$field];
-                } else if (isset($results[$i]->$field)) {
+                } elseif (isset($results[$i]->$field)) {
                     $data['fields'][$i][$field] = $results[$i]->$field;
                 } else {
                     $data['fields'][$i][$field] = '';
@@ -429,7 +433,8 @@ class quicksearchQuery
                     'id' => (string) $id,
                     'user_name' => $name,
                     'module' => 'Users'
-            ));
+            )
+            );
         }
 
         return $results;
@@ -484,8 +489,8 @@ class quicksearchQuery
     protected function overrideContactId($result, $data, $args)
     {
         foreach ($args['field_list'] as $field) {
-            $result[$field] = (preg_match('/reports_to_id$/s',$field)
-                               || preg_match('/contact_id$/s',$field))
+            $result[$field] = (preg_match('/reports_to_id$/s', $field)
+                               || preg_match('/contact_id$/s', $field))
                 ? $data->id // "reports_to_id" to "id"
                 : $data->$field;
         }
@@ -515,7 +520,7 @@ class quicksearchQuery
 
         // Sanitize group
         /* BUG: 52684 properly check for 'and' jeff@neposystems.com */
-        if(!empty($args['group'])  && strcasecmp($args['group'], 'and') == 0) {
+        if (!empty($args['group'])  && strcasecmp($args['group'], 'and') == 0) {
             $args['group'] = 'AND';
         } else {
             $args['group'] = 'OR';
@@ -547,7 +552,7 @@ class quicksearchQuery
         return (showFullName())
             // utils.php, if system is configured to show full name
             ? getUserArrayFromFullName($condition, true)
-            : get_user_array(false, 'Active', '', false, $condition,' AND portal_only=0 ',false);
+            : get_user_array(false, 'Active', '', false, $condition, ' AND portal_only=0 ', false);
     }
 
     /**
@@ -567,7 +572,7 @@ class quicksearchQuery
         if (isset($args['conditions']) && is_array($args['conditions'])) {
             foreach ($args['conditions'] as $i => $condition) {
                 if (isset($condition['name'], $condition['value'])) {
-                    switch($condition['name']) {
+                    switch ($condition['name']) {
                         case 'name':
                             $where[] = sprintf(
                                 "(teams.name like '%s%%' OR teams.name_2 like '%s%%')",

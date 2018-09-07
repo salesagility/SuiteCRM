@@ -22,106 +22,108 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-class AOS_Quotes_sugar extends Basic {
-	var $new_schema = true;
-	var $module_dir = 'AOS_Quotes';
-	var $object_name = 'AOS_Quotes';
-	var $table_name = 'aos_quotes';
-	var $importable = true;
-	var $lineItems = true;
+class AOS_Quotes_sugar extends Basic
+{
+    public $new_schema = true;
+    public $module_dir = 'AOS_Quotes';
+    public $object_name = 'AOS_Quotes';
+    public $table_name = 'aos_quotes';
+    public $importable = true;
+    public $lineItems = true;
 
-	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+    public $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 
-		var $id;
-		var $name;
-		var $date_entered;
-		var $date_modified;
-		var $modified_user_id;
-		var $modified_by_name;
-		var $created_by;
-		var $created_by_name;
-		var $description;
-		var $deleted;
-		var $created_by_link;
-		var $modified_user_link;
-		var $assigned_user_id;
-		var $assigned_user_name;
-		var $assigned_user_link;
-		var $aos_quotes_type;
-		var $industry;
-		var $annual_revenue;
-		var $phone_fax;
-		var $billing_address_street;
-		var $billing_address_city;
-		var $billing_address_state;
-		var $billing_address_postalcode;
-		var $billing_address_country;
-		var $rating;
-		var $phone_office;
-		var $phone_alternate;
-		var $website;
-		var $ownership;
-		var $employees;
-		var $ticker_symbol;
-		var $shipping_address_street;
-		var $shipping_address_city;
-		var $shipping_address_state;
-		var $shipping_address_postalcode;
-		var $shipping_address_country;
-		var $email1;
-		var $email_addresses_primary;
-		var $approval_issue;
-		var $billing_account_id;
-		var $billing_account;
-		var $billing_contact_id;
-		var $billing_contact;
-		var $expiration;
-		var $number;
-		var $opportunity_id;
-		var $opportunity;
-		var $shipping_account_id;
-		var $shipping_account;
-		var $template_ddown_c;
-		var $shipping_contact_id;
-		var $shipping_contact;
-		var $subtotal_amount;
-		var $tax_amount;
-		var $shipping_amount;
-		var $total_amount;
-		var $stage;
-		var $term;
-		var $terms_c;
-		var $approval_status;
-		var $invoice_status;
-
-
-
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
+    public $aos_quotes_type;
+    public $industry;
+    public $annual_revenue;
+    public $phone_fax;
+    public $billing_address_street;
+    public $billing_address_city;
+    public $billing_address_state;
+    public $billing_address_postalcode;
+    public $billing_address_country;
+    public $rating;
+    public $phone_office;
+    public $phone_alternate;
+    public $website;
+    public $ownership;
+    public $employees;
+    public $ticker_symbol;
+    public $shipping_address_street;
+    public $shipping_address_city;
+    public $shipping_address_state;
+    public $shipping_address_postalcode;
+    public $shipping_address_country;
+    public $email1;
+    public $email_addresses_primary;
+    public $approval_issue;
+    public $billing_account_id;
+    public $billing_account;
+    public $billing_contact_id;
+    public $billing_contact;
+    public $expiration;
+    public $number;
+    public $opportunity_id;
+    public $opportunity;
+    public $shipping_account_id;
+    public $shipping_account;
+    public $template_ddown_c;
+    public $shipping_contact_id;
+    public $shipping_contact;
+    public $subtotal_amount;
+    public $tax_amount;
+    public $shipping_amount;
+    public $total_amount;
+    public $stage;
+    public $term;
+    public $terms_c;
+    public $approval_status;
+    public $invoice_status;
 
 
-	function __construct(){
-		parent::__construct();
-	}
+
+
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Quotes_sugar(){
+    public function AOS_Quotes_sugar()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-	function bean_implements($interface){
-		switch($interface){
-			case 'ACL': return true;
-		}
-		return false;
-}
-
+    public function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL': return true;
+        }
+        return false;
+    }
 }

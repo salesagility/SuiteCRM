@@ -87,9 +87,7 @@ class EmailAddress extends SugarEmailAddress
     ) {
         if (func_num_args() > 1) {
             return parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
-        } else {
-            return SugarBean::save($id);
         }
+        return SugarBean::save($id);
     }
-    
 }

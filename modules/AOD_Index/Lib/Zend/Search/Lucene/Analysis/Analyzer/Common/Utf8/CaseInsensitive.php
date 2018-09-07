@@ -46,4 +46,3 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive extends Z
         $this->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_LowerCaseUtf8());
     }
 }
-

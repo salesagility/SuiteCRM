@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,33 +34,33 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-$viewdefs ['Prospects'] = 
-array (
-  'DetailView' => 
-  array (
-    'templateMeta' => 
-    array (
-      'form' => 
-      array (
-        'buttons' => 
-        array (
+$viewdefs ['Prospects'] =
+array(
+  'DetailView' =>
+  array(
+    'templateMeta' =>
+    array(
+      'form' =>
+      array(
+        'buttons' =>
+        array(
             'SEND_CONFIRM_OPT_IN_EMAIL' => EmailAddress::getSendConfirmOptInEmailActionLinkDefs('Prospects'),
           0 => 'EDIT',
           1 => 'DUPLICATE',
           2 => 'DELETE',
-          3 => 
-          array (
+          3 =>
+          array(
             'customCode' => '<input title="{$MOD.LBL_CONVERT_BUTTON_TITLE}" class="button" onclick="this.form.return_module.value=\'Prospects\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\';this.form.module.value=\'Leads\';this.form.action.value=\'EditView\';" type="submit" name="CONVERT_LEAD_BTN" value="{$MOD.LBL_CONVERT_BUTTON_LABEL}"/>',
-            'sugar_html' => 
-            array (
+            'sugar_html' =>
+            array(
               'type' => 'submit',
               'value' => '{$MOD.LBL_CONVERT_BUTTON_LABEL}',
-              'htmlOptions' => 
-              array (
+              'htmlOptions' =>
+              array(
                 'class' => 'button',
                 'name' => 'CONVERT_LEAD_BTN',
                 'id' => 'convert_target_button',
@@ -68,15 +69,15 @@ array (
               ),
             ),
           ),
-          4 => 
-          array (
+          4 =>
+          array(
             'customCode' => '<input title="{$APP.LBL_MANAGE_SUBSCRIPTIONS}" class="button" onclick="this.form.return_module.value=\'Prospects\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.action.value=\'Subscriptions\'; this.form.module.value=\'Campaigns\';" type="submit" name="Manage Subscriptions" value="{$APP.LBL_MANAGE_SUBSCRIPTIONS}"/>',
-            'sugar_html' => 
-            array (
+            'sugar_html' =>
+            array(
               'type' => 'submit',
               'value' => '{$APP.LBL_MANAGE_SUBSCRIPTIONS}',
-              'htmlOptions' => 
-              array (
+              'htmlOptions' =>
+              array(
                 'class' => 'button',
                 'id' => 'manage_subscriptions_button',
                 'name' => 'Manage Subscriptions',
@@ -86,135 +87,135 @@ array (
             ),
           ),
         ),
-        'hidden' => 
-        array (
+        'hidden' =>
+        array(
           0 => '<input type="hidden" name="prospect_id" value="{$fields.id.value}">',
         ),
         'headerTpl' => 'modules/Prospects/tpls/DetailViewHeader.tpl',
       ),
       'maxColumns' => '2',
-      'widths' => 
-      array (
-        0 => 
-        array (
+      'widths' =>
+      array(
+        0 =>
+        array(
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
-        array (
+        1 =>
+        array(
           'label' => '10',
           'field' => '30',
         ),
       ),
       'useTabs' => true,
-      'tabDefs' => 
-      array (
-        'LBL_PROSPECT_INFORMATION' => 
-        array (
+      'tabDefs' =>
+      array(
+        'LBL_PROSPECT_INFORMATION' =>
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
-        'LBL_MORE_INFORMATION' => 
-        array (
+        'LBL_MORE_INFORMATION' =>
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
-        'LBL_PANEL_ASSIGNMENT' => 
-        array (
+        'LBL_PANEL_ASSIGNMENT' =>
+        array(
           'newTab' => true,
           'panelDefault' => 'expanded',
         ),
       ),
     ),
-    'panels' => 
-    array (
-      'lbl_prospect_information' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
+    'panels' =>
+    array(
+      'lbl_prospect_information' =>
+      array(
+        0 =>
+        array(
+          0 =>
+          array(
             'name' => 'full_name',
           ),
         ),
-        1 => 
-        array (
+        1 =>
+        array(
           0 => 'title',
-          1 => 
-          array (
+          1 =>
+          array(
             'name' => 'phone_work',
             'label' => 'LBL_OFFICE_PHONE',
           ),
         ),
-        2 => 
-        array (
+        2 =>
+        array(
           0 => 'department',
           1 => 'phone_mobile',
         ),
-        3 => 
-        array (
-          0 => 
-          array (
+        3 =>
+        array(
+          0 =>
+          array(
             'name' => 'account_name',
           ),
           1 => 'phone_fax',
         ),
-        4 => 
-        array (
-          0 => 
-          array (
+        4 =>
+        array(
+          0 =>
+          array(
             'name' => 'primary_address_street',
             'label' => 'LBL_PRIMARY_ADDRESS',
             'type' => 'address',
-            'displayParams' => 
-            array (
+            'displayParams' =>
+            array(
               'key' => 'primary',
             ),
           ),
-          1 => 
-          array (
+          1 =>
+          array(
             'name' => 'alt_address_street',
             'label' => 'LBL_ALTERNATE_ADDRESS',
             'type' => 'address',
-            'displayParams' => 
-            array (
+            'displayParams' =>
+            array(
               'key' => 'alt',
             ),
           ),
         ),
-        5 => 
-        array (
+        5 =>
+        array(
           0 => 'email1',
         ),
-        6 => 
-        array (
+        6 =>
+        array(
           0 => 'description',
         ),
-        7 => 
-        array (
+        7 =>
+        array(
           0 => 'assigned_user_name',
         ),
       ),
-      'LBL_MORE_INFORMATION' => 
-      array (
-        0 => 
-        array (
+      'LBL_MORE_INFORMATION' =>
+      array(
+        0 =>
+        array(
           0 => 'email_opt_out',
           1 => 'do_not_call',
         ),
       ),
-      'LBL_PANEL_ASSIGNMENT' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
+      'LBL_PANEL_ASSIGNMENT' =>
+      array(
+        0 =>
+        array(
+          0 =>
+          array(
             'name' => 'modified_by_name',
             'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}&nbsp;',
             'label' => 'LBL_DATE_MODIFIED',
           ),
           1 =>
-          array (
+          array(
             'name' => 'created_by_name',
             'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}&nbsp;',
             'label' => 'LBL_DATE_ENTERED',

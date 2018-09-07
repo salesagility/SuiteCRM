@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,48 +37,48 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 $GLOBALS['dictionary']['UserPreference'] = array('table' => 'user_preferences',
-'fields' => array (
-  'id' => 
-  array (
+'fields' => array(
+  'id' =>
+  array(
     'name' => 'id',
     'vname' => 'LBL_NAME',
     'type' => 'id',
     'required'=>true,
     'reportable'=>false,
   ),
-  'category' => 
-  array (
+  'category' =>
+  array(
     'name' => 'category',
     'type' => 'varchar',
     'len' => 50,
   ),
-  'deleted' => 
-  array (
+  'deleted' =>
+  array(
     'name' => 'deleted',
     'type' => 'bool',
     'default' => '0',
     'required'=>false,
   ),
-  'date_entered' => 
-  array (
+  'date_entered' =>
+  array(
     'name' => 'date_entered',
     'type' => 'datetime',
     'required' => true,
   ),
-  'date_modified' => 
-  array (
+  'date_modified' =>
+  array(
     'name' => 'date_modified',
     'type' => 'datetime',
     'required' => true,
   ),
-  'assigned_user_id' => 
-  array (
+  'assigned_user_id' =>
+  array(
     'name' => 'assigned_user_id',
     'rname' => 'user_name',
     'id_name' => 'assigned_user_id',
@@ -84,8 +87,8 @@ $GLOBALS['dictionary']['UserPreference'] = array('table' => 'user_preferences',
     'required' => true,
     'dbType' => 'id',
   ),
-  'assigned_user_name' => 
-  array (
+  'assigned_user_name' =>
+  array(
     'name' => 'assigned_user_name',
     'vname' => 'LBL_ASSIGNED_TO_NAME',
     'type' => 'varchar',
@@ -94,8 +97,8 @@ $GLOBALS['dictionary']['UserPreference'] = array('table' => 'user_preferences',
     'source'=>'non-db',
     'table' => 'users',
   ),
-  'contents' => 
-  array (
+  'contents' =>
+  array(
     'name' => 'contents',
     'type' => 'longtext',
     'vname' => 'LBL_DESCRIPTION',
@@ -104,7 +107,7 @@ $GLOBALS['dictionary']['UserPreference'] = array('table' => 'user_preferences',
 ),
  
 
-'indices' => array (
+'indices' => array(
        array('name' =>'userpreferencespk', 'type' =>'primary', 'fields'=>array('id')),
        array('name' =>'idx_userprefnamecat', 'type'=>'index', 'fields'=>array('assigned_user_id','category')),
       )

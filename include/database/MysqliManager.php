@@ -2,11 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
  * Description: This file handles the Data base functionality for the application.
@@ -128,15 +130,15 @@ class MysqliManager extends MysqlManager
         static $queryMD5 = array();
 
         parent::countQuery($sql);
-        $GLOBALS['log']->info('Query:' . $sql);
+        LoggerManager::getLogger()->info('Query:' . $this->removeLineBreaks($sql));
         $this->checkConnection();
         $this->query_time = microtime(true);
         $this->lastsql = $sql;
-        if(!empty($sql)) {
+        if (!empty($sql)) {
             if ($this->database instanceof mysqli) {
                 $result = $suppress ? @mysqli_query($this->database, $sql) : mysqli_query($this->database, $sql);
-                if($result === false && !$suppress) {
-                    if(inDeveloperMode()) {
+                if ($result === false && !$suppress) {
+                    if (inDeveloperMode()) {
                         LoggerManager::getLogger()->debug('Mysqli_query failed, error was: ' . $this->lastDbError() . ', query was: ');
                     }
                     LoggerManager::getLogger()->fatal('Mysqli_query failed.');
@@ -216,7 +218,7 @@ class MysqliManager extends MysqlManager
         }
         if (!empty($this->database)) {
             $this->freeResult();
-            if(!@mysqli_close($this->database)) {
+            if (!@mysqli_close($this->database)) {
                 $GLOBALS['log']->fatal('mysqli_close() failed');
             }
             $this->database = null;
@@ -311,8 +313,13 @@ class MysqliManager extends MysqlManager
                 $dbport = substr($configOptions['db_host_name'], $pos + 1);
             }
 
-            $this->database = @mysqli_connect($dbhost, $configOptions['db_user_name'], $configOptions['db_password'],
-                isset($configOptions['db_name']) ? $configOptions['db_name'] : '', $dbport);
+            $this->database = @mysqli_connect(
+                $dbhost,
+                $configOptions['db_user_name'],
+                $configOptions['db_password'],
+                isset($configOptions['db_name']) ? $configOptions['db_name'] : '',
+                $dbport
+            );
             if (empty($this->database)) {
                 $GLOBALS['log']->fatal("Could not connect to DB server " . $dbhost . " as " . $configOptions['db_user_name'] . ". port " . $dbport . ": " . mysqli_connect_error());
                 if ($dieOnError) {

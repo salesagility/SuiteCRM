@@ -55,14 +55,16 @@ class Zend_Gdata_Gapps_GroupQuery extends Zend_Gdata_Gapps_Query
      * Create a new instance.
      *
      * @param string $domain (optional) The Google Apps-hosted domain to use
-     *          when constructing query URIs. 
+     *          when constructing query URIs.
      * @param string $groupId (optional) Value for the groupId property.
      * @param string $startGroupName (optional) Value for the
      *          startGroupName property.
      */
-    public function __construct($domain = null, $groupId = null,
-            $startGroupId = null)
-    {
+    public function __construct(
+        $domain = null,
+        $groupId = null,
+            $startGroupId = null
+    ) {
         parent::__construct($domain);
         $this->setGroupId($groupId);
         $this->setStartGroupId($startGroupId);
@@ -106,8 +108,7 @@ class Zend_Gdata_Gapps_GroupQuery extends Zend_Gdata_Gapps_Query
     {
         if ($value !== null) {
             $this->_params['member'] = $value;
-        }
-        else {
+        } else {
             unset($this->_params['member']);
         }
     }
@@ -137,7 +138,7 @@ class Zend_Gdata_Gapps_GroupQuery extends Zend_Gdata_Gapps_Query
     public function setDirectOnly($value)
     {
         if ($value !== null) {
-            if($value == true) {
+            if ($value == true) {
                 $this->_params['directOnly'] = 'true';
             } else {
                 $this->_params['directOnly'] = 'false';
@@ -155,8 +156,7 @@ class Zend_Gdata_Gapps_GroupQuery extends Zend_Gdata_Gapps_Query
     public function getDirectOnly()
     {
         if (array_key_exists('directOnly', $this->_params)) {
-
-            if($this->_params['directOnly'] == 'true') {
+            if ($this->_params['directOnly'] == 'true') {
                 return true;
             } else {
                 return false;
@@ -206,7 +206,6 @@ class Zend_Gdata_Gapps_GroupQuery extends Zend_Gdata_Gapps_Query
      */
     public function getQueryUrl()
     {
-
         $uri  = Zend_Gdata_Gapps::APPS_BASE_FEED_URI;
         $uri .= Zend_Gdata_Gapps::APPS_GROUP_PATH;
         $uri .= '/' . $this->_domain;
@@ -215,12 +214,11 @@ class Zend_Gdata_Gapps_GroupQuery extends Zend_Gdata_Gapps_Query
             $uri .= '/' . $this->_groupId;
         }
         
-        if(array_key_exists('member', $this->_params)) {
+        if (array_key_exists('member', $this->_params)) {
             $uri .= '/';
         }
         
         $uri .= $this->getQueryString();
         return $uri;
     }
-
 }

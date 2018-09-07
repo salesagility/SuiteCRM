@@ -61,4 +61,3 @@ class Zend_Search_Lucene_Analysis_TokenFilter_LowerCaseUtf8 extends Zend_Search_
         return $srcToken;
     }
 }
-

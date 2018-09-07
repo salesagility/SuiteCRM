@@ -1,12 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -22,13 +24,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 
 $layout_defs['AOS_Product_Categories'] = array(
-	'subpanel_setup' => array(
-        'sub_categories' => array (
+    'subpanel_setup' => array(
+        'sub_categories' => array(
             'order' => 100,
             'module' => 'AOS_Product_Categories',
             'subpanel_name' => 'default',
@@ -37,19 +39,19 @@ $layout_defs['AOS_Product_Categories'] = array(
             'title_key' => 'LBL_SUB_CATEGORIES',
             'get_subpanel_data' => 'sub_categories',
             'top_buttons' =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                     'widget_class' => 'SubPanelTopButtonQuickCreate',
                 ),
                 1 =>
-                array (
+                array(
                     'widget_class' => 'SubPanelTopSelectButton',
                     'mode' => 'MultiSelect',
                 ),
             ),
         ),
-        'aos_products' => array (
+        'aos_products' => array(
             'order' => 100,
             'module' => 'AOS_Products',
             'subpanel_name' => 'default',
@@ -58,13 +60,13 @@ $layout_defs['AOS_Product_Categories'] = array(
             'title_key' => 'AOS_Products',
             'get_subpanel_data' => 'aos_products',
             'top_buttons' =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                     'widget_class' => 'SubPanelTopButtonQuickCreate',
                 ),
                 1 =>
-                array (
+                array(
                     'widget_class' => 'SubPanelTopSelectButton',
                     'mode' => 'MultiSelect',
                 ),

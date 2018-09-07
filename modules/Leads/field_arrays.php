@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -45,58 +48,58 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Lead'] = array ('column_fields' => Array("id"
-		,"refered_by"
-		,"date_entered"
-		,"date_modified"
-		,"modified_user_id"
-		,"assigned_user_id"
-		, "created_by"
-		,"salutation"
-		,"first_name"
-		,"last_name"
-		,"lead_source"
-		,"lead_source_description"
-		,"title"
-		,"department"
-		,"reports_to_id"
-		,"do_not_call"
-		,"phone_home"
-		,"phone_mobile"
-		,"phone_work"
-		,"phone_other"
-		,"phone_fax"
-		,"email1"
-		,"email2"
-		,"email_opt_out"
-		,"primary_address_street"
-		,"primary_address_city"
-		,"primary_address_state"
-		,"primary_address_postalcode"
-		,"primary_address_country"
-		,"alt_address_street"
-		,"alt_address_city"
-		,"alt_address_state"
-		,"alt_address_postalcode"
-		,"alt_address_country"
-		,"description"
-		,"status"
-		,"status_description"
-		,"account_name"
-		,"account_description"
-		,"account_id"
-		,"opportunity_id"
-		,"contact_id"
-		,"opportunity_amount"
-		,"opportunity_name"
-		,"portal_name"
-		,"portal_app"
-		,"invalid_email"
-		,"campaign_id"
-		),
-        'list_fields' =>  Array('id', 'first_name', 'last_name', 'account_name', 'title', 'email1', 'phone_work', 'assigned_user_name', 'assigned_user_id', 'lead_source', 'lead_source_description', 'refered_by', 'opportunity_name', 'opportunity_amount', 'date_entered', 'status'
-		,'invalid_email'
-		, "campaign_id"
-		),
+$fields_array['Lead'] = array('column_fields' => array("id"
+        ,"refered_by"
+        ,"date_entered"
+        ,"date_modified"
+        ,"modified_user_id"
+        ,"assigned_user_id"
+        , "created_by"
+        ,"salutation"
+        ,"first_name"
+        ,"last_name"
+        ,"lead_source"
+        ,"lead_source_description"
+        ,"title"
+        ,"department"
+        ,"reports_to_id"
+        ,"do_not_call"
+        ,"phone_home"
+        ,"phone_mobile"
+        ,"phone_work"
+        ,"phone_other"
+        ,"phone_fax"
+        ,"email1"
+        ,"email2"
+        ,"email_opt_out"
+        ,"primary_address_street"
+        ,"primary_address_city"
+        ,"primary_address_state"
+        ,"primary_address_postalcode"
+        ,"primary_address_country"
+        ,"alt_address_street"
+        ,"alt_address_city"
+        ,"alt_address_state"
+        ,"alt_address_postalcode"
+        ,"alt_address_country"
+        ,"description"
+        ,"status"
+        ,"status_description"
+        ,"account_name"
+        ,"account_description"
+        ,"account_id"
+        ,"opportunity_id"
+        ,"contact_id"
+        ,"opportunity_amount"
+        ,"opportunity_name"
+        ,"portal_name"
+        ,"portal_app"
+        ,"invalid_email"
+        ,"campaign_id"
+        ),
+        'list_fields' =>  array('id', 'first_name', 'last_name', 'account_name', 'title', 'email1', 'phone_work', 'assigned_user_name', 'assigned_user_id', 'lead_source', 'lead_source_description', 'refered_by', 'opportunity_name', 'opportunity_amount', 'date_entered', 'status'
+        ,'invalid_email'
+        , "campaign_id"
+        ),
     'required_fields' =>  array("last_name"=>1),
 );

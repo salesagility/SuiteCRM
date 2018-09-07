@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,54 +44,44 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 include_once("include/InlineEditing/InlineEditing.php");
 
-class HomeController extends SugarController{
-
-
-    public function action_getEditFieldHTML(){
-
-        if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']){
-
-            $html = getEditFieldHTML($_REQUEST['current_module'], $_REQUEST['field'], $_REQUEST['field'] , 'EditView', $_REQUEST['id']);
+class HomeController extends SugarController
+{
+    public function action_getEditFieldHTML()
+    {
+        if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
+            $html = getEditFieldHTML($_REQUEST['current_module'], $_REQUEST['field'], $_REQUEST['field'], 'EditView', $_REQUEST['id']);
             echo $html;
         }
-
     }
 
-    public function action_saveHTMLField(){
-
-        if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']){
-
+    public function action_saveHTMLField()
+    {
+        if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
             echo saveField($_REQUEST['field'], $_REQUEST['id'], $_REQUEST['current_module'], $_REQUEST['value'], $_REQUEST['view']);
-
         }
-
     }
 
-    public function action_getDisplayValue(){
+    public function action_getDisplayValue()
+    {
+        if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
+            $bean = BeanFactory::getBean($_REQUEST['current_module'], $_REQUEST['id']);
 
-        if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] ){
-
-            $bean = BeanFactory::getBean($_REQUEST['current_module'],$_REQUEST['id']);
-
-            if(is_object($bean) && $bean->id != ""){
-                echo getDisplayValue($bean, $_REQUEST['field'],"close");
-            }else{
+            if (is_object($bean) && $bean->id != "") {
+                echo getDisplayValue($bean, $_REQUEST['field'], "close");
+            } else {
                 echo "Could not find value.";
             }
-
         }
-
     }
 
-    public function action_getValidationRules(){
+    public function action_getValidationRules()
+    {
         global $app_strings, $mod_strings;
 
-        if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] ){
+        if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
+            $bean = BeanFactory::getBean($_REQUEST['current_module'], $_REQUEST['id']);
 
-            $bean = BeanFactory::getBean($_REQUEST['current_module'],$_REQUEST['id']);
-
-            if(is_object($bean) && $bean->id != ""){
-
+            if (is_object($bean) && $bean->id != "") {
                 $fielddef = $bean->field_defs[$_REQUEST['field']];
 
                 if (!isset($fielddef['required']) || !$fielddef['required']) {
@@ -105,10 +95,12 @@ class HomeController extends SugarController{
 
                 if (isset($app_strings[$fielddef['vname']])) {
                     $fielddef['label'] = $app_strings[$fielddef['vname']];
-                }else{
-                    if (isset($mod_strings[$fielddef['vname']])) {$fielddef['label'] = $mod_strings[$fielddef['vname']];} else {
+                } else {
+                    if (isset($mod_strings[$fielddef['vname']])) {
+                        $fielddef['label'] = $mod_strings[$fielddef['vname']];
+                    } else {
                         $GLOBALS['log']->warn("Unknown text label in a fielddef: {$fielddef['vname']}");
-                        if(!isset($fielddef['label'])) {
+                        if (!isset($fielddef['label'])) {
                             $fielddef['label'] = null;
                         }
                     }
@@ -117,19 +109,17 @@ class HomeController extends SugarController{
 
                 echo json_encode($validate_array);
             }
-
         }
-
     }
     
-    public function action_getRelateFieldJS(){
-        
+    public function action_getRelateFieldJS()
+    {
         global $beanFiles, $beanList;
         
         $fieldlist = array();
         $view = "EditView";
 
-        if (!isset($focus) || !($focus instanceof SugarBean)){
+        if (!isset($focus) || !($focus instanceof SugarBean)) {
             require_once($beanFiles[$beanList[$_REQUEST['current_module']]]);
             $focus = new $beanList[$_REQUEST['current_module']];
         }
@@ -142,12 +132,10 @@ class HomeController extends SugarController{
         $quicksearch_js = $template_handler->createQuickSearchCode($vardefFields, $vardefFields, $view);
         $quicksearch_js = str_replace($_REQUEST['field'], $_REQUEST['field'] . '_display', $quicksearch_js);
 
-        if($_REQUEST['field'] != "parent_name") {
+        if ($_REQUEST['field'] != "parent_name") {
             $quicksearch_js = str_replace($vardefFields[$_REQUEST['field']]['id_name'], $_REQUEST['field'], $quicksearch_js);
         }
 
         echo $quicksearch_js;
-
     }
-
 }

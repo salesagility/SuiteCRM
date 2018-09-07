@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*
  * Created on Oct 4, 2005
@@ -66,167 +69,141 @@ $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $xtpl->assign('JSON_CONFIG_JAVASCRIPT', $json_config->get_static_json_server(false, true));
 
-if($_SESSION['MAILMERGE_MODULE'] == 'Campaigns' || $_SESSION['MAILMERGE_MODULE'] == 'CampaignProspects'){
-	$modules_array['Campaigns'] = 'Campaigns';
+if ($_SESSION['MAILMERGE_MODULE'] == 'Campaigns' || $_SESSION['MAILMERGE_MODULE'] == 'CampaignProspects') {
+    $modules_array['Campaigns'] = 'Campaigns';
 }
 $module_list = $modules_array;
 
-if(isset($_REQUEST['reset']) && $_REQUEST['reset'])
-{
-	$_SESSION['MAILMERGE_MODULE'] = null;
-	$_SESSION['MAILMERGE_DOCUMENT_ID'] = null;
-	$_SESSION['SELECTED_OBJECTS_DEF'] = null;
-	$_SESSION['MAILMERGE_SKIP_REL'] = null;
-	$_SESSION['MAILMERGE_RECORD'] = null;
-	$_SESSION['MAILMERGE_RECORDS'] = null;
-	$_SESSION['MAILMERGE_CONTAINS_CONTACT_INFO'] = null;
+if (isset($_REQUEST['reset']) && $_REQUEST['reset']) {
+    $_SESSION['MAILMERGE_MODULE'] = null;
+    $_SESSION['MAILMERGE_DOCUMENT_ID'] = null;
+    $_SESSION['SELECTED_OBJECTS_DEF'] = null;
+    $_SESSION['MAILMERGE_SKIP_REL'] = null;
+    $_SESSION['MAILMERGE_RECORD'] = null;
+    $_SESSION['MAILMERGE_RECORDS'] = null;
+    $_SESSION['MAILMERGE_CONTAINS_CONTACT_INFO'] = null;
 }
 $fromListView = false;
-if(!empty($_REQUEST['record']))
-{
-	$_SESSION['MAILMERGE_RECORD'] = $_REQUEST['record'];
-}
-else if(isset($_REQUEST['uid'])) {
-	$_SESSION['MAILMERGE_RECORD'] = explode(',', $_REQUEST['uid']);
+if (!empty($_REQUEST['record'])) {
+    $_SESSION['MAILMERGE_RECORD'] = $_REQUEST['record'];
+} elseif (isset($_REQUEST['uid'])) {
+    $_SESSION['MAILMERGE_RECORD'] = explode(',', $_REQUEST['uid']);
+} elseif (isset($_REQUEST['entire']) && $_REQUEST['entire'] == 'true') {
+    // do entire list
+    $focus = 0;
 
-}
-else if(isset($_REQUEST['entire']) && $_REQUEST['entire'] == 'true') {
-	// do entire list
-	$focus = 0;
+    $bean = $beanList[ $_SESSION['MAILMERGE_MODULE']];
+    require_once($beanFiles[$bean]);
+    $focus = new $bean;
 
-	$bean = $beanList[ $_SESSION['MAILMERGE_MODULE']];
-	require_once($beanFiles[$bean]);
-	$focus = new $bean;
-
-	if(isset($_SESSION['export_where']) && !empty($_SESSION['export_where'])) { // bug 4679
-		$where = $_SESSION['export_where'];
-	} else {
-		$where = '';
-	}
+    if (isset($_SESSION['export_where']) && !empty($_SESSION['export_where'])) { // bug 4679
+        $where = $_SESSION['export_where'];
+    } else {
+        $where = '';
+    }
     $beginWhere = substr(trim($where), 0, 5);
-    if ($beginWhere == "where")
+    if ($beginWhere == "where") {
         $where = substr(trim($where), 5, strlen($where));
+    }
     $orderBy = '';
-	$query = $focus->create_export_query($orderBy,$where);
+    $query = $focus->create_export_query($orderBy, $where);
 
-	$result = $db->query($query,true,"Error mail merging {$_SESSION['MAILMERGE_MODULE']}: "."<BR>$query");
+    $result = $db->query($query, true, "Error mail merging {$_SESSION['MAILMERGE_MODULE']}: "."<BR>$query");
 
-	$new_arr = array();
-	while($val = $db->fetchByAssoc($result,false))
-	{
-		array_push($new_arr, $val['id']);
-	}
-	$_SESSION['MAILMERGE_RECORD'] = $new_arr;
-}
-else if(isset($_SESSION['MAILMERGE_RECORDS']))
-{
-
-	$fromListView = true;
-	$_SESSION['MAILMERGE_RECORD'] = $_SESSION['MAILMERGE_RECORDS'];
-	$_SESSION['MAILMERGE_RECORDS'] = null;
+    $new_arr = array();
+    while ($val = $db->fetchByAssoc($result, false)) {
+        array_push($new_arr, $val['id']);
+    }
+    $_SESSION['MAILMERGE_RECORD'] = $new_arr;
+} elseif (isset($_SESSION['MAILMERGE_RECORDS'])) {
+    $fromListView = true;
+    $_SESSION['MAILMERGE_RECORD'] = $_SESSION['MAILMERGE_RECORDS'];
+    $_SESSION['MAILMERGE_RECORDS'] = null;
 }
 $rModule = '';
-if(isset($_SESSION['MAILMERGE_RECORD']))
-{
-	if(!empty($_POST['return_module']) && $_POST['return_module'] != "MailMerge")
-	{
-		$rModule = $_POST['return_module'];
-	}
-	else if($fromListView)
-	{
-		$rModule = 	$_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'];
-		$_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'] = null;
-	}
-	else
-	{
-		$rModule = $_SESSION['MAILMERGE_MODULE'];
-	}
-	if($rModule == 'CampaignProspects'){
-    	$rModule = 'Campaigns';
-	}
-
-	$_SESSION['MAILMERGE_MODULE'] = $rModule;
-	if(!empty($rModule) && $rModule != "MailMerge")
-	{
-	   $class_name = $beanList[$rModule];
-	   $includedir = $beanFiles[$class_name];
-	   require_once($includedir);
-	   $seed = new $class_name();
-
-	   $selected_objects = '';
-    	foreach($_SESSION['MAILMERGE_RECORD'] as $record_id)
-    	{
-    		if($rModule == 'Campaigns'){
-
-    			$prospect = new Prospect();
-    			$prospect_module_list = array('leads', 'contacts', 'prospects', 'users');
-    			foreach($prospect_module_list as $mname){
-	    			$pList = $prospect->retrieveTargetList("campaigns.id = '$record_id' AND related_type = #$mname#", array('id', 'first_name', 'last_name'));
-
-	    			foreach($pList['list'] as $bean){
-	    				$selected_objects .= $bean->id.'='.str_replace("&", "##", $bean->name).'&';
-	    			}
-    			}
-    		}else{
-    	   		$seed->retrieve($record_id);
-    	   		$selected_objects .= $record_id.'='.str_replace("&", "##", $seed->name).'&';
-    		}
-    	}
-
-
-    	if($rModule != 'Contacts'
-    	   && $rModule != 'Leads' && $rModule != 'Products' && $rModule != 'Campaigns' && $rModule != 'Projects'
-    	   )
-    	{
-    		$_SESSION['MAILMERGE_SKIP_REL'] = false;
-    		$xtpl->assign("STEP", "2");
-    		$xtpl->assign("SELECTED_OBJECTS", $selected_objects);
-    		$_SESSION['SELECTED_OBJECTS_DEF'] = $selected_objects;
-    	}
-    	else
-    	{
-    		$_SESSION['MAILMERGE_SKIP_REL'] = true;
-    		$xtpl->assign("STEP", "2");
-    		$_SESSION['SELECTED_OBJECTS_DEF'] = $selected_objects;
-    	}
+if (isset($_SESSION['MAILMERGE_RECORD'])) {
+    if (!empty($_POST['return_module']) && $_POST['return_module'] != "MailMerge") {
+        $rModule = $_POST['return_module'];
+    } elseif ($fromListView) {
+        $rModule = 	$_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'];
+        $_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'] = null;
+    } else {
+        $rModule = $_SESSION['MAILMERGE_MODULE'];
     }
-    else
-    {
-    	$xtpl->assign("STEP", "2");
+    if ($rModule == 'CampaignProspects') {
+        $rModule = 'Campaigns';
     }
 
-}
-else
-{
-	$xtpl->assign("STEP", "2");
+    $_SESSION['MAILMERGE_MODULE'] = $rModule;
+    if (!empty($rModule) && $rModule != "MailMerge") {
+        $class_name = $beanList[$rModule];
+        $includedir = $beanFiles[$class_name];
+        require_once($includedir);
+        $seed = new $class_name();
+
+        $selected_objects = '';
+        foreach ($_SESSION['MAILMERGE_RECORD'] as $record_id) {
+            if ($rModule == 'Campaigns') {
+                $prospect = new Prospect();
+                $prospect_module_list = array('leads', 'contacts', 'prospects', 'users');
+                foreach ($prospect_module_list as $mname) {
+                    $pList = $prospect->retrieveTargetList("campaigns.id = '$record_id' AND related_type = #$mname#", array('id', 'first_name', 'last_name'));
+
+                    foreach ($pList['list'] as $bean) {
+                        $selected_objects .= $bean->id.'='.str_replace("&", "##", $bean->name).'&';
+                    }
+                }
+            } else {
+                $seed->retrieve($record_id);
+                $selected_objects .= $record_id.'='.str_replace("&", "##", $seed->name).'&';
+            }
+        }
+
+
+        if ($rModule != 'Contacts'
+           && $rModule != 'Leads' && $rModule != 'Products' && $rModule != 'Campaigns' && $rModule != 'Projects'
+           ) {
+            $_SESSION['MAILMERGE_SKIP_REL'] = false;
+            $xtpl->assign("STEP", "2");
+            $xtpl->assign("SELECTED_OBJECTS", $selected_objects);
+            $_SESSION['SELECTED_OBJECTS_DEF'] = $selected_objects;
+        } else {
+            $_SESSION['MAILMERGE_SKIP_REL'] = true;
+            $xtpl->assign("STEP", "2");
+            $_SESSION['SELECTED_OBJECTS_DEF'] = $selected_objects;
+        }
+    } else {
+        $xtpl->assign("STEP", "2");
+    }
+} else {
+    $xtpl->assign("STEP", "2");
 }
 $modules = $module_list;
 $func = "";
-if($rModule == 'Campaigns'){
-	$func = "disableModuleDropDown();";
+if ($rModule == 'Campaigns') {
+    $func = "disableModuleDropDown();";
 }
 $xtpl->assign("MAILMERGE_DISABLE_DROP_DOWN", $func);
 $xtpl->assign("MAILMERGE_MODULE_OPTIONS", get_select_options_with_id($modules, $_SESSION['MAILMERGE_MODULE']));
 $xtpl->assign("MAILMERGE_TEMPLATES", get_select_options_with_id(getDocumentRevisions(), '0'));
 
-if(isset($_SESSION['MAILMERGE_MODULE'])){
-	$module_select_text = $mod_strings['LBL_MAILMERGE_SELECTED_MODULE'];
-	$xtpl->assign("MAILMERGE_NUM_SELECTED_OBJECTS",count($_SESSION['MAILMERGE_RECORD'])." ".$_SESSION['MAILMERGE_MODULE']." Selected");
-}
-else{
-	$module_select_text = $mod_strings['LBL_MAILMERGE_MODULE'];
+if (isset($_SESSION['MAILMERGE_MODULE'])) {
+    $module_select_text = $mod_strings['LBL_MAILMERGE_SELECTED_MODULE'];
+    $xtpl->assign("MAILMERGE_NUM_SELECTED_OBJECTS", count($_SESSION['MAILMERGE_RECORD'])." ".$_SESSION['MAILMERGE_MODULE']." Selected");
+} else {
+    $module_select_text = $mod_strings['LBL_MAILMERGE_MODULE'];
 }
 $xtpl->assign("MODULE_SELECT", $module_select_text);
-if($_SESSION['MAILMERGE_MODULE'] == 'Campaigns'){
+if ($_SESSION['MAILMERGE_MODULE'] == 'Campaigns') {
     $_SESSION['MAILMERGE_MODULE'] = 'CampaignProspects';
 }
 
 $admin = new Administration();
 $admin->retrieveSettings();
 $user_merge = $current_user->getPreference('mailmerge_on');
-if ($user_merge != 'on' || !isset($admin->settings['system_mailmerge_on']) || !$admin->settings['system_mailmerge_on']){
-	$xtpl->assign("ADDIN_NOTICE", $mod_strings['LBL_ADDIN_NOTICE']);
-	$xtpl->assign("DISABLE_NEXT_BUTTON", "disabled");
+if ($user_merge != 'on' || !isset($admin->settings['system_mailmerge_on']) || !$admin->settings['system_mailmerge_on']) {
+    $xtpl->assign("ADDIN_NOTICE", $mod_strings['LBL_ADDIN_NOTICE']);
+    $xtpl->assign("DISABLE_NEXT_BUTTON", "disabled");
 }
 
 
@@ -234,44 +211,41 @@ $xtpl->parse("main");
 $xtpl->out("main");
 
 /*function get_user_module_list($user){
-	global $app_list_strings, $current_language;
-	$app_list_strings = return_app_list_strings_language($current_language);
-	$modules = query_module_access_list($user);
-	global $modInvisList;
+    global $app_list_strings, $current_language;
+    $app_list_strings = return_app_list_strings_language($current_language);
+    $modules = query_module_access_list($user);
+    global $modInvisList;
 
-	return $modules;
+    return $modules;
 }*/
 
 function getDocumentRevisions()
 {
-	$document = new Document();
+    $document = new Document();
 
-	$currentDate = $document->db->now();
-	$empty_date = $document->db->emptyValue("date");
+    $currentDate = $document->db->now();
+    $empty_date = $document->db->emptyValue("date");
 
-			$query = "SELECT revision, document_name, document_revisions.id FROM document_revisions
+    $query = "SELECT revision, document_name, document_revisions.id FROM document_revisions
 LEFT JOIN documents on documents.id = document_revisions.document_id
 WHERE ((active_date <= $currentDate AND exp_date > $currentDate)
 	OR (active_date is NULL) or (active_date = ".$empty_date.")
 	OR (active_date <= $currentDate AND ((exp_date = $empty_date OR (exp_date is NULL)))))
 AND is_template = 1 AND template_type = 'mailmerge' AND documents.deleted = 0 ORDER BY document_name";
 
-			$result = $document->db->query($query,true,"Error retrieving $document->object_name list: ");
+    $result = $document->db->query($query, true, "Error retrieving $document->object_name list: ");
 
-                        $list = Array();
-                        $list['None'] = 'None';
-                        while(($row = $document->db->fetchByAssoc($result)) != null)
-                            {
-                                $revision = null;
-                                $docName = $row['document_name'];
-                                $revision = $row['revision'];
-                                if(!empty($revision));
-                                {
+    $list = array();
+    $list['None'] = 'None';
+    while (($row = $document->db->fetchByAssoc($result)) != null) {
+        $revision = null;
+        $docName = $row['document_name'];
+        $revision = $row['revision'];
+        if (!empty($revision));
+        {
                                         $docName .= " (rev. ".$revision.")";
                                 }
-                                $list[$row['id']] = $docName;
-                            }
-                        return $list;
-
+        $list[$row['id']] = $docName;
+    }
+    return $list;
 }
-

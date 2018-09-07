@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -64,7 +64,7 @@ class DynamicField
         global $sugar_config;
         $this->module = (!empty($module)) ? $module : ((isset($_REQUEST['module']) && !empty($_REQUEST['module'])) ? $_REQUEST ['module'] : '');
         $this->base_path = "custom/Extension/modules/{$this->module}/Ext/Vardefs";
-        if(isset($sugar_config['dbconfig'])) {
+        if (isset($sugar_config['dbconfig'])) {
             $this->db = DBManagerFactory::getInstance();
         }
     }
@@ -582,12 +582,10 @@ class DynamicField
                 }
 
                 return false;
-            } else {
-                return !empty($vardefs[$name]) && ($vardefs[$name]['type'] == $type);
             }
-        } else {
-            return false;
+            return !empty($vardefs[$name]) && ($vardefs[$name]['type'] == $type);
         }
+        return false;
     }
 
     /**
@@ -768,9 +766,8 @@ class DynamicField
             fclose($fh);
 
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

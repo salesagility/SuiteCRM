@@ -1,7 +1,7 @@
 <?php
 
 /*
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  * Date: 15/01/14
  * Time: 09:14
  *
@@ -44,14 +44,13 @@ $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_se
 /* If method is set change API call made. Test is called by default. */
 $tweets = $connection->get('statuses/user_timeline', array('screen_name' => $_REQUEST['twitter_user']));
 
-$formatted_display = format_tweets($db,$tweets);
+$formatted_display = format_tweets($db, $tweets);
 
 echo $formatted_display;
 
 
-function format_tweets($db,$tweets){
-
-
+function format_tweets($db, $tweets)
+{
     $i = 0;
     $html ='';
 //    $html = "<link rel='stylesheet' type='text/css' href='include/social/twitter/twitter.css'>";
@@ -63,11 +62,10 @@ function format_tweets($db,$tweets){
     $html .= "</table>";
 
 
-    foreach($tweets as $tweet){
-
+    foreach ($tweets as $tweet) {
         $limit = 255;
 
-        $tweet['text'] = format_feed_tweets($db,$tweet, $limit);
+        $tweet['text'] = format_feed_tweets($db, $tweet, $limit);
 
         if (count($tweet['entities']['hashtags']) > 0) {
             $tweets['text'] = replace_hashtags($db, $tweet);
@@ -83,5 +81,4 @@ function format_tweets($db,$tweets){
     }
 
     return $html . '</div>';
-
 }

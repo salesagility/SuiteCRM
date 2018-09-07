@@ -23,12 +23,12 @@
  */
 
 $dictionary['AOR_Field'] = array(
-	'table'=>'aor_fields',
-	'audited'=>false,
-	'duplicate_merge'=>true,
-	'fields'=>array (
+    'table'=>'aor_fields',
+    'audited'=>false,
+    'duplicate_merge'=>true,
+    'fields'=>array(
         'aor_report_id' =>
-        array (
+        array(
             'required' => false,
             'name' => 'aor_report_id',
             'vname' => 'LBL_AOR_REPORT_ID',
@@ -47,7 +47,7 @@ $dictionary['AOR_Field'] = array(
             'size' => '20',
         ),
         'field_order' =>
-        array (
+        array(
             'required' => false,
             'name' => 'field_order',
             'vname' => 'LBL_ORDER',
@@ -68,14 +68,14 @@ $dictionary['AOR_Field'] = array(
             'disable_num_format' => '',
         ),
         'module_path' =>
-        array (
+        array(
             'name' => 'module_path',
             'type' => 'longtext',
             'vname' => 'LBL_MODULE_PATH',
             'isnull' => true,
         ),
         'field' =>
-        array (
+        array(
             'required' => false,
             'name' => 'field',
             'vname' => 'LBL_FIELD',
@@ -97,7 +97,7 @@ $dictionary['AOR_Field'] = array(
             'dependency' => false,
         ),
         'display' =>
-        array (
+        array(
             'required' => false,
             'name' => 'display',
             'vname' => 'LBL_DISPLAY',
@@ -115,7 +115,7 @@ $dictionary['AOR_Field'] = array(
             'studio' => 'visible',
         ),
         'link' =>
-        array (
+        array(
             'required' => false,
             'name' => 'link',
             'vname' => 'LBL_LINK',
@@ -133,7 +133,7 @@ $dictionary['AOR_Field'] = array(
             'studio' => 'visible',
         ),
         'label' =>
-        array (
+        array(
             'required' => false,
             'name' => 'label',
             'vname' => 'LBL_LABEL',
@@ -152,7 +152,7 @@ $dictionary['AOR_Field'] = array(
             'size' => '20',
         ),
         'field_function' =>
-        array (
+        array(
             'required' => false,
             'name' => 'field_function',
             'vname' => 'LBL_FUNCTION',
@@ -174,7 +174,7 @@ $dictionary['AOR_Field'] = array(
             'dependency' => false,
         ),
         'sort_by' =>
-        array (
+        array(
             'required' => false,
             'name' => 'sort_by',
             'vname' => 'LBL_SORT',
@@ -196,7 +196,7 @@ $dictionary['AOR_Field'] = array(
             'dependency' => false,
         ),
         'format' =>
-            array (
+            array(
                 'required' => false,
                 'name' => 'format',
                 'vname' => 'LBL_FORMAT',
@@ -218,7 +218,7 @@ $dictionary['AOR_Field'] = array(
                 'dependency' => false,
             ),
         'total' =>
-            array (
+            array(
                 'required' => false,
                 'name' => 'total',
                 'vname' => 'LBL_TOTAL',
@@ -240,7 +240,7 @@ $dictionary['AOR_Field'] = array(
                 'dependency' => false,
             ),
         'sort_order' =>
-        array (
+        array(
             'required' => false,
             'name' => 'sort_order',
             'vname' => 'LBL_SORT_ORDER',
@@ -262,7 +262,7 @@ $dictionary['AOR_Field'] = array(
             'dependency' => false,
         ),
         'group_by' =>
-        array (
+        array(
             'required' => false,
             'name' => 'group_by',
             'vname' => 'LBL_GROUP',
@@ -280,7 +280,7 @@ $dictionary['AOR_Field'] = array(
             'studio' => 'visible',
         ),
         'group_order' =>
-        array (
+        array(
             'required' => false,
             'name' => 'group_order',
             'vname' => 'LBL_GROUP_ORDER',
@@ -302,7 +302,7 @@ $dictionary['AOR_Field'] = array(
             'dependency' => false,
         ),
         'group_display' =>
-        array (
+        array(
             'required' => false,
             'name' => 'group_display',
             'vname' => 'LBL_GROUP_DISPLAY',
@@ -320,7 +320,7 @@ $dictionary['AOR_Field'] = array(
             'studio' => 'visible',
         ),
         'aor_reports' =>
-        array (
+        array(
             'name' => 'aor_reports',
             'type' => 'link',
             'relationship' => 'aor_reports_aor_fields',
@@ -329,7 +329,7 @@ $dictionary['AOR_Field'] = array(
             'source'=>'non-db',
         ),
     ),
-    'relationships'=>array (
+    'relationships'=>array(
     ),
     'indices' => array(
         array(
@@ -338,10 +338,10 @@ $dictionary['AOR_Field'] = array(
             'fields' => array('aor_report_id'),
         ),
     ),
-	'optimistic_locking'=>true,
-		'unified_search'=>true,
+    'optimistic_locking'=>true,
+        'unified_search'=>true,
 );
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Fields','AOR_Field', array('basic'));
+VardefManager::createVardef('AOR_Fields', 'AOR_Field', array('basic'));

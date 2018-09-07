@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +37,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/Sugarpdf/sugarpdf_default.php');
-if(file_exists('custom/include/Sugarpdf/sugarpdf_default.php')){
+if (file_exists('custom/include/Sugarpdf/sugarpdf_default.php')) {
     require_once('custom/include/Sugarpdf/sugarpdf_default.php');
 }
 // set alternative config file
@@ -48,56 +51,56 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
     /*
      *  Installation path of TCPDF
      */
-    define ("K_PATH_MAIN", $sugarpdf_default["K_PATH_MAIN"]);
+    define("K_PATH_MAIN", $sugarpdf_default["K_PATH_MAIN"]);
     /**
      * URL path to tcpdf installation folder
      */
-    define ("K_PATH_URL", $sugarpdf_default["K_PATH_URL"]);
+    define("K_PATH_URL", $sugarpdf_default["K_PATH_URL"]);
     /**
      * custom path for PDF fonts (Use for non core added fonts)
      */
-    define ("K_PATH_CUSTOM_FONTS", $sugarpdf_default["K_PATH_CUSTOM_FONTS"]);
-     /**
-     * path for PDF fonts
-     */
-    define ("K_PATH_FONTS", $sugarpdf_default["K_PATH_FONTS"]);
+    define("K_PATH_CUSTOM_FONTS", $sugarpdf_default["K_PATH_CUSTOM_FONTS"]);
+    /**
+    * path for PDF fonts
+    */
+    define("K_PATH_FONTS", $sugarpdf_default["K_PATH_FONTS"]);
     /**
      * cache directory for temporary files (full path)
      */
-    define ("K_PATH_CACHE", $sugarpdf_default["K_PATH_CACHE"]);
+    define("K_PATH_CACHE", $sugarpdf_default["K_PATH_CACHE"]);
     /**
      * cache directory for temporary files (url path)
      */
-    define ("K_PATH_URL_CACHE", $sugarpdf_default["K_PATH_URL_CACHE"]);
+    define("K_PATH_URL_CACHE", $sugarpdf_default["K_PATH_URL_CACHE"]);
 
     /*
      * Custom path for images (use for loaded logos)
-     */ 
-    define ("K_PATH_CUSTOM_IMAGES", $sugarpdf_default["K_PATH_CUSTOM_IMAGES"]);
+     */
+    define("K_PATH_CUSTOM_IMAGES", $sugarpdf_default["K_PATH_CUSTOM_IMAGES"]);
     /*
      * Default path for images
-     */ 
-    define ("K_PATH_IMAGES", $sugarpdf_default["K_PATH_IMAGES"]);
+     */
+    define("K_PATH_IMAGES", $sugarpdf_default["K_PATH_IMAGES"]);
     /*
      * Blank image
      */
-    define ("K_BLANK_IMAGE", $sugarpdf_default["K_BLANK_IMAGE"]);
+    define("K_BLANK_IMAGE", $sugarpdf_default["K_BLANK_IMAGE"]);
     /*
      * The format used for pages.
      * It can be either one of the following values (case insensitive)
      * or a custom format in the form of a two-element array containing
      * the width and the height (expressed in the unit given by unit).
-     * 4A0, 2A0, A0, A1, A2, A3, A4 (default), A5, A6, A7, A8, A9, A10, 
-     * B0, B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, C0, C1, C2, C3, C4, 
-     * C5, C6, C7, C8, C9, C10, RA0, RA1, RA2, RA3, RA4, SRA0, SRA1, 
+     * 4A0, 2A0, A0, A1, A2, A3, A4 (default), A5, A6, A7, A8, A9, A10,
+     * B0, B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, C0, C1, C2, C3, C4,
+     * C5, C6, C7, C8, C9, C10, RA0, RA1, RA2, RA3, RA4, SRA0, SRA1,
      * SRA2, SRA3, SRA4, LETTER, LEGAL, EXECUTIVE, FOLIO.
      */
-    defineFromUserPreference ("PDF_PAGE_FORMAT", $sugarpdf_default["PDF_PAGE_FORMAT"]);
+    defineFromUserPreference("PDF_PAGE_FORMAT", $sugarpdf_default["PDF_PAGE_FORMAT"]);
     define("PDF_PAGE_FORMAT_LIST", $sugarpdf_default["PDF_PAGE_FORMAT_LIST"]);
     /*
      * page orientation. Possible values are (case insensitive):P or Portrait (default), L or Landscape.
      */
-    defineFromUserPreference ("PDF_PAGE_ORIENTATION", $sugarpdf_default["PDF_PAGE_ORIENTATION"]);
+    defineFromUserPreference("PDF_PAGE_ORIENTATION", $sugarpdf_default["PDF_PAGE_ORIENTATION"]);
     define("PDF_PAGE_ORIENTATION_LIST", $sugarpdf_default["PDF_PAGE_ORIENTATION_LIST"]);
     /*
      * Defines the creator of the document. This is typically the name of the application that generates the PDF.
@@ -107,13 +110,13 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
      * Defines the author of the document.
      */
     defineFromConfig("PDF_AUTHOR", $sugarpdf_default["PDF_AUTHOR"]);
-     /**
-     * header title
-     */
+    /**
+    * header title
+    */
     defineFromConfig("PDF_HEADER_TITLE", $sugarpdf_default["PDF_HEADER_TITLE"]);
-     /**
-     * header description string
-     */
+    /**
+    * header description string
+    */
     defineFromConfig("PDF_HEADER_STRING", $sugarpdf_default["PDF_HEADER_STRING"]);
     /**
      * image logo for the default Header
@@ -123,7 +126,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
      * header logo image width [mm]
      */
     defineFromConfig("PDF_HEADER_LOGO_WIDTH", $sugarpdf_default["PDF_HEADER_LOGO_WIDTH"]);
-        /**
+    /**
      * image logo for the default Header
      */
     defineFromConfig("PDF_SMALL_HEADER_LOGO", $sugarpdf_default["PDF_SMALL_HEADER_LOGO"]);
@@ -140,51 +143,51 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
     /**
      * header margin
      */
-    defineFromUserPreference ('PDF_MARGIN_HEADER', $sugarpdf_default["PDF_MARGIN_HEADER"]);
+    defineFromUserPreference('PDF_MARGIN_HEADER', $sugarpdf_default["PDF_MARGIN_HEADER"]);
     
     /**
      * footer margin
      */
-    defineFromUserPreference ('PDF_MARGIN_FOOTER', $sugarpdf_default["PDF_MARGIN_FOOTER"]);
+    defineFromUserPreference('PDF_MARGIN_FOOTER', $sugarpdf_default["PDF_MARGIN_FOOTER"]);
     
     /**
      * top margin
      */
-    defineFromUserPreference ('PDF_MARGIN_TOP', $sugarpdf_default["PDF_MARGIN_TOP"]);
+    defineFromUserPreference('PDF_MARGIN_TOP', $sugarpdf_default["PDF_MARGIN_TOP"]);
     
     /**
      * bottom margin
      */
-    defineFromUserPreference ('PDF_MARGIN_BOTTOM', $sugarpdf_default["PDF_MARGIN_BOTTOM"]);
+    defineFromUserPreference('PDF_MARGIN_BOTTOM', $sugarpdf_default["PDF_MARGIN_BOTTOM"]);
     
     /**
      * left margin
      */
-    defineFromUserPreference ('PDF_MARGIN_LEFT', $sugarpdf_default["PDF_MARGIN_LEFT"]);
+    defineFromUserPreference('PDF_MARGIN_LEFT', $sugarpdf_default["PDF_MARGIN_LEFT"]);
     
     /**
      * right margin
      */
-    defineFromUserPreference ('PDF_MARGIN_RIGHT', $sugarpdf_default["PDF_MARGIN_RIGHT"]);
+    defineFromUserPreference('PDF_MARGIN_RIGHT', $sugarpdf_default["PDF_MARGIN_RIGHT"]);
     
     /**
      * main font name
      */
-    defineFromUserPreference ('PDF_FONT_NAME_MAIN', $sugarpdf_default["PDF_FONT_NAME_MAIN"]);
+    defineFromUserPreference('PDF_FONT_NAME_MAIN', $sugarpdf_default["PDF_FONT_NAME_MAIN"]);
     
     /**
      * main font size
      */
-    defineFromUserPreference ("PDF_FONT_SIZE_MAIN", $sugarpdf_default["PDF_FONT_SIZE_MAIN"]);
+    defineFromUserPreference("PDF_FONT_SIZE_MAIN", $sugarpdf_default["PDF_FONT_SIZE_MAIN"]);
     /**
      * data font name
      */
-    defineFromUserPreference ('PDF_FONT_NAME_DATA', $sugarpdf_default["PDF_FONT_NAME_DATA"]);
+    defineFromUserPreference('PDF_FONT_NAME_DATA', $sugarpdf_default["PDF_FONT_NAME_DATA"]);
     
     /**
      * data font size
      */
-    defineFromUserPreference ('PDF_FONT_SIZE_DATA', $sugarpdf_default["PDF_FONT_SIZE_DATA"]);
+    defineFromUserPreference('PDF_FONT_SIZE_DATA', $sugarpdf_default["PDF_FONT_SIZE_DATA"]);
     
     /**
      * Ratio used to scale the images
@@ -210,7 +213,6 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
      * reduction factor for small font
      */
     defineFromConfig('K_SMALL_RATIO', $sugarpdf_default["K_SMALL_RATIO"]);
-
 }
 // Sugarpdf define
 /**
@@ -257,7 +259,7 @@ defineFromConfig("PDF_JPEG_QUALITY", $sugarpdf_default["PDF_JPEG_QUALITY"]);
 defineFromConfig("PDF_PDF_VERSION", $sugarpdf_default["PDF_PDF_VERSION"]);
 
 /**
- * Set document protection (available are: copy, print, modify, annot-forms. Seperate with a coma) 
+ * Set document protection (available are: copy, print, modify, annot-forms. Seperate with a coma)
  */
 defineFromConfig("PDF_PROTECTION", $sugarpdf_default["PDF_PROTECTION"]);
 
@@ -296,14 +298,15 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
  * @param $value    settings to search
  * @param $default  default value
  */
-function defineFromConfig($value, $default){
+function defineFromConfig($value, $default)
+{
     $lowerValue = strtolower($value);
-   require_once("modules/Administration/Administration.php");
+    require_once("modules/Administration/Administration.php");
     $focus = new Administration();
     $focus->retrieveSettings();
-    if(isset($focus->settings["sugarpdf_".$lowerValue])){
+    if (isset($focus->settings["sugarpdf_".$lowerValue])) {
         define($value, $focus->settings["sugarpdf_".$lowerValue]);
-    }else{
+    } else {
         define($value, $default);
     }
 }
@@ -315,30 +318,30 @@ function defineFromConfig($value, $default){
  * use the default value.
  * SUGARPDF_USE_FOCUS is use to load the preference of the none current user. To use
  * this constant you have to define a global variable $focus_user.
- * 
+ *
  * @param $value    settings to search
  * @param $default  default value
  */
-function defineFromUserPreference($value, $default){
+function defineFromUserPreference($value, $default)
+{
     global $focus_user, $current_user;
     $lowerValue = strtolower($value);
-    if(defined('SUGARPDF_USE_FOCUS')){
+    if (defined('SUGARPDF_USE_FOCUS')) {
         $pref = $focus_user->getPreference("sugarpdf_".$lowerValue);
-    }else{
+    } else {
         $pref = $current_user->getPreference("sugarpdf_".$lowerValue);
     }
-    if(strpos($value, "PDF_FONT_NAME_") !== false){
+    if (strpos($value, "PDF_FONT_NAME_") !== false) {
         require_once('include/Sugarpdf/FontManager.php');
         $fontManager = new FontManager();
         $fontManager->listFontFiles();
-        if(!isset($fontManager->fontList[$pref]) || !$fontManager->fontFileExist($fontManager->fontList[$pref]['filename'])){
+        if (!isset($fontManager->fontList[$pref]) || !$fontManager->fontFileExist($fontManager->fontList[$pref]['filename'])) {
             $pref = $default;
         }
     }
-    if(isset($pref) && !defined('SUGARPDF_USE_DEFAULT_SETTINGS')){
+    if (isset($pref) && !defined('SUGARPDF_USE_DEFAULT_SETTINGS')) {
         define($value, $pref);
-    }else{
+    } else {
         define($value, $default);
     }
-    
 }

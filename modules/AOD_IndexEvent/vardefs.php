@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,17 +34,17 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $dictionary['AOD_IndexEvent'] = array(
-	'table'=>'aod_indexevent',
-	'audited'=>true,
-		'duplicate_merge'=>true,
-		'fields'=>array (
-  'error' => 
-  array (
+    'table'=>'aod_indexevent',
+    'audited'=>true,
+        'duplicate_merge'=>true,
+        'fields'=>array(
+  'error' =>
+  array(
     'required' => false,
     'name' => 'error',
     'vname' => 'LBL_ERROR',
@@ -62,8 +63,8 @@ $dictionary['AOD_IndexEvent'] = array(
     'len' => '255',
     'size' => '20',
   ),
-  'success' => 
-  array (
+  'success' =>
+  array(
     'required' => false,
     'name' => 'success',
     'vname' => 'LBL_SUCCESS',
@@ -82,13 +83,13 @@ $dictionary['AOD_IndexEvent'] = array(
     'merge_filter' => 'disabled',
     'size' => '20',
   ),
-  'record_id' => array (
+  'record_id' => array(
     'name' => 'record_id',
     'type' => 'id',
     'reportable' => false,
     'vname' => 'LBL_RECORD_ID',
   ),
-  'record_module' => array (
+  'record_module' => array(
     'required' => false,
     'name' => 'record_module',
     'vname' => 'LBL_RECORD_MODULE',
@@ -108,16 +109,16 @@ $dictionary['AOD_IndexEvent'] = array(
     'size' => '20',
   ),
 ),
-	'relationships'=>array (
+    'relationships'=>array(
 ),
-    'indices' => array (
+    'indices' => array(
         array('name' =>'idx_record_module' , 'type'=>'index' , 'fields'=>array('record_module')),
         array('name' =>'idx_record_id', 'type' =>'index', 'fields'=>array('record_id')),
     ),
-	'optimistic_locking'=>true,
-		'unified_search'=>false,
-	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+    'optimistic_locking'=>true,
+        'unified_search'=>false,
+    );
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOD_IndexEvent','AOD_IndexEvent', array('basic','assignable'));
+VardefManager::createVardef('AOD_IndexEvent', 'AOD_IndexEvent', array('basic','assignable'));

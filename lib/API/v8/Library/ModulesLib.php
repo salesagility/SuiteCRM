@@ -233,7 +233,6 @@ class ModulesLib
         if (!empty($req->getParam('sort'))) {
             $sortField = explode(',', $req->getParam('sort'));
             foreach ($sortField as $sortKey => $sortValue) {
-
                 if ($sortValue[0] === '-') {
                     $sortField[$sortKey] = $db->quote(substr($sortValue, 1)) . ' DESC';
                 } else {
@@ -291,7 +290,7 @@ class ModulesLib
             // Do not perform a filter
             $where = '';
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
-        } elseif($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
+        } elseif ($filterInterpreter->isFilterByPreMadeName($filterStructure)) {
             $where = $filterInterpreter->getFilterByPreMadeName($filterStructure);
             /** @var array $moduleList */
             return $module->get_list($orderBy, $where, $currentOffset, $limit, $maximumResults, $show_deleted);
