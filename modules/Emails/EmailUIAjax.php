@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Utility\SuiteValidator;
 
 /**
  * handle requested subscriptions
@@ -1128,9 +1129,9 @@ eoq;
             break;
 
         case "setFolderViewSelection":
-
+            $isValidator = new SuiteValidator();
             $user =
-                isset($_REQUEST['user']) && $_REQUEST['user'] && isValidId($_REQUEST['user']) ?
+                isset($_REQUEST['user']) && $_REQUEST['user'] && $isValidator->isValidId($_REQUEST['user']) ?
                     BeanFactory::getBean('Users', $_REQUEST['user']) :
                     $current_user;
 

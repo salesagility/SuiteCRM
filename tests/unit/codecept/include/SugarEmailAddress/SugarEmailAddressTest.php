@@ -1238,6 +1238,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
 
 	// test
         
+        $isValidator = new \SuiteCRM\Utility\SuiteValidator();
         
         
         $query = "SELECT * FROM email_addr_bean_rel";
@@ -1282,11 +1283,11 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
 
         // test
         $result = $this->ea->getEmailGUID('non-valid');
-        self::assertTrue(isValidId($result));
+        self::assertTrue($isValidator->isValidId($result));
 
         // test
         $result = $this->ea->getEmailGUID('nonexists@nihil.com');
-        self::assertTrue(isValidId($result));
+        self::assertTrue($isValidator->isValidId($result));
 
         // test
         $q = /** @lang sql */
@@ -1297,7 +1298,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
         $db->query($q);
 
         $result = $this->ea->getEmailGUID('test@email.com');
-        self::assertTrue(isValidId($result));
+        self::assertTrue($isValidator->isValidId($result));
         
         
         // clean up
