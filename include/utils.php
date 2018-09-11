@@ -5523,6 +5523,21 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
     return strrpos($haystack, $needle, $offset);
 }
 
+/**
+ * @deprecated deprecated since version 7.10 please use the SuiteValidator class
+ */
+function isValidId($id)
+{
+    $deprecatedMessage = 'isValidId method is deprecated please update your code';
+    if (isset($GLOBALS['log'])) {
+        $GLOBALS['log']->deprecated($deprecatedMessage);
+    } else {
+        trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+    }
+    $isValidator = new \SuiteCRM\Utility\SuiteValidator();
+    $result = $isValidator->isValidId($id);
+    return $result;
+}
 
 function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error')
 {

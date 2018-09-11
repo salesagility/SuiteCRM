@@ -122,7 +122,8 @@ class templateParser
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);
             }
-            if($isValidator->isPercentageField($name)){
+
+            if ($isValidator->isPercentageField($name)) {
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
