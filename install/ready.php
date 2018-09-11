@@ -87,7 +87,7 @@ $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CUSTOM'].'</b> '.$mod_strings['
 
 
 // modules dir
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p';
+$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // upload dir
 $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_UPLOAD'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
