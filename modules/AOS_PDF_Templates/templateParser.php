@@ -118,9 +118,13 @@ class templateParser
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);
             }
-            if ($name === 'aos_products_quotes_vat' || strpos($name, 'pct') >= 0 || strpos($name, 'percent') >= 0 || strpos($name, 'percentage') >= 0) {
-                $sep = get_number_seperators();
-                $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
+
+            if ($name === 'aos_products_quotes_vat' ||
+                strpos($name, 'pct') !== false ||
+                strpos($name, 'percent') !== false ||
+                strpos($name, 'percentage') !== false) {
+                    $sep = get_number_seperators();
+                    $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
             if ($focus->field_defs[$name][dbType] == 'datetime' &&
                 (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0) ) {
