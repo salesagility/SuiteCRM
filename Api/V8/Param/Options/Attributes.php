@@ -26,9 +26,9 @@ class Attributes extends BaseOption
             ]))
             ->setNormalizer('attributes', function (Options $options, $values) {
                 $bean = $this->beanManager->newBeanSafe($options->offsetGet('type'));
-
+                //throw new \Exception(nl2br(str_replace(' ', '&nbsp;', print_r($bean, true))) . '<hr>', true);
                 foreach ($values as $attribute => $value) {
-                    if (!property_exists($bean, $attribute)) {
+                    if (!property_exists($bean, $attribute) && !array_key_exists($attribute, $bean->field_name_map)) {
                         throw new \InvalidArgumentException(sprintf(
                             'Property %s in %s module is invalid',
                             $attribute,
