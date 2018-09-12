@@ -112,10 +112,10 @@ class templateParser
                         $value = rtrim(rtrim(format_number($value), '0'),
                                 $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
-                }
                 } else {
                     $value = '';
                 }
+            }
             if ($name === 'aos_products_product_image' && !empty($value)) {
                 $value = '<img src="' . $value . '" class="img-responsive"/>';
             }
