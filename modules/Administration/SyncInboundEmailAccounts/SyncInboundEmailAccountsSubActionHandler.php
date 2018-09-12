@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Utility\SuiteValidator;
+
 /**
  * Class SyncInboundEmailAccountsSubActionHandler
  *
@@ -346,7 +348,8 @@ class SyncInboundEmailAccountsSubActionHandler
      */
     protected function getEmailIdsOfInboundEmail($ieId)
     {
-        if (!isValidId($ieId)) {
+        $isValidator = new SuiteValidator();
+        if (!$isValidator->isValidId($ieId)) {
             throw new SyncInboundEmailException("Invalid Inbound Email ID");
         }
         $query = "SELECT id FROM emails WHERE mailbox_id = '{$ieId}' AND deleted = 0;";

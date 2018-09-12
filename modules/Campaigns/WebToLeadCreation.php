@@ -49,6 +49,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Utility\SuiteValidator;
+
 require_once 'include/EditView/EditView2.php';
 
 require_once 'modules/Campaigns/utils.php';
@@ -143,7 +145,10 @@ if (!empty($focus)) {
 
 $xtpl->assign("REDIRECT_URL_DEFAULT", 'http://');
 
-if (isset($_REQUEST['campaign_id']) && isValidId($_REQUEST['campaign_id'])) {
+$isValidator = new SuiteValidator();
+
+
+if (isset($_REQUEST['campaign_id']) && $isValidator->isValidId($_REQUEST['campaign_id'])) {
     $campaign = new Campaign();
     if ($campaign) {
         $campaign->retrieve($_REQUEST['campaign_id']);
