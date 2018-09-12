@@ -105,16 +105,15 @@ class templateParser
         reset($repl_arr);
 
         foreach ($repl_arr as $name => $value) {
-            if (strpos($name, 'product_discount') > 0) {
+            if (strpos($name, 'product_discount') !== false || strpos($name, 'quotes_discount') !== false) {
                 if ($value != '' && $value != '0.00') {
-                    if ($repl_arr['aos_products_quotes_discount'] == 'Percentage') {
                         $sep = get_number_seperators();
-                        $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);//.$app_strings['LBL_PERCENTAGE_SYMBOL'];
+                        $value = rtrim(rtrim(format_number($value), '0'),
+                                $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
                 } else {
                     $value = '';
                 }
-            }
             if ($name === 'aos_products_product_image' && !empty($value)) {
                 $value = '<img src="' . $value . '" class="img-responsive"/>';
             }
