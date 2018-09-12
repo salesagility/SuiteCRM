@@ -393,8 +393,8 @@ class SugarTheme
                 unlink("$cachedir/spriteCache.php");
             }
 
-            if (strlen($cachedir)>1) {
-                rmdir_recursive($cachedir.'/modules');
+            if ((strlen($cachedir) > 1) && is_dir($cachedir . '/modules')) {
+                rmdir_recursive($cachedir . '/modules');
             }
         } elseif (!inDeveloperMode()) {
             // only update the caches if they have been changed in this request
