@@ -101,11 +101,11 @@ class templateParser
         reset($repl_arr);
 
         foreach ($repl_arr as $name => $value) {
-            if (strpos($name, 'product_discount') > 0) {
+            if (strpos($name, 'product_discount') !== false) {
                 if ($value != '' && $value != '0.00') {
-                    if ($repl_arr['aos_products_quotes_discount'] == 'Percentage') {
+                    if (strtolower($repl_arr['aos_products_quotes_discount']) == 'percentage' || strtolower($repl_arr['aos_products_quotes_discount']) == 'pct' || strtolower($repl_arr['aos_products_quotes_discount']) == 'percent') {
                         $sep = get_number_seperators();
-                        $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);//.$app_strings['LBL_PERCENTAGE_SYMBOL'];
+                        $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
                 } else {
                     $value = '';
