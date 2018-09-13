@@ -651,7 +651,7 @@ function get_assigned_user_name($assigned_user_id, $is_group = '')
  */
 function get_user_name($id)
 {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
@@ -1341,7 +1341,7 @@ function append_where_clause(&$where_clauses, $variable_name, $SQL_name = null)
     }
 
     if (isset($_REQUEST[$variable_name]) && $_REQUEST[$variable_name] != '') {
-        array_push($where_clauses, "$SQL_name like '".$GLOBALS['db']->quote($_REQUEST[$variable_name])."%'");
+        array_push($where_clauses, "$SQL_name like '".DBManagerFactory::getInstance()->quote($_REQUEST[$variable_name])."%'");
     }
 }
 
@@ -4161,11 +4161,11 @@ function generate_search_where(
                         if (!empty($field_value)) {
                             $field_value .= ',';
                         }
-                        $field_value .= "'".$GLOBALS['db']->quote($val)."'";
+                        $field_value .= "'".DBManagerFactory::getInstance()->quote($val)."'";
                     }
                 }
             } else {
-                $field_value = $GLOBALS['db']->quote($values[$field]);
+                $field_value = DBManagerFactory::getInstance()->quote($values[$field]);
             }
             //set db_fields array.
             if (!isset($parms['db_field'])) {
@@ -4173,7 +4173,7 @@ function generate_search_where(
             }
             if (isset($parms['my_items']) and $parms['my_items'] == true) {
                 global $current_user;
-                $field_value = $GLOBALS['db']->quote($current_user->id);
+                $field_value = DBManagerFactory::getInstance()->quote($current_user->id);
                 $operator = '=';
             }
 
@@ -4184,7 +4184,7 @@ function generate_search_where(
                     if (strstr($db_field, '.') === false) {
                         $db_field = $bean->table_name.'.'.$db_field;
                     }
-                    if ($GLOBALS['db']->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
+                    if (DBManagerFactory::getInstance()->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
                         $db_field = 'upper('.$db_field.')';
                         $field_value = strtoupper($field_value);
                     }
@@ -4526,7 +4526,7 @@ function chartColors()
  */
 function ajaxInit()
 {
-    ini_set('display_errors', 'false');
+    //ini_set('display_errors', 'false');
 }
 
 /**
@@ -5431,4 +5431,21 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
 function isValidId($id) {
     $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
     return $valid;
+}
+
+function getAppString($key) {
+    
+    global $app_strings;
+    
+    if (!isset($app_strings[$key])) {
+        LoggerManager::getLogger()->warn('Language key not found: ' . $key);
+        return $key;
+    }
+    
+    if (!$app_strings[$key]) {
+        LoggerManager::getLogger()->warn('Language string is empty at key: ' . $key);
+        return $key;
+    }
+    
+    return $app_strings[$key];
 }

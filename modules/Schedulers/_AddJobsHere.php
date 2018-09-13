@@ -432,7 +432,7 @@ function removeDocumentsFromFS()
      * @var DBManager $db
      * @var SugarBean $bean
      */
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     // temp table to store id of files without memory leak
     $tableName = 'cron_remove_documents';
@@ -687,7 +687,9 @@ function aodOptimiseIndex()
 
 function performLuceneIndexing()
 {
-    global $db, $sugar_config;
+    global $sugar_config;
+    $db = DBManagerFactory::getInstance();
+    
     if (empty($sugar_config['aod']['enable_aod'])) {
         return;
     }

@@ -43,7 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/utils/zip_utils.php');
-
 require_once('include/upload_file.php');
 
 
@@ -248,8 +247,8 @@ function commitPatch($unlink = false, $type = 'patch'){
     global $mod_strings;
     global $base_upgrade_dir;
     global $base_tmp_upgrade_dir;
-    global $db;
-    $GLOBALS['db'] = $db;
+    
+    $db = DBManagerFactory::getInstance();
     $errors = array();
     $files = array();
     global $current_user;
@@ -317,8 +316,7 @@ function commitModules($unlink = false, $type = 'module'){
     global $mod_strings;
     global $base_upgrade_dir;
     global $base_tmp_upgrade_dir;
-    global $db;
-    $GLOBALS['db'] = $db;
+    $db = DBManagerFactory::getInstance();
     $errors = array();
     $files = array();
     global $current_user;
@@ -947,7 +945,7 @@ EOQ;
     $cache_headers = <<<EOQ
 
 <IfModule mod_rewrite.c>
-    Options +FollowSymLinks
+    Options +SymLinksIfOwnerMatch
     RewriteEngine On
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
@@ -1088,7 +1086,7 @@ function handleWebConfig()
  * Drop old tables if table exists and told to drop it
  */
 function drop_table_install( &$focus ){
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $dictionary;
 
     $result = $db->tableExists($focus->table_name);
@@ -1124,7 +1122,7 @@ function create_table_if_not_exist( &$focus ){
 
 
 function create_default_users(){
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $setup_site_admin_password;
     global $setup_site_admin_user_name;
     global $create_default_user;
@@ -1163,7 +1161,7 @@ function create_default_users(){
 }
 
 function set_admin_password( $password ) {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     $user_hash = User::getPasswordHash($password);
 
@@ -1173,7 +1171,7 @@ function set_admin_password( $password ) {
 }
 
 function insert_default_settings(){
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $setup_sugar_version;
     global $sugar_db_version;
 
@@ -2059,7 +2057,7 @@ function create_db_user_creds($numChars=10){
 }
 
 function addDefaultRoles($defaultRoles = array()) {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
 
     foreach($defaultRoles as $roleName=>$role){

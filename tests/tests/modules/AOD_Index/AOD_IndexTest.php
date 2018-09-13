@@ -1,9 +1,17 @@
 <?PHP
 
-class AOD_IndexTest extends PHPUnit_Framework_TestCase
+class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOD_Index()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and type attribute
         $aod_index = new AOD_Index();
@@ -18,11 +26,14 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aod_index);
         $this->assertAttributeEquals(false, 'importable', $aod_index);
         $this->assertAttributeEquals(false, 'tracker_visibility', $aod_index);
+        
+        // clean up
+        
+        $state->popTable('aod_index');
     }
 
     public function testisEnabled()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aod_index = new AOD_Index();
 
@@ -45,6 +56,13 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
 
     public function testoptimise()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        
+        // test
+        
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
@@ -53,6 +71,10 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
         //execute the method and test if the last optimized date is changed to a later date/time.
         $aod_index->optimise();
         $this->assertGreaterThan($last_optimized, $aod_index->last_optimised);
+        
+        // clean up
+        
+        $state->popTable('aod_index');
     }
 
     public function testgetIndex()
@@ -90,7 +112,7 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
             $aod_index->commit();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -141,7 +163,7 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
             $aod_index->remove('Accounts', 1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 

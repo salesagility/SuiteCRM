@@ -114,7 +114,8 @@
             $ical_array = array();
             // First, get the list of IDs.
             $query = "SELECT id from vcals where user_id='{$user_bean->id}' AND type='vfb' AND deleted=0";
-            $vcal_arr = $this->build_related_list($query, new vCal());
+            $vCal = new vCal();
+            $vcal_arr = $this->build_related_list($query, $vCal);
 
             foreach ($vcal_arr as $focus) {
                 if (empty($focus->content)) {
@@ -353,7 +354,8 @@
         /**
          * get ics file content for meeting invite email
          */
-        public static function get_ical_event(SugarBean $bean, User $user) {
+        public static function get_ical_event(SugarBean $bean, User $user)
+        {
 
             global $timedate;
             $ical_array = array();
@@ -363,12 +365,13 @@
             $ical_array[] = array("PRODID", "-//SugarCRM//SugarCRM Calendar//EN");
             $ical_array[] = array("BEGIN", "VEVENT");
             $ical_array[] = array("UID", $bean->id);
-            $ical_array[] = array("ORGANIZED;CN=" . $user->full_name, $user->email1);
+            $ical_array[] = array("ORGANIZER;CN=" . $user->name, "mailto:" . $user->email1);
             $ical_array[] = array("DTSTART", $timedate->fromDb($bean->date_start)->format(self::UTC_FORMAT));
             $ical_array[] = array("DTEND", $timedate->fromDb($bean->date_end)->format(self::UTC_FORMAT));
 
             $ical_array[] = array(
-                "DTSTAMP", $GLOBALS['timedate']->getNow(false)->format(self::UTC_FORMAT)
+                "DTSTAMP",
+                $GLOBALS['timedate']->getNow(false)->format(self::UTC_FORMAT)
             );
             $ical_array[] = array("SUMMARY", $bean->name);
             $ical_array[] = array("LOCATION", $bean->location);

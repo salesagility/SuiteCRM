@@ -171,7 +171,11 @@ class AOW_WorkFlow extends Basic
         $flows = AOW_WorkFlow::get_full_list('',
             " aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
-        foreach ($flows as $flow) {
+        if (empty($flows)) {
+            LoggerManager::getLogger()->warn('There is no any workflow to run');
+        }
+        
+        foreach ((array)$flows as $flow) {
             $flow->run_flow();
         }
 
@@ -216,8 +220,15 @@ class AOW_WorkFlow extends Basic
      */
     function get_flow_beans(){
         global $beanList;
+        
+        $flowModule = null;
+        if (isset($beanList[$this->flow_module])) {
+            $flowModule = $beanList[$this->flow_module];
+        } else {
+            LoggerManager::getLogger()->warn('Undefined flow module in bean list: ' . $this->flow_module);
+        }
 
-        if($beanList[$this->flow_module]){
+        if($flowModule){
             $module = new $beanList[$this->flow_module]();
 
             $query = '';
@@ -253,38 +264,41 @@ class AOW_WorkFlow extends Basic
         return null;
     }
 
-    function build_flow_query_join($name, SugarBean $module, $type, $query = array()){
+    function build_flow_custom_query_join($name, $custom_name, SugarBean $module,
+            $query = array()) {
+        if(!isset($query['join'][$custom_name])) {
+            $query['join'][$custom_name] = 'LEFT JOIN '.$module->get_custom_table_name()
+                    .' '.$custom_name.' ON '.$name.'.id = '. $custom_name.'.id_c ';
+        }
+        return $query;
+    }
 
-        if(!isset($query['join'][$name])){
+    function build_flow_relationship_query_join($name, SugarBean $module,
+            $query = array()) {
+        if(!isset($query['join'][$name])) {
+            if($module->load_relationship($name)) {
+                $params['join_type'] = 'LEFT JOIN';
+                $params['join_table_alias'] = $name;
+                $join = $module->$name->getJoin($params, true);
 
-            switch ($type){
-                case 'custom':
-                    $query['join'][$name] = 'LEFT JOIN '.$module->get_custom_table_name().' '.$name.' ON '.$module->table_name.'.id = '. $name.'.id_c ';
-                    break;
-
-                case 'relationship':
-                    if($module->load_relationship($name)){
-                        $params['join_type'] = 'LEFT JOIN';
-                        $params['join_table_alias'] = $name;
-                        $join = $module->$name->getJoin($params, true);
-
-                        $query['join'][$name] = $join['join'];
-                        $query['select'][] = $join['select']." AS '".$name."_id'";
-                    }
-                    break;
-                default:
-                    break;
-
+                $query['join'][$name] = $join['join'];
+                $query['select'][] = $join['select']." AS '".$name."_id'";
             }
-
         }
         return $query;
     }
 
     function build_flow_query_where($query = array()){
         global $beanList;
+        
+        $flowModule = null;
+        if (isset($beanList[$this->flow_module])) {
+            $flowModule = $beanList[$this->flow_module];
+        } else {
+            LoggerManager::getLogger()->warn('Undefined flow module in bean list: ' . $this->flow_module);
+        }
 
-        if($beanList[$this->flow_module]){
+        if($flowModule){
             $module = new $beanList[$this->flow_module]();
 
             $sql = "SELECT id FROM aow_conditions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
@@ -321,6 +335,12 @@ class AOW_WorkFlow extends Basic
             }
 
             if(!$this->multiple_runs){
+                
+                if (!isset($query['where'])) {
+                    LoggerManager::getLogger()->warn('Undefined index: where');
+                    $query['where'] = [];
+                } 
+                
                 $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
             }
 
@@ -338,7 +358,8 @@ class AOW_WorkFlow extends Basic
         $table_alias = $condition_module->table_name;
         if(isset($path[0]) && $path[0] != $module->module_dir){
             foreach($path as $rel){
-                $query = $this->build_flow_query_join($rel, $condition_module, 'relationship', $query);
+                $query = $this->build_flow_relationship_query_join($rel,
+                        $condition_module, $query);
                 $condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
                 $table_alias = $rel;
             }
@@ -354,7 +375,8 @@ class AOW_WorkFlow extends Basic
             }
             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                 $field = $table_alias.'_cstm.'.$condition->field;
-                $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
+                $query = $this->build_flow_custom_query_join($table_alias,
+                    $table_alias.'_cstm', $condition_module, $query);
             } else {
                 $field = $table_alias.'.'.$condition->field;
             }
@@ -366,14 +388,22 @@ class AOW_WorkFlow extends Basic
 
             switch($condition->value_type) {
                 case 'Field':
-                    $data = $module->field_defs[$condition->value];
+                    
+                    $data = null;
+                    if (isset($module->field_defs[$condition->value])) {
+                        $data = $module->field_defs[$condition->value];
+                    } else {
+                        LoggerManager::getLogger()->warn('Undefined field def for condition value in module: ' . get_class($module) . '::field_defs[' . $condition->value . ']');
+                    }
 
                     if($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->value = $data['id_name'];
                     }
                     if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $value = $module->table_name.'_cstm.'.$condition->value;
-                        $query = $this->build_flow_query_join($module->table_name.'_cstm', $module, 'custom', $query);
+                        $query = $this->build_flow_custom_query_join(
+                                $module->table_name, $module->table_name.'_cstm',
+                                $module, $query);
                     } else {
                         $value = $module->table_name.'.'.$condition->value;
                     }
@@ -382,7 +412,14 @@ class AOW_WorkFlow extends Basic
                     //can't detect in scheduler so return
                     return array();
                 case 'Date':
-                    $params =  unserialize(base64_decode($condition->value));
+                    
+                    $params = @unserialize(base64_decode($condition->value));
+                    if ($params === false) {
+                        LoggerManager::getLogger()->error('Unserializable data given');
+                    } else {
+                        $params = [null];
+                    }
+                    
                     if($params[0] == 'now'){
                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                             $value  = 'GetUTCDate()';
@@ -398,10 +435,18 @@ class AOW_WorkFlow extends Basic
                             $value = 'Curdate()';
                         }
                     } else {
-                        $data = $module->field_defs[$params[0]];
+                        $data = null;
+                        if (isset($module->field_defs[$params[0]])) {
+                            $data = $module->field_defs[$params[0]];
+                        } else {
+                            LoggerManager::getLogger()->warn('Filed def data is missing: ' . get_class($module) . '::$field_defs[' . $params[0] . ']');
+                        }
+                        
                         if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                             $value = $module->table_name.'_cstm.'.$params[0];
-                            $query = $this->build_flow_query_join($module->table_name.'_cstm', $module, 'custom', $query);
+                            $query = $this->build_flow_custom_query_join(
+                                    $module->table_name, $module->table_name.'_cstm',
+                                    $module, $query);
                         } else {
                             $value = $module->table_name.'.'.$params[0];
                         }
@@ -430,7 +475,24 @@ class AOW_WorkFlow extends Basic
                                 if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                                     $value = "DATEADD(".$params[3].",  ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2], $value)";
                                 } else {
-                                    $value = "DATE_ADD($value, INTERVAL ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3].")";
+                                    
+                                    if (!isset($params)) {
+                                        LoggerManager::getLogger()->warn('Undefined variable: param');
+                                        $params = [null, null, null, null];
+                                    }
+                                    
+                                    $params1 = $params[1];
+                                    $params2 = $params[2];
+                                    $params3 = $params[3];
+                                    
+                                    $dateOp = null;
+                                    if (isset($app_list_strings['aow_date_operator'][$params1])) {
+                                        $dateOp = $app_list_strings['aow_date_operator'][$params1];
+                                    } else {
+                                        LoggerManager::getLogger()->warn('Date operator is not set in app_list_string[' . $params1 . ']');
+                                    }
+                                    
+                                    $value = "DATE_ADD($value, INTERVAL ".$dateOp." $params2 ".$params3.")";
                                 }
                                 break;
                         }

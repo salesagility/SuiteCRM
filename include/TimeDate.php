@@ -696,7 +696,11 @@ class TimeDate
         try {
             return SugarDateTime::createFromFormat(self::DB_DATETIME_FORMAT, $date, self::$gmtTimezone);
         } catch (Exception $e) {
-            $GLOBALS['log']->error("fromDb: Conversion of $date from DB format failed: {$e->getMessage()}");
+            if (is_string($date)) {
+                $GLOBALS['log']->error("fromDb: Conversion of $date from DB format failed: {$e->getMessage()}");
+            } else {
+                LoggerManager::getLogger()->error('Date parameter is not a string');
+            }
             return null;
         }
     }

@@ -244,7 +244,7 @@ if (!defined('sugarEntry') || !sugarEntry){
       case 'getTemplateAttachments':
           $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
           if (isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
-              global $db;
+              $db = DBManagerFactory::getInstance();
 
               $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
               $order = '';
@@ -1599,7 +1599,7 @@ eoq;
 	        $time = microtime(true);
 	        $r = $ie->db->query($countq);
 	        $GLOBALS['log']->debug("***QUERY counted in " . (microtime(true) - $time) . " milisec\n");
-	        if($row = $GLOBALS['db']->fetchByAssoc($r)){
+	        if($row = DBManagerFactory::getInstance()->fetchByAssoc($r)){
 	            $count = $row['c'];
 	        }
 	        $time = microtime(true);

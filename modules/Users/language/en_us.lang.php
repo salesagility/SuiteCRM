@@ -591,13 +591,6 @@ $mod_strings = array(
     'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by <a href="https://salesagility.com">SalesAgility</a>. The Program is provided AS IS, without warranty. Licensed under AGPLv3.',
     'LBL_SUITE_DESC2' => 'This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 as published by the Free Software Foundation, including the additional permission set forth in the source code header.',
     'LBL_SUITE_DESC3' => 'SuiteCRM is a trademark of SalesAgility Ltd. All other company and product names may be trademarks of the respective companies with which they are associated.',
-    'LBL_QUICK_ACCOUNT' => 'Create Account',
-    'LBL_QUICK_CONTACT' => 'Create Contact',
-    'LBL_QUICK_OPPORTUNITY' => 'Create Opportunity',
-    'LBL_QUICK_LEAD' => 'Create Lead',
-    'LBL_QUICK_DOCUMENT' => 'Create Document',
-    'LBL_QUICK_CALL' => 'Log Call',
-    'LBL_QUICK_TASK' => 'Create Task',
 
     'LBL_ENABLE_NOTIFICATIONS' => 'Enable Desktop Notifications',
     'LBL_LIST_NONINHERITABLE' => "Not Inheritable",
@@ -609,5 +602,3 @@ $mod_strings = array(
     'LBL_ROLES' => 'Roles',
     'LBL_SECURITYGROUPS' => 'Security Groups',
 ); // END STRINGS DEFS
-
-?>

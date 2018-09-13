@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "96a9365313fbb24abbaecd8fa43b204f",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leafo/scssphp.git",
-                "reference": "3d3fd508102242ab5744b91e51ff78e262db9467"
+                "reference": "1d656f8c02a3a69404bba6b28ec4e06edddf0f49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/3d3fd508102242ab5744b91e51ff78e262db9467",
-                "reference": "3d3fd508102242ab5744b91e51ff78e262db9467",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/1d656f8c02a3a69404bba6b28ec4e06edddf0f49",
+                "reference": "1d656f8c02a3a69404bba6b28ec4e06edddf0f49",
                 "shasum": ""
             },
             "require": {
@@ -57,7 +57,7 @@
                 "scss",
                 "stylesheet"
             ],
-            "time": "2018-06-20T03:10:38+00:00"
+            "time": "2018-07-22T01:22:08+00:00"
         },
         {
             "name": "mikey179/vfsStream",
@@ -469,25 +469,28 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.8.0",
+            "version": "v1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "7cc359f1b7b80fc25ed7796be7d96adc9b354bae"
+                "reference": "e3d826245268269cd66f8326bd8bc066687b4a19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/7cc359f1b7b80fc25ed7796be7d96adc9b354bae",
-                "reference": "7cc359f1b7b80fc25ed7796be7d96adc9b354bae",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/e3d826245268269cd66f8326bd8bc066687b4a19",
+                "reference": "e3d826245268269cd66f8326bd8bc066687b4a19",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "suggest": {
+                "ext-ctype": "For best performance"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.8-dev"
+                    "dev-master": "1.9-dev"
                 }
             },
             "autoload": {
@@ -520,20 +523,20 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2018-04-30T19:57:29+00:00"
+            "time": "2018-08-06T14:22:27+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.42",
+            "version": "v2.8.44",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "51356b7a2ff7c9fd06b2f1681cc463bb62b5c1ff"
+                "reference": "fbf876678e29dc634430dcf0096e216eb0004467"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/51356b7a2ff7c9fd06b2f1681cc463bb62b5c1ff",
-                "reference": "51356b7a2ff7c9fd06b2f1681cc463bb62b5c1ff",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/fbf876678e29dc634430dcf0096e216eb0004467",
+                "reference": "fbf876678e29dc634430dcf0096e216eb0004467",
                 "shasum": ""
             },
             "require": {
@@ -570,7 +573,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-05-01T22:52:40+00:00"
+            "time": "2018-07-26T09:03:18+00:00"
         }
     ],
     "aliases": [],
