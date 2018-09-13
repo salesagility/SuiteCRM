@@ -37,7 +37,12 @@ class ParamsMiddleware
         } catch (\Exception $exception) {
             $response = new ErrorResponse();
             $response->setStatus(400);
-            $response->setDetail($exception->getMessage());
+            $debug = 
+                    "<pre>\nCode:" . $exception->getCode() .
+                    "\n" . $exception->getFile() . ':' . $exception->getLine() . 
+                    "\nTrace:\n" . $exception->getTraceAsString() . 
+                    "\n</pre>";
+            $response->setDetail($exception->getMessage() . nl2br($debug));
 
             return $httpResponse->withJson(
                 $response,
