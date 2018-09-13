@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,63 +37,62 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('modules/DynamicFields/templates/Fields/TemplateText.php');
-class TemplateTextArea extends TemplateText{
-	var $type = 'text';
-	var $len = '';
+class TemplateTextArea extends TemplateText
+{
+    public $type = 'text';
+    public $len = '';
 
-	function __construct()
-	{
-		$this->vardef_map['rows'] = 'ext2';
-		$this->vardef_map['cols'] = 'ext3';
-	}
+    public function __construct()
+    {
+        $this->vardef_map['rows'] = 'ext2';
+        $this->vardef_map['cols'] = 'ext3';
+    }
 
-	function set($values){
-	   parent::set($values);
-	    if(!empty($this->ext2)){
-	       $this->rows = $this->ext2;
-	   }
-	    if(!empty($this->ext3)){
-	       $this->cols = $this->ext3;
-	   }
-	   if(!empty($this->ext4)){
-	       $this->default_value = $this->ext4;
-	   }
+    public function set($values)
+    {
+        parent::set($values);
+        if (!empty($this->ext2)) {
+            $this->rows = $this->ext2;
+        }
+        if (!empty($this->ext3)) {
+            $this->cols = $this->ext3;
+        }
+        if (!empty($this->ext4)) {
+            $this->default_value = $this->ext4;
+        }
+    }
 
-	}
 
+    public function get_xtpl_detail()
+    {
+        $name = $this->name;
+        return nl2br($this->bean->$name);
+    }
 
-	function get_xtpl_detail(){
-		$name = $this->name;
-		return nl2br($this->bean->$name);
-	}
+    public function get_field_def()
+    {
+        $def = parent::get_field_def();
+        $def['studio'] = 'visible';
 
-	function get_field_def()
-	{
-		$def = parent::get_field_def();
-		$def['studio'] = 'visible';
-
-		if ( isset ( $this->ext2 ) && isset ($this->ext3))
-		{
-			$def[ 'rows' ] = $this->ext2 ;
-			$def[ 'cols' ] = $this->ext3 ;
-		}
-	   if (isset( $this->rows ) && isset ($this->cols))
-        {
+        if (isset($this->ext2) && isset($this->ext3)) {
+            $def[ 'rows' ] = $this->ext2 ;
+            $def[ 'cols' ] = $this->ext3 ;
+        }
+        if (isset($this->rows) && isset($this->cols)) {
             $def[ 'rows' ] = $this->rows ;
             $def[ 'cols' ] = $this->cols ;
         }
-		return $def;
-	}
-
-	function get_db_default($modify = false)
-	{
-	    // TEXT columns in MySQL cannot have a DEFAULT value - let the Bean handle it on save
-        return null; // Bug 16612 - null so that the get_db_default() routine in TemplateField doesn't try to set DEFAULT
+        return $def;
     }
 
+    public function get_db_default($modify = false)
+    {
+        // TEXT columns in MySQL cannot have a DEFAULT value - let the Bean handle it on save
+        return null; // Bug 16612 - null so that the get_db_default() routine in TemplateField doesn't try to set DEFAULT
+    }
 }

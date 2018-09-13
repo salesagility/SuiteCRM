@@ -1,41 +1,41 @@
 <?php
-/** 
- * 
- * SugarCRM Community Edition is a customer relationship management program developed by 
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
- * 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
- * Copyright (C) 2011 - 2018 SalesAgility Ltd. 
- * 
- * This program is free software; you can redistribute it and/or modify it under 
- * the terms of the GNU Affero General Public License version 3 as published by the 
- * Free Software Foundation with the addition of the following permission added 
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
- * details. 
- * 
- * You should have received a copy of the GNU Affero General Public License along with 
- * this program; if not, see http://www.gnu.org/licenses or write to the Free 
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
- * 02110-1301 USA. 
- * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
- * 
- * The interactive user interfaces in modified source and object code versions 
- * of this program must display Appropriate Legal Notices, as required under 
- * Section 5 of the GNU Affero General Public License version 3. 
- * 
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
- * these Appropriate Legal Notices must retain the display of the "Powered by 
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 /*********************************************************************************
@@ -297,7 +297,7 @@ class MssqlManager extends DBManager
 
         $sql = $this->_appendN($sql);
 
-        $GLOBALS['log']->info('Query:' . $sql);
+        LoggerManager::getLogger()->info('Query:' . $this->removeLineBreaks($sql));
         $this->checkConnection();
         $this->countQuery($sql);
         $this->query_time = microtime(true);
@@ -557,8 +557,11 @@ class MssqlManager extends DBManager
                             $newSQL = "SELECT TOP $countVar * FROM
                                         (
                                             SELECT ROW_NUMBER()
-                                                OVER (ORDER BY " . preg_replace('/^' . $dist_str . '\s+/', '',
-                                    $this->returnOrderBy($sql, $orderByMatch[3])) . ') AS row_number,
+                                                OVER (ORDER BY " . preg_replace(
+                                '/^' . $dist_str . '\s+/',
+                                '',
+                                    $this->returnOrderBy($sql, $orderByMatch[3])
+                            ) . ') AS row_number,
                                                 count(*) counter, ' . $distinctSQLARRAY[0] . '
                                                 ' . $distinctSQLARRAY[1] . '
                                                 group by ' . $grpByStr . "
@@ -615,7 +618,6 @@ class MssqlManager extends DBManager
         }
 
         return $newSQL;
-
     }
 
 
@@ -658,10 +660,15 @@ class MssqlManager extends DBManager
                 $exists = strpos($strip_array[$patt . $i], $strip_beg);
                 if ($exists >= 0) {
                     $nested_pos = strrpos($strip_array[$patt . $i], $strip_beg);
-                    $strip_array[$patt . $i] = substr($p_sql, $nested_pos + $beg_sin,
-                        $sec_sin - ($nested_pos + $beg_sin) + 1);
-                    $p_sql = substr($p_sql, 0, $nested_pos + $beg_sin) . ' ##' . $patt . $i . '## ' . substr($p_sql,
-                            $sec_sin + 1);
+                    $strip_array[$patt . $i] = substr(
+                        $p_sql,
+                        $nested_pos + $beg_sin,
+                        $sec_sin - ($nested_pos + $beg_sin) + 1
+                    );
+                    $p_sql = substr($p_sql, 0, $nested_pos + $beg_sin) . ' ##' . $patt . $i . '## ' . substr(
+                        $p_sql,
+                            $sec_sin + 1
+                    );
                     ++$i;
                     continue;
                 }
@@ -848,47 +855,46 @@ class MssqlManager extends DBManager
             $GLOBALS['log']->debug("No match was found for order by, pass string back untouched as: $orig_order_match");
 
             return $orig_order_match;
-        } else {
-            //if found, then parse and return
-            //grab string up to the aliased column
-            $GLOBALS['log']->debug('order by found, process sql string');
-
-            $psql = trim($this->getAliasFromSQL($sql, $orderMatch));
-            if (empty($psql)) {
-                $psql = trim(substr($sql, 0, $found_in_sql));
-            }
-
-            //grab the last comma before the alias
-            preg_match('/\s+' . trim($orderMatch) . '/', $psql, $match, PREG_OFFSET_CAPTURE);
-            $comma_pos = $match[0][1];
-            //substring between the comma and the alias to find the joined_table alias and column name
-            $col_name = substr($psql, 0, $comma_pos);
-
-            //make sure the string does not have an end parenthesis
-            //and is not part of a function (i.e. "ISNULL(leads.last_name,'') as name"  )
-            //this is especially true for unified search from home screen
-
-            $alias_beg_pos = 0;
-            if (strpos($psql, ' as ')) {
-                $alias_beg_pos = strpos($psql, ' as ');
-            }
-
-            // Bug # 44923 - This breaks the query and does not properly filter isnull
-            // as there are other functions such as ltrim and rtrim.
-            /* elseif (strncasecmp($psql, 'isnull', 6) != 0)
-                $alias_beg_pos = strpos($psql, " "); */
-
-            if ($alias_beg_pos > 0) {
-                $col_name = substr($psql, 0, $alias_beg_pos);
-            }
-            //add the "asc/desc" order back
-            $col_name = $col_name . ' ' . $asc_desc;
-
-            //pass in new order by
-            $GLOBALS['log']->debug('order by being returned is ' . $col_name);
-
-            return $col_name;
         }
+        //if found, then parse and return
+        //grab string up to the aliased column
+        $GLOBALS['log']->debug('order by found, process sql string');
+
+        $psql = trim($this->getAliasFromSQL($sql, $orderMatch));
+        if (empty($psql)) {
+            $psql = trim(substr($sql, 0, $found_in_sql));
+        }
+
+        //grab the last comma before the alias
+        preg_match('/\s+' . trim($orderMatch) . '/', $psql, $match, PREG_OFFSET_CAPTURE);
+        $comma_pos = $match[0][1];
+        //substring between the comma and the alias to find the joined_table alias and column name
+        $col_name = substr($psql, 0, $comma_pos);
+
+        //make sure the string does not have an end parenthesis
+        //and is not part of a function (i.e. "ISNULL(leads.last_name,'') as name"  )
+        //this is especially true for unified search from home screen
+
+        $alias_beg_pos = 0;
+        if (strpos($psql, ' as ')) {
+            $alias_beg_pos = strpos($psql, ' as ');
+        }
+
+        // Bug # 44923 - This breaks the query and does not properly filter isnull
+        // as there are other functions such as ltrim and rtrim.
+        /* elseif (strncasecmp($psql, 'isnull', 6) != 0)
+            $alias_beg_pos = strpos($psql, " "); */
+
+        if ($alias_beg_pos > 0) {
+            $col_name = substr($psql, 0, $alias_beg_pos);
+        }
+        //add the "asc/desc" order back
+        $col_name = $col_name . ' ' . $asc_desc;
+
+        //pass in new order by
+        $GLOBALS['log']->debug('order by being returned is ' . $col_name);
+
+        return $col_name;
     }
 
     /**
@@ -982,7 +988,8 @@ class MssqlManager extends DBManager
 
         $this->checkConnection();
         $result = $this->getOne(
-            "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME=" . $this->quoted($tableName));
+            "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME=" . $this->quoted($tableName)
+        );
 
         return !empty($result);
     }
@@ -1129,9 +1136,10 @@ class MssqlManager extends DBManager
                     $len = $this->date_formats[$additional_parameters[0]];
 
                     return "LEFT(CONVERT(varchar($len)," . $string . ",120),$len)";
-                } else {
-                    return 'LEFT(CONVERT(varchar(10),' . $string . ',120),10)';
                 }
+
+                return 'LEFT(CONVERT(varchar(10),' . $string . ',120),10)';
+
             case 'ifnull':
                 if (empty($additional_parameters_string)) {
                     $additional_parameters_string = ",''";
@@ -1152,7 +1160,7 @@ class MssqlManager extends DBManager
                 return "DATEADD({$additional_parameters[1]},{$additional_parameters[0]},$string)";
             case 'add_time':
                 return "DATEADD(hh, {$additional_parameters[0]}, DATEADD(mi, {$additional_parameters[1]}, $string))";
-            case 'add_tz_offset' :
+            case 'add_tz_offset':
                 $getUserUTCOffset = $GLOBALS['timedate']->getUserUTCOffset();
                 $operation = $getUserUTCOffset < 0 ? '-' : '+';
 
@@ -1679,24 +1687,24 @@ EOQ;
 
         if (empty($fieldDef['len'])) {
             switch ($fieldDef['type']) {
-                case 'bit'      :
-                case 'bool'     :
+                case 'bit':
+                case 'bool':
                     $fieldDef['len'] = '1';
                     break;
-                case 'smallint' :
+                case 'smallint':
                     $fieldDef['len'] = '2';
                     break;
-                case 'float'    :
+                case 'float':
                     $fieldDef['len'] = '8';
                     break;
-                case 'varchar'  :
-                case 'nvarchar' :
+                case 'varchar':
+                case 'nvarchar':
                     $fieldDef['len'] = $this->isTextType($fieldDef['dbType']) ? 'max' : '255';
                     break;
-                case 'image'    :
+                case 'image':
                     $fieldDef['len'] = '2147483647';
                     break;
-                case 'ntext'    :
+                case 'ntext':
                     $fieldDef['len'] = '2147483646';
                     break;   // Note: this is from legacy code, don't know if this is correct
             }
@@ -1748,9 +1756,8 @@ EOQ;
 
         if ($return_as_array) {
             return $ref;
-        } else {
-            return "{$ref['name']} {$ref['colType']} {$ref['default']} {$ref['required']} {$ref['auto_increment']}";
         }
+        return "{$ref['name']} {$ref['colType']} {$ref['default']} {$ref['required']} {$ref['auto_increment']}";
     }
 
     /**
@@ -1820,22 +1827,22 @@ EOQ;
         $sqlpos3 = strpos($sqlmsg, 'Checking identity information:');
         if ($sqlpos !== false || $sqlpos2 !== false || $sqlpos3 !== false) {
             return false;
-        } else {
-            global $app_strings;
-            //ERR_MSSQL_DB_CONTEXT: localized version of 'Changed database context to' message
-            if (empty($app_strings) || !isset($app_strings['ERR_MSSQL_DB_CONTEXT'])) {
-                //ignore the message from sql-server if $app_strings array is empty. This will happen
-                //only if connection if made before languge is set.
-                $GLOBALS['log']->debug('Ignoring this database message: ' . $sqlmsg);
-
-                return false;
-            } else {
-                $sqlpos = strpos($sqlmsg, $app_strings['ERR_MSSQL_DB_CONTEXT']);
-                if ($sqlpos !== false) {
-                    return false;
-                }
-            }
         }
+        global $app_strings;
+        //ERR_MSSQL_DB_CONTEXT: localized version of 'Changed database context to' message
+        if (empty($app_strings) || !isset($app_strings['ERR_MSSQL_DB_CONTEXT'])) {
+            //ignore the message from sql-server if $app_strings array is empty. This will happen
+            //only if connection if made before languge is set.
+            $GLOBALS['log']->debug('Ignoring this database message: ' . $sqlmsg);
+
+            return false;
+        }
+        $sqlpos = strpos($sqlmsg, $app_strings['ERR_MSSQL_DB_CONTEXT']);
+        if ($sqlpos !== false) {
+            return false;
+        }
+
+
 
         if (strlen($sqlmsg) > 2) {
             return 'SQL Server error: ' . $sqlmsg;

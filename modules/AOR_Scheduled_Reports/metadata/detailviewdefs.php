@@ -2,15 +2,15 @@
 $module_name = 'AOR_Scheduled_Reports';
 $_object_name = 'aor_scheduled_reports';
 $viewdefs [$module_name] =
-    array (
+    array(
         'DetailView' =>
-            array (
+            array(
                 'templateMeta' =>
-                    array (
+                    array(
                         'form' =>
-                            array (
+                            array(
                                 'buttons' =>
-                                    array (
+                                    array(
                                         0 => 'EDIT',
                                         1 => 'DUPLICATE',
                                         2 => 'DELETE',
@@ -19,23 +19,23 @@ $viewdefs [$module_name] =
                             ),
                         'maxColumns' => '2',
                         'widths' =>
-                            array (
+                            array(
                                 0 =>
-                                    array (
+                                    array(
                                         'label' => '10',
                                         'field' => '30',
                                     ),
                                 1 =>
-                                    array (
+                                    array(
                                         'label' => '10',
                                         'field' => '30',
                                     ),
                             ),
                         'useTabs' => false,
                         'tabDefs' =>
-                            array (
+                            array(
                                 'LBL_SCHEDULED_REPORTS_INFORMATION' =>
-                                    array (
+                                    array(
                                         'newTab' => false,
                                         'panelDefault' => 'expanded',
                                     ),
@@ -43,32 +43,32 @@ $viewdefs [$module_name] =
                         'syncDetailEditViews' => true,
                     ),
                 'panels' =>
-                    array (
+                    array(
                         'lbl_scheduled_reports_information' =>
-                            array (
+                            array(
                                 0 =>
-                                    array (
+                                    array(
                                         0 => 'name',
                                         1 => 'status',
                                     ),
                                 1 =>
-                                    array (
+                                    array(
                                         0 =>
-                                            array (
+                                            array(
                                                 'name' => 'aor_report_name',
                                             ),
                                     ),
                                 2 =>
-                                    array (
+                                    array(
                                         0 =>
-                                            array (
+                                            array(
                                                 'name' => 'schedule',
                                                 'label' => 'LBL_SCHEDULE',
                                             ),
                                         1 => 'last_run',
                                     ),
                                 3 =>
-                                    array (
+                                    array(
                                         0 => 'email_recipients',
                                         1 => 'description',
                                     ),

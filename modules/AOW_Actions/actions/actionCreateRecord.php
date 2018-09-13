@@ -40,7 +40,8 @@
 
 
 require_once 'modules/AOW_Actions/actions/actionBase.php';
-class actionCreateRecord extends actionBase {
+class actionCreateRecord extends actionBase
+{
 
     /**
      * @return array
@@ -86,38 +87,53 @@ class actionCreateRecord extends actionBase {
                  '_table" width="100%" class="lines"></table></td>';
         $html .= '</tr>';
         $html .= '<tr>';
-        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate('LBL_ADD_FIELD',
-                'AOW_Actions').'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
+        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate(
+            'LBL_ADD_FIELD',
+                'AOW_Actions'
+        ).'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
         $html .= '</tr>';
         $html .= '<tr>';
         $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%" class="relationship"></table></td>';
         $html .= '</tr>';
         $html .= '<tr>';
-        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate('LBL_ADD_RELATIONSHIP',
-                'AOW_Actions').'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
+        $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate(
+            'LBL_ADD_RELATIONSHIP',
+                'AOW_Actions'
+        ).'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
         $html .= '</tr>';
 
 
-        if(isset($params['record_type']) && $params['record_type'] != ''){
+        if (isset($params['record_type']) && $params['record_type'] != '') {
             require_once 'modules/AOW_WorkFlow/aow_utils.php';
             $html .= "<script id ='aow_script".$line."'>";
-            $html .= 'cr_fields[' . $line . '] = "' . trim(preg_replace('/\s+/', ' ',
-                    getModuleFields($params['record_type'], 'EditView', '', array(),
-                        array('email1', 'email2')))) . '";';
-            $html .= 'cr_relationships[' . $line . '] = "' . trim(preg_replace('/\s+/', ' ',
-                    getModuleRelationships($params['record_type']))) . '";';
+            $html .= 'cr_fields[' . $line . '] = "' . trim(preg_replace(
+                '/\s+/',
+                ' ',
+                    getModuleFields(
+                        $params['record_type'],
+                        'EditView',
+                        '',
+                        array(),
+                        array('email1', 'email2')
+                    )
+            )) . '";';
+            $html .= 'cr_relationships[' . $line . '] = "' . trim(preg_replace(
+                '/\s+/',
+                ' ',
+                    getModuleRelationships($params['record_type'])
+            )) . '";';
             $html .= 'cr_module[' .$line. '] = "' .$params['record_type']. '";';
-            if(isset($params['field'])){
-                foreach($params['field'] as $key => $field){
+            if (isset($params['field'])) {
+                foreach ($params['field'] as $key => $field) {
                     if (is_array($params['value'][$key])) {
                         $params['value'][$key] = json_encode($params['value'][$key]);
                     }
 
-                    $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n"), ' ',$params['value'][$key])."','".$params['value_type'][$key]."');";
+                    $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n"), ' ', $params['value'][$key])."','".$params['value_type'][$key]."');";
                 }
             }
-            if(isset($params['rel'])){
-                foreach($params['rel'] as $key => $field){
+            if (isset($params['rel'])) {
+                foreach ($params['rel'] as $key => $field) {
                     if (is_array($params['rel_value'][$key])) {
                         $params['rel_value'][$key] = json_encode($params['rel_value'][$key]);
                     }
@@ -128,7 +144,6 @@ class actionCreateRecord extends actionBase {
             $html .= '</script>';
         }
         return $html;
-
     }
 
     /**
@@ -141,18 +156,18 @@ class actionCreateRecord extends actionBase {
     {
         global $beanList;
 
-        if(isset($params['record_type']) && $params['record_type'] != ''){
-            if($beanList[$params['record_type']]){
+        if (isset($params['record_type']) && $params['record_type'] != '') {
+            if ($beanList[$params['record_type']]) {
                 $record = new $beanList[$params['record_type']]();
                 $this->set_record($record, $bean, $params);
                 $this->set_relationships($record, $bean, $params);
 
-                if(isset($params['relate_to_workflow']) && $params['relate_to_workflow']){
+                if (isset($params['relate_to_workflow']) && $params['relate_to_workflow']) {
                     require_once 'modules/Relationships/Relationship.php';
-                    $key = Relationship::retrieve_by_modules($bean->module_dir, $record->module_dir, $GLOBALS['db']);
+                    $key = Relationship::retrieve_by_modules($bean->module_dir, $record->module_dir, DBManagerFactory::getInstance());
                     if (!empty($key)) {
-                        foreach($bean->field_defs as $field=>$def){
-                            if($def['type'] == 'link' && !empty($def['relationship']) && $def['relationship'] == $key){
+                        foreach ($bean->field_defs as $field=>$def) {
+                            if ($def['type'] == 'link' && !empty($def['relationship']) && $def['relationship'] == $key) {
                                 $bean->load_relationship($field);
                                 $bean->$field->add($record->id);
                                 break;
@@ -172,19 +187,19 @@ class actionCreateRecord extends actionBase {
      * @param array $params
      * @param bool $in_save
      */
-    public function set_record(SugarBean $record, SugarBean $bean, $params = array(), $in_save = false){
+    public function set_record(SugarBean $record, SugarBean $bean, $params = array(), $in_save = false)
+    {
         global $app_list_strings, $timedate;
 
         $record_vardefs = $record->getFieldDefinitions();
 
-        if(isset($params['field'])){
-            foreach($params['field'] as $key => $field){
-
+        if (isset($params['field'])) {
+            foreach ($params['field'] as $key => $field) {
                 if ($field === '') {
                     continue;
                 }
                 $value = '';
-                switch($params['value_type'][$key]) {
+                switch ($params['value_type'][$key]) {
                     case 'Field':
                         if ($params['value'][$key] === '') {
                             continue 2;
@@ -192,7 +207,7 @@ class actionCreateRecord extends actionBase {
                         $fieldName = $params['value'][$key];
                         $data = $bean->field_defs[$fieldName];
 
-                        switch($data['type'] ) {
+                        switch ($data['type']) {
                             case 'double':
                             case 'decimal':
                             case 'currency':
@@ -205,14 +220,14 @@ class actionCreateRecord extends actionBase {
                             case 'int':
                                 $value = format_number($bean->$fieldName);
                                 break;
-			    case 'relate':
-			        if(isset($data['id_name']) && $record_vardefs[$field]['type'] === 'relate'){
-				    $idName = $data['id_name'];
-                                    $value = $bean->$idName;
-				}else{
-				    $value = $bean->$fieldName;
-				}
-				break;
+                case 'relate':
+                    if (isset($data['id_name']) && $record_vardefs[$field]['type'] === 'relate') {
+                        $idName = $data['id_name'];
+                        $value = $bean->$idName;
+                    } else {
+                        $value = $bean->$fieldName;
+                    }
+                break;
                             default:
                                 $value = $bean->$fieldName;
                                 break;
@@ -224,7 +239,7 @@ class actionCreateRecord extends actionBase {
                             $dformat = 'Y-m-d';
                         }
                         switch ($params['value'][$key][3]) {
-                            case 'business_hours';
+                            case 'business_hours':
                                 require_once 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
 
                                 $businessHours = new AOBH_BusinessHours();
@@ -233,33 +248,33 @@ class actionCreateRecord extends actionBase {
                                 $sign = $params['value'][$key][1];
                                 $amount = $params['value'][$key][2];
 
-                                if($sign !== 'plus'){
+                                if ($sign !== 'plus') {
                                     $amount = 0-$amount;
                                 }
-                                if($dateToUse === 'now'){
+                                if ($dateToUse === 'now') {
                                     $value = $businessHours->addBusinessHours($amount);
-                                }else if($dateToUse === 'field'){
+                                } elseif ($dateToUse === 'field') {
                                     $dateToUse = $params['field'][$key];
                                     $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->$dateToUse));
-                                }else{
+                                } else {
                                     $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->$dateToUse));
                                 }
-                                $value = $timedate->asDb( $value );
+                                $value = $timedate->asDb($value);
                                 break;
                             default:
-                                if($params['value'][$key][0] === 'now'){
+                                if ($params['value'][$key][0] === 'now') {
                                     $date = gmdate($dformat);
-                                } else if($params['value'][$key][0] === 'field'){
+                                } elseif ($params['value'][$key][0] === 'field') {
                                     $dateToUse = $params['field'][$key];
                                     $date = $record->$dateToUse;
-                                } else if ($params['value'][$key][0] === 'today') {
+                                } elseif ($params['value'][$key][0] === 'today') {
                                     $date = $params['value'][$key][0];
                                 } else {
                                     $dateToUse = $params['value'][$key][0];
                                     $date = $bean->$dateToUse;
                                 }
 
-                                if($params['value'][$key][1] !== 'now'){
+                                if ($params['value'][$key][1] !== 'now') {
                                     $value = date($dformat, strtotime($date . ' '.$app_list_strings['aow_date_operator'][$params['value'][$key][1]].$params['value'][$key][2].' '.$params['value'][$key][3]));
                                 } else {
                                     $value = date($dformat, strtotime($date));
@@ -267,44 +282,44 @@ class actionCreateRecord extends actionBase {
                                 break;
                         }
                         break;
-                    Case 'Round_Robin':
-                    Case 'Least_Busy':
-                    Case 'Random':
-                        switch($params['value'][$key][0]) {
-                            Case 'security_group':
+                    case 'Round_Robin':
+                    case 'Least_Busy':
+                    case 'Random':
+                        switch ($params['value'][$key][0]) {
+                            case 'security_group':
                                 require_once 'modules/SecurityGroups/SecurityGroup.php';
                                 $security_group = new SecurityGroup();
                                 $security_group->retrieve($params['value'][$key][1]);
-                                $group_users = $security_group->get_linked_beans( 'users','User');
+                                $group_users = $security_group->get_linked_beans('users', 'User');
                                 $users = array();
                                 $r_users = array();
-                                if($params['value'][$key][2] != ''){
+                                if ($params['value'][$key][2] != '') {
                                     require_once 'modules/ACLRoles/ACLRole.php';
                                     $role = new ACLRole();
                                     $role->retrieve($params['value'][$key][2]);
-                                    $role_users = $role->get_linked_beans( 'users','User');
-                                    foreach($role_users as $role_user){
+                                    $role_users = $role->get_linked_beans('users', 'User');
+                                    foreach ($role_users as $role_user) {
                                         $r_users[$role_user->id] = $role_user->name;
                                     }
                                 }
-                                foreach($group_users as $group_user){
-                                    if($params['value'][$key][2] != '' && !isset($r_users[$group_user->id])){
+                                foreach ($group_users as $group_user) {
+                                    if ($params['value'][$key][2] != '' && !isset($r_users[$group_user->id])) {
                                         continue;
                                     }
                                     $users[$group_user->id] = $group_user->name;
                                 }
                                 break;
-                            Case 'role':
+                            case 'role':
                                 require_once 'modules/ACLRoles/ACLRole.php';
                                 $role = new ACLRole();
                                 $role->retrieve($params['value'][$key][2]);
-                                $role_users = $role->get_linked_beans( 'users','User');
+                                $role_users = $role->get_linked_beans('users', 'User');
                                 $users = array();
-                                foreach($role_users as $role_user){
+                                foreach ($role_users as $role_user) {
                                     $users[$role_user->id] = $role_user->name;
                                 }
                                 break;
-                            Case 'all':
+                            case 'all':
                             default:
                                 $users = get_user_array(false);
                                 break;
@@ -313,23 +328,23 @@ class actionCreateRecord extends actionBase {
                         // format the users array
                         $users = array_values(array_flip($users));
 
-                        if(empty($users)){
+                        if (empty($users)) {
                             $value = '';
-                        }else if (count($users) == 1) {
+                        } elseif (count($users) == 1) {
                             $value = $users[0];
                         } else {
-                            switch($params['value_type'][$key]) {
-                                Case 'Round_Robin':
+                            switch ($params['value_type'][$key]) {
+                                case 'Round_Robin':
                                     $value = getRoundRobinUser($users, $this->id);
                                     break;
-                                Case 'Least_Busy':
+                                case 'Least_Busy':
                                     $user_id = 'assigned_user_id';
-                                    if(isset($record_vardefs[$field]['id_name']) && $record_vardefs[$field]['id_name'] != ''){
+                                    if (isset($record_vardefs[$field]['id_name']) && $record_vardefs[$field]['id_name'] != '') {
                                         $user_id = $record_vardefs[$field]['id_name'];
                                     }
                                     $value = getLeastBusyUser($users, $user_id, $record);
                                     break;
-                                Case 'Random':
+                                case 'Random':
                                 default:
                                     shuffle($users);
                                     $value = $users[0];
@@ -345,7 +360,7 @@ class actionCreateRecord extends actionBase {
                         break;
                 }
 
-                if($record_vardefs[$field]['type'] === 'relate' && isset($record_vardefs[$field]['id_name'])) {
+                if ($record_vardefs[$field]['type'] === 'relate' && isset($record_vardefs[$field]['id_name'])) {
                     $field = $record_vardefs[$field]['id_name'];
                 }
                 $record->$field = $value;
@@ -380,7 +395,7 @@ class actionCreateRecord extends actionBase {
         $record_vardefs = $record->getFieldDefinitions();
 
         require_once 'modules/Relationships/Relationship.php';
-        if(isset($params['rel'])){
+        if (isset($params['rel'])) {
             foreach ($params['rel'] as $key => $field) {
                 if ($field == '' || $params['rel_value'][$key] == '') {
                     continue;
@@ -388,12 +403,12 @@ class actionCreateRecord extends actionBase {
 
                 $relField = $params['rel_value'][$key];
 
-                switch($params['rel_value_type'][$key]) {
+                switch ($params['rel_value_type'][$key]) {
                     case 'Field':
 
                         $data = $bean->field_defs[$relField];
 
-                        if($data['type'] == 'relate' && isset($data['id_name'])) {
+                        if ($data['type'] == 'relate' && isset($data['id_name'])) {
                             $relField = $data['id_name'];
                         }
                         $rel_id = $bean->$relField;
@@ -404,13 +419,11 @@ class actionCreateRecord extends actionBase {
                 }
 
                 $def = $record_vardefs[$field];
-                if($def['type'] == 'link' && !empty($def['relationship'])){
+                if ($def['type'] == 'link' && !empty($def['relationship'])) {
                     $record->load_relationship($field);
                     $record->$field->add($rel_id);
                 }
             }
         }
     }
-
-
 }

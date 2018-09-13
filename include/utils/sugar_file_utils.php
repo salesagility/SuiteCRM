@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -125,9 +125,8 @@ function sugar_fopen($filename, $mode, $use_include_path = false, $context = nul
 
     if (empty($context)) {
         return fopen($filename, $mode, $use_include_path);
-    } else {
-        return fopen($filename, $mode, $use_include_path, $context);
     }
+    return fopen($filename, $mode, $use_include_path, $context);
 }
 
 /**
@@ -153,7 +152,7 @@ function sugar_file_put_contents($filename, $data, $flags = null, $context = nul
     }
 
     if (!is_writable($filename)) {
-        $GLOBALS['log']->error("File $filename cannot be written to");
+        LoggerManager::getLogger()->error("File $filename cannot be written to");
 
         return false;
     }
@@ -232,9 +231,8 @@ function sugar_file_get_contents($filename, $use_include_path = false, $context 
 
     if (empty($context)) {
         return file_get_contents($filename, $use_include_path);
-    } else {
-        return file_get_contents($filename, $use_include_path, $context);
     }
+    return file_get_contents($filename, $use_include_path, $context);
 }
 
 /**
@@ -300,9 +298,8 @@ function sugar_chmod($filename, $mode = null)
         }
         if (isset($mode) && $mode > 0) {
             return @chmod($filename, $mode);
-        } else {
-            return false;
         }
+        return false;
     }
 
     return true;
@@ -323,15 +320,13 @@ function sugar_chown($filename, $user = '')
     if (!is_windows()) {
         if (strlen($user)) {
             return chown($filename, $user);
-        } else {
-            if (strlen($GLOBALS['sugar_config']['default_permissions']['user'])) {
-                $user = $GLOBALS['sugar_config']['default_permissions']['user'];
-
-                return chown($filename, $user);
-            } else {
-                return false;
-            }
         }
+        if (strlen($GLOBALS['sugar_config']['default_permissions']['user'])) {
+            $user = $GLOBALS['sugar_config']['default_permissions']['user'];
+
+            return chown($filename, $user);
+        }
+        return false;
     }
 
     return true;
@@ -352,15 +347,13 @@ function sugar_chgrp($filename, $group = '')
     if (!is_windows()) {
         if (!empty($group)) {
             return chgrp($filename, $group);
-        } else {
-            if (!empty($GLOBALS['sugar_config']['default_permissions']['group'])) {
-                $group = $GLOBALS['sugar_config']['default_permissions']['group'];
-
-                return chgrp($filename, $group);
-            } else {
-                return false;
-            }
         }
+        if (!empty($GLOBALS['sugar_config']['default_permissions']['group'])) {
+            $group = $GLOBALS['sugar_config']['default_permissions']['group'];
+
+            return chgrp($filename, $group);
+        }
+        return false;
     }
 
     return true;
@@ -425,7 +418,7 @@ function sugar_cached($file)
  */
 function sugar_is_dir($path)
 {
-    if(isset($GLOBALS['log'])) {
+    if (isset($GLOBALS['log'])) {
         $GLOBALS['log']->deprecated('sugar_file_utils.php: sugar_is_dir() is deprecated');
     }
     return is_dir($path);
@@ -440,7 +433,7 @@ function sugar_is_dir($path)
  */
 function sugar_is_file($path)
 {
-    if(isset($GLOBALS['log'])) {
+    if (isset($GLOBALS['log'])) {
         $GLOBALS['log']->deprecated('sugar_file_utils.php: sugar_is_file() is deprecated');
     }
     return is_file($path);

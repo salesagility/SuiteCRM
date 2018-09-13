@@ -42,16 +42,18 @@ require_once 'Zend/Gdata/Extension/Reminder.php';
  */
 class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'when';
     protected $_reminders = array();
     protected $_startTime = null;
     protected $_valueString = null;
     protected $_endTime = null;
 
-    public function __construct($startTime = null, $endTime = null,
-            $valueString = null, $reminders = null)
-    {
+    public function __construct(
+        $startTime = null,
+        $endTime = null,
+            $valueString = null,
+        $reminders = null
+    ) {
         parent::__construct();
         $this->_startTime = $startTime;
         $this->_endTime = $endTime;
@@ -74,7 +76,8 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
         if ($this->_reminders !== null) {
             foreach ($this->_reminders as $reminder) {
                 $element->appendChild(
-                        $reminder->getDOM($element->ownerDocument));
+                        $reminder->getDOM($element->ownerDocument)
+                );
             }
         }
         return $element;
@@ -84,7 +87,7 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gd') . ':' . 'reminder';
+            case $this->lookupNamespace('gd') . ':' . 'reminder':
                 $reminder = new Zend_Gdata_Extension_Reminder();
                 $reminder->transferFromDOM($child);
                 $this->_reminders[] = $reminder;
@@ -114,9 +117,9 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
 
     public function __toString()
     {
-        if ($this->_valueString)
+        if ($this->_valueString) {
             return $this->_valueString;
-        else {
+        } else {
             return 'Starts: ' . $this->getStartTime() . ' ' .
                    'Ends: ' .  $this->getEndTime();
         }
@@ -165,5 +168,4 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
         $this->_reminders = $value;
         return $this;
     }
-
 }

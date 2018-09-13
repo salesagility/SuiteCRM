@@ -1,6 +1,7 @@
 <?php
 
-class directw {
+class directw
+{
 
 var $mpdf = null;
 
@@ -38,7 +39,7 @@ function Write($h,$txt,$currentx=0,$link='',$directionality='ltr',$align='') {
 		if (preg_match("/([".$this->mpdf->pregRTLchars."])/u", $txt)) { $this->mpdf->biDirectional = true; }	// *RTL*
 		$checkCursive=false;
 		if ($this->mpdf->biDirectional) {  $checkCursive=true; }	// *RTL*
-		else if (isset($this->mpdf->CurrentFont['indic']) && $this->mpdf->CurrentFont['indic']) {  $checkCursive=true; }	// *INDIC*
+		elseif (isset($this->mpdf->CurrentFont['indic']) && $this->mpdf->CurrentFont['indic']) {  $checkCursive=true; }	// *INDIC*
 		while($i<$nb) {
 			//Get next character
 			$c = mb_substr($s,$i,1,$this->mpdf->mb_enc );

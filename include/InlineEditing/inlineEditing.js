@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2015 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 buildEditField();
 
@@ -114,7 +115,7 @@ function buildEditField(){
 
         if(view == "view_GanttChart" )
             view = "DetailView";
-        
+
         if(view == "DetailView"){
             var field = $(_this).attr( "field" );
             var type = $(_this).attr( "type" );
@@ -185,13 +186,13 @@ function buildEditField(){
     };
 
     var touchtime = 0;
-    $('.inlineEdit').on('click', function(e) {
+    $(".inlineEdit").dblclick(function(e) {
         if(touchtime == 0) {
             //set first click
             touchtime = new Date().getTime();
         } else {
             //compare first click to this click and see if they occurred within double click threshold
-            if(((new Date().getTime())-touchtime) < 800) {
+            if (((new Date().getTime()) - touchtime) < 800) {
                 //double click occurred
                 //alert("double clicked");
                 touchtime = 0;
@@ -203,7 +204,7 @@ function buildEditField(){
         }
     });
 
-    $(".inlineEdit").dblclick(function(e) {
+    $(".inlineEdit").dblclick(function (e) {
         onInlineEditDblClick(this, e);
     });
 
@@ -251,7 +252,6 @@ function clickedawayclose(field,id,module, type){
     // Fix for issue #373 get name from system field name.
     message_field = 'LBL_' + field.toUpperCase();
     message_field = SUGAR.language.get(module, message_field);
-
     // Fix for issue #373 remove ':'
     var last_charachter = message_field.substring(message_field.length, message_field.length - 1);
     if (':'.toUpperCase() === last_charachter.toUpperCase()) {
@@ -266,13 +266,12 @@ function clickedawayclose(field,id,module, type){
 }
 
 $(document).on('click', function (e) {
-    if(clickListenerActive) {
+    if (clickListenerActive) {
         var field = ie_field;
         var id = ie_id;
         var module = ie_module;
         var type = ie_type;
         var message_field = ie_message_field;
-        var alertFlag = true;
 
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
             var output_value = loadFieldHTMLValue(field, id, module);
@@ -308,11 +307,18 @@ $(document).on('click', function (e) {
                 }
             }
 
-            if (user_value == outputValueParse || user_value == output_value) {
-                var alertFlag = false;
+            var date_compare = false;
+            var output_value_compare = '';
+            if (type == 'datetimecombo' || type == 'datetime' || type == 'date') {
+                if (output_value == user_value) {
+                    output_value_compare = user_value;
+                    date_compare = true;
+                }
+            } else {
+                output_value_compare = $(output_value).text();
             }
-
-            if (alertFlag) {
+            if (user_value != output_value_compare) {
+                message_field = message_field != 'undefined' ? message_field : '';
                 var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + message_field);
                 if (r == true) {
                     var output = setValueClose(output_value);
@@ -323,7 +329,7 @@ $(document).on('click', function (e) {
                 }
             } else {
                 // user hasn't changed value so can close field without warning them first
-                var output = setValueClose(output_value);
+                var output = date_compare ? setValueClose(user_value) : setValueClose(output_value);
                 clickListenerActive = false;
             }
         }
@@ -341,8 +347,6 @@ $(document).on('click', function (e) {
  */
 
 function getInputValue(field,type){
-
-
 
     if($('#'+ field).length > 0 && type){
 
@@ -422,6 +426,7 @@ function getInputValue(field,type){
 function handleSave(field,id,module,type){
     var value = getInputValue(field,type);
     var parent_type = "";
+
     if(typeof value === "undefined"){
         var value = "";
     }
@@ -429,8 +434,6 @@ function handleSave(field,id,module,type){
     if(type == "parent") {
         parent_type = $('#parent_type').val();
     }
-
-
     var output_value = saveFieldHTML(field,module,id,value, parent_type);
     var output = setValueClose(output_value);
 }
@@ -467,18 +470,18 @@ function setValueClose(value){
 
 function saveFieldHTML(field,module,id,value, parent_type) {
     $.ajaxSetup({"async": false});
-    var result = $.post('index.php',
-      {
-          'module': 'Home',
-          'action': 'saveHTMLField',
-          'field': field,
-          'current_module': module,
-          'id': id,
-          'value': value,
-          'view' : view,
-          'parent_type': parent_type,
-          'to_pdf': true
-      }, null, "json"
+    var result = $.getJSON('index.php',
+        {
+            'module': 'Home',
+            'action': 'saveHTMLField',
+            'field': field,
+            'current_module': module,
+            'id': id,
+            'value': value,
+            'view' : view,
+            'parent_type': parent_type,
+            'to_pdf': true
+        }
     );
     $.ajaxSetup({"async": true});
     return(result.responseText);
@@ -496,18 +499,18 @@ function saveFieldHTML(field,module,id,value, parent_type) {
  * @returns {*}
  */
 
-function loadFieldHTML(field,module,id) {
+function loadFieldHTML(field, module, id) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-      {
-          'module': 'Home',
-          'action': 'getEditFieldHTML',
-          'field': field,
-          'current_module': module,
-          'id': id,
-          'view' : view,
-          'to_pdf': true
-      }
+        {
+            'module': 'Home',
+            'action': 'getEditFieldHTML',
+            'field': field,
+            'current_module': module,
+            'id': id,
+            'view': view,
+            'to_pdf': true
+        }
     );
     $.ajaxSetup({"async": true});
     if(result.responseText){
@@ -534,22 +537,22 @@ function loadFieldHTML(field,module,id) {
  * @returns {*}
  */
 
-function loadFieldHTMLValue(field,id,module) {
+function loadFieldHTMLValue(field, id, module) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-      {
-          'module': 'Home',
-          'action': 'getDisplayValue',
-          'field': field,
-          'current_module': module,
-          'view': view,
-          'id': id,
-          'to_pdf': true
-      }
+        {
+            'module': 'Home',
+            'action': 'getDisplayValue',
+            'field': field,
+            'current_module': module,
+            'view': view,
+            'id': id,
+            'to_pdf': true
+        }
     );
     $.ajaxSetup({"async": true});
 
-    return(result.responseText);
+    return (result.responseText);
 }
 
 /**
@@ -562,17 +565,17 @@ function loadFieldHTMLValue(field,id,module) {
  * @returns {*}
  */
 
-function getValidationRules(field,module,id){
+function getValidationRules(field, module, id) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-      {
-          'module': 'Home',
-          'action': 'getValidationRules',
-          'field': field,
-          'current_module': module,
-          'id': id,
-          'to_pdf': true
-      }
+        {
+            'module': 'Home',
+            'action': 'getValidationRules',
+            'field': field,
+            'current_module': module,
+            'id': id,
+            'to_pdf': true
+        }
     );
     $.ajaxSetup({"async": true});
 
@@ -596,17 +599,17 @@ function getValidationRules(field,module,id){
  * @returns {*}
  */
 
-function getRelateFieldJS(field, module, id){
+function getRelateFieldJS(field, module, id) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
-      {
-          'module': 'Home',
-          'action': 'getRelateFieldJS',
-          'field': field,
-          'current_module': module,
-          'id': id,
-          'to_pdf': true
-      }
+        {
+            'module': 'Home',
+            'action': 'getRelateFieldJS',
+            'field': field,
+            'current_module': module,
+            'id': id,
+            'to_pdf': true
+        }
     );
     $.ajaxSetup({"async": true});
 

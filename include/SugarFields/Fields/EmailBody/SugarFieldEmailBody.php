@@ -64,4 +64,56 @@ class SugarFieldEmailBody extends SugarFieldBase
 
         return $this->fetch($this->findTemplate('DetailView'));
     }
+
+    /**
+     * @param string $parentFieldArray
+     * @param array $vardef
+     * @param array $displayParams
+     * @param integer $tabindex
+     * @return string
+     */
+    public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    {
+        $sugarCleaner = new SugarCleaner();
+        $vardef['value'] = $sugarCleaner::cleanHtml($this->getVardefValue($vardef));
+
+        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+
+        return $this->fetch($this->findTemplate('EditView'));
+    }
+
+    /**
+     * @param string $parentFieldArray
+     * @param array $vardef
+     * @param array $displayParams
+     * @param integer $tabindex
+     * @return string
+     */
+    public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    {
+        $sugarCleaner = new SugarCleaner();
+        $vardef['value'] = $sugarCleaner::cleanHtml($this->getVardefValue($vardef));
+
+        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
+
+        return $this->fetch($this->findTemplate('DetailView'));
+    }
+
+    /**
+     * @param array $vardef
+     * @return mixed
+     */
+    private function getVardefValue($vardef)
+    {
+        if (empty($vardef['value'])) {
+            if (!empty($vardef['default'])) {
+                return $vardef['default'];
+            } elseif (!empty($vardef['default_value'])) {
+                return $vardef['default_value'];
+            }
+            LoggerManager::getLogger()->warn('Vardef has no value');
+        }
+
+        return utf8_decode($vardef['value']);
+    }
 }

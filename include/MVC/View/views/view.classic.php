@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,47 +34,44 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/MVC/View/SugarView.php');
 require_once('include/MVC/Controller/SugarController.php');
 
 class ViewClassic extends SugarView
 {
- 	/**
- 	 * @see SugarView::SugarView()
- 	 */
+    /**
+     * @see SugarView::SugarView()
+     */
     public function __construct(
- 	    $bean = null,
+        $bean = null,
         $view_object_map = array()
-        )
-    {
- 		parent::__construct();
- 		$this->type = $this->action;
- 	}
+        ) {
+        parent::__construct();
+        $this->type = $this->action;
+    }
 
- 	/**
- 	 * @see SugarView::display()
- 	 */
+    /**
+     * @see SugarView::display()
+     */
     public function display()
     {
-		if(($this->bean instanceof SugarBean) && isset($this->view_object_map['remap_action']) && !$this->bean->ACLAccess($this->view_object_map['remap_action']))
-		{
-		  ACLController::displayNoAccess(true);
-		  return false;
-		}
- 		// Call SugarController::getActionFilename to handle case sensitive file names
- 		$file = SugarController::getActionFilename($this->action);
- 		if(file_exists('custom/modules/' . $this->module . '/'. $file . '.php')){
-			$this->includeClassicFile('custom/modules/'. $this->module . '/'. $file . '.php');
-			return true;
-		}
-		elseif(file_exists('modules/' . $this->module . '/'. $file . '.php')){
-			$this->includeClassicFile('modules/'. $this->module . '/'. $file . '.php');
-			return true;
-		}
-		return false;
- 	}
+        if (($this->bean instanceof SugarBean) && isset($this->view_object_map['remap_action']) && !$this->bean->ACLAccess($this->view_object_map['remap_action'])) {
+            ACLController::displayNoAccess(true);
+            return false;
+        }
+        // Call SugarController::getActionFilename to handle case sensitive file names
+        $file = SugarController::getActionFilename($this->action);
+        if (file_exists('custom/modules/' . $this->module . '/'. $file . '.php')) {
+            $this->includeClassicFile('custom/modules/'. $this->module . '/'. $file . '.php');
+            return true;
+        } elseif (file_exists('modules/' . $this->module . '/'. $file . '.php')) {
+            $this->includeClassicFile('modules/'. $this->module . '/'. $file . '.php');
+            return true;
+        }
+        return false;
+    }
 }

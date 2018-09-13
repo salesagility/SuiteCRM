@@ -21,9 +21,12 @@
     <div>
         <strong>{$MOD.LBL_DURATION}</strong>
         {if !empty($FIELD.DURATION_HOURS)}
-            {$FIELD.DURATION_HOURS} {$MOD.LBL_HOURS_ABBREV}
+            {if $FIELD.DURATION_HOURS > 1}
+                {$FIELD.DURATION_HOURS} {$MOD.LBL_HOURS_ABBREV}
+            {else}
+                {$FIELD.DURATION_HOURS} {$MOD.LBL_HOUR_ABBREV}
+            {/if}
         {/if}
-
         {if !empty($FIELD.DURATION_MINUTES)}
             {$FIELD.DURATION_MINUTES} {$MOD.LBL_MINSS_ABBREV}
         {/if}

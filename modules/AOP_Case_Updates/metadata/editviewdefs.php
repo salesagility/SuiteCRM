@@ -19,51 +19,51 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 $module_name = 'AOP_Case_Updates';
 $viewdefs [$module_name] =
-    array (
+    array(
         'EditView' =>
-        array (
+        array(
             'templateMeta' =>
-            array (
+            array(
                 'maxColumns' => '2',
                 'widths' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         'label' => '10',
                         'field' => '30',
                     ),
                     1 =>
-                    array (
+                    array(
                         'label' => '10',
                         'field' => '30',
                     ),
                 ),
             ),
             'panels' =>
-            array (
+            array(
                 'default' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         0 => 'name',
                         1 => 'assigned_user_name',
                     ),
                     1 =>
-                    array (
+                    array(
                         0 => 'description',
                         1 =>
-                        array (
+                        array(
                             'name' => 'aop_case_updates_contacts_1_name',
                         ),
                     ),
                     2 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'cases_aop_case_updates_1_name',
                         ),
                     ),

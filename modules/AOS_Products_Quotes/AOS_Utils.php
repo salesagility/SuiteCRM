@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
@@ -22,29 +24,27 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <info@salesagility.com>
+ * @author SalesAgility Ltd <info@salesagility.com>
  */
 
-function perform_aos_save($focus){
-
-    foreach($focus->field_defs as $field){
-
+function perform_aos_save($focus)
+{
+    foreach ($focus->field_defs as $field) {
         $fieldName = $field['name'];
         $fieldNameDollar = $field['name'].'_usdollar';
 
-        if(isset($focus->field_defs[$fieldNameDollar])){
-
+        if (isset($focus->field_defs[$fieldNameDollar])) {
             $focus->$fieldNameDollar = '';
-            if(!number_empty($focus->field_defs[$field['name']])){
+            if (!number_empty($focus->field_defs[$field['name']])) {
                 $currency = new Currency();
-                if(!isset($focus->currency_id)) {
+                if (!isset($focus->currency_id)) {
                     LoggerManager::getLogger()->warn('Currency is not set for perform AOS save.');
                     $currency->retrieve();
                 } else {
                     $currency->retrieve($focus->currency_id);
                 }
 
-                if(!isset($focus->$fieldName)) {
+                if (!isset($focus->$fieldName)) {
                     LoggerManager::getLogger()->warn('Perform AOS Save error: Undefined field name of focus. Focus and field name were: ' . get_class($focus) . ', ' . $fieldName);
                 }
                 $amountToConvert = isset($focus->$fieldName) ? $focus->$fieldName : null;
@@ -60,9 +60,7 @@ function perform_aos_save($focus){
 
                 $focus->$fieldNameDollar = $currency->convertToDollar($amountToConvert);
             }
-
         }
-
     }
 }
 

@@ -46,12 +46,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * StateCheckerTrait
- * 
+ *
  * Using in state checker tests.
  *
  * @author SalesAgility
  */
-trait StateCheckerTrait {
+trait StateCheckerTrait
+{
    
     /**
      *
@@ -60,7 +61,7 @@ trait StateCheckerTrait {
     protected static $stateChecker = null;
     
     /**
-     * 
+     *
      */
     protected function saveStates()
     {
@@ -72,7 +73,7 @@ trait StateCheckerTrait {
     }
     
     /**
-     * 
+     *
      */
     protected function checkStates()
     {
@@ -95,12 +96,12 @@ trait StateCheckerTrait {
     
     /**
      *
-     * @var array 
+     * @var array
      */
     protected static $testCounters = [];
     
     /**
-     * 
+     *
      * @return string
      */
     protected static function getClassName()
@@ -110,7 +111,7 @@ trait StateCheckerTrait {
     }
     
     /**
-     * 
+     *
      * @return int
      */
     protected static function getTestMethodsCount()
@@ -127,11 +128,11 @@ trait StateCheckerTrait {
     }
 
     /**
-     * 
+     *
      * @throws StateCheckerException
      */
-    protected function beforeStateCheck() {
-        
+    protected function beforeStateCheck()
+    {
         $mode = StateCheckerConfig::get('testStateCheckMode');
         
         switch ($mode) {
@@ -153,16 +154,14 @@ trait StateCheckerTrait {
             default:
                 throw new StateCheckerException('Incorect state check mode: ' . $mode);
         }
-        
-        
     }
-    
+
     /**
-     * 
+     *
      * @throws StateCheckerException
      */
-    protected function afterStateCheck() {
-        
+    protected function afterStateCheck()
+    {
         $mode = StateCheckerConfig::get('testStateCheckMode');
         
         switch ($mode) {
@@ -184,7 +183,5 @@ trait StateCheckerTrait {
             default:
                 throw new StateCheckerException('Incorect state check mode: ' . $mode);
         }
-        
     }
-    
 }

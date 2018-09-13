@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once 'Zend/Gdata/Extension.php';
@@ -43,10 +44,9 @@ require_once 'Zend/Gdata/Extension.php';
 
 class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'gd';
     protected $_rootElement = 'email';
-    protected $_isPrimary = FALSE;
+    protected $_isPrimary = false;
     protected $_emailType = null;
     protected $_email = null;
     /**
@@ -62,8 +62,7 @@ class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
-        switch ($absoluteNodeName)
-        {
+        switch ($absoluteNodeName) {
             default:
                 parent::takeChildFromDOM($child);
                 break;
@@ -78,13 +77,13 @@ class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
      */
     protected function takeAttributeFromDOM($attribute)
     {
-        switch ($attribute->localName)
-        {
+        switch ($attribute->localName) {
             case 'primary':
-                if(strtolower($attribute->nodeValue) == 'true')
+                if (strtolower($attribute->nodeValue) == 'true') {
                     $this->_isPrimary = true;
-                else
+                } else {
                     $this->_isPrimary = false;
+                }
             break;
             
             case 'rel':
@@ -103,10 +102,11 @@ class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
 
     public function getEmailType()
     {
-        if($this->_emailType == null)
+        if ($this->_emailType == null) {
             return '';
-        else
+        } else {
             return str_replace($this->lookupNamespace('gd') . '#', '', $this->_emailType);
+        }
     }
     
     public function getEmail()
@@ -119,4 +119,3 @@ class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
         return $this->_isPrimary;
     }
 }
- 

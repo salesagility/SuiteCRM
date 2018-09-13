@@ -466,7 +466,7 @@
 </div>
 {if $ID}
     <div id="eapm_area" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};' class="user-tab-content">
-        <div style="text-align:center; width: 100%">{sugar_image name="loading"}</div>
+        <div style="text-align:center; width: 100%">{sugar_getimage name="loading"}</div>
     </div>
 {/if}
 <div class="user-tab-content">
@@ -516,6 +516,12 @@
                     <td width="17%" scope="row"><span>{$MOD.LBL_SUBPANEL_TABS}
                             :</span>&nbsp;{sugar_help text=$MOD.LBL_SUBPANEL_TABS_DESCRIPTION }</td>
                     <td width="83%" colspan="3"><input type="checkbox" name="user_subpanel_tabs" {$SUBPANEL_TABS}
+                                                       tabindex='13'></td>
+                </tr>
+                <tr>
+                    <td width="17%" scope="row"><span>{$MOD.LBL_COUNT_COLLAPSED_SUBPANELS}
+                            :</span>&nbsp;{sugar_help text=$MOD.LBL_COUNT_COLLAPSED_SUBPANELS_DESCRIPTION }</td>
+                    <td width="83%" colspan="3"><input type="checkbox" name="user_count_collapsed_subpanels" {$COUNT_COLLAPSED_SUBPANELS}
                                                        tabindex='13'></td>
                 </tr>
             </tbody>

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 class EmailManController extends SugarController
@@ -98,6 +99,7 @@ class EmailManController extends SugarController
         $configurator->config['email_enable_confirm_opt_in'] = isset($_REQUEST['email_enable_confirm_opt_in']) ? $_REQUEST['email_enable_confirm_opt_in'] : SugarEmailAddress::COI_STAT_DISABLED;
         $configurator->config['email_enable_auto_send_opt_in'] = (isset($_REQUEST['email_enable_auto_send_opt_in'])) ? true : false;
         $configurator->config['email_confirm_opt_in_email_template_id'] = isset($_REQUEST['email_template_id_opt_in']) ? $_REQUEST['email_template_id_opt_in'] : $configurator->config['aop']['confirm_opt_in_template_id'];
+        $configurator->config['email_allow_send_as_user']  = (isset($_REQUEST['mail_allowusersend']) && $_REQUEST['mail_allowusersend'] == '1') ? true : false;
         ///////////////////////////////////////////////////////////////////////////////
         ////	SECURITY
         $security = array();
