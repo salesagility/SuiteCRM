@@ -120,7 +120,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         if ($this->validateUrl($url)) {
             $this->self = $url;
         } else {
-            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
+            $this->getLogger()->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
         return clone $this;
@@ -148,7 +148,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         if ($this->validateUrl($url)) {
             $this->first = $url;
         } else {
-            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
+            $this->getLogger()->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
         return clone $this;
@@ -164,7 +164,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         if ($this->validateUrl($url)) {
             $this->prev = $url;
         } else {
-            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
+            $this->getLogger()->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
         return clone $this;
@@ -180,7 +180,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         if ($this->validateUrl($url)) {
             $this->next = $url;
         } else {
-            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
+            $this->getLogger()->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
         return clone $this;
@@ -196,7 +196,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         if ($this->validateUrl($url)) {
             $this->last = $url;
         } else {
-            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
+            $this->getLogger()->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
         return clone $this;
@@ -355,7 +355,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
      */
     public function getLogger() {
         if (!$this->logger) {
-            $this->logger = new Logger();
+            $this->setLogger(new Logger());
         }
         return $this->logger;
     }
