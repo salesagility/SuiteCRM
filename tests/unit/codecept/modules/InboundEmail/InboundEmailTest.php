@@ -3728,8 +3728,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 
         //retrieve Outbound Server Id back and verify
         $result = $inboundEmail->getUsersDefaultOutboundServerId($user);
+        $isValidator = new SuiteCRM\Utility\SuiteValidator();
 
-        $this->assertTrue(isValidId($result));
+        $this->assertTrue($isValidator->isValidId($result));
         
         // clean up
         

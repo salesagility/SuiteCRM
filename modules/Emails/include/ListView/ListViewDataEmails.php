@@ -41,6 +41,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+use SuiteCRM\Utility\SuiteValidator;
 
 require_once('include/ListView/ListViewData.php');
 
@@ -147,7 +148,8 @@ class ListViewDataEmails extends ListViewData
             $inboundEmailID = $folder->getId();
         }
 
-        if ($inboundEmailID && !isValidId($inboundEmailID)) {
+        $isValidator = new SuiteValidator();
+        if ($inboundEmailID && !$isValidator->isValidId($inboundEmailID)) {
             throw new SuiteException("Invalid Inbound Email ID" . ($inboundEmailID ? " ($inboundEmailID)" : ''));
         }
 

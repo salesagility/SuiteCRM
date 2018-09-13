@@ -48,12 +48,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-
+use SuiteCRM\Utility\SuiteValidator;
 
 if (isset($_POST['saveConfig'])) {
     require_once('modules/Users/User.php');
 	$focus = new User();
-        if (!isValidId($_POST['record'])) {
+	$isValidator = new SuiteValidator();
+        if (!$isValidator->isValidId($_POST['record'])) {
             LoggerManager::getLogger()->warn('Invalid ID in post request');
         } else {
             $record = $_POST['record'];

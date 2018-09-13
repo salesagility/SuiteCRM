@@ -1,3 +1,4 @@
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -36,8 +37,35 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-function initPanel(id,state){panelId='detailpanel_'+id;expandPanel(id);if(state=='collapsed'){collapsePanel(id);}}
-function expandPanel(id){var panelId='detailpanel_'+id;document.getElementById(panelId).className=document.getElementById(panelId).className.replace(/(expanded|collapsed)/ig,'')+' expanded';}
-function collapsePanel(id){var panelId='detailpanel_'+id;document.getElementById(panelId).className=document.getElementById(panelId).className.replace(/(expanded|collapsed)/ig,'')+' collapsed';}
-function setCollapseState(mod,panel,isCollapsed){var sugar_panel_collase=Get_Cookie("sugar_panel_collase");if(sugar_panel_collase==null){sugar_panel_collase={};}else{sugar_panel_collase=YAHOO.lang.JSON.parse(sugar_panel_collase);}
-sugar_panel_collase[mod]=sugar_panel_collase[mod]||{};sugar_panel_collase[mod][panel]=isCollapsed;Set_Cookie('sugar_panel_collase',YAHOO.lang.JSON.stringify(sugar_panel_collase),30,'/','','');}
+
+namespace SuiteCRM\Utility;
+
+class SuiteValidator
+{
+    /**
+     * @param string $id
+     * @return bool
+     */
+
+    public function isValidId($id)
+    {
+        $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
+
+        return $valid;
+    }
+
+    /**
+     * @param string $fieldname
+     * @return bool
+     */
+    public function isPercentageField($fieldname)
+    {
+        if ($fieldname === 'aos_products_quotes_vat' ||
+            strpos(strtolower($fieldname), 'pct') !== false ||
+            strpos(strtolower($fieldname), 'percent') !== false ||
+            strpos(strtolower($fieldname), 'percentage') !== false) {
+            return true;
+        }
+        return false;
+    }
+}

@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Utility\SuiteValidator;
 
 /**
  * Class Folder
@@ -90,7 +91,9 @@ class Folder
      */
     public function retrieve($folderId = -1)
     {
-        if (isValidId($folderId)) {
+
+        $isValidator = new SuiteValidator();
+        if ($isValidator->isValidId($folderId)) {
             $result = $this->db->query("SELECT * FROM folders WHERE id='" . $folderId . "'");
             $row = $this->db->fetchByAssoc($result);
 
