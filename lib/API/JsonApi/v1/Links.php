@@ -104,13 +104,6 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
     private $logger;
 
     /**
-     * Links constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @return Links
      */
     public static function get()
