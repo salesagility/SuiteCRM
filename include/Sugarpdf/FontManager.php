@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once("include/Sugarpdf/sugarpdf_config.php");
 class FontManager
@@ -138,9 +139,8 @@ class FontManager
             return array("bold");
         } elseif (preg_match("/i.php$/i", $this->filename)) {
             return array("italic");
-        } else {
-            return array("regular");
         }
+        return array("regular");
     }
     /**
      * This method calculate the font size of $this->filename in KB
@@ -256,9 +256,8 @@ class FontManager
         ksort($this->fontList);
         if (count($this->fontList)>0) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
     /**
      * This method fill the fontList with all the fonts available
@@ -270,13 +269,13 @@ class FontManager
             require $cachedfile;
             $this->fontList=$cachedFontList;
             return true;
-        } else {
-            if ($this->parseFolder()) {
-                $cacheDir = create_cache_directory('Sugarpdf/');
-                write_array_to_file('cachedFontList', $this->fontList, $cacheDir . 'cachedFontList.php');
-                return true;
-            }
         }
+        if ($this->parseFolder()) {
+            $cacheDir = create_cache_directory('Sugarpdf/');
+            write_array_to_file('cachedFontList', $this->fontList, $cacheDir . 'cachedFontList.php');
+            return true;
+        }
+        
         return false;
     }
     /**
@@ -331,9 +330,8 @@ class FontManager
                 }
                 $this->clearCachedFile();
                 return true;
-            } else {
-                array_push($this->errors, $this->fontPath.$this->filename . " " . translate("ERR_FONT_NOT_WRITABLE", "Configurator"));
             }
+            array_push($this->errors, $this->fontPath.$this->filename . " " . translate("ERR_FONT_NOT_WRITABLE", "Configurator"));
         } else {
             array_push($this->errors, $this->fontPath . " " . translate("ERR_FONT_FILE_DO_NOT_EXIST", "Configurator"));
         }

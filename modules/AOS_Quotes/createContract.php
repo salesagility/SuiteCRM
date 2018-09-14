@@ -29,7 +29,7 @@
 
     require_once('modules/AOS_Quotes/AOS_Quotes.php');
     require_once('modules/AOS_Contracts/AOS_Contracts.php');
-    
+
     //Setting values in Quotes
     $quote = new AOS_Quotes();
     $quote->retrieve($_REQUEST['record']);

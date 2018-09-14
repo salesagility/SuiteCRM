@@ -522,16 +522,15 @@ class nusoap_base
                 $xml = "<$name$xmlns$atts/>";
                 $this->debug("serialize_val returning $xml");
                 return $xml;
-            } else {
-                if (isset($type) && isset($type_prefix)) {
-                    $type_str = " xsi:type=\"$type_prefix:$type\"";
-                } else {
-                    $type_str = '';
-                }
-                $xml = "<$name$xmlns$type_str$atts xsi:nil=\"true\"/>";
-                $this->debug("serialize_val returning $xml");
-                return $xml;
             }
+            if (isset($type) && isset($type_prefix)) {
+                $type_str = " xsi:type=\"$type_prefix:$type\"";
+            } else {
+                $type_str = '';
+            }
+            $xml = "<$name$xmlns$type_str$atts xsi:nil=\"true\"/>";
+            $this->debug("serialize_val returning $xml");
+            return $xml;
         }
         // serialize if an xsd built-in primitive type
         if ($type != '' && isset($this->typemap[$this->XMLSchemaVersion][$type])) {
@@ -549,11 +548,10 @@ class nusoap_base
                 $xml = "<$name$xmlns$atts>$val</$name>";
                 $this->debug("serialize_val returning $xml");
                 return $xml;
-            } else {
-                $xml = "<$name$xmlns xsi:type=\"xsd:$type\"$atts>$val</$name>";
-                $this->debug("serialize_val returning $xml");
-                return $xml;
             }
+            $xml = "<$name$xmlns xsi:type=\"xsd:$type\"$atts>$val</$name>";
+            $this->debug("serialize_val returning $xml");
+            return $xml;
         }
         // detect type and serialize
         $xml = '';
@@ -821,9 +819,8 @@ class nusoap_base
                 return $p . ':' . $name;
             }
             return $qname;
-        } else {
-            return $qname;
         }
+        return $qname;
     }
 
     /**
@@ -843,12 +840,10 @@ class nusoap_base
             $prefix = substr($qname, 0, strpos($qname, ':'));
             if (isset($this->namespaces[$prefix])) {
                 return $this->namespaces[$prefix].':'.$name;
-            } else {
-                return $qname;
             }
-        } else {
             return $qname;
         }
+        return $qname;
     }
 
     /**
@@ -864,9 +859,8 @@ class nusoap_base
         if ($sstr = strrchr($str, ':')) {
             // get unqualified name
             return substr($sstr, 1);
-        } else {
-            return $str;
         }
+        return $str;
     }
 
     /**
@@ -1008,9 +1002,8 @@ function timestamp_to_iso8601($timestamp, $utc=true)
             return sprintf('%04d-%02d-%02dT%02d:%02d:%02dZ', $regs[1], $regs[2], $regs[3], $regs[4], $regs[5], $regs[6]);
         }
         return false;
-    } else {
-        return $datestr;
     }
+    return $datestr;
 }
 
 /**
@@ -1047,10 +1040,9 @@ function iso8601_to_timestamp($datestr)
             }
         }
         return gmmktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-    //		return strtotime("$regs[1]-$regs[2]-$regs[3] $regs[4]:$regs[5]:$regs[6]Z");
-    } else {
-        return false;
+        //		return strtotime("$regs[1]-$regs[2]-$regs[3] $regs[4]:$regs[5]:$regs[6]Z");
     }
+    return false;
 }
 
 /**

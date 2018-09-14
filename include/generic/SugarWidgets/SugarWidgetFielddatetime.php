@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -147,9 +148,8 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
 
         if ($end) {
             return $date->setTime(23, 59, 59);
-        } else {
-            return $date->setTime(0, 0, 0);
         }
+        return $date->setTime(0, 0, 0);
     }
 
     public function queryFilterBefore($layout_def)
@@ -207,13 +207,12 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
 
         if (!$timestamp) {
             return $begin;
-        } else {
-            $begin_parts = explode(' ', $begin);
-            $date_parts=explode('-', $begin_parts[0]);
-            $time_parts=explode(':', $begin_parts[1]);
-            $curr_timestamp=mktime($time_parts[0], $time_parts[1], 0, $date_parts[1], $date_parts[2], $date_parts[0]);
-            return $curr_timestamp;
         }
+        $begin_parts = explode(' ', $begin);
+        $date_parts=explode('-', $begin_parts[0]);
+        $time_parts=explode(':', $begin_parts[1]);
+        $curr_timestamp=mktime($time_parts[0], $time_parts[1], 0, $date_parts[1], $date_parts[2], $date_parts[0]);
+        return $curr_timestamp;
     }
     /**
      * Get specified date and time for a particalur day, in current user's timezone.
@@ -538,10 +537,9 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
             if (substr_count($layout_def['type'], 'time') > 0 && $this->get_time_part($content)!= false) {
                 $td = $timedate->to_display_date_time($content);
                 return $td;
-            } else {// if date only field
+            }  // if date only field
                 $td = $timedate->to_display_date($content, false); // Avoid PHP notice of returning by reference.
                 return $td;
-            }
         }
     }
 
@@ -552,9 +550,8 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $date_parts=$timedate->split_date_time($date_time_value);
         if (count($date_parts) > 1) {
             return $date_parts[1];
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function displayList(&$layout_def)
@@ -653,9 +650,8 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
 
         if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
             return $orderBy . " ASC\n";
-        } else {
-            return $orderBy . " DESC\n";
         }
+        return $orderBy . " DESC\n";
     }
 
     /**
@@ -767,9 +763,8 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
 
         if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
             return $orderBy . " ASC\n";
-        } else {
-            return $orderBy . " DESC\n";
         }
+        return $orderBy . " DESC\n";
     }
 
     public function displayInput($layout_def)

@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 class Meeting extends SugarBean
 {
@@ -562,14 +563,14 @@ class Meeting extends SugarBean
         global $timedate;
         $today = $timedate->nowDb();
         $nextday = $timedate->asDbDate($timedate->getNow()->get("+1 day"));
-                
+
         if (!isset($meeting_fields['DATE_START'])) {
             LoggerManager::getLogger()->warn('Meeting get list view data: Undefined index: DATE_START');
             $meetingFieldsDateStart = null;
         } else {
             $meetingFieldsDateStart = $meeting_fields['DATE_START'];
         }
-                
+
         $mergeTime = $meetingFieldsDateStart; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
         $date_db = $timedate->to_db($mergeTime);
         if ($date_db	< $today) {
@@ -623,27 +624,27 @@ class Meeting extends SugarBean
         $notifyUser = ($meetingCurrentNotifyUserObjectName == 'User') ?
                         $meeting->current_notify_user :
                         $current_user;
-                
+
         // cn: bug 8078 - fixed call to $timedate
-                
+
         if (!isset($meeting->id)) {
             LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingId)');
             $meetingId = null;
         } else {
             $meetingId = $meeting->id;
         }
-                
+
         if (!isset($meeting->current_notify_user->id)) {
             LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingCurrentNotifyUserId)');
             $meetingCurrentNotifyUserId = null;
         } else {
             $meetingCurrentNotifyUserId = $meeting->current_notify_user->id;
         }
-                
+
         if (!is_object($meeting->current_notify_user)) {
             LoggerManager::getLogger()->warn('Meeting try to set notification body but the current notify user is not an object');
         }
-                
+
         if (is_object($meeting->current_notify_user) && strtolower(get_class($meeting->current_notify_user)) == 'contact') {
             $xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
                             '/index.php?entryPoint=acceptDecline&module=Meetings&contact_id='.
@@ -660,15 +661,15 @@ class Meeting extends SugarBean
                                 $meetingCurrentNotifyUserId.'&record='.
                                 $meetingId);
         }
-                
-                
+
+
         if (!isset($meeting->current_notify_user->new_assigned_user_name)) {
             LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingCurrentNotifyUserNewAssingnedUserName)');
             $meetingCurrentNotifyUserNewAssingnedUserName = null;
         } else {
             $meetingCurrentNotifyUserNewAssingnedUserName = $meeting->current_notify_user->new_assigned_user_name;
         }
-                
+
         $xtpl->assign("MEETING_TO", $meetingCurrentNotifyUserNewAssingnedUserName);
         $xtpl->assign("MEETING_SUBJECT", trim($meeting->name));
         $xtpl->assign("MEETING_STATUS", (isset($meeting->status)? $app_list_strings['meeting_status_dom'][$meeting->status]:""));
@@ -733,12 +734,12 @@ class Meeting extends SugarBean
         parent::send_assignment_notifications($notify_user, $admin);
 
         $path = SugarConfig::getInstance()->get('upload_dir', 'upload/') . $this->id;
-                
+
         if (is_dir($path)) {
             LoggerManager::getLogger()->warn('Meeting send_assignment_notifications: unlink(' . $path . '): Is a directory');
             return false;
         }
-                
+
         return unlink($path);
     }
 
@@ -985,13 +986,13 @@ class Meeting extends SugarBean
         $def = $this->field_defs['status'];
         if (isset($def['default'])) {
             return $def['default'];
-        } else {
-            $app = return_app_list_strings_language($GLOBALS['current_language']);
-            if (isset($def['options']) && isset($app[$def['options']])) {
-                $keys = array_keys($app[$def['options']]);
-                return $keys[0];
-            }
         }
+        $app = return_app_list_strings_language($GLOBALS['current_language']);
+        if (isset($def['options']) && isset($app[$def['options']])) {
+            $keys = array_keys($app[$def['options']]);
+            return $keys[0];
+        }
+
         return '';
     }
 } // end class def
@@ -1017,14 +1018,14 @@ function getMeetingsExternalApiDropDown($focus = null, $name = null, $value = nu
         $apiList[$value] = $value;
     }
     //bug 46294: adding list of options to dropdown list (if it is not the default list)
-    
+
     if (!isset($dictionary['Meeting'])) {
         LoggerManager::getLogger()->warn('Meeting getMeetingsExternalApiDropDown: Undefined index: Meeting ($dictionaryMeeting)');
         $dictionaryMeeting = null;
     } else {
         $dictionaryMeeting = $dictionary['Meeting'];
     }
-    
+
     if ($dictionaryMeeting['fields']['type']['options'] != "eapm_list") {
         $apiList = array_merge(getMeetingTypeOptions($dictionary, $app_list_strings), $apiList);
     }

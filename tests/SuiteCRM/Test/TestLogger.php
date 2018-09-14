@@ -45,17 +45,16 @@ class TestLogger
      * @param string|string[] $levels
      * @return array
      */
-    public function getNotes($levels = 'fatal')
-    {
+    public function getNotes($levels = 'fatal') {
         $results = array();
-        if (is_string($levels)) {
+        if(is_string($levels)) {
             $levels = explode(',', $levels);
-            foreach ($levels as &$level) {
+            foreach($levels as &$level) {
                 $level = strtolower(trim($level));
             }
         }
-        foreach ($this->notes as $note) {
-            if (in_array($note['level'], $levels, true)) {
+        foreach($this->notes as $note) {
+            if(in_array($note['level'], $levels, true)) {
                 $results[] = $note;
             }
         }
@@ -70,4 +69,5 @@ class TestLogger
         $this->calls = array();
         $this->notes = array();
     }
+
 }

@@ -121,9 +121,8 @@ function getModuleFields(
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
-    } else {
-        return $fields[$value];
     }
+    return $fields[$value];
 }
 
 function getRelModuleFields($module, $rel_field, $view='EditView', $value = '')
@@ -261,9 +260,8 @@ function getModuleRelationships($module, $view='EditView', $value = '')
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
-    } else {
-        return $fields[$value];
     }
+    return $fields[$value];
 }
 
 function getValidFieldsTypes($module, $field)
@@ -600,8 +598,12 @@ function getModuleField(
                 $convert_format = "Y-m-d";
             }
             $fieldlist[$fieldname]['value'] = $timedate->to_display($value, $convert_format, $params['date_format']);
-        } else {
-            $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+        }else{
+            if($fieldlist[$fieldname]['type'] == 'date') {
+                $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value, true, true);
+            } else {
+                $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+            }
         }
         $fieldlist[$fieldname]['name'] = $aow_field;
     } elseif (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')) {
@@ -652,7 +654,7 @@ function getModuleField(
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
     $ss->assign("module", $module);
-    if (isset($params['record_id']) && $params['record_id']) {
+    if (!empty($params['record_id'])) {
         $ss->assign("record_id", $params['record_id']);
     }
 
@@ -741,9 +743,8 @@ function getDateFields($module, $view='EditView', $value = '', $field_option = t
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
-    } else {
-        return $fields[$value];
     }
+    return $fields[$value];
 }
 
 function getAssignField($aow_field, $view, $value)

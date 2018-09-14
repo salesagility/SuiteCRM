@@ -354,10 +354,9 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
             // It's a segment with pre-2.1 format delete file
             // Try to load deletions file
             return $this->_loadPre21DelFile();
-        } else {
-            // It's 2.1+ format deleteions file
-            return $this->_load21DelFile();
         }
+        // It's 2.1+ format deleteions file
+        return $this->_load21DelFile();
     }
 
     /**
@@ -388,19 +387,18 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
 
             if (extension_loaded('bitset')) {
                 return $delBytes;
-            } else {
-                $deletions = array();
-                for ($count = 0; $count < $byteCount; $count++) {
-                    $byte = ord($delBytes[$count]);
-                    for ($bit = 0; $bit < 8; $bit++) {
-                        if ($byte & (1<<$bit)) {
-                            $deletions[$count*8 + $bit] = 1;
-                        }
+            }
+            $deletions = array();
+            for ($count = 0; $count < $byteCount; $count++) {
+                $byte = ord($delBytes[$count]);
+                for ($bit = 0; $bit < 8; $bit++) {
+                    if ($byte & (1<<$bit)) {
+                        $deletions[$count*8 + $bit] = 1;
                     }
                 }
-
-                return $deletions;
             }
+
+            return $deletions;
         } catch (Zend_Search_Lucene_Exception $e) {
             if (strpos($e->getMessage(), 'is not readable') === false) {
                 throw new Zend_Search_Lucene_Exception($e->getMessage(), $e->getCode(), $e);
@@ -452,14 +450,13 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
                         }
                     }
                     return $deletions;
-                } else {
-                    for ($bit = 0; $bit < 8; $bit++) {
-                        if ($nonZeroByte & (1<<$bit)) {
-                            $deletions[$byteNum*8 + $bit] = 1;
-                        }
-                    }
-                    return (count($deletions) > 0) ? $deletions : null;
                 }
+                for ($bit = 0; $bit < 8; $bit++) {
+                    if ($nonZeroByte & (1<<$bit)) {
+                        $deletions[$byteNum*8 + $bit] = 1;
+                    }
+                }
+                return (count($deletions) > 0) ? $deletions : null;
             } while ($delFile->tell() < $delFileSize);
         } else {
             // $format is actually byte count
@@ -474,19 +471,18 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
 
             if (extension_loaded('bitset')) {
                 return $delBytes;
-            } else {
-                $deletions = array();
-                for ($count = 0; $count < $byteCount; $count++) {
-                    $byte = ord($delBytes[$count]);
-                    for ($bit = 0; $bit < 8; $bit++) {
-                        if ($byte & (1<<$bit)) {
-                            $deletions[$count*8 + $bit] = 1;
-                        }
+            }
+            $deletions = array();
+            for ($count = 0; $count < $byteCount; $count++) {
+                $byte = ord($delBytes[$count]);
+                for ($bit = 0; $bit < 8; $bit++) {
+                    if ($byte & (1<<$bit)) {
+                        $deletions[$count*8 + $bit] = 1;
                     }
                 }
-
-                return (count($deletions) > 0) ? $deletions : null;
             }
+
+            return (count($deletions) > 0) ? $deletions : null;
         }
     }
 
@@ -511,15 +507,14 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
                 if ($extension == '.fdx') {
                     // '.fdx' file is requested
                     return $fdxFile;
-                } else {
-                    // '.fdt' file is requested
-                    $fdtStartOffset = $fdxFile->readLong();
-
-                    $fdtFile = $this->_directory->getFileObject($fdtFName, $shareHandler);
-                    $fdtFile->seek($fdtStartOffset, SEEK_CUR);
-
-                    return $fdtFile;
                 }
+                // '.fdt' file is requested
+                $fdtStartOffset = $fdxFile->readLong();
+
+                $fdtFile = $this->_directory->getFileObject($fdtFName, $shareHandler);
+                $fdtFile->seek($fdtStartOffset, SEEK_CUR);
+
+                return $fdtFile;
             }
 
             if (!isset($this->_sharedDocStoreOptions['files'][$fdxFName])) {
@@ -543,17 +538,16 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
             if ($extension == '.fdx') {
                 // '.fdx' file is requested
                 return $cfxFile;
-            } else {
-                // '.fdt' file is requested
-                $fdtStartOffset = $cfxFile->readLong();
-
-                // Seek to the start of '.fdt' file within compound file
-                $cfxFile->seek($this->_sharedDocStoreOptions['files'][$fdtFName]);
-                // Seek to the start of current segment documents section
-                $cfxFile->seek($fdtStartOffset, SEEK_CUR);
-
-                return $fdtFile;
             }
+            // '.fdt' file is requested
+            $fdtStartOffset = $cfxFile->readLong();
+
+            // Seek to the start of '.fdt' file within compound file
+            $cfxFile->seek($this->_sharedDocStoreOptions['files'][$fdtFName]);
+            // Seek to the start of current segment documents section
+            $cfxFile->seek($fdtStartOffset, SEEK_CUR);
+
+            return $fdtFile;
         }
 
         $filename = $this->_name . $extension;
@@ -703,9 +697,8 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
 
         if (extension_loaded('bitset')) {
             return count(bitset_to_array($this->_deleted));
-        } else {
-            return count($this->_deleted);
         }
+        return count($this->_deleted);
     }
 
     /**
@@ -717,9 +710,8 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
     {
         if ($this->hasDeletions()) {
             return $this->_docCount - $this->_deletedCount();
-        } else {
-            return $this->_docCount;
         }
+        return $this->_docCount;
     }
 
     /**
@@ -1513,9 +1505,8 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
 
         if (extension_loaded('bitset')) {
             return bitset_in($this->_deleted, $id);
-        } else {
-            return isset($this->_deleted[$id]);
         }
+        return isset($this->_deleted[$id]);
     }
 
     /**
@@ -1544,11 +1535,10 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
             // There is no deletions file for current segment in the directory
             // Set deletions file generation number to 1
             return -1;
-        } else {
-            // There are some deletions files for current segment in the directory
-            // Set deletions file generation number to the highest nuber
-            return max($delFileList);
         }
+        // There are some deletions files for current segment in the directory
+        // Set deletions file generation number to the highest nuber
+        return max($delFileList);
     }
 
     /**
@@ -1578,10 +1568,9 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
                 $this->_deleted = $this->_loadDelFile();
 
                 return;
-            } else {
-                require_once 'Zend/Search/Lucene/Exception.php';
-                throw new Zend_Search_Lucene_Exception('Delete file processing workflow is corrupted for the segment \'' . $this->_name . '\'.');
             }
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('Delete file processing workflow is corrupted for the segment \'' . $this->_name . '\'.');
         }
 
         if ($latestDelGen > $this->_delGen) {

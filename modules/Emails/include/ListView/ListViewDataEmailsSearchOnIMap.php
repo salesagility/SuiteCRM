@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -134,7 +134,9 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             if ($emailRecord === false) {
                 continue;
             }
-
+            $assigned_user = $this->retrieveEmailAssignedUser($emailRecord['UID']);
+            $emailRecord['ASSIGNED_USER_NAME'] = $assigned_user['assigned_user_name'];
+            $emailRecord['ASSIGNED_USER_ID'] = $assigned_user['assigned_user_id'];
             $data[] = $emailRecord;
             $pageData['rowAccess'][$h] = array('edit' => true, 'view' => true);
             $pageData['additionalDetails'][$h] = '';
@@ -254,12 +256,12 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
 
         // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap
         $endOffset = floor(($total - 1) / $limit) * $limit;
-        
+
         if (!isset($pageData['ordering']) || !isset($pageData['ordering']['sortOrder'])) {
             LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: sort order is not set. Using null by default.');
             $pageData['ordering']['sortOrder'] = null;
         }
-        
+
         $pageData['queries'] = $this->lvde->callGenerateQueries(
             $pageData['ordering']['sortOrder'],
             $offset,
@@ -346,9 +348,37 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             $queryString = null;
             LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: qurey string is not set');
         }
-        
+
         $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
 
+        return $ret;
+    }
+
+
+    /**
+     * Returns an array with an email assigned_user_id and assigned_user_name
+     *
+     * @param string $uid
+     * @return array
+     */
+
+    private function retrieveEmailAssignedUser($uid)
+    {
+        $ret = array(
+            'assigned_user_id' => '',
+            'assigned_user_name' => '',
+        );
+
+        if (!empty($uid)) {
+            $email = BeanFactory::getBean('Emails');
+            $email->retrieve_by_string_fields(
+                array(
+                    'uid' => $uid
+                )
+            );
+            $ret['assigned_user_id'] = $email->assigned_user_id;
+            $ret['assigned_user_name'] = $email->assigned_user_name;
+        }
         return $ret;
     }
 }

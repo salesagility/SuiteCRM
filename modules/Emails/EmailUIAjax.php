@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Utility\SuiteValidator;
 
 /**
  * handle requested subscriptions
@@ -58,11 +59,11 @@ function handleSubs($subs, $email, $json, $user = null)
     // flows into next case statement
     $db = DBManagerFactory::getInstance();
     global $current_user;
-    
+
     if (!$user) {
         $user = $current_user;
     }
-    
+
     $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
     $viewFolders = $subs;
     $user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
@@ -560,8 +561,8 @@ if (isset($_REQUEST['emailUIAction'])) {
                 isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])
             ) {
                 $email->et->markEmails("deleted", $_REQUEST['ieId'], $_REQUEST['folder'], $_REQUEST['uids']);
-            } else {
             }
+
             break;
         case "markEmail":
             global $app_strings;
@@ -605,8 +606,8 @@ if (isset($_REQUEST['emailUIAction'])) {
                 }
                 $out = trim($json->encode($ret, false));
                 echo $out;
-            } else {
             }
+
             break;
 
         case "checkEmail2":
@@ -1128,14 +1129,14 @@ eoq;
             break;
 
         case "setFolderViewSelection":
-            
+            $isValidator = new SuiteValidator();
             $user =
-                isset($_REQUEST['user']) && $_REQUEST['user'] && isValidId($_REQUEST['user']) ?
+                isset($_REQUEST['user']) && $_REQUEST['user'] && $isValidator->isValidId($_REQUEST['user']) ?
                     BeanFactory::getBean('Users', $_REQUEST['user']) :
                     $current_user;
-            
+
             $out = handleSubs($_REQUEST['ieIdShow'], $email, $json, $user);
-            
+
             echo $out;
             break;
 
@@ -1314,9 +1315,9 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            } else {
-                echo "NOOP";
             }
+                echo "NOOP";
+
             break;
 
         case "saveOutbound":
@@ -1576,9 +1577,9 @@ eoq;
                 echo $out;
                 ob_end_flush();
                 die();
-            } else {
-                echo "NOOP: no search criteria found";
             }
+                echo "NOOP: no search criteria found";
+
             break;
 
         case "searchAdvanced":

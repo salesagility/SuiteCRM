@@ -122,17 +122,17 @@ class SugarAuthenticate
                 $usr->savePreferencesToDB();
             }
             return $this->postLoginAuthenticate();
-        } else {
-            //if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
-            if (!empty($usr_id)) {
-                if (($logout=$usr->getPreference('loginfailed'))=='') {
-                    $usr->setPreference('loginfailed', '1');
-                } else {
-                    $usr->setPreference('loginfailed', $logout+1);
-                }
-                $usr->savePreferencesToDB();
-            }
         }
+        //if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
+        if (!empty($usr_id)) {
+            if (($logout=$usr->getPreference('loginfailed'))=='') {
+                $usr->setPreference('loginfailed', '1');
+            } else {
+                $usr->setPreference('loginfailed', $logout+1);
+            }
+            $usr->savePreferencesToDB();
+        }
+        
         if (strtolower(get_class($this)) != 'sugarauthenticate') {
             $sa = new SugarAuthenticate();
             $error = (!empty($_SESSION['login_error']))?$_SESSION['login_error']:'';
@@ -392,10 +392,9 @@ class SugarAuthenticate
                         if ($session_parts[$i] == $client_parts[$i]) {
                             $classCheck = 1;
                             continue;
-                        } else {
-                            $classCheck = 0;
-                            break;
                         }
+                        $classCheck = 0;
+                        break;
                     }
                 }
                 // we have a different IP address

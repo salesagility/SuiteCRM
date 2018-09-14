@@ -222,7 +222,7 @@ class SqlsrvManager extends MssqlManager
         $sql = $this->_appendN($sql);
 
         $this->countQuery($sql);
-        $GLOBALS['log']->info('Query:' . $sql);
+        LoggerManager::getLogger()->info('Query:' . $this->removeLineBreaks($sql));
         $this->checkConnection();
         $this->query_time = microtime(true);
 
@@ -297,9 +297,8 @@ class SqlsrvManager extends MssqlManager
     {
         if ($type == 'datetime') { // see http://msdn.microsoft.com/en-us/library/ms187928.aspx for details
             return "CONVERT(datetime,$string,120)";
-        } else {
-            return parent::convert($string, $type, $additional_parameters);
         }
+        return parent::convert($string, $type, $additional_parameters);
     }
 
     /**

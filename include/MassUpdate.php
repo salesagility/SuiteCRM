@@ -113,37 +113,53 @@ class MassUpdate
         unset($_REQUEST['PHPSESSID']);
         $query = json_encode($_REQUEST);
 
-        $bean = loadBean($_REQUEST['module']);
-        $order_by_name = $bean->module_dir . '2_' . strtoupper($bean->object_name) . '_ORDER_BY';
-        $lvso = isset($_REQUEST['lvso']) ? $_REQUEST['lvso'] : "";
-        $request_order_by_name = isset($_REQUEST[$order_by_name]) ? $_REQUEST[$order_by_name] : "";
-        $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : "";
-        $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : "";
-        if ($multi_select_popup) {
-            $tempString = '';
-        } else {
-            $tempString = "<form action='index.php' method='post' name='MassUpdate'  id='MassUpdate' onsubmit=\"return check_form('MassUpdate');\">\n"
-                . "<input type='hidden' name='return_action' value='{$action}' />\n"
-                . "<input type='hidden' name='return_module' value='{$module}' />\n"
-                . "<input type='hidden' name='massupdate' value='true' />\n"
-                . "<input type='hidden' name='delete' value='false' />\n"
-                . "<input type='hidden' name='merge' value='false' />\n"
-                . "<input type='hidden' name='current_query_by_page' value='{$query}' />\n"
-                . "<input type='hidden' name='module' value='{$module}' />\n"
-                . "<input type='hidden' name='action' value='MassUpdate' />\n"
-                . "<input type='hidden' name='lvso' value='{$lvso}' />\n"
-                . "<input type='hidden' name='{$order_by_name}' value='{$request_order_by_name}' />\n";
+                if (!isset($_REQUEST['module'])) {
+                    LoggerManager::getLogger()->warn('Undefined index: module');
+                }
+
+        $bean = loadBean(isset($_REQUEST['module']) ? $_REQUEST['module'] : null);
+
+        if (!isset($bean->module_dir)) {
+            LoggerManager::getLogger()->warn('module_dir is not set for bean');
+        }
+        if (!isset($bean->object_name)) {
+            LoggerManager::getLogger()->warn('object_name is not set for bean');
         }
 
-        // cn: bug 9103 - MU navigation in emails is broken
-        if ($_REQUEST['module'] == 'Emails') {
-            $type = "";
-            // determine "type" - inbound, archive, etc.
-            if (isset($_REQUEST['type'])) {
-                $type = $_REQUEST['type'];
-            }
-            // determine owner
-            $tempString .= <<<eoq
+       $order_by_name = (isset($bean->module_dir) ? $bean->module_dir : null).'2_'.strtoupper(isset($bean->object_name) ? $bean->object_name : null).'_ORDER_BY' ;
+       $lvso = isset($_REQUEST['lvso'])?$_REQUEST['lvso']:"";
+       $request_order_by_name = isset($_REQUEST[$order_by_name])?$_REQUEST[$order_by_name]:"";
+       $action = isset($_REQUEST['action'])?$_REQUEST['action']:"";
+       $module = isset($_REQUEST['module'])?$_REQUEST['module']:"";
+		if($multi_select_popup)
+		$tempString = '';
+		else
+		$tempString = "<form action='index.php' method='post' name='MassUpdate'  id='MassUpdate' onsubmit=\"return check_form('MassUpdate');\">\n"
+		. "<input type='hidden' name='return_action' value='{$action}' />\n"
+        . "<input type='hidden' name='return_module' value='{$module}' />\n"
+		. "<input type='hidden' name='massupdate' value='true' />\n"
+		. "<input type='hidden' name='delete' value='false' />\n"
+		. "<input type='hidden' name='merge' value='false' />\n"
+        . "<input type='hidden' name='current_query_by_page' value='{$query}' />\n"
+        . "<input type='hidden' name='module' value='{$module}' />\n"
+        . "<input type='hidden' name='action' value='MassUpdate' />\n"
+        . "<input type='hidden' name='lvso' value='{$lvso}' />\n"
+        . "<input type='hidden' name='{$order_by_name}' value='{$request_order_by_name}' />\n";
+
+		// cn: bug 9103 - MU navigation in emails is broken
+
+                if (!isset($_REQUEST['module'])) {
+                    LoggerManager::getLogger()->warn('Undefined index: module');
+                }
+
+		if(isset($_REQUEST['module']) && $_REQUEST['module'] == 'Emails') {
+			$type = "";
+			// determine "type" - inbound, archive, etc.
+			if (isset($_REQUEST['type'])) {
+				$type = $_REQUEST['type'];
+			}
+			// determine owner
+			$tempString .=<<<eoq
 				<input type='hidden' name='type' value="{$type}" />
 				<input type='hidden' name='ie_assigned_user_id' value="{$current_user->id}" />
 eoq;
@@ -185,9 +201,9 @@ eoq;
                         $_POST[$post] = 0;
                     }
                     if (!empty($this->sugarbean->field_defs[$post]['dbType']) && strcmp(
-                        $this->sugarbean->field_defs[$post]['dbType'],
+                            $this->sugarbean->field_defs[$post]['dbType'],
                             'varchar'
-                    ) == 0
+                        ) == 0
                     ) {
                         if (strcmp($value, '1') == 0) {
                             $_POST[$post] = 'on';
@@ -435,10 +451,10 @@ eoq;
         $sugar_config = $configurator->config;
 
         if ($this->sugarbean->bean_implements('ACL') && (!ACLController::checkAccess(
-            $this->sugarbean->module_dir,
+                    $this->sugarbean->module_dir,
                     'edit',
-            true
-        ) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
+                    true
+                ) || !ACLController::checkAccess($this->sugarbean->module_dir, 'massupdate', true))
         ) {
             return '';
         }
@@ -558,24 +574,24 @@ eoq;
                                     translate($field["options"])
                                 );
                                 break;
-                            } else {
-                                if (!empty($field['options'])) {
-                                    $even = !$even;
-                                    $newhtml .= $this->addStatus(
-                                        $displayname,
-                                        $field["name"],
-                                        translate($field["options"])
-                                    );
-                                    break;
-                                } else {
-                                    if (!empty($field['function'])) {
-                                        $functionValue = $this->getFunctionValue($this->sugarbean, $field);
-                                        $even = !$even;
-                                        $newhtml .= $this->addStatus($displayname, $field["name"], $functionValue);
-                                        break;
-                                    }
-                                }
                             }
+                            if (!empty($field['options'])) {
+                                $even = !$even;
+                                $newhtml .= $this->addStatus(
+                                    $displayname,
+                                    $field["name"],
+                                    translate($field["options"])
+                                );
+                                break;
+                            }
+                            if (!empty($field['function'])) {
+                                $functionValue = $this->getFunctionValue($this->sugarbean, $field);
+                                $even = !$even;
+                                $newhtml .= $this->addStatus($displayname, $field["name"], $functionValue);
+                                break;
+                            }
+
+
                             break;
                         case "radioenum":
                             $even = !$even;
@@ -679,17 +695,16 @@ EOJS;
 
         if ($field_count > 0) {
             return $html;
-        } else {
-            //If no fields are found, render either a form that still permits Mass Update deletes or just display a message that no fields are available
-            $html = "<div id='massupdate_form' style='display:none;'><table width='100%' cellpadding='0' cellspacing='0' border='0' class='formHeader h3Row'><tr><td nowrap><h3><span>" . $app_strings['LBL_MASS_UPDATE'] . "</h3></td></tr></table>";
-            if ($this->sugarbean->ACLAccess('Delete', true) && !$hideDeleteIfNoFieldsAvailable) {
-                $html .= "<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td><input type='submit' name='Delete' value='$lang_delete' onclick=\"return confirm('{$lang_confirm}')\" class='button'></td></tr></table></div>";
-            } else {
-                $html .= $app_strings['LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE'] . "</div>";
-            }
-
-            return $html;
         }
+        //If no fields are found, render either a form that still permits Mass Update deletes or just display a message that no fields are available
+        $html = "<div id='massupdate_form' style='display:none;'><table width='100%' cellpadding='0' cellspacing='0' border='0' class='formHeader h3Row'><tr><td nowrap><h3><span>" . $app_strings['LBL_MASS_UPDATE'] . "</h3></td></tr></table>";
+        if ($this->sugarbean->ACLAccess('Delete', true) && !$hideDeleteIfNoFieldsAvailable) {
+            $html .= "<table cellpadding='0' cellspacing='0' border='0' width='100%'><tr><td><input type='submit' name='Delete' value='$lang_delete' onclick=\"return confirm('{$lang_confirm}')\" class='button'></td></tr></table></div>";
+        } else {
+            $html .= $app_strings['LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE'] . "</div>";
+        }
+
+        return $html;
     }
 
     public function getFunctionValue($focus, $vardef)
@@ -706,9 +721,9 @@ EOJS;
             }
 
             return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
-        } else {
-            return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
         }
+
+        return call_user_func($function, $focus, $vardef['name'], '', 'MassUpdate');
     }
 
     /**
@@ -1205,8 +1220,7 @@ EOQ;
             }
             $options = $new_options;
         }
-        $options = get_select_options_with_id_separate_key($options, $options, '', true);
-        ;
+        $options = get_select_options_with_id_separate_key($options, $options, '', true);;
 
         // cn: added "mass_" to the id tag to differentiate from the status id in StoreQuery
         $html = '<td scope="row" width="15%">' . $displayname . '</td>

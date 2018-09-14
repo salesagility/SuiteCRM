@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 class CalendarUtils
@@ -302,7 +303,7 @@ class CalendarUtils
         /**
          * @var SugarDateTime $end Recurrence end date. Used if recurrence ends by date.
          */
-         
+
         if (!empty($params['until'])) {
             $end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(), $until);
             $end->modify("+1 Day");
@@ -382,10 +383,10 @@ class CalendarUtils
         // rather than using relationships framework due to performance issues.
         // Relationship framework runs very slowly
 
-        $db = DBManagerFactory::getInstance();
-        $id = $bean->id;
-        $date_modified = $GLOBALS['timedate']->nowDb();
-        $lower_name = strtolower($bean->object_name);
+		$db = DBManagerFactory::getInstance();
+		$id = $bean->id;
+		$date_modified = $GLOBALS['timedate']->nowDb();
+		$lower_name = strtolower($bean->object_name);
 
         $qu = "SELECT * FROM {$bean->rel_users_table} WHERE deleted = 0 AND {$lower_name}_id = '{$id}'";
         $re = $db->query($qu);
@@ -472,7 +473,7 @@ class CalendarUtils
                 $i++;
             }
         }
-        
+
         if ($users_filled) {
             $db->query($qu_users);
         }
@@ -482,7 +483,7 @@ class CalendarUtils
         if ($leads_filled) {
             $db->query($qu_leads);
         }
-        
+
         vCal::cache_sugar_vcal($GLOBALS['current_user']);
         return $arr;
     }
@@ -524,7 +525,7 @@ class CalendarUtils
     public static function correctRecurrences(SugarBean $bean, $beanId)
     {
         $db = DBManagerFactory::getInstance();
-        
+
         $qu = "SELECT id FROM {$bean->table_name} WHERE repeat_parent_id = '{$beanId}' AND deleted = 0 ORDER BY date_start";
         $re = $db->query($qu);
 

@@ -269,22 +269,21 @@ function validate_user($user_name, $password)
         login_success();
 
         return true;
-    } else {
-        if (function_exists('openssl_decrypt')) {
-            $password = decrypt_string($password);
-            if ($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])) {
-                $user->retrieve($_SESSION['authenticated_user_id']);
-                $current_user = $user;
-                login_success();
+    }
+    if (function_exists('openssl_decrypt')) {
+        $password = decrypt_string($password);
+        if ($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])) {
+            $user->retrieve($_SESSION['authenticated_user_id']);
+            $current_user = $user;
+            login_success();
 
-                return true;
-            }
-        } else {
-            $GLOBALS['log']->fatal("SECURITY: failed attempted login for $user_name using SOAP api");
-            $server->setError("Invalid username and/or password");
-
-            return false;
+            return true;
         }
+    } else {
+        $GLOBALS['log']->fatal("SECURITY: failed attempted login for $user_name using SOAP api");
+        $server->setError("Invalid username and/or password");
+
+        return false;
     }
 }
 
@@ -893,7 +892,8 @@ function track_email($user_name, $password, $parent_id, $contact_ids, $date_sent
     // for each contact, add a link between the contact and the email message
     $id_list = explode(";", $contact_ids);
 
-    foreach ($id_list as $id) {
+    foreach ($id_list as $id)
+    {
         if (!empty($id)) {
             $email->set_emails_contact_invitee_relationship($email->id, DBManagerFactory::getInstance()->quote($id));
         }

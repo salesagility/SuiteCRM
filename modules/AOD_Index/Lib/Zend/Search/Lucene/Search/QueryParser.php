@@ -416,10 +416,9 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
 
 
                 return $query;
-            } else {
-                require_once 'Zend/Search/Lucene/Exception.php';
-                throw new Zend_Search_Lucene_Exception($e->getMessage(), $e->getCode(), $e);
             }
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 

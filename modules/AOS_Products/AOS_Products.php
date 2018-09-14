@@ -21,7 +21,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 /**
@@ -53,17 +53,16 @@ class AOS_Products extends AOS_Products_sugar
     {
         if (function_exists('com_create_guid')) {
             return com_create_guid();
-        } else {
-            mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
-            $charid = strtoupper(md5(uniqid(rand(), true)));
-            $hyphen = chr(45);// "-"
-            $uuid = substr($charid, 0, 8).$hyphen
+        }
+        mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+        $charid = strtoupper(md5(uniqid(rand(), true)));
+        $hyphen = chr(45);// "-"
+        $uuid = substr($charid, 0, 8).$hyphen
                 .substr($charid, 8, 4).$hyphen
                 .substr($charid, 12, 4).$hyphen
                 .substr($charid, 16, 4).$hyphen
                 .substr($charid, 20, 12);
-            return $uuid;
-        }
+        return $uuid;
     }
 
     public function save($check_notify=false)
@@ -81,18 +80,17 @@ class AOS_Products extends AOS_Products_sugar
         if (isset($_FILES['uploadimage']['tmp_name'])&&$_FILES['uploadimage']['tmp_name']!="") {
             if ($_FILES['uploadimage']['size'] > $sugar_config['upload_maxsize']) {
                 die($mod_strings['LBL_IMAGE_UPLOAD_FAIL'].$sugar_config['upload_maxsize']);
-            } else {
-                $prefix_image = $this->getGUID().'_';
-                $this->product_image=$sugar_config['site_url'].'/'.$sugar_config['upload_dir'].$prefix_image.$_FILES['uploadimage']['name'];
-                move_uploaded_file($_FILES['uploadimage']['tmp_name'], $sugar_config['upload_dir'].$prefix_image.$_FILES['uploadimage']['name']);
             }
+            $prefix_image = $this->getGUID().'_';
+            $this->product_image=$sugar_config['site_url'].'/'.$sugar_config['upload_dir'].$prefix_image.$_FILES['uploadimage']['name'];
+            move_uploaded_file($_FILES['uploadimage']['tmp_name'], $sugar_config['upload_dir'].$prefix_image.$_FILES['uploadimage']['name']);
         }
 
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
 
         perform_aos_save($this);
 
-        parent::save($check_notify);
+        return parent::save($check_notify);
     }
 
     public function getCustomersPurchasedProductsQuery()

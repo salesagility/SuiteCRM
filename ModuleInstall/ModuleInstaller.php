@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /*
@@ -374,9 +375,8 @@ class ModuleInstaller
     {
         if ($module == 'application') {
             return "custom/Extension/application/Ext";
-        } else {
-            return "custom/Extension/modules/$module/Ext";
         }
+        return "custom/Extension/modules/$module/Ext";
     }
 
     /**
@@ -2011,39 +2011,35 @@ class ModuleInstaller
                         sugar_touch($dest, filemtime($source));
                     }
                     return(unlink($source));
-                } else {
-                    $GLOBALS['log']->debug("Can't restore file: " . $source);
-                    return true;
                 }
-            } else {
-                if (file_exists($dest)) {
-                    $rest = clean_path($backup_path."/$dest");
-                    if (!is_dir(dirname($rest))) {
-                        mkdir_recursive(dirname($rest), true);
-                    }
-
-                    $GLOBALS['log']->debug("Backup ... " . $dest.  " to " .$rest);
-                    if (copy($dest, $rest)) {
-                        if (is_writable($rest)) {
-                            sugar_touch($rest, filemtime($dest));
-                        }
-                    } else {
-                        $GLOBALS['log']->debug("Can't backup file: " . $dest);
-                    }
-                }
-                return(copy($source, $dest));
+                $GLOBALS['log']->debug("Can't restore file: " . $source);
+                return true;
             }
+            if (file_exists($dest)) {
+                $rest = clean_path($backup_path."/$dest");
+                if (!is_dir(dirname($rest))) {
+                    mkdir_recursive(dirname($rest), true);
+                }
+
+                $GLOBALS['log']->debug("Backup ... " . $dest.  " to " .$rest);
+                if (copy($dest, $rest)) {
+                    if (is_writable($rest)) {
+                        sugar_touch($rest, filemtime($dest));
+                    }
+                } else {
+                    $GLOBALS['log']->debug("Can't backup file: " . $dest);
+                }
+            }
+            return(copy($source, $dest));
         } elseif (!is_dir($source)) {
             if ($uninstall) {
                 if (is_file($dest)) {
                     return(unlink($dest));
-                } else {
-                    //don't do anything we already cleaned up the files using uninstall_new_files
-                    return true;
                 }
-            } else {
-                return false;
+                //don't do anything we already cleaned up the files using uninstall_new_files
+                return true;
             }
+            return false;
         }
 
         if (!is_dir($dest) && !$uninstall) {
@@ -2142,9 +2138,8 @@ class ModuleInstaller
             $errors = $_SESSION['MODULEINSTALLER_ERRORS'];
             unset($_SESSION['MODULEINSTALLER_ERRORS']);
             return $errors;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /*

@@ -2,9 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,10 +36,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -238,10 +242,10 @@ class UserPreference extends SugarBean
             $_SESSION[$user->user_name . '_PREFERENCES'][$category] = unserialize(base64_decode($row['contents']));
             $user->user_preferences[$category] = unserialize(base64_decode($row['contents']));
             return true;
-        } else {
-            $_SESSION[$user->user_name . '_PREFERENCES'][$category] = array();
-            $user->user_preferences[$category] = array();
         }
+        $_SESSION[$user->user_name . '_PREFERENCES'][$category] = array();
+        $user->user_preferences[$category] = array();
+
         return false;
     }
 
@@ -280,27 +284,26 @@ class UserPreference extends SugarBean
             $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($user);
 
             return $prefDate;
-        } else {
-            $prefDate['date'] = $timedate->get_date_format();
-            $prefDate['time'] = $timedate->get_time_format();
-
-            if (!empty($user) && $user->object_name == 'User') {
-                $timeZone = TimeDate::userTimezone($user);
-                // cn: bug 9171 - if user has no time zone, cron.php fails for InboundEmail
-                if (!empty($timeZone)) {
-                    $prefDate['userGmt'] = TimeDate::tzName($timeZone);
-                    $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($user);
-                }
-            } else {
-                $timeZone = TimeDate::userTimezone($current_user);
-                if (!empty($timeZone)) {
-                    $prefDate['userGmt'] = TimeDate::tzName($timeZone);
-                    $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($current_user);
-                }
-            }
-
-            return $prefDate;
         }
+        $prefDate['date'] = $timedate->get_date_format();
+        $prefDate['time'] = $timedate->get_time_format();
+
+        if (!empty($user) && $user->object_name == 'User') {
+            $timeZone = TimeDate::userTimezone($user);
+            // cn: bug 9171 - if user has no time zone, cron.php fails for InboundEmail
+            if (!empty($timeZone)) {
+                $prefDate['userGmt'] = TimeDate::tzName($timeZone);
+                $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($user);
+            }
+        } else {
+            $timeZone = TimeDate::userTimezone($current_user);
+            if (!empty($timeZone)) {
+                $prefDate['userGmt'] = TimeDate::tzName($timeZone);
+                $prefDate['userGmtOffset'] = $timedate->getUserUTCOffset($current_user);
+            }
+        }
+
+        return $prefDate;
     }
 
     /**

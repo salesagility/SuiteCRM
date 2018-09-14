@@ -98,9 +98,8 @@ function smarty_function_fetch($params, &$smarty)
                                 if (!preg_match('![\w\d-]+: .+!', $param_value)) {
                                     $smarty->_trigger_fatal_error("[plugin] invalid header format '".$param_value."'");
                                     return;
-                                } else {
-                                    $extra_headers[] = $param_value;
                                 }
+                                $extra_headers[] = $param_value;
                             }
                             break;
                         case "proxy_host":
@@ -149,45 +148,44 @@ function smarty_function_fetch($params, &$smarty)
                 if (!$fp) {
                     $smarty->_trigger_fatal_error("[plugin] unable to fetch: $errstr ($errno)");
                     return;
+                }
+                if ($_is_proxy) {
+                    fputs($fp, 'GET ' . $params['file'] . " HTTP/1.0\r\n");
                 } else {
-                    if ($_is_proxy) {
-                        fputs($fp, 'GET ' . $params['file'] . " HTTP/1.0\r\n");
-                    } else {
-                        fputs($fp, "GET $uri HTTP/1.0\r\n");
+                    fputs($fp, "GET $uri HTTP/1.0\r\n");
+                }
+                if (!empty($host)) {
+                    fputs($fp, "Host: $host\r\n");
+                }
+                if (!empty($accept)) {
+                    fputs($fp, "Accept: $accept\r\n");
+                }
+                if (!empty($agent)) {
+                    fputs($fp, "User-Agent: $agent\r\n");
+                }
+                if (!empty($referer)) {
+                    fputs($fp, "Referer: $referer\r\n");
+                }
+                if (isset($extra_headers) && is_array($extra_headers)) {
+                    foreach ($extra_headers as $curr_header) {
+                        fputs($fp, $curr_header."\r\n");
                     }
-                    if (!empty($host)) {
-                        fputs($fp, "Host: $host\r\n");
-                    }
-                    if (!empty($accept)) {
-                        fputs($fp, "Accept: $accept\r\n");
-                    }
-                    if (!empty($agent)) {
-                        fputs($fp, "User-Agent: $agent\r\n");
-                    }
-                    if (!empty($referer)) {
-                        fputs($fp, "Referer: $referer\r\n");
-                    }
-                    if (isset($extra_headers) && is_array($extra_headers)) {
-                        foreach ($extra_headers as $curr_header) {
-                            fputs($fp, $curr_header."\r\n");
-                        }
-                    }
-                    if (!empty($user) && !empty($pass)) {
-                        fputs($fp, "Authorization: BASIC ".base64_encode("$user:$pass")."\r\n");
-                    }
+                }
+                if (!empty($user) && !empty($pass)) {
+                    fputs($fp, "Authorization: BASIC ".base64_encode("$user:$pass")."\r\n");
+                }
 
-                    fputs($fp, "\r\n");
-                    while (!feof($fp)) {
-                        $content .= fgets($fp, 4096);
-                    }
-                    fclose($fp);
-                    $csplit = preg_split("!\r\n\r\n!", $content, 2);
+                fputs($fp, "\r\n");
+                while (!feof($fp)) {
+                    $content .= fgets($fp, 4096);
+                }
+                fclose($fp);
+                $csplit = preg_split("!\r\n\r\n!", $content, 2);
 
-                    $content = $csplit[1];
+                $content = $csplit[1];
 
-                    if (!empty($params['assign_headers'])) {
-                        $smarty->assign($params['assign_headers'], preg_split("!\r\n!", $csplit[0]));
-                    }
+                if (!empty($params['assign_headers'])) {
+                    $smarty->assign($params['assign_headers'], preg_split("!\r\n!", $csplit[0]));
                 }
             } else {
                 $smarty->_trigger_fatal_error("[plugin] unable to parse URL, check syntax");

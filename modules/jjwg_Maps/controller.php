@@ -398,8 +398,10 @@ class jjwg_MapsController extends SugarController
         }
 
         // JSON Encoded $result
+        $out['message'] = $result['message'];
+        $out['list']['name'] = $result['object_name'];
         header('Content-Type: application/json');
-        echo @json_encode($result);
+        echo @json_encode($out);
     }
 
     /**
@@ -1112,9 +1114,8 @@ class jjwg_MapsController extends SugarController
             $marker['html'] = preg_replace('/\n\r/', ' ', $marker['html']);
             //var_dump($marker['html']);
             return $marker;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -1160,9 +1161,8 @@ class jjwg_MapsController extends SugarController
             $marker['html'] = preg_replace('/\n\r/', ' ', $marker['html']);
             //var_dump($marker['html']);
             return $marker;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -1198,9 +1198,8 @@ class jjwg_MapsController extends SugarController
             $area['html'] = preg_replace('/\n\r/', ' ', $area['html']);
             //var_dump($marker['html']);
             return $area;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

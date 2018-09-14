@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -105,10 +106,9 @@ function override_recursive_helper($key_names, $array_name, $value)
 {
     if (empty($key_names)) {
         return "=".var_export_helper($value, true).";";
-    } else {
-        $key = array_shift($key_names);
-        return "[".var_export($key, true)."]". override_recursive_helper($key_names, $array_name, $value);
     }
+    $key = array_shift($key_names);
+    return "[".var_export($key, true)."]". override_recursive_helper($key_names, $array_name, $value);
 }
 
 function override_value_to_string_recursive2($array_name, $value_name, $value, $save_empty = true)
@@ -121,13 +121,11 @@ function override_value_to_string_recursive2($array_name, $value_name, $value, $
             $str.= override_value_to_string_recursive2($newArrayName, $key, $val, $save_empty);
         }
         return $str;
-    } else {
-        if (!$save_empty && empty($value)) {
-            return;
-        } else {
-            return "\$$array_name" . "[$quoted_vname] = " . var_export($value, true) . ";\n";
-        }
     }
+    if (!$save_empty && empty($value)) {
+        return;
+    }
+    return "\$$array_name" . "[$quoted_vname] = " . var_export($value, true) . ";\n";
 }
 
 /**
@@ -303,11 +301,10 @@ class SugarArray extends ArrayObject
             return $default;
         } elseif (count($children) == 0) {
             return $raw_config;
-        } else {
-            $next_key = array_shift($children);
-            return isset($raw_config[$next_key]) ?
+        }
+        $next_key = array_shift($children);
+        return isset($raw_config[$next_key]) ?
                 $this->_getRecursive($raw_config[$next_key], $children, $default) :
                 $default;
-        }
     }
 }

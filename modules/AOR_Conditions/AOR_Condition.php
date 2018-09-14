@@ -17,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,8 +35,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 class AOR_Condition extends Basic
 {
@@ -93,11 +93,20 @@ class AOR_Condition extends Basic
     {
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
-        $j = 0;
-        if (!isset($post_data[$key . 'field']) || !is_array($post_data[$key . 'field'])) {
-            return;
+        $postData = null;
+        if (isset($post_data[$key . 'field'])) {
+            $postData = $post_data[$key . 'field'];
+        } else {
+            LoggerManager::getLogger()->warn('Field in POST data is not set for save lines at key: ' . $key);
         }
-        foreach ($post_data[$key . 'field'] as $i => $field) {
+
+        $j = 0;
+        foreach ((array)$postData as $i => $field) {
+
+            if (!isset($post_data[$key . 'deleted'][$i])) {
+                LoggerManager::getLogger()->warn('AOR Condition trying to save lines but POST data does not contains the key "' . $key . 'deleted' . '" at index: ' . $i);
+            }
+
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {

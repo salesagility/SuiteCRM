@@ -70,15 +70,13 @@ function installerHook($function_name, $options = array())
 
     if ($GLOBALS['customInstallHooksExist'] === false) {
         return 'undefined';
-    } else {
-        if (function_exists($function_name)) {
-            installLog("installerHook: function {$function_name} found, calling and returning the return value");
-            return $function_name($options);
-        } else {
-            installLog("installerHook: function {$function_name} not found in custom install hooks file");
-            return 'undefined';
-        }
     }
+    if (function_exists($function_name)) {
+        installLog("installerHook: function {$function_name} found, calling and returning the return value");
+        return $function_name($options);
+    }
+    installLog("installerHook: function {$function_name} not found in custom install hooks file");
+    return 'undefined';
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -93,12 +91,12 @@ function parseAcceptLanguage()
     if (strpos($lang, ';')) {
         $exLang = explode(';', $lang);
         return strtolower(str_replace('-', '_', $exLang[0]));
-    } else {
-        $match = array();
-        if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
-            return strtolower(str_replace('-', '_', $match[0]));
-        }
     }
+    $match = array();
+    if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
+        return strtolower(str_replace('-', '_', $match[0]));
+    }
+
     return '';
 }
 
@@ -1156,10 +1154,9 @@ function drop_table_install(&$focus)
         $focus->drop_tables();
         $GLOBALS['log']->info("Dropped old ".$focus->table_name." table.");
         return 1;
-    } else {
-        $GLOBALS['log']->info("Did not need to drop old ".$focus->table_name." table.  It doesn't exist.");
-        return 0;
     }
+    $GLOBALS['log']->info("Did not need to drop old ".$focus->table_name." table.  It doesn't exist.");
+    return 0;
 }
 
 // Creating new tables if they don't exist.
@@ -1399,9 +1396,8 @@ function get_boolean_from_request($field)
 
     if (($_REQUEST[$field] == 'on') || ($_REQUEST[$field] == 'yes')) {
         return(true);
-    } else {
-        return(false);
     }
+    return(false);
 }
 
 function stripslashes_checkstrings($value)
@@ -1882,13 +1878,12 @@ function langPackUnpack($unpack_type, $full_file)
             copy($manifest_file, $target_manifest);
             unlink($full_file); // remove tempFile
             return "The file $base_filename has been uploaded.<br>\n";
-        } else {
-            unlinkTempFiles($manifest_file, $full_file);
-            return "There was an error uploading the file, please try again!<br>\n";
         }
-    } else {
-        die("The zip file is missing a manifest.php file.  Cannot proceed.");
+        unlinkTempFiles($manifest_file, $full_file);
+        return "There was an error uploading the file, please try again!<br>\n";
     }
+    die("The zip file is missing a manifest.php file.  Cannot proceed.");
+
     unlinkTempFiles($manifest_file, '');
 }
 

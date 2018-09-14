@@ -462,11 +462,10 @@ class soap_transport_http extends nusoap_base
             }
             $this->debug('cURL connection set up');
             return true;
-        } else {
-            $this->setError('Unknown scheme ' . $this->scheme);
-            $this->debug('Unknown scheme ' . $this->scheme);
-            return false;
         }
+        $this->setError('Unknown scheme ' . $this->scheme);
+        $this->debug('Unknown scheme ' . $this->scheme);
+        return false;
     }
 
     /**
@@ -853,8 +852,8 @@ class soap_transport_http extends nusoap_base
                 $this->setCurlOption(CURLOPT_POST, 1);
                 $this->setCurlOption(CURLOPT_POSTFIELDS, $data);
                 $this->debug('set cURL POST data');
-            } else {
             }
+            
             // insert custom user-set cURL options
             foreach ($this->ch_options as $key => $val) {
                 $this->setCurlOption($key, $val);
@@ -1054,11 +1053,11 @@ class soap_transport_http extends nusoap_base
                 $this->setError($err);
                 curl_close($this->ch);
                 return false;
-            } else {
-                //echo '<pre>';
+            }
+            //echo '<pre>';
             //var_dump(curl_getinfo($this->ch));
             //echo '</pre>';
-            }
+            
             // close curl
             $this->debug('No cURL error, closing cURL');
             curl_close($this->ch);

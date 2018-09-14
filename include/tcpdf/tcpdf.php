@@ -4400,9 +4400,8 @@ if (!class_exists('TCPDF', false)) {
         {
             if ($this->rtl) {
                 return ($this->x - $this->lMargin);
-            } else {
-                return ($this->w - $this->rMargin - $this->x);
             }
+            return ($this->w - $this->rMargin - $this->x);
         }
 
         /**
@@ -4488,9 +4487,8 @@ if (!class_exists('TCPDF', false)) {
             } elseif ($c <= 0x10FFFF) {
                 // four bytes
                 return chr(0xF0 | $c >> 18).chr(0x80 | $c >> 12 & 0x3F).chr(0x80 | $c >> 6 & 0x3F).chr(0x80 | $c & 0x3F);
-            } else {
-                return '';
             }
+            return '';
         }
 
         /**
@@ -5029,9 +5027,8 @@ if (!class_exists('TCPDF', false)) {
             //Get x position
             if ($this->rtl) {
                 return ($this->w - $this->x);
-            } else {
-                return $this->x;
             }
+            return $this->x;
         }
 
         /**
@@ -13668,9 +13665,8 @@ if (!class_exists('TCPDF', false)) {
         {
             if ($this->diskcache) {
                 return $this->readDiskCache($this->buffer);
-            } else {
-                return $this->buffer;
             }
+            return $this->buffer;
         }
 
         /**

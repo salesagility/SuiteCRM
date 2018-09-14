@@ -155,7 +155,7 @@ trait StateCheckerTrait
                 throw new StateCheckerException('Incorect state check mode: ' . $mode);
         }
     }
-    
+
     /**
      *
      * @throws StateCheckerException

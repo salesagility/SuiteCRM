@@ -1,8 +1,11 @@
 <?php
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -13,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -30,15 +33,15 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //// This is a stand alone file that can be run from the command prompt for upgrading a
-//// Sugar Instance. Three parameters are required to be defined in order to execute this file.
+//// SuiteCRM Instance. Three parameters are required to be defined in order to execute this file.
 //// php.exe -f silentUpgrade.php [Path to Upgrade Package zip] [Path to Log file] [Path to Instance]
 //// See below the Usage for more details.
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -211,9 +214,8 @@ function merge_passwordsetting($sugar_config, $sugar_version)
 
     if (write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 function addDefaultModuleRoles($defaultRoles = array())
@@ -728,10 +730,11 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
                 include($newtemplate_path.'/modules/Administration/upgradeTeams.php');
                 logThis(" Finish {$newtemplate_path}/modules/Administration/upgradeTeams.php", $path);
 
-                //update the users records to have default team
-                logThis('running query to populate default_team on users table', $path);
-                DBManagerFactory::getInstance()->query("update users set default_team = (select teams.id from teams where teams.name = concat('(',users.user_name, ')') or team.associated_user_id = users.id)");
-            }
+				//update the users records to have default team
+				logThis('running query to populate default_team on users table',$path);
+				DBManagerFactory::getInstance()->query("update users set default_team = (select teams.id from teams where teams.name = concat('(',users.user_name, ')') or team.associated_user_id = users.id)");
+
+			}
 
             //run upgrade script for dashlets to include sales/marketing
             if (function_exists('upgradeDashletsForSalesAndMarketing')) {

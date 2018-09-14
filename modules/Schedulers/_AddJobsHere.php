@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 /**
  * Set up an array of Jobs with the appropriate metadata
  * 'jobName' => array (
@@ -603,7 +602,7 @@ function pollMonitoredInboxesAOP()
                             $uid = imap_uid($aopInboundEmailX->conn, $msgNo);
                         } // else
                         if ($isGroupFolderExists) {
-                            if ($aopInboundEmailX->returnImportedEmail($msgNo, $uid)) {
+                            if ($aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists)) {
                                 // add to folder
                                 $sugarFolder->addBean($aopInboundEmailX->email);
                                 if ($aopInboundEmailX->isPop3Protocol()) {
@@ -696,7 +695,9 @@ function aodOptimiseIndex()
 
 function performLuceneIndexing()
 {
-    global $db, $sugar_config;
+    global $sugar_config;
+    $db = DBManagerFactory::getInstance();
+    
     if (empty($sugar_config['aod']['enable_aod'])) {
         return;
     }
@@ -733,7 +734,17 @@ function aorRunScheduledReports()
     require_once 'include/SugarQueue/SugarJobQueue.php';
     $date = new DateTime();//Ensure we check all schedules at the same instant
     foreach (BeanFactory::getBean('AOR_Scheduled_Reports')->get_full_list() as $scheduledReport) {
-        if ($scheduledReport->status == 'active' && $scheduledReport->shouldRun($date)) {
+
+        if ($scheduledReport->status != 'active') {
+            continue;
+        }
+        try {
+            $shouldRun = $scheduledReport->shouldRun($date);
+        } catch (Exception $ex) {
+            LoggerManager::getLogger()->warn('aorRunScheduledReports: id: ' . $scheduledReport->id . ' got exception. code: ' . $ex->getCode() . ', message: ' . $ex->getMessage());
+            $shouldRun = false;
+        }
+        if ($shouldRun) {
             if (empty($scheduledReport->aor_report_id)) {
                 continue;
             }

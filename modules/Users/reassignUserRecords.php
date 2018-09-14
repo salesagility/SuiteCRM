@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 global $mod_strings;
@@ -251,37 +252,35 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
     $fromusername = $_POST['fromuser'];
     $tousername = $_POST['touser'];
 
-    $query = "select user_name, id from users where id in ('{$_POST['fromuser']}', '{$_POST['touser']}')";
-    $res = DBManagerFactory::getInstance()->query($query, true);
-    while ($row = DBManagerFactory::getInstance()->fetchByAssoc($res)) {
-        if ($row['id'] == $_POST['fromuser']) {
-            $fromusername = $row['user_name'];
-        }
-        if ($row['id'] == $_POST['touser']) {
-            $tousername = $row['user_name'];
-        }
-    }
-    echo "{$mod_strings_users['LBL_REASS_DESC_PART2']}\n";
-    echo "<form action=\"index.php?module=Users&action=reassignUserRecords&execute=true\" method=post>\n";
-    echo "<BR>{$mod_strings_users['LBL_REASS_NOTES_TITLE']}\n";
-    echo "<ul>\n";
-    echo "<li>* {$mod_strings_users['LBL_REASS_NOTES_ONE']}\n";
-    echo "<li>* {$mod_strings_users['LBL_REASS_NOTES_TWO']}\n";
-    echo "<li>* {$mod_strings_users['LBL_REASS_NOTES_THREE']}\n";
-    echo "</ul>\n";
-    require_once('include/Smarty/plugins/function.sugar_help.php');
-    $sugar_smarty = new Sugar_Smarty();
-    $help_img = smarty_function_sugar_help(array("text"=>$mod_strings['LBL_REASS_VERBOSE_HELP']), $sugar_smarty);
-    echo "<BR><input type=checkbox name=verbose> {$mod_strings_users['LBL_REASS_VERBOSE_OUTPUT']}".$help_img."<BR>\n";
-    
-    unset($_SESSION['reassignRecords']['modules']);
-    $beanListFlip = array_flip($_SESSION['reassignRecords']['assignedModuleListCache']);
-    foreach ($_POST['modules'] as $module) {
-        if (!array_key_exists($module, $beanListFlip)) {
-            //echo "$module not found as key in \$beanListFlip. Skipping $module.<BR>";
-            continue;
-        }
-        $p_module = $beanListFlip[$module];
+	$query = "select user_name, id from users where id in ('{$_POST['fromuser']}', '{$_POST['touser']}')";
+	$res = DBManagerFactory::getInstance()->query($query, true);
+	while($row = DBManagerFactory::getInstance()->fetchByAssoc($res)){
+		if($row['id'] == $_POST['fromuser'])
+			$fromusername = $row['user_name'];
+		if($row['id'] == $_POST['touser'])
+			$tousername = $row['user_name'];
+	}
+        echo "{$mod_strings_users['LBL_REASS_DESC_PART2']}\n";
+	echo "<form action=\"index.php?module=Users&action=reassignUserRecords&execute=true\" method=post>\n";
+	echo "<BR>{$mod_strings_users['LBL_REASS_NOTES_TITLE']}\n";
+	echo "<ul>\n";
+	echo "<li>* {$mod_strings_users['LBL_REASS_NOTES_ONE']}\n";
+	echo "<li>* {$mod_strings_users['LBL_REASS_NOTES_TWO']}\n";
+	echo "<li>* {$mod_strings_users['LBL_REASS_NOTES_THREE']}\n";
+	echo "</ul>\n";
+	require_once('include/Smarty/plugins/function.sugar_help.php');
+	$sugar_smarty = new Sugar_Smarty();
+        $help_img = smarty_function_sugar_help(array("text"=>$mod_strings['LBL_REASS_VERBOSE_HELP']),$sugar_smarty);
+	echo "<BR><input type=checkbox name=verbose> {$mod_strings_users['LBL_REASS_VERBOSE_OUTPUT']}".$help_img."<BR>\n";
+	
+	unset($_SESSION['reassignRecords']['modules']);
+	$beanListFlip = array_flip($_SESSION['reassignRecords']['assignedModuleListCache']);
+	foreach($_POST['modules'] as $module){
+		if(!array_key_exists($module, $beanListFlip)){
+			//echo "$module not found as key in \$beanListFlip. Skipping $module.<BR>";
+			continue;
+		}
+		$p_module = $beanListFlip[$module];
 
         require_once($beanFiles[$module]);
         $object = new $module();

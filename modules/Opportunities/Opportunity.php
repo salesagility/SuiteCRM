@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,26 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- * Description:
- ********************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 // Opportunity is used to store customer information.
 class Opportunity extends SugarBean
@@ -275,22 +259,22 @@ class Opportunity extends SugarBean
         $this->load_relationship('contacts');
         $query_array=$this->contacts->getQuery(true);
 
-        if (is_string($query_array)) {
-            LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array)");
-        } else {
-            //update the select clause in the retruned query.
-            $query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
-        }
+                if (is_string($query_array)) {
+                    LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array) value id: $query_array");
+                } else {
+                    //update the select clause in the retruned query.
+                    $query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
 
-        $query='';
-        foreach ((array)$query_array as $qstring) {
-            $query.=' '.$qstring;
-        }
-        $temp = array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
-        
-        $contact = new Contact();
-        return $this->build_related_list2($query, $contact, $temp);
-    }
+                }
+
+		$query='';
+		foreach ((array)$query_array as $qstring) {
+			$query.=' '.$qstring;
+		}
+	    $temp = Array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
+            $contact = new Contact();
+		return $this->build_related_list2($query, $contact, $temp);
+	}
 
     public function update_currency_id($fromid, $toid)
     {
@@ -347,16 +331,15 @@ class Opportunity extends SugarBean
     }
 
 
-    /**
-    	builds a generic search based on the query string using or
-    	do not include any $this-> because this is called on without having the class instantiated
-    */
-    public function build_generic_where_clause($the_query_string)
-    {
-        $where_clauses = array();
-        $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
-        array_push($where_clauses, "opportunities.name like '$the_query_string%'");
-        array_push($where_clauses, "accounts.name like '$the_query_string%'");
+	/**
+		builds a generic search based on the query string using or
+		do not include any $this-> because this is called on without having the class instantiated
+	*/
+	public function build_generic_where_clause ($the_query_string) {
+	$where_clauses = Array();
+	$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
+	array_push($where_clauses, "opportunities.name like '$the_query_string%'");
+	array_push($where_clauses, "accounts.name like '$the_query_string%'");
 
         $the_where = "";
         foreach ($where_clauses as $clause) {

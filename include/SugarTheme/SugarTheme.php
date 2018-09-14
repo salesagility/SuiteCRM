@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,17 +37,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
-/*********************************************************************************
+/**
 
  * Description:  Contains a variety of utility functions used to display UI
  * components such as form headers and footers.  Intended to be modified on a per
  * theme basis.
- ********************************************************************************/
+ */
 
 include_once __DIR__ . '/SugarThemeRegistry.php';
 
@@ -914,9 +915,8 @@ EOHTML;
         if (isset($this->_imageCache[$imageName])) {
             if ($addJSPath) {
                 return getJSPath($this->_imageCache[$imageName]);
-            } else {
-                return $this->_imageCache[$imageName];
             }
+            return $this->_imageCache[$imageName];
         }
         $imagePath = '';
         if (($filename = $this->_getImageFileName('custom/'.$this->getImagePath().'/'.$imageName)) != '') {
@@ -937,7 +937,7 @@ EOHTML;
             $imagePath = false;
         }
 
-        
+
         if ($imagePath) {
             $this->_imageCache[$imageName] = $imagePath;
 
@@ -945,7 +945,7 @@ EOHTML;
                 return getJSPath($imagePath);
             }
         }
-        
+
         return $imagePath;
     }
 
@@ -996,9 +996,8 @@ EOHTML;
         if (isset($this->_cssCache[$cssFileName]) && is_file(sugar_cached($this->_cssCache[$cssFileName]))) {
             if ($returnURL) {
                 return getJSPath("cache/".$this->_cssCache[$cssFileName]);
-            } else {
-                return sugar_cached($this->_cssCache[$cssFileName]);
             }
+            return sugar_cached($this->_cssCache[$cssFileName]);
         }
 
         $cssFileContents = '';
@@ -1077,9 +1076,8 @@ EOHTML;
         if (isset($this->_jsCache[$jsFileName]) && is_file(sugar_cached($this->_jsCache[$jsFileName]))) {
             if ($returnURL) {
                 return getJSPath("cache/".$this->_jsCache[$jsFileName]);
-            } else {
-                return sugar_cached($this->_jsCache[$jsFileName]);
             }
+            return sugar_cached($this->_jsCache[$jsFileName]);
         }
 
         $jsFileContents = '';
@@ -1200,14 +1198,14 @@ EOHTML;
 
         return $config;
     }
-    
-    
+
+
     public function getSubThemes()
     {
         $subThemes = SugarThemeRegistry::getSubThemes();
         return $subThemes;
     }
-    
+
     public function getSubThemeDefault()
     {
         $subThemeDefault = SugarThemeRegistry::getSubThemeDefault();
