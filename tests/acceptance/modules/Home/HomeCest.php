@@ -51,6 +51,7 @@ class HomeCest
         $I->loginAsAdmin();
         $dashboard->waitForDashboardVisible();
         $detailView->clickActionMenuItem('Add Dashlets');
+        $I->waitForText('Charts');
         $I->click('Charts');
         $I->click('All Opportunities By Lead Source By Outcome');
         $I->click('Close');
