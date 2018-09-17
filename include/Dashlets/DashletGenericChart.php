@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/Dashlets/Dashlet.php');
 require_once('include/generic/LayoutManager.php');
@@ -134,7 +135,8 @@ abstract class DashletGenericChart extends Dashlet
         $this->layoutManager->setAttribute('context', 'Report');
         // fake a reporter object here just to pass along the db type used in many widgets.
         // this should be taken out when sugarwidgets change
-        $temp = (object) array('db' => &DBManagerFactory::getInstance(), 'report_def_str' => '');
+        $db = DBManagerFactory::getInstance();
+        $temp = (object) array('db' => &$db, 'report_def_str' => '');
         $this->layoutManager->setAttributePtr('reporter', $temp);
     }
 
