@@ -60,12 +60,7 @@ class UsersCest
         // @TODO - Need to include dummy data to utilise these tests efficiently
         $I->wantTo('Create an Account');
 
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
         // Navigate to accounts list-view
-        $I->loginAsAdmin();
         $accounts->gotoAccounts();
         $listView->waitForListViewVisible();
 
