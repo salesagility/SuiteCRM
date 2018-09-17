@@ -3,6 +3,8 @@ namespace Api\V8\Middleware;
 
 use Api\V8\JsonApi\Response\ErrorResponse;
 use Api\V8\Param\BaseParam;
+use Exception;
+use LoggerManager;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -34,15 +36,16 @@ class ParamsMiddleware
             $parameters = $this->getParameters($request);
             $this->params->configure($parameters);
             $request = $request->withAttribute('params', $this->params);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $response = new ErrorResponse();
             $response->setStatus(400);
-            $debug = 
-                    "<pre>\nCode:" . $exception->getCode() .
-                    "\n" . $exception->getFile() . ':' . $exception->getLine() . 
-                    "\nTrace:\n" . $exception->getTraceAsString() . 
-                    "\n</pre>";
-            $response->setDetail($exception->getMessage() . nl2br($debug));
+            $msg = $exception->getMessage();
+            $dbg = "\nCode:" . $exception->getCode() .
+                "\n" . $exception->getFile() . ':' . $exception->getLine() . 
+                "\nTrace:\n" . $exception->getTraceAsString() . 
+                "\n";
+            LoggerManager::getLogger()->fatal("API Exception detected:\nMessage was: $msg\nException details:\n$dbg");
+            $response->setDetail($msg);
 
             return $httpResponse->withJson(
                 $response,
