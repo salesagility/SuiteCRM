@@ -226,7 +226,7 @@ class ActivitiesRelationship extends OneToManyRelationship
         return array(
             'order' => 10 ,
             'sort_order' => 'desc' ,
-            'sort_by' => 'date_start' ,
+            'sort_by' => 'date_due' ,
             'title_key' => 'LBL_ACTIVITIES_SUBPANEL_TITLE' ,
             'type' => 'collection' ,
             'subpanel_name' => 'activities' , //this value is not associated with a physical file
