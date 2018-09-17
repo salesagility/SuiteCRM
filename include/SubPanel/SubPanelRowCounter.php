@@ -139,11 +139,9 @@ class SubPanelRowCounter
             return $this->makeFunctionCountQuery($relationshipName);
         }
 
-        $this->focus->load_relationship($relationshipName);
-        /** @var \Link2 $relationship */
-        $relationship = $this->focus->$relationshipName;
-
-        if ($relationship) {
+        if ($this->focus->load_relationship($relationshipName) !== false) {
+            /** @var \Link2 $relationship */
+            $relationship = $this->focus->$relationshipName;
             return $this->selectQueryToCountQuery($relationship->getQuery());
         }
 
