@@ -99,7 +99,7 @@ abstract class DashletGenericChart extends Dashlet
     /**
      * Constructor
      *
-     * @param int   $id
+     * @param int $id
      * @param array $options
      */
     public function __construct(
