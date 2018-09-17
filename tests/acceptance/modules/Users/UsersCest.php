@@ -81,6 +81,14 @@ class UsersCest
         $DetailView->acceptPopup();
         $listView->waitForListViewVisible();
 
+        // Reset the collapsed subpanels
+        $Users->gotoProfile();
+        $I->see('User Profile', '.panel-heading');
+        $I->click("Layout Options");
+        $I->seeElement('input', ['name' => 'user_count_collapsed_subpanels']);
+        $I->uncheckOption(['name' => 'user_count_collapsed_subpanels']);
+        $EditView->clickSaveButton();
+        $DetailView->waitForDetailViewVisible();
 
 
     }
