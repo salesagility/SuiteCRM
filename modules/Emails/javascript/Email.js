@@ -222,7 +222,7 @@ function multiFiles( list_target){
                 //AJAX call begins
                 YAHOO.util.Connect.setForm(document.getElementById("upload_form"), true, true);
                 YAHOO.util.Connect.asyncRequest('POST', url, {upload: function(e) {
-					if(mozaik && mozaik.uploadPathField) {
+					if(mozaik.uploadPathField) {
 						var resp = JSON.parse(e.responseText);
 						document.getElementById(mozaik.uploadPathField).value = resp[0];
 					}
