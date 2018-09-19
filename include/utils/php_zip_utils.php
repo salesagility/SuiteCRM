@@ -65,8 +65,8 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
 
     if ($res !== true) {
         if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL')) {
-            $GLOBALS['log']->fatal(sprintf("ZIP Error(%d): Status(%s)", $res, $zip->status));
-
+            $GLOBALS['log']->fatal(sprintf("ZIP Error(%d): Status(%s): Arhive(%s): Directory(%s)", $res, $zip->status,
+                $zip_archive, $zip_dir));
             return false;
         } else {
             die(sprintf("ZIP Error(%d): Status(%s)", $res, $zip->status));
