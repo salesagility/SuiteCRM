@@ -167,8 +167,10 @@ class AccountsCest
         $editView->waitForEditViewVisible();
         $I->fillfield('#name', $accountName);
         $editView->clickSaveButton();
+
+        // View child account in parent account subpanel
         $detailView->waitForDetailViewVisible();
-        $I->see($accountName);
+        $I->see($accountName, '//*[@id="list_subpanel_accounts"]/table/tbody/tr/td[2]/a');
 
         // Delete account
         $detailView->clickActionMenuItem('Delete');
