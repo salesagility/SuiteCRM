@@ -160,7 +160,6 @@ class AccountsCest
         $listView->waitForListViewVisible();
 
         // Create Second account
-        $this->fakeData->seed($this->fakeDataSeed);
         $parentAccountName = 'Test_' . $this->fakeData->company();
         $accounts->createAccount($parentAccountName);
 
@@ -170,8 +169,7 @@ class AccountsCest
 
         // Add child account
         $I->click('#member_accounts_create_button');
-        $I->waitForElementVisible('#name', 60);
-        $I->click('#name');
+        $I->wait(1);
         $I->fillfield('#name', $accountName);
         $I->click('#Accounts_subpanel_save_button');
         $detailView->waitForDetailViewVisible();
