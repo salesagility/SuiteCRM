@@ -1595,8 +1595,8 @@ class SugarBean
                                 " FROM " . $templates[$child_info['parent_type']]->table_name .
                                 " WHERE id IN ('$childInfoParentId'";
                         }
-                    } elseif(isset($parent_child_map[$child_info['parent_id']])) {
-                        if (empty($parent_child_map[$child_info['parent_id']])) {
+                    } elseif(isset($child_info['parent_id']) && isset($parent_child_map[$child_info['parent_id']])) {
+                        if (empty($parent_child_map[$child_info['parent_id']]) && isset($child_info['parent_type'])) {
                             $queries[$child_info['parent_type']] .= " ,'{$child_info['parent_id']}'";
                         }
                     }
