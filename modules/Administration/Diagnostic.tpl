@@ -92,7 +92,7 @@
 
 	<td ><span><input name='beanlistbeanfiles' class="checkbox" type="checkbox" tabindex='10' checked></span></td>
 	</tr><tr>
-	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_SUGARLOG}</span></td>
+	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_SUITELOG}</span></td>
 	<td ><span><input name='sugarlog' class="checkbox" type="checkbox" tabindex='11' checked></span></td>
 	</tr><tr>
 	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_VARDEFS}</span></td>

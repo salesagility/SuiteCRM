@@ -988,7 +988,7 @@ class Scheduler extends SugarBean
         $sched14->save();
 
         $sched15 = new Scheduler();
-        $sched15->name               = $mod_strings['LBL_OOTB_SUGARFEEDS'];
+        $sched15->name               = $mod_strings['LBL_OOTB_SUITEFEEDS'];
         $sched15->job                = 'function::trimSugarFeeds';
         $sched15->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
         $sched15->date_time_end      = null;

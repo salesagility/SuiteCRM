@@ -858,7 +858,7 @@ if ($dobeanlistbeanfiles) {
     echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
 }
 if ($dosugarlog) {
-    echo $mod_strings['LBL_DIAGNOSTIC_GETSUGARLOG']."<BR>";
+    echo $mod_strings['LBL_DIAGNOSTIC_GETSUITELOG']."<BR>";
     executesugarlog();
     echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
 }

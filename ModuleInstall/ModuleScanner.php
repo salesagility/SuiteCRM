@@ -850,7 +850,6 @@ class ModuleScanner
         }
     }
 
-
     /**
      *Main external function that takes in a path to a package and then scans
      *that package's manifest for disabled actions and then it scans the PHP files
@@ -872,8 +871,8 @@ class ModuleScanner
     public function displayIssues($package='Package')
     {
         echo '<h2>'.str_replace('{PACKAGE}', $package, translate('ML_PACKAGE_SCANNING')). '</h2><BR><h2 class="error">' . translate('ML_INSTALLATION_FAILED') . '</h2><br><p>' .str_replace('{PACKAGE}', $package, translate('ML_PACKAGE_NOT_CONFIRM')). '</p><ul><li>'. translate('ML_OBTAIN_NEW_PACKAGE') . '<li>' . translate('ML_RELAX_LOCAL').
-'</ul></p><br>' . translate('ML_SUGAR_LOADING_POLICY') .  ' <a href=" http://kb.sugarcrm.com/custom/module-loader-restrictions-for-sugar-open-cloud/">' . translate('ML_SUGAR_KB') . '</a>.'.
-'<br>' . translate('ML_AVAIL_RESTRICTION'). ' <a href=" http://developers.sugarcrm.com/wordpress/2009/08/14/module-loader-restrictions/">' . translate('ML_SUGAR_DZ') .  '</a>.<br><br>';
+'</ul></p><br>' . translate('ML_SUGAR_LOADING_POLICY') .  ' <a href=" http://kb.sugarcrm.com/custom/module-loader-restrictions-for-sugar-open-cloud/">' . translate('ML_SUITE_KB') . '</a>.'.
+'<br>' . translate('ML_AVAIL_RESTRICTION'). ' <a href=" http://developers.sugarcrm.com/wordpress/2009/08/14/module-loader-restrictions/">' . translate('ML_SUITE_DZ') .  '</a>.<br><br>';
 
 
         foreach ($this->issues as $type=>$issues) {

@@ -166,7 +166,7 @@ $checked = '';
 $out .= <<<EOQ
    <tr style='display:none'><td></td>
        <td><input type="checkbox" class="checkbox" name="setup_site_sugarbeet_automatic_checks" value="yes" /></td>
-       <td><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b><br><i>{$mod_strings['LBL_SITECFG_SUGAR_UP_DIRECTIONS']}</i><br>&nbsp;</td></tr>
+       <td><b>{$mod_strings['LBL_SITECFG_SUITE_UP']}</b><br><i>{$mod_strings['LBL_SITECFG_SUITE_UP_DIRECTIONS']}</i><br>&nbsp;</td></tr>
    <tbody id="setup_site_session_section_pre">
    <tr><td></td>
        <td><input type="checkbox" class="checkbox" name="setup_site_custom_session_path" value="yes" onclick="javascript:toggleSession();" {$customSession} /></td>
