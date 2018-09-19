@@ -73,7 +73,7 @@
 
 
       var action = 'index.php?module=Emails&action=ImportFromListView';
-      var view = caller[0].messageBox.controls.modal.content.find('[name="EditView"]');
+      var view = caller[0].messageBox.controls.modal.content.find('[name="EditNonImported"]');
       caller[0].messageBox.hideFooter();
       $('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>')
         .prependTo(view.parent());
