@@ -135,6 +135,7 @@ class AccountsCest
     public function testScenarioCreateAccountChild(
         \AcceptanceTester $I,
         \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Accounts $accounts,
         \Helper\WebDriverHelper $webDriverHelper
@@ -152,14 +153,6 @@ class AccountsCest
 
         // Create account
         $this->fakeData->seed($this->fakeDataSeed);
-        $accountName = 'Test_' . $this->fakeData->company();
-        $accounts->createAccount($accountName);
-
-        // Navigate to accounts list-view
-        $accounts->gotoAccounts();
-        $listView->waitForListViewVisible();
-
-        // Create Second account
         $parentAccountName = 'Test_' . $this->fakeData->company();
         $accounts->createAccount($parentAccountName);
 
@@ -168,10 +161,12 @@ class AccountsCest
         $I->waitForElementVisible('#member_accounts_create_button', 60);
 
         // Add child account
+        $accountName = 'Test_' . $this->fakeData->company();
         $I->click('#member_accounts_create_button');
-        $I->wait(1);
+        $I->click('#Accounts_subpanel_full_form_button');
+        $editView->waitForEditViewVisible();
         $I->fillfield('#name', $accountName);
-        $I->click('#Accounts_subpanel_save_button');
+        $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
         $I->see($accountName);
 
