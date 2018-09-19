@@ -214,6 +214,11 @@ function multiFiles( list_target){
                 var url = 'index.php?to_pdf=1&module=EmailTemplates&action=AttachFiles',
                     new_element;
 
+                // allow attachments with TinyMCE or Direct HTML;
+                if (typeof mozaik == 'undefined') {
+                    var mozaik={};
+                }
+
                 //AJAX call begins
                 YAHOO.util.Connect.setForm(document.getElementById("upload_form"), true, true);
                 YAHOO.util.Connect.asyncRequest('POST', url, {upload: function(e) {
