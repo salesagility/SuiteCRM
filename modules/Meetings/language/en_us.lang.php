@@ -100,7 +100,6 @@ $mod_strings = array(
     'LBL_SCHEDULING_FORM_TITLE' => 'Scheduling',
     'LBL_SEARCH_BUTTON' => 'Search',
     'LBL_SEARCH_FORM_TITLE' => 'Meeting Search',
-    'LBL_SEND_BUTTON_KEY'=>'I',
     'LBL_SEND_BUTTON_LABEL' => 'Save & Send Invites',
     'LBL_SEND_BUTTON_TITLE' => 'Save & Send Invites',
     'LBL_STATUS' => 'Status:',
