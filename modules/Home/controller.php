@@ -144,7 +144,7 @@ class HomeController extends SugarController{
         $quicksearch_js = $template_handler->createQuickSearchCode($vardefFields, $vardefFields, $view);
         $quicksearch_js = str_replace($_REQUEST['field'], $_REQUEST['field'] . '_display', $quicksearch_js);
 
-        if($_REQUEST['field'] != "parent_name" || ($_REQUEST['field'] == "parent_name" && $_REQUEST['current_module'] == "Accounts")) {
+        if($_REQUEST['field'] != "parent_name" || $_REQUEST['current_module'] == "Accounts") {
             $quicksearch_js = str_replace($vardefFields[$_REQUEST['field']]['id_name'], $_REQUEST['field'], $quicksearch_js);
         }
 
