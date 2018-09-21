@@ -449,7 +449,7 @@ function getRunningUser()
     $runningUser = exec('whoami');
 
     if ($runningUser == null) {  // matches null, false and ""
-        if (is_windows()) {
+        if (!function_exists('posix_getpwuid')) {
             $runningUser = getenv('USERDOMAIN') . '\\' . getenv('USERNAME');
         } else {
             $usr = posix_getpwuid(posix_geteuid());
