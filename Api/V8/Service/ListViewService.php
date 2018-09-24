@@ -124,17 +124,26 @@ class ListViewService {
      */
     public function getListViewDefs(ListViewColumnsParams $params)
     {
-        $displayColumns = ListViewFacade::getDisplayColumns($params->getModuleName());
-        $data = [];
+        $moduleName = $params->getModuleName();
+        /** @var SugarBean */
+        $bean = \BeanFactory::getBean($moduleName);
+        
+        $text = new LangText(null, null, LangText::USING_ALL_STRINGS, true, false, $moduleName);
+        $displayColumns = ListViewFacade::getDisplayColumns($moduleName);
+        $data = [];        
         foreach ($displayColumns as $key => $column) {
             $column = array_merge(self::$listViewColumnInterface, $column);
-            $column['fieldName'] = strtolower($key); // TODO: get the vardef instead this "intuitive fieldName"
-            $text = new LangText($column['label'], null, LangText::USING_ALL_STRINGS, true, false);
-            $translated = $text->getText();
+            $column['fieldName'] = $key; //strtolower($key); // TODO: get the vardef instead this "intuitive fieldName"
+            //$text = new LangText($column['label'], null, LangText::USING_ALL_STRINGS, true, false);
+            $translated = $text->getText($column['label']);
+            if (!$translated) {
+                $translated = $text->getText($bean->field_name_map[strtolower($key)]['vname']);
+            }
             $column['label'] = $translated ? $translated : $column['label'];
+            
             // TODO: validate the column name (for e.g label and name should be requered etc...) also check the ListViewColumnInterface keys are match..
             $data[] = $column;
-        }
+        }        
         $response = new AttributeResponse($data);
         return $response;
     }

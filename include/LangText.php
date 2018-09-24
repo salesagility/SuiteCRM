@@ -102,6 +102,10 @@ class LangText
      * @var boolean
      */
     protected $throw;
+    
+    protected $module;
+    
+    protected $lang;
 
     /**
      *
@@ -111,13 +115,15 @@ class LangText
      * @param boolean $log
      * @param boolean $throw
      */
-    public function __construct($key = null, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true)
+    public function __construct($key = null, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true, $module = null, $lang = null)
     {
         $this->key = $key;
         $this->args = $args;
         $this->use = $use;
         $this->log = $log;
         $this->throw = $throw;
+        $this->module = $module;
+        $this->lang = $lang;
     }
 
     /**
@@ -130,11 +136,20 @@ class LangText
      * @return string
      * @throws ErrorMessageException
      */
-    public function getText($key = null, $args = null, $use = null)
+    public function getText($key = null, $args = null, $use = null, $module = null, $lang = null)
     { // TODO: rename the methode to LangText::translate()
 
         // TODO: app_strings and mod_strings could be in separated methods
         global $app_strings, $mod_strings, $app_list_strings;
+        
+        $module = $module ? $module : $this->module;
+        
+        if (!$mod_strings && $module) {
+            // retrieve translation for specified module            
+            $lang = $lang ? $lang : ($this->lang ? $this->lang : $GLOBALS['current_language']);
+            include_once __DIR__ . '/SugarObjects/LanguageManager.php';
+            \LanguageManager::loadModuleLanguage($module, $lang);
+        }
 
         if (!is_null($key)) {
             $this->key = $key;
