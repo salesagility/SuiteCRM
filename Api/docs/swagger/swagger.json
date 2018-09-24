@@ -1,0 +1,488 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SalesAgility REST API",
+    "version": "8.1",
+    "contact": {
+      "name": "Support",
+      "url": "https://suitecrm.com/forum"
+    },
+    "license": {
+      "name": "GNU AFFERO GENERAL PUBLIC LICENSE VERSION 3",
+      "url": "https://github.com/salesagility/SuiteCRM/blob/master/LICENSE.txt"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost/forkedSuite/Api/V8"
+    }
+  ],
+  "paths": {
+    "/module/{moduleName}/{id}": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "description": "Returns a bean with the specific ID",
+        "parameters": [
+          {
+            "name": "moduleName",
+            "in": "path",
+            "description": "Name of the module",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Contacts"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the module",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "b13a39f8-1c24-c5d0-ba0d-5ab123d6e899"
+          },
+          {
+            "name": "fields[Contacts]",
+            "in": "query",
+            "description": "Filtering attributes of the bean",
+            "schema": {
+              "type": "string"
+            },
+            "example": "name,account_type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Module"
+        ],
+        "description": "Delete a bean with specific ID",
+        "parameters": [
+          {
+            "name": "moduleName",
+            "in": "path",
+            "description": "Name of the module",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Contacts"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the module",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "b13a39f8-1c24-c5d0-ba0d-5ab123d6e899"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/module/{module}": {
+      "get": {
+        "tags": [
+          "Module"
+        ],
+        "description": "Returns a collections of beans",
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "description": "Name of the module",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Contacts"
+          },
+          {
+            "name": "fields[Contacts]",
+            "in": "query",
+            "description": "Filtering attributes of each bean",
+            "schema": {
+              "type": "string"
+            },
+            "example": "name,account_type"
+          },
+          {
+            "name": "page[size]",
+            "in": "query",
+            "description": "Number of beans showed in a page",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "4"
+          },
+          {
+            "name": "page[number]",
+            "in": "query",
+            "description": "Number of a page",
+            "schema": {
+              "type": "integer"
+            },
+            "example": "4"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting the bean list based on this parameter. Ascending by default, but if sort is prefixed with a minus (U+002D HYPHEN-MINUS, '-'), sort will be descending",
+            "schema": {
+              "type": "string"
+            },
+            "example": "-name"
+          },
+          {
+            "name": "filter[operator]",
+            "in": "query",
+            "description": "Filtering the bean collection and using it between two or more conditions as logical operator. Only one level conditions are supported so far. Supported operators: AND, OR",
+            "schema": {
+              "type": "string"
+            },
+            "example": "AND"
+          },
+          {
+            "name": "filter[name][eq]",
+            "in": "query",
+            "description": "Filtering the bean collections by conditions. The [name] is the  bean's property, the [eq] is a comparison operator. Supported operators: EQ, NEQ, GT, GTE, LT, LTE",
+            "schema": {
+              "type": "string"
+            },
+            "example": "John Doe"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/module": {
+      "post": {
+        "tags": [
+          "Module"
+        ],
+        "requestBody": {
+          "description": "Create a module record. If ID is not set, it will be created automatically. Attributes is optional, if the new bean will be set with certain, valid properties",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "example": {
+                  "data": {
+                    "type": "Accounts",
+                    "id": "86ee02b3-96d2-47b3-bd6d-9e1035daff3a",
+                    "attributes": {
+                      "name": "Account name"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Module"
+        ],
+        "requestBody": {
+          "description": "Update a module record. Type and ID are required, attributes have to be valid",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "example": {
+                  "data": {
+                    "type": "Accounts",
+                    "id": "86ee02b3-96d2-47b3-bd6d-9e1035daff3a",
+                    "attributes": {
+                      "name": "Another account name"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/module/{moduleName}/{id}/relationships/{relationship}": {
+      "get": {
+        "tags": [
+          "Relationship"
+        ],
+        "description": "Get relationship of a bean",
+        "parameters": [
+          {
+            "name": "moduleName",
+            "in": "path",
+            "description": "Name of the module",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Accounts"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the module",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "11a71596-83e7-624d-c792-5ab9006dd493"
+          },
+          {
+            "name": "relationship",
+            "in": "path",
+            "description": "The name of the relationship related to the module",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "contacts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/module/{moduleName}/{id}/relationships": {
+      "post": {
+        "tags": [
+          "Relationship"
+        ],
+        "parameters": [
+          {
+            "name": "moduleName",
+            "in": "path",
+            "description": "Name of the module",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Accounts"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the module",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "11a71596-83e7-624d-c792-5ab9006dd493"
+          }
+        ],
+        "requestBody": {
+          "description": "Add relationship to a module. The type is the name of the relationship",
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "example": {
+                  "data": {
+                    "type": "contacts"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/module/{moduleName}/{id}/relationships/{relationship}/{relatedBeanId}": {
+      "delete": {
+        "tags": [
+          "Relationship"
+        ],
+        "description": "Delete relationship between 2 modules",
+        "parameters": [
+          {
+            "name": "moduleName",
+            "in": "path",
+            "description": "Name of the module",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Contacts"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the module",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "b13a39f8-1c24-c5d0-ba0d-5ab123d6e899"
+          },
+          {
+            "name": "relationship",
+            "in": "path",
+            "description": "The name of the relationship related to the module",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "contacts"
+          },
+          {
+            "name": "relatedBeanId",
+            "in": "path",
+            "description": "ID of the related module",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "11806811-0b4b-fcdd-268b-5b2260e68333"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "BAD REQUEST"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "Logout"
+        ],
+        "description": "Logging out",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "tokenUrl": "http://localhost/forkedSuite/Api/access_token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  }
+}

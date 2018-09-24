@@ -79,9 +79,6 @@ SuiteCRM.kdev4
 vendor/
 public/
 
-#Ingore composer files
-composer.lock
-
 #Ignore bower_components
 bower_components/
 node_modules/
