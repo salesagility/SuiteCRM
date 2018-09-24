@@ -8,6 +8,14 @@ use Api\V8\Service;
 use Interop\Container\ContainerInterface as Container;
 
 return [
+    Service\ListViewService::class => function (Container $container) {
+        return new Service\ListViewService(
+            $container->get(BeanManager::class),
+            $container->get(AttributeObjectHelper::class),
+            $container->get(RelationshipObjectHelper::class),
+            $container->get(PaginationObjectHelper::class)
+        );
+    },
     Service\ModuleService::class => function (Container $container) {
         return new Service\ModuleService(
             $container->get(BeanManager::class),

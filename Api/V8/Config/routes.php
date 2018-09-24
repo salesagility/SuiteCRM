@@ -5,10 +5,10 @@ use Api\V8\Factory\ParamsMiddlewareFactory;
 use Api\V8\Param\CreateModuleParams;
 use Api\V8\Param\CreateRelationshipParams;
 use Api\V8\Param\DeleteModuleParams;
-use Api\V8\Param\DeleteRelationshipParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
 use Api\V8\Param\GetRelationshipParams;
+use Api\V8\Param\ListViewColumnsParams;
 use Api\V8\Param\UpdateModuleParams;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Middleware\AuthorizationServerMiddleware;
@@ -30,6 +30,10 @@ $app->group('', function () use ($app) {
          * Logout
          */
         $app->post('/logout', LogoutController::class);
+        
+        $app
+            ->get('/listview/columns/{moduleName}', 'Api\V8\Controller\ListViewController:getListViewColumns')
+            ->add($paramsMiddlewareFactory->bind(ListViewColumnsParams::class));                
 
         /**
          * Get module records

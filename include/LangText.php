@@ -134,7 +134,7 @@ class LangText
     { // TODO: rename the methode to LangText::translate()
 
         // TODO: app_strings and mod_strings could be in separated methods
-        global $app_strings, $mod_strings;
+        global $app_strings, $mod_strings, $app_list_strings;
 
         if (!is_null($key)) {
             $this->key = $key;
@@ -154,7 +154,9 @@ class LangText
             $text = isset($app_strings[$this->key]) && $app_strings[$this->key] ? $app_strings[$this->key] : null;
         } elseif ($this->use === self::USING_ALL_STRINGS) {
             $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : (
-                isset($app_strings[$this->key]) ? $app_strings[$this->key] : null
+                isset($app_strings[$this->key]) ? $app_strings[$this->key] : (
+                    isset($app_list_strings[$this->key]) ? $app_list_strings[$this->key] : null
+                )
             );
         } else {
             ErrorMessage::drop('Unknown use case for translation: ' . $this->use);

@@ -1,12 +1,19 @@
 <?php
 
 use Api\V8\Controller;
+use Api\V8\Service\ListViewService;
 use Api\V8\Service\LogoutService;
 use Api\V8\Service\ModuleService;
 use Api\V8\Service\RelationshipService;
 use Interop\Container\ContainerInterface as Container;
+use League\OAuth2\Server\ResourceServer;
 
 return [
+    Controller\ListViewController::class => function (Container $container) {
+        return new Controller\ListViewController(
+            $container->get(ListViewService::class)
+        );
+    },
     Controller\ModuleController::class => function (Container $container) {
         return new Controller\ModuleController(
             $container->get(ModuleService::class)
@@ -15,7 +22,7 @@ return [
     Controller\LogoutController::class => function (Container $container) {
         return new Controller\LogoutController(
             $container->get(LogoutService::class),
-            $container->get(\League\OAuth2\Server\ResourceServer::class)
+            $container->get(ResourceServer::class)
         );
     },
     Controller\RelationshipController::class => function (Container $container) {

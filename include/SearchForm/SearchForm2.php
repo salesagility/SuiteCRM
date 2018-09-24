@@ -451,7 +451,7 @@ class SearchForm
                 }
             }
         }
-        throw new Exception('Not found');
+        throw new Exception('Find Field Option Value: Not found');
     }
 
     /**
