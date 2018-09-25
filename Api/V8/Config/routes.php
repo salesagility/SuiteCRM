@@ -33,7 +33,9 @@ $app->group('', function () use ($app) {
         
         $app
             ->get('/listview/columns/{moduleName}', 'Api\V8\Controller\ListViewController:getListViewColumns')
-            ->add($paramsMiddlewareFactory->bind(ListViewColumnsParams::class));                
+            ->add($paramsMiddlewareFactory->bind(ListViewColumnsParams::class));  
+        
+        $app->get('/current-user', 'Api\V8\Controller\UserController:getCurrentUser');
 
         /**
          * Get module records

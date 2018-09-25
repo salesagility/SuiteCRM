@@ -38,49 +38,49 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace Api\V8\Controller;
+namespace Api\V8\Service;
+
+use Api\V8\BeanDecorator\BeanManager;
+use Api\V8\JsonApi\Response\AttributeResponse;
+use Slim\Http\Request;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-
-use Api\V8\Param\ListViewColumnsParams;
-use Api\V8\Service\ListViewService;
-use Api\V8\Service\ModuleService;
-use Exception;
-use Slim\Http\Request;
-use Slim\Http\Response;
+include_once __DIR__ . '/../../../include/ListView/ListViewFacade.php';
 
 /**
- * ListViewController
+ * UserService
  *
  * @author gyula
  */
-class ListViewController extends BaseController {
+class UserService {
+
     
     /**
-     * @var ListViewService
+     * @var BeanManager
      */
-    private $listViewService;
+    private $beanManager;
 
     /**
-     * @param ListViewService $listViewService
+     * @param BeanManager $beanManager
      */
-    public function __construct(ListViewService $listViewService)
+    public function __construct(
+        BeanManager $beanManager
+    ) {
+        $this->beanManager = $beanManager;
+    }
+
+    public function getCurrentUser(Request $request)
     {
-        $this->listViewService = $listViewService;
+        // needs to determinate the curent user without globals
+        $oauthClientId = $request->getAttribute('oauth_client_id');
+        $oauthClient = $this->beanManager->getBeanSafe('OAuth2Clients', $oauthClientId);
+        $currentUser = $this->beanManager->getBeanSafe('Users', $oauthClient->assigned_user_id);
+        $data = $currentUser->toArray();
+        unset($data['user_hash']);
+        $response = new AttributeResponse($data);
+        return $response;
     }
-    
-    public function getListViewColumns(Request $request, Response $response, array $args, ListViewColumnsParams $params) {
-        try {
-            $jsonResponse = $this->listViewService->getListViewDefs($params);
-
-            return $this->generateResponse($response, $jsonResponse, 200);
-        } catch (Exception $exception) {
-            return $this->generateErrorResponse($response, $exception, 400);
-        }
-    }
-
 }

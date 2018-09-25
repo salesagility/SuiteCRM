@@ -8,6 +8,11 @@ use Api\V8\Service;
 use Interop\Container\ContainerInterface as Container;
 
 return [
+    Service\UserService::class => function (Container $container) {
+        return new Service\UserService(
+            $container->get(BeanManager::class)
+        );
+    },
     Service\ListViewService::class => function (Container $container) {
         return new Service\ListViewService(
             $container->get(BeanManager::class),

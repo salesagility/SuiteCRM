@@ -44,43 +44,37 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-
-use Api\V8\Param\ListViewColumnsParams;
-use Api\V8\Service\ListViewService;
-use Api\V8\Service\ModuleService;
+use Api\V8\Service\UserService;
 use Exception;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * ListViewController
+ * UserController
  *
  * @author gyula
  */
-class ListViewController extends BaseController {
+class UserController extends BaseController {
     
     /**
-     * @var ListViewService
+     * @var UserService
      */
-    private $listViewService;
-
+    private $userService;
+    
     /**
-     * @param ListViewService $listViewService
+     * @param UserService $userService
      */
-    public function __construct(ListViewService $listViewService)
+    public function __construct(UserService $userService)
     {
-        $this->listViewService = $listViewService;
+        $this->userService = $userService;
     }
     
-    public function getListViewColumns(Request $request, Response $response, array $args, ListViewColumnsParams $params) {
+    public function getCurrentUser(Request $request, Response $response) {
         try {
-            $jsonResponse = $this->listViewService->getListViewDefs($params);
-
+            $jsonResponse = $this->userService->getCurrentUser($request);
             return $this->generateResponse($response, $jsonResponse, 200);
         } catch (Exception $exception) {
             return $this->generateErrorResponse($response, $exception, 400);
         }
     }
-
 }
