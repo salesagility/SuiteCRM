@@ -41,7 +41,11 @@
 namespace Api\V8\Service;
 
 use Api\V8\BeanDecorator\BeanManager;
+use Api\V8\JsonApi\Helper\AttributeObjectHelper;
+use Api\V8\JsonApi\Helper\RelationshipObjectHelper;
 use Api\V8\JsonApi\Response\AttributeResponse;
+use Api\V8\JsonApi\Response\DataResponse;
+use Api\V8\JsonApi\Response\DocumentResponse;
 use Slim\Http\Request;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -64,12 +68,26 @@ class UserService {
     private $beanManager;
 
     /**
+     * @var AttributeObjectHelper
+     */
+    private $attributeHelper;
+
+    /**
+     * @var RelationshipObjectHelper
+     */
+    private $relationshipHelper;
+
+    /**
      * @param BeanManager $beanManager
      */
     public function __construct(
-        BeanManager $beanManager
+        BeanManager $beanManager,
+        AttributeObjectHelper $attributeHelper,
+        RelationshipObjectHelper $relationshipHelper
     ) {
         $this->beanManager = $beanManager;
+        $this->attributeHelper = $attributeHelper;
+        $this->relationshipHelper = $relationshipHelper;
     }
 
     public function getCurrentUser(Request $request)
@@ -78,9 +96,17 @@ class UserService {
         $oauthClientId = $request->getAttribute('oauth_client_id');
         $oauthClient = $this->beanManager->getBeanSafe('OAuth2Clients', $oauthClientId);
         $currentUser = $this->beanManager->getBeanSafe('Users', $oauthClient->assigned_user_id);
-        $data = $currentUser->toArray();
-        unset($data['user_hash']);
-        $response = new AttributeResponse($data);
+        
+        $currentUserData = $currentUser->toArray();
+        unset($currentUserData['user_hash']);
+        
+        $dataResponse = new DataResponse($currentUser->getObjectName(), $currentUser->id);
+        $attributeResponse = new AttributeResponse($currentUserData);
+        $dataResponse->setAttributes($attributeResponse);
+        $dataResponse->setRelationships($this->relationshipHelper->getRelationships($currentUser, $request->getUri()->getPath()));
+        
+        $response = new DocumentResponse();
+        $response->setData($dataResponse);
         return $response;
     }
 }

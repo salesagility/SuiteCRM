@@ -10,7 +10,9 @@ use Interop\Container\ContainerInterface as Container;
 return [
     Service\UserService::class => function (Container $container) {
         return new Service\UserService(
-            $container->get(BeanManager::class)
+            $container->get(BeanManager::class),
+            $container->get(AttributeObjectHelper::class),
+            $container->get(RelationshipObjectHelper::class)
         );
     },
     Service\ListViewService::class => function (Container $container) {

@@ -69,7 +69,7 @@ class UserController extends BaseController {
         $this->userService = $userService;
     }
     
-    public function getCurrentUser(Request $request, Response $response) {
+    public function getCurrentUser(Request $request, Response $response, array $args) {
         try {
             $jsonResponse = $this->userService->getCurrentUser($request);
             return $this->generateResponse($response, $jsonResponse, 200);
