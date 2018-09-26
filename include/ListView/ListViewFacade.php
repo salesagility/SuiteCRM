@@ -134,21 +134,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
          if (!$foundViewDefs && file_exists('modules/'. $module.'/metadata/listviewdefs.php')) {
              $metadataFile = 'modules/'. $module.'/metadata/listviewdefs.php';
          }
-         require_once($metadataFile);
+         
+         if ($metadataFile) {
+            if (!file_exists($metadataFile)) {
+                throw new Exception("Metadata file '$metadataFile' not found for module '$module'.");
+            }
+            require_once($metadataFile);
+         }
 
          $displayColumns = array();
-         if (!empty($request['displayColumns'])) {
-             foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
-                 if (!empty($listViewDefs[$module][$col])) {
-                     $displayColumns[$col] = $listViewDefs[$module][$col];
-                 }
-             }
+         if (!empty($listViewDefs)) {
+            if (!empty($request['displayColumns'])) {
+                foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
+                    if (!empty($listViewDefs[$module][$col])) {
+                        $displayColumns[$col] = $listViewDefs[$module][$col];
+                    }
+                }
+            } else {
+                foreach ($listViewDefs[$module] as $col => $params) {
+                    if (!empty($params['default']) && $params['default']) {
+                        $displayColumns[$col] = $params;
+                    }
+                }
+            }
          } else {
-             foreach ($listViewDefs[$module] as $col => $params) {
-                 if (!empty($params['default']) && $params['default']) {
-                     $displayColumns[$col] = $params;
-                 }
-             }
+             throw new Exception("List view definition is not found for module '$module'");
          }
          return $displayColumns;
      }
