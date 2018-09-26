@@ -2,6 +2,7 @@
 
 use Api\V8\Controller;
 use Api\V8\Service\UserService;
+use Api\V8\Service\UserPreferencesService;
 use Api\V8\Service\ListViewService;
 use Api\V8\Service\LogoutService;
 use Api\V8\Service\ModuleService;
@@ -10,6 +11,11 @@ use Interop\Container\ContainerInterface as Container;
 use League\OAuth2\Server\ResourceServer;
 
 return [
+    Controller\UserPreferencesController::class => function (Container $container) {
+        return new Controller\UserPreferencesController(
+            $container->get(UserPreferencesService::class)
+        );
+    },
     Controller\UserController::class => function (Container $container) {
         return new Controller\UserController(
             $container->get(UserService::class)

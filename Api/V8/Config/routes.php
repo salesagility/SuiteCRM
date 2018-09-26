@@ -10,6 +10,7 @@ use Api\V8\Param\GetModulesParams;
 use Api\V8\Param\GetRelationshipParams;
 use Api\V8\Param\ListViewColumnsParams;
 use Api\V8\Param\UpdateModuleParams;
+use Api\V8\Param\GetUserPreferencesParams;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Middleware\AuthorizationServerMiddleware;
 use League\OAuth2\Server\Middleware\ResourceServerMiddleware;
@@ -33,9 +34,13 @@ $app->group('', function () use ($app) {
         
         $app
             ->get('/listview/columns/{moduleName}', 'Api\V8\Controller\ListViewController:getListViewColumns')
-            ->add($paramsMiddlewareFactory->bind(ListViewColumnsParams::class));  
+            ->add($paramsMiddlewareFactory->bind(ListViewColumnsParams::class));
         
         $app->get('/current-user', 'Api\V8\Controller\UserController:getCurrentUser');
+        
+        $app
+            ->get('/user-preferences/{id}', 'Api\V8\Controller\UserPreferencesController:getUserPreferences')
+            ->add($paramsMiddlewareFactory->bind(GetUserPreferencesParams::class));
 
         /**
          * Get module records

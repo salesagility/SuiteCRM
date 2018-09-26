@@ -6,6 +6,12 @@ use Api\V8\Param;
 use Interop\Container\ContainerInterface as Container;
 
 return [
+    Param\GetUserPreferencesParams::class => function (Container $container) {
+        return new Param\GetUserPreferencesParams(
+            $container->get(ValidatorFactory::class),
+            $container->get(BeanManager::class)
+        );
+    },
     Param\ListViewColumnsParams::class => function (Container $container) {
         return new Param\ListViewColumnsParams(
             $container->get(ValidatorFactory::class),
