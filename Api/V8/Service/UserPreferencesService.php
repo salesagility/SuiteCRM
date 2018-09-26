@@ -45,6 +45,7 @@ use Api\V8\JsonApi\Response\AttributeResponse;
 use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\Param\GetUserPreferencesParams;
+use DBManagerFactory;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -89,10 +90,18 @@ class UserPreferencesService {
     public function getUserPreferences(GetUserPreferencesParams $params)
     {
         // needs to determinate the user preferences
-        $userPreferencesData = ['foo', 'bar', 'bazz'];
+        $user = $this->beanManager->getBeanSafe('Users', $params->getUserId());
+        
+        $db = DBManagerFactory::getInstance();
+        $result = $db->query("SELECT contents, category FROM user_preferences WHERE assigned_user_id='$user->id' AND deleted = 0", false, 'Failed to load user preferences');
+        $preferences = [];
+        while ($row = $db->fetchByAssoc($result)) {
+            $category = $row['category'];
+            $preferences[$category] = unserialize(base64_decode($row['contents']));
+        }
         
         $dataResponse = new DataResponse('UserPreference', $params->getUserId());
-        $attributeResponse = new AttributeResponse($userPreferencesData);
+        $attributeResponse = new AttributeResponse($preferences);
         $dataResponse->setAttributes($attributeResponse);
         
         $response = new DocumentResponse();
