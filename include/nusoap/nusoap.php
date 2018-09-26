@@ -9232,32 +9232,32 @@ class nusoap_client extends nusoap_base
      */
     public $faultdetail;
 
-	/**
-	* constructor
-	*
-	* @param    mixed $endpoint SOAP server or WSDL URL (string), or wsdl instance (object)
-	* @param    mixed $wsdl optional, set to 'wsdl' or true if using WSDL
-	* @param    string $proxyhost optional
-	* @param    string $proxyport optional
-	* @param	string $proxyusername optional
-	* @param	string $proxypassword optional
-	* @param	integer $timeout set the connection timeout
-	* @param	integer $response_timeout set the response timeout
-	* @param	string $portName optional portName in WSDL document
-	* @access   public
-	*/
-	function nusoap_client($endpoint,$wsdl = false,$proxyhost = false,$proxyport = false,$proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30, $portName = ''){
-		parent::nusoap_base();
-		//ADDED FOR SUGAR PROXY SUPPORT
-		global $proxy_config;
-		if(!$proxyhost){
-			if(empty($proxy_config)){
-				if(!empty(DBManagerFactory::getInstance())){
-
-					$proxy_config = new Administration();
-					$proxy_config->retrieveSettings('proxy');
-				}
-			}
+    /**
+    * constructor
+    *
+    * @param    mixed $endpoint SOAP server or WSDL URL (string), or wsdl instance (object)
+    * @param    mixed $wsdl optional, set to 'wsdl' or true if using WSDL
+    * @param    string $proxyhost optional
+    * @param    string $proxyport optional
+    * @param	string $proxyusername optional
+    * @param	string $proxypassword optional
+    * @param	integer $timeout set the connection timeout
+    * @param	integer $response_timeout set the response timeout
+    * @param	string $portName optional portName in WSDL document
+    * @access   public
+    */
+    public function nusoap_client($endpoint, $wsdl = false, $proxyhost = false, $proxyport = false, $proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30, $portName = '')
+    {
+        parent::nusoap_base();
+        //ADDED FOR SUGAR PROXY SUPPORT
+        global $proxy_config;
+        if (!$proxyhost) {
+            if (empty($proxy_config)) {
+                if (!empty(DBManagerFactory::getInstance())) {
+                    $proxy_config = new Administration();
+                    $proxy_config->retrieveSettings('proxy');
+                }
+            }
 
             if (!empty($proxy_config)) {
                 if (!empty($proxy_config->settings['proxy_on'])) {

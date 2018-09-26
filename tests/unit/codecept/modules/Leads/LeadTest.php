@@ -15,13 +15,13 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         //self::markTestIncomplete('Test changes error level');
 
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('inbound_email');
         
 
-	// test
+        // test
         
         //execute the contructor and check for the Object type and  attributes
         $lead = new Lead();
@@ -42,8 +42,6 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
         
         
         $state->popTable('inbound_email');
-
-
     }
 
     public function testget_account()
@@ -66,8 +64,6 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(null, $result);
         
         // clean up
-        
-        
     }
 
     public function testget_opportunity()
@@ -181,7 +177,7 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testfill_in_additional_list_fields()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -191,7 +187,7 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('sugarfeed');
         $state->pushTable('tracker');
 
-	// test
+        // test
         $lead = new Lead();
 
         $lead->first_name = "firstn";
@@ -228,13 +224,13 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testget_list_view_data()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
 
-	// test
+        // test
         
         $lead = new Lead();
 
@@ -266,9 +262,6 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $state->popTable('tracker');
         $state->popTable('email_addresses');
-
-
-
     }
 
 
@@ -309,7 +302,6 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testbuild_generic_where_clause()
     {
-        
         self::markTestSkipped('State dependecy');
         
         $lead = new Lead();
@@ -358,12 +350,12 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testlistviewACLHelper()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $lead = new Lead();
 

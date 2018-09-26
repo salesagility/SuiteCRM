@@ -645,7 +645,8 @@ enableQS(false);
         return true;
     }
 
-    function check_enabled($type){
+    public function check_enabled($type)
+    {
         $db = DBManagerFactory::getInstance();
         $query = "SELECT * FROM config where name = 'module_" .$type . "' and value =  1;";
         $results = $db->query($query);

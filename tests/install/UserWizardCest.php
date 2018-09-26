@@ -49,5 +49,4 @@ class UserWizardCest
         $I->configureInstaller($webDriverHelper);
         $I->waitForInstallerToFinish();
     }
-
 }

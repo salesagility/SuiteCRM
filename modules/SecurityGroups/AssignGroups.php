@@ -130,10 +130,8 @@ EOQ;
         }
     }
 
-public function mass_assign($event, $arguments)
-{
-
-
+    public function mass_assign($event, $arguments)
+    {
         $action = null;
         if (isset($_REQUEST['action'])) {
             $action = $_REQUEST['action'];

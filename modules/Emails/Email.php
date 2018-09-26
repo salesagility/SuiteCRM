@@ -821,13 +821,12 @@ class Email extends Basic
         $this->name = $request['sendSubject'];
         $this->description_html = '&lt;html&gt;&lt;body&gt;' . $request['sendDescription'] . '&lt;/body&gt;&lt;/html&gt;';
 
-		/**********************************************************************
-		 * PHPMAILER PREP
-		 */
-		$mail = new SugarPHPMailer();
-		$mail = $this->setMailer($mail, '', $request['fromAccount']);
-		if (empty($mail->Host) && !$this->isDraftEmail($request))
-		{
+        /**********************************************************************
+         * PHPMAILER PREP
+         */
+        $mail = new SugarPHPMailer();
+        $mail = $this->setMailer($mail, '', $request['fromAccount']);
+        if (empty($mail->Host) && !$this->isDraftEmail($request)) {
             $this->status = 'send_error';
 
             if ($mail->oe->type == 'system') {
@@ -842,15 +841,15 @@ class Email extends Basic
         $subject = $this->name;
         $mail->Subject = from_html($this->name);
 
-		// work-around legacy code in SugarPHPMailer
-		if($request['setEditor'] == 1) {
+        // work-around legacy code in SugarPHPMailer
+        if ($request['setEditor'] == 1) {
             $request['description_html'] = $request['sendDescription'];
-			$this->description_html = $request['description_html'];
-		} else {
-			$this->description_html = '';
-			$this->description = $request['sendDescription'];
-		}
-		// end work-around
+            $this->description_html = $request['description_html'];
+        } else {
+            $this->description_html = '';
+            $this->description = $request['sendDescription'];
+        }
+        // end work-around
 
         if ($this->isDraftEmail($request)) {
             if ($this->type != 'draft' && $this->status != 'draft') {
@@ -862,70 +861,69 @@ class Email extends Basic
             $r1 = $this->db->query($q1);
         } // if
 
-		if (isset($request['saveDraft'])) {
-			$this->type = 'draft';
-			$this->status = 'draft';
-			$forceSave = true;
-		} else {
-			/* Apply Email Templates */
-			// do not parse email templates if the email is being saved as draft....
-		    $toAddresses = $this->email2ParseAddresses($request['sendTo']);
-	        $sea = new SugarEmailAddress();
-	        $object_arr = array();
+        if (isset($request['saveDraft'])) {
+            $this->type = 'draft';
+            $this->status = 'draft';
+            $forceSave = true;
+        } else {
+            /* Apply Email Templates */
+            // do not parse email templates if the email is being saved as draft....
+            $toAddresses = $this->email2ParseAddresses($request['sendTo']);
+            $sea = new SugarEmailAddress();
+            $object_arr = array();
 
-			if( isset($request['parent_type']) && !empty($request['parent_type']) &&
-				isset($request['parent_id']) && !empty($request['parent_id']) &&
-				($request['parent_type'] == 'Accounts' ||
-				$request['parent_type'] == 'Contacts' ||
-				$request['parent_type'] == 'Leads' ||
-				$request['parent_type'] == 'Users' ||
-				$request['parent_type'] == 'Prospects')) {
-					if(isset($beanList[$request['parent_type']]) && !empty($beanList[$request['parent_type']])) {
-						$className = $beanList[$request['parent_type']];
-						if(isset($beanFiles[$className]) && !empty($beanFiles[$className])) {
-							if(!class_exists($className)) {
-								require_once($beanFiles[$className]);
-							}
-							$bean = new $className();
-							$bean->retrieve($request['parent_id']);
-	                		$object_arr[$bean->module_dir] = $bean->id;
-						} // if
-					} // if
-			}
-			foreach($toAddresses as $addrMeta) {
-				$addr = $addrMeta['email'];
-				$beans = $sea->getBeansByEmailAddress($addr);
-				foreach($beans as $bean) {
-					if (!isset($object_arr[$bean->module_dir])) {
-						$object_arr[$bean->module_dir] = $bean->id;
-					}
-				}
-			}
+            if (isset($request['parent_type']) && !empty($request['parent_type']) &&
+                isset($request['parent_id']) && !empty($request['parent_id']) &&
+                ($request['parent_type'] == 'Accounts' ||
+                $request['parent_type'] == 'Contacts' ||
+                $request['parent_type'] == 'Leads' ||
+                $request['parent_type'] == 'Users' ||
+                $request['parent_type'] == 'Prospects')) {
+                if (isset($beanList[$request['parent_type']]) && !empty($beanList[$request['parent_type']])) {
+                    $className = $beanList[$request['parent_type']];
+                    if (isset($beanFiles[$className]) && !empty($beanFiles[$className])) {
+                        if (!class_exists($className)) {
+                            require_once($beanFiles[$className]);
+                        }
+                        $bean = new $className();
+                        $bean->retrieve($request['parent_id']);
+                        $object_arr[$bean->module_dir] = $bean->id;
+                    } // if
+                } // if
+            }
+            foreach ($toAddresses as $addrMeta) {
+                $addr = $addrMeta['email'];
+                $beans = $sea->getBeansByEmailAddress($addr);
+                foreach ($beans as $bean) {
+                    if (!isset($object_arr[$bean->module_dir])) {
+                        $object_arr[$bean->module_dir] = $bean->id;
+                    }
+                }
+            }
 
-	        /* template parsing */
-	        if (empty($object_arr)) {
-	          $object_arr= array('Contacts' => '123');
-	        }
-	        $object_arr['Users'] = $current_user->id;
-	        $this->description_html = EmailTemplate::parse_template($this->description_html, $object_arr);
-	        $this->name = EmailTemplate::parse_template($this->name, $object_arr);
-	        $this->description = EmailTemplate::parse_template($this->description, $object_arr);
-	        $this->description = html_entity_decode($this->description,ENT_COMPAT,'UTF-8');
-			if($this->type != 'draft' && $this->status != 'draft') {
-	        	$this->id = create_guid();
-	        	$this->date_entered = "";
-	        	$this->new_with_id = true;
-		        $this->type = 'out';
-		        $this->status = 'sent';
-			}
-
+            /* template parsing */
+            if (empty($object_arr)) {
+                $object_arr= array('Contacts' => '123');
+            }
+            $object_arr['Users'] = $current_user->id;
+            $this->description_html = EmailTemplate::parse_template($this->description_html, $object_arr);
+            $this->name = EmailTemplate::parse_template($this->name, $object_arr);
+            $this->description = EmailTemplate::parse_template($this->description, $object_arr);
+            $this->description = html_entity_decode($this->description, ENT_COMPAT, 'UTF-8');
+            if ($this->type != 'draft' && $this->status != 'draft') {
+                $this->id = create_guid();
+                $this->date_entered = "";
+                $this->new_with_id = true;
+                $this->type = 'out';
+                $this->status = 'sent';
+            }
         }
 
-        if(isset($request['parent_type']) && empty($request['parent_type']) &&
-			isset($request['parent_id']) && empty($request['parent_id']) ) {
-				$this->parent_id = "";
-				$this->parent_type = "";
-		} // if
+        if (isset($request['parent_type']) && empty($request['parent_type']) &&
+            isset($request['parent_id']) && empty($request['parent_id'])) {
+            $this->parent_id = "";
+            $this->parent_type = "";
+        } // if
 
 
         $mail->Subject = $this->name;
@@ -1226,31 +1224,30 @@ class Email extends Basic
             }
         }
 
-		if ((!(empty($orignialId) || isset($request['saveDraft']) || ($this->type == 'draft' && $this->status == 'draft'))) &&
-			(($request['composeType'] == 'reply') || ($request['composeType'] == 'replyAll') || ($request['composeType'] == 'replyCase')) && ($orignialId != $this->id)) {
-			$originalEmail = new Email();
-			$originalEmail->retrieve($orignialId);
-			$originalEmail->reply_to_status = 1;
-			$originalEmail->save();
-			$this->reply_to_status = 0;
-		} // if
+        if ((!(empty($orignialId) || isset($request['saveDraft']) || ($this->type == 'draft' && $this->status == 'draft'))) &&
+            (($request['composeType'] == 'reply') || ($request['composeType'] == 'replyAll') || ($request['composeType'] == 'replyCase')) && ($orignialId != $this->id)) {
+            $originalEmail = new Email();
+            $originalEmail->retrieve($orignialId);
+            $originalEmail->reply_to_status = 1;
+            $originalEmail->save();
+            $this->reply_to_status = 0;
+        } // if
 
-		if ($request['composeType'] == 'reply' || $request['composeType'] == 'replyCase') {
-			if (isset($request['ieId']) && isset($request['mbox'])) {
-				$emailFromIe = new InboundEmail();
-				$emailFromIe->retrieve($request['ieId']);
-				$emailFromIe->mailbox = $request['mbox'];
-				if (isset($emailFromIe->id) && $emailFromIe->is_personal) {
-					if ($emailFromIe->isPop3Protocol()) {
-						$emailFromIe->mark_answered($this->uid, 'pop3');
-					}
-					elseif ($emailFromIe->connectMailserver() == 'true') {
-						$emailFromIe->markEmails($this->uid, 'answered');
-						$emailFromIe->mark_answered($this->uid);
-					}
-				}
-			}
-		}
+        if ($request['composeType'] == 'reply' || $request['composeType'] == 'replyCase') {
+            if (isset($request['ieId']) && isset($request['mbox'])) {
+                $emailFromIe = new InboundEmail();
+                $emailFromIe->retrieve($request['ieId']);
+                $emailFromIe->mailbox = $request['mbox'];
+                if (isset($emailFromIe->id) && $emailFromIe->is_personal) {
+                    if ($emailFromIe->isPop3Protocol()) {
+                        $emailFromIe->mark_answered($this->uid, 'pop3');
+                    } elseif ($emailFromIe->connectMailserver() == 'true') {
+                        $emailFromIe->markEmails($this->uid, 'answered');
+                        $emailFromIe->mark_answered($this->uid);
+                    }
+                }
+            }
+        }
 
 
         if ($forceSave ||
@@ -1258,64 +1255,57 @@ class Email extends Basic
             (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)
         ) {
 
-			// saving a draft OR saving a sent email
-			$decodedFromName = mb_decode_mimeheader($mail->FromName);
-			$this->from_addr = "{$decodedFromName} <{$mail->From}>";
-			$this->from_addr_name = $this->from_addr;
-			$this->to_addrs = $request['sendTo'];
-			$this->to_addrs_names = $request['sendTo'];
-			$this->cc_addrs = $request['sendCc'];
-			$this->cc_addrs_names = $request['sendCc'];
-			$this->bcc_addrs = $request['sendBcc'];
-			$this->bcc_addrs_names = $request['sendBcc'];
-			$this->assigned_user_id = $current_user->id;
+            // saving a draft OR saving a sent email
+            $decodedFromName = mb_decode_mimeheader($mail->FromName);
+            $this->from_addr = "{$decodedFromName} <{$mail->From}>";
+            $this->from_addr_name = $this->from_addr;
+            $this->to_addrs = $request['sendTo'];
+            $this->to_addrs_names = $request['sendTo'];
+            $this->cc_addrs = $request['sendCc'];
+            $this->cc_addrs_names = $request['sendCc'];
+            $this->bcc_addrs = $request['sendBcc'];
+            $this->bcc_addrs_names = $request['sendBcc'];
+            $this->assigned_user_id = $current_user->id;
 
             $this->date_sent = $timedate->now();
             ///////////////////////////////////////////////////////////////////
             ////	LINK EMAIL TO SUGARBEANS BASED ON EMAIL ADDY
 
-			if( isset($request['parent_type']) && !empty($request['parent_type']) &&
-				isset($request['parent_id']) && !empty($request['parent_id']) ) {
-	                $this->parent_id = $request['parent_id'];
-	                $this->parent_type = $request['parent_type'];
-					$q = "SELECT count(*) c FROM emails_beans WHERE  email_id = '{$this->id}' AND bean_id = '{$request['parent_id']}' AND bean_module = '{$request['parent_type']}'";
-					$r = $this->db->query($q);
-					$a = $this->db->fetchByAssoc($r);
-					if($a['c'] <= 0) {
-						if(isset($beanList[$request['parent_type']]) && !empty($beanList[$request['parent_type']])) {
-							$className = $beanList[$request['parent_type']];
-							if(isset($beanFiles[$className]) && !empty($beanFiles[$className])) {
-								if(!class_exists($className)) {
-									require_once($beanFiles[$className]);
-								}
-								$bean = new $className();
-								$bean->retrieve($request['parent_id']);
-								if($bean->load_relationship('emails')) {
-									$bean->emails->add($this->id);
-								} // if
-
-							} // if
-
-						} // if
-
-					} // if
-
-				} else {
-					if(!class_exists('aCase')) {
-
-					}
-					else{
-						$c = new aCase();
-						if($caseId = InboundEmail::getCaseIdFromCaseNumber($mail->Subject, $c)) {
-							$c->retrieve($caseId);
-							$c->load_relationship('emails');
-							$c->emails->add($this->id);
-							$this->parent_type = "Cases";
-							$this->parent_id = $caseId;
-						} // if
-					}
-
-				} // else
+            if (isset($request['parent_type']) && !empty($request['parent_type']) &&
+                isset($request['parent_id']) && !empty($request['parent_id'])) {
+                $this->parent_id = $request['parent_id'];
+                $this->parent_type = $request['parent_type'];
+                $q = "SELECT count(*) c FROM emails_beans WHERE  email_id = '{$this->id}' AND bean_id = '{$request['parent_id']}' AND bean_module = '{$request['parent_type']}'";
+                $r = $this->db->query($q);
+                $a = $this->db->fetchByAssoc($r);
+                if ($a['c'] <= 0) {
+                    if (isset($beanList[$request['parent_type']]) && !empty($beanList[$request['parent_type']])) {
+                        $className = $beanList[$request['parent_type']];
+                        if (isset($beanFiles[$className]) && !empty($beanFiles[$className])) {
+                            if (!class_exists($className)) {
+                                require_once($beanFiles[$className]);
+                            }
+                            $bean = new $className();
+                            $bean->retrieve($request['parent_id']);
+                            if ($bean->load_relationship('emails')) {
+                                $bean->emails->add($this->id);
+                            } // if
+                        } // if
+                    } // if
+                } // if
+            } else {
+                if (!class_exists('aCase')) {
+                } else {
+                    $c = new aCase();
+                    if ($caseId = InboundEmail::getCaseIdFromCaseNumber($mail->Subject, $c)) {
+                        $c->retrieve($caseId);
+                        $c->load_relationship('emails');
+                        $c->emails->add($this->id);
+                        $this->parent_type = "Cases";
+                        $this->parent_id = $caseId;
+                    } // if
+                }
+            } // else
 
             ////	LINK EMAIL TO SUGARBEANS BASED ON EMAIL ADDY
             ///////////////////////////////////////////////////////////////////
@@ -2816,10 +2806,10 @@ class Email extends Basic
         $mail = $this->setMailer($mail, '', $ieId);
         
         if (($mail->oe->type === 'system') && (!isset($sugar_config['email_allow_send_as_user']) || (!$sugar_config['email_allow_send_as_user']))) {
-            $mail->From = 
-            $sender = 
+            $mail->From =
+            $sender =
             $ReplyToAddr = $mail->oe->smtp_from_addr;
-          isValidEmailAddress($mail->From);
+            isValidEmailAddress($mail->From);
             $ReplyToName = $mail->oe->smtp_from_name;
         } else {
 

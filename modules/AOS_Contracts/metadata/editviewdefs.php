@@ -89,7 +89,7 @@ array(
             'studio' => 'visible',
             'label' => 'LBL_CONTACT',
             'displayParams' =>
-            array (
+            array(
               'initial_filter' => '&account_name="+this.form.{$fields.contract_account.name}.value+"',
             ),
           ),

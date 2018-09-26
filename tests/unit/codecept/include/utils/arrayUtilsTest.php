@@ -35,7 +35,7 @@ class array_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
         $actual = add_blank_option($tempArray);
         $this->assertSame($actual, $expected);
 
-        //execute the method with array having a blank key value pair. function will return the same array back without any change.		
+        //execute the method with array having a blank key value pair. function will return the same array back without any change.
         $tempArray = array('' => '', 'Key1' => 'value1', 'Key2' => 'value2');
         $expected = array('' => '', 'Key1' => 'value1', 'Key2' => 'value2');
 
@@ -192,14 +192,14 @@ class array_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
         //try with two different length arrays
         $tempArray1 = array('v1', 'v2', 'v3');
         $tempArray2 = array('v4', 'v5');
-        $actual = array_merge_values($tempArray1,  $tempArray2);
+        $actual = array_merge_values($tempArray1, $tempArray2);
         $this->assertFalse($actual);
 
         //try with same length arrays.
         $tempArray1 = array('v1', 'v2', 'v3');
         $tempArray2 = array('v4', 'v5', 'v6');
         $expected = array('v1v4', 'v2v5', 'v3v6');
-        $actual = array_merge_values($tempArray1,  $tempArray2);
+        $actual = array_merge_values($tempArray1, $tempArray2);
         $this->assertSame($expected, $actual);
     }
 

@@ -132,7 +132,6 @@ class SubPanelRowCounter
      */
     public function makeSubPanelRowCountQuery()
     {
-
         $relationshipName = $this->subPanelDef['get_subpanel_data'];
 
         if (0 === strpos($relationshipName, 'function:')) {

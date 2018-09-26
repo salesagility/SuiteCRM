@@ -2,7 +2,6 @@
 
 class ViewDetailTest extends SuiteCRM\StateCheckerUnitAbstract
 {
-    
     protected $stateSaver;
     
     public function setUp()
@@ -18,7 +17,7 @@ class ViewDetailTest extends SuiteCRM\StateCheckerUnitAbstract
     }
     
     public function tearDown()
-    {   
+    {
         $this->stateSaver->popTable('email_addresses');
         
         parent::tearDown();
@@ -45,7 +44,6 @@ class ViewDetailTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
     }
 
     public function testpreDisplay()
@@ -60,7 +58,7 @@ class ViewDetailTest extends SuiteCRM\StateCheckerUnitAbstract
         // test
         
 
-        //execute the method with required attributes preset, it will initialize the dv(detail view) attribute. 
+        //execute the method with required attributes preset, it will initialize the dv(detail view) attribute.
         $view = new ViewDetail();
         $view->module = 'Users';
         $view->bean = new User();
@@ -82,7 +80,6 @@ class ViewDetailTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
     }
 
     public function testdisplay()
@@ -117,7 +114,5 @@ class ViewDetailTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
     }
 }
