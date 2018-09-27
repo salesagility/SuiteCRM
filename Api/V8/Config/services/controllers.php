@@ -1,16 +1,22 @@
 <?php
 
 use Api\V8\Controller;
-use Api\V8\Service\UserService;
-use Api\V8\Service\UserPreferencesService;
+use Api\V8\Service\ListViewSearchService;
 use Api\V8\Service\ListViewService;
 use Api\V8\Service\LogoutService;
 use Api\V8\Service\ModuleService;
 use Api\V8\Service\RelationshipService;
+use Api\V8\Service\UserPreferencesService;
+use Api\V8\Service\UserService;
 use Interop\Container\ContainerInterface as Container;
 use League\OAuth2\Server\ResourceServer;
 
 return [
+    Controller\ListViewSearchController::class => function (Container $container) {
+        return new Controller\ListViewSearchController(
+            $container->get(ListViewSearchService::class)
+        );
+    },
     Controller\UserPreferencesController::class => function (Container $container) {
         return new Controller\UserPreferencesController(
             $container->get(UserPreferencesService::class)

@@ -9,6 +9,7 @@ use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
 use Api\V8\Param\GetRelationshipParams;
 use Api\V8\Param\ListViewColumnsParams;
+use Api\V8\Param\ListViewSearchParams;
 use Api\V8\Param\UpdateModuleParams;
 use Api\V8\Param\GetUserPreferencesParams;
 use League\OAuth2\Server\AuthorizationServer;
@@ -21,6 +22,7 @@ $app->group('', function () use ($app) {
      * OAuth2 access token
      */
     $app->post('/access_token', function () {
+        
     })->add(new AuthorizationServerMiddleware($app->getContainer()->get(AuthorizationServer::class)));
 
     $app->group('/V8', function () use ($app) {
@@ -31,6 +33,10 @@ $app->group('', function () use ($app) {
          * Logout
          */
         $app->post('/logout', LogoutController::class);
+        
+        $app
+            ->get('/module-search-def/{moduleName}', 'Api\V8\Controller\ListViewSearchController:getModuleSearchDefs')
+            ->add($paramsMiddlewareFactory->bind(ListViewSearchParams::class));
         
         $app
             ->get('/listview/columns/{moduleName}', 'Api\V8\Controller\ListViewController:getListViewColumns')
