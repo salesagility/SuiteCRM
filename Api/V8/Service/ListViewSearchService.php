@@ -45,15 +45,18 @@ use Api\V8\JsonApi\Helper\AttributeObjectHelper;
 use Api\V8\JsonApi\Helper\PaginationObjectHelper;
 use Api\V8\JsonApi\Helper\RelationshipObjectHelper;
 use Api\V8\JsonApi\Response\AttributeResponse;
+use Api\V8\JsonApi\Response\DataResponse;
+use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\Param\ListViewSearchParams;
-use ListViewFacade;
+use JsonSerializable;
+use SearchForm;
 use SuiteCRM\LangText;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once __DIR__ . '/../../../include/ListView/ListViewFacade.php';
+include_once __DIR__ . '/../../../include/SearchForm/SearchForm2.php';
 
 /**
  * ListViewSearchService
@@ -107,13 +110,54 @@ class ListViewSearchService {
      */
     public function getListViewSearchDefs(ListViewSearchParams $params)
     {
+        // retrieving search defs
+        
         $moduleName = $params->getModuleName();
-        /** @var SugarBean */
-        $bean = \BeanFactory::getBean($moduleName);
+        $searchDefs = SearchForm::retrieveSearchDefs($moduleName);
         
-        $data = ['list', 'view', 'search', 'data', 'example', 'response'];
+        // simplified data struct
         
-        $response = new AttributeResponse($data);
+        $data = [
+            'module' => $moduleName,
+            'templateMeta' => $searchDefs['searchdefs'][$moduleName]['templateMeta'],
+            'basic' => $searchDefs['searchdefs'][$moduleName]['layout']['basic_search'],
+            'advanced' => $searchDefs['searchdefs'][$moduleName]['layout']['advanced_search'],
+            'fields' => $searchDefs['searchFields'][$moduleName]
+        ];
+        
+        // translations
+        
+        $trans = new LangText(null, null, LangText::USING_ALL_STRINGS, true, false, $moduleName);
+        
+        foreach ($data['basic'] as $key => $value) {
+            if (isset($value['label'])) {
+                $label = $trans->getText($value['label']);
+                $data['basic'][$key]['label'] = $label;
+            }
+        }
+        
+        foreach ($data['advanced'] as $key => $value) {
+            if (isset($value['label'])) {
+                $label = $trans->getText($value['label']);
+                $data['advanced'][$key]['label'] = $label;
+            }
+        }
+        
+        foreach ($data['fields'] as $key => $value) {
+            if (isset($value['vname'])) {
+                $label = $trans->getText($value['vname']);
+                $data['fields'][$key]['vname'] = $label;
+            }
+        }
+        
+        // generate response
+        
+        $dataResponse = new DataResponse('SearchDefs', null);
+        $attributeResponse = new AttributeResponse($data);
+        $dataResponse->setAttributes($attributeResponse);
+        
+        $response = new DocumentResponse();
+        $response->setData($dataResponse);
         return $response;
     }
 }
