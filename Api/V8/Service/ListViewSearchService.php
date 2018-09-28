@@ -120,8 +120,8 @@ class ListViewSearchService {
         $data = [
             'module' => $moduleName,
             'templateMeta' => $searchDefs['searchdefs'][$moduleName]['templateMeta'],
-            'basic' => $searchDefs['searchdefs'][$moduleName]['layout']['basic_search'],
-            'advanced' => $searchDefs['searchdefs'][$moduleName]['layout']['advanced_search'],
+            'basic' => array_values($searchDefs['searchdefs'][$moduleName]['layout']['basic_search']),
+            'advanced' => array_values($searchDefs['searchdefs'][$moduleName]['layout']['advanced_search']),
             'fields' => $searchDefs['searchFields'][$moduleName]
         ];
         
