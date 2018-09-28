@@ -382,7 +382,7 @@ class ModulesCest
         $I->assertNotEmpty('filename', $response['data']['attributes']['filename']);
         $I->assertNotEmpty('filename_file', $response['data']['attributes']['filename_file']);
         $I->assertEquals($filenameBinaryFile, $response['data']['attributes']['filename']);
-        $I->assertEquals($binaryFileEncoded, $response['data']['attributes']['filename_file']);
+        $I->assertEquals($binaryFileEncoded, '<OMITTED>');
     }
 
     /**
