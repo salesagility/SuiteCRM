@@ -177,7 +177,12 @@ class Resource extends ResourceIdentifier
                 continue;
             }
             if (in_array($attribute, $fields) === true) {
-                $response[self::ATTRIBUTES][$attribute] = $this->attributes[$attribute];
+                if (substr($attribute, -5) === "_file") {
+                    $value = "<OMITTED>";
+                } else {
+                    $value = $this->attributes[$attribute];
+                }
+                $response[self::ATTRIBUTES][$attribute] = $value;
             }
         }
 
