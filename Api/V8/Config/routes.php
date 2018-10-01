@@ -35,7 +35,7 @@ $app->group('', function () use ($app) {
         $app->post('/logout', LogoutController::class);
         
         $app
-            ->get('/module-search-defs/{moduleName}', 'Api\V8\Controller\ListViewSearchController:getModuleSearchDefs')
+            ->get('/search-defs/module/{moduleName}', 'Api\V8\Controller\ListViewSearchController:getModuleSearchDefs')
             ->add($paramsMiddlewareFactory->bind(ListViewSearchParams::class));
         
         $app
