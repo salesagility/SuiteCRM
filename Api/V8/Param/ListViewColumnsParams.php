@@ -40,6 +40,7 @@
 
 namespace Api\V8\Param;
 
+use Api\V8\Param\Options as ParamOption;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 if (!defined('sugarEntry') || !sugarEntry) {

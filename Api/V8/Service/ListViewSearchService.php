@@ -100,7 +100,7 @@ class ListViewSearchService
             $text = null;
             if (isset($value[$valueKey])) {
                 $text = $value[$valueKey];
-            } elseif (isset($displayColumns[strtoupper($value['name'])]['label'])) {
+            } elseif (isset($value['name']) && isset($displayColumns[strtoupper($value['name'])]['label'])) {
                 $text = $displayColumns[strtoupper($value['name'])]['label'];
             } else {
                 \LoggerManager::getLogger()->warn("Not found translation text key for search defs for selected module field: $key");
