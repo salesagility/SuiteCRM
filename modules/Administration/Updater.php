@@ -1,8 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -42,12 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
-
-********************************************************************************/
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 global $app_strings;
 global $app_list_strings;
@@ -79,7 +72,7 @@ echo getClassicModuleTitle(
         "Administration",
         array(
             "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
-           $mod_strings['LBL_SUGAR_UPDATE_TITLE'],
+           $mod_strings['LBL_SUITE_UPDATE_TITLE'],
            ),
         false
         );

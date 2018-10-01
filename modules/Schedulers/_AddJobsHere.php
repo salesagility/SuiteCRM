@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,6 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Set up an array of Jobs with the appropriate metadata
@@ -134,13 +134,15 @@ function pollMonitoredInboxes()
                 if (!$ieX->isPop3Protocol()) {
                     $newMsgs = $ieX->getNewMessageIds();
                 }
+
+                $isGroupFolderExists = false;
+
                 if (is_array($newMsgs)) {
                     $current = 1;
                     $total = count($newMsgs);
                     require_once("include/SugarFolders/SugarFolders.php");
                     $sugarFolder = new SugarFolder();
                     $groupFolderId = $ieX->groupfolder_id;
-                    $isGroupFolderExists = false;
                     $users = array();
                     if ($groupFolderId != null && $groupFolderId != "") {
                         $sugarFolder->retrieve($groupFolderId);

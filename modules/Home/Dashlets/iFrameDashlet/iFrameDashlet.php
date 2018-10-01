@@ -60,7 +60,7 @@ class iFrameDashlet extends Dashlet
 
         if (empty($this->title)) {
             $this->title = translate('LBL_DASHLET_TITLE', 'Home');
-            $this->title = translate('LBL_DASHLET_DISCOVER_SUGAR_PRO', 'Home');
+            $this->title = translate('LBL_DASHLET_DISCOVER_SUITE', 'Home');
         }
 
         if (!empty($options['titleLabel'])) {
