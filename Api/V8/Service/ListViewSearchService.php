@@ -51,12 +51,14 @@ use Api\V8\Param\ListViewSearchParams;
 use JsonSerializable;
 use SearchForm;
 use SuiteCRM\LangText;
+use ListViewFacade;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 include_once __DIR__ . '/../../../include/SearchForm/SearchForm2.php';
+include_once __DIR__ . '/../../../include/ListView/ListViewFacade.php';
 
 /**
  * ListViewSearchService
@@ -102,7 +104,28 @@ class ListViewSearchService {
 //        $this->relationshipHelper = $relationshipHelper;
 //        $this->paginationHelper = $paginationHelper;
     }
+    
+    protected function getDataTranslated($trans, $data, $part, $valueKey, $displayColumns) {
+        
+        foreach ($data[$part] as $key => $value) {
+            
+            $text = null;
+            if (isset($value[$valueKey])) {
+                $text = $value[$valueKey];
+            } elseif (isset($displayColumns[strtoupper($value['name'])]['label'])) {
+                $text = $displayColumns[strtoupper($value['name'])]['label'];
+            } else {
+                \LoggerManager::getLogger()->warn("Not found translation text key for search defs for selected module field: $key");
+            }
+            
+            $label = $text ? $trans->getText($text) : $text;
+            $data[$part][$key][$valueKey] = $label;
 
+        }
+        
+        return $data;
+    }
+    
     /**
      * @param ListViewSearchParams $params
      *
@@ -114,6 +137,9 @@ class ListViewSearchService {
         
         $moduleName = $params->getModuleName();
         $searchDefs = SearchForm::retrieveSearchDefs($moduleName);
+        
+        // get list view defs
+        $displayColumns = ListViewFacade::getDisplayColumns($moduleName);
         
         // simplified data struct
         
@@ -129,26 +155,10 @@ class ListViewSearchService {
         
         $trans = new LangText(null, null, LangText::USING_ALL_STRINGS, true, false, $moduleName);
         
-        foreach ($data['basic'] as $key => $value) {
-            if (isset($value['label'])) {
-                $label = $trans->getText($value['label']);
-                $data['basic'][$key]['label'] = $label;
-            }
-        }
         
-        foreach ($data['advanced'] as $key => $value) {
-            if (isset($value['label'])) {
-                $label = $trans->getText($value['label']);
-                $data['advanced'][$key]['label'] = $label;
-            }
-        }
-        
-        foreach ($data['fields'] as $key => $value) {
-            if (isset($value['vname'])) {
-                $label = $trans->getText($value['vname']);
-                $data['fields'][$key]['vname'] = $label;
-            }
-        }
+        $data = $this->getDataTranslated($trans, $data, 'basic', 'label', $displayColumns);
+        $data = $this->getDataTranslated($trans, $data, 'advanced', 'label', $displayColumns);
+        $data = $this->getDataTranslated($trans, $data, 'fields', 'vname', $displayColumns);
         
         // generate response
         
