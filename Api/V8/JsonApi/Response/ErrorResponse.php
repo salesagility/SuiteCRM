@@ -17,6 +17,8 @@ class ErrorResponse implements \JsonSerializable
      * @var string
      */
     private $detail;
+    
+    private $exception;
 
     /**
      * @return integer
@@ -65,6 +67,29 @@ class ErrorResponse implements \JsonSerializable
     {
         $this->detail = $detail;
     }
+    
+    public function setException(\Exception $exception) {
+        $this->exception = $exception;
+    }
+    
+    protected static function exceptionToArray(\Exception $exception) {
+        return [
+            'code' => $exception->getCode(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'message' => $exception->getMessage(),
+            'previous' => self::exceptionToArray($exception->getPrevious()),
+            'trace' => $exception->getTrace(),
+            'traceAsString' => $exception->getTraceAsString(),
+        ];
+    }
+    
+    public function getExceptionArray() {
+        if (!$this->exception) { // TODO: do it only in debug mode!!!!
+            return null;
+        } 
+        return self::exceptionToArray($this->exception);
+    }
 
     /**
      * @inheritdoc
@@ -76,6 +101,7 @@ class ErrorResponse implements \JsonSerializable
                 'status' => $this->getStatus(),
                 'title' => $this->getTitle(),
                 'detail' => $this->getDetail(),
+                'exception' => $this->getExceptionArray(),
             ]
         ];
     }

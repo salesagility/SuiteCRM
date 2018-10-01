@@ -44,9 +44,8 @@ abstract class BaseController
     {
         $response = new ErrorResponse();
         $response->setStatus($status);
-        $debugInfo = '';
-        $debugInfo = "\nTrace:\n" . $exception->getTraceAsString(); // TODO: need a config variable to show/hide trace of errors
-        $response->setDetail($exception->getMessage() . $debugInfo);
+        $response->setDetail($exception->getMessage());
+        $response->setException($exception);
 
         return $this->generateResponse($httpResponse, $response, $status);
     }
