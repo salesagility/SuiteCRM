@@ -58,7 +58,8 @@ use Slim\Http\Response;
  *
  * @author gyula
  */
-class ListViewController extends BaseController {
+class ListViewController extends BaseController
+{
     
     /**
      * @var ListViewService
@@ -73,7 +74,16 @@ class ListViewController extends BaseController {
         $this->listViewService = $listViewService;
     }
     
-    public function getListViewColumns(Request $request, Response $response, array $args, ListViewColumnsParams $params) {
+    /**
+     * 
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @param ListViewColumnsParams $params
+     * @return HttpResponse
+     */
+    public function getListViewColumns(Request $request, Response $response, array $args, ListViewColumnsParams $params)
+    {
         try {
             $jsonResponse = $this->listViewService->getListViewDefs($params);
 
@@ -82,5 +92,4 @@ class ListViewController extends BaseController {
             return $this->generateErrorResponse($response, $exception, 400);
         }
     }
-
 }

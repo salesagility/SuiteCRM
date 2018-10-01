@@ -59,7 +59,7 @@ class ModuleController extends BaseController
 
             return $this->generateResponse($response, $jsonResponse, 200);
         } catch (\Exception $exception) {
-            return $this->generateErrorResponse($response, $exception, 400, false); // TODO: documentation needs to be updated at this point (about debug exceptions)
+            return $this->generateErrorResponse($response, $exception, 400);
         }
     }
 

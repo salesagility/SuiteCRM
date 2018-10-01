@@ -57,7 +57,8 @@ use Slim\Http\Response;
  *
  * @author gyula
  */
-class ListViewSearchController extends BaseController {
+class ListViewSearchController extends BaseController
+{
     
     /**
      * @var ListViewSearchService
@@ -72,7 +73,16 @@ class ListViewSearchController extends BaseController {
         $this->listViewSearchService = $listViewSearchService;
     }
     
-    public function getModuleSearchDefs(Request $request, Response $response, array $args, ListViewSearchParams $params) {
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @param ListViewSearchParams $params
+     * @return HttpResponse
+     */
+    public function getModuleSearchDefs(Request $request, Response $response, array $args, ListViewSearchParams $params)
+    {
         try {
             $jsonResponse = $this->listViewSearchService->getListViewSearchDefs($params);
 
@@ -81,5 +91,4 @@ class ListViewSearchController extends BaseController {
             return $this->generateErrorResponse($response, $exception, 400);
         }
     }
-
 }

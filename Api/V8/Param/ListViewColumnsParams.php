@@ -40,22 +40,19 @@
 
 namespace Api\V8\Param;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
-
-
-use Api\V8\Param\Options as ParamOption;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * ListViewColumnsParams
  *
  * @author gyula
  */
-class ListViewColumnsParams extends BaseParam {
+class ListViewColumnsParams extends BaseParam
+{
     
     /**
      * @return string
@@ -65,15 +62,17 @@ class ListViewColumnsParams extends BaseParam {
         return $this->parameters['moduleName'];
     }
 
-    protected function configureParameters(\Symfony\Component\OptionsResolver\OptionsResolver $resolver) {
+    /**
+     * 
+     * @param \Api\V8\Param\OptionsResolver $resolver
+     */
+    protected function configureParameters(OptionsResolver $resolver)
+    {
         $this->setOptions(
             $resolver,
             [
                 ParamOption\ModuleName::class,
-//                ParamOption\Id::class,
-//                ParamOption\Fields::class,
             ]
         );
     }
-
 }

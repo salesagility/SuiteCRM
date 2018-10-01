@@ -56,7 +56,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class UserPreferencesService {
+class UserPreferencesService
+{
 
     
     /**
@@ -64,29 +65,20 @@ class UserPreferencesService {
      */
     private $beanManager;
 
-//    /**
-//     * @var AttributeObjectHelper
-//     */
-//    private $attributeHelper;
-//
-//    /**
-//     * @var RelationshipObjectHelper
-//     */
-//    private $relationshipHelper;
-
     /**
      * @param BeanManager $beanManager
      */
     public function __construct(
-        BeanManager $beanManager //,
-//        AttributeObjectHelper $attributeHelper,
-//        RelationshipObjectHelper $relationshipHelper
+        BeanManager $beanManager
     ) {
         $this->beanManager = $beanManager;
-//        $this->attributeHelper = $attributeHelper;
-//        $this->relationshipHelper = $relationshipHelper;
     }
 
+    /**
+     *
+     * @param GetUserPreferencesParams $params
+     * @return DocumentResponse
+     */
     public function getUserPreferences(GetUserPreferencesParams $params)
     {
         // needs to determinate the user preferences

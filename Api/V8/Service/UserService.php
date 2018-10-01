@@ -59,7 +59,8 @@ include_once __DIR__ . '/../../../include/ListView/ListViewFacade.php';
  *
  * @author gyula
  */
-class UserService {
+class UserService
+{
 
     
     /**
@@ -90,6 +91,11 @@ class UserService {
         $this->relationshipHelper = $relationshipHelper;
     }
 
+    /**
+     * 
+     * @param Request $request
+     * @return DocumentResponse
+     */
     public function getCurrentUser(Request $request)
     {
         // needs to determinate the curent user without globals

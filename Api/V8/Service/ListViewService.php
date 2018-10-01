@@ -60,12 +60,13 @@ include_once __DIR__ . '/../../../include/ListView/ListViewFacade.php';
  *
  * @author gyula
  */
-class ListViewService {
+class ListViewService
+{
     
     /**
      * an exact match to ListViewColumnInterface struct of Angular front-end
      *
-     * @var array 
+     * @var array
      */
     private static $listViewColumnInterface = [
         'fieldName' => '',
@@ -76,7 +77,7 @@ class ListViewService {
         'module' => '',
         'id' => '',
         'sortable' => false,
-        'customCode' => '', // TODO: deprecated from legacy (using only on PHP front-end)
+        'customCode' => '', // deprecated from legacy (using only on PHP front-end)
     ];
     
     /**
@@ -130,11 +131,10 @@ class ListViewService {
         
         $text = new LangText(null, null, LangText::USING_ALL_STRINGS, true, false, $moduleName);
         $displayColumns = ListViewFacade::getDisplayColumns($moduleName);
-        $data = [];        
+        $data = [];
         foreach ($displayColumns as $key => $column) {
             $column = array_merge(self::$listViewColumnInterface, $column);
-            $column['fieldName'] = $key; //strtolower($key); // TODO: get the vardef instead this "intuitive fieldName"
-            //$text = new LangText($column['label'], null, LangText::USING_ALL_STRINGS, true, false);
+            $column['fieldName'] = $key; // get the vardef instead this "intuitive fieldName"
             $translated = $text->getText($column['label']);
             if (!$translated) {
                 $translated = $text->getText($bean->field_name_map[strtolower($key)]['vname']);
@@ -143,7 +143,7 @@ class ListViewService {
             
             // TODO: validate the column name (for e.g label and name should be requered etc...) also check the ListViewColumnInterface keys are match..
             $data[] = $column;
-        }        
+        }
         $response = new AttributeResponse($data);
         return $response;
     }

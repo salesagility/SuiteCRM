@@ -22,7 +22,6 @@ $app->group('', function () use ($app) {
      * OAuth2 access token
      */
     $app->post('/access_token', function () {
-        
     })->add(new AuthorizationServerMiddleware($app->getContainer()->get(AuthorizationServer::class)));
 
     $app->group('/V8', function () use ($app) {
@@ -112,6 +111,5 @@ $app->group('', function () use ($app) {
                 'Api\V8\Controller\RelationshipController:deleteRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(DeleteRelationShipParams::class));
-
     })->add(new ResourceServerMiddleware($app->getContainer()->get(ResourceServer::class)));
 });

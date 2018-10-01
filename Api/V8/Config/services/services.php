@@ -10,16 +10,12 @@ use Interop\Container\ContainerInterface as Container;
 return [
     Service\ListViewSearchService::class => function (Container $container) {
         return new Service\ListViewSearchService(
-            $container->get(BeanManager::class) //,
-//            $container->get(AttributeObjectHelper::class),
-//            $container->get(RelationshipObjectHelper::class)
+            $container->get(BeanManager::class)
         );
     },
     Service\UserPreferencesService::class => function (Container $container) {
         return new Service\UserPreferencesService(
-            $container->get(BeanManager::class) //,
-//            $container->get(AttributeObjectHelper::class),
-//            $container->get(RelationshipObjectHelper::class)
+            $container->get(BeanManager::class)
         );
     },
     Service\UserService::class => function (Container $container) {

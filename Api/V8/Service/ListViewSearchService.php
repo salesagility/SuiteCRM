@@ -65,27 +65,13 @@ include_once __DIR__ . '/../../../include/ListView/ListViewFacade.php';
  *
  * @author gyula
  */
-class ListViewSearchService {
+class ListViewSearchService
+{
     
     /**
      * @var BeanManager
      */
     private $beanManager;
-//
-//    /**
-//     * @var AttributeObjectHelper
-//     */
-//    private $attributeHelper;
-//
-//    /**
-//     * @var RelationshipObjectHelper
-//     */
-//    private $relationshipHelper;
-//
-//    /**
-//     * @var PaginationObjectHelper
-//     */
-//    private $paginationHelper;
 
     /**
      * @param BeanManager $beanManager
@@ -94,21 +80,23 @@ class ListViewSearchService {
      * @param PaginationObjectHelper $paginationHelper
      */
     public function __construct(
-        BeanManager $beanManager//,
-//        AttributeObjectHelper $attributeHelper,
-//        RelationshipObjectHelper $relationshipHelper,
-//        PaginationObjectHelper $paginationHelper
+        BeanManager $beanManager
     ) {
         $this->beanManager = $beanManager;
-//        $this->attributeHelper = $attributeHelper;
-//        $this->relationshipHelper = $relationshipHelper;
-//        $this->paginationHelper = $paginationHelper;
     }
     
-    protected function getDataTranslated($trans, $data, $part, $valueKey, $displayColumns) {
-        
+    /**
+     *
+     * @param LangText $trans
+     * @param array $data
+     * @param string $part
+     * @param string $valueKey
+     * @param array $displayColumns
+     * @return array
+     */
+    protected function getDataTranslated($trans, $data, $part, $valueKey, $displayColumns)
+    {
         foreach ($data[$part] as $key => $value) {
-            
             $text = null;
             if (isset($value[$valueKey])) {
                 $text = $value[$valueKey];
@@ -120,7 +108,6 @@ class ListViewSearchService {
             
             $label = $text ? $trans->getText($text) : $text;
             $data[$part][$key][$valueKey] = $label;
-
         }
         
         return $data;

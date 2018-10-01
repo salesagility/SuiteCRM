@@ -103,8 +103,16 @@ class LangText
      */
     protected $throw;
     
+    /**
+     *
+     * @var string
+     */
     protected $module;
     
+    /**
+     *
+     * @var string
+     */
     protected $lang;
 
     /**
@@ -145,7 +153,7 @@ class LangText
         $module = $module ? $module : $this->module;
         
         if (!$mod_strings && $module) {
-            // retrieve translation for specified module            
+            // retrieve translation for specified module
             $lang = $lang ? $lang : ($this->lang ? $this->lang : $GLOBALS['current_language']);
             include_once __DIR__ . '/SugarObjects/LanguageManager.php';
             \LanguageManager::loadModuleLanguage($module, $lang);

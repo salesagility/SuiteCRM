@@ -1,7 +1,11 @@
 <?php
 namespace Api\V8\JsonApi\Response;
 
-class ErrorResponse implements \JsonSerializable
+use Api\Core\Config\ApiConfig;
+use Exception;
+use JsonSerializable;
+
+class ErrorResponse implements JsonSerializable
 {
     /**
      * @var integer
@@ -18,12 +22,30 @@ class ErrorResponse implements \JsonSerializable
      */
     private $detail;
     
+    /**
+     *
+     * @var Exception
+     */
     private $exception;
     
+    /**
+     * In debug mode, ErrorResponse should shows full description about occurred exceptions.
+     *
+     * @todo  documentation needs to be updated at this point (about debug exceptions)
+     * @var boolean
+     */
     protected $debugExceptions;
     
-    public function __construct($debugExceptions = false) {
-        $this->debugExceptions = $debugExceptions;
+    /**
+     *
+     * @param bool|null $debugExceptions optional - using ApiConfig setting by default
+     */
+    public function __construct($debugExceptions = null)
+    {
+        $this->debugExceptions =
+            null === $debugExceptions ?
+                ApiConfig::getDebugExceptions() :
+                $debugExceptions;
     }
 
     /**
@@ -74,11 +96,22 @@ class ErrorResponse implements \JsonSerializable
         $this->detail = $detail;
     }
     
-    public function setException(\Exception $exception) {
+    /**
+     *
+     * @param Exception $exception
+     */
+    public function setException(Exception $exception)
+    {
         $this->exception = $exception;
     }
     
-    protected static function exceptionToArray(\Exception $exception) {
+    /**
+     *
+     * @param Exception $exception
+     * @return array
+     */
+    protected static function exceptionToArray(Exception $exception)
+    {
         return [
             'code' => $exception->getCode(),
             'file' => $exception->getFile(),
@@ -90,10 +123,15 @@ class ErrorResponse implements \JsonSerializable
         ];
     }
     
-    public function getExceptionArray() {
-        if (!$this->exception) { 
+    /**
+     *
+     * @return array
+     */
+    public function getExceptionArray()
+    {
+        if (!$this->exception) {
             return null;
-        } 
+        }
         return self::exceptionToArray($this->exception);
     }
 

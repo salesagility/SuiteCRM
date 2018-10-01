@@ -19,6 +19,21 @@ class ApiConfig
     const OAUTH2_PRIVATE_KEY = 'Api/V8/OAuth2/private.key';
     const OAUTH2_PUBLIC_KEY = 'Api/V8/OAuth2/public.key';
     const OAUTH2_ENCRYPTION_KEY = 'KcWedk/XtvWgtuf7UHx6ayHnrIaMC/t4RjZrdVBY2Ho=';
+    
+    /**
+     *
+     * @var boolean
+     */
+    private static $debugExceptions = false;
+    
+    /**
+     *
+     * @return boolean
+     */
+    public static function getDebugExceptions()
+    {
+        return self::$debugExceptions;
+    }
 
     /**
      * @return array

@@ -40,7 +40,6 @@
 
 namespace Api\V8\Param;
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -53,7 +52,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author gyula
  */
-class GetUserPreferencesParams extends BaseParam {
+class GetUserPreferencesParams extends BaseParam
+{
     
     /**
      * @return string
@@ -63,8 +63,12 @@ class GetUserPreferencesParams extends BaseParam {
         return $this->parameters['id'];
     }
 
-    protected function configureParameters(OptionsResolver $resolver) {
+    /**
+     * 
+     * @param OptionsResolver $resolver
+     */
+    protected function configureParameters(OptionsResolver $resolver)
+    {
         $this->setOptions($resolver, [ParamOption\Id::class]);
     }
-
 }

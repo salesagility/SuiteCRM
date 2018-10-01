@@ -40,7 +40,6 @@
 
 namespace Api\V8\Param;
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -53,7 +52,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author gyula
  */
-class ListViewSearchParams extends BaseParam {
+class ListViewSearchParams extends BaseParam
+{
     
     /**
      * @return string
@@ -63,15 +63,17 @@ class ListViewSearchParams extends BaseParam {
         return $this->parameters['moduleName'];
     }
 
-    protected function configureParameters(OptionsResolver $resolver) {
+    /**
+     * 
+     * @param OptionsResolver $resolver
+     */
+    protected function configureParameters(OptionsResolver $resolver)
+    {
         $this->setOptions(
             $resolver,
             [
                 ParamOption\ModuleName::class,
-//                ParamOption\Id::class,
-//                ParamOption\Fields::class,
             ]
         );
     }
-
 }

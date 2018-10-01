@@ -57,7 +57,8 @@ use Slim\Http\Response;
  *
  * @author gyula
  */
-class UserPreferencesController extends BaseController {
+class UserPreferencesController extends BaseController
+{
     
     /**
      * @var UserPreferencesService
@@ -72,7 +73,16 @@ class UserPreferencesController extends BaseController {
         $this->userPreferencesService = $userPreferencesService;
     }
     
-    public function getUserPreferences(Request $request, Response $response, array $args, GetUserPreferencesParams $params) {
+    /**
+     * 
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @param GetUserPreferencesParams $params
+     * @return Response
+     */
+    public function getUserPreferences(Request $request, Response $response, array $args, GetUserPreferencesParams $params)
+    {
         try {
             $jsonResponse = $this->userPreferencesService->getUserPreferences($params);
 
@@ -81,5 +91,4 @@ class UserPreferencesController extends BaseController {
             return $this->generateErrorResponse($response, $exception, 400);
         }
     }
-
 }

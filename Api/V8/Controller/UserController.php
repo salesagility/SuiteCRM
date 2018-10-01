@@ -54,7 +54,8 @@ use Slim\Http\Response;
  *
  * @author gyula
  */
-class UserController extends BaseController {
+class UserController extends BaseController
+{
     
     /**
      * @var UserService
@@ -69,7 +70,15 @@ class UserController extends BaseController {
         $this->userService = $userService;
     }
     
-    public function getCurrentUser(Request $request, Response $response, array $args) {
+    /**
+     * 
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
+    public function getCurrentUser(Request $request, Response $response, array $args)
+    {
         try {
             $jsonResponse = $this->userService->getCurrentUser($request);
             return $this->generateResponse($response, $jsonResponse, 200);
