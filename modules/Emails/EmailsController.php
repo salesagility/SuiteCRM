@@ -552,7 +552,7 @@ class EmailsController extends SugarController
         }
 
         $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
-        echo utf8_decode($dataEncoded);
+        echo $dataEncoded;
         $this->view = 'ajax';
     }
 
