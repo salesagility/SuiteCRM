@@ -114,7 +114,7 @@ class GetModuleCest
             [
                 'shouldNotWork02' => 'withInvalidId',
                 'endPoint' => '/Api/V8/module/Accounts/111',
-                'detail' => 'The option "id" with value "111" is invalid.'
+                'detail' => 'Accounts module with id 111 is not found'
             ],
             [
                 'shouldNotWork03' => 'withIdNotExist',
