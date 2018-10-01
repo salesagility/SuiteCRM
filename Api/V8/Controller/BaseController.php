@@ -40,9 +40,9 @@ abstract class BaseController
      *
      * @return HttpResponse
      */
-    public function generateErrorResponse(HttpResponse $httpResponse, \Exception $exception, $status)
+    public function generateErrorResponse(HttpResponse $httpResponse, \Exception $exception, $status, $debugExceptions = false)
     {
-        $response = new ErrorResponse();
+        $response = new ErrorResponse($debugExceptions);
         $response->setStatus($status);
         $response->setDetail($exception->getMessage());
         $response->setException($exception);

@@ -19,6 +19,12 @@ class ErrorResponse implements \JsonSerializable
     private $detail;
     
     private $exception;
+    
+    protected $debugExceptions;
+    
+    public function __construct($debugExceptions = false) {
+        $this->debugExceptions = $debugExceptions;
+    }
 
     /**
      * @return integer
@@ -85,7 +91,7 @@ class ErrorResponse implements \JsonSerializable
     }
     
     public function getExceptionArray() {
-        if (!$this->exception) { // TODO: do it only in debug mode!!!!
+        if (!$this->exception) { 
             return null;
         } 
         return self::exceptionToArray($this->exception);
@@ -96,13 +102,19 @@ class ErrorResponse implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return [
+        $ret = [
             'errors' => [
                 'status' => $this->getStatus(),
                 'title' => $this->getTitle(),
                 'detail' => $this->getDetail(),
-                'exception' => $this->getExceptionArray(),
             ]
         ];
+        
+        // do it only in debug mode!!!!
+        if ($this->debugExceptions) {
+            $ret['errors']['exception'] = $this->getExceptionArray();
+        }
+        
+        return $ret;
     }
 }
