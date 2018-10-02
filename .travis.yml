@@ -75,10 +75,13 @@ script:
   # set the log level to error
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
   # add keys
+  - sudo chmod -R 777 .
   - openssl genrsa -out Api/V8/OAuth2/private.key 2048
   - openssl rsa -in Api/V8/OAuth2/private.key -pubout -out Api/V8/OAuth2/public.key
   - sudo chmod 600 Api/V8/OAuth2/private.key Api/V8/OAuth2/public.key
+  - sudo chown www-data:www-data Api/V8/OAuth2/p*.key
   # Run API functional tests
+  - composer update
   - ./vendor/bin/codecept run tests/api/V8/ -f -vvv -d
   # RUN Basic Acceptance test
   - sudo chmod -R 777 .
