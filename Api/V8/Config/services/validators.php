@@ -1,9 +1,9 @@
 <?php
 
-use Symfony\Component\Validator\ValidatorBuilder;
+include_once __DIR__ . '/../../../../vendor/symfony/validator/ValidatorBuilder.php';
 
 return [
     'Validation' => function () {
-        return (new ValidatorBuilder())->getValidator();
+        return (new Symfony\Component\Validator\ValidatorBuilder())->getValidator();
     },
 ];
