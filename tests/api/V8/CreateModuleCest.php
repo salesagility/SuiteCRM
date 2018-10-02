@@ -42,7 +42,7 @@ class CreateModuleCest
         }
 
         $I->sendPOST($endpoint, $payload);
-        //$I->seeResponseCodeIs(200); // maybe 201 also correct?
+        $I->seeResponseCodeIs(201);
         $I->seeResponseIsJson();
         $I->canSeeResponseContainsJson($response);
         $I->assertGreaterThanOrEqual(2, count($I->grabDataFromResponseByJsonPath('$.data.attributes')[0]));
