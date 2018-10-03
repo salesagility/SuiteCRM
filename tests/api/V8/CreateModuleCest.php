@@ -42,7 +42,7 @@ class CreateModuleCest
         }
 
         $I->sendPOST($endpoint, $payload);
-        // $I->seeResponseCodeIs(201); randomly sometimes it's 201 or 200 - both is correct?
+        $I->seeResponseCodeIs(201); // 201 or 200 - both is correct?
         $I->seeResponseIsJson();
         $I->canSeeResponseContainsJson($response);
         $I->assertGreaterThanOrEqual(2, count($I->grabDataFromResponseByJsonPath('$.data.attributes')[0]));
