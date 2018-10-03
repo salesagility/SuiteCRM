@@ -11,7 +11,9 @@ use Api\V8\Service\UserService;
 use Interop\Container\ContainerInterface as Container;
 use League\OAuth2\Server\ResourceServer;
 
-return [
+use Api\Core\Loader\CustomLoader;
+
+return CustomLoader::mergeCustomArray([
     Controller\ListViewSearchController::class => function (Container $container) {
         return new Controller\ListViewSearchController(
             $container->get(ListViewSearchService::class)
@@ -48,4 +50,4 @@ return [
             $container->get(RelationshipService::class)
         );
     },
-];
+], basename(__FILE__));

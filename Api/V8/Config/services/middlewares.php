@@ -13,8 +13,9 @@ use Interop\Container\ContainerInterface as Container;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use League\OAuth2\Server\ResourceServer;
+use Api\Core\Loader\CustomLoader;
 
-return [
+return CustomLoader::mergeCustomArray([
     AuthorizationServer::class => function (Container $container) {
         // base dir must exist in entryPoint.php
         $baseDir = $GLOBALS['BASE_DIR'];
@@ -62,4 +63,4 @@ return [
             sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PUBLIC_KEY)
         );
     },
-];
+], basename(__FILE__));

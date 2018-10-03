@@ -5,7 +5,9 @@ use Api\V8\Helper;
 use Api\V8\JsonApi\Helper as ApiHelper;
 use Interop\Container\ContainerInterface as Container;
 
-return [
+use Api\Core\Loader\CustomLoader;
+
+return CustomLoader::mergeCustomArray([
     Helper\VarDefHelper::class => function () {
         return new Helper\VarDefHelper();
     },
@@ -22,4 +24,4 @@ return [
     ApiHelper\PaginationObjectHelper::class => function (Container $container) {
         return new ApiHelper\PaginationObjectHelper();
     },
-];
+], basename(__FILE__));

@@ -3,9 +3,9 @@
 use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\Controller\InvocationStrategy\SuiteInvocationStrategy;
 use Interop\Container\ContainerInterface as Container;
+use Api\Core\Loader\CustomLoader;
 
-return
-    [
+return CustomLoader::mergeCustomArray([
         /** overwrite slim's foundHandler */
         'foundHandler' => function () {
             return new SuiteInvocationStrategy();
@@ -25,4 +25,4 @@ return
     (require __DIR__ . '/services/middlewares.php') +
     (require __DIR__ . '/services/params.php') +
     (require __DIR__ . '/services/services.php') +
-    (require __DIR__ . '/services/validators.php');
+    (require __DIR__ . '/services/validators.php'), basename(__FILE__));

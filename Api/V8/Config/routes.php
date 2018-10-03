@@ -16,6 +16,7 @@ use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Middleware\AuthorizationServerMiddleware;
 use League\OAuth2\Server\Middleware\ResourceServerMiddleware;
 use League\OAuth2\Server\ResourceServer;
+use Api\Core\Loader\CustomLoader;
 
 $app->group('', function () use ($app) {
     /**
@@ -111,5 +112,12 @@ $app->group('', function () use ($app) {
                 'Api\V8\Controller\RelationshipController:deleteRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(DeleteRelationShipParams::class));
+        
+        // add custom routes        
+        $app->group('/custom', function () use ($app) {
+            $app = CustomLoader::loadCustomRoutes($app);
+        });
+        
     })->add(new ResourceServerMiddleware($app->getContainer()->get(ResourceServer::class)));
 });
+

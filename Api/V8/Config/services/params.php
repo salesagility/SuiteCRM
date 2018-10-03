@@ -4,8 +4,9 @@ use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\Factory\ValidatorFactory;
 use Api\V8\Param;
 use Interop\Container\ContainerInterface as Container;
+use Api\Core\Loader\CustomLoader;
 
-return [
+return CustomLoader::mergeCustomArray([
     Param\ListViewSearchParams::class => function (Container $container) {
         return new Param\ListViewSearchParams(
             $container->get(ValidatorFactory::class),
@@ -72,4 +73,4 @@ return [
             $container->get(BeanManager::class)
         );
     },
-];
+], basename(__FILE__));

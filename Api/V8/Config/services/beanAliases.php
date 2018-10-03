@@ -1,9 +1,11 @@
 <?php
 
+use Api\Core\Loader\CustomLoader;
+
 /**
  * Aliases for core modules
  */
-return [
+return CustomLoader::mergeCustomArray([
     'beanAliases' => function () {
         return [
             Account::class => 'Accounts',
@@ -56,4 +58,4 @@ return [
             'Quotes' => AOS_Quotes::class,
         ];
     }
-];
+], basename(__FILE__));

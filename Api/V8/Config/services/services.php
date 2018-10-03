@@ -6,8 +6,9 @@ use Api\V8\JsonApi\Helper\PaginationObjectHelper;
 use Api\V8\JsonApi\Helper\RelationshipObjectHelper;
 use Api\V8\Service;
 use Interop\Container\ContainerInterface as Container;
+use Api\Core\Loader\CustomLoader;
 
-return [
+return CustomLoader::mergeCustomArray([
     Service\ListViewSearchService::class => function (Container $container) {
         return new Service\ListViewSearchService(
             $container->get(BeanManager::class)
@@ -52,4 +53,4 @@ return [
             $container->get(AttributeObjectHelper::class)
         );
     },
-];
+], basename(__FILE__));
