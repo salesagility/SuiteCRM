@@ -195,7 +195,8 @@ $dictionary['Campaign'] = array('audited' => true,
             'name' => 'content',
             'vname' => 'LBL_CAMPAIGN_CONTENT',
             'type' => 'text',
-            'comment' => 'The campaign description'
+            'comment' => 'The campaign description',
+            'inline_edit' => false
         ),
         'prospectlists' => array(
             'name' => 'prospectlists',
