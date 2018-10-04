@@ -38,8 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 use Api\Core\Loader\CustomLoader;
+use Slim\App;
 use SuiteCRM\StateCheckerUnitAbstract;
 
 /**
@@ -87,7 +87,7 @@ class CustomLoaderTest extends StateCheckerUnitAbstract
     
     public function testLoadCustomRoutes()
     {
-        $app = new Slim\App();
+        $app = new App();
         
         CustomLoader::loadCustomRoutes($app, 'testRoutes.php');
         $this->assertEquals(CustomLoader::ERR_ROUTE_FILE_NOT_FOUND, CustomLoader::getLastError());
