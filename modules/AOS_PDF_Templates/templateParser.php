@@ -133,7 +133,7 @@ class templateParser
                 if ($value != '') {
                     $dt = explode(' ', $value);
                     $value = $dt[0];
-                    if(isset($dt[1]) && isset($dt[1]!=''){
+                    if(isset($dt[1]) && $dt[1]!=''){
                         if (strpos($dt[1], 'am') > 0 || strpos($dt[1], 'pm') > 0) {
                             $value = $dt[0].' '.$dt[1];
                         }
