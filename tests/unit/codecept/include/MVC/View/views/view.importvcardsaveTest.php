@@ -14,7 +14,6 @@ class ViewImportvcardsaveTest extends SuiteCRM\StateCheckerUnitAbstract
     //incomplete test. this method uses exit() so it cannot be tested.
     public function testdisplay()
     {
-        
         $state = new SuiteCRM\StateSaver();
         
         
@@ -36,7 +35,5 @@ class ViewImportvcardsaveTest extends SuiteCRM\StateCheckerUnitAbstract
         
         
         // clean up
-        
-        
     }
 }

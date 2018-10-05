@@ -21,7 +21,7 @@ class UnsupportedMediaTypeExceptionTest extends \SuiteCRM\StateCheckerUnitAbstra
     public function _before()
     {
         parent::_before();
-        if(self::$exception === null) {
+        if (self::$exception === null) {
             self::$exception = new UnsupportedMediaTypeException();
         }
     }

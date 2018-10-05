@@ -43,7 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 use SuiteCRM\Utility\SuiteValidator;
 
-
 require_once 'include/formbase.php';
 
 require_once 'modules/Campaigns/utils.php';

@@ -78,7 +78,6 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->popGlobals();
         $state->popTable('tracker');
         $state->popTable('aos_products_quotes');
-        
     }
     
     

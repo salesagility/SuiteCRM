@@ -84,7 +84,5 @@ class UsersCest
         $I->uncheckOption(['name' => 'user_count_collapsed_subpanels']);
         $EditView->clickSaveButton();
         $DetailView->waitForDetailViewVisible();
-
-
     }
 }

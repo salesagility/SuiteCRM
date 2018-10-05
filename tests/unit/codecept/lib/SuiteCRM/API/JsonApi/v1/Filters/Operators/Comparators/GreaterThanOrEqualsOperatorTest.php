@@ -22,7 +22,7 @@ class GreaterThanOrEqualsOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][Comparators][GreaterThanOrEqualsOperator][isValid][expected type to be string] $operator'),
-            function() {
+            function () {
                 self::$operator->isValid(array());
             }
         );

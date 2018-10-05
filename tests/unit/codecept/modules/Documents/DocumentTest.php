@@ -72,7 +72,6 @@ class DocumentTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->popTable('documents');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
-        
     }
 
     public function testget_summary_text()
@@ -145,8 +144,6 @@ class DocumentTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->popGlobals();
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -203,7 +200,6 @@ class DocumentTest extends SuiteCRM\StateCheckerUnitAbstract
         // clean up
         
         $state->popTable('cron_remove_documents');
-        
     }
 
     public function testcreate_export_query()
@@ -288,8 +284,6 @@ class DocumentTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testbean_implements()

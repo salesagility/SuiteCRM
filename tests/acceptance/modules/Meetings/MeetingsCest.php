@@ -92,5 +92,4 @@ class MeetingsCest
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
     }
-
 }

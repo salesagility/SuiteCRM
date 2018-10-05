@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /*********************************************************************************
 
- * Description:  Saves an Account record and then redirects the browser to the 
+ * Description:  Saves an Account record and then redirects the browser to the
  * defined return URL.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.

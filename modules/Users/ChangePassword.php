@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,13 +38,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description: TODO:  To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 use SuiteCRM\Utility\SuiteValidator;
 
 if (isset($_POST['saveConfig'])) {
@@ -67,7 +61,7 @@ if (isset($_POST['saveConfig'])) {
             // Send to new user wizard if it hasn't been run
             $ut = $GLOBALS['current_user']->getPreference('ut');
         }
-    if(empty($ut))
+    if(empty($ut)) {
         SugarApplication::redirect('index.php?module=Users&action=Wizard');
     }
 

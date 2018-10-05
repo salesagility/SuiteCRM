@@ -264,7 +264,6 @@ class ViewList extends SugarView
         $this->prepareSearchForm();
 
         if (isset($this->options['show_title']) && $this->options['show_title']) {
-
             $modStrings = null;
             if (isset($GLOBALS['mod_strings'])) {
                 $modStrings = $GLOBALS['mod_strings'];

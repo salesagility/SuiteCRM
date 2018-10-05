@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerUnitAbstract
 {

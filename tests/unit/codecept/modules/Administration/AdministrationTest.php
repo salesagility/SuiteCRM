@@ -60,13 +60,13 @@ class AdministrationTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('config');
         $state->pushGlobals();
 
-	// test
+        // test
         
         $admin = new Administration();
 
@@ -85,7 +85,7 @@ class AdministrationTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testsaveSetting()
     {
-	// save state
+        // save state
         
         self::markTestIncomplete('environment dependency');
 
@@ -93,7 +93,7 @@ class AdministrationTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('config');
         $state->pushGlobals();
 
-	// test
+        // test
         
         $admin = new Administration();
 
