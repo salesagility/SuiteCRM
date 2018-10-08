@@ -34,7 +34,7 @@ class AOR_FieldTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $aor_Field = new AOR_Field();
 
-        //preset the required data 
+        //preset the required data
         $post_data = array();
         $post_data['field'][] = 'test field';
         $post_data['name'][] = 'test';

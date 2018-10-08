@@ -598,8 +598,8 @@ function getModuleField(
                 $convert_format = "Y-m-d";
             }
             $fieldlist[$fieldname]['value'] = $timedate->to_display($value, $convert_format, $params['date_format']);
-        }else{
-            if($fieldlist[$fieldname]['type'] == 'date') {
+        } else {
+            if ($fieldlist[$fieldname]['type'] == 'date') {
                 $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value, true, true);
             } else {
                 $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);

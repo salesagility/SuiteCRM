@@ -5561,8 +5561,8 @@ function displayAdminError($errorString)
     SugarApplication::appendErrorMessage($output);
 }
 
-function getAppString($key) {
-
+function getAppString($key)
+{
     global $app_strings;
 
     if (!isset($app_strings[$key])) {

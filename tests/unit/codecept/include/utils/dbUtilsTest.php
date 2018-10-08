@@ -61,8 +61,6 @@ class db_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
-        
-        
     }
 
     public function testfrom_db_convert()

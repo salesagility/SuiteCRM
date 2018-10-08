@@ -21,14 +21,14 @@ class EmailAddressTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testsave()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
         
-        // test 
+        // test
         
         $email = new EmailAddress();
 

@@ -54,11 +54,10 @@ global $gridline;
 echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_UPGRADE_TITLE']), false);
 $str1="";
 if (DBManagerFactory::getInstance()->supports('fulltext')) {
-
-	$str1='<tr><td scope="row">';
-	$str1.=SugarThemeRegistry::current()->getImage('Repair','align="absmiddle" border="0"',null,null,'.gif',$mod_strings['LBL_REPAIR_ORACLE_FULLTEXT']);
-	$str1.='&nbsp;<a href="./index.php?module=Administration&action=RebuildFulltextIndices">' . $mod_strings['LBL_REPAIR_ORACLE_FULLTEXT'] .'</a></td>';
-	$str1.='<td>' .$mod_strings['LBL_REPAIR_ORACLE_FULLTEXT_DESC'] . '</td></tr>';
+    $str1='<tr><td scope="row">';
+    $str1.=SugarThemeRegistry::current()->getImage('Repair', 'align="absmiddle" border="0"', null, null, '.gif', $mod_strings['LBL_REPAIR_ORACLE_FULLTEXT']);
+    $str1.='&nbsp;<a href="./index.php?module=Administration&action=RebuildFulltextIndices">' . $mod_strings['LBL_REPAIR_ORACLE_FULLTEXT'] .'</a></td>';
+    $str1.='<td>' .$mod_strings['LBL_REPAIR_ORACLE_FULLTEXT_DESC'] . '</td></tr>';
 }
 ?>
 <p>

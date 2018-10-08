@@ -193,7 +193,6 @@ class StoreQuery
     {
         if (isset($_REQUEST['query'])) {
             if (!empty($_REQUEST['clear_query']) && $_REQUEST['clear_query'] == 'true') {
-
                 $this->loadQuery($name);
                 $_REQUEST['displayColumns'] = $this->query['displayColumns'];
                 $this->clearQuery($name);

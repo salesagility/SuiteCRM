@@ -68,7 +68,8 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum
         return '('.$query.')';
     }
 
-    public function queryFilterone_of($layout_def, $rename_columns = true) {
+    public function queryFilterone_of($layout_def, $rename_columns = true)
+    {
         //Fix for inaccurate filtering of contacts in Contacts dashlet on multiselects.
         $arr = array();
         foreach ($layout_def['input_name0'] as $value) {

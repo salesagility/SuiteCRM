@@ -22,7 +22,6 @@ class Calls extends \AcceptanceTester
      */
     public function createCall($name)
     {
-
         $I = new EditView($this->getScenario());
         $DetailView = new DetailView($this->getScenario());
 
@@ -47,8 +46,8 @@ class Calls extends \AcceptanceTester
      * @param $name, $module_name, $module, $params
      *
      */
-    public function createCallRelateModule($name, $module_name, $module, $params = array()){
-
+    public function createCallRelateModule($name, $module_name, $module, $params = array())
+    {
         $I = new EditView($this->getScenario());
         $DetailView = new DetailView($this->getScenario());
 
@@ -62,8 +61,8 @@ class Calls extends \AcceptanceTester
         $I->fillField('#date_start_date', '01/19/2038');
         $I->fillField('#description', $faker->text());
 
-        if(!empty($params)){
-            foreach($params as $field => $value){
+        if (!empty($params)) {
+            foreach ($params as $field => $value) {
                 $I->selectOption('#'.$field, $value);
             }
         }
@@ -79,7 +78,5 @@ class Calls extends \AcceptanceTester
 
         $I->clickSaveButton();
         $DetailView->waitForDetailViewVisible();
-
     }
-
 }

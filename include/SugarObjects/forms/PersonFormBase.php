@@ -202,8 +202,8 @@ abstract class PersonFormBase extends FormBase
 
         $rows = array();
 
-    $db = DBManagerFactory::getInstance();
-	$result = $db->query($query);
+        $db = DBManagerFactory::getInstance();
+        $result = $db->query($query);
 
         //Loop through the results and store
         while (($row = $db->fetchByAssoc($result)) != null) {

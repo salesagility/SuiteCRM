@@ -892,8 +892,7 @@ function track_email($user_name, $password, $parent_id, $contact_ids, $date_sent
     // for each contact, add a link between the contact and the email message
     $id_list = explode(";", $contact_ids);
 
-    foreach ($id_list as $id)
-    {
+    foreach ($id_list as $id) {
         if (!empty($id)) {
             $email->set_emails_contact_invitee_relationship($email->id, DBManagerFactory::getInstance()->quote($id));
         }
