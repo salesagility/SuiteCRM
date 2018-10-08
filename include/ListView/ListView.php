@@ -1068,7 +1068,7 @@ class ListView
 
 
 
-    public function processUnionBeans($sugarbean, $subpanel_def, $html_var = 'CELL')
+    public function processUnionBeans($sugarbean, $subpanel_def, $html_var = 'CELL', $countOnly = false)
     {
         $last_detailview_record = $this->getSessionVariable("detailview", "record");
         if (!empty($last_detailview_record) && $last_detailview_record != $sugarbean->id) {
@@ -1129,21 +1129,34 @@ class ListView
             $response =& $this->response;
             echo 'cached';
         } else {
-            $response = SugarBean::get_union_related_list($sugarbean, $this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page, $this->query_limit, $subpanel_def);
+            $response = SugarBean::get_union_related_list(
+                $sugarbean, 
+                $this->sortby, 
+                $this->sort_order, 
+                $this->query_where, 
+                $current_offset, 
+                -1, 
+                $this->records_per_page, 
+                $this->query_limit, 
+                $subpanel_def
+            );
             $this->response =& $response;
         }
         $list = $response['list'];
-        $row_count = $response['row_count'];
-        $next_offset = $response['next_offset'];
-        $previous_offset = $response['previous_offset'];
-        if (!empty($response['current_offset'])) {
-            $current_offset = $response['current_offset'];
+        
+        if (!$countOnly) {
+            $row_count = $response['row_count'];
+            $next_offset = $response['next_offset'];
+            $previous_offset = $response['previous_offset'];
+            if (!empty($response['current_offset'])) {
+                $current_offset = $response['current_offset'];
+            }
+            global $list_view_row_count;
+            $list_view_row_count = $row_count;
+            $this->processListNavigation('dyn_list_view', $html_var, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean, $subpanel_def);
         }
-        global $list_view_row_count;
-        $list_view_row_count = $row_count;
-        $this->processListNavigation('dyn_list_view', $html_var, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean, $subpanel_def);
-
-        return array('list'=>$list, 'parent_data'=>$response['parent_data'], 'query'=>$response['query']);
+        
+        return $response;
     }
 
     public function getBaseURL($html_varName)

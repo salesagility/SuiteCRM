@@ -374,7 +374,7 @@ class SubPanelTiles
                     $extraClass = ' incomplete';
                 }
                 
-                $tabs_properties[$t]['title'] .= ' (<span class="subPanelCountHint' . $extraClass . '" data-tab="' . $tab . '">' . $countStr . '</span>)';
+                $tabs_properties[$t]['title'] .= ' (<span class="subPanelCountHint' . $extraClass . '" data-subpanel="' . $tab . '" data-module="' . $layout_def_key . '" data-record="' . $_REQUEST['record'] . '">' . $countStr . '</span>)';
             }
 
 
