@@ -5,9 +5,9 @@ use Api\Core\Loader\CustomLoader;
 /**
  * Aliases for core modules
  */
-return CustomLoader::mergeCustomArray([
+return [
     'beanAliases' => function () {
-        return [
+        return CustomLoader::mergeCustomArray([
             Account::class => 'Accounts',
             ACLAction::class => 'ACLActions',
             ACLRole::class => 'ACLRoles',
@@ -56,6 +56,6 @@ return CustomLoader::mergeCustomArray([
             'Invoices' => AOS_Invoices::class,
             'ProductQuotes' => AOS_Products_Quotes::class,
             'Quotes' => AOS_Quotes::class,
-        ];
+        ], basename(__FILE__));
     }
-], basename(__FILE__));
+];
