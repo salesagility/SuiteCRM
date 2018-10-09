@@ -407,7 +407,7 @@ class ModulesCest
         $filenameBinaryFile = 'testFile.png';
         $pathToBinaryFile = codecept_data_dir().'/'.$filenameBinaryFile;
         $binaryFile = file_get_contents($pathToBinaryFile);
-        $binaryFileEncoded = '<OMITED>';
+        $binaryFileEncoded = '<OMITTED>';
 
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
