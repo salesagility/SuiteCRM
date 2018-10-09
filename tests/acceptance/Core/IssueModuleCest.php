@@ -26,7 +26,7 @@ class IssueModuleCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -182,7 +182,6 @@ class IssueModuleCest
         $listView->clickNameLink($this->fakeData->name);
         $detailView->waitForDetailViewVisible();
         $this->lastView = 'DetailView';
-
     }
 
     /**
@@ -204,7 +203,7 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit Issue Test Module Record from detail view');
-        if($this->lastView !== 'DetailView') {
+        if ($this->lastView !== 'DetailView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -254,7 +253,7 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate Issue Test Module Record from detail view');
-        if($this->lastView !== 'DetailView') {
+        if ($this->lastView !== 'DetailView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -310,7 +309,7 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete Issue Test Module Record from detail view');
-        if($this->lastView !== 'DetailView') {
+        if ($this->lastView !== 'DetailView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );

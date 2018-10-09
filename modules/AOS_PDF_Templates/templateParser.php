@@ -109,8 +109,10 @@ class templateParser
                 if ($value != '' && $value != '0.00') {
                     if ($isValidator->isPercentageField($repl_arr['aos_products_quotes_discount'])) {
                         $sep = get_number_seperators();
-                        $value = rtrim(rtrim(format_number($value), '0'),
-                                $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
+                        $value = rtrim(
+                            rtrim(format_number($value), '0'),
+                                $sep[1]
+                        ) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
                 } else {
                     $value = '';

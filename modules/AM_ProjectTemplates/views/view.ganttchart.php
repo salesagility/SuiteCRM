@@ -34,8 +34,8 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
     }
 
 
-    public function display() {
-
+    public function display()
+    {
         global $mod_strings, $app_list_strings;
         $db = DBManagerFactory::getInstance();
 

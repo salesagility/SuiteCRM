@@ -26,7 +26,6 @@ require_once 'modules/InboundEmail/InboundEmail.php';
 require_once 'include/clean.php';
 class AOPInboundEmail extends InboundEmail
 {
-
     public $job_name = 'function::pollMonitoredInboxesAOP';
 
     /**

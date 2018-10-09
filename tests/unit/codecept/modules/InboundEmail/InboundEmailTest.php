@@ -3,8 +3,7 @@
 
 class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 {
-    
-    protected function storeStateAll() 
+    protected function storeStateAll()
     {
         // save state
         
@@ -21,7 +20,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
         return $state;
     }
     
-    protected function restoreStateAll($state) 
+    protected function restoreStateAll($state)
     {
         // clean up
         
@@ -33,7 +32,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->popTable('inbound_email');
         $state->popTable('inbound_email_autoreply');
         $state->popTable('inbound_email_cache_ts');
-        
     }
     
     public function testInboundEmail()
@@ -1560,7 +1558,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testsetReadFlagOnFolderCache()
     {
         $this->markTestIncomplete('Undefined offset: 0');
-//        
+//
 //        $inboundEmail = new InboundEmail();
 //
 //        $inboundEmail->id = 1;
@@ -1743,7 +1741,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testgetTeamSetIdForTeams()
     {
         $this->markTestIncomplete("Fatal error: Class 'Team' not found");
-//        
+//
 //        //unset and reconnect Db to resolve mysqli fetch exeception
 //        $db = DBManagerFactory::getInstance();
 //        unset($db->database);
@@ -1756,7 +1754,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 //        //test for record ID to verify that record is saved
 //        //$this->assertTrue(isset($result));
 //        //$this->assertEquals(36, strlen($result));
-
     }
 
     public function testsavePersonalEmailAccountAndOthers()
@@ -2383,8 +2380,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 //        //$result = $inboundEmail->getEncodingFromBreadCrumb("1.2.3", $parts);
 //
 //        //$this->assertEqilas('utf-8', $result);
-
-        
     }
 
     public function testgetCharsetFromBreadCrumb()
@@ -2414,7 +2409,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testgetMessageTextFromSingleMimePart()
     {
         $this->markTestIncomplete('Exception: PHPUnit_Framework_Error_Notice: Undefined variable: structure');
-//        
+//
 //        //unset and reconnect Db to resolve mysqli fetch exeception
 //        $db = DBManagerFactory::getInstance();
 //        unset($db->database);
@@ -2462,7 +2457,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
         // clean up
         
         $this->restoreStateAll($state);
-
     }
 
     public function testgetMessageText()
@@ -3010,7 +3004,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testhandleUUDecode()
     {
-
         $this->markTestIncomplete('Uncaught require_once(include/PHP_Compat/convert_uudecode.php)');
         /*
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -3243,7 +3236,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testgetRelatedId()
     {
-        
         $this->markTestIncomplete('Undefined variable: result');
 //
 //        //unset and reconnect Db to resolve mysqli fetch exeception
@@ -3897,7 +3889,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->markTestIncomplete("Fatal error: Class 'Team' not found");
         
-//        
+//
 //
 //        //unset and reconnect Db to resolve mysqli fetch exeception
 //        $db = DBManagerFactory::getInstance();
@@ -3908,7 +3900,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 //
 //        //$inboundEmail->createUserSubscriptionsForGroupAccount();
 //
-//        
+//
     }
 
     public function testcreateAutoImportSugarFolder()
@@ -4227,7 +4219,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testOverview()
     {
         $this->markTestIncomplete('Fatal error: Class \'Overview\' not found');
-//        
+//
 //
 //        //execute the contructor and check for the Object type and  attributes
 //        $overview = new Overview();

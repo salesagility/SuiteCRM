@@ -736,7 +736,6 @@ function aorRunScheduledReports()
     require_once 'include/SugarQueue/SugarJobQueue.php';
     $date = new DateTime();//Ensure we check all schedules at the same instant
     foreach (BeanFactory::getBean('AOR_Scheduled_Reports')->get_full_list() as $scheduledReport) {
-
         if ($scheduledReport->status != 'active') {
             continue;
         }

@@ -436,14 +436,11 @@ class ModuleScanner
         echo "'''Default Extensions'''<br>";
         foreach ($this->validExt as $b) {
             echo '#' . $b . '<br>';
-
         }
         echo "'''Default Black Listed Functions'''<br>";
         foreach ($this->blackList as $b) {
             echo '#' . $b . '<br>';
-
         }
-
     }
 
     /**

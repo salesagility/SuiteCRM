@@ -88,7 +88,6 @@ class AOPAssignManager
     {
         global $sugar_config;
         if ($this->aopFallback) {
-
             $distributionOptions = null;
             if (isset($sugar_config['aop']['distribution_options'])) {
                 $distributionOptions = $sugar_config['aop']['distribution_options'];

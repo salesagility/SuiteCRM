@@ -25,7 +25,7 @@ class CompanyModuleCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeData->addProvider(new Faker\Provider\en_US\Address($this->fakeData));
             $this->fakeData->addProvider(new Faker\Provider\en_US\PhoneNumber($this->fakeData));
@@ -124,7 +124,7 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Create Company Test Module Record');
 
-        if($this->lastView !== 'ListView') {
+        if ($this->lastView !== 'ListView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -181,7 +181,7 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Select Record from list view');
 
-        if($this->lastView !== 'ListView') {
+        if ($this->lastView !== 'ListView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -207,7 +207,6 @@ class CompanyModuleCest
 
         $detailView->waitForDetailViewVisible();
         $this->lastView = 'DetailView';
-
     }
 
     /**
@@ -230,7 +229,7 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Edit Company Test Module Record from detail view');
 
-        if($this->lastView !== 'DetailView') {
+        if ($this->lastView !== 'DetailView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -282,7 +281,7 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Duplicate Company Test Module Record from detail view');
 
-        if($this->lastView !== 'DetailView') {
+        if ($this->lastView !== 'DetailView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -341,7 +340,7 @@ class CompanyModuleCest
     ) {
         $I->wantTo('Delete Company Test Module Record from detail view');
 
-        if($this->lastView !== 'ListView') {
+        if ($this->lastView !== 'ListView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );

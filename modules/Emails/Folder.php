@@ -91,7 +91,6 @@ class Folder
      */
     public function retrieve($folderId = -1)
     {
-
         $isValidator = new SuiteValidator();
         if ($isValidator->isValidId($folderId)) {
             $result = $this->db->query("SELECT * FROM folders WHERE id='" . $folderId . "'");

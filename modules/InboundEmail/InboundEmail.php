@@ -5413,12 +5413,9 @@ class InboundEmail extends SugarBean
         ///////////////////////////////////////////////////////////////////////
         ////	DEAL WITH THE MAILBOX
         if (!$forDisplay) {
-            if (!$isGroupFolderExists)
-            {
+            if (!$isGroupFolderExists) {
                 $r = imap_setflag_full($this->conn, $msgNo, '\\SEEN');
-            }
-            else
-            {
+            } else {
                 $r = imap_clearflag_full($this->conn, $msgNo, '\\SEEN');
             }
 

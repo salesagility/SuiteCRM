@@ -15,8 +15,8 @@ function smarty_function_sugar_literal($params)
 {
     $content = '';
 
-   if (!isset($params['content'])) {
-       return $content;
-   }
+    if (!isset($params['content'])) {
+        return $content;
+    }
     return $params['content'];
 }

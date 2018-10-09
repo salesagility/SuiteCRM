@@ -319,27 +319,26 @@ class PopupSmarty extends ListViewSmarty
         $id_field = 'id',
         $id = null
     ) {
-		$args = func_get_args();
-		return call_user_func_array(array($this, '_setup'), $args);
-	}
+        $args = func_get_args();
+        return call_user_func_array(array($this, '_setup'), $args);
+    }
 
-	function _setup($file) {
-
-	    if(isset($this->_popupMeta)){
-			if(isset($this->_popupMeta['create']['formBase'])) {
-				require_once('modules/' . $this->seed->module_dir . '/' . $this->_popupMeta['create']['formBase']);
-				$this->_create = true;
-			}
-		}
-	    if(!empty($this->_popupMeta['create'])){
-			$formBase = new $this->_popupMeta['create']['formBaseClass']();
-			if(isset($_REQUEST['doAction']) && $_REQUEST['doAction'] == 'save')
-			{
-				//If it's a new record, set useRequired to false
-				$useRequired = empty($_REQUEST['id']) ? false : true;
-				$formBase->handleSave('', false, $useRequired);
-			}
-		}
+    public function _setup($file)
+    {
+        if (isset($this->_popupMeta)) {
+            if (isset($this->_popupMeta['create']['formBase'])) {
+                require_once('modules/' . $this->seed->module_dir . '/' . $this->_popupMeta['create']['formBase']);
+                $this->_create = true;
+            }
+        }
+        if (!empty($this->_popupMeta['create'])) {
+            $formBase = new $this->_popupMeta['create']['formBaseClass']();
+            if (isset($_REQUEST['doAction']) && $_REQUEST['doAction'] == 'save') {
+                //If it's a new record, set useRequired to false
+                $useRequired = empty($_REQUEST['id']) ? false : true;
+                $formBase->handleSave('', false, $useRequired);
+            }
+        }
 
         $params = array();
         if (!empty($this->_popupMeta['orderBy'])) {

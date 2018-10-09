@@ -102,7 +102,6 @@ class AOR_Condition extends Basic
 
         $j = 0;
         foreach ((array)$postData as $i => $field) {
-
             if (!isset($post_data[$key . 'deleted'][$i])) {
                 LoggerManager::getLogger()->warn('AOR Condition trying to save lines but POST data does not contains the key "' . $key . 'deleted' . '" at index: ' . $i);
             }

@@ -185,7 +185,6 @@ class Popup_Picker
         } // end Tasks
 
         foreach ($focus_meetings_list as $meeting) {
-
             if (!$meeting->ACLAccess('list')) {
                 continue;
             }
@@ -238,7 +237,6 @@ class Popup_Picker
         } // end Meetings
 
         foreach ($focus_calls_list as $call) {
-
             if (!$call->ACLAccess('list')) {
                 continue;
             }

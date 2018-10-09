@@ -365,8 +365,7 @@ class SubPanelTiles
 
                 if ($count === 0) {
                     $tabs_properties[$t]['title'] .= ' (0)';
-                }
-                elseif ($count > 0) {
+                } elseif ($count > 0) {
                     $tabs_properties[$t]['title'] .= ' +';
                     $tabs_properties[$t]['collapsed_override'] = 1;
                 }

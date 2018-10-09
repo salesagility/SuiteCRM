@@ -255,14 +255,14 @@ class ProjectTask extends SugarBean
         return $return_value;
     }
 
-	/*
-	 *
-	 */
-	public function build_generic_where_clause ($the_query_string)
-	{
-		$where_clauses = array();
-		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
-		array_push($where_clauses, "project_task.name like '$the_query_string%'");
+    /*
+     *
+     */
+    public function build_generic_where_clause($the_query_string)
+    {
+        $where_clauses = array();
+        $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
+        array_push($where_clauses, "project_task.name like '$the_query_string%'");
 
         $the_where = "";
         foreach ($where_clauses as $clause) {

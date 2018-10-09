@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class AOS_PDF_TemplatesTest extends SuiteCRM\StateCheckerUnitAbstract
 {

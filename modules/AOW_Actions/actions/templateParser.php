@@ -28,15 +28,13 @@ require_once 'modules/AOS_PDF_Templates/templateParser.php';
 
 class aowTemplateParser extends templateParser
 {
-
-    static function parse_template($string, $bean_arr)
+    public static function parse_template($string, $bean_arr)
     {
         global $beanList;
 
         $person = [];
 
         foreach ($bean_arr as $bean_name => $bean_id) {
-
             $focus = BeanFactory::getBean($bean_name, $bean_id);
 
             if (!$focus->fetched_row) {
@@ -52,7 +50,6 @@ class aowTemplateParser extends templateParser
             if ($focus instanceof Person) {
                 $person[] = $focus;
             }
-
         }
 
         if (!empty($person)) {

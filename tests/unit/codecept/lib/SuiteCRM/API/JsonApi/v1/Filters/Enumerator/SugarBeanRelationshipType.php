@@ -16,7 +16,7 @@ class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
     public function _before()
     {
         parent::_before();
-        if(self::$sugarBeanRelationShipType === null) {
+        if (self::$sugarBeanRelationShipType === null) {
             self::$sugarBeanRelationShipType = new \SuiteCRM\API\JsonApi\v1\Enumerator\SugarBeanRelationshipType();
         }
     }
@@ -24,8 +24,8 @@ class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
     public function testFromSugarBeanLinkToOne()
     {
         $obj = new \stdClass();
-        $obj->getType = function() {
-          return "one";
+        $obj->getType = function () {
+            return "one";
         };
 
         $expected = self::$sugarBeanRelationShipType::TO_ONE;
@@ -37,7 +37,7 @@ class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
     public function testFromSugarBeanLinkToMany()
     {
         $obj = new \stdClass();
-        $obj->getType = function() {
+        $obj->getType = function () {
             return "one";
         };
 
