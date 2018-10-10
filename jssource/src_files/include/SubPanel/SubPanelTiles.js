@@ -862,7 +862,7 @@ $(function () {
                 console.error('Subpanel Row Count loading error');
             } else {
                 $(e).html(resp);
-                if (resp) {
+                if (resp && resp != '0') {
                     $(e).closest('.collapsed').addClass('collapsed-override');
                 }
             }
