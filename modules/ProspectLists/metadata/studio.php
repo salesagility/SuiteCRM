@@ -65,5 +65,4 @@ $GLOBALS['studioDefs']['ProspectList'] = array(
     'php_file'=>'modules/ProspectList/ListView.php',
     'type'=>'SearchForm',
   ),
-
 );
