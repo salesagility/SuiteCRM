@@ -173,7 +173,7 @@ class ListViewDataEmails extends ListViewData
 
                 WHERE
                   inbound_email.status = 'Active' AND
-                  inbound_email.mailbox_type = 'pick' AND
+                  inbound_email.mailbox_type not like 'bounce' AND
                   inbound_email.is_personal = 0 AND
                   inbound_email.deleted = 0";
 
@@ -235,13 +235,15 @@ class ListViewDataEmails extends ListViewData
      */
     private function setInboundEmailMailbox(Folder $folder, InboundEmail $inboundEmail)
     {
+        $test = $inboundEmail->getStoredOptions();
+
         switch ($folder->getType()) {
-            case "sent":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
+            case "inbound":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('mailbox');
                 break;
 
-            case "draft":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
+            case "sent":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
                 break;
 
             case "trash":
