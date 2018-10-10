@@ -361,14 +361,20 @@ class SubPanelTiles
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel, $subpanel_object->subpanel_query);
             } elseif ($current_user->getPreference('count_collapsed_subpanels')) {
                 $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
-                $count = $this->rowCounter->getSubPanelRowCount($subPanelDef);
+                $count = (int)$this->rowCounter->getSubPanelRowCount($subPanelDef);
 
+                $extraClass = '';
                 if ($count === 0) {
-                    $tabs_properties[$t]['title'] .= ' (0)';
+                    $countStr = $count.'';
                 } elseif ($count > 0) {
-                    $tabs_properties[$t]['title'] .= ' +';
+                    $countStr = $count.'';
                     $tabs_properties[$t]['collapsed_override'] = 1;
+                } else {
+                    $countStr = '...';
+                    $extraClass = ' incomplete';
                 }
+                
+                $tabs_properties[$t]['title'] .= ' (<span class="subPanelCountHint' . $extraClass . '" data-subpanel="' . $tab . '" data-module="' . $layout_def_key . '" data-record="' . $_REQUEST['record'] . '">' . $countStr . '</span>)';
             }
 
 

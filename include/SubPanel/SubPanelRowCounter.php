@@ -70,9 +70,13 @@ class SubPanelRowCounter
         $this->setSubPanelDefs($subPanelDef);
 
         try {
-            return $this->doGetSubPanelRowCount($this->subPanelDef);
+            $count = $this->doGetSubPanelRowCount($this->subPanelDef);
+            if ($count < 0) {
+                throw new \Exception('sub panel row count can not be negative');
+            }
+            return $count;
         } catch (\Exception $e) {
-            $GLOBALS['log']->error($e->getMessage());
+            \LoggerManager::getLogger()->error($e->getMessage());
             return -1;
         }
     }
@@ -93,8 +97,9 @@ class SubPanelRowCounter
     {
         if (!isset($subPanelDef['get_subpanel_data'])) {
             foreach ($subPanelDef['collection_list'] as $subSubPanelDef) {
-                if ($this->doGetSubPanelRowCount($subSubPanelDef)) {
-                    return 1;
+                $subPanelRowCount = $this->doGetSubPanelRowCount($subSubPanelDef);
+                if ($subPanelRowCount) {
+                    return $subPanelRowCount;
                 }
             }
             return 0;
@@ -132,7 +137,11 @@ class SubPanelRowCounter
      */
     public function makeSubPanelRowCountQuery()
     {
-        $relationshipName = $this->subPanelDef['get_subpanel_data'];
+
+        $relationshipName = isset($this->subPanelDef['get_subpanel_data']) && $this->subPanelDef['get_subpanel_data'] ? $this->subPanelDef['get_subpanel_data'] : null;
+        if (!$relationshipName) {
+            throw new \Exception('relationship name can not be empty');
+        }
 
         if (0 === strpos($relationshipName, 'function:')) {
             return $this->makeFunctionCountQuery($relationshipName);
@@ -156,10 +165,14 @@ class SubPanelRowCounter
         include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'utils.php';
         $functionName = substr($relationshipName, 9);
         $qry = [];
+        $functionParameters = isset($this->subPanelDef['function_parameters']) && $this->subPanelDef['function_parameters'] ? $this->subPanelDef['function_parameters'] : null;
+        if (null === $functionParameters) {
+            \LoggerManager::getLogger()->warn('Function parameters is empty');
+        }
         if (method_exists($this->focus, $functionName)) {
-            $qry = $this->focus->$functionName($this->subPanelDef['function_parameters']);
+            $qry = $this->focus->$functionName($functionParameters);
         } elseif (\function_exists($functionName)) {
-            $qry = $functionName($this->subPanelDef['function_parameters']);
+            $qry = $functionName($functionParameters);
         }
         if (\is_array($qry) && \count($qry)) {
             $qry = $qry['select'] . $qry['from'] . $qry['join'] . $qry['where'];
