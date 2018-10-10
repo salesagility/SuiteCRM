@@ -235,11 +235,13 @@ class ListViewDataEmails extends ListViewData
      */
     private function setInboundEmailMailbox(Folder $folder, InboundEmail $inboundEmail)
     {
-        $test = $inboundEmail->getStoredOptions();
-
         switch ($folder->getType()) {
             case "inbound":
                 $inboundEmail->mailbox = $inboundEmail->get_stored_options('mailbox');
+                break;
+
+            case "draft":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
                 break;
 
             case "sent":
