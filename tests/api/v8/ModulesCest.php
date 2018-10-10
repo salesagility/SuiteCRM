@@ -48,14 +48,14 @@ class ModulesCest
 
     /**
      * Get list of modules
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules
      *
      */
-    public function TestScenarioListModules(apiTester $I)
+    public function TestScenarioListModules(ApiTester $I)
     {
         $I->comment('Test list modules');
         $I->sendJsonApiContentNegotiation();
@@ -77,7 +77,7 @@ class ModulesCest
 
     /**
      * Create a new entry with missing type
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
@@ -85,7 +85,7 @@ class ModulesCest
      * URL: /api/v8/modules/{module_name}/{id}
      *
      */
-    public function TestScenarioCreateWithMissingType(apiTester $I)
+    public function TestScenarioCreateWithMissingType(ApiTester $I)
     {
         $I->comment('Test missing type');
         $I->sendJsonApiContentNegotiation();
@@ -107,7 +107,7 @@ class ModulesCest
 
     /**
      * Create a new entry with missing attributes
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
@@ -115,7 +115,7 @@ class ModulesCest
      * URL: /api/v8/modules/{module_name}/{id}
      *
      */
-    public function TestScenarioCreateWithMissingAttributes(apiTester $I)
+    public function TestScenarioCreateWithMissingAttributes(ApiTester $I)
     {
         $I->comment('Test required attributes');
         $I->sendJsonApiContentNegotiation();
@@ -139,7 +139,7 @@ class ModulesCest
 
     /**
      * Create a new entry with required fields
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
@@ -147,7 +147,7 @@ class ModulesCest
      * URL: /api/v8/modules/{module_name}/{id}
      *
      */
-    public function TestScenarioCreateWithMissingRequiredFields(apiTester $I)
+    public function TestScenarioCreateWithMissingRequiredFields(ApiTester $I)
     {
         $I->comment('Test required attributes');
         $I->sendJsonApiContentNegotiation();
@@ -171,7 +171,7 @@ class ModulesCest
 
     /**
      * Create a new entry
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
@@ -179,7 +179,7 @@ class ModulesCest
      * URL: /api/v8/modules/{module_name}/{id}
      *
      */
-    public function TestScenarioCreateNew(apiTester $I)
+    public function TestScenarioCreateNew(ApiTester $I)
     {
         $faker = \Faker\Factory::create();
         $I->comment('Test create account');
@@ -216,7 +216,7 @@ class ModulesCest
 
     /**
      * Create a new entry
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
@@ -224,7 +224,7 @@ class ModulesCest
      * URL: /api/v8/modules/{module_name}/{id}
      * @throws \Codeception\Exception\ModuleException
      */
-    public function TestScenarioCreateNewWithClientCredentialsGrant(apiTester $I)
+    public function TestScenarioCreateNewWithClientCredentialsGrant(ApiTester $I)
     {
         $faker = \Faker\Factory::create();
         $I->comment('Test create account');
@@ -261,17 +261,17 @@ class ModulesCest
         $I->loginAsAdmin();
     }
 
-    /**
-     * Create a existing entry
-     * @param apiTester $I
-     * @see http://jsonapi.org/format/1.0/#crud-creating
-     *
-     * HTTP Verb: POST
-     * URL: /api/v8/modules/{module_name} (with id in $_POST)
-     * URL: /api/v8/modules/{module_name}/{id}
-     *
-     */
-    public function TestScenarioCreateExisting(apiTester $I)
+     /**
+      * Create a existing entry
+      * @param ApiTester $I
+      * @see http://jsonapi.org/format/1.0/#crud-creating
+      *
+      * HTTP Verb: POST
+      * URL: /api/v8/modules/{module_name} (with id in $_POST)
+      * URL: /api/v8/modules/{module_name}/{id}
+      *
+      */
+    public function TestScenarioCreateExisting(ApiTester $I)
     {
         $faker = \Faker\Factory::create();
 
@@ -302,7 +302,7 @@ class ModulesCest
 
     /**
      * Create a notes resource and attaches file
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
@@ -313,7 +313,7 @@ class ModulesCest
      * @see \SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource
      * @see SugarFieldFile::save()
      */
-    public function TestScenarioCreateNoteWithAttachment(apiTester $I)
+    public function TestScenarioCreateNoteWithAttachment(ApiTester $I)
     {
         $faker = \Faker\Factory::create();
 
@@ -387,7 +387,7 @@ class ModulesCest
 
     /**
      * Create a document resource and attaches a file
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: POST
@@ -398,7 +398,7 @@ class ModulesCest
      * @see \SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource
      * @see SugarFieldFile::save()
      */
-    public function TestScenarioCreateDocumentWithAttachment(apiTester $I)
+    public function TestScenarioCreateDocumentWithAttachment(ApiTester $I)
     {
         $faker = \Faker\Factory::create();
 
@@ -479,14 +479,14 @@ class ModulesCest
 
     /**
      * Retrieves an entry
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#fetching
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module_name}/{id}
      *
      */
-    public function TestScenarioRetrieveEntry(apiTester $I)
+    public function TestScenarioRetrieveEntry(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -505,14 +505,14 @@ class ModulesCest
 
     /**
      * Update entry
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-updating
      *
      * HTTP Verb: POST (update and replace) / PATCH (update and modify)
      * URL: /api/v8/modules/{module_name}/{id}
      *
      */
-    public function TestScenarioUpdateEntry(apiTester $I)
+    public function TestScenarioUpdateEntry(ApiTester $I)
     {
         $faker = \Faker\Factory::create();
 
@@ -550,14 +550,14 @@ class ModulesCest
 
     /**
      * Update entry
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-deleting
      *
      * HTTP Verb: DELETE
      * URL: /api/v8/modules/{module_name}/{id}
      *
      */
-    public function TestScenarioDeleteEntry(apiTester $I)
+    public function TestScenarioDeleteEntry(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -570,13 +570,13 @@ class ModulesCest
 
     /**
      * Retrieves a list of entries
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#fetching
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module_name}
      */
-    public function TestScenarioRetrieveList(apiTester $I)
+    public function TestScenarioRetrieveList(ApiTester $I)
     {
         // Send Request
         $I->loginAsAdmin();
@@ -608,13 +608,13 @@ class ModulesCest
 
     /**
      * Retrieves a list of entries
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#fetching
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module_name}
      */
-    public function TestScenarioRetrieveFilteredList(apiTester $I)
+    public function TestScenarioRetrieveFilteredList(ApiTester $I)
     {
         // Send Request
         $I->loginAsAdmin();
@@ -649,13 +649,13 @@ class ModulesCest
 
     /**
      * Create product and create a relationship with product categories (One To Many)
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#fetching-resources-responses
      *
      * HTTP Verb: POST
      * URL: /api/v8/modules/{module_name}
      */
-    public function TestScenarioCreateProductWithAnOneToManyRelationship(apiTester $I)
+    public function TestScenarioCreateProductWithAnOneToManyRelationship(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -720,13 +720,13 @@ class ModulesCest
 
     /**
      * Use product to retrieve a relationship (One To Many)
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-creating
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioRetrieveOneToManyRelationship(apiTester $I)
+    public function TestScenarioRetrieveOneToManyRelationship(ApiTester $I)
     {
         // Retrieve Product
         // Retrieve relationship
@@ -755,13 +755,13 @@ class ModulesCest
 
     /**
      * Use product to create a new relationship with product categories (One To Many)
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#fetching-resources-responses
      *
      * HTTP Verb: POST
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioCreateAnOneToManyRelationship(apiTester $I)
+    public function TestScenarioCreateAnOneToManyRelationship(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -831,13 +831,13 @@ class ModulesCest
 
     /**
      * Update a relationship (One To Many)
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/#crud-updating-relationships
      *
      * HTTP Verb: PATCH
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioUpdateOneToManyRelationship(apiTester $I)
+    public function TestScenarioUpdateOneToManyRelationship(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -907,13 +907,13 @@ class ModulesCest
 
     /**
      * Update a relationship (One To Many)
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/#crud-updating-relationships
      *
      * HTTP Verb: PATCH
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioClearOneToManyRelationshipUsingRelationshipLink(apiTester $I)
+    public function TestScenarioClearOneToManyRelationshipUsingRelationshipLink(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -951,13 +951,13 @@ class ModulesCest
 
     /**
      * Delete a relationship (One To Many)
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-deleting
      *
      * HTTP Verb: DELETE
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioDeleteOneToManyRelationship(apiTester $I)
+    public function TestScenarioDeleteOneToManyRelationship(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -1026,13 +1026,13 @@ class ModulesCest
 
     /**
      * Retrieve a relationship (Many To Many)
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/#fetching-relationships
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioCreateManyToManyRelationships(apiTester $I)
+    public function TestScenarioCreateManyToManyRelationships(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -1148,13 +1148,13 @@ class ModulesCest
 
     /**
      * Retrieve a relationship (Many To Many)
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/#fetching-relationships
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioRetrieveManyToManyRelationships(apiTester $I)
+    public function TestScenarioRetrieveManyToManyRelationships(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -1185,13 +1185,13 @@ class ModulesCest
 
     /**
      * Replaces a relationship
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      *
      * HTTP Verb: PATCH
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioUpdateManyToManyRelationships(apiTester $I)
+    public function TestScenarioUpdateManyToManyRelationships(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -1245,13 +1245,13 @@ class ModulesCest
 
     /**
      * Clears all related items
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      *
      * HTTP Verb: PATCH
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioClearManyToManyRelationships(apiTester $I)
+    public function TestScenarioClearManyToManyRelationships(ApiTester $I)
     {
         // PATCH {"data": []} to clear all relationships
 
@@ -1295,13 +1295,13 @@ class ModulesCest
 
     /**
      * Removes a relationship
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#crud-updating-relationships
      *
      * HTTP Verb: DELETE
      * URL: /api/v8/modules/{module_name}/relationships/{link}
      */
-    public function TestScenarioDeleteManyToManyRelationships(apiTester $I)
+    public function TestScenarioDeleteManyToManyRelationships(ApiTester $I)
     {
         // DELETE single resource
         $I->loginAsAdmin();
@@ -1454,7 +1454,8 @@ class ModulesCest
         $I->assertEquals(self::$PRODUCT_RECORD_TYPE, $responseProducts['data'][0]['type']);
     }
 
-    public function TestScenarioCreateMeetingsWithUsersAndMiddleTableFields(apiTester $I)
+
+    public function TestScenarioCreateMeetingsWithUsersAndMiddleTableFields(ApiTester $I)
     {
         // Temporary removing this. The API seems does not save correctly the relations on meetings but other problem blocking to solve this
 //

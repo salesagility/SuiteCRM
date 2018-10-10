@@ -26,6 +26,8 @@
     "justinrainbow/json-schema": "^5.2",
     "onelogin/php-saml": "^3.0.0",
     "google/recaptcha": "^1.1",
+    "symfony/options-resolver": "^3.4",
+    "symfony/validator": "^3.4",
     "ezyang/htmlpurifier": "^4.10"
   },
   "require-dev": {
@@ -36,7 +38,9 @@
     "jeroendesloovere/vcard": "v1.5",
     "browserstack/browserstack-local": "dev-master",
     "consolidation/robo": "^1.0.0",
-    "mockery/mockery": "^0.9.9"
+    "mockery/mockery": "^0.9.9",
+    "symfony/yaml": "^3.4",
+    "flow/jsonpath": "^0.3"
   },
   "scripts": {},
   "prefer-stable": true,
@@ -51,7 +55,10 @@
       "SuiteCRM\\Custom\\": [
         "custom/lib"
       ]
-    }
+    },
+    "classmap": [
+      "Api/"
+    ]
   },
   "extra": {}
 }
