@@ -16,9 +16,9 @@
  *
  * @SuppressWarnings(PHPMD)
 */
-class apiTester extends \Codeception\Actor
+class ApiTester extends \Codeception\Actor
 {
-    use _generated\apiTesterActions;
+    use _generated\ApiTesterActions;
 
     const CONTENT_TYPE = 'Content-Type';
     const CONTENT_TYPE_JSON_API = 'application/vnd.api+json';
@@ -218,5 +218,87 @@ class apiTester extends \Codeception\Actor
 
         $response = json_decode($I->grabResponse(), true);
         $I->assertArrayHasKey('errors', $response);
+    }
+
+    /**
+     * This is only temporary till we fix this.
+     * Please set your environment variables up for your test fw settings.
+     *
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function login()
+    {
+        $this->sendPOST($this->getInstanceURL() . '/Api/access_token', [
+            'username' => $this->getAdminUser(),
+            'password' => $this->getAdminPassword(),
+            'grant_type' => 'password',
+            'scope' => '',
+            'client_id' => $this->getPasswordGrantClientId(),
+            'client_secret' => $this->getPasswordGrantClientSecret(),
+        ]);
+
+        $response = json_decode($this->grabResponse(), true);
+        $this->setHeader('Authorization', sprintf('%s %s', $response['token_type'], $response['access_token']));
+        $this->setHeader('Content-Type', \Api\V8\Controller\BaseController::MEDIA_TYPE);
+
+        $this->seeResponseCodeIs(200);
+        $this->canSeeResponseIsJson();
+    }
+
+    /**
+     * This is also temporary till we fix this.
+     *
+     * @return string
+     */
+    public function createAccount()
+    {
+        $id = create_guid();
+        $name = 'testAccount';
+        $accountType = 'Customer';
+        $db = DBManagerFactory::getInstance();
+
+        $query = sprintf(
+            "INSERT INTO accounts (id, name, account_type, date_entered) VALUES (%s, %s, %s, %s)",
+            $db->quoted($id),
+            $db->quoted($name),
+            $db->quoted($accountType),
+            $db->quoted(date('Y-m-d H:i:s'))
+        );
+        $db->query($query);
+
+        return $id;
+    }
+
+    /**
+     * This is also temporary till we fix this.
+     *
+     * @return string
+     */
+    public function createContact()
+    {
+        $id = create_guid();
+        $db = DBManagerFactory::getInstance();
+
+        $query = sprintf(
+            "INSERT INTO contacts (id, date_entered) VALUES (%s,%s)",
+            $db->quoted($id),
+            $db->quoted(date('Y-m-d H:i:s'))
+        );
+        $db->query($query);
+
+        return $id;
+    }
+
+    /**
+     * This is also temporary till we fix this.
+     *
+     * @param string $tableName
+     * @param string $id
+     */
+    public function deleteBean($tableName, $id)
+    {
+        $db = DBManagerFactory::getInstance();
+        $query = sprintf("DELETE FROM %s WHERE id = %s", $tableName, $db->quoted($id));
+        $db->query($query);
     }
 }
