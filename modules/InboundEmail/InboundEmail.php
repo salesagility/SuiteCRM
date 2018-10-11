@@ -3190,7 +3190,7 @@ class InboundEmail extends SugarBean
             if (is_resource($this->imap->getConnection())) {
                 if (!$this->isPop3Protocol()) {
                     $serviceTest = str_replace("INBOX", "", $serviceTest);
-                    $boxes = $this->imap->getMailboxes($serverText, "*");
+                    $boxes = $this->imap->getMailboxes($serviceTest, "*");
                     $delimiter = '.';
                     // clean MBOX path names
                     foreach ($boxes as $k => $mbox) {
