@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SubPanelTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class SubPanelTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp()
     {
