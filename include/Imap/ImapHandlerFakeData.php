@@ -146,7 +146,7 @@ class ImapHandlerFakeData
     }
     
     /**
-     * 
+     *
      * @param string $name
      * @param array|null $args
      * @throws Exception

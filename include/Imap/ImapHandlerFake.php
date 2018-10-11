@@ -53,61 +53,122 @@ class ImapHandlerFake implements ImapHandlerInterface
 {
     protected $fakes;
     
+    /**
+     *
+     * @param ImapHandlerFakeData $fakeData
+     */
     public function __construct(ImapHandlerFakeData $fakeData)
     {
         $this->fakes = $fakes;
     }
     
+    /**
+     *
+     * @return boolean
+     */
     public function close()
     {
         return $this->fakes->call('close');
     }
 
+    /**
+     *
+     * @return array
+     */
     public function getAlerts()
     {
         return $this->fakes->call('getAlerts');
     }
 
+    /**
+     *
+     * @return resource|boolean
+     */
     public function getConnection()
     {
         return $this->fakes->call('getConnection');
     }
-
+    
+    /**
+     *
+     * @return array
+     */
     public function getErrors()
     {
         return $this->fakes->call('getErrors');
     }
-
+    
+    /**
+     *
+     * @return string|boolean
+     */
     public function getLastError()
     {
         return $this->fakes->call('getLastError');
     }
-
+    
+    /**
+     *
+     * @param string $ref
+     * @param string $pattern
+     * @return array
+     */
     public function getMailboxes($ref, $pattern)
     {
         return $this->fakes->call('getMailboxes', [$ref, $pattern]);
     }
 
+    /**
+     *
+     * @return boolean
+     */
     public function isAvailable()
     {
         return $this->fakes->call('isAvailable');
     }
-
+    
+    /**
+     *
+     * @param string $mailbox
+     * @param string $username
+     * @param string $password
+     * @param int $options
+     * @param int $n_retries
+     * @param array|null $params
+     * @return resource|boolean
+     */
     public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null)
     {
         return $this->fakes->call('open', [$mailbox, $username, $password, $options, $n_retries, $params]);
     }
-
+    
+    /**
+     *
+     * @return boolean
+     */
     public function ping()
     {
         return $this->fakes->call('ping');
     }
-
+    
+    /**
+     *
+     * @param string $mailbox
+     * @param int $options
+     * @param int $n_retries
+     * @return boolean
+     */
     public function reopen($mailbox, $options = 0, $n_retries = 0)
     {
         return $this->fakes->call('reopen', [$mailbox, $options, $n_retries]);
     }
-
+    
+    /**
+     *
+     * @param int $timeout_type
+     * @param int $timeout
+     * @return mixed
+     */
     public function setTimeout($timeout_type, $timeout = -1)
     {
         return $this->fakes->call('setTimeout', [$timeout_type, $timeout]);

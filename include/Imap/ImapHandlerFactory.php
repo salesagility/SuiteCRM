@@ -54,6 +54,22 @@ class ImapHandlerFactory
 {
     protected $interfaceObject = null;
     
+    /**
+     *
+     * @param string $interface
+     */
+    protected function includeInterface($interface)
+    {
+        if (!class_exists($interface)) {
+            require_once __DIR__ . '/' . $interface . '.php';
+        }
+    }
+    
+    /**
+     *
+     * @global array $sugar_config
+     * @return ImapHandlerInterface
+     */
     public function getImapHandler()
     {
         if (null === $this->interfaceObject) {
@@ -61,9 +77,7 @@ class ImapHandlerFactory
             $interface = ImapHandler::class;
             if (isset($sugar_config['imap_handler_interface']) && $sugar_config['imap_handler_interface']) {
                 $interface = $sugar_config['imap_handler_interface'];
-                if (!class_exists($interface)) {
-                    require_once __DIR__ . '/' . $interface . '.php';
-                }
+                $this->includeInterface($interface);
             }
             $this->interfaceObject = new $interface();
         }
