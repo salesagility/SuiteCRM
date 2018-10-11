@@ -145,6 +145,12 @@ class ImapHandlerFakeData
         unset($this->calls[$name][$argsEncoded]);
     }
     
+    /**
+     * 
+     * @param string $name
+     * @param array|null $args
+     * @throws Exception
+     */
     public function set($name, $args = null)
     {
         try {
