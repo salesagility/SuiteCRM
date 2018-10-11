@@ -727,8 +727,6 @@ $_POST['user_theme'] = (string) SugarThemeRegistry::getDefault();
 
 // save and redirect to new view
 $_REQUEST['do_not_redirect'] = true;
-installLog('DBG: require modules/Users/Save.php');
-require('modules/Users/Save.php');
 
 // restore superglobals and vars
 $GLOBALS = $varStack['GLOBALS'];
