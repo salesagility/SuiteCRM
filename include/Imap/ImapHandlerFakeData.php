@@ -44,14 +44,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * ImapHandlerFakeData
- * 
+ *
  * For tests only, it deals fake return values for fake calls on an IMAP wrapper.
  *
  * @author gyula
  * @todo using common Call faker as base class
  */
-class ImapHandlerFakeData {
-    
+class ImapHandlerFakeData
+{
     const ERR_NO_MATCH_ARGS = 1;
     const ERR_CALL_NOT_FOUND = 2;
     const ERR_CALL_ALREDY_EXISTS = 3;
@@ -65,22 +65,24 @@ class ImapHandlerFakeData {
     protected $calls = [];
     
     /**
-     * 
+     *
      * @param array|null $args
      * @return string
      */
-    protected function encodeArgs($args = null) {
+    protected function encodeArgs($args = null)
+    {
         return $encoded = md5(serialize($args));
     }
     
     /**
-     * 
+     *
      * @param string $name
      * @param array|null $args
      * @return mixed
      * @throws Exception
      */
-    protected function getCall($name, $args = null) {
+    protected function getCall($name, $args = null)
+    {
         if (key_exists($name, $this->calls)) {
             $argsEncoded = $this->encodeArgs($args);
             if (key_exists($argsEncoded, $this->calls[$name])) {
@@ -95,13 +97,14 @@ class ImapHandlerFakeData {
     }
     
     /**
-     * 
+     *
      * @param string $name
      * @param array|null $args
      * @return mixed
      * @throws Exception
      */
-    public function call($name, $args = null) {
+    public function call($name, $args = null)
+    {
         $ret = $this->getCall($name, $args);
         if (is_object($ret) && ($ret instanceof Closure)) {
             $out = $ret();
@@ -112,13 +115,14 @@ class ImapHandlerFakeData {
     }
     
     /**
-     * 
+     *
      * @param string $name
      * @param array|null $args
      * @param mixed|null $ret
      * @throws Exception
      */
-    public function add($name, $args = null, $ret = null) {
+    public function add($name, $args = null, $ret = null)
+    {
         $argsEncoded = $this->encodeArgs($args);
         if (isset($this->calls[$name][$argsEncoded])) {
             throw new Exception('Fake call already exists with given arguments: ' . $name . ', hint: remove first, use ' . __CLASS__ . '::remove(...)', self::ERR_CALL_ALREDY_EXISTS);
@@ -127,12 +131,13 @@ class ImapHandlerFakeData {
     }
     
     /**
-     * 
+     *
      * @param string $name
      * @param array|null $args
      * @throws Exception
      */
-    public function remove($name, $args = null) {
+    public function remove($name, $args = null)
+    {
         $argsEncoded = $this->encodeArgs($args);
         if (isset($this->calls[$name][$argsEncoded])) {
             throw new Exception('Trying to remove a fake call but it is not exists: ' . $name, self::ERR_CALL_NOT_EXISTS);
@@ -140,7 +145,8 @@ class ImapHandlerFakeData {
         unset($this->calls[$name][$argsEncoded]);
     }
     
-    public function set($name, $args = null) {
+    public function set($name, $args = null)
+    {
         try {
             $this->remove($name, $args);
         } catch (Exception $e) {
@@ -166,23 +172,22 @@ class ImapHandlerFakeData {
      *      ],
      *      'close' => [
      *          [
-     *              'args' => null, 
-     *              'return' => true    // <-- when ImapHandlerFake::close() called, pass back a "TRUE" as success 
+     *              'args' => null,
+     *              'return' => true    // <-- when ImapHandlerFake::close() called, pass back a "TRUE" as success
      *          ],
      *          // ... add more possible calls of this method
      *      ],
      *      // ... add more possible calls
      * ];
-     * 
+     *
      * @param array $calls
      */
-    public function retrieve($calls) {
+    public function retrieve($calls)
+    {
         foreach ($calls as $name => $call) {
             $args = isset($call['args']) ? $call['args'] : null;
             $ret = isset($call['return']) ? $call['return'] : null;
             $this->add($name, $args, $ret);
         }
     }
-    
-    
 }

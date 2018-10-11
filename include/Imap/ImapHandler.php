@@ -50,11 +50,12 @@ require_once __DIR__ . '/ImapHandlerInterface.php';
  *
  * @author gyula
  */
-class ImapHandler implements ImapHandlerInterface {
+class ImapHandler implements ImapHandlerInterface
+{
     
     /**
      *
-     * @var LoggerManager 
+     * @var LoggerManager
      */
     protected $logger;
     
@@ -77,10 +78,11 @@ class ImapHandler implements ImapHandlerInterface {
     protected $logCalls;
     
     /**
-     * 
+     *
      * @param bool $log
      */
-    public function __construct($logErrors = true, $logCalls = true) {
+    public function __construct($logErrors = true, $logCalls = true)
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $this->logErrors = $logErrors;
         $this->logCalls = $logCalls;
@@ -88,46 +90,50 @@ class ImapHandler implements ImapHandlerInterface {
     }
     
     /**
-     * 
+     *
      * @param array $errors
      */
-    protected function log($errors) {
+    protected function log($errors)
+    {
         if ($errors && $this->logErrors) {
             foreach ($errors as $error) {
                 if ($error) {
                     $this->logger->warn('An Imap error detected: ' . json_encode($error));
                 }
             }
-        }   
+        }
     }
     
     /**
-     * 
+     *
      * @param string $func
      * @param array $args
      */
-    protected function logCall($func, $args) {
+    protected function logCall($func, $args)
+    {
         if ($this->logCalls) {
             $this->logger->debug('IMAP wrapper called: ' . __CLASS__ . "::$func(" . json_encode($args) . ')');
         }
     }
     
     /**
-     * 
+     *
      * @param string $func
      * @param mixed $ret
      */
-    protected function logReturn($func, $ret) {
+    protected function logReturn($func, $ret)
+    {
         if ($this->logCalls) {
             $this->logger->debug('IMAP wrapper return: ' . __CLASS__ . "::$func(...) => " . json_encode($ret));
         }
     }
     
     /**
-     * 
+     *
      * @return boolean
      */
-    public function close() {
+    public function close()
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         if (!$ret = imap_close($this->stream)) {
             $this->log(['IMAP close error']);
@@ -137,22 +143,24 @@ class ImapHandler implements ImapHandlerInterface {
     }
 
     /**
-     * 
+     *
      * @return array
      */
-    public function getAlerts() {
+    public function getAlerts()
+    {
         $this->logCall(__FUNCTION__, func_get_args());
-        $ret = imap_alerts();  
+        $ret = imap_alerts();
         $this->log($ret);
         $this->logReturn(__FUNCTION__, $ret);
         return $ret;
     }
 
     /**
-     * 
+     *
      * @return resource|boolean
      */
-    public function getConnection() {
+    public function getConnection()
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = $this->stream;
         $this->logReturn(__FUNCTION__, $ret);
@@ -160,10 +168,11 @@ class ImapHandler implements ImapHandlerInterface {
     }
 
     /**
-     * 
+     *
      * @return array
      */
-    public function getErrors() {
+    public function getErrors()
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = imap_errors();
         $this->log($ret);
@@ -172,10 +181,11 @@ class ImapHandler implements ImapHandlerInterface {
     }
 
     /**
-     * 
+     *
      * @return string|boolean
      */
-    public function getLastError() {
+    public function getLastError()
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = imap_last_error();
         $this->log([$ret]);
@@ -184,12 +194,13 @@ class ImapHandler implements ImapHandlerInterface {
     }
 
     /**
-     * 
+     *
      * @param string $ref
      * @param string $pattern
      * @return array
      */
-    public function getMailboxes($ref, $pattern) {
+    public function getMailboxes($ref, $pattern)
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = imap_getmailboxes($this->stream, $ref, $pattern);
         $this->logReturn(__FUNCTION__, $ret);
@@ -197,10 +208,11 @@ class ImapHandler implements ImapHandlerInterface {
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
-    public function isAvailable() {
+    public function isAvailable()
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = function_exists("imap_open") && function_exists("imap_timeout");
         $this->logReturn(__FUNCTION__, $ret);
@@ -208,7 +220,7 @@ class ImapHandler implements ImapHandlerInterface {
     }
 
     /**
-     * 
+     *
      * @param string $mailbox
      * @param string $username
      * @param string $password
@@ -217,7 +229,8 @@ class ImapHandler implements ImapHandlerInterface {
      * @param array|null $params
      * @return resource|boolean
      */
-    public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null) {
+    public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null)
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $this->stream = imap_open($mailbox, $username, $password, $options, $n_retries, $params);
         if (!$this->stream) {
@@ -228,10 +241,11 @@ class ImapHandler implements ImapHandlerInterface {
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
-    public function ping() {
+    public function ping()
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = imap_ping($this->stream);
         $this->logReturn(__FUNCTION__, $ret);
@@ -239,13 +253,14 @@ class ImapHandler implements ImapHandlerInterface {
     }
     
     /**
-     * 
+     *
      * @param string $mailbox
      * @param int $options
      * @param int $n_retries
      * @return boolean
      */
-    public function reopen($mailbox, $options = 0, $n_retries = 0) {
+    public function reopen($mailbox, $options = 0, $n_retries = 0)
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = imap_reopen($this->stream, $mailbox, $options, $n_retries);
         if (!$ret) {
@@ -256,12 +271,13 @@ class ImapHandler implements ImapHandlerInterface {
     }
 
     /**
-     * 
+     *
      * @param int $timeout_type
      * @param int $timeout
      * @return mixed
      */
-    public function setTimeout($timeout_type, $timeout = -1) {
+    public function setTimeout($timeout_type, $timeout = -1)
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = imap_timeout($timeout_type, $timeout);
         if (!$ret) {
@@ -270,5 +286,4 @@ class ImapHandler implements ImapHandlerInterface {
         $this->logReturn(__FUNCTION__, $ret);
         return $ret;
     }
-
 }

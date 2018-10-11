@@ -48,34 +48,35 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-interface ImapHandlerInterface {
+interface ImapHandlerInterface
+{
     
     /**
-     * 
+     *
      * @return boolean
      */
     public function isAvailable();
     
     /**
-     * 
+     *
      * @return string|boolean
      */
     public function getLastError();
     
     /**
-     * 
+     *
      * @return array
      */
     public function getErrors();
 
     /**
-     * 
+     *
      * @return array
      */
     public function getAlerts();
     
     /**
-     * 
+     *
      * @param string $mailbox
      * @param string $username
      * @param string $password
@@ -87,19 +88,19 @@ interface ImapHandlerInterface {
     public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null);
     
     /**
-     * 
+     *
      * @return boolean
      */
     public function close();
     
     /**
-     * 
+     *
      * @return boolean
      */
     public function ping();
     
     /**
-     * 
+     *
      * @param string $mailbox
      * @param int $options
      * @param int $n_retries
@@ -108,13 +109,13 @@ interface ImapHandlerInterface {
     public function reopen($mailbox, $options = 0, $n_retries = 0);
 
     /**
-     * 
+     *
      * @return resource|boolean
      */
     public function getConnection();
     
     /**
-     * 
+     *
      * @param int $timeout_type
      * @param int $timeout
      * @return mixed
@@ -122,11 +123,10 @@ interface ImapHandlerInterface {
     public function setTimeout($timeout_type, $timeout = -1);
     
     /**
-     * 
+     *
      * @param string $ref
      * @param string $pattern
      * @return array
      */
     public function getMailboxes($ref, $pattern);
-    
 }

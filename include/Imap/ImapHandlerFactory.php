@@ -50,11 +50,12 @@ require_once __DIR__ . '/ImapHandler.php';
  *
  * @author gyula
  */
-class ImapHandlerFactory {
-    
+class ImapHandlerFactory
+{
     protected $interfaceObject = null;
     
-    public function getImapHandler() {
+    public function getImapHandler()
+    {
         if (null === $this->interfaceObject) {
             global $sugar_config;
             $interface = ImapHandler::class;
