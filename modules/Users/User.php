@@ -653,10 +653,13 @@ class User extends Person implements EmailInterface
         parent::save($check_notify);
 
         // User Profile specific save for Email addresses
-        if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
-            $GLOBALS['log']->error('Email address save error');
-            return false;
+        if ($this->emailAddress->isUserProfileEditViewPageSaveAction($_REQUEST)){
+            if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
+                $GLOBALS['log']->error('Email address save error');
+                return false;
+            }
         }
+
 
         // set some default preferences when creating a new user
         if ($setNewUserPreferences) {
