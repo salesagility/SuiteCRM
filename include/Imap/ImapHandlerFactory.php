@@ -43,6 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
+require_once __DIR__ . '/ImapHandler.php';
+
 /**
  * ImapHandlerFactory
  *

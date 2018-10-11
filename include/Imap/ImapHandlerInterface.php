@@ -84,7 +84,7 @@ interface ImapHandlerInterface {
      * @param array|null $params
      * @return resource|boolean
      */
-    public function open();
+    public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null);
     
     /**
      * 
@@ -105,7 +105,7 @@ interface ImapHandlerInterface {
      * @param int $n_retries
      * @return boolean
      */
-    public function reopen();
+    public function reopen($mailbox, $options = 0, $n_retries = 0);
 
     /**
      * 
@@ -119,7 +119,7 @@ interface ImapHandlerInterface {
      * @param int $timeout
      * @return mixed
      */
-    public function setTimeout();
+    public function setTimeout($timeout_type, $timeout = -1);
     
     /**
      * 
@@ -127,6 +127,6 @@ interface ImapHandlerInterface {
      * @param string $pattern
      * @return array
      */
-    public function getMailboxes();
+    public function getMailboxes($ref, $pattern);
     
 }

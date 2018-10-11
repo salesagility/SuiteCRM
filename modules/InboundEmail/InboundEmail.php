@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
 
 require_once('include/OutboundEmail/OutboundEmail.php');
 require_once('modules/InboundEmail/Overview.php');
@@ -186,7 +187,8 @@ class InboundEmail extends SugarBean
         // using ImapHandlerInterface as dependency
         if (null == $imapHandler) {
             LoggerManager::getLogger()->warn('Using system default ImapHandler. Hint: Use any ImapHandlerInterface as dependency of InboundEmail');
-            $imapHandler = ImapHandlerFactory::getImapHandler();
+            $imapHandlerFactory = new ImapHandlerFactory();
+            $imapHandler = $imapHandlerFactory->getImapHandler();
         }
         $this->imap = $imapHandler;
         
