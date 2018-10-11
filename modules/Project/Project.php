@@ -330,14 +330,13 @@ class Project extends SugarBean
             $keys = array_keys($app[$def['options']]);
             return $keys[0];
         }
-        
+
         return '';
     }
 
     public function save($check_notify = false)
     {
         global $current_user, $db;
-        
         $focus = $this;
 
         //--- check if project template is same or changed.
@@ -391,7 +390,7 @@ class Project extends SugarBean
 
                 ////	REMOVE RESOURCE RELATIONSHIPS
                 // Calculate which users to flag as deleted and which to add
-                
+
                 // Get all users for the project
                 $focus->load_relationship('users');
                 $users = $focus->get_linked_beans('project_users_1', 'User');
@@ -437,15 +436,15 @@ class Project extends SugarBean
                     $focus->db->query($sql);
                     echo $sql;
                 }
-        
+
                 ////END REMOVE
             }
-            
+
             $return_id = parent::save($check_notify);
             $focus->retrieve($return_id);
 
             ////REBUILD INVITEE RELATIONSHIPS
-            
+
             // Process users
             $focus->load_relationship('users');
             $focus->get_linked_beans('project_users_1', 'User');
@@ -470,7 +469,7 @@ class Project extends SugarBean
             ///////////////////////////////////////////////////////////////////////////
         }
 
-        
+
 
         ///////////////////////////////
         // Code Block to handle the template selection at project edit.
@@ -485,7 +484,7 @@ class Project extends SugarBean
                 if ($startdate == false) {
                     $startdate = DateTime::createFromFormat('Y-m-d', $project_start);
                 }
-                
+
                 $start = $startdate->format('Y-m-d');
             }
 
@@ -507,13 +506,13 @@ class Project extends SugarBean
             $bhours = array();
             foreach ($days as $day) {
                 $bh = $businessHours->getBusinessHoursForDay($day);
-                
+
                 if ($bh) {
                     $bh = $bh[0];
                     if ($bh->open) {
                         $open_h = $bh ? $bh->opening_hours : 9;
                         $close_h = $bh ? $bh->closing_hours : 17;
-                        
+
                         $start_time = DateTime::createFromFormat('Y-m-d', $start);
 
                         $start_time = $start_time->modify('+'.$open_h.' Hours');
@@ -533,26 +532,26 @@ class Project extends SugarBean
                 }
             }
             //-----------------------------------
-            
+
 
             //default business hours array
             if ($override_business_hours != 1 || empty($bhours)) {
                 $bhours = array('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
             }
             //---------------------------
-            
+
             //copy all resources from template to project
             $template->load_relationship('am_projecttemplates_users_1');
             $template_users = $template->get_linked_beans('am_projecttemplates_users_1', 'User');
 
             $template->load_relationship('am_projecttemplates_contacts_1');
             $template_contacts = $template->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
-            
+
 
             foreach ($template_users as $user) {
                 $focus->project_users_1->add($user->id);
             }
-            
+
             foreach ($template_contacts as $contact) {
                 $focus->project_contacts_1->add($contact->id);
             }
@@ -591,7 +590,7 @@ class Project extends SugarBean
                 $project_task->duration = $row['duration'];
                 $project_task->duration_unit = $duration_unit;
                 $project_task->project_task_id = $count;
-                
+
                 //Flag to prevent after save logichook running when project_tasks are created (see custom/modules/ProjectTask/updateProject.php)
                 $project_task->set_project_end_date = 0;
 
@@ -603,7 +602,7 @@ class Project extends SugarBean
                 $enddate = $startdate;
 
                 $d = 0;
-                
+
                 while ($duration > $d) {
                     $day = $enddate->format('l');
 
@@ -633,20 +632,20 @@ class Project extends SugarBean
                     $project_task->date_start = $start;
                     $end = $enddate->format('Y-m-d');
                     $project_task->date_finish = $end;
-                    
+
                     $startdate = $enddate;
                     //add one day to let the next task start on next day of it's finish.
                     $enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d');
-                    
+
                     $enddate = $end;
                 }
-                
+
                 $project_task->save();
-                
+
                 //link tasks to the newly created project
                 $project_task->load_relationship('projects');
                 $project_task->projects->add($focus->id);
-                
+
                 //Add assinged users from each task to the project resourses subpanel
                 $focus->load_relationship('project_users_1');
                 $focus->project_users_1->add($row['assigned_user_id']);
@@ -655,5 +654,6 @@ class Project extends SugarBean
         }
         /// End Template Selection handling
         ////////////////////////////////////////////////////////////
+        return $return_id;
     }
 }

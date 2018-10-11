@@ -333,6 +333,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
             array(
                 'name' => 'getCurrencyDropDown',
                 'returns' => 'html',
+                'onListView' => true,
             ),
     ),
   'aos_products_quotes' =>

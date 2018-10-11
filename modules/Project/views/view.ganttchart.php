@@ -34,9 +34,10 @@ class ProjectViewGanttChart extends ViewDetail
     }
 
 
-    public function display()
-    {
-        global $db, $mod_strings, $app_list_strings;
+    public function display() {
+
+        global $mod_strings, $app_list_strings;
+        $db = DBManagerFactory::getInstance();
 
         echo '<link rel="stylesheet" type="text/css" href="modules/Project/css/style.css" />';
         echo '<link rel="stylesheet" type="text/css" href="modules/Project/qtip/jquery.qtip.min.css" />';

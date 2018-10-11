@@ -373,8 +373,7 @@ function addFieldRow(colName, colLabel) {
   td3.appendChild(selElement);
   row.appendChild(td3);
 
-  var coldata;
-  SUGAR.util.globalEval("coldata=bean_data." + colName + ";");
+  var coldata = bean_data[colName];
 
   var edit = document.createElement("input");
   edit.setAttribute("type", "text");

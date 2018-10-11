@@ -127,7 +127,7 @@ class ViewList extends SugarView
     public function listViewPrepare()
     {
         $module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
-        
+
         if (!isset($module)) {
             LoggerManager::getLogger()->fatal('Undefined module for list view prepare');
             return false;
@@ -202,15 +202,15 @@ class ViewList extends SugarView
             } else {
                 LoggerManager::getLogger()->warn('update_stored_query_key is not defined for list view at listViewPrepare');
             }
-            
+
             $updateValue = null;
             if (isset($_REQUEST[$updateKey])) {
                 $updateValue = $_REQUEST[$updateKey];
             } else {
                 LoggerManager::getLogger()->warn('requested update key is not defined for list view at listViewPrepare: ' . $updateKey);
             }
-            
-            
+
+
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
             $_REQUEST[$updateKey] = $updateValue;
@@ -251,6 +251,12 @@ class ViewList extends SugarView
         if (!isset($this->lv) || !$this->lv) {
             $this->lv = new stdClass();
         }
+
+        if (!isset($this->lv)) {
+            $this->lv = new stdClass();
+            LoggerManager::getLogger()->warn('List view is not defined');
+        }
+
         $this->lv->displayColumns = $displayColumns;
 
         $this->module = $module;
@@ -258,7 +264,15 @@ class ViewList extends SugarView
         $this->prepareSearchForm();
 
         if (isset($this->options['show_title']) && $this->options['show_title']) {
-            $moduleName = isset($this->seed->module_dir) ? $this->seed->module_dir : $GLOBALS['mod_strings']['LBL_MODULE_NAME'];
+
+            $modStrings = null;
+            if (isset($GLOBALS['mod_strings'])) {
+                $modStrings = $GLOBALS['mod_strings'];
+            } else {
+                LoggerManager::getLogger()->warn('Undefined index: mod_strings');
+            }
+
+            $moduleName = isset($this->seed->module_dir) ? $this->seed->module_dir : $modStrings['LBL_MODULE_NAME'];
             echo $this->getModuleTitle(true);
         }
     }

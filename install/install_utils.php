@@ -43,7 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/utils/zip_utils.php');
-
 require_once('include/upload_file.php');
 
 
@@ -96,7 +95,7 @@ function parseAcceptLanguage()
     if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
         return strtolower(str_replace('-', '_', $match[0]));
     }
-    
+
     return '';
 }
 
@@ -996,7 +995,7 @@ EOQ;
     $cache_headers = <<<EOQ
 
 <IfModule mod_rewrite.c>
-    Options +FollowSymLinks
+    Options +SymLinksIfOwnerMatch
     RewriteEngine On
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
@@ -1883,7 +1882,7 @@ function langPackUnpack($unpack_type, $full_file)
         return "There was an error uploading the file, please try again!<br>\n";
     }
     die("The zip file is missing a manifest.php file.  Cannot proceed.");
-    
+
     unlinkTempFiles($manifest_file, '');
 }
 

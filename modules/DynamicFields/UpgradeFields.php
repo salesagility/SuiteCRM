@@ -59,7 +59,7 @@ require_once('modules/DynamicFields/DynamicField.php');
      }
      $modules[$the_modules][$row['name']] = $row['name'];
  }
-    
+
  $simulate = false;
  if (!isset($_REQUEST['run'])) {
      $simulate = true;
@@ -70,7 +70,7 @@ require_once('modules/DynamicFields/DynamicField.php');
      if (isset($beanList[$the_module])) {
          $class_name = $beanList[$the_module];
          echo "<br><br>Scanning $the_module <br>";
-        
+
          require_once($beanFiles[$class_name]);
          $mod = new $class_name();
          if (!$db->tableExists($mod->table_name . "_cstm")) {
@@ -80,14 +80,14 @@ require_once('modules/DynamicFields/DynamicField.php');
          }
 
          $result = $db->query("DESCRIBE $mod->table_name" . "_cstm");
-        
+
          while ($row = $db->fetchByAssoc($result)) {
              $col = $row['Field'];
              $type = $row['Type'];
              $fieldDef = $mod->getFieldDefinition($col);
              $the_field = get_widget($fieldDef['type']);
              $the_field->set($fieldDef);
-                
+
              if (!isset($fields[$col]) && $col != 'id_c') {
                  if (!$simulate) {
                      $db->query("ALTER TABLE $mod->table_name" . "_cstm DROP COLUMN $col");
@@ -103,11 +103,11 @@ require_once('modules/DynamicFields/DynamicField.php');
                          }
                      }
                  }
-                    
+
                  unset($fields[$col]);
              }
          }
-            
+
          echo sizeof($fields) . " field(s) missing from $mod->table_name" . "_cstm<br>";
          foreach ($fields as $field) {
              echo "Adding Column $field to $mod->table_name" . "_cstm<br>";
@@ -124,8 +124,8 @@ require_once('modules/DynamicFields/DynamicField.php');
          }
      }
  }
-    
-    
+
+
     DynamicField::deleteCache();
     echo '<br>Done<br>';
     if ($simulate) {

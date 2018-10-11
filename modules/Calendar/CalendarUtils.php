@@ -303,7 +303,7 @@ class CalendarUtils
         /**
          * @var SugarDateTime $end Recurrence end date. Used if recurrence ends by date.
          */
-         
+
         if (!empty($params['until'])) {
             $end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(), $until);
             $end->modify("+1 Day");
@@ -383,10 +383,10 @@ class CalendarUtils
         // rather than using relationships framework due to performance issues.
         // Relationship framework runs very slowly
 
-        $db = DBManagerFactory::getInstance();
-        $id = $bean->id;
-        $date_modified = $GLOBALS['timedate']->nowDb();
-        $lower_name = strtolower($bean->object_name);
+		$db = DBManagerFactory::getInstance();
+		$id = $bean->id;
+		$date_modified = $GLOBALS['timedate']->nowDb();
+		$lower_name = strtolower($bean->object_name);
 
         $qu = "SELECT * FROM {$bean->rel_users_table} WHERE deleted = 0 AND {$lower_name}_id = '{$id}'";
         $re = $db->query($qu);
@@ -473,7 +473,7 @@ class CalendarUtils
                 $i++;
             }
         }
-        
+
         if ($users_filled) {
             $db->query($qu_users);
         }
@@ -483,7 +483,7 @@ class CalendarUtils
         if ($leads_filled) {
             $db->query($qu_leads);
         }
-        
+
         vCal::cache_sugar_vcal($GLOBALS['current_user']);
         return $arr;
     }
@@ -525,7 +525,7 @@ class CalendarUtils
     public static function correctRecurrences(SugarBean $bean, $beanId)
     {
         $db = DBManagerFactory::getInstance();
-        
+
         $qu = "SELECT id FROM {$bean->table_name} WHERE repeat_parent_id = '{$beanId}' AND deleted = 0 ORDER BY date_start";
         $re = $db->query($qu);
 

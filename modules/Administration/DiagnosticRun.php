@@ -751,8 +751,8 @@ function finishDiag()
     chdir(RETURN_FROM_DIAG_DIR);
 
     deleteDir($cacheDir);
-    
-    
+
+
     print "<a href=\"index.php?module=Administration&action=DiagnosticDownload&guid=$sod_guid&time=$curdatetime&to_pdf=1\">".$mod_strings['LBL_DIAGNOSTIC_DOWNLOADLINK']."</a><BR>";
 
     print "<a href=\"index.php?module=Administration&action=DiagnosticDelete&file=diagnostic".$curdatetime."&guid=".$sod_guid."\">".$mod_strings['LBL_DIAGNOSTIC_DELETELINK']."</a><br>";
@@ -858,7 +858,7 @@ if ($dobeanlistbeanfiles) {
     echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
 }
 if ($dosugarlog) {
-    echo $mod_strings['LBL_DIAGNOSTIC_GETSUGARLOG']."<BR>";
+    echo $mod_strings['LBL_DIAGNOSTIC_GETSUITELOG']."<BR>";
     executesugarlog();
     echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
 }

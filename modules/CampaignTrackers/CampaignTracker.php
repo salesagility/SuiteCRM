@@ -135,7 +135,7 @@ class CampaignTracker extends SugarBean
             }
         }
 
-        parent::save($check_notify);
+        return parent::save($check_notify);
     }
 
     /* This method should return the summary text which is used to build the bread crumb navigation*/

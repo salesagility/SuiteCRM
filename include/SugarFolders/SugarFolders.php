@@ -441,7 +441,7 @@ class SugarFolder
 
 
         $metadata = array();
-        $metadata['mbox'] = $app_strings['LBL_EMAIL_SUGAR_FOLDER'] . ': ' . $this->name;
+        $metadata['mbox'] = $app_strings['LBL_EMAIL_SUITE_FOLDER'] . ': ' . $this->name;
         $metadata['ieId'] = $folderId;
         $metadata['name'] = $this->name;
         $metadata['unreadChecked'] = ($current_user->getPreference('showUnreadOnly', 'Emails') == 1) ? 'CHECKED' : '';
@@ -609,7 +609,7 @@ class SugarFolder
 
         $grp = array();
 
-        $folders = $this->retrieveFoldersForProcessing($focusUser);
+        $folders = $this->retrieveFoldersForProcessing($focusUser, false);
         $subscriptions = $this->getSubscriptions($focusUser);
 
         foreach ($folders as $a) {

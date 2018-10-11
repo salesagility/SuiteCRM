@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
+require_once dirname(dirname(__FILE__)).'/SAML2Authenticate/lib/onelogin/php-saml/_toolkit_loader.php';
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
 
 /**
@@ -99,7 +99,7 @@ class SAML2Authenticate extends SugarAuthenticate
             $_SESSION['samlSessionIndex'] = $auth->getSessionIndex();
             unset($_SESSION['AuthNRequestID']);
 
-            if (isset($_POST['RelayState'])) {
+            if (isset($_POST['RelayState']) && OneLogin_Saml2_Utils::getSelfURL() != $_POST['RelayState']) {
                 $relayStateUrl = $_POST['RelayState'] . '?action=Login&module=Users';
                 $selfurl = OneLogin_Saml2_Utils::getSelfURL();
                 if ($selfurl === $relayStateUrl) {

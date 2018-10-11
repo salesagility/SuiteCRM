@@ -67,9 +67,8 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum
         }
         return '('.$query.')';
     }
-        
-    public function queryFilterone_of($layout_def)
-    {
+
+    public function queryFilterone_of($layout_def, $rename_columns = true) {
         //Fix for inaccurate filtering of contacts in Contacts dashlet on multiselects.
         $arr = array();
         foreach ($layout_def['input_name0'] as $value) {
@@ -106,7 +105,7 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum
         // Bug 40022
         // IS filter doesn't add the carets (^) to multienum custom field values
         $input_name0 = $this->encodeMultienumCustom($layout_def, $input_name0);
-        
+
         return $this->_get_column_select($layout_def)." = ".$this->reporter->db->quoted($input_name0)."\n";
     }
 
@@ -120,10 +119,10 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum
         // Bug 50549
         // IS NOT filter doesn't add the carets (^) to multienum custom field values
         $input_name0 = $this->encodeMultienumCustom($layout_def, $input_name0);
-        
+
         return $this->_get_column_select($layout_def)." <> ".$this->reporter->db->quoted($input_name0)."\n";
     }
-    
+
     /**
      * Returns an OrderBy query for multi-select. We treat multi-select the same as a normal field because
      * the values stored in the database are in the format ^A^,^B^,^C^ though not necessarily in that order.

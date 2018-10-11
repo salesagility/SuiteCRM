@@ -41,6 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\Utility\SuiteValidator;
+
 require_once('include/formbase.php');
 require_once('modules/Leads/LeadFormBase.php');
 
@@ -67,7 +69,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $campaign_id=$_POST['campaign_id'];
     $campaign = new Campaign();
     $campaign_id = $campaign->db->quote($_POST['campaign_id']);
-    if (!isValidId($campaign_id)) {
+    $isValidator = new SuiteValidator();
+    if (!$isValidator->isValidId($campaign_id)) {
         throw new RuntimeException('Invalid ID requested in Lead Capture');
     }
     $camp_query  = "select name,id from campaigns where id='$campaign_id'";

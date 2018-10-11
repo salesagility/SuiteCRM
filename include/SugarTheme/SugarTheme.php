@@ -607,6 +607,7 @@ class SugarTheme
         $html = '
             <!-- qtip & suggestion box -->
             <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
+	$html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
         $html .= '<link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" />';
 
         // sprites
@@ -937,7 +938,7 @@ EOHTML;
             $imagePath = false;
         }
 
-        
+
         if ($imagePath) {
             $this->_imageCache[$imageName] = $imagePath;
 
@@ -945,7 +946,7 @@ EOHTML;
                 return getJSPath($imagePath);
             }
         }
-        
+
         return $imagePath;
     }
 
@@ -1198,14 +1199,14 @@ EOHTML;
 
         return $config;
     }
-    
-    
+
+
     public function getSubThemes()
     {
         $subThemes = SugarThemeRegistry::getSubThemes();
         return $subThemes;
     }
-    
+
     public function getSubThemeDefault()
     {
         $subThemeDefault = SugarThemeRegistry::getSubThemeDefault();

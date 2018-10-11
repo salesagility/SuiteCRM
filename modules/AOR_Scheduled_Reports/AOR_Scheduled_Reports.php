@@ -99,7 +99,7 @@ class AOR_Scheduled_Reports extends basic
             $this->email_recipients = base64_encode(serialize($_POST['email_recipients']));
         }
 
-        parent::save($check_notify);
+        return parent::save($check_notify);
     }
 
     public function get_email_recipients()

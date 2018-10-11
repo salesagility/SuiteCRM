@@ -245,7 +245,7 @@ class UserPreference extends SugarBean
         }
         $_SESSION[$user->user_name . '_PREFERENCES'][$category] = array();
         $user->user_preferences[$category] = array();
-        
+
         return false;
     }
 

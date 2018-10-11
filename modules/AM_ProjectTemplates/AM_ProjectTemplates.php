@@ -214,5 +214,7 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
             ////	END REBUILD INVITEE RELATIONSHIPS
             ///////////////////////////////////////////////////////////////////////////
         }
+
+        return $return_id;
     }
 }

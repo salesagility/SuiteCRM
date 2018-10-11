@@ -203,10 +203,10 @@ if ($db->supports("create_user")) {
     <hr>
 <br>
 {$mod_strings['LBL_DBCONFIG_SECURITY']}
-<div class='install_block'><label><b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b></label>$dbUSRDD
+<div class='install_block'><label><b>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}</b></label>$dbUSRDD
     <span id='connection_user_div' style="display:none">
         <span class="required">*</span>
-            <label><b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b></label>
+            <label><b>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}</b></label>
             <input type="text" name="setup_db_sugarsales_user" value="{$_SESSION['setup_db_sugarsales_user']}" />
             <label><b>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</b></label>
             <input type="password" name="setup_db_sugarsales_password_entry" value="{$setup_db_sugarsales_password}" />

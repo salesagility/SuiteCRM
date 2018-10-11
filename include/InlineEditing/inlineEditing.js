@@ -192,7 +192,7 @@ function buildEditField(){
             touchtime = new Date().getTime();
         } else {
             //compare first click to this click and see if they occurred within double click threshold
-            if(((new Date().getTime())-touchtime) < 800) {
+            if (((new Date().getTime()) - touchtime) < 800) {
                 //double click occurred
                 //alert("double clicked");
                 touchtime = 0;
@@ -204,7 +204,7 @@ function buildEditField(){
         }
     });
 
-    $(".inlineEdit").dblclick(function(e) {
+    $(".inlineEdit").dblclick(function (e) {
         onInlineEditDblClick(this, e);
     });
 

@@ -57,10 +57,10 @@
 			    </select>
 			    &nbsp;
 			    <a href="javascript:void(0);">
-                    {sugar_getimage name="select" ext=".gif" alt=$mod_strings.LBL_EMAIL_SELECTOR_SELECT other_attributes='align="absmiddle" border="0" onclick="SUGAR.email2.addressBook.searchContacts();" '}
+                    {sugar_getimage name="id-ff-select" ext=".gif" alt=$mod_strings.LBL_EMAIL_SELECTOR_SELECT other_attributes='align="absmiddle" border="0" onclick="SUGAR.email2.addressBook.searchContacts();" '}
                 </a>
                 <a href="javascript:void(0);">
-                    {sugar_getimage name="clear" ext=".gif" alt=$mod_strings.LBL_EMAIL_SELECTOR_CLEAR other_attributes='align="absmiddle" border="0" onclick="SUGAR.email2.addressBook.clearAddressBookSearch();" '}
+                    {sugar_getimage name="id-ff-clear" ext=".gif" alt=$mod_strings.LBL_EMAIL_SELECTOR_CLEAR other_attributes='align="absmiddle" border="0" onclick="SUGAR.email2.addressBook.clearAddressBookSearch();" '}
                 </a>
 			</td>
         </tr>

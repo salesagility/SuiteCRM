@@ -114,7 +114,7 @@ class ListViewSmarty extends ListViewDisplay
             return;
         }
         global $odd_bg, $even_bg, $hilite_bg, $app_strings, $sugar_config;
-        
+
         $seedClass = get_parent_class($this->seed);
         if (in_array($seedClass, array('Company', 'Person'), true)) {
             $configurator = new Configurator();

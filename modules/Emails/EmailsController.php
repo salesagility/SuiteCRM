@@ -165,6 +165,56 @@ class EmailsController extends SugarController
     }
 
     /**
+     * Creates a record from the Quick Create Modal
+     */
+    public function action_QuickCreate()
+    {
+        $this->view = 'ajax';
+        $originModule = $_REQUEST['module'];
+        $targetModule = $_REQUEST['quickCreateModule'];
+
+        $_REQUEST['module'] = $targetModule;
+
+        $controller = ControllerFactory::getController($targetModule);
+        $controller->loadBean();
+        $controller->pre_save();
+        $controller->action_save();
+        $bean = $controller->bean;
+
+        $_REQUEST['module'] = $originModule;
+
+        if (!$bean) {
+            $result = ['id' => false];
+            echo json_encode($result);
+            return;
+        }
+
+        $result = [
+            'id' => $bean->id,
+            'module' => $bean->module_name,
+        ];
+        echo json_encode($result);
+
+        if (empty($_REQUEST['parentEmailRecordId'])) {
+            return;
+        }
+        $emailBean = BeanFactory::getBean('Emails', $_REQUEST['parentEmailRecordId']);
+        if (!$emailBean) {
+            return;
+        }
+
+        $relationship = strtolower($controller->module);
+        $emailBean->load_relationship($relationship);
+        $emailBean->$relationship->add($bean->id);
+
+        if (!$bean->load_relationship('emails')) {
+            return;
+        }
+
+        $bean->emails->add($emailBean->id);
+    }
+
+    /**
      * @see EmailsViewSendemail
      */
     public function action_send()
@@ -365,6 +415,7 @@ class EmailsController extends SugarController
     public function action_GetFromFields()
     {
         global $current_user;
+        global $sugar_config;
         $email = new Email();
         $email->email2init();
         $ie = new InboundEmail();
@@ -444,6 +495,37 @@ class EmailsController extends SugarController
 
                 $data[] = $dataAddress;
             }
+        }
+
+        if (isset($sugar_config['email_allow_send_as_user']) && ($sugar_config['email_allow_send_as_user'])) {
+            require_once ('include/SugarEmailAddress/SugarEmailAddress.php');
+            $sugarEmailAddress = new SugarEmailAddress();
+            $userAddressesArr = $sugarEmailAddress->getAddressesByGUID($current_user->id, 'Users');
+            foreach ($userAddressesArr as $userAddress) {
+                if ($userAddress['reply_to_addr'] === '1') {
+                    $fromString =  $current_user->full_name . ' &lt;' . $userAddress['email_address'] . '&gt;';
+                } else {
+                    $fromString =  $current_user->full_name . ' &lt;' . $current_user->email1 . '&gt;';
+                }
+                // ($userAddress['reply_to_addr'] === '1') ? $current_user->email1 : $userAddress['email_address']
+                $data[] = array(
+                    'type' => 'personal',
+                    'id' => $userAddress['email_address_id'],
+                    'attributes' => array(
+                        'from' => $fromString,
+                        'reply_to' =>  $current_user->full_name . ' &lt;' . $userAddress['email_address']  . '&gt;',
+                        'name' => $current_user->full_name,
+                    ),
+                    'prepend' => $prependSignature,
+                    'isPersonalEmailAccount' => true,
+                    'isGroupEmailAccount' => false,
+                    'emailSignatures' => array(
+                        'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
+                        'plain' => $defaultEmailSignature['signature'],
+                    ),
+                );
+            }
+            unset($userAddress);
         }
 
         $oe = new OutboundEmail();
@@ -906,6 +988,8 @@ class EmailsController extends SugarController
      */
     protected function userIsAllowedToSendEmail($requestedUser, $requestedInboundEmail, $requestedEmail)
     {
+        global $sugar_config;
+
         // Check that user is allowed to use inbound email account
         $hasAccessToInboundEmailAccount = false;
         $usersInboundEmailAccounts = $requestedInboundEmail->retrieveAllByGroupIdWithGroupAccounts($requestedUser->id);
@@ -952,6 +1036,11 @@ class EmailsController extends SugarController
             // When there are not any authentication details for the system account, allow the user to use the system
             // email account.
             if ($outboundEmailAccount->mail_smtpauth_req == 0) {
+                $isAllowedToUseOutboundEmail = true;
+            }
+
+            // When the user is allowed to send email as themselves using the system account, allow them to use the system account
+            if (isset($sugar_config['email_allow_send_as_user']) && ($sugar_config['email_allow_send_as_user'])) {
                 $isAllowedToUseOutboundEmail = true;
             }
 

@@ -150,7 +150,7 @@ class EmailMarketing extends SugarBean
         } else {
             $id = $temp_array['ID'];
         }
-                
+
 
         if (!isset($temp_array['ID'])) {
             LoggerManager::getLogger()->warn('EmailMarketing get list view data error: list view array has not Template ID.');
@@ -158,7 +158,7 @@ class EmailMarketing extends SugarBean
         } else {
             $template_id = $temp_array['TEMPLATE_ID'];
         }
-        
+
 
         //mode is set by schedule.php from campaigns module.
         if (!isset($this->mode) or empty($this->mode) or $this->mode!='test') {

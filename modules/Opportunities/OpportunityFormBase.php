@@ -49,7 +49,7 @@ class OpportunityFormBase
     public function checkForDuplicates($prefix)
     {
         require_once('include/formbase.php');
-    
+
         $focus = new Opportunity();
         $query = '';
         $baseQuery = 'select id, name, sales_stage,amount, date_closed  from opportunities where deleted!=1 and (';
@@ -59,23 +59,21 @@ class OpportunityFormBase
             $query .= getLikeForEachWord('name', $_POST[$prefix.'name']);
         }
 
-        if (!empty($query)) {
-            $rows = array();
-            $db = DBManagerFactory::getInstance();
-            $result = $db->query($query.')');
-            $i=-1;
-            while (($row=$db->fetchByAssoc($result)) != null) {
-                $i++;
-                $rows[$i] = $row;
-            }
-            if ($i==-1) {
-                return null;
-            }
-        
-            return $rows;
-        }
-        return null;
-    }
+	if(!empty($query)){
+		$rows = array();
+		$db = DBManagerFactory::getInstance();
+		$result = $db->query($query.')');
+		$i=-1;
+		while(($row=$db->fetchByAssoc($result)) != null) {
+			$i++;
+			$rows[$i] = $row;
+		}
+		if ($i==-1) return null;
+		
+		return $rows;		
+	}
+	return null;
+}
 
 
     public function buildTableForm($rows, $mod='Opportunities')
@@ -439,10 +437,10 @@ EOQ;
     public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $current_user;
-    
-    
+
+
         require_once('include/formbase.php');
-    
+
         $focus = new Opportunity();
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -469,7 +467,7 @@ EOQ;
             clone_relationship($focus->db, array('opportunities_contacts'), 'opportunity_id', $_POST['duplicate_parent_id'], $focus->id);
         }
         $return_id = $focus->id;
-    
+
         $GLOBALS['log']->debug("Saved record with id of ".$return_id);
         if ($redirect) {
             handleRedirect($return_id, "Opportunities");

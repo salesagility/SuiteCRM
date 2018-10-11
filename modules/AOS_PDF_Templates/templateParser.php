@@ -24,6 +24,9 @@
  *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
+
+use SuiteCRM\Utility\SuiteValidator as SuiteValidator;
+
 class templateParser
 {
     public static function parse_template($string, $bean_arr)
@@ -50,6 +53,7 @@ class templateParser
     {
         global $app_strings, $sugar_config;
         $repl_arr = array();
+        $isValidator = new SuiteValidator();
 
         foreach ($focus->field_defs as $field_def) {
             if (isset($field_def['name']) && $field_def['name'] != '') {
@@ -84,7 +88,7 @@ class templateParser
                     if (!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
                         $secureLink = $sugar_config['site_url'] . '/'. $file_location;
                     }
-                    
+
                     if (empty($focus->$fieldName)) {
                         $repl_arr[$key . "_" . $fieldName] = "";
                     } else {
@@ -101,11 +105,12 @@ class templateParser
         reset($repl_arr);
 
         foreach ($repl_arr as $name => $value) {
-            if (strpos($name, 'product_discount') > 0) {
+            if (strpos($name, 'product_discount') !== false || strpos($name, 'quotes_discount') !== false) {
                 if ($value != '' && $value != '0.00') {
-                    if ($repl_arr['aos_products_quotes_discount'] == 'Percentage') {
+                    if ($isValidator->isPercentageField($repl_arr['aos_products_quotes_discount'])) {
                         $sep = get_number_seperators();
-                        $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);//.$app_strings['LBL_PERCENTAGE_SYMBOL'];
+                        $value = rtrim(rtrim(format_number($value), '0'),
+                                $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
                 } else {
                     $value = '';
@@ -118,7 +123,8 @@ class templateParser
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);
             }
-            if ($name === 'aos_products_quotes_vat' || strpos($name, 'pct') > 0 || strpos($name, 'percent') > 0 || strpos($name, 'percentage') > 0) {
+
+            if ($isValidator->isPercentageField($name)) {
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }

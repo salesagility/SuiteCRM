@@ -170,6 +170,12 @@ class ViewConfig extends SugarView
             LoggerManager::getLogger()->error('EmailMan view display error: mail send type is not set for focus');
         }
         
+        $mailAllowUserSend = null;
+        if (isset($sugar_config['email_allow_send_as_user'])) {
+            $mailAllowUserSend = $sugar_config['email_allow_send_as_user'];
+        } else {
+            LoggerManager::getLogger()->warn('EmailMan view display error: mail allow user send is not set for focus');
+        }
         
         
         $this->ss->assign("mail_smtptype", $mailSmtpType);
@@ -179,6 +185,7 @@ class ViewConfig extends SugarView
         $this->ss->assign("mail_smtpauth_req", ($mailSmtpAuthReq) ? "checked='checked'" : "");
         $this->ss->assign("mail_haspass", empty($mailSmtpPass)?0:1);
         $this->ss->assign("MAIL_SSL_OPTIONS", get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $mailSmtpSsl));
+        $this->ss->assign("mail_allow_user_send", ($mailAllowUserSend) ? "checked='checked'" : "");
 
         //Assign the current users email for the test send dialogue.
         $this->ss->assign("CURRENT_USER_EMAIL", $current_user->email1);

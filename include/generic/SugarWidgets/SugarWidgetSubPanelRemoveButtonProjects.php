@@ -53,12 +53,12 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
         return '&nbsp;';
     }
 
-    public function displayList(&$layout_def)
+    public function displayList($layout_def)
     {
         global $app_strings;
-        
+
         global $current_user;
-        
+
         $parent_record_id = $_REQUEST['record'];
         $parent_module = $_REQUEST['module'];
 
@@ -73,23 +73,23 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
         $record = $layout_def['fields']['ID'];
         $current_module=$layout_def['module'];
         $hideremove=false;
-        
+
         $return_module = $_REQUEST['module'];
         $return_action = 'SubPanelViewer';
         $subpanel = $layout_def['subpanel_id'];
         $return_id = $_REQUEST['record'];
-        
-        
+
+
         $focus = new Project();
-        
+
         $focus->retrieve($return_id);
-        
+
         if ($current_user->id == $focus->assigned_user_id || is_admin($current_user)) {
             $is_owner = true;
         } else {
             $is_owner = false;
         }
-                
+
         if (isset($layout_def['linked_field_set']) && !empty($layout_def['linked_field_set'])) {
             $linked_field= $layout_def['linked_field_set'] ;
         } else {

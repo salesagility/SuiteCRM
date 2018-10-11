@@ -105,7 +105,7 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView
     .error { background-color: #ffcdd1; border-top: 2px solid #e10c0c; border-bottom: 2px solid #e10c0c; }
   </style>
 
-  <script type="text/javascript" src="//maps.google.com/maps/api/js?key=<?= $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false&libraries=drawing"></script>
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?= $GLOBALS['jjwg_config']['google_maps_api_key']; ?>&sensor=false&libraries=drawing"></script>
   <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
 
   <script type="text/javascript">

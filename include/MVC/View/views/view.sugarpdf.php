@@ -61,17 +61,26 @@ class ViewSugarpdf extends SugarView
     public $sugarpdfBean=null;
 
 
-    public function __construct()
-    {
-        parent::__construct();
-        if (isset($_REQUEST["sugarpdf"])) {
-            $this->sugarpdf = $_REQUEST["sugarpdf"];
-        } else {
-            $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
-            $record = isset($_REQUEST['record']) ? $_REQUEST['record'] : null;
-            header('Location:index.php?module='.$module.'&action=DetailView&record='.$record);
-        }
-    }
+    public function __construct(){
+         parent::__construct();
+
+
+         if (isset($_REQUEST["sugarpdf"]))
+         	$this->sugarpdf = $_REQUEST["sugarpdf"];
+         else {
+
+
+            if (!isset($_REQUEST['module'])) {
+                LoggerManager::getLogger()->warn('Undefined index: module');
+            }
+
+            if (!isset($_REQUEST['record'])) {
+                LoggerManager::getLogger()->warn('Undefined index: record');
+            }
+
+        	header('Location:index.php?module='.(isset($_REQUEST['module']) ? $_REQUEST['module'] : null).'&action=DetailView&record='.(isset($_REQUEST['record']) ? $_REQUEST['record'] : null));
+         }
+     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
