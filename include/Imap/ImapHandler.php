@@ -57,12 +57,43 @@ class ImapHandler implements ImapHandlerInterface {
     protected $stream;
     
     /**
+     *
+     * @var bool
+     */
+    protected $log;
+    
+    /**
+     * 
+     * @param bool $log
+     */
+    public function __construct($log = true) {
+        $this->log = $log;
+    }
+    
+    /**
      * 
      * @return boolean
      */
     public function close() {
-        $ret = imap_close($this->stream);
+        if (!$ret = imap_close($this->stream)) {
+            $this->log(['IMAP close error']);
+        }
         return $ret;
+    }
+    
+    /**
+     * 
+     * @param array $errors
+     */
+    protected function log($errors) {
+        if ($errors && $this->log) {
+            $logger = LoggerManager::getLogger();
+            foreach ($errors as $error) {
+                if ($error) {
+                    $logger->warn('An Imap error detected: ' . json_encode($error));
+                }
+            }
+        }   
     }
 
     /**
@@ -70,7 +101,8 @@ class ImapHandler implements ImapHandlerInterface {
      * @return array
      */
     public function getAlerts() {
-        $ret = imap_alerts();        
+        $ret = imap_alerts();  
+        $this->log($ret);
         return $ret;
     }
 
@@ -89,6 +121,7 @@ class ImapHandler implements ImapHandlerInterface {
      */
     public function getErrors() {
         $ret = imap_errors();
+        $this->log($ret);
         return $ret;
     }
 
@@ -98,6 +131,7 @@ class ImapHandler implements ImapHandlerInterface {
      */
     public function getLastError() {
         $ret = imap_last_error();
+        $this->log([$ret]);
         return $ret;
     }
 
@@ -133,6 +167,9 @@ class ImapHandler implements ImapHandlerInterface {
      */
     public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null) {
         $this->stream = imap_open($mailbox, $username, $password, $options, $n_retries, $params);
+        if (!$this->stream) {
+            $this->log(['IMAP open error']);
+        }
         return $this->stream;
     }
 
@@ -154,6 +191,9 @@ class ImapHandler implements ImapHandlerInterface {
      */
     public function reopen($mailbox, $options = 0, $n_retries = 0) {
         $ret = imap_reopen($this->stream, $mailbox, $options, $n_retries);
+        if (!$ret) {
+            $this->log(['IMAP reopen error']);
+        }
         return $ret;
     }
 
@@ -165,6 +205,9 @@ class ImapHandler implements ImapHandlerInterface {
      */
     public function setTimeout($timeout_type, $timeout = -1) {
         $ret = imap_timeout($timeout_type, $timeout);
+        if (!$ret) {
+            $this->log(['IMAP set timeout error']);
+        }
         return $ret;
     }
 

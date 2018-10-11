@@ -57,6 +57,9 @@ function this_callback($str)
 }
 
 
+/**
+ * @todo use InboundEmail::$imap::getConnection() instead of InboundEmail::$conn
+ */
 class InboundEmail extends SugarBean
 {
     // module specific
@@ -168,27 +171,39 @@ class InboundEmail extends SugarBean
     // prefix to use when importing inlinge images in emails
     public $imagePrefix;
     public $job_name = 'function::pollMonitoredInboxes';
-
+    
+    /**
+     *
+     * @var ImapHandlerInterface
+     */
+    protected $imap;
+    
     /**
      * Email constructor
      */
-    public function __construct()
+    public function __construct(ImapHandlerInterface $imapHandler = null)
     {
+        // using ImapHandlerInterface as dependency
+        if (null == $imapHandler) {
+            LoggerManager::getLogger()->warn('Using system default ImapHandler. Hint: Use any ImapHandlerInterface as dependency of InboundEmail');
+            $imapHandler = ImapHandlerFactory::getImapHandler();
+        }
+        $this->imap = $imapHandler;
+        
         $this->InboundEmailCachePath = sugar_cached('modules/InboundEmail');
         $this->EmailCachePath = sugar_cached('modules/Emails');
         parent::__construct();
-        // TODO: use ImapHandlerInterface::isAvailable
-        if (function_exists("imap_timeout")) {
+        
+        if ($this->imap->isAvailable()) {
             /*
              * 1: Open
              * 2: Read
              * 3: Write
              * 4: Close
              */
-            // TODO: useImapHandlerInterface::setTimeout();
-            imap_timeout(1, 60);
-            imap_timeout(2, 60);
-            imap_timeout(3, 60);
+            $this->imap->setTimeout(1, 60);
+            $this->imap->setTimeout(2, 60);
+            $this->imap->setTimeout(3, 60);
         }
 
         $this->smarty = new Sugar_Smarty();
@@ -3042,15 +3057,13 @@ class InboundEmail extends SugarBean
             'err' => $errorArr
         );
 
-        // TODO: use ImapHandlerInterface::isAvailable()
-        if (!function_exists('imap_open')) {
+        if (!$this->imap->isAvailable()) {
             $retArray['err'][0] = $mod_strings['ERR_NO_IMAP'];
 
             return $retArray;
         }
 
-        // TODO: use ImapHandlerInterface::getErrors();
-        imap_errors(); // clearing error stack
+        $this->imap->getErrors(); // clearing error stack
         //error_reporting(0); // turn off notices from IMAP
 
         if (isset($_REQUEST['ssl']) && $_REQUEST['ssl'] == 1) {
@@ -3142,8 +3155,7 @@ class InboundEmail extends SugarBean
             // open the connection and try the test string
             $this->conn = $this->getImapConnection($serviceTest, $login, $passw);
 
-            // TODO: use ImapHandlerInterface::getLastError() and ::getAlerts();
-            if (($errors = imap_last_error()) || ($alerts = imap_alerts())) {
+            if (($errors = $this->imap->getLastError()) || ($alerts = $this->imap->getAlerts())) {
                 // login failure means don't bother trying the rest
                 if ($errors == 'Too many login failures'
                     || $errors == '[CLOSED] IMAP connection broken (server response)'
@@ -3173,11 +3185,10 @@ class InboundEmail extends SugarBean
                 $foundGoodConnection = true;
             }
 
-            if (is_resource($this->conn)) {
+            if (is_resource($this->imap->getConnection())) {
                 if (!$this->isPop3Protocol()) {
                     $serviceTest = str_replace("INBOX", "", $serviceTest);
-                    // TODO: use ImapHandlerInterface::getMailboxes();
-                    $boxes = imap_getmailboxes($this->conn, $serviceTest, "*");
+                    $boxes = $this->imap->getMailboxes($serverText, "*");
                     $delimiter = '.';
                     // clean MBOX path names
                     foreach ($boxes as $k => $mbox) {
@@ -3195,19 +3206,17 @@ class InboundEmail extends SugarBean
                     );
                 } // if
 
-                // TODO: use ImapHandlerInterfce::close();
-                if (!imap_close($this->conn)) {
+                if (!$this->imap->close()) {
                     $GLOBALS['log']->debug('imap_close() failed!');
                 }
             }
 
             $GLOBALS['log']->debug($l . ': I-E clearing error and alert stacks.');
             
-            // TODO: use ImapHandlerInterface::getErrors();
-            imap_errors(); // clear stacks
+            $this->imap->getErrors(); // clear stacks
             
-            // TODO: use ImapHandlerInterface::getAlerts();
-            imap_alerts();
+            $this->imap->getAlerts();
+            
             // If you find a good connection, then don't do any further testing to find URL
             if ($foundGoodConnection) {
                 break;
@@ -6133,15 +6142,15 @@ class InboundEmail extends SugarBean
     public function connectMailserver($test = false, $force = false)
     {
         global $mod_strings;
-        // TODO: use ImapHandlerInterface::isAvailable()
-        if (!function_exists("imap_open")) {
+        
+        if (!$this->imap->isAvailable()) {
             $GLOBALS['log']->debug('------------------------- IMAP libraries NOT available!!!! die()ing thread.----');
 
             return $mod_strings['LBL_WARN_NO_IMAP'];
         }
 
-        // TODO: use ImapHandlerInterface::getErrors()
-        imap_errors(); // clearing error stack
+        
+        $this->imap->getErrors(); // clearing error stack
         //error_reporting(0); // turn off notices from IMAP
 
         // tls::ca::ssl::protocol::novalidate-cert::notls
@@ -6155,10 +6164,9 @@ class InboundEmail extends SugarBean
         
         $useSsl = ($requestSsl == 'true') ? true : false;
         if ($test) {
-            // TODO: use ImapHandlerInterface::setTimeout()
-            imap_timeout(1, 15); // 60 secs is the default
-            imap_timeout(2, 15);
-            imap_timeout(3, 15);
+            $this->imap->setTimeout(1, 15); // 60 secs is the default
+            $this->imap->setTimeout(2, 15);
+            $this->imap->setTimeout(3, 15);
 
             $opts = $this->findOptimumSettings($useSsl);
             if (isset($opts['good']) && empty($opts['good'])) {
@@ -6196,25 +6204,20 @@ class InboundEmail extends SugarBean
         /*
          * Try to recycle the current connection to reduce response times
          */
-        // TODO: use ImapHandlerInterface::getConnection();  make __get magic warning for $this->conn
-        if (is_resource($this->conn)) {
+        if (is_resource($this->imap->getConnection())) {
             if ($force) {
                 // force disconnect
-                // TODO: use ImapHandlerInterface::close();
-                imap_close($this->conn);
+                $this->imap->close();
             }
 
-            // TODO: use ImapHandlerInterface::ping();
-            if (imap_ping($this->conn)) {
+            if ($this->imap->ping()) {
                 // we have a live connection
-                // TODO: use ImapHandlerInterface::reopen();
-                imap_reopen($this->conn, $connectString, CL_EXPUNGE);
+                $this->imap->reopen($connectString, CL_EXPUNGE);
             }
         }
 
         // final test
-        // TODO: use ImapHandlerInterface::getConnection();  make __get magic warning for $this->conn
-        if (!is_resource($this->conn) && !$test) {
+        if (!is_resource($this->imap->getConnection()) && !$test) {
             $this->conn = $this->getImapConnection(
                 $connectString,
                 $this->email_user,
@@ -6224,8 +6227,7 @@ class InboundEmail extends SugarBean
         }
 
         if ($test) {
-            // TODO: use ImapHandlerInterface::getConnection();  make __get magic warning for $this->conn
-            if ($opts == false && !is_resource($this->conn)) {
+            if ($opts == false && !is_resource($this->imap->getConnection())) {
                 $this->conn = $this->getImapConnection(
                     $connectString,
                     $this->email_user,
@@ -6236,8 +6238,7 @@ class InboundEmail extends SugarBean
             $errors = '';
             $alerts = '';
             $successful = false;
-            // TODO: use ImapHandlerInterface::getLastError() and ::getAlerts();
-            if (($errors = imap_last_error()) || ($alerts = imap_alerts())) {
+            if (($errors = $this->imap->getLastError()) || ($alerts = $this->imap->getAlerts())) {
                 if ($errors == 'Mailbox is empty') { // false positive
                     $successful = true;
                 } else {
@@ -6261,21 +6262,18 @@ class InboundEmail extends SugarBean
                 }
             }
 
-            // TODO: use ImepHandlerInterface::getErrors();
-            imap_errors(); // collapse error stack
+            $this->imap->getErrors(); // collapse error stack
             
-            // TODO: use ImapHandlerInterface::getConnection();  make __get magic warning for $this->conn
-            if (is_resource($this->conn)) {
-                // TODO: use ImepHandlerInterface::close();
-                imap_close($this->conn);
+            if (is_resource($this->imap->getConnection())) {
+                $this->imap->close();
             } else {
                 LoggerManager::getLogger()->warn('Connection is not a valid resource.');
             }
             
 
             return $msg;
-            // TODO: use ImapHandlerInterface::getConnection();  make __get magic warning for $this->conn
-        } elseif (!is_resource($this->conn)) {
+            
+        } elseif (!is_resource($this->imap->getConnection())) {
             $GLOBALS['log']->info('Couldn\'t connect to mail server id: ' . $this->id);
 
             return "false";
@@ -6318,8 +6316,7 @@ class InboundEmail extends SugarBean
     {
         // if php is prior to 5.3.2, then return call without disable parameters as they are not supported yet
         if (version_compare(phpversion(), '5.3.2', '<')) {
-            // TODO: use ImapHandlerInterface::open();
-            return imap_open($mailbox, $username, $password, $options);
+            return $this->imap->open($mailbox, $username, $password, $options);
         }
 
         $connection = null;
@@ -6337,8 +6334,7 @@ class InboundEmail extends SugarBean
             $state = new \SuiteCRM\StateSaver();
             $state->pushErrorLevel();
             error_reporting(0);
-            // TODO: use ImapHandlerInterface::open();
-            $connection = imap_open($mailbox, $username, $password, $options, 0, $params);
+            $connection = $this->imap->open($mailbox, $username, $password, $options, 0, $params);
             $state->popErrorLevel();
         }
 
