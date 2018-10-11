@@ -44,89 +44,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 /**
- * ImapHandlerInterface
+ * ImapHandlerFactory
  *
  * @author gyula
  */
-interface ImapHandlerInterface {
+class ImapHandlerFactory {
     
-    /**
-     * 
-     * @return boolean
-     */
-    public function isAvailable();
+    protected $interfaceObject = null;
     
-    /**
-     * 
-     * @return string|boolean
-     */
-    public function getLastError();
-    
-    /**
-     * 
-     * @return array
-     */
-    public function getErrors();
-
-    /**
-     * 
-     * @return array
-     */
-    public function getAlerts();
-    
-    /**
-     * 
-     * @param string $mailbox
-     * @param string $username
-     * @param string $password
-     * @param int $options
-     * @param int $n_retries
-     * @param array|null $params
-     * @return resource|boolean
-     */
-    public function open();
-    
-    /**
-     * 
-     * @return boolean
-     */
-    public function close();
-    
-    /**
-     * 
-     * @return boolean
-     */
-    public function ping();
-    
-    /**
-     * 
-     * @param string $mailbox
-     * @param int $options
-     * @param int $n_retries
-     * @return boolean
-     */
-    public function reopen();
-
-    /**
-     * 
-     * @return resource|boolean
-     */
-    public function getConnection();
-    
-    /**
-     * 
-     * @param int $timeout_type
-     * @param int $timeout
-     * @return mixed
-     */
-    public function setTimeout();
-    
-    /**
-     * 
-     * @param string $ref
-     * @param string $pattern
-     * @return array
-     */
-    public function getMailboxes();
-    
+    public function getImapHandler() {
+        if (null === $this->interfaceObject) {
+            global $sugar_config;
+            $interface = ImapHandler::class;
+            if (isset($sugar_config['imap_handler_interface']) && $sugar_config['imap_handler_interface']) {
+                $interface = $sugar_config['imap_handler_interface'];
+            }
+            $this->interfaceObject = new $interface();
+        }
+        return $this->interfaceObject;
+    }
 }

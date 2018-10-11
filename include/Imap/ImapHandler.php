@@ -44,36 +44,83 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 /**
- * ImapHandlerInterface
+ * ImapHandler
  *
  * @author gyula
  */
-interface ImapHandlerInterface {
+class ImapHandler implements ImapHandlerInterface {
+    
+    /**
+     *
+     * @var resource|boolean
+     */
+    protected $stream;
     
     /**
      * 
      * @return boolean
      */
-    public function isAvailable();
-    
-    /**
-     * 
-     * @return string|boolean
-     */
-    public function getLastError();
-    
-    /**
-     * 
-     * @return array
-     */
-    public function getErrors();
+    public function close() {
+        $ret = imap_close($this->stream);
+        return $ret;
+    }
 
     /**
      * 
      * @return array
      */
-    public function getAlerts();
-    
+    public function getAlerts() {
+        $ret = imap_alerts();        
+        return $ret;
+    }
+
+    /**
+     * 
+     * @return resource|boolean
+     */
+    public function getConnection() {
+        $ret = $this->stream;
+        return $ret;
+    }
+
+    /**
+     * 
+     * @return array
+     */
+    public function getErrors() {
+        $ret = imap_errors();
+        return $ret;
+    }
+
+    /**
+     * 
+     * @return string|boolean
+     */
+    public function getLastError() {
+        $ret = imap_last_error();
+        return $ret;
+    }
+
+    /**
+     * 
+     * @param string $ref
+     * @param string $pattern
+     * @return array
+     */
+    public function getMailboxes($ref, $pattern) {
+        $ret = imap_getmailboxes($this->stream, $ref, $pattern);
+        return $ret;
+    }
+
+    /**
+     * 
+     * @return boolean
+     */
+    public function isAvailable() {
+        $ret = function_exists("imap_open") && function_exists("imap_timeout");
+        return $ret;
+    }
+
     /**
      * 
      * @param string $mailbox
@@ -84,19 +131,19 @@ interface ImapHandlerInterface {
      * @param array|null $params
      * @return resource|boolean
      */
-    public function open();
-    
+    public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null) {
+        $this->stream = imap_open($mailbox, $username, $password, $options, $n_retries, $params);
+        return $this->stream;
+    }
+
     /**
      * 
      * @return boolean
      */
-    public function close();
-    
-    /**
-     * 
-     * @return boolean
-     */
-    public function ping();
+    public function ping() {
+        $ret = imap_ping($this->stream);
+        return $ret;
+    }
     
     /**
      * 
@@ -105,28 +152,20 @@ interface ImapHandlerInterface {
      * @param int $n_retries
      * @return boolean
      */
-    public function reopen();
+    public function reopen($mailbox, $options = 0, $n_retries = 0) {
+        $ret = imap_reopen($this->stream, $mailbox, $options, $n_retries);
+        return $ret;
+    }
 
-    /**
-     * 
-     * @return resource|boolean
-     */
-    public function getConnection();
-    
     /**
      * 
      * @param int $timeout_type
      * @param int $timeout
      * @return mixed
      */
-    public function setTimeout();
-    
-    /**
-     * 
-     * @param string $ref
-     * @param string $pattern
-     * @return array
-     */
-    public function getMailboxes();
-    
+    public function setTimeout($timeout_type, $timeout = -1) {
+        $ret = imap_timeout($timeout_type, $timeout);
+        return $ret;
+    }
+
 }
