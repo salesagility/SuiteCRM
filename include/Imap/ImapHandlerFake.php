@@ -43,29 +43,62 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-require_once __DIR__ . '/ImapHandler.php';
-
 /**
- * ImapHandlerFactory
+ * ImapHandlerFake
+ * For tests only, use `$sugar_config['imap_handler_interface'] = 'ImapHandlerFake';`
  *
  * @author gyula
  */
-class ImapHandlerFactory {
+class ImapHandlerFake implements ImapHandlerInterface {
     
-    protected $interfaceObject = null;
+    protected $fakes;
     
-    public function getImapHandler() {
-        if (null === $this->interfaceObject) {
-            global $sugar_config;
-            $interface = ImapHandler::class;
-            if (isset($sugar_config['imap_handler_interface']) && $sugar_config['imap_handler_interface']) {
-                $interface = $sugar_config['imap_handler_interface'];
-                if (!class_exists($interface)) {
-                    require_once __DIR__ . '/' . $interface . '.php';
-                }
-            }
-            $this->interfaceObject = new $interface();
-        }
-        return $this->interfaceObject;
+    public function __construct(ImapHandlerFakeData $fakeData) {
+        $this->fakes = $fakes;
     }
+    
+    public function close() {
+        return $this->fakes->call('close');
+    }
+
+    public function getAlerts() {
+        return $this->fakes->call('getAlerts');
+    }
+
+    public function getConnection() {
+        return $this->fakes->call('getConnection');
+    }
+
+    public function getErrors() {
+        return $this->fakes->call('getErrors');
+    }
+
+    public function getLastError() {
+        return $this->fakes->call('getLastError');        
+    }
+
+    public function getMailboxes($ref, $pattern) {
+        return $this->fakes->call('getMailboxes', [$ref, $pattern]);        
+    }
+
+    public function isAvailable() {
+        return $this->fakes->call('isAvailable');        
+    }
+
+    public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null) {
+        return $this->fakes->call('open', [$mailbox, $username, $password, $options, $n_retries, $params]);        
+    }
+
+    public function ping() {
+        return $this->fakes->call('ping');        
+    }
+
+    public function reopen($mailbox, $options = 0, $n_retries = 0) {
+        return $this->fakes->call('reopen', [$mailbox, $options, $n_retries]);        
+    }
+
+    public function setTimeout($timeout_type, $timeout = -1) {
+        return $this->fakes->call('setTimeout', [$timeout_type, $timeout]);        
+    }
+
 }
