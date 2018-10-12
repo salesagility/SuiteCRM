@@ -116,7 +116,7 @@ class ImapHandlerFactory
     }
     
     /**
-     * 
+     *
      * @param string $key
      * @return boolean
      * @throws Exception
