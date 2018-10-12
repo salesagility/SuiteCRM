@@ -90,6 +90,7 @@ themes/SuiteP/css/*/*.map
 themes/SuiteP/css/*/color-palette.css
 themes/SuiteP/css/*/variables.css
 tests/_output/*
+fakeImapResource
 
 
 #Ignore browserstack

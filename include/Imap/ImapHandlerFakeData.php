@@ -89,7 +89,7 @@ class ImapHandlerFakeData
                 $ret = $this->calls[$name][$argsEncoded];
                 return $ret;
             } else {
-                throw new Exception('Fake caller has not matched arguments for this call: ' . $name, self::ERR_NO_MATCH_ARGS);
+                throw new Exception('Fake caller has not matched arguments for this call: ' . $name . "\nArguments was: " . print_r($args, true), self::ERR_NO_MATCH_ARGS);
             }
         } else {
             throw new Exception('Fake call does not exists for this function call: ' . $name, self::ERR_CALL_NOT_FOUND);
@@ -147,6 +147,14 @@ class ImapHandlerFakeData
     
     /**
      *
+     */
+    public function reset()
+    {
+        $this->calls = null;
+    }
+    
+    /**
+     *
      * @param string $name
      * @param array|null $args
      * @throws Exception
@@ -191,9 +199,14 @@ class ImapHandlerFakeData
     public function retrieve($calls)
     {
         foreach ($calls as $name => $call) {
-            $args = isset($call['args']) ? $call['args'] : null;
-            $ret = isset($call['return']) ? $call['return'] : null;
-            $this->add($name, $args, $ret);
+            if (empty($call)) {
+                $call = [[]];
+            }
+            foreach ($call as $param) {
+                $args = isset($param['args']) ? $param['args'] : null;
+                $ret = isset($param['return']) ? $param['return'] : null;
+                $this->add($name, $args, $ret);
+            }
         }
     }
 }

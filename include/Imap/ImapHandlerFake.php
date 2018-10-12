@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/ImapHandlerInterface.php';
+include_once __DIR__ . '/ImapHandlerFakeData.php';
 
 /**
  * ImapHandlerFake
@@ -59,7 +61,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      */
     public function __construct(ImapHandlerFakeData $fakeData)
     {
-        $this->fakes = $fakes;
+        $this->fakes = $fakeData;
     }
     
     /**

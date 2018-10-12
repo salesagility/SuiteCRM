@@ -52,34 +52,83 @@ require_once __DIR__ . '/ImapHandler.php';
  */
 class ImapHandlerFactory
 {
+    
+    const ERR_TEST_SET_NOT_FOUND = 1;
+    const ERR_TEST_SET_NOT_EXISTS = 2;
+    
     protected $interfaceObject = null;
+    
+    protected $imapHandlerTestInterface = [
+        'file' => 'include/Imap/ImapHandlerFake.php',
+        'class' => 'ImapHandlerFake',
+        'calls' => 'include/Imap/ImapHandlerFakeCalls.php',
+    ];
     
     /**
      *
-     * @param string $interface
      */
-    protected function includeInterface($interface)
+    protected function includeFakeInterface()
     {
-        if (!class_exists($interface)) {
-            require_once __DIR__ . '/' . $interface . '.php';
+        if (!class_exists($this->imapHandlerTestInterface['class'])) {
+            require_once $this->imapHandlerTestInterface['file'];
         }
+    }
+    
+    /**
+     * 
+     * @global array $sugar_config
+     * @param string $testSettings
+     * @throws Exception
+     */
+    protected function loadTestSettings($testSettings = null) {
+        if (!$testSettings) {
+            global $sugar_config;
+            $testSettings = isset($sugar_config['imap_test_settings']) ? $sugar_config['imap_test_settings'] : null;
+            if (!$testSettings) {
+                throw new Exception("Test settings not set.", self::ERR_TEST_SET_NOT_FOUND);
+            }
+        }
+        $this->includeFakeInterface();
+        $interfaceClass = $this->imapHandlerTestInterface['class'];
+        $interfaceCallsSettings = include $this->imapHandlerTestInterface['calls'];
+
+        if (!isset($interfaceCallsSettings[$testSettings])) {
+            throw new Exception("Test settings does not exists: $testSettings", self::ERR_TEST_SET_NOT_EXISTS);
+        }
+
+        $interfaceCalls = $interfaceCallsSettings[$testSettings];
+        $interfaceFakeData = new ImapHandlerFakeData();
+        $interfaceFakeData->retrieve($interfaceCalls);
+        $this->interfaceObject = new $interfaceClass($interfaceFakeData);
     }
     
     /**
      *
      * @global array $sugar_config
+     * @param string $testSettings
      * @return ImapHandlerInterface
+     * @throws Exception
      */
-    public function getImapHandler()
+    public function getImapHandler($testSettings = null)
     {
         if (null === $this->interfaceObject) {
             global $sugar_config;
-            $interface = ImapHandler::class;
-            if (isset($sugar_config['imap_handler_interface']) && $sugar_config['imap_handler_interface']) {
-                $interface = $sugar_config['imap_handler_interface'];
-                $this->includeInterface($interface);
+            $test = isset($sugar_config['imap_test']) && $sugar_config['imap_test'];            
+            
+            if ($sugar_config['developerMode']) {
+                $logErrors = true;
+                $logCalls = true;
+            } else {
+                $logErrors = true;
+                $logCalls = false;
             }
-            $this->interfaceObject = new $interface();
+            
+            $interfaceClass = ImapHandler::class;
+            if ($test) {
+                $this->loadTestSettings($testSettings);
+            } else {
+                $this->interfaceObject = new $interfaceClass($logErrors, $logCalls);
+            }
         }
         return $this->interfaceObject;
     }

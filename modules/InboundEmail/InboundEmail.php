@@ -186,7 +186,7 @@ class InboundEmail extends SugarBean
     {
         // using ImapHandlerInterface as dependency
         if (null == $imapHandler) {
-            LoggerManager::getLogger()->warn('Using system default ImapHandler. Hint: Use any ImapHandlerInterface as dependency of InboundEmail');
+            LoggerManager::getLogger()->debug('Using system default ImapHandler. Hint: Use any ImapHandlerInterface as dependency of InboundEmail');
             $imapHandlerFactory = new ImapHandlerFactory();
             $imapHandler = $imapHandlerFactory->getImapHandler();
         }
@@ -6145,6 +6145,8 @@ class InboundEmail extends SugarBean
     {
         global $mod_strings;
         
+        $msg = '';
+        
         if (!$this->imap->isAvailable()) {
             $GLOBALS['log']->debug('------------------------- IMAP libraries NOT available!!!! die()ing thread.----');
 
@@ -6256,7 +6258,7 @@ class InboundEmail extends SugarBean
                 $successful = true;
             }
 
-            if ($successful) {
+            if ($successful) {                
                 if ($this->protocol == 'imap') {
                     $msg .= $mod_strings['LBL_TEST_SUCCESSFUL'];
                 } else {
@@ -6333,11 +6335,11 @@ class InboundEmail extends SugarBean
                 $params = array();
             }
 
-            $state = new \SuiteCRM\StateSaver();
-            $state->pushErrorLevel();
-            error_reporting(0);
+//            $state = new \SuiteCRM\StateSaver();
+//            $state->pushErrorLevel();
+//            error_reporting(0);
             $connection = $this->imap->open($mailbox, $username, $password, $options, 0, $params);
-            $state->popErrorLevel();
+//            $state->popErrorLevel();
         }
 
         return $connection;

@@ -1,5 +1,7 @@
 <?php
 
+include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFakeData.php';
+include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFake.php';
 
 class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 {
@@ -33,6 +35,46 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->popTable('inbound_email_autoreply');
         $state->popTable('inbound_email_cache_ts');
     }
+    
+    
+    
+    // ---------------------------------------------
+    // ----- FOLLOWIN TESTS ARE USING FAKE IMAP ----
+    // ------------------------------------------------->
+    
+    public function testFindOptimumSettingsOk()
+    {
+        
+//        $state = new SuiteCRM\StateSaver();
+//        $state->pushErrorLevel('errs');
+        
+        $fakes = new ImapHandlerFakeData();
+        $fakes->add('isAvailable', null, true);  // <-- when the code calls ImapHandlerInterface::isAvailable([null]), it will return true
+        $fakes->add('setTimeout', [1, 60], true);
+        $fakes->add('setTimeout', [2, 60], true);
+        $fakes->add('setTimeout', [3, 60], true);
+        $fakes->add('getErrors', null, false);
+        $fakes->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], function(){
+            return fopen('fakeImapResource', 'w+');
+        });
+        $fakes->add('getLastError', null, false);
+        $fakes->add('getAlerts', null, false);
+        $fakes->add('getConnection', null, function(){
+            return fopen('fakeImapResource', 'w+');
+        });
+        //$fakes->add('getMailboxes', [], []); // TODO: !@#
+        
+        $imap = new ImapHandlerFake($fakes);
+        $inboundEmail = new InboundEmail($imap);
+        $ret = $inboundEmail->findOptimumSettings();
+        $this->assertEquals(null, $ret);
+        
+//        $state->popErrorLevel('errs');
+    }
+    
+    // ------------------------------------------------------------
+    // ----- FOLLOWIN TESTS ARE USING REAL IMAP SO SHOULD FAIL ----
+    // ---------------------------------------------------------------->
     
     public function testInboundEmail()
     {
