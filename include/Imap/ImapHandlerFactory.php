@@ -54,6 +54,8 @@ class ImapHandlerFactory
 {
     const ERR_TEST_SET_NOT_FOUND = 1;
     const ERR_TEST_SET_NOT_EXISTS = 2;
+    const ERR_KEY_NOT_FOUND = 3;
+    const ERR_KEY_SAVE_ERROR = 4;
     
     const SETTINGS_KEY_FILE = __DIR__ . '/ImapTestSettings.txt';
     
@@ -111,6 +113,28 @@ class ImapHandlerFactory
         $interfaceFakeData = new ImapHandlerFakeData();
         $interfaceFakeData->retrieve($interfaceCalls);
         $this->interfaceObject = new $interfaceClass($interfaceFakeData);
+    }
+    
+    /**
+     * 
+     * @param string $key
+     * @return boolean
+     * @throws Exception
+     */
+    public function saveTestSettingsKey($key)
+    {
+        $calls = include $this->imapHandlerTestInterface['calls'];
+
+        if (!isset($calls[$key])) {
+            throw new Exception('Key not found: ' . $key, self::ERR_KEY_NOT_FOUND);
+        } else {
+            if (!file_put_contents(ImapHandlerFactory::SETTINGS_KEY_FILE, $key)) {
+                throw new Exception('Key save error', self::ERR_KEY_SAVE_ERROR);
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,7 +38,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -47,18 +47,24 @@ include_once __DIR__ . '/ImapHandlerFactory.php';
 $var = 'imap_test_settings';
 $key = isset($_REQUEST[$var]) && $_REQUEST[$var] ? $_REQUEST[$var] : null;
 if (!$key) {
-    echo "Invalud request, use '$var' value.";
+    // TODO: should it be translatable?
+    $error = "Invalud request, use '$var' value.";
 } else {
-    $calls = include __DIR__ . '/ImapHandlerFakeCalls.php';
-
-    if (!isset($calls[$key])) {
-        echo 'Key not found: ' . $key;
-    } else {
-        if (!file_put_contents(ImapHandlerFactory::SETTINGS_KEY_FILE, $key)) {
-            echo 'save error';
-        } else {
-            echo "OK: test entry set to: $key";
+    $imapHandlerFactory = new ImapHandlerFactory();
+    try {
+        if (!$imapHandlerFactory->saveTestSettingsKey($key)) {
+            // TODO: should it be translatable?
+            $error = 'Unknown error occured, key not saved.';
         }
+    } catch (Exception $e) {
+        // TODO: should we use exception code in a switch and message is translatable?
+        $error = $e->getMessage();
     }
+}
+if (!empty($error)) {
+    echo $error;
+} else {
+    // TODO: should it be translatable?
+    echo "OK: test settings changed to '$key'\n";
 }
 exit;
