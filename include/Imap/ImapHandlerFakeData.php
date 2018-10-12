@@ -172,27 +172,7 @@ class ImapHandlerFakeData
     }
     
     /**
-     * Following example when ImapHandlerFake::open() called with valid arguments and returns a resource (imitate a success IMAP connection)
-     * Also close IMAP connection "successfully"
-     * $calls = [
-     *      'open' => [
-     *          [
-     *              'args' => ["{localhost:110/pop3}INBOX", "user_id", "password"],   // <-- arguments
-     *              'return' => function() {
-     *                  return fopen('fakeImapResource', 'w+');                       // <-- create and return a fake resource for InboundEmail usages
-     *              }
-     *          ],
-     *          // ... add more possible calls of this method
-     *      ],
-     *      'close' => [
-     *          [
-     *              'args' => null,
-     *              'return' => true    // <-- when ImapHandlerFake::close() called, pass back a "TRUE" as success
-     *          ],
-     *          // ... add more possible calls of this method
-     *      ],
-     *      // ... add more possible calls
-     * ];
+     * Following example when ImapHandlerFake::open() called and imitate a success IMAP connection
      *
      * @param array $calls
      */
