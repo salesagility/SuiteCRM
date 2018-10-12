@@ -15,7 +15,7 @@
      {
 
         //execute the contructor and check for the Object type and attributes
-        $view = new ViewEdit();
+         $view = new ViewEdit();
          $this->assertInstanceOf('ViewEdit', $view);
          $this->assertInstanceOf('SugarView', $view);
          $this->assertAttributeEquals('edit', 'type', $view);
@@ -36,29 +36,29 @@
         
          //
 
-        //execute the method with required attributes preset, it will initialize the ev(edit view) attribute.
-        $view = new ViewEdit();
+         //execute the method with required attributes preset, it will initialize the ev(edit view) attribute.
+         $view = new ViewEdit();
          $view->module = 'Users';
          $view->bean = new User();
          $view->preDisplay();
          $this->assertInstanceOf('EditView', $view->ev);
 
-        //execute the method again for a different module with required attributes preset, it will initialize the ev(edit view) attribute.
-        $view = new ViewEdit();
+         //execute the method again for a different module with required attributes preset, it will initialize the ev(edit view) attribute.
+         $view = new ViewEdit();
          $view->module = 'Meetings';
          $view->bean = new Meeting();
          $view->preDisplay();
          $this->assertInstanceOf('EditView', $view->ev);
          
-        // clean up
+         // clean up
         
         
         
-        if (isset($session)) {
-            $_SESSION = $session;
-        } else {
-            unset($_SESSION);
-        }
+         if (isset($session)) {
+             $_SESSION = $session;
+         } else {
+             unset($_SESSION);
+         }
      }
 
      public function testdisplay()
@@ -68,8 +68,8 @@
          
          //
          
-        //execute the method with essential parameters set. it should return some html.
-        $view = new ViewEdit();
+         //execute the method with essential parameters set. it should return some html.
+         $view = new ViewEdit();
          $view->module = 'Users';
          $view->bean = new User();
          $view->preDisplay();

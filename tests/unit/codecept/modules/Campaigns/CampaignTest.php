@@ -239,7 +239,7 @@ class CampaignTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-    // test
+        // test
         
         $campaign = new Campaign();
         $campaign->name = 'test';

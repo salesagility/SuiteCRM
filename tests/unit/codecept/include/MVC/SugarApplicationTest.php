@@ -31,7 +31,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
 
         //cannot test this method as it uses die which stops execution of php unit as well
         /*
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
@@ -51,7 +51,6 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testACLFilter()
     {
         $state = new SuiteCRM\StateSaver();
-        
         
         
         
@@ -139,7 +138,6 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testpreProcess()
     {
         $state = new SuiteCRM\StateSaver();
-        
         
         
         
@@ -337,7 +335,6 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testloadGlobals()
     {
         $state = new SuiteCRM\StateSaver();
-        
         
         
         

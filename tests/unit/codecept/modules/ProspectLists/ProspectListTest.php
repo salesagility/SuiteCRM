@@ -74,7 +74,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $prospectList = new ProspectList();
 
@@ -117,7 +117,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-    // test
+        // test
         
         $prospectList = new ProspectList();
 
@@ -217,8 +217,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerUnitAbstract
         
         
         
-        
-        
         $prospectList = new ProspectList();
 
         //execute the method and test if it works and does not throws an exception.
@@ -237,9 +235,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testfill_in_additional_list_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        
         
         
         $prospectList = new ProspectList();

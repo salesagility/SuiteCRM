@@ -73,17 +73,17 @@ class SavedSearchTest extends SuiteCRM\StateCheckerUnitAbstract
 //        // Why is this combined?
 //        // TODO: TASK: UNDEFINED - build the tests for the following methods.
 //        $this->markTestIncomplete('');
-////        //test handleSave method
-////        $this->handleSaveAndRetrieveSavedSearch($savedSearch->id);
-////
-////        //test returnSavedSearch method
-////        $this->returnSavedSearch($savedSearch->id);
-////
-////        //test returnSavedSearchContents method
-////        $this->returnSavedSearchContents($savedSearch->id);
-////
-////        //test handleDelete method
-////        $this->handleDelete($savedSearch->id);
+    ////        //test handleSave method
+    ////        $this->handleSaveAndRetrieveSavedSearch($savedSearch->id);
+    ////
+    ////        //test returnSavedSearch method
+    ////        $this->returnSavedSearch($savedSearch->id);
+    ////
+    ////        //test returnSavedSearchContents method
+    ////        $this->returnSavedSearchContents($savedSearch->id);
+    ////
+    ////        //test handleDelete method
+    ////        $this->handleDelete($savedSearch->id);
 //    }
 
     public function handleSaveAndRetrieveSavedSearch($id)
@@ -172,7 +172,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('saved_search');
 
-    // test
+        // test
         
         $savedSearch = new SavedSearch();
 
@@ -197,7 +197,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('saved_search');
         $state->pushGlobals();
 
-    // test
+        // test
         
         $savedSearch = new SavedSearch();
 

@@ -83,7 +83,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
 
-    // test
+        // test
         
         $oauthToken = OAuthToken::generate();
 
@@ -160,7 +160,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
 
-    // test
+        // test
         
         $oauthKey = new OAuthKey();
         $oauthKey->id = '1';

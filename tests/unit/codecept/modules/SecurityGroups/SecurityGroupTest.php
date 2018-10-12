@@ -291,7 +291,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
 
         $securityGroup = new SecurityGroup();
@@ -313,7 +313,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('securitygroups');
         $state->pushTable('tracker');
 
-    // test
+        // test
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception

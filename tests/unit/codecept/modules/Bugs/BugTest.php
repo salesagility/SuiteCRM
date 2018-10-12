@@ -211,7 +211,7 @@ class BugTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-    // test
+        // test
         
         $bug = new Bug();
 

@@ -43,7 +43,7 @@ class CampaignTrackerTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
 
-    // test
+        // test
         
         $campaignTracker = new CampaignTracker();
 

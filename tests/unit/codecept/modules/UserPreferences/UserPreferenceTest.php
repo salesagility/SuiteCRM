@@ -20,7 +20,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-    // test
+        // test
         
         $user = new User();
         $user->retrieve('1');
@@ -39,13 +39,13 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testSetAndGetPreference()
     {
         $this->markTestIncomplete('state is incorrect');
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-    // test
+        // test
         
         global $sugar_config;
 
@@ -87,7 +87,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
 
-    // test
+        // test
         
         global $sugar_config;
 
@@ -128,7 +128,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
 
-    // test
+        // test
         
         //execute the contructor and check for the Object type and  attributes
         $userPreference = new UserPreference();
@@ -155,7 +155,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $user = new User();
         $user->retrieve('1');
@@ -178,7 +178,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $user = new User();
         $user->retrieve('1');
@@ -197,7 +197,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testSavePreferencesToDBAndResetPreferences()
     {
         self::markTestIncomplete('environment dependency');
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
@@ -206,7 +206,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-    // test
+        // test
         
         $user = new User();
         $user->retrieve('1');

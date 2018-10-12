@@ -471,7 +471,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         // $this->assertEquals($id, $result['id']);
     }
 
-// --- OK
+    // --- OK
  
     public function authenticate_user($id)
     {
@@ -897,7 +897,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         //test with contacts module
         $contact = new Contact();
-         // Contact name auto populate from first name and last name, so we need set value for first name or last name to test insteard set value for name
+        // Contact name auto populate from first name and last name, so we need set value for first name or last name to test insteard set value for name
         $contact->first_name = "test";
 
         $expected =

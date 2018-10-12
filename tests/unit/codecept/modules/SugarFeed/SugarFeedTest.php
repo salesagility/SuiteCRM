@@ -39,12 +39,12 @@ class SugarFeedTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         self::markTestIncomplete('environment dependency');
 
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('config');
 
-    // test
+        // test
         
         $admin = new Administration();
 
@@ -134,7 +134,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('aod_index');
         $state->pushTable('sugarfeed');
 
-    // test
+        // test
         
         $lead = new Lead();
         $lead->id = 1;
@@ -166,7 +166,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('sugarfeed');
 
-    // test
+        // test
         
         SugarFeed::pushFeed('some text', 'SugarFeed', 1, 1, 'Link', 'some url');
 

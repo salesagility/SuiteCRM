@@ -46,18 +46,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
 ********************************************************************************/
 require_once('include/utils/encryption_utils.php');
 
-function getSystemInfo($send_usage_info=true){
-	global $sugar_config;
-	global $administration, $timedate;
-        $db = DBManagerFactory::getInstance();
-	$info=array();
-	$info = getBaseSystemInfo($send_usage_info);
-    if($send_usage_info){
-		$info['application_key']=$sugar_config['unique_key'];
-		$info['php_version']=phpversion();
-		if(isset($_SERVER['SERVER_SOFTWARE'])) {
-			$info['server_software'] = $_SERVER['SERVER_SOFTWARE'];
-		} // if
+function getSystemInfo($send_usage_info=true)
+{
+    global $sugar_config;
+    global $administration, $timedate;
+    $db = DBManagerFactory::getInstance();
+    $info=array();
+    $info = getBaseSystemInfo($send_usage_info);
+    if ($send_usage_info) {
+        $info['application_key']=$sugar_config['unique_key'];
+        $info['php_version']=phpversion();
+        if (isset($_SERVER['SERVER_SOFTWARE'])) {
+            $info['server_software'] = $_SERVER['SERVER_SOFTWARE'];
+        } // if
 
         //get user count.
 
@@ -140,10 +141,11 @@ function getBaseSystemInfo($send_usage_info=true)
     return $info;
 }
 
-function check_now($send_usage_info=true, $get_request_data=false, $response_data = false, $from_install=false ) {
-	global $sugar_config, $timedate;
-	global $license;
-        $db = DBManagerFactory::getInstance();
+function check_now($send_usage_info=true, $get_request_data=false, $response_data = false, $from_install=false)
+{
+    global $sugar_config, $timedate;
+    global $license;
+    $db = DBManagerFactory::getInstance();
 
     include('sugar_version.php');
 

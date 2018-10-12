@@ -140,7 +140,7 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         global $locale, $timedate;
 
@@ -166,7 +166,7 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         $vcal = new vCal();
         $user_focus = new User('1');
 

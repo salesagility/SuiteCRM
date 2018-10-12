@@ -50,7 +50,7 @@ class EmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
 
-    // test
+        // test
         
         $email = new Email();
         $this->assertEquals(false, $email->bean_implements('')); //test with blank value
@@ -122,8 +122,10 @@ class EmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $email = new Email();
 
         $this->assertEquals('some text', $email->decodeDuringSend('some text'));
-        $this->assertEquals('&lt; some text &gt;',
-            $email->decodeDuringSend('sugarLessThan some text sugarGreaterThan'));
+        $this->assertEquals(
+            '&lt; some text &gt;',
+            $email->decodeDuringSend('sugarLessThan some text sugarGreaterThan')
+        );
     }
 
     public function testisDraftEmail()
@@ -227,7 +229,7 @@ class EmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-    // test
+        // test
         
         
         $email = new Email();
@@ -744,12 +746,12 @@ class EmailTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         self::markTestIncomplete('environment dependency (span os a?)');
         
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-    // test
+        // test
         
         $email = new Email();
 
@@ -911,7 +913,7 @@ class EmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         
         $email = new Email();
@@ -953,10 +955,14 @@ class EmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $email = new Email();
 
         $this->assertEquals('test string', $email->trimLongTo('test string')); //test without any separator
-        $this->assertEquals('test string 1...',
-            $email->trimLongTo('test string 1, test string2')); //test with , separator
-        $this->assertEquals('test string 1...',
-            $email->trimLongTo('test string 1; test string2'));//test with ; separator
+        $this->assertEquals(
+            'test string 1...',
+            $email->trimLongTo('test string 1, test string2')
+        ); //test with , separator
+        $this->assertEquals(
+            'test string 1...',
+            $email->trimLongTo('test string 1; test string2')
+        );//test with ; separator
     }
 
     public function testget_summary_text()
@@ -979,7 +985,7 @@ class EmailTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         require_once 'include/utils/layout_utils.php';
         $email = new Email();

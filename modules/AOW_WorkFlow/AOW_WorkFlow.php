@@ -235,7 +235,7 @@ class AOW_WorkFlow extends Basic
             LoggerManager::getLogger()->warn('Undefined flow module in bean list: ' . $this->flow_module);
         }
 
-        if($flowModule){
+        if ($flowModule) {
             $module = new $beanList[$this->flow_module]();
 
             $query = '';
@@ -269,19 +269,26 @@ class AOW_WorkFlow extends Basic
         return null;
     }
 
-    public function build_flow_custom_query_join($name, $custom_name, SugarBean $module,
-            $query = array()) {
-        if(!isset($query['join'][$custom_name])) {
+    public function build_flow_custom_query_join(
+        $name,
+        $custom_name,
+        SugarBean $module,
+            $query = array()
+    ) {
+        if (!isset($query['join'][$custom_name])) {
             $query['join'][$custom_name] = 'LEFT JOIN '.$module->get_custom_table_name()
                     .' '.$custom_name.' ON '.$name.'.id = '. $custom_name.'.id_c ';
         }
         return $query;
     }
 
-    function build_flow_relationship_query_join($name, SugarBean $module,
-            $query = array()) {
-        if(!isset($query['join'][$name])) {
-            if($module->load_relationship($name)) {
+    public function build_flow_relationship_query_join(
+        $name,
+        SugarBean $module,
+            $query = array()
+    ) {
+        if (!isset($query['join'][$name])) {
+            if ($module->load_relationship($name)) {
                 $params['join_type'] = 'LEFT JOIN';
                 $params['join_table_alias'] = $name;
                 $join = $module->$name->getJoin($params, true);
@@ -304,7 +311,7 @@ class AOW_WorkFlow extends Basic
             LoggerManager::getLogger()->warn('Undefined flow module in bean list: ' . $this->flow_module);
         }
 
-        if($flowModule){
+        if ($flowModule) {
             $module = new $beanList[$this->flow_module]();
 
             $sql = "SELECT id FROM aow_conditions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
@@ -340,8 +347,7 @@ class AOW_WorkFlow extends Basic
                 }
             }
 
-            if(!$this->multiple_runs){
-
+            if (!$this->multiple_runs) {
                 if (!isset($query['where'])) {
                     LoggerManager::getLogger()->warn('Undefined index: where');
                     $query['where'] = [];
@@ -363,11 +369,14 @@ class AOW_WorkFlow extends Basic
 
         $condition_module = $module;
         $table_alias = $condition_module->table_name;
-        if(isset($path[0]) && $path[0] != $module->module_dir){
-            foreach($path as $rel){
-                $query = $this->build_flow_relationship_query_join($rel,
-                        $condition_module, $query);
-                $condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
+        if (isset($path[0]) && $path[0] != $module->module_dir) {
+            foreach ($path as $rel) {
+                $query = $this->build_flow_relationship_query_join(
+                    $rel,
+                        $condition_module,
+                    $query
+                );
+                $condition_module = new $beanList[getRelatedModule($condition_module->module_dir, $rel)];
                 $table_alias = $rel;
             }
         }
@@ -382,8 +391,12 @@ class AOW_WorkFlow extends Basic
             }
             if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                 $field = $table_alias.'_cstm.'.$condition->field;
-                $query = $this->build_flow_custom_query_join($table_alias,
-                    $table_alias.'_cstm', $condition_module, $query);
+                $query = $this->build_flow_custom_query_join(
+                    $table_alias,
+                    $table_alias.'_cstm',
+                    $condition_module,
+                    $query
+                );
             } else {
                 $field = $table_alias.'.'.$condition->field;
             }
@@ -409,8 +422,11 @@ class AOW_WorkFlow extends Basic
                     if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $value = $module->table_name.'_cstm.'.$condition->value;
                         $query = $this->build_flow_custom_query_join(
-                                $module->table_name, $module->table_name.'_cstm',
-                                $module, $query);
+                                $module->table_name,
+                            $module->table_name.'_cstm',
+                                $module,
+                            $query
+                        );
                     } else {
                         $value = $module->table_name.'.'.$condition->value;
                     }
@@ -427,8 +443,8 @@ class AOW_WorkFlow extends Basic
                         $params = [null];
                     }
 
-                    if($params[0] == 'now'){
-                        if($sugar_config['dbconfig']['db_type'] == 'mssql'){
+                    if ($params[0] == 'now') {
+                        if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                             $value  = 'GetUTCDate()';
                         } else {
                             $value = 'UTC_TIMESTAMP()';
@@ -449,11 +465,14 @@ class AOW_WorkFlow extends Basic
                             LoggerManager::getLogger()->warn('Filed def data is missing: ' . get_class($module) . '::$field_defs[' . $params[0] . ']');
                         }
 
-                        if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
+                        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                             $value = $module->table_name.'_cstm.'.$params[0];
                             $query = $this->build_flow_custom_query_join(
-                                    $module->table_name, $module->table_name.'_cstm',
-                                    $module, $query);
+                                    $module->table_name,
+                                $module->table_name.'_cstm',
+                                    $module,
+                                $query
+                            );
                         } else {
                             $value = $module->table_name.'.'.$params[0];
                         }
@@ -483,7 +502,6 @@ class AOW_WorkFlow extends Basic
                                 if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                                     $value = "DATEADD(".$params[3].",  ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2], $value)";
                                 } else {
-
                                     if (!isset($params)) {
                                         LoggerManager::getLogger()->warn('Undefined variable: param');
                                         $params = [null, null, null, null];

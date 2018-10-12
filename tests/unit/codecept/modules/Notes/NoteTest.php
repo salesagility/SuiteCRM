@@ -86,7 +86,7 @@ class NoteTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushGlobals();
         $state->pushTable('tracker');
 
-    // test
+        // test
         
         $note = new Note();
 
@@ -202,7 +202,7 @@ class NoteTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $note = new Note();
 

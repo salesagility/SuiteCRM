@@ -81,7 +81,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-    // test
+        // test
         
         $projectTask = new ProjectTask();
 
@@ -310,7 +310,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $projectTask = new ProjectTask();
 

@@ -22,7 +22,7 @@ class ViewListTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-    // test
+        // test
         
         
         $query = "SELECT * FROM aod_index";
@@ -99,7 +99,7 @@ class ViewListTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-    // test
+        // test
         
         //execute the contructor and check for the Object type and type attribute
         $view = new ViewList();
@@ -126,8 +126,7 @@ class ViewListTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-    // test
-        
+        // test
         
         
         
@@ -177,7 +176,7 @@ class ViewListTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-    // test
+        // test
         
         
         //test without any REQUEST parameters set. it will set searchform attribute to a searchform object.
@@ -215,7 +214,7 @@ class ViewListTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-    // test
+        // test
         
         //test without use_old_search. it should return html.
         $view = new ViewList();
@@ -257,7 +256,7 @@ class ViewListTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-    // test
+        // test
         
         //execute the method and test if it sets the lv attribute to ListViewSmarty object.
         $view = new ViewList();
@@ -284,7 +283,7 @@ class ViewListTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-    // test
+        // test
         
         
         $query = "SELECT * FROM email_addresses";

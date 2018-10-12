@@ -359,8 +359,8 @@
         /**
          * get ics file content for meeting invite email
          */
-        public static function get_ical_event(SugarBean $bean, User $user) {
-
+        public static function get_ical_event(SugarBean $bean, User $user)
+        {
             global $timedate;
             $ical_array = array();
 

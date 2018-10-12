@@ -42,8 +42,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-    // test
-        
+        // test
         
         
         $SugarView = new SugarView();

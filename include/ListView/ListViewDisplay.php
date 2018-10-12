@@ -190,18 +190,16 @@ class ListViewDisplay
         return true;
     }
 
-	public function setupFilterFields($filter_fields = array())
-	{
-		// create filter fields based off of display columns
-        if(empty($filter_fields) || $this->mergeDisplayColumns) {
-
+    public function setupFilterFields($filter_fields = array())
+    {
+        // create filter fields based off of display columns
+        if (empty($filter_fields) || $this->mergeDisplayColumns) {
             if (!is_array($this->displayColumns)) {
                 LoggerManager::getLogger()->warn('displayColumns is not an array');
             }
 
-            foreach((array)$this->displayColumns as $columnName => $def) {
-
-               $filter_fields[strtolower($columnName)] = true;
+            foreach ((array)$this->displayColumns as $columnName => $def) {
+                $filter_fields[strtolower($columnName)] = true;
 
                 if (isset($this->seed->field_defs[strtolower($columnName)]['type']) &&
                strtolower($this->seed->field_defs[strtolower($columnName)]['type']) == 'currency' &&

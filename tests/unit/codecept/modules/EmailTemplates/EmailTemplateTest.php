@@ -67,7 +67,7 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         
         $emailTemplate = new EmailTemplate();

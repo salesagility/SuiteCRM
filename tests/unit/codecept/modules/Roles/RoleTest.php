@@ -101,7 +101,7 @@ class RoleTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-    // test
+        // test
         
         $role = new Role();
 

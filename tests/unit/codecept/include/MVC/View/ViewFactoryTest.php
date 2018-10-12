@@ -35,7 +35,7 @@ class ViewFactoryTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertSame($options, $view->options);
 
         //check with a valid module which does not implement it's own view config. method must not change the view options.
-         $view = ViewFactory::loadView('detail', 'Users');
+        $view = ViewFactory::loadView('detail', 'Users');
         $options = $view->options;
         ViewFactory::_loadConfig($view, 'detail');
         $this->assertSame($options, $view->options);

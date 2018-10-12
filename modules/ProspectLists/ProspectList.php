@@ -390,20 +390,21 @@ FROM prospect_lists_prospects plp
     }
 
 
-	public function get_list_view_data(){
-		$temp_array = $this->get_list_view_array();
-		$temp_array["ENTRY_COUNT"] = $this->get_entry_count();
-		return $temp_array;
-	}
-	/**
-		builds a generic search based on the query string using or
-		do not include any $this-> because this is called on without having the class instantiated
-	*/
-	function build_generic_where_clause ($the_query_string)
-	{
-		$where_clauses = Array();
-		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
-		array_push($where_clauses, "prospect_lists.name like '$the_query_string%'");
+    public function get_list_view_data()
+    {
+        $temp_array = $this->get_list_view_array();
+        $temp_array["ENTRY_COUNT"] = $this->get_entry_count();
+        return $temp_array;
+    }
+    /**
+        builds a generic search based on the query string using or
+        do not include any $this-> because this is called on without having the class instantiated
+    */
+    public function build_generic_where_clause($the_query_string)
+    {
+        $where_clauses = array();
+        $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
+        array_push($where_clauses, "prospect_lists.name like '$the_query_string%'");
 
         $the_where = "";
         foreach ($where_clauses as $clause) {

@@ -74,7 +74,6 @@ class ProjectTest extends SuiteCRM\StateCheckerUnitAbstract
         
         
         
-        
         $project = new Project();
 
         $project->id =1;

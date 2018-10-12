@@ -55,7 +55,7 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
 
-    // test
+        // test
         
         $jjwgAddressCache = new jjwg_Address_Cache();
 

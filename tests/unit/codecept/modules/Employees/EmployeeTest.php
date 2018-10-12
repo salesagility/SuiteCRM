@@ -101,7 +101,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-    // test
+        // test
         
         $employee = new Employee();
         $this->assertEquals(true, $employee->verify_data());
@@ -245,7 +245,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-    // test
+        // test
         
         
         $employee = new Employee();

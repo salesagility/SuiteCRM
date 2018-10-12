@@ -44,8 +44,8 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerUnitAbstract
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-         //execute the method with parameters and verify that it returns true
-         $hits = $aod_index->find('/');
+        //execute the method with parameters and verify that it returns true
+        $hits = $aod_index->find('/');
         $this->assertTrue(is_array($hits));
     }
 
@@ -57,7 +57,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
 
-    // test
+        // test
         
         $aod_index = new AOD_Index();
         $aod_index->id = 1;

@@ -51,7 +51,6 @@ include_once __DIR__ . '/../../../include/utils.php';
 
 class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
 {
-    
     public function testGetAppString()
     {
         global $app_strings;

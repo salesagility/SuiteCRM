@@ -95,7 +95,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerUnitAbstract
 
         //test without a last_run date
         //@todo: NEEDS FIXING - are we sure?
-        
+        //$this->assertFalse($aorScheduledReports->shouldRun(new DateTime()) );
 
         //test without a older last_run date
         $aorScheduledReports->last_run = date("d-m-y H:i:s", mktime(0, 0, 0, 10, 3, 2014));

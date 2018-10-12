@@ -50,7 +50,7 @@ class MeetingTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $meeting = new Meeting();
 
@@ -96,7 +96,7 @@ class MeetingTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-    // test
+        // test
         
         $meeting = new Meeting();
 
@@ -176,7 +176,7 @@ class MeetingTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $meeting = new Meeting();
 
@@ -217,7 +217,7 @@ class MeetingTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $meeting = new Meeting();
         $current_theme = SugarThemeRegistry::current();
@@ -388,7 +388,7 @@ class MeetingTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $meeting = new Meeting();
 

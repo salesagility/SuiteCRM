@@ -215,7 +215,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-    // test
+        // test
         
         $opportunity = new Opportunity();
 
@@ -326,7 +326,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $opportunity = new Opportunity();
 

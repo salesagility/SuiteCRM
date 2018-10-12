@@ -45,13 +45,13 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('config');
         $state->pushTable('tracker');
 
-    // test
+        // test
         
         $jjwgMaps = new jjwg_Maps();
 
@@ -148,7 +148,7 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('accounts_cstm');
 
-    // test
+        // test
         
         $jjwgMaps = new jjwg_Maps();
 
@@ -176,7 +176,7 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('accounts_cstm');
 
-    // test
+        // test
         
         $jjwgMaps = new jjwg_Maps();
         $bean = new Account();

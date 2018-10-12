@@ -170,7 +170,6 @@ class ContactTest extends SuiteCRM\StateCheckerUnitAbstract
         
         
         
-        
         $contact = new Contact();
 
         //execute the method and test if it works and does not throws an exception.

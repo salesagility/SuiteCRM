@@ -82,7 +82,7 @@
       self.messageBox.hideFooter();
       self.messageBox.setTitle(SUGAR.language.translate('', 'LBL_EMAIL_IMPORTING_EMAIL'));
 
-      var view = self.messageBox.controls.modal.content.find('[name="EditView"]');
+      var view = self.messageBox.controls.modal.content.find('[name="EditNonImported"]');
       var action = 'index.php?module=Emails&action=ImportAndShowDetailView&folder=INBOXTestInbox&folder=inbound'+
         '&inbound_email_record='+self.email.inboundEmailRecord +
         '&uid='+ self.email.uid +

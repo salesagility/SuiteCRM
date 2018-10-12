@@ -498,7 +498,7 @@ class EmailsController extends SugarController
         }
 
         if (isset($sugar_config['email_allow_send_as_user']) && ($sugar_config['email_allow_send_as_user'])) {
-            require_once ('include/SugarEmailAddress/SugarEmailAddress.php');
+            require_once('include/SugarEmailAddress/SugarEmailAddress.php');
             $sugarEmailAddress = new SugarEmailAddress();
             $userAddressesArr = $sugarEmailAddress->getAddressesByGUID($current_user->id, 'Users');
             foreach ($userAddressesArr as $userAddress) {

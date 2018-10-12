@@ -15,13 +15,13 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         //self::markTestIncomplete('Test changes error level');
 
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('inbound_email');
         
 
-    // test
+        // test
         
         //execute the contructor and check for the Object type and  attributes
         $lead = BeanFactory::getBean('Leads');
@@ -187,8 +187,8 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('sugarfeed');
         $state->pushTable('tracker');
 
-    // test
-        $lead = BeanFactory::getBean('Leads');
+        // test
+        $lead = new Lead();
 
         $lead->first_name = "firstn";
         $lead->last_name = "lastn";
@@ -230,7 +230,7 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
 
-    // test
+        // test
         
         $lead = BeanFactory::getBean('Leads');
 
@@ -355,7 +355,7 @@ class LeadTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $lead = BeanFactory::getBean('Leads');
 

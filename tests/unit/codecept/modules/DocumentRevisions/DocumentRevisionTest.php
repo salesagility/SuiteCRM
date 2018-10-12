@@ -169,7 +169,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $documentRevision = new DocumentRevision();
 
-            //execute the method and test if it works and does not throws an exception.
+        //execute the method and test if it works and does not throws an exception.
         try {
             $documentRevision->fill_in_additional_detail_fields();
             $this->assertTrue(true);

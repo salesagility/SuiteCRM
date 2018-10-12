@@ -214,7 +214,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-    // test
+        // test
         
         $scheduler = new Scheduler();
 
@@ -267,12 +267,12 @@ class SchedulerTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         self::markTestIncomplete('environment dependency');
 
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
 
-    // test
+        // test
         
         $scheduler = new Scheduler();
 
@@ -343,12 +343,12 @@ class SchedulerTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         self::markTestIncomplete('environment dependency');
 
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
 
-    // test
+        // test
         
         $scheduler = new Scheduler();
 
@@ -382,12 +382,12 @@ class SchedulerTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testget_summary_text()
     {
         self::markTestIncomplete('environment dependency');
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
 
-    // test
+        // test
         
         $scheduler = new Scheduler();
 
@@ -407,12 +407,12 @@ class SchedulerTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-    // save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
 
-    // test
+        // test
         
         $result = Scheduler::getJobsList();
         $this->assertTrue(is_array($result));

@@ -79,6 +79,7 @@ SuiteCRM.kdev4
 vendor/
 public/
 
+
 #Ignore bower_components
 bower_components/
 node_modules/
