@@ -64,6 +64,8 @@ class ImapHandlerFactory
         'calls' => 'include/Imap/ImapHandlerFakeCalls.php',
     ];
     
+    const SETTINGS_KEY_FILE = __DIR__ . '/ImapTestSettings.txt';
+    
     /**
      *
      */
@@ -82,8 +84,9 @@ class ImapHandlerFactory
      */
     protected function loadTestSettings($testSettings = null) {
         if (!$testSettings) {
-            global $sugar_config;
-            $testSettings = isset($sugar_config['imap_test_settings']) ? $sugar_config['imap_test_settings'] : null;
+            if (file_exists(self::SETTINGS_KEY_FILE)) {
+                $testSettings = file_get_contents(self::SETTINGS_KEY_FILE);
+            }
             if (!$testSettings) {
                 throw new Exception("Test settings not set.", self::ERR_TEST_SET_NOT_FOUND);
             }
