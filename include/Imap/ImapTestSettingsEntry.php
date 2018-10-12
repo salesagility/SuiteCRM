@@ -54,13 +54,11 @@ if (!$key) {
     if (!isset($calls[$key])) {
         echo 'Key not found: ' . $key;
     } else {
-        
         if (!file_put_contents(ImapHandlerFactory::SETTINGS_KEY_FILE, $key)) {
             echo 'save error';
         } else {
             echo "OK: test entry set to: $key";
         }
-        
     }
 }
 exit;

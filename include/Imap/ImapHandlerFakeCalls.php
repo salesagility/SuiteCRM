@@ -57,7 +57,7 @@ return $calls = [
         'open' => [
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/validate-cert/secure}INBOX', 'testuser_name', 'testuser_pass', 0, 0, []],
-                'return' => function() {
+                'return' => function () {
                     return fopen('fakeImapResource', 'w+'); // <-- create and return a fake resource for InboundEmail test usages
                 },
             ],
@@ -66,12 +66,12 @@ return $calls = [
         'getAlerts' => [['args' => null, 'return' => false]],
         'getConnection' => [],
         'close' => [
-            ['args' => null, 'return' => function() {
-                    if (file_exists('fakeImapResource')) {
-                        unlink('fakeImapResource');
-                    }
-                    return true; // <-- when ImapHandlerFake::close() called, pass back a "TRUE" as success
-                }],
+            ['args' => null, 'return' => function () {
+                if (file_exists('fakeImapResource')) {
+                    unlink('fakeImapResource');
+                }
+                return true; // <-- when ImapHandlerFake::close() called, pass back a "TRUE" as success
+            }],
         ],
     // ... add more possible calls here...
     ],
@@ -298,4 +298,3 @@ return $calls = [
 //    // ... add more possible calls here...
     ],
 ];
-

@@ -52,19 +52,26 @@ require_once __DIR__ . '/ImapHandler.php';
  */
 class ImapHandlerFactory
 {
-    
     const ERR_TEST_SET_NOT_FOUND = 1;
     const ERR_TEST_SET_NOT_EXISTS = 2;
     
+    const SETTINGS_KEY_FILE = __DIR__ . '/ImapTestSettings.txt';
+    
+    /**
+     *
+     * @var ImapHandlerInterface
+     */
     protected $interfaceObject = null;
     
+    /**
+     *
+     * @var array
+     */
     protected $imapHandlerTestInterface = [
         'file' => 'include/Imap/ImapHandlerFake.php',
         'class' => 'ImapHandlerFake',
         'calls' => 'include/Imap/ImapHandlerFakeCalls.php',
     ];
-    
-    const SETTINGS_KEY_FILE = __DIR__ . '/ImapTestSettings.txt';
     
     /**
      *
@@ -77,12 +84,13 @@ class ImapHandlerFactory
     }
     
     /**
-     * 
+     *
      * @global array $sugar_config
      * @param string $testSettings
      * @throws Exception
      */
-    protected function loadTestSettings($testSettings = null) {
+    protected function loadTestSettings($testSettings = null)
+    {
         if (!$testSettings) {
             if (file_exists(self::SETTINGS_KEY_FILE)) {
                 $testSettings = file_get_contents(self::SETTINGS_KEY_FILE);
@@ -116,7 +124,7 @@ class ImapHandlerFactory
     {
         if (null === $this->interfaceObject) {
             global $sugar_config;
-            $test = isset($sugar_config['imap_test']) && $sugar_config['imap_test'];            
+            $test = isset($sugar_config['imap_test']) && $sugar_config['imap_test'];
             
             if ($sugar_config['developerMode']) {
                 $logErrors = true;
