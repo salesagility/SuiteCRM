@@ -62,7 +62,7 @@ if (!$key) {
     }
 }
 if (!empty($error)) {
-    echo $error;
+    echo "ERROR: $error";
 } else {
     // TODO: should it be translatable?
     echo "OK: test settings changed to '$key'\n";

@@ -150,7 +150,7 @@ class ImapHandlerFactory
             global $sugar_config;
             $test = isset($sugar_config['imap_test']) && $sugar_config['imap_test'];
             
-            if ($sugar_config['developerMode']) {
+            if (inDeveloperMode()) {
                 $logErrors = true;
                 $logCalls = true;
             } else {
