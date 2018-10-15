@@ -249,7 +249,8 @@ class ImapHandlerFake implements ImapHandlerInterface
     /**
      * @return bool
      */
-    public function expunge() {
+    public function expunge()
+    {
         return $this->fakes->call('expunge', []);
     }
 }

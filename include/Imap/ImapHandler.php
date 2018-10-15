@@ -375,7 +375,8 @@ class ImapHandler implements ImapHandlerInterface
      * @param int $msg_number
      * @return int
      */
-    public function getUid($msg_number) {
+    public function getUid($msg_number)
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = imap_uid($this->stream, $msg_number);
         $this->logReturn(__FUNCTION__, $ret);
@@ -384,7 +385,8 @@ class ImapHandler implements ImapHandlerInterface
     /**
      * @return bool
      */
-    public function expunge() {
+    public function expunge()
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = imap_append($this->stream);
         if (!$ret) {
@@ -392,5 +394,4 @@ class ImapHandler implements ImapHandlerInterface
         }
         $this->logReturn(__FUNCTION__, $ret);
     }
-
 }

@@ -600,7 +600,7 @@ function pollMonitoredInboxesAOP()
                         if ($aopInboundEmailX->isPop3Protocol()) {
                             $uid = $msgNoToUIDL[$msgNo];
                         } else {
-                            $uid = imap_uid($aopInboundEmailX->conn, $msgNo);
+                            $uid = $aopInboundEmailX->getImap()->getUid($msgNo);
                         } // else
                         if ($isGroupFolderExists) {
                             if ($aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists)) {
@@ -626,7 +626,7 @@ function pollMonitoredInboxesAOP()
 
                                 $aopInboundEmailX->getMessagesInEmailCache($msgNo, $uid);
                                 $email = new Email();
-                                $header = imap_headerinfo($aopInboundEmailX->conn, $msgNo);
+                                $header = $aopInboundEmailX->getImap()->getHeaderInfo($msgNo);
                                 $email->name = $aopInboundEmailX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $aopInboundEmailX->convertImapToSugarEmailAddress($header->from);
                                 isValidEmailAddress($email->from_addr);
@@ -662,8 +662,8 @@ function pollMonitoredInboxesAOP()
                 // cn: bug 9171 - continue while
             } // else
         } // foreach
-        imap_expunge($aopInboundEmailX->conn);
-        imap_close($aopInboundEmailX->conn, CL_EXPUNGE);
+        $aopInboundEmailX->getImap()->expunge();
+        $aopInboundEmailX->getImap()->close(CL_EXPUNGE);
     } // while
     return true;
 }

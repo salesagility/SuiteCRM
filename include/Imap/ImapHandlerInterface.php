@@ -159,7 +159,7 @@ interface ImapHandlerInterface
     public function getHeaderInfo($msg_number, $fromlength = 0, $subjectlength = 0, $defaulthost = null);
     
     /**
-     * 
+     *
      * @param type $msg_number
      * @param type $options
      * @return string
@@ -167,7 +167,7 @@ interface ImapHandlerInterface
     public function fetchHeader($msg_number, $options = 0);
     
     /**
-     * 
+     *
      * @param string $mailbox
      * @param string $message
      * @param string $options
@@ -177,7 +177,7 @@ interface ImapHandlerInterface
     public function append($mailbox, $message, $options = null, $internal_date = null);
     
     /**
-     * 
+     *
      * @param int $msg_number
      * @return int
      */
