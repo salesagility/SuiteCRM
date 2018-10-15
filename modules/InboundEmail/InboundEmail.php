@@ -3870,7 +3870,7 @@ class InboundEmail extends SugarBean
 
     public function getMessageTextFromSingleMimePartWithUid($uid, $section, $structure)
     {
-        $msgPartTmp = this->imap->fetchBody($uid, $section, FT_UID);
+        $msgPartTmp = $this->imap->fetchBody($uid, $section, FT_UID);
         $enc = $this->getEncodingFromBreadCrumb($section, $structure->parts);
         $charset = $this->getCharsetFromBreadCrumb($section, $structure->parts);
         $msgPartTmp = $this->handleTranserEncoding($msgPartTmp, $enc);
