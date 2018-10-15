@@ -57,7 +57,7 @@ class ImapHandlerFactory
     const ERR_KEY_NOT_FOUND = 3;
     const ERR_KEY_SAVE_ERROR = 4;
     
-    const SETTINGS_KEY_FILE = __DIR__ . '/ImapTestSettings.txt';
+    const SETTINGS_KEY_FILE = '/ImapTestSettings.txt';
     
     /**
      *
@@ -94,8 +94,8 @@ class ImapHandlerFactory
     protected function loadTestSettings($testSettings = null)
     {
         if (!$testSettings) {
-            if (file_exists(self::SETTINGS_KEY_FILE)) {
-                $testSettings = file_get_contents(self::SETTINGS_KEY_FILE);
+            if (file_exists(__DIR__ . self::SETTINGS_KEY_FILE)) {
+                $testSettings = file_get_contents(__DIR__ . self::SETTINGS_KEY_FILE);
             }
             if (!$testSettings) {
                 throw new Exception("Test settings not set.", self::ERR_TEST_SET_NOT_FOUND);
@@ -128,7 +128,7 @@ class ImapHandlerFactory
         if (!isset($calls[$key])) {
             throw new Exception('Key not found: ' . $key, self::ERR_KEY_NOT_FOUND);
         } else {
-            if (!file_put_contents(ImapHandlerFactory::SETTINGS_KEY_FILE, $key)) {
+            if (!file_put_contents(__DIR__ . self::SETTINGS_KEY_FILE, $key)) {
                 throw new Exception('Key save error', self::ERR_KEY_SAVE_ERROR);
             } else {
                 return true;
