@@ -212,6 +212,15 @@ class InboundEmail extends SugarBean
         $this->overview = new Overview();
         $this->imagePrefix = "{$GLOBALS['sugar_config']['site_url']}/cache/images/";
     }
+    
+    /**
+     *
+     * @return ImapHandlerInterface
+     */
+    public function getImap()
+    {
+        return $this->imap;
+    }
 
     /**
      * retrieves I-E bean
@@ -6255,7 +6264,7 @@ class InboundEmail extends SugarBean
                 $successful = true;
             }
 
-            if ($successful) {                
+            if ($successful) {
                 if ($this->protocol == 'imap') {
                     $msg .= $mod_strings['LBL_TEST_SUCCESSFUL'];
                 } else {
@@ -6273,7 +6282,6 @@ class InboundEmail extends SugarBean
             
 
             return $msg;
-            
         } elseif (!is_resource($this->imap->getConnection())) {
             $GLOBALS['log']->info('Couldn\'t connect to mail server id: ' . $this->id);
 

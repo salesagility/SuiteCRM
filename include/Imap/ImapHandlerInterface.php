@@ -165,4 +165,13 @@ interface ImapHandlerInterface
      * @return string
      */
     public function fetchHeader($msg_number, $options = 0);
+    
+    /**
+     * 
+     * @param string $mailbox
+     * @param string $message
+     * @param string $options
+     * @param string $internal_date
+     */
+    public function append($mailbox, $message, $options = null, $internal_date = null);
 }

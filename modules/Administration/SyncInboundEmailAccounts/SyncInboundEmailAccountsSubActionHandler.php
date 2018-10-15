@@ -67,7 +67,7 @@ class SyncInboundEmailAccountsSubActionHandler
      * @var DBManager
      */
     protected $db;
-    
+
     /**
      *
      * @var ImapHandlerInterface

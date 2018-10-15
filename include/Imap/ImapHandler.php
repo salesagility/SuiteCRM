@@ -338,16 +338,34 @@ class ImapHandler implements ImapHandlerInterface
     }
     
     /**
-     * 
+     *
      * @param type $msg_number
      * @param type $options
      * @return string
      */
-    public function fetchHeader($msg_number, $options = 0) {
+    public function fetchHeader($msg_number, $options = 0)
+    {
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = imap_fetchheader($this->stream, $msg_number, $options);
         $this->logReturn(__FUNCTION__, $ret);
         return $ret;
     }
 
+    /**
+     *
+     * @param string $mailbox
+     * @param string $message
+     * @param string $options
+     * @param string $internal_date
+     */
+    public function append($mailbox, $message, $options = null, $internal_date = null)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_append($this->stream, $msg_number, $fromlength, $subjectlength, $defaulthost);
+        if (!$ret) {
+            $this->log(['IMAP append error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
 }
