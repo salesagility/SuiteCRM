@@ -200,7 +200,7 @@ class SugarFieldDatetime extends SugarFieldBase
         global $timedate,$current_user;
 
         //check to see if the date is in the proper format
-        $user_dateFormat = $timedate->get_date_format();
+        $user_dateFormat = $timedate->get_date_time_format();
         if (!empty($vardef['value']) && !$timedate->check_matching_format($vardef['value'], $user_dateFormat)) {
 
             //date is not in proper user format, so get the SugarDateTiemObject and inject the vardef with a new element
