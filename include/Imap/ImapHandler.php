@@ -362,7 +362,7 @@ class ImapHandler implements ImapHandlerInterface
     public function append($mailbox, $message, $options = null, $internal_date = null)
     {
         $this->logCall(__FUNCTION__, func_get_args());
-        $ret = imap_append($this->stream, $msg_number, $fromlength, $subjectlength, $defaulthost);
+        $ret = imap_append($this->stream, $mailbox, $message, $options, $internal_date);
         if (!$ret) {
             $this->log(['IMAP append error']);
         }
@@ -380,6 +380,7 @@ class ImapHandler implements ImapHandlerInterface
         $this->logCall(__FUNCTION__, func_get_args());
         $ret = imap_uid($this->stream, $msg_number);
         $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
     }
     
     /**
@@ -393,5 +394,349 @@ class ImapHandler implements ImapHandlerInterface
             $this->log(['IMAP expunge error']);
         }
         $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     * @return object|bool Returns FALSE on failure.
+     */
+    public function check()
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_check($this->stream);
+        if (!$ret) {
+            $this->log(['IMAP check error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $sequence
+     * @param string $flag
+     * @param int $options
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function clearFlagFull($sequence, $flag, $options = 0)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_clearflag_full($this->stream, $sequence, $flag, $options);
+        if (!$ret) {
+            $this->log(['IMAP clearFlagFull error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+    
+    /**
+     *
+     * @param string $mailbox
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function createMailbox($mailbox)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_createmailbox($this->stream, $mailbox);
+        if (!$ret) {
+            $this->log(['IMAP createMailbox error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param int $msg_number
+     * @param int $options
+     * @return bool Returns TRUE.
+     */
+    public function delete($msg_number, $options = 0)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_delete($this->stream, $msg_number, $options);
+        if (!$ret) {
+            $this->log(['IMAP delete error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $mailbox
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function deleteMailbox($mailbox)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_deletemailbox($this->stream, $mailbox);
+        if (!$ret) {
+            $this->log(['IMAP deleteMailbox error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param int $msg_number
+     * @param string $section
+     * @param int $options
+     * @return string
+     */
+    public function fetchBody($msg_number, $section, $options = 0)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_fetchbody($this->stream, $msg_number, $section, $options);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $sequence
+     * @param int $options
+     * @return array
+     */
+    public function fetchOverview($sequence, $options = 0)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_fetchbody($this->stream, $sequence, $options);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param int $msg_number
+     * @param int $options
+     * @return object
+     */
+    public function fetchStructure($msg_number, $options = 0)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_fetchstructure($this->stream, $msg_number, $options);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param int $msg_number
+     * @param int $options
+     * @return string
+     */
+    public function getBody($msg_number, $options)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_body($this->stream, $msg_number, $options);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     * @return int|bool Return the number of messages in the current mailbox, as an integer, or FALSE on error.
+     */
+    public function getNumberOfMessages()
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_num_msg($this->stream);
+        if (!$ret) {
+            $this->log(['IMAP getNumberOfMessages error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $mailbox
+     * @param int $options
+     * @return object
+     */
+    public function getStatus($mailbox, $options)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_status($this->stream, $mailbox, $options);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $msglist
+     * @param string $mailbox
+     * @param int $options
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function mailCopy($msglist, $mailbox, $options = 0)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_mail_copy($this->stream, $msglist, $mailbox, $options);
+        if (!$ret) {
+            $this->log(['IMAP mailCopy error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $msglist
+     * @param string $mailbox
+     * @param int $options
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function mailMove($msglist, $mailbox, $options = 0)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_mail_move($this->stream, $msglist, $mailbox, $options);
+        if (!$ret) {
+            $this->log(['IMAP mailMove error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $text
+     * @return array
+     */
+    public function mimeHeaderDecode($text)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_mime_header_decode($text);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $old_mbox
+     * @param string $new_mbox
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function renameMailbox($old_mbox, $new_mbox)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_renamemailbox($this->stream, $old_mbox, $new_mbox);
+        if (!$ret) {
+            $this->log(['IMAP renameMailbox error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $headers
+     * @param string $defaulthost
+     * @return object
+     */
+    public function rfc822ParseHeaders($headers, $defaulthost = "UNKNOWN")
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_rfc822_parse_headers($headers, $defaulthost);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $criteria
+     * @param int $options
+     * @param string $charset
+     * @return array|bool Return FALSE if it does not understand the search criteria or no messages have been found.
+     */
+    public function search($criteria, $options = SE_FREE, $charset = null)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_search($this->stream, $criteria, $options, $charset);
+        if (!$ret) {
+            $this->log(['IMAP search error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $sequence
+     * @param string $flag
+     * @param int $options
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function setFlagFull($sequence, $flag, $options = NIL)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_setflag_full($this->stream, $sequence, $flag, $options);
+        if (!$ret) {
+            $this->log(['IMAP setFlagFull error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $mailbox
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function subscribe($mailbox)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_subscribe($this->stream, $mailbox);
+        if (!$ret) {
+            $this->log(['IMAP subscribe error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $mailbox
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function unsubscribe($mailbox)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_unsubscribe($this->stream, $mailbox);
+        if (!$ret) {
+            $this->log(['IMAP unsubscribe error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $data
+     * @return string|bool FALSE if text contains invalid modified UTF-7 sequence or text contains a character that is not part of ISO-8859-1 character set.
+     */
+    public function utf7Encode($data)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_utf7_decode($data);
+        if (!$ret) {
+            $this->log(['IMAP utf7Encode error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param string $mime_encoded_text
+     * @return string
+     */
+    public function utf8($mime_encoded_text)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_utf8($mime_encoded_text);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
     }
 }

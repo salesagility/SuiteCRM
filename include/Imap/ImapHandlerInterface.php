@@ -187,4 +187,173 @@ interface ImapHandlerInterface
      * @return bool
      */
     public function expunge();
+    
+    /**
+     *
+     * @param string $old_mbox
+     * @param string $new_mbox
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function renameMailbox($old_mbox, $new_mbox);
+    
+    /**
+     * @return int|bool Return the number of messages in the current mailbox, as an integer, or FALSE on error.
+     */
+    public function getNumberOfMessages();
+    
+    /**
+     *
+     * @param string $sequence
+     * @param int $options
+     * @return array
+     */
+    public function fetchOverview($sequence, $options = 0);
+    
+    /**
+     *
+     * @param int $msg_number
+     * @param int $options
+     * @return object
+     */
+    public function fetchStructure($msg_number, $options = 0);
+    
+    /**
+     *
+     * @param int $msg_number
+     * @param int $options
+     * @return string
+     */
+    public function getBody($msg_number, $options);
+    
+    /**
+     *
+     * @param string $criteria
+     * @param int $options
+     * @param string $charset
+     * @return array|bool Return FALSE if it does not understand the search criteria or no messages have been found.
+     */
+    public function search($criteria, $options = SE_FREE, $charset = null);
+    
+    /**
+     *
+     * @param int $msg_number
+     * @param int $options
+     * @return bool Returns TRUE.
+     */
+    public function delete($msg_number, $options = 0);
+    
+    /**
+     *
+     * @param string $sequence
+     * @param string $flag
+     * @param int $options
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function clearFlagFull($sequence, $flag, $options = 0);
+    
+    /**
+     *
+     * @param string $sequence
+     * @param string $flag
+     * @param int $options
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function setFlagFull($sequence, $flag, $options = NIL);
+    
+    /**
+     *
+     * @param string $mailbox
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function unsubscribe($mailbox);
+
+    /**
+     *
+     * @param string $data
+     * @return string|bool FALSE if text contains invalid modified UTF-7 sequence or text contains a character that is not part of ISO-8859-1 character set.
+     */
+    public function utf7Encode($data);
+    
+    /**
+     *
+     * @param string $mailbox
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function deleteMailbox($mailbox);
+    
+    /**
+     *
+     * @param string $mailbox
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function createMailbox($mailbox);
+    
+    /**
+     *
+     * @param string $mailbox
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function subscribe($mailbox);
+    
+    /**
+     *
+     * @param string $mailbox
+     * @param int $options
+     * @return object
+     */
+    public function getStatus($mailbox, $options);
+    
+    /**
+     *
+     * @param string $mime_encoded_text
+     * @return string
+     */
+    public function utf8($mime_encoded_text);
+    
+    /**
+     *
+     * @param int $msg_number
+     * @param string $section
+     * @param int $options
+     * @return string
+     */
+    public function fetchBody($msg_number, $section, $options = 0);
+    
+    /**
+     *
+     * @param string $text
+     * @return array
+     */
+    public function mimeHeaderDecode($text);
+    
+    /**
+     *
+     * @param string $headers
+     * @param string $defaulthost
+     * @return object
+     */
+    public function rfc822ParseHeaders($headers, $defaulthost = "UNKNOWN");
+    
+    /**
+     * @return object|bool Returns FALSE on failure.
+     */
+    public function check();
+    
+    /**
+     *
+     * @param string $msglist
+     * @param string $mailbox
+     * @param int $options
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function mailCopy($msglist, $mailbox, $options = 0);
+    
+    /**
+     *
+     * @param string $msglist
+     * @param string $mailbox
+     * @param int $options
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function mailMove($msglist, $mailbox, $options = 0);
 }
