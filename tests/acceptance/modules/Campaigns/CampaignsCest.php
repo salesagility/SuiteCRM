@@ -107,7 +107,7 @@ class CampaignsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Campaigns $campaign
-     * @param \Step\Acceptance\InboundEmail $inboundEmail
+     * @param \Step\Acceptance\InboundEmailTester $inboundEmailTester
      * @param \Step\Acceptance\EmailMan $emailMan
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -120,7 +120,7 @@ class CampaignsCest
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Campaigns $campaign,
         \Step\Acceptance\EmailMan $emailMan,
-        \Step\Acceptance\InboundEmail $inboundEmail,
+        \Step\Acceptance\InboundEmailTester $inboundEmailTester,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Newsletter Campaign');
@@ -133,7 +133,7 @@ class CampaignsCest
 
         // Setup email settings
         $emailMan->createEmailSettings();
-        $inboundEmail->createBounceEmail();
+        $inboundEmailTester->createBounceEmail();
 
         // Navigate to campaigns list-view
         $campaign->gotoCampaigns();
