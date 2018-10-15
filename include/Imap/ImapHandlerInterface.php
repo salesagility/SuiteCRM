@@ -172,6 +172,19 @@ interface ImapHandlerInterface
      * @param string $message
      * @param string $options
      * @param string $internal_date
+     * @return bool
      */
     public function append($mailbox, $message, $options = null, $internal_date = null);
+    
+    /**
+     * 
+     * @param int $msg_number
+     * @return int
+     */
+    public function getUid($msg_number);
+    
+    /**
+     * @return bool
+     */
+    public function expunge();
 }

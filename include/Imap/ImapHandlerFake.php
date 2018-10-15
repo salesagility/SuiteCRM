@@ -221,7 +221,7 @@ class ImapHandlerFake implements ImapHandlerInterface
      */
     public function fetchHeader($msg_number, $options = 0)
     {
-        return $this->fakes->call('getHeaderInfo', [$msg_number, $options]);
+        return $this->fakes->call('fetchHeader', [$msg_number, $options]);
     }
 
     /**
@@ -233,6 +233,23 @@ class ImapHandlerFake implements ImapHandlerInterface
      */
     public function append($mailbox, $message, $options = null, $internal_date = null)
     {
-        return $this->fakes->call('getHeaderInfo', [$mailbox, $message, $options, $internal_date]);
+        return $this->fakes->call('append', [$mailbox, $message, $options, $internal_date]);
+    }
+    
+    /**
+     *
+     * @param int $msg_number
+     * @return int
+     */
+    public function getUid($msg_number)
+    {
+        return $this->fakes->call('getUid', [$msg_number]);
+    }
+    
+    /**
+     * @return bool
+     */
+    public function expunge() {
+        return $this->fakes->call('expunge', []);
     }
 }

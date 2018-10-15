@@ -357,6 +357,7 @@ class ImapHandler implements ImapHandlerInterface
      * @param string $message
      * @param string $options
      * @param string $internal_date
+     * @return bool
      */
     public function append($mailbox, $message, $options = null, $internal_date = null)
     {
@@ -368,4 +369,28 @@ class ImapHandler implements ImapHandlerInterface
         $this->logReturn(__FUNCTION__, $ret);
         return $ret;
     }
+
+    /**
+     *
+     * @param int $msg_number
+     * @return int
+     */
+    public function getUid($msg_number) {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_uid($this->stream, $msg_number);
+        $this->logReturn(__FUNCTION__, $ret);
+    }
+    
+    /**
+     * @return bool
+     */
+    public function expunge() {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_append($this->stream);
+        if (!$ret) {
+            $this->log(['IMAP expunge error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+    }
+
 }
