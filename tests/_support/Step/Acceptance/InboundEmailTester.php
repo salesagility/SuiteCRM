@@ -2,7 +2,7 @@
 
 namespace Step\Acceptance;
 
-class InboundEmail extends \AcceptanceTester
+class InboundEmailTester extends \AcceptanceTester
 {
     /**
      * Go to inbound email
