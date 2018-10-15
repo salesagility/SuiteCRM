@@ -286,4 +286,68 @@ class ImapHandler implements ImapHandlerInterface
         $this->logReturn(__FUNCTION__, $ret);
         return $ret;
     }
+
+    
+    /**
+     *
+     * @param int $criteria
+     * @param int $reverse
+     * @param int $options
+     * @param string $search_criteria
+     * @param string $charset
+     * @return array
+     */
+    public function sort($criteria, $reverse, $options = 0, $search_criteria = null, $charset = null)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_sort($this->stream, $criteria, $reverse, $options, $search_criteria, $charset);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
+    /**
+     *
+     * @param int $uid
+     * @return int
+     */
+    public function getMessageNo($uid)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_msgno($this->stream, $uid);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+    
+    /**
+     *
+     * @param int $msg_number
+     * @param int $fromlength
+     * @param int $subjectlength
+     * @param string $defaulthost
+     * @return bool|object Returns FALSE on error or, if successful, the information in an object
+     */
+    public function getHeaderInfo($msg_number, $fromlength = 0, $subjectlength = 0, $defaulthost = null)
+    {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_headerinfo($this->stream, $msg_number, $fromlength, $subjectlength, $defaulthost);
+        if (!$ret) {
+            $this->log(['IMAP get header info error']);
+        }
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+    
+    /**
+     * 
+     * @param type $msg_number
+     * @param type $options
+     * @return string
+     */
+    public function fetchHeader($msg_number, $options = 0) {
+        $this->logCall(__FUNCTION__, func_get_args());
+        $ret = imap_fetchheader($this->stream, $msg_number, $options);
+        $this->logReturn(__FUNCTION__, $ret);
+        return $ret;
+    }
+
 }

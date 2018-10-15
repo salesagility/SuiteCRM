@@ -175,4 +175,52 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('setTimeout', [$timeout_type, $timeout]);
     }
+    
+    /**
+     *
+     * @param int $criteria
+     * @param int $reverse
+     * @param int $options
+     * @param string $search_criteria
+     * @param string $charset
+     * @return array
+     */
+    public function sort($criteria, $reverse, $options = 0, $search_criteria = null, $charset = null)
+    {
+        return $this->fakes->call('sort', [$criteria, $reverse, $options, $search_criteria, $charset]);
+    }
+
+    /**
+     *
+     * @param int $uid
+     * @return int
+     */
+    public function getMessageNo($uid)
+    {
+        return $this->fakes->call('getMessageNo', [$uid]);
+    }
+    
+    /**
+     *
+     * @param int $msg_number
+     * @param int $fromlength
+     * @param int $subjectlength
+     * @param string $defaulthost
+     * @return bool|object Returns FALSE on error or, if successful, the information in an object
+     */
+    public function getHeaderInfo($msg_number, $fromlength = 0, $subjectlength = 0, $defaulthost = null)
+    {
+        return $this->fakes->call('getHeaderInfo', [$msg_number, $fromlength, $subjectlength, $defaulthost]);
+    }
+    
+    /**
+     * 
+     * @param type $msg_number
+     * @param type $options
+     * @return string
+     */
+    public function fetchHeader($msg_number, $options = 0) {
+        return $this->fakes->call('getHeaderInfo', [$msg_number, $options]);
+    }
+
 }

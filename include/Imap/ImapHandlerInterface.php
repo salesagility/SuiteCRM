@@ -129,4 +129,40 @@ interface ImapHandlerInterface
      * @return array
      */
     public function getMailboxes($ref, $pattern);
+    
+    /**
+     *
+     * @param int $criteria
+     * @param int $reverse
+     * @param int $options
+     * @param string $search_criteria
+     * @param string $charset
+     * @return array
+     */
+    public function sort($criteria, $reverse, $options = 0, $search_criteria = null, $charset = null);
+    
+    /**
+     *
+     * @param int $uid
+     * @return int
+     */
+    public function getMessageNo($uid);
+    
+    /**
+     *
+     * @param int $msg_number
+     * @param int $fromlength
+     * @param int $subjectlength
+     * @param string $defaulthost
+     * @return bool|object Returns FALSE on error or, if successful, the information in an object
+     */
+    public function getHeaderInfo($msg_number, $fromlength = 0, $subjectlength = 0, $defaulthost = null);
+    
+    /**
+     * 
+     * @param type $msg_number
+     * @param type $options
+     * @return string
+     */
+    public function fetchHeader($msg_number, $options = 0);
 }
