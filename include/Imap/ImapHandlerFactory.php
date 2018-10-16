@@ -75,6 +75,12 @@ class ImapHandlerFactory
         'calls' => 'include/Imap/ImapHandlerFakeCalls.php',
     ];
     
+    protected function setInterfaceObject(ImapHandlerInterface $interfaceObject) {
+        $class = get_class($interfaceObject);
+        LoggerManager::getLogger()->debug('ImapHandlerFactory will using a ' . $class);
+        $this->interfaceObject = $interfaceObject;
+    }
+    
     /**
      *
      */
@@ -98,7 +104,8 @@ class ImapHandlerFactory
                 $testSettings = file_get_contents(__DIR__ . self::SETTINGS_KEY_FILE);
             }
             if (!$testSettings) {
-                throw new Exception("Test settings not set.", self::ERR_TEST_SET_NOT_FOUND);
+                LoggerManager::getLogger()->warn("Test settings not set, create one with default key");
+                $this->saveTestSettingsKey('testSettingsOk');
             }
         }
         $this->includeFakeInterface();
@@ -112,7 +119,7 @@ class ImapHandlerFactory
         $interfaceCalls = $interfaceCallsSettings[$testSettings];
         $interfaceFakeData = new ImapHandlerFakeData();
         $interfaceFakeData->retrieve($interfaceCalls);
-        $this->interfaceObject = new $interfaceClass($interfaceFakeData);
+        $this->setInterfaceObject(new $interfaceClass($interfaceFakeData));
     }
     
     /**
@@ -162,7 +169,7 @@ class ImapHandlerFactory
             if ($test) {
                 $this->loadTestSettings($testSettings);
             } else {
-                $this->interfaceObject = new $interfaceClass($logErrors, $logCalls);
+                $this->setInterfaceObject(new $interfaceClass($logErrors, $logCalls));
             }
         }
         return $this->interfaceObject;

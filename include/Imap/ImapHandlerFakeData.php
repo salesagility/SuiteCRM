@@ -75,6 +75,22 @@ class ImapHandlerFakeData
     }
     
     /**
+     * 
+     * @param string $name
+     * @param string $argsEncoded
+     * @return mixed
+     */
+    protected function getNextCallReturn($name, $argsEncoded)
+    {
+        $ret = array_shift($this->calls[$name][$argsEncoded]);
+        if (empty($this->calls[$name][$argsEncoded])) {
+            // using the last element forever..
+            $this->calls[$name][$argsEncoded] = [$ret];
+        }
+        return $ret;
+    }
+    
+    /**
      *
      * @param string $name
      * @param array|null $args
@@ -86,7 +102,7 @@ class ImapHandlerFakeData
         if (key_exists($name, $this->calls)) {
             $argsEncoded = $this->encodeArgs($args);
             if (key_exists($argsEncoded, $this->calls[$name])) {
-                $ret = $this->calls[$name][$argsEncoded];
+                $ret = $this->getNextCallReturn($name, $argsEncoded);
                 return $ret;
             } else {
                 throw new Exception('Fake caller has not matched arguments for this call: ' . $name . "\nArguments was: " . print_r($args, true), self::ERR_NO_MATCH_ARGS);

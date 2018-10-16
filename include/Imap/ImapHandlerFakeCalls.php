@@ -43,256 +43,260 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 return $calls = [
     'testSettingsOk' => [
-        'isAvailable' => [['args' => null, 'return' => true]],
+        'isAvailable' => [['args' => null, 'return' => [true]]],
         'setTimeout' => [
-            ['args' => [1, 60], 'return' => true],
-            ['args' => [2, 60], 'return' => true],
-            ['args' => [3, 60], 'return' => true],
-            ['args' => [1, 15], 'return' => true],
-            ['args' => [2, 15], 'return' => true],
-            ['args' => [3, 15], 'return' => true],
+            ['args' => [1, 60], 'return' => [true]],
+            ['args' => [2, 60], 'return' => [true]],
+            ['args' => [3, 60], 'return' => [true]],
+            ['args' => [1, 15], 'return' => [true]],
+            ['args' => [2, 15], 'return' => [true]],
+            ['args' => [3, 15], 'return' => [true]],
         ],
-        'getErrors' => [['args' => null, 'return' => false]],
+        'getErrors' => [['args' => null, 'return' => [false]]],
         'open' => [
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/validate-cert/secure}INBOX', 'testuser_name', 'testuser_pass', 0, 0, []],
-                'return' => function () {
-                    return fopen('fakeImapResource', 'w+'); // <-- create and return a fake resource for InboundEmail test usages
-                },
+                'return' => [function () {
+                    $ret = fopen('fakeImapResource', 'w+'); // <-- create and return a fake resource for InboundEmail test usages
+                    if (!is_resource($ret)) {
+                        throw new Exception('Imap fake needs a resource to return (check the file permisson - 1)');
+                    }
+                    return $ret;
+                }],
             ],
         ],
-        'getLastError' => [['args' => null, 'return' => false]],
-        'getAlerts' => [['args' => null, 'return' => false]],
+        'getLastError' => [['args' => null, 'return' => [false]]],
+        'getAlerts' => [['args' => null, 'return' => [false]]],
         'getConnection' => [],
         'close' => [
-            ['args' => null, 'return' => function () {
+            ['args' => null, 'return' => [function () {
                 if (file_exists('fakeImapResource')) {
                     unlink('fakeImapResource');
                 }
                 return true; // <-- when ImapHandlerFake::close() called, pass back a "TRUE" as success
-            }],
+            }]],
         ],
     // ... add more possible calls here...
     ],
     'testSettingsWrongUser' => [
-        'isAvailable' => [['args' => null, 'return' => true]],
+        'isAvailable' => [['args' => null, 'return' => [true]]],
         'setTimeout' => [
-            ['args' => [1, 60], 'return' => true],
-            ['args' => [2, 60], 'return' => true],
-            ['args' => [3, 60], 'return' => true],
-            ['args' => [1, 15], 'return' => true],
-            ['args' => [2, 15], 'return' => true],
-            ['args' => [3, 15], 'return' => true],
+            ['args' => [1, 60], 'return' => [true]],
+            ['args' => [2, 60], 'return' => [true]],
+            ['args' => [3, 60], 'return' => [true]],
+            ['args' => [1, 15], 'return' => [true]],
+            ['args' => [2, 15], 'return' => [true]],
+            ['args' => [3, 15], 'return' => [true]],
         ],
         'getErrors' => [
-            ['args' => null, 'return' => ["Can't open mailbox {imap.gmail.com:993\/service=imap\/ssl\/tls\/validate-cert\/secure}INBOX: invalid remote specification"]],
+            ['args' => null, 'return' => [["Can't open mailbox {imap.gmail.com:993\/service=imap\/ssl\/tls\/validate-cert\/secure}INBOX: invalid remote specification"]]],
         ],
         'open' => [
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/validate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/validate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/validate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/validate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/validate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/validate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/validate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/validate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/validate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/validate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/validate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/validate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls/novalidate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls/novalidate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls/novalidate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls/novalidate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls/novalidate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls/novalidate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/novalidate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/novalidate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/novalidate-cert/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/novalidate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/novalidate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/novalidate-cert}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/notls}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/secure}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl}INBOX', 'testuser_name_wrong', 'testuser_pass', 0, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
             
             [
                 'args' => ['{imap.gmail.com:993/service=imap}INBOX', 'testuser_name_wrong', 'testuser_pass', 32768, 0, []],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap}INBOX', 'testuser_name_wrong', 'testuser_pass', 32768, 0, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']],
-                'return' => false,
+                'return' => [false],
             ],
             [
                 'args' => ['{imap.gmail.com:993/service=imap}INBOX', 'testuser_name_wrong', 'testuser_pass', 32768, 0, ['DISABLE_AUTHENTICATOR' => 'NTLM']],
-                'return' => false,
+                'return' => [false],
             ],
         ],
-        'getLastError' => [['args' => null, 'return' => "Can't open mailbox {imap.gmail.com:993/service=imap/ssl/tls/validate-cert/secure}INBOX: invalid remote specification"]],
-        'getAlerts' => [['args' => null, 'return' => false]],
-        'getConnection' => [['args' => null, 'return' => false]],
+        'getLastError' => [['args' => null, 'return' => ["Can't open mailbox {imap.gmail.com:993/service=imap/ssl/tls/validate-cert/secure}INBOX: invalid remote specification"]]],
+        'getAlerts' => [['args' => null, 'return' => [false]]],
+        'getConnection' => [['args' => null, 'return' => [false]]],
 //        'close' => [
-//            ['args' => null, 'return' => function() {
+//            ['args' => null, 'return' => [function() {
 //                    if (file_exists('fakeImapResource')) {
 //                        unlink('fakeImapResource');
 //                    }
 //                    return false; // <-- when ImapHandlerFake::close() called, pass back a "FALSE" as failed
-//                }],
+//                }]],
 //        ],
 //    // ... add more possible calls here...
     ],
