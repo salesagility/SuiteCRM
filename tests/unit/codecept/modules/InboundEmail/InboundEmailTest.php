@@ -3,7 +3,7 @@
 include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFakeData.php';
 include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFake.php';
 
-class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
+class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     protected function storeStateAll()
     {
@@ -42,32 +42,162 @@ class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
     // ----- FOLLOWIN TESTS ARE USING FAKE IMAP ----
     // ------------------------------------------------->
     
+    public function testFindOptimumSettingsFalsePositive() {
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);  // <-- when the code calls ImapHandlerInterface::isAvailable([null]), it will return true
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('getLastError', null, ["SECURITY PROBLEM: insecure server advertised AUTH=PLAIN"]);
+        $fake->add('getAlerts', null, [false]);
+        $fake->add('getConnection', null, [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
+        $fake->add('close', null, [null]);
+        
+        $exp = [
+            'serial' => '::::::::novalidate-cert::notls::secure',
+            'service' => 'foo/notls/novalidate-cert/secure',
+        ];
+        
+        $imap = new ImapHandlerFake($fake);
+        $inboundEmail = new InboundEmail($imap);
+        $ret = $inboundEmail->findOptimumSettings();
+        $this->assertEquals($exp, $ret);
+        
+        // other errors also cause same results..
+        
+        $fake->add('getLastError', null, ["Mailbox is empty"]);
+        $ret = $inboundEmail->findOptimumSettings();
+        $this->assertEquals($exp, $ret);
+    }
+    
+    public function testFindOptimumSettingsFail() {
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);  // <-- when the code calls ImapHandlerInterface::isAvailable([null]), it will return true
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('getLastError', null, ['Too many login failures']);
+        $fake->add('getAlerts', null, [false]);
+        $fake->add('getConnection', null, [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
+        $fake->add('close', null, [null]);
+        
+        $exp = [
+            'good' => [],
+            'bad' => ['both-secure' => '{:/service=/notls/novalidate-cert/secure}'],
+            'err' => ['both-secure' => null],
+        ];
+        
+        $imap = new ImapHandlerFake($fake);
+        $inboundEmail = new InboundEmail($imap);
+        $ret = $inboundEmail->findOptimumSettings();
+        $this->assertEquals($exp, $ret);
+        
+        // other errors also cause same results..
+        
+        $fake->add('getLastError', null, ['[CLOSED] IMAP connection broken (server response)']);
+        $ret = $inboundEmail->findOptimumSettings();
+        $this->assertEquals($exp, $ret);
+        
+        $fake->add('getLastError', null, ['[AUTHENTICATIONFAILED]']);
+        $ret = $inboundEmail->findOptimumSettings();
+        $this->assertEquals($exp, $ret);
+        
+        $fake->add('getLastError', null, ['something.. AUTHENTICATE .. something .. failed .. something']);
+        $ret = $inboundEmail->findOptimumSettings();
+        $this->assertEquals($exp, $ret);
+    }
+    
     public function testFindOptimumSettingsOk()
     {
-        $fakes = new ImapHandlerFakeData();
-        $fakes->add('isAvailable', null, [true]);  // <-- when the code calls ImapHandlerInterface::isAvailable([null]), it will return true
-        $fakes->add('setTimeout', [1, 60], [true]);
-        $fakes->add('setTimeout', [2, 60], [true]);
-        $fakes->add('setTimeout', [3, 60], [true]);
-        $fakes->add('getErrors', null, [false]);
-        $fakes->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function(){
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);  // <-- when the code calls ImapHandlerInterface::isAvailable([null]), it will return true
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
             return fopen('fakeImapResource', 'w+');
         }]);
-        $fakes->add('getLastError', null, [false]);
-        $fakes->add('getAlerts', null, [false]);
-        $fakes->add('getConnection', null, [function(){
+        $fake->add('getLastError', null, [false]);
+        $fake->add('getAlerts', null, [false]);
+        $fake->add('getConnection', null, [function () {
             return fopen('fakeImapResource', 'w+');
         }]);
-        $fakes->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
-        $fakes->add('close', null, [null]);
+        $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
+        $fake->add('close', null, [null]);
         
-        $imap = new ImapHandlerFake($fakes);
+        $imap = new ImapHandlerFake($fake);
         $inboundEmail = new InboundEmail($imap);
         $ret = $inboundEmail->findOptimumSettings();
         $this->assertEquals([
             'serial' => '::::::::novalidate-cert::notls::secure',
             'service' => 'foo/notls/novalidate-cert/secure',
         ], $ret);
+    }
+    
+    public function testFindOptimumSettingsNoImap()
+    {
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [false]);
+        $imap = new ImapHandlerFake($fake);
+        
+        $ie = new InboundEmail($imap);
+        $ret = $ie->findOptimumSettings();
+        $this->assertEquals([
+            'good' => [],
+            'bad' => [],
+            'err' => [null],
+        ], $ret);
+    }
+    
+    public function testFindOptimumSettingsUseSsl()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('open', ["{:/service=/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('getLastError', null, [false]);
+        $fake->add('getAlerts', null, [false]);
+        $fake->add('getConnection', null, [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
+        $fake->add('close', null, [null]);
+        
+        $imap = new ImapHandlerFake($fake);
+        
+        $_REQUEST['ssl'] = 1;
+        
+        $ie = new InboundEmail($imap);
+        $ret = $ie->findOptimumSettings();
+        $this->assertEquals([
+            'serial' => 'tls::::ssl::::::::secure',
+            'service' => 'foo/ssl/tls/validate-cert/secure',
+        ], $ret);
+        
+        $state->popGlobals();
     }
     
     // ------------------------------------------------------------

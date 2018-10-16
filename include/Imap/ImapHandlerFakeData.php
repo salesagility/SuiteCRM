@@ -145,7 +145,9 @@ class ImapHandlerFakeData
     {
         $argsEncoded = $this->encodeArgs($args);
         if (isset($this->calls[$name][$argsEncoded])) {
-            throw new Exception('Fake call already exists with given arguments: ' . $name . ', hint: remove first, use ' . __CLASS__ . '::remove(...)', self::ERR_CALL_ALREDY_EXISTS);
+            LoggerManager::getLogger()->warn('Fake call already exists with given arguments: ' . $name . ', hint: remove first, use ' . __CLASS__ . '::remove(...)');
+            $this->remove($name, $args);
+            
         }
         $this->calls[$name][$argsEncoded] = $ret;
     }
@@ -159,7 +161,7 @@ class ImapHandlerFakeData
     public function remove($name, $args = null)
     {
         $argsEncoded = $this->encodeArgs($args);
-        if (isset($this->calls[$name][$argsEncoded])) {
+        if (!isset($this->calls[$name][$argsEncoded])) {
             throw new Exception('Trying to remove a fake call but it is not exists: ' . $name, self::ERR_CALL_NOT_EXISTS);
         }
         unset($this->calls[$name][$argsEncoded]);
