@@ -57,6 +57,7 @@ class ImapHandlerFakeData
     const ERR_CALL_ALREDY_EXISTS = 3;
     const ERR_CALL_NOT_EXISTS = 4;
     const ERR_CALL_REMOVE = 5;
+    const ERR_WRONG_TESTSET = 6;
     
     /**
      *
@@ -82,6 +83,9 @@ class ImapHandlerFakeData
      */
     protected function getNextCallReturn($name, $argsEncoded)
     {
+        if (!is_array($this->calls[$name][$argsEncoded])) {
+            throw new Exception('Fake handler given an incorrect data. Returns should be an array at name: ' . $name, self::ERR_WRONG_TESTSET);
+        }
         $ret = array_shift($this->calls[$name][$argsEncoded]);
         if (empty($this->calls[$name][$argsEncoded])) {
             // using the last element forever..
