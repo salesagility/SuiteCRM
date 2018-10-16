@@ -42,7 +42,182 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     // ----- FOLLOWIN TESTS ARE USING FAKE IMAP ----
     // ------------------------------------------------->
     
-    public function testFindOptimumSettingsFalsePositive() {
+    
+    public function testConnectMailServerFolderInboundForceFirstMailbox()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('getConnection', null, [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('close', null, [null]);
+        $fake->add('ping', null, [true]);
+        $fake->add('reopen', ['{:/service=}first', 32768, 0], [true]);
+        $imap = new ImapHandlerFake($fake);
+        $ie = new InboundEmail($imap);
+        $_REQUEST['folder'] = 'inbound';
+        $_REQUEST['folder_name'] = [];
+        $ie->mailboxarray = ['first'];
+        $ret = $ie->connectMailserver(false, true);
+        $this->assertEquals('true', $ret);
+        $state->popGlobals();
+    }
+    
+    public function testConnectMailServerFolderInboundForceTestFolder()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('getConnection', null, [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('close', null, [null]);
+        $fake->add('ping', null, [true]);
+        $fake->add('reopen', ['{:/service=}test', 32768, 0], [true]);
+        $imap = new ImapHandlerFake($fake);
+        $ie = new InboundEmail($imap);
+        $_REQUEST['folder'] = 'inbound';
+        $_REQUEST['folder_name'] = 'test';
+        $ret = $ie->connectMailserver(false, true);
+        $this->assertEquals('true', $ret);
+        $state->popGlobals();
+    }
+    
+    public function testConnectMailServerFolderInboundForce()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('getConnection', null, [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('close', null, [null]);
+        $fake->add('ping', null, [true]);
+        $fake->add('reopen', ['{:/service=}INBOX', 32768, 0], [true]);
+        $imap = new ImapHandlerFake($fake);
+        $ie = new InboundEmail($imap);
+        $_REQUEST['folder'] = 'inbound';
+        $ret = $ie->connectMailserver(false, true);
+        $this->assertEquals('true', $ret);
+        $state->popGlobals();
+    }
+    
+    public function testConnectMailServerFolderSentForce()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('getConnection', null, [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('close', null, [null]);
+        $fake->add('ping', null, [true]);
+        $fake->add('reopen', ['{:/service=}', 32768, 0], [true]);
+        $imap = new ImapHandlerFake($fake);
+        $ie = new InboundEmail($imap);
+        $_REQUEST['folder'] = 'sent';
+        $ret = $ie->connectMailserver(false, true);
+        $this->assertEquals('true', $ret);
+        $state->popGlobals();
+    }
+        
+    public function testConnectMailserverNoGood()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('setTimeout', [1, 15], [true]);
+        $fake->add('setTimeout', [2, 15], [true]);
+        $fake->add('setTimeout', [3, 15], [true]);
+        $fake->add('open', ["{:/service=/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('getLastError', null, ['Too many login failures']);
+        $fake->add('getAlerts', null, [null]);
+        $fake->add('getConnection', null, [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
+        $fake->add('close', null, [null]);
+        $imap = new ImapHandlerFake($fake);
+        
+        $_REQUEST['ssl'] = 1;
+        
+        $ie = new InboundEmail($imap);
+        $ret = $ie->connectMailserver(true);
+        $this->assertEquals(null, $ret);
+        
+        $state->popGlobals();
+    }
+    
+    public function testConnectMailserverUseSsl()
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('getConnection', null, [function () {
+            return fopen('fakeImapResource', 'w+');
+        }]);
+        $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
+        $fake->add('ping', null, [true]);
+        $fake->add('reopen', ['{:/service=}', 32768, 0], [true]);
+        $imap = new ImapHandlerFake($fake);
+        
+        $_REQUEST['ssl'] = 1;
+        
+        $ie = new InboundEmail($imap);
+        $ret = $ie->connectMailserver();
+        $this->assertEquals('true', $ret);
+        
+        $state->popGlobals();
+    }
+    
+    public function testConnectMailserverNoImap()
+    {
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [false]);
+        $imap = new ImapHandlerFake($fake);
+        
+        $ie = new InboundEmail($imap);
+        $ret = $ie->connectMailserver();
+        $this->assertEquals(null, $ret);
+    }
+    
+    public function testFindOptimumSettingsFalsePositive()
+    {
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);  // <-- when the code calls ImapHandlerInterface::isAvailable([null]), it will return true
         $fake->add('setTimeout', [1, 60], [true]);
@@ -77,7 +252,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals($exp, $ret);
     }
     
-    public function testFindOptimumSettingsFail() {
+    public function testFindOptimumSettingsFail()
+    {
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);  // <-- when the code calls ImapHandlerInterface::isAvailable([null]), it will return true
         $fake->add('setTimeout', [1, 60], [true]);

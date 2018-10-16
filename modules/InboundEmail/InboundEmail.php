@@ -3276,6 +3276,7 @@ class InboundEmail extends SugarBean
                 $goodStr
             );
             $i = 0;
+            // $raw given values only if pop3 is set
             foreach ($raw as $mbox) {
                 $raw[$i] = str_replace(
                     $testConnectString,
@@ -6166,7 +6167,7 @@ class InboundEmail extends SugarBean
             $requestSsl = $_REQUEST['ssl'];
         }
         
-        $useSsl = ($requestSsl == 'true') ? true : false;
+        $useSsl = ($requestSsl == 'true') ? true : false; // TODO: validate the ssl request variable value (for e.g its posibble to give a numeric 1 as true)
         if ($test) {
             $this->imap->setTimeout(1, 15); // 60 secs is the default
             $this->imap->setTimeout(2, 15);
@@ -6174,7 +6175,8 @@ class InboundEmail extends SugarBean
 
             $opts = $this->findOptimumSettings($useSsl);
             if (isset($opts['good']) && empty($opts['good'])) {
-                return array_pop($opts['err']);
+                $ret = array_pop($opts['err']); // TODO: lost error info?
+                return $ret;
             }
             $service = $opts['service'];
             $service = str_replace('foo', '', $service); // foo there to support no-item explodes

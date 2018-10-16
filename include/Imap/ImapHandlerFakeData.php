@@ -87,6 +87,7 @@ class ImapHandlerFakeData
             throw new Exception('Fake handler given an incorrect data. Returns should be an array at name: ' . $name, self::ERR_WRONG_TESTSET);
         }
         $ret = array_shift($this->calls[$name][$argsEncoded]);
+        $this->calls[$name][$argsEncoded] = array_values($this->calls[$name][$argsEncoded]);
         if (empty($this->calls[$name][$argsEncoded])) {
             // using the last element forever..
             $this->calls[$name][$argsEncoded] = [$ret];
@@ -112,7 +113,7 @@ class ImapHandlerFakeData
                 throw new Exception('Fake caller has not matched arguments for this call: ' . $name . "\nArguments was: " . print_r($args, true), self::ERR_NO_MATCH_ARGS);
             }
         } else {
-            throw new Exception('Fake call does not exists for this function call: ' . $name, self::ERR_CALL_NOT_FOUND);
+            throw new Exception('Fake call does not exists for this function call: ' . $name . "\nwith specific arguments:\n" . print_r($args, true), self::ERR_CALL_NOT_FOUND);
         }
     }
     
