@@ -4684,7 +4684,7 @@ class InboundEmail extends SugarBean
      */
     public function handleMimeHeaderDecode($subject)
     {
-        $subjectDecoded = $this->imapMimeHeaderDecode($subject);
+        $subjectDecoded = $this->imap->MimeHeaderDecode($subject);
 
         $ret = '';
         foreach ($subjectDecoded as $object) {
