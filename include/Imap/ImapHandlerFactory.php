@@ -47,6 +47,8 @@ require_once __DIR__ . '/ImapHandler.php';
 
 /**
  * ImapHandlerFactory
+ * Retrieves an ImapHandlerInterface. It could be ImapHandler or ImapHandlerFake.
+ * Use `$sugar_config['imap_test'] = true` in config_override.php to set test mode on.
  *
  * @author gyula
  */
@@ -58,6 +60,7 @@ class ImapHandlerFactory
     const ERR_KEY_SAVE_ERROR = 4;
     
     const SETTINGS_KEY_FILE = '/ImapTestSettings.txt';
+    const DEFAULT_SETTINGS_KEY = 'testSettingsOk';
     
     /**
      *
@@ -105,7 +108,7 @@ class ImapHandlerFactory
             }
             if (!$testSettings) {
                 LoggerManager::getLogger()->warn("Test settings not set, create one with default key");
-                $this->saveTestSettingsKey('testSettingsOk');
+                $this->saveTestSettingsKey(self::DEFAULT_SETTINGS_KEY);
             }
         }
         $this->includeFakeInterface();
@@ -155,7 +158,7 @@ class ImapHandlerFactory
     {
         if (null === $this->interfaceObject) {
             global $sugar_config;
-            $test = isset($sugar_config['imap_test']) && $sugar_config['imap_test'];
+            $test = (isset($sugar_config['imap_test']) && $sugar_config['imap_test']) || $testSettings;
             
             if (inDeveloperMode()) {
                 $logErrors = true;

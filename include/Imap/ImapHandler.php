@@ -47,6 +47,7 @@ require_once __DIR__ . '/ImapHandlerInterface.php';
 
 /**
  * ImapHandler
+ * Wrapper class for functions of IMAP PHP built in extension.
  *
  * @author gyula
  */

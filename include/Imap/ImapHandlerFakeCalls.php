@@ -41,6 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+// describes the face imap function return values for each function calls with a specific parameters in every test screnario.
 return $calls = [
     'testSettingsOk' => [
         'isAvailable' => [['args' => null, 'return' => [true]]],

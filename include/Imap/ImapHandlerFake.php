@@ -47,7 +47,7 @@ include_once __DIR__ . '/ImapHandlerFakeData.php';
 
 /**
  * ImapHandlerFake
- * For tests only, use `$sugar_config['imap_handler_interface'] = 'ImapHandlerFake';`
+ * For tests only.
  *
  * @author gyula
  */
