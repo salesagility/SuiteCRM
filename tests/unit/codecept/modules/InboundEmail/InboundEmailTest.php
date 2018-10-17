@@ -3,7 +3,7 @@
 include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFakeData.php';
 include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFake.php';
 
-class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class InboundEmailTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     protected function storeStateAll()
     {

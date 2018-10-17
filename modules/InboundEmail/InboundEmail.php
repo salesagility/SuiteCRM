@@ -6198,7 +6198,7 @@ class InboundEmail extends SugarBean
         if ($requestFolder === 'inbound') {
             if (!empty($_REQUEST['folder_name'])) {
                 $this->mailbox = $_REQUEST['folder_name'];
-            } elseif (count($this->mailboxarray)) {
+            } elseif ($this->mailboxarray && count($this->mailboxarray)) {
                 $this->mailbox = $this->mailboxarray[0];
             } else {
                 $this->mailbox = 'INBOX';
