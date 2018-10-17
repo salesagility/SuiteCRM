@@ -43,8 +43,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 // describes the face imap function return values for each function calls with a specific parameters in every test screnario.
 return $calls = [
+    
+    
     'testSettingsOk' => [
-        'isAvailable' => [['args' => null, 'return' => [true]]],
+        'isAvailable' => [
+            ['args' => null, 'return' => [true]],
+        ],
         'setTimeout' => [
             ['args' => [1, 60], 'return' => [true]],
             ['args' => [2, 60], 'return' => [true]],
@@ -53,7 +57,9 @@ return $calls = [
             ['args' => [2, 15], 'return' => [true]],
             ['args' => [3, 15], 'return' => [true]],
         ],
-        'getErrors' => [['args' => null, 'return' => [false]]],
+        'getErrors' => [
+            ['args' => null, 'return' => [false]]
+        ],
         'open' => [
             [
                 'args' => ['{imap.gmail.com:993/service=imap/ssl/tls/validate-cert/secure}INBOX', 'testuser_name', 'testuser_pass', 0, 0, []],
@@ -65,20 +71,17 @@ return $calls = [
                     return $ret;
                 }],
             ],
+        ],           
+        'getLastError' => [
+            ['args' => null, 'return' => [false]],
+        ],           
+        'getAlerts' => [
+            ['args' => null, 'return' => [false]],
         ],
-        'getLastError' => [['args' => null, 'return' => [false]]],
-        'getAlerts' => [['args' => null, 'return' => [false]]],
-        'getConnection' => [],
-        'close' => [
-            ['args' => null, 'return' => [function () {
-                if (file_exists('fakeImapResource')) {
-                    unlink('fakeImapResource');
-                }
-                return true; // <-- when ImapHandlerFake::close() called, pass back a "TRUE" as success
-            }]],
-        ],
-    // ... add more possible calls here...
-    ],
+        'getConnection' => [],    
+    ],    
+                        
+                        
     'testSettingsWrongUser' => [
         'isAvailable' => [['args' => null, 'return' => [true]]],
         'setTimeout' => [

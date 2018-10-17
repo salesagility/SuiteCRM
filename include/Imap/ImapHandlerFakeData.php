@@ -207,7 +207,7 @@ class ImapHandlerFakeData
             }
             foreach ($call as $param) {
                 $args = isset($param['args']) ? $param['args'] : null;
-                $ret = isset($param['return']) ? $param['return'] : null;
+                $ret = isset($param['return']) ? $param['return'] : [null];
                 $this->add($name, $args, $ret);
             }
         }
