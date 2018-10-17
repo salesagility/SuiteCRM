@@ -28,10 +28,10 @@
     "google/recaptcha": "^1.1",
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
-    "ezyang/htmlpurifier": "^4.10"
+    "ezyang/htmlpurifier": "^4.10",
+    "leafo/scssphp": "^0.7.7"
   },
   "require-dev": {
-    "leafo/scssphp": "dev-master",
     "mikey179/vfsStream": "1.6.*",
     "codeception/codeception": "^2.0",
     "fzaninotto/Faker": "^1.6",
