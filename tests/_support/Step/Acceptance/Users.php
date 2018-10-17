@@ -2,7 +2,7 @@
 
 namespace Step\Acceptance;
 
-class UsersTester extends \AcceptanceTester
+class Users extends \AcceptanceTester
 {
     /**
      * Navigate to users profile module
