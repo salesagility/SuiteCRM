@@ -44,6 +44,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 include_once __DIR__ . '/ImapHandlerFactory.php';
 
+global $sugar_config;
+
+if (!isset($sugar_config['imap_test']) || !$sugar_config['imap_test']) {
+    throw new Exception('IMAP test required');
+}
+
 $var = 'imap_test_settings';
 $key = isset($_REQUEST[$var]) && $_REQUEST[$var] ? $_REQUEST[$var] : null;
 if (!$key) {
