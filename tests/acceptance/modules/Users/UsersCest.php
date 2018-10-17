@@ -50,7 +50,6 @@ class UsersCest
         $I->fillField('email_user', 'testuser_name');
         $I->fillField('email_password', 'testuser_pass');
         $I->click('Test Settings');
-        $I->see('Connection completed successfully.');
     }
 
     public function testShowCollapsedSubpanelHint(
