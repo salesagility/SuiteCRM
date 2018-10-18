@@ -45,6 +45,6 @@ class EmailManCest
         $I->loginAsAdmin();
         $emailMan->createEmailSettings();
 
-        $I->dontSee('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');
+        $I->see('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');
     }
 }
