@@ -108,7 +108,8 @@ class ImapHandlerFactory
             }
             if (!$testSettings) {
                 LoggerManager::getLogger()->warn("Test settings not set, create one with default key");
-                $this->saveTestSettingsKey(self::DEFAULT_SETTINGS_KEY);
+                $testSettings = self::DEFAULT_SETTINGS_KEY;
+                $this->saveTestSettingsKey($testSettings);
             }
         }
         $this->includeFakeInterface();
@@ -116,6 +117,10 @@ class ImapHandlerFactory
         $interfaceCallsSettings = include $this->imapHandlerTestInterface['calls'];
 
         if (!isset($interfaceCallsSettings[$testSettings])) {
+            $info = "[debug testSettings] " . var_dump($testSettings, true); 
+            $info .= "\n[debug info this] " . var_dump($this, true);
+            $info .= "\n[debug info callset] " . var_dump($interfaceCallsSettings, true);
+            LoggerManager::getLogger()->debug('Imap test setting failure: ' . $info);
             throw new Exception("Test settings does not exists: $testSettings", self::ERR_TEST_SET_NOT_EXISTS);
         }
 
