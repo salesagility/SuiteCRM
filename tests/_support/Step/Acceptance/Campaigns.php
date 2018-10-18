@@ -115,7 +115,7 @@ class Campaigns extends \AcceptanceTester
         // Step 5
         $I->wait(3);
         $I->fillField('#marketing_name', $faker->email);
-        $I->selectOption('#inbound_email_id', 'Test_BounceHandling');
+//        $I->selectOption('#inbound_email_id', 'Test_BounceHandling');
         $I->click('#date_start_trigger');
         $I->click('#callnav_today');
         $I->wait(3);
