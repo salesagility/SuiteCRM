@@ -360,8 +360,8 @@ class ListViewDisplay
                 }
             }
 
-            // compose email
-            if (isset($this->email)) {
+            // Compose email
+            if (isset($this->email) && $this->email === true) {
                 $menuItems[] = $this->buildComposeEmailLink($this->data['pageData']['offsets']['total'], $location);
             }
 
