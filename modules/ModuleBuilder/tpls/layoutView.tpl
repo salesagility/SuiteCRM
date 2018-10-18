@@ -144,7 +144,7 @@
         </div>
         {if $panelid ne 'default'}
             {capture assign="otherAttributes"}class="le_edit" style="float:left; cursor:pointer;" onclick="editPanelProperties('{$idCount}');"{/capture}
-            {sugar_getimage name="edit_inline" ext=".gif" other_attributes=$otherAttributes}
+            <span class="glyphicon glyphicon-pencil"></span>
         {/if}
         <span id="le_paneltype_{$idCount}" style="float:left;">
         &nbsp;&nbsp;{sugar_translate label="LBL_TABDEF_TYPE" module="ModuleBuilder"}&nbsp;{sugar_help text=$mod.LBL_TABDEF_TYPE_OPTION_HELP}:
