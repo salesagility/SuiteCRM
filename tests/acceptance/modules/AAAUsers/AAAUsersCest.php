@@ -9,7 +9,7 @@ use Step\Acceptance\EditView;
 use Step\Acceptance\ListView;
 use Step\Acceptance\UsersTester;
 
-class UsersCest
+class AAAUsersCest
 {
     /**
      * @var Generator $fakeData
