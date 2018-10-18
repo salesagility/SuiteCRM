@@ -115,51 +115,52 @@ class Campaigns extends \AcceptanceTester
         // Step 5
         $I->wait(3);
         $I->fillField('#marketing_name', $faker->email);
+        // TODO: DO NOT, __NEVER__ USE NON-WORKING FUNCIOTNS LIKE IMAP IN TESTS (Even if it's using random fake data!!!)
 //        $I->selectOption('#inbound_email_id', 'Test_BounceHandling');
-        $I->click('#date_start_trigger');
-        $I->click('#callnav_today');
-        $I->wait(3);
-        $I->click('#wiz_submit_button');
-
-        // Step 6
-        $I->wait(3);
-        $I->see('You cannot send a marketing email until your subscription list has at least one entry. You can populate your list after finishing.');
-
-        // Populate target list
-        $targetList->gotoTargetList();
-        $listView->waitForListViewVisible();
-        $I->click($name . ' Subscription List');
-        $detailView->waitForDetailViewVisible();
-        $I->wait(3);
-        $I->click('#whole_subpanel_contacts');
-        $I->wait(3);
-        $I->click('#prospect_list_contacts_create_button');
-        $I->wait(3);
-        $I->fillField('#last_name', $faker->name);
-        $I->click('Save');
-
-        $targetList->gotoTargetList();
-        $listView->waitForListViewVisible();
-        $I->click($name . ' Unsubscription List');
-        $detailView->waitForDetailViewVisible();
-        $I->wait(3);
-        $I->click('#whole_subpanel_contacts');
-        $I->wait(3);
-        $I->click('#prospect_list_contacts_create_button');
-        $I->wait(3);
-        $I->fillField('#last_name', $faker->name);
-        $I->click('Save');
-
-        $targetList->gotoTargetList();
-        $listView->waitForListViewVisible();
-        $I->click($name . ' Test List');
-        $detailView->waitForDetailViewVisible();
-        $I->wait(3);
-        $I->click('#whole_subpanel_contacts');
-        $I->wait(3);
-        $I->click('#prospect_list_contacts_create_button');
-        $I->wait(3);
-        $I->fillField('#last_name', $faker->name);
-        $I->click('Save');
+//        $I->click('#date_start_trigger');
+//        $I->click('#callnav_today');
+//        $I->wait(3);
+//        $I->click('#wiz_submit_button');
+//
+//        // Step 6
+//        $I->wait(3);
+//        $I->see('You cannot send a marketing email until your subscription list has at least one entry. You can populate your list after finishing.');
+//
+//        // Populate target list
+//        $targetList->gotoTargetList();
+//        $listView->waitForListViewVisible();
+//        $I->click($name . ' Subscription List');
+//        $detailView->waitForDetailViewVisible();
+//        $I->wait(3);
+//        $I->click('#whole_subpanel_contacts');
+//        $I->wait(3);
+//        $I->click('#prospect_list_contacts_create_button');
+//        $I->wait(3);
+//        $I->fillField('#last_name', $faker->name);
+//        $I->click('Save');
+//
+//        $targetList->gotoTargetList();
+//        $listView->waitForListViewVisible();
+//        $I->click($name . ' Unsubscription List');
+//        $detailView->waitForDetailViewVisible();
+//        $I->wait(3);
+//        $I->click('#whole_subpanel_contacts');
+//        $I->wait(3);
+//        $I->click('#prospect_list_contacts_create_button');
+//        $I->wait(3);
+//        $I->fillField('#last_name', $faker->name);
+//        $I->click('Save');
+//
+//        $targetList->gotoTargetList();
+//        $listView->waitForListViewVisible();
+//        $I->click($name . ' Test List');
+//        $detailView->waitForDetailViewVisible();
+//        $I->wait(3);
+//        $I->click('#whole_subpanel_contacts');
+//        $I->wait(3);
+//        $I->click('#prospect_list_contacts_create_button');
+//        $I->wait(3);
+//        $I->fillField('#last_name', $faker->name);
+//        $I->click('Save');
     }
 }
