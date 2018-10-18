@@ -74,7 +74,7 @@ script:
   # Install demo user data
   - mysql -u root -D automated_tests -v -e "source tests/_data/demo_users.sql"
   # set the log level to error
-  - echo "\$sugar_config['logger']['level'] = 'error';" >> config_override.php
+  - echo "\$sugar_config['logger']['level'] = 'debug';" >> config_override.php
   # add keys
   - sudo chmod -R 777 .
   - openssl genrsa -out Api/V8/OAuth2/private.key 2048
