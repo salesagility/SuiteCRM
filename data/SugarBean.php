@@ -3688,8 +3688,12 @@ class SugarBean
             }
 
             if ((!isset($data['source']) || $data['source'] == 'db') && (!empty($alias) || !empty($filter))) {
-                $ret_array['select'] .= ", $this->table_name.$field $alias";
-                $selectedFields["$this->table_name.$field"] = true;
+                if (!isset($this->field_defs[$field]) || $this->field_defs[$field]['source'] == 'non-db') {
+                    LoggerManager::getLogger()->error("Trying to create new list query but field not found: $this->table_name.$field");
+                } else {
+                    $ret_array['select'] .= ", $this->table_name.$field $alias";
+                    $selectedFields["$this->table_name.$field"] = true;
+                }
             } elseif ((!isset($data['source']) || $data['source'] == 'custom_fields')
                 && (!empty($alias) || !empty($filter))) {
                 //add this column only if it has NOT already been added to select statement string
