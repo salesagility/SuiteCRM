@@ -237,8 +237,10 @@ class actionCreateRecord extends actionBase
                         }
                         switch ($params['value'][$key][3]) {
                             case 'business_hours':
-                                if (file_exists(get_custom_file_if_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php'))) {
-                                    require_once(get_custom_file_if_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php'));
+                                if (file_exists(
+                                    get_custom_file_if_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php'))) {
+                                       require_once(
+                                           get_custom_file_if_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php'));
                                 }
 
                                 $businessHours = new AOBH_BusinessHours();
@@ -286,9 +288,11 @@ class actionCreateRecord extends actionBase
                     case 'Random':
                         switch ($params['value'][$key][0]) {
                             case 'security_group':
-                                if (file_exists(get_custom_file_if_exists('modules/SecurityGroups/SecurityGroup.php'))) {
-                                    require_once(get_custom_file_if_exists('modules/SecurityGroups/SecurityGroup.php'));
-                                }  
+                                if (file_exists(
+                                    get_custom_file_if_exists('modules/SecurityGroups/SecurityGroup.php'))) {
+                                        require_once(
+                                            get_custom_file_if_exists('modules/SecurityGroups/SecurityGroup.php'));
+                                }
                                 $security_group = new SecurityGroup();
                                 $security_group->retrieve($params['value'][$key][1]);
                                 $group_users = $security_group->get_linked_beans('users', 'User');
