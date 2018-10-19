@@ -112,7 +112,7 @@ class AOR_Report extends Basic
             unset($_POST['aor_fields_id']);
         }
 
-        parent::save($check_notify);
+        $return_id = parent::save($check_notify);
 
         require_once('modules/AOR_Fields/AOR_Field.php');
         $field = new AOR_Field();
@@ -125,6 +125,8 @@ class AOR_Report extends Basic
         require_once('modules/AOR_Charts/AOR_Chart.php');
         $chart = new AOR_Chart();
         $chart->save_lines($_POST, $this, 'aor_chart_');
+
+        return $return_id;
     }
 
     /**
@@ -327,36 +329,33 @@ class AOR_Report extends Basic
                 }
 
                 return $this->buildMultiGroupReport($offset, $links, $level + 1, $path);
-            } else {
-                if (!$rows) {
-                    if ($path) {
-                        $html = '';
-                        foreach ($path as $pth) {
-                            $_fieldIdName = $this->db->quoteIdentifier($pth['field_id_name']);
-                            $query = "SELECT $_fieldIdName FROM " . $this->db->quoteIdentifier($pth['module_path'][0]) . " GROUP BY $_fieldIdName;";
-                            $values = $this->dbSelect($query);
+            }
+            if (!$rows) {
+                if ($path) {
+                    $html = '';
+                    foreach ($path as $pth) {
+                        $_fieldIdName = $this->db->quoteIdentifier($pth['field_id_name']);
+                        $query = "SELECT $_fieldIdName FROM " . $this->db->quoteIdentifier($pth['module_path'][0]) . " GROUP BY $_fieldIdName;";
+                        $values = $this->dbSelect($query);
 
-                            foreach ($values as $value) {
-                                $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue(
+                        foreach ($values as $value) {
+                            $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue(
                                     $beanList,
                                     $value[$pth['field_id_name']]
                                 );
-                                $moduleFieldByGroupValue = $this->addDataIdValueToInnertext($moduleFieldByGroupValue);
-                                $html .= $this->getMultiGroupFrameHTML(
+                            $moduleFieldByGroupValue = $this->addDataIdValueToInnertext($moduleFieldByGroupValue);
+                            $html .= $this->getMultiGroupFrameHTML(
                                     $moduleFieldByGroupValue,
                                     $this->build_group_report($offset, $links)
                                 );
-                            }
                         }
-
-                        return $html;
-                    } else {
-                        return $this->build_group_report($offset, $links, array());
                     }
-                } else {
-                    throw new Exception('incorrect results');
+
+                    return $html;
                 }
+                return $this->build_group_report($offset, $links, array());
             }
+            throw new Exception('incorrect results');
         }
         throw new Exception('incorrect state');
     }
@@ -667,7 +666,7 @@ class AOR_Report extends Basic
         }
         $html = '<div class="list-view-rounded-corners" style="' . $report_style . '">';
         //End
-        
+
         $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive aor_reports">';
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
@@ -846,11 +845,11 @@ class AOR_Report extends Basic
 
             $row_class = $row_class == 'oddListRowS1' ? 'evenListRowS1' : 'oddListRowS1';
         }
-        $html .= "</tbody>";
+        $html .= "</tbody></table>";
 
         $html .= $this->getTotalHTML($fields, $totals);
 
-        $html .= '</table></div>';
+        $html .= '</div>';
 
         $html .= "    <script type=\"text/javascript\">
                             groupedReportToggler = {
@@ -941,33 +940,33 @@ class AOR_Report extends Basic
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
         $showTotal = false;
-        $html = '';
+        $html = '<table>';
         $html .= "<thead class='fc-head'>";
         $html .= "<tr>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
             }
-            
+
             $fieldTotal = null;
             if (!isset($field['total'])) {
                 LoggerManager::getLogger()->warn('AOR_Report problem: field[total] is not set for getTotalHTML()');
             } else {
                 $fieldTotal = $field['total'];
             }
-            
+
             $appListStringsAorTotalOptionsFieldTotal = null;
             if (!isset($app_list_strings['aor_total_options'][$fieldTotal])) {
                 LoggerManager::getLogger()->warn('AOR_Report problem: app_list_strings[aor_total_options][fieldTotal] is not set for getTotalHTML()');
             } else {
                 $appListStringsAorTotalOptionsFieldTotal = $app_list_strings['aor_total_options'][$fieldTotal];
             }
-            
-            
+
+
             if ($fieldTotal) {
                 $showTotal = true;
                 $totalLabel = $field['label'] . ' ' . $appListStringsAorTotalOptionsFieldTotal;
-                $html .= "<th>{$totalLabel}</td>";
+                $html .= "<th>{$totalLabel}</th>";
             } else {
                 $html .= '<th></th>';
             }
@@ -978,7 +977,7 @@ class AOR_Report extends Basic
             return '';
         }
 
-        $html .= "</body><tr class='oddListRowS1'>";
+        $html .= "<tbody><tr class='oddListRowS1'>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
@@ -1030,7 +1029,7 @@ class AOR_Report extends Basic
             }
         }
         $html .= '</tr>';
-        $html .= '</body>';
+        $html .= '</tbody></table>';
 
         return $html;
     }
@@ -1108,7 +1107,7 @@ class AOR_Report extends Basic
         if ($field->display) {
             $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
         }
-            
+
         $sql = $this->build_report_query();
         $result = $this->db->query($sql);
 

@@ -217,9 +217,8 @@
 
                      if ($Verbose) {
                          return(array("DBPos"=>$DBPos,"PicSize"=>$PicSize,"GeneratedTS"=>$GeneratedTS,"Hits"=>$Hits));
-                     } else {
-                         return(true);
                      }
+                     return(true);
                  }
              }
          }

@@ -676,24 +676,23 @@ class nusoap_parser extends nusoap_base
             $this->debug('in buildVal, return:');
             $this->appendDebug($this->varDump($ret));
             return $ret;
-        } else {
-            $this->debug('in buildVal, no children, building scalar');
-            $cdata = isset($this->message[$pos]['cdata']) ? $this->message[$pos]['cdata'] : '';
-            if (isset($this->message[$pos]['type'])) {
-                $ret = $this->decodeSimple($cdata, $this->message[$pos]['type'], isset($this->message[$pos]['type_namespace']) ? $this->message[$pos]['type_namespace'] : '');
-                $this->debug("in buildVal, return: $ret");
-                return $ret;
-            }
-            $parent = $this->message[$pos]['parent'];
-            if (isset($this->message[$parent]['type']) && ($this->message[$parent]['type'] == 'array') && isset($this->message[$parent]['arrayType'])) {
-                $ret = $this->decodeSimple($cdata, $this->message[$parent]['arrayType'], isset($this->message[$parent]['arrayTypeNamespace']) ? $this->message[$parent]['arrayTypeNamespace'] : '');
-                $this->debug("in buildVal, return: $ret");
-                return $ret;
-            }
-            $ret = $this->message[$pos]['cdata'];
+        }
+        $this->debug('in buildVal, no children, building scalar');
+        $cdata = isset($this->message[$pos]['cdata']) ? $this->message[$pos]['cdata'] : '';
+        if (isset($this->message[$pos]['type'])) {
+            $ret = $this->decodeSimple($cdata, $this->message[$pos]['type'], isset($this->message[$pos]['type_namespace']) ? $this->message[$pos]['type_namespace'] : '');
             $this->debug("in buildVal, return: $ret");
             return $ret;
         }
+        $parent = $this->message[$pos]['parent'];
+        if (isset($this->message[$parent]['type']) && ($this->message[$parent]['type'] == 'array') && isset($this->message[$parent]['arrayType'])) {
+            $ret = $this->decodeSimple($cdata, $this->message[$parent]['arrayType'], isset($this->message[$parent]['arrayTypeNamespace']) ? $this->message[$parent]['arrayTypeNamespace'] : '');
+            $this->debug("in buildVal, return: $ret");
+            return $ret;
+        }
+        $ret = $this->message[$pos]['cdata'];
+        $this->debug("in buildVal, return: $ret");
+        return $ret;
     }
 }
 

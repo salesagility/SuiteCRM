@@ -13,5 +13,6 @@ class Dashboard extends Tester
     {
         $I = $this;
         $I->waitForElementVisible('.dashboard', 120);
+        $I->waitForElementVisible('.dashletcontainer', 5);
     }
 }

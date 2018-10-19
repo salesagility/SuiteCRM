@@ -177,9 +177,8 @@ class User extends Person implements EmailInterface
     {
         if ($defaultId = $this->getPreference('signature_default')) {
             return $this->getSignature($defaultId);
-        } else {
-            return array();
         }
+        return array();
     }
 
     /**
@@ -344,17 +343,15 @@ class User extends Person implements EmailInterface
         $userPrivGuid = $this->getPreference('userPrivGuid', 'global', $this);
         if ($userPrivGuid) {
             return $userPrivGuid;
-        } else {
-            $this->setUserPrivGuid();
-            if (!isset($_SESSION['setPrivGuid'])) {
-                $_SESSION['setPrivGuid'] = true;
-                $userPrivGuid = $this->getUserPrivGuid();
-
-                return $userPrivGuid;
-            } else {
-                sugar_die("Breaking Infinite Loop Condition: Could not setUserPrivGuid.");
-            }
         }
+        $this->setUserPrivGuid();
+        if (!isset($_SESSION['setPrivGuid'])) {
+            $_SESSION['setPrivGuid'] = true;
+            $userPrivGuid = $this->getUserPrivGuid();
+
+            return $userPrivGuid;
+        }
+        sugar_die("Breaking Infinite Loop Condition: Could not setUserPrivGuid.");
     }
 
     public function setUserPrivGuid()
@@ -720,9 +717,8 @@ class User extends Person implements EmailInterface
         // If the role doesn't exist in the list of the user's roles
         if (!empty($role_array) && in_array($role_name, $role_array)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function get_summary_text()
@@ -758,11 +754,10 @@ class User extends Person implements EmailInterface
         $row = self::findUserPassword($this->user_name, $password);
         if (empty($row)) {
             return false;
-        } else {
-            $this->id = $row['id'];
-
-            return true;
         }
+        $this->id = $row['id'];
+
+        return true;
     }
 
     /**
@@ -1015,47 +1010,47 @@ EOQ;
         global $sugar_config, $mod_strings;
 
         $messages = array();
-        
+
         if (!isset($sugar_config['passwordsetting']['minpwdlength'])) {
             LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: minpwdlength ($sugar_config[passwordsetting][minpwdlength])');
             $sugar_config['passwordsetting']['minpwdlength'] = null;
         }
 
         $minpwdlength = $sugar_config['passwordsetting']['minpwdlength'];
-        
-        
+
+
         if (!isset($sugar_config['passwordsetting']['oneupper'])) {
             LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: oneupper ($sugar_config[passwordsetting][oneupper])');
             $sugar_config['passwordsetting']['oneupper'] = null;
         }
 
         $oneupper = $sugar_config['passwordsetting']['oneupper'];
-        
-        
+
+
         if (!isset($sugar_config['passwordsetting']['onelower'])) {
             LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onelower ($sugar_config[passwordsetting][onelower])');
             $sugar_config['passwordsetting']['onelower'] = null;
         }
-        
+
         $onelower = $sugar_config['passwordsetting']['onelower'];
-        
-        
+
+
         if (!isset($sugar_config['passwordsetting']['onenumber'])) {
             LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onenumber ($sugar_config[passwordsetting][onenumber])');
             $sugar_config['passwordsetting']['onenumber'] = null;
         }
-        
+
         $onenumber = $sugar_config['passwordsetting']['onenumber'];
-        
-        
+
+
         if (!isset($sugar_config['passwordsetting']['onespecial'])) {
             LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onespecial ($sugar_config[passwordsetting][onespecial])');
             $sugar_config['passwordsetting']['onespecial'] = null;
         }
-        
+
         $onespecial = $sugar_config['passwordsetting']['onespecial'];
 
-        
+
         if ($minpwdlength && strlen($newPassword) < $minpwdlength) {
             $messages[] = sprintf($mod_strings['ERR_PASSWORD_MINPWDLENGTH'], $minpwdlength);
         }
@@ -1838,9 +1833,8 @@ EOQ;
         $localeFormat = $locale->getLocaleFormatMacro($this);
         if (strpos($localeFormat, 'l') > strpos($localeFormat, 'f')) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     public function create_new_list_query(
@@ -2096,9 +2090,8 @@ EOQ;
     {
         if (!empty($this->email1) && !empty($email) && strcasecmp($this->email1, $email) == 0) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function getEditorType()

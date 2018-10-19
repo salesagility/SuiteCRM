@@ -4,7 +4,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
     $db = DBManagerFactory::getInstance();
-     
+
     $even_id = $_GET['event'];
     $delegate_id = $_GET['delegate'];
     $type = $_GET['type'];
@@ -40,7 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
             $check = $db->getOne($check_q);
             //update contact to accepted
             $query = 'UPDATE fp_events_contacts_c SET accept_status="Declined", email_responded="1" WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'" AND email_responded="0"';
-            
+
             if ($db->query($query) && $check != '1') {
                 if (!IsNullOrEmptyString($event->decline_redirect)) {
                     $url = $event->decline_redirect;

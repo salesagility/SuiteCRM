@@ -276,10 +276,9 @@ class OneLogin_Saml2_Settings
 
             $this->_addDefaultValues();
             return true;
-        } else {
-            $this->_errors = $errors;
-            return false;
         }
+        $this->_errors = $errors;
+        return false;
     }
 
     /**

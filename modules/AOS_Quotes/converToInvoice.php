@@ -30,7 +30,7 @@
     require_once('modules/AOS_Quotes/AOS_Quotes.php');
     require_once('modules/AOS_Invoices/AOS_Invoices.php');
     require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes.php');
-    
+
     global $timedate;
     //Setting values in Quotes
     $quote = new AOS_Quotes();
@@ -45,7 +45,7 @@
     }
     $quote->total_amount = format_number($quote->total_amount);
     $quote->save();
-    
+
     //Setting Invoice Values
     $invoice = new AOS_Invoices();
     $rawRow = $quote->fetched_row;
@@ -69,7 +69,7 @@
     $invoice->populateFromRow($rawRow);
     $invoice->process_save_dates =false;
     $invoice->save();
-    
+
     //Setting invoice quote relationship
     require_once('modules/Relationships/Relationship.php');
     $key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Invoices', $GLOBALS['db']);
@@ -77,7 +77,7 @@
         $quote->load_relationship($key);
         $quote->$key->add($invoice->id);
     }
-    
+
     //Setting Group Line Items
     $sql = "SELECT * FROM aos_line_item_groups WHERE parent_type = 'AOS_Quotes' AND parent_id = '".$quote->id."' AND deleted = 0";
     $result = $this->bean->db->query($sql);
@@ -110,7 +110,7 @@
         $group_invoice->save();
         $quoteToInvoiceGroupIds[$quoteGroupId] = $group_invoice->id;
     }
-    
+
     //Setting Line Items
     $sql = "SELECT * FROM aos_products_quotes WHERE parent_type = 'AOS_Quotes' AND parent_id = '".$quote->id."' AND deleted = 0";
     $result = $this->bean->db->query($sql);

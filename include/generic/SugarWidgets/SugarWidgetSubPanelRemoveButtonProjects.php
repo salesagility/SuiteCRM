@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -52,12 +53,12 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
         return '&nbsp;';
     }
 
-    public function displayList(&$layout_def)
+    public function displayList($layout_def)
     {
         global $app_strings;
-        
+
         global $current_user;
-        
+
         $parent_record_id = $_REQUEST['record'];
         $parent_module = $_REQUEST['module'];
 
@@ -72,23 +73,23 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
         $record = $layout_def['fields']['ID'];
         $current_module=$layout_def['module'];
         $hideremove=false;
-        
+
         $return_module = $_REQUEST['module'];
         $return_action = 'SubPanelViewer';
         $subpanel = $layout_def['subpanel_id'];
         $return_id = $_REQUEST['record'];
-        
-        
+
+
         $focus = new Project();
-        
+
         $focus->retrieve($return_id);
-        
+
         if ($current_user->id == $focus->assigned_user_id || is_admin($current_user)) {
             $is_owner = true;
         } else {
             $is_owner = false;
         }
-                
+
         if (isset($layout_def['linked_field_set']) && !empty($layout_def['linked_field_set'])) {
             $linked_field= $layout_def['linked_field_set'] ;
         } else {
@@ -118,8 +119,7 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
             . ' class="listViewTdToolsS1"'
             . " onclick=\"return confirm('$remove_confirmation_text');\""
             . ">$icon_remove_html&nbsp;$icon_remove_text</a>";
-        } else {
-            return '';
         }
+        return '';
     }
 }

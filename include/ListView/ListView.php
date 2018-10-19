@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/EditView/SugarVCR.php');
 /**
@@ -312,9 +313,9 @@ class ListView
             $fields = $aItem->get_list_view_data();
             if (isset($processed_ids[$aItem->id])) {
                 continue;
-            } else {
-                $processed_ids[$aItem->id] = 1;
             }
+            $processed_ids[$aItem->id] = 1;
+            
 
 
             //ADD OFFSET TO ARRAY
@@ -1067,7 +1068,7 @@ class ListView
 
 
 
-    public function processUnionBeans($sugarbean, $subpanel_def, $html_var = 'CELL')
+    public function processUnionBeans($sugarbean, $subpanel_def, $html_var = 'CELL', $countOnly = false)
     {
         $last_detailview_record = $this->getSessionVariable("detailview", "record");
         if (!empty($last_detailview_record) && $last_detailview_record != $sugarbean->id) {
@@ -1128,21 +1129,34 @@ class ListView
             $response =& $this->response;
             echo 'cached';
         } else {
-            $response = SugarBean::get_union_related_list($sugarbean, $this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page, $this->query_limit, $subpanel_def);
+            $response = SugarBean::get_union_related_list(
+                $sugarbean, 
+                $this->sortby, 
+                $this->sort_order, 
+                $this->query_where, 
+                $current_offset, 
+                -1, 
+                $this->records_per_page, 
+                $this->query_limit, 
+                $subpanel_def
+            );
             $this->response =& $response;
         }
         $list = $response['list'];
-        $row_count = $response['row_count'];
-        $next_offset = $response['next_offset'];
-        $previous_offset = $response['previous_offset'];
-        if (!empty($response['current_offset'])) {
-            $current_offset = $response['current_offset'];
+        
+        if (!$countOnly) {
+            $row_count = $response['row_count'];
+            $next_offset = $response['next_offset'];
+            $previous_offset = $response['previous_offset'];
+            if (!empty($response['current_offset'])) {
+                $current_offset = $response['current_offset'];
+            }
+            global $list_view_row_count;
+            $list_view_row_count = $row_count;
+            $this->processListNavigation('dyn_list_view', $html_var, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean, $subpanel_def);
         }
-        global $list_view_row_count;
-        $list_view_row_count = $row_count;
-        $this->processListNavigation('dyn_list_view', $html_var, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean, $subpanel_def);
-
-        return array('list'=>$list, 'parent_data'=>$response['parent_data'], 'query'=>$response['query']);
+        
+        return $response;
     }
 
     public function getBaseURL($html_varName)
@@ -1573,9 +1587,8 @@ class ListView
         if ($sort_URL_base !== "") {
             $this->xTemplate->assign("ORDER_BY", $sort_URL_base);
             return $sort_URL_base;
-        } else {
-            return '';
         }
+        return '';
     }
 
 
@@ -1933,9 +1946,8 @@ class ListView
             return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
         } elseif (($upDown === '_up')) {
             return '<span class="suitepicon suitepicon-action-sorting-descending"></span>';
-        } else {
-            return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
         }
+        return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
     }
 
     /**
@@ -2081,9 +2093,8 @@ class ListView
     {
         if (isset($_SESSION[$localVarName."_".$varName])) {
             return $_SESSION[$localVarName."_".$varName];
-        } else {
-            return "";
         }
+        return "";
     }
 
     /* Set to true if you want Additional Details to appear in the listview

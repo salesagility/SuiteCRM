@@ -76,6 +76,7 @@ use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Exception\Exception;
 use SuiteCRM\Exception\InvalidArgumentException;
 use SuiteCRM\Utility\ApplicationLanguage;
+use SuiteCRM\Utility\SuiteValidator;
 use Tracker;
 
 /**
@@ -443,8 +444,8 @@ class ModuleController extends ApiController
             && !empty($body['data']['id'])
         ) {
                 $beanID = $body['data']['id'];
-
-                if (!isValidId($beanID)) {
+                $isValidator = new SuiteValidator();
+                if (!$isValidator->isValidId($beanID)) {
                     throw new InvalidArgumentException(sprintf('Bean id %s is invalid', $beanID));
                 }
 

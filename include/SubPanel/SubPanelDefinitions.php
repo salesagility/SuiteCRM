@@ -458,9 +458,8 @@ class aSubPanel
     {
         if (isset($this->panel_definition [ $name ])) {
             return $this->panel_definition [ $name ] ;
-        } else {
-            return null ;
         }
+        return null ;
     }
 
     //if datasource is of the type function then return the function name
@@ -482,14 +481,13 @@ class aSubPanel
         }
         if (! empty($prop_value)) {
             return $prop_value ;
-        } else {
-            //fall back to default behavior.
         }
+        //fall back to default behavior.
+        
         if ($this->isDatasourceFunction()) {
             return (substr_replace($this->get_inst_prop_value('get_subpanel_data'), '', 0, 9)) ;
-        } else {
-            return $this->get_inst_prop_value('get_subpanel_data') ;
         }
+        return $this->get_inst_prop_value('get_subpanel_data') ;
     }
 
     //returns the where clause for the query.
@@ -514,9 +512,8 @@ class aSubPanel
     {
         if (isset($this->panel_definition [ 'list_fields' ])) {
             return $this->panel_definition [ 'list_fields' ] ;
-        } else {
-            return array( ) ;
         }
+        return array( ) ;
     }
 
     public function get_module_name()
@@ -555,18 +552,17 @@ class aSubPanel
         if (! empty($this->sub_subpanels)) {
             if (! empty($this->_instance_properties [ 'header_definition_from_subpanel' ]) && ! empty($this->sub_subpanels [ $this->_instance_properties [ 'header_definition_from_subpanel' ] ])) {
                 return $this->sub_subpanels [ $this->_instance_properties [ 'header_definition_from_subpanel' ] ] ;
-            } else {
-                $display_fields = array();
-                //If we are not pulling from a specific subpanel, create a list of all list fields and use that.
-                foreach ($this->sub_subpanels as $subpanel) {
-                    $list_fields = $subpanel->get_list_fields();
-                    foreach ($list_fields as $field => $def) {
-                    }
-                }
-
-                reset($this->sub_subpanels) ;
-                return current($this->sub_subpanels) ;
             }
+            $display_fields = array();
+            //If we are not pulling from a specific subpanel, create a list of all list fields and use that.
+            foreach ($this->sub_subpanels as $subpanel) {
+                $list_fields = $subpanel->get_list_fields();
+                foreach ($list_fields as $field => $def) {
+                }
+            }
+
+            reset($this->sub_subpanels) ;
+            return current($this->sub_subpanels) ;
         }
         return null ;
     }

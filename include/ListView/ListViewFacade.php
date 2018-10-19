@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /*
@@ -101,6 +102,66 @@ if (!defined('sugarEntry') || !sugarEntry) {
          self::__construct($focus, $module, $type);
      }
 
+     /**
+      * Retrieves display columns on list view of specified module
+      * 
+      * @param string $module
+      * @param array $request
+      * @return array
+      */
+     public static function getDisplayColumns($module, $request = [])
+     {
+         $metadataFile = null;
+         $foundViewDefs = false;
+         if (file_exists('custom/modules/' . $module. '/metadata/listviewdefs.php')) {
+             $metadataFile = 'custom/modules/' .  $module . '/metadata/listviewdefs.php';
+             $foundViewDefs = true;
+         } else {
+             if (file_exists('custom/modules/'. $module.'/metadata/metafiles.php')) {
+                 require_once('custom/modules/'. $module.'/metadata/metafiles.php');
+                 if (!empty($metafiles[$module]['listviewdefs'])) {
+                     $metadataFile = $metafiles[$module]['listviewdefs'];
+                     $foundViewDefs = true;
+                 }
+             } elseif (file_exists('modules/'. $module.'/metadata/metafiles.php')) {
+                 require_once('modules/'. $module.'/metadata/metafiles.php');
+                 if (!empty($metafiles[$module]['listviewdefs'])) {
+                     $metadataFile = $metafiles[$module]['listviewdefs'];
+                     $foundViewDefs = true;
+                 }
+             }
+         }
+         if (!$foundViewDefs && file_exists('modules/'. $module.'/metadata/listviewdefs.php')) {
+             $metadataFile = 'modules/'. $module.'/metadata/listviewdefs.php';
+         }
+         
+         if ($metadataFile) {
+            if (!file_exists($metadataFile)) {
+                throw new Exception("Metadata file '$metadataFile' not found for module '$module'.");
+            }
+            require_once($metadataFile);
+         }
+
+         $displayColumns = array();
+         if (!empty($listViewDefs)) {
+            if (!empty($request['displayColumns'])) {
+                foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
+                    if (!empty($listViewDefs[$module][$col])) {
+                        $displayColumns[$col] = $listViewDefs[$module][$col];
+                    }
+                }
+            } else {
+                foreach ($listViewDefs[$module] as $col => $params) {
+                    if (!empty($params['default']) && $params['default']) {
+                        $displayColumns[$col] = $params;
+                    }
+                }
+            }
+         } else {
+             throw new Exception("List view definition is not found for module '$module'");
+         }
+         return $displayColumns;
+     }
 
      public function build()
      {
@@ -110,51 +171,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
              $this->lv = new ListView();
              $this->template = 'modules/'.$this->module.'/ListView.html';
          } else {
-             $metadataFile = null;
-             $foundViewDefs = false;
-             if (file_exists('custom/modules/' . $this->module. '/metadata/listviewdefs.php')) {
-                 $metadataFile = 'custom/modules/' .  $this->module . '/metadata/listviewdefs.php';
-                 $foundViewDefs = true;
-             } else {
-                 if (file_exists('custom/modules/'. $this->module.'/metadata/metafiles.php')) {
-                     require_once('custom/modules/'. $this->module.'/metadata/metafiles.php');
-                     if (!empty($metafiles[ $this->module]['listviewdefs'])) {
-                         $metadataFile = $metafiles[ $this->module]['listviewdefs'];
-                         $foundViewDefs = true;
-                     }
-                 } elseif (file_exists('modules/'. $this->module.'/metadata/metafiles.php')) {
-                     require_once('modules/'. $this->module.'/metadata/metafiles.php');
-                     if (!empty($metafiles[ $this->module]['listviewdefs'])) {
-                         $metadataFile = $metafiles[ $this->module]['listviewdefs'];
-                         $foundViewDefs = true;
-                     }
-                 }
-             }
-             if (!$foundViewDefs && file_exists('modules/'. $this->module.'/metadata/listviewdefs.php')) {
-                 $metadataFile = 'modules/'. $this->module.'/metadata/listviewdefs.php';
-             }
-             require_once($metadataFile);
-
-
              $this->lv = new ListViewSmarty();
-             $displayColumns = array();
-             if (!empty($_REQUEST['displayColumns'])) {
-                 foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
-                     if (!empty($listViewDefs[$this->module][$col])) {
-                         $displayColumns[$col] = $listViewDefs[$this->module][$col];
-                     }
-                 }
-             } else {
-                 foreach ($listViewDefs[$this->module] as $col => $params) {
-                     if (!empty($params['default']) && $params['default']) {
-                         $displayColumns[$col] = $params;
-                     }
-                 }
-             }
-
-
-
-             $this->lv->displayColumns = $displayColumns;
+             $this->lv->displayColumns = self::getDisplayColumns($this->module, $_REQUEST);
              $this->type = 2;
              $this->template = 'include/ListView/ListViewGeneric.tpl';
          }
@@ -200,9 +218,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
          }
          if ($return) {
              return $output;
-         } else {
-             echo $output;
          }
+         echo $output;
      }
 
      public function setTitle($title = '')

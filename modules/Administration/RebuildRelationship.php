@@ -44,8 +44,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 include 'include/modules.php';
 
-global $db, $mod_strings;
-$log = &$GLOBALS ['log'];
+global $mod_strings ;
+$db = DBManagerFactory::getInstance();
+
+$log = & $GLOBALS [ 'log' ] ;
 
 $query = 'DELETE FROM relationships';
 $db->query($query);

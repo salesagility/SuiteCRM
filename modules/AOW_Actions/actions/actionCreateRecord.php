@@ -161,7 +161,7 @@ class actionCreateRecord extends actionBase
 
                 if (isset($params['relate_to_workflow']) && $params['relate_to_workflow']) {
                     require_once(get_custom_file_if_exists('modules/Relationships/Relationship.php'));
-                    $key = Relationship::retrieve_by_modules($bean->module_dir, $record->module_dir, $GLOBALS['db']);
+                    $key = Relationship::retrieve_by_modules($bean->module_dir, $record->module_dir, DBManagerFactory::getInstance());
                     if (!empty($key)) {
                         foreach ($bean->field_defs as $field=>$def) {
                             if ($def['type'] == 'link' && !empty($def['relationship']) && $def['relationship'] == $key) {

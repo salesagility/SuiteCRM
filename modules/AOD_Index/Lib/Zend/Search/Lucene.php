@@ -289,9 +289,8 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                 } catch (Zend_Search_Lucene_Exception $e) {
                     if (strpos($e->getMessage(), 'is not readable') !== false) {
                         return -1;
-                    } else {
-                        throw new Zend_Search_Lucene_Exception($e->getMessage(), $e->getCode(), $e);
                     }
+                    throw new Zend_Search_Lucene_Exception($e->getMessage(), $e->getCode(), $e);
                 }
             } else {
                 throw new Zend_Search_Lucene_Exception($e->getMessage(), $e->getCode(), $e);
@@ -541,9 +540,8 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
                 if (strpos($e->getMessage(), 'Can\'t obtain exclusive index lock') === false) {
                     throw new Zend_Search_Lucene_Exception($e->getMessage(), $e->getCode(), $e);
-                } else {
-                    throw new Zend_Search_Lucene_Exception('Can\'t create index. It\'s under processing now', 0, $e);
                 }
+                throw new Zend_Search_Lucene_Exception('Can\'t create index. It\'s under processing now', 0, $e);
             }
 
             if ($this->_generation == -1) {
@@ -1033,9 +1031,8 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                             } catch (Zend_Search_Lucene_Exception $e) {
                                 if (strpos($e->getMessage(), 'not found') === false) {
                                     throw new Zend_Search_Lucene_Exception($e->getMessage(), $e->getCode(), $e);
-                                } else {
-                                    $value = null;
                                 }
+                                $value = null;
                             }
 
                             $valuesArray[] = $value;
@@ -1217,9 +1214,9 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             // Index is optimized (only one segment)
             // Do not perform array reindexing
             return reset($subResults);
-        } else {
-            $result = call_user_func_array('array_merge', $subResults);
         }
+        $result = call_user_func_array('array_merge', $subResults);
+        
 
         return $result;
     }
@@ -1251,9 +1248,9 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             // Index is optimized (only one segment)
             // Do not perform array reindexing
             return reset($subResults);
-        } else {
-            $result = call_user_func_array('array_merge', $subResults);
         }
+        $result = call_user_func_array('array_merge', $subResults);
+        
 
         return $result;
     }

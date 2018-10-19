@@ -64,9 +64,8 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
     {
         if (array_key_exists($srcToken->getTermText(), $this->_stopSet)) {
             return null;
-        } else {
-            return $srcToken;
         }
+        return $srcToken;
     }
 
     /**

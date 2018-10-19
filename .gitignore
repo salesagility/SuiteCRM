@@ -6,6 +6,7 @@ cache/*
 upload/*
 !upload/index.html
 # Ignore some files and directories from the custom directory.
+custom/
 custom/history/*
 custom/blowfish/*
 custom/modulebuilder/*
@@ -78,8 +79,6 @@ SuiteCRM.kdev4
 vendor/
 public/
 
-#Ingore composer files
-composer.lock
 
 #Ignore bower_components
 bower_components/

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -756,13 +756,13 @@ class MetaParser
         foreach ($panels as $panel) {
             if (!empty($panel) && !is_array($panel)) {
                 return false;
-            } else {
-                foreach ($panel as $row) {
-                    if (!empty($row) && !is_array($row)) {
-                        return false;
-                    } //if
-                } //foreach
-            } //if-else
+            }
+            foreach ($panel as $row) {
+                if (!empty($row) && !is_array($row)) {
+                    return false;
+                } //if
+            } //foreach
+             //if-else
         } //foreach
 
    return true;

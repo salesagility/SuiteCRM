@@ -65,19 +65,17 @@ class ModuleBuilderController extends SugarController
             if ($_REQUEST['type'] == 'studio') {
                 return $mod_strings['LBL_STUDIO'];
             } elseif ($_REQUEST['type'] == 'sugarportal') {
-                return $mod_strings['LBL_SUGARPORTAL'];
+                return $mod_strings['LBL_SUITEPORTAL'];
             } elseif ($_REQUEST['type'] == 'mb') {
                 return $mod_strings['LBL_MODULEBUILDER'];
             } elseif ($_REQUEST['type'] == 'dropdowns') {
                 return $mod_strings['LBL_DROPDOWNEDITOR'];
             } elseif ($_REQUEST['type'] == 'home') {
                 return $mod_strings['LBL_HOME'];
-            } else {
-                return $mod_strings['LBL_DEVELOPER_TOOLS'];
             }
-        } else {
             return $mod_strings['LBL_DEVELOPER_TOOLS'];
         }
+        return $mod_strings['LBL_DEVELOPER_TOOLS'];
     }
 
     public function fromModuleBuilder()
@@ -518,9 +516,9 @@ class ModuleBuilderController extends SugarController
                     $parser->handleSaveRelationshipLabels($metadata, $selected_lang) ;
                 }
             }
-        } else {
-            //TODO FOR MB
         }
+        //TODO FOR MB
+        
         $this->view = 'relationships' ;
     }
 

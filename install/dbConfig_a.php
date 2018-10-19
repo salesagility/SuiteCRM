@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -126,8 +127,8 @@ foreach ($config_params as $group => $gdata) {
         if (!empty($value)) {
             if (!empty($value['required'])) {
                 $form .= "<span class=\"required\">*</span>";
-            } else {
             }
+            
             if (!empty($_SESSION[$name])) {
                 $sessval = $_SESSION[$name];
             } else {
@@ -202,10 +203,10 @@ if ($db->supports("create_user")) {
     <hr>
 <br>
 {$mod_strings['LBL_DBCONFIG_SECURITY']}
-<div class='install_block'><label><b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b></label>$dbUSRDD
+<div class='install_block'><label><b>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}</b></label>$dbUSRDD
     <span id='connection_user_div' style="display:none">
         <span class="required">*</span>
-            <label><b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b></label>
+            <label><b>{$mod_strings['LBL_DBCONF_SUITE_DB_USER']}</b></label>
             <input type="text" name="setup_db_sugarsales_user" value="{$_SESSION['setup_db_sugarsales_user']}" />
             <label><b>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</b></label>
             <input type="password" name="setup_db_sugarsales_password_entry" value="{$setup_db_sugarsales_password}" />

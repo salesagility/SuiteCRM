@@ -194,27 +194,26 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
             return new Zend_Search_Lucene_Search_Query_Empty();
         } elseif ($this->_terms[0]->field !== null) {
             return $this;
-        } else {
-            require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
-            $query = new Zend_Search_Lucene_Search_Query_Boolean();
-            $query->setBoost($this->getBoost());
+        }
+        require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
+        $query = new Zend_Search_Lucene_Search_Query_Boolean();
+        $query->setBoost($this->getBoost());
 
-            foreach ($index->getFieldNames(true) as $fieldName) {
-                $subquery = new Zend_Search_Lucene_Search_Query_Phrase();
-                $subquery->setSlop($this->getSlop());
+        foreach ($index->getFieldNames(true) as $fieldName) {
+            $subquery = new Zend_Search_Lucene_Search_Query_Phrase();
+            $subquery->setSlop($this->getSlop());
 
-                require_once 'Zend/Search/Lucene/Index/Term.php';
-                foreach ($this->_terms as $termId => $term) {
-                    $qualifiedTerm = new Zend_Search_Lucene_Index_Term($term->text, $fieldName);
+            require_once 'Zend/Search/Lucene/Index/Term.php';
+            foreach ($this->_terms as $termId => $term) {
+                $qualifiedTerm = new Zend_Search_Lucene_Index_Term($term->text, $fieldName);
 
-                    $subquery->addTerm($qualifiedTerm, $this->_offsets[$termId]);
-                }
-
-                $query->addSubquery($subquery);
+                $subquery->addTerm($qualifiedTerm, $this->_offsets[$termId]);
             }
 
-            return $query;
+            $query->addSubquery($subquery);
         }
+
+        return $query;
     }
 
     /**
@@ -513,9 +512,8 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
 
             // Included in result, but culculated freq is zero
             return 0;
-        } else {
-            return 0;
         }
+        return 0;
     }
 
     /**

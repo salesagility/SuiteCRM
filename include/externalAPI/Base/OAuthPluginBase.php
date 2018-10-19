@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('include/externalAPI/Base/ExternalAPIBase.php');
@@ -120,18 +121,16 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
 
         if (!empty($this->oauth_token) && !empty($this->oauth_secret)) {
             return array('success'=>true);
-        } else {
-            return array('success'=>false,'errorMessage'=>translate('LBL_ERR_NO_TOKEN', 'EAPM'));
         }
+        return array('success'=>false,'errorMessage'=>translate('LBL_ERR_NO_TOKEN', 'EAPM'));
     }
 
     protected function checkOauthLogin()
     {
         if (empty($this->oauth_token) || empty($this->oauth_secret)) {
             return $this->oauthLogin();
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function getOauthParams()
@@ -192,13 +191,12 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
 
             if (empty($request_token_info['oauth_token_secret']) || empty($request_token_info['oauth_token'])) {
                 return false;
-            } else {
-                // FIXME: error checking here
-                $_SESSION['eapm_oauth_secret'] = $request_token_info['oauth_token_secret'];
-                $_SESSION['eapm_oauth_token'] = $request_token_info['oauth_token'];
-                $authReq = $this->getOauthAuthURL();
-                SugarApplication::redirect("{$authReq}?oauth_token={$request_token_info['oauth_token']}");
             }
+            // FIXME: error checking here
+            $_SESSION['eapm_oauth_secret'] = $request_token_info['oauth_token_secret'];
+            $_SESSION['eapm_oauth_token'] = $request_token_info['oauth_token'];
+            $authReq = $this->getOauthAuthURL();
+            SugarApplication::redirect("{$authReq}?oauth_token={$request_token_info['oauth_token']}");
         } else {
             $accReq = $this->getOauthAccessURL();
             $oauth->setToken($_SESSION['eapm_oauth_token'], $_SESSION['eapm_oauth_secret']);

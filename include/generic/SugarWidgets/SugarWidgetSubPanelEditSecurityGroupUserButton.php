@@ -55,7 +55,7 @@ class SugarWidgetSubPanelEditSecurityGroupUserButton extends SugarWidgetField
         return $this->displayList($layout_def);
     }
 
-    public function displayList(&$layout_def)
+    public function displayList($layout_def)
     {
         global $app_strings;
         global $image_path;
@@ -72,8 +72,7 @@ class SugarWidgetSubPanelEditSecurityGroupUserButton extends SugarWidgetField
         if ($layout_def['ListView']) {
             return '<a href="' . $href . '"'
                 . 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_EDIT'] .'</a>&nbsp;';
-        } else {
-            return '';
         }
+        return '';
     }
 }

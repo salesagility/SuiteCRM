@@ -226,6 +226,10 @@ class Document extends File
 
     public function is_authenticated()
     {
+        if (!isset($this->authenticated)) {
+            LoggerManager::getLogger()->warn('Document::$authenticated is not set');
+            return null;
+        }
         return $this->authenticated;
     }
 
@@ -387,21 +391,21 @@ class Document extends File
                 LoggerManager::getLogger()->warn('In language app strings[document_category_dom] does not found for category id for document list view data: ' . $this->category_id);
             }
         }
-        
+
         if (!isset($app_list_strings['document_category_dom'][$this->category_id])) {
             LoggerManager::getLogger()->warn('Category ID is not found in document_category_dom in app_list_string for getting list view date of Document.');
             $appListStringDocumentCategoryDomForThisCategoryId = null;
         } else {
             $appListStringDocumentCategoryDomForThisCategoryId = $app_list_strings['document_category_dom'][$this->category_id];
         }
-        
+
         if (!isset($app_list_strings['document_category_dom'][$this->category_id])) {
             LoggerManager::getLogger()->warn('Category ID is not found in document_category_dom in app_list_string for getting list view date of Document.');
             $appListStringDocumentCategoryDomForThisSubCategoryId = null;
         } else {
             $appListStringDocumentCategoryDomForThisSubCategoryId = $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
         }
-        
+
         $document_fields['CATEGORY_ID'] = empty($this->category_id) ? "" : $appListStringDocumentCategoryDomForThisCategoryId;
         $document_fields['SUBCATEGORY_ID'] = empty($this->subcategory_id) ? "" : $appListStringDocumentCategoryDomForThisSubCategoryId;
         $document_fields['NAME'] = $this->document_name;

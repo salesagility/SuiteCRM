@@ -663,9 +663,8 @@ class chart
 
         if ($sdate->format('m') != $edate->format('m')) {
             return -1;
-        } else {
-            return 0;
         }
+        return 0;
     }
 
 
@@ -743,9 +742,8 @@ class chart
             return 'weekend';
         } elseif ($date == $now) {
             return 'today';
-        } else {
-            return false;
         }
+        return false;
     }
 
 
@@ -764,8 +762,7 @@ class chart
     {
         if ($days > 1) {
             return " d";
-        } else {
-            return " h";
         }
+        return " h";
     }
 }

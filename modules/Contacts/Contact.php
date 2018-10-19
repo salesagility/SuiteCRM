@@ -1,5 +1,6 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 /*********************************************************************************
@@ -251,15 +252,15 @@ class Contact extends Person implements EmailInterface
                 $singleSelect,
                 $ifListForExport
             );
-        } else {
-            //any other action goes to parent function in sugarbean
-            if (strpos($order_by, 'sync_contact') !== false) {
-                //we have found that the user is ordering by the sync_contact field, it would be troublesome to sort by this field
-                //and perhaps a performance issue, so just remove it
-                $order_by = '';
-            }
+        }
+        //any other action goes to parent function in sugarbean
+        if (strpos($order_by, 'sync_contact') !== false) {
+            //we have found that the user is ordering by the sync_contact field, it would be troublesome to sort by this field
+            //and perhaps a performance issue, so just remove it
+            $order_by = '';
+        }
 
-            return parent::create_new_list_query(
+        return parent::create_new_list_query(
                 $order_by,
                 $where,
                 $filter,
@@ -271,7 +272,6 @@ class Contact extends Person implements EmailInterface
                 $singleSelect,
                 $ifListForExport
             );
-        }
     }
 
 

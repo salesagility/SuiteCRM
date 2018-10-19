@@ -1,5 +1,6 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -419,12 +420,11 @@ class TimeDate
 
         if (!empty($cachedValue)) {
             return $cachedValue;
-        } else {
-            $value = $this->merge_date_time($this->get_date_format($user), $this->get_time_format($user));
-            sugar_cache_put($cacheKey, $value, 0);
-
-            return $value;
         }
+        $value = $this->merge_date_time($this->get_date_format($user), $this->get_time_format($user));
+        sugar_cache_put($cacheKey, $value, 0);
+
+        return $value;
     }
 
     /**
@@ -712,11 +712,11 @@ class TimeDate
         if ($date instanceof DateTime) {
             $date = $date->format(self::DB_DATETIME_FORMAT);
         }
-        
+
         if (null === $date) {
             $date = '';
         }
-            
+
         if (!is_string($date)) {
             $msg = 'Date should be a string, ' . gettype($date) . ' given.';
             LoggerManager::getLogger()->fatal($msg . "\nDate was:\n" . print_r($date, true));
@@ -725,12 +725,15 @@ class TimeDate
         try {
             return SugarDateTime::createFromFormat(self::DB_DATETIME_FORMAT, $date, self::$gmtTimezone);
         } catch (Exception $e) {
-            $GLOBALS['log']->error("fromDb: Conversion of $date from DB format failed: {$e->getMessage()}");
-
+            if (is_string($date)) {
+                $GLOBALS['log']->error("fromDb: Conversion of $date from DB format failed: {$e->getMessage()}");
+            } else {
+                LoggerManager::getLogger()->error('Date parameter is not a string');
+            }
             return null;
         }
     }
-    
+
     /**
      * Create a date from a certain type of field in DB format
      * The types are: date, time, datatime[combo]
@@ -1574,9 +1577,8 @@ class TimeDate
     {
         if ($a[0] == $b[0]) {
             return strcmp($a[1], $b[1]);
-        } else {
-            return $a[0] < $b[0] ? -1 : 1;
         }
+        return $a[0] < $b[0] ? -1 : 1;
     }
 
     /**
@@ -1626,37 +1628,34 @@ class TimeDate
             return $this->fromTimestamp($time['ts']);
         } elseif (isset($time['date_str'])) {
             return $this->fromDb($time['date_str']);
-        } else {
-            $hour = 0;
-            $min = 0;
-            $sec = 0;
-            $now = $this->getNow(true);
-            $day = $now->day;
-            $month = $now->month;
-            $year = $now->year;
-            if (isset($time['sec'])) {
-                $sec = $time['sec'];
-            }
-            if (isset($time['min'])) {
-                $min = $time['min'];
-            }
-            if (isset($time['hour'])) {
-                $hour = $time['hour'];
-            }
-            if (isset($time['day'])) {
-                $day = $time['day'];
-            }
-            if (isset($time['month'])) {
-                $month = $time['month'];
-            }
-            if (isset($time['year']) && $time['year'] >= 1970) {
-                $year = $time['year'];
-            }
-
-            return $now->setDate($year, $month, $day)->setTime($hour, $min, $sec)->setTimeZone(self::$gmtTimezone);
+        }
+        $hour = 0;
+        $min = 0;
+        $sec = 0;
+        $now = $this->getNow(true);
+        $day = $now->day;
+        $month = $now->month;
+        $year = $now->year;
+        if (isset($time['sec'])) {
+            $sec = $time['sec'];
+        }
+        if (isset($time['min'])) {
+            $min = $time['min'];
+        }
+        if (isset($time['hour'])) {
+            $hour = $time['hour'];
+        }
+        if (isset($time['day'])) {
+            $day = $time['day'];
+        }
+        if (isset($time['month'])) {
+            $month = $time['month'];
+        }
+        if (isset($time['year']) && $time['year'] >= 1970) {
+            $year = $time['year'];
         }
 
-        return null;
+        return $now->setDate($year, $month, $day)->setTime($hour, $min, $sec)->setTimeZone(self::$gmtTimezone);
     }
 
     /**
@@ -1757,9 +1756,8 @@ class TimeDate
         }
         if ($daystart) {
             return $now->get_day_begin();
-        } else {
-            return $now->get_day_end();
         }
+        return $now->get_day_end();
     }
 
     /**

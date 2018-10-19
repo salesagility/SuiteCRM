@@ -745,9 +745,8 @@ class parseCSV
                     return '1';
                 } elseif ($op == 'does not contain' && !preg_match('/'.preg_quote($value, '/').'/i', $row[$field])) {
                     return '1';
-                } else {
-                    return '0';
                 }
+                return '0';
             }
         }
         return '1';
@@ -830,9 +829,8 @@ class parseCSV
                 $pref = strpos($preferred, $char);
                 $pref = ($pref !== false) ? str_pad($pref, 3, '0', STR_PAD_LEFT) : '999' ;
                 return $pref.$match.'.'.(99999 - str_pad($first, 5, '0', STR_PAD_LEFT));
-            } else {
-                return false;
             }
+            return false;
         }
     }
 

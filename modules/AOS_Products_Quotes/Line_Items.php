@@ -237,12 +237,10 @@ function get_discount_string($type, $amount, $params, $locale, $sep)
             return currency_format_number($amount, $params)."</td>";
         } elseif ($locale->getPrecision()) {
             return rtrim(rtrim(format_number($amount), '0'), $sep[1])."%";
-        } else {
-            return format_number($amount)."%";
         }
-    } else {
-        return "-";
+        return format_number($amount)."%";
     }
+    return "-";
 }
 
 function display_shipping_vat($focus, $field, $value, $view)

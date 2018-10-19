@@ -93,11 +93,10 @@ class ParserFactory
                 if ($subpanelName == null) {
                     require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php' ;
                     return new ListLayoutMetaDataParser(MB_LISTVIEW, $moduleName, $packageName) ;
-                } else {
+                }
                     require_once 'modules/ModuleBuilder/parsers/views/SubpanelMetaDataParser.php' ;
                     return new SubpanelMetaDataParser($subpanelName, $moduleName, $packageName) ;
-                }
-                // no break
+                
             case MB_DASHLET:
             case MB_DASHLETSEARCH:
                 require_once 'modules/ModuleBuilder/parsers/views/DashletMetaDataParser.php' ;
