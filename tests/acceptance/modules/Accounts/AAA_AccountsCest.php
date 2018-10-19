@@ -2,7 +2,7 @@
 
 use Faker\Generator;
 
-class AccountsCest
+class AAA_AccountsCest
 {
     /**
      * @var Generator $fakeData
