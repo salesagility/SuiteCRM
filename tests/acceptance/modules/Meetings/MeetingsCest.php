@@ -129,9 +129,8 @@ class MeetingsCest
         $I->fillField('#date_start_date', '01/01/2000');
         $I->selectOption('#date_start_hours', '01');
         $I->selectOption('#date_start_minutes', '00');
-        $I->selectOption('#date_start_meridiem', 'pm');
-        $I->pressKey('#date_start_date',WebDriverKeys::ENTER);
-        $I->see('01/01/2000 01:00pm');
+        $I->doubleClick('#inlineEditSaveButton');
+        $I->see('01/01/2000 01:00am', '#date_start');
 
         // Delete meeting
         $detailView->clickActionMenuItem('Delete');
