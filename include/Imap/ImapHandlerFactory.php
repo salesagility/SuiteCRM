@@ -137,14 +137,13 @@ class ImapHandlerFactory
 
         if (!isset($calls[$key])) {
             throw new Exception('Key not found: ' . $key, self::ERR_KEY_NOT_FOUND);
-        } else {
-            if (!file_put_contents(__DIR__ . self::SETTINGS_KEY_FILE, $key)) {
-                throw new Exception('Key save error', self::ERR_KEY_SAVE_ERROR);
-            } else {
-                return true;
-            }
         }
-        return false;
+        
+        if (!file_put_contents(__DIR__ . self::SETTINGS_KEY_FILE, $key)) {
+            throw new Exception('Key save error', self::ERR_KEY_SAVE_ERROR);
+        }
+            
+        return true;
     }
     
     /**
