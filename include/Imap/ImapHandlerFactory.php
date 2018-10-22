@@ -72,7 +72,7 @@ class ImapHandlerFactory
      *
      * @var array
      */
-    protected $imapHandlerTestInterface = [
+    protected $imapHndlrTstIntrface = [
         'file' => 'include/Imap/ImapHandlerFake.php',
         'class' => 'ImapHandlerFake',
         'calls' => 'include/Imap/ImapHandlerFakeCalls.php',
@@ -89,8 +89,8 @@ class ImapHandlerFactory
      */
     protected function includeFakeInterface()
     {
-        if (!class_exists($this->imapHandlerTestInterface['class'])) {
-            require_once $this->imapHandlerTestInterface['file'];
+        if (!class_exists($this->imapHndlrTstIntrface['class'])) {
+            require_once $this->imapHndlrTstIntrface['file'];
         }
     }
     
@@ -112,8 +112,8 @@ class ImapHandlerFactory
             }
         }
         $this->includeFakeInterface();
-        $interfaceClass = $this->imapHandlerTestInterface['class'];
-        $interfaceCallsSettings = include $this->imapHandlerTestInterface['calls'];
+        $interfaceClass = $this->imapHndlrTstIntrface['class'];
+        $interfaceCallsSettings = include $this->imapHndlrTstIntrface['calls'];
 
         if (!isset($interfaceCallsSettings[$testSettings])) {
             throw new Exception("Test settings does not exists: $testSettings", self::ERR_TEST_SET_NOT_EXISTS);
@@ -133,7 +133,7 @@ class ImapHandlerFactory
      */
     public function saveTestSettingsKey($key)
     {
-        $calls = include $this->imapHandlerTestInterface['calls'];
+        $calls = include $this->imapHndlrTstIntrface['calls'];
 
         if (!isset($calls[$key])) {
             throw new Exception('Key not found: ' . $key, self::ERR_KEY_NOT_FOUND);
