@@ -110,12 +110,10 @@ class ImapHandlerFakeData
             if (key_exists($argsEncoded, $this->calls[$name])) {
                 $ret = $this->getNextCallReturn($name, $argsEncoded);
                 return $ret;
-            } else {
-                throw new Exception('Fake caller has not matched arguments for this call: ' . $name . "\nArguments was: " . print_r($args, true), self::ERR_NO_MATCH_ARGS);
             }
-        } else {
-            throw new Exception('Fake call does not exists for this function call: ' . $name . "\nwith specific arguments:\n" . print_r($args, true), self::ERR_CALL_NOT_FOUND);
+            throw new Exception('Fake caller has not matched arguments for this call: ' . $name . "\nArguments was: " . print_r($args, true), self::ERR_NO_MATCH_ARGS);
         }
+        throw new Exception('Fake call does not exists for this function call: ' . $name . "\nwith specific arguments:\n" . print_r($args, true), self::ERR_CALL_NOT_FOUND);
     }
     
     /**
