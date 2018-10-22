@@ -72,7 +72,8 @@ class ImapHandlerFakeData
      */
     protected function encodeArgs($args = null)
     {
-        return $encoded = md5(serialize($args));
+        $encoded = md5(serialize($args));
+        return $encoded;
     }
     
     /**
