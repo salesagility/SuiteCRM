@@ -113,13 +113,13 @@ class ImapHandlerFactory
         }
         $this->includeFakeInterface();
         $interfaceClass = $this->imapHndlrTstIntrface['class'];
-        $interfaceCallsSettings = include $this->imapHndlrTstIntrface['calls'];
+        $intrfaceCllsSettings = include $this->imapHndlrTstIntrface['calls'];
 
-        if (!isset($interfaceCallsSettings[$testSettings])) {
+        if (!isset($intrfaceCllsSettings[$testSettings])) {
             throw new Exception("Test settings does not exists: $testSettings", self::ERR_TEST_SET_NOT_EXISTS);
         }
 
-        $interfaceCalls = $interfaceCallsSettings[$testSettings];
+        $interfaceCalls = $intrfaceCllsSettings[$testSettings];
         $interfaceFakeData = new ImapHandlerFakeData();
         $interfaceFakeData->retrieve($interfaceCalls);
         $this->setInterfaceObject(new $interfaceClass($interfaceFakeData));
