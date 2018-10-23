@@ -1,4 +1,6 @@
 <?php
+
+use SuiteCRM\Utility\SuiteValidator;
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -617,10 +619,10 @@ function pollMonitoredInboxesAOP()
                                 if ($aopInboundEmailX->isMailBoxTypeCreateCase()) {
                                     $userId = $assignManager->getNextAssignedUser();
                                     $GLOBALS['log']->debug('userId [ ' . $userId . ' ]');
-                                    
+                                    $validatior = new SuiteValidator();
                                     if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email || 
                                         !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) && 
-                                        isValidId($emailId)
+                                        $validatior->isValidId($emailId)
                                     ) {
                                         $aopInboundEmailX->email = new Email();
                                         if (!$aopInboundEmailX->email->retrieve($emailId)) {
