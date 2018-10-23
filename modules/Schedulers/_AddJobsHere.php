@@ -620,10 +620,11 @@ function pollMonitoredInboxesAOP()
                                     
                                     if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email || 
                                         !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) && 
-                                            isValidId($emailId)) {
+                                        isValidId($emailId)
+                                    ) {
                                         $aopInboundEmailX->email = new Email();
                                         if (!$aopInboundEmailX->email->retrieve($emailId)) {
-                                            throw new Exception('Email retrieving error to handle case creaate, email id was: ' . $emailId);
+                                            throw new Exception('Email retrieving error to handle case create, email id was: ' . $emailId);
                                         }
                                     }
                                     $aopInboundEmailX->handleCreateCase($aopInboundEmailX->email, $userId);
