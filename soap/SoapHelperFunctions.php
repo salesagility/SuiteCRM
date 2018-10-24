@@ -1060,33 +1060,36 @@ function get_decoded($object){
 
 }
 
-/**
- * decrypt a string use the TripleDES algorithm. This meant to be
- * modified if the end user chooses a different algorithm
- *
- * @param $string - the string to decrypt
- *
- * @return a decrypted string if we can decrypt, the original string otherwise
- */
-function decrypt_string($string){
-	if(function_exists('mcrypt_cbc')){
+    /**
+     * decrypt a string use the TripleDES algorithm. This meant to be
+     * modified if the end user chooses a different algorithm
+     *
+     * @param $string - the string to decrypt
+     *
+     * @return a decrypted string if we can decrypt, the original string otherwise
+     */
+    function decrypt_string($string)
+    {
+        if (function_exists('openssl_decrypt')) {
 
-		$focus = new Administration();
-		$focus->retrieveSettings();
-		$key = '';
-		if(!empty($focus->settings['ldap_enc_key'])){
-			$key = $focus->settings['ldap_enc_key'];
-		}
-		if(empty($key))
-			return $string;
-		$buffer = $string;
-		$key = substr(md5($key),0,24);
-	    $iv = "password";
-	    return mcrypt_cbc(MCRYPT_3DES, $key, pack("H*", $buffer), MCRYPT_DECRYPT, $iv);
-	}else{
-		return $string;
-	}
-}
+            $focus = new Administration();
+            $focus->retrieveSettings();
+            $key = '';
+            if (!empty($focus->settings['ldap_enc_key'])) {
+                $key = $focus->settings['ldap_enc_key'];
+            }
+            if (empty($key)) {
+                return $string;
+            }
+            $buffer = $string;
+            $key = substr(md5($key), 0, 24);
+            $iv = "password";
+
+            return openssl_decrypt($buffer, OPENSSL_CIPHER_3DES, $key, OPENSSL_ZERO_PADDING, $iv);
+        } else {
+            return $string;
+        }
+    }
 
 }
 

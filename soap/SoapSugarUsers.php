@@ -124,7 +124,7 @@ function login($user_auth, $application){
 			LogicHook::initialize();
 			$GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
 			return array('id'=>-1, 'error'=>$error);
-	} else if(function_exists('mcrypt_cbc')){
+    } elseif (function_exists('openssl_decrypt')) {
 		$password = decrypt_string($user_auth['password']);
 		$authController = new AuthenticationController();
 		if($authController->login($user_auth['user_name'], $password) && isset($_SESSION['authenticated_user_id'])){
