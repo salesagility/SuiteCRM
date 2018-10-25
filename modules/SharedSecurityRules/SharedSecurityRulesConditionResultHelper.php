@@ -56,6 +56,18 @@ class SharedSecurityRulesConditionResultHelper {
         $this->rulesHelper = $rulesHelper;
     }
     
+    /**
+     * 
+     * @param type $result
+     * @param type $overallResult
+     * @param type $nextConditionLogicOperator
+     * @return type
+     */
+    protected function updateResultByLogicOp($result, $overallResult, $nextConditionLogicOperator) {
+        
+        return $result;
+    }
+    
 
     /**
      *
@@ -96,6 +108,7 @@ class SharedSecurityRulesConditionResultHelper {
                 $nextConditionLogicOperator = $nextRow['logic_op'];
 
                 // If the condition is a match then continue if it is an AND and finish if its an OR
+                $result = $this->updateResultByLogicOp($result, $overallResult, $nextConditionLogicOperator);
                 try {
                     $result = $this->rulesHelper->getResultByLogicOp($overallResult, $nextConditionLogicOperator);
                 } catch (SharedSecurityRulesHelperException $e) {

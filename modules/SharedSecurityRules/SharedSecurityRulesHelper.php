@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once 'SharedSecurityRulesHelperException.php';
+include_once __DIR__ . '/SharedSecurityRulesHelperException.php';
+include_once __DIR__ . '/SharedSecurityRulesConditionResultHelper.php';
 
 class SharedSecurityRulesHelper
 {
