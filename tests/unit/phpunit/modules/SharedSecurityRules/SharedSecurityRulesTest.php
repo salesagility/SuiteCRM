@@ -41,6 +41,7 @@ use SuiteCRM\StateSaver;
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+include_once __DIR__ . '/../../../../../modules/SharedSecurityRules/SharedSecurityRulesTest.php';
 
 /**
  * SharedSecurityRulesTest
@@ -686,9 +687,9 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
     }
 
     public function testCheckHistory() {
-        $ssr = BeanFactory::getBean('SharedSecurityRules');
+        $ssrh = new SharedSecurityRulesHelper();
         $acc = BeanFactory::getBean('Accounts');
-        $ret = $ssr->checkHistory($acc, 'name', 'test');
+        $ret = $ssrh->checkHistory($acc, 'name', 'test');
         $this->assertEquals(null, $ret);
     }
     
