@@ -82,8 +82,8 @@ class SharedSecurityRulesConditionResultHelper {
             if ($allConditions[$x]['parenthesis'] == "START") {
                 LoggerManager::getLogger()->info('SharedSecurityRules: Parenthesis condition found.');
 
-                $parenthesisConditionArray = $this->getParenthesisConditions($allConditions[$x], $allConditions);
-                $overallResult = $this->checkParenthesisConditions($parenthesisConditionArray, $moduleBean, $rule, $view, $action, $key);
+                $parenthesisConditionArray = $this->rulesHelper->getParenthesisConditions($allConditions[$x], $allConditions);
+                $overallResult = $this->rulesHelper->checkParenthesisConditions($parenthesisConditionArray, $moduleBean, $rule, $view, $action, $key);
 
                 // Retrieve the number of parenthesis conditions so we know how many conditions to skip for next run through
                 $x = $x + sizeof($parenthesisConditionArray);
@@ -91,13 +91,13 @@ class SharedSecurityRulesConditionResultHelper {
                 //Check next logical operator
                 $nextOrder = $allConditions[$x]['condition_order'] + 1;
                 $nextQuery = "SELECT logic_op FROM sharedsecurityrulesconditions WHERE sa_shared_sec_rules_id = '{$allConditions[$x]['sa_shared_sec_rules_id']}' AND condition_order = $nextOrder AND deleted=0";
-                $nextResult = $this->db->query($nextQuery, true, "Error retrieving next condition");
-                $nextRow = $this->db->fetchByAssoc($nextResult);
+                $nextResult = $this->rulesHelper->db->query($nextQuery, true, "Error retrieving next condition");
+                $nextRow = $this->rulesHelper->db->fetchByAssoc($nextResult);
                 $nextConditionLogicOperator = $nextRow['logic_op'];
 
                 // If the condition is a match then continue if it is an AND and finish if its an OR
                 try {
-                    $result = $this->getResultByLogicOp($overallResult, $nextConditionLogicOperator);
+                    $result = $this->rulesHelper->getResultByLogicOp($overallResult, $nextConditionLogicOperator);
                 } catch (SharedSecurityRulesHelperException $e) {
                     LoggerManager::getLogger()->info($e->getMessage());
                     $end = true;
@@ -110,10 +110,10 @@ class SharedSecurityRulesConditionResultHelper {
                 LoggerManager::getLogger()->info('SharedSecurityRules: All parenthesis looked at now working out next order number to be processed');
                 $nextOrder = $allConditions[$x]['condition_order'] + 1;
                 $nextQuery = "SELECT logic_op FROM sharedsecurityrulesconditions WHERE sa_shared_sec_rules_id = '{$allConditions[$x]['sa_shared_sec_rules_id']}' AND condition_order = $nextOrder AND deleted=0";
-                $nextResult = $this->db->query($nextQuery, true, "Error retrieving next condition");
-                $nextRow = $this->db->fetchByAssoc($nextResult);
+                $nextResult = $this->rulesHelper->db->query($nextQuery, true, "Error retrieving next condition");
+                $nextRow = $this->rulesHelper->db->fetchByAssoc($nextResult);
                 $nextConditionLogicOperator = $nextRow['logic_op'];
-                $allConditions[$x]['module_path'] = $this->unserializeIfSerialized($allConditions[$x]['module_path']);
+                $allConditions[$x]['module_path'] = $this->rulesHelper->unserializeIfSerialized($allConditions[$x]['module_path']);
 
                 /* this needs to be uncommented out and checked */
 
@@ -140,7 +140,7 @@ class SharedSecurityRulesConditionResultHelper {
                         if ($allConditions[$x]['field'] == 'assigned_user_name') {
                             $allConditions[$x]['field'] = 'assigned_user_id';
                         }
-                        if ($this->checkOperator(
+                        if ($this->rulesHelper->checkOperator(
                                         $record->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']
                                 )) {
                             $result = true;
@@ -166,7 +166,7 @@ class SharedSecurityRulesConditionResultHelper {
                         $allConditions[$x]['field'] = 'assigned_user_id';
                     }
 
-                    $conditionResult = $this->checkOperator($moduleBean->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']);
+                    $conditionResult = $this->rulesHelper->checkOperator($moduleBean->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']);
 
                     if ($conditionResult) {
                         if ($nextConditionLogicOperator === "AND") {
@@ -177,7 +177,7 @@ class SharedSecurityRulesConditionResultHelper {
                         }
                     } else {
                         if ($rule['run'] == "Once True") {
-                            if ($this->checkHistory($moduleBean, $allConditions[$x]['field'], $allConditions[$x]['value'])) {
+                            if ($this->rulesHelper->checkHistory($moduleBean, $allConditions[$x]['field'], $allConditions[$x]['value'])) {
                                 $result = true;
                             } else {
                                 $result = false;
@@ -195,7 +195,7 @@ class SharedSecurityRulesConditionResultHelper {
 
         $converted_res = '';
         if (isset($result)) {
-            $converted_res = $this->getConvertedRes($result);
+            $converted_res = $this->rulesHelper->getConvertedRes($result);
         }
         LoggerManager::getLogger()->info('SharedSecurityRules: Exiting getConditionResult() with result: ' . $converted_res);
         
