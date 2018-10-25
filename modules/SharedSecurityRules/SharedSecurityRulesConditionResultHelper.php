@@ -74,12 +74,11 @@ class SharedSecurityRulesConditionResultHelper
     
     /**
      *
-     * @param bool|null $result
      * @param boolean $overallResult
-     * @param mixed $nextConditionLogicOperator
+     * @param string $nextConditionLogicOperator
      * @return bool
      */
-    protected function updateResultByLogicOp($result, $overallResult, $nextConditionLogicOperator)
+    protected function getResultByLogicOp($overallResult, $nextConditionLogicOperator)
     {
         try {
             $result = $this->rulesHelper->getResultByLogicOp($overallResult, $nextConditionLogicOperator);
@@ -92,11 +91,149 @@ class SharedSecurityRulesConditionResultHelper
         return $result;
     }
     
-
     /**
      *
-     * @global User $current_user
-     * @global User $current_user
+     * @param array|null $related
+     * @param array $modulePath
+     * @param string $flowModule
+     * @param SugarBean $moduleBean
+     * @return array
+     */
+    protected function updateRelated($related, $modulePath, $flowModule, SugarBean $moduleBean)
+    {
+        if ($modulePath[0] != $flowModule) {
+            foreach ($modulePath as $rel) {
+                if (!empty($rel)) {
+                    $moduleBean->load_relationship($rel);
+                    $related = $moduleBean->$rel->getBeans();
+                }
+            }
+        }
+                
+        return $related;
+    }
+    
+    /**
+     *
+     * @param SugarBean $moduleBean
+     * @param array $allCondition
+     * @param string $userId
+     * @return array
+     */
+    protected function updateAllConditionRelated(SugarBean $moduleBean, $allCondition, $userId)
+    {
+        if ($moduleBean->field_defs[$allCondition['field']]['type'] == "relate") {
+            $allCondition['field'] = $moduleBean->field_defs[$allCondition['field']]['id_name'];
+        }
+        if ($allCondition['value_type'] == "currentUser") {
+            $allCondition['value_type'] = "Field";
+            $allCondition['value'] = $userId;
+        }
+
+        if ($allCondition['field'] == 'assigned_user_name') {
+            $allCondition['field'] = 'assigned_user_id';
+        }
+                        
+        return $allCondition;
+    }
+    
+    /**
+     *
+     * @param boolean $result
+     * @param array $related
+     * @param array $allCondition
+     * @param SugarBean $moduleBean
+     * @param string $userId
+     * @return boolean
+     */
+    protected function updateResultByRelated($result, $related, $allCondition, SugarBean $moduleBean, $userId)
+    {
+        foreach ($related as $record) {
+            $allCondition = $this->updateAllConditionRelated($moduleBean, $allCondition, $userId);
+                        
+            if ($this->rulesHelper->checkOperator(
+                $record->{$allCondition['field']}, $allCondition['value'], $allCondition['operator']
+            )) {
+                $result = true;
+            } elseif (count($related) <= 1) {
+                $result = false;
+            }
+        }
+        return $result;
+    }
+    
+    /**
+     *
+     * @param array $allCondition
+     * @param string $userId
+     * @param SugarBean $moduleBean
+     * @return array
+     */
+    protected function updateAllConditionStarted($allCondition, $userId, SugarBean $moduleBean)
+    {
+        if ($allCondition['value_type'] == "currentUser") {
+            $allCondition['value_type'] = "Field";
+            $allCondition['value'] = $userId;
+        }
+        //check and see if it is pointed at a field rather than a value.
+        if ($allCondition['value_type'] == "Field" &&
+            isset($moduleBean->{$allCondition['value']}) &&
+            !empty($moduleBean->{$allCondition['value']})
+        ) {
+            $allCondition['value'] = $moduleBean->{$allCondition['value']};
+        }
+
+        if ($allCondition['field'] == 'assigned_user_name') {
+            $allCondition['field'] = 'assigned_user_id';
+        }
+                    
+        return $allCondition;
+    }
+    
+    /**
+     *
+     * @param string $ruleRun
+     * @param SugarBean $moduleBean
+     * @param string $field
+     * @param string $value
+     * @param string $nextConditionLogicOperator
+     * @return boolean
+     */
+    protected function getResultByRuleRun($ruleRun, SugarBean $moduleBean, $field, $value, $nextConditionLogicOperator)
+    {
+        if ($ruleRun == "Once True") {
+            $result = $this->rulesHelper->checkHistory($moduleBean, $field, $value);
+        } else {
+            $result = false;
+            $this->end = $nextConditionLogicOperator === "AND" ? true : $this->end;
+        }
+
+        return $result;
+    }
+    
+    /**
+     * 
+     * @param bool $conditionResult
+     * @param string $nextConditionLogicOperator
+     * @param string $ruleRun
+     * @param SugarBean $moduleBean
+     * @param string $field
+     * @param string $value
+     * @return bool
+     */
+    protected function getResultByConditionResult($conditionResult, $nextConditionLogicOperator, $ruleRun, SugarBean $moduleBean, $field, $value)
+    {
+        if ($conditionResult) {
+            $this->end = $nextConditionLogicOperator !== "AND" ? true : $this->end;
+            $result = true;
+        } else {
+            $result = $this->getResultByRuleRun($ruleRun, $moduleBean, $field, $value, $nextConditionLogicOperator);
+        }
+        return $result;
+    }
+    
+    /**
+     * 
      * @param array $allConditions
      * @param SugarBean $moduleBean
      * @param array $rule
@@ -106,12 +243,10 @@ class SharedSecurityRulesConditionResultHelper
      * @param boolean $result
      * @return boolean
      */
-    public function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false)
-    {
-        global $current_user;
+    protected function getResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false) {
         
         $this->end = false;
-        $result = null;
+        $related = null;
 
         for ($x = 0; $x < sizeof($allConditions) && !$this->end; $x++) {
             // Is it the starting parenthesis?
@@ -132,7 +267,7 @@ class SharedSecurityRulesConditionResultHelper
                 $nextConditionLogicOperator = $nextRow['logic_op'];
 
                 // If the condition is a match then continue if it is an AND and finish if its an OR
-                $result = $this->updateResultByLogicOp($result, $overallResult, $nextConditionLogicOperator);
+                $result = $this->getResultByLogicOp($overallResult, $nextConditionLogicOperator);
             } else {
 
                 // Check if there is another condition and get the operator
@@ -146,88 +281,48 @@ class SharedSecurityRulesConditionResultHelper
 
                 /* this needs to be uncommented out and checked */
 
-                if ($allConditions[$x]['module_path'][0] != $rule['flow_module']) {
-                    foreach ($allConditions[$x]['module_path'] as $rel) {
-                        if (!empty($rel)) {
-                            $moduleBean->load_relationship($rel);
-                            $related = $moduleBean->$rel->getBeans();
-                        }
-                    }
-                }
+                $related = $this->updateRelated($related, $allConditions[$x]['module_path'], $rule['flow_module'], $moduleBean);
 
 
                 if ($related !== false && $related !== null && $related !== "") {
-                    foreach ($related as $record) {
-                        if ($moduleBean->field_defs[$allConditions[$x]['field']]['type'] == "relate") {
-                            $allConditions[$x]['field'] = $moduleBean->field_defs[$allConditions[$x]['field']]['id_name'];
-                        }
-                        if ($allConditions[$x]['value_type'] == "currentUser") {
-                            $allConditions[$x]['value_type'] = "Field";
-                            $allConditions[$x]['value'] = $current_user->id;
-                        }
-
-                        if ($allConditions[$x]['field'] == 'assigned_user_name') {
-                            $allConditions[$x]['field'] = 'assigned_user_id';
-                        }
-                        if ($this->rulesHelper->checkOperator(
-                                        $record->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']
-                                )) {
-                            $result = true;
-                        } else {
-                            if (count($related) <= 1) {
-                                $result = false;
-                            }
-                        }
-                    }
+                    $result = $this->updateResultByRelated($result, $related, $allConditions[$x], $moduleBean, $current_user->id);
                 } else {
-                    if ($allConditions[$x]['value_type'] == "currentUser") {
-                        $allConditions[$x]['value_type'] = "Field";
-                        $allConditions[$x]['value'] = $current_user->id;
-                    }
-                    //check and see if it is pointed at a field rather than a value.
-                    if ($allConditions[$x]['value_type'] == "Field" &&
-                            isset($moduleBean->{$allConditions[$x]['value']}) &&
-                            !empty($moduleBean->{$allConditions[$x]['value']})) {
-                        $allConditions[$x]['value'] = $moduleBean->{$allConditions[$x]['value']};
-                    }
-
-                    if ($allConditions[$x]['field'] == 'assigned_user_name') {
-                        $allConditions[$x]['field'] = 'assigned_user_id';
-                    }
+                    $allConditions[$x] = $this->updateAllConditionStarted($allConditions[$x], $current_user->id, $moduleBean);
 
                     $conditionResult = $this->rulesHelper->checkOperator($moduleBean->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']);
 
-                    if ($conditionResult) {
-                        if ($nextConditionLogicOperator === "AND") {
-                            $result = true;
-                        } else {
-                            $this->end = true;
-                            $result = true;
-                        }
-                    } else {
-                        if ($rule['run'] == "Once True") {
-                            if ($this->rulesHelper->checkHistory($moduleBean, $allConditions[$x]['field'], $allConditions[$x]['value'])) {
-                                $result = true;
-                            } else {
-                                $result = false;
-                            }
-                        } else {
-                            $result = false;
-                            if ($nextConditionLogicOperator === "AND") {
-                                $this->end = true;
-                            }
-                        }
-                    }
+                    $result = $this->getResultByConditionResult($conditionResult, $nextConditionLogicOperator, $rule['run'], $moduleBean, $allConditions[$x]['field'], $allConditions[$x]['value']);
                 }
             }
         }
+        
+        return $result;
+    }
 
+    /**
+     *
+     * @global User $current_user
+     * @param array $allConditions
+     * @param SugarBean $moduleBean
+     * @param array $rule
+     * @param string $view
+     * @param string $action
+     * @param string $key
+     * @param boolean $result
+     * @return boolean
+     */
+    public function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false)
+    {
+        global $current_user;
+
+        $ret = $this->getResult($allConditions, $moduleBean, $rule, $view, $action, $key, $result);
+        
         $converted_res = '';
-        if (isset($result)) {
-            $converted_res = $this->rulesHelper->getConvertedRes($result);
+        if (isset($ret)) {
+            $converted_res = $this->rulesHelper->getConvertedRes($ret);
         }
         LoggerManager::getLogger()->info('SharedSecurityRules: Exiting getConditionResult() with result: ' . $converted_res);
         
-        return $result;
+        return $ret;
     }
 }
