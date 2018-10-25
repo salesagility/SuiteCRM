@@ -226,8 +226,11 @@ class SharedSecurityRulesHelper
         global $current_user;
 
         LoggerManager::getLogger()->info('SharedSecurityRules: Entering getConditionResult()');
+        
+        $end = false;
+        $result = null;
 
-        for ($x = 0; $x < sizeof($allConditions); $x++) {
+        for ($x = 0; $x < sizeof($allConditions) && !$end; $x++) {
             // Is it the starting parenthesis?
             if ($allConditions[$x]['parenthesis'] == "START") {
                 LoggerManager::getLogger()->info('SharedSecurityRules: Parenthesis condition found.');
@@ -250,94 +253,94 @@ class SharedSecurityRulesHelper
                     $result = $this->getResultByLogicOp($overallResult, $nextConditionLogicOperator);
                 } catch (SharedSecurityRulesHelperException $e) {
                     LoggerManager::getLogger()->info($e->getMessage());
-                    return $e->return;
+                    $end = true;
+                    $result = $e->return;
                 }
 
-                continue;
-            }
+            } else {
 
-            // Check if there is another condition and get the operator
-            LoggerManager::getLogger()->info('SharedSecurityRules: All parenthesis looked at now working out next order number to be processed');
-            $nextOrder = $allConditions[$x]['condition_order'] + 1;
-            $nextQuery = "SELECT logic_op FROM sharedsecurityrulesconditions WHERE sa_shared_sec_rules_id = '{$allConditions[$x]['sa_shared_sec_rules_id']}' AND condition_order = $nextOrder AND deleted=0";
-            $nextResult = $this->db->query($nextQuery, true, "Error retrieving next condition");
-            $nextRow = $this->db->fetchByAssoc($nextResult);
-            $nextConditionLogicOperator = $nextRow['logic_op'];
-            $allConditions[$x]['module_path'] = $this->unserializeIfSerialized($allConditions[$x]['module_path']);
-            
-            /* this needs to be uncommented out and checked */
+                // Check if there is another condition and get the operator
+                LoggerManager::getLogger()->info('SharedSecurityRules: All parenthesis looked at now working out next order number to be processed');
+                $nextOrder = $allConditions[$x]['condition_order'] + 1;
+                $nextQuery = "SELECT logic_op FROM sharedsecurityrulesconditions WHERE sa_shared_sec_rules_id = '{$allConditions[$x]['sa_shared_sec_rules_id']}' AND condition_order = $nextOrder AND deleted=0";
+                $nextResult = $this->db->query($nextQuery, true, "Error retrieving next condition");
+                $nextRow = $this->db->fetchByAssoc($nextResult);
+                $nextConditionLogicOperator = $nextRow['logic_op'];
+                $allConditions[$x]['module_path'] = $this->unserializeIfSerialized($allConditions[$x]['module_path']);
 
-            if ($allConditions[$x]['module_path'][0] != $rule['flow_module']) {
-                foreach ($allConditions[$x]['module_path'] as $rel) {
-                    if (empty($rel)) {
-                        continue;
+                /* this needs to be uncommented out and checked */
+
+                if ($allConditions[$x]['module_path'][0] != $rule['flow_module']) {
+                    foreach ($allConditions[$x]['module_path'] as $rel) {
+                        if (!empty($rel)) {
+                            $moduleBean->load_relationship($rel);
+                            $related = $moduleBean->$rel->getBeans();
+                        }
                     }
-                    $moduleBean->load_relationship($rel);
-                    $related = $moduleBean->$rel->getBeans();
                 }
-            }
 
 
-            if ($related !== false && $related !== null && $related !== "") {
-                foreach ($related as $record) {
-                    if ($moduleBean->field_defs[$allConditions[$x]['field']]['type'] == "relate") {
-                        $allConditions[$x]['field'] = $moduleBean->field_defs[$allConditions[$x]['field']]['id_name'];
+                if ($related !== false && $related !== null && $related !== "") {
+                    foreach ($related as $record) {
+                        if ($moduleBean->field_defs[$allConditions[$x]['field']]['type'] == "relate") {
+                            $allConditions[$x]['field'] = $moduleBean->field_defs[$allConditions[$x]['field']]['id_name'];
+                        }
+                        if ($allConditions[$x]['value_type'] == "currentUser") {
+                            $allConditions[$x]['value_type'] = "Field";
+                            $allConditions[$x]['value'] = $current_user->id;
+                        }
+
+                        if ($allConditions[$x]['field'] == 'assigned_user_name') {
+                            $allConditions[$x]['field'] = 'assigned_user_id';
+                        }
+                        if ($this->checkOperator(
+                                        $record->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']
+                                )) {
+                            $result = true;
+                        } else {
+                            if (count($related) <= 1) {
+                                $result = false;
+                            }
+                        }
                     }
+                } else {
                     if ($allConditions[$x]['value_type'] == "currentUser") {
                         $allConditions[$x]['value_type'] = "Field";
                         $allConditions[$x]['value'] = $current_user->id;
+                    }
+                    //check and see if it is pointed at a field rather than a value.
+                    if ($allConditions[$x]['value_type'] == "Field" &&
+                            isset($moduleBean->{$allConditions[$x]['value']}) &&
+                            !empty($moduleBean->{$allConditions[$x]['value']})) {
+                        $allConditions[$x]['value'] = $moduleBean->{$allConditions[$x]['value']};
                     }
 
                     if ($allConditions[$x]['field'] == 'assigned_user_name') {
                         $allConditions[$x]['field'] = 'assigned_user_id';
                     }
-                    if ($this->checkOperator(
-                                    $record->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']
-                            )) {
-                        $result = true;
-                    } else {
-                        if (count($related) <= 1) {
-                            $result = false;
-                        }
-                    }
-                }
-            } else {
-                if ($allConditions[$x]['value_type'] == "currentUser") {
-                    $allConditions[$x]['value_type'] = "Field";
-                    $allConditions[$x]['value'] = $current_user->id;
-                }
-                //check and see if it is pointed at a field rather than a value.
-                if ($allConditions[$x]['value_type'] == "Field" &&
-                        isset($moduleBean->{$allConditions[$x]['value']}) &&
-                        !empty($moduleBean->{$allConditions[$x]['value']})) {
-                    $allConditions[$x]['value'] = $moduleBean->{$allConditions[$x]['value']};
-                }
 
-                if ($allConditions[$x]['field'] == 'assigned_user_name') {
-                    $allConditions[$x]['field'] = 'assigned_user_id';
-                }
+                    $conditionResult = $this->checkOperator($moduleBean->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']);
 
-                $conditionResult = $this->checkOperator($moduleBean->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']);
-
-                if ($conditionResult) {
-                    if ($nextConditionLogicOperator === "AND") {
-                        $result = true;
-                    } else {
-                        return true;
-                    }
-                } else {
-                    if ($rule['run'] == "Once True") {
-                        if ($this->checkHistory($moduleBean, $allConditions[$x]['field'], $allConditions[$x]['value'])) {
+                    if ($conditionResult) {
+                        if ($nextConditionLogicOperator === "AND") {
                             $result = true;
                         } else {
-                            $result = false;
+                            $end = true;
+                            $result = true;
                         }
                     } else {
-                        if ($nextConditionLogicOperator === "AND") {
+                        if ($rule['run'] == "Once True") {
+                            if ($this->checkHistory($moduleBean, $allConditions[$x]['field'], $allConditions[$x]['value'])) {
+                                $result = true;
+                            } else {
+                                $result = false;
+                            }
+                        } else {
                             $result = false;
-                            return $result;
+                            if ($nextConditionLogicOperator === "AND") {
+                                $end = true;
+                            }
                         }
-                        $result = false;
                     }
                 }
             }
@@ -348,6 +351,7 @@ class SharedSecurityRulesHelper
             $converted_res = $this->getConvertedRes($result);
         }
         LoggerManager::getLogger()->info('SharedSecurityRules: Exiting getConditionResult() with result: ' . $converted_res);
+
         return $result;
     }
     
