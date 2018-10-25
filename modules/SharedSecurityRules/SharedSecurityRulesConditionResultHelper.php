@@ -82,7 +82,7 @@ class SharedSecurityRulesConditionResultHelper {
      * @param boolean $result
      * @return boolean
      */
-    protected function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false) {
+    public function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false) {
         
         global $current_user;
         
