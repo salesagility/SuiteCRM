@@ -48,23 +48,47 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class SharedSecurityRulesConditionResultHelper {
+class SharedSecurityRulesConditionResultHelper
+{
     
+    /**
+     *
+     * @var SharedSecurityRulesHelper
+     */
     protected $rulesHelper;
     
-    public function __construct(SharedSecurityRulesHelper $rulesHelper) {
+    /**
+     *
+     * @var bool
+     */
+    protected $end;
+    
+    /**
+     *
+     * @param SharedSecurityRulesHelper $rulesHelper
+     */
+    public function __construct(SharedSecurityRulesHelper $rulesHelper)
+    {
         $this->rulesHelper = $rulesHelper;
     }
     
     /**
-     * 
-     * @param type $result
-     * @param type $overallResult
-     * @param type $nextConditionLogicOperator
-     * @return type
+     *
+     * @param bool|null $result
+     * @param boolean $overallResult
+     * @param mixed $nextConditionLogicOperator
+     * @return bool
      */
-    protected function updateResultByLogicOp($result, $overallResult, $nextConditionLogicOperator) {
-        
+    protected function updateResultByLogicOp($result, $overallResult, $nextConditionLogicOperator)
+    {
+        try {
+            $result = $this->rulesHelper->getResultByLogicOp($overallResult, $nextConditionLogicOperator);
+        } catch (SharedSecurityRulesHelperException $e) {
+            LoggerManager::getLogger()->info($e->getMessage());
+            $this->end = true;
+            $result = $e->return;
+        }
+                
         return $result;
     }
     
@@ -82,14 +106,14 @@ class SharedSecurityRulesConditionResultHelper {
      * @param boolean $result
      * @return boolean
      */
-    public function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false) {
-        
+    public function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false)
+    {
         global $current_user;
         
-        $end = false;
+        $this->end = false;
         $result = null;
 
-        for ($x = 0; $x < sizeof($allConditions) && !$end; $x++) {
+        for ($x = 0; $x < sizeof($allConditions) && !$this->end; $x++) {
             // Is it the starting parenthesis?
             if ($allConditions[$x]['parenthesis'] == "START") {
                 LoggerManager::getLogger()->info('SharedSecurityRules: Parenthesis condition found.');
@@ -109,14 +133,6 @@ class SharedSecurityRulesConditionResultHelper {
 
                 // If the condition is a match then continue if it is an AND and finish if its an OR
                 $result = $this->updateResultByLogicOp($result, $overallResult, $nextConditionLogicOperator);
-                try {
-                    $result = $this->rulesHelper->getResultByLogicOp($overallResult, $nextConditionLogicOperator);
-                } catch (SharedSecurityRulesHelperException $e) {
-                    LoggerManager::getLogger()->info($e->getMessage());
-                    $end = true;
-                    $result = $e->return;
-                }
-
             } else {
 
                 // Check if there is another condition and get the operator
@@ -185,7 +201,7 @@ class SharedSecurityRulesConditionResultHelper {
                         if ($nextConditionLogicOperator === "AND") {
                             $result = true;
                         } else {
-                            $end = true;
+                            $this->end = true;
                             $result = true;
                         }
                     } else {
@@ -198,7 +214,7 @@ class SharedSecurityRulesConditionResultHelper {
                         } else {
                             $result = false;
                             if ($nextConditionLogicOperator === "AND") {
-                                $end = true;
+                                $this->end = true;
                             }
                         }
                     }
@@ -214,5 +230,4 @@ class SharedSecurityRulesConditionResultHelper {
         
         return $result;
     }
-    
 }
