@@ -130,7 +130,7 @@ class MeetingsCest
         $I->selectOption('#date_start_hours', '01');
         $I->selectOption('#date_start_minutes', '00');
         $I->doubleClick('#inlineEditSaveButton');
-        $I->see('01/01/2000 01:00am', '#date_start');
+        $I->see('01/01/2000 01:00', '#date_start');
 
         // Delete meeting
         $detailView->clickActionMenuItem('Delete');
