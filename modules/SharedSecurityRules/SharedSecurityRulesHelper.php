@@ -51,7 +51,7 @@ class SharedSecurityRulesHelper
      *
      * @var DBManager
      */
-    protected $db;
+    public $db;
     
     /**
      *
@@ -87,7 +87,7 @@ class SharedSecurityRulesHelper
      * @param array $allConditionsResults
      * @return array
      */
-    protected function getParenthesisConditions($originalCondition, $allConditionsResults)
+    public function getParenthesisConditions($originalCondition, $allConditionsResults)
     {
         LoggerManager::getLogger()->info('SharedSecurityRules: Entering getParenthesisConditions()');
         // Just get the conditions we need to check for this
@@ -163,7 +163,7 @@ class SharedSecurityRulesHelper
      * @param string $key
      * @return boolean
      */
-    protected function checkParenthesisConditions($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key)
+    public function checkParenthesisConditions($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key)
     {
         LoggerManager::getLogger()->info('SharedSecurityRules: Entering checkParenthesisConditions()');
 
@@ -187,7 +187,7 @@ class SharedSecurityRulesHelper
      * @return boolean
      * @throws SharedSecurityRulesHelperException
      */
-    protected function getResultByLogicOp($overallResult, $nextConditionLogicOperator)
+    public function getResultByLogicOp($overallResult, $nextConditionLogicOperator)
     {
         if ($overallResult) {
             if ($nextConditionLogicOperator === "AND") {
@@ -272,7 +272,7 @@ class SharedSecurityRulesHelper
      *
      * @return bool
      */
-    protected function checkOperator($rowField, $field, $operator)
+    public function checkOperator($rowField, $field, $operator)
     {
         LoggerManager::getLogger()->info('SharedSecurityRules: In checkOperator() with row: ' . $rowField . ' field: ' . $field . ' operator: ' . $operator);
         switch ($operator) {
@@ -296,6 +296,38 @@ class SharedSecurityRulesHelper
                 return $rowField <= $field;
             case "is_null":
                 return $rowField == null || $rowField == "";
+        }
+        return false;
+    }
+    
+
+    /**
+     *
+     * @global Database $db
+     * @param SugarBean $module
+     * @param string $field
+     * @param string $value
+     * @return boolean
+     */
+    public function checkHistory(SugarBean $module, $field, $value)
+    {
+        $db = $this->db;
+        if (!isset($module->field_defs[$field]['audited'])) {
+            LoggerManager::getLogger()->warn("$field field in not exists in given module field_defs for checking shared security rules history");
+            return false;
+        }
+        if ($module->field_defs[$field]['audited'] == true) {
+            $value = $db->quote($value);
+            $field = $db->quote($field);
+
+            $sql = "SELECT * FROM {$module->table_name}_audit WHERE field_name = '{$field}' AND parent_id = '{$module->id}' AND (before_value_string = '{$value}'
+                    OR after_value_string = '{$value}' )";
+            $results = $db->getOne($sql);
+
+
+            if ($results !== false) {
+                return true;
+            }
         }
         return false;
     }

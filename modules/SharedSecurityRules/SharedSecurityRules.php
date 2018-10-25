@@ -194,37 +194,6 @@ class SharedSecurityRules extends Basic
 
     /**
      *
-     * @global Database $db
-     * @param SugarBean $module
-     * @param string $field
-     * @param string $value
-     * @return boolean
-     */
-    public function checkHistory(SugarBean $module, $field, $value)
-    {
-        $db = $this->db;
-        if (!isset($module->field_defs[$field]['audited'])) {
-            LoggerManager::getLogger()->warn("$field field in not exists in given module field_defs for checking shared security rules history");
-            return false;
-        }
-        if ($module->field_defs[$field]['audited'] == true) {
-            $value = $db->quote($value);
-            $field = $db->quote($field);
-
-            $sql = "SELECT * FROM {$module->table_name}_audit WHERE field_name = '{$field}' AND parent_id = '{$module->id}' AND (before_value_string = '{$value}'
-                    OR after_value_string = '{$value}' )";
-            $results = $db->getOne($sql);
-
-
-            if ($results !== false) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     *
      * @param string $operator
      * @param string $value
      * @param boolean $reverse
