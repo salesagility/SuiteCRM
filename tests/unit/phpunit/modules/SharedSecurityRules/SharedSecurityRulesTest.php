@@ -41,7 +41,7 @@ use SuiteCRM\StateSaver;
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-include_once __DIR__ . '/../../../../../modules/SharedSecurityRules/SharedSecurityRulesTest.php';
+include_once __DIR__ . '/../../../../../modules/SharedSecurityRules/SharedSecurityRules.php';
 
 /**
  * SharedSecurityRulesTest
