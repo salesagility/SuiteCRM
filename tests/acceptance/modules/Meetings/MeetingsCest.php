@@ -102,39 +102,39 @@ class MeetingsCest
      *
      * As administrative user I want to inline edit the start date
      */
-//    public function testScenarioEditStartDate(
-//        \AcceptanceTester $I,
-//        \Step\Acceptance\DetailView $detailView,
-//        \Step\Acceptance\ListView $listView,
-//        \Step\Acceptance\Meetings $meeting,
-//        \Helper\WebDriverHelper $webDriverHelper
-//    ) {
-//        $I->wantTo('Create a meeting');
-//
-//        $I->amOnUrl(
-//            $webDriverHelper->getInstanceURL()
-//        );
-//
-//        // Navigate to meetings list-view
-//        $I->loginAsAdmin();
-//        $meeting->gotoMeetings();
-//        $listView->waitForListViewVisible();
-//
-//        // Create meeting
-//        $this->fakeData->seed($this->fakeDataSeed);
-//        $meeting->createMeeting('Test_'. $this->fakeData->company());
-//
-//        // Inline edit
-//        $I->doubleClick('#date_start');
-//        $I->fillField('#date_start_date', '01/01/2000');
-//        $I->selectOption('#date_start_hours', '01');
-//        $I->selectOption('#date_start_minutes', '00');
-//        $I->doubleClick('#inlineEditSaveButton');
-//        $I->see('01/01/2000 01:00am', '#date_start');
-//
-//        // Delete meeting
-//        $detailView->clickActionMenuItem('Delete');
-//        $detailView->acceptPopup();
-//        $listView->waitForListViewVisible();
-//    }
+    public function testScenarioEditStartDate(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Meetings $meeting,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create a meeting');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to meetings list-view
+        $I->loginAsAdmin();
+        $meeting->gotoMeetings();
+        $listView->waitForListViewVisible();
+
+        // Create meeting
+        $this->fakeData->seed($this->fakeDataSeed);
+        $meeting->createMeeting('Test_'. $this->fakeData->company());
+
+        // Inline edit
+        $I->doubleClick('#date_start');
+        $I->fillField('#date_start_date', '01/01/2000');
+        $I->selectOption('#date_start_hours', '01');
+        $I->selectOption('#date_start_minutes', '00');
+        $I->doubleClick('#inlineEditSaveButton');
+        $I->see('01/01/2000 01:00am', '#date_start');
+
+        // Delete meeting
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }
