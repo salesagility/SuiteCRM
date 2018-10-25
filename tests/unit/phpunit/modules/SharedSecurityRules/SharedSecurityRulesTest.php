@@ -694,9 +694,9 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
     }
     
     public function testChangeOperator() {
-        $ssr = BeanFactory::getBean('SharedSecurityRules');
+        $ssrh = new SharedSecurityRulesHelper(DBManagerFactory::getInstance());
         $acc = BeanFactory::getBean('Accounts');
-        $ret = $ssr->checkHistory($acc, 'incorrect_value', 'incorrect_reverse');
+        $ret = $ssrh->checkHistory($acc, 'incorrect_value', 'incorrect_reverse');
         $this->assertEquals(null, $ret);
     }
     
