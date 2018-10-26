@@ -67,6 +67,51 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
         parent::tearDown();
     }
 
+    
+    public function testChangeOperatorSSR() {
+        $ssr = BeanFactory::getBean('SharedSecurityRules');
+        
+        $result = $ssr->changeOperator(null, null, null);
+        $this->assertEquals(false, $result);
+        
+        $result = $ssr->changeOperator('Equal_To', 'foo', false);
+        $this->assertEquals(" = 'foo' ", $result);
+        
+        $result = $ssr->changeOperator('Equal_To', 'foo', true);
+        $this->assertEquals(" != 'foo' ", $result);
+        
+        $result = $ssr->changeOperator('Not_Equal_To', 'foo', false);
+        $this->assertEquals(" != 'foo' ", $result);
+        
+        $result = $ssr->changeOperator('Not_Equal_To', 'foo', true);
+        $this->assertEquals(" = 'foo' ", $result);
+        
+        $result = $ssr->changeOperator('Starts_With', 'foo', false);
+        $this->assertEquals(" LIKE 'foo%'", $result);
+        
+        $result = $ssr->changeOperator('Starts_With', 'foo', true);
+        $this->assertEquals(" NOT LIKE 'foo%'", $result);
+        
+        $result = $ssr->changeOperator('Ends_With', 'foo', false);
+        $this->assertEquals(" LIKE '%foo'", $result);
+        
+        $result = $ssr->changeOperator('Ends_With', 'foo', true);
+        $this->assertEquals(" NOT LIKE '%foo'", $result);
+        
+        $result = $ssr->changeOperator('Contains', 'foo', false);
+        $this->assertEquals(" LIKE '%foo%'", $result);
+        
+        $result = $ssr->changeOperator('Contains', 'foo', true);
+        $this->assertEquals(" NOT LIKE '%foo%' ", $result);
+        
+        $result = $ssr->changeOperator('is_null', 'foo', false);
+        $this->assertEquals(" IS NULL ", $result);
+        
+        $result = $ssr->changeOperator('is_null', 'foo', true);
+        $this->assertEquals(" IS NOT NULL ", $result);
+        
+    }
+    
 
     public function testBeanImplementsIfNotImplemented() {
         $ssr = BeanFactory::getBean('SharedSecurityRules');
