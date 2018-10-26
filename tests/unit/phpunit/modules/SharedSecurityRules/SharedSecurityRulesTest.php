@@ -126,6 +126,9 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
         $uid = $usr->id;
         $current_user = $usr;
         
+        /**
+         * @var SharedSecurityRules
+         */
         $ssr = BeanFactory::getBean('SharedSecurityRules');
         $acc = BeanFactory::getBean('Accounts');
         $acc->assigned_user_id = $uid;
@@ -155,7 +158,7 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
         $this->assertEquals($ssra->id, $ssraid);
         
         $ret = $ssr->checkRules($acc, 'test_value');
-        $this->assertEquals(null, $ret);
+        $this->assertEquals(true, $ret);
         
         $this->assertTrue(isset($_SESSION['ACL'][$uid]));
         
@@ -221,7 +224,7 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
         $this->assertEquals($ssra->id, $ssraid);
         
         $ret = $ssr->checkRules($acc, 'test_value');
-        $this->assertEquals(null, $ret);
+        $this->assertEquals(true, $ret);
         
         $this->assertTrue(isset($_SESSION['ACL'][$uid]));
         

@@ -230,7 +230,11 @@ class SharedSecurityRulesWhereBuilder
     {
         $helper = new SharedSecurityRulesHelper($module->db);
         while (($action = $module->db->fetchByAssoc($actions_results)) != null) {
-            $action['parameters'] = $helper->unserializeIfSerialized($action['parametes']);
+            if (!isset($action['parameters'])) {
+                LoggerManager::getLogger()->warn('Parameters is not set for updating action access.');
+            } else {                
+                $action['parameters'] = $helper->unserializeIfSerialized($action['parameters']);
+            }
             if ($this->checkIfActionIsUser($action, $userId, $module, $accessLevel)) {
                 $actionIsUser = true;
                 break;
