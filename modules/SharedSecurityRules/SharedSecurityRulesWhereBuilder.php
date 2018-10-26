@@ -152,6 +152,9 @@ class SharedSecurityRulesWhereBuilder
         } elseif (($targetType == "Specify User" && $userId == $action['parameters']['email'][$key]) ||
                                     ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
             $uid = $userId;
+        } else {
+            $uid = null;
+            LoggerManager::getLogger()->warn('Unable to determinate UID by target type.');
         }
         return $uid;
     }
