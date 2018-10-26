@@ -78,6 +78,12 @@ class SharedSecurityRules extends Basic
      * @var bool
      */
     public $importable = false;
+    
+    /**
+     *
+     * @var array
+     */
+    public $exemptFields = [];
 
     /**
      *
@@ -251,10 +257,10 @@ class SharedSecurityRules extends Basic
         $defs[''] = "";
         foreach ($fieldDefs as $field) {
             $label = translate($field['vname'], $module);
-            if (in_array($field['type'], $this->exemptFields) || in_array($field['dbType'], $this->exemptFields)) {
+            if (in_array($field['type'], $this->exemptFields) || (isset($field['dbType']) && in_array($field['dbType'], $this->exemptFields))) {
                 continue;
             }
-            if (empty($label)) {
+            if (empty($label)) { // TODO: <-- pointless validation, translate() function can not return empty value
                 $label = $field['name'];
             }
             if (($module == "Leads" || $module == "Contacts") && ($field['name'] == "full_name" || $field['name'] == "name")) {
