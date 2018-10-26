@@ -226,8 +226,8 @@ class SharedSecurityRulesHelper
     {
         LoggerManager::getLogger()->info('SharedSecurityRules: Entering getConditionResult()');
         $conditionRulesHelper = new SharedSecurityRulesConditionResultHelper($this);
-        $result = $conditionRulesHelper->getConditionResult($allConditions, $moduleBean, $rule, $view, $action, $key, $result);
-        return $result;
+        $ret = $conditionRulesHelper->getConditionResult($allConditions, $moduleBean, $rule, $view, $action, $key, $result);
+        return $ret;
     }
     
 
