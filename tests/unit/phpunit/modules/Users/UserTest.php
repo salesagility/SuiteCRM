@@ -1173,6 +1173,9 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         global $app_strings;
         
+        $state = new SuiteCRM\StateChecker();
+        $state->pushTable('email_addresses_audit');
+        
         // setup
         $this->assertTrue(!isset($app_strings['TEST_ERROR_MESSAGE']));
         
@@ -1199,5 +1202,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         unset($app_strings['TEST_ERROR_MESSAGE']);
+        
+        $state->popTable('email_addresses_audit');
     }
 }
