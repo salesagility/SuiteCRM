@@ -187,7 +187,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $userPreference->loadPreferences();
 
-        $this->assertTrue(!$result, 'Result was: ' . $result);
+        $this->assertNotTrue(!$result, 'Result was: ' . $result);
         
         // clean up
         
