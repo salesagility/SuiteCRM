@@ -252,7 +252,6 @@ $mod_strings = array(
     'LBL_GLOBAL_TEAM_DESC' => 'Globally Visible',
     'LBL_GLOBAL_TEAM_SELECT' => 'A default global team was not found. Please select a team from this list.',
     'LBL_GLOBAL_TEAM' => 'Rebuild access to global team.',
-    'LBL_GLOBAL_SEARCH_SETTINGS_DESC' => 'Configure the global search options for the system',
     'LBL_GO' => 'Go',
     'LBL_HELP_BOOKMARK' => 'Bookmark this page',
     'LBL_HELP_EMAIL' => 'Email',

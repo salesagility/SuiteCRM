@@ -1,4 +1,6 @@
 <?php
+
+use SuiteCRM\Utility\SuiteValidator;
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -556,7 +558,9 @@ function pollMonitoredInboxesAOP()
     while ($inboundEmailRow = $aopInboundEmail->db->fetchByAssoc($sqlQueryResult)) {
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
         $aopInboundEmailX = new AOPInboundEmail();
-        $aopInboundEmailX->retrieve($inboundEmailRow['id']);
+        if (!$aopInboundEmailX->retrieve($inboundEmailRow['id']) || !$aopInboundEmailX->id) {
+            throw new Exception('Error retrieving AOP Inbound Email: ' . $inboundEmailRow['id']);
+        }
         $mailboxes = $aopInboundEmailX->mailboxarray;
         foreach ($mailboxes as $mbox) {
             $aopInboundEmailX->mailbox = $mbox;
@@ -603,7 +607,8 @@ function pollMonitoredInboxesAOP()
                             $uid = $aopInboundEmailX->getImap()->getUid($msgNo);
                         } // else
                         if ($isGroupFolderExists) {
-                            if ($aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists)) {
+                            $emailId = $aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists);
+                            if ($emailId) {
                                 // add to folder
                                 $sugarFolder->addBean($aopInboundEmailX->email);
                                 if ($aopInboundEmailX->isPop3Protocol()) {
@@ -614,6 +619,16 @@ function pollMonitoredInboxesAOP()
                                 if ($aopInboundEmailX->isMailBoxTypeCreateCase()) {
                                     $userId = $assignManager->getNextAssignedUser();
                                     $GLOBALS['log']->debug('userId [ ' . $userId . ' ]');
+                                    $validatior = new SuiteValidator();
+                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email || 
+                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) && 
+                                        $validatior->isValidId($emailId)
+                                    ) {
+                                        $aopInboundEmailX->email = new Email();
+                                        if (!$aopInboundEmailX->email->retrieve($emailId)) {
+                                            throw new Exception('Email retrieving error to handle case create, email id was: ' . $emailId);
+                                        }
+                                    }
                                     $aopInboundEmailX->handleCreateCase($aopInboundEmailX->email, $userId);
                                 } // if
                             } // if
@@ -802,7 +817,7 @@ class AORScheduledReportJob implements RunnableSchedulerJob
             font-weight: normal;
             color: black;
             padding: 10px 8px;
-            border-bottom: 2px solid black};
+            border-bottom: 2px solid black;
         }
         .list td
         {
