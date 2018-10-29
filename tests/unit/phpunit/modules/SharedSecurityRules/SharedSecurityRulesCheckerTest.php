@@ -52,6 +52,12 @@ include_once __DIR__ . '/../../../../../modules/SharedSecurityRules/SharedSecuri
 class SharedSecurityRulesCheckerTest extends StateCheckerPHPUnitTestCaseAbstract {
     
     public function testGetResultWithSpecifyUser() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
         $ssrc = new SharedSecurityRulesChecker(DBManagerFactory::getInstance());
         $module = BeanFactory::getBean('Accounts');
         $moduleBean = BeanFactory::getBean('Accounts');
@@ -60,6 +66,11 @@ class SharedSecurityRulesCheckerTest extends StateCheckerPHPUnitTestCaseAbstract
         $view = 'foo';
         $result = $ssrc->getResult($module, $moduleBean, $userId, $view);
         $this->assertEquals(null, $result);
+        
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
     }
     
 }
