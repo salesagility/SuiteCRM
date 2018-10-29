@@ -70,7 +70,7 @@ script:
   # Run the unit tests
   # - ./vendor/bin/codecept run unit --steps -f -vvv -d
   - cd tests
-  - ../vendor/bin/phpunit "--colors" ./tests/unit/phpunit
+  - ../vendor/bin/phpunit --stop-on-failure --stop-on-error "--colors" ./tests/unit/phpunit
   - cd ..
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
