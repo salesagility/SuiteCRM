@@ -240,7 +240,7 @@ WHERE ( accounts.deleted IS NULL
         $actual = str_replace("\t", '', $actual);
         $actual = str_replace("\t", '', $actual);
 
-        $this->assertSame($expected, $expected);
+        $this->assertSame($expected, $actual);
     }
 
     public function testset_notification_body()
