@@ -1,8 +1,4 @@
 <?php
-
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
-use SuiteCRM\StateSaver;
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,6 +37,10 @@ use SuiteCRM\StateSaver;
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+
+use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\StateSaver;
 
 include_once __DIR__ . '/../../../../../modules/SharedSecurityRules/SharedSecurityRules.php';
 
