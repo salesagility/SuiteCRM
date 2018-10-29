@@ -204,19 +204,14 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $Account = new Account();
 
         // execute the method with empty strings and verify that it retunrs expected results
-        $expected = "SELECTaccounts.*,email_addresses.email_addressemail_address,''email_addresses_non_primary,accounts.nameasaccount_name,users.user_nameasassigned_user_name,accounts_cstm.jjwg_maps_address_c,accounts_cstm.jjwg_maps_geocode_status_c,accounts_cstm.jjwg_maps_lat_c,accounts_cstm.jjwg_maps_lng_cFROMaccountsLEFTJOINusersONaccounts.assigned_user_id=users.idLEFTJOINemail_addr_bean_relonaccounts.id=email_addr_bean_rel.bean_idandemail_addr_bean_rel.bean_module='Accounts'andemail_addr_bean_rel.deleted=0andemail_addr_bean_rel.primary_address=1LEFTJOINemail_addressesonemail_addresses.id=email_addr_bean_rel.email_address_idLEFTJOINaccounts_cstmONaccounts.id=accounts_cstm.id_cwhere(accounts.deletedISNULLORaccounts.deleted=0)";
-        $expected = trim($expected);
-        $expected = str_replace(' ', '', $expected);
-        $expected = str_replace("\n", '', $expected);
-        $expected = str_replace("\t", '', $expected);
-        $expected = str_replace("\t", '', $expected);
+        $expected = "SELECT
+                                accounts.*,
+                                email_addresses.email_address email_address,
+                                '' email_addresses_non_primary, accounts.name as account_name,
+                                users.user_name as assigned_user_name ,accounts_cstm.jjwg_maps_address_c,accounts_cstm.jjwg_maps_geocode_status_c,accounts_cstm.jjwg_maps_lat_c,accounts_cstm.jjwg_maps_lng_c FROM accounts LEFT JOIN users
+	                                ON accounts.assigned_user_id=users.id  LEFT JOIN  email_addr_bean_rel on accounts.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module='Accounts' and email_addr_bean_rel.deleted=0 and email_addr_bean_rel.primary_address=1  LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id  LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c where ( accounts.deleted IS NULL OR accounts.deleted=0 )";
 
         $actual = $Account->create_export_query('', '');
-        $actual = trim($actual);
-        $actual = str_replace(' ', '', $actual);
-        $actual = str_replace("\n", '', $actual);
-        $actual = str_replace("\t", '', $actual);
-        $actual = str_replace("\t", '', $actual);
 
         $this->assertSame($expected, $actual);
     }
