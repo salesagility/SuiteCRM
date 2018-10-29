@@ -13,7 +13,12 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         parent::setUp();
 
         $this->state = new SuiteCRM\StateSaver();
+        $this->state->pushTable('aod_index');
+        $this->state->pushTable('aod_indexevent');
+        $this->state->pushTable('tasks');
+        $this->state->pushTable('tracker');
         $this->state->pushFile('config.php');
+        $this->state->pushGlobals();
         
         global $current_user;
         get_sugar_config_defaults();
@@ -22,6 +27,11 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     
     public function tearDown() {
         
+        $this->state->popTable('tracker');
+        $this->state->popTable('tasks');
+        $this->state->popTable('aod_indexevent');
+        $this->state->popTable('aod_index');
+        $this->state->popGlobals();
         $this->state->popFile('config.php');
         
         parent::tearDown();
@@ -46,13 +56,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        $state->pushTable('aod_index');
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('tasks');
-        $state->pushTable('tracker');
-        $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -73,14 +76,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $task->mark_deleted($task->id);
         $result = $task->retrieve($task->id);
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('tracker');
-        $state->popTable('tasks');
-        $state->popTable('aod_indexevent');
-        $state->popTable('aod_index');
     }
 
     public function testget_summary_text()
@@ -112,11 +107,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        //error_reporting(E_ERROR | E_PARSE);
-        
         
         $task = new Task();
 
@@ -130,13 +120,10 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -157,12 +144,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_parent_fields()
     {
-        $state = new SuiteCRM\StateSaver();
-        
-        
-        //error_reporting(E_ERROR | E_PARSE);
-        
-        
         $task = new Task();
         $task->parent_type = 'Accounts';
         $task->parent_id = '1';
@@ -245,12 +226,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-        // save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-        // test
         
         $task = new Task();
 
@@ -258,9 +233,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $task->listviewACLHelper();
         $this->assertSame($expected, $actual);
         
-        // clean up
-        
-        $state->popGlobals();
     }
 
     public function testgetDefaultStatus()
