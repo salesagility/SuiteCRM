@@ -2,13 +2,29 @@
 
 class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    /**
+     *
+     * @var SuiteCRM\StateSaver
+     */
+    protected $state;
+    
     public function setUp()
     {
         parent::setUp();
 
+        $this->state = new SuiteCRM\StateSaver();
+        $this->state->pushFile('config.php');
+        
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
+    }
+    
+    public function tearDown() {
+        
+        $this->state->popFile('config.php');
+        
+        parent::tearDown();
     }
 
     public function testTask()
