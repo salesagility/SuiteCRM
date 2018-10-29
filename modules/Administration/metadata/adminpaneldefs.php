@@ -50,6 +50,25 @@ $license_management = false;
         $license_management = array('License','LBL_MANAGE_LICENSE_TITLE','LBL_MANAGE_LICENSE','./index.php?module=Administration&action=LicenseSettings');
     }
 
+  // Shared Security Rules
+    $admin_option_defs['Administration']['sharedrules_settings'] = array(
+        'icon_SugarFeed',
+        'LBL_SHAREDRULES_SETTINGS',
+        'LBL_SHAREDRULES_SETTINGS_DESC',
+        './index.php?module=SharedSecurityRules&action=index',
+        'security'
+    );
+    if (isset($admin_group_header[0])) {
+        $admin_option_defs =
+            array_merge(
+                (array)$admin_option_defs['Administration'],
+                (array)$admin_group_header[0][3]['Administration']
+            );
+    }
+
+    $admin_group_header[0][3]['Administration'] = $admin_option_defs;
+
+
 //system.
 $admin_option_defs=array();
 $admin_option_defs['Administration']['configphp_settings']= array('Administration','LBL_CONFIGURE_SETTINGS_TITLE','LBL_CONFIGURE_SETTINGS','./index.php?module=Configurator&action=EditView', 'system-settings');

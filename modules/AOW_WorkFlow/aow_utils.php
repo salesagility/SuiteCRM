@@ -355,8 +355,12 @@ function getModuleField(
     if ( !is_file($file)
         || inDeveloperMode()
         || !empty($_SESSION['developerMode']) ) {
-
-        if ( !isset($vardef) ) {
+        
+        if (!isset($beanList[$module]) || !isset($beanFiles[$beanList[$module]])) {
+            LoggerManager::getLogger()->warn('bean file in bean list is not defined for module: "' . $module . '" in function aow_utiles.php:getModuleField()');
+        }
+        
+        if (!isset($vardef) && isset($beanList[$module]) && isset($beanFiles[$beanList[$module]])) {
             require_once($beanFiles[$beanList[$module]]);
             $focus = new $beanList[$module];
             $vardef = $focus->getFieldDefinition($fieldname);
@@ -371,38 +375,38 @@ function getModuleField(
         }
 
 
-        //$displayParams['formName'] = 'EditView';
-
+        if (!isset($vardef['type'])) {
+            LoggerManager::getLogger()->warn('vardef[type] is not set');
+        }
+        
         // if this is the id relation field, then don't have a pop-up selector.
-        if( $vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
+        if(isset($vardef['type']) && $vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
             $vardef['type'] = 'varchar';
         }
 
         if(isset($vardef['precision'])) unset($vardef['precision']);
 
-        //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
-
-        if( $vardef['type'] == 'datetime') {
+        if(isset($vardef['type']) && $vardef['type'] == 'datetime') {
             $vardef['type'] = 'datetimecombo';
         }
-        if( $vardef['type'] == 'datetimecombo') {
+        if(isset($vardef['type']) && $vardef['type'] == 'datetimecombo') {
             $displayParams['originalFieldName'] = $aow_field;
             // Replace the square brackets by a deliberately complex alias to avoid JS conflicts
             $displayParams['idName'] = createBracketVariableAlias($aow_field);
         }
 
         // trim down textbox display
-        if( $vardef['type'] == 'text' ) {
+        if(isset($vardef['type']) && $vardef['type'] == 'text' ) {
             $vardef['rows'] = 2;
             $vardef['cols'] = 32;
         }
 
         // create the dropdowns for the parent type fields
-        if ( $vardef['type'] == 'parent_type' ) {
+        if (isset($vardef['type']) && $vardef['type'] == 'parent_type' ) {
             $vardef['type'] = 'enum';
         }
 
-        if($vardef['type'] == 'link'){
+        if(isset($vardef['type']) && $vardef['type'] == 'link'){
             $vardef['type'] = 'relate';
             $vardef['rname'] = 'name';
             $vardef['id_name'] = $vardef['name'].'_id';
@@ -436,12 +440,12 @@ function getModuleField(
             $sfh = new SugarFieldHandler();
         }
 
-        $contents = $sfh->displaySmarty('fields', $vardef, $view, $displayParams);
+        $contents = $sfh->displaySmarty('fields', isset($vardef) ? $vardef : null, $view, $displayParams);
 
         // Remove all the copyright comments
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
 
-        if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
+        if ($view == 'EditView' && isset($vardef['type']) && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
             $contents = str_replace('"' . $vardef['id_name'] . '"',
                 '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}', $contents);
             $contents = str_replace('"' . $vardef['name'] . '"',
@@ -496,9 +500,14 @@ function getModuleField(
 
     // populate the fieldlist from the vardefs
     $fieldlist = array();
-    if ( !isset($focus) || !($focus instanceof SugarBean) )
+    if ( (!isset($focus) || !($focus instanceof SugarBean)) && isset($beanList[$module]) && isset($beanFiles[$beanList[$module]])) {
         require_once($beanFiles[$beanList[$module]]);
-    $focus = new $beanList[$module];
+    }
+    if (isset($beanList[$module])) {
+        $focus = new $beanList[$module];
+    } else {
+        return null;
+    }
     // create the dropdowns for the parent type fields
     $vardefFields = $focus->getFieldDefinitions();
     if (isset($vardefFields[$fieldname]['type']) && $vardefFields[$fieldname]['type'] == 'parent_type' ) {
@@ -841,12 +850,16 @@ eoq;
 function getEmailableModules(){
     global $beanFiles, $beanList, $app_list_strings;
     $emailableModules = array();
-    foreach($app_list_strings['aow_moduleList'] as $bean_name => $bean_dis) {
-        if(isset($beanList[$bean_name]) && isset($beanFiles[$beanList[$bean_name]])){
-            require_once($beanFiles[$beanList[$bean_name]]);
-            $obj = new $beanList[$bean_name];
-            if($obj instanceof Person || $obj instanceof Company){
-                $emailableModules[] = $bean_name;
+    if (!isset($app_list_strings['aow_moduleList'])) {
+        LoggerManager::getLogger()->warn('getting Emailable Modules of AOW utils needs aow_moduleList in app_list_strings');
+    } else {
+        foreach($app_list_strings['aow_moduleList'] as $bean_name => $bean_dis) {
+            if(isset($beanList[$bean_name]) && isset($beanFiles[$beanList[$bean_name]])){
+                require_once($beanFiles[$beanList[$bean_name]]);
+                $obj = new $beanList[$bean_name];
+                if($obj instanceof Person || $obj instanceof Company){
+                    $emailableModules[] = $bean_name;
+                }
             }
         }
     }

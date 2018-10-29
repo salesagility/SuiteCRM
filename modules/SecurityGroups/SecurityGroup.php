@@ -777,4 +777,5 @@ order by securitygroups_users.primary_group desc ";
 
         return $primary_group_id;
     }
+
 }

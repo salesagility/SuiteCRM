@@ -81,11 +81,14 @@ class DetailView2 extends EditView
         global $sugar_config;
 
         $this->th = new TemplateHandler();
+        if (!isset($this->ss) || null === $this->ss) {
+            LoggerManager::getLogger()->warn('Sugar Smarty is not defined for ViewDetail::preDisplay()');
+        }
         $this->th->ss = $this->ss;
         $viewdefs = array();
 
         //Check if inline editing is enabled for detail view.
-        if(!isset($sugar_config['enable_line_editing_detail']) || $sugar_config['enable_line_editing_detail']){
+        if(isset($this->ss) && null !== $this->ss && (!isset($sugar_config['enable_line_editing_detail']) || $sugar_config['enable_line_editing_detail'])) {
             $this->ss->assign('inline_edit', true);
         }
         $this->focus = $focus;
@@ -117,8 +120,8 @@ class DetailView2 extends EditView
         	   global $app_strings;
         	   $error = str_replace("[file]", "modules/$this->module/metadata/$metadataFileName.php", $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
         	   $GLOBALS['log']->fatal($error);
-        	   echo $error;
-        	   die();
+        	   LoggerManager::getLogger()->error($error);
+        	   throw new SuiteException('File not found: ' . $error, SuiteException::FILE_NOT_FOUND);
         	}
             require("modules/$this->module/metadata/$metadataFileName.php");
         }

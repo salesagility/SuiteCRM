@@ -104,28 +104,47 @@ class HtmlSanitizer
 
     /**
      * Clean string from potential XSS problems
-     * @param string $dirtyHtml
+     * @param string|array|object $dirtyHtml
      * @param bool $removeHtml - remove encoded html
      * @return string clean html
      */
     public static function cleanHtml($dirtyHtml, $removeHtml = false)
     {
-        // $encode_html previously effected the decoding process.
-        // we should decode regardless, just in case, the calling method passing encoded html
-        $dirty_html_decoded = html_entity_decode($dirtyHtml);
+        $ret = $dirtyHtml;
+        
+        // first, make sure dirtyHtml is a string, or if it is not (for e.g array - try to clean it up)
+        
+        if (is_array($dirtyHtml) || is_object($dirtyHtml)) {
+            
+            foreach ($dirtyHtml as $key => $value) {
+                $dirtyHtml[$key] = self::cleanHtml($value, $removeHtml);
+            }
+            $ret = $dirtyHtml;
+            
+        } elseif (is_string($dirtyHtml)) {
+        
+            // $encode_html previously effected the decoding process.
+            // we should decode regardless, just in case, the calling method passing encoded html        
+            $dirty_html_decoded = html_entity_decode($dirtyHtml);
 
-        // Re-encode html
-        if ($removeHtml === true) {
-            // remove all HTML tags
-            $sugarCleaner = new HtmlSanitizer();
-            $purifier = $sugarCleaner->purifier;
-            $clean_html = $purifier->purify($dirty_html_decoded);
+            // Re-encode html
+            if ($removeHtml === true) {
+                // remove all HTML tags
+                $sugarCleaner = new HtmlSanitizer();
+                $purifier = $sugarCleaner->purifier;
+                $clean_html = $purifier->purify($dirty_html_decoded);
+            } else {
+                // encode all HTML tags
+                $clean_html = $dirty_html_decoded;
+            }
+
+            $ret = $clean_html;
         } else {
-            // encode all HTML tags
-            $clean_html = $dirty_html_decoded;
+            // it should throw an InvalidArgumentException
+            \LoggerManager::getLogger()->error('cleanHtml given an unaccepted type: ' . gettype($dirtyHtml));            
         }
-
-        return $clean_html;
+        
+        return $ret;
     }
 
     /**
