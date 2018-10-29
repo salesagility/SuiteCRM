@@ -9,7 +9,7 @@ use Step\Acceptance\EditView;
 use Step\Acceptance\ListView;
 use Step\Acceptance\UsersTester;
 
-class AAAUsersCest
+class UsersCest
 {
     /**
      * @var Generator $fakeData
@@ -40,7 +40,7 @@ class AAAUsersCest
         $I->amOnUrl($instanceUrl);
         $I->loginAsAdmin();
         $Users->gotoProfile();
-        $I->see('User Profile');
+        $I->see('User Profile', '.panel-heading');
         $I->click('Settings');
         $I->see('Mail Accounts');
         $I->click('Mail Accounts');
@@ -50,6 +50,7 @@ class AAAUsersCest
         $I->fillField('email_user', 'testuser_name');
         $I->fillField('email_password', 'testuser_pass');
         $I->click('Test Settings');
+        $I->wait(3);
         $I->see('Connection completed successfully.');
     }
 
