@@ -114,11 +114,11 @@ class CodeCoverageCommands extends \Robo\Tasks
 
     private function getCodeCoverageCommand()
     {
-        $paths = new Paths();
+        //$paths = new Paths();
         $os = new OperatingSystem();
-        $projectPath = $os->toOsPath($paths->getProjectPath());
+        //$projectPath = $os->toOsPath($paths->getProjectPath());
         $command = 
-            'cd tests/ ; ' . $projectPath
+            'cd tests/ ; ' //. projectPath
             . $os->toOsPath('../vendor/bin/phpunit')
             . ' --coverage-clover ./_output/coverage.xml ./tests/unit/phpunit';
         return $command;

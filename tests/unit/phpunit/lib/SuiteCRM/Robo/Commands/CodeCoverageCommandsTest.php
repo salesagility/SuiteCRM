@@ -79,11 +79,12 @@ class CodeCoverageCommandsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
     {
         $paths = new \SuiteCRM\Utility\Paths();
         $os = new \SuiteCRM\Utility\OperatingSystem();
-        $commandExpected =  $os->toOsPath($paths->getProjectPath())
-            . DIRECTORY_SEPARATOR
-            . $os->toOsPath('vendor/bin/codecept')
-            . ' run unit --coverage-xml';
-
+        // original
+//        $commandExpected =  $os->toOsPath($paths->getProjectPath())
+//            . DIRECTORY_SEPARATOR
+//            . $os->toOsPath('vendor/bin/codecept')
+//            . ' run unit --coverage-xml';
+        $commandExpected = 'cd tests/ ; ../vendor/bin/phpunit --coverage-clover ./_output/coverage.xml ./tests/unit/phpunit';
         // Run tests
         $reflection = new ReflectionClass(CodeCoverageCommands::class);
         $method = $reflection->getMethod('getCodeCoverageCommand');
