@@ -43,7 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/utils/zip_utils.php');
-
 require_once('include/upload_file.php');
 
 
@@ -100,6 +99,7 @@ function parseAcceptLanguage() {
             return strtolower(str_replace('-','_',$match[0]));
         }
     }
+
     return '';
 }
 
@@ -982,13 +982,20 @@ EOQ;
     $cache_headers = <<<EOQ
 
 <IfModule mod_rewrite.c>
-    Options +FollowSymLinks
+    Options +SymLinksIfOwnerMatch
     RewriteEngine On
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
+    
+    # --------- DEPRECATED --------
     RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    # -----------------------------
+    
+    RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
+    RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
+    RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
         <IfModule mod_headers.c>

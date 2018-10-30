@@ -21,7 +21,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 /**
@@ -89,15 +89,17 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 
         perform_aos_save($this);
 
-		parent::save($check_notify);
+        $return_id = parent::save($check_notify);
 
         require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
         $productQuoteGroup = new AOS_Line_Item_Groups();
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
 
-		if(isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])){
-			$this->createLink();
-		}
+        if (isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])) {
+            $this->createLink();
+        }
+        return $return_id;
+    }
 
 	}
 
@@ -144,7 +146,7 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 
 		if($this->renewal_reminder_date != 0){
             $call->id = $this->call_id;
-            
+
             if (!isset($this->contract_account_id)) {
                 LoggerManager::getLogger()->warn('Contract Account ID not defined for AOS Contracts / create link.');
                 $contractAccountId = null;
@@ -158,17 +160,17 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 		}
 	}
 
-	function deleteCall(){
-	    require_once('modules/Calls/Call.php');
-	    $call = new call();
-            
-            
-            if (!isset($this->call_id)) {
-                LoggerManager::getLogger()->warn('Call ID not found for AOS Contract / delete call.');
-                $callId = null;
-            } else {
-                $callId = $this->call_id;
-            }
+    public function deleteCall()
+    {
+        require_once('modules/Calls/Call.php');
+        $call = new call();
+
+        if (!isset($this->call_id)) {
+            LoggerManager::getLogger()->warn('Call ID not found for AOS Contract / delete call.');
+            $callId = null;
+        } else {
+            $callId = $this->call_id;
+        }
 
 		if($callId != null){
             $call->id = $this->call_id;

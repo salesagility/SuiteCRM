@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once("data/Relationships/One2MRelationship.php");
@@ -187,9 +190,15 @@ class One2MBeanRelationship extends One2MRelationship
         if ($link->getSide() == REL_RHS)
         {
             $rhsID = $this->def['rhs_key'];
-            $id = isset($link->getFocus()->$rhsID) ? $link->getFocus()->$rhsID : '';
-            if (!empty($id))
-            {
+
+            $id = null;
+            if (isset($link->getFocus()->$rhsID)) {
+                $id = $link->getFocus()->$rhsID;
+            } else {
+                LoggerManager::getLogger()->warn('Incorrect linked relationship rhs ID: ' . get_class($link->getFocus()) . '::$' . $rhsID . ' is undefined');
+            }
+
+            if (!empty($id)) {
                 $rows[$id] = array('id' => $id);
             }
         }
@@ -222,29 +231,29 @@ class One2MBeanRelationship extends One2MRelationship
 
         if ($link->getSide() == REL_RHS) {
             return false;
-        } else {
-            $lhsKey = $this->def['lhs_key'];
-            $rhsTable = $this->def['rhs_table'];
-            $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
-            $relatedSeed = BeanFactory::getBean($this->getRHSModule());
-            $deleted = !empty($params['deleted']) ? 1 : 0;
-            
-            if (!isset($link->getFocus()->$lhsKey)) {
-                LoggerManager::getLogger()->warn('One2MBeanRelationship getQuery: Trying to get property of non-object');
-                $linkFocusLhsKey = null;
-            } else {
-                $linkFocusLhsKey = $link->getFocus()->$lhsKey;
-            }
-            
-            $where = "WHERE $rhsTableKey = '{$linkFocusLhsKey}' AND {$rhsTable}.deleted=$deleted";
-            $order_by = '';
+        }
+        $lhsKey = $this->def['lhs_key'];
+        $rhsTable = $this->def['rhs_table'];
+        $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
+        $relatedSeed = BeanFactory::getBean($this->getRHSModule());
+        $deleted = !empty($params['deleted']) ? 1 : 0;
 
-            //Check for role column
-            if (!empty($this->def["relationship_role_column"]) && !empty($this->def["relationship_role_column_value"])) {
-                $roleField = $this->def["relationship_role_column"];
-                $roleValue = $this->def["relationship_role_column_value"];
-                $where .= " AND $rhsTable.$roleField = '$roleValue'";
-            }
+        if (!isset($link->getFocus()->$lhsKey)) {
+            LoggerManager::getLogger()->warn('One2MBeanRelationship getQuery: Trying to get property of non-object');
+            $linkFocusLhsKey = null;
+        } else {
+            $linkFocusLhsKey = $link->getFocus()->$lhsKey;
+        }
+
+        $where = "WHERE $rhsTableKey = '{$linkFocusLhsKey}' AND {$rhsTable}.deleted=$deleted";
+        $order_by = '';
+
+        //Check for role column
+        if (!empty($this->def["relationship_role_column"]) && !empty($this->def["relationship_role_column_value"])) {
+            $roleField = $this->def["relationship_role_column"];
+            $roleValue = $this->def["relationship_role_column_value"];
+            $where .= " AND $rhsTable.$roleField = '$roleValue'";
+        }
 
             //Add any optional where clause
             if (!empty($params['where'])) {

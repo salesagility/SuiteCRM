@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +37,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
 //find all mailboxes of type bounce.
 
 /**
@@ -162,43 +165,39 @@ function checkBouncedEmailForIdentifier($email_description)
 
 function campaign_process_bounced_emails(&$email, &$email_header) 
 {
-	global $sugar_config;
-	$emailFromAddress = $email_header->fromaddress;
-	$email_description = $email->raw_source;
-    	
-	//if raw_source is empty, try using the description instead
-    	if (empty($email_description)){
-        	$email_description = $email->description;
-	}
+    global $sugar_config;
+    $emailFromAddress = $email_header->fromaddress;
+    $email_description = $email->raw_source;
+
+    //if raw_source is empty, try using the description instead
+    if (empty($email_description)) {
+        $email_description = $email->description;
+    }
 
     $email_description .= retrieveErrorReportAttachment($email);
 
-	if (preg_match('/MAILER-DAEMON|POSTMASTER/i',$emailFromAddress)) 
-	{
-	    $email_description=quoted_printable_decode($email_description);
-		$matches=array();
-		
-		//do we have the identifier tag in the email?
-		$identifierScanResults = checkBouncedEmailForIdentifier($email_description);
-		
-		if ( $identifierScanResults['found'] ) 
-		{
-			$matches = $identifierScanResults['matches'];
-			$identifiers = $identifierScanResults['identifiers'];
+    if (preg_match('/MAILER-DAEMON|POSTMASTER/i', $emailFromAddress)) {
+        $email_description=quoted_printable_decode($email_description);
+        $matches=array();
 
-			if (!empty($identifiers)) 
-			{
-				//array should have only one element in it.
-				$identifier = trim($identifiers[0]);
-				$row = getExistingCampaignLogEntry($identifier);
-				
-				//Found entry
-				if (!empty($row)) 
-				{
-					//do not create another campaign_log record is we already have an
-					//invalid email or send error entry for this tracker key.
-					$query_log = "select * from campaign_log where target_tracker_key='{$row['target_tracker_key']}'"; 
-					$query_log .=" and (activity_type='invalid email' or activity_type='send error')";
+        //do we have the identifier tag in the email?
+        $identifierScanResults = checkBouncedEmailForIdentifier($email_description);
+
+        if ($identifierScanResults['found']) {
+            $matches = $identifierScanResults['matches'];
+            $identifiers = $identifierScanResults['identifiers'];
+
+            if (!empty($identifiers)) {
+                //array should have only one element in it.
+                $identifier = trim($identifiers[0]);
+                $row = getExistingCampaignLogEntry($identifier);
+
+                //Found entry
+                if (!empty($row)) {
+                    //do not create another campaign_log record is we already have an
+                    //invalid email or send error entry for this tracker key.
+                    $query_log = "select * from campaign_log where target_tracker_key='{$row['target_tracker_key']}'";
+                    $query_log .=" and (activity_type='invalid email' or activity_type='send error')";
                     $targeted = new CampaignLog();
 					$result_log=$targeted->db->query($query_log);
 					$row_log=$targeted->db->fetchByAssoc($result_log);

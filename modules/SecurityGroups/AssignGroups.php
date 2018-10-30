@@ -6,39 +6,61 @@ class AssignGroups {
 
 function popup_select(&$bean, $event, $arguments)
 {
-	global $sugar_config;
+    public function popup_select(&$bean, $event, $arguments)
+    {
+        global $sugar_config;
 
-	//only process if action is Save (meaning a user has triggered this event and not the portal or automated process)
-	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'Save' 
-		&& isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
-		&& empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {		
-		//Upload an attachment to an Email Template and save. If user with multi groups - popup select option
-		//it will redirect to notes instead of EmailTemplate and relationship will fail...check below to avoid
-		if(!empty($_REQUEST['module']) && $_REQUEST['module'] != $bean->module_dir) return;
+        //only process if action is Save (meaning a user has triggered this event and not the portal or automated process)
+        if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'Save'
+        && isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
+        && empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {
+            //Upload an attachment to an Email Template and save. If user with multi groups - popup select option
+            //it will redirect to notes instead of EmailTemplate and relationship will fail...check below to avoid
+            if (!empty($_REQUEST['module']) && $_REQUEST['module'] != $bean->module_dir) {
+                return;
+            }
 
-		if(!empty($_REQUEST['securitygroup_list'])) {
-			require_once('modules/SecurityGroups/SecurityGroup.php');
-			$groupFocus = new SecurityGroup();
-			$security_modules = $groupFocus->getSecurityModules();
-			//sanity check
-			if(in_array($bean->module_dir,array_keys($security_modules))) {
-				//add each group in securitygroup_list to new record
-				$rel_name = $groupFocus->getLinkName($bean->module_dir,"SecurityGroups");
+            if (!empty($_REQUEST['securitygroup_list'])) {
+                require_once('modules/SecurityGroups/SecurityGroup.php');
+                $groupFocus = new SecurityGroup();
+                $security_modules = $groupFocus->getSecurityModules();
+                //sanity check
+                if (in_array($bean->module_dir, array_keys($security_modules))) {
+                    //add each group in securitygroup_list to new record
+                    $rel_name = $groupFocus->getLinkName($bean->module_dir, "SecurityGroups");
 
-				$bean->load_relationship($rel_name);
-				foreach($_REQUEST['securitygroup_list'] as $group_id) {
-					$bean->$rel_name->add($group_id);
-				}
-			}
-		} else if(!empty($_REQUEST['dup_checked'])) {
-			//well...ShowDuplicates doesn't pass through request vars unless they are defined in the module vardefs
-			//so we are screwed here...
-			global $current_language;
-			$ss_mod_strings = return_module_language($current_language, 'SecurityGroups');	
-			unset($_SESSION['securitysuite_error']); //to be safe
-			$_SESSION['securitysuite_error'] = $ss_mod_strings['LBL_ERROR_DUPLICATE'];
-		}
-	}
+                    $bean->load_relationship($rel_name);
+                    foreach ($_REQUEST['securitygroup_list'] as $group_id) {
+                        $bean->$rel_name->add($group_id);
+                    }
+                }
+            } elseif (!empty($_REQUEST['dup_checked'])) {
+                //well...ShowDuplicates doesn't pass through request vars unless they are defined in the module vardefs
+                //so we are screwed here...
+                global $current_language;
+                $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');
+                unset($_SESSION['securitysuite_error']); //to be safe
+                $_SESSION['securitysuite_error'] = $ss_mod_strings['LBL_ERROR_DUPLICATE'];
+            }
+        } elseif (isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
+        && empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
+        && isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature') { //Bug: 589
+
+            //$_REQUEST['return_module'] = $bean->module_dir;
+            //$_REQUEST['return_action'] = "DetailView";
+            //$_REQUEST['return_id'] = $bean->id;
+
+            //$_SESSION['securitygroups_popup_'.$bean->module_dir] = $bean->id;
+
+            if (!isset($_SESSION['securitygroups_popup'])) {
+                $_SESSION['securitygroups_popup'] = array();
+            }
+            $_SESSION['securitygroups_popup'][] = array(
+            'module' => $bean->module_dir,
+            'id' => $bean->id
+        );
+        }
+    }
 
 	else if(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
 		&& empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
@@ -60,48 +82,62 @@ function popup_select(&$bean, $event, $arguments)
 	}
 } 
 
+    public function popup_onload($event, $arguments)
+    {
+        if (!empty($_REQUEST['to_pdf']) || !empty($_REQUEST['sugar_body_only'])) {
+            return;
+        }
 
-function popup_onload($event, $arguments)
-{
-	if(!empty($_REQUEST['to_pdf']) || !empty($_REQUEST['sugar_body_only'])) return;
+        /** //test user popup
+        	//always have this loaded
+        	echo '<script type="text/javascript" src="modules/SecurityGroups/javascript/popup_relate.js"></script>';
+        */
+        global $sugar_config;
 
-/** //test user popup
-	//always have this loaded
-	echo '<script type="text/javascript" src="modules/SecurityGroups/javascript/popup_relate.js"></script>';
-*/
-	global $sugar_config;
+        $action = null;
+        if (isset($_REQUEST['action'])) {
+            $action = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined action in request');
+        }
 
-	$module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
-	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined module in request');
+        }
 
-	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) return;  
 
-	if( (
-			//(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)
-			//|| 
-			($module == "Users" && isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true)
-		)
-	
-		//&& isset($_SESSION['securitygroups_popup_'.$module]) && !empty($_SESSION['securitygroups_popup_'.$module])
-		&& !empty($_SESSION['securitygroups_popup'])
-	) {	
+        if (isset($action) && ($action == "Save" || $action == "SetTimezone")) {
+            return;
+        }
 
-		foreach($_SESSION['securitygroups_popup'] as $popup_index => $popup) {
-			$record_id = $popup['id'];
-			$module = $popup['module'];
-			unset($_SESSION['securitygroups_popup'][$popup_index]);
-			
-			require_once('modules/SecurityGroups/SecurityGroup.php');
-			$groupFocus = new SecurityGroup();
-			if($module == 'Users') {
-				$rel_name = "SecurityGroups";
-			} else {
-				$rel_name = $groupFocus->getLinkName($module,"SecurityGroups");
-			}
+        if ((
+            //(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)
+            //||
+            ($module == "Users" && isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true)
+        )
 
-				//this only works if on the detail view of the record actually saved...
-				//so ajaxui breaks this as it stays on the parent
-				$auto_popup = <<<EOQ
+        //&& isset($_SESSION['securitygroups_popup_'.$module]) && !empty($_SESSION['securitygroups_popup_'.$module])
+        && !empty($_SESSION['securitygroups_popup'])
+    ) {
+            foreach ($_SESSION['securitygroups_popup'] as $popup_index => $popup) {
+                $record_id = $popup['id'];
+                $module = $popup['module'];
+                unset($_SESSION['securitygroups_popup'][$popup_index]);
+
+                require_once('modules/SecurityGroups/SecurityGroup.php');
+                $groupFocus = new SecurityGroup();
+                if ($module == 'Users') {
+                    $rel_name = "SecurityGroups";
+                } else {
+                    $rel_name = $groupFocus->getLinkName($module, "SecurityGroups");
+                }
+
+                //this only works if on the detail view of the record actually saved...
+                //so ajaxui breaks this as it stays on the parent
+                $auto_popup = <<<EOQ
 <script type="text/javascript" language="javascript">
 	open_popup("SecurityGroups",600,400,"",true,true,{"call_back_function":"securitysuite_set_return_and_save_background","form_name":"DetailView","field_to_name_array":{"id":"subpanel_id"},"passthru_data":{"module":"$module","record":"$record_id","child_field":"$rel_name","return_url":"","link_field_name":"$rel_name","module_name":"$rel_name","refresh_page":"1"}},"MultiSelect",true);
 </script>
@@ -109,17 +145,22 @@ EOQ;
 
 			echo $auto_popup;
 
-		}
-		unset($_SESSION['securitygroups_popup']);
-		
-	}
+    public function mass_assign($event, $arguments)
+    {
+        $action = null;
+        if (isset($_REQUEST['action'])) {
+            $action = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined action in request');
+        }
 
-}
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined module in request');
+        }
 
-function mass_assign($event, $arguments)
-{
-    $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
-    $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
   
   	$no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
     //check if security suite enabled

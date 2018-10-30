@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +41,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+use SuiteCRM\Utility\SuiteValidator;
 
 require_once('include/ListView/ListViewData.php');
 
@@ -147,7 +148,8 @@ class ListViewDataEmails extends ListViewData
             $inboundEmailID = $folder->getId();
         }
 
-        if ($inboundEmailID && !isValidId($inboundEmailID)) {
+        $isValidator = new SuiteValidator();
+        if ($inboundEmailID && !$isValidator->isValidId($inboundEmailID)) {
             throw new SuiteException("Invalid Inbound Email ID" . ($inboundEmailID ? " ($inboundEmailID)" : ''));
         }
 
@@ -171,7 +173,7 @@ class ListViewDataEmails extends ListViewData
 
                 WHERE
                   inbound_email.status = 'Active' AND
-                  inbound_email.mailbox_type = 'pick' AND
+                  inbound_email.mailbox_type not like 'bounce' AND
                   inbound_email.is_personal = 0 AND
                   inbound_email.deleted = 0";
 
@@ -235,12 +237,16 @@ class ListViewDataEmails extends ListViewData
     private function setInboundEmailMailbox(Folder $folder, InboundEmail $inboundEmail)
     {
         switch ($folder->getType()) {
-            case "sent":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
+            case "inbound":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('mailbox');
                 break;
 
             case "draft":
                 $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
+                break;
+
+            case "sent":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
                 break;
 
             case "trash":

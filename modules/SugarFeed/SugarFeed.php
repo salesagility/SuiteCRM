@@ -368,14 +368,14 @@ class SugarFeed extends Basic {
         /**
         if (ACLController::moduleSupportsACL($data['RELATED_MODULE']) && !ACLController::checkAccess($data['RELATED_MODULE'], 'view', $data['CREATED_BY'] == $GLOBALS['current_user']->id) && !ACLController::checkAccess($data['RELATED_MODULE'], 'list', $data['CREATED_BY'] == $GLOBALS['current_user']->id)){
         */
-                
+
         if (!isset($data['RELATED_MODULE'])) {
             LoggerManager::getLogger()->warn('SugarFeed get_list_view_data: Undefined index: RELATED_MODULE');
             $dataRelatedModule = null;
         } else {
             $dataRelatedModule = $data['RELATED_MODULE'];
         }
-            
+
         if (ACLController::moduleSupportsACL($dataRelatedModule)) {
             $in_group = 'not_set';
             require_once("modules/SecurityGroups/SecurityGroup.php");
@@ -393,18 +393,18 @@ class SugarFeed extends Basic {
             $delete = ' - <a id="sugarFeedDeleteLink'.$data['ID'].'" href="#" onclick=\'SugarFeed.deleteFeed("'. $data['ID'] . '", "{this.id}"); return false;\'>'. $GLOBALS['app_strings']['LBL_DELETE_BUTTON_LABEL'].'</a>';
         }
         /* END - SECURITY GROUPS */
-        
+
         if (!isset($data['DESCRIPTION'])) {
             LoggerManager::getLogger()->warn('SugarFeed get_list_view_data: Undefined index: DESCRIPTION ');
             $dataDescription = null;
         } else {
             $dataDescription = $data['DESCRIPTION'];
         }
-         
+
         if (!isset($data['NAME'])) {
             $data['NAME'] = '';
         }
-        
+
         $data['NAME'] .= $dataDescription;
         $data['NAME'] =  '<div style="padding:3px">' . html_entity_decode($data['NAME']);
         if(!empty($data['LINK_URL'])){
@@ -414,21 +414,21 @@ class SugarFeed extends Basic {
             }
         }
         $data['NAME'] .= '<div class="byLineBox"><span class="byLineLeft">';
-        
+
         if (!isset($data['DATE_ENTERED'])) {
             LoggerManager::getLogger()->warn('SugarFeed get_list_view_data: Undefined index: DATE_ENTERED ');
             $dataDateEntered = null;
         } else {
             $dataDateEntered = $data['DATE_ENTERED'];
         }
-            
+
         if (!isset($data['ID'])) {
             LoggerManager::getLogger()->warn('SugarFeed get_list_view_data: Undefined index: ID ');
             $dataId = null;
         } else {
             $dataId = $data['ID'];
         }
-            
+
         $data['NAME'] .= $this->getTimeLapse($dataDateEntered) . '&nbsp;</span><div class="byLineRight"><a id="sugarFeedReplyLink'.$dataId.'" href="#" onclick=\'SugarFeed.buildReplyForm("'.$dataId.'", "{this.id}", this); return false;\'>'.$GLOBALS['app_strings']['LBL_EMAIL_REPLY'].'</a>' .$delete. '</div></div>';
 
         $data['NAME'] .= $this->fetchReplies($data);
@@ -444,8 +444,8 @@ class SugarFeed extends Basic {
         } else {
             $dataId = $data['ID'];
         }
-           
-        $replies = $seedBean->get_list('date_entered',"related_module = 'SugarFeed' AND related_id = '".$dataId."'");
+
+        $replies = $seedBean->get_list('date_entered', "related_module = 'SugarFeed' AND related_id = '".$dataId."'");
 
         if ( count($replies['list']) < 1 ) {
             return '';
@@ -457,15 +457,15 @@ class SugarFeed extends Basic {
         foreach ( $replies['list'] as $reply ) {
             // Setup the delete link
             $delete = '';
-            
+
             if (!isset($data['CREATED_BY'])) {
                 LoggerManager::getLogger()->warn('SugarFeed fetchReplies: Undefined index: $data[CREATED_BY]');
                 $dataCreateBy = null;
             } else {
                 $dataCreateBy = $data['CREATED_BY'];
             }
-            
-            if(is_admin($GLOBALS['current_user']) || $dataCreateBy == $GLOBALS['current_user']->id) {
+
+            if (is_admin($GLOBALS['current_user']) || $dataCreateBy == $GLOBALS['current_user']->id) {
                 $delete = '<a id="sugarFieldDeleteLink'.$reply->id.'" href="#" onclick=\'SugarFeed.deleteFeed("'. $reply->id . '", "{this.id}"); return false;\'>'. $GLOBALS['app_strings']['LBL_DELETE_BUTTON_LABEL'].'</a>';
             }
 
@@ -473,14 +473,14 @@ class SugarFeed extends Basic {
             if ( isset($reply->created_by) ) {
                 $user = loadBean('Users');
                 $user->retrieve($reply->created_by);
-                
+
                 if (!isset($user->picture)) {
                     LoggerManager::getLogger()->warn('SugarFeed fetchReplies: Undefined property: User::$picture');
                     $userPicture = null;
                 } else {
                     $userPicture = $user->picture;
                 }
-            
+
                 $image_url = 'index.php?entryPoint=download&id=' . $userPicture . '&type=SugarFieldImage&isTempFile=1&isProfile=1';
             }
             $replyHTML .= '<div style="float: left; margin-right: 3px; width: 50px; height: 50px;"><!--not_in_theme!--><img src="'.$image_url.'" style="max-width: 50px; max-height: 50px;"></div> ';

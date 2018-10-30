@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  * 
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,28 +37,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-class ModuleScanner{
-	private $manifestMap = array(
-			'pre_execute'=>'pre_execute',
-			'install_mkdirs'=>'mkdir',
-			'install_copy'=>'copy',
-			'install_images'=>'image_dir',
-			'install_menus'=>'menu',
-			'install_userpage'=>'user_page',
-			'install_dashlets'=>'dashlets',
-			'install_administration'=>'administration',
-			'install_connectors'=>'connectors',
-			'install_vardefs'=>'vardefs',
-			'install_layoutdefs'=>'layoutdefs',
-			'install_layoutfields'=>'layoutfields',
-			'install_relationships'=>'relationships',
-			'install_languages'=>'language',
-            'install_logichooks'=>'logic_hooks',
-			'post_execute'=>'post_execute',
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+class ModuleScanner
+{
+    private $manifestMap = array(
+        'pre_execute' => 'pre_execute',
+        'install_mkdirs' => 'mkdir',
+        'install_copy' => 'copy',
+        'install_images' => 'image_dir',
+        'install_menus' => 'menu',
+        'install_userpage' => 'user_page',
+        'install_dashlets' => 'dashlets',
+        'install_administration' => 'administration',
+        'install_connectors' => 'connectors',
+        'install_vardefs' => 'vardefs',
+        'install_layoutdefs' => 'layoutdefs',
+        'install_layoutfields' => 'layoutfields',
+        'install_relationships' => 'relationships',
+        'install_languages' => 'language',
+        'install_logichooks' => 'logic_hooks',
+        'post_execute' => 'post_execute',
 
 	);
 
@@ -69,9 +77,23 @@ class ModuleScanner{
 	private $blackListExempt = array();
 	private $classBlackListExempt = array();
 
-    // Bug 56717 - adding hbs extension to the whitelist - rgonzalez
-	private $validExt = array('png', 'gif', 'jpg', 'css', 'js', 'php', 'txt', 'html', 'htm', 'tpl', 'pdf', 'md5', 'xml', 'hbs');
-	private $classBlackList = array(
+    private $validExt = array(
+        'png',
+        'gif',
+        'jpg',
+        'css',
+        'js',
+        'php',
+        'txt',
+        'html',
+        'htm',
+        'tpl',
+        'pdf',
+        'md5',
+        'xml',
+        'hbs'
+    );
+    private $classBlackList = array(
         // Class names specified here must be in lowercase as the implementation
         // of the tokenizer converts all tokens to lowercase.
         'reflection',
@@ -93,107 +115,107 @@ class ModuleScanner{
 	    'pclzip',
 
     );
-	private $blackList = array(
-    'popen',
-    'proc_open',
-    'escapeshellarg',
-    'escapeshellcmd',
-    'proc_close',
-    'proc_get_status',
-    'proc_nice',
-	'passthru',
-    'clearstatcache',
-    'disk_free_space',
-    'disk_total_space',
-    'diskfreespace',
-	'dir',
-    'fclose',
-    'feof',
-    'fflush',
-    'fgetc',
-    'fgetcsv',
-    'fgets',
-    'fgetss',
-    'file_exists',
-    'file_get_contents',
-    'filesize',
-    'filetype',
-    'flock',
-    'fnmatch',
-    'fpassthru',
-    'fputcsv',
-    'fputs',
-    'fread',
-    'fscanf',
-    'fseek',
-    'fstat',
-    'ftell',
-    'ftruncate',
-    'fwrite',
-    'glob',
-    'is_dir',
-    'is_file',
-    'is_link',
-    'is_readable',
-    'is_uploaded_file',
-	'opendir',
-    'parse_ini_string',
-    'pathinfo',
-    'pclose',
-    'readfile',
-    'readlink',
-    'realpath_cache_get',
-    'realpath_cache_size',
-    'realpath',
-    'rewind',
-	'readdir',
-    'set_file_buffer',
-    'tmpfile',
-    'umask',
-    'ini_set',
-    'set_time_limit',
-	'eval',
-	'exec',
-	'system',
-	'shell_exec',
-	'passthru',
-	'chgrp',
-	'chmod',
-	'chwown',
-	'file_put_contents',
-	'file',
-	'fileatime',
-	'filectime',
-	'filegroup',
-	'fileinode',
-	'filemtime',
-	'fileowner',
-	'fileperms',
-	'fopen',
-	'is_executable',
-	'is_writable',
-	'is_writeable',
-	'lchgrp',
-	'lchown',
-	'linkinfo',
-	'lstat',
-	'mkdir',
-    'mkdir_recursive',
-	'parse_ini_file',
-	'rmdir',
-    'rmdir_recursive',
-	'stat',
-	'tempnam',
-	'touch',
-	'unlink',
-	'getimagesize',
-	'call_user_func',
-	'call_user_func_array',
-	'create_function',
+    private $blackList = array(
+        'popen',
+        'proc_open',
+        'escapeshellarg',
+        'escapeshellcmd',
+        'proc_close',
+        'proc_get_status',
+        'proc_nice',
+        'passthru',
+        'clearstatcache',
+        'disk_free_space',
+        'disk_total_space',
+        'diskfreespace',
+        'dir',
+        'fclose',
+        'feof',
+        'fflush',
+        'fgetc',
+        'fgetcsv',
+        'fgets',
+        'fgetss',
+        'file_exists',
+        'file_get_contents',
+        'filesize',
+        'filetype',
+        'flock',
+        'fnmatch',
+        'fpassthru',
+        'fputcsv',
+        'fputs',
+        'fread',
+        'fscanf',
+        'fseek',
+        'fstat',
+        'ftell',
+        'ftruncate',
+        'fwrite',
+        'glob',
+        'is_dir',
+        'is_file',
+        'is_link',
+        'is_readable',
+        'is_uploaded_file',
+        'opendir',
+        'parse_ini_string',
+        'pathinfo',
+        'pclose',
+        'readfile',
+        'readlink',
+        'realpath_cache_get',
+        'realpath_cache_size',
+        'realpath',
+        'rewind',
+        'readdir',
+        'set_file_buffer',
+        'tmpfile',
+        'umask',
+        'ini_set',
+        'set_time_limit',
+        'eval',
+        'exec',
+        'system',
+        'shell_exec',
+        'passthru',
+        'chgrp',
+        'chmod',
+        'chwown',
+        'file_put_contents',
+        'file',
+        'fileatime',
+        'filectime',
+        'filegroup',
+        'fileinode',
+        'filemtime',
+        'fileowner',
+        'fileperms',
+        'fopen',
+        'is_executable',
+        'is_writable',
+        'is_writeable',
+        'lchgrp',
+        'lchown',
+        'linkinfo',
+        'lstat',
+        'mkdir',
+        'mkdir_recursive',
+        'parse_ini_file',
+        'rmdir',
+        'rmdir_recursive',
+        'stat',
+        'tempnam',
+        'touch',
+        'unlink',
+        'getimagesize',
+        'call_user_func',
+        'call_user_func_array',
+        'create_function',
 
 
-	//mutliple files per function call
-	'copy',
+    //mutliple files per function call
+    'copy',
     'copy_recursive',
 	'link',
 	'rename',
@@ -399,11 +421,15 @@ class ModuleScanner{
 	    'simplexml_load_file',
 	    'simplexml_load_string',
 
-	    // unzip
-	    'unzip',
-	    'unzip_file',
-);
-    private $methodsBlackList = array('setlevel', 'put' => array('sugarautoloader'), 'unlink' => array('sugarautoloader'));
+        // unzip
+        'unzip',
+        'unzip_file',
+    );
+    private $methodsBlackList = array(
+        'setlevel',
+        'put' => array('sugarautoloader'),
+        'unlink' => array('sugarautoloader')
+    );
 
 	public function printToWiki(){
 		echo "'''Default Extensions'''<br>";
@@ -419,15 +445,18 @@ class ModuleScanner{
 
 	}
 
+    /**
+     * ModuleScanner constructor.
+     */
     public function __construct()
     {
         $params = array(
-            'blackListExempt'      => 'MODULE_INSTALLER_PACKAGE_SCAN_BLACK_LIST_EXEMPT',
-            'blackList'            => 'MODULE_INSTALLER_PACKAGE_SCAN_BLACK_LIST',
+            'blackListExempt' => 'MODULE_INSTALLER_PACKAGE_SCAN_BLACK_LIST_EXEMPT',
+            'blackList' => 'MODULE_INSTALLER_PACKAGE_SCAN_BLACK_LIST',
             'classBlackListExempt' => 'MODULE_INSTALLER_PACKAGE_SCAN_CLASS_BLACK_LIST_EXEMPT',
-            'classBlackList'       => 'MODULE_INSTALLER_PACKAGE_SCAN_CLASS_BLACK_LIST',
-            'validExt'             => 'MODULE_INSTALLER_PACKAGE_SCAN_VALID_EXT',
-            'methodsBlackList'     => 'MODULE_INSTALLER_PACKAGE_SCAN_METHOD_LIST',
+            'classBlackList' => 'MODULE_INSTALLER_PACKAGE_SCAN_CLASS_BLACK_LIST',
+            'validExt' => 'MODULE_INSTALLER_PACKAGE_SCAN_VALID_EXT',
+            'methodsBlackList' => 'MODULE_INSTALLER_PACKAGE_SCAN_METHOD_LIST',
         );
 
         $disableConfigOverride = defined('MODULE_INSTALLER_DISABLE_CONFIG_OVERRIDE')
@@ -537,6 +566,7 @@ class ModuleScanner{
                 $tag++;
                 continue;
             }
+
             // found <?, it's PHP
             return true;
 	    }
@@ -664,7 +694,7 @@ class ModuleScanner{
             include ('files.md5');
             $md5 = isset($md5_string) ? $md5_string : null;
         }
-        if ($path[0] != '.' || $path[1] != '/') {
+        if ($path[0] !== '.' || $path[1] !== '/') {
             $path = './' . $path;
         }
         if (isset($md5[$path])) {
@@ -682,7 +712,7 @@ class ModuleScanner{
      */
     public function normalizePath($path)
     {
-        if (DIRECTORY_SEPARATOR != '/') {
+        if (DIRECTORY_SEPARATOR !== '/') {
             // convert to / for OSes that use other separators
             $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
         }
@@ -691,10 +721,10 @@ class ModuleScanner{
             if (empty($component)) {
                 continue;
             }
-            if ($component == '.') {
+            if ($component === '.') {
                 continue;
             }
-            if ($component == '..') {
+            if ($component === '..') {
                 // this is not allowed, bail
                 return false;
             }
@@ -741,7 +771,8 @@ class ModuleScanner{
             foreach ($installdefs['copy'] as $copy) {
                 $from = $this->normalizePath($copy['from']);
                 if ($from === false) {
-                    $this->issues['copy'][$copy['from']] = translate('ML_PATH_MAY_NOT_CONTAIN') .' ".." -' . $copy['from'];
+                    $this->issues['copy'][$copy['from']] = translate('ML_PATH_MAY_NOT_CONTAIN') .
+                        ' ".." -' . $copy['from'];
                     continue;
                 }
                 $from = str_replace('<basepath>', $this->pathToModule, $from);
@@ -778,46 +809,47 @@ class ModuleScanner{
         if (is_dir($from)) {
             $d = dir($from);
             while ($e = $d->read()) {
-                if ($e == '.' || $e == '..') {
+                if ($e === '.' || $e === '..') {
                     continue;
                 }
                 $this->scanCopy($from . '/' . $e, $to . '/' . $e);
             }
+
             return;
         }
         // if $to is a dir and $from is a file then make $to a full file path as well
         if (is_dir($to) && is_file($from)) {
-            $to = rtrim($to, '/'). '/' . basename($from);
+            $to = rtrim($to, '/') . '/' . basename($from);
         }
         // if the $to is a file and it is found in sugarFileExists then don't allow overriding it
         if (is_file($to) && $this->sugarFileExists($to)) {
             $this->issues['copy'][$from] = translate('ML_OVERRIDE_CORE_FILES') . '(' . $to . ')';
         }
-
     }
 
+    /**
+     *Main external function that takes in a path to a package and then scans
+     *that package's manifest for disabled actions and then it scans the PHP files
+     *for restricted function calls
+     *
+     */
+    public function scanPackage($path)
+    {
+        $this->pathToModule = $path;
+        $this->scanManifest($path . '/manifest.php');
+        if (empty($this->config['disableFileScan'])) {
+            $this->scanDir($path);
+        }
+    }
 
-	/**
-	 *Main external function that takes in a path to a package and then scans
-	 *that package's manifest for disabled actions and then it scans the PHP files
-	 *for restricted function calls
-	 *
-	 */
-	public function scanPackage($path){
-		$this->pathToModule = $path;
-		$this->scanManifest($path . '/manifest.php');
-		if(empty($this->config['disableFileScan'])){
-			$this->scanDir($path);
-		}
-	}
-
-	/**
-	 *This function will take all issues of the current instance and print them to the screen
-	 **/
-	public function displayIssues($package='Package'){
-		echo '<h2>'.str_replace('{PACKAGE}' , $package ,translate('ML_PACKAGE_SCANNING')). '</h2><BR><h2 class="error">' . translate('ML_INSTALLATION_FAILED') . '</h2><br><p>' .str_replace('{PACKAGE}' , $package ,translate('ML_PACKAGE_NOT_CONFIRM')). '</p><ul><li>'. translate('ML_OBTAIN_NEW_PACKAGE') . '<li>' . translate('ML_RELAX_LOCAL').
-'</ul></p><br>' . translate('ML_SUGAR_LOADING_POLICY') .  ' <a href=" http://kb.sugarcrm.com/custom/module-loader-restrictions-for-sugar-open-cloud/">' . translate('ML_SUGAR_KB') . '</a>.'.
-'<br>' . translate('ML_AVAIL_RESTRICTION'). ' <a href=" http://developers.sugarcrm.com/wordpress/2009/08/14/module-loader-restrictions/">' . translate('ML_SUGAR_DZ') .  '</a>.<br><br>';
+    /**
+     *This function will take all issues of the current instance and print them to the screen
+     **/
+    public function displayIssues($package='Package')
+    {
+        echo '<h2>'.str_replace('{PACKAGE}', $package, translate('ML_PACKAGE_SCANNING')). '</h2><BR><h2 class="error">' . translate('ML_INSTALLATION_FAILED') . '</h2><br><p>' .str_replace('{PACKAGE}', $package, translate('ML_PACKAGE_NOT_CONFIRM')). '</p><ul><li>'. translate('ML_OBTAIN_NEW_PACKAGE') . '<li>' . translate('ML_RELAX_LOCAL').
+'</ul></p><br>' . translate('ML_SUGAR_LOADING_POLICY') .  ' <a href=" http://kb.sugarcrm.com/custom/module-loader-restrictions-for-sugar-open-cloud/">' . translate('ML_SUITE_KB') . '</a>.'.
+'<br>' . translate('ML_AVAIL_RESTRICTION'). ' <a href=" http://developers.sugarcrm.com/wordpress/2009/08/14/module-loader-restrictions/">' . translate('ML_SUITE_DZ') .  '</a>.<br><br>';
 
 
 		foreach($this->issues as $type=>$issues){

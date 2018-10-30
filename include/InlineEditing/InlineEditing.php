@@ -430,6 +430,12 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     //If field is of type date time or datetimecombo
     if ($vardef['type'] == "datetimecombo" || $vardef['type'] == "datetime") {
 
+            if ($vardef['type'] == "date") {
+                $value = $value . ' 00:00:00';
+            }
+            // create utc date (as it's utc in db)
+            // use the calculated datetime_format
+            $datetime = DateTime::createFromFormat($datetime_format, $value,new DateTimeZone('UTC'));
 
         if ($method != "save") {
             $value = convertDateUserToDB($value);

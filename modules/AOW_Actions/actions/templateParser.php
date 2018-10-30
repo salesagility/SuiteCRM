@@ -21,15 +21,31 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 require_once 'modules/AOS_PDF_Templates/templateParser.php';
- 
-class aowTemplateParser extends templateParser {
 
-		static function parse_template($string, $bean_arr) {
-			global $beanList;
+class aowTemplateParser extends templateParser
+{
+    public static function parse_template($string, $bean_arr)
+    {
+        global $beanList;
+
+        $person = [];
+
+        foreach ($bean_arr as $bean_name => $bean_id) {
+            $focus = BeanFactory::getBean($bean_name, $bean_id);
+
+            if (!$focus->fetched_row) {
+
+                // We do not want the cached version for a newly created bean, as some data such as date fields and
+                // auto increment fields will only be correct after a retrieve operation
+                BeanFactory::unregisterBean($bean_name, $bean_id);
+                $focus = BeanFactory::getBean($bean_name, $bean_id);
+            }
+
+            $string = aowTemplateParser::parse_template_bean($string, strtolower($beanList[$bean_name]), $focus);
 
             $person = array();
 	

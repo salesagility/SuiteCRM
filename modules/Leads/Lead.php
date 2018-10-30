@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -274,45 +277,57 @@ class Lead extends Person implements EmailInterface {
 		$lead->save();
     }
 
-	function fill_in_additional_list_fields()
-	{
-		parent::fill_in_additional_list_fields();
-		$this->_create_proper_name_field();
-		$this->get_account();
+    public function converted_lead($leadid, $contactid, $accountid, $opportunityid)
+    {
+        $query = "UPDATE leads set converted='1', contact_id=$contactid, account_id=$accountid, opportunity_id=$opportunityid where  id=$leadid and deleted=0";
+        $this->db->query($query, true, "Error converting lead: ");
 
-	}
+        //we must move the status out here in order to be able to capture workflow conditions
+        $leadid = str_replace("'", "", $leadid);
+        $lead = new Lead();
+        $lead->retrieve($leadid);
+        $lead->status='Converted';
+        $lead->save();
+    }
 
-	function fill_in_additional_detail_fields()
-	{
-		//Fill in the assigned_user_name
-		//if(!empty($this->status))
-		//$this->status = translate('lead_status_dom', '', $this->status);
-	    parent::fill_in_additional_detail_fields();
-	    $this->_create_proper_name_field();
-		$this->get_contact();
-		$this->get_opportunity();
-		$this->get_account();
+    public function fill_in_additional_list_fields()
+    {
+        parent::fill_in_additional_list_fields();
+        $this->_create_proper_name_field();
+        $this->get_account();
+    }
 
-		if(!empty($this->campaign_id)){
+    public function fill_in_additional_detail_fields()
+    {
+        //Fill in the assigned_user_name
+        //if(!empty($this->status))
+        //$this->status = translate('lead_status_dom', '', $this->status);
+        parent::fill_in_additional_detail_fields();
+        $this->_create_proper_name_field();
+        $this->get_contact();
+        $this->get_opportunity();
+        $this->get_account();
 
-			$camp = new Campaign();
-			$where = "campaigns.id='$this->campaign_id'";
-			$campaign_list = $camp->get_full_list("campaigns.name", $where, true);
-			if(!empty($campaign_list))
-				$this->campaign_name = $campaign_list[0]->name;
-		}
-	}
+        if (!empty($this->campaign_id)) {
+            $camp = new Campaign();
+            $where = "campaigns.id='$this->campaign_id'";
+            $campaign_list = $camp->get_full_list("campaigns.name", $where, true);
+            if (!empty($campaign_list)) {
+                $this->campaign_name = $campaign_list[0]->name;
+            }
+        }
+    }
 
-	function get_list_view_data(){
+    public function get_list_view_data()
+    {
+        $temp_array = parent::get_list_view_data();
 
-		$temp_array = parent::get_list_view_data();
-                
-                if (!isset($temp_array['ACCOUNT_NAME'])) {
-                    LoggerManager::getLogger()->warn('Leads get list view data error: account name is not defined in list view data.');
-                    $tempArrayAccountName = null;
-                } else {
-                    $tempArrayAccountName = $temp_array['ACCOUNT_NAME'];
-                }
+        if (!isset($temp_array['ACCOUNT_NAME'])) {
+            LoggerManager::getLogger()->warn('Leads get list view data error: account name is not defined in list view data.');
+            $tempArrayAccountName = null;
+        } else {
+            $tempArrayAccountName = $temp_array['ACCOUNT_NAME'];
+        }
 
 		$temp_array['ACC_NAME_FROM_ACCOUNTS'] = empty($temp_array['ACC_NAME_FROM_ACCOUNTS']) ? ($tempArrayAccountName) : ($temp_array['ACC_NAME_FROM_ACCOUNTS']);
 
@@ -565,6 +580,75 @@ class Lead extends Person implements EmailInterface {
 
 					$form .= "</td></tr>";
 
+    //carrys forward custom lead fields to contacts, accounts, opportunities during Lead Conversion
+    public function convertCustomFieldsForm(&$form, &$tempBean, &$prefix)
+    {
+        global $mod_strings, $app_list_strings, $app_strings, $lbl_required_symbol;
+
+        foreach ($this->field_defs as $field => $value) {
+            if (!empty($value['source']) && $value['source'] == 'custom_fields') {
+                if (!empty($tempBean->field_defs[$field]) and isset($tempBean->field_defs[$field])) {
+                    $form .= "<tr><td nowrap colspan='4' class='dataLabel'>".$mod_strings[$tempBean->field_defs[$field]['vname']].":";
+
+                    if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) and (($tempBean->custom_fields->avail_fields[$field]['required']== 1) or ($tempBean->custom_fields->avail_fields[$field]['required']== '1') or ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') or ($tempBean->custom_fields->avail_fields[$field]['required']== true))) {
+                        $form .= "&nbsp;<span class='required'>".$lbl_required_symbol."</span>";
+                    }
+                    $form .= "</td></tr>";
+                    $form .= "<tr><td nowrap colspan='4' class='dataField' nowrap>";
+
+                    if (isset($value['isMultiSelect']) && $value['isMultiSelect'] == 1) {
+                        $this->$field = unencodeMultienum($this->$field);
+                        $multiple = "multiple";
+                        $array = '[]';
+                    } else {
+                        $multiple = null;
+                        $array = null;
+                    }
+
+                    if (!empty($value['options']) and isset($value['options'])) {
+                        $form .= "<select " . $multiple . " name='".$prefix.$field.$array."'>";
+                        $form .= get_select_options_with_id($app_list_strings[$value['options']], $this->$field);
+                        $form .= "</select";
+                    } elseif ($value['type'] == 'bool') {
+                        if (($this->$field == 1) or ($this->$field == '1')) {
+                            $checked = 'checked';
+                        } else {
+                            $checked = '';
+                        }
+                        $form .= "<input type='checkbox' name='".$prefix.$field."' id='".$prefix.$field."'  value='1' ".$checked."/>";
+                    } elseif ($value['type'] == 'text') {
+                        $form .= "<textarea name='".$prefix.$field."' rows='6' cols='50'>".$this->$field."</textarea>";
+                    } elseif ($value['type'] == 'date') {
+                        $form .= "<input name='".$prefix.$field."' id='jscal_field".$field."' type='text'  size='11' maxlength='10' value='".$this->$field."'>&nbsp;<span id=\"jscal_trigger\" class='suitepicon suitepicon-module-calendar'></span> <span class='dateFormat'>yyyy-mm-dd</span><script type='text/javascript'>Calendar.setup ({inputField : 'jscal_field".$field."', ifFormat : '%Y-%m-%d', showsTime : false, button : 'jscal_trigger".$field."', singleClick : true, step : 1, weekNumbers:false}); addToValidate('ConvertLead', '".$field."', 'date', false,'".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
+                    } else {
+                        if (!isset($this->$field)) {
+                            LoggerManager::getLogger()->warn('Field not found: ' . $field);
+                            $thisField = null;
+                        } else {
+                            $thisField = $this->$field;
+                        }
+
+                        $form .= "<input name='".$prefix.$field."' type='text' value='".$thisField."'>";
+
+                        if (!isset($this->custom_fields->avail_fields)) {
+                            LoggerManager::getLogger()->warn('Undefined property: $avail_fields');
+                        }
+
+                        if (isset($this->custom_fields->avail_fields) && $this->custom_fields->avail_fields[$field]['type'] == 'int') {
+                            $form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'int', false,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
+                        } elseif (isset($this->custom_fields->avail_fields) && $this->custom_fields->avail_fields[$field]['type'] == 'float') {
+                            $form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'float', false,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
+                        }
+                    }
+
+                    if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) and (($tempBean->custom_fields->avail_fields[$field]['required']== 1) or ($tempBean->custom_fields->avail_fields[$field]['required']== '1') or ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') or ($tempBean->custom_fields->avail_fields[$field]['required']== true))) {
+                        $form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'relate', true,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
+                    }
+
+                    $form .= "</td></tr>";
+                }
+            }
+        }
 
 				}
 			}

@@ -65,7 +65,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
             } else {
                 $aInfoAddress = $aInfo['address'];
             }
-            
+
             $address = $aInfoAddress;
         } else {
             $address = (string)$aInfo;

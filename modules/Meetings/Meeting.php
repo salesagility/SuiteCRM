@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 class Meeting extends SugarBean {
 	// Stored fields
@@ -552,35 +555,32 @@ class Meeting extends SugarBean {
             } else {
                 $meeting_fields['SET_COMPLETE'] = '';
             }
-		}
-		global $timedate;
-		$today = $timedate->nowDb();
-		$nextday = $timedate->asDbDate($timedate->getNow()->get("+1 day"));
-                
-                if (!isset($meeting_fields['DATE_START'])) {
-                    LoggerManager::getLogger()->warn('Meeting get list view data: Undefined index: DATE_START');
-                    $meetingFieldsDateStart = null;
-                } else {
-                    $meetingFieldsDateStart = $meeting_fields['DATE_START'];
-                }
-                
-		$mergeTime = $meetingFieldsDateStart; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
-		$date_db = $timedate->to_db($mergeTime);
-		if($date_db	< $today	) {
-			if($meeting_fields['STATUS']=='Held' || $meeting_fields['STATUS']=='Not Held')
-			{
-				$meeting_fields['DATE_START']= "<font>".$meeting_fields['DATE_START']."</font>";
-			}
-			else
-			{
-				$meeting_fields['DATE_START']= "<font class='overdueTask'>".$meetingFieldsDateStart."</font>";
-			}
-		}else if($date_db	< $nextday) {
-			$meeting_fields['DATE_START'] = "<font class='todaysTask'>".$meetingFieldsDateStart."</font>";
-		} else {
-			$meeting_fields['DATE_START'] = "<font class='futureTask'>".$meetingFieldsDateStart."</font>";
-		}
-		$this->fill_in_additional_detail_fields();
+        }
+        global $timedate;
+        $today = $timedate->nowDb();
+        $nextday = $timedate->asDbDate($timedate->getNow()->get("+1 day"));
+
+        if (!isset($meeting_fields['DATE_START'])) {
+            LoggerManager::getLogger()->warn('Meeting get list view data: Undefined index: DATE_START');
+            $meetingFieldsDateStart = null;
+        } else {
+            $meetingFieldsDateStart = $meeting_fields['DATE_START'];
+        }
+
+        $mergeTime = $meetingFieldsDateStart; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
+        $date_db = $timedate->to_db($mergeTime);
+        if ($date_db	< $today) {
+            if ($meeting_fields['STATUS']=='Held' || $meeting_fields['STATUS']=='Not Held') {
+                $meeting_fields['DATE_START']= "<font>".$meeting_fields['DATE_START']."</font>";
+            } else {
+                $meeting_fields['DATE_START']= "<font class='overdueTask'>".$meetingFieldsDateStart."</font>";
+            }
+        } elseif ($date_db	< $nextday) {
+            $meeting_fields['DATE_START'] = "<font class='todaysTask'>".$meetingFieldsDateStart."</font>";
+        } else {
+            $meeting_fields['DATE_START'] = "<font class='futureTask'>".$meetingFieldsDateStart."</font>";
+        }
+        $this->fill_in_additional_detail_fields();
 
         // make sure we grab the localized version of the contact name, if a contact is provided
         if (!empty($this->contact_id))
@@ -621,30 +621,30 @@ class Meeting extends SugarBean {
 		$notifyUser = ($meetingCurrentNotifyUserObjectName == 'User') ? 
                         $meeting->current_notify_user : 
                         $current_user;
-                
-		// cn: bug 8078 - fixed call to $timedate
-                
-                if (!isset($meeting->id)) {
-                    LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingId)');
-                    $meetingId = null;
-                } else {
-                    $meetingId = $meeting->id;
-                }
-                
-                if (!isset($meeting->current_notify_user->id)) {
-                    LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingCurrentNotifyUserId)');
-                    $meetingCurrentNotifyUserId = null;
-                } else {
-                    $meetingCurrentNotifyUserId = $meeting->current_notify_user->id;
-                }
-                
-                if (!is_object($meeting->current_notify_user)) {
-                    LoggerManager::getLogger()->warn('Meeting try to set notification body but the current notify user is not an object');
-                }
-                
-		if (is_object($meeting->current_notify_user) && strtolower(get_class($meeting->current_notify_user)) == 'contact') {
-			$xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
-							'/index.php?entryPoint=acceptDecline&module=Meetings&contact_id='.
+
+        // cn: bug 8078 - fixed call to $timedate
+
+        if (!isset($meeting->id)) {
+            LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingId)');
+            $meetingId = null;
+        } else {
+            $meetingId = $meeting->id;
+        }
+
+        if (!isset($meeting->current_notify_user->id)) {
+            LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingCurrentNotifyUserId)');
+            $meetingCurrentNotifyUserId = null;
+        } else {
+            $meetingCurrentNotifyUserId = $meeting->current_notify_user->id;
+        }
+
+        if (!is_object($meeting->current_notify_user)) {
+            LoggerManager::getLogger()->warn('Meeting try to set notification body but the current notify user is not an object');
+        }
+
+        if (is_object($meeting->current_notify_user) && strtolower(get_class($meeting->current_notify_user)) == 'contact') {
+            $xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
+                            '/index.php?entryPoint=acceptDecline&module=Meetings&contact_id='.
                                 $meetingCurrentNotifyUserId.'&record='.
                                 $meetingId);
 		} elseif (is_object($meeting->current_notify_user) && strtolower(get_class($meeting->current_notify_user)) == 'lead') {
@@ -657,35 +657,35 @@ class Meeting extends SugarBean {
 							'/index.php?entryPoint=acceptDecline&module=Meetings&user_id='.
                                 $meetingCurrentNotifyUserId.'&record='.
                                 $meetingId);
-		}
-                
-                
-                if (!isset($meeting->current_notify_user->new_assigned_user_name)) {
-                    LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingCurrentNotifyUserNewAssingnedUserName)');
-                    $meetingCurrentNotifyUserNewAssingnedUserName = null;
-                } else {
-                    $meetingCurrentNotifyUserNewAssingnedUserName = $meeting->current_notify_user->new_assigned_user_name;
-                }
-                
-		$xtpl->assign("MEETING_TO", $meetingCurrentNotifyUserNewAssingnedUserName);
-		$xtpl->assign("MEETING_SUBJECT", trim($meeting->name));
-		$xtpl->assign("MEETING_STATUS",(isset($meeting->status)? $app_list_strings['meeting_status_dom'][$meeting->status]:""));
-		$typekey = strtolower($meeting->type);
-		if(isset($meeting->type)) {
-		    if(!empty($app_list_strings['eapm_list'][$typekey])) {
-    		    $typestring = $app_list_strings['eapm_list'][$typekey];
-	    	} else {
-		        $typestring = $app_list_strings['meeting_type_dom'][$meeting->type];
-		    }
-		}
-		$xtpl->assign("MEETING_TYPE", isset($meeting->type)? $typestring:"");
-		$startdate = $timedate->fromDb($meeting->date_start);
-		$xtpl->assign("MEETING_STARTDATE", $timedate->asUser($startdate, $notifyUser)." ".TimeDate::userTimezoneSuffix($startdate, $notifyUser));
-		$enddate = $timedate->fromDb($meeting->date_end);
-		$xtpl->assign("MEETING_ENDDATE", $timedate->asUser($enddate, $notifyUser)." ".TimeDate::userTimezoneSuffix($enddate, $notifyUser));
-		$xtpl->assign("MEETING_HOURS", $meeting->duration_hours);
-		$xtpl->assign("MEETING_MINUTES", $meeting->duration_minutes);
-		$xtpl->assign("MEETING_DESCRIPTION", $meeting->description);
+        }
+
+
+        if (!isset($meeting->current_notify_user->new_assigned_user_name)) {
+            LoggerManager::getLogger()->warn('Meeting set_notification_body: Trying to get property of non-object ($meetingCurrentNotifyUserNewAssingnedUserName)');
+            $meetingCurrentNotifyUserNewAssingnedUserName = null;
+        } else {
+            $meetingCurrentNotifyUserNewAssingnedUserName = $meeting->current_notify_user->new_assigned_user_name;
+        }
+
+        $xtpl->assign("MEETING_TO", $meetingCurrentNotifyUserNewAssingnedUserName);
+        $xtpl->assign("MEETING_SUBJECT", trim($meeting->name));
+        $xtpl->assign("MEETING_STATUS", (isset($meeting->status)? $app_list_strings['meeting_status_dom'][$meeting->status]:""));
+        $typekey = strtolower($meeting->type);
+        if (isset($meeting->type)) {
+            if (!empty($app_list_strings['eapm_list'][$typekey])) {
+                $typestring = $app_list_strings['eapm_list'][$typekey];
+            } else {
+                $typestring = $app_list_strings['meeting_type_dom'][$meeting->type];
+            }
+        }
+        $xtpl->assign("MEETING_TYPE", isset($meeting->type)? $typestring:"");
+        $startdate = $timedate->fromDb($meeting->date_start);
+        $xtpl->assign("MEETING_STARTDATE", $timedate->asUser($startdate, $notifyUser)." ".TimeDate::userTimezoneSuffix($startdate, $notifyUser));
+        $enddate = $timedate->fromDb($meeting->date_end);
+        $xtpl->assign("MEETING_ENDDATE", $timedate->asUser($enddate, $notifyUser)." ".TimeDate::userTimezoneSuffix($enddate, $notifyUser));
+        $xtpl->assign("MEETING_HOURS", $meeting->duration_hours);
+        $xtpl->assign("MEETING_MINUTES", $meeting->duration_minutes);
+        $xtpl->assign("MEETING_DESCRIPTION", $meeting->description);
         $xtpl->assign("MEETING_LOCATION", $meeting->location);
         if ( !empty($meeting->join_url) ) {
             $xtpl->assign('MEETING_URL', $meeting->join_url);
@@ -729,11 +729,165 @@ class Meeting extends SugarBean {
 	public function send_assignment_notifications($notify_user, $admin){
 		parent::send_assignment_notifications($notify_user, $admin);
 
-		$path = SugarConfig::getInstance()->get('upload_dir','upload/') . $this->id;
-                
-                if (is_dir($path)) {
-                    LoggerManager::getLogger()->warn('Meeting send_assignment_notifications: unlink(' . $path . '): Is a directory');
-                    return false;
+        $path = SugarConfig::getInstance()->get('upload_dir', 'upload/') . $this->id;
+
+        if (is_dir($path)) {
+            LoggerManager::getLogger()->warn('Meeting send_assignment_notifications: unlink(' . $path . '): Is a directory');
+            return false;
+        }
+
+        return unlink($path);
+    }
+
+    public function get_meeting_users()
+    {
+        $template = new User();
+        // First, get the list of IDs.
+        $query = "SELECT meetings_users.required, meetings_users.accept_status, meetings_users.user_id from meetings_users where meetings_users.meeting_id='$this->id' AND meetings_users.deleted=0";
+        $GLOBALS['log']->debug("Finding linked records $this->object_name: ".$query);
+        $result = $this->db->query($query, true);
+        $list = array();
+
+        while ($row = $this->db->fetchByAssoc($result)) {
+            $template = new User(); // PHP 5 will retrieve by reference, always over-writing the "old" one
+            $record = $template->retrieve($row['user_id']);
+            $template->required = $row['required'];
+            $template->accept_status = $row['accept_status'];
+
+            if ($record != null) {
+                // this copies the object into the array
+                $list[] = $template;
+            }
+        }
+        return $list;
+    }
+
+    public function get_invite_meetings(&$user)
+    {
+        $template = $this;
+        // First, get the list of IDs.
+        $GLOBALS['log']->debug("Finding linked records $this->object_name: ");
+        $query = "SELECT meetings_users.required, meetings_users.accept_status, meetings_users.meeting_id from meetings_users where meetings_users.user_id='$user->id' AND( meetings_users.accept_status IS NULL OR	meetings_users.accept_status='none') AND meetings_users.deleted=0";
+        $result = $this->db->query($query, true);
+        $list = array();
+
+        while ($row = $this->db->fetchByAssoc($result)) {
+            $record = $template->retrieve($row['meeting_id']);
+            $template->required = $row['required'];
+            $template->accept_status = $row['accept_status'];
+
+
+            if ($record != null) {
+                // this copies the object into the array
+                $list[] = $template;
+            }
+        }
+        return $list;
+    }
+
+
+    public function set_accept_status(&$user, $status)
+    {
+        if ($user->object_name == 'User') {
+            $relate_values = array('user_id'=>$user->id,'meeting_id'=>$this->id);
+            $data_values = array('accept_status'=>$status);
+            $this->set_relationship($this->rel_users_table, $relate_values, true, true, $data_values);
+            global $current_user;
+
+            if ($this->update_vcal) {
+                vCal::cache_sugar_vcal($user);
+            }
+        } elseif ($user->object_name == 'Contact') {
+            $relate_values = array('contact_id'=>$user->id,'meeting_id'=>$this->id);
+            $data_values = array('accept_status'=>$status);
+            $this->set_relationship($this->rel_contacts_table, $relate_values, true, true, $data_values);
+        } elseif ($user->object_name == 'Lead') {
+            $relate_values = array('lead_id'=>$user->id,'meeting_id'=>$this->id);
+            $data_values = array('accept_status'=>$status);
+            $this->set_relationship($this->rel_leads_table, $relate_values, true, true, $data_values);
+        }
+    }
+
+
+    public function get_notification_recipients()
+    {
+        if ($this->special_notification) {
+            return parent::get_notification_recipients();
+        }
+
+        $list = array();
+        if (!is_array($this->contacts_arr)) {
+            $this->contacts_arr =	array();
+        }
+
+        if (!is_array($this->users_arr)) {
+            $this->users_arr =	array();
+        }
+
+        if (!isset($this->leads_arr) || !is_array($this->leads_arr)) {
+            $this->leads_arr =	array();
+        }
+
+        foreach ($this->users_arr as $user_id) {
+            $notify_user = new User();
+            $notify_user->retrieve($user_id);
+            $notify_user->new_assigned_user_name = $notify_user->full_name;
+            $GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");
+            $list[$notify_user->id] = $notify_user;
+        }
+
+        foreach ($this->contacts_arr as $contact_id) {
+            $notify_user = new Contact();
+            $notify_user->retrieve($contact_id);
+            $notify_user->new_assigned_user_name = $notify_user->full_name;
+            $GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");
+            $list[$notify_user->id] = $notify_user;
+        }
+
+        foreach ($this->leads_arr as $lead_id) {
+            $notify_user = new Lead();
+            $notify_user->retrieve($lead_id);
+            $notify_user->new_assigned_user_name = $notify_user->full_name;
+            $GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");
+            $list[$notify_user->id] = $notify_user;
+        }
+
+        global $sugar_config;
+        if (isset($sugar_config['disable_notify_current_user']) && $sugar_config['disable_notify_current_user']) {
+            global $current_user;
+            if (isset($list[$current_user->id])) {
+                unset($list[$current_user->id]);
+            }
+        }
+        return $list;
+    }
+
+
+    public function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':return true;
+        }
+        return false;
+    }
+
+    public function listviewACLHelper()
+    {
+        $array_assign = parent::listviewACLHelper();
+        $is_owner = false;
+        $in_group = false; //SECURITY GROUPS
+        if (!empty($this->parent_name)) {
+            if (!empty($this->parent_name_owner)) {
+                global $current_user;
+                $is_owner = $current_user->id == $this->parent_name_owner;
+            }
+            /* BEGIN - SECURITY GROUPS */
+            //parent_name_owner not being set for whatever reason so we need to figure this out
+            elseif (!empty($this->parent_type) && !empty($this->parent_id)) {
+                global $current_user;
+                $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
+                if ($parent_bean !== false) {
+                    $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }
                 
 		return unlink($path);
@@ -991,6 +1145,7 @@ class Meeting extends SugarBean {
                 return $keys[0];
             }
         }
+
         return '';
     }
 
@@ -1018,17 +1173,16 @@ function getMeetingsExternalApiDropDown($focus = null, $name = null, $value = nu
 	{
 		$apiList[$value] = $value;
     }
-	//bug 46294: adding list of options to dropdown list (if it is not the default list)
-    
+    //bug 46294: adding list of options to dropdown list (if it is not the default list)
+
     if (!isset($dictionary['Meeting'])) {
         LoggerManager::getLogger()->warn('Meeting getMeetingsExternalApiDropDown: Undefined index: Meeting ($dictionaryMeeting)');
         $dictionaryMeeting = null;
     } else {
         $dictionaryMeeting = $dictionary['Meeting'];
     }
-    
-    if ($dictionaryMeeting['fields']['type']['options'] != "eapm_list")
-    {
+
+    if ($dictionaryMeeting['fields']['type']['options'] != "eapm_list") {
         $apiList = array_merge(getMeetingTypeOptions($dictionary, $app_list_strings), $apiList);
     }
 

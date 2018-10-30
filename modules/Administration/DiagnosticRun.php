@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -745,7 +748,10 @@ function finishDiag(){
 	
 	print "<a href=\"index.php?module=Administration&action=DiagnosticDownload&guid=$sod_guid&time=$curdatetime&to_pdf=1\">".$mod_strings['LBL_DIAGNOSTIC_DOWNLOADLINK']."</a><BR>";
 
-	print "<a href=\"index.php?module=Administration&action=DiagnosticDelete&file=diagnostic".$curdatetime."&guid=".$sod_guid."\">".$mod_strings['LBL_DIAGNOSTIC_DELETELINK']."</a><br>";
+    deleteDir($cacheDir);
+
+
+    print "<a href=\"index.php?module=Administration&action=DiagnosticDownload&guid=$sod_guid&time=$curdatetime&to_pdf=1\">".$mod_strings['LBL_DIAGNOSTIC_DOWNLOADLINK']."</a><BR>";
 
 }
 
@@ -809,32 +815,28 @@ if($domysql_info || $domysql_dumps || $domysql_schema)
                  ($domysql_dumps ? "... ".$mod_strings['LBL_DIAGNOSTIC_GETMYSQLTD'] : " ").
                  ($domysql_schema ? "... ".$mod_strings['LBL_DIAGNOSTIC_GETMYSQLTS'] : "...").
                  "<BR>";
-  execute_sql($domysql_info, $domysql_dumps, $domysql_schema);
-  echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
+    execute_sql($domysql_info, $domysql_dumps, $domysql_schema);
+    echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
 }
-if($domd5)
-{
-  echo $mod_strings['LBL_DIAGNOSTIC_GETMD5INFO']."<BR>";
-  executemd5($domd5filesmd5, $domd5calculated);
-  echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
+if ($domd5) {
+    echo $mod_strings['LBL_DIAGNOSTIC_GETMD5INFO']."<BR>";
+    executemd5($domd5filesmd5, $domd5calculated);
+    echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
 }
-if($dobeanlistbeanfiles)
-{
-  echo $mod_strings['LBL_DIAGNOSTIC_GETBEANFILES']."<BR>";
-  executebeanlistbeanfiles();
-  echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
+if ($dobeanlistbeanfiles) {
+    echo $mod_strings['LBL_DIAGNOSTIC_GETBEANFILES']."<BR>";
+    executebeanlistbeanfiles();
+    echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
 }
-if($dosugarlog)
-{
-  echo $mod_strings['LBL_DIAGNOSTIC_GETSUGARLOG']."<BR>";
-  executesugarlog();
-  echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
+if ($dosugarlog) {
+    echo $mod_strings['LBL_DIAGNOSTIC_GETSUITELOG']."<BR>";
+    executesugarlog();
+    echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
 }
-if($dovardefs)
-{
-  echo $mod_strings['LBL_DIAGNOSTIC_VARDEFS']."<BR>";
-  executevardefs();
-  echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
+if ($dovardefs) {
+    echo $mod_strings['LBL_DIAGNOSTIC_VARDEFS']."<BR>";
+    executevardefs();
+    echo $mod_strings['LBL_DIAGNOSTIC_DONE']."<BR><BR>";
 }
 
 //finish up the last steps

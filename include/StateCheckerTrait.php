@@ -156,7 +156,7 @@ trait StateCheckerTrait {
         
         
     }
-    
+
     /**
      * 
      * @throws StateCheckerException

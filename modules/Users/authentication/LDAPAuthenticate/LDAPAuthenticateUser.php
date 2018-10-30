@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * This file is where the user authentication occurs. No redirection should happen in this file.
@@ -147,38 +148,37 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 
 
 
-			$GLOBALS['log']->debug("ldapauth: User info from Directory fetched.");
+            $GLOBALS['log']->debug("ldapauth: User info from Directory fetched.");
 
-			// some of these don't seem to work
-			$this->ldapUserInfo = array();
-			foreach($GLOBALS['ldapConfig']['users']['fields'] as $key=>$value){
-				//MRF - BUG:19765
-				$key = strtolower($key);
-				if(isset($info[0]) && isset($info[0][$key]) && isset($info[0][$key][0])){
-					$this->ldapUserInfo[$value] = $info[0][$key][0];
-				}
-			}
+            // some of these don't seem to work
+            $this->ldapUserInfo = array();
+            foreach ($GLOBALS['ldapConfig']['users']['fields'] as $key=>$value) {
+                //MRF - BUG:19765
+                $key = strtolower($key);
+                if (isset($info[0]) && isset($info[0][$key]) && isset($info[0][$key][0])) {
+                    $this->ldapUserInfo[$value] = $info[0][$key][0];
+                }
+            }
 
-			//we should check that a user is a member of a specific group
-			if(!empty($GLOBALS['ldap_config']->settings['ldap_group'])){
-				$GLOBALS['log']->debug("LDAPAuth: scanning group for user membership");
-				$group_user_attr = $GLOBALS['ldap_config']->settings['ldap_group_user_attr'];
-				$group_attr = $GLOBALS['ldap_config']->settings['ldap_group_attr'];
-				if(!isset($info[0][$group_user_attr])){
-					$GLOBALS['log']->fatal("ldapauth: $group_user_attr not found for user $name cannot authenticate against an LDAP group");
-					ldap_close($ldapconn);
-					return '';
-				}else{
-					$user_uid = $info[0][$group_user_attr];
-                    if (is_array($user_uid)){
-                        $user_uid = $user_uid[0];
-                    }
-                    // If user_uid contains special characters (for LDAP) we need to escape them !
-                    $user_uid = str_replace(array("(", ")"), array("\(", "\)"), $user_uid);
+            //we should check that a user is a member of a specific group
+            if (!empty($GLOBALS['ldap_config']->settings['ldap_group'])) {
+                $GLOBALS['log']->debug("LDAPAuth: scanning group for user membership");
+                $group_user_attr = $GLOBALS['ldap_config']->settings['ldap_group_user_attr'];
+                $group_attr = $GLOBALS['ldap_config']->settings['ldap_group_attr'];
+                if (!isset($info[0][$group_user_attr])) {
+                    $GLOBALS['log']->fatal("ldapauth: $group_user_attr not found for user $name cannot authenticate against an LDAP group");
+                    ldap_close($ldapconn);
+                    return '';
+                }
+                $user_uid = $info[0][$group_user_attr];
+                if (is_array($user_uid)) {
+                    $user_uid = $user_uid[0];
+                }
+                // If user_uid contains special characters (for LDAP) we need to escape them !
+                $user_uid = str_replace(array("(", ")"), array("\(", "\)"), $user_uid);
 
-				}
 
-				// build search query and determine if we are searching for a bare id or the full dn path
+                // build search query and determine if we are searching for a bare id or the full dn path
                 $group_name = $GLOBALS['ldap_config']->settings['ldap_group_name'] . ","
                     . $GLOBALS['ldap_config']->settings['ldap_group_dn'];
 				$GLOBALS['log']->debug("ldapauth: Searching for group name: " . $group_name);
