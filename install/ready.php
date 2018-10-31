@@ -1,11 +1,12 @@
 <?php
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2017 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +35,16 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-if(!defined('sugarEntry') || !sugarEntry) {
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-if( !isset( $install_script ) || !$install_script ){
-	die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
+if (!isset($install_script) || !$install_script) {
+    die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 // $mod_strings come from calling page.
 
@@ -104,17 +105,17 @@ $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CACHE'].'</b> '.$mod_strings['L
 $memory_msg     = "";
 // CL - fix for 9183 (if memory_limit is enabled we will honor it and check it; otherwise use unlimited)
 $memory_limit = ini_get('memory_limit');
-if(empty($memory_limit)){
+if (empty($memory_limit)) {
     $memory_limit = "-1";
 }
-if(!defined('SUGARCRM_MIN_MEM')) {
+if (!defined('SUGARCRM_MIN_MEM')) {
     define('SUGARCRM_MIN_MEM', 40*1024*1024);
 }
 $sugarMinMem = constant('SUGARCRM_MIN_MEM');
 // logic based on: http://us2.php.net/manual/en/ini.core.php#ini.memory-limit
-if( $memory_limit == "" ){          // memory_limit disabled at compile time, no memory limit
+if ($memory_limit == "") {          // memory_limit disabled at compile time, no memory limit
     $memory_msg = "<b>{$mod_strings['LBL_CHECKSYS_MEM_OK']}</b>";
-} elseif( $memory_limit == "-1" ){   // memory_limit enabled, but set to unlimited
+} elseif ($memory_limit == "-1") {   // memory_limit enabled, but set to unlimited
     $memory_msg = "{$mod_strings['LBL_CHECKSYS_MEM_UNLIMITED']}";
 } else {
     $mem_display = $memory_limit;
@@ -124,14 +125,16 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
     switch (strtoupper($matches[2])) {
         case 'G':
             $num = $num * 1024;
+            // no break
         case 'M':
             $num = $num * 1024;
+            // no break
         case 'K':
             $num = $num * 1024;
     }
     $memory_limit_int = intval($num);
     $SUGARCRM_MIN_MEM = (int) constant('SUGARCRM_MIN_MEM');
-    if( $memory_limit_int < constant('SUGARCRM_MIN_MEM') ){
+    if ($memory_limit_int < constant('SUGARCRM_MIN_MEM')) {
         // Bug59667: The string ERR_CHECKSYS_MEM_LIMIT_2 already has 'M' in it,
         // so we divide the constant by 1024*1024.
         $min_mem_in_megs = constant('SUGARCRM_MIN_MEM')/(1024*1024);
@@ -145,7 +148,7 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
 $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MEM'].'</strong></b> '.$memory_msg.'</p>';
 
 // zlib
-if(function_exists('gzclose')) {
+if (function_exists('gzclose')) {
     $zlibStatus = "{$mod_strings['LBL_CHECKSYS_OK']}";
 } else {
     $zlibStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_ZLIB']}</b></span>";
@@ -153,7 +156,7 @@ if(function_exists('gzclose')) {
 $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_ZLIB'].'</b> '.$zlibStatus.'</p>';
 
 // zip
-if(class_exists("ZipArchive")) {
+if (class_exists("ZipArchive")) {
     $zipStatus = "{$mod_strings['LBL_CHECKSYS_OK']}";
 } else {
     $zipStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_ZIP']}</b></span>";
@@ -161,11 +164,10 @@ if(class_exists("ZipArchive")) {
 $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_ZIP'].'</b> '.$zipStatus.'</p>';
 
 // PCRE
-if(defined('PCRE_VERSION')) {
+if (defined('PCRE_VERSION')) {
     if (version_compare(PCRE_VERSION, '7.0') < 0) {
         $pcreStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_PCRE_VER']}</b></span>";
-    }
-    else {
+    } else {
         $pcreStatus = "{$mod_strings['LBL_CHECKSYS_OK']}";
     }
 } else {
@@ -174,7 +176,7 @@ if(defined('PCRE_VERSION')) {
 $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_PCRE'].'</b> '.$pcreStatus.'</p>';
 
 // imap
-if(function_exists('imap_open')) {
+if (function_exists('imap_open')) {
     $imapStatus = "{$mod_strings['LBL_CHECKSYS_OK']}";
 } else {
     $imapStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_IMAP']}</b></span>";
@@ -184,7 +186,7 @@ $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_IMAP'].'</b> '.$imapStatus.'</p
 
 
 // cURL
-if(function_exists('curl_init')) {
+if (function_exists('curl_init')) {
     $curlStatus = "{$mod_strings['LBL_CHECKSYS_OK']}";
 } else {
     $curlStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_CURL']}</b></span>";
@@ -196,11 +198,11 @@ $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CURL'].'</b> '.$curlStatus.'</p
 //CHECK UPLOAD FILE SIZE
 $upload_max_filesize = ini_get('upload_max_filesize');
 $upload_max_filesize_bytes = return_bytes($upload_max_filesize);
-if(!defined('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')){
+if (!defined('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
     define('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES', 6 * 1024 * 1024);
 }
 
-if($upload_max_filesize_bytes > constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
+if ($upload_max_filesize_bytes > constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
     $fileMaxStatus = "{$mod_strings['LBL_CHECKSYS_OK']}</font>";
 } else {
     $fileMaxStatus = "<span class='stop'><b>{$mod_strings['ERR_UPLOAD_MAX_FILESIZE']}</font></b></span>";
@@ -209,21 +211,17 @@ if($upload_max_filesize_bytes > constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES
 $envString .='<p><b>'.$mod_strings['LBL_UPLOAD_MAX_FILESIZE_TITLE'].'</b> '.$fileMaxStatus.'</p>';
 
 //CHECK Sprite support
-if(function_exists('imagecreatetruecolor'))
-{
+if (function_exists('imagecreatetruecolor')) {
     $spriteSupportStatus = "{$mod_strings['LBL_CHECKSYS_OK']}</font>";
-}else{
+} else {
     $spriteSupportStatus = "<span class='stop'><b>{$mod_strings['ERROR_SPRITE_SUPPORT']}</b></span>";
 }
 $envString .='<p><b>'.$mod_strings['LBL_SPRITE_SUPPORT'].'</b> '.$spriteSupportStatus.'</p>';
 
 // Suhosin allow to use upload://
-if (UploadStream::getSuhosinStatus() == true || (strpos(ini_get('suhosin.perdir'), 'e') !== false && strpos($_SERVER["SERVER_SOFTWARE"],'Microsoft-IIS') === false))
-{
+if (UploadStream::getSuhosinStatus() == true || (strpos(ini_get('suhosin.perdir'), 'e') !== false && strpos($_SERVER["SERVER_SOFTWARE"], 'Microsoft-IIS') === false)) {
     $suhosinStatus = "{$mod_strings['LBL_CHECKSYS_OK']}";
-}
-else
-{
+} else {
     $suhosinStatus = "<span class='stop'><b>{$app_strings['ERR_SUHOSIN']}</b></span>";
 }
 $envString .= "<p><b>{$mod_strings['LBL_STREAM']} (" . UploadStream::STREAM_NAME . "://)</b> " . $suhosinStatus . "</p>";
@@ -249,23 +247,27 @@ EOQ;
 $sugar_config_defaults = get_sugar_config_defaults();
 
 // CRON Settings
-if ( !isset($sugar_config['default_language']) )
+if (!isset($sugar_config['default_language'])) {
     $sugar_config['default_language'] = $_SESSION['default_language'];
-if ( !isset($sugar_config['cache_dir']) )
+}
+if (!isset($sugar_config['cache_dir'])) {
     $sugar_config['cache_dir'] = $sugar_config_defaults['cache_dir'];
-if ( !isset($sugar_config['site_url']) )
+}
+if (!isset($sugar_config['site_url'])) {
     $sugar_config['site_url'] = $_SESSION['setup_site_url'];
-if ( !isset($sugar_config['translation_string_prefix']) )
+}
+if (!isset($sugar_config['translation_string_prefix'])) {
     $sugar_config['translation_string_prefix'] = $sugar_config_defaults['translation_string_prefix'];
+}
 $mod_strings_scheduler = return_module_language($GLOBALS['current_language'], 'Schedulers');
 $error = '';
 
 if (!isset($_SERVER['Path'])) {
     $_SERVER['Path'] = getenv('Path');
 }
-if(is_windows()) {
-    if(isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // IIS IUSR_xxx may not have access to Path or it is not set
-        if(!strpos($_SERVER['Path'], 'php')) {
+if (is_windows()) {
+    if (isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // IIS IUSR_xxx may not have access to Path or it is not set
+        if (!strpos($_SERVER['Path'], 'php')) {
 //        $error = '<em>'.$mod_strings_scheduler['LBL_NO_PHP_CLI'].'</em>';
         }
     }
@@ -275,8 +277,8 @@ if(is_windows()) {
 						<br>'.$error.'</p>
 			   ';
 } else {
-    if(isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // some Linux servers do not make this available
-        if(!strpos($_SERVER['PATH'], 'php')) {
+    if (isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // some Linux servers do not make this available
+        if (!strpos($_SERVER['PATH'], 'php')) {
 //        $error = '<em>'.$mod_strings_scheduler['LBL_NO_PHP_CLI'].'</em>';
         }
     }
@@ -395,4 +397,3 @@ $out = <<<EOQ
 </html>
 EOQ;
 echo $out;
-

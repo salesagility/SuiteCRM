@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -60,7 +61,6 @@ require_once 'Zend/Gdata/Contacts/ListEntry.php';
  */
 class Zend_Gdata_Contacts extends Zend_Gdata
 {
-
     const CONTACT_FEED_URI = 'https://www.google.com/m8/feeds/contacts/default/full';
     const AUTH_SERVICE_NAME = 'cp';
     const DEFAULT_MAJOR_PROTOCOL_VERSION = 3;
@@ -102,7 +102,7 @@ class Zend_Gdata_Contacts extends Zend_Gdata
         $query = new Zend_Gdata_Query(self::CONTACT_FEED_URI);
         $query->maxResults = $this->maxResults;
         $query->startIndex = $this->startIndex;
-        return parent::getFeed($query,'Zend_Gdata_Contacts_ListFeed');
+        return parent::getFeed($query, 'Zend_Gdata_Contacts_ListFeed');
     }
 
     /**
@@ -113,12 +113,12 @@ class Zend_Gdata_Contacts extends Zend_Gdata
      */
     public function getContactEntry($entryID)
     {
-        return parent::getEntry($entryID,'Zend_Gdata_Contacts_ListEntry');
+        return parent::getEntry($entryID, 'Zend_Gdata_Contacts_ListEntry');
     }
 
     /**
      * Set the max results that the feed should return.
-     * 
+     *
      * @param  $maxResults
      * @return void
      */
@@ -137,6 +137,4 @@ class Zend_Gdata_Contacts extends Zend_Gdata
     {
         $this->startIndex = $value;
     }
-
 }
- 

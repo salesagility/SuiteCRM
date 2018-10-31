@@ -200,7 +200,6 @@ class EmailTemplateParser
      */
     public function getSurvey()
     {
-
         if ($this->survey === null) {
             $this->survey = \BeanFactory::getBean('Surveys', $this->campaign->survey_id);
         }
@@ -222,7 +221,7 @@ class EmailTemplateParser
             /** @var Contact $contact */
             $contact = $this->module;
             $value = sprintf(
-                '%s/index.php?entryPoint=survey&id=%s&contact=%s%s',
+                '%s/index.php?entryPoint=survey&id=%s&contact=%s&tracker=%s',
                 $this->siteUrl,
                 $this->getSurvey()->id,
                 $contact->id,

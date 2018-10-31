@@ -1,12 +1,14 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,8 +37,8 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 $dictionary['Tracker'] = array(
@@ -51,17 +53,17 @@ $dictionary['Tracker'] = array(
             'auto_increment' => true,
             'reportable'=>true,
         ),
-	    'monitor_id'=>array (
-		    'name' => 'monitor_id',
-		    'vname' => 'LBL_MONITOR_ID',
-		    'type' => 'id',
-		    'required'=>true,
-		    'reportable'=>false,
-	    ),
+        'monitor_id'=>array(
+            'name' => 'monitor_id',
+            'vname' => 'LBL_MONITOR_ID',
+            'type' => 'id',
+            'required'=>true,
+            'reportable'=>false,
+        ),
         'user_id'=>array(
             'name' => 'user_id',
             'vname' => 'LBL_USER_ID',
-			'type' => 'varchar',
+            'type' => 'varchar',
             'len' => '36',
             'isnull' => 'false',
         ),
@@ -116,34 +118,34 @@ $dictionary['Tracker'] = array(
             'len' => '1',
             'default' => '0',
         ),
-	    'deleted' =>array (
-		    'name' => 'deleted',
-		    'vname' => 'LBL_DELETED',
-		    'type' => 'bool',
-		    'default' => '0',
-		    'reportable'=>false,
-		    'comment' => 'Record deletion indicator'
-		),
-		'assigned_user_link'=>array (
-		    'name' => 'assigned_user_link',
-		    'type' => 'link',
-		    'relationship' => 'tracker_user_id',
-		    'vname' => 'LBL_ASSIGNED_TO_USER',
-		    'link_type' => 'one',
-		    'module'=>'Users',
-		    'bean_name'=>'User',
-		    'source'=>'non-db',
-		),
-		'monitor_id_link'=>array (
-		    'name' => 'monitor_id_link',
-		    'type' => 'link',
-		    'relationship' => 'tracker_monitor_id',
-		    'vname' => 'LBL_MONITOR_ID',
-		    'link_type' => 'one',
-		    'module'=>'TrackerPerfs',
-		    'bean_name'=>'TrackerPerf',
-		    'source'=>'non-db',
-		),
+        'deleted' =>array(
+            'name' => 'deleted',
+            'vname' => 'LBL_DELETED',
+            'type' => 'bool',
+            'default' => '0',
+            'reportable'=>false,
+            'comment' => 'Record deletion indicator'
+        ),
+        'assigned_user_link'=>array(
+            'name' => 'assigned_user_link',
+            'type' => 'link',
+            'relationship' => 'tracker_user_id',
+            'vname' => 'LBL_ASSIGNED_TO_USER',
+            'link_type' => 'one',
+            'module'=>'Users',
+            'bean_name'=>'User',
+            'source'=>'non-db',
+        ),
+        'monitor_id_link'=>array(
+            'name' => 'monitor_id_link',
+            'type' => 'link',
+            'relationship' => 'tracker_monitor_id',
+            'vname' => 'LBL_MONITOR_ID',
+            'link_type' => 'one',
+            'module'=>'TrackerPerfs',
+            'bean_name'=>'TrackerPerf',
+            'source'=>'non-db',
+        ),
     ) ,
 
     //indices
@@ -173,7 +175,7 @@ $dictionary['Tracker'] = array(
             ),
         ),
         array(
-        	// shortened name to comply with Oracle length restriction
+            // shortened name to comply with Oracle length restriction
             'name' => 'idx_tracker_userid_itemid_vis',
             'type' => 'index',
             'fields' => array(
@@ -199,12 +201,12 @@ $dictionary['Tracker'] = array(
     ),
 
     //relationships
- 	'relationships' => array (
-	  'tracker_monitor_id' =>
-		   array(
-				'lhs_module'=> 'TrackerPerfs', 'lhs_table'=> 'tracker_perf', 'lhs_key' => 'monitor_id',
-		   		'rhs_module'=> 'Trackers', 'rhs_table'=> 'tracker', 'rhs_key' => 'monitor_id',
-		   		'relationship_type'=>'one-to-one'
-		   )
-   	),
+    'relationships' => array(
+      'tracker_monitor_id' =>
+           array(
+                'lhs_module'=> 'TrackerPerfs', 'lhs_table'=> 'tracker_perf', 'lhs_key' => 'monitor_id',
+                'rhs_module'=> 'Trackers', 'rhs_table'=> 'tracker', 'rhs_key' => 'monitor_id',
+                'relationship_type'=>'one-to-one'
+           )
+    ),
 );

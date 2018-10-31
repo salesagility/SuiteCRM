@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/App/Extension.php';
  */
 class Zend_Gdata_Media_Extension_MediaCredit extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'credit';
     protected $_rootNamespace = 'media';
 
@@ -58,7 +57,7 @@ class Zend_Gdata_Media_Extension_MediaCredit extends Zend_Gdata_Extension
      * @param string $role
      * @param string $scheme
      */
-    public function __construct($text = null, $role = null,  $scheme = null)
+    public function __construct($text = null, $role = null, $scheme = null)
     {
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
@@ -145,5 +144,4 @@ class Zend_Gdata_Media_Extension_MediaCredit extends Zend_Gdata_Extension
         $this->_scheme = $value;
         return $this;
     }
-
 }

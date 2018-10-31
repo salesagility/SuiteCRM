@@ -55,5 +55,4 @@ class Zend_Gdata_YouTube_CommentEntry extends Zend_Gdata_Entry
         $this->registerAllNamespaces(Zend_Gdata_YouTube::$namespaces);
         parent::__construct($element);
     }
-
 }

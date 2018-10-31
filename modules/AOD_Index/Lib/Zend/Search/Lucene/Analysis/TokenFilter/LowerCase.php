@@ -49,4 +49,3 @@ class Zend_Search_Lucene_Analysis_TokenFilter_LowerCase extends Zend_Search_Luce
         return $srcToken;
     }
 }
-

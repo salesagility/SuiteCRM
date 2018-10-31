@@ -29,7 +29,6 @@ require_once("modules/AOR_Reports/aor_utils.php");
 
 class AOR_ReportsController extends SugarController
 {
-
     protected function action_getModuleFields()
     {
         if (!empty($_REQUEST['aor_module']) && $_REQUEST['aor_module'] != '') {
@@ -42,7 +41,6 @@ class AOR_ReportsController extends SugarController
             echo getModuleFields($module, $_REQUEST['view'], $val);
         }
         die;
-
     }
 
     public function action_getVarDefs()
@@ -141,7 +139,6 @@ class AOR_ReportsController extends SugarController
 
         $key = Relationship::retrieve_by_modules($this->bean->report_module, 'ProspectLists', $GLOBALS['db']);
         if (!empty($key)) {
-
             $sql = $this->bean->build_report_query();
             $result = $this->bean->db->query($sql);
             $beans = array();
@@ -172,25 +169,29 @@ class AOR_ReportsController extends SugarController
     protected function action_export()
     {
         set_time_limit(0);
-        if(!$this->bean->ACLAccess('Export')){
+        if (!$this->bean->ACLAccess('Export')) {
             SugarApplication::appendErrorMessage(translate('LBL_NO_ACCESS', 'ACL'));
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
         }
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
         $this->bean->build_report_csv();
         die;
     }
 
     protected function action_downloadPDF()
     {
-        if(!$this->bean->ACLAccess('Export')){
+        if (!$this->bean->ACLAccess('Export')) {
             SugarApplication::appendErrorMessage(translate('LBL_NO_ACCESS', 'ACL'));
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
         }
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
         error_reporting(0);
         require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
+        $state->popErrorLevel();
 
         $d_image = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $graphs = $_POST["graphsForPDF"];
@@ -247,7 +248,7 @@ class AOR_ReportsController extends SugarController
                 </tbody>
                 </table><br />' . $graphHtml;
 
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
 
         $printable = $this->bean->build_group_report(-1, false);
         $stylesheet = file_get_contents(SugarThemeRegistry::current()->getCSSURL('style.css', false));
@@ -260,7 +261,6 @@ class AOR_ReportsController extends SugarController
             $pdf->WriteHTML($head, 2);
             $pdf->WriteHTML($printable, 3);
             $pdf->Output($this->bean->name . '.pdf', "D");
-
         } catch (mPDF_exception $e) {
             echo $e;
         }
@@ -279,8 +279,10 @@ class AOR_ReportsController extends SugarController
         $aor_field = $_REQUEST['aor_newfieldname'];
 
         if ($view == 'EditView') {
-            echo "<select type='text' style='width:100px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id($app_list_strings['aor_function_list'],
-                    $value) . "</select>";
+            echo "<select type='text' style='width:100px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id(
+                $app_list_strings['aor_function_list'],
+                    $value
+            ) . "</select>";
         } else {
             echo $app_list_strings['aor_function_list'][$value];
         }
@@ -290,7 +292,6 @@ class AOR_ReportsController extends SugarController
 
     protected function action_getModuleOperatorField()
     {
-
         global $app_list_strings, $beanFiles, $beanList;
 
         if (isset($_REQUEST['rel_field']) && $_REQUEST['rel_field'] != '') {
@@ -377,18 +378,18 @@ class AOR_ReportsController extends SugarController
 
         $app_list_strings['aor_operator_list'];
         if ($view == 'EditView') {
-            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id($app_list_strings['aor_operator_list'],
-                    $value) . "</select>";
+            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id(
+                $app_list_strings['aor_operator_list'],
+                    $value
+            ) . "</select>";
         } else {
             echo $app_list_strings['aor_operator_list'][$value];
         }
         die;
-
     }
 
     protected function action_getFieldTypeOptions()
     {
-
         global $app_list_strings, $beanFiles, $beanList;
 
         if (isset($_REQUEST['rel_field']) && $_REQUEST['rel_field'] != '') {
@@ -459,18 +460,18 @@ class AOR_ReportsController extends SugarController
         }
 
         if ($view == 'EditView') {
-            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id($app_list_strings['aor_condition_type_list'],
-                    $value) . "</select>";
+            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id(
+                $app_list_strings['aor_condition_type_list'],
+                    $value
+            ) . "</select>";
         } else {
             echo $app_list_strings['aor_condition_type_list'][$value];
         }
         die;
-
     }
 
     protected function action_getActionFieldTypeOptions()
     {
-
         global $app_list_strings, $beanFiles, $beanList;
 
         if (isset($_REQUEST['rel_field']) && $_REQUEST['rel_field'] != '') {
@@ -541,13 +542,14 @@ class AOR_ReportsController extends SugarController
         }
 
         if ($view == 'EditView') {
-            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id($app_list_strings['aor_action_type_list'],
-                    $value) . "</select>";
+            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id(
+                $app_list_strings['aor_action_type_list'],
+                    $value
+            ) . "</select>";
         } else {
             echo $app_list_strings['aor_action_type_list'][$value];
         }
         die;
-
     }
 
     protected function action_getModuleFieldType()
@@ -582,8 +584,11 @@ class AOR_ReportsController extends SugarController
                     $module = $_REQUEST['alt_module'];
                 }
                 if ($view == 'EditView') {
-                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . getModuleFields($module,
-                            $view, $value) . "</select>";
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . getModuleFields(
+                        $module,
+                            $view,
+                        $value
+                    ) . "</select>";
                 } else {
                     echo getModuleFields($module, $view, $value);
                 }
@@ -596,8 +601,10 @@ class AOR_ReportsController extends SugarController
                 break;
             case 'Period':
                 if ($view == 'EditView') {
-                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . getDropdownList('date_time_period_list',
-                            $_REQUEST['aor_value']) . "</select>";
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . getDropdownList(
+                        'date_time_period_list',
+                            $_REQUEST['aor_value']
+                    ) . "</select>";
                 } else {
                     echo getDropdownList('date_time_period_list', $_REQUEST['aor_value']);
                 }
@@ -611,7 +618,6 @@ class AOR_ReportsController extends SugarController
                 break;
         }
         die;
-
     }
 
     protected function action_getModuleFieldTypeSet()
@@ -638,8 +644,11 @@ class AOR_ReportsController extends SugarController
                     $module = $_REQUEST['alt_module'];
                 }
                 if ($view == 'EditView') {
-                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . getModuleFields($module,
-                            $view, $value) . "</select>";
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . getModuleFields(
+                        $module,
+                            $view,
+                        $value
+                    ) . "</select>";
                 } else {
                     echo getModuleFields($module, $view, $value);
                 }
@@ -650,9 +659,9 @@ class AOR_ReportsController extends SugarController
                 }
                 echo getDateField($module, $aor_field, $view, $value);
                 break;
-            Case 'Round_Robin';
-            Case 'Least_Busy';
-            Case 'Random';
+            case 'Round_Robin':
+            case 'Least_Busy':
+            case 'Random':
                 echo getAssignField($aor_field, $view, $value);
                 break;
             case 'Value':
@@ -661,7 +670,6 @@ class AOR_ReportsController extends SugarController
                 break;
         }
         die;
-
     }
 
     protected function action_getModuleField()
@@ -678,8 +686,13 @@ class AOR_ReportsController extends SugarController
             $value = '';
         }
 
-        echo getModuleField($_REQUEST['aor_module'], $_REQUEST['aor_fieldname'], $_REQUEST['aor_newfieldname'], $view,
-            $value);
+        echo getModuleField(
+            $_REQUEST['aor_module'],
+            $_REQUEST['aor_fieldname'],
+            $_REQUEST['aor_newfieldname'],
+            $view,
+            $value
+        );
         die;
     }
 
@@ -707,8 +720,11 @@ class AOR_ReportsController extends SugarController
                     $module = $_REQUEST['alt_module'];
                 }
                 if ($view == 'EditView') {
-                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . getModuleFields($module,
-                            $view, $value) . "</select>";
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . getModuleFields(
+                        $module,
+                            $view,
+                        $value
+                    ) . "</select>";
                 } else {
                     echo getModuleFields($module, $view, $value);
                 }
@@ -719,12 +735,10 @@ class AOR_ReportsController extends SugarController
                 break;
         }
         die;
-
     }
 
     protected function action_getRelActionFieldTypeOptions()
     {
-
         global $app_list_strings, $beanFiles, $beanList;
 
         $module = $_REQUEST['aor_module'];
@@ -765,13 +779,13 @@ class AOR_ReportsController extends SugarController
         }
 
         if ($view == 'EditView') {
-            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id($app_list_strings['aor_rel_action_type_list'],
-                    $value) . "</select>";
+            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>" . get_select_options_with_id(
+                $app_list_strings['aor_rel_action_type_list'],
+                    $value
+            ) . "</select>";
         } else {
             echo $app_list_strings['aor_rel_action_type_list'][$value];
         }
         die;
-
     }
-
 }

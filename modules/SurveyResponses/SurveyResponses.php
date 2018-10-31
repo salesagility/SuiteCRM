@@ -1,9 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,45 +34,44 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once 'modules/AOP_Case_Updates/util.php';
 
 class SurveyResponses extends Basic
 {
+    public $new_schema = true;
+    public $module_dir = 'SurveyResponses';
+    public $object_name = 'SurveyResponses';
+    public $table_name = 'surveyresponses';
+    public $importable = false;
+    public $disable_row_level_security = true; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 
-    var $new_schema = true;
-    var $module_dir = 'SurveyResponses';
-    var $object_name = 'SurveyResponses';
-    var $table_name = 'surveyresponses';
-    var $importable = false;
-    var $disable_row_level_security = true; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
+    public $SecurityGroups;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $assigned_user_link;
-    var $SecurityGroups;
-
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':
@@ -161,6 +162,7 @@ class SurveyResponses extends Basic
         $mailer->IsHTML(true);
         $mailer->AltBody = $text['body_alt'];
         $mailer->From = $admin->settings['notify_fromaddress'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $admin->settings['notify_fromname'];
 
         $mailer->AddAddress($email);
@@ -168,11 +170,10 @@ class SurveyResponses extends Basic
             $GLOBALS['log']->info("SurveyResponse: Could not send email:  " . $mailer->ErrorInfo);
 
             return false;
-        } else {
-            $this->logEmail($email, $mailer, $contact->id);
-
-            return true;
         }
+        $this->logEmail($email, $mailer, $contact->id);
+
+        return true;
     }
 
     private function populateTemplate(EmailTemplate $template, $contact, $case)
@@ -211,6 +212,7 @@ class SurveyResponses extends Basic
         $emailObj->description = $mailer->AltBody;
         $emailObj->description_html = $mailer->Body;
         $emailObj->from_addr = $mailer->From;
+        isValidEmailAddress($emailObj->from_addr);
         if ($contactId) {
             $emailObj->parent_type = "Contacts";
             $emailObj->parent_id = $contactId;
@@ -221,7 +223,4 @@ class SurveyResponses extends Basic
         $emailObj->status = 'sent';
         $emailObj->save();
     }
-
 }
-
-?>

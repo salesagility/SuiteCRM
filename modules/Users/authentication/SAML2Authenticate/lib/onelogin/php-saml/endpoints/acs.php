@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  *  SP Assertion Consumer Service Endpoint
  */

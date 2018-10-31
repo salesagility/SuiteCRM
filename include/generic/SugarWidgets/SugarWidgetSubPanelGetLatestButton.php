@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -45,39 +48,37 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelGetLatestButton extends SugarWidgetField
 {
-	function displayHeaderCell($layout_def)
-	{
-		return '&nbsp;';
-	}
+    public function displayHeaderCell($layout_def)
+    {
+        return '&nbsp;';
+    }
 
-	function displayList(&$layout_def)
-	{
-		//if the contract has been executed or selected_revision is same as latest revision
-		//then hide the latest button. 		
-		//if the contract state is executed or document is not a template hide this action.
-		if ((!empty($layout_def['fields']['CONTRACT_STATUS']) && $layout_def['fields']['CONTRACT_STATUS']=='executed') or
-			$layout_def['fields']['SELECTED_REVISION_ID']== $layout_def['fields']['LATEST_REVISION_ID']) {
-			return "";
-		}
-		
-		global $app_strings;
-		
+    public function displayList(&$layout_def)
+    {
+        //if the contract has been executed or selected_revision is same as latest revision
+        //then hide the latest button.
+        //if the contract state is executed or document is not a template hide this action.
+        if ((!empty($layout_def['fields']['CONTRACT_STATUS']) && $layout_def['fields']['CONTRACT_STATUS']=='executed') or
+            $layout_def['fields']['SELECTED_REVISION_ID']== $layout_def['fields']['LATEST_REVISION_ID']) {
+            return "";
+        }
+        
+        global $app_strings;
+        
 
-		$href = 'index.php?module=' . $layout_def['module']
-			. '&action=' . 'GetLatestRevision'
-			. '&record=' . $layout_def['fields']['ID']
-			. '&return_module=' . $_REQUEST['module']
-			. '&return_action=' . 'DetailView'
-			. '&return_id=' . $_REQUEST['record']
-			. '&get_latest_for_id=' . $layout_def['fields']['LINKED_ID'];
+        $href = 'index.php?module=' . $layout_def['module']
+            . '&action=' . 'GetLatestRevision'
+            . '&record=' . $layout_def['fields']['ID']
+            . '&return_module=' . $_REQUEST['module']
+            . '&return_action=' . 'DetailView'
+            . '&return_id=' . $_REQUEST['record']
+            . '&get_latest_for_id=' . $layout_def['fields']['LINKED_ID'];
 
-		$edit_icon_html = SugarThemeRegistry::current()->getImage( 'getLatestDocument','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_GET_LATEST']);
-		if($layout_def['EditView']){
-			return '<a href="' . $href . '"' . "title ='". $app_strings['LNK_GET_LATEST_TOOLTIP']  ."'"
-			. 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_GET_LATEST'] .'</a>&nbsp;';
-		}else{
-			return '';
-		}
-	}
-		
+        $edit_icon_html = SugarThemeRegistry::current()->getImage('getLatestDocument', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_GET_LATEST']);
+        if ($layout_def['EditView']) {
+            return '<a href="' . $href . '"' . "title ='". $app_strings['LNK_GET_LATEST_TOOLTIP']  ."'"
+            . 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_GET_LATEST'] .'</a>&nbsp;';
+        }
+        return '';
+    }
 }

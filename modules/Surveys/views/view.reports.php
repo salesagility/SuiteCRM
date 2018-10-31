@@ -6,15 +6,14 @@ require_once 'include/DetailView/DetailView2.php';
 
 class SurveysViewReports extends SugarView
 {
-
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
     private function getSurveyStats()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $quotedId = $db->quote($this->bean->id);
         $sentQuery = <<<EOF
 SELECT COUNT(campaign_log.target_id) AS sent, COUNT(DISTINCT campaign_log.target_id) AS distinct_sent 
@@ -120,7 +119,6 @@ EOF;
                         );
                         break;
                 }
-
             }
         }
 
@@ -129,7 +127,6 @@ EOF;
         $this->ss->assign('surveysSentDistinct', $distinctCount);
         $html = $this->ss->fetch('modules/Surveys/tpls/reports.tpl');
         echo $html;
-
     }
 
     private function getCheckboxQuestionSkeleton($arr)

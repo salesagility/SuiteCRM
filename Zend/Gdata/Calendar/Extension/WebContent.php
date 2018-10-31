@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_Calendar_Extension_WebContent extends Zend_Gdata_App_Extension
 {
-
     protected $_rootNamespace = 'gCal';
     protected $_rootElement = 'webContent';
     protected $_url = null;
@@ -173,5 +172,4 @@ class Zend_Gdata_Calendar_Extension_WebContent extends Zend_Gdata_App_Extension
         $this->_width = $value;
         return $this;
     }
-
 }

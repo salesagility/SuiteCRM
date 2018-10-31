@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +37,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
  
 require_once('include/MVC/View/views/view.ajax.php');
 
-class ViewEditFields extends ViewAjax{
- 	
-    function __construct(){
+class ViewEditFields extends ViewAjax
+{
+    public function __construct()
+    {
         $rel = $this->rel = $_REQUEST['rel'];
         $this->id = $_REQUEST['id'];
         $moduleName = $this->module = $_REQUEST['rel_module'];
@@ -54,9 +58,10 @@ class ViewEditFields extends ViewAjax{
         $beanName = $beanList [ $moduleName ];
         $link = new Link($this->rel, new $beanName(), array());
         $this->fields = $link->_get_link_table_definition($rel, 'fields');
- 	}
+    }
 
- 	function display(){
+    public function display()
+    {
 
         //echo "<pre>".print_r($this->fields, true)."</pre>";
         echo "<form name='edit_rel_fields'>" .
@@ -69,19 +74,18 @@ class ViewEditFields extends ViewAjax{
              '<input type="hidden" name="rel_module" value="' . $this->module .'">' .
              "<table class='edit view'><tr>";
         $count = 0;
-        foreach($this->fields as $def)
-        {
+        foreach ($this->fields as $def) {
             if (!empty($def['relationship_field'])) {
                 $label = !empty($def['vname']) ? $def['vname'] : $def['name'];
                 echo "<td>" . translate($label, $this->module) . ":</td>"
                    . "<td><input id='{$def['name']}' name='{$def['name']}'>"  ;
 
-                if ($count%1)
+                if ($count%1) {
                     echo "</tr><tr>";
+                }
                 $count++;
             }
         }
         echo "</tr></table></form>";
- 	}
-
+    }
 }

@@ -626,14 +626,19 @@ slot {
   font-weight: 400;
   background-color: $detail-view-field-bg;
   color: $main-font-color;
-  padding: 0px 10px;
+  padding: 10px 10px;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
-  line-height: 38px;
   text-align: left;
   min-height: 38px;
   vertical-align: baseline;
   white-space: inherit;
+}
+
+.detail-view-field span {
+  line-height: normal;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .detail-view-field a {
@@ -2069,7 +2074,6 @@ ul.clickMenu li a:hover {
 }
 
 ul.clickMenu > li > span {
-  display: inline-block;
   cursor: pointer;
 }
 
@@ -4649,7 +4653,6 @@ object {
 }
 
 #report-editview-footer .tab-panels {
-  width: 100%;
 }
 
 .noGraphDataPoints {

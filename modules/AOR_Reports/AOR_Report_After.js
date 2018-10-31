@@ -35,7 +35,7 @@ $(function(){
   $('#EditView_tabs .clear').remove();
 
   $( '#aor_condition_parenthesis_btn' ).bind( "sortstart", function (event, ui) {
-    ui.helper.css('margin-top', $(window).scrollTop() );
+    ui.helper.css('margin-top', 0 );
   });
   $( '#aor_condition_parenthesis_btn' ).bind( "sortbeforestop", function (event, ui) {
     ui.helper.css('margin-top', 0 );

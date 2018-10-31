@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -97,7 +97,7 @@ class StudioModule
         );
 
         $moduleNames = array_change_key_case($GLOBALS ['app_list_strings'] ['moduleList']);
-        $this->name = isset ($moduleNames [strtolower($module)]) ? $moduleNames [strtolower($module)] : strtolower($module);
+        $this->name = isset($moduleNames [strtolower($module)]) ? $moduleNames [strtolower($module)] : strtolower($module);
         $this->module = $module;
         $this->seed = BeanFactory::getBean($this->module);
         if ($this->seed) {
@@ -118,7 +118,7 @@ class StudioModule
         $modules_with_odd_names = array(
             'Bugs' => 'Bugs'
         );
-        if (isset ($modules_with_odd_names [$this->name])) {
+        if (isset($modules_with_odd_names [$this->name])) {
             return ($modules_with_odd_names [$this->name]);
         }
 
@@ -133,7 +133,7 @@ class StudioModule
      * If all else fails, fall back on type 'basic'...
      * @return string Module's type
      */
-    function getType()
+    public function getType()
     {
         // first, get a list of a possible parent types
         $templates = array();
@@ -149,7 +149,7 @@ class StudioModule
         require_once $GLOBALS ['beanFiles'] [$type];
 
         do {
-            $seed = new $type ();
+            $seed = new $type();
             $type = get_parent_class($seed);
         } while (!in_array(strtolower($type), $templates) && $type !== 'SugarBean');
 
@@ -167,7 +167,7 @@ class StudioModule
             'Leads' => 'person',
             'Opportunities' => 'sale'
         );
-        if (isset ($types [$this->module])) {
+        if (isset($types [$this->module])) {
             return $types [$this->module];
         }
 
@@ -237,14 +237,14 @@ class StudioModule
         foreach ($sources as $source => $def) {
             $nodes [$source] = $def;
             $nodes [$source] ['name'] = translate($source);
-            if (isset ($def ['children'])) {
+            if (isset($def ['children'])) {
                 $defChildren = $def ['children'];
-                $childNodes = $this->$defChildren ();
-                if (!empty ($childNodes)) {
+                $childNodes = $this->$defChildren();
+                if (!empty($childNodes)) {
                     $nodes [$source] ['type'] = 'Folder';
                     $nodes [$source] ['children'] = $childNodes;
                 } else {
-                    unset ($nodes [$source]);
+                    unset($nodes [$source]);
                 }
             }
         }
@@ -350,7 +350,7 @@ class StudioModule
         );
 
         $nodes = $this->getSearch();
-        if (!empty ($nodes)) {
+        if (!empty($nodes)) {
             $layouts [translate('LBL_FILTER')] = array(
                 'name' => translate('LBL_FILTER'),
                 'type' => 'Folder',
@@ -364,7 +364,6 @@ class StudioModule
         }
 
         return $layouts;
-
     }
 
     /**
@@ -428,16 +427,16 @@ class StudioModule
      * Return an object containing all the relationships participated in by this module
      * @return AbstractRelationships Set of relationships
      */
-    function getRelationships()
+    public function getRelationships()
     {
-        return new DeployedRelationships ($this->module);
+        return new DeployedRelationships($this->module);
     }
 
     /**
      * Gets a list of subpanels used by the current module
      * @return array
      */
-    function getSubpanels()
+    public function getSubpanels()
     {
         if (!empty($GLOBALS['current_user']) && empty($GLOBALS['modListHeader'])) {
             $GLOBALS['modListHeader'] = query_module_access_list($GLOBALS['current_user']);
@@ -455,7 +454,7 @@ class StudioModule
             if ($name == 'users') {
                 continue;
             }
-            $subname = sugar_ucfirst((!empty ($label)) ? translate($label, $this->module) : $name);
+            $subname = sugar_ucfirst((!empty($label)) ? translate($label, $this->module) : $name);
             $action = "module=ModuleBuilder&action=editLayout&view=ListView&view_module={$this->module}&subpanel={$name}&subpanelLabel=" . urlencode($subname);
 
             //  bug47452 - adding a unique number to the $nodes[ key ] so if you have 2+ panels
@@ -472,7 +471,6 @@ class StudioModule
         }
 
         return $nodes;
-
     }
 
     /**
@@ -519,7 +517,7 @@ class StudioModule
 
         $spd = '';
         $spd_arr = array();
-        //iterate through modules and build subpanel array  
+        //iterate through modules and build subpanel array
         foreach ($modules_to_check as $mod_name) {
 
            /**

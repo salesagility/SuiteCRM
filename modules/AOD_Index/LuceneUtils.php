@@ -1,10 +1,10 @@
 <?php
  /**
- * 
- * 
- * @package 
+ *
+ *
+ * @package
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -20,17 +20,19 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 
 
-function requireLucene(){
+function requireLucene()
+{
     set_include_path(get_include_path() . PATH_SEPARATOR . "modules/AOD_Index/Lib");
     require_once('Zend/Search/Lucene.php');
 }
 
-function getDocumentRevisionPath($revisionId){
+function getDocumentRevisionPath($revisionId)
+{
     return "upload/$revisionId";
 }
 
@@ -39,7 +41,8 @@ function getDocumentRevisionPath($revisionId){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createPPTXDocument($path){
+function createPPTXDocument($path)
+{
     $doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($path);
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     return $doc;
@@ -50,7 +53,8 @@ function createPPTXDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createXLSXDocument($path){
+function createXLSXDocument($path)
+{
     $doc = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($path);
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     return $doc;
@@ -60,7 +64,8 @@ function createXLSXDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createHTMLDocument($path){
+function createHTMLDocument($path)
+{
     $doc = Zend_Search_Lucene_Document_Html::loadHTMLFile($path);
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     return $doc;
@@ -70,7 +75,8 @@ function createHTMLDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createDocXDocument($path){
+function createDocXDocument($path)
+{
     $doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($path);
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     return $doc;
@@ -81,21 +87,20 @@ function createDocXDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createDocDocument($path){
+function createDocDocument($path)
+{
     $fileHandle = fopen($path, "r");
     $line = @fread($fileHandle, filesize($path));
-    $lines = explode(chr(0x0D),$line);
+    $lines = explode(chr(0x0D), $line);
     $outtext = "";
-    foreach($lines as $thisline)
-    {
+    foreach ($lines as $thisline) {
         $pos = strpos($thisline, chr(0x00));
-        if (($pos !== FALSE)||(strlen($thisline)==0))
-        {
+        if (($pos !== false)||(strlen($thisline)==0)) {
         } else {
             $outtext .= $thisline." ";
         }
     }
-    $outtext = preg_replace("/[^a-zA-Z0-9\s\,\.\-\n\r\t@\/\_\(\)]/","",$outtext);
+    $outtext = preg_replace("/[^a-zA-Z0-9\s\,\.\-\n\r\t@\/\_\(\)]/", "", $outtext);
 
     $doc = new Zend_Search_Lucene_Document();
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
@@ -109,7 +114,8 @@ function createDocDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createPDFDocument($path){
+function createPDFDocument($path)
+{
     require_once('PdfParser.php');
     $text = PdfParser::parseFile($path);
     $doc = new Zend_Search_Lucene_Document();
@@ -123,8 +129,9 @@ function createPDFDocument($path){
  * @param $path
  * @return bool|Zend_Search_Lucene_Document
  */
-function createOdtDocument($path){
-    if(!is_file($path)){
+function createOdtDocument($path)
+{
+    if (!is_file($path)) {
         return false;
     }
     $doc = new Zend_Search_Lucene_Document();
@@ -150,7 +157,8 @@ function createOdtDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createTextDocument($path){
+function createTextDocument($path)
+{
     $doc = new Zend_Search_Lucene_Document();
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', file_get_contents($path)));
@@ -163,7 +171,8 @@ function createTextDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createRTFDocument($path){
+function createRTFDocument($path)
+{
     $doc = new Zend_Search_Lucene_Document();
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     $contents = rtf2text($path);
@@ -172,18 +181,24 @@ function createRTFDocument($path){
     return $doc;
 }
 
-function rtf_isPlainText($s) {
+function rtf_isPlainText($s)
+{
     $arrfailAt = array("*", "fonttbl", "colortbl", "datastore", "themedata");
-    for ($i = 0; $i < count($arrfailAt); $i++)
-        if (!empty($s[$arrfailAt[$i]])) return false;
+    for ($i = 0; $i < count($arrfailAt); $i++) {
+        if (!empty($s[$arrfailAt[$i]])) {
+            return false;
+        }
+    }
     return true;
 }
 
-function rtf2text($filename) {
+function rtf2text($filename)
+{
     // Read the data from the input file.
     $text = file_get_contents($filename);
-    if (!strlen($text))
+    if (!strlen($text)) {
         return "";
+    }
 
     // Create empty stack array.
     $document = "";
@@ -202,20 +217,27 @@ function rtf2text($filename) {
 
                 // If it is another backslash or nonbreaking space or hyphen,
                 // then the character is plain text and add it to the output stream.
-                if ($nc == '\\' && rtf_isPlainText($stack[$j])) $document .= '\\';
-                elseif ($nc == '~' && rtf_isPlainText($stack[$j])) $document .= ' ';
-                elseif ($nc == '_' && rtf_isPlainText($stack[$j])) $document .= '-';
+                if ($nc == '\\' && rtf_isPlainText($stack[$j])) {
+                    $document .= '\\';
+                } elseif ($nc == '~' && rtf_isPlainText($stack[$j])) {
+                    $document .= ' ';
+                } elseif ($nc == '_' && rtf_isPlainText($stack[$j])) {
+                    $document .= '-';
+                }
                 // If it is an asterisk mark, add it to the stack.
-                elseif ($nc == '*') $stack[$j]["*"] = true;
+                elseif ($nc == '*') {
+                    $stack[$j]["*"] = true;
+                }
                 // If it is a single quote, read next two characters that are the hexadecimal notation
                 // of a character we should add to the output stream.
                 elseif ($nc == "'") {
                     $hex = substr($text, $i + 2, 2);
-                    if (rtf_isPlainText($stack[$j]))
+                    if (rtf_isPlainText($stack[$j])) {
                         $document .= html_entity_decode("&#".hexdec($hex).";");
+                    }
                     //Shift the pointer.
                     $i += 2;
-                    // Since, we’ve found the alphabetic character, the next characters are control word
+                // Since, we’ve found the alphabetic character, the next characters are control word
                     // and, possibly, some digit parameter.
                 } elseif ($nc >= 'a' && $nc <= 'z' || $nc >= 'A' && $nc <= 'Z') {
                     $word = "";
@@ -228,22 +250,26 @@ function rtf2text($filename) {
                         // then we’re still reading the control word. If there were digits, we should stop
                         // since we reach the end of the control word.
                         if ($nc >= 'a' && $nc <= 'z' || $nc >= 'A' && $nc <= 'Z') {
-                            if (empty($param))
+                            if (empty($param)) {
                                 $word .= $nc;
-                            else
+                            } else {
                                 break;
+                            }
                             // If it is a digit, store the parameter.
-                        } elseif ($nc >= '0' && $nc <= '9')
+                        } elseif ($nc >= '0' && $nc <= '9') {
                             $param .= $nc;
+                        }
                         // Since minus sign may occur only before a digit parameter, check whether
                         // $param is empty. Otherwise, we reach the end of the control word.
                         elseif ($nc == '-') {
-                            if (empty($param))
+                            if (empty($param)) {
                                 $param .= $nc;
-                            else
+                            } else {
                                 break;
-                        } else
+                            }
+                        } else {
                             break;
+                        }
                     }
                     // Shift the pointer on the number of read characters.
                     $i += $m - 1;
@@ -258,8 +284,9 @@ function rtf2text($filename) {
                         case "u":
                             $toText .= html_entity_decode("&#x".dechex($param).";");
                             $ucDelta = @$stack[$j]["uc"];
-                            if ($ucDelta > 0)
+                            if ($ucDelta > 0) {
                                 $i += $ucDelta;
+                            }
                             break;
                         // Select line feeds, spaces and tabs.
                         case "par": case "page": case "column": case "line": case "lbr":
@@ -289,8 +316,9 @@ function rtf2text($filename) {
                             break;
                     }
                     // Add data to the output stream if required.
-                    if (rtf_isPlainText($stack[$j]))
+                    if (rtf_isPlainText($stack[$j])) {
                         $document .= $toText;
+                    }
                 }
 
                 $i++;
@@ -310,8 +338,9 @@ function rtf2text($filename) {
             case '\0': case '\r': case '\f': case '\n': break;
             // Add other data to the output stream if required.
             default:
-                if (rtf_isPlainText($stack[$j]))
+                if (rtf_isPlainText($stack[$j])) {
                     $document .= $c;
+                }
                 break;
         }
     }

@@ -10,7 +10,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -26,7 +26,7 @@ Also added support in the Smarty plugin sugar_image for an altimage parameter to
 r27371 - 2007-09-28 03:58:13 -0700 (Fri, 28 Sep 2007) - tyoung - Added optional parameter to sugar_image - if 'image' is set then use that as the base for the image filename instead of using the value of parameter 'name'. Required for images where the image title to be displayed under the image does not match the image filename, for example, title='Basic Search' and filename='BasicSearch'
 
 r24875 - 2007-07-31 11:34:56 -0700 (Tue, 31 Jul 2007) - dwheeler - Updated sugar_image smarty function to use the new module image function.
-Numerous bug fixes to wizard views, crumb fixes in label editor. 
+Numerous bug fixes to wizard views, crumb fixes in label editor.
 Added feedback for saving edited fields in list/subpanel views
 Added saving of labels in list and subpanel views.
 
@@ -39,15 +39,13 @@ r24477 - 2007-07-19 18:01:09 -0700 (Thu, 19 Jul 2007) - majed - smarty get_image
 
 function smarty_function_sugar_image($params, &$smarty)
 {
-	
-	if(!isset($params['name'])){
-		$smarty->trigger_error("sugar_field: missing 'name' parameter");
-		return;
-	}
-	$height = (!empty($params['height']))?$params['height']:'48';
-	$width = (!empty($params['width']))?$params['width']:'48';
-	$image = (!empty($params['image']))?$params['image']:$params['name'];
-	$altimage = (!empty($params['altimage']))?$params['altimage']:$params['name'];
-	return getStudioIcon($image, $altimage, $height, $width);
-	
+    if (!isset($params['name'])) {
+        $smarty->trigger_error("sugar_field: missing 'name' parameter");
+        return;
+    }
+    $height = (!empty($params['height']))?$params['height']:'48';
+    $width = (!empty($params['width']))?$params['width']:'48';
+    $image = (!empty($params['image']))?$params['image']:$params['name'];
+    $altimage = (!empty($params['altimage']))?$params['altimage']:$params['name'];
+    return getStudioIcon($image, $altimage, $height, $width);
 }

@@ -124,4 +124,3 @@ abstract class Zend_Search_Lucene_Search_Query_Preprocessing extends Zend_Search
         throw new Zend_Search_Lucene_Exception('Rewrite operation has to be done before retrieving query terms.');
     }
 }
-

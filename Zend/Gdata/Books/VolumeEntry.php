@@ -107,7 +107,6 @@ require_once 'Zend/Gdata/Books/Extension/Viewability.php';
  */
 class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
 {
-
     const THUMBNAIL_LINK_REL = 'http://schemas.google.com/books/2008/thumbnail';
     const PREVIEW_LINK_REL = 'http://schemas.google.com/books/2008/preview';
     const INFO_LINK_REL = 'http://schemas.google.com/books/2008/info';
@@ -157,7 +156,8 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
         if ($this->_creators !== null) {
             foreach ($this->_creators as $creators) {
                 $element->appendChild($creators->getDOM(
-                    $element->ownerDocument));
+                    $element->ownerDocument
+                ));
             }
         }
         if ($this->_dates !== null) {
@@ -168,37 +168,43 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
         if ($this->_descriptions !== null) {
             foreach ($this->_descriptions as $descriptions) {
                 $element->appendChild($descriptions->getDOM(
-                    $element->ownerDocument));
+                    $element->ownerDocument
+                ));
             }
         }
         if ($this->_formats !== null) {
             foreach ($this->_formats as $formats) {
                 $element->appendChild($formats->getDOM(
-                    $element->ownerDocument));
+                    $element->ownerDocument
+                ));
             }
         }
         if ($this->_identifiers !== null) {
             foreach ($this->_identifiers as $identifiers) {
                 $element->appendChild($identifiers->getDOM(
-                    $element->ownerDocument));
+                    $element->ownerDocument
+                ));
             }
         }
         if ($this->_languages !== null) {
             foreach ($this->_languages as $languages) {
                 $element->appendChild($languages->getDOM(
-                    $element->ownerDocument));
+                    $element->ownerDocument
+                ));
             }
         }
         if ($this->_publishers !== null) {
             foreach ($this->_publishers as $publishers) {
                 $element->appendChild($publishers->getDOM(
-                    $element->ownerDocument));
+                    $element->ownerDocument
+                ));
             }
         }
         if ($this->_subjects !== null) {
             foreach ($this->_subjects as $subjects) {
                 $element->appendChild($subjects->getDOM(
-                    $element->ownerDocument));
+                    $element->ownerDocument
+                ));
             }
         }
         if ($this->_titles !== null) {
@@ -208,23 +214,28 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
         }
         if ($this->_comments !== null) {
             $element->appendChild($this->_comments->getDOM(
-                $element->ownerDocument));
+                $element->ownerDocument
+            ));
         }
         if ($this->_embeddability !== null) {
             $element->appendChild($this->_embeddability->getDOM(
-                $element->ownerDocument));
+                $element->ownerDocument
+            ));
         }
         if ($this->_rating !== null) {
             $element->appendChild($this->_rating->getDOM(
-                $element->ownerDocument));
+                $element->ownerDocument
+            ));
         }
         if ($this->_review !== null) {
             $element->appendChild($this->_review->getDOM(
-                $element->ownerDocument));
+                $element->ownerDocument
+            ));
         }
         if ($this->_viewability !== null) {
             $element->appendChild($this->_viewability->getDOM(
-                $element->ownerDocument));
+                $element->ownerDocument
+            ));
         }
         return $element;
     }
@@ -640,7 +651,7 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
             require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('Slash not found in atom:id');
         } else {
-            return substr($fullId, strrpos($fullId,'/') + 1);
+            return substr($fullId, strrpos($fullId, '/') + 1);
         }
     }
 
@@ -683,5 +694,4 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
     {
         return $this->getLink(self::ANNOTATION_LINK_REL);
     }
-
 }

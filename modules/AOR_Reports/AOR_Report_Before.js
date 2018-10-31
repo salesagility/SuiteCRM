@@ -89,7 +89,7 @@ $(document).ready(function(){
           }
           if(target.closest('#fieldLines').length > 0){
             dropFieldLine(node);
-          }else if(target.closest('#conditionLines').length > 0){
+          }else if(target.closest('#aor_conditionLines').length > 0){
             var conditionLineTarget = ConditionOrderHandler.getConditionLineByPageEvent(e);
             var conditionLineNew = dropConditionLine(node);
             if(conditionLineTarget) {
