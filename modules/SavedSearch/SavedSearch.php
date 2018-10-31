@@ -191,8 +191,9 @@ class SavedSearch extends SugarBean
 
                 if (!empty($val['default']) && $val['default']) {
                     $chooser->args['values_array'][0][$name] = trim(translate($valLabel, $module), ':');
-                else
+                } else {
                     $chooser->args['values_array'][1][$name] = trim(translate($valLabel, $module), ':');
+                }
             }
         }
 
