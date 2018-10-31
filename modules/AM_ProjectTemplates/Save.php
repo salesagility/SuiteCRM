@@ -53,7 +53,7 @@ global $current_user;
 $sugarbean = new AM_ProjectTemplates();
 $sugarbean = populateFromPost('', $sugarbean);
 
-$sugarbean->save($check_notify);
+$sugarbean->save(null);
 $return_id = $sugarbean->id;
 
 //customize default retrun view to make it to redirect to GanttChart view

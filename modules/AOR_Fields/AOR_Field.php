@@ -98,7 +98,12 @@ class AOR_Field extends Basic
 
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
-        $line_count = count($post_data[$key . 'field']);
+        if (!isset($post_data[$key . 'field'])) {
+            $line_count = 0;
+            LoggerManager::getLogger()->warn('AOR Field trying to save lines but post data key not found: ' . $key . 'field');
+        } else {
+            $line_count = count($post_data[$key . 'field']);
+        }
         for ($i = 0; $i < $line_count; ++$i) {
 
             
