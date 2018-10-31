@@ -364,6 +364,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
         //---------------
 
+        if ($percent > 0) {
             $status = 'In Progress';
         }
         else {
