@@ -101,8 +101,6 @@ class AOS_Contracts extends AOS_Contracts_sugar {
         return $return_id;
     }
 
-	}
-
 	function mark_deleted($id)
 	{
         $productQuote = new AOS_Products_Quotes();
