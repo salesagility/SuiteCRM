@@ -265,17 +265,6 @@ class Lead extends Person implements EmailInterface {
         return $ret_array;
 	}
 
-    function converted_lead($leadid, $contactid, $accountid, $opportunityid){
-    	$query = "UPDATE leads set converted='1', contact_id=$contactid, account_id=$accountid, opportunity_id=$opportunityid where  id=$leadid and deleted=0";
-		$this->db->query($query,true,"Error converting lead: ");
-
-		//we must move the status out here in order to be able to capture workflow conditions
-		$leadid = str_replace("'","", $leadid);
-		$lead = new Lead();
-		$lead->retrieve($leadid);
-		$lead->status='Converted';
-		$lead->save();
-    }
 
     public function converted_lead($leadid, $contactid, $accountid, $opportunityid)
     {
