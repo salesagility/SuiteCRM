@@ -287,7 +287,6 @@ class One2MBeanRelationship extends One2MRelationship
                 );
             }
         }
-    }
 
     public function getJoin($link, $params = array(), $return_array = false)
     {
