@@ -502,73 +502,6 @@ class Lead extends Person implements EmailInterface {
 		return $array_assign;
 	}
 
-//carrys forward custom lead fields to contacts, accounts, opportunities during Lead Conversion
-	function convertCustomFieldsForm(&$form, &$tempBean, &$prefix) {
-
-		global $mod_strings, $app_list_strings, $app_strings, $lbl_required_symbol;
-
-		foreach($this->field_defs as $field => $value) {
-
-			if(!empty($value['source']) && $value['source'] == 'custom_fields') {
-				if( !empty($tempBean->field_defs[$field]) AND isset($tempBean->field_defs[$field]) ) {
-					$form .= "<tr><td nowrap colspan='4' class='dataLabel'>".$mod_strings[$tempBean->field_defs[$field]['vname']].":";
-
-					if( !empty($tempBean->custom_fields->avail_fields[$field]['required']) AND ( ($tempBean->custom_fields->avail_fields[$field]['required']== 1) OR ($tempBean->custom_fields->avail_fields[$field]['required']== '1') OR ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') OR ($tempBean->custom_fields->avail_fields[$field]['required']== true) ) ) {
-						$form .= "&nbsp;<span class='required'>".$lbl_required_symbol."</span>";
-					}
-					$form .= "</td></tr>";
-					$form .= "<tr><td nowrap colspan='4' class='dataField' nowrap>";
-
-					if(isset($value['isMultiSelect']) && $value['isMultiSelect'] == 1){
-						$this->$field = unencodeMultienum($this->$field);
-						$multiple = "multiple";
-						$array = '[]';
-					} else {
-						$multiple = null;
-						$array = null;
-					}
-
-					if(!empty($value['options']) AND isset($value['options']) ) {
-						$form .= "<select " . $multiple . " name='".$prefix.$field.$array."'>";
-						$form .= get_select_options_with_id($app_list_strings[$value['options']], $this->$field);
-						$form .= "</select";
-					} elseif($value['type'] == 'bool' ) {
-						if( ($this->$field == 1) OR ($this->$field == '1') ) { $checked = 'checked'; } else { $checked = ''; }
-						$form .= "<input type='checkbox' name='".$prefix.$field."' id='".$prefix.$field."'  value='1' ".$checked."/>";
-					} elseif($value['type'] == 'text' ) {
-						$form .= "<textarea name='".$prefix.$field."' rows='6' cols='50'>".$this->$field."</textarea>";
-					} elseif($value['type'] == 'date' ) {
-						$form .= "<input name='".$prefix.$field."' id='jscal_field".$field."' type='text'  size='11' maxlength='10' value='".$this->$field."'>&nbsp;<span id=\"jscal_trigger\" class='suitepicon suitepicon-module-calendar'></span> <span class='dateFormat'>yyyy-mm-dd</span><script type='text/javascript'>Calendar.setup ({inputField : 'jscal_field".$field."', ifFormat : '%Y-%m-%d', showsTime : false, button : 'jscal_trigger".$field."', singleClick : true, step : 1, weekNumbers:false}); addToValidate('ConvertLead', '".$field."', 'date', false,'".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
-					} else {
-                                            
-                                            if (!isset($this->$field)) {
-                                                LoggerManager::getLogger()->warn('Field not found: ' . $field);
-                                                $thisField = null;
-                                            } else {
-                                                $thisField = $this->$field;
-                                            }
-
-						$form .= "<input name='".$prefix.$field."' type='text' value='".$thisField."'>";
-
-                                                if (!isset($this->custom_fields->avail_fields)) {
-                                                    LoggerManager::getLogger()->warn('Undefined property: $avail_fields');
-                                                }
-                                                
-						if(isset($this->custom_fields->avail_fields) && $this->custom_fields->avail_fields[$field]['type'] == 'int') {
-							$form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'int', false,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
-						}
-						elseif(isset($this->custom_fields->avail_fields) && $this->custom_fields->avail_fields[$field]['type'] == 'float') {
-							$form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'float', false,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
-						}
-
-					}
-
-					if( !empty($tempBean->custom_fields->avail_fields[$field]['required']) AND ( ($tempBean->custom_fields->avail_fields[$field]['required']== 1) OR ($tempBean->custom_fields->avail_fields[$field]['required']== '1') OR ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') OR ($tempBean->custom_fields->avail_fields[$field]['required']== true) ) ) {
-							$form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'relate', true,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
-						}
-
-					$form .= "</td></tr>";
-
     //carrys forward custom lead fields to contacts, accounts, opportunities during Lead Conversion
     public function convertCustomFieldsForm(&$form, &$tempBean, &$prefix)
     {
@@ -637,15 +570,8 @@ class Lead extends Person implements EmailInterface {
                     $form .= "</td></tr>";
                 }
             }
+            return true;
         }
-
-				}
-			}
-
-		}
-
-		return true;
-	}
 
 	function save($check_notify = false) {
 		if(empty($this->status))
