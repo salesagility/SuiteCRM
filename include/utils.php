@@ -3939,7 +3939,17 @@ function string_format($format, $args)
     /* End of fix */
 
     for ($i = 0; $i < count($args); ++$i) {
-        $result = str_replace('{'.$i.'}', $args[$i], $result);
+        /** Bug2741 fix
+         * expected  'Customer','CustomerofCustomer'
+         * but returns Customer,CustomerofCustomer
+         */
+        if(strpos($args[$i], ',') !== false) {
+            $values = explode(',', $args[$i]);
+            $args[$i] = implode("','",$values);
+        }
+
+        $result = str_replace('{'.$i.'}',"'" . $args[$i] . "'", $result);
+        /** End of fix */
     }
 
     return $result;
