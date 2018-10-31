@@ -1,10 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
-class AssignGroups {
-
-function popup_select(&$bean, $event, $arguments)
+class AssignGroups
 {
     public function popup_select(&$bean, $event, $arguments)
     {
@@ -62,25 +62,6 @@ function popup_select(&$bean, $event, $arguments)
         }
     }
 
-	else if(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
-		&& empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
-		&& isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature' ) { //Bug: 589
-
-		//$_REQUEST['return_module'] = $bean->module_dir;
-		//$_REQUEST['return_action'] = "DetailView";
-		//$_REQUEST['return_id'] = $bean->id;
-		
-		//$_SESSION['securitygroups_popup_'.$bean->module_dir] = $bean->id;
-		
-		if(!isset($_SESSION['securitygroups_popup'])) {
-			$_SESSION['securitygroups_popup'] = array();
-		}
-		$_SESSION['securitygroups_popup'][] = array(
-			'module' => $bean->module_dir,
-			'id' => $bean->id
-		);
-	}
-} 
 
     public function popup_onload($event, $arguments)
     {
@@ -143,7 +124,11 @@ function popup_select(&$bean, $event, $arguments)
 </script>
 EOQ;
 
-			echo $auto_popup;
+                echo $auto_popup;
+            }
+            unset($_SESSION['securitygroups_popup']);
+        }
+    }
 
     public function mass_assign($event, $arguments)
     {
@@ -162,37 +147,35 @@ EOQ;
         }
 
   
-  	$no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
-    //check if security suite enabled
-    $action = strtolower($action);
-    if(isset($module) && ($action == "list" || $action == "index" || $action == "listview") 
-    	&& (!isset($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] != true)
-    	&& !array_key_exists($module,$no_mass_assign_list)
-    	) {
-   		global $current_user;
-   		if(is_admin($current_user) || ACLAction::getUserAccessLevel($current_user->id,"SecurityGroups", 'access') == ACL_ALLOW_ENABLED) {
+        $no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
+        //check if security suite enabled
+        $action = strtolower($action);
+        if (isset($module) && ($action == "list" || $action == "index" || $action == "listview")
+        && (!isset($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] != true)
+        && !array_key_exists($module, $no_mass_assign_list)
+        ) {
+            global $current_user;
+            if (is_admin($current_user) || ACLAction::getUserAccessLevel($current_user->id, "SecurityGroups", 'access') == ACL_ALLOW_ENABLED) {
+                require_once('modules/SecurityGroups/SecurityGroup.php');
+                $groupFocus = new SecurityGroup();
+                $security_modules = $groupFocus->getSecurityModules();
+                //if(in_array($module,$security_modules)) {
+                if (in_array($module, array_keys($security_modules))) {
+                    global $app_strings;
 
-			require_once('modules/SecurityGroups/SecurityGroup.php');
-			$groupFocus = new SecurityGroup();
-			$security_modules = $groupFocus->getSecurityModules();
-			//if(in_array($module,$security_modules)) {
-			if(in_array($module,array_keys($security_modules))) {
+                    global $current_language;
+                    $current_module_strings = return_module_language($current_language, 'SecurityGroups');
 
-				global $app_strings;
+                    $form_header = get_form_header($current_module_strings['LBL_MASS_ASSIGN'], '', false);
 
-				global $current_language;
-				$current_module_strings = return_module_language($current_language, 'SecurityGroups');
+                    $groups = $groupFocus->get_list("name", "", 0, -99, -99);
+                    $options = array(""=>"");
+                    foreach ($groups['list'] as $group) {
+                        $options[$group->id] = $group->name;
+                    }
+                    $group_options =  get_select_options_with_id($options, "");
 
-				$form_header = get_form_header($current_module_strings['LBL_MASS_ASSIGN'], '', false);
-
-				$groups = $groupFocus->get_list("name","",0,-99,-99);
-				$options = array(""=>"");
-				foreach($groups['list'] as $group) {
-					$options[$group->id] = $group->name;
-				}
-				$group_options =  get_select_options_with_id($options, "");
-
-				$mass_assign = <<<EOQ
+                    $mass_assign = <<<EOQ
 
 <script type="text/javascript" language="javascript">
 function confirm_massassign(del,start_string, end_string) {
@@ -305,16 +288,16 @@ function send_massassign(mode, no_record_txt, start_string, end_string, del) {
 EOQ;
 
 
-				echo $mass_assign;
-			}
-		}
-    }
+                    echo $mass_assign;
+                }
+            }
+        }
 
-	//if after a save...
-	if(!empty($_SESSION['securitysuite_error'])) {
-		$lbl_securitysuite_error = $_SESSION['securitysuite_error'];
-		unset($_SESSION['securitysuite_error']);
-		echo <<<EOQ
+        //if after a save...
+        if (!empty($_SESSION['securitysuite_error'])) {
+            $lbl_securitysuite_error = $_SESSION['securitysuite_error'];
+            unset($_SESSION['securitysuite_error']);
+            echo <<<EOQ
 <script>
 				
 
@@ -328,7 +311,7 @@ var beforeMe = document.getElementsByTagName("div")[0];
 document.body.insertBefore(oNewP, beforeMe);
 </script>
 EOQ;
-	}
-}
+        }
+    }
 
 }
