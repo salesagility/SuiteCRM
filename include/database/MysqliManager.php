@@ -348,13 +348,17 @@ class MysqliManager extends MysqlManager
         }
 
         // cn: using direct calls to prevent this from spamming the Logs
-
         $collation = $this->getOption('collation');
-        if (!empty($collation)) {
-            $names = "SET NAMES 'utf8' COLLATE '$collation'";
+        $charset = $this->getOption('charset');
+
+        if (!empty($collation) && !empty($charset)) {
+            $names = "SET NAMES '$charset' COLLATE '$collation'";
             mysqli_query($this->database, $names);
         }
-        mysqli_set_charset($this->database, "utf8");
+
+        if (!empty($charset)) {
+            mysqli_set_charset($this->database, $charset);
+        }
 
         if ($this->checkError('Could Not Connect', $dieOnError)) {
             $GLOBALS['log']->info("connected to db");
