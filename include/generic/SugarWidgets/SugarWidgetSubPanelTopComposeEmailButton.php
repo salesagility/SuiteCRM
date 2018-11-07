@@ -119,6 +119,11 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             return '';
         }
 
-        return parent::display($defines, $additionalFormFields);
+        $inputID = $this->getWidgetId();
+
+        $button = $this->_get_form($defines, $additionalFormFields);
+        $button .= "<a id='$inputID'>$this->form_value</a>";
+
+        return $button;
     }
 }
