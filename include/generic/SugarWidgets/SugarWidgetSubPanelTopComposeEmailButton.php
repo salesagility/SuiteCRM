@@ -114,11 +114,6 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
 
     public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
-        $focus = new Meeting;
-        if (!$focus->ACLAccess('EditView')) {
-            return '';
-        }
-
         $inputID = $this->getWidgetId();
 
         $button = $this->_get_form($defines, $additionalFormFields);
