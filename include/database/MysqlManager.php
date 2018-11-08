@@ -554,14 +554,20 @@ class MysqlManager extends DBManager
             }
         }
 
-        // cn: using direct calls to prevent this from spamming the Logs
-        mysql_query("SET CHARACTER SET utf8", $this->database);
-        $names = "SET NAMES 'utf8'";
-        $collation = $this->getOption('collation');
-        if (!empty($collation)) {
-            $names .= " COLLATE '$collation'";
+	// cn: using direct calls to prevent this from spamming the Logs
+        $charset = $this->getOption('charset');
+
+        if(!empty($charset)) {
+            mysql_query("SET CHARACTER SET $charset", $this->database);
+
+            $names = "SET NAMES '$charset'";
+            $collation = $this->getOption('collation');
+
+            if (!empty($collation)) {
+                $names .= " COLLATE '$collation'";
+            }
+            mysql_query($names, $this->database);
         }
-        mysql_query($names, $this->database);
 
         if (!$this->checkError('Could Not Connect:', $dieOnError)) {
             $GLOBALS['log']->info("connected to db");
@@ -775,12 +781,11 @@ class MysqlManager extends DBManager
             $keys = ",$keys";
         }
 
-        // cn: bug 9873 - module tables do not get created in utf8 with assoc collation
-        $collation = $this->getOption('collation');
-        if (empty($collation)) {
-            $collation = 'utf8_general_ci';
-        }
-        $sql = "CREATE TABLE $tablename ($columns $keys) CHARACTER SET utf8 COLLATE $collation";
+	// cn: bug 9873 - module tables do not get created in utf8 with assoc collation
+        $collation = $this->getCollation();
+        $charset = $this->getCharset();
+
+        $sql = "CREATE TABLE $tablename ($columns $keys) CHARACTER SET $charset COLLATE $collation";
 
         if (!empty($engine)) {
             $sql .= " ENGINE=$engine";
@@ -1156,12 +1161,49 @@ class MysqlManager extends DBManager
     }
 
     /**
-     * List of available collation settings
+     * Get default collation settings
+     * @return string
+     */
+    public function getCollation()
+    {
+        $collation = $this->getOption('collation');
+        if (empty($collation)) {
+            $collation = $this->getDefaultCollation();
+        }
+
+        return $collation;
+    }
+
+    /**
+     * Get default charset settings
+     * @return string
+     */
+    public function getCharset()
+    {
+        $charset = $this->getOption('charset');
+        if(empty($charset)) {
+            $charset = $this->getDefaultCharset();
+        }
+
+        return $charset;
+    }
+
+    /**
+     * Get default collation settings
      * @return string
      */
     public function getDefaultCollation()
     {
         return "utf8_general_ci";
+    }
+
+    /**
+     * Get default charset settings
+     * @return string
+     */
+    public function getDefaultCharset()
+    {
+        return "utf8";
     }
 
     /**
@@ -1506,13 +1548,19 @@ class MysqlManager extends DBManager
      */
     public function createDatabase($dbname)
     {
-        $this->query("CREATE DATABASE `$dbname` CHARACTER SET utf8 COLLATE utf8_general_ci", true);
+        $collation = $this->getCollation();
+        $charset = $this->getCharset();
+
+        $this->query("CREATE DATABASE `$dbname` CHARACTER SET $charset COLLATE $collation", true);
     }
 
     public function preInstall()
     {
-        $db->query("ALTER DATABASE `{$setup_db_database_name}` DEFAULT CHARACTER SET utf8", true);
-        $db->query("ALTER DATABASE `{$setup_db_database_name}` DEFAULT COLLATE utf8_general_ci", true);
+        $collation = $this->getCollation();
+        $charset = $this->getCharset();
+
+        $db->query("ALTER DATABASE `{$setup_db_database_name}` DEFAULT CHARACTER SET $charset", true);
+        $db->query("ALTER DATABASE `{$setup_db_database_name}` DEFAULT COLLATE $collation", true);
     }
 
     /**
