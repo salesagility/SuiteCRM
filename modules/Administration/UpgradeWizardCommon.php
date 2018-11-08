@@ -166,44 +166,9 @@ function getUITextForMode($mode)
 
 function validate_manifest($manifest)
 {
-    // takes a manifest.php manifest array and validates contents
-    global $subdirs;
-    global $sugar_version;
-    global $sugar_flavor;
-    global $mod_strings;
-
-    if (!isset($manifest['type'])) {
-        die($mod_strings['ERROR_MANIFEST_TYPE']);
-    }
-    $type = $manifest['type'];
-    if (getInstallType("/$type/") == "") {
-        die($mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.");
-    }
-
-    if (isset($manifest['acceptable_sugar_versions'])) {
-        $version_ok = false;
-        $matches_empty = true;
-        if (isset($manifest['acceptable_sugar_versions']['exact_matches'])) {
-            $matches_empty = false;
-            foreach ($manifest['acceptable_sugar_versions']['exact_matches'] as $match) {
-                if ($match == $sugar_version) {
-                    $version_ok = true;
-                }
-            }
-        }
-        if (!$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches'])) {
-            $matches_empty = false;
-            foreach ($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
-                if (preg_match("/$match/", $sugar_version)) {
-                    $version_ok = true;
-                }
-            }
-        }
-
-        if (!$matches_empty && !$version_ok) {
-            die($mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version);
-        }
-    }
+    require_once('ModuleInstall/PackageManager/PackageManager.php');
+    $pm = new PackageManager();
+    $pm->validate_manifest($manifest);
 }
 
 function getDiffFiles($unzip_dir, $install_file, $is_install = true, $previous_version = '')
