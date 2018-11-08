@@ -424,6 +424,7 @@ class PackageManager
         // takes a manifest.php manifest array and validates contents
         global $subdirs;
         global $sugar_version;
+        global $suitecrm_version;
         global $sugar_flavor;
         global $mod_strings;
 
@@ -438,27 +439,63 @@ class PackageManager
         }
         $GLOBALS['log']->debug("Passed with InstallType");
         if (isset($manifest['acceptable_sugar_versions'])) {
-            $version_ok = false;
+            $GLOBALS['log']->debug("Getting AcceptableSugarVersions");
+            $version_sugar_ok = false;
             $matches_empty = true;
             if (isset($manifest['acceptable_sugar_versions']['exact_matches'])) {
                 $matches_empty = false;
                 foreach ($manifest['acceptable_sugar_versions']['exact_matches'] as $match) {
                     if ($match == $sugar_version) {
-                        $version_ok = true;
+                        $version_sugar_ok = true;
+                        $GLOBALS['log']->debug("Passed AcceptableSugarVersions");
+                        break;
                     }
                 }
             }
-            if (!$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches'])) {
+            if (!$version_sugar_ok && isset($manifest['acceptable_sugar_versions']['regex_matches'])) {
                 $matches_empty = false;
                 foreach ($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
                     if (preg_match("/$match/", $sugar_version)) {
-                        $version_ok = true;
+                        $version_sugar_ok = true;
+                        $GLOBALS['log']->debug("Passed AcceptableSugarVersions");
+                        break;
                     }
                 }
             }
 
-            if (!$matches_empty && !$version_ok) {
+            if (!$matches_empty && !$version_sugar_ok) {
+                $GLOBALS['log']->debug("Error with AcceptableSugarVersions");
                 die($mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version);
+            }
+        }
+        if (isset($manifest['acceptable_suitecrm_versions'])) {
+            $GLOBALS['log']->debug("Getting AcceptableSuiteCRMVersions");
+            $version_suitecrm_ok = false;
+            $matches_empty = true;
+            if (isset($manifest['acceptable_suitecrm_versions']['exact_matches'])) {
+                $matches_empty = false;
+                foreach ($manifest['acceptable_suitecrm_versions']['exact_matches'] as $match) {
+                    if ($match == $suitecrm_version) {
+                        $version_suitecrm_ok = true;
+                        $GLOBALS['log']->debug("Passed AcceptableSuitecrmVersions");
+                        break;
+                    }
+                }
+            }
+            if (!$version_suitecrm_ok && isset($manifest['acceptable_suitecrm_versions']['regex_matches'])) {
+                $matches_empty = false;
+                foreach ($manifest['acceptable_suitecrm_versions']['regex_matches'] as $match) {
+                    if (preg_match("/$match/", $suitecrm_version)) {
+                        $version_suitecrm_ok = true;
+                        $GLOBALS['log']->debug("Passed AcceptableSuitecrmVersions");
+                        break;
+                    }
+                }
+            }
+
+            if (!$matches_empty && !$version_suitecrm_ok) {
+                $GLOBALS['log']->debug("Error with AcceptableSuiteCRMVersions");
+                die($mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . $suitecrm_version);
             }
         }
     }
