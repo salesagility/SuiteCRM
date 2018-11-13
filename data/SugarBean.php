@@ -1696,6 +1696,11 @@ class SugarBean
                 return true;
             }
         }
+        //other wise if there is a created_by that is the owner
+        if (isset($this->created_by) && $this->created_by == $user_id) {
+            return true;
+        }
+
         return false;
     }
 
@@ -2409,9 +2414,6 @@ class SugarBean
             $this->custom_fields->bean = $this;
             $this->custom_fields->save($isUpdate);
         }
-
-        // use the db independent query generator
-        $this->preprocess_fields_on_save();
 
         $this->_sendNotifications($check_notify);
 
@@ -3688,6 +3690,8 @@ class SugarBean
             } else {
                 $data = $this->field_defs[$field];
             }
+            $data = $this->field_defs[$field];
+
 
             //ignore fields that are a part of the collection and a field has been removed as a result of
             //layout customization.. this happens in subpanel customizations, use case, from the contacts subpanel
@@ -4868,6 +4872,8 @@ class SugarBean
         } else {
             $this->parent_name = '';
         }
+        $this->parent_name = '';
+
         if (!empty($this->parent_type)) {
             $this->last_parent_id = $this->parent_id;
             $this->getRelatedFields($this->parent_type, $this->parent_id, array(

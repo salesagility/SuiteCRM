@@ -129,8 +129,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
         }
 
 
-        public function process_dynamic_listview($source_module, $sugarbean, $subpanel_def) {
-
+        public function process_dynamic_listview($source_module, $sugarbean, $subpanel_def, $countOnly = false)
+        {
             $this->source_module = $source_module;
             $this->subpanel_module = $subpanel_def->name;
             if (!isset($this->smartyTemplate)) {
@@ -139,7 +139,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
             $html_var = $this->subpanel_module . "_CELL";
 
-            $list_data = $this->processUnionBeans($sugarbean, $subpanel_def, $html_var);
+            $list_data = $this->processUnionBeans($sugarbean, $subpanel_def, $html_var, $countOnly);
+            
+            if ($countOnly) {
+                return $list_data;
+            }
 
             $list = $list_data['list'];
             $parent_data = $list_data['parent_data'];

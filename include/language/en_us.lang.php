@@ -38,6 +38,11 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 //the left value is the key stored in the db and the right value is ie display value
 //to translate, only modify the right value in each key/value pair
 $app_list_strings = array(
@@ -1088,7 +1093,9 @@ $app_strings = array(
     'LBL_EMAIL_REMOVE_SMTP_WARNING' => 'Warning! The outbound account you are trying to delete is associated to an existing inbound account. Are you sure you want to continue?',
     'LBL_EMAIL_ADDRESSES' => 'Email',
     'LBL_EMAIL_ADDRESS_PRIMARY' => 'Email Address',
-    'LBL_EMAIL_ARCHIVE_TO_SUGAR' => 'Import to SuiteCRM',
+    'LBL_EMAIL_ADDRESS_OPT_IN' => 'You have confirmed that your email address has been opted in: ',
+    'LBL_EMAIL_ADDRESS_OPT_IN_ERR' => 'Unable to confirm email address',
+    'LBL_EMAIL_ARCHIVE_TO_SUITE' => 'Import to SuiteCRM',
     'LBL_EMAIL_ASSIGNMENT' => 'Assignment',
     'LBL_EMAIL_ATTACH_FILE_TO_EMAIL' => 'Attach',
     'LBL_EMAIL_ATTACHMENT' => 'Attach',
@@ -1333,7 +1340,7 @@ $app_strings = array(
     'LBL_EMAIL_SPACER_LOCAL_FOLDER' => '[ SuiteCRM Folders ]',
     'LBL_EMAIL_SUBJECT' => 'Subject',
     'LBL_EMAIL_SUCCESS' => 'Success',
-    'LBL_EMAIL_SUGAR_FOLDER' => 'SuiteCRM Folder',
+    'LBL_EMAIL_SUITE_FOLDER' => 'SuiteCRM Folder',
     'LBL_EMAIL_TEMPLATE_EDIT_PLAIN_TEXT' => 'Email template body is empty',
     'LBL_EMAIL_TEMPLATES' => 'Templates',
     'LBL_EMAIL_TO' => 'To',
@@ -3248,23 +3255,6 @@ $app_list_strings['marker_image_list']['currency_exchange'] = 'Currency Exchange
 $app_list_strings['marker_image_list']['customs'] = 'Customs';
 $app_list_strings['marker_image_list']['cycling'] = 'Cycling';
 $app_list_strings['marker_image_list']['dam'] = 'Dam';
-$app_list_strings['marker_image_list']['days_dim'] = 'Days Dim';
-$app_list_strings['marker_image_list']['days_dom'] = 'Days Dom';
-$app_list_strings['marker_image_list']['days_jeu'] = 'Days Jeu';
-$app_list_strings['marker_image_list']['days_jue'] = 'Days Jue';
-$app_list_strings['marker_image_list']['days_lun'] = 'Days Lun';
-$app_list_strings['marker_image_list']['days_mar'] = 'Days Mar';
-$app_list_strings['marker_image_list']['days_mer'] = 'Days Mer';
-$app_list_strings['marker_image_list']['days_mie'] = 'Days Mie';
-$app_list_strings['marker_image_list']['days_qua'] = 'Days Qua';
-$app_list_strings['marker_image_list']['days_qui'] = 'Days Qui';
-$app_list_strings['marker_image_list']['days_sab'] = 'Days Sab';
-$app_list_strings['marker_image_list']['days_sam'] = 'Days Sam';
-$app_list_strings['marker_image_list']['days_seg'] = 'Days Seg';
-$app_list_strings['marker_image_list']['days_sex'] = 'Days Sex';
-$app_list_strings['marker_image_list']['days_ter'] = 'Days Ter';
-$app_list_strings['marker_image_list']['days_ven'] = 'Days Ven';
-$app_list_strings['marker_image_list']['days_vie'] = 'Days Vie';
 $app_list_strings['marker_image_list']['dentist'] = 'Dentist';
 $app_list_strings['marker_image_list']['deptartment_store'] = 'Deptartment Store';
 $app_list_strings['marker_image_list']['disability'] = 'Disability';
@@ -3467,7 +3457,9 @@ $app_strings['LBL_RESCHEDULE_HISTORY'] = 'Call attempt history';
 $app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
 
 //SecurityGroups
-$app_list_strings['moduleList']['SecurityGroups'] = 'Security Groups Management';
+$app_list_strings['moduleList']['SecurityGroups'] = 'Security Suite Management';
+$app_strings['LBL_LOGIN_AS'] = 'Login as ';
+$app_strings['LBL_LOGOUT_AS'] = 'Logout as ';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
 
 $app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';
@@ -3479,13 +3471,6 @@ $app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Social Feed Details';
 
 $app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Filter';
 
-$app_strings['LBL_QUICK_ACCOUNT'] = 'Create Account';
-$app_strings['LBL_QUICK_CONTACT'] = 'Create Contact';
-$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Create Opportunity';
-$app_strings['LBL_QUICK_LEAD'] = 'Create Lead';
-$app_strings['LBL_QUICK_DOCUMENT'] = 'Create Document';
-$app_strings['LBL_QUICK_CALL'] = 'Log Call';
-$app_strings['LBL_QUICK_TASK'] = 'Create Task';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
 
 $app_strings['LBL_ADD_TAB'] = 'Add Tab';

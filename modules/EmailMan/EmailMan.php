@@ -405,14 +405,14 @@ class EmailMan extends SugarBean
         $temp_array = parent::get_list_view_array();
 
         $related_type = isset($temp_array['RELATED_TYPE']) ? $temp_array['RELATED_TYPE'] : null;
-        
+
         if (!isset($temp_array['RELATED_ID'])) {
             LoggerManager::getLogger()->warn('EmailMan List view array has not related id for list view data');
             $tempArrayRelatedId = null;
         } else {
             $tempArrayRelatedId = $temp_array['RELATED_ID'];
         }
-        
+
         $related_id = $tempArrayRelatedId;
         $is_person = SugarModule::get($related_type)->moduleImplements('Person');
 
@@ -445,7 +445,7 @@ class EmailMan extends SugarBean
         } else {
             $temArrayRecipientEmail = $temp_array['RECIPIENT_EMAIL'];
         }
-        
+
         $this->email1 = $temArrayRecipientEmail;
         $temp_array['EMAIL1_LINK'] = $current_user->getEmailLink('email1', $this, '', '', 'ListView');
 
@@ -610,29 +610,29 @@ class EmailMan extends SugarBean
                     $noteAudit = new Note();
                     $noteAudit->parent_id = $retId;
                     $noteAudit->parent_type = $this->ref_email->module_dir;
-                    
+
                     if (!isset($note->filename)) {
                         LoggerManager::getLogger()->warn('EmailMan create ref email error: Note filename is undefined.');
                         $noteFilename = null;
                     } else {
                         $noteFilename = $note->filename ;
                     }
-                    
+
                     $noteAudit->description = "[" . $noteFilename . "] " . $mod_strings['LBL_ATTACHMENT_AUDIT'];
-                    
-                    
+
+
                     if (!isset($filename)) {
                         LoggerManager::getLogger()->warn('EmailMan create ref email error: Filename is undefined.');
                         $filename = null;
                     }
-                    
+
                     $noteAudit->filename = $filename;
-                    
+
                     if (!isset($mime_type)) {
                         LoggerManager::getLogger()->warn('EmailMan create ref email error: Mime Type is undefined.');
                         $mime_type = null;
                     }
-                    
+
                     $noteAudit->file_mime_type = $mime_type;
                     $noteAudit_id = $noteAudit->save();
 
@@ -642,7 +642,7 @@ class EmailMan extends SugarBean
                     } else {
                         $noteId = $note->id;
                     }
-                    
+
                     UploadFile::duplicate_file($noteId, $noteAudit_id, $filename);
                 }
             }
@@ -707,21 +707,21 @@ class EmailMan extends SugarBean
         $email->to_addrs_emails = $module->email1 . ';';
         $email->type = 'archived';
         $email->deleted = '0';
-        
+
         if (!isset($this->current_campaign)) {
             LoggerManager::getLogger()->warn('EmailMan has not current campaign for create individual email.');
             $currentCampaignNameMailSubject = null;
         } else {
             $currentCampaignNameMailSubject = $this->current_campaign->name . ': ' . $mail->Subject;
         }
-        
+
         $email->name = $currentCampaignNameMailSubject;
-        
+
         if (!isset($mail->ContentType)) {
             LoggerManager::getLogger()->warn('EmailMan given an mail for creating individual email but there is not content type.');
             $mail->ContentType = null;
         }
-            
+
         if ($mail->ContentType == "text/plain") {
             $email->description = $mail->Body;
             $email->description_html = null;
@@ -1025,7 +1025,7 @@ class EmailMan extends SugarBean
             $mail->From = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
             isValidEmailAddress($mail->From);
             $mail->FromName = $locale->translateCharsetMIME(trim($this->current_emailmarketing->from_name), 'UTF-8', $OBCharset);
-            
+
             $mail->ClearCustomHeaders();
             $mail->AddCustomHeader('X-CampTrackID:' . $this->getTargetId());
             //CL - Bug 25256 Check if we have a reply_to_name/reply_to_addr value from the email marketing table.  If so use email marketing entry; otherwise current mailbox (inbound email) entry
@@ -1118,7 +1118,7 @@ class EmailMan extends SugarBean
             $mail->handleAttachments($this->notes_array);
             $tmp_Subject = $mail->Subject;
             $mail->prepForOutbound();
-            
+
             $success = $mail->Send();
             //Do not save the encoded subject.
             $mail->Subject = $tmp_Subject;
@@ -1452,7 +1452,7 @@ class EmailMan extends SugarBean
             isset($focus->last_name) ? $focus->last_name : '');
         $emailAddressConfirmOptInToken = $emailAddress->getConfirmOptInTokenGenerateIfNotExists();
         $mailer->replace('emailaddress_confirm_opt_in_token', $emailAddressConfirmOptInToken);
-        
+
         /**
          * @deprecated since version 7.10.2
          */

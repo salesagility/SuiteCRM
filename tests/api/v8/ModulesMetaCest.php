@@ -33,14 +33,14 @@ class ModulesMetaCest
 
     /**
      * Get list of modules
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/language
      *
      */
-    public function TestScenarioGetModuleMetaLanguages(apiTester $I)
+    public function TestScenarioGetModuleMetaLanguages(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -64,14 +64,14 @@ class ModulesMetaCest
 
     /**
      * Get list of fields/attributes of a given module
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/attributes
      *
      */
-    public function TestScenarioGetModuleMetaAttributes(apiTester $I)
+    public function TestScenarioGetModuleMetaAttributes(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -98,14 +98,14 @@ class ModulesMetaCest
 
     /**
      * Get menu metadata of a given module
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/menu
      *
      */
-    public function TestScenarioGetModuleMetaMenu(apiTester $I)
+    public function TestScenarioGetModuleMetaMenu(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -140,14 +140,14 @@ class ModulesMetaCest
 
     /**
      * Get layout metadata of module view
-     * @param apiTester $I
+     * @param ApiTester $I
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/view/{view}
      * @see \MBConstants for posible {view} values
      */
-    public function TestScenarioGetMetaLayout(apiTester $I)
+    public function TestScenarioGetMetaLayout(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -169,14 +169,15 @@ class ModulesMetaCest
 
     /**
      * Get the current user's favorites for a single module
-     * @param \apiTester $I
+     * @param \ApiTester $I
      * @see http://jsonapi.org/format/1.0/#document-meta
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/{module}/favorites
      * @see global $moduleList for posible {module} values
      */
-    public function TestScenarioGetModuleFavorites(apiTester $I) {
+    public function TestScenarioGetModuleFavorites(ApiTester $I)
+    {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
@@ -263,14 +264,15 @@ class ModulesMetaCest
     }
     /**
      * Get the current user's favorite records for all modules
-     * @param \apiTester $I
+     * @param \ApiTester $I
      * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/favorites
      * @see global $moduleList for posible {module} values
      */
-    public function TestScenarioGetAllModulesFavorites(apiTester $I) {
+    public function TestScenarioGetAllModulesFavorites(ApiTester $I)
+    {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
@@ -356,14 +358,14 @@ class ModulesMetaCest
 
     /**
      * Get the current user recently viewed records for all modules
-     * @param \apiTester $I
+     * @param \ApiTester $I
      * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/viewed
      */
 
-    public function TestScenarioGetModuleRecentlyViewed(apiTester $I)
+    public function TestScenarioGetModuleRecentlyViewed(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -394,14 +396,14 @@ class ModulesMetaCest
 
     /**
      * Get the current user recently viewed records for all modules
-     * @param \apiTester $I
+     * @param \ApiTester $I
      * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/viewed
      */
 
-    public function TestScenarioGetAllModulesRecentlyViewed(apiTester $I)
+    public function TestScenarioGetAllModulesRecentlyViewed(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -432,13 +434,13 @@ class ModulesMetaCest
 
     /**
      * Get the module filters
-     * @param \apiTester $I
+     * @param \ApiTester $I
      * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/filters
      */
-    public function TestScenarioModuleFilters(apiTester $I)
+    public function TestScenarioModuleFilters(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
@@ -461,13 +463,13 @@ class ModulesMetaCest
 
     /**
      * Get the module menus
-     * @param \apiTester $I
+     * @param \ApiTester $I
      * @see http://jsonapi.org/format/1.0/#document-compound-documents
      *
      * HTTP Verb: GET
      * URL: /api/v8/modules/meta/filters
      */
-    public function TestScenarioModuleMenus(apiTester $I)
+    public function TestScenarioModuleMenus(ApiTester $I)
     {
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
