@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -120,61 +123,64 @@ class Call extends SugarBean {
 										'assigned_user_id'	=> 'users',
 										'note_id'			=> 'notes',
                                         'lead_id'			=> 'leads',
-								);
+                                );
 
-	public function __construct() {
-	    parent::__construct();
-		global $app_list_strings;
+    public function __construct()
+    {
+        parent::__construct();
+        global $app_list_strings;
 
-       	$this->setupCustomFields('Calls');
+        $this->setupCustomFields('Calls');
 
-		foreach ($this->field_defs as $field) {
-			$this->field_name_map[$field['name']] = $field;
-		}
-
-
+        foreach ($this->field_defs as $field) {
+            $this->field_name_map[$field['name']] = $field;
+        }
 
 
-         if(!empty($GLOBALS['app_list_strings']['duration_intervals']))
-        	$this->minutes_values = $GLOBALS['app_list_strings']['duration_intervals'];
-	}
 
-	/**
-	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-	 */
-	public function Call(){
-		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-		if(isset($GLOBALS['log'])) {
-			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
-			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-		}
-		self::__construct();
-	}
 
-	/**
-	 * Disable edit if call is recurring and source is not Sugar. It should be edited only from Outlook.
-	 * @param $view string
-	 * @param $is_owner bool
-	 */
-	function ACLAccess($view,$is_owner='not_set',$in_group='not_set'){
-		// don't check if call is being synced from Outlook
-		if($this->syncing == false){
-			$view = strtolower($view);
-			switch($view){
-				case 'edit':
-				case 'save':
-				case 'editview':
-				case 'delete':
-					if(!empty($this->recurring_source) && $this->recurring_source != "Sugar"){
-						return false;
-					}
-			}
-		}
-		return parent::ACLAccess($view,$is_owner,$in_group);
-	}
-	
+        if (!empty($GLOBALS['app_list_strings']['duration_intervals'])) {
+            $this->minutes_values = $GLOBALS['app_list_strings']['duration_intervals'];
+        }
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Call()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+    /**
+     * Disable edit if call is recurring and source is not Sugar. It should be edited only from Outlook.
+     * @param $view string
+     * @param $is_owner bool
+     */
+    public function ACLAccess($view, $is_owner='not_set', $in_group='not_set')
+    {
+        // don't check if call is being synced from Outlook
+        if ($this->syncing == false) {
+            $view = strtolower($view);
+            switch ($view) {
+                case 'edit':
+                case 'save':
+                case 'editview':
+                case 'delete':
+                    if (!empty($this->recurring_source) && $this->recurring_source != "Sugar") {
+                        return false;
+                    }
+            }
+        }
+        return parent::ACLAccess($view, $is_owner, $in_group);
+    }
+
     // save date_end by calculating user input
     // this is for calendar
     function save($check_notify = false)
@@ -848,6 +854,7 @@ class Call extends SugarBean {
                 return $keys[0];
             }
         }
+
         return '';
     }
 

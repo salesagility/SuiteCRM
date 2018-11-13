@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/ListView/ListViewSmarty.php');
 
@@ -273,21 +277,33 @@ class PopupSmarty extends ListViewSmarty{
 		$this->th->ss->assign('sugarVersion', $GLOBALS['sugar_version']);
         $this->th->ss->assign('should_process', $this->should_process);
 
-		if($this->_create){
-			$this->th->ss->assign('ADDFORM', $this->getQuickCreate());//$this->_getAddForm());
-			$this->th->ss->assign('ADDFORMHEADER', $this->_getAddFormHeader());
-			$this->th->ss->assign('object_name', $this->seed->object_name);
-		}
-		$this->th->ss->assign('LIST_HEADER', get_form_header($GLOBALS['mod_strings']['LBL_LIST_FORM_TITLE'], '', false));
-		$this->th->ss->assign('SEARCH_FORM_HEADER', get_form_header($GLOBALS['mod_strings']['LBL_SEARCH_FORM_TITLE'], '', false));
-		$str = $this->th->displayTemplate($this->seed->module_dir, $this->view, $this->tpl);
-		return $str;
-	}
+        if ($this->_create) {
+            $this->th->ss->assign('ADDFORM', $this->getQuickCreate());//$this->_getAddForm());
+            $this->th->ss->assign('ADDFORMHEADER', $this->_getAddFormHeader());
+            $this->th->ss->assign('object_name', $this->seed->object_name);
+        }
+        $this->th->ss->assign(
+            'LIST_HEADER',
+            get_form_header($GLOBALS['mod_strings']['LBL_LIST_FORM_TITLE'], '', false)
+        );
+        $this->th->ss->assign(
+            'SEARCH_FORM_HEADER',
+            get_form_header($GLOBALS['mod_strings']['LBL_SEARCH_FORM_TITLE'], '', false)
+        );
 
-	/*
-	 * Setup up the smarty template. we added an extra step here to add the order by from the popupdefs.
-	 */
-    function setup(
+        $themeObject = SugarThemeRegistry::current();
+        $this->th->ss->assign("STYLE_JS", ob_get_contents() . $themeObject->getJS());
+
+        $str = $this->th->displayTemplate($this->seed->module_dir, $this->view, $this->tpl);
+        return $str;
+    }
+
+    /**
+     * Setup up the smarty template. we added an extra step here to add the order by from the popupdefs.
+     *
+     * @see ListViewDisplay::setup
+     */
+    public function setup(
         $seed,
         $file = null,
         $where = null,
@@ -298,43 +314,43 @@ class PopupSmarty extends ListViewSmarty{
         $id_field = 'id',
         $id = null
     ) {
-		$args = func_get_args();
-		return call_user_func_array(array($this, '_setup'), $args);
-	}
-	function _setup($file) {
+        $args = func_get_args();
+        return call_user_func_array(array($this, '_setup'), $args);
+    }
 
-	    if(isset($this->_popupMeta)){
-			if(isset($this->_popupMeta['create']['formBase'])) {
-				require_once('modules/' . $this->seed->module_dir . '/' . $this->_popupMeta['create']['formBase']);
-				$this->_create = true;
-			}
-		}
-	    if(!empty($this->_popupMeta['create'])){
-			$formBase = new $this->_popupMeta['create']['formBaseClass']();
-			if(isset($_REQUEST['doAction']) && $_REQUEST['doAction'] == 'save')
-			{
-				//If it's a new record, set useRequired to false
-				$useRequired = empty($_REQUEST['id']) ? false : true;
-				$formBase->handleSave('', false, $useRequired);
-			}
-		}
+    public function _setup($file)
+    {
+        if (isset($this->_popupMeta)) {
+            if (isset($this->_popupMeta['create']['formBase'])) {
+                require_once('modules/' . $this->seed->module_dir . '/' . $this->_popupMeta['create']['formBase']);
+                $this->_create = true;
+            }
+        }
+        if (!empty($this->_popupMeta['create'])) {
+            $formBase = new $this->_popupMeta['create']['formBaseClass']();
+            if (isset($_REQUEST['doAction']) && $_REQUEST['doAction'] == 'save') {
+                //If it's a new record, set useRequired to false
+                $useRequired = empty($_REQUEST['id']) ? false : true;
+                $formBase->handleSave('', false, $useRequired);
+            }
+        }
 
-		$params = array();
-		if(!empty($this->_popupMeta['orderBy'])){
-			$params['orderBy'] = $this->_popupMeta['orderBy'];
-		}
+        $params = array();
+        if (!empty($this->_popupMeta['orderBy'])) {
+            $params['orderBy'] = $this->_popupMeta['orderBy'];
+        }
 
-		if(file_exists('custom/modules/'.$this->module.'/metadata/metafiles.php')){
-			require('custom/modules/'.$this->module.'/metadata/metafiles.php');
-		}elseif(file_exists('modules/'.$this->module.'/metadata/metafiles.php')){
-			require('modules/'.$this->module.'/metadata/metafiles.php');
-		}
+        if (file_exists('custom/modules/'.$this->module.'/metadata/metafiles.php')) {
+            require('custom/modules/'.$this->module.'/metadata/metafiles.php');
+        } elseif (file_exists('modules/'.$this->module.'/metadata/metafiles.php')) {
+            require('modules/'.$this->module.'/metadata/metafiles.php');
+        }
 
-		if(!empty($metafiles[$this->module]['searchfields'])) {
-			require($metafiles[$this->module]['searchfields']);
-		} elseif(file_exists('modules/'.$this->module.'/metadata/SearchFields.php')) {
-			require('modules/'.$this->module.'/metadata/SearchFields.php');
-	    }
+        if (!empty($metafiles[$this->module]['searchfields'])) {
+            require($metafiles[$this->module]['searchfields']);
+        } elseif (file_exists('modules/'.$this->module.'/metadata/SearchFields.php')) {
+            require('modules/'.$this->module.'/metadata/SearchFields.php');
+        }
         $this->searchdefs[$this->module]['templateMeta']['maxColumns'] = 2;
         $this->searchdefs[$this->module]['templateMeta']['widths']['label'] = 10;
         $this->searchdefs[$this->module]['templateMeta']['widths']['field'] = 30;

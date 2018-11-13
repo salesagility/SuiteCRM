@@ -21,7 +21,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 /**
@@ -80,11 +80,13 @@ class AOS_Invoices extends AOS_Invoices_sugar {
 
         perform_aos_save($this);
 
-        parent::save($check_notify);
+        $return_id = parent::save($check_notify);
 
         require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
         $productQuoteGroup = new AOS_Line_Item_Groups();
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
+
+        return $return_id;
     }
 
     function mark_deleted($id)

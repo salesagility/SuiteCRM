@@ -37,14 +37,13 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+require_once 'include/utils.php';
 
-global $db, $current_user, $timedate;
-
+global $current_user, $timedate;
+$db = DBManagerFactory::getInstance();
 
 
 if (isset($_SESSION['rebuild_relationships'])) {
@@ -55,8 +54,11 @@ if (isset($_SESSION['rebuild_extensions'])) {
     displayAdminError(translate('MSG_REBUILD_EXTENSIONS', 'Administration'));
 }
 
-if ((strpos((string) (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : null), 'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')
-) {
+if (!isset($_SERVER['SERVER_SOFTWARE'])) {
+    LoggerManager::getLogger()->warn('SERVER_SOFTVARE is undefined got Display Warnings');
+}
+
+if (isset($_SERVER['SERVER_SOFTWARE']) && (strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')) {
     displayAdminError(translate('LBL_FASTCGI_LOGGING', 'Administration'));
 }
 if (is_admin($current_user)) {

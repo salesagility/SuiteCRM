@@ -20,7 +20,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -38,8 +38,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 /*********************************************************************************
@@ -277,7 +277,7 @@ class Link2
     {
         return $this->relationship_fields;
     }
-    
+
     /**
      * @param $name
      *
@@ -291,7 +291,7 @@ class Link2
             return null;
         } //For now return null. Later try the relationship object directly.
     }
-    
+
     /**
      * @return SugarRelationship the relationship object this link references
      */
@@ -306,6 +306,14 @@ class Link2
     public function getSide()
     {
         //First try the relationship
+
+        $focusModuleName = null;
+        if (isset($this->focus->module_name)) {
+            $focusModuleName = $this->focus->module_name;
+        } else {
+            LoggerManager::getLogger()->error('Focus Module Name is not set for Link2 get side.');
+        }
+
         if ($this->relationship->getLHSLink() == $this->name &&
             ($this->relationship->getLHSModule() == (isset($this->focus->module_name) ? $this->focus->module_name : null))
         ) {
@@ -323,7 +331,7 @@ class Link2
         } else {
             $focusModuleName = $this->focus->module_name;
         }
-        
+
         if ($rhsLink == $this->name &&
             ($rhsModule == $focusModuleName)
         ) {

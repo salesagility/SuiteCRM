@@ -68,7 +68,7 @@ class SugarEmailAddress extends SugarBean
 
     /** @var boolean $tracker_visibility */
     public $tracker_visibility = false;
-    
+
     /**
      * @var string $table_name
      */
@@ -168,7 +168,7 @@ class SugarEmailAddress extends SugarBean
      * @var TimeDate $confirm_opt_in_fail_date
      */
     public $confirm_opt_in_fail_date;
-    
+
     /**
      *
      * @var string
@@ -2053,7 +2053,14 @@ class SugarEmailAddress extends SugarBean
     public function getOptInStatus()
     {
         $configurator = new Configurator();
-        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+
+        $enableConfirmedOptIn = null;
+        if (isset($configurator->config['email_enable_confirm_opt_in'])) {
+            $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        } else {
+            LoggerManager::getLogger()->warn('EmailUI::populateComposeViewFields: $configurator->config[email_enable_confirm_opt_in] is not set');
+        }
+
         $optInFromFlags = $this->getOptInIndicationFromFlags();
 
         if ($enableConfirmedOptIn === self::COI_STAT_DISABLED) {
@@ -2332,7 +2339,7 @@ class SugarEmailAddress extends SugarBean
 
         return $tickHtml;
     }
-    
+
     /**
      *
      * @return string

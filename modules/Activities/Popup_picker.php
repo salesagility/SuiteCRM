@@ -132,7 +132,10 @@ class Popup_Picker
         }
 
         foreach ($focus_tasks_list as $task) {
-            $sort_date_time='';
+            if (!$task->ACLAccess('list')) {
+                continue;
+            }
+
             if (empty($task->date_due) || $task->date_due == '0000-00-00') {
                 $date_due = '';
             } else {
@@ -184,6 +187,9 @@ class Popup_Picker
         } // end Tasks
 
         foreach ($focus_meetings_list as $meeting) {
+            if (!$meeting->ACLAccess('list')) {
+                continue;
+            }
 
             if (empty($meeting->contact_id) && empty($meeting->contact_name)) {
                 $meeting_contacts = $meeting->get_linked_beans('contacts', 'Contact');
@@ -234,6 +240,9 @@ class Popup_Picker
         } // end Meetings
 
         foreach ($focus_calls_list as $call) {
+            if (!$call->ACLAccess('list')) {
+                continue;
+            }
 
             if (empty($call->contact_id) && empty($call->contact_name)) {
                 $call_contacts = $call->get_linked_beans('contacts', 'Contact');
@@ -284,7 +293,9 @@ class Popup_Picker
         } // end Calls
 
         foreach ($focus_emails_list as $email) {
-
+            if (!$email->ACLAccess('list')) {
+                continue;
+            }
             if (empty($email->contact_id) && empty($email->contact_name)) {
                 $email_contacts = $email->get_linked_beans('contacts', 'Contact');
                 if (!empty($email_contacts[0]->id) && !empty($email_contacts[0]->name)) {
@@ -363,6 +374,9 @@ class Popup_Picker
         } //end Unlinked Emails
 
         foreach ($focus_notes_list as $note) {
+            if (!$note->ACLAccess('list')) {
+                continue;
+            }
             if ($note->ACLAccess('view')) {
 
                 $summary_list[] = array(

@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('soap/SoapRelationshipHelper.php');
 set_time_limit(360);
@@ -131,28 +134,26 @@ function sync_get_modified_relationships($session, $module_name, $related_module
 	}	
 	$results = retrieve_modified_relationships($module_name,  $related_module, $query, $deleted, $offset, $max_results, $select_fields, $relationship_name);
 
-	$list = $results['result'];
-	
-	$xml = '<?xml version="1.0" encoding="utf-8"?><items>';
-	foreach($list as $value)
-	{
-		$val = array_get_return_value($value, $results['table_name']);
-		if($php_serialize == 0){
-			$xml .= get_name_value_xml($val, $module_name);
-		}
-		$output_list[] = $val;
-	}
-	$xml .= '</items>';
-	$next_offset = $offset + sizeof($output_list);
-	
-	if($php_serialize == 0){
-		$myoutput = base64_encode($xml);	
-	}
-	else{
-		$myoutput = get_encoded($output_list);
-	}
-	
-	return array('result_count'=>sizeof($output_list),'next_offset'=>0, 'total_count'=>sizeof($output_list), 'field_list'=>array(), 'entry_list'=>$myoutput , 'error'=>$error->get_soap_array());
+    $list = $results['result'];
+
+    $xml = '<?xml version="1.0" encoding="utf-8"?><items>';
+    foreach ($list as $value) {
+        $val = array_get_return_value($value, $results['table_name']);
+        if ($php_serialize == 0) {
+            $xml .= get_name_value_xml($val, $module_name);
+        }
+        $output_list[] = $val;
+    }
+    $xml .= '</items>';
+    $next_offset = $offset + sizeof($output_list);
+
+    if ($php_serialize == 0) {
+        $myoutput = base64_encode($xml);
+    } else {
+        $myoutput = get_encoded($output_list);
+    }
+
+    return array('result_count'=>sizeof($output_list),'next_offset'=>0, 'total_count'=>sizeof($output_list), 'field_list'=>array(), 'entry_list'=>$myoutput , 'error'=>$error->get_soap_array());
 }
 
 
@@ -162,65 +163,62 @@ $server->register(
     array('return'=>'tns:get_sync_result_encoded'),
     $NAMESPACE);
 
-function get_modified_entries($session, $module_name, $ids, $select_fields ){
-	global  $beanList, $beanFiles;
-	$error = new SoapError();
-	$field_list = array();
-	$output_list = array();
-	if(!validate_authenticated($session)){
-		$error->set_error('invalid_login');	
-		return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
-	}
-	if(empty($beanList[$module_name])){
-		$error->set_error('no_module');	
-		return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
-	}
-	global $current_user;
-	if(!check_modules_access($current_user, $module_name, 'read')){
-		$error->set_error('no_access');	
-		return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
-	}
-	
-	$class_name = $beanList[$module_name];
-	require_once($beanFiles[$class_name]);
-	$seed = new $class_name();
-	//rsmith
-	$in = '';
-	$field_select ='';
-	
-	$table_name = $seed->table_name;
-	if(isset($ids)){
-		foreach($ids as $value){
-			if(empty($in))
-			{
-				$in .= "('" . DBManagerFactory::getInstance()->quote($value) . "'";	
-			}
-			else
-			{
-				$in .= ",'" . DBManagerFactory::getInstance()->quote($value) . "'";	
-			}
-		}//end foreach
-	}
-	$index = 0;
-	foreach($select_fields as $field){
-            if ( !isset($seed->field_defs[$field]) ) {
-                continue;
+function get_modified_entries($session, $module_name, $ids, $select_fields)
+{
+    global  $beanList, $beanFiles;
+    $error = new SoapError();
+    $field_list = array();
+    $output_list = array();
+    if (!validate_authenticated($session)) {
+        $error->set_error('invalid_login');
+        return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+    }
+    if (empty($beanList[$module_name])) {
+        $error->set_error('no_module');
+        return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+    }
+    global $current_user;
+    if (!check_modules_access($current_user, $module_name, 'read')) {
+        $error->set_error('no_access');
+        return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+    }
+
+    $class_name = $beanList[$module_name];
+    require_once($beanFiles[$class_name]);
+    $seed = new $class_name();
+    //rsmith
+    $in = '';
+    $field_select ='';
+
+    $table_name = $seed->table_name;
+    if (isset($ids)) {
+        foreach ($ids as $value) {
+            if (empty($in)) {
+                $in .= "('" . DBManagerFactory::getInstance()->quote($value) . "'";
+            } else {
+                $in .= ",'" . DBManagerFactory::getInstance()->quote($value) . "'";
             }
-			$field_select .= $table_name.".".$field;
-		
-			if($index < (count($select_fields) - 1))
-			{
-				$field_select .= ",";
-				$index++;
-			}
-		}//end foreach
-	
-		$ids = array();
-	
-	//end rsmith
-	if(!empty($in)){
-			$in .=')';	
-	}
+        }//end foreach
+    }
+    $index = 0;
+    foreach ($select_fields as $field) {
+        if (!isset($seed->field_defs[$field])) {
+            continue;
+        }
+        $field_select .= $table_name.".".$field;
+
+        if ($index < (count($select_fields) - 1)) {
+            $field_select .= ",";
+            $index++;
+        }
+    }//end foreach
+
+    $ids = array();
+
+    //end rsmith
+    if (!empty($in)) {
+        $in .=')';
+    }
 
 	$ret_array = $seed->create_new_list_query('', "$table_name.id IN $in", $select_fields, array(), -2, '', true, $seed, true);
     if(!is_array($params)) $params = array();
@@ -250,9 +248,9 @@ function get_modified_entries($session, $module_name, $ids, $select_fields ){
 	}
 	$xml .= "</items>";
 
-	$xml = base64_encode($xml);
-	
-	return array('result'=>$xml, 'error'=>$error->get_soap_array());
+    $xml = base64_encode($xml);
+
+    return array('result'=>$xml, 'error'=>$error->get_soap_array());
 }
 
 $server->register(
@@ -261,73 +259,73 @@ $server->register(
     array('return'=>'tns:get_sync_result_encoded'),
     $NAMESPACE);
 
-function get_attendee_list($session, $module_name, $id){
-	global  $beanList, $beanFiles;
-	$error = new SoapError();
-	$field_list = array();
-	$output_list = array();
-	if(!validate_authenticated($session)){
-		$error->set_error('invalid_login');	
-		return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
-	}
-	if(empty($beanList[$module_name])){
-		$error->set_error('no_module');	
-		return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
-	}
-	global $current_user;
-	if(!check_modules_access($current_user, $module_name, 'read')){
-		$error->set_error('no_access');	
-		return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
-	}
-	
+function get_attendee_list($session, $module_name, $id)
+{
+    global  $beanList, $beanFiles;
+    $error = new SoapError();
+    $field_list = array();
+    $output_list = array();
+    if (!validate_authenticated($session)) {
+        $error->set_error('invalid_login');
+        return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+    }
+    if (empty($beanList[$module_name])) {
+        $error->set_error('no_module');
+        return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+    }
+    global $current_user;
+    if (!check_modules_access($current_user, $module_name, 'read')) {
+        $error->set_error('no_access');
+        return array('field_list'=>$field_list, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+    }
 
-	$class_name = $beanList[$module_name];
-	require_once($beanFiles[$class_name]);
-	$seed = new $class_name();
-	
-	
-			//rsmith
-			$xml = '<?xml version="1.0" encoding="utf-8"?>';
-			if($module_name == 'Meetings' || $module_name == 'Calls'){
-				//if we find a meeting or call we want to send back the attendees
-				$l_module_name = strtolower($module_name);
-				$table_name = $l_module_name."_users";
-				if($module_name == 'Meetings')
-					$join_field = "meeting";
-				else
-					$join_field = "call";
-				$xml .= '<attendees>';
-				$result = $seed->db->query("SELECT users.id, $table_name.date_modified, first_name, last_name FROM users INNER JOIN $table_name ON $table_name.user_id = users.id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND $table_name.deleted = 0"); 
-				$user = new User();
-				while($row = $seed->db->fetchByAssoc($result))
-				{
-					$user->id = $row['id'];
-					$email = $user->emailAddress->getPrimaryAddress($user);
-					$xml .= '<attendee>';
-					$xml .= '<id>'.$user->id.'</id>';
-					$xml .= '<first_name>'.$row['first_name'].'</first_name>';
-					$xml .= '<last_name>'.$row['last_name'].'</last_name>';
-					$xml .= '<email1>'.$email.'</email1>';
-					$xml .= '</attendee>';
-				}	
-				//now get contacts
-				$table_name = $l_module_name."_contacts";
-				$result = $seed->db->query("SELECT contacts.id, $table_name.date_modified, first_name, last_name FROM contacts INNER JOIN $table_name ON $table_name.contact_id = contacts.id INNER JOIN $seed->table_name ON ".$seed->table_name.".id = ".$table_name.".".$join_field."_id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND ".$table_name.".deleted = 0 AND (contacts.id != ".$seed->table_name.".parent_id OR ".$seed->table_name.".parent_id IS NULL)"); 
-				$contact = new Contact();
-				while($row = $seed->db->fetchByAssoc($result))
-				{
-					$contact->id = $row['id'];
-					$email = $contact->emailAddress->getPrimaryAddress($contact);
-					$xml .= '<attendee>';
-					$xml .= '<id>'.$contact->id.'</id>';
-					$xml .= '<first_name>'.$row['first_name'].'</first_name>';
-					$xml .= '<last_name>'.$row['last_name'].'</last_name>';
-					$xml .= '<email1>'.$email.'</email1>';
-					$xml .= '</attendee>';
-				}					
-				$xml .= '</attendees>';
-			}
-	$xml = base64_encode($xml);
-	return array('result'=>$xml, 'error'=>$error->get_soap_array());
+
+    $class_name = $beanList[$module_name];
+    require_once($beanFiles[$class_name]);
+    $seed = new $class_name();
+
+
+    //rsmith
+    $xml = '<?xml version="1.0" encoding="utf-8"?>';
+    if ($module_name == 'Meetings' || $module_name == 'Calls') {
+        //if we find a meeting or call we want to send back the attendees
+        $l_module_name = strtolower($module_name);
+        $table_name = $l_module_name."_users";
+        if ($module_name == 'Meetings') {
+            $join_field = "meeting";
+        } else {
+            $join_field = "call";
+        }
+        $xml .= '<attendees>';
+        $result = $seed->db->query("SELECT users.id, $table_name.date_modified, first_name, last_name FROM users INNER JOIN $table_name ON $table_name.user_id = users.id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND $table_name.deleted = 0");
+        $user = new User();
+        while ($row = $seed->db->fetchByAssoc($result)) {
+            $user->id = $row['id'];
+            $email = $user->emailAddress->getPrimaryAddress($user);
+            $xml .= '<attendee>';
+            $xml .= '<id>'.$user->id.'</id>';
+            $xml .= '<first_name>'.$row['first_name'].'</first_name>';
+            $xml .= '<last_name>'.$row['last_name'].'</last_name>';
+            $xml .= '<email1>'.$email.'</email1>';
+            $xml .= '</attendee>';
+        }
+        //now get contacts
+        $table_name = $l_module_name."_contacts";
+        $result = $seed->db->query("SELECT contacts.id, $table_name.date_modified, first_name, last_name FROM contacts INNER JOIN $table_name ON $table_name.contact_id = contacts.id INNER JOIN $seed->table_name ON ".$seed->table_name.".id = ".$table_name.".".$join_field."_id WHERE ".$table_name.".".$join_field."_id = '".DBManagerFactory::getInstance()->quote($id)."' AND ".$table_name.".deleted = 0 AND (contacts.id != ".$seed->table_name.".parent_id OR ".$seed->table_name.".parent_id IS NULL)");
+        $contact = new Contact();
+        while ($row = $seed->db->fetchByAssoc($result)) {
+            $contact->id = $row['id'];
+            $email = $contact->emailAddress->getPrimaryAddress($contact);
+            $xml .= '<attendee>';
+            $xml .= '<id>'.$contact->id.'</id>';
+            $xml .= '<first_name>'.$row['first_name'].'</first_name>';
+            $xml .= '<last_name>'.$row['last_name'].'</last_name>';
+            $xml .= '<email1>'.$email.'</email1>';
+            $xml .= '</attendee>';
+        }
+        $xml .= '</attendees>';
+    }
+    $xml = base64_encode($xml);
+    return array('result'=>$xml, 'error'=>$error->get_soap_array());
 }
 

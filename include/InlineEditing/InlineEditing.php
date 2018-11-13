@@ -427,21 +427,23 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
     }
 
-    //If field is of type date time or datetimecombo
-    if ($vardef['type'] == "datetimecombo" || $vardef['type'] == "datetime") {
+    //If field is of type date time, datetimecombo or date
+    if ($vardef['type'] == "datetimecombo" || $vardef['type'] == "datetime" || $vardef['type'] == "date") {
+        if ($method != "close") {
+            if ($method != "save") {
+                $value = convertDateUserToDB($value);
+            }
+            $datetime_format = $timedate->get_date_time_format();
 
+            if ($vardef['type'] == "date") {
+                $value = $value . ' 00:00:00';
+            }
+            // create utc date (as it's utc in db)
+            // use the calculated datetime_format
+            $datetime = DateTime::createFromFormat($datetime_format, $value,new DateTimeZone('UTC'));
 
-        if ($method != "save") {
-            $value = convertDateUserToDB($value);
+            $value = $datetime->format($datetime_format);
         }
-        $datetime_format = $timedate->get_date_time_format();
-        // create utc date (as it's utc in db)
-        $datetime = DateTime::createFromFormat("Y-m-d H:i:s", $value,new DateTimeZone('UTC'));
-        // convert it to timezone the user uses
-        $datetime = $timedate->tzUser($datetime);
-
-        $value = $datetime->format($datetime_format);
-
     }
 
     //If field is of type bool, checkbox.
