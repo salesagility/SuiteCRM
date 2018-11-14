@@ -961,10 +961,6 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_FAIL' => 'Failed to start partial index.',
 
     // SearchWrapper Settings
-    'LBL_SEARCH_CONTROLLER' => 'Enable new Search',
-    'LBL_SEARCH_CONTROLLER_HELP' => 'If not enabled the search will use the legacy global search controller',
-    'LBL_SEARCH_CONTROLLER_TOOLTIP' => 'A Search interface that allows admin user to introduce new engines.',
-
     'LBL_SEARCH_ENGINE' => 'Search Engine',
     'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search wrapper',
     'LBL_SEARCH_ENGINE_TOOLTIP' => 'Select a search engine for the Global Search.',
