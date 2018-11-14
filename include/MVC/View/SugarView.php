@@ -553,13 +553,14 @@ class SugarView
             $ss->assign("CURRENT_USER_ID", $current_user->id);
 
             // get the last viewed records
-			$favorites = BeanFactory::getBean('Favorites');
-			$favorite_records = $favorites->getCurrentUserSidebarFavorites();
-			$ss->assign("favoriteRecords", $favorite_records);
+            require_once("modules/Favorites/Favorites.php");
+            $favorites = new Favorites();
+            $favorite_records = $favorites->getCurrentUserSidebarFavorites();
+            $ss->assign("favoriteRecords", $favorite_records);
 
-			$tracker = BeanFactory::getBean('Trackers');
-			$history = $tracker->get_recently_viewed($current_user->id);
-			$ss->assign("recentRecords", $this->processRecentRecords($history));
+            $tracker = new Tracker();
+            $history = $tracker->get_recently_viewed($current_user->id);
+            $ss->assign("recentRecords", $this->processRecentRecords($history));
         }
 
         $bakModStrings = $mod_strings;
