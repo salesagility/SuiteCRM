@@ -1522,6 +1522,7 @@ eoq;
                 die();
             } else {
                 echo "NOOP: no search criteria found";
+            }
 
             break;
 
