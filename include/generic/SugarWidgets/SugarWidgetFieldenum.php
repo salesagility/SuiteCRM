@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 class SugarWidgetFieldEnum extends SugarWidgetReportField
@@ -72,43 +75,48 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
         return "(coalesce(" . $this->reporter->db->convert($column, "length") . ",0) > 0 AND $column != '^^' )\n";
     }
 
-    public function queryFilteris($layout_def) {
-		$input_name0 = $layout_def['input_name0'];
-		if (is_array($layout_def['input_name0'])) {
-			$input_name0 = $layout_def['input_name0'][0];
-		}
-		return $this->_get_column_select($layout_def)." = ".$this->reporter->db->quoted($input_name0)."\n";
-	}
+    public function queryFilteris($layout_def)
+    {
+        $input_name0 = $layout_def['input_name0'];
+        if (is_array($layout_def['input_name0'])) {
+            $input_name0 = $layout_def['input_name0'][0];
+        }
+        return $this->_get_column_select($layout_def)." = ".$this->reporter->db->quoted($input_name0)."\n";
+    }
 
-	public function queryFilteris_not($layout_def) {
-		$input_name0 = $layout_def['input_name0'];
-		if (is_array($layout_def['input_name0'])) {
-			$input_name0 = $layout_def['input_name0'][0];
-		}
-		return $this->_get_column_select($layout_def)." <> ".$this->reporter->db->quoted($input_name0)."\n";
-	}
+    public function queryFilteris_not($layout_def)
+    {
+        $input_name0 = $layout_def['input_name0'];
+        if (is_array($layout_def['input_name0'])) {
+            $input_name0 = $layout_def['input_name0'][0];
+        }
+        return $this->_get_column_select($layout_def)." <> ".$this->reporter->db->quoted($input_name0)."\n";
+    }
 
-	public function queryFilterone_of($layout_def) {
-		$arr = array ();
-		foreach ($layout_def['input_name0'] as $value) {
-			$arr[] = $this->reporter->db->quoted($value);
-		}
-		$str = implode(",", $arr);
-		return $this->_get_column_select($layout_def)." IN (".$str.")\n";
-	}
+    public function queryFilterone_of($layout_def, $rename_columns = true)
+    {
+        $arr = array();
+        foreach ($layout_def['input_name0'] as $value) {
+            $arr[] = $this->reporter->db->quoted($value);
+        }
+        $str = implode(",", $arr);
+        return $this->_get_column_select($layout_def)." IN (".$str.")\n";
+    }
 
-	public function queryFilternot_one_of($layout_def) {
-		$arr = array ();
-		foreach ($layout_def['input_name0'] as $value) {
-			$arr[] = $this->reporter->db->quoted($value);
-		}
-	    $reporter = $this->layout_manager->getAttribute("reporter");
-		$str = implode(",", $arr);
-		return $this->_get_column_select($layout_def)." NOT IN (".$str.")\n";
-	}
+    public function queryFilternot_one_of($layout_def)
+    {
+        $arr = array();
+        foreach ($layout_def['input_name0'] as $value) {
+            $arr[] = $this->reporter->db->quoted($value);
+        }
+        $reporter = $this->layout_manager->getAttribute("reporter");
+        $str = implode(",", $arr);
+        return $this->_get_column_select($layout_def)." NOT IN (".$str.")\n";
+    }
 
-    function & displayList(&$layout_def) {
-        if(!empty($layout_def['column_key'])){
+    public function & displayList(&$layout_def)
+    {
+        if (!empty($layout_def['column_key'])) {
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
         }else if(!empty($layout_def['fields'])){
             $field_def = $layout_def['fields'];

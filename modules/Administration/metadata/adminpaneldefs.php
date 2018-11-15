@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 global $current_user,$admin_group_header;
 
@@ -71,8 +72,6 @@ $admin_option_defs['Administration']['languages']= array('Currencies','LBL_MANAG
 
 $admin_option_defs['Administration']['repair']= array('Repair','LBL_UPGRADE_TITLE','LBL_UPGRADE','./index.php?module=Administration&action=Upgrade', 'repair');
 
-$admin_option_defs['Administration']['global_search']=array('icon_SearchForm','LBL_GLOBAL_SEARCH_SETTINGS','LBL_GLOBAL_SEARCH_SETTINGS_DESC','./index.php?module=Administration&action=GlobalSearchSettings', 'global-search');
-
 if (!isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) || !$GLOBALS['sugar_config']['hide_admin_diagnostics'])
 {
     $admin_option_defs['Administration']['diagnostic']= array('Diagnostic','LBL_DIAGNOSTIC_TITLE','LBL_DIAGNOSTIC_DESC','./index.php?module=Administration&action=Diagnostic', 'diagnostic');
@@ -85,9 +84,9 @@ $admin_option_defs['Administration']['connector_settings']=array('icon_Connector
 // Theme Enable/Disable
 $admin_option_defs['Administration']['theme_settings']=array('icon_AdminThemes','LBL_THEME_SETTINGS','LBL_THEME_SETTINGS_DESC','./index.php?module=Administration&action=ThemeSettings', 'themes');
 
-$admin_option_defs['Administration']['scheduler'] = array('Schedulers','LBL_SUGAR_SCHEDULER_TITLE','LBL_SUGAR_SCHEDULER','./index.php?module=Schedulers&action=index', 'scheduler');
+$admin_option_defs['Administration']['scheduler'] = array('Schedulers','LBL_SUITE_SCHEDULER_TITLE','LBL_SUITE_SCHEDULER','./index.php?module=Schedulers&action=index', 'scheduler');
 
-$admin_option_defs['Administration']['feed_settings']=array('icon_SugarFeed','LBL_SUGARFEED_SETTINGS','LBL_SUGARFEED_SETTINGS_DESC','./index.php?module=SugarFeed&action=AdminSettings', 'activity-streams');
+$admin_option_defs['Administration']['feed_settings']=array('icon_SugarFeed','LBL_SUITEFEED_SETTINGS','LBL_SUITEFEED_SETTINGS_DESC','./index.php?module=SugarFeed&action=AdminSettings', 'activity-streams');
 
 
 
@@ -238,6 +237,41 @@ $admin_group_header['sagility'] = array(
     $admin_option_defs,
     ''
 );
+
+$admin_option_defs = [];
+
+$admin_option_defs['Administration']['search_wrapper'] = [
+    'icon_SearchForm',
+    'LBL_SEARCH_WRAPPER',
+    'LBL_SEARCH_WRAPPER_DESC',
+    './index.php?module=Administration&action=SearchSettings',
+    'global-search'
+];
+
+$admin_option_defs['Administration']['global_search'] = [
+    'icon_SearchForm',
+    'LBL_SEARCH_MODULES',
+    'LBL_SEARCH_MODULES_HELP',
+    './index.php?module=Administration&action=GlobalSearchSettings',
+    'global-search'
+];
+
+$admin_option_defs['Administration']['elastic_search'] = [
+    'ElasticSearchIndexerSettings',
+    'LBL_ELASTIC_SEARCH_SETTINGS',
+    'LBL_ELASTIC_SEARCH_SETTINGS_DESC',
+    './index.php?module=Administration&action=ElasticSearchSettings',
+    'global-search'
+];
+
+// SearchWrapper
+$admin_group_header[] = [
+    'LBL_SEARCH_HEADER',
+    '',
+    false,
+    $admin_option_defs,
+    'LBL_SEARCH_HEADER_DESC'
+];
 
 //bugs.
 $admin_option_defs=array();

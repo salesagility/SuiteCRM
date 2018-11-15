@@ -1185,6 +1185,8 @@ class SoapHelperWebServices
         } else {
             $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - no duplicte found');
         }
+        $GLOBALS['log']->info('End: SoapHelperWebServices->check_for_duplicate_contacts - no duplicte found');
+
 
         return null;
     }

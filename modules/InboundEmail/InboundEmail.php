@@ -167,6 +167,7 @@ class InboundEmail extends SugarBean
     public $keyForUsersDefaultIEAccount = 'defaultIEAccount';
     // prefix to use when importing inlinge images in emails
     public $imagePrefix;
+    public $job_name = 'function::pollMonitoredInboxes';
 
     /**
      * Email constructor
@@ -680,7 +681,12 @@ class InboundEmail extends SugarBean
         }
         $this->connectMailserver();
 
-        $uids = imap_search($this->conn, "ALL", SE_UID);
+        if (is_resource($this->conn)) {
+            $uids = imap_search($this->conn, "ALL", SE_UID);
+        } else {
+            LoggerManager::getLogger()->warn('connection is not a valid resource to empty trush');
+            $uids = array();
+        }
 
         foreach ($uids as $uid) {
             if (!imap_delete($this->conn, $uid, FT_UID)) {
@@ -1083,7 +1089,12 @@ class InboundEmail extends SugarBean
                             if (isset($overview->uid) && !empty($overview->uid)) {
                                 $this->imap_uid = $overview->uid;
                             }
-                            $values .= "'{$this->imap_uid}'";
+                            if (!isset($this->imap_uid)) {
+                                LoggerManager::getLogger()->warn('Inbound email has not imap uid for setting cache value.');
+                                $values .= "''";
+                            } else {
+                                $values .= "'{$this->imap_uid}'";
+                            }
                             break;
 
                         case "ie_id":
@@ -1640,7 +1651,12 @@ class InboundEmail extends SugarBean
         }
         $this->setCacheTimestamp($mailbox);
         $GLOBALS['log']->info("[EMAIL] Performing IMAP search using criteria [{$criteria}] on mailbox [{$mailbox}] for user [{$current_user->user_name}]");
-        $searchResults = imap_search($this->conn, $criteria, SE_UID);
+        if (!is_resource($this->conn)) {
+            LoggerManager::getLogger()->warn('checkEmailOneMailbox: connection is not a valid resource');
+            $searchResults = null;
+        } else {
+            $searchResults = imap_search($this->conn, $criteria, SE_UID);
+        }
         $GLOBALS['log']->info("[EMAIL] Done IMAP search on mailbox [{$mailbox}] for user [{$current_user->user_name}]. Result count = " . count($searchResults));
 
         if (!empty($searchResults)) {
@@ -1681,7 +1697,12 @@ class InboundEmail extends SugarBean
         }
 
         if ($this->mailbox != $trashFolder) {
-            $searchResults = imap_search($this->conn, $criteria, SE_UID);
+            if (!is_resource($this->conn)) {
+                LoggerManager::getLogger()->warn('connection is not a valid resource for checkEmailOneMailbox()');
+                $searchResults = null;
+            } else {
+                $searchResults = imap_search($this->conn, $criteria, SE_UID);
+            }
             if (!empty($searchResults)) {
                 $uids = implode($app_strings['LBL_EMAIL_DELIMITER'], $searchResults);
                 $GLOBALS['log']->info("INBOUNDEMAIL: removing UIDs found deleted [ {$uids} ]");
@@ -1769,7 +1790,9 @@ class InboundEmail extends SugarBean
         if ($ret['status'] == 'done') {
             //Remove the cached search if we are done with this mailbox
             $cacheFilePath = clean_path("{$this->EmailCachePath}/{$this->id}/folders/SearchData.php");
-            unlink($cacheFilePath);
+            if (file_exists($cacheFilePath)) {
+                unlink($cacheFilePath);
+            }
             /**
              * To handle the use case where an external client is also connected, deleting emails, we need to clear our
              * local cache of all emails with the "DELETED" flag
@@ -1784,7 +1807,12 @@ class InboundEmail extends SugarBean
             }
 
             if ($this->mailbox != $trashFolder) {
-                $searchResults = imap_search($this->conn, $criteria, SE_UID);
+                if (!is_resource($this->conn)) {
+                    LoggerManager::getLogger()->warn('mailbox != trash folder but connection is not a valid resource for checkEmailOneMailbox()');
+                    $searchResults = null;
+                } else {
+                    $searchResults = imap_search($this->conn, $criteria, SE_UID);
+                }
                 if (!empty($searchResults)) {
                     $uids = implode($app_strings['LBL_EMAIL_DELIMITER'], $searchResults);
                     $GLOBALS['log']->info("INBOUNDEMAIL: removing UIDs found deleted [ {$uids} ]");
@@ -1910,6 +1938,9 @@ class InboundEmail extends SugarBean
         $ret['mailboxes'] = $mailboxes_meta;
 
         foreach ($mailboxes_meta as $count) {
+            if (!isset($ret['processCount'])) {
+                $ret['processCount'] = 0;
+            }
             $ret['processCount'] += $count;
         }
 
@@ -1941,7 +1972,13 @@ class InboundEmail extends SugarBean
         }
 
         $GLOBALS['log']->info("INBOUNDEMAIL: using [ {$criteria} ]");
-        $searchResults = imap_search($this->conn, $criteria, SE_UID);
+        if (!is_resource($this->conn)) {
+            LoggerManager::getLogger()->warn('connection is not a valid resource for getMailboxProcessCount()');
+            $searchResults = null;
+        } else {
+            $searchResults = imap_search($this->conn, $criteria, SE_UID);
+        }
+        
 
         if (!empty($searchResults)) {
             $concatResults = implode(",", $searchResults);
@@ -1968,7 +2005,12 @@ class InboundEmail extends SugarBean
         } else {
             $this->connectMailserver();
             $mailboxes = $this->getMailboxes(true);
-            sort($mailboxes);
+            if (!is_array($mailboxes)) {
+                LoggerManager::getLogger()->warn('mailboxes is not an array for check email');
+                $mailboxes = (array)$mailboxes;
+            } else {
+                sort($mailboxes);
+            }
 
             $GLOBALS['log']->info("INBOUNDEMAIL: checking account [ {$this->name} ]");
 
@@ -2762,6 +2804,7 @@ class InboundEmail extends SugarBean
             $stored_options['reply_to_addr'] = trim($_REQUEST['reply_to_addr']);
 
             if (!$this->isPop3Protocol()) {
+                $stored_options['mailbox'] = (isset($_REQUEST['mailbox']) ? trim($_REQUEST['mailbox']) : "");
                 $stored_options['trashFolder'] = (isset($_REQUEST['trashFolder']) ? trim($_REQUEST['trashFolder']) : "");
                 $stored_options['sentFolder'] = (isset($_REQUEST['sentFolder']) ? trim($_REQUEST['sentFolder']) : "");
             } // if
@@ -3034,7 +3077,12 @@ class InboundEmail extends SugarBean
         }
 
         $exServ = explode('::', $this->service);
-        $service = '/' . $exServ[1];
+        if (!isset($exServ[1])) {
+            LoggerManager::getLogger()->warn('incorrect service given: ' . $this->service);
+            $service = '/';
+        } else {
+            $service = '/' . $exServ[1];
+        }
 
         $nonSsl = array(
             'both-secure' => '/notls/novalidate-cert/secure',
@@ -4868,8 +4916,14 @@ class InboundEmail extends SugarBean
         // UNCOMMENT THIS IF YOU HAVE THIS PROBLEM!  See notes on Bug # 45477
         // $this->markEmails($uid, "read");
 
-        $header = imap_headerinfo($this->conn, $msgNo);
-        $fullHeader = imap_fetchheader($this->conn, $msgNo); // raw headers
+        if (!is_resource($this->conn)) {
+            LoggerManager::getLogger()->warn('Connection is not a valid resource for importOneEmail()');
+            $header = null;
+            $fullHeader = null;
+        } else {
+            $header = imap_headerinfo($this->conn, $msgNo);
+            $fullHeader = imap_fetchheader($this->conn, $msgNo); // raw headers
+        }
 
         // reset inline images cache
         $this->inlineImages = array();
@@ -5142,9 +5196,10 @@ class InboundEmail extends SugarBean
      * @param $uid
      * @param bool $forDisplay
      * @param bool $clean_email
+     * @param bool $isGroupFolderExists
      * @return boolean
      */
-    public function returnImportedEmail($msgNo, $uid, $forDisplay = false, $clean_email = true)
+    public function returnImportedEmail($msgNo, $uid, $forDisplay = false, $clean_email = true, $isGroupFolderExists = false)
     {
         $GLOBALS['log']->debug("InboundEmail processing 1 email {$msgNo}-----------------------------------------------------------------------------------------");
         global $timedate;
@@ -5391,7 +5446,11 @@ class InboundEmail extends SugarBean
         ///////////////////////////////////////////////////////////////////////
         ////	DEAL WITH THE MAILBOX
         if (!$forDisplay) {
-            $r = imap_setflag_full($this->conn, $msgNo, '\\SEEN');
+            if (!$isGroupFolderExists) {
+                $r = imap_setflag_full($this->conn, $msgNo, '\\SEEN');
+            } else {
+                $r = imap_clearflag_full($this->conn, $msgNo, '\\SEEN');
+            }
 
             // if delete_seen, mark msg as deleted
             if ($this->delete_seen == 1 && !$forDisplay) {
@@ -6034,11 +6093,12 @@ class InboundEmail extends SugarBean
         //TODO figure out if the since date is UDT
         if ($storedOptions['only_since']) {// POP3 does not support Unseen flags
             if (!isset($storedOptions['only_since_last']) && !empty($storedOptions['only_since_last'])) {
-                $q = 'SELECT last_run FROM schedulers WHERE job = \'function::pollMonitoredInboxes\'';
+                $q = "SELECT last_run FROM schedulers WHERE job = '{$this->job_name}'";
                 $r = $this->db->query($q, true);
                 $a = $this->db->fetchByAssoc($r);
 
                 $date = date('r', strtotime($a['last_run']));
+                LoggerManager::getLogger()->debug("-----> getNewMessageIds() executed query: {$q}");
             } else {
                 $date = $storedOptions['only_since_last'];
             }
@@ -6049,13 +6109,13 @@ class InboundEmail extends SugarBean
             $this->save();
         } else {
             if (!is_resource($this->conn)) {
-                LoggerManager::getLogger()->fatal('Inbounc Email Connection is not valid resource for getting New Message Ids.');
+                LoggerManager::getLogger()->fatal('Inbound Email Connection is not valid resource for getting New Message Ids.');
                 return false;
             }
             $ret = imap_search($this->conn, 'UNDELETED UNSEEN');
         }
 
-        $GLOBALS['log']->debug('-----> getNewMessageIds() got ' . count($ret) . ' new Messages');
+        LoggerManager::getLogger()->debug('-----> getNewMessageIds() got ' . count($ret) . ' new Messages');
 
         return $ret;
     }
@@ -6139,8 +6199,8 @@ class InboundEmail extends SugarBean
             $requestFolder = $_REQUEST['folder'];
         }
         
-        if($requestFolder === 'sent') {
-            $inboundEmail->mailbox = $this->get_stored_options('sentFolder');
+        if ($requestFolder === 'sent') {
+            $this->mailbox = $this->get_stored_options('sentFolder');
         }
 
         if($requestFolder === 'inbound') {
@@ -6198,7 +6258,11 @@ class InboundEmail extends SugarBean
                 if ($errors == 'Mailbox is empty') { // false positive
                     $successful = true;
                 } else {
-                    $msg .= $errors;
+                    if (!isset($msg)) {
+                        $msg = $errors;
+                    } else {
+                        $msg .= $errors;
+                    }
                     $msg .= '<p>' . $alerts . '<p>';
                     $msg .= '<p>' . $mod_strings['ERR_TEST_MAILBOX'];
                 }
@@ -6215,7 +6279,12 @@ class InboundEmail extends SugarBean
             }
 
             imap_errors(); // collapse error stack
-            imap_close($this->conn);
+            if (is_resource($this->conn)) {
+                imap_close($this->conn);
+            } else {
+                LoggerManager::getLogger()->warn('Connection is not a valid resource.');
+            }
+            
 
             return $msg;
         } elseif (!is_resource($this->conn)) {
@@ -6932,6 +7001,11 @@ class InboundEmail extends SugarBean
         $r = $this->db->query($query);
         $a = $this->db->fetchByAssoc($r);
 
+        if (!isset($a['message_id'])) {
+            LoggerManager::getLogger()->warn('unable to get msgno for message id');
+            return null;
+        }
+        
         return $a['message_id'];
     }
 

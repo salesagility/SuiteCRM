@@ -176,7 +176,6 @@ class Scheduler extends SugarBean {
         $job->execute_time = $GLOBALS['timedate']->nowDb();
 
         $user = $this->getUser();
-        
         if (!is_object($user)) {
             LoggerManager::getLogger()->warn('Scheduler / create job: User object not found.');
             $job->assigned_user_id = null;
@@ -533,212 +532,224 @@ class Scheduler extends SugarBean {
 		 * If "Execute If Missed bit is set
 		 */
         $now = TimeDate::getInstance()->getNow();
-		$now = $now->setTime($now->hour, $now->min, "00")->asDb();
+        $now = $now->setTime($now->hour, $now->min, "00")->asDb();
 
-		if($focus->catch_up == 1) {
-			if($focus->last_run == null) {
-				// always "catch-up"
-				$validJobTime[] = $now;
-			} else {
-				// determine what the interval in min/hours is
-				// see if last_run is in it
-				// if not, add NOW
-                if(!empty($validJobTime) && ($focus->last_run < $validJobTime[0]) && ($now > $validJobTime[0])) {
-				// cn: empty() bug 5914;
-				// if(!empty) should be checked, becasue if a scheduler is defined to run every day 4pm, then after 4pm, and it runs as 4pm,
-				// the $validJobTime will be empty, and it should not catch up.
-				// If $focus->last_run is the the day before yesterday,  it should run yesterday and tomorrow,
-				// but it hadn't run yesterday, then it should catch up today.
-				// But today is already filtered out when doing date check before. The catch up will not work on this occasion.
-				// If the scheduler runs at least one time on each day, I think this bug can be avoided.
-					$validJobTime[] = $now;
-				}
-			}
-		}
-		return $validJobTime;
-	}
+        if ($focus->catch_up == 1) {
+            if ($focus->last_run == null) {
+                // always "catch-up"
+                $validJobTime[] = $now;
+            } else {
+                // determine what the interval in min/hours is
+                // see if last_run is in it
+                // if not, add NOW
+                if (!empty($validJobTime) && ($focus->last_run < $validJobTime[0]) && ($now > $validJobTime[0])) {
+                    // cn: empty() bug 5914;
+                    // if(!empty) should be checked, becasue if a scheduler is defined to run every day 4pm, then after 4pm, and it runs as 4pm,
+                    // the $validJobTime will be empty, and it should not catch up.
+                    // If $focus->last_run is the the day before yesterday,  it should run yesterday and tomorrow,
+                    // but it hadn't run yesterday, then it should catch up today.
+                    // But today is already filtered out when doing date check before. The catch up will not work on this occasion.
+                    // If the scheduler runs at least one time on each day, I think this bug can be avoided.
+                    $validJobTime[] = $now;
+                }
+            }
+        }
+        return $validJobTime;
+    }
 
-	function handleIntervalType($type, $value, $mins, $hours) {
-		global $mod_strings;
-		/* [0]:min [1]:hour [2]:day of month [3]:month [4]:day of week */
-		$days = array (	1 => $mod_strings['LBL_MON'],
-						2 => $mod_strings['LBL_TUE'],
-						3 => $mod_strings['LBL_WED'],
-						4 => $mod_strings['LBL_THU'],
-						5 => $mod_strings['LBL_FRI'],
-						6 => $mod_strings['LBL_SAT'],
-						0 => $mod_strings['LBL_SUN'],
-						'*' => $mod_strings['LBL_ALL']);
-		switch($type) {
-			case 0: // minutes
-				if($value == '0') {
-					//return;
-					return trim($mod_strings['LBL_ON_THE']).$mod_strings['LBL_HOUR_SING'];
-				} elseif(!preg_match('/[^0-9]/', $hours) && !preg_match('/[^0-9]/', $value)) {
-					return;
+    public function handleIntervalType($type, $value, $mins, $hours)
+    {
+        global $mod_strings;
+        /* [0]:min [1]:hour [2]:day of month [3]:month [4]:day of week */
+        $days = array(
+            1 => $mod_strings['LBL_MON'],
+            2 => $mod_strings['LBL_TUE'],
+            3 => $mod_strings['LBL_WED'],
+            4 => $mod_strings['LBL_THU'],
+            5 => $mod_strings['LBL_FRI'],
+            6 => $mod_strings['LBL_SAT'],
+            0 => $mod_strings['LBL_SUN'],
+            '*' => $mod_strings['LBL_ALL']
+        );
+        switch ($type) {
+            case 0: // minutes
+                if ($value == '0') {
+                    //return;
+                    return trim($mod_strings['LBL_ON_THE']) . $mod_strings['LBL_HOUR_SING'];
+                } elseif (!preg_match('/[^0-9]/', $hours) && !preg_match('/[^0-9]/', $value)) {
+                    return;
+                } elseif (preg_match('/\*\//', $value)) {
+                    $value = str_replace('*/', '', $value);
 
-				} elseif(preg_match('/\*\//', $value)) {
-					$value = str_replace('*/','',$value);
-					return $value.$mod_strings['LBL_MINUTES'];
-				} elseif(!preg_match('[^0-9]', $value)) {
-					return $mod_strings['LBL_ON_THE'].$value.$mod_strings['LBL_MIN_MARK'];
-				} else {
-					return $value;
-				}
-			case 1: // hours
-				global $current_user;
-				if(preg_match('/\*\//', $value)) { // every [SOME INTERVAL] hours
-					$value = str_replace('*/','',$value);
-					return $value.$mod_strings['LBL_HOUR'];
-				} elseif(preg_match('/[^0-9]/', $mins)) { // got a range, or multiple of mins, so we return an 'Hours' label
-					return $value;
-				} else {	// got a "minutes" setting, so it will be at some o'clock.
-					$datef = $current_user->getUserDateTimePreferences();
-					return date($datef['time'], strtotime($value.':'.str_pad($mins, 2, '0', STR_PAD_LEFT)));
-				}
-			case 2: // day of month
-				if(preg_match('/\*/', $value)) {
-					return $value;
-				} else {
-					return date('jS', strtotime('December '.$value));
-				}
+                    return $value . $mod_strings['LBL_MINUTES'];
+                } elseif (!preg_match('[^0-9]', $value)) {
+                    return $mod_strings['LBL_ON_THE'] . $value . $mod_strings['LBL_MIN_MARK'];
+                }
 
-			case 3: // months
-				return date('F', strtotime('2005-'.$value.'-01'));
-			case 4: // days of week
-				return $days[$value];
-			default:
-				return 'bad'; // no condition to touch this branch
-		}
-	}
+                return $value;
 
-	function setIntervalHumanReadable() {
-		global $current_user;
-		global $mod_strings;
+            case 1: // hours
+                global $current_user;
+                if (preg_match('/\*\//', $value)) { // every [SOME INTERVAL] hours
+                    $value = str_replace('*/', '', $value);
 
-		/* [0]:min [1]:hour [2]:day of month [3]:month [4]:day of week */
-		$ints = $this->intervalParsed;
-		$intVal = array('-', ',');
-		$intSub = array($mod_strings['LBL_RANGE'], $mod_strings['LBL_AND']);
-		$intInt = array(0 => $mod_strings['LBL_MINS'], 1 => $mod_strings['LBL_HOUR']);
-		$tempInt = '';
-		$iteration = '';
+                    return $value . $mod_strings['LBL_HOUR'];
+                } elseif (preg_match(
+                    '/[^0-9]/',
+                    $mins
+                )) { // got a range, or multiple of mins, so we return an 'Hours' label
+                    return $value;
+                }    // got a "minutes" setting, so it will be at some o'clock.
+                $datef = $current_user->getUserDateTimePreferences();
 
-		foreach($ints['raw'] as $key => $interval) {
-			if($tempInt != $iteration) {
-				$tempInt .= '; ';
-			}
-			$iteration = $tempInt;
+                return date($datef['time'], strtotime($value . ':' . str_pad($mins, 2, '0', STR_PAD_LEFT)));
 
-			if($interval != '*' && $interval != '*/1') {
-				if(false !== strpos($interval, ',')) {
-					$exIndiv = explode(',', $interval);
-					foreach($exIndiv as $val) {
-						if(false !== strpos($val, '-')) {
-							$exRange = explode('-', $val);
-							foreach($exRange as $valRange) {
-								if($tempInt != '') {
-									$tempInt .= $mod_strings['LBL_AND'];
-								}
-								$tempInt .= $this->handleIntervalType($key, $valRange, $ints['raw'][0], $ints['raw'][1]);
-							}
-						} elseif($tempInt != $iteration) {
-							$tempInt .= $mod_strings['LBL_AND'];
-						}
-						$tempInt .= $this->handleIntervalType($key, $val, $ints['raw'][0], $ints['raw'][1]);
-					}
-				} elseif(false !== strpos($interval, '-')) {
-					$exRange = explode('-', $interval);
-					$tempInt .= $mod_strings['LBL_FROM'];
-					$check = $tempInt;
+            case 2: // day of month
+                if (preg_match('/\*/', $value)) {
+                    return $value;
+                }
 
-					foreach($exRange as $val) {
-						if($tempInt == $check) {
-							$tempInt .= $this->handleIntervalType($key, $val, $ints['raw'][0], $ints['raw'][1]);
-							$tempInt .= $mod_strings['LBL_RANGE'];
-
-						} else {
-							$tempInt .= $this->handleIntervalType($key, $val, $ints['raw'][0], $ints['raw'][1]);
-						}
-					}
-
-				} elseif(false !== strpos($interval, '*/')) {
-					$tempInt .= $mod_strings['LBL_EVERY'];
-					$tempInt .= $this->handleIntervalType($key, $interval, $ints['raw'][0], $ints['raw'][1]);
-				} else {
-					$tempInt .= $this->handleIntervalType($key, $interval, $ints['raw'][0], $ints['raw'][1]);
-				}
-			}
-		} // end foreach()
-
-		if($tempInt == '') {
-			$this->intervalHumanReadable = $mod_strings['LBL_OFTEN'];
-		} else {
-			$tempInt = trim($tempInt);
-			if(';' == substr($tempInt, (strlen($tempInt)-1), strlen($tempInt))) {
-				$tempInt = substr($tempInt, 0, (strlen($tempInt)-1));
-			}
-			$this->intervalHumanReadable = $tempInt;
-		}
-	}
+                return date('jS', strtotime('December ' . $value));
 
 
-	/* take an integer and return its suffix */
-	function setStandardArraysAttributes() {
-		global $mod_strings;
-		global $app_list_strings; // using from month _dom list
+            case 3: // months
+                return date('F', strtotime('2005-' . $value . '-01'));
+            case 4: // days of week
+                return $days[$value];
+            default:
+                return 'bad'; // no condition to touch this branch
+        }
+    }
 
-		$suffArr = array('','st','nd','rd');
-		for($i=1; $i<32; $i++) {
-			if($i > 3 && $i < 21) {
-				$this->suffixArray[$i] = $i."th";
-			} elseif (substr($i,-1,1) < 4 && substr($i,-1,1) > 0) {
-				$this->suffixArray[$i] = $i.$suffArr[substr($i,-1,1)];
-			} else {
-				$this->suffixArray[$i] = $i."th";
-			}
-			$this->datesArray[$i] = $i;
-		}
+    public function setIntervalHumanReadable()
+    {
+        global $current_user;
+        global $mod_strings;
 
-		$this->dayInt = array('*',1,2,3,4,5,6,0);
-		$this->dayLabel = array('*',$mod_strings['LBL_MON'],$mod_strings['LBL_TUE'],$mod_strings['LBL_WED'],$mod_strings['LBL_THU'],$mod_strings['LBL_FRI'],$mod_strings['LBL_SAT'],$mod_strings['LBL_SUN']);
-		$this->monthsInt = array(0,1,2,3,4,5,6,7,8,9,10,11,12);
-		$this->monthsLabel = $app_list_strings['dom_cal_month_long'];
-		$this->metricsVar = array("*", "/", "-", ",");
-		$this->metricsVal = array(' every ','',' thru ',' and ');
-	}
+        /* [0]:min [1]:hour [2]:day of month [3]:month [4]:day of week */
+        $ints = $this->intervalParsed;
+        $intVal = array('-', ',');
+        $intSub = array($mod_strings['LBL_RANGE'], $mod_strings['LBL_AND']);
+        $intInt = array(0 => $mod_strings['LBL_MINS'], 1 => $mod_strings['LBL_HOUR']);
+        $tempInt = '';
+        $iteration = '';
 
-	/**
-	 *  takes the serialized interval string and renders it into an array
-	 */
-	function parseInterval() {
-		global $metricsVar;
-		$ws = array(' ', '\r','\t');
-		$blanks = array('','','');
+        foreach ($ints['raw'] as $key => $interval) {
+            if ($tempInt != $iteration) {
+                $tempInt .= '; ';
+            }
+            $iteration = $tempInt;
 
-		$intv = $this->job_interval;
-		$rawValues = explode('::', $intv);
-		$rawProcessed = str_replace($ws,$blanks,$rawValues); // strip all whitespace
+            if ($interval != '*' && $interval != '*/1') {
+                if (false !== strpos($interval, ',')) {
+                    $exIndiv = explode(',', $interval);
+                    foreach ($exIndiv as $val) {
+                        if (false !== strpos($val, '-')) {
+                            $exRange = explode('-', $val);
+                            foreach ($exRange as $valRange) {
+                                if ($tempInt != '') {
+                                    $tempInt .= $mod_strings['LBL_AND'];
+                                }
+                                $tempInt .= $this->handleIntervalType($key, $valRange, $ints['raw'][0], $ints['raw'][1]);
+                            }
+                        } elseif ($tempInt != $iteration) {
+                            $tempInt .= $mod_strings['LBL_AND'];
+                        }
+                        $tempInt .= $this->handleIntervalType($key, $val, $ints['raw'][0], $ints['raw'][1]);
+                    }
+                } elseif (false !== strpos($interval, '-')) {
+                    $exRange = explode('-', $interval);
+                    $tempInt .= $mod_strings['LBL_FROM'];
+                    $check = $tempInt;
 
-		$hours = $rawValues[1].':::'.$rawValues[0];
-		$months = $rawValues[3].':::'.$rawValues[2];
+                    foreach ($exRange as $val) {
+                        if ($tempInt == $check) {
+                            $tempInt .= $this->handleIntervalType($key, $val, $ints['raw'][0], $ints['raw'][1]);
+                            $tempInt .= $mod_strings['LBL_RANGE'];
+                        } else {
+                            $tempInt .= $this->handleIntervalType($key, $val, $ints['raw'][0], $ints['raw'][1]);
+                        }
+                    }
+                } elseif (false !== strpos($interval, '*/')) {
+                    $tempInt .= $mod_strings['LBL_EVERY'];
+                    $tempInt .= $this->handleIntervalType($key, $interval, $ints['raw'][0], $ints['raw'][1]);
+                } else {
+                    $tempInt .= $this->handleIntervalType($key, $interval, $ints['raw'][0], $ints['raw'][1]);
+                }
+            }
+        } // end foreach()
 
-		$intA = array (	'raw' => $rawProcessed,
-						'hours' => $hours,
-						'months' => $months,
-						);
+        if ($tempInt == '') {
+            $this->intervalHumanReadable = $mod_strings['LBL_OFTEN'];
+        } else {
+            $tempInt = trim($tempInt);
+            if (';' == substr($tempInt, (strlen($tempInt)-1), strlen($tempInt))) {
+                $tempInt = substr($tempInt, 0, (strlen($tempInt)-1));
+            }
+            $this->intervalHumanReadable = $tempInt;
+        }
+    }
 
-		$this->intervalParsed = $intA;
-	}
 
-	/**
-	 * checks for cURL libraries
-	 */
-	function checkCurl() {
-		global $mod_strings;
+    /* take an integer and return its suffix */
+    public function setStandardArraysAttributes()
+    {
+        global $mod_strings;
+        global $app_list_strings; // using from month _dom list
 
-		if(!function_exists('curl_init')) {
-			echo '
+        $suffArr = array('','st','nd','rd');
+        for ($i=1; $i<32; $i++) {
+            if ($i > 3 && $i < 21) {
+                $this->suffixArray[$i] = $i."th";
+            } elseif (substr($i, -1, 1) < 4 && substr($i, -1, 1) > 0) {
+                $this->suffixArray[$i] = $i.$suffArr[substr($i, -1, 1)];
+            } else {
+                $this->suffixArray[$i] = $i."th";
+            }
+            $this->datesArray[$i] = $i;
+        }
+
+        $this->dayInt = array('*',1,2,3,4,5,6,0);
+        $this->dayLabel = array('*',$mod_strings['LBL_MON'],$mod_strings['LBL_TUE'],$mod_strings['LBL_WED'],$mod_strings['LBL_THU'],$mod_strings['LBL_FRI'],$mod_strings['LBL_SAT'],$mod_strings['LBL_SUN']);
+        $this->monthsInt = array(0,1,2,3,4,5,6,7,8,9,10,11,12);
+        $this->monthsLabel = $app_list_strings['dom_cal_month_long'];
+        $this->metricsVar = array("*", "/", "-", ",");
+        $this->metricsVal = array(' every ','',' thru ',' and ');
+    }
+
+    /**
+     *  takes the serialized interval string and renders it into an array
+     */
+    public function parseInterval()
+    {
+        global $metricsVar;
+        $ws = array(' ', '\r','\t');
+        $blanks = array('','','');
+
+        $intv = $this->job_interval;
+        $rawValues = explode('::', $intv);
+        $rawProcessed = str_replace($ws, $blanks, $rawValues); // strip all whitespace
+
+        $hours = $rawValues[1].':::'.$rawValues[0];
+        $months = $rawValues[3].':::'.$rawValues[2];
+
+        $intA = array(	'raw' => $rawProcessed,
+                        'hours' => $hours,
+                        'months' => $months,
+                        );
+
+        $this->intervalParsed = $intA;
+    }
+
+    /**
+     * checks for cURL libraries
+     */
+    public function checkCurl()
+    {
+        global $mod_strings;
+
+        if (!function_exists('curl_init')) {
+            echo '
 			<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 				<tr height="20">
 					<th width="25%" colspan="2"><span>
@@ -978,7 +989,7 @@ class Scheduler extends SugarBean {
         $sched14->save();
 
         $sched15 = new Scheduler();
-        $sched15->name               = $mod_strings['LBL_OOTB_SUGARFEEDS'];
+        $sched15->name               = $mod_strings['LBL_OOTB_SUITEFEEDS'];
         $sched15->job                = 'function::trimSugarFeeds';
         $sched15->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
         $sched15->date_time_end      = null;
@@ -1046,26 +1057,25 @@ class Scheduler extends SugarBean {
         if($this->date_time_end == '2020-12-31 23:59' || $this->date_time_end == '') {
         	$temp_array['DATE_TIME_END'] = $mod_strings['LBL_PERENNIAL'];
         }
-    	$this->created_by_name = get_assigned_user_name($this->created_by);
-		$this->modified_by_name = get_assigned_user_name($this->modified_user_id);
-    	return $temp_array;
+        $this->created_by_name = get_assigned_user_name($this->created_by);
+        $this->modified_by_name = get_assigned_user_name($this->modified_user_id);
+        return $temp_array;
+    }
 
-	}
-
-	/**
-	 * returns the bean name - overrides SugarBean's
-	 */
-	function get_summary_text()
-	{
-		return $this->name;
-	}
-	////	END STANDARD SUGARBEAN OVERRIDES
-	///////////////////////////////////////////////////////////////////////////
-	static public function getJobsList()
-	{
-		if(empty(self::$job_strings)) {
-			global $mod_strings;
-			include_once('modules/Schedulers/_AddJobsHere.php');
+    /**
+     * returns the bean name - overrides SugarBean's
+     */
+    public function get_summary_text()
+    {
+        return $this->name;
+    }
+    ////	END STANDARD SUGARBEAN OVERRIDES
+    ///////////////////////////////////////////////////////////////////////////
+    public static function getJobsList()
+    {
+        if (empty(self::$job_strings)) {
+            global $mod_strings;
+            include_once('modules/Schedulers/_AddJobsHere.php');
 
 			// job functions
 			self::$job_strings = array('url::' => 'URL');

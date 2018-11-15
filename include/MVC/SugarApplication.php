@@ -684,7 +684,7 @@ class SugarApplication {
         $messages = self::getMessages('user_error_message');
         return $messages;
     }
-    
+
     /**
      * Storing messages into session
      *
@@ -703,7 +703,7 @@ class SugarApplication {
         $messages = self::getMessages('user_success_message');
         return $messages;
     }
-    
+
     /**
      * Storing messages into session
      * @param string $message
@@ -711,7 +711,7 @@ class SugarApplication {
     protected static function appendMessage($type, $message) {
         
         self::validateMessageType($type);
-        
+
         if (empty($_SESSION[$type]) || !is_array($_SESSION[$type])) {
             $_SESSION[$type] = array();
         }
@@ -719,7 +719,7 @@ class SugarApplication {
             $_SESSION[$type][] = $message;
         }
     }
-    
+
     /**
      * picking up the messages from the session and clearing session storage array
      * @return array messages
@@ -727,7 +727,7 @@ class SugarApplication {
     protected static function getMessages($type) {
         
         self::validateMessageType($type);
-        
+
         if (isset($_SESSION[$type]) && is_array($_SESSION[$type])) {
             $msgs = $_SESSION[$type];
             unset($_SESSION[$type]);
@@ -736,7 +736,7 @@ class SugarApplication {
             return array();
         }
     }
-    
+
     /**
      * 
      * @param string $type possible message types: ['user_error_message', 'user_success_message']
