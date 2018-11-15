@@ -337,6 +337,10 @@ function saveField($field, $id, $module, $value)
             } else {
                 $bean->$field = $value;
             }
+        } else if ($module === 'Leads' && $field === 'account_name') {
+            require_once('modules/Leads/LeadFormBase.php');
+            $bean->$field = $value;
+            $bean->account_id = LeadFormBase::handleLeadAccountName($bean);
         } else {
             $bean->$field = $value;
         }
