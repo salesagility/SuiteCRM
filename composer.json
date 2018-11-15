@@ -8,11 +8,11 @@
   "config": {
     "vendor-dir": "vendor",
     "platform": {
-      "php": "5.5.9"
+      "php": "5.6.0"
     }
   },
   "require": {
-    "php": ">=5.5.9",
+    "php": ">=5.6.0",
     "ext-json": "*",
     "ext-gd": "*",
     "ext-curl": "*",
@@ -26,9 +26,13 @@
     "justinrainbow/json-schema": "^5.2",
     "onelogin/php-saml": "^3.0.0",
     "google/recaptcha": "^1.1",
+    "ezyang/htmlpurifier": "^4.10",
+    "elasticsearch/elasticsearch": "^5.3",
+    "nesbot/carbon": "^1.31",
+    "monolog/monolog": "^1.23",
+    "filp/whoops": "^2.2",
     "symfony/options-resolver": "^3.4",
-    "symfony/validator": "^3.4",
-    "ezyang/htmlpurifier": "^4.10"
+    "symfony/validator": "^3.4"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
@@ -38,8 +42,7 @@
     "jeroendesloovere/vcard": "v1.5",
     "browserstack/browserstack-local": "dev-master",
     "consolidation/robo": "^1.0.0",
-    "mockery/mockery": "^0.9.9",
-    "symfony/yaml": "^3.4",
+    "mockery/mockery": "^1.1.0",
     "flow/jsonpath": "^0.3"
   },
   "scripts": {},
@@ -54,6 +57,9 @@
       ],
       "SuiteCRM\\Custom\\": [
         "custom/lib"
+      ],
+      "SuiteCRM\\Modules\\": [
+        "modules/"
       ]
     },
     "classmap": [

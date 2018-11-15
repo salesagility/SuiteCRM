@@ -79,7 +79,7 @@ $job_strings = array(
     14 => 'cleanJobQueue',
     15 => 'removeDocumentsFromFS',
     16 => 'trimSugarFeeds',
-
+    17 => 'runElasticSearchIndexerScheduler',
 );
 
 /**
@@ -851,6 +851,11 @@ EOF;
         $bean->save();
         return true;
     }
+}
+
+function runElasticSearchIndexerScheduler($data)
+{
+    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode($data));
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {

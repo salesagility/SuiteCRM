@@ -552,7 +552,6 @@ if (isset($_REQUEST['emailUIAction'])) {
                 isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])
             ) {
                 $email->et->markEmails("deleted", $_REQUEST['ieId'], $_REQUEST['folder'], $_REQUEST['uids']);
-            } else {
             }
 
             break;
@@ -1266,7 +1265,7 @@ eoq;
                 die();
             } else {
                 echo "NOOP";
-
+            }
             break;
 
         case "saveOutbound":
@@ -1523,6 +1522,7 @@ eoq;
                 die();
             } else {
                 echo "NOOP: no search criteria found";
+            }
 
             break;
 

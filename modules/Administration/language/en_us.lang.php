@@ -756,7 +756,6 @@ $mod_strings = array(
     'LBL_SAML_LOGIN_URL_DESC' => 'Enter Login URL',
     'LBL_SAML_LOGOUT_URL_DESC' => 'Enter Logout URL',
 
-    'LBL_GLOBAL_SEARCH_SETTINGS_TITLE' => 'Select the module(s) that users will be able to search against using the Global Search.',
     'LBL_SELECT_MODULES' => 'Advanced',
     'LBL_SELECT_MODULES_TITLE' => 'Drag and drop to select modules and to change the display order. Perform a search to apply the changes.',
     'LBL_LANGUAGE_PACKS' => 'Language Packs' /*for 508 compliance fix*/,
@@ -925,5 +924,60 @@ $mod_strings = array(
     'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contain special characters',
     'LBL_PWDSEC_CHARS' => 'Characters',
 
+    // SearchWrapper
+    'LBL_SEARCH_HEADER' => 'Search Settings',
+    'LBL_SEARCH_HEADER_DESC' => 'Manage your search preferences',
+    'LBL_SEARCH_WRAPPER' => 'Search Settings',
+    'LBL_SEARCH_WRAPPER_DESC' => 'Configure the global search preferences for the system',
+
+    // Elasticsearch Settings
+    'LBL_ELASTIC_SEARCH' => 'Elasticsearch',
+    'LBL_ELASTIC_SEARCH_SETTINGS' => 'Elasticsearch',
+    'LBL_ELASTIC_SEARCH_SETTINGS_DESC' => 'Configure Elasticsearch preferences',
+    'LBL_ELASTIC_SEARCH_SETTINGS_HELP' => 'Elasticsearch requires an external server set up to work. Read the <a href="https://docs.suitecrm.com/admin/administration-panel/search/elasticsearch/">documentation</a> to learn how.',
+    'LBL_ELASTIC_SEARCH_GENERAL' => 'General',
+    'LBL_ELASTIC_SEARCH_ENABLE' => 'Enable Elasticsearch.',
+    'LBL_ELASTIC_SEARCH_TEST_CONNECTION' => 'Test connection',
+    'LBL_ELASTIC_SEARCH_TEST_CONNECTION_SUCCESS' => 'Connection successful.',
+    'LBL_ELASTIC_SEARCH_TEST_CONNECTION_FAIL' => 'Connection failed.',
+    'LBL_ELASTIC_SEARCH_TEST_CONNECTION_ERROR' => 'Failed perform ping request.',
+    'LBL_ELASTIC_SEARCH_SERVER' => 'Server',
+    'LBL_ELASTIC_SEARCH_HOST' => 'Host',
+    'LBL_ELASTIC_SEARCH_USER' => 'Username',
+    'LBL_ELASTIC_SEARCH_PASS' => 'Password',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS' => 'Schedulers',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS_HELP' => 'The following ElasticSearch schedulers were detected:',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS_LAST_RUN' => 'last run:',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS_NEVER_RUN' => 'This job has never run',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS_NOT_FOUND' => 'No schedulers found. Consider creating one.',
+    'LBL_ELASTIC_SEARCH_SCHEDULERS_DESC' => 'The ElasticSearch module uses schedulers to keep the database and the indexing engine synchronised.',
+    'LBL_ELASTIC_SEARCH_INDEX' => 'Index',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_HELP' => 'Schedule an indexing',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL' => 'Schedule full indexing',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART' => 'Schedule partial indexing',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_SUCCESS' => 'A full indexing has been scheduled and will start in the next 60 seconds. Search results might be inconsistent until the process is complete.',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_FULL_FAIL' => 'Failed to start full index.',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_SUCCESS' => 'A partial indexing has been scheduled and will start in the next 60 seconds.',
+    'LBL_ELASTIC_SEARCH_INDEX_SCHEDULE_PART_FAIL' => 'Failed to start partial index.',
+
+    // SearchWrapper Settings
+    'LBL_SEARCH_ENGINE' => 'Search Engine',
+    'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search wrapper',
+    'LBL_SEARCH_ENGINE_TOOLTIP' => 'Select a search engine for the Global Search.',
+
+    'LBL_SEARCH_MODULES' => 'Search Modules',
+    'LBL_SEARCH_MODULES_HELP' => 'Select the module(s) that users will be able to search against using the Global Search.',
+
+    // Search Engines Translations
+    'LBL_LEGACY_SEARCH_ENGINES' => 'Legacy Search',
+    'LBL_SEARCH_WRAPPER_ENGINES' => 'Search Engines (new)',
+    'LBL_BASIC_SEARCH_ENGINE' => 'Basic Search',
+    'LBL_BASIC_AND_AOD_ENGINE' => 'Basic + Advanced Search',
+    'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
+    'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine',
+
+    // Ajax Submit
+    'LBL_AJAX_SUBMIT_SUCCESS' => 'The settings have been saved successfully.',
+    'LBL_AJAX_SUBMIT_FAIL' => 'An error has occurred while saving the settings.',
 );
 

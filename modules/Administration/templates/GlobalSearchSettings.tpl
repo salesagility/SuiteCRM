@@ -42,11 +42,11 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td colspan="100">
-        <h2> {$moduleTitle}</h2>
+        <h2> {$MOD.LBL_SEARCH_MODULES}</h2>
     </td>
 </tr>
 <tr>
-    <td colspan="100">{$MOD.LBL_GLOBAL_SEARCH_SETTINGS_TITLE}</td>
+    <td colspan="100">{$MOD.LBL_SEARCH_MODULES_HELP}</td>
 </tr>
 <tr>
     <td>
@@ -58,22 +58,12 @@
 
 <script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
 <link rel="stylesheet" type="text/css" href="{sugar_getjspath file='modules/Connectors/tpls/tabs.css'}"/>
-<form name="GlobalSearchSettings" method="POST">
+<form name="GlobalSearchSettings" method="POST" class="search-module-selector">
 	<input type="hidden" name="module" value="Administration">
 	<input type="hidden" name="action" value="saveGlobalSearchSettings">
 	<input type="hidden" name="enabled_modules" value="">
 
-	<table border="0" cellspacing="1" cellpadding="1">
-		<tr>
-			<td>
-			<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" accessKey="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary" onclick="SUGAR.saveGlobalSearchSettings();" type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
-                <input title="{$MOD.LBL_SAVE_SCHED_BUTTON}" class="button primary schedFullSystemIndex" onclick="SUGAR.FTS.schedFullSystemIndex();" style="{if !$showSchedButton}display:none;{/if}text-decoration: none;" id='schedFullSystemIndexBtn' type="button" name="button" value="{$MOD.LBL_SAVE_SCHED_BUTTON}">
-            <input title="{$APP.LBL_CANCEL_BUTTON_LABEL}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="document.GlobalSearchSettings.action.value='';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
-			</td>
-		</tr>
-	</table>
-
-	<div class='add_table' style='margin-bottom:5px'>
+	<div class='add_table' style='margin-bottom: 10px'>
 		<table id="GlobalSearchSettings" class="GlobalSearchSettings edit view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
 		    <tr>
 				<td width='1%'>
@@ -85,7 +75,7 @@
 			</tr>
 		</table>
 	</div>
-	<table border="0" cellspacing="1" cellpadding="1">
+	<table border="0" cellspacing="1" cellpadding="1" class="settings-buttons">
 		<tr>
 			<td>
 				<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" class="button primary" onclick="SUGAR.saveGlobalSearchSettings();" type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
@@ -175,7 +165,7 @@
             var data = enabledTable.getRecord(i).getData();
             if (data.module && data.module != '')
             {
-                var tmp = {'module' : data.module, 'label' : data.label};
+                var tmp = {'module' : data.module,};
                 modules.push(tmp);
             }
         }

@@ -2789,6 +2789,7 @@ class Email extends Basic
         $ieId = $this->mailbox_id;
         $mail = $this->setMailer($mail, '', $ieId);
         
+
         if (($mail->oe->type === 'system') && (!isset($sugar_config['email_allow_send_as_user']) || (!$sugar_config['email_allow_send_as_user']))) {
             $mail->From =
             $sender =
@@ -3068,6 +3069,7 @@ class Email extends Basic
 
         $query .= $custom_join['join'];
 
+        $where_auto = "1=1";
         if ($show_deleted == 0) {
             $where_auto = " emails.deleted=0 \n";
         } else {

@@ -157,6 +157,8 @@ $mod_strings = array(
     'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
     'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
 
+    'LBL_RUNELASTICSEARCHINDEXERSCHEDULER' => 'Elasticsearch indexer',
+
     'LBL_SCHEDULER_TIMES' => 'Scheduler Times',
 );
 
