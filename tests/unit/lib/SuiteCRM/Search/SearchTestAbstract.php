@@ -2,7 +2,7 @@
 
 namespace SuiteCRM\Search;
 
-abstract class SearchTestAbstract extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+abstract class SearchTestAbstract extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * Call protected/private method of a class.
