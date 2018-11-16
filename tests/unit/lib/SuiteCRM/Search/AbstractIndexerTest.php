@@ -148,8 +148,6 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
     public function testLogger()
     {
 
-        self::markTestIncomplete('environment dependency (Incorrect state hash: Hash doesn\'t match at key "database::reminders".)');
-
         $indexer = $this->getIndexerMock();
 
         $this->invokeMethod($indexer, 'setupLogger');

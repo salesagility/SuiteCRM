@@ -271,7 +271,6 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
 
     public function testUrlParserBadUrls()
     {
-        self::markTestIncomplete('environment dependency (Incorrect state hash: Hash doesn\'t match at key "database::reminders".)');
 
         $url1 = ['host' => 'http:///example.com'];
         $url2 = ['host' => 'http://:80'];

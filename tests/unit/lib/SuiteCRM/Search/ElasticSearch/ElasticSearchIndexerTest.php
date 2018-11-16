@@ -542,7 +542,6 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
     public function testCreateIndexWithBody()
     {
-        self::markTestIncomplete('environment dependency (Incorrect state hash: Hash doesn\'t match at key "database::reminders".)');
 
         $index = 'test';
         $body = ["mappings" => ['my_type' => ['_source' => ['enabled' => true]]]];
