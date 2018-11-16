@@ -37,7 +37,11 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
+
+namespace SuiteCRM\Test;
+
+require_once 'tests/unit/lib/SuiteCRM/Search/AbstractDocumentifierMock.php';
+
 
 class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
 {
@@ -82,7 +86,6 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
             ],
         ];
 
-        $this->assertInstanceOf("SuiteCRM\\Search\\Index\\Documentify\\AbstractDocumentifier", $this->documentifier);
 
         $this->documentifier->fixPhone($document);
 
@@ -91,13 +94,9 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
         $state->popTable('reminders');
     }
 
-    public function _before() {
-        $this->setUp();
-    }
-
     public function setUp()
     {
-        $this->documentifier = \Mockery::mock(AbstractDocumentifier::class)->makePartial();
+        $this->documentifier = new \AbstractDocumentifierMock();
 
         return parent::setUp();
     }
