@@ -62,7 +62,8 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testFixPhone()
     {
-        self::markTestIncomplete('environment dependency (Incorrect state hash: Hash doesn\'t match at key "database::reminders".)');
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('reminders');
 
 
         $document = [
@@ -81,9 +82,17 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
             ],
         ];
 
+        $this->assertInstanceOf("AbstractDocumentifier", $this->documentifier);
+
         $this->documentifier->fixPhone($document);
 
         self::assertEquals($expected, $document);
+
+        $state->popTable('reminders');
+    }
+
+    public function _before() {
+        $this->setUp();
     }
 
     public function setUp()
