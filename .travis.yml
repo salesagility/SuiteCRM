@@ -68,7 +68,7 @@ script:
   - ./build/push_output.sh
   
   # Run the unit tests
-  - ./vendor/bin/codecept run unit --steps -f -vvv -d tests/unit/lib/SuiteCRM/Search/AbstractDocumentifierTest.php
+  - ./vendor/bin/codecept run unit --steps -f -vvv -d
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
   # Install demo user data
