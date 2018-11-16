@@ -226,7 +226,6 @@ public static function handleLeadAccountName($leadBean) {
             "'";
         $account_results = $leadBean->db->query($account_query);
         $row = $leadBean->db->fetchByAssoc($account_results);
-        $row2 = $leadBean->db->fetchByAssoc($account_results);
 
         if ((!isset($leadBean->account_id) || strlen($leadBean->account_id)==0)) {
             // If id is empty, and we can find one, and only one, matching account, we fill it
