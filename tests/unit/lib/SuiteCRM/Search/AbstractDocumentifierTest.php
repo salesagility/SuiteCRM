@@ -40,7 +40,7 @@
 
 namespace SuiteCRM\Test;
 
-require_once 'tests/unit/lib/SuiteCRM/Search/AbstractDocumentifierMock.php';
+require_once __DIR__."/AbstractDocumentifierMock.php";
 
 
 class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
@@ -96,7 +96,8 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function setUp()
     {
-        $this->documentifier = new \AbstractDocumentifierMock();
+
+        $this->documentifier = new AbstractDocumentifierMock();
 
         return parent::setUp();
     }
