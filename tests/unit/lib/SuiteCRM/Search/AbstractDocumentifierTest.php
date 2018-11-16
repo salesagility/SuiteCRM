@@ -82,7 +82,7 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
             ],
         ];
 
-        $this->assertInstanceOf("AbstractDocumentifier", $this->documentifier);
+        $this->assertInstanceOf("SuiteCRM\\Search\\Index\\Documentify\\AbstractDocumentifier", $this->documentifier);
 
         $this->documentifier->fixPhone($document);
 
