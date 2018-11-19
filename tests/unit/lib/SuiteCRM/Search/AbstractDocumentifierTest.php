@@ -52,6 +52,7 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
     {
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('reminders');
+        $state->pushTable('reminders_invitees');
 
 
         $data1 = "(+44) 012321323";
@@ -68,12 +69,14 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertEquals($expe3, $this->documentifier->sanitizePhone($data3));
 
         $state->popTable('reminders');
+        $state->popTable('reminders_invitees');
     }
 
     public function testFixPhone()
     {
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('reminders');
+        $state->pushTable('reminders_invitees');
 
 
         $document = [
@@ -98,6 +101,7 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertEquals($expected, $document);
 
         $state->popTable('reminders');
+        $state->popTable('reminders_invitees');
     }
 
     public function setUp()

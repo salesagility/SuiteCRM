@@ -125,6 +125,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('reminders');
+        $state->pushTable('reminders_invitees');
 
         $object = new GoogleSync();
 
@@ -189,6 +190,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals('FAKEUSER', $return->assigned_user_id);
 
         $state->popTable('reminders');
+        $state->popTable('reminders_invitees');
     }
 
     public function testUpdateGoogleCalendarEvent()
