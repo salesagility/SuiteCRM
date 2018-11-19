@@ -2,7 +2,7 @@
 
 require_once dirname(dirname(dirname(dirname(__DIR__)))). '/include/GoogleSync/GoogleSync.php';
 
-class GoogleSyncTest extends \Codeception\Test\Unit
+class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /** @var UnitTester */
     protected $tester;
@@ -122,6 +122,10 @@ class GoogleSyncTest extends \Codeception\Test\Unit
 
     public function testCreateSuitecrmMeetingEvent()
     {
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('reminders');
+
         $object = new GoogleSync();
 
         date_default_timezone_set('Etc/UTC');
@@ -183,6 +187,8 @@ class GoogleSyncTest extends \Codeception\Test\Unit
         $this->assertEquals('1', $return->duration_hours);
         $this->assertEquals('0', $return->duration_minutes);
         $this->assertEquals('FAKEUSER', $return->assigned_user_id);
+
+        $state->popTable('reminders');
     }
 
     public function testUpdateGoogleCalendarEvent()
