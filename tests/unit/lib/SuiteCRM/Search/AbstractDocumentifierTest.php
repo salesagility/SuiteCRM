@@ -50,6 +50,10 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testSanitizePhone()
     {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('reminders');
+
+
         $data1 = "(+44) 012321323";
         $expe1 = "+44012321323";
 
@@ -62,6 +66,8 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertEquals($expe1, $this->documentifier->sanitizePhone($data1));
         self::assertEquals($expe2, $this->documentifier->sanitizePhone($data2));
         self::assertEquals($expe3, $this->documentifier->sanitizePhone($data3));
+
+        $state->popTable('reminders');
     }
 
     public function testFixPhone()
