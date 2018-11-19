@@ -74,6 +74,7 @@ function make_sugar_config(&$sugar_config)
     global $disable_persistent_connections;
     global $display_email_template_variable_chooser;
     global $display_inbound_email_buttons;
+    global $google_auth_json;
     global $history_max_viewed;
     global $host_name;
     global $import_dir;
@@ -147,6 +148,7 @@ function make_sugar_config(&$sugar_config)
         'disable_persistent_connections' => empty($disable_persistent_connections) ? false : $disable_persistent_connections,
         'display_email_template_variable_chooser' => empty($display_email_template_variable_chooser) ? false : $display_email_template_variable_chooser,
         'display_inbound_email_buttons' => empty($display_inbound_email_buttons) ? false : $display_inbound_email_buttons,
+        'google_auth_json' => empty($google_auth_json) ? '' : $google_auth_json,
         'history_max_viewed' => empty($history_max_viewed) ? 50 : $history_max_viewed,
         'host_name' => empty($host_name) ? 'localhost' : $host_name,
         'import_dir' => $import_dir, // this must be set!!
@@ -329,6 +331,7 @@ function get_sugar_config_defaults()
                 'oauth_tokens',
             )
         ),
+        'google_auth_json' => '',
         'history_max_viewed' => 50,
         'installer_locked' => true,
         'import_max_records_per_file' => 100,

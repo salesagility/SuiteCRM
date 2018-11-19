@@ -37,78 +37,24 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 namespace SuiteCRM\Test;
 
-require_once __DIR__."/AbstractDocumentifierMock.php";
+use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 
 
-class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
+
+class AbstractDocumentifierMock extends \SuiteCRM\Search\Index\Documentify\AbstractDocumentifier
 {
-    /** @var AbstractDocumentifier */
-    private $documentifier;
-
-    public function testSanitizePhone()
-    {
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('reminders');
-        $state->pushTable('reminders_invitees');
-
-
-        $data1 = "(+44) 012321323";
-        $expe1 = "+44012321323";
-
-        $data2 = "(+45) 0123-213-23";
-        $expe2 = "+45012321323";
-
-        $data3 = "(ab) 0123 213 23";
-        $expe3 = "012321323";
-
-        self::assertEquals($expe1, $this->documentifier->sanitizePhone($data1));
-        self::assertEquals($expe2, $this->documentifier->sanitizePhone($data2));
-        self::assertEquals($expe3, $this->documentifier->sanitizePhone($data3));
-
-        $state->popTable('reminders');
-        $state->popTable('reminders_invitees');
+    /**
+     * Converts a bean to a document-friendly associative array.
+     *
+     * @param \SugarBean $bean
+     *
+     * @return array
+     */
+    public function documentify(\SugarBean $bean){
+        parent::documentify($bean);
     }
 
-    public function testFixPhone()
-    {
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('reminders');
-        $state->pushTable('reminders_invitees');
 
-
-        $document = [
-            'name' => 'foo',
-            'phone' => [
-                'home' => '+44 077 099 885',
-                'work' => '+44-077-099-885',
-            ],
-        ];
-
-        $expected = [
-            'name' => 'foo',
-            'phone' => [
-                'home' => '+44077099885',
-                'work' => '+44077099885',
-            ],
-        ];
-
-
-        $this->documentifier->fixPhone($document);
-
-        self::assertEquals($expected, $document);
-
-        $state->popTable('reminders');
-        $state->popTable('reminders_invitees');
-    }
-
-    public function setUp()
-    {
-
-        $this->documentifier = new AbstractDocumentifierMock();
-
-        return parent::setUp();
-    }
 }

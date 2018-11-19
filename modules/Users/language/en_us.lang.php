@@ -682,4 +682,12 @@ $mod_strings = array(
     'ERR_USER_FACTOR_SMTP_REQUIRED' => 'SMTP server settings required first.',
     'ERR_USER_FACTOR_CHANGE_DISABLED' => 'Current user is not able to change two factor authentication settings.',
     'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
+    // for Google Token/Synchronization settings
+    'LBL_GOOGLE_API_SETTINGS' => 'Google Account Synchronization',
+    'LBL_GOOGLE_API_TOKEN' => 'Google API Token',
+    'LBL_GOOGLE_API_TOKEN_HELP' => 'Use this to authorize SuiteCRM to access your Google Calendar. This is required for synchronization. Don\'t forget to check the "Enable Calendar Sync" checkbox when done.',
+    'LBL_GOOGLE_API_TOKEN_BTN' => 'Get Token',
+    'LBL_GSYNC_CAL' => 'Enable Calendar Sync',
+    // END Google Token/Synchronization settings
+
 ); // END STRINGS DEFS

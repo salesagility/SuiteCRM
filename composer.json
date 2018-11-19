@@ -27,6 +27,7 @@
     "onelogin/php-saml": "^3.0.0",
     "google/recaptcha": "^1.1",
     "ezyang/htmlpurifier": "^4.10",
+    "google/apiclient": "^2.0",
     "elasticsearch/elasticsearch": "^5.3",
     "nesbot/carbon": "^1.31",
     "monolog/monolog": "^1.23",

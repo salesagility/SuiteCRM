@@ -367,4 +367,9 @@ More help : www.tcpdf.org',
     'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
 
+    // Google auth
+    'LBL_GOOGLE_AUTH_TITLE' => 'Google Authentication',
+    'LBL_GOOGLE_AUTH_JSON' => 'JSON File',
+    'LBL_GOOGLE_AUTH_JSON_HELP' => 'Upload the JSON file you downloaded from Google Developers Console.',
+
 );

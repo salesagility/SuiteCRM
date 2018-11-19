@@ -54,6 +54,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 abstract class AbstractDocumentifier
 {
+
     /**
      * Converts a bean to a document-friendly associative array.
      *

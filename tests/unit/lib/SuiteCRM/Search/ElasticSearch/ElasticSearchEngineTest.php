@@ -281,6 +281,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testGetIndex()
     {
+
         $engine = new ElasticSearchEngine();
 
         self::assertEquals('main', $engine->getIndex());

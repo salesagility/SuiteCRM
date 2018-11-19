@@ -271,6 +271,7 @@ class ElasticSearchClientBuilderTest extends SearchTestAbstract
 
     public function testUrlParserBadUrls()
     {
+
         $url1 = ['host' => 'http:///example.com'];
         $url2 = ['host' => 'http://:80'];
         $url3 = ['host' => 'http://user@:80'];

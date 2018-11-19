@@ -542,6 +542,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
     public function testCreateIndexWithBody()
     {
+
         $index = 'test';
         $body = ["mappings" => ['my_type' => ['_source' => ['enabled' => true]]]];
         $params = ['index' => $index, 'body' => $body];

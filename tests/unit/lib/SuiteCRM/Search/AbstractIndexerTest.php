@@ -147,6 +147,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testLogger()
     {
+
         $indexer = $this->getIndexerMock();
 
         $this->invokeMethod($indexer, 'setupLogger');
