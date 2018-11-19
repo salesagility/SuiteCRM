@@ -13,7 +13,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
     /** @var ReflectionProperty */
     protected static $dbProperty;
 
-    protected function _before()
+    public function _before()
     {
         parent::_before();
 
