@@ -45,6 +45,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
 
 /**
+ * Returns the XML metadata which can be used to register the SP with the IDP
+ *
+ * @param array $settingsInfo a SAML2 settings array structure
+ * @return string the xml metadata
+ * @throws OneLogin_Saml2_Error In case the settings/metadata are invalid
+ */
+function getSAML2Metadata($settingsInfo) {
+    $auth = new OneLogin_Saml2_Auth($settingsInfo);
+    $settings = $auth->getSettings();
+    $metadata = $settings->getSPMetadata();
+    $errors = $settings->validateMetadata($metadata);
+    if (!empty($errors)) {
+        throw new OneLogin_Saml2_Error(
+            'Invalid SP metadata: '.implode(', ', $errors),
+            OneLogin_Saml2_Error::METADATA_SP_INVALID
+        );
+    }
+    return $metadata;
+}
+
+/**
  * Class SAML2Authenticate for SAML2 auth
  */
 class SAML2Authenticate extends SugarAuthenticate
