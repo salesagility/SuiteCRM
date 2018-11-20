@@ -44,7 +44,7 @@
         <ul>
             {foreach from=$beans item=bean}
                 <li>
-                    <a href="/index.php?action=DetailView&module={$module}&record={$bean->id}&offset=1">{$bean->name}</a>
+                    <a href="{$SITEURL}/index.php?action=DetailView&module={$module}&record={$bean->id}&offset=1">{$bean->name}</a>
                 </li>
             {/foreach}
         </ul>
