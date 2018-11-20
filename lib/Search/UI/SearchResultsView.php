@@ -58,14 +58,4 @@ class SearchResultsView extends View
         parent::__construct(__DIR__ . '/templates/search.results.tpl');
     }
 
-    /** @inheritdoc */
-    public function display()
-    {
-
-        global $sugar_config;
-
-        $this->smarty->assign("SITEURL", $sugar_config['site_url']);
-
-        parent::display();
-    }
 }
