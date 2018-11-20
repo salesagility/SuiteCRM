@@ -476,7 +476,7 @@ class UserViewHelper {
 
         // Set Google Auth variables
         $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "none"); // Hide new token button by default
-        $this->ss->assign("GOOGLE_API_TOKEN_NEW_URL", "/index.php?entryPoint=saveGoogleApiKey&getnew");
+        $this->ss->assign("GOOGLE_API_TOKEN_NEW_URL", $sugar_config['site_url']."/index.php?entryPoint=saveGoogleApiKey&getnew");
         $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Disabled");
         if(isset($sugar_config['google_auth_json']) && !empty($sugar_config['google_auth_json'])) {
             $json = base64_decode($sugar_config['google_auth_json']);

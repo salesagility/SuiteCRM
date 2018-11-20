@@ -32,7 +32,7 @@ if (isset($_REQUEST['code'])) {
         $user->setPreference('GoogleApiRefreshToken', base64_encode($accessRefreshToken), false, 'GoogleSync');
     }
     $user->savePreferencesToDB();
-    $url = "/index.php?module=Users&action=EditView&record=" . $current_user->id;
+    $url = $sugar_config['site_url']."/index.php?module=Users&action=EditView&record=" . $current_user->id;
     SugarApplication::redirect($url);
 }
 
@@ -43,19 +43,19 @@ if (isset($_REQUEST['setinvalid'])) {
     $user->retrieve($current_user->id);
     $user->setPreference('GoogleApiToken', '', false, 'GoogleSync');
     $user->savePreferencesToDB();
-    $url = "/index.php?module=Users&action=EditView&record=" . $current_user->id;
+    $url = $sugar_config['site_url']."/index.php?module=Users&action=EditView&record=" . $current_user->id;
     SugarApplication::redirect($url);
 }
 
 if (isset($_REQUEST['error'])) {
     global $GLOBALS;
     global $current_user;
-    $url = "/index.php?module=Users&action=EditView&record=" . $current_user->id;
+    $url = $sugar_config['site_url']."/index.php?module=Users&action=EditView&record=" . $current_user->id;
     $exitstring = "<html><head><title>SuiteCRM Google Sync - ERROR</title></head><body><h1>There was an error: " . $_REQUEST['error'] . "</h1><br><p><a href=" . $url . ">Click here</a> to continue.</body></html>";
     die($exitstring);
 }
 
 // If we don't get a known return, we just silently return to the user profile.
 global $current_user;
-$url = "/index.php?module=Users&action=EditView&record=" . $current_user->id;
+$url = $sugar_config['site_url']."/index.php?module=Users&action=EditView&record=" . $current_user->id;
 SugarApplication::redirect($url);
