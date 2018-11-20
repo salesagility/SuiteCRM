@@ -148,6 +148,12 @@ class SugarCache
         {
             apc_delete_file( $file );
         }
+
+        // Zend OPcache
+        if (function_exists('opcache_invalidate'))
+        {
+            opcache_invalidate($file, true);
+        }
     }
 }
 

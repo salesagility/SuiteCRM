@@ -147,6 +147,8 @@ function sugar_fopen($filename, $mode, $use_include_path = false, $context = nul
  */
 function sugar_file_put_contents($filename, $data, $flags = null, $context = null)
 {
+    require_once('include/SugarCache/SugarCache.php');
+
     //check to see if the file exists, if not then use touch to create it.
     if (!file_exists($filename)) {
         sugar_touch($filename);
@@ -158,7 +160,10 @@ function sugar_file_put_contents($filename, $data, $flags = null, $context = nul
         return false;
     }
 
-    return file_put_contents($filename, $data, $flags, $context);
+    $result = file_put_contents($filename, $data, $flags, $context);
+    SugarCache::cleanFile($filename);
+
+    return $result;
 }
 
 /**
