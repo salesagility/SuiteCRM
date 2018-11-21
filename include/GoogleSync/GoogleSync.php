@@ -38,6 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /**
  * Implements Google Calendar Syncing
  *
@@ -81,6 +85,8 @@ class GoogleSync
      */
     public function __construct()
     {
+        // This sets the log level to a variable that can be set on the command line while running cron.php on the server. It's for debugging only.
+        // EXAMPLE: $ GSYNC_LOGLEVEL=debug php cron.php
         if (isset($_SERVER['GSYNC_LOGLEVEL'])) {
             LoggerManager::getLogger()->setLevel($_SERVER['GSYNC_LOGLEVEL']);
             LoggerManager::getLogger()->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Log Level Set to: ' . $_SERVER['GSYNC_LOGLEVEL']);
@@ -102,11 +108,11 @@ class GoogleSync
         $authJson_local = json_decode(base64_decode($sugar_config['google_auth_json']), true);
         if (!$authJson_local) {
         // The authconfig json string is invalid json
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid AuthConfig JSON');
+            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'AuthConfig is not proper JSON string');
             return false;
         } elseif (!array_key_exists('web', $authJson_local)) {
             // The authconfig is valid json, but the 'web' key is missing. This is not a valid authconfig.
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid AuthConfig JSON');
+            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'AuthConfig is missing required [web] key');
             return false;
         } else {
             return $authJson_local;
@@ -235,7 +241,6 @@ class GoogleSync
         $meetings = array();
         require_once('modules/Meetings/Meeting.php');
         while ($row = $this->db->fetchByAssoc($result)) {
-            $results[] = $row['id'];
             $meeting = new Meeting();
             $meeting->retrieve($row['id'], true, false);
             $meetings[] = $meeting;
@@ -313,7 +318,6 @@ class GoogleSync
         // Set Options for what events we get from Google
         $optParams = array(
             'maxResults' => 500,
-            //'orderBy' => 'startTime',
             'showDeleted' => true,
             'singleEvents' => true,
             'timeMin' => date('c', strtotime('-1 month')),
@@ -440,7 +444,7 @@ class GoogleSync
      *
      * @param string $event_id The Google Event ID
      *
-     * @return \Meeting SuiteCRM Meeting Bean
+     * @return \Meeting SuiteCRM Meeting Bean if found, false on error, null if not found
      */
     public function getMeetingByEventId($event_id)
     {
