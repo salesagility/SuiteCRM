@@ -160,8 +160,8 @@ class SearchResultsController extends Controller
     /**
      *
      * @param SugarBean $bean
-     * @param string $fieldKey
-     * @param string $fieldValue
+     * @param array $fieldValue
+     * @param array $fieldDef
      * @return array of label
      */
     protected function getListViewHeaderLabel(SugarBean $bean, $fieldValue, $fieldDef)
