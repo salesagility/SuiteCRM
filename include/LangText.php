@@ -153,11 +153,11 @@ class LangText
         
         $module = $module ? $module : $this->module;
         
-        if (!$mod_strings && $module) {
+        if ($module) {
             // retrieve translation for specified module
             $lang = $lang ? $lang : ($this->lang ? $this->lang : $GLOBALS['current_language']);
             include_once __DIR__ . '/SugarObjects/LanguageManager.php';
-            \LanguageManager::loadModuleLanguage($module, $lang);
+            $moduleLang = \LanguageManager::loadModuleLanguage($module, $lang);
         }
 
         if (!is_null($key)) {
@@ -184,6 +184,10 @@ class LangText
             );
         } else {
             ErrorMessage::drop('Unknown use case for translation: ' . $this->use);
+        }
+        
+        if (!$text && isset($moduleLang)) {
+            $text = isset($moduleLang[$this->key]) && $moduleLang[$this->key] ? $moduleLang[$this->key] : null;
         }
 
         if (!$text) {
@@ -221,9 +225,9 @@ class LangText
      * @return string
      * @throws ErrorMessageException
      */
-    public static function get($key, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true)
+    public static function get($key, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true, $module = null, $lang = null)
     {
-        $text = new LangText($key, $args, $use, $log, $throw);
+        $text = new LangText($key, $args, $use, $log, $throw, $module, $lang);
         $translated = $text->getText();
         return $translated;
     }
