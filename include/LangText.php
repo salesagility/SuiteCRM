@@ -152,30 +152,49 @@ class LangText
     public function getText($key = null, $args = null, $use = null, $module = null, $lang = null)
     { // TODO: rename the methode to LangText::translate()
 
+        $this->selfUpdate($key, $args, $use);
+        $textResolved = $this->resolveText($module, $lang);
+        $text = $this->replaceArgs($textResolved);
+
+        return $text;
+    }
+    
+    /**
+     * 
+     * @global array $app_strings
+     * @global array $mod_strings
+     * @global array $app_list_strings
+     * @param string $module
+     * @param string $lang
+     * @return string
+     */
+    protected function resolveText($module = null, $lang = null) {
+        
+        $textFromGlobals = $this->resolveTextByGlobals();
+        $text = $this->updateTextByModuleLang($textFromGlobals, $module, $lang);
+
+        if (!$text) {
+            if ($this->log) {
+                ErrorMessage::handler('A language key does not found: [' . $this->key . ']', self::LOG_LEVEL, $this->throw);
+            } else {
+                $text = $this->key;
+            }
+        }
+        
+        return $text;
+    }
+    
+    /**
+     * 
+     * @global array $app_strings
+     * @global array $mod_strings
+     * @global array $app_list_strings
+     * @return string
+     */
+    protected function resolveTextByGlobals() {
         // TODO: app_strings and mod_strings could be in separated methods
         global $app_strings, $mod_strings, $app_list_strings;
         
-        $module = $module ? $module : $this->module;
-        
-        if ($module) {
-            // retrieve translation for specified module
-            $lang = $lang ? $lang : ($this->lang ? $this->lang : $GLOBALS['current_language']);
-            include_once __DIR__ . '/SugarObjects/LanguageManager.php';
-            $moduleLang = \LanguageManager::loadModuleLanguage($module, $lang);
-        }
-
-        if (!is_null($key)) {
-            $this->key = $key;
-        }
-
-        if (!is_null($args)) {
-            $this->args = $args;
-        }
-
-        if (!is_null($use)) {
-            $this->use = $use;
-        }
-
         if ($this->use === self::USING_MOD_STRINGS) {
             $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : null;
         } elseif ($this->use === self::USING_APP_STRINGS) {
@@ -189,24 +208,75 @@ class LangText
         } else {
             ErrorMessage::drop('Unknown use case for translation: ' . $this->use);
         }
-        
-        if (!$text && isset($moduleLang)) {
+        return $text;
+    }
+
+    /**
+     * 
+     * @param string $text
+     * @param string $module
+     * @param string $lang
+     * @return string
+     */
+    protected function updateTextByModuleLang($text, $module = null, $lang = null) {
+        $moduleLang = $this->getModuleLang($module, $lang);
+        if (!$text && $moduleLang) {
             $text = isset($moduleLang[$this->key]) && $moduleLang[$this->key] ? $moduleLang[$this->key] : null;
         }
+        return $text;
+    }
 
-        if (!$text) {
-            if ($this->log) {
-                ErrorMessage::handler('A language key does not found: [' . $this->key . ']', self::LOG_LEVEL, $this->throw);
-            } else {
-                $text = $this->key;
-            }
-        }
-
+    /**
+     * 
+     * @param string $text
+     * @return string
+     */
+    protected function replaceArgs($text) {
         foreach ((array) $this->args as $name => $value) {
             $text = str_replace('{' . $name . '}', $value, $text);
         }
-
         return $text;
+    }
+    
+    /**
+     * 
+     * @param string|null $key
+     * @param array|null $args
+     * @param integer|null $use
+     */
+    protected function selfUpdate($key = null, $args = null, $use = null) {
+        if (!is_null($key)) {
+            $this->key = $key;
+        }
+
+        if (!is_null($args)) {
+            $this->args = $args;
+        }
+
+        if (!is_null($use)) {
+            $this->use = $use;
+        }
+    }
+    
+    /**
+     * 
+     * @param string $module
+     * @param string $lang
+     * @return array|null
+     */
+    protected function getModuleLang($module = null, $lang = null) {        
+        $moduleLang = null;
+        
+        $moduleName = $module ? $module : $this->module;
+        
+        if ($moduleName) {
+            // retrieve translation for specified module
+            $lang = $lang ? $lang : ($this->lang ? $this->lang : $GLOBALS['current_language']);
+            include_once __DIR__ . '/SugarObjects/LanguageManager.php';
+            $moduleLang = \LanguageManager::loadModuleLanguage($moduleName, $lang);
+        }
+        
+        return $moduleLang;
     }
 
     /**
@@ -224,7 +294,6 @@ class LangText
      * @param string $key
      * @param array|null $args
      * @param boolean|null $log
-     * @param integer $use
      * @param boolean $throw
      * @param string $module
      * @param string $lang
