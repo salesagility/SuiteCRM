@@ -3699,7 +3699,7 @@ SUGAR.savedViews = function () {
       }
       //add showSSDIV to url if it is available.  This determines whether saved search sub form should
       //be rendered open or not
-      if (document.getElementById('showSSDIV') && typeof(document.getElementById('showSSDIV') != 'undefined')) {
+      if (document.getElementById('showSSDIV') && (typeof(document.getElementById('showSSDIV')) != 'undefined')) {
         selecturl = selecturl + '&showSSDIV=' + document.getElementById('showSSDIV').value;
       }
       //use created url to navigate
