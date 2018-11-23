@@ -41,7 +41,6 @@
 
 namespace SuiteCRM;
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -160,7 +159,7 @@ class LangText
     }
     
     /**
-     * 
+     *
      * @global array $app_strings
      * @global array $mod_strings
      * @global array $app_list_strings
@@ -168,8 +167,8 @@ class LangText
      * @param string $lang
      * @return string
      */
-    protected function resolveText($module = null, $lang = null) {
-        
+    protected function resolveText($module = null, $lang = null)
+    {
         $textFromGlobals = $this->resolveTextByGlobals();
         $text = $this->updateTextByModuleLang($textFromGlobals, $module, $lang);
 
@@ -185,40 +184,47 @@ class LangText
     }
     
     /**
-     * 
+     *
      * @global array $app_strings
      * @global array $mod_strings
      * @global array $app_list_strings
      * @return string
      */
-    protected function resolveTextByGlobals() {
+    protected function resolveTextByGlobals()
+    {
         // TODO: app_strings and mod_strings could be in separated methods
         global $app_strings, $mod_strings, $app_list_strings;
         
-        if ($this->use === self::USING_MOD_STRINGS) {
-            $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : null;
-        } elseif ($this->use === self::USING_APP_STRINGS) {
-            $text = isset($app_strings[$this->key]) && $app_strings[$this->key] ? $app_strings[$this->key] : null;
-        } elseif ($this->use === self::USING_ALL_STRINGS) {
-            $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : (
-                isset($app_strings[$this->key]) ? $app_strings[$this->key] : (
-                    isset($app_list_strings[$this->key]) ? $app_list_strings[$this->key] : null
-                )
-            );
-        } else {
-            ErrorMessage::drop('Unknown use case for translation: ' . $this->use);
+        switch ($this->use) {
+            case self::USING_MOD_STRINGS:
+                $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : null;
+                break;
+            case self::USING_APP_STRINGS:
+                $text = isset($app_strings[$this->key]) && $app_strings[$this->key] ? $app_strings[$this->key] : null;
+                break;
+            case self::USING_ALL_STRINGS:
+                $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : (
+                    isset($app_strings[$this->key]) ? $app_strings[$this->key] : (
+                        isset($app_list_strings[$this->key]) ? $app_list_strings[$this->key] : null
+                    )
+                );
+                break;
+            default:
+                ErrorMessage::drop('Unknown use case for translation: ' . $this->use);
+                break;
         }
         return $text;
     }
 
     /**
-     * 
+     *
      * @param string $text
      * @param string $module
      * @param string $lang
      * @return string
      */
-    protected function updateTextByModuleLang($text, $module = null, $lang = null) {
+    protected function updateTextByModuleLang($text, $module = null, $lang = null)
+    {
         $moduleLang = $this->getModuleLang($module, $lang);
         if (!$text && $moduleLang) {
             $text = isset($moduleLang[$this->key]) && $moduleLang[$this->key] ? $moduleLang[$this->key] : null;
@@ -227,11 +233,12 @@ class LangText
     }
 
     /**
-     * 
+     *
      * @param string $text
      * @return string
      */
-    protected function replaceArgs($text) {
+    protected function replaceArgs($text)
+    {
         foreach ((array) $this->args as $name => $value) {
             $text = str_replace('{' . $name . '}', $value, $text);
         }
@@ -239,12 +246,13 @@ class LangText
     }
     
     /**
-     * 
+     *
      * @param string|null $key
      * @param array|null $args
      * @param integer|null $use
      */
-    protected function selfUpdate($key = null, $args = null, $use = null) {
+    protected function selfUpdate($key = null, $args = null, $use = null)
+    {
         if (!is_null($key)) {
             $this->key = $key;
         }
@@ -259,12 +267,13 @@ class LangText
     }
     
     /**
-     * 
+     *
      * @param string $module
      * @param string $lang
      * @return array|null
      */
-    protected function getModuleLang($module = null, $lang = null) {        
+    protected function getModuleLang($module = null, $lang = null)
+    {
         $moduleLang = null;
         
         $moduleName = $module ? $module : $this->module;
