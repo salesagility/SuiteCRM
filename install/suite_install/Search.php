@@ -52,7 +52,7 @@ function install_search()
     global $sugar_config;
 
     $sugar_config['search']['controller'] = 'UnifiedSearch';
-    $sugar_config['search']['default_engine'] = 'BasicSearchEngine';
+    $sugar_config['search']['defaultEngine'] = 'BasicSearchEngine';
     $sugar_config['search']['pagination'] = [
         'min' => 10, 'max' => 50, 'step' => 10,
     ];
