@@ -801,6 +801,12 @@ $mod_strings = array(
     'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC' => 'Provides access to Address Cache information. This is only cache.',
 
 
+    // Google auth
+    'LBL_GOOGLE_CALENDAR_HEADER' => 'Google Calendar',
+    'LBL_GOOGLE_CALENDAR_DESC'  => 'Manage your Google Calendar Integration',
+    'LBL_GOOGLE_CALENDAR_AUTH_TITLE' => 'Authentication',
+    'LBL_GOOGLE_CALENDAR_AUTH_DESC'  => 'Google Calendar Authentication Settings',
+
     'LBL_DISPLAY_SIDEBAR' => 'Display Sidebar',
     'LBL_COLOUR_ADMIN_PAGEHEADER' => 'Page header colour',
     'LBL_COLOUR_ADMIN_PAGELINK' => 'Page link colour',
@@ -979,5 +985,6 @@ $mod_strings = array(
     // Ajax Submit
     'LBL_AJAX_SUBMIT_SUCCESS' => 'The settings have been saved successfully.',
     'LBL_AJAX_SUBMIT_FAIL' => 'An error has occurred while saving the settings.',
-);
 
+
+);

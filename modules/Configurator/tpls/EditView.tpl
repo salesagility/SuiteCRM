@@ -38,11 +38,8 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 *}
+
 <form name="ConfigureSettings" enctype='multipart/form-data' method="POST" action="index.php" onSubmit="return (add_checks(document.ConfigureSettings) && check_form('ConfigureSettings'));">
 <input type='hidden' name='action' value='SaveConfig'/>
 <input type='hidden' name='module' value='Configurator'/>
@@ -280,42 +277,6 @@
 
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 	<tr>
-		<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_GOOGLE_AUTH_TITLE}</h4></th>
-	</tr>
-	<tr>
-		<td width="25%" scope="row" valign='middle'>
-			{$MOD.LBL_GOOGLE_AUTH_JSON}&nbsp{sugar_help text=$MOD.LBL_GOOGLE_AUTH_JSON_HELP}
-		</td>
-		<td id="google_json" width="75%" align="left"  valign='middle' colspan='3'>
-			<script type='text/javascript'>
-				{literal}
-				var openGoogleJson = function(event) {
-					var input = event.target;
-					var reader = new FileReader();
-					var parent_td = document.getElementById('google_json');
-					reader.onload = function(){
-						console.log(reader.result.substring(0, 1024));
-						var json_input = document.getElementById("google_auth_json");
-						if (json_input == null) {
-							var json_input_text = document.createElement('span');
-							json_input_text.innerHTML = '<input type="hidden" id="google_auth_json" name="google_auth_json" />';
-							parent_td.appendChild(json_input_text);
-						}
-						document.getElementById('google_auth_json').value = btoa(reader.result.substring(0, 1024));
-					};
-					reader.readAsText(input.files[0]);
-				};
-				{/literal}
-			</script>
-			JSON file is: <span style="color:{$GOOGLE_JSON_CONF_COLOR}">{$GOOGLE_JSON_CONF}</span><input type="file" accept="text/plain" onchange="openGoogleJson(event)">
-		</td>
-	</tr>
-</table>
-
-
-
-<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-	<tr>
 	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_SKYPEOUT_TITLE}</h4></th>
 	</tr>
 	<tr>
@@ -328,8 +289,6 @@
 	<td width="75%" align="left"  valign='middle'><input type='hidden' name='system_skypeout_on' value='0'><input name="system_skypeout_on" value="1" class="checkbox" tabindex='1' type="checkbox" {$system_skypeout_on_checked}></td>
 	</tr>
  </table>
-
-
 
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 	<tr>
@@ -350,8 +309,7 @@
 		{else}
 			{assign var='log_memory_usage_checked' value=''}
 		{/if}
-		<td  ><input type='hidden' name='log_memory_usage' value='false'><input name='log_memory_usage'  type="checkbox" value='true' {$log_memory_usage_checked}></td>
-
+		<td><input type='hidden' name='log_memory_usage' value='false'><input name='log_memory_usage'  type="checkbox" value='true' {$log_memory_usage_checked}></td>
 	</tr>
 	<tr>
 		<td  scope="row">{$MOD.LOG_SLOW_QUERIES}: </td>
@@ -380,9 +338,6 @@
 			{assign var='stack_trace_errors_checked' value=''}
 		{/if}
 		<td ><input type='hidden' name='stack_trace_errors' value='false'><input name='stack_trace_errors'  type="checkbox" value='true' {$stack_trace_errors_checked}></td>
-
-
-
 	</tr>
 
 	<tr>
@@ -403,11 +358,7 @@
 		<td >
 			<input type='text' size='4' name='import_max_records_total_limit' value='{$config.import_max_records_total_limit}'>
 		</td>
-
 	</tr>
-
-
-
 </table>
 
 <table  width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">

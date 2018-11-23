@@ -45,6 +45,49 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/MVC/Controller/SugarController.php');
 class ConfiguratorController extends SugarController
 {
+
+    /**
+     * Go to the authentication view
+     */
+    function action_gcauthentication(){
+        global $current_user;
+        if(!is_admin($current_user)){
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
+        }
+
+        $this->view = 'gcauthentication';
+    }
+
+    /**
+    * Save the authentication
+    */
+    function action_savegcauthentication()
+    {        
+        require_once('modules/Administration/QuickRepairAndRebuild.php');
+        global $current_user;
+        if(!is_admin($current_user)){
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
+        }
+        $configurator = new Configurator();
+
+        if ($configurator->saveConfig() === false)
+        {
+            echo 'saveConfig returned false';
+        }
+
+        $focus = new Administration();
+        $focus->saveConfig();
+
+        $rc = new RepairAndClear();
+        $rc->clearTpls();
+        $rc->clearLanguageCache();
+        $rc->clearSmarty();
+        $rc->clearThemeCache();
+
+        SugarApplication::redirect('index.php?module=Administration&action=index');
+    }
+
+
     /**
      * Go to the font manager view
      */
@@ -244,6 +287,7 @@ class ConfiguratorController extends SugarController
     function action_saveconfig()
     {
         require_once('modules/Administration/QuickRepairAndRebuild.php');
+
         global $current_user;
         if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
