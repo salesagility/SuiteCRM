@@ -99,10 +99,6 @@ class ConfiguratorViewGCAuthentication extends SugarView {
 
          $this->ss->assign("ENCODING_TABLE", array_combine(explode(",",PDF_ENCODING_TABLE_LIST), explode(",",PDF_ENCODING_TABLE_LABEL_LIST)));
 
-         if (!empty($this->configurator->config['google_auth_json'])) {
-             var_dump($this->configurator->config['google_auth_json']);
-             exit;
-         }
          // Check for Google Sync JSON
          $json = base64_decode($this->configurator->config['google_auth_json']);
 
