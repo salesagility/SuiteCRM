@@ -56,6 +56,7 @@ $("form").submit(function (e) {
         data: data
     }).success(function () {
         alert(translate("LBL_AJAX_SUBMIT_SUCCESS"));
+        document.location.href = 'index.php?module=Administration';
     }).fail(function () {
         alert("LBL_AJAX_SUBMIT_FAIL");
     });
