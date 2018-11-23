@@ -35,25 +35,44 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
-<h2 class="moduleTitle">Results</h2>
+<h2 class="moduleTitle">{$APP.LBL_SEARCH_REAULTS_TITLE}</h2>
 {if isset($error)}
-    <p class="error">An error has occurred while performing the search. Your query syntax might not be valid.</p>
+    <p class="error">{$APP.ERR_SEARCH_INVALID_QUERY}</p>
 {else}
+
     {foreach from=$results->getHitsAsBeans() item=beans key=module}
-        <h3>{$module}</h3>
-        <ul>
+    <h3>{$module}</h3>
+    <table class="list view">
+        <thead>
+            <tr>
+                {foreach from=$headers[$module] item=header}
+                <th title="{$header.comment}">{$header.label}</th>
+                {/foreach}
+            </tr>
+        </thead>
+        <tbody>
             {foreach from=$beans item=bean}
-                <li>
-                    <a href="{$APP_CONFIG.site_url}/index.php?action=DetailView&module={$module}&record={$bean->id}&offset=1">{$bean->name}</a>
-                </li>
+            <tr class="{cycle values="oddListRowS1,evenListRowS1"}">
+                {foreach from=$headers[$module] item=header}
+                <td><span><a href="{$APP_CONFIG.site_url}/index.php?action=DetailView&module={$module}&record={$bean->id}&offset=1">{php}
+                        // using php to access to a smarty template object 
+                        // variable field by a dynamic indexed array element 
+                        // because it's impossible only with smarty syntax
+                        echo $this->get_template_vars('bean')->{$this->get_template_vars('header')['field']};
+                    {/php}</a></span></td>
+                {/foreach}
+            </tr>
             {/foreach}
-        </ul>
-        {foreachelse}
-        <p class="error">No results matching your search criteria. Try broadening your search.</p>
+        </tbody>
+        </thead>
+    </table>
+    {foreachelse}
+    <p class="error">{$APP.ERR_SEARCH_NO_RESULTS}</p>
     {/foreach}
+    
     {if !empty($results->getSearchTime())}
         <p class="text-muted text-right" id="search-time">
-            Search performed in {$results->getSearchTime()*1000|string_format:"%.2f"} ms
+            {$APP.LBL_SEARCH_PERFORMED_IN} {$results->getSearchTime()*1000|string_format:"%.2f"} ms
         </p>
     {/if}
 {/if}
