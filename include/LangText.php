@@ -197,22 +197,26 @@ class LangText
         
         switch ($this->use) {
             case self::USING_MOD_STRINGS:
-                $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : null;
+                $text = $this->resolveTextByGlobal($mod_strings, $key);
                 break;
             case self::USING_APP_STRINGS:
-                $text = isset($app_strings[$this->key]) && $app_strings[$this->key] ? $app_strings[$this->key] : null;
+                $text = $this->resolveTextByGlobal($app_strings, $key);
                 break;
             case self::USING_ALL_STRINGS:
-                $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : (
-                    isset($app_strings[$this->key]) ? $app_strings[$this->key] : (
-                        isset($app_list_strings[$this->key]) ? $app_list_strings[$this->key] : null
-                    )
-                );
+                $text = $this->resolveTextByGlobal($mod_strings, $key,
+                    $this->resolveTextByGlobal($app_strings, $key,
+                        $this->resolveTextByGlobal($app_list_strings, $key)));
                 break;
             default:
                 ErrorMessage::drop('Unknown use case for translation: ' . $this->use);
                 break;
         }
+        return $text;
+    }
+    
+    protected function resolveTextByGlobal($texts, $key, $default = null)
+    {
+        $text = isset($texts[$key]) && $texts[$key] ? $texts[$key] : $default;
         return $text;
     }
 
