@@ -197,15 +197,15 @@ class LangText
         
         switch ($this->use) {
             case self::USING_MOD_STRINGS:
-                $text = $this->resolveTextByGlobal($mod_strings, $key);
+                $text = $this->resolveTextByGlobal($mod_strings, $this->key);
                 break;
             case self::USING_APP_STRINGS:
-                $text = $this->resolveTextByGlobal($app_strings, $key);
+                $text = $this->resolveTextByGlobal($app_strings, $this->key);
                 break;
             case self::USING_ALL_STRINGS:
-                $text = $this->resolveTextByGlobal($mod_strings, $key,
-                    $this->resolveTextByGlobal($app_strings, $key,
-                        $this->resolveTextByGlobal($app_list_strings, $key)));
+                $text = $this->resolveTextByGlobal($mod_strings, $this->key,
+                    $this->resolveTextByGlobal($app_strings, $this->key,
+                        $this->resolveTextByGlobal($app_list_strings, $this->key)));
                 break;
             default:
                 ErrorMessage::drop('Unknown use case for translation: ' . $this->use);
