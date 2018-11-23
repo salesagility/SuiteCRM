@@ -214,6 +214,13 @@ class LangText
         return $text;
     }
     
+    /**
+     * 
+     * @param array $texts
+     * @param string $key
+     * @param string|null $default
+     * @return string
+     */
     protected function resolveTextByGlobal($texts, $key, $default = null)
     {
         $text = isset($texts[$key]) && $texts[$key] ? $texts[$key] : $default;
