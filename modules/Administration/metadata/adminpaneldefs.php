@@ -178,7 +178,6 @@ $admin_option_defs['jjwg_Maps']['address_cache'] = array(
     'address-cache'
 );
 
-
 $admin_group_header[] = array(
     'LBL_JJWG_MAPS_ADMIN_HEADER',
     '',
@@ -187,6 +186,25 @@ $admin_group_header[] = array(
     'LBL_JJWG_MAPS_ADMIN_DESC'
 );
 
+// Google Calendar Definitions
+
+$admin_option_defs = array();
+
+$admin_option_defs['Administration']['gcauthentication'] = array(
+    'Authentication',
+    'LBL_GOOGLE_CALENDAR_AUTH_TITLE',
+    'LBL_GOOGLE_CALENDAR_AUTH_DESC',
+    './index.php?module=Configurator&action=gcauthentication',
+    'admin-oauth-keys'
+);
+
+$admin_group_header[] = array(
+    'LBL_GOOGLE_CALENDAR_HEADER',
+    '',
+    false,
+    $admin_option_defs,
+    'LBL_GOOGLE_CALENDAR_DESC'
+);
 
 $admin_option_defs = array();
 $admin_option_defs['Administration']['securitygroup_management'] = array('SecuritySuiteGroupManagement', 'LBL_MANAGE_SECURITYGROUPS_TITLE', 'LBL_MANAGE_SECURITYGROUPS', './index.php?module=SecurityGroups&action=index', 'security');
