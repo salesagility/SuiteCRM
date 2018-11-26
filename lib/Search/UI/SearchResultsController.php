@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,16 +44,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use BeanFactory;
+use Exception;
+use SugarBean;
+use SuiteCRM\LangText;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
 use SuiteCRM\Search\UI\MVC\Controller;
+use ViewList;
 
 /**
  * Controller that handles the search results.
  */
 class SearchResultsController extends Controller
 {
+
+    /**
+     *
+     * @var SearchQuery
+     */
     private $query;
+
+    /**
+     *
+     * @var SearchResults
+     */
     private $results;
 
     /**
@@ -70,8 +86,95 @@ class SearchResultsController extends Controller
 
     public function display()
     {
+        $headers = $this->getListViewHeaders();
+        $this->view->getTemplate()->assign('headers', $headers);
         $this->view->getTemplate()->assign('results', $this->results);
 
         parent::display();
+    }
+
+    /**
+     *
+     * @return array of header info
+     * @throws Exception
+     */
+    protected function getListViewHeaders()
+    {
+        $headers = [];
+        $listViewDefs = $this->getListViewDefs();
+        foreach ($listViewDefs as $module => $listViewDef) {
+            $bean = BeanFactory::getBean($module);
+            if (!$bean) {
+                throw new Exception('Module bean not found for search results: ' . $module);
+            }
+            foreach ($listViewDef as $fieldKey => $fieldValue) {
+                if ($fieldValue['default']) {
+                    $header = $this->getListViewHeader($bean, $fieldKey, $fieldValue);
+
+                    $headers[$module][$fieldKey] = $header;
+                }
+            }
+        }
+        return $headers;
+    }
+
+    /**
+     *
+     * @return array of list view definitions
+     */
+    protected function getListViewDefs()
+    {
+        $listViewDefs = [];
+        if ($this->results->isGroupedByModule()) {
+            $modules = array_keys($this->results->getHits());
+            foreach ($modules as $module) {
+                $viewList = new ViewList();
+                $viewList->type = 'list';
+                $viewList->module = $module;
+
+                $metaDataFile = $viewList->getMetaDataFile();
+                require($metaDataFile);
+            }
+        }
+        return $listViewDefs;
+    }
+
+    /**
+     *
+     * @param SugarBean $bean
+     * @param string $fieldKey
+     * @param string $fieldValue
+     * @return array of header
+     */
+    protected function getListViewHeader(SugarBean $bean, $fieldKey, $fieldValue)
+    {
+        $fieldDef = $bean->getFieldDefinition(strtolower($fieldKey));
+        $header = [
+            'label' => $this->getListViewHeaderLabel($bean, $fieldValue, $fieldDef),
+            'comment' => isset($fieldDef['comment']) ? $fieldDef['comment'] : null,
+            'field' => $fieldDef['name'],
+        ];
+        return $header;
+    }
+    
+    /**
+     *
+     * @param SugarBean $bean
+     * @param array $fieldValue
+     * @param array $fieldDef
+     * @return array of label
+     */
+    protected function getListViewHeaderLabel(SugarBean $bean, $fieldValue, $fieldDef)
+    {
+        $label = isset($fieldValue['label']) ?
+            LangText::get(
+                $fieldValue['label'], null, LangText::USING_ALL_STRINGS, true, true, $bean->module_name) :
+            null;
+        if (!$label) {
+            $label = isset($fieldDef['vname']) ?
+                LangText::get($fieldDef['vname'], null, LangText::USING_ALL_STRINGS, true, false, $bean->module_name) :
+                null;
+        }
+        return $label;
     }
 }
