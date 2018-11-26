@@ -190,11 +190,11 @@ $admin_group_header[] = array(
 
 $admin_option_defs = array();
 
-$admin_option_defs['Administration']['gcauthentication'] = array(
+$admin_option_defs['Administration']['google_calendar_auth'] = array(
     'Authentication',
     'LBL_GOOGLE_CALENDAR_AUTH_TITLE',
     'LBL_GOOGLE_CALENDAR_AUTH_DESC',
-    './index.php?module=Configurator&action=gcauthentication',
+    './index.php?module=Administration&action=GoogleCalendarAuth',
     'admin-oauth-keys'
 );
 

@@ -986,5 +986,8 @@ $mod_strings = array(
     'LBL_AJAX_SUBMIT_SUCCESS' => 'The settings have been saved successfully.',
     'LBL_AJAX_SUBMIT_FAIL' => 'An error has occurred while saving the settings.',
 
-
+    // Google auth
+    'LBL_GOOGLE_AUTH_TITLE' => 'Google Authentication',
+    'LBL_GOOGLE_AUTH_JSON' => 'JSON File',
+    'LBL_GOOGLE_AUTH_JSON_HELP' => 'Upload the JSON file you downloaded from Google Developers Console.',
 );

@@ -43,20 +43,22 @@
 
 
 *}
-<form name="gcAuthentication" enctype='multipart/form-data' method="post" action="index.php" onSubmit="return (add_checks(document.gcAuthentication) && check_form('gcAuthentication'));">
-    <input type='hidden' name='module' value='Configurator'/>
-    <input type='hidden' name='action' value='savegcauthentication'/>
+<form name="gcAuthentication"
+      enctype='multipart/form-data'
+      method="post"
+      action="index.php?module=Administration&action=GoogleCalendarAuth&do=save"
+      onSubmit="return (add_checks(document.gcAuthentication) && check_form('gcAuthentication'));"
+>
+
 
     <span class='error'>{$error.main}</span>
 
-    <table width="100%" cellpadding="0" cellspacing="1" border="0" class="actionsContainer" style="margin-bottom: 20px;">
-        <tr>
-            <td>
-                <input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" id="Authentication_save_button" type="submit" name="save" value="  {$APP.LBL_SAVE_BUTTON_LABEL}  ">
-                &nbsp;<input title="{$MOD.LBL_CANCEL_BUTTON_TITLE}" id="Authentication_cancel_button" onclick="document.location.href='index.php?module=Administration&action=index'" class="button" type="button" name="cancel" value="  {$APP.LBL_CANCEL_BUTTON_LABEL}  ">
-            </td>
-        </tr>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="actionsContainer">
+      <tr>
+          <td>{$BUTTONS}</td>
+      </tr>
     </table>
+
 
     <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
     	<tr>
@@ -92,12 +94,11 @@
     	</tr>
     </table>
 
-    <div style="margin-top: 20px;">
-    	<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary"  type="submit" name="save" value="  {$APP.LBL_SAVE_BUTTON_LABEL}  " class="button primary"/>
-    	&nbsp;<input title="{$MOD.LBL_CANCEL_BUTTON_TITLE}" onclick="document.location.href='index.php?module=Administration&action=index'" class="button"  type="button" name="cancel" value="  {$APP.LBL_CANCEL_BUTTON_LABEL}  " />
+    <div style="padding-top: 2px;">
+        {$BUTTONS}
     </div>
 
-{$JAVASCRIPT}
-
+    
+    {$JAVASCRIPT}
 
 </form>
