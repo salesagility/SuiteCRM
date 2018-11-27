@@ -431,9 +431,8 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
                 $value = $value . ' 00:00:00';
             }
             // create utc date (as it's utc in db)
-            $datetime = DateTime::createFromFormat("Y-m-d H:i:s", $value, new DateTimeZone('UTC'));
-            // convert it to timezone the user uses
-            $datetime = $timedate->tzUser($datetime);
+            // use the calculated datetime_format
+            $datetime = DateTime::createFromFormat($datetime_format, $value,new DateTimeZone('UTC'));
 
             $value = $datetime->format($datetime_format);
         }

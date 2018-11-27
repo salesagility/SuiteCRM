@@ -63,7 +63,7 @@ RedirectMatch 403 {$ignoreCase}/+upload
 RedirectMatch 403 {$ignoreCase}/+cache/+diagnostic
 RedirectMatch 403 {$ignoreCase}/+files\.md5\$
 <IfModule mod_rewrite.c>
-    Options +FollowSymLinks
+    Options +SymLinksIfOwnerMatch
     RewriteEngine On
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
@@ -90,7 +90,6 @@ if (file_exists($htaccess_file)) {
         }
     }
 }
-
 if (substr($contents, -1) != "\n") {
     $restrict_str = "\n" . $restrict_str;
 }
@@ -141,7 +140,6 @@ if (file_exists($uploadHta) && filesize($uploadHta)) {
         $htaccess_failed = true;
     }
 }
-
 
 if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'UpgradeAccess') {
     // only display message in the repair tool and not during the upgrade process

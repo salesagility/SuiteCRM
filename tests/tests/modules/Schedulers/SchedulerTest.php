@@ -26,15 +26,15 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('job_queue');
         
     }
-    
+
     public function testderiveDBDateTimes()
     {
         // save state
-        
+
         $state = $this->storeStateAll();
-        
+
         // test
-        
+
         $scheduler = new Scheduler();
 
         $scheduler->id = 1;
@@ -42,7 +42,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //execute the method with different job intervals
 
-        $scheduler->job_interval = '*::*::*::*::3';
+        $scheduler->job_interval = '*::*::*::*::*';
         $result = $scheduler->deriveDBDateTimes($scheduler);
         $this->assertTrue(is_array($result));
 
@@ -53,11 +53,12 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $scheduler->job_interval = '0::*::3::*::*';
         $result = $scheduler->deriveDBDateTimes($scheduler);
         $this->assertEquals(false, $result);
-        
+
         // clean up
-        
+
         $this->restoreStateAll($state);
     }
+
     public function test__construct()
     {
         // save state
