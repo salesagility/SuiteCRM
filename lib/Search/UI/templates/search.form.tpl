@@ -56,7 +56,7 @@
         	<tr style="padding-top: 10px;">
         		<td colspan="6" style="padding-left: 20px;" nowrap="">
             		<div id="inlineGlobalSearch">
-                		<table id="GlobalSearchSettings" class="GlobalSearchSettings edit view" style="margin-bottom:0px;" cellspacing="0" cellpadding="0" border="0">
+                		<table style="margin-bottom:0px;" cellspacing="0" cellpadding="0" border="0">
                 		    <tbody>
                                 <td>
                                     <label for="search-query-size" class="text-muted">Results per page: </label>
