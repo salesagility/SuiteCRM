@@ -35,41 +35,45 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
-<h1 class="module-title-text hide">Search</h1>
 
-<form id="search-wrapper-form">
-    {*hidden input to handle actions*}
-    {search_controller}
+<div class="moduleTitle">
+    <h2 class="module-title-text">Search</h2>
+</div>
+<div style="clear:both;">
+    <form id="search-wrapper-form">
+        {*hidden input to handle actions*}
+        {search_controller}
 
-    <table width="600" cellspacing="1" border="0">
-    	<tbody>
-            <tr style="padding-bottom: 10px">
-                <td class="submitButtons" colspan="8" nowrap="">
-                    <label for="searchFieldMain" class="text-muted hide">Search Query</label>
-                    <input id="searchFieldMain" title="Search" class="searchField" type="text" size="80" name="search-query-string" value="{$searchQueryString}" autofocus>
-                    <input type="submit" title="Search" class="button primary" value="Search">&nbsp;
-                </td>
-            <tr>
-        	<tr height="5">
-                <td></td>
-            </tr>
-        	<tr style="padding-top: 10px;">
-        		<td colspan="6" style="padding-left: 20px;" nowrap="">
-            		<div id="inlineGlobalSearch">
-                		<table style="margin-bottom:0px;" cellspacing="0" cellpadding="0" border="0">
-                		    <tbody>
-                                <td>
-                                    <label for="search-query-size" class="text-muted">Results per page: </label>
-                                    {html_options options=$sizeOptions selected=$searchQuerySize id="search-query-size" name="search-query-size"}
-                                    &nbsp;&nbsp;
-                                    <label for="search-query-size" class="text-muted">Engine:</label>
-                                    {html_options options=$engineOptions selected=$searchQueryEngine id="search-engine" name="search-engine"}
-                                </td>
-                		     </tbody>
-                        </table>
-            		</div>
-        		</td>
-        	</tr>
-    	</tbody>
-    </table>
-</form>
+        <table width="600" cellspacing="1" border="0">
+        	<tbody>
+                <tr style="padding-bottom: 10px">
+                    <td class="submitButtons" colspan="8" nowrap="">
+                        <label for="searchFieldMain" class="text-muted hide">Search Query</label>
+                        <input id="searchFieldMain" title="Search" class="searchField" type="text" size="80" name="search-query-string" value="{$searchQueryString}" autofocus>
+                        <input type="submit" title="Search" class="button primary" value="Search">&nbsp;
+                    </td>
+                <tr>
+            	<tr height="5">
+                    <td></td>
+                </tr>
+            	<tr style="padding-top: 10px;">
+            		<td colspan="6" style="padding-left: 20px;" nowrap="">
+                		<div id="inlineGlobalSearch">
+                    		<table style="margin-bottom:0px;" cellspacing="0" cellpadding="0" border="0">
+                    		    <tbody>
+                                    <td>
+                                        <label for="search-query-size" class="text-muted">Results per page: </label>
+                                        {html_options options=$sizeOptions selected=$searchQuerySize id="search-query-size" name="search-query-size"}
+                                        &nbsp;&nbsp;
+                                        <label for="search-query-size" class="text-muted">Engine:</label>
+                                        {html_options options=$engineOptions selected=$searchQueryEngine id="search-engine" name="search-engine"}
+                                    </td>
+                    		     </tbody>
+                            </table>
+                		</div>
+            		</td>
+            	</tr>
+        	</tbody>
+        </table>
+    </form>
+</div>
