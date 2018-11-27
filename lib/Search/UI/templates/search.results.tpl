@@ -41,7 +41,7 @@
 {else}
 
     {foreach from=$results->getHitsAsBeans() item=beans key=module}
-    <h3>{$module}</h3>
+    <h3>{$module} ({php} echo count($this->get_template_vars('results')->getHitsAsBeans()[$this->get_template_vars('module')]);{/php})</h3>
     <table class="list view">
         <thead>
             <tr>
