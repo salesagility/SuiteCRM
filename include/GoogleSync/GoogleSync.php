@@ -80,6 +80,12 @@ class GoogleSync
     /** @var object A Database Instance */
     private $db;
 
+    /** @var object A Logger Instance */
+    private $logger;
+
+    /** @var string The log level before we begin */
+    private $oldLogLevel;
+
     /**
      * Class Constructor
      */
@@ -87,14 +93,29 @@ class GoogleSync
     {
         // This sets the log level to a variable that can be set on the command line while running cron.php on the server. It's for debugging only.
         // EXAMPLE: $ GSYNC_LOGLEVEL=debug php cron.php
+        $this->logger = LoggerManager::getLogger();
         if (isset($_SERVER['GSYNC_LOGLEVEL'])) {
-            LoggerManager::getLogger()->setLevel($_SERVER['GSYNC_LOGLEVEL']);
-            LoggerManager::getLogger()->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Log Level Set to: ' . $_SERVER['GSYNC_LOGLEVEL']);
+            $this->oldLogLevel = $this->logger->getLogLevel();
+            $this->logger->setLevel($_SERVER['GSYNC_LOGLEVEL']);
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Log Level Set To: ' . $_SERVER['GSYNC_LOGLEVEL']);
         }
         $this->timezone = date_default_timezone_get(); // This defaults to the server timezone. Overridden later.
         $this->authJson = $this->getAuthJson();
         $this->db = DBManagerFactory::getInstance();
-        LoggerManager::getLogger()->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . '__construct');
+        $this->logger->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . '__construct');
+    }
+
+    /**
+     * Class Destructor
+     */
+    public function __destruct()
+    {
+        // Set the log level back to the original value
+        $this->logger->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . '__destruct');
+        if (isset($_SERVER['GSYNC_LOGLEVEL'])) {
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Setting Log Level Back To: ' . $this->oldLogLevel);
+            $this->logger->setLevel($this->oldLogLevel);
+        }
     }
 
     /**
@@ -408,38 +429,6 @@ class GoogleSync
     }
 
     /**
-     * Find a missing event on users calendars
-     *
-     * This is an expensive method. It searches *all* the users calendars for a missing event,
-     * moves it back to the SuiteCRM calendar, and returns the moved event.
-     *
-     * @param string $event_id The Google Event Id
-     *
-     * @return \Google_Service_Calendar_Event|null Google_Service_Calendar_Event if found, null if not found
-     */
-    public function getMissingMeeting($event_id)
-    {
-        // get list of users calendars
-        $calendarList = $this->gService->calendarList->listCalendarList();
-
-        // Search all calendars looking for event
-        foreach ($calendarList->getItems() as $calendarListEntry) {
-            if ($gEvent = $this->gService->events->get($calendarListEntry->getId(), $event_id)) {
-                $foundOnCalendar = $calendarListEntry->getId();
-                break;
-            }
-        }
-        if (isset($foundOnCalendar)) {
-            $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Found Event on Calendar ID: ' . $foundOnCalendar);
-            $result = $this->gService->events->move($foundOnCalendar, $event_id, $this->calendarId);
-            return $result;
-        } else {
-            $GLOBALS['log']->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find missing Calendar Event');
-            return null;
-        }
-    }
-
-    /**
      * Get a SuiteCRM meeting by Google Event ID
      *
      * @param string $event_id The Google Event ID
@@ -492,6 +481,85 @@ class GoogleSync
     }
 
     /**
+     * Helper function for pushPullSkip.
+     * 
+     * When given a single calendar object, determine its type and return an action.
+     * 
+     * @param Meeting|\Google_Service_Calendar_Event $event Either the Meeting Bean or Google_Service_Calendar_Event Object
+     * 
+     * @return string push, pull, skip, or false on error
+     */
+    public function singleEventAction($event)
+    {
+        switch (get_class($event)) {
+            case "Google_Service_Calendar_Event":
+                if ($event->status !== 'cancelled') {
+                 // We only pull if the Google Event is not deleted/cancelled
+                    $return = "pull";
+                } else {
+                    $return = "skip";
+                }
+                break;
+            case "Meeting":
+                if ($event->deleted == '0') {
+                 // We only push if the meeting is not deleted
+                    $return = "push";
+                } else {
+                    $return = "skip";
+                }
+                break;
+            default:
+                $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'I don\'t understand the event type you used.');
+                $return = false;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Helper function for pushPullSkip
+     * 
+     * Takes two objects, and determines which one is local and which is remote.
+     * 
+     * @param Meeting|\Google_Service_Calendar_Event $event_1 Either the Meeting Bean or Google_Service_Calendar_Event Object
+     * @param Meeting|\Google_Service_Calendar_Event $event_2 Either the Meeting Bean or Google_Service_Calendar_Event Object
+     * 
+     * @return array ['local']=Meeting Bean, ['remote']=Google_Service_Calendar_Event object
+     */
+    public function sortEventObjects($event_1, $event_2)
+    {
+        if (!isset($event_1) || empty($event_1) || !isset($event_2) || empty($event_2)) {
+            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass two events event');
+            return false;
+        }
+
+        $events_array = array();
+
+        // We have two events... figure out which is which and set the internal objects
+        $obj_class1 = get_class($event_1);
+        if ($obj_class1 == 'Meeting') {
+            $events_array['local'] = $event_1;
+        } elseif ($obj_class1 == 'Google_Service_Calendar_Event') {
+            $events_array['remote'] = $event_1;
+        } else {
+            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
+            return false;
+        }
+        $obj_class2 = get_class($event_2);
+        if ($obj_class2 == 'Meeting') {
+            $events_array['local'] = $event_2;
+        } elseif ($obj_class2 == 'Google_Service_Calendar_Event') {
+            $events_array['remote'] = $event_2;
+        } else {
+            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
+            return false;
+        }
+    
+        return $events_array;
+
+    }
+
+    /**
      * Figure out if we need to push/pull an update, or do nothing.
      *
      * Used when an event w/ a matching ID is on both ends of the sync.
@@ -508,98 +576,59 @@ class GoogleSync
             return false;
         }
 
-        // If we only got one event, figure out which kind it is
+        // Did we only get one event?
         if (!isset($event_2) || empty($event_2)) {
-            switch (get_class($event_1)) {
-                case "Google_Service_Calendar_Event":
-                    if ($event_1->status !== 'cancelled') {
-                     // We only pull if the Google Event is not deleted/cancelled
-                        $return = "pull";
-                    } else {
-                        $return = "skip";
-                    }
-                    break;
-                case "Meeting":
-                    if ($event_1->deleted == '0') {
-                     // We only push if the meeting is not deleted
-                        $return = "push";
-                    } else {
-                        $return = "skip";
-                    }
-                    break;
-                default:
-                    $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'I don\'t understand the event type you used.');
-                    $return = false;
-            }
-            // Only one event, we're done here
-            return $return;
+            // If we only got one event, figure out which kind it is, and pass the return from the helper function
+            return $this->singleEventAction($event_1);
         } else {
-
-            // We have two events... figure out which is which and set the internal objects
-            $obj_class1 = get_class($event_1);
-            if ($obj_class1 == 'Meeting') {
-                $event_local = $event_1;
-            } elseif ($obj_class1 == 'Google_Service_Calendar_Event') {
-                $event_remote = $event_1;
-            } else {
-                $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
-                return false;
-            }
-
-            $obj_class2 = get_class($event_2);
-            if ($obj_class2 == 'Meeting') {
-                $event_local = $event_2;
-            } elseif ($obj_class2 == 'Google_Service_Calendar_Event') {
-                $event_remote = $event_2;
-            } else {
-                $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
-                return false;
-            }
-
-            if (in_array($event_local->id, $this->syncedList, true)) {
-                $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We already synced this meeting. Marking to skip.');
-                return "skip";
-            }
+            // For two events, pass to the helper function that sorts them and returns an array of objects
+            $events_array = $this->sortEventObjects($event_1, $event_2);
 
             // We don't need the original vars now
             unset($event_1);
             unset($event_2);
 
+            // Check if we already sync'ed this event on this run
+            if (in_array($events_array['local']->id, $this->syncedList, true)) {
+                $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We already synced this meeting. Marking to skip.');
+                return "skip";
+            }
+
             // Before we get further, if both events are deleted, skip
-            if ($event_local->deleted == '1' && $event_remote->status == 'cancelled') {
+            if ($events_array['local']->deleted == '1' && $events_array['remote']->status == 'cancelled') {
                 return "skip";
             }
 
             // Get the last modified time from google event
-            $gModified = strtotime($event_remote->getUpdated());
+            $gModified = strtotime($events_array['remote']->getUpdated());
 
             // Get last modified of SuiteCRM event
-            $sModified = strtotime($event_local->fetched_row['date_modified'] . ' UTC'); // SuiteCRM stores the timedate as UTC in the DB
+            $sModified = strtotime($events_array['local']->fetched_row['date_modified'] . ' UTC'); // SuiteCRM stores the timedate as UTC in the DB
 
             // Get the last sync time of SuiteCRM event
-            if (isset($event_local->fetched_row['gsync_lastsync'])) {
-                $lastSync = $event_local->fetched_row['gsync_lastsync'];
+            if (isset($events_array['local']->fetched_row['gsync_lastsync'])) {
+                $lastSync = $events_array['local']->fetched_row['gsync_lastsync'];
             } else {
                 $lastSync = 0;
             }
 
             // Event has not been modified since last sync... skip
             if ($gModified <= $lastSync && $sModified <= $lastSync) {
-                $this->syncedList[] = $event_local->id;
+                $this->syncedList[] = $events_array['local']->id;
                 return "skip";
             }
 
             // Event was modified since last sync
             if ($gModified > $lastSync || $sModified > $lastSync) {
                 if ($gModified > $sModified) {
-                    if ($event_remote->status == 'cancelled') {
+                    if ($events_array['remote']->status == 'cancelled') {
                          // if the remote event is deleted, delete it here
                         return "pull_delete";
                     } else {
                         return "pull";
                     }
                 } else {
-                    if ($event_local->deleted == '1') {
+                    if ($events_array['local']->deleted == '1') {
                         return "push_delete";
                     } else {
                         return "push";
@@ -623,7 +652,7 @@ class GoogleSync
      *
      * @return bool Success/Failure
      */
-    public function pushEvent($event_local, $event_remote = null)
+    public function pushEvent(Meeting $event_local, Google_Service_Calendar_Event $event_remote = null)
     {
 
         if (!isset($event_remote) || empty($event_remote)) {
@@ -642,10 +671,41 @@ class GoogleSync
          * So we check to make sure it has an ID to determine Success/Failure.
          */
         if (isset($return->id)) {
-            return true;
+            return $return->id;
         } else {
             return false;
         }
+    }
+
+    /**
+     * Helper Function to get a Google_Service_Calendar_EventExtendedProperties object for the Google event
+     * 
+     * Takes the local and remote events, and returns a Google_Service_Calendar_EventExtendedProperties
+     * 
+     * @param \Google_Service_Calendar_Event $event_remote \Google_Service_Calendar_Event Object
+     * @param Meeting $event_local Meeting (optional) \Meeting Bean
+     * 
+     * @return Google_Service_Calendar_EventExtendedProperties object
+     */
+    public function returnExtendedProperties(Google_Service_Calendar_Event $event_remote, Meeting $event_local)
+    {
+        // We pull the existing extendedProperties, and change our values
+        // That way we don't mess with anything else that's using other values.
+        $extendedProperties = $event_remote->getExtendedProperties();
+
+        if (!empty($extendedProperties)) {
+            $private = $extendedProperties->getPrivate();
+        } else {
+            $extendedProperties = new Google_Service_Calendar_EventExtendedProperties;
+            $private = array();
+        }
+
+        $private['suitecrm_id'] = $event_local->id;
+        $private['suitecrm_type'] = $event_local->module_name;
+
+        $extendedProperties->setPrivate($private);
+
+        return $extendedProperties;
     }
 
     /**
@@ -659,7 +719,7 @@ class GoogleSync
      *
      * @return bool Success/Failure of setLastSync, since that's what saves the record
      */
-    public function pullEvent($event_remote, $event_local = null)
+    public function pullEvent(Google_Service_Calendar_Event $event_remote, Meeting $event_local = null)
     {
 
         if (!isset($event_local) || empty($event_local)) {
@@ -670,23 +730,7 @@ class GoogleSync
 
         // We need to set the suitecrm_ private properties in the Google event here,
         // Otherwise it's seen as a new event next time we sync
-
-        // We pull the existing extendedProperties, and change our values
-        // That way we don't mess with anything else that's using other values.
-        $extendedProperties = $event_remote->getExtendedProperties();
-
-        if (!empty($extendedProperties)) {
-            $private = $extendedProperties->getPrivate();
-        } else {
-            $extendedProperties = new Google_Service_Calendar_EventExtendedProperties;
-            $private = array();
-        }
-
-        $private['suitecrm_id'] = $event->id;
-        $private['suitecrm_type'] = $event->module_name;
-
-        $extendedProperties->setPrivate($private);
-
+        $extendedProperties = $this->returnExtendedProperties($event_remote, $event);
         $event_remote->setExtendedProperties($extendedProperties);
 
         $greturn = $this->gService->events->update($this->calendarId, $event_remote->getId(), $event_remote);
@@ -709,7 +753,7 @@ class GoogleSync
      *
      * @return bool Success/Failure of setLastSync, since that's what saves the record
      */
-    public function delMeeting($meeting)
+    public function delMeeting(Meeting $meeting)
     {
         $meeting->deleted = '1';
         $meeting->gsync_id = '';
@@ -724,7 +768,7 @@ class GoogleSync
      *
      * @return bool Success/Failure
      */
-    public function delEvent($event, $meeting_id)
+    public function delEvent(Google_Service_Calendar_Event $event, $meeting_id)
     {
         // Make sure the calendar service is set up
         if (!isset($this->gService)) {
@@ -748,8 +792,11 @@ class GoogleSync
             $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Success Status Code: ' . $statusCode . ' on delete.');
 
             // This removes the gsync_id reference from the table.
-            $sql = "UPDATE Meetings SET gsync_id = '' WHERE id = '" . $meeting_id . "'";
+            $sql = "UPDATE meetings SET gsync_id = '' WHERE id = '" . $meeting_id . "'";
             $res = $this->db->query($sql);
+            if (!$res) {
+                $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to remove gsync_id from record' . $meeting_id);
+            }
 
             $this->syncedList[] = $meeting_id;
             return true;
@@ -760,6 +807,39 @@ class GoogleSync
     }
 
     /**
+     * Helper function. Clear all popup reminders from crm meeting
+     * 
+     * @param string $event_id The ID of the event in the DB
+     * 
+     * @return bool Success/Failure
+     */
+    public function clearPopups($event_id) {
+
+        if (!isset($event_id) || empty($event_id)) {
+            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Event_id is missing');
+            return false;
+        } 
+
+        // Disable all popup reminders for the SuiteCRM meeting
+        $sql = sprintf("UPDATE reminders SET popup = '0' WHERE related_event_module_id = '%s' AND deleted = '0'", $event_id);
+        $res = $this->db->query($sql);
+        if (!$res) {
+            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'SQL Failure!');
+            return false;
+        }
+
+        // Mark all reminders where both popup and email are disabled as deleted.
+        $sql = sprintf("UPDATE reminders SET deleted = '1' WHERE popup = '0' AND email = '0' AND related_event_module_id = '%s' AND deleted = '0'", $event_id);
+        $res = $this->db->query($sql);
+        if (!$res) {
+            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'SQL Failure!');
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Update SuiteCRM Meeting from Google Calendar Event
      *
      * @param Meeting $event_local SuiteCRM Meeting Bean
@@ -767,7 +847,7 @@ class GoogleSync
      *
      * @return Meeting SuiteCRM Meeting Bean
      */
-    public function updateSuitecrmMeetingEvent($event_local, $event_remote)
+    public function updateSuitecrmMeetingEvent(Meeting $event_local, Google_Service_Calendar_Event $event_remote)
     {
 
         if ((!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote))) {
@@ -794,18 +874,9 @@ class GoogleSync
         $event_local->duration_minutes = $mins;
         $event_local->assigned_user_id = $this->workingUser->id;
 
-        // Disable all popup reminders for the SuiteCRM meeting
-        $sql = "UPDATE reminders SET popup = '0' WHERE related_event_module_id = '" .
-            $event_local->id .
-            "' AND deleted = '0'";
-        $res = $this->db->query($sql);
-
-        // Mark all reminders where both popup and email are disabled as deleted.
-        $sql = "UPDATE reminders SET deleted = '1' " .
-            "WHERE popup = '0' AND email = '0' AND related_event_module_id = '" .
-            $event_local->id .
-            "' AND deleted = '0'";
-        $res = $this->db->query($sql);
+        // Disable all popup reminders for the SuiteCRM meeting. We add them back from Google event below.
+        $event_id = $event_local->id;
+        $this->clearPopups($event_id);
 
         // Get Google Event Popup Reminders
         $gReminders = $event_remote->getReminders();
@@ -838,7 +909,7 @@ class GoogleSync
      *
      * @return Meeting SuiteCRM Meeting Bean
      */
-    public function createSuitecrmMeetingEvent($event_remote)
+    public function createSuitecrmMeetingEvent(Google_Service_Calendar_Event $event_remote)
     {
         $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Creating New SuiteCRM Meeting');
         $meeting = new Meeting;
@@ -856,7 +927,7 @@ class GoogleSync
      *
      * @return \Google_Service_Calendar_Event
      */
-    public function updateGoogleCalendarEvent($event_local, $event_remote)
+    public function updateGoogleCalendarEvent(Meeting $event_local, Google_Service_Calendar_Event $event_remote)
     {
 
         if ((!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote))) {
@@ -878,21 +949,7 @@ class GoogleSync
         $endDateTime->setTimeZone($this->timezone);
         $event_remote->setEnd($endDateTime);
 
-        // We pull the existing extendedProperties, and change our values
-        // That way we don't mess with anything else that's using other values.
-        $extendedProperties = $event_remote->getExtendedProperties();
-
-        if (!empty($extendedProperties)) {
-            $private = $extendedProperties->getPrivate();
-        } else {
-            $extendedProperties = new Google_Service_Calendar_EventExtendedProperties;
-            $private = array();
-        }
-
-        $private['suitecrm_id'] = $event_local->id;
-        $private['suitecrm_type'] = $event_local->module_name;
-
-        $extendedProperties->setPrivate($private);
+        $extendedProperties = $this->returnExtendedProperties($event_remote, $event_local);
         $event_remote->setExtendedProperties($extendedProperties);
 
         // Copy over popup reminders
@@ -927,7 +984,7 @@ class GoogleSync
      *
      * @return \Google_Service_Calendar_Event Google_Service_Calendar_Event Object
      */
-    public function createGoogleCalendarEvent($event_local)
+    public function createGoogleCalendarEvent(Meeting $event_local)
     {
 
         //We're creating a new event
@@ -976,7 +1033,7 @@ class GoogleSync
      *
      * @return bool Success/Failure
      */
-    protected function setLastSync($event_local, $gEventId = null)
+    protected function setLastSync(Meeting $event_local, $gEventId = null)
     {
 
         if (isset($gEventId)) {
@@ -1127,7 +1184,7 @@ class GoogleSync
             $user->retrieve($row['id']);
 
             if (!empty($user->getPreference('GoogleApiToken', 'GoogleSync')) &&
-            $accessToken = json_decode(base64_decode($user->getPreference('GoogleApiToken', 'GoogleSync'))) &&
+            json_decode(base64_decode($user->getPreference('GoogleApiToken', 'GoogleSync'))) &&
             $user->getPreference('syncGCal', 'GoogleSync') == '1') {
                 $this->addUser($user->id, $user->full_name);
             }
@@ -1154,7 +1211,7 @@ class GoogleSync
 
         // Then we go though the array and sync the users with doSync()
         if (isset($this->users) && !empty($this->users)) {
-            foreach ($this->users as $key => $value) {
+            foreach (array_keys($this->users) as $key ) {
                 $return = $this->doSync($key);
                 if (!$return) {
                     $GLOBALS['log']->error('Something went wrong syncing for user id: ' . $key);
