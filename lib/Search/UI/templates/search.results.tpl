@@ -45,6 +45,7 @@
     <table class="list view">
         <thead>
             <tr>
+                <th></th>
                 {foreach from=$headers[$module] item=header}
                 <th title="{$header.comment}">{$header.label}</th>
                 {/foreach}
@@ -53,6 +54,7 @@
         <tbody>
             {foreach from=$beans item=bean}
             <tr class="{cycle values="oddListRowS1,evenListRowS1"}">
+                <td><a href="{$APP_CONFIG.site_url}/index.php?action=EditView&module={$module}&record={$bean->id}&offset=1"><span class="suitepicon suitepicon-action-edit"></span></a></td>
                 {foreach from=$headers[$module] item=header}
                 <td><span><a href="{$APP_CONFIG.site_url}/index.php?action=DetailView&module={$module}&record={$bean->id}&offset=1">{php}
                         // using php to access to a smarty template object 
