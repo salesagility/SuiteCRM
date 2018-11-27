@@ -116,7 +116,7 @@ class SearchResults
         $parsed = [];
 
         foreach ($hits as $module => $beans) {
-            foreach ($beans as $bean) {
+            foreach ((array)$beans as $bean) {
                 $obj = BeanFactory::getBean($module, $bean);
                 if (!$obj) {
                     throw new Exception('Error retrieveing bean: ' . $module . ' [' . $bean . ']');
@@ -140,14 +140,16 @@ class SearchResults
     protected function updateFieldDefLinks(SugarBean $obj, $fieldDefs)
     {
         foreach ($fieldDefs as &$fieldDef) {
-            if ($fieldDef['type'] == 'relate' && isset($fieldDef['link'])) {
-                $link2 = $obj->{$fieldDef['link']};
-                $link2Focus = $link2->getFocus();
-                $relField = $fieldDef['id_name'];
-                $relId = $link2Focus->$relField;
-                $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId, 'DetailView');
-            } elseif ($fieldDef['name'] == 'name') {
-                $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $obj->module_name, $obj->id, 'DetailView');
+            if (isset($obj->{$fieldDef['name']})) {
+                if ($fieldDef['type'] == 'relate' && isset($fieldDef['link'])) {
+                    $link2 = $obj->{$fieldDef['link']};
+                    $link2Focus = $link2->getFocus();
+                    $relField = $fieldDef['id_name'];
+                    $relId = $link2Focus->$relField;
+                    $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId, 'DetailView');
+                } elseif ($fieldDef['name'] == 'name') {
+                    $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $obj->module_name, $obj->id, 'DetailView');
+                }
             }
         }
         return $obj;
