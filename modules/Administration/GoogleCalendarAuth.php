@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,6 +38,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 global $current_user, $sugar_config;
 global $mod_strings;
 global $app_list_strings;
@@ -77,26 +78,10 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     exit();
 }
 
-$sugar_smarty->assign('MOD', $mod_strings);
-$sugar_smarty->assign('APP', $app_strings);
-$sugar_smarty->assign('APP_LIST', $app_list_strings);
 $sugar_smarty->assign('LANGUAGES', get_languages());
 $sugar_smarty->assign("JAVASCRIPT", get_set_focus_js());
 $sugar_smarty->assign('config', $cfg->config['google_auth_json']);
 $sugar_smarty->assign('error', $errors);
-
-$buttons = <<<EOQ
-    <input title="{$app_strings['LBL_SAVE_BUTTON_TITLE']}"
-                       accessKey="{$app_strings['LBL_SAVE_BUTTON_KEY']}"
-                       class="button primary"
-                       type="submit"
-                       name="save"
-                       onclick="return check_form('ConfigureSettings');"
-                       value="  {$app_strings['LBL_SAVE_BUTTON_LABEL']}  " >
-                &nbsp;<input title="{$mod_strings['LBL_CANCEL_BUTTON_TITLE']}"  onclick="document.location.href='index.php?module=Administration&action=index'" class="button"  type="button" name="cancel" value="  {$app_strings['LBL_CANCEL_BUTTON_LABEL']}  " >
-EOQ;
-
-$sugar_smarty->assign("BUTTONS", $buttons);
 
 // Check for Google Sync JSON
 $json = base64_decode($cfg->config['google_auth_json']);

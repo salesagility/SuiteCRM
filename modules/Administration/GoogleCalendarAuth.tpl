@@ -55,7 +55,22 @@
 
     <table width="100%" cellpadding="0" cellspacing="0" border="0" class="actionsContainer">
       <tr>
-          <td>{$BUTTONS}</td>
+          <td>
+              <input title="{$APP.LBL_SAVE_BUTTON_TITLE}"
+                     accessKey="{$APP.LBL_SAVE_BUTTON_KEY}"
+                     class="button primary"
+                     type="submit"
+                     name="save"
+                     onclick="return check_form('ConfigureSettings');"
+                     value="  {$APP.LBL_SAVE_BUTTON_LABEL}  " />
+                     &nbsp;
+              <input title="{$MOD.LBL_CANCEL_BUTTON_TITLE}"
+                     onclick="document.location.href='index.php?module=Administration&action=index'"
+                     class="button"
+                     type="button"
+                     name="cancel"
+                     value="  {$APP.LBL_CANCEL_BUTTON_LABEL}  " />
+          </td>
       </tr>
     </table>
 
@@ -95,10 +110,23 @@
     </table>
 
     <div style="padding-top: 2px;">
-        {$BUTTONS}
+        <input title="{$APP.LBL_SAVE_BUTTON_TITLE}"
+               accessKey="{$APP.LBL_SAVE_BUTTON_KEY}"
+               class="button primary"
+               type="submit"
+               name="save"
+               onclick="return check_form('ConfigureSettings');"
+               value="  {$APP.LBL_SAVE_BUTTON_LABEL}  " />
+               &nbsp;
+        <input title="{$MOD.LBL_CANCEL_BUTTON_TITLE}"
+               onclick="document.location.href='index.php?module=Administration&action=index'"
+               class="button"
+               type="button"
+               name="cancel"
+               value="  {$APP.LBL_CANCEL_BUTTON_LABEL}  " />
     </div>
 
-    
+
     {$JAVASCRIPT}
 
 </form>
