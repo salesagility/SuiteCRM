@@ -40,8 +40,8 @@
     <p class="error">{$APP.ERR_SEARCH_INVALID_QUERY}</p>
 {else}
 
-    {foreach from=$results->getHitsAsBeans() item=beans key=module}
-    <h3>{$module} ({php} echo count($this->get_template_vars('results')->getHitsAsBeans()[$this->get_template_vars('module')]);{/php})</h3>
+    {foreach from=$resultsAsBean item=beans key=module}
+    <h3>{$module} ({php} echo count($this->get_template_vars('resultsAsBean')[$this->get_template_vars('module')]);{/php})</h3>
     <table class="list view">
         <thead>
             <tr>
@@ -56,12 +56,12 @@
             <tr class="{cycle values="oddListRowS1,evenListRowS1"}">
                 <td><a href="{$APP_CONFIG.site_url}/index.php?action=EditView&module={$module}&record={$bean->id}&offset=1"><span class="suitepicon suitepicon-action-edit"></span></a></td>
                 {foreach from=$headers[$module] item=header}
-                <td><span><a href="{$APP_CONFIG.site_url}/index.php?action=DetailView&module={$module}&record={$bean->id}&offset=1">{php}
+                <td>{php} 
                         // using php to access to a smarty template object 
                         // variable field by a dynamic indexed array element 
-                        // because it's impossible only with smarty syntax
+                        // because it's impossible only with smarty syntax 
                         echo $this->get_template_vars('bean')->{$this->get_template_vars('header')['field']};
-                    {/php}</a></span></td>
+                    {/php}</td>
                 {/foreach}
             </tr>
             {/foreach}

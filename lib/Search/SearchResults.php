@@ -40,6 +40,9 @@
 namespace SuiteCRM\Search;
 
 use BeanFactory;
+use RuntimeException;
+use SugarBean;
+use SuiteCRM\Exception\Exception;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -85,7 +88,7 @@ class SearchResults
         $this->total = $total;
 
         if ($this->scores != null && count($hits) != count($scores)) {
-            throw new \RuntimeException('The sizes of $hits and $scores must match.');
+            throw new RuntimeException('The sizes of $hits and $scores must match.');
         }
     }
 
@@ -114,11 +117,56 @@ class SearchResults
 
         foreach ($hits as $module => $beans) {
             foreach ($beans as $bean) {
-                $parsed[$module][] = BeanFactory::getBean($module, $bean);
+                $obj = BeanFactory::getBean($module, $bean);
+                if (!$obj) {
+                    throw new Exception('Error retrieveing bean: ' . $module . ' [' . $bean . ']');
+                }
+                $obj->load_relationships();
+                $fieldDefs = $obj->getFieldDefinitions();
+                $objUpdatedLinks = $this->updateFieldDefLinks($obj, $fieldDefs);
+                $parsed[$module][] = $objUpdatedLinks;
             }
         }
 
         return $parsed;
+    }
+    
+    /**
+     *
+     * @param SugarBean $obj
+     * @param array $fieldDefs
+     * @return SugarBean
+     */
+    protected function updateFieldDefLinks(SugarBean $obj, $fieldDefs)
+    {
+        foreach ($fieldDefs as &$fieldDef) {
+            if ($fieldDef['type'] == 'relate' && isset($fieldDef['link'])) {
+                $link2 = $obj->{$fieldDef['link']};
+                $link2Focus = $link2->getFocus();
+                $relField = $fieldDef['id_name'];
+                $relId = $link2Focus->$relField;
+                $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId, 'DetailView');
+            } elseif ($fieldDef['name'] == 'name') {
+                $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $obj->module_name, $obj->id, 'DetailView');
+            }
+        }
+        return $obj;
+    }
+    
+    /**
+     *
+     * @global array $sugar_config
+     * @param string $label
+     * @param string $module
+     * @param string $record
+     * @param string $action
+     * @return string
+     */
+    protected function getLink($label, $module, $record, $action)
+    {
+        global $sugar_config;
+        $link = "<a href=\"{$sugar_config['site_url']}/index.php?action={$action}&module={$module}&record={$record}&offset=1\"><span>{$label}</span></a>";
+        return $link;
     }
 
     /**
@@ -176,5 +224,4 @@ class SearchResults
     {
         return $this->groupedByModule;
     }
-
 }
