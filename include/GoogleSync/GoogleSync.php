@@ -49,8 +49,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * GNU Affero General Public License version 3
  * @author Benjamin Long <ben@offsite.guru>
  */
-require_once __DIR__ . '../../modules/Users/User.php';
-require_once __DIR__ . '../../modules/Meetings/Meeting.php';
+require_once __DIR__ . '/../../modules/Users/User.php';
+require_once __DIR__ . '/../../modules/Meetings/Meeting.php';
 
 class GoogleSync
 {
