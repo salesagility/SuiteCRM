@@ -50,7 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once __DIR__ . 'GoogleApiKeySaverEntryPoint.php';
+include_once __DIR__ . '/GoogleApiKeySaverEntryPoint.php';
 
 global $current_user, $sugar_config;
 $client = new Google_Client();
