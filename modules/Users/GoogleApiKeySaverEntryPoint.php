@@ -124,14 +124,17 @@ class GoogleApiKeySaverEntryPoint
     /**
      *
      * @param array $config
-     * @throws Exception 3 - client_id is not set in config json, 4 - client_secret is not set in config json
+     * @throws Exception 2 - web is not set in the config json, 3 - client_id is not set in config json, 4 - client_secret is not set in config json
      */
     protected function validateConfig($config)
     {
-        if (!isset($config['client_id'])) {
+        if (!isset($config['web'])) {
+            throw new Exception('web is not set in the config json', 2);
+        }
+        if (!isset($config['web']['client_id'])) {
             throw new Exception('client_id is not set in config json', 3);
         }
-        if (!isset($config['client_secret'])) {
+        if (!isset($config['web']['client_secret'])) {
             throw new Exception('client_secret is not set in config json', 4);
         }
     }
