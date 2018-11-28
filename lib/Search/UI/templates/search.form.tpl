@@ -37,7 +37,7 @@
  *}
 
 <div class="moduleTitle">
-    <h2 class="module-title-text">Search</h2>
+    <h2 class="module-title-text">{$APP.LBL_SEARCH_TITLE}</h2>
 </div>
 <div style="clear:both;">
     <form id="search-wrapper-form">
@@ -62,10 +62,10 @@
                     		<table style="margin-bottom:0px;" cellspacing="0" cellpadding="0" border="0">
                     		    <tbody>
                                     <td>
-                                        <label for="search-query-size" class="text-muted">Results per page: </label>
+                                        <label for="search-query-size" class="text-muted">{$APP.LBL_SEARCH_RESULTS_PER_PAGE}</label>
                                         {html_options options=$sizeOptions selected=$searchQuerySize id="search-query-size" name="search-query-size"}
                                         &nbsp;&nbsp;
-                                        <label for="search-query-size" class="text-muted">Engine:</label>
+                                        <label for="search-query-size" class="text-muted">{$APP.LBL_SEARCH_ENGINE}</label>
                                         {html_options options=$engineOptions selected=$searchQueryEngine id="search-engine" name="search-engine"}
                                     </td>
                     		     </tbody>
