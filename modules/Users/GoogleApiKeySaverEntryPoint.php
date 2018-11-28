@@ -1,4 +1,6 @@
 <?php
+
+use SuiteCRM\LangText;
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -144,7 +146,7 @@ class GoogleApiKeySaverEntryPoint
     protected function handleRequestGetnew()
     {
         $authUrl = $this->client->createAuthUrl();
-        $this->redirect($url);
+        $this->redirect($authUrl);
     }
 
     /**
@@ -184,7 +186,7 @@ class GoogleApiKeySaverEntryPoint
         if (!$user) {
             throw new Exception('Unable to get User bean.', 1);
         }
-        $user->retrieve($this->currentUser->id);
+        $ret = $user->retrieve($this->currentUser->id);
         if (!$ret) {
             throw new Exception('Unable to retrive user by ID: ' . $this->currentUser->id, 2);
         }
@@ -195,13 +197,17 @@ class GoogleApiKeySaverEntryPoint
     }
 
     /**
-     * shows an error
-     * @todo smarty template, translation and security issue
+     * shows an error - pick error message from language file instead 
+     * using simple requested text as it is an XSS vulnerability issue
      */
     protected function handleRequestError()
-    {
+    {        
         $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
-        $exitstring = "<html><head><title>SuiteCRM Google Sync - ERROR</title></head><body><h1>There was an error: " . $this->request['error'] . "</h1><br><p><a href=" . $url . ">Click here</a> to continue.</body></html>";
+        $tpl = new Sugar_Smarty();
+        $txtKey = $this->request['error'];
+        $tpl->assign('error', LangText::get($txtKey));
+        $tpl->assign('url', $url);
+        $exitstring = $tpl->fetch('googleApiKeySaverEntryPointError.tpl');
         $this->protectedDie($exitstring);
     }
 
