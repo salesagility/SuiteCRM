@@ -107,7 +107,18 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testGetUserMeetings()
     {
-        $this->markTestIncomplete('TODO: Implement Tests');
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('meetings');
+
+        $object = new GoogleSync();
+        $object->workingUser = BeanFactory::getBean('Users');
+        $object->workingUser->retrieve('seed_sarah_id');
+
+        $return = $object->getUserMeetings($object->workingUser->id);
+
+        $this->assertEquals(14, count($return));
+
+        $state->popTable('meetings');
     }
 
     public function testGetUserGoogleEvents()
