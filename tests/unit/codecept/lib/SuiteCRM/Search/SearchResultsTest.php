@@ -83,7 +83,9 @@ class SearchResultsTest extends StateCheckerUnitAbstract {
         $this->assertContains('modified_user_id', $exp);
         
         $exp = $parsed['Accounts'][0]->name;
-        $this->assertEquals('<a href="http://localhost/SuiteCRM/index.php?action=DetailView&module=Accounts&record=' . $ids[0] . '&offset=1"><span>acc 1</span></a>', $exp);
+        global $sugar_config;
+        $siteUrl = $sugar_config['site_url'];
+        $this->assertEquals('<a href="' . $siteUrl . '/index.php?action=DetailView&module=Accounts&record=' . $ids[0] . '&offset=1"><span>acc 1</span></a>', $exp);
         
         
         
