@@ -65,8 +65,14 @@
                                         <label for="search-query-size" class="text-muted">{$APP.LBL_SEARCH_RESULTS_PER_PAGE}</label>
                                         {html_options options=$sizeOptions selected=$searchQuerySize id="search-query-size" name="search-query-size"}
                                         &nbsp;&nbsp;
-                                        <label for="search-query-size" class="text-muted">{$APP.LBL_SEARCH_ENGINE}</label>
-                                        {html_options options=$engineOptions selected=$searchQueryEngine id="search-engine" name="search-engine"}
+
+                                        {if $engineOptions|@count gt 1}
+                                            <label for="search-query-size" class="text-muted">{$APP.LBL_SEARCH_ENGINE}</label>
+                                            {html_options options=$engineOptions selected=$searchQueryEngine id="search-engine" name="search-engine"}
+                                        {else}
+                                            {assign var=firstRow value=$engineOptions|@key}
+                                            <input type="hidden" name="search-engine" value="{$firstRow}" />
+                                        {/if}
                                     </td>
                     		     </tbody>
                             </table>
