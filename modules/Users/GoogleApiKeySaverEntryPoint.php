@@ -1,0 +1,212 @@
+<?php
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+/**
+ * Entry Point for saving Google API tokens during account authorization.
+ *
+ * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
+ * GNU Affero General Public License version 3
+ * @author Benjamin Long <ben@offsite.guru>
+ */
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+/**
+ * class GoogleApiKeySaverEntryPoint
+ */
+class GoogleApiKeySaverEntryPoint
+{
+
+    /**
+     *
+     * @var User
+     */
+    protected $currentUser;
+
+    /**
+     *
+     * @var array
+     */
+    protected $sugarConfig;
+
+    /**
+     *
+     * @var Google_Client
+     */
+    protected $client;
+
+    /**
+     *
+     * @var array
+     */
+    protected $request;
+
+    /**
+     * 
+     * @param User $current_user
+     * @param array $sugar_config
+     * @param Google_Client $client
+     * @param array $request
+     */
+    public function __construct(User $current_user, $sugar_config, Google_Client $client, $request)
+    {
+        $this->currentUser = $current_user;
+        $this->sugarConfig = $sugar_config;
+        $this->client = $client;
+        $this->request = $request;
+
+        $this->handleEntryPoint();
+    }
+
+    /**
+     * 
+     * @throws Exception Invalid json for auth config
+     */
+    protected function handleEntryPoint()
+    {
+        $this->client->setApplicationName('SuiteCRM');
+        $this->client->setScopes(Google_Service_Calendar::CALENDAR);
+        $json = base64_decode($this->sugarConfig['google_auth_json']);
+        if (!$config = json_decode($json, true)) {
+            throw new Exception('Invalid json for auth config');
+        }
+        $this->client->setAuthConfig($config);
+        $this->client->setAccessType('offline');
+        $this->client->setApprovalPrompt('force');
+
+        $this->handleRequest();
+    }
+
+    /**
+     * handle requested action handler method
+     */
+    protected function handleRequest()
+    {
+        if (isset($this->request['getnew'])) {
+            $this->handleRequestGetnew();
+        }
+
+        if (isset($this->request['code'])) {
+            $this->handleRequestCode();
+        }
+
+        if (isset($this->request['setinvalid'])) {
+            $this->handleRequestSetinvalid();
+        }
+
+        if (isset($this->request['error'])) {
+            $this->handleRequestError();
+        }
+
+        $this->handleRequestUnknown();
+    }
+
+    /**
+     * create and redirect to auth URL
+     */
+    protected function handleRequestGetnew()
+    {
+        $authUrl = $this->client->createAuthUrl();
+        SugarApplication::redirect($authUrl);
+    }
+
+    /**
+     * set google api token
+     * 
+     * @throws Exception Unable to get User bean.
+     */
+    protected function handleRequestCode()
+    {
+        $user = BeanFactory::getBean('Users');
+        if (!$user) {
+            throw new Exception('Unable to get User bean.');
+        }
+        $user->retrieve($this->currentUser->id);
+        $accessToken = $this->client->fetchAccessTokenWithAuthCode($this->request['code']);
+        $user->setPreference('GoogleApiToken', base64_encode(json_encode($accessToken)), false, 'GoogleSync');
+        $accessRefreshToken = $accessToken['refresh_token'];
+        if (isset($accessRefreshToken)) {
+            $user->setPreference('GoogleApiRefreshToken', base64_encode($accessRefreshToken), false, 'GoogleSync');
+        }
+        $user->savePreferencesToDB();
+        $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
+        SugarApplication::redirect($url);
+    }
+
+    /**
+     * set google api token to invalid
+     * 
+     * @throws Exception Unable to get User bean.
+     */
+    protected function handleRequestSetinvalid()
+    {
+        $user = BeanFactory::getBean('Users');
+        if (!$user) {
+            throw new Exception('Unable to get User bean.');
+        }
+        $user->retrieve($this->currentUser->id);
+        $user->setPreference('GoogleApiToken', '', false, 'GoogleSync');
+        $user->savePreferencesToDB();
+        $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
+        SugarApplication::redirect($url);
+    }
+
+    /**
+     * shows an error
+     * @todo smarty template, translation and security issue
+     */
+    protected function handleRequestError()
+    {
+        $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
+        $exitstring = "<html><head><title>SuiteCRM Google Sync - ERROR</title></head><body><h1>There was an error: " . $this->request['error'] . "</h1><br><p><a href=" . $url . ">Click here</a> to continue.</body></html>";
+        die($exitstring);
+    }
+
+    /**
+     * redirect to user edit view if unknown function given.
+     */
+    protected function handleRequestUnknown()
+    {
+        LoggerManager::getLogger()->error('Unkown entry point function given.');
+        // If we don't get a known return, we just silently return to the user profile.
+        $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
+        SugarApplication::redirect($url);
+    }
+}
