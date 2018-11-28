@@ -211,7 +211,74 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testGetMeetingByEventId()
     {
-        $this->markTestIncomplete('TODO: Implement Tests');
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('meetings');
+
+        $db = DBManagerFactory::getInstance();
+
+        $object = new GoogleSync();
+
+        // Create three meetings and save them to the DB for testing.
+        $meeting1 = new Meeting();
+        $meeting1->name = 'test1';
+        $meeting1->assigned_user_id = '666';
+        $meeting1->status = 'Not Held';
+        $meeting1->type = 'Sugar';
+        $meeting1->description = 'test description';
+        $meeting1->duration_hours = 1;
+        $meeting1->duration_minutes = 1;
+        $meeting1->date_start = '2016-02-11 17:30:00';
+        $meeting1->date_end = '2016-02-11 17:30:00';
+        $meeting1_id = $meeting1->save();
+
+        $meeting2 = new Meeting();
+        $meeting2->name = 'test2';
+        $meeting2->assigned_user_id = '666';
+        $meeting2->status = 'Not Held';
+        $meeting2->type = 'Sugar';
+        $meeting2->description = 'test description';
+        $meeting2->duration_hours = 1;
+        $meeting2->duration_minutes = 1;
+        $meeting2->date_start = '2016-02-11 17:30:00';
+        $meeting2->date_end = '2016-02-11 17:30:00';
+        $meeting2_id = $meeting2->save();
+
+        $meeting3 = new Meeting();
+        $meeting3->name = 'test3';
+        $meeting3->assigned_user_id = '666';
+        $meeting3->status = 'Not Held';
+        $meeting3->type = 'Sugar';
+        $meeting3->description = 'test description';
+        $meeting3->duration_hours = 1;
+        $meeting3->duration_minutes = 1;
+        $meeting3->date_start = '2016-02-11 17:30:00';
+        $meeting3->date_end = '2016-02-11 17:30:00';
+        $meeting3_id = $meeting3->save();
+
+
+        // Give meeting 1 a gsync_id
+        $sql = "UPDATE meetings SET gsync_id = 'valid_gsync_id' WHERE id = '{$meeting1_id}'";
+        $res = $db->query($sql);
+        $this->assertEquals(true, $res);
+
+        // Give meetings 1 and 2 a duplicate gsync_id
+        $sql = "UPDATE meetings SET gsync_id = 'duplicate_gsync_id' WHERE id = '{$meeting2_id}' OR id = '{$meeting3_id}'";
+        $res = $db->query($sql);
+        $this->assertEquals(true, $res);
+
+        $return = $object->getMeetingByEventId('valid_gsync_id');
+        $this->assertInstanceOf('Meeting', $return);
+        $this->assertInstanceOf('SugarBean', $return);
+        $this->assertEquals($meeting1_id, $return->id);
+
+        $return = $object->getMeetingByEventId('duplicate_gsync_id');
+        $this->assertEquals(false, $return);
+
+        $return = $object->getMeetingByEventId('NOTHING_MATCHES');
+        $this->assertEquals(null, $return);
+
+        $state->popTable('meetings');
+
     }
 
     public function testDelEvent()
@@ -466,7 +533,5 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals('FAKE_MEETING_ID', $returnPrivate['suitecrm_id']);
         $this->assertEquals('Meeting', $returnPrivate['suitecrm_type']);
         $this->assertEquals('VALID', $returnPrivate['remain_unchanged']);
-
-
     }
 }
