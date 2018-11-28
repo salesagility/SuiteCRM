@@ -43,62 +43,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-global $current_user, $sugar_config;
+
+include 'modules/Configurator/Configurator.php';
+include 'modules/Administration/GoogleCalendarAuthHandler.php';
+
+global $current_user;
 global $mod_strings;
-global $app_list_strings;
 global $app_strings;
-global $theme;
 
-if (!is_admin($current_user)) {
-    sugar_die("Unauthorized access to administration.");
-}
+$tplPath = 'modules/Administration/GoogleCalendarAuth.tpl';
+$request = $_REQUEST;
 
-require_once('modules/Configurator/Configurator.php');
-
-echo getClassicModuleTitle(
-    "Administration",
-    array(
-        "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . "</a>",
-        $mod_strings['LBL_GOOGLE_AUTH_TITLE'],
-    ),
-    false
+new GoogleCalendarAuthHandler(
+    $tplPath,
+    $current_user,
+    $request,
+    $mod_strings,
+    new Configurator(),
+    new Sugar_Smarty(),
+    new javascript()
 );
-
-$cfg          = new Configurator();
-$sugar_smarty = new Sugar_Smarty();
-$errors       = array();
-
-if (!array_key_exists('google_auth_json', $cfg->config)) {
-    $cfg->config['google_auth_json'] = false;
-}
-
-if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
-    $cfg->config['google_auth_json'] = !empty($_REQUEST['google_auth_json']);
-    $cfg->saveConfig();
-    header('Location: index.php?module=Administration&action=index');
-    exit();
-}
-
-$sugar_smarty->assign('LANGUAGES', get_languages());
-$sugar_smarty->assign("JAVASCRIPT", get_set_focus_js());
-$sugar_smarty->assign('config', $cfg->config['google_auth_json']);
-$sugar_smarty->assign('error', $errors);
-
-// Check for Google Sync JSON
-$json = base64_decode($cfg->config['google_auth_json']);
-
-$gcConfig = json_decode($json, true);
-
-if ($gcConfig) {
-    $sugar_smarty->assign("GOOGLE_JSON_CONF", 'CONFIGURED');
-    $sugar_smarty->assign("GOOGLE_JSON_CONF_COLOR", 'green');
-} else {
-    $sugar_smarty->assign("GOOGLE_JSON_CONF", 'UNCONFIGURED');
-    $sugar_smarty->assign("GOOGLE_JSON_CONF_COLOR", 'black');
-}
-
-$sugar_smarty->display('modules/Administration/GoogleCalendarAuth.tpl');
-
-$javascript = new javascript();
-$javascript->setFormName('ConfigureSettings');
-echo $javascript->getScript();

@@ -37,13 +37,15 @@
 * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
 *}
 
+{$PAGE_TITLE}
+
+
 <form name="gcAuthentication"
       enctype='multipart/form-data'
       method="post"
       action="index.php?module=Administration&action=GoogleCalendarAuth&do=save"
       onSubmit="return (add_checks(document.gcAuthentication) && check_form('gcAuthentication'));"
 >
-
 
     <span class='error'>{$error.main}</span>
 
@@ -119,7 +121,6 @@
                name="cancel"
                value="  {$APP.LBL_CANCEL_BUTTON_LABEL}  " />
     </div>
-
 
     {$JAVASCRIPT}
 
