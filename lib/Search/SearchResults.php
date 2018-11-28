@@ -141,11 +141,15 @@ class SearchResults
     {
         foreach ($fieldDefs as &$fieldDef) {
             if (isset($obj->{$fieldDef['name']})) {
-                if ($fieldDef['type'] == 'relate' && isset($fieldDef['link'])) {
-                    $link2 = $obj->{$fieldDef['link']};
-                    $link2Focus = $link2->getFocus();
+                if ($fieldDef['type'] == 'relate' && isset($fieldDef['link']) && isset($fieldDef['id_name']) && $fieldDef['id_name']) {
                     $relField = $fieldDef['id_name'];
-                    $relId = $link2Focus->$relField;
+                    if (isset($obj->{$fieldDef['link']})) {
+                        $link2 = $obj->{$fieldDef['link']};
+                        $link2Focus = $link2->getFocus();
+                        $relId = $link2Focus->$relField;
+                    } else {
+                        $relId = $obj->$relField;
+                    }
                     $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $fieldDef['module'], $relId, 'DetailView');
                 } elseif ($fieldDef['name'] == 'name') {
                     $obj->{$fieldDef['name']} = $this->getLink($obj->{$fieldDef['name']}, $obj->module_name, $obj->id, 'DetailView');

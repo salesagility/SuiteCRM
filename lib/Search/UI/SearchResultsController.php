@@ -109,7 +109,7 @@ class SearchResultsController extends Controller
                 throw new Exception('Module bean not found for search results: ' . $module);
             }
             foreach ($listViewDef as $fieldKey => $fieldValue) {
-                if ($fieldValue['default']) {
+                if (isset($fieldValue['default']) && $fieldValue['default']) {
                     $header = $this->getListViewHeader($bean, $fieldKey, $fieldValue);
 
                     $headers[$module][$fieldKey] = array_merge($fieldValue, $header);
