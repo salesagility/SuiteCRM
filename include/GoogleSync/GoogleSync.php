@@ -129,11 +129,11 @@ class GoogleSync
         $authJson_local = json_decode(base64_decode($sugar_config['google_auth_json']), true);
         if (!$authJson_local) {
         // The authconfig json string is invalid json
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'AuthConfig is not proper JSON string');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'AuthConfig is not proper JSON string');
             return false;
         } elseif (!array_key_exists('web', $authJson_local)) {
             // The authconfig is valid json, but the 'web' key is missing. This is not a valid authconfig.
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'AuthConfig is missing required [web] key');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'AuthConfig is missing required [web] key');
             return false;
         } else {
             return $authJson_local;
@@ -154,11 +154,11 @@ class GoogleSync
     public function addUser($id, $name)
     {
         if (array_key_exists($id, $this->users)) {
-            $GLOBALS['log']->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' already set');
+            $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' already set');
             return false;
         } else {
             $this->users[$id] = $name;
-            $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' set to ' . $this->users[$id]);
+            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' set to ' . $this->users[$id]);
             return true;
         }
     }
@@ -173,7 +173,7 @@ class GoogleSync
     public function delUser($id)
     {
         if (!array_key_exists($id, $this->users)) {
-            $GLOBALS['log']->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' missing');
+            $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' missing');
             return false;
         } else {
             unset($this->users[$id]);
@@ -218,7 +218,7 @@ class GoogleSync
         $accessToken = json_decode(base64_decode($this->workingUser->getPreference('GoogleApiToken', 'GoogleSync')), true);
         if (!array_key_exists('access_token', $accessToken)) {
         // The Token is invalid JSON or missing
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid or Missing AuthToken');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid or Missing AuthToken');
             return false;
         }
         // The refresh token is only provided once, on first authentication. It must be added afterwards.
@@ -236,7 +236,7 @@ class GoogleSync
 
         // Refresh the token if needed
         if ($client->isAccessTokenExpired()) {
-            $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Refreshing Access Token');
+            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Refreshing Access Token');
             $refreshToken = $client->getRefreshToken();
             $client->fetchAccessTokenWithRefreshToken($refreshToken);
             // Save new token to user preference
@@ -280,7 +280,7 @@ class GoogleSync
 
         // Make sure we have a Google Calendar Service instance
         if (!isset($this->gService)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
 
@@ -297,7 +297,7 @@ class GoogleSync
 
         // if the SuiteCRM calendar doesn't exist... Create it!
         if (!isset($this->calendarId)) {
-            $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find the SuiteCRM Google Calendar, Creating it!');
+            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find the SuiteCRM Google Calendar, Creating it!');
             $calendar = new Google_Service_Calendar_Calendar();
             $calendar->setSummary('SuiteCRM');
             $calendar->setTimeZone($this->timezone);
@@ -308,7 +308,7 @@ class GoogleSync
 
         // Final check to make sure we have an ID
         if (!isset($this->calendarId)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find the SuiteCRM Google Calendar, and creation failed.');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find the SuiteCRM Google Calendar, and creation failed.');
             return false;
         } else {
             return true;
@@ -326,13 +326,13 @@ class GoogleSync
 
         // Make sure we have a Google Calendar Service instance
         if (!isset($this->gService)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
 
         // Make sure we have a calendar id
         if (!isset($this->calendarId)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The calendar ID is not set. See setUsersGoogleCalendar Method');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The calendar ID is not set. See setUsersGoogleCalendar Method');
             return false;
         }
 
@@ -351,10 +351,10 @@ class GoogleSync
         $results = $results_g->getItems();
 
         if (empty($results)) {
-            $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'No events found.');
+            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'No events found.');
             return array();
         } else {
-            $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Found ' . count($results) . ' Google Events');
+            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Found ' . count($results) . ' Google Events');
             return $results;
         }
     }
@@ -371,7 +371,7 @@ class GoogleSync
 
         // Make sure the calendar service is set up
         if (!isset($this->gService)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
 
@@ -388,7 +388,7 @@ class GoogleSync
         $results = $results_g->getItems();
 
         if (count($results) > 1) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We received more than one Google event with the same SuiteCRM meeting ID. Something is horribly wrong!');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We received more than one Google event with the same SuiteCRM meeting ID. Something is horribly wrong!');
             return false;
         } elseif (count($results) == 0) { // No events match. Return emtpy array.
             return array();
@@ -410,7 +410,7 @@ class GoogleSync
 
         // Make sure the calendar service is set up
         if (!isset($this->gService)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
 
@@ -444,7 +444,7 @@ class GoogleSync
 
         // This checks to make sure we only get one result. If we get more than one, something is inconsistant in the DB
         if ($result->num_rows > 1) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'More than one meeting matches Google Id: ' . $event_id);
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'More than one meeting matches Google Id: ' . $event_id);
             return false;
         } elseif ($result->num_rows == 0) {
             return; // No matches Found
@@ -466,7 +466,7 @@ class GoogleSync
     {
         // make sure we have a client set
         if (!isset($this->gClient)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Client is not set up. See setClient Method');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Client is not set up. See setClient Method');
             return false;
         }
 
@@ -475,7 +475,7 @@ class GoogleSync
         if (isset($this->gService)) {
             return true;
         } else {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Setting $this->gService Failed');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Setting $this->gService Failed');
             return false;
         }
     }
@@ -509,7 +509,7 @@ class GoogleSync
                 }
                 break;
             default:
-                $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'I don\'t understand the event type you used.');
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'I don\'t understand the event type you used.');
                 $return = false;
         }
 
@@ -529,7 +529,7 @@ class GoogleSync
     public function sortEventObjects($event_1, $event_2)
     {
         if (!isset($event_1) || empty($event_1) || !isset($event_2) || empty($event_2)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass two events event');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass two events event');
             return false;
         }
 
@@ -542,7 +542,7 @@ class GoogleSync
         } elseif ($obj_class1 == 'Google_Service_Calendar_Event') {
             $events_array['remote'] = $event_1;
         } else {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
             return false;
         }
         $obj_class2 = get_class($event_2);
@@ -551,7 +551,7 @@ class GoogleSync
         } elseif ($obj_class2 == 'Google_Service_Calendar_Event') {
             $events_array['remote'] = $event_2;
         } else {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
             return false;
         }
     
@@ -572,7 +572,7 @@ class GoogleSync
     public function pushPullSkip($event_1, $event_2 = null)
     {
         if ((!isset($event_1) || empty($event_1)) && (!isset($event_2) || empty($event_2))) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass at least one event');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass at least one event');
             return false;
         }
 
@@ -590,7 +590,7 @@ class GoogleSync
 
             // Check if we already sync'ed this event on this run
             if (in_array($events_array['local']->id, $this->syncedList, true)) {
-                $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We already synced this meeting. Marking to skip.');
+                $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We already synced this meeting. Marking to skip.');
                 return "skip";
             }
 
@@ -772,13 +772,13 @@ class GoogleSync
     {
         // Make sure the calendar service is set up
         if (!isset($this->gService)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
 
         // Make sure we got a meeting_id
         if (!isset($meeting_id)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'This function requires a meeting id as the 2nd parameter');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'This function requires a meeting id as the 2nd parameter');
             return false;
         }
 
@@ -789,19 +789,19 @@ class GoogleSync
 
         if ($statusCode >= 200 && $statusCode <= 299) {
          // 2xx statusCode = success
-            $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Success Status Code: ' . $statusCode . ' on delete.');
+            $this->logger->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Success Status Code: ' . $statusCode . ' on delete.');
 
             // This removes the gsync_id reference from the table.
             $sql = "UPDATE meetings SET gsync_id = '' WHERE id = '" . $meeting_id . "'";
             $res = $this->db->query($sql);
             if (!$res) {
-                $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to remove gsync_id from record' . $meeting_id);
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to remove gsync_id from record' . $meeting_id);
             }
 
             $this->syncedList[] = $meeting_id;
             return true;
         } else {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Failure Status Code: ' . $statusCode . ' on delete!');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Failure Status Code: ' . $statusCode . ' on delete!');
             return false;
         }
     }
@@ -816,7 +816,7 @@ class GoogleSync
     public function clearPopups($event_id) {
 
         if (!isset($event_id) || empty($event_id)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Event_id is missing');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Event_id is missing');
             return false;
         } 
 
@@ -824,7 +824,7 @@ class GoogleSync
         $sql = sprintf("UPDATE reminders SET popup = '0' WHERE related_event_module_id = '%s' AND deleted = '0'", $event_id);
         $res = $this->db->query($sql);
         if (!$res) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'SQL Failure!');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'SQL Failure!');
             return false;
         }
 
@@ -832,7 +832,7 @@ class GoogleSync
         $sql = sprintf("UPDATE reminders SET deleted = '1' WHERE popup = '0' AND email = '0' AND related_event_module_id = '%s' AND deleted = '0'", $event_id);
         $res = $this->db->query($sql);
         if (!$res) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'SQL Failure!');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'SQL Failure!');
             return false;
         }
 
@@ -851,7 +851,7 @@ class GoogleSync
     {
 
         if ((!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote))) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'ERROR:Missing Variables');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'ERROR:Missing Variables');
             return false;
         }
 
@@ -911,7 +911,7 @@ class GoogleSync
      */
     public function createSuitecrmMeetingEvent(Google_Service_Calendar_Event $event_remote)
     {
-        $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Creating New SuiteCRM Meeting');
+        $this->logger->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Creating New SuiteCRM Meeting');
         $meeting = new Meeting;
         $meeting->id = create_guid();
         $meeting->new_with_id = true;
@@ -931,7 +931,7 @@ class GoogleSync
     {
 
         if ((!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote))) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'ERROR:Missing Variables');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'ERROR:Missing Variables');
             return false;
         }
 
@@ -1012,11 +1012,11 @@ class GoogleSync
     public function setTimezone($timezone)
     {
         if (!date_default_timezone_set($timezone)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set timezone to \'' . $timezone . '\'');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set timezone to \'' . $timezone . '\'');
             return false;
         } else {
             $this->timezone = date_default_timezone_get();
-            $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Timezone set to \'' . $this->timezone . '\'');
+            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Timezone set to \'' . $this->timezone . '\'');
             return true;
         }
     }
@@ -1065,7 +1065,7 @@ class GoogleSync
     {
 
         if (!$this->setClient($id)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Client');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Client');
             return false;
         }
 
@@ -1073,23 +1073,23 @@ class GoogleSync
             $tz = $this->workingUser->getPreference('timezone', 'global');
             $this->setTimezone($tz);
         } else {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set the working user and timezone');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set the working user and timezone');
             return false;
         }
 
         if (!$this->setGService()) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Service');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Service');
             return false;
         }
 
         if (!$this->setUsersGoogleCalendar()) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Calendar Id');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Calendar Id');
             return false;
         }
 
         $meetings = $this->getUserMeetings();
         if (!isset($meetings)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to get Users Meetings');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to get Users Meetings');
             return false;
         }
 
@@ -1101,33 +1101,33 @@ class GoogleSync
 
             switch ($dowhat) {
                 case "push":
-                    $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pushing Meeting: ' . $meeting->name);
+                $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pushing Meeting: ' . $meeting->name);
                     $this->pushEvent($meeting, $gevent);
                     break;
                 case "pull":
-                    $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pulling Meeting: ' . $meeting->name);
+                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pulling Meeting: ' . $meeting->name);
                     $this->pullEvent($gevent, $meeting);
                     break;
                 case "skip":
-                    $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Skipping Meeting: ' . $meeting->name);
+                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Skipping Meeting: ' . $meeting->name);
                     break;
                 case "push_delete":
-                    $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Event: ' . $meeting->name);
+                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Event: ' . $meeting->name);
                     $this->delEvent($gevent, $meeting->id);
                     break;
                 case "pull_delete":
-                    $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Meeting: ' . $meeting->name);
+                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Meeting: ' . $meeting->name);
                     $this->delMeeting($meeting);
                     break;
                 default:
-                    $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'pushPullSkip() returned unknown value: ' . $dowhat . ' for event: ' . $meeting->name);
+                    $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'pushPullSkip() returned unknown value: ' . $dowhat . ' for event: ' . $meeting->name);
             }
         }
 
         // Now, we look at the Google Calendar
         $googleEvents = $this->getUserGoogleEvents();
         if (!isset($googleEvents)) {
-            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to get Google Events');
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to get Google Events');
             return false;
         }
 
@@ -1140,26 +1140,26 @@ class GoogleSync
 
             switch ($dowhat) {
                 case "push":
-                    $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pushing Event: ' . $gevent->getSummary());
+                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pushing Event: ' . $gevent->getSummary());
                     $this->pushEvent($meeting, $gevent);
                     break;
                 case "pull":
-                    $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pulling Event: ' . $gevent->getSummary());
+                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pulling Event: ' . $gevent->getSummary());
                     $this->pullEvent($gevent, $meeting);
                     break;
                 case "skip":
-                    $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Skipping Event: ' . $gevent->getSummary());
+                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Skipping Event: ' . $gevent->getSummary());
                     break;
                 case "push_delete":
-                    $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Event: ' . $meeting->name);
+                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Event: ' . $meeting->name);
                     $this->delEvent($gevent, $meeting->id);
                     break;
                 case "pull_delete":
-                    $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Meeting: ' . $meeting->name);
+                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Meeting: ' . $meeting->name);
                     $this->delMeeting($meeting);
                     break;
                 default:
-                    $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'pushPullSkip() returned unknown value: ' . $dowhat . ' for event: ' . $gevent->getSummary());
+                    $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'pushPullSkip() returned unknown value: ' . $dowhat . ' for event: ' . $gevent->getSummary());
             }
         }
         return true;
@@ -1214,7 +1214,7 @@ class GoogleSync
             foreach (array_keys($this->users) as $key ) {
                 $return = $this->doSync($key);
                 if (!$return) {
-                    $GLOBALS['log']->error('Something went wrong syncing for user id: ' . $key);
+                    $this->logger->error('Something went wrong syncing for user id: ' . $key);
                     $failures++;
                 }
             }

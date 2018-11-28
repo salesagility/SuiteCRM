@@ -61,6 +61,7 @@ if (!$config = json_decode($json, true)) {
 }
 $client->setAuthConfig($config);
 $client->setAccessType('offline');
+$client->setApprovalPrompt('force');
 
 if (isset($_REQUEST['getnew'])) {
     $authUrl = $client->createAuthUrl();
@@ -68,7 +69,6 @@ if (isset($_REQUEST['getnew'])) {
 }
 
 if (isset($_REQUEST['code'])) {
-    global $GLOBALS;
     global $current_user;
     $user= new user();
     $user->retrieve($current_user->id);
@@ -84,7 +84,6 @@ if (isset($_REQUEST['code'])) {
 }
 
 if (isset($_REQUEST['setinvalid'])) {
-    global $GLOBALS;
     global $current_user;
     $user= new user();
     $user->retrieve($current_user->id);
@@ -95,7 +94,6 @@ if (isset($_REQUEST['setinvalid'])) {
 }
 
 if (isset($_REQUEST['error'])) {
-    global $GLOBALS;
     global $current_user;
     $url = $sugar_config['site_url']."/index.php?module=Users&action=EditView&record=" . $current_user->id;
     $exitstring = "<html><head><title>SuiteCRM Google Sync - ERROR</title></head><body><h1>There was an error: " . $_REQUEST['error'] . "</h1><br><p><a href=" . $url . ">Click here</a> to continue.</body></html>";
