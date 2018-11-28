@@ -982,9 +982,9 @@ class GoogleSync
                 $sReminder->related_event_module_id = $event_local->id;
                 $reminderId = $sReminder->save(false);
 
-                $reminderInvitee = BeanFactory::getBean('Reminder_Invitees');
+                $reminderInvitee = BeanFactory::getBean('Reminders_Invitees');
                 if (!$reminderInvitee) {
-                    throw new Exception('Unable to get Reminder_Invitees bean.');
+                    throw new Exception('Unable to get Reminders_Invitees bean.');
                 }
                 $reminderInvitee->reminder_id = $reminderId;
                 $reminderInvitee->related_invitee_module = 'Users';
