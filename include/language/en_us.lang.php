@@ -3646,3 +3646,8 @@ $app_strings['LBL_UNSUPPORTED_MEDIA_TYPE_EXCEPTION_DETAIL'] = 'Json API expects 
 $app_strings['MSG_BROWSER_NOTIFICATIONS_ENABLED'] = 'Desktop notifications are now enabled for this web browser.';
 $app_strings['MSG_BROWSER_NOTIFICATIONS_DISABLED'] = 'Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.';
 $app_strings['MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED'] = 'This browser does not support desktop notifications.';
+
+$app_strings['LBL_GOOGLE_SYNC_ERR'] = 'SuiteCRM Google Sync - ERROR';
+$app_strings['LBL_THERE_WAS_AN_ERR'] = 'There was an error: ';
+$app_strings['LBL_CLICK_HERE'] = 'Click here';
+$app_strings['LBL_TO_CONTINUE'] = ' to continue.';
