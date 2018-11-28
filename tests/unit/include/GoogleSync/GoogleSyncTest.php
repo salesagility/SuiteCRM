@@ -391,4 +391,71 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals($expectedTimezone, date_default_timezone_get());
 
     }
+
+    public function testReturnExtendedProperties()
+    {
+        $object = new GoogleSync();
+        date_default_timezone_set('Etc/UTC');
+
+        // BEGIN: Create Google Event Object
+        $Google_Event = new Google_Service_Calendar_Event();
+
+        $Google_Event->setSummary('Unit Test Event');
+        $Google_Event->setDescription('Unit Test Event');
+        $Google_Event->setLocation('123 Seseme Street');
+
+        // Set start date/time
+        $startDateTime = new Google_Service_Calendar_EventDateTime;
+        $startDateTime->setDateTime(date(DATE_ATOM, strtotime('2018-01-01 01:00:00 UTC')));
+        $startDateTime->setTimeZone('Etc/UTC');
+        $Google_Event->setStart($startDateTime);
+
+        // Set end date/time
+        $endDateTime = new Google_Service_Calendar_EventDateTime;
+        $endDateTime->setDateTime(date(DATE_ATOM, strtotime('2018-01-01 02:00:00 UTC')));
+        $endDateTime->setTimeZone('Etc/UTC');
+        $Google_Event->setEnd($endDateTime);
+
+        // Set extended properties
+        $extendedProperties = new Google_Service_Calendar_EventExtendedProperties;
+        $private = array();
+        $private['suitecrm_id'] = 'INVALID';
+        $private['suitecrm_type'] = 'INVALID';
+        $private['remain_unchanged'] = 'VALID';
+        $extendedProperties->setPrivate($private);
+        $Google_Event->setExtendedProperties($extendedProperties);
+
+        // Set popup reminder
+        $reminders_remote = new Google_Service_Calendar_EventReminders;
+        $reminders_remote->setUseDefault(false);
+        $reminders_array = array();
+        $reminder_remote = new Google_Service_Calendar_EventReminder;
+        $reminder_remote->setMethod('popup');
+        $reminder_remote->setMinutes('15');
+        $reminders_array[] = $reminder_remote;
+        $reminders_remote->setOverrides($reminders_array);
+        $Google_Event->setReminders($reminders_remote);
+
+        // END: Create Google Event Object
+
+        // Create SuiteCRM Meeting Object
+        $CRM_Meeting = new Meeting();
+
+        $CRM_Meeting->id = 'FAKE_MEETING_ID';
+        $CRM_Meeting->name = 'Unit Test Event';
+        $CRM_Meeting->description = 'Unit Test Event';
+        $CRM_Meeting->location = '123 Sesame Street';
+        $CRM_Meeting->date_start = '2018-01-01 12:00:00';
+        $CRM_Meeting->date_end = '2018-01-01 13:00:00';
+        $CRM_Meeting->module_name = 'Meeting';
+
+        $return = $object->returnExtendedProperties($Google_Event, $CRM_Meeting);
+        $returnPrivate = $return->getPrivate();
+
+        $this->assertEquals('FAKE_MEETING_ID', $returnPrivate['suitecrm_id']);
+        $this->assertEquals('Meeting', $returnPrivate['suitecrm_type']);
+        $this->assertEquals('VALID', $returnPrivate['remain_unchanged']);
+
+
+    }
 }
