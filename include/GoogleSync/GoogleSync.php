@@ -112,7 +112,7 @@ class GoogleSync
     {
         // Set the log level back to the original value
         $this->logger->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . '__destruct');
-        if (isset($_SERVER['GSYNC_LOGLEVEL'])) {
+        if (isset($this->oldLogLevel)) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Setting Log Level Back To: ' . $this->oldLogLevel);
             $this->logger->setLevel($this->oldLogLevel);
         }
