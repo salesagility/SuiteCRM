@@ -48,7 +48,7 @@
         	<tbody>
                 <tr style="padding-bottom: 10px">
                     <td class="submitButtons" colspan="8" nowrap="">
-                        <label for="searchFieldMain" class="text-muted hide">Search Query</label>
+                        <label for="searchFieldMain" class="text-muted hide">{$APP.LBL_SEARCH_QUERY}</label>
                         <input id="searchFieldMain" title="Search" class="searchField" type="text" size="80" name="search-query-string" value="{$searchQueryString}" autofocus>
                         <input type="submit" title="Search" class="button primary" value="Search">&nbsp;
                     </td>

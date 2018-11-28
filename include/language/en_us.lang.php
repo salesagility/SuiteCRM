@@ -3648,5 +3648,6 @@ $app_strings['MSG_BROWSER_NOTIFICATIONS_DISABLED'] = 'Desktop notifications are 
 $app_strings['MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED'] = 'This browser does not support desktop notifications.';
 
 $app_strings['LBL_SEARCH_TITLE'] = 'Search';
+$app_strings['LBL_SEARCH_QUERY'] = 'Search query: ';
 $app_strings['LBL_SEARCH_RESULTS_PER_PAGE'] = 'Results per page: ';
 $app_strings['LBL_SEARCH_ENGINE'] = 'Engine: ';
