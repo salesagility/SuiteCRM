@@ -144,21 +144,24 @@ class GoogleApiKeySaverEntryPoint
     protected function handleRequestGetnew()
     {
         $authUrl = $this->client->createAuthUrl();
-        SugarApplication::redirect($authUrl);
+        $this->redirect($url);
     }
 
     /**
      * set google api token
      * 
-     * @throws Exception Unable to get User bean.
+     * @throws Exception 1 - Unable to get User bean. 2 - Unable to retrive user by ID
      */
     protected function handleRequestCode()
     {
         $user = BeanFactory::getBean('Users');
         if (!$user) {
-            throw new Exception('Unable to get User bean.');
+            throw new Exception('Unable to get User bean.', 1);
         }
-        $user->retrieve($this->currentUser->id);
+        $ret = $user->retrieve($this->currentUser->id);
+        if (!$ret) {
+            throw new Exception('Unable to retrive user by ID: ' . $this->currentUser->id, 2);
+        }
         $accessToken = $this->client->fetchAccessTokenWithAuthCode($this->request['code']);
         $user->setPreference('GoogleApiToken', base64_encode(json_encode($accessToken)), false, 'GoogleSync');
         $accessRefreshToken = $accessToken['refresh_token'];
@@ -167,25 +170,28 @@ class GoogleApiKeySaverEntryPoint
         }
         $user->savePreferencesToDB();
         $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
-        SugarApplication::redirect($url);
+        $this->redirect($url);
     }
 
     /**
      * set google api token to invalid
      * 
-     * @throws Exception Unable to get User bean.
+     * @throws Exception 1 - Unable to get User bean. 2 - Unable to retrive user by ID
      */
     protected function handleRequestSetinvalid()
     {
         $user = BeanFactory::getBean('Users');
         if (!$user) {
-            throw new Exception('Unable to get User bean.');
+            throw new Exception('Unable to get User bean.', 1);
         }
         $user->retrieve($this->currentUser->id);
+        if (!$ret) {
+            throw new Exception('Unable to retrive user by ID: ' . $this->currentUser->id, 2);
+        }
         $user->setPreference('GoogleApiToken', '', false, 'GoogleSync');
         $user->savePreferencesToDB();
         $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
-        SugarApplication::redirect($url);
+        $this->redirect($url);
     }
 
     /**
@@ -196,7 +202,7 @@ class GoogleApiKeySaverEntryPoint
     {
         $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
         $exitstring = "<html><head><title>SuiteCRM Google Sync - ERROR</title></head><body><h1>There was an error: " . $this->request['error'] . "</h1><br><p><a href=" . $url . ">Click here</a> to continue.</body></html>";
-        die($exitstring);
+        $this->protectedDie($exitstring);
     }
 
     /**
@@ -207,6 +213,22 @@ class GoogleApiKeySaverEntryPoint
         LoggerManager::getLogger()->error('Unkown entry point function given.');
         // If we don't get a known return, we just silently return to the user profile.
         $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
+        $this->redirect($url);
+    }
+    
+    /**
+     * protected function for SugarApplication::redirect() so test mock can override it
+     * @param string $url
+     */
+    protected function redirect($url) {
         SugarApplication::redirect($url);
+    }
+    
+    /**
+     * protected function for die() so test mock can override it
+     * @param string $exitstring
+     */
+    protected function protectedDie($exitstring) {
+        die($exitstring);
     }
 }
