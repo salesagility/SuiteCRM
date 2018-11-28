@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,7 +38,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -593,34 +593,60 @@ class GoogleSync
      */
     public function sortEventObjects($event_1, $event_2)
     {
+        if ($this->isValidEventPair($event_1, $event_2)) {
+            $events_array = array();
+
+            // We have two events... figure out which is which and set the internal objects
+            $event1Array = $this->getEventArray($event_1);
+            if (!$event1Array) {
+                return false;
+            }
+            $events_array = array_merge($events_array, $event1Array);
+
+            $event2Array = $this->getEventArray($event_2);
+            if (!$event2Array) {
+                return false;
+            }
+            $events_array = array_merge($events_array, $event2Array);
+
+            return $events_array;
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @param array $event
+     * @return boolean
+     */
+    protected function getEventArray($event)
+    {
+        $events_array = array();
+        $obj_class = get_class($event);
+        if ($obj_class == 'Meeting') {
+            $events_array['local'] = $event;
+        } elseif ($obj_class == 'Google_Service_Calendar_Event') {
+            $events_array['remote'] = $event;
+        } else {
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
+            return false;
+        }
+        return $events_array;
+    }
+
+    /**
+     * 
+     * @param array $event_1
+     * @param array $event_2
+     * @return boolean
+     */
+    protected function isValidEventPair($event_1, $event_2)
+    {
         if (!isset($event_1) || empty($event_1) || !isset($event_2) || empty($event_2)) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass two events event');
             return false;
         }
-
-        $events_array = array();
-
-        // We have two events... figure out which is which and set the internal objects
-        $obj_class1 = get_class($event_1);
-        if ($obj_class1 == 'Meeting') {
-            $events_array['local'] = $event_1;
-        } elseif ($obj_class1 == 'Google_Service_Calendar_Event') {
-            $events_array['remote'] = $event_1;
-        } else {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
-            return false;
-        }
-        $obj_class2 = get_class($event_2);
-        if ($obj_class2 == 'Meeting') {
-            $events_array['local'] = $event_2;
-        } elseif ($obj_class2 == 'Google_Service_Calendar_Event') {
-            $events_array['remote'] = $event_2;
-        } else {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
-            return false;
-        }
-
-        return $events_array;
+        return true;
     }
 
     /**
@@ -631,7 +657,7 @@ class GoogleSync
      * @param Meeting|\Google_Service_Calendar_Event $event_1 Either the Meeting Bean or Google_Service_Calendar_Event Object
      * @param \Google_Service_Calendar_Event $event_2 (optional) Google Event
      *
-     * @return string push(_delete), pull(_delete), skip
+     * @return string|bool push(_delete), pull(_delete), skip
      */
     public function pushPullSkip($event_1, $event_2 = null)
     {
@@ -956,7 +982,6 @@ class GoogleSync
                 $sReminder->related_event_module_id = $event_local->id;
                 $reminderId = $sReminder->save(false);
 
-                $reminderInvitee = new Reminder_Invitee;
                 $reminderInvitee = BeanFactory::getBean('Reminder_Invitees');
                 if (!$reminderInvitee) {
                     throw new Exception('Unable to get Reminder_Invitees bean.');
