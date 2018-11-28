@@ -56,6 +56,7 @@ class SearchResultsTest extends StateCheckerUnitAbstract {
         $state->pushTable('accounts');
         $state->pushTable('accounts_cstm');
         $state->pushTable('job_queue');
+        $state->pushTable('aod_indexevent');
         
         $acc = BeanFactory::getBean('Accounts');
         $acc->name = 'acc 1';
@@ -88,7 +89,7 @@ class SearchResultsTest extends StateCheckerUnitAbstract {
         $this->assertEquals('<a href="' . $siteUrl . '/index.php?action=DetailView&module=Accounts&record=' . $ids[0] . '&offset=1"><span>acc 1</span></a>', $exp);
         
         
-        
+        $state->popTable('aod_indexevent');
         $state->popTable('job_queue');
         $state->popTable('accounts_cstm');
         $state->popTable('accounts');
