@@ -45,18 +45,30 @@ include_once __DIR__ . '/GoogleApiKeySaverEntryPointMock.php';
  *
  * @author gyula
  */
-class UserTest extends SuiteCRM\StateCheckerUnitAbstract {
+
+class GoogleApiKeySaverEntryPointTest extends SuiteCRM\StateCheckerUnitAbstract {
     
     public function testHandleRequestError() {
         $user = BeanFactory::getBean('Users');
         $cfg['site_url'] = 'http://foo/bar.org';
+        $cfg['google_auth_json'] = base64_encode('{"foo":"bar", "client_id":"cli123", "client_secret":"scrt123"}');
         $client = new Google_Client();
         $request['error'] = 'ERR_NOT_ADMIN';
         $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
         $dieOk = $epMock->getDieOk();
         $exitString = $epMock->getExitString();
         $this->assertTrue($dieOk);
-        $this->assertEquals('??asd', $exitString);
+        $this->assertEquals('<html>
+    <head>
+        <title>SuiteCRM Google Sync - ERROR</title>
+    </head>
+    <body>
+        <h1>There was an error: Unauthorized access to administration.</h1>
+        <br>
+        <p>
+            <a href="http://foo/bar.org/index.php?module=Users&action=EditView&record=">Click here</a> to continue.
+    </body>
+</html>', $exitString);
     }
     
 }

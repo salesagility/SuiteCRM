@@ -39,7 +39,7 @@
  */
 
 
-include_once __DIR__ . '/../../../modules/Users/GoogleApiKeySaverEntryPoint.php';
+include_once __DIR__ . '/../../../../../modules/Users/GoogleApiKeySaverEntryPoint.php';
 
 /**
  * GoogleApiKeySaverEntryPointMock
@@ -65,7 +65,7 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
      * @param string $exitString
      */
     public function protectedDie($exitString) {
-        $this->$dieOk = true;
+        $this->dieOk = true;
         $this->exitString = $exitString;
     }
     
@@ -74,7 +74,7 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
      * @return bool
      */
     public function getDieOk() {
-        return $this->$dieOk;
+        return $this->dieOk;
     }
     
     /**

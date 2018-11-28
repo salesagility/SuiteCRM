@@ -81,7 +81,7 @@ class GoogleApiKeySaverEntryPoint
     protected $request;
 
     /**
-     * 
+     *
      * @param User $current_user
      * @param array $sugar_config
      * @param Google_Client $client
@@ -98,22 +98,42 @@ class GoogleApiKeySaverEntryPoint
     }
 
     /**
-     * 
-     * @throws Exception Invalid json for auth config
+     *
+     * @throws Exception 1 - google_auth_json requested variable is missing, 2 - Invalid json for auth config
      */
     protected function handleEntryPoint()
     {
         $this->client->setApplicationName('SuiteCRM');
         $this->client->setScopes(Google_Service_Calendar::CALENDAR);
-        $json = base64_decode($this->sugarConfig['google_auth_json']);
-        if (!$config = json_decode($json, true)) {
-            throw new Exception('Invalid json for auth config');
+        if (!isset($this->sugarConfig['google_auth_json'])) {
+            throw new Exception('google_auth_json requested variable is missing', 1);
         }
+        $json = base64_decode($this->sugarConfig['google_auth_json']);
+        $config = json_decode($json, true);
+        if (!$config) {
+            throw new Exception('Invalid json for auth config', 2);
+        }
+        $this->validateConfig($config);
         $this->client->setAuthConfig($config);
         $this->client->setAccessType('offline');
         $this->client->setApprovalPrompt('force');
 
         $this->handleRequest();
+    }
+    
+    /**
+     *
+     * @param array $config
+     * @throws Exception 3 - client_id is not set in config json, 4 - client_secret is not set in config json
+     */
+    protected function validateConfig($config)
+    {
+        if (!isset($config['client_id'])) {
+            throw new Exception('client_id is not set in config json', 3);
+        }
+        if (!isset($config['client_secret'])) {
+            throw new Exception('client_secret is not set in config json', 4);
+        }
     }
 
     /**
@@ -123,21 +143,15 @@ class GoogleApiKeySaverEntryPoint
     {
         if (isset($this->request['getnew'])) {
             $this->handleRequestGetnew();
-        }
-
-        if (isset($this->request['code'])) {
+        } elseif (isset($this->request['code'])) {
             $this->handleRequestCode();
-        }
-
-        if (isset($this->request['setinvalid'])) {
+        } elseif (isset($this->request['setinvalid'])) {
             $this->handleRequestSetinvalid();
-        }
-
-        if (isset($this->request['error'])) {
+        } elseif (isset($this->request['error'])) {
             $this->handleRequestError();
+        } else {
+            $this->handleRequestUnknown();
         }
-
-        $this->handleRequestUnknown();
     }
 
     /**
@@ -151,7 +165,7 @@ class GoogleApiKeySaverEntryPoint
 
     /**
      * set google api token
-     * 
+     *
      * @throws Exception 1 - Unable to get User bean. 2 - Unable to retrive user by ID
      */
     protected function handleRequestCode()
@@ -177,7 +191,7 @@ class GoogleApiKeySaverEntryPoint
 
     /**
      * set google api token to invalid
-     * 
+     *
      * @throws Exception 1 - Unable to get User bean. 2 - Unable to retrive user by ID
      */
     protected function handleRequestSetinvalid()
@@ -197,17 +211,17 @@ class GoogleApiKeySaverEntryPoint
     }
 
     /**
-     * shows an error - pick error message from language file instead 
+     * shows an error - pick error message from language file instead
      * using simple requested text as it is an XSS vulnerability issue
      */
     protected function handleRequestError()
-    {        
+    {
         $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
         $tpl = new Sugar_Smarty();
         $txtKey = $this->request['error'];
         $tpl->assign('error', LangText::get($txtKey));
         $tpl->assign('url', $url);
-        $exitstring = $tpl->fetch('googleApiKeySaverEntryPointError.tpl');
+        $exitstring = $tpl->fetch(__DIR__ . '/googleApiKeySaverEntryPointError.tpl');
         $this->protectedDie($exitstring);
     }
 
@@ -226,7 +240,8 @@ class GoogleApiKeySaverEntryPoint
      * protected function for SugarApplication::redirect() so test mock can override it
      * @param string $url
      */
-    protected function redirect($url) {
+    protected function redirect($url)
+    {
         SugarApplication::redirect($url);
     }
     
@@ -234,7 +249,8 @@ class GoogleApiKeySaverEntryPoint
      * protected function for die() so test mock can override it
      * @param string $exitstring
      */
-    protected function protectedDie($exitstring) {
+    protected function protectedDie($exitstring)
+    {
         die($exitstring);
     }
 }
