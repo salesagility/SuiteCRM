@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-include_once __DIR__ . 'GoogleApiKeySaverEntryPointMock.php';
+include_once __DIR__ . '/GoogleApiKeySaverEntryPointMock.php';
 
 /**
  * GoogleApiKeySaverEntryPointTest
