@@ -45,7 +45,7 @@ include_once __DIR__ . '/GoogleApiKeySaverEntryPointMock.php';
  *
  * @author gyula
  */
-class UserTest extends SuiteCRM\StateCheckerUnitAbstract {
+class GoogleApiKeySaverEntryPointTest extends SuiteCRM\StateCheckerUnitAbstract {
     
     public function testHandleRequestError() {
         $user = BeanFactory::getBean('Users');
