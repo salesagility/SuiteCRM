@@ -211,13 +211,11 @@ class GoogleSync
     {
         // Retrieve user bean
         if (!isset($this->workingUser)) {
-            $this->workingUser = BeanFactory::getBean('Users');
+            $this->workingUser = BeanFactory::getBean('Users', $id);
             if (!$this->workingUser) {
                 throw new Exception('Unable to retrieve a User bean');
             }
         }
-
-        $this->workingUser->retrieve($id);
 
         // Retrieve Access Token JSON from user preference
         $accessToken = json_decode(base64_decode($this->workingUser->getPreference('GoogleApiToken', 'GoogleSync')), true);
@@ -335,7 +333,7 @@ class GoogleSync
      *
      * @param Google_Service_Calendar_CalendarList $calendarList
      */
-    protected function findSuiteCRMCalendar($calendarList)
+    protected function findSuiteCRMCalendar(Google_Service_Calendar_CalendarList $calendarList)
     {
         foreach ($calendarList->getItems() as $calendarListEntry) {
             if ($calendarListEntry->getSummary() == 'SuiteCRM') {
@@ -478,7 +476,7 @@ class GoogleSync
 
         if (empty($event_id)) {
             // If we didn't get passed an event, return null
-            throw new \InvalidArgumentException('event ID is empty');
+            return;
         }
 
         $gEvent = $this->gService->events->get($this->calendarId, $event_id);
@@ -1180,7 +1178,7 @@ class GoogleSync
         }
 
         $meetings = $this->getUserMeetings();
-        if (!isset($meetings)) {
+        if (empty($meetings)) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to get Users Meetings');
             return false;
         }
