@@ -330,6 +330,11 @@ $dictionary['Campaign'] = array('audited' => true,
             'type' => 'index',
             'fields' => array('name')
         ),
+        array(
+            'name' => 'idx_survey_id',
+            'type' => 'index',
+            'fields' => array('survey_id')
+        ),
     ),
 
     'relationships' => array(
