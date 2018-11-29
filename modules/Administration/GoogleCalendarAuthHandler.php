@@ -103,12 +103,13 @@ class GoogleCalendarAuthHandler
      */
     public function __construct(string $tpl_path, User $current_user, $request, $mod_strings, Configurator $config, Sugar_Smarty $sugar_smarty, javascript $js)
     {
-        $this->currentUser = $current_user;
-        $this->request     = $request;
-        $this->modStrings  = $mod_strings;
-        $this->ss          = $sugar_smarty;
-        $this->tplPath     = $tpl_path;
-        $this->js          = $js;
+        $this->currentUser  = $current_user;
+        $this->request      = $request;
+        $this->modStrings   = $mod_strings;
+        $this->ss           = $sugar_smarty;
+        $this->tplPath      = $tpl_path;
+        $this->js           = $js;
+        $this->configurator = $config;
 
         if (isset($this->request['do']) && $this->request['do'] == 'save') {
             $this->configurator->config['google_auth_json'] = !empty($this->request['google_auth_json']);
