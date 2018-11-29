@@ -977,7 +977,5 @@ $mod_strings = array(
     'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine',
 
     // Ajax Submit
-    'LBL_AJAX_SUBMIT_SUCCESS' => 'The settings have been saved successfully.',
     'LBL_AJAX_SUBMIT_FAIL' => 'An error has occurred while saving the settings.',
 );
-

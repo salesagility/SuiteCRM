@@ -1,4 +1,6 @@
-{*
+<?php
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -34,47 +36,65 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- *}
-<h2 class="moduleTitle">{$APP.LBL_SEARCH_REAULTS_TITLE}</h2>
-{if isset($error)}
-    <p class="error">{$APP.ERR_SEARCH_INVALID_QUERY}</p>
-{else}
+ */
 
-    {foreach from=$resultsAsBean item=beans key=module}
-    <h3>{$module} ({php} echo count($this->get_template_vars('resultsAsBean')[$this->get_template_vars('module')]);{/php})</h3>
-    <table class="list view">
-        <thead>
-            <tr>
-                <th></th>
-                {foreach from=$headers[$module] item=header}
-                <th title="{$header.comment}">{$header.label}</th>
-                {/foreach}
-            </tr>
-        </thead>
-        <tbody>
-            {foreach from=$beans item=bean}
-            <tr class="{cycle values="oddListRowS1,evenListRowS1"}">
-                <td><a href="{$APP_CONFIG.site_url}/index.php?action=EditView&module={$module}&record={$bean->id}&offset=1"><span class="suitepicon suitepicon-action-edit"></span></a></td>
-                {foreach from=$headers[$module] item=header}
-                <td>{php} 
-                        // using php to access to a smarty template object 
-                        // variable field by a dynamic indexed array element 
-                        // because it's impossible only with smarty syntax 
-                        echo $this->get_template_vars('bean')->{$this->get_template_vars('header')['field']};
-                    {/php}</td>
-                {/foreach}
-            </tr>
-            {/foreach}
-        </tbody>
-        </thead>
-    </table>
-    {foreachelse}
-    <p class="error">{$APP.ERR_SEARCH_NO_RESULTS}</p>
-    {/foreach}
+
+use SuiteCRM\Search\SearchResults;
+use SuiteCRM\StateCheckerUnitAbstract;
+use SuiteCRM\StateSaver;
+
+/**
+ * SearchResultsTest
+ *
+ * @author gyula
+ */
+class SearchResultsTest extends StateCheckerUnitAbstract {
     
-    {if !empty($results->getSearchTime())}
-        <p class="text-muted text-right" id="search-time">
-            {$APP.LBL_SEARCH_PERFORMED_IN} {$results->getSearchTime()*1000|string_format:"%.2f"} ms
-        </p>
-    {/if}
-{/if}
+    public function testGetHitsAsBeans() {
+        
+        $state = new StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('job_queue');
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        $acc = BeanFactory::getBean('Accounts');
+        $acc->name = 'acc 1';
+        $ids[] = $acc->save();
+        $acc = BeanFactory::getBean('Accounts');
+        $acc->name = 'acc 2';
+        $ids[] = $acc->save();
+        $acc = BeanFactory::getBean('Accounts');
+        $acc->name = 'acc 3';
+        $ids[] = $acc->save();
+        $hits = [
+            'Accounts' => $ids,
+        ];
+        
+        $sr = new SearchResults($hits);
+        $parsed = $sr->getHitsAsBeans();
+        
+        $exp = array_keys($parsed);
+        $this->assertSame(['Accounts'], $exp);
+        
+        $exp = array_keys($parsed['Accounts']);
+        $this->assertSame([0, 1, 2], $exp);
+        
+        $exp = array_keys((array)$parsed['Accounts'][0]);
+        $this->assertContains('modified_user_id', $exp);
+        
+        $exp = $parsed['Accounts'][0]->name;
+        global $sugar_config;
+        $siteUrl = $sugar_config['site_url'];
+        $this->assertEquals('<a href="' . $siteUrl . '/index.php?action=DetailView&module=Accounts&record=' . $ids[0] . '&offset=1"><span>acc 1</span></a>', $exp);
+        
+        
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
+        $state->popTable('job_queue');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+    }
+    
+}

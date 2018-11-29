@@ -50,13 +50,33 @@ $("form").submit(function (e) {
         return SUGAR.language.get("Administration", label);
     }
 
+    function alertMsg(message) {
+        var alertMsg = document.createElement("p");
+        var classAttr = document.createAttribute("class");
+        classAttr.value = "error";
+
+        alertMsg.setAttributeNode(classAttr);
+
+        var alertContent = document.createTextNode(message);
+        alertMsg.appendChild(alertContent);
+
+        var pageContent = document.getElementById("pagecontent");
+        pageContent.insertBefore(alertMsg, pageContent.firstChild);
+    }
+
     $.ajax({
         url: action,
         type: method.toLowerCase(),
         data: data
-    }).success(function () {
-        alert(translate("LBL_AJAX_SUBMIT_SUCCESS"));
+    }).success(function (result) {
+        if (result.status == 'success') {
+            window.location.href="index.php?module=Administration&action=index";
+        } else {
+            alertMsg("Error: " + translate("LBL_AJAX_SUBMIT_FAIL"));
+        }
+        return false;
     }).fail(function () {
-        alert("LBL_AJAX_SUBMIT_FAIL");
+        alertMsg("Error: " + translate("LBL_AJAX_SUBMIT_FAIL"));
+        return false;
     });
 });

@@ -48,6 +48,6 @@ class SearchInstallTest extends SearchTestAbstract
         self::assertArrayHasKey('search', $sugar_config, 'Search config not present');
 
         self::assertArrayHasKey('controller', $sugar_config['search']);
-        self::assertArrayHasKey('default_engine', $sugar_config['search']);
+        self::assertArrayHasKey('defaultEngine', $sugar_config['search']);
     }
 }

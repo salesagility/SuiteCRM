@@ -35,32 +35,51 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
-<h1 class="module-title-text">Search</h1>
 
-<form id="search-wrapper-form">
-    {*hidden input to handle actions*}
-    {search_controller}
+<div class="moduleTitle">
+    <h2 class="module-title-text">{$APP.LBL_SEARCH_TITLE}</h2>
+</div>
+<div style="clear:both;">
+    <form id="search-wrapper-form">
+        {*hidden input to handle actions*}
+        {search_controller}
 
-    <div class="row">
-        <div class="col-md-6 msfcol">
-            <label for="search-query-string" class="text-muted">Search Query</label>
-            <input type="text"
-                   name="search-query-string"
-                   id="search-query-string"
-                   placeholder="Search..."
-                   value="{$searchQueryString}"
-                   autofocus/>
-        </div>
-        <div class="col-md-2 msfcol">
-            <label for="search-query-size" class="text-muted">Results per page</label>
-            {html_options options=$sizeOptions selected=$searchQuerySize id="search-query-size" name="search-query-size"}
-        </div>
-        <div class="col-md-2 msfcol">
-            <label for="search-query-size" class="text-muted">Engine</label>
-            {html_options options=$engineOptions selected=$searchQueryEngine id="search-engine" name="search-engine"}
-        </div>
-        <div class="col-md-2 msfcol">
-            <input type="submit" value="search"/>
-        </div>
-    </div>
-</form>
+        <table width="600" cellspacing="1" border="0">
+        	<tbody>
+                <tr style="padding-bottom: 10px">
+                    <td class="submitButtons" colspan="8" nowrap="">
+                        <label for="searchFieldMain" class="text-muted hide">{$APP.LBL_SEARCH_QUERY}</label>
+                        <input id="searchFieldMain" title="{$APP.LBL_SEARCH_TEXT_FIELD_TITLE_ATTR}" class="searchField" type="text" size="80" name="search-query-string" value="{$searchQueryString}" autofocus>
+                        <input type="submit" title="{$APP.LBL_SEARCH_SUBMIT_FIELD_TITLE_ATTR}" class="button primary" value="{$APP.LBL_SEARCH_SUBMIT_FIELD_VALUE}">&nbsp;
+                    </td>
+                <tr>
+            	<tr height="5">
+                    <td></td>
+                </tr>
+            	<tr style="padding-top: 10px;">
+            		<td colspan="6" style="padding-left: 20px;" nowrap="">
+                		<div id="inlineGlobalSearch">
+                    		<table style="margin-bottom:0px;" cellspacing="0" cellpadding="0" border="0">
+                    		    <tbody>
+                                    <td>
+                                        <label for="search-query-size" class="text-muted">{$APP.LBL_SEARCH_RESULTS_PER_PAGE}</label>
+                                        {html_options options=$sizeOptions selected=$searchQuerySize id="search-query-size" name="search-query-size"}
+                                        &nbsp;&nbsp;
+
+                                        {if $engineOptions|@count gt 1}
+                                            <label for="search-query-size" class="text-muted">{$APP.LBL_SEARCH_ENGINE}</label>
+                                            {html_options options=$engineOptions selected=$searchQueryEngine id="search-engine" name="search-engine"}
+                                        {else}
+                                            {assign var=firstRow value=$engineOptions|@key}
+                                            <input type="hidden" name="search-engine" value="{$firstRow}" />
+                                        {/if}
+                                    </td>
+                    		     </tbody>
+                            </table>
+                		</div>
+            		</td>
+            	</tr>
+        	</tbody>
+        </table>
+    </form>
+</div>

@@ -3651,3 +3651,11 @@ $app_strings['LBL_GOOGLE_SYNC_ERR'] = 'SuiteCRM Google Sync - ERROR';
 $app_strings['LBL_THERE_WAS_AN_ERR'] = 'There was an error: ';
 $app_strings['LBL_CLICK_HERE'] = 'Click here';
 $app_strings['LBL_TO_CONTINUE'] = ' to continue.';
+
+$app_strings['LBL_SEARCH_TITLE']                   = 'Search';
+$app_strings['LBL_SEARCH_TEXT_FIELD_TITLE_ATTR']   = 'Input Search Criteria';
+$app_strings['LBL_SEARCH_SUBMIT_FIELD_TITLE_ATTR'] = 'Search';
+$app_strings['LBL_SEARCH_SUBMIT_FIELD_VALUE']      = 'Search';
+$app_strings['LBL_SEARCH_QUERY']                   = 'Search query: ';
+$app_strings['LBL_SEARCH_RESULTS_PER_PAGE']        = 'Results per page: ';
+$app_strings['LBL_SEARCH_ENGINE']                  = 'Engine: ';
