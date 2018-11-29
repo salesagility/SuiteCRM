@@ -88,15 +88,12 @@ $admin_option_defs['Administration']['scheduler'] = array('Schedulers','LBL_SUIT
 
 $admin_option_defs['Administration']['feed_settings']=array('icon_SugarFeed','LBL_SUITEFEED_SETTINGS','LBL_SUITEFEED_SETTINGS_DESC','./index.php?module=SugarFeed&action=AdminSettings', 'activity-streams');
 
-
-
-
-
 require_once 'include/SugarOAuthServer.php';
 if(SugarOAuthServer::enabled()) {
-    $admin_option_defs['Administration']['oauth_keys']= array('Password','LBL_OAUTH_TITLE','LBL_OAUTH','./index.php?module=OAuthKeys&action=index');
+    $admin_option_defs['Administration']['oauth_keys']= array('Password','LBL_OAUTH_TITLE','LBL_OAUTH','./index.php?module=OAuthKeys&action=index', 'oauth-keys');
 }
-$admin_option_defs['Administration']['oauth2_clients']= array('Password','LBL_OAUTH2_CLIENTS_TITLE','LBL_OAUTH2_CLIENTS','./index.php?module=OAuth2Clients&action=index');
+
+$admin_option_defs['Administration']['oauth2_clients']= array('Password','LBL_OAUTH2_CLIENTS_TITLE','LBL_OAUTH2_CLIENTS','./index.php?module=OAuth2Clients&action=index', 'password');
 
 $admin_group_header[]= array('LBL_ADMINISTRATION_HOME_TITLE','',false,$admin_option_defs, 'LBL_ADMINISTRATION_HOME_DESC');
 
@@ -113,9 +110,6 @@ $admin_option_defs['Campaigns']['mass_Email']= array('EmailQueue','LBL_MASS_EMAI
 
 
 $admin_group_header[]= array('LBL_EMAIL_TITLE','',false,$admin_option_defs, 'LBL_EMAIL_DESC');
-
-
-
 
 //studio.
 $admin_option_defs=array();
@@ -195,7 +189,7 @@ $admin_option_defs['Administration']['google_calendar_auth'] = array(
     'LBL_GOOGLE_CALENDAR_AUTH_TITLE',
     'LBL_GOOGLE_CALENDAR_AUTH_DESC',
     './index.php?module=Administration&action=GoogleCalendarAuth',
-    'admin-oauth-keys'
+    'password'
 );
 
 $admin_group_header[] = array(
