@@ -89,6 +89,7 @@ class SearchResultsController extends Controller
         $headers = $this->getListViewHeaders();
         $this->view->getTemplate()->assign('headers', $headers);
         $this->view->getTemplate()->assign('results', $this->results);
+        $this->view->getTemplate()->assign('resultsAsBean', $this->results->getHitsAsBeans());
 
         parent::display();
     }
@@ -108,10 +109,10 @@ class SearchResultsController extends Controller
                 throw new Exception('Module bean not found for search results: ' . $module);
             }
             foreach ($listViewDef as $fieldKey => $fieldValue) {
-                if ($fieldValue['default']) {
+                if (isset($fieldValue['default']) && $fieldValue['default']) {
                     $header = $this->getListViewHeader($bean, $fieldKey, $fieldValue);
 
-                    $headers[$module][$fieldKey] = $header;
+                    $headers[$module][$fieldKey] = array_merge($fieldValue, $header);
                 }
             }
         }
