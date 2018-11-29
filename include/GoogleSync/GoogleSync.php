@@ -469,14 +469,14 @@ class GoogleSync
     public function getGoogleEventById($event_id)
     {
 
-        // Make sure the calendar service is set up
-        if (!$this->isServiceExists()) {
-            return false;
+        if (empty($event_id)) {
+            // If we didn't get passed an event id, throw an exception
+            throw new \InvalidArgumentException('event ID is empty');
         }
 
-        if (empty($event_id)) {
-            // If we didn't get passed an event, return null
-            return;
+        // Make sure the calendar service is set up
+        if (!$this->isServiceExists()) {
+            throw new \RuntimeException('Cannot Continue Without Google Service');
         }
 
         $gEvent = $this->gService->events->get($this->calendarId, $event_id);
@@ -907,7 +907,7 @@ class GoogleSync
 
         // Disable all popup reminders for the SuiteCRM meeting
         $eventIdQuoted = $this->db->quoted($event_id);
-        $sql = sprintf("UPDATE reminders SET popup = '0' WHERE related_event_module_id = '%s' AND deleted = '0'", $eventIdQuoted);
+        $sql = sprintf("UPDATE reminders SET popup = '0' WHERE related_event_module_id = %s AND deleted = '0'", $eventIdQuoted);
         $res = $this->db->query($sql);
         if (!$res) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'SQL Failure!');
@@ -915,7 +915,7 @@ class GoogleSync
         }
 
         // Mark all reminders where both popup and email are disabled as deleted.
-        $sql = sprintf("UPDATE reminders SET deleted = '1' WHERE popup = '0' AND email = '0' AND related_event_module_id = '%s' AND deleted = '0'", $eventIdQuoted);
+        $sql = sprintf("UPDATE reminders SET deleted = '1' WHERE popup = '0' AND email = '0' AND related_event_module_id = %s AND deleted = '0'", $eventIdQuoted);
         $res = $this->db->query($sql);
         if (!$res) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'SQL Failure!');
@@ -1089,7 +1089,6 @@ class GoogleSync
 
         //Set the Google Event up to match the SuiteCRM one
         $event_remote = $this->updateGoogleCalendarEvent($event_local, $event_remote_empty);
-        unset($event_remote_empty); // We're done with this
 
         return $event_remote;
     }
@@ -1146,6 +1145,54 @@ class GoogleSync
     }
 
     /**
+     * Helper function for doSync
+     * 
+     * @param Meeting $meeting The CRM Meeting
+     * @param \Google_Service_Calendar_Event $event The Google Event
+     * @param string $action The action to take with the two events
+     * 
+     * @return bool Success/Failure
+     */
+    protected function doAction(Meeting $meeting = null, Google_Service_Calendar_Event $event = null, $action)
+    {
+        if ( !empty($meeting) && !empty($event) ) {
+            $title = $meeting->name . " / " . $event->getSummary();
+        } elseif ( !empty($meeting) ) {
+            $title = $meeting->name;
+        } elseif ( !empty($event) ) {
+            $title = $event->getSummary();
+        } else {
+            $title = "UNNAMED RECORD"; // Google doesn't require an event to be named.
+        }
+
+        switch ($action) {
+            case "push":
+                $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pushing Record: ' . $title);
+                return $this->pushEvent($meeting, $event);
+                break;
+            case "pull":
+                $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pulling Record: ' . $title);
+                return $this->pullEvent($event, $meeting);
+                break;
+            case "skip":
+                $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Skipping Record: ' . $title);
+                break;
+            case "push_delete":
+                $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Push Deleting Record: ' . $title);
+                return $this->delEvent($event, $meeting->id);
+                break;
+            case "pull_delete":
+                $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pull Deleting Record: ' . $title);
+                return $this->delMeeting($meeting);
+                break;
+            default:
+                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unknown Action: ' . $action . ' for record: ' . $title);
+                throw new \InvalidArgumentException('Invalid Action');
+                return false;
+        }
+    }
+
+    /**
      * Perform the sync for a user
      *
      * @param string $id The SuiteCRM user id
@@ -1185,32 +1232,14 @@ class GoogleSync
 
         // First, we look for SuiteCRM meetings that are not on Google
         foreach ($meetings as $meeting) {
-            $gevent = $this->getGoogleEventById($meeting->gsync_id);
-            $dowhat = $this->pushPullSkip($meeting, $gevent);
-
-            switch ($dowhat) {
-                case "push":
-                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pushing Meeting: ' . $meeting->name);
-                    $this->pushEvent($meeting, $gevent);
-                    break;
-                case "pull":
-                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pulling Meeting: ' . $meeting->name);
-                    $this->pullEvent($gevent, $meeting);
-                    break;
-                case "skip":
-                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Skipping Meeting: ' . $meeting->name);
-                    break;
-                case "push_delete":
-                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Event: ' . $meeting->name);
-                    $this->delEvent($gevent, $meeting->id);
-                    break;
-                case "pull_delete":
-                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Meeting: ' . $meeting->name);
-                    $this->delMeeting($meeting);
-                    break;
-                default:
-                    $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'pushPullSkip() returned unknown value: ' . $dowhat . ' for event: ' . $meeting->name);
+            if ( !empty($meeting->gsync_id) ) {
+                $gevent = $this->getGoogleEventById($meeting->gsync_id);
+            } else {
+                $gevent = null;
             }
+            
+            $action = $this->pushPullSkip($meeting, $gevent);
+            $actionResult = $this->doAction($meeting, $gevent, $action); //TODO: Check this result for success
         }
 
         // Now, we look at the Google Calendar
@@ -1225,31 +1254,8 @@ class GoogleSync
                 $meeting = null;
             }
 
-            $dowhat = $this->pushPullSkip($gevent, $meeting);
-
-            switch ($dowhat) {
-                case "push":
-                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pushing Event: ' . $gevent->getSummary());
-                    $this->pushEvent($meeting, $gevent);
-                    break;
-                case "pull":
-                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pulling Event: ' . $gevent->getSummary());
-                    $this->pullEvent($gevent, $meeting);
-                    break;
-                case "skip":
-                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Skipping Event: ' . $gevent->getSummary());
-                    break;
-                case "push_delete":
-                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Event: ' . $meeting->name);
-                    $this->delEvent($gevent, $meeting->id);
-                    break;
-                case "pull_delete":
-                    $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Deleting Meeting: ' . $meeting->name);
-                    $this->delMeeting($meeting);
-                    break;
-                default:
-                    $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'pushPullSkip() returned unknown value: ' . $dowhat . ' for event: ' . $gevent->getSummary());
-            }
+            $action = $this->pushPullSkip($gevent, $meeting);
+            $actionResult = $this->doAction($meeting, $gevent, $action); //TODO: Check this result for success
         }
         return true;
     }
