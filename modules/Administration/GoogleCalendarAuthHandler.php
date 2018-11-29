@@ -91,17 +91,17 @@ class GoogleCalendarAuthHandler
 
 
     /**
-     * Setup object
+     * Setup Object
      *
-     * @param  User         $current_user
-     * @param               $request
-     * @param               $mod_strings
-     * @param  Configurator $config
-     * @param  Sugar_Smarty $sugar_smarty
-     * @param  javascript   $js
-     * @return void
+     * @param string       $tpl_path
+     * @param User         $current_user
+     * @param mixed        $request
+     * @param mixed        $mod_strings
+     * @param Configurator $config
+     * @param Sugar_Smarty $sugar_smarty
+     * @param javascript   $js
      */
-    public function __construct(string $tpl_path, User $current_user, $request, $mod_strings, Configurator $config, Sugar_Smarty $sugar_smarty, javascript $js)
+    public function __construct($tpl_path, User $current_user, $request, $mod_strings, Configurator $config, Sugar_Smarty $sugar_smarty, javascript $js)
     {
         $this->currentUser  = $current_user;
         $this->request      = $request;
@@ -114,7 +114,7 @@ class GoogleCalendarAuthHandler
         if (isset($this->request['do']) && $this->request['do'] == 'save') {
             $this->configurator->config['google_auth_json'] = !empty($this->request['google_auth_json']);
             $this->configurator->saveConfig();
-            header('Location: index.php?module=Administration&action=index');
+            $this->redirect('index.php?module=Administration&action=index');
             exit();
         }
 
@@ -129,13 +129,95 @@ class GoogleCalendarAuthHandler
      */
     protected function handleDisplay()
     {
-        $errors = array();
+        $this->checkUserIsAdmin();
 
+        $this->getConfig();
+        $this->getLanguage();
+        $this->getPageTitle();
+        $this->getGoogleCalendarAuthState();
+        $this->getJavascript();
+
+        $this->ss->display($this->tplPath);
+    }
+
+    /**
+     * Check the current user is admin
+     *
+     * @return void
+     */
+    protected function checkUserIsAdmin()
+    {
         // Check current user is admin
         if (!is_admin($this->currentUser)) {
             sugar_die("Unauthorized access to administration.");
         }
+    }
 
+    /**
+     * Get the config
+     *
+     * @return void
+     */
+    protected function getConfig()
+    {
+        if (!array_key_exists('google_auth_json', $this->configurator->config)) {
+            $this->configurator->config['google_auth_json'] = false;
+        }
+
+        $this->ss->assign('config', $this->configurator->config['google_auth_json']);
+    }
+
+
+    /**
+     * Get Languages
+     *
+     * @return void
+     */
+    protected function getLanguage()
+    {
+        $this->ss->assign('LANGUAGES', get_languages());
+    }
+
+
+    /**
+     * Get the javascript
+     *
+     * @return void
+     */
+    protected function getJavascript()
+    {
+        $this->ss->assign("JAVASCRIPT", get_set_focus_js());
+        $this->js->setFormName('ConfigureSettings');
+        $js = $this->js->getScript();
+        $this->ss->assign('JAVASCRIPT', $js);
+    }
+
+
+    /**
+     * Get the google calendar authentication state
+     *
+     * @return void
+     */
+    protected function getGoogleCalendarAuthState()
+    {
+        // Check for Google Sync JSON
+        $json = base64_decode($this->configurator->config['google_auth_json']);
+        $gcConfig = json_decode($json, true);
+
+        $googleJsonConfState = 'UNCONFIGURED';
+        $googleJsonConfColor = 'black';
+
+        if ($gcConfig) {
+            $googleJsonConfState = 'CONFIGURED';
+            $googleJsonConfColor = 'green';
+        }
+
+        $this->ss->assign("GOOGLE_JSON_CONF", $googleJsonConfState);
+        $this->ss->assign("GOOGLE_JSON_CONF_COLOR", $googleJsonConfColor);
+    }
+
+    protected function getPageTitle()
+    {
         $pageTitle = getClassicModuleTitle(
             "Administration",
             array(
@@ -146,35 +228,23 @@ class GoogleCalendarAuthHandler
         );
 
         $this->ss->assign('PAGE_TITLE', $pageTitle);
-        $this->ss->assign('LANGUAGES', get_languages());
-        $this->ss->assign("JAVASCRIPT", get_set_focus_js());
+    }
 
-        if (!array_key_exists('google_auth_json', $this->configurator->config)) {
-            $this->configurator->config['google_auth_json'] = false;
-        }
+    /**
+     * protected function for SugarApplication::redirect() so test mock can override it
+     * @param string $url
+     */
+    protected function redirect($url)
+    {
+        SugarApplication::redirect($url);
+    }
 
-        $this->ss->assign('config', $this->configurator->config['google_auth_json']);
-
-        // Check for Google Sync JSON
-        $json = base64_decode($this->configurator->config['google_auth_json']);
-
-        $gcConfig = json_decode($json, true);
-
-        if ($gcConfig) {
-            $this->ss->assign("GOOGLE_JSON_CONF", 'CONFIGURED');
-            $this->ss->assign("GOOGLE_JSON_CONF_COLOR", 'green');
-        } else {
-            $this->ss->assign("GOOGLE_JSON_CONF", 'UNCONFIGURED');
-            $this->ss->assign("GOOGLE_JSON_CONF_COLOR", 'black');
-        }
-
-        $this->js->setFormName('ConfigureSettings');
-        $js = $this->js->getScript();
-
-        $this->ss->assign('JAVASCRIPT', $js);
-
-        $this->ss->assign('error', $errors);
-
-        $this->ss->display($this->tplPath);
+    /**
+     * protected function for die() so test mock can override it
+     * @param string $exitstring
+     */
+    protected function protectedDie($exitstring)
+    {
+        die($exitstring);
     }
 }

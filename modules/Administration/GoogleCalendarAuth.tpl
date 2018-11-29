@@ -47,8 +47,6 @@
       onSubmit="return (add_checks(document.gcAuthentication) && check_form('gcAuthentication'));"
 >
 
-    <span class='error'>{$error.main}</span>
-
     <table width="100%" cellpadding="0" cellspacing="0" border="0" class="actionsContainer">
       <tr>
           <td>

@@ -43,22 +43,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-include __DIR__ . '../../modules/Configurator/Configurator.php';
-include __DIR__ . '/GoogleCalendarAuthHandler.php';
+class GoogleCalendarAuthHandlerTest extends SuiteCRM\StateCheckerUnitAbstract
+{
+    public function setUp() {
+        parent::setUp();
+    }
 
-global $current_user;
-global $mod_strings;
-global $app_strings;
+    public function testsaveGoogleAuth() {
+        
+        $this->assertEquals(true, true);
+    }
 
-$tplPath = __DIR__ . '/GoogleCalendarAuth.tpl';
-$request = $_REQUEST;
-
-new GoogleCalendarAuthHandler(
-    $tplPath,
-    $current_user,
-    $request,
-    $mod_strings,
-    new Configurator(),
-    new Sugar_Smarty(),
-    new javascript()
-);
+}
