@@ -68,6 +68,8 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testGetAuthJson()
     {
+        $state = new \SuiteCrm\StateSaver();
+        $state->pushGlobals();
     
         // Set up object for testing
         global $sugar_config;
@@ -82,6 +84,8 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
         $this->assertEquals($expectedAuthJson, $actualAuthJson);
         $this->assertArrayHasKey('web', $actualAuthJson);
+
+        $state->popGlobals();
     }
 
     public function testAddUser()
@@ -109,8 +113,11 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
     {
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('meetings');
+        $state->pushTable('meetings_cstm');
         $state->pushTable('users');
         $state->pushTable('user_preferences');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('vcals');
 
         // Create a User
         $user = new User();
@@ -163,8 +170,11 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(3, count($return));
 
         $state->popTable('meetings');
+        $state->popTable('meetings_cstm');
         $state->popTable('users');
         $state->popTable('user_preferences');
+        $state->popTable('aod_indexevent');
+        $state->popTable('vcals');
     }
 
     public function testGetUserGoogleEvents()
@@ -179,7 +189,6 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testCreateSuitecrmMeetingEvent()
     {
-
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('reminders');
         $state->pushTable('reminders_invitees');
@@ -259,6 +268,9 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
     {
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('meetings');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('vcals');
+        $state->pushTable('aod_indexevent');
 
         $db = DBManagerFactory::getInstance();
 
@@ -324,6 +336,9 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(null, $return);
 
         $state->popTable('meetings');
+        $state->popTable('meetings_cstm');
+        $state->popTable('vcals');
+        $state->popTable('aod_indexevent');
     }
 
     public function testDelEvent()
@@ -418,7 +433,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
     public function testCreateGoogleCalendarEvent()
     {
         $object = new GoogleSync();
-        date_default_timezone_set('Etc/UTC');
+        $object->setTimeZone('Etc/UTC');
 
         // Create SuiteCRM Meeting Object
         $CRM_Meeting = new Meeting();
@@ -512,13 +527,11 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue($return);
         $this->assertEquals($expectedTimezone, $object->timezone);
         $this->assertEquals($expectedTimezone, date_default_timezone_get());
-
     }
 
     public function testReturnExtendedProperties()
     {
         $object = new GoogleSync();
-        date_default_timezone_set('Etc/UTC');
 
         // BEGIN: Create Google Event Object
         $Google_Event = new Google_Service_Calendar_Event();
