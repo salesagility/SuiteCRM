@@ -139,6 +139,7 @@ class AOR_ReportsController extends SugarController
 
         $key = Relationship::retrieve_by_modules($this->bean->report_module, 'ProspectLists', $GLOBALS['db']);
         if (!empty($key)) {
+            $this->bean->user_parameters = requestToUserParameters();
             $sql = $this->bean->build_report_query();
             $result = $this->bean->db->query($sql);
             $beans = array();
