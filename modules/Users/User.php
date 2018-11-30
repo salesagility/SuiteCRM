@@ -665,7 +665,7 @@ class User extends Person implements EmailInterface
             }
         }
 
-
+        $this->savePreferencesToDB();
 
         return $this->id;
     }
@@ -751,7 +751,10 @@ class User extends Person implements EmailInterface
      */
     public function authenticate_user($password)
     {
-        $row = self::findUserPassword($this->user_name, $p
+        $row = self::findUserPassword($this->user_name, $password);
+        if (empty($row)) {
+            return false;
+        }
         $this->id = $row['id'];
 
         return true;
@@ -935,7 +938,7 @@ EOQ;
         if (!empty($where)) {
             $query .= " AND $where";
         }
-        $query .= " AND deleted=0";
+	$query .= " AND deleted=0"; 
         $result = $db->limitQuery($query, 0, 1, false);
         if (!empty($result)) {
             $row = $db->fetchByAssoc($result);
@@ -2031,7 +2034,17 @@ EOQ;
             }
             $hasRecipients = true;
         }
-        
+        if ($hasRecipients) {
+            $result['status'] = $mail->Send();
+        }
+
+        if ($result['status'] == true) {
+            $emailObj->team_id = 1;
+            $emailObj->to_addrs = '';
+            $emailObj->type = 'archived';
+            $emailObj->deleted = '0';
+            $emailObj->name = $mail->Subject;
+            $emailObj->description = $mail->Body;
             $emailObj->description_html = null;
             $emailObj->from_addr = $mail->From;
             isValidEmailAddress($emailObj->from_addr);
