@@ -39,7 +39,6 @@
 
 {$PAGE_TITLE}
 
-
 <form name="gcAuthentication"
       enctype='multipart/form-data'
       method="post"
@@ -98,7 +97,7 @@
         				};
     				{/literal}
     			</script>
-    			JSON file is: <span style="color:{$GOOGLE_JSON_CONF_COLOR}">{$GOOGLE_JSON_CONF}</span><input type="file" accept="text/plain" onchange="openGoogleJson(event)">
+    			JSON file is: <span style="color:{$GOOGLE_JSON_CONF.color}">{$GOOGLE_JSON_CONF.status}</span><input type="file" accept="text/plain" onchange="openGoogleJson(event)">
     		</td>
     	</tr>
     </table>

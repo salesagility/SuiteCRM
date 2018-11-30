@@ -43,25 +43,87 @@ if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-include __DIR__ . '../../modules/Configurator/Configurator.php';
-include __DIR__ . '/AdminHandlerInterface.php';
-include __DIR__ . '/TestableTrait.php';
-include __DIR__ . '/BaseAdminHandler.php';
-include __DIR__ . '/GoogleCalendarAuthHandler.php';
+class BaseAdminHandler
+{
+    // Make the class testable
+    use TestableTrait;
 
-global $current_user;
-global $mod_strings;
-global $app_strings;
+    /**
+     *
+     * @var string
+     */
+    protected $tplPath = '';
 
-$tplPath = __DIR__ . '/GoogleCalendarAuth.tpl';
-$request = $_REQUEST;
+    /**
+     *
+     * @var Sugar_Smarty
+     */
+    protected $ss = null;
 
-new GoogleCalendarAuthHandler(
-    $tplPath,
-    $current_user,
-    $request,
-    $mod_strings,
-    new Configurator(),
-    new Sugar_Smarty(),
-    new javascript()
-);
+    /**
+     *
+     * @var User
+     */
+    protected $currentUser = null;
+
+    /**
+     *
+     * @var array
+     */
+    protected $request = null;
+
+    /**
+     *
+     * @var array
+     */
+    protected $modStrings = null;
+
+
+    /**
+     * Setup Object
+     */
+    public function __construct(Sugar_Smarty $sugar_smarty, User $current_user, $request, $mod_strings)
+    {
+        $this->ss          = $sugar_smarty;
+        $this->currentUser = $current_user;
+        $this->request     = $request;
+        $this->modStrings  = $mod_strings;
+
+        $this->checkUserIsAdmin();
+        $this->getLanguage();
+        $this->getJavascipt();
+    }
+
+    /**
+     * Check the current user is admin
+     *
+     * @return void
+     */
+    protected function checkUserIsAdmin()
+    {
+        // Check current user is admin
+        if (!is_admin($this->currentUser)) {
+            $this->protectedDie("Unauthorized access to administration.");
+        }
+    }
+
+    /**
+     * Get Languages
+     *
+     * @return void
+     */
+    protected function getLanguage()
+    {
+        $this->ss->assign('LANGUAGES', get_languages());
+    }
+
+    /**
+     * Get Javascript
+     *
+     * @return void
+     */
+    protected function getJavascipt()
+    {
+        $this->ss->assign("JAVASCRIPT", get_set_focus_js());
+    }
+}

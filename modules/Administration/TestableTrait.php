@@ -43,25 +43,33 @@ if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-include __DIR__ . '../../modules/Configurator/Configurator.php';
-include __DIR__ . '/AdminHandlerInterface.php';
-include __DIR__ . '/TestableTrait.php';
-include __DIR__ . '/BaseAdminHandler.php';
-include __DIR__ . '/GoogleCalendarAuthHandler.php';
+trait TestableTrait {
+    /**
+     * protected function for SugarApplication::redirect() so test mock can override it
+     *
+     * @param string $url
+     */
+    protected function redirect($url)
+    {
+        SugarApplication::redirect($url);
+    }
 
-global $current_user;
-global $mod_strings;
-global $app_strings;
+    /**
+     * protected function for exit so test mock can override it
+     *
+     * @return void
+     */
+    protected function protectedExit() {
+        exit;
+    }
 
-$tplPath = __DIR__ . '/GoogleCalendarAuth.tpl';
-$request = $_REQUEST;
-
-new GoogleCalendarAuthHandler(
-    $tplPath,
-    $current_user,
-    $request,
-    $mod_strings,
-    new Configurator(),
-    new Sugar_Smarty(),
-    new javascript()
-);
+    /**
+     * protected function for die() so test mock can override it
+     *
+     * @param string $exitstring
+     */
+    protected function protectedDie($exitstring)
+    {
+        die($exitstring);
+    }
+}

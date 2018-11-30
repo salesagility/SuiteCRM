@@ -43,25 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-include __DIR__ . '../../modules/Configurator/Configurator.php';
-include __DIR__ . '/AdminHandlerInterface.php';
-include __DIR__ . '/TestableTrait.php';
-include __DIR__ . '/BaseAdminHandler.php';
-include __DIR__ . '/GoogleCalendarAuthHandler.php';
-
-global $current_user;
-global $mod_strings;
-global $app_strings;
-
-$tplPath = __DIR__ . '/GoogleCalendarAuth.tpl';
-$request = $_REQUEST;
-
-new GoogleCalendarAuthHandler(
-    $tplPath,
-    $current_user,
-    $request,
-    $mod_strings,
-    new Configurator(),
-    new Sugar_Smarty(),
-    new javascript()
-);
+interface AdminHandlerInterface
+{
+    public function doActions();
+    public function handleDisplay();
+}

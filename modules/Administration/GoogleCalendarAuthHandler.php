@@ -43,33 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-class GoogleCalendarAuthHandler
+class GoogleCalendarAuthHandler extends BaseAdminHandler implements AdminHandlerInterface
 {
-
-    /**
-     *
-     * @var string
-     */
-    protected $tplPath = '';
-
-    /**
-     *
-     * @var User
-     */
-    protected $currentUser = null;
-
-    /**
-     *
-     * @var array
-     */
-    protected $request = null;
-
-    /**
-     *
-     * @var array
-     */
-    protected $modStrings = null;
-
     /**
      *
      * @var Configurator
@@ -78,79 +53,108 @@ class GoogleCalendarAuthHandler
 
     /**
      *
-     * @var Sugar_Smarty
-     */
-    protected $ss = null;
-
-    /**
-     *
      * @var javascript
      */
     protected $js = null;
-
-
 
     /**
      * Setup Object
      *
      * @param string       $tpl_path
      * @param User         $current_user
-     * @param mixed        $request
-     * @param mixed        $mod_strings
+     * @param array        $request
+     * @param array        $mod_strings
      * @param Configurator $config
      * @param Sugar_Smarty $sugar_smarty
      * @param javascript   $js
      */
     public function __construct($tpl_path, User $current_user, $request, $mod_strings, Configurator $config, Sugar_Smarty $sugar_smarty, javascript $js)
     {
-        $this->currentUser  = $current_user;
-        $this->request      = $request;
-        $this->modStrings   = $mod_strings;
-        $this->ss           = $sugar_smarty;
+        // Get parent
+        parent::__construct($sugar_smarty, $current_user, $mod_strings, $request);
+
         $this->tplPath      = $tpl_path;
         $this->js           = $js;
         $this->configurator = $config;
 
+        $this->doActions();
+        $this->handleDisplay();
+    }
+
+    /**
+     * Deal with do actions
+     *
+     * @return void
+     */
+    protected function doActions()
+    {
         if (isset($this->request['do']) && $this->request['do'] == 'save') {
             $this->configurator->config['google_auth_json'] = !empty($this->request['google_auth_json']);
             $this->configurator->saveConfig();
             $this->redirect('index.php?module=Administration&action=index');
-            exit();
+            $this->protectedExit();
         }
-
-        $this->handleDisplay();
     }
-
 
     /**
      * This function handles displaying the template
      *
      * @return void
      */
-    protected function handleDisplay()
+    public function handleDisplay()
     {
-        $this->checkUserIsAdmin();
+        $this->ss->assign('PAGE_TITLE', $this->getPageTitle());
 
-        $this->getConfig();
-        $this->getLanguage();
-        $this->getPageTitle();
-        $this->getGoogleCalendarAuthState();
         $this->getJavascript();
+        $this->getGoogleCalendarAuthState();
 
-        $this->ss->display($this->tplPath);
+        return $this->ss->display($this->tplPath);
     }
 
     /**
-     * Check the current user is admin
+     * Get the page title
+     *
+     * @return string
+     */
+    protected function getPageTitle()
+    {
+        return getClassicModuleTitle(
+            "Administration",
+            array(
+                "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . "</a>",
+                $this->modStrings['LBL_GOOGLE_AUTH_TITLE'],
+            ),
+            false
+        );
+    }
+
+    /**
+     * Get the google calendar authentication state
      *
      * @return void
      */
-    protected function checkUserIsAdmin()
+    protected function getGoogleCalendarAuthState()
     {
-        // Check current user is admin
-        if (!is_admin($this->currentUser)) {
-            sugar_die("Unauthorized access to administration.");
+        // Get the config
+        $this->getConfig();
+
+        // Check for Google Sync JSON
+        $json = base64_decode($this->configurator->config['google_auth_json']);
+        $gcConfig = json_decode($json, true);
+
+        $googleJsonConfState = array(
+            'status' => 'UNCONFIGURED',
+            'color'  => 'black'
+        );
+
+        if ($gcConfig) {
+            $googleJsonConfState = array(
+                'status' => 'CONFIGURED',
+                'color'  => 'green'
+            );
         }
+
+        $this->ss->assign('GOOGLE_JSON_CONF', $googleJsonConfState);
     }
 
     /**
@@ -167,18 +171,6 @@ class GoogleCalendarAuthHandler
         $this->ss->assign('config', $this->configurator->config['google_auth_json']);
     }
 
-
-    /**
-     * Get Languages
-     *
-     * @return void
-     */
-    protected function getLanguage()
-    {
-        $this->ss->assign('LANGUAGES', get_languages());
-    }
-
-
     /**
      * Get the javascript
      *
@@ -186,65 +178,8 @@ class GoogleCalendarAuthHandler
      */
     protected function getJavascript()
     {
-        $this->ss->assign("JAVASCRIPT", get_set_focus_js());
         $this->js->setFormName('ConfigureSettings');
         $js = $this->js->getScript();
         $this->ss->assign('JAVASCRIPT', $js);
-    }
-
-
-    /**
-     * Get the google calendar authentication state
-     *
-     * @return void
-     */
-    protected function getGoogleCalendarAuthState()
-    {
-        // Check for Google Sync JSON
-        $json = base64_decode($this->configurator->config['google_auth_json']);
-        $gcConfig = json_decode($json, true);
-
-        $googleJsonConfState = 'UNCONFIGURED';
-        $googleJsonConfColor = 'black';
-
-        if ($gcConfig) {
-            $googleJsonConfState = 'CONFIGURED';
-            $googleJsonConfColor = 'green';
-        }
-
-        $this->ss->assign("GOOGLE_JSON_CONF", $googleJsonConfState);
-        $this->ss->assign("GOOGLE_JSON_CONF_COLOR", $googleJsonConfColor);
-    }
-
-    protected function getPageTitle()
-    {
-        $pageTitle = getClassicModuleTitle(
-            "Administration",
-            array(
-                "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . "</a>",
-                $this->modStrings['LBL_GOOGLE_AUTH_TITLE'],
-            ),
-            false
-        );
-
-        $this->ss->assign('PAGE_TITLE', $pageTitle);
-    }
-
-    /**
-     * protected function for SugarApplication::redirect() so test mock can override it
-     * @param string $url
-     */
-    protected function redirect($url)
-    {
-        SugarApplication::redirect($url);
-    }
-
-    /**
-     * protected function for die() so test mock can override it
-     * @param string $exitstring
-     */
-    protected function protectedDie($exitstring)
-    {
-        die($exitstring);
     }
 }
