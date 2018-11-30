@@ -19,13 +19,15 @@
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
 
-if (!defined('sugarEntry') || !sugarEntry)
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
+}
 
 
-class ProjectViewResourceList extends SugarView {
-
-    public function display() {
+class ProjectViewResourceList extends SugarView
+{
+    public function display()
+    {
         include('modules/Project/chart.php');
 
         echo '<link rel="stylesheet" type="text/css" href="modules/Project/css/style.css" />';
@@ -33,8 +35,7 @@ class ProjectViewResourceList extends SugarView {
         echo '<link rel="stylesheet" type="text/css" href="modules/Project/qtip/jquery.qtip.min.css" />';
         echo '<script type="text/javascript" src="modules/Project/js/jquery.blockUI.js"></script>';
         echo '<script type="text/javascript" src="modules/Project/qtip/jquery.qtip.min.js"></script>';
-        echo '<script type="text/javascript" src="modules/Project/js/main_lib_chart.js"></script>';
-?>
+        echo '<script type="text/javascript" src="modules/Project/js/main_lib_chart.js"></script>'; ?>
         <!--Mark-up for the main body of the view-->
         <div id="wrapper_chart">
 
@@ -53,5 +54,4 @@ class ProjectViewResourceList extends SugarView {
         <!--Main body end-->
 <?php
     }
-
 }

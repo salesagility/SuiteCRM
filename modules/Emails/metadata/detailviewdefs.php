@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 $module_name = 'Emails';
@@ -47,7 +47,41 @@ $viewdefs[$module_name]['DetailView'] = array(
                 'DUPLICATE',
                 'DELETE',
                 'FIND_DUPLICATES',
+                array(
+                    'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=ReplyTo&return_module=Emails&return_action=index&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_REPLY_TITLE}">'
+                ),
+                array(
+                    'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=ReplyToAll&return_module=Emails&return_action=index&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_REPLY_ALL}">'
+                ),
+                array(
+                    'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=Forward&return_module=Emails&return_action=index&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_FORWARD}">'
+                ),
+                array(
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Bugs\',\'&name={$bean->name}\',\'{$bean->from_addr_name}\');" value="{$MOD.LBL_CREATE} {$APP.LBL_EMAIL_QC_BUGS}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}">'
+                ),
+                array(
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Cases\',\'&name={$bean->name}\',\'{$bean->from_addr_name}\');" value="{$MOD.LBL_CREATE} {$APP.LBL_EMAIL_QC_CASES}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}">'
+                ),
+                array(
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Contacts\',\'&last_name={$bean->name}\',\'{$bean->from_addr_name}\');" value="{$MOD.LBL_CREATE} {$APP.LBL_EMAIL_QC_CONTACTS}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}">'
+                ),
+                array(
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Leads\',\'&last_name={$bean->name}\',\'{$bean->from_addr_name}\');" value="{$MOD.LBL_CREATE} {$APP.LBL_EMAIL_QC_LEADS}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}">'
+                ),
+                array(
+                    'customCode' => '<input type=button onclick="openQuickCreateModal(\'Opportunities\',\'&name={$bean->name}\',\'{$bean->from_addr_name}\');" value="{$MOD.LBL_CREATE} {$APP.LBL_EMAIL_QC_OPPORTUNITIES}">'
+                        . '<input type="hidden" id="parentEmailId" name="parentEmailId" value="{$bean->id}">'
+                ),
             )
+        ),
+        'includes' => array(
+            array(
+                'file' => 'modules/Emails/include/DetailView/quickCreateModal.js',
+            ),
         ),
         'maxColumns' => '2',
         'widths' => array(
@@ -59,6 +93,12 @@ $viewdefs[$module_name]['DetailView'] = array(
     'panels' => array(
 
         'LBL_EMAIL_INFORMATION' => array(
+            array(
+                'opt_in' => array(
+                    'name' => 'opt_in',
+                    'label' => 'LBL_OPT_IN',
+                ),
+            ),
             array(
                 'from_addr_name' => array(
                     'name' => 'from_addr_name',
@@ -101,11 +141,10 @@ $viewdefs[$module_name]['DetailView'] = array(
             array(
                 'date_entered' => array(
                     'name' => 'date_entered',
-                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
                     'label' => 'LBL_DATE_ENTERED',
                 )
             ),
-            array (
+            array(
                 'category_id',
             ),
         )

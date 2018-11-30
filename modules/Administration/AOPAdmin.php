@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -137,7 +137,7 @@ if (!empty($cfg->config['aop']['distribution_user_id'])) {
 
 $sugar_smarty->assign('distribution_user_name', $distributionUserName);
 
-$emailTemplateList = get_bean_select_array(true, 'EmailTemplate', 'name');
+$emailTemplateList = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
 
 $userEmailTemplateDropdown =
     get_select_options_with_id($emailTemplateList, $cfg->config['aop']['user_email_template_id']);
@@ -169,11 +169,15 @@ $sugar_smarty->assign('error', $errors);
 $cBean = BeanFactory::getBean('Cases');
 $statusDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], '');
 $currentStatuses = '';
-foreach (json_decode($cfg->config['aop']['case_status_changes'], true) as $if => $then) {
-    $ifDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], $if);
-    $thenDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], $then);
-    $currentStatuses .= getStatusRowTemplate($mod_strings, $ifDropdown, $thenDropdown) . "\n";
+
+if ($cfg->config['aop']['case_status_changes']) {
+    foreach (json_decode($cfg->config['aop']['case_status_changes'], true) as $if => $then) {
+        $ifDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], $if);
+        $thenDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], $then);
+        $currentStatuses .= getStatusRowTemplate($mod_strings, $ifDropdown, $thenDropdown) . "\n";
+    }
 }
+
 
 $sugar_smarty->assign('currentStatuses', $currentStatuses);
 

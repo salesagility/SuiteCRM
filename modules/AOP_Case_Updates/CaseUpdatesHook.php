@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 require_once 'util.php';
 
@@ -296,7 +297,7 @@ class CaseUpdatesHook
             return;
         }
         $case = BeanFactory::getBean('Cases', $caseId);
-        if (!empty($case->id)) {
+        if (empty($case->id)) {
             return;
         }
         if (array_key_exists($case->status, $statusMap)) {
@@ -376,7 +377,7 @@ class CaseUpdatesHook
         $aop_config = $this->getAOPConfig();
         $emailTemplate->retrieve($aop_config['case_closure_email_template_id']);
 
-        if (!$emailTemplate) {
+        if (!$emailTemplate->id) {
             $GLOBALS['log']->warn('CaseUpdatesHook: sendClosureEmail template is empty');
 
             return false;
@@ -397,6 +398,7 @@ class CaseUpdatesHook
         $mailer->isHTML(true);
         $mailer->AltBody = $text['body_alt'];
         $mailer->From = $emailSettings['from_address'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $emailSettings['from_name'];
 
         $email = $contact->emailAddress->getPrimaryAddress($contact);
@@ -525,7 +527,7 @@ class CaseUpdatesHook
 
         $aop_config = $this->getAOPConfig();
         $emailTemplate->retrieve($aop_config['case_creation_email_template_id']);
-        if (!$emailTemplate || !$aop_config['case_creation_email_template_id']) {
+        if (!$emailTemplate->id) {
             $GLOBALS['log']->warn('CaseUpdatesHook: sendCreationEmail template is empty');
 
             return false;
@@ -538,6 +540,7 @@ class CaseUpdatesHook
         $mailer->isHTML(true);
         $mailer->AltBody = $text['body_alt'];
         $mailer->From = $emailSettings['from_address'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $emailSettings['from_name'];
         $email = $contact->emailAddress->getPrimaryAddress($contact);
         if (empty($email) && !empty($contact->email1)) {
@@ -602,14 +605,25 @@ class CaseUpdatesHook
     {
         global $current_user, $sugar_config;
         $email_template = new EmailTemplate();
-        if ($_REQUEST['module'] === 'Import') {
+
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Requested module is not set for case update');
+        }
+
+        if ($module === 'Import') {
             //Don't send email on import
+            LoggerManager::getLogger()->warn("Don't send email on import");
             return;
         }
         if (!isAOPEnabled()) {
+            LoggerManager::getLogger()->warn("Don't send email if AOP enabled");
             return;
         }
         if ($caseUpdate->internal) {
+            LoggerManager::getLogger()->warn("Don't send email if case update is internal");
             return;
         }
         $signature = array();
@@ -620,7 +634,7 @@ class CaseUpdatesHook
                 $email_template = $email_template->retrieve($aop_config['contact_email_template_id']);
                 $signature = $current_user->getDefaultSignature();
             }
-            if ($email_template) {
+            if ($email_template->id) {
                 foreach ($caseUpdate->getContacts() as $contact) {
                     $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
                     $emails = array();

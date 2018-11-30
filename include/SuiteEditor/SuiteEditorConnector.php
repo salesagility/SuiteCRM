@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,23 +34,22 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once 'include/SuiteEditor/SuiteEditorInterface.php';
-include_once 'include/SuiteEditor/SuiteEditorSettings.php';
-include_once 'include/SuiteEditor/SuiteEditorSettingsForDirectHTML.php';
-include_once 'include/SuiteEditor/SuiteEditorDirectHTML.php';
-include_once 'include/SuiteEditor/SuiteEditorSettingsForTinyMCE.php';
-include_once 'include/SuiteEditor/SuiteEditorTinyMCE.php';
-include_once 'include/SuiteEditor/SuiteEditorSettingsForMozaik.php';
-include_once 'include/SuiteEditor/SuiteEditorMozaik.php';
-include_once 'include/SuiteEditor/SuiteEditorConnector.php';
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorInterface.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettings.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettingsForDirectHTML.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorDirectHTML.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettingsForTinyMCE.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorTinyMCE.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorSettingsForMozaik.php');
+include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorMozaik.php');
 
 /**
  * Class SuiteEditor
@@ -60,8 +59,8 @@ include_once 'include/SuiteEditor/SuiteEditorConnector.php';
  */
 class SuiteEditorConnector
 {
-
-    public static function getSuiteSettings($html, $width) {
+    public static function getSuiteSettings($html, $width)
+    {
         return array(
             'contents' => $html,
             'textareaId' => 'body_text',
@@ -75,7 +74,8 @@ class SuiteEditorConnector
                     editor.on('focus', function(e){
                         onClickTemplateBody();
                     });
-                }
+                },
+                plugins: ['code', 'table', 'link'],
             }");
     }
 
@@ -87,10 +87,11 @@ class SuiteEditorConnector
      * @throws Exception unknown or incorrect editor
      * @return string HTML output of editor
      */
-    public static function getHtml($settings = null) {
+    public static function getHtml($settings = null)
+    {
         global $current_user;
 
-        switch($current_user->getEditorType()) {
+        switch ($current_user->getEditorType()) {
 
             case 'none':
                 $editor = new SuiteEditorDirectHTML();
@@ -121,7 +122,7 @@ class SuiteEditorConnector
 
         // just make sure the type of editor implements a SuiteEditorInterface..
 
-        if( !($editor instanceof SuiteEditorInterface) ){
+        if (!($editor instanceof SuiteEditorInterface)) {
             throw new Exception("class $editor is not a SuiteEditorInterface");
         }
 
@@ -131,7 +132,6 @@ class SuiteEditorConnector
 
         $smarty = new Sugar_Smarty();
         $smarty->assign('editor', $editor->getHtml());
-        return $smarty->fetch('include/SuiteEditor/tpls/SuiteEditorConnector.tpl');
+        return $smarty->fetch(get_custom_file_if_exists('include/SuiteEditor/tpls/SuiteEditorConnector.tpl'));
     }
-
 }

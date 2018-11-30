@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_YouTube_Extension_Hometown extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'hometown';
     protected $_rootNamespace = 'yt';
 
@@ -47,5 +46,4 @@ class Zend_Gdata_YouTube_Extension_Hometown extends Zend_Gdata_Extension
         parent::__construct();
         $this->_text = $text;
     }
-
 }

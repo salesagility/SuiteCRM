@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -46,7 +46,9 @@ require_once('include/ytree/Tree.php');
 require_once('include/ytree/ExtNode.php');
 
 
-class SugarFolderEmptyException extends Exception { }
+class SugarFolderEmptyException extends Exception
+{
+}
 
 /**
  * Polymorphic buckets - place any item in a folder
@@ -134,9 +136,9 @@ class SugarFolder
         $a = $this->db->fetchByAssoc($r);
         if ($a['c'] > 0) {
             return true;
-        } else {
-            return false;
-        } // else
+        }
+        return false;
+        // else
     }
 
     /**
@@ -168,7 +170,6 @@ class SugarFolder
      */
     public function setFolder($fields)
     {
-
         global $current_user;
         if (empty($fields['groupFoldersUser'])) {
             $fields['groupFoldersUser'] = $current_user->id;
@@ -214,17 +215,21 @@ class SugarFolder
     {
         global $current_user;
 
-        if(empty($user)) {
-            $focusUser = $current_user;
+        if (null === $user) {
+            $user = $current_user;
         }
 
-        if (empty($focusUser->id)) {
+        if (empty($user->id)) {
             $GLOBALS['log']->fatal("*** FOLDERS: tried to update folder subscriptions for a user with no ID");
 
             return false;
         }
 
         $cleanSubscriptions = array();
+
+        // remove the duplications
+
+        $subs = array_unique($subs);
 
         // ensure parent folders are selected, regardless.
         foreach ($subs as $id) {
@@ -241,10 +246,10 @@ class SugarFolder
             }
         }
 
-        $this->clearSubscriptions();
+        $this->clearSubscriptions($user);
 
         foreach ($cleanSubscriptions as $id) {
-            $this->insertFolderSubscription($id, $focusUser->id);
+            $this->insertFolderSubscription($id, $user->id);
         }
     }
 
@@ -296,13 +301,18 @@ class SugarFolder
 
     /**
      * Deletes subscriptions to folders in preparation for reset
+     * @param User|null $user User
      */
-    public function clearSubscriptions()
+    public function clearSubscriptions($user = null)
     {
         global $current_user;
+        
+        if (!$user) {
+            $user = $current_user;
+        }
 
-        if (!empty($current_user->id)) {
-            $q = "DELETE FROM folders_subscriptions WHERE assigned_user_id = '{$current_user->id}'";
+        if (!empty($user->id)) {
+            $q = "DELETE FROM folders_subscriptions WHERE assigned_user_id = '{$user->id}'";
             $r = $this->db->query($q);
         }
     }
@@ -324,10 +334,10 @@ class SugarFolder
         global $current_user;
         $q = "SELECT emails.id , emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, ".
             "emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails'".
-            " polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id".
+            " polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id ".
             "WHERE emails.deleted=0 AND emails.type NOT IN ('out', 'draft')"."
             AND emails.status NOT IN ('sent', 'draft') AND emails.id IN (".
-            "SELECT eear.email_id FROM emails_email_addr_rel eear".
+            "SELECT eear.email_id FROM emails_email_addr_rel eear " .
             "JOIN email_addr_bean_rel eabr ON eabr.email_address_id=eear.email_address_id AND".
             " eabr.bean_id = '{$current_user->id}' AND eabr.bean_module = 'Users' WHERE eear.deleted=0)";
 
@@ -412,7 +422,6 @@ class SugarFolder
         $email = new Email(); //Needed for email specific functions.
 
         while ($a = $this->db->fetchByAssoc($r)) {
-
             $temp = array();
             $temp['flagged'] = (is_null($a['flagged']) || $a['flagged'] == '0') ? '' : 1;
             $temp['status'] = (is_null($a['reply_to_status']) || $a['reply_to_status'] == '0') ? '' : 1;
@@ -432,7 +441,7 @@ class SugarFolder
 
 
         $metadata = array();
-        $metadata['mbox'] = $app_strings['LBL_EMAIL_SUGAR_FOLDER'] . ': ' . $this->name;
+        $metadata['mbox'] = $app_strings['LBL_EMAIL_SUITE_FOLDER'] . ': ' . $this->name;
         $metadata['ieId'] = $folderId;
         $metadata['name'] = $this->name;
         $metadata['unreadChecked'] = ($current_user->getPreference('showUnreadOnly', 'Emails') == 1) ? 'CHECKED' : '';
@@ -532,6 +541,7 @@ class SugarFolder
      * Builds up a metacollection of user/group folders to be passed to processor methods
      * @param object User object, defaults to $current_user
      * @return array Array of abstract folder objects
+     * @throws \SugarFolderEmptyException
      */
     public function retrieveFoldersForProcessing($user, $subscribed = true)
     {
@@ -542,6 +552,7 @@ class SugarFolder
         $myEmailTypeString = 'inbound';
         $myDraftsTypeString = 'draft';
         $mySentEmailTypeString = 'sent';
+        $myArchiveTypeString = 'archived';
 
         if (empty($user)) {
             global $current_user;
@@ -564,11 +575,13 @@ class SugarFolder
 
         $found = array();
         while ($a = $this->db->fetchByAssoc($r)) {
-            if ($a['folder_type'] == $myEmailTypeString) {
+            if (!empty($a['folder_type']) &&
+                $a['folder_type'] !== $myArchiveTypeString
+            ) {
                 if (!isset($found[$a['id']])) {
                     $found[$a['id']] = true;
 
-                    $children = $this->db->query('SELECT * FROM folders WHERE parent_folder = "' . $a['id'] . '"');
+                    $children = $this->db->query("SELECT * FROM folders WHERE parent_folder = '" . $a['id'] . "'");
                     while ($b = $this->db->fetchByAssoc($children)) {
                         $a['children'][] = $b;
                     }
@@ -578,7 +591,7 @@ class SugarFolder
             }
         }
 
-        if(empty($found)) {
+        if (empty($found)) {
             throw new SugarFolderEmptyException(
                 ' SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - '.
                 'Please check the users inbound email settings.'
@@ -639,7 +652,7 @@ class SugarFolder
         );
 
         try {
-            $folders = $this->retrieveFoldersForProcessing($focusUser, false);
+            $folders = $this->retrieveFoldersForProcessing($focusUser);
             $subscriptions = $this->getSubscriptions($focusUser);
 
             foreach ($folders as $a) {
@@ -673,11 +686,40 @@ class SugarFolder
             // And empty sugar folder exception is ok in this case.
         }
 
+        $user = $this->removeDeletedFolders($user);
 
         $ret = array(
             'userFolders' => $user,
             'groupFolders' => $grp,
         );
+
+        return $ret;
+    }
+
+    /**
+     * Remove folders of deleted inbounds
+     *
+     * @param array $folders - array of folders table rows
+     * @return array
+     */
+    private function removeDeletedFolders($folders)
+    {
+        $ret = array();
+
+        foreach ($folders as $folder) {
+            $correct = false;
+            if (!$folder['id']) {
+                $correct = true;
+            }
+            $ie = BeanFactory::getBean('InboundEmail', $folder['id']);
+            if ($ie) {
+                $correct = true;
+            }
+
+            if ($correct) {
+                $ret[] = $folder;
+            }
+        }
 
         return $ret;
     }
@@ -1045,7 +1087,6 @@ class SugarFolder
         global $current_user;
 
         $this->createSubscriptionForUser($current_user->id);
-
     }
 
 
@@ -1099,7 +1140,6 @@ class SugarFolder
             $r3 = $this->db->query($q3);
         } // if
         return array('status' => "done");
-
     } // fn
 
     public function findAllChildren($folderId, &$childrenArray)
@@ -1117,7 +1157,6 @@ class SugarFolder
                 $this->findAllChildren($a2['id'], $childrenArray);
             } // while
         } // if
-
     } // fn
 
     /**

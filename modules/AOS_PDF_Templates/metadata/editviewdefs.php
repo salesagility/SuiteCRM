@@ -1,89 +1,89 @@
 <?php
 $module_name = 'AOS_PDF_Templates';
 $viewdefs [$module_name] =
-    array (
+    array(
         'EditView' =>
-        array (
+        array(
             'templateMeta' =>
-            array (
+            array(
                 'maxColumns' => '2',
                 'widths' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         'label' => '10',
                         'field' => '60',
                     ),
                     1 =>
-                    array (
+                    array(
                         'label' => '10',
                         'field' => '30',
                     ),
                 ),
                 'includes' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         'file' => 'include/javascript/tiny_mce/tiny_mce.js',
                     ),
                     1 =>
-                    array (
+                    array(
                         'file' => 'modules/AOS_PDF_Templates/AOS_PDF_Templates.js',
                     ),
                 ),
                 'useTabs' => false,
                 'tabDefs' =>
-                array (
+                array(
                     'DEFAULT' =>
-                    array (
+                    array(
                         'newTab' => false,
                         'panelDefault' => 'expanded',
                     ),
                     'LBL_EDITVIEW_PANEL1' =>
-                    array (
+                    array(
                         'newTab' => false,
                         'panelDefault' => 'expanded',
                     ),
                 ),
             ),
             'panels' =>
-            array (
+            array(
                 'default' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'name',
                             'label' => 'LBL_NAME',
                         ),
                         1 => 'assigned_user_name',
                     ),
                     1 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'type',
                             'label' => 'LBL_TYPE',
                             'displayParams' =>
-                            array (
+                            array(
                                 'field' =>
-                                array (
+                                array(
                                     'onchange' => 'populateModuleVariables(this.options[this.selectedIndex].value)',
                                 ),
                             ),
                         ),
                         1 =>
-                        array (
+                        array(
                             'name' => 'sample',
                             'label' => 'LBL_SAMPLE',
                             'customCode' => '{$CUSTOM_SAMPLE}',
                         ),
                     ),
                     2 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'active',
                             'studio' => 'visible',
                             'label' => 'LBL_ACTIVE',
@@ -91,89 +91,89 @@ $viewdefs [$module_name] =
                         1 => '',
                     ),
                     3 =>
-                        array (
+                        array(
                             0 =>
-                                array (
+                                array(
                                     'name' => 'page_size',
                                     'label' => 'LBL_PAGE_SIZE',
                                 ),
                             1 =>
-                                array (
+                                array(
                                     'name' => 'orientation',
                                     'label' => 'LBL_ORIENTATION',
                                 ),
                         ),
                     4 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'insert_fields',
                             'label' => 'LBL_INSERT_FIELDS',
                             'customCode' => '{$INSERT_FIELDS}',
                         ),
                     ),
                     5 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'description',
                             'label' => 'LBL_DESCRIPTION',
                         ),
                     ),
                     6 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'pdfheader',
                             'label' => 'LBL_HEADER',
                         ),
                     ),
                     7 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'pdffooter',
                             'label' => 'LBL_FOOTER',
                         ),
                     ),
                 ),
                 'lbl_editview_panel1' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'margin_left',
                             'label' => 'LBL_MARGIN_LEFT',
                         ),
                         1 =>
-                        array (
+                        array(
                             'name' => 'margin_right',
                             'label' => 'LBL_MARGIN_RIGHT',
                         ),
                     ),
                     1 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'margin_top',
                             'label' => 'LBL_MARGIN_TOP',
                         ),
                         1 =>
-                        array (
+                        array(
                             'name' => 'margin_bottom',
                             'label' => 'LBL_MARGIN_BOTTOM',
                         ),
                     ),
                     2 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'margin_header',
                             'label' => 'LBL_MARGIN_HEADER',
                         ),
                         1 =>
-                        array (
+                        array(
                             'name' => 'margin_footer',
                             'label' => 'LBL_MARGIN_FOOTER',
                         ),
@@ -182,4 +182,3 @@ $viewdefs [$module_name] =
             ),
         ),
     );
-?>

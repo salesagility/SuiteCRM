@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -105,25 +106,24 @@ class SpotsDashlet extends Dashlet
 
         if (is_null($this->spotId) || $this->spotId === '') {
             return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_NO_SPOTS_SELECTED'].'</span><br />'; // return parent::display for title and such
-        } else {
-            if ($this->checkIfSpotHasBeenDeleted($this->spotId)) {
-                return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_SPOTS_POINTED_DELETED'].'</span><br />'; // return parent::display for title and such
-            }
-
-            $ss = new Sugar_Smarty();
-            $ss->assign('id', $this->id);
-            $ss->assign('showUI', $this->showGui);
-            $ss->assign('spotToLoad', $this->spotId);
-
-            $spot = BeanFactory::getBean('Spots', $this->spotId);
-
-            $ss->assign('config', $spot->config);
-            $ss->assign('type', $spot->type);
-
-            $str = $ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashlet.tpl');
-
-            return parent::display().$str.'<br />'; // return parent::display for title and such
         }
+        if ($this->checkIfSpotHasBeenDeleted($this->spotId)) {
+            return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_SPOTS_POINTED_DELETED'].'</span><br />'; // return parent::display for title and such
+        }
+
+        $ss = new Sugar_Smarty();
+        $ss->assign('id', $this->id);
+        $ss->assign('showUI', $this->showGui);
+        $ss->assign('spotToLoad', $this->spotId);
+
+        $spot = BeanFactory::getBean('Spots', $this->spotId);
+
+        $ss->assign('config', $spot->config);
+        $ss->assign('type', $spot->type);
+
+        $str = $ss->fetch('modules/Spots/Dashlets/SpotsDashlet/SpotsDashlet.tpl');
+
+        return parent::display().$str.'<br />'; // return parent::display for title and such
     }
 
     /**

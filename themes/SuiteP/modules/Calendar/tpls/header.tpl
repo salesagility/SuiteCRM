@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 
@@ -54,32 +54,34 @@
 		<input id="userListButtonId" type="button" class="btn btn-info" value="{$MOD.LBL_EDIT_USERLIST}" data-toggle="modal" data-target=".modal-calendar-user-list"">
 	{/if}
 	{if $view != 'year' && !$print}
-	<span class="dateTime">
-					<img border="0" src="{$cal_img}" alt="{$APP.LBL_ENTER_DATE}" id="goto_date_trigger" align="absmiddle">
+	<button id="goto_date_trigger" class="btn btn-danger">
+		<span class="dateTime module-calendar">
+		<span class="suitepicon suitepicon-module-calendar" alt="{$APP.LBL_ENTER_DATE}" ></span>
 					<input type="hidden" id="goto_date" name="goto_date" value="{$current_date}">
 					<script type="text/javascript">
 					Calendar.setup ({literal}{{/literal}
-						inputField : "goto_date",
-						ifFormat : "%m/%d/%Y",
-						daFormat : "%m/%d/%Y",
-						button : "goto_date_trigger",
-						singleClick : true,
-						dateStr : "{$current_date}",
-						step : 1,
-						onUpdate: goto_date_call,
-						startWeekday: {$start_weekday},
-						weekNumbers:false
-					{literal}}{/literal});
-					{literal}
-					YAHOO.util.Event.onDOMReady(function(){
-						YAHOO.util.Event.addListener("goto_date","change",goto_date_call);
-					});
-					function goto_date_call(){
-						CAL.goto_date_call();
-					}
-					{/literal}
+                      inputField : "goto_date",
+                      ifFormat : "%m/%d/%Y",
+                      daFormat : "%m/%d/%Y",
+                      button : "goto_date_trigger",
+                      singleClick : true,
+                      dateStr : "{$current_date}",
+                      step : 1,
+                      onUpdate: goto_date_call,
+                      startWeekday: {$start_weekday},
+                      weekNumbers:false
+                        {literal}}{/literal});
+                    {literal}
+                    YAHOO.util.Event.onDOMReady(function(){
+                      YAHOO.util.Event.addListener("goto_date","change",goto_date_call);
+                    });
+                    function goto_date_call(){
+                      CAL.goto_date_call();
+                    }
+                    {/literal}
 					</script>
 	</span>
+	</button>
 	{/if}
 	<input type="button" id="" class="btn btn-info" data-toggle="modal" data-target=".modal-calendar-settings" value="{$MOD.LBL_SETTINGS}">
 </div>
@@ -89,9 +91,9 @@
 {/if}
 
 
-<div class="row {if $controls}monthHeader{/if}">
-	<div class="col-xs-1">{$previous}</div>
-	<div class="col-xs-10 text-center"><h3>{$date_info}</h3></div>
-	<div class="col-xs-1 text-right">{$next}</div>
-	<br>
+<div class="row monthHeader">
+    <div class="col-xs-1">{$previous}</div>
+    <div class="col-xs-10 text-center"><h3>{$date_info}</h3></div>
+    <div class="col-xs-1 text-right">{$next}</div>
+    <br>
 </div>
