@@ -42,7 +42,7 @@
 <form name="gcAuthentication"
       enctype='multipart/form-data'
       method="post"
-      action="index.php?module=Administration&action=GoogleCalendarAuth&do=save"
+      action="index.php?module=Administration&action=GoogleCalendarSettings&do=save"
       onSubmit="return (add_checks(document.gcAuthentication) && check_form('gcAuthentication'));"
 >
 
@@ -70,11 +70,11 @@
 
     <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
     	<tr>
-    		<th style="padding: 15px" align="left" scope="row" colspan="4"><h4>{$MOD.LBL_GOOGLE_AUTH_TITLE}</h4></th>
+    		<th style="padding: 15px" align="left" scope="row" colspan="4"><h4>{$MOD.LBL_GOOGLE_CALENDAR_SETTINGS_TITLE}</h4></th>
     	</tr>
     	<tr>
     		<td style="padding-left: 15px" width="25%" scope="row" valign='middle'>
-    			{$MOD.LBL_GOOGLE_AUTH_JSON}&nbsp{sugar_help text=$MOD.LBL_GOOGLE_AUTH_JSON_HELP}
+    			{$MOD.LBL_GOOGLE_CALENDAR_SETTINGS_JSON}&nbsp{sugar_help text=$MOD.LBL_GOOGLE_CALENDAR_SETTINGS_JSON_HELP}
     		</td>
     		<td style="padding-bottom: 15px" id="google_json" width="75%" align="left"  valign='middle' colspan='3'>
     			<script type='text/javascript'>
@@ -100,6 +100,11 @@
     			JSON file is: <span style="color:{$GOOGLE_JSON_CONF.color}">{$GOOGLE_JSON_CONF.status}</span><input type="file" accept="text/plain" onchange="openGoogleJson(event)">
     		</td>
     	</tr>
+        <tr>
+            <td></td>
+            <td><a href="https://developers.google.com/calendar/quickstart/php" target="_blank">{$MOD.LBL_GOOGLE_CALENDAR_GET_API_KEY}</a></td>
+        </tr>
+
     </table>
 
     <div style="padding-top: 2px;">

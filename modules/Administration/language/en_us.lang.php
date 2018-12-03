@@ -804,8 +804,9 @@ $mod_strings = array(
     // Google Calendar
     'LBL_GOOGLE_CALENDAR_SETTINGS_TITLE'          => 'Google Calendar Settings',
     'LBL_GOOGLE_CALENDAR_SETTINGS_DESC'           => 'Configuration settings to adjust your Google Calendar',
-    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON'           => 'JSON File',
-    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON_HELP'      => 'Upload the JSON file you downloaded from Google Developers Console.',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON'           => 'Upload Google API Credentials File',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON_HELP'      => 'Upload the JSON Credentials file you downloaded from Google Developers Console.',
+    'LBL_GOOGLE_CALENDAR_GET_API_KEY'             => 'Get API Credentials',
 
     'LBL_DISPLAY_SIDEBAR' => 'Display Sidebar',
     'LBL_COLOUR_ADMIN_PAGEHEADER' => 'Page header colour',
