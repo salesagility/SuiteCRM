@@ -43,9 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-include __DIR__ . '../../modules/Configurator/Configurator.php';
-include __DIR__ . '/BaseHandler.php';
-include __DIR__ . '/GoogleCalendarSettingsHandler.php';
+include_once __DIR__ . '/../../include/utils/BaseHandler.php';
+include_once __DIR__ . '/GoogleCalendarSettingsHandler.php';
 
 global $current_user;
 global $mod_strings;

@@ -58,6 +58,12 @@ class GoogleCalendarSettingsHandler extends BaseHandler
     protected $js = null;
 
     /**
+     *
+     * @var User
+     */
+    protected $currentUser = null;
+
+    /**
      * Setup Object
      *
      * @param string       $tpl_path
@@ -71,14 +77,30 @@ class GoogleCalendarSettingsHandler extends BaseHandler
     public function __construct($tpl_path, User $current_user, $request, $mod_strings, Configurator $config, Sugar_Smarty $sugar_smarty, javascript $js)
     {
         // Get parent
-        parent::__construct($sugar_smarty, $current_user, $request, $mod_strings);
+        parent::__construct($sugar_smarty, $request, $mod_strings);
 
+        $this->currentUser  = $current_user;
         $this->tplPath      = $tpl_path;
         $this->js           = $js;
         $this->configurator = $config;
 
+        $this->checkUserIsAdmin();
+
         $this->doActions();
         $this->handleDisplay();
+    }
+
+    /**
+     * Check the current user is admin
+     *
+     * @return void
+     */
+    protected function checkUserIsAdmin()
+    {
+        // Check current user is admin
+        if (!is_admin($this->currentUser)) {
+            $this->protectedDie("Unauthorized access to administration.");
+        }
     }
 
     /**
@@ -89,8 +111,6 @@ class GoogleCalendarSettingsHandler extends BaseHandler
     protected function doActions()
     {
         if (isset($this->request['do']) && $this->request['do'] == 'save') {
-            echo 'this working';
-
             $this->configurator->config['google_auth_json'] = !empty($this->request['google_auth_json']);
             $this->configurator->saveConfig();
             $this->redirect('index.php?module=Administration&action=index');

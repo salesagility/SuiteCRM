@@ -59,12 +59,6 @@ class BaseHandler
 
     /**
      *
-     * @var User
-     */
-    protected $currentUser = null;
-
-    /**
-     *
      * @var array
      */
     protected $request = null;
@@ -76,31 +70,20 @@ class BaseHandler
     protected $modStrings = null;
 
     /**
-     * Setup Object
+     * Set up the object
+     *
+     * @param Sugar_Smarty $sugar_smarty
+     * @param array        $request
+     * @param array        $mod_strings
      */
-    public function __construct(Sugar_Smarty $sugar_smarty, User $current_user, $request, $mod_strings)
+    public function __construct(Sugar_Smarty $sugar_smarty, $request, $mod_strings)
     {
         $this->ss          = $sugar_smarty;
-        $this->currentUser = $current_user;
         $this->request     = $request;
         $this->modStrings  = $mod_strings;
 
-        $this->checkUserIsAdmin();
         $this->getLanguage();
         $this->getJavascipt();
-    }
-
-    /**
-     * Check the current user is admin
-     *
-     * @return void
-     */
-    protected function checkUserIsAdmin()
-    {
-        // Check current user is admin
-        if (!is_admin($this->currentUser)) {
-            $this->protectedDie("Unauthorized access to administration.");
-        }
     }
 
     /**
@@ -110,7 +93,7 @@ class BaseHandler
      */
     protected function getLanguage()
     {
-        $this->ss->assign('LANGUAGES', get_languages());
+        $this->ss->assign('LANGUAGES', $this->protectedLanguage());
     }
 
     /**
@@ -120,7 +103,27 @@ class BaseHandler
      */
     protected function getJavascipt()
     {
-        $this->ss->assign("JAVASCRIPT", get_set_focus_js());
+        $this->ss->assign("JAVASCRIPT", $this->protectedJavascript());
+    }
+
+    /**
+     * protected function the languages
+     *
+     * @return array
+     */
+    protected function protectedLanguage()
+    {
+        return get_languages();
+    }
+
+    /**
+     * protected function for javascript
+     *
+     * @return array
+     */
+    protected function protectedJavascript()
+    {
+        return get_set_focus_js();
     }
 
     /**
