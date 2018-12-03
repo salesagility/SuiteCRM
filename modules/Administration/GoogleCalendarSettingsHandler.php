@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-class GoogleCalendarAuthHandler extends BaseAdminHandler implements AdminHandlerInterface
+class GoogleCalendarSettingsHandler extends BaseHandler
 {
     /**
      *
@@ -71,7 +71,7 @@ class GoogleCalendarAuthHandler extends BaseAdminHandler implements AdminHandler
     public function __construct($tpl_path, User $current_user, $request, $mod_strings, Configurator $config, Sugar_Smarty $sugar_smarty, javascript $js)
     {
         // Get parent
-        parent::__construct($sugar_smarty, $current_user, $mod_strings, $request);
+        parent::__construct($sugar_smarty, $current_user, $request, $mod_strings);
 
         $this->tplPath      = $tpl_path;
         $this->js           = $js;
@@ -89,6 +89,8 @@ class GoogleCalendarAuthHandler extends BaseAdminHandler implements AdminHandler
     protected function doActions()
     {
         if (isset($this->request['do']) && $this->request['do'] == 'save') {
+            echo 'this working';
+
             $this->configurator->config['google_auth_json'] = !empty($this->request['google_auth_json']);
             $this->configurator->saveConfig();
             $this->redirect('index.php?module=Administration&action=index');

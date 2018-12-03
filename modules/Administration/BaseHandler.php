@@ -43,11 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-class BaseAdminHandler
+class BaseHandler
 {
-    // Make the class testable
-    use TestableTrait;
-
     /**
      *
      * @var string
@@ -77,7 +74,6 @@ class BaseAdminHandler
      * @var array
      */
     protected $modStrings = null;
-
 
     /**
      * Setup Object
@@ -125,5 +121,34 @@ class BaseAdminHandler
     protected function getJavascipt()
     {
         $this->ss->assign("JAVASCRIPT", get_set_focus_js());
+    }
+
+    /**
+     * protected function for SugarApplication::redirect() so test mock can override it
+     *
+     * @param string $url
+     */
+    protected function redirect($url)
+    {
+        SugarApplication::redirect($url);
+    }
+
+    /**
+     * protected function for exit so test mock can override it
+     *
+     * @return void
+     */
+    protected function protectedExit() {
+        exit;
+    }
+
+    /**
+     * protected function for die() so test mock can override it
+     *
+     * @param string $exitstring
+     */
+    protected function protectedDie($exitstring)
+    {
+        die($exitstring);
     }
 }

@@ -43,15 +43,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-class GoogleCalendarAuthHandlerTest extends SuiteCRM\StateCheckerUnitAbstract
+class GoogleCalendarSettingsHandlerTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     public function setUp() {
         parent::setUp();
     }
 
     public function testsaveGoogleAuth() {
-        
         $this->assertEquals(true, true);
     }
-
 }

@@ -42,10 +42,17 @@ global $current_user,$admin_group_header;
 
 //users and security.
 $admin_option_defs=array();
-$admin_option_defs['Users']['user_management']= array('UserManagement','LBL_MANAGE_USERS_TITLE','LBL_MANAGE_USERS','./index.php?module=Users&action=index', 'user-management');
-$admin_option_defs['Users']['roles_management']= array('Roles','LBL_MANAGE_ROLES_TITLE','LBL_MANAGE_ROLES','./index.php?module=ACLRoles&action=index', 'roles');
-$admin_option_defs['Administration']['password_management']= array('Password','LBL_MANAGE_PASSWORD_TITLE','LBL_MANAGE_PASSWORD','./index.php?module=Administration&action=PasswordManager', 'password');
-$admin_group_header[]= array('LBL_USERS_TITLE','',false,$admin_option_defs, 'LBL_USERS_DESC');
+
+$admin_option_defs['Users']['user_management'] = array(
+    'UserManagement',
+    'LBL_MANAGE_USERS_TITLE',
+    'LBL_MANAGE_USERS','./index.php?module=Users&action=index', 'user-management');
+$admin_option_defs['Users']['roles_management'] = array('Roles','LBL_MANAGE_ROLES_TITLE','LBL_MANAGE_ROLES','./index.php?module=ACLRoles&action=index', 'roles');
+$admin_option_defs['Administration']['password_management'] = array('Password','LBL_MANAGE_PASSWORD_TITLE','LBL_MANAGE_PASSWORD','./index.php?module=Administration&action=PasswordManager', 'password');
+$admin_group_header[] = array('LBL_USERS_TITLE','',false,$admin_option_defs, 'LBL_USERS_DESC');
+
+
+
 $license_management = false;
     if (!isset($GLOBALS['sugar_config']['hide_admin_licensing']) || !$GLOBALS['sugar_config']['hide_admin_licensing']) {
         $license_management = array('License','LBL_MANAGE_LICENSE_TITLE','LBL_MANAGE_LICENSE','./index.php?module=Administration&action=LicenseSettings');
@@ -58,14 +65,14 @@ $admin_option_defs['Administration']['import']= array('Import','LBL_IMPORT_WIZAR
 $admin_option_defs['Administration']['locale']= array('Currencies','LBL_MANAGE_LOCALE','LBL_LOCALE','./index.php?module=Administration&action=Locale&view=default', 'locale');
 
 if(!defined('TEMPLATE_URL')){
-	$admin_option_defs['Administration']['upgrade_wizard']= array('Upgrade','LBL_UPGRADE_WIZARD_TITLE','LBL_UPGRADE_WIZARD','./index.php?module=UpgradeWizard&action=index', 'upgrade-wizard');
+	$admin_option_defs['Administration']['upgrade_wizard'] = array('Upgrade','LBL_UPGRADE_WIZARD_TITLE','LBL_UPGRADE_WIZARD','./index.php?module=UpgradeWizard&action=index', 'upgrade-wizard');
 }
 
-$admin_option_defs['Administration']['currencies_management']= array('Currencies','LBL_MANAGE_CURRENCIES','LBL_CURRENCY','./index.php?module=Currencies&action=index', 'currencies');
+$admin_option_defs['Administration']['currencies_management'] = array('Currencies','LBL_MANAGE_CURRENCIES','LBL_CURRENCY','./index.php?module=Currencies&action=index', 'currencies');
 
 if (!isset($GLOBALS['sugar_config']['hide_admin_backup']) || !$GLOBALS['sugar_config']['hide_admin_backup'])
 {
-    $admin_option_defs['Administration']['backup_management']= array('Backups','LBL_BACKUPS_TITLE','LBL_BACKUPS','./index.php?module=Administration&action=Backups', 'backups');
+    $admin_option_defs['Administration']['backup_management'] = array('Backups','LBL_BACKUPS_TITLE','LBL_BACKUPS','./index.php?module=Administration&action=Backups', 'backups');
 }
 
 $admin_option_defs['Administration']['languages']= array('Currencies','LBL_MANAGE_LANGUAGES','LBL_LANGUAGES','./index.php?module=Administration&action=Languages&view=default', 'languages');
@@ -172,32 +179,20 @@ $admin_option_defs['jjwg_Maps']['address_cache'] = array(
     'address-cache'
 );
 
-$admin_group_header[] = array(
-    'LBL_JJWG_MAPS_ADMIN_HEADER',
-    '',
-    false,
-    $admin_option_defs,
-    'LBL_JJWG_MAPS_ADMIN_DESC'
-);
-
-// Google Calendar Definitions
-
-$admin_option_defs = array();
-
-$admin_option_defs['Administration']['google_calendar_auth'] = array(
-    'Authentication',
-    'LBL_GOOGLE_CALENDAR_AUTH_TITLE',
-    'LBL_GOOGLE_CALENDAR_AUTH_DESC',
-    './index.php?module=Administration&action=GoogleCalendarAuth',
-    'password'
+$admin_option_defs['Administration']['google_calendar_settings'] = array(
+    'Google Calendar Settings',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_TITLE',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_DESC',
+    './index.php?module=Administration&action=GoogleCalendarSettings',
+    'system-settings'
 );
 
 $admin_group_header[] = array(
-    'LBL_GOOGLE_CALENDAR_HEADER',
+    'LBL_GOOGLE_SUITE_ADMIN_HEADER',
     '',
     false,
     $admin_option_defs,
-    'LBL_GOOGLE_CALENDAR_DESC'
+    'LBL_GOOGLE_SUITE_ADMIN_DESC'
 );
 
 $admin_option_defs = array();
