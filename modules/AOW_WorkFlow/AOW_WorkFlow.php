@@ -84,6 +84,7 @@ class AOW_WorkFlow extends Basic
         $sqlOperatorList['Starts_With'] = 'LIKE';
         $sqlOperatorList['Ends_With'] = 'LIKE';
         $sqlOperatorList['is_null'] = 'IS NULL';
+        $sqlOperatorList['is_not_null'] = 'IS NOT NULL';
         if(!isset($sqlOperatorList[$key])) {
             return false;
         }
@@ -400,6 +401,11 @@ class AOW_WorkFlow extends Basic
 
             if($condition->operator == 'is_null'){
                 $query['where'][] = '('.$field.' '.$this->getSQLOperator($condition->operator).' OR '.$field.' '.$this->getSQLOperator('Equal_To')." '')";
+                return $query;
+            }
+
+            if($condition->operator == 'is_not_null'){
+                $query['where'][] = '('.$field.' '.$this->getSQLOperator($condition->operator).' OR '.$field.' '.$this->getSQLOperator('Not_Equal_To')." '')";
                 return $query;
             }
 
@@ -829,6 +835,7 @@ class AOW_WorkFlow extends Basic
             case "Starts_With": return strrpos($var1, $var2, -strlen($var1));
             case "Ends_With": return strpos($var1, $var2, strlen($var1) - strlen($var2));
             case "is_null": return $var1 == '';
+            case "is_not_null": return $var1 != '';
             case "One_of":
                 if(is_array($var1)){
                     foreach($var1 as $var){

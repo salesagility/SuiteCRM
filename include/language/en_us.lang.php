@@ -3114,6 +3114,7 @@ $app_list_strings['aow_operator_list']['Not_Contains'] = 'Not Contains';
 $app_list_strings['aow_operator_list']['Starts_With'] = 'Starts With';
 $app_list_strings['aow_operator_list']['Ends_With'] = 'Ends With';
 $app_list_strings['aow_operator_list']['is_null'] = 'Is Null';
+$app_list_strings['aow_operator_list']['is_not_null'] = 'Is Not Null';
 $app_list_strings['aow_process_status_list']['Complete'] = 'Complete';
 $app_list_strings['aow_process_status_list']['Running'] = 'Running';
 $app_list_strings['aow_process_status_list']['Pending'] = 'Pending';
