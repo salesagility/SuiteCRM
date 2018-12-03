@@ -166,24 +166,6 @@ class GoogleSync
     }
 
     /**
-     * Remove a user from the list of users to sync
-     *
-     * @param string $id : the SuiteCRM user id
-     *
-     * @return bool Success/Failure
-     */
-    public function delUser($id)
-    {
-        if (!array_key_exists($id, $this->users)) {
-            $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' missing');
-            return false;
-        } else {
-            unset($this->users[$id]);
-            return true;
-        }
-    }
-
-    /**
      * Creates and Sets the Google client in the object
      *
      * @param string $id : the SuiteCRM user id
@@ -232,14 +214,18 @@ class GoogleSync
         // New Google Client anf refresh the token if needed
         $client = $this->getGoogleClient($accessToken);
 
-        return $client;
+        if (!$client) {
+            return false;
+        } else {
+            return $client;
+        }
     }
 
     /**
      * New Google Client anf refresh the token if needed
      *
      * @param array $accessToken
-     * @return \Google_Client
+     * @return \Google_Client or false on Exception
      */
     protected function getGoogleClient($accessToken)
     {
@@ -255,7 +241,17 @@ class GoogleSync
         if ($client->isAccessTokenExpired()) {
             $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Refreshing Access Token');
             $refreshToken = $client->getRefreshToken();
-            $client->fetchAccessTokenWithRefreshToken($refreshToken);
+            if (isempty($refreshToken)) {
+                throw new Exception('Refresh token is missing');
+                return false;
+            } else {
+                try {
+                    $client->fetchAccessTokenWithRefreshToken($refreshToken);
+                } catch (Exception $e) {
+                    $this->logger->fatal('Caught exception: ',  $e->getMessage());
+                    return false;
+                }
+            }
             // Save new token to user preference
             $this->workingUser->setPreference('GoogleApiToken', base64_encode(json_encode($client->getAccessToken())), 'GoogleSync');
             $this->workingUser->savePreferencesToDB();

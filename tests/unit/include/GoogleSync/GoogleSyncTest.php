@@ -496,16 +496,6 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->markTestIncomplete('TODO: Implement Tests');
     }
 
-    public function testDelUser()
-    {
-        $object = new GoogleSync();
-
-        $object->users['ABC123'] = 'End User';
-        $return = $object->delUser('ABC123');
-        $this->assertTrue($return);
-        $this->assertArrayNotHasKey('ABC123', $object->users);
-    }
-
     public function testGetMissingMeeting()
     {
         $this->markTestIncomplete('TODO: Implement Tests');
