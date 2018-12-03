@@ -47,9 +47,95 @@ class GoogleCalendarSettingsHandlerTest extends SuiteCRM\StateCheckerUnitAbstrac
 {
     public function setUp() {
         parent::setUp();
+
+        include_once __DIR__ . '/../../../../../include/utils/BaseHandler.php';
+        include_once __DIR__ . '/../../../../../modules/Administration/GoogleCalendarSettingsHandler.php';
+        include_once __DIR__ . '/GoogleCalendarSettingsHandlerMock.php';
+        include_once __DIR__ . '/../../../../../include/utils/layout_utils.php';
     }
 
     public function testFirst() {
         $this->assertEquals(true, true);
+    }
+
+    public function testDoAction()
+    {
+        global $current_user;
+        global $mod_strings;
+        global $app_strings;
+
+        $tplPath = __DIR__ . '/GoogleCalendarSettings.tpl';
+
+        $request = array('do' => 'save');
+
+        $gcsHandler = new GoogleCalendarSettingsHandlerMock(
+            $tplPath,
+            $current_user,
+            $request,
+            $mod_strings,
+            new Configurator(),
+            new Sugar_Smarty(),
+            new javascript()
+        );
+
+        $this->assertTrue($gcsHandler->getExitOk());
+        $this->assertEquals('index.php?module=Administration&action=index', $gcsHandler->getRedirectUrl());
+    }
+
+    public function testNoDoAction()
+    {
+        global $current_user;
+        global $mod_strings;
+        global $app_strings;
+
+        $tplPath = __DIR__ . '/GoogleCalendarSettings.tpl';
+
+        $request = array();
+
+        $gcsHandler = new GoogleCalendarSettingsHandlerMock(
+            $tplPath,
+            $current_user,
+            $request,
+            $mod_strings,
+            new Configurator(),
+            new Sugar_Smarty(),
+            new javascript()
+        );
+
+        $this->assertFalse($gcsHandler->getExitOk());
+        $this->assertEquals('', $gcsHandler->getRedirectUrl());
+    }
+
+    public function testHandleDisplay()
+    {
+        global $current_user;
+        global $mod_strings;
+        global $app_strings;
+
+        $tplPath = __DIR__ . '/GoogleCalendarSettings.tpl';
+
+        $request = array();
+
+        $cfg = new Configurator();
+        unset($cfg->config['google_auth_json']);
+        $gcsHandler = new GoogleCalendarSettingsHandlerMock(
+            $tplPath,
+            $current_user,
+            $request,
+            $mod_strings,
+            $cfg,
+            $s = new Sugar_Smarty(),
+            new javascript()
+        );
+
+        $ret = $gcsHandler->handleDisplay();
+
+        $this->assertTrue($gcsHandler->getJavascriptCalled());
+        $this->assertFalse($cfg->config['google_auth_json']);
+
+        $this->assertEquals(array(
+            'status' => 'UNCONFIGURED',
+            'color' => 'black'
+            ), $s->get_template_vars('GOOGLE_JSON_CONF'));
     }
 }

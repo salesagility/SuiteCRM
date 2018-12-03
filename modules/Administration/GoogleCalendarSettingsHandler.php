@@ -130,7 +130,7 @@ class GoogleCalendarSettingsHandler extends BaseHandler
         $this->getJavascript();
         $this->getGoogleCalendarAuthState();
 
-        return $this->ss->display($this->tplPath);
+        $this->ss->display($this->tplPath);
     }
 
     /**
