@@ -49,7 +49,7 @@ class BaseHandlerTest extends SuiteCRM\StateCheckerUnitAbstract
         parent::setUp();
     }
 
-    public function testsaveGoogleAuth() {
+    public function testFirst() {
         $this->assertEquals(true, true);
     }
 }

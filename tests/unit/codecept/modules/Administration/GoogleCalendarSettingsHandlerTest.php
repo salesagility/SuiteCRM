@@ -49,7 +49,7 @@ class GoogleCalendarSettingsHandlerTest extends SuiteCRM\StateCheckerUnitAbstrac
         parent::setUp();
     }
 
-    public function testsaveGoogleAuth() {
+    public function testFirst() {
         $this->assertEquals(true, true);
     }
 }
