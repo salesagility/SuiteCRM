@@ -118,26 +118,32 @@ class SugarXHprof
      */
     protected static function loadConfig()
     {
-        if (!empty($GLOBALS['sugar_config']['xhprof_config'])) {
-            foreach ($GLOBALS['sugar_config']['xhprof_config'] as $k => $v) {
-                if (isset($v) && property_exists(__CLASS__, $k)) {
+        if (!empty($GLOBALS['sugar_config']['xhprof_config']))
+        {
+            foreach($GLOBALS['sugar_config']['xhprof_config'] as $k => $v)
+            {
+                if (isset($v) && property_exists(__CLASS__, $k))
+                {
                     self::${$k} = $v;
                 }
             }
         }
 
         // disabling profiler if XHprof extension is not loaded
-        if (extension_loaded('xhprof') == false) {
+        if (extension_loaded('xhprof') == false)
+        {
             self::$enable = false;
         }
 
         // using default directory for profiler if it is not set
-        if (empty(self::$log_to)) {
+        if (empty(self::$log_to))
+        {
             self::$log_to = ini_get('xhprof.output_dir');
         }
 
         // disabling profiler if directory is not exist or is not writable
-        if (is_dir(self::$log_to) == false || is_writable(self::$log_to) == false) {
+        if (is_dir(self::$log_to) == false || is_writable(self::$log_to) == false)
+        {
             self::$enable = false;
         }
     }
@@ -149,20 +155,27 @@ class SugarXHprof
      */
     public static function getInstance()
     {
-        if (self::$instance != null) {
+        if (self::$instance != null)
+        {
             return self::$instance;
         }
 
         self::loadConfig();
 
-        if (is_file('custom/include/SugarXHprof/' . self::$manager . '.php')) {
+        if (is_file('custom/include/SugarXHprof/' . self::$manager . '.php'))
+        {
             require_once 'custom/include/SugarXHprof/' . self::$manager . '.php';
-        } elseif (is_file('include/SugarXHprof/' . self::$manager . '.php')) {
+        }
+        elseif (is_file('include/SugarXHprof/' . self::$manager . '.php'))
+        {
             require_once 'include/SugarXHprof/' . self::$manager . '.php';
         }
-        if (class_exists(self::$manager) && is_subclass_of(self::$manager, __CLASS__)) {
+        if (class_exists(self::$manager) && is_subclass_of(self::$manager, __CLASS__))
+        {
             self::$instance = new self::$manager();
-        } else {
+        }
+        else
+        {
             self::$instance = new self();
         }
         return self::$instance;
@@ -173,56 +186,81 @@ class SugarXHprof
      *
      * @return string action
      */
-    public static function detectAction()
+    static public function detectAction()
     {
         $action = '';
 
         // index.php
-        if (!empty($GLOBALS['app']) && $GLOBALS['app'] instanceof SugarApplication && $GLOBALS['app']->controller instanceof SugarController) {
-            if (!empty($_REQUEST['entryPoint'])) {
-                if (!empty($GLOBALS['app']->controller->entry_point_registry) && !empty($GLOBALS['app']->controller->entry_point_registry[$_REQUEST['entryPoint']])) {
+        if (!empty($GLOBALS['app']) && $GLOBALS['app'] instanceof SugarApplication && $GLOBALS['app']->controller instanceof SugarController)
+        {
+            if (!empty($_REQUEST['entryPoint']))
+            {
+                if (!empty($GLOBALS['app']->controller->entry_point_registry) && !empty($GLOBALS['app']->controller->entry_point_registry[$_REQUEST['entryPoint']]))
+                {
                     $action .= '.entryPoint.' . $_REQUEST['entryPoint'];
-                } else {
+                }
+                else
+                {
                     $action .= '.entryPoint.unknown';
                 }
-            } else {
+            }
+            else
+            {
                 $action .= '.' . $GLOBALS['app']->controller->module . '.' . $GLOBALS['app']->controller->action;
             }
         }
         // soap.php
-        elseif (!empty($GLOBALS['server']) && $GLOBALS['server'] instanceof soap_server) {
-            if ($GLOBALS['server']->methodname) {
+        elseif (!empty($GLOBALS['server']) && $GLOBALS['server'] instanceof soap_server)
+        {
+            if ($GLOBALS['server']->methodname)
+            {
                 $action .= '.soap.' . $GLOBALS['server']->methodname;
-            } else {
+            }
+            else
+            {
                 $action .= '.soap.wsdl';
             }
         }
         // service soap
-        elseif (!empty($GLOBALS['service_object']) && $GLOBALS['service_object'] instanceof SugarSoapService) {
+        elseif (!empty($GLOBALS['service_object']) && $GLOBALS['service_object'] instanceof SugarSoapService)
+        {
             $action .= '.soap.' . $GLOBALS['service_object']->getRegisteredClass();
-            if ($GLOBALS['service_object']->getServer() instanceof soap_server) {
-                if ($GLOBALS['service_object']->getServer()->methodname) {
+            if ($GLOBALS['service_object']->getServer() instanceof soap_server)
+            {
+                if ($GLOBALS['service_object']->getServer()->methodname)
+                {
                     $action .= '.' . $GLOBALS['service_object']->getServer()->methodname;
-                } else {
+                }
+                else
+                {
                     $action .= '.wsdl';
                 }
-            } else {
+            }
+            else
+            {
                 $action .= '.unknown';
             }
         }
         // service rest
-        elseif (!empty($GLOBALS['service_object']) && $GLOBALS['service_object'] instanceof SugarRestService) {
+        elseif (!empty($GLOBALS['service_object']) && $GLOBALS['service_object'] instanceof SugarRestService)
+        {
             $action .= '.rest.' . $GLOBALS['service_object']->getRegisteredImplClass();
-            if (!empty($_REQUEST['method']) && method_exists($GLOBALS['service_object']->implementation, $_REQUEST['method'])) {
+            if (!empty($_REQUEST['method']) && method_exists($GLOBALS['service_object']->implementation, $_REQUEST['method']))
+            {
                 $action .= '.' . $_REQUEST['method'];
-            } elseif (empty($_REQUEST['method'])) {
+            }
+            elseif (empty($_REQUEST['method']))
+            {
                 $action .= '.index';
-            } else {
+            }
+            else
+            {
                 $action .= '.unknown';
             }
         }
         // unknown
-        else {
+        else
+        {
             $action .= '.' . basename($_SERVER['SCRIPT_FILENAME']);
         }
 
@@ -234,16 +272,19 @@ class SugarXHprof
      */
     public function start()
     {
-        if (self::$enable == false) {
+        if (self::$enable == false)
+        {
             return;
         }
 
-        if (self::$sample_rate == 0) {
+        if (self::$sample_rate == 0)
+        {
             return;
         }
 
         $rate = 1 / self::$sample_rate * 100;
-        if (rand(0, 100) > $rate) {
+        if (rand(0, 100) > $rate)
+        {
             return;
         }
 
@@ -263,12 +304,14 @@ class SugarXHprof
      */
     public function end()
     {
-        if ($this->registered == false) {
+        if ($this->registered == false)
+        {
             return;
         }
         $this->registered = false;
 
-        if (self::$enable == false) {
+        if (self::$enable == false)
+        {
             return;
         }
 

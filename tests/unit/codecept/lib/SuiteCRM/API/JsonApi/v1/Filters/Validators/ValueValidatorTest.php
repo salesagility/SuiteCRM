@@ -14,7 +14,7 @@ class ValueValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
     public function _before()
     {
         parent::_before();
-        if (self::$valueValidator === null) {
+        if(self::$valueValidator === null) {
             self::$valueValidator = new \SuiteCRM\API\JsonApi\v1\Filters\Validators\ValueValidator();
         }
     }
@@ -26,7 +26,7 @@ class ValueValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
             new \SuiteCRM\Exception\InvalidArgumentException(
                 '[JsonApi][v1][Filters][Validators][ValueValidator][isValid][expected type to be string] $value'
             ),
-            function () {
+            function() {
                 self::$valueValidator->isValid(array());
             }
         );

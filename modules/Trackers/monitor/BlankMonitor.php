@@ -46,30 +46,29 @@ require_once('modules/Trackers/monitor/Monitor.php');
 require_once('modules/Trackers/Metric.php');
 require_once('modules/Trackers/Trackable.php');
 
-class BlankMonitor extends Monitor implements Trackable
-{
+class BlankMonitor extends Monitor implements Trackable {
 
     /**
      * BlankMonitor constructor
      */
-    public function __construct()
-    {
+    function __construct() {
+
     }
 
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function BlankMonitor()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function BlankMonitor(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
 
     /**
      * setValue
@@ -78,8 +77,8 @@ class BlankMonitor extends Monitor implements Trackable
      * @param $value Mixed value
      * @throws Exception Thrown if metric name is not configured for monitor instance
      */
-    public function setValue($name, $value)
-    {
+    function setValue($name, $value) {
+
     }
 
     /**
@@ -87,8 +86,7 @@ class BlankMonitor extends Monitor implements Trackable
      * Returns Array of store names defined for monitor instance
      * @return Array of store names defined for monitor instance
      */
-    public function getStores()
-    {
+    function getStores() {
         return null;
     }
 
@@ -97,9 +95,8 @@ class BlankMonitor extends Monitor implements Trackable
      * Returns Array of metric instances defined for monitor instance
      * @return Array of metric instances defined for monitor instance
      */
-    public function getMetrics()
-    {
-        return null;
+    function getMetrics() {
+    	return null;
     }
 
     /**
@@ -108,31 +105,30 @@ class BlankMonitor extends Monitor implements Trackable
      * the flush method passing with the montior ($this) instance.
      *
      */
-    public function save()
-    {
+    public function save() {
+
     }
 
 
-    /**
-     * getStore
-     * This method checks if the Store implementation has already been instantiated and
-     * will return the one stored; otherwise it will create the Store implementation and
-     * save it to the Array of Stores.
-     * @param $store The name of the store as defined in the 'modules/Trackers/config.php' settings
-     * @return An instance of a Store implementation
-     * @throws Exception Thrown if $store class cannot be loaded
-     */
-    protected function getStore($store)
-    {
-        return null;
-    }
+	/**
+	 * getStore
+	 * This method checks if the Store implementation has already been instantiated and
+	 * will return the one stored; otherwise it will create the Store implementation and
+	 * save it to the Array of Stores.
+	 * @param $store The name of the store as defined in the 'modules/Trackers/config.php' settings
+	 * @return An instance of a Store implementation
+	 * @throws Exception Thrown if $store class cannot be loaded
+	 */
+	protected function getStore($store) {
+		return null;
+	}
 
 
-    /**
-     * clear
-     * This function clears the metrics data in the monitor instance
-     */
-    public function clear()
-    {
-    }
+	/**
+	 * clear
+	 * This function clears the metrics data in the monitor instance
+	 */
+	public function clear() {
+
+	}
 }

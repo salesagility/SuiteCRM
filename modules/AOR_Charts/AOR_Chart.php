@@ -22,60 +22,58 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-class AOR_Chart extends Basic
-{
-    public $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#144c73','#6caed1','#8acf4e','#20641c','#f8514f','#9e1214','#fc9d24','#b35900','#a880bb','#442763','#ffff4d','#733a1a']";
-    public $new_schema = true;
-    public $module_dir = 'AOR_Charts';
-    public $object_name = 'AOR_Chart';
-    public $table_name = 'aor_charts';
-    public $importable = true;
-    public $disable_row_level_security = true ;
+class AOR_Chart extends Basic {
 
-    public $id;
-    public $name;
-    public $date_entered;
-    public $date_modified;
-    public $modified_user_id;
-    public $modified_by_name;
-    public $created_by;
-    public $created_by_name;
-    public $description;
-    public $deleted;
-    public $created_by_link;
-    public $modified_user_link;
+    var $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#144c73','#6caed1','#8acf4e','#20641c','#f8514f','#9e1214','#fc9d24','#b35900','#a880bb','#442763','#ffff4d','#733a1a']";
+	var $new_schema = true;
+	var $module_dir = 'AOR_Charts';
+	var $object_name = 'AOR_Chart';
+	var $table_name = 'aor_charts';
+	var $importable = true;
+	var $disable_row_level_security = true ;
 
-    public $type;
-    public $x_field;
-    public $y_field;
-    public $noDataMessage = "No Results";
+	var $id;
+	var $name;
+	var $date_entered;
+	var $date_modified;
+	var $modified_user_id;
+	var $modified_by_name;
+	var $created_by;
+	var $created_by_name;
+	var $description;
+	var $deleted;
+	var $created_by_link;
+	var $modified_user_link;
+
+    var $type;
+    var $x_field;
+    var $y_field;
+    var $noDataMessage = "No Results";
 
 
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	public function __construct(){
+		parent::__construct();
+	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function AOR_Chart()
-    {
+    public function AOR_Chart(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    public function save_lines(array $post, AOR_Report $bean, $postKey)
-    {
+    function save_lines(array $post,AOR_Report $bean,$postKey){
         $seenIds = array();
-        if (isset($post[$postKey.'id'])) {
+        if(isset($post[$postKey.'id'])) {
             foreach ($post[$postKey . 'id'] as $key => $id) {
                 if ($id && $post['record']!='') {
                     $aorChart = BeanFactory::getBean('AOR_Charts', $id);
@@ -92,131 +90,125 @@ class AOR_Chart extends Basic
             }
         }
         //Any beans that exist but aren't in $seenIds must have been removed.
-        foreach ($bean->get_linked_beans('aor_charts', 'AOR_Charts') as $chart) {
-            if (!in_array($chart->id, $seenIds)) {
+        foreach($bean->get_linked_beans('aor_charts','AOR_Charts') as $chart){
+            if(!in_array($chart->id,$seenIds)){
                 $chart->mark_deleted($chart->id);
             }
         }
     }
 
-    private function getValidChartTypes()
-    {
+    private function getValidChartTypes(){
         return array('bar','line','pie','radar','rose', 'grouped_bar', 'stacked_bar');
     }
 
 
-    private function getColour($seed, $rgbArray = false)
-    {
+    private function getColour($seed,$rgbArray = false){
         $hash = md5($seed);
         $r = hexdec(substr($hash, 0, 2));
         $g = hexdec(substr($hash, 2, 2));
         $b = hexdec(substr($hash, 4, 2));
-        if ($rgbArray) {
+        if($rgbArray){
             return array('R'=>$r,'G'=>$g,'B'=>$b);
         }
         $highR = $r + 10;
         $highG = $g + 10;
         $highB = $b + 10;
-        $main = '#'.str_pad(dechex($r), 2, '0', STR_PAD_LEFT)
-            .str_pad(dechex($g), 2, '0', STR_PAD_LEFT)
-            .str_pad(dechex($b), 2, '0', STR_PAD_LEFT);
+        $main = '#'.str_pad(dechex($r),2,'0',STR_PAD_LEFT)
+            .str_pad(dechex($g),2,'0',STR_PAD_LEFT)
+            .str_pad(dechex($b),2,'0',STR_PAD_LEFT);
         $highlight = '#'.dechex($highR).dechex($highG).dechex($highB);
         return array('main'=>$main,'highlight'=>$highlight);
     }
 
-    public function buildChartImageBar($chartPicture, $recordImageMap = false)
-    {
+    function buildChartImageBar($chartPicture,$recordImageMap = false){
         $scaleSettings = array("DrawSubTicks" => false, "LabelRotation" => 30, 'MinDivHeight' => 50);
         $chartPicture->drawScale($scaleSettings);
         $chartPicture->drawBarChart(array("RecordImageMap"=>$recordImageMap));
     }
 
-    public function buildChartImagePie($chartPicture, $chartData, $reportData, $imageHeight, $imageWidth, $xName, $recordImageMap)
-    {
-        $PieChart = new pPie($chartPicture, $chartData);
+    function buildChartImagePie($chartPicture,$chartData, $reportData,$imageHeight, $imageWidth, $xName,$recordImageMap){
+        $PieChart = new pPie($chartPicture,$chartData);
         $x = 0;
-        foreach ($reportData as $row) {
-            $PieChart->setSliceColor($x, $this->getColour($row[$xName], true));
+        foreach($reportData as $row){
+            $PieChart->setSliceColor($x,$this->getColour($row[$xName],true));
             $x++;
         }
-        $PieChart->draw2DPie($imageWidth/3, $imageHeight/2, array("Border"=>true,'Radius'=>200,''=>true,"RecordImageMap"=>$recordImageMap));
-        $PieChart->drawPieLegend($imageWidth*0.7, $imageHeight/3, array('FontSize'=>10,"FontName"=>"modules/AOR_Charts/lib/pChart/fonts/verdana.ttf",'BoxSize'=>14));
+        $PieChart->draw2DPie($imageWidth/3,$imageHeight/2,array("Border"=>TRUE,'Radius'=>200,''=>true,"RecordImageMap"=>$recordImageMap));
+        $PieChart->drawPieLegend($imageWidth*0.7,$imageHeight/3, array('FontSize'=>10,"FontName"=>"modules/AOR_Charts/lib/pChart/fonts/verdana.ttf",'BoxSize'=>14));
     }
 
-    public function buildChartImageLine($chartPicture, $recordImageMap = false)
-    {
+    function buildChartImageLine($chartPicture, $recordImageMap = false){
         $scaleSettings = array("XMargin"=>10,"YMargin"=>10,"GridR"=>200,"GridG"=>200,"GridB"=>200,'MinDivHeight' => 50,"LabelRotation" => 30);
         $chartPicture->drawScale($scaleSettings);
         $chartPicture->drawLineChart(array("RecordImageMap"=>$recordImageMap));
     }
 
-    public function buildChartImageRadar($chartPicture, $chartData, $recordImageMap)
-    {
+    function buildChartImageRadar($chartPicture, $chartData,$recordImageMap){
         $SplitChart = new pRadar();
         $Options = array("LabelPos"=>RADAR_LABELS_HORIZONTAL,"RecordImageMap"=>$recordImageMap);
-        $SplitChart->drawRadar($chartPicture, $chartData, $Options);
+        $SplitChart->drawRadar($chartPicture,$chartData,$Options);
+
     }
 
-    public function buildChartImage(array $reportData, array $fields, $asDataURI = true, $generateImageMapId = false)
-    {
+    public function buildChartImage(array $reportData, array $fields,$asDataURI = true, $generateImageMapId = false){
         global $current_user;
         require_once 'modules/AOR_Charts/lib/pChart/pChart.php';
 
-        if ($generateImageMapId !== false) {
+        if($generateImageMapId !== false){
             $generateImageMapId = $current_user->id."-".$generateImageMapId;
         }
 
         $html = '';
-        if (!in_array($this->type, $this->getValidChartTypes())) {
+        if(!in_array($this->type, $this->getValidChartTypes())){
             return $html;
         }
         $x = $fields[$this->x_field];
         $y = $fields[$this->y_field];
-        if (!$x || !$y) {
+        if(!$x || !$y){
             //Malformed chart object - missing an axis field
             return '';
         }
-        $xName = str_replace(' ', '_', $x->label) . $this->x_field;
-        $yName = str_replace(' ', '_', $y->label) . $this->y_field;
+        $xName = str_replace(' ','_',$x->label) . $this->x_field;
+        $yName = str_replace(' ','_',$y->label) . $this->y_field;
 
         $chartData = new pData();
-        $chartData->loadPalette("modules/AOR_Charts/lib/pChart/palettes/navy.color", true);
+        $chartData->loadPalette("modules/AOR_Charts/lib/pChart/palettes/navy.color", TRUE);
         $labels = array();
-        foreach ($reportData as $row) {
-            $chartData->addPoints($row[$yName], 'data');
-            $chartData->addPoints($row[$xName], 'Labels');
+        foreach($reportData as $row){
+            $chartData->addPoints($row[$yName],'data');
+            $chartData->addPoints($row[$xName],'Labels');
             $labels[] = $row[$xName];
         }
 
-        $chartData->setSerieDescription("Months", "Month");
+        $chartData->setSerieDescription("Months","Month");
         $chartData->setAbscissa("Labels");
 
         $imageHeight = 700;
         $imageWidth = 700;
 
-        $chartPicture = new pImage($imageWidth, $imageHeight, $chartData);
-        if ($generateImageMapId) {
+        $chartPicture = new pImage($imageWidth,$imageHeight,$chartData);
+        if($generateImageMapId){
             $imageMapDir = create_cache_directory('modules/AOR_Charts/ImageMap/'.$current_user->id.'/');
-            $chartPicture->initialiseImageMap($generateImageMapId, IMAGE_MAP_STORAGE_FILE, $generateImageMapId, $imageMapDir);
+            $chartPicture->initialiseImageMap($generateImageMapId,IMAGE_MAP_STORAGE_FILE,$generateImageMapId,$imageMapDir);
         }
 
-        $chartPicture->Antialias = true;
+        $chartPicture->Antialias = True;
 
-        $chartPicture->drawFilledRectangle(0, 0, $imageWidth-1, $imageHeight-1, array("R"=>240,"G"=>240,"B"=>240,"BorderR"=>0,"BorderG"=>0,"BorderB"=>0,));
+        $chartPicture->drawFilledRectangle(0,0,$imageWidth-1,$imageHeight-1,array("R"=>240,"G"=>240,"B"=>240,"BorderR"=>0,"BorderG"=>0,"BorderB"=>0,));
 
         $chartPicture->setFontProperties(array("FontName"=>"modules/AOR_Charts/lib/pChart/fonts/verdana.ttf","FontSize"=>14));
 
-        $chartPicture->drawText($imageWidth/2, 20, $this->name, array("R"=>0,"G"=>0,"B"=>0,'Align'=>TEXT_ALIGN_TOPMIDDLE));
+        $chartPicture->drawText($imageWidth/2,20,$this->name,array("R"=>0,"G"=>0,"B"=>0,'Align'=>TEXT_ALIGN_TOPMIDDLE));
         $chartPicture->setFontProperties(array("FontName"=>"modules/AOR_Charts/lib/pChart/fonts/verdana.ttf","FontSize"=>6));
 
-        $chartPicture->setGraphArea(60, 60, $imageWidth-60, $imageHeight-100);
+        $chartPicture->setGraphArea(60,60,$imageWidth-60,$imageHeight-100);
 
-        switch ($this->type) {
+        switch($this->type){
             case 'radar':
                 $this->buildChartImageRadar($chartPicture, $chartData, !empty($generateImageMapId));
                 break;
             case 'pie':
-                $this->buildChartImagePie($chartPicture, $chartData, $reportData, $imageHeight, $imageWidth, $xName, !empty($generateImageMapId));
+                $this->buildChartImagePie($chartPicture,$chartData, $reportData,$imageHeight, $imageWidth, $xName, !empty($generateImageMapId));
                 break;
             case 'line':
                 $this->buildChartImageLine($chartPicture, !empty($generateImageMapId));
@@ -226,51 +218,50 @@ class AOR_Chart extends Basic
                 $this->buildChartImageBar($chartPicture, !empty($generateImageMapId));
                 break;
         }
-        if ($generateImageMapId) {
+        if($generateImageMapId) {
             $chartPicture->replaceImageMapTitle("data", $labels);
         }
         ob_start();
         $chartPicture->render(null);
         $img = ob_get_clean();
-        if ($asDataURI) {
+        if($asDataURI){
             return 'data:image/png;base64,'.base64_encode($img);
+        }else{
+            return $img;
         }
-        return $img;
     }
 
-    public function buildChartHTML(array $reportData, array $fields, $index = 0, $chartType = AOR_Report::CHART_TYPE_PCHART, AOR_Field $mainGroupField = null)
-    {
-        switch ($chartType) {
+    public function buildChartHTML(array $reportData, array $fields,$index = 0, $chartType = AOR_Report::CHART_TYPE_PCHART, AOR_Field $mainGroupField = null){
+        switch($chartType){
             case AOR_Report::CHART_TYPE_PCHART:
-                return $this->buildChartHTMLPChart($reportData, $fields, $index);
+                return $this->buildChartHTMLPChart($reportData,$fields,$index);
             case AOR_Report::CHART_TYPE_CHARTJS:
-                return $this->buildChartHTMLChartJS($reportData, $fields);
+                return $this->buildChartHTMLChartJS($reportData,$fields);
             case AOR_Report::CHART_TYPE_RGRAPH:
-                return $this->buildChartHTMLRGraph($reportData, $fields, $mainGroupField);
+                return $this->buildChartHTMLRGraph($reportData,$fields, $mainGroupField);
         }
         return '';
     }
 
 
-    private function buildChartHTMLRGraph(array $reportData, array $fields, AOR_Field $mainGroupField = null)
-    {
+    private function buildChartHTMLRGraph(array $reportData, array $fields, AOR_Field $mainGroupField = null){
         $html = '';
-        if (!in_array($this->type, $this->getValidChartTypes())) {
+        if(!in_array($this->type, $this->getValidChartTypes())){
             return $html;
         }
         $x = $fields[$this->x_field];
         $y = $fields[$this->y_field];
-        if (!$x || !$y) {
+        if(!$x || !$y){
             //Malformed chart object - missing an axis field
             return '';
         }
-        $xName = str_replace(' ', '_', $x->label) . $this->x_field;
-        $yName = str_replace(' ', '_', $y->label) . $this->y_field;
+        $xName = str_replace(' ','_',$x->label) . $this->x_field;
+        $yName = str_replace(' ','_',$y->label) . $this->y_field;
 
         $defaultHeight = 500;
         $defaultWidth = 900;
 
-        switch ($this->type) {
+        switch($this->type){
             /*
              //Polar was not implemented for the previous library (it is not in the getValidChartTypes method)
             case 'polar':
@@ -281,56 +272,57 @@ class AOR_Chart extends Basic
             */
             case 'radar':
                 $chartFunction = 'Radar';
-                $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getRadarChartConfig();
-                $chart = $this->getRGraphRadarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
+                $chart = $this->getRGraphRadarChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight,$defaultWidth);
                 break;
             case 'pie':
                 $chartFunction = 'Pie';
-                $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getPieChartConfig();
-                $chart = $this->getRGraphPieChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
+                $chart = $this->getRGraphPieChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth);
                 break;
             case 'line':
                 $chartFunction = 'Line';
-                $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getLineChartConfig();
-                $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
+                $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth);
                 break;
             case 'rose':
                 $chartFunction = 'Rose';
-                $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getRoseChartConfig();
-                $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
+                $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth);
                 break;
             case 'grouped_bar':
                 $chartFunction = 'Grouped bar';
-                $data = $this->getRGraphGroupedBarChartData($reportData, $xName, $yName, $mainGroupField);
+                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName, $mainGroupField);
                 $config = $this->getGroupedBarChartConfig();
-                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth, true);
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth, true);
                 break;
             case 'stacked_bar':
                 $chartFunction = 'Stacked bar';
-                $data = $this->getRGraphGroupedBarChartData($reportData, $xName, $yName, $mainGroupField);
+                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName, $mainGroupField);
                 $config = $this->getStackedBarChartConfig();
-                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth, false);
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth, false);
                 break;
             case 'bar':
             default:
                 $chartFunction = 'Bar';
-                $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getBarChartConfig();
-                $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
+                $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth);
                 break;
         }
 
         return $chart;
     }
 
-    private function getRGraphRoseChart($chartDataValues, $chartLabelValues, $chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphRoseChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
-        if (!is_array($dataArray)||count($dataArray) < 1) {
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
             return "<h3>$this->noDataMessage</h3>";
         }
         $html = '';
@@ -363,14 +355,14 @@ EOF;
     //I have not used a parameter for getRGraphBarChart to say whether to group etc, as the future development could be quite different
     //for both, hence the separate methods.  However, the $grouped parameter allows us to specify whether the chart is grouped (true)
     //or stacked (false)
-    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues, $chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = false)
+    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = false)
     {
         $dataArray = json_decode($chartDataValues);
         $grouping = 'grouped'; //$mainGroupField->label; //'grouped';
-        if (!$grouped) {
+        if(!$grouped)
             $grouping='stacked';
-        }
-        if (!is_array($dataArray)||count($dataArray) < 1) {
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
             return "<h3>$this->noDataMessage</h3>";
         }
         $html = '';
@@ -409,10 +401,11 @@ EOF;
 
 
 
-    private function getRGraphBarChart($chartDataValues, $chartLabelValues, $chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
-        if (!is_array($dataArray)||count($dataArray) < 1) {
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
             return "<h3>$this->noDataMessage</h3>";
         }
         $html = '';
@@ -448,10 +441,11 @@ EOF;
         return $html;
     }
 
-    private function getRGraphRadarChart($chartDataValues, $chartLabelValues, $chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphRadarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
-        if (!is_array($dataArray)||count($dataArray) < 1) {
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
             return "<h3>$this->noDataMessage</h3>";
         }
         $html = '';
@@ -480,18 +474,19 @@ EOF;
         return $html;
     }
 
-    private function getRGraphPieChart($chartDataValues, $chartLabelValues, $chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphPieChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
-        if (!is_array($dataArray)||count($dataArray) < 1) {
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
             return "<h3>$this->noDataMessage</h3>";
         }
-        /*
-                if($chartHeight > 400)
-                    $chartHeight = 400;
-                if($chartWidth > 600)
-                    $chartWidth = 400;
-        */
+/*
+        if($chartHeight > 400)
+            $chartHeight = 400;
+        if($chartWidth > 600)
+            $chartWidth = 400;
+*/
         $html = '';
         $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
         $html .= <<<EOF
@@ -515,10 +510,11 @@ EOF;
         return $html;
     }
 
-    private function getRGraphLineChart($chartDataValues, $chartLabelValues, $chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphLineChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
-        if (!is_array($dataArray)||count($dataArray) < 1) {
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
             return "<h3>$this->noDataMessage</h3>";
         }
         $html = '';
@@ -557,41 +553,40 @@ EOF;
         return $html;
     }
 
-    private function buildChartHTMLChartJS(array $reportData, array $fields)
-    {
+    private function buildChartHTMLChartJS(array $reportData, array $fields){
         $html = '';
-        if (!in_array($this->type, $this->getValidChartTypes())) {
+        if(!in_array($this->type, $this->getValidChartTypes())){
             return $html;
         }
         $x = $fields[$this->x_field];
         $y = $fields[$this->y_field];
-        if (!$x || !$y) {
+        if(!$x || !$y){
             //Malformed chart object - missing an axis field
             return '';
         }
-        $xName = str_replace(' ', '_', $x->label) . $this->x_field;
-        $yName = str_replace(' ', '_', $y->label) . $this->y_field;
+        $xName = str_replace(' ','_',$x->label) . $this->x_field;
+        $yName = str_replace(' ','_',$y->label) . $this->y_field;
 
-        switch ($this->type) {
+        switch($this->type){
             case 'radar':
                 $chartFunction = 'Radar';
-                $data = $this->getRadarChartData($reportData, $xName, $yName);
+                $data = $this->getRadarChartData($reportData, $xName,$yName);
                 $config = $this->getRadarChartConfig();
                 break;
             case 'pie':
                 $chartFunction = 'Pie';
-                $data = $this->getPieChartData($reportData, $xName, $yName);
+                $data = $this->getPieChartData($reportData, $xName,$yName);
                 $config = $this->getPieChartConfig();
                 break;
             case 'line':
                 $chartFunction = 'Line';
-                $data = $this->getLineChartData($reportData, $xName, $yName);
+                $data = $this->getLineChartData($reportData, $xName,$yName);
                 $config = $this->getLineChartConfig();
                 break;
             case 'bar':
             default:
                 $chartFunction = 'Bar';
-                $data = $this->getBarChartData($reportData, $xName, $yName);
+                $data = $this->getBarChartData($reportData, $xName,$yName);
                 $config = $this->getBarChartConfig();
                 break;
         }
@@ -618,10 +613,9 @@ EOF;
         return $html;
     }
 
-    private function buildChartHTMLPChart(array $reportData, array $fields, $index = 0)
-    {
+    private function buildChartHTMLPChart(array $reportData, array $fields,$index = 0){
         $html = '';
-        $imgUri = $this->buildChartImage($reportData, $fields, true, $index);
+        $imgUri = $this->buildChartImage($reportData,$fields,true,$index);
         $img = "<img id='{$this->id}_img' src='{$imgUri}'>";
         $html .= $img;
         $html .= <<<EOF
@@ -636,21 +630,22 @@ EOF;
 
     private function getShortenedLabel($label, $maxLabelSize = 20)
     {
-        if (strlen($label) > $maxLabelSize) {
-            return substr($label, 0, $maxLabelSize).'...';
+        if(strlen($label) > $maxLabelSize)
+        {
+            return substr($label,0,$maxLabelSize).'...';
         }
-        return $label;
+        else
+            return $label;
     }
 
 
-    private function getRGraphGroupedBarChartData($reportData, $xName, $yName, AOR_Field $mainGroupField = null)
-    {
+    private function getRGraphGroupedBarChartData($reportData, $xName,$yName, AOR_Field $mainGroupField = null){
 
 
         // get z-axis name
 
         $zName = null;
-        foreach ($reportData[0] as $key => $value) {
+        foreach($reportData[0] as $key => $value) {
             $field = str_replace(' ', '_', is_null($mainGroupField) ? 'no data' : $mainGroupField->label);
             if (preg_match('/^' . $field . '[0-9]+/', $key)) {
                 $zName = $key;
@@ -666,10 +661,10 @@ EOF;
         $tooltips = array();
 
         $usedKeys = array();
-        foreach ($reportData as $key => $row) {
+        foreach($reportData as $key => $row) {
             $filter = $row[$xName];
-            foreach ($reportData as $key2 => $row2) {
-                if ($row2[$xName] == $filter && !in_array($key, $usedKeys)) {
+            foreach($reportData as $key2 => $row2) {
+                if($row2[$xName] == $filter && !in_array($key, $usedKeys)) {
                     $data      [ $row[$xName]  ]   [] = (float) $row[$yName];
                     $tooltips  [ $row[$xName]  ]   [] = isset($row[$zName]) ? $row[$zName] : null;
                     $usedKeys[] = $key;
@@ -678,8 +673,8 @@ EOF;
         }
 
         $_data = array();
-        foreach ($data as $label => $values) {
-            foreach ($values as $key => $value) {
+        foreach($data as $label => $values) {
+            foreach($values as $key => $value) {
                 $_data[$label][$tooltips[$label][$key]] = $value;
             }
         }
@@ -691,10 +686,10 @@ EOF;
         $_data = array();
         $_labels = array();
         $_tooltips = array();
-        foreach ($data as $label => $values) {
+        foreach($data as $label => $values) {
             $_labels[] = $this->getShortenedLabel($label);
             $_values = array();
-            foreach ($values as $tooltip => $value) {
+            foreach($values as $tooltip => $value) {
                 $_tooltips[] = $tooltip . " ($value)";
                 $_values[] = $value;
             }
@@ -709,28 +704,29 @@ EOF;
         );
 
         return $chart;
+
+
     }
 
-    private function getRGraphBarChartData($reportData, $xName, $yName)
-    {
+    private function getRGraphBarChartData($reportData, $xName,$yName){
         $chart['labels']=array();
         $chart['data']=array();
         $chart['tooltips']=array();
-        foreach ($reportData as $row) {
+        foreach($reportData as $row){
             $chart['labels'][] = $this->getShortenedLabel($row[$xName]);
             $chart['tooltips'][] = $row[$xName].': '.$row[$yName];
             $chart['data'][] = (float)$row[$yName];
+
         }
         return $chart;
     }
 
 
-    private function getBarChartData($reportData, $xName, $yName)
-    {
+    private function getBarChartData($reportData, $xName,$yName){
         $data = array();
         $data['labels'] = array();
         $datasetData = array();
-        foreach ($reportData as $row) {
+        foreach($reportData as $row){
             $data['labels'][] = $row[$xName];
             $datasetData[] = $row[$yName];
         }
@@ -747,17 +743,14 @@ EOF;
         return $data;
     }
 
-    private function getLineChartData($reportData, $xName, $yName)
-    {
-        return $this->getBarChartData($reportData, $xName, $yName);
+    private function getLineChartData($reportData, $xName,$yName){
+        return $this->getBarChartData($reportData, $xName,$yName);
     }
 
-    private function getBarChartConfig()
-    {
+    private function getBarChartConfig(){
         return array();
     }
-    private function getLineChartConfig()
-    {
+    private function getLineChartConfig(){
         return $this->getBarChartConfig();
     }
 
@@ -771,34 +764,29 @@ EOF;
         return $this->getBarChartConfig();
     }
 
-    private function getRoseChartConfig()
-    {
+    private function getRoseChartConfig(){
         return $this->getBarChartConfig();
     }
 
-    private function getRadarChartData($reportData, $xName, $yName)
-    {
-        return $this->getBarChartData($reportData, $xName, $yName);
+    private function getRadarChartData($reportData, $xName,$yName){
+        return $this->getBarChartData($reportData, $xName,$yName);
     }
 
-    private function getRadarChartConfig()
-    {
+    private function getRadarChartConfig(){
         return array();
     }
 
-    private function getPieChartConfig()
-    {
+    private function getPieChartConfig(){
         $config = array();
         $config['legendTemplate'] = "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>";
         return $config;
     }
 
-    private function getPieChartData($reportData, $xName, $yName)
-    {
+    private function getPieChartData($reportData, $xName,$yName){
         $data = array();
 
-        foreach ($reportData as $row) {
-            if (!$row[$yName]) {
+        foreach($reportData as $row){
+            if(!$row[$yName]){
                 continue;
             }
             $colour = $this->getColour($row[$xName]);
@@ -811,4 +799,6 @@ EOF;
         }
         return $data;
     }
+
+
 }

@@ -20,9 +20,10 @@ class NotLikeOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testIsValidTagWithInvalidType()
     {
+
         $this->tester->expectException(
             new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][Strings][NotLikeOperator][isValid][expected type to be string] $operator'),
-            function () {
+            function() {
                 self::$operator->isValid(array());
             }
         );

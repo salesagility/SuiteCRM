@@ -51,6 +51,8 @@ class AOR_ChartTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testbuildChartImageBar()

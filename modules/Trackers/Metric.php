@@ -42,10 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-class Metric
-{
-    public function __construct($type, $name)
-    {
+class Metric {
+
+    public function __construct($type, $name) {
         $this->_name = $name;
         $this->_type = $type;
         $this->_mutable = $name == 'monitor_id' ? false : true;
@@ -54,30 +53,28 @@ class Metric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function Metric($type, $name)
-    {
+    public function Metric($type, $name){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($type, $name);
     }
 
 
-    public function type()
-    {
+    function type() {
         return $this->_type;
     }
 
-    public function name()
-    {
+    function name() {
         return $this->_name;
     }
 
-    public function isMutable()
-    {
+    function isMutable() {
         return $this->_mutable;
     }
+
 }

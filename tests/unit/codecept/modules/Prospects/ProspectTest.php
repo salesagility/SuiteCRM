@@ -51,6 +51,8 @@ class ProspectTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertAttributeEquals('last &lt;email1@test.com&gt;', 'email_and_name1', $prospect);
         
         // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -104,6 +106,8 @@ class ProspectTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->markTestIncomplete('Multiple errors in query');
         
         // clean up
+        
+        
     }
 
     public function testbean_implements()
@@ -133,6 +137,7 @@ class ProspectTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testget_unlinked_email_query()
     {
+        
         self::markTestIncomplete('environment dependency (CRLF2)');
         
         $prospect = new Prospect();

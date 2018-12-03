@@ -190,7 +190,6 @@ $dictionary['FP_events'] = array(
                 'options' => 'email_templet_list',
                 'studio' => 'visible',
                 'dependency' => false,
-                'inline_edit' => false,
             ),
         'accept_redirect' =>
             array(
@@ -223,7 +222,7 @@ $dictionary['FP_events'] = array(
                 'vname' => 'LBL_DECLINE_REDIRECT',
                 'type' => 'url',
                 'massupdate' => '0',
-                'default' => null,
+                'default' => NULL,
                 'no_default' => false,
                 'comments' => 'Insert a URL to a web page here.',
                 'help' => 'Insert the URL for the page that you want the event delegates to see when they have declined the invitation from the email.',
@@ -237,7 +236,7 @@ $dictionary['FP_events'] = array(
                 'len' => '255',
                 'size' => '20',
                 'dbType' => 'varchar',
-                'gen' => null,
+                'gen' => NULL,
                 'link_target' => '_blank',
                 'id' => 'FP_eventsdecline_redirect',
             ),

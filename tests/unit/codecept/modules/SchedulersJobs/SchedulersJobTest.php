@@ -52,6 +52,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals('2015-01-01 00:00:00', $schedulersJob->execute_time_db);
         
         // clean up
+        
+        
     }
 
     public function testhandleDateFormat()
@@ -121,6 +123,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testfailJob()
@@ -204,6 +208,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
         
         // clean up
+        
+        
     }
 
     public function testOnFinalFailure()
@@ -227,6 +233,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
         
         // clean up
+        
+        
     }
 
     public function testresolveJob()
@@ -267,6 +275,8 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $state->popTable('tracker');
         $state->popTable('aod_index');
+        
+        
     }
 
     public function testpostponeJobAndMark_deleted()
@@ -347,7 +357,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerUnitAbstract
         
 
         //test with invalid job id
-        $result = SchedulersJob::runJobId('1', '');
+        $result = SchedulersJob::runJobId('1','');
         $this->assertEquals('Job 1 not found.', $result);
 
         //test with valid job id

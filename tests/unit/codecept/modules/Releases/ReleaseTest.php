@@ -35,6 +35,8 @@ class ReleaseTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals('test', $release->get_summary_text());
         
         // clean up
+        
+        
     }
 
     public function testget_releases()
@@ -69,6 +71,8 @@ class ReleaseTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -90,6 +94,8 @@ class ReleaseTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testget_list_view_data()

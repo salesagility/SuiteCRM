@@ -47,6 +47,8 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals('test', $opportunity->get_summary_text());
         
         // clean up
+        
+        
     }
 
     public function testcreate_list_query()
@@ -107,6 +109,8 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -128,6 +132,8 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testget_contacts()
@@ -157,6 +163,8 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testget_list_view_data()
@@ -204,7 +212,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testsave()
     {
-        // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
@@ -215,7 +223,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-        // test
+	// test
         
         $opportunity = new Opportunity();
 
@@ -245,6 +253,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->popTable('opportunities_cstm');
         $state->popTable('opportunities');
         $state->popTable('aod_indexevent');
+
     }
 
     public function testsave_relationship_changes()
@@ -266,6 +275,8 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testset_opportunity_contact_relationship()
@@ -286,6 +297,8 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testset_notification_body()
@@ -321,12 +334,12 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testlistviewACLHelper()
     {
 
-    // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-        // test
+	// test
         
         $opportunity = new Opportunity();
 
@@ -337,6 +350,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         // clean up
         
         $state->popGlobals();
+
     }
 
     public function testget_account_detail()
@@ -349,6 +363,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testgetCurrencyType()
     {
+
         $state = new SuiteCRM\StateSaver();
         
         
@@ -366,5 +381,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->markTestIncomplete('This method has no implementation');
         
         // clean up
+        
+        
     }
 }

@@ -16,7 +16,7 @@ class FilterInterpreterTest extends SuiteCRM\StateCheckerUnitAbstract
     public function _before()
     {
         parent::_before();
-        if (self::$interpreter === null) {
+        if(self::$interpreter === null) {
 
             // load PSR 11 interface
             $container = $this->tester->getContainerInterface();
@@ -89,7 +89,7 @@ class FilterInterpreterTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Interpreters][getFilterByPreMadeName][cannot find filter]'),
-            function () {
+            function() {
                 $filter = array('InvalidFilterThatIsNotFound');
                 self::$interpreter->getFilterByPreMadeName($filter);
             }

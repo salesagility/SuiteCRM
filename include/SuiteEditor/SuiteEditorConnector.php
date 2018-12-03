@@ -59,8 +59,8 @@ include_once get_custom_file_if_exists('include/SuiteEditor/SuiteEditorMozaik.ph
  */
 class SuiteEditorConnector
 {
-    public static function getSuiteSettings($html, $width)
-    {
+
+    public static function getSuiteSettings($html, $width) {
         return array(
             'contents' => $html,
             'textareaId' => 'body_text',
@@ -87,11 +87,10 @@ class SuiteEditorConnector
      * @throws Exception unknown or incorrect editor
      * @return string HTML output of editor
      */
-    public static function getHtml($settings = null)
-    {
+    public static function getHtml($settings = null) {
         global $current_user;
 
-        switch ($current_user->getEditorType()) {
+        switch($current_user->getEditorType()) {
 
             case 'none':
                 $editor = new SuiteEditorDirectHTML();
@@ -122,7 +121,7 @@ class SuiteEditorConnector
 
         // just make sure the type of editor implements a SuiteEditorInterface..
 
-        if (!($editor instanceof SuiteEditorInterface)) {
+        if( !($editor instanceof SuiteEditorInterface) ){
             throw new Exception("class $editor is not a SuiteEditorInterface");
         }
 
@@ -134,4 +133,5 @@ class SuiteEditorConnector
         $smarty->assign('editor', $editor->getHtml());
         return $smarty->fetch(get_custom_file_if_exists('include/SuiteEditor/tpls/SuiteEditorConnector.tpl'));
     }
+
 }

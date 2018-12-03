@@ -56,7 +56,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset($db->database);
+        unset ($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -72,6 +72,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testdelete()
     {
+
         $state = new SuiteCRM\StateSaver();
         
         
@@ -88,6 +89,8 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testget_other_module()
@@ -96,7 +99,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset($db->database);
+        unset ($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -116,7 +119,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset($db->database);
+        unset ($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -143,7 +146,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
-        unset($db->database);
+        unset ($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -163,6 +166,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testretrieve_by_name()
     {
+
         $relationship = new Relationship();
 
         //test with invalid relationship
@@ -185,6 +189,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testload_relationship_meta()
     {
+
         $relationship = new Relationship();
 
         $relationship->load_relationship_meta();
@@ -193,6 +198,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testbuild_relationship_cache()
     {
+
         $state = new SuiteCRM\StateSaver();
         
         
@@ -210,6 +216,8 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testcache_file_dir()
@@ -226,6 +234,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testdelete_cache()
     {
+
         $state = new SuiteCRM\StateSaver();
         
         
@@ -241,10 +250,13 @@ class RelationshipTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testtrace_relationship_module()
     {
+
         $relationship = new Relationship();
         $result = $relationship->trace_relationship_module('Roles', 'Users');
         $this->assertInstanceOf('User', $result);

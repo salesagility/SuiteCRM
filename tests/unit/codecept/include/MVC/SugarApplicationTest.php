@@ -3,6 +3,7 @@
 
 class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
 {
+
     public function setUp()
     {
         parent::setUp();
@@ -35,14 +36,14 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
-
+        
         try {
             $SugarApplication->loadUser();
-        }
+        } 
         catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
-
+        
         $this->assertTrue(TRUE);
         */
         $this->markTestIncomplete('Can Not be implemented');
@@ -56,8 +57,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         //error_reporting(E_ERROR | E_PARSE);
         
         
-        
-        if (isset($_SESSION)) {
+        if(isset($_SESSION)) {
             $session = $_SESSION;
         }
         
@@ -78,7 +78,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         
         
         
-        if (isset($session)) {
+        if(isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);
@@ -112,6 +112,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testsetupPrint()
@@ -134,6 +136,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testpreProcess()
@@ -144,8 +148,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         //error_reporting(E_ERROR | E_PARSE);
         
         
-        
-        if (isset($_SESSION)) {
+        if(isset($_SESSION)) {
             $session = $_SESSION;
         }
         
@@ -167,7 +170,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         
         
         
-        if (isset($session)) {
+        if(isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);
@@ -194,6 +197,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testhandleAccessControl()
@@ -231,6 +236,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testloadLanguages()
@@ -263,6 +270,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testcheckDatabaseVersion()
@@ -310,6 +319,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testloadLicense()
@@ -332,6 +343,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testloadGlobals()
@@ -342,8 +355,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         //error_reporting(E_ERROR | E_PARSE);
         
         
-        
-        if (isset($_REQUEST)) {
+        if(isset($_REQUEST)) {
             $request = $_REQUEST;
         }
         
@@ -365,18 +377,20 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         
         
         
-        if (isset($request)) {
+        if(isset($request)) {
             $_REQUEST = $request;
         } else {
             unset($_REQUEST);
         }
+        
     }
 
     protected $sessionStartedOk = false;
     
     public function teststartSession()
     {
-        if (isset($_SESSION)) {
+        
+        if(isset($_SESSION)) {
             $session = $_SESSION;
         }
         
@@ -385,7 +399,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            if (!headers_sent()) {
+            if(!headers_sent()) {
                 $SugarApplication->startSession();
                 $this->sessionStartedOk = true;
             }
@@ -399,11 +413,12 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         
         // cleanup
         
-        if (isset($session)) {
+        if(isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);
         }
+        
     }
 
     public function testendSession()
@@ -413,7 +428,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            if ($this->sessionStartedOk) {
+            if($this->sessionStartedOk) {
                 $SugarApplication->endSession();
             }
         } catch (Exception $e) {
@@ -434,13 +449,13 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         //execute the method and check if it works and doesn't throws an exception
         try {
             ob_start();
-
+        
             $SugarApplication->redirect();
-
+        
             $renderedContent = ob_get_contents();
             ob_end_clean();
             $this->assertGreaterThan(0,strlen($renderedContent));
-
+             
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
@@ -450,7 +465,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testappendErrorMessage()
     {
-        if (isset($_SESSION)) {
+        
+        if(isset($_SESSION)) {
             $session = $_SESSION;
         }
         
@@ -463,7 +479,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         
         // cleanup
         
-        if (isset($session)) {
+        if(isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);
@@ -472,14 +488,15 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testgetErrorMessages()
     {
-        //execute the method and check if it returns a array.
+        //execute the method and check if it returns a array. 
         $errorMessages = SugarApplication::getErrorMessages();
         $this->assertTrue(is_array($errorMessages));
     }
 
     public function testsetCookie()
     {
-        if (isset($_COOKIE)) {
+        
+        if(isset($_COOKIE)) {
             $cookie = $_COOKIE;
         }
         //execute the method and check that the method adds the key value pair to cookies array.
@@ -488,7 +505,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         
         // cleanup
         
-        if (isset($cookie)) {
+        if(isset($cookie)) {
             $_COOKIE = $cookie;
         } else {
             unset($_COOKIE);
@@ -515,6 +532,8 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testgetLoginVars()

@@ -61,4 +61,5 @@ class Zend_Gdata_Exif extends Zend_Gdata
         $this->registerPackage('Zend_Gdata_Exif_Extension');
         parent::__construct($client, $applicationId);
     }
+
 }

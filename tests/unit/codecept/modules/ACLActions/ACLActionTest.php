@@ -3,6 +3,7 @@
 
 class ACLActionTest extends SuiteCRM\StateCheckerUnitAbstract
 {
+    
     public function setUp()
     {
         parent::setUp();
@@ -12,8 +13,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerUnitAbstract
         $current_user = new User();
     }
     
-    public function tearDown()
-    {
+    public function tearDown() {
         parent::tearDown();
     }
 
@@ -25,7 +25,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('acl_actions');
         $state->pushGlobals();
         
-        $_POST['foo'] = 'bar123ase';
+$_POST['foo'] = 'bar123ase';
         //execute the contructor and check for the Object type and type attribute
         $aclAction = new ACLAction();
         $this->assertInstanceOf('ACLAction', $aclAction);
@@ -86,6 +86,8 @@ class ACLActionTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals('All', ACLAction::AccessName(90)); //test with a valid value
         
         // clean up
+        
+        
     }
 
     public function testgetDefaultActions()
@@ -119,11 +121,11 @@ class ACLActionTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testhasAccess()
     {
-        $this->assertFalse(ACLAction::hasAccess()); //check with defaults
+        $this->assertFalse(ACLAction::hasAccess()); //check with defaults 
         $this->assertTrue(ACLAction::hasAccess(false, false, 90));  //access All with is owner false
-        $this->assertTrue(ACLAction::hasAccess(true, true, 90)); //access All with is owner true
+        $this->assertTrue(ACLAction::hasAccess(true, true, 90)); //access All with is owner true 
         $this->assertFalse(ACLAction::hasAccess(false, false, -98));// check access disabled
-        $this->assertFalse(ACLAction::hasAccess(true, true, 89)); //check access enabled
+        $this->assertFalse(ACLAction::hasAccess(true, true, 89)); //check access enabled 
         $this->assertTrue(ACLAction::hasAccess(true, true, 75)); //check owner access with is owner true
         $this->assertFalse(ACLAction::hasAccess(false, true, 75)); //check owner access with is owner false
     }
@@ -133,7 +135,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action
+        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action 
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts', 'list')); //test with valid module and action
         
         // clean up
@@ -143,11 +145,10 @@ class ACLActionTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testuserHasAccess()
     {
-        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
+        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
         $this->assertFalse(ACLAction::userHasAccess('', '', '')); //test with empty module and action
         $this->assertTrue(ACLAction::userHasAccess('', 'Accounts', 'list')); //test with e,pty user and valid module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Accounts', 'list')); //test with valid User, module and action
@@ -217,7 +218,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $aclAction = new ACLAction();
 
-        //wihout any fields set
+        //wihout any fields set 
         $expected = array('id' => null, 'aclaccess' => null);
         $actual = $aclAction->toArray();
         $this->assertSame($expected, $actual);

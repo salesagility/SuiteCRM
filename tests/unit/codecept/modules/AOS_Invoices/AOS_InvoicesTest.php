@@ -56,5 +56,6 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $state->popTable('tracker');
         $state->popTable('aos_invoices');
+        
     }
 }

@@ -4,6 +4,7 @@ namespace Step\Acceptance;
 
 use \AcceptanceTester as Tester;
 
+
 class DetailView extends Tester
 {
 
@@ -33,4 +34,5 @@ class DetailView extends Tester
         $I = $this;
         $I->waitForElementVisible('.detail-view', 120);
     }
+
 }

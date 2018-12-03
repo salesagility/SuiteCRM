@@ -75,6 +75,7 @@ require_once 'Zend/Gdata/YouTube/Extension/Uploaded.php';
  */
 class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension_MediaGroup
 {
+
     protected $_rootElement = 'group';
     protected $_rootNamespace = 'media';
 
@@ -119,33 +120,27 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_duration !== null) {
             $element->appendChild(
-                $this->_duration->getDOM($element->ownerDocument)
-            );
+                $this->_duration->getDOM($element->ownerDocument));
         }
         if ($this->_private !== null) {
             $element->appendChild(
-                $this->_private->getDOM($element->ownerDocument)
-            );
+                $this->_private->getDOM($element->ownerDocument));
         }
         if ($this->_videoid != null) {
             $element->appendChild(
-                $this->_videoid->getDOM($element->ownerDocument)
-            );
+                $this->_videoid->getDOM($element->ownerDocument));
         }
         if ($this->_uploaded != null) {
             $element->appendChild(
-                $this->_uploaded->getDOM($element->ownerDocument)
-            );
+                $this->_uploaded->getDOM($element->ownerDocument));
         }
         if ($this->_mediacredit != null) {
             $element->appendChild(
-                $this->_mediacredit->getDOM($element->ownerDocument)
-            );
+                $this->_mediacredit->getDOM($element->ownerDocument));
         }
         if ($this->_mediarating != null) {
             $element->appendChild(
-                $this->_mediarating->getDOM($element->ownerDocument)
-            );
+                $this->_mediarating->getDOM($element->ownerDocument));
         }
         return $element;
     }

@@ -15,7 +15,7 @@ class WebDriver extends \Codeception\Module\WebDriver
         $this->config['host'] = $config['host'];
         $this->config['port'] = $config['port'];
 
-        if ($this->isBrowserStackEnabled()) {
+        if($this->isBrowserStackEnabled()) {
             $this->configureBrowserStack();
         }
 
@@ -48,7 +48,7 @@ class WebDriver extends \Codeception\Module\WebDriver
         $this->config['capabilities']['browserstack.user'] = $webDriverHelper->getBrowserStackUsername();
         $this->config['capabilities']['browserstack.key'] = $webDriverHelper->getBrowserStackAccessKey();
 
-        if ($this->isBrowserStackLocalEnabled()) {
+        if($this->isBrowserStackLocalEnabled()) {
             $bs_local_args = array(
                 "key" => $this->config["capabilities"]["browserstack.key"],
                 "v" => true,
@@ -62,9 +62,10 @@ class WebDriver extends \Codeception\Module\WebDriver
             } catch (\BrowserStack\LocalException $exception) {
                 echo $exception->getMessage();
             }
-            if ($this->browserStackLocal->isRunning()) {
+            if($this->browserStackLocal->isRunning()) {
                 echo "Browser stack binary is running";
             }
+
         }
     }
 
@@ -72,17 +73,16 @@ class WebDriver extends \Codeception\Module\WebDriver
     {
         $config = $this->_getConfig();
         // Don't resize window for browser stack instead maximize
-        if ($this->isBrowserStackEnabled()) {
+        if($this->isBrowserStackEnabled()) {
             $this->maximizeWindow();
-        } else {
+        }  else {
             $width =  isset($config['width']) ? $config['width'] : 1920;
             $height = isset($config['height']) ? $config['height'] : 1080;
             $this->resizeWindow($width, $height);
         }
     }
 
-    public function _afterSuite()
-    {
+    public function _afterSuite() {
         parent::_afterSuite();
         if ($this->isBrowserStackLocalEnabled()) {
             $this->browserStackLocal->stop();

@@ -26,7 +26,7 @@ class PersonModuleCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if (!$this->fakeData) {
+        if(!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -121,7 +121,7 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Person Test Module Record');
-        if ($this->lastView !== 'ListView') {
+        if($this->lastView !== 'ListView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -236,7 +236,7 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit Person Test Module Record from detail view');
-        if ($this->lastView !== 'DetailView') {
+        if($this->lastView !== 'DetailView') {
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );

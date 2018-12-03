@@ -38,4 +38,4 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-// This file is no longer in use. Included for compatibility only.
+// This file is no longer in use. Included for compatibility only. 

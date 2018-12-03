@@ -72,9 +72,11 @@ class JSON
     {
         $encodedString = json_encode($array);
 
-        if ($encodeSpecial) {
+        if ($encodeSpecial)
+        {
             $charMap = array('<' => '\u003C', '>' => '\u003E', "'" => '\u0027', '&' => '\u0026');
-            foreach ($charMap as $c => $enc) {
+            foreach($charMap as $c => $enc)
+            {
                 $encodedString = str_replace($c, $enc, $encodedString);
             }
         }
@@ -92,7 +94,7 @@ class JSON
      */
     public static function decode($string, $examineEnvelope=false, $assoc = true)
     {
-        return json_decode($string, $assoc);
+        return json_decode($string,$assoc);
     }
 
     /**

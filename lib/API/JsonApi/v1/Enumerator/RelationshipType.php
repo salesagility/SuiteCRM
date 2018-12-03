@@ -39,6 +39,7 @@
  */
 namespace SuiteCRM\API\JsonApi\v1\Enumerator;
 
+
 /**
  * Class RelationshipType
  * @package SuiteCRM\API\JsonApi\v1

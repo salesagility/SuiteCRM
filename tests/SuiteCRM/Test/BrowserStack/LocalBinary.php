@@ -8,10 +8,9 @@ namespace SuiteCRM\Test\BrowserStack;
  *
  * Extends the browser stack binary
  */
-class LocalBinary extends \BrowserStack\LocalBinary
+class LocalBinary extends  \BrowserStack\LocalBinary
 {
-    public function __construct()
-    {
+    public function __construct() {
         $this->possible_binary_paths = array(
             getcwd(),
             sys_get_temp_dir()

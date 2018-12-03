@@ -1,5 +1,5 @@
 <?php
-$sugar_config_si  = array(
+$sugar_config_si  = array (
     'dbUSRData' => 'create',
     'default_date_format' => 'Y-m-d',
     'default_decimal_seperator' => '.',

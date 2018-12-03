@@ -25,7 +25,7 @@ class BasicModuleCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if (!$this->fakeData) {
+        if(!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -37,6 +37,7 @@ class BasicModuleCest
      */
     public function _after(AcceptanceTester $I)
     {
+
     }
 
     // Tests
@@ -124,6 +125,7 @@ class BasicModuleCest
         $I->wantTo('Create Basic Test Module Record');
 
         if ($this->lastView !== 'ListView') {
+
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -172,7 +174,7 @@ class BasicModuleCest
 
         $I->loginAsAdmin();
 
-        if ($this->lastView !== 'ListView') {
+        if($this->lastView !== 'ListView') {
             // Go to Basic Test Module
             $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
             $listView->waitForListViewVisible();
@@ -213,6 +215,7 @@ class BasicModuleCest
 
 
         if ($this->lastView !== 'DetailView') {
+
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -265,6 +268,7 @@ class BasicModuleCest
         $I->wantTo('Duplicate Basic Test Module Record from detail view');
 
         if ($this->lastView !== 'DetailView') {
+
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );
@@ -284,6 +288,7 @@ class BasicModuleCest
             $listView->waitForListViewVisible();
             $this->fakeData->seed($this->fakeDataSeed);
             $listView->clickNameLink($this->fakeData->name);
+
         }
 
         // duplicate Record
@@ -322,6 +327,7 @@ class BasicModuleCest
         $I->wantTo('Delete Basic Test Module Record from detail view');
 
         if ($this->lastView !== 'DetailView') {
+
             $I->amOnUrl(
                 $webDriverHelper->getInstanceURL()
             );

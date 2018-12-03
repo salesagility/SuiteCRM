@@ -182,7 +182,10 @@ $layout_defs['UserRoles']['subpanel_setup']['securitygroups'] = array(
 
 
 if (is_admin($current_user)) {
+
     $layout_defs['Users']['subpanel_setup']['securitygroups']['subpanel_name'] = 'ForUsers';
 } else {
+
     $layout_defs['Users']['subpanel_setup']['securitygroups']['top_buttons'] = array();
+
 }

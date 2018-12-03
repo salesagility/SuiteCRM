@@ -41,6 +41,8 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(true, $aowWorkFlow->bean_implements('ACL')); //test with valid value
         
         // clean up
+        
+        
     }
 
     public function testsave()
@@ -99,6 +101,8 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testrun_flows()
@@ -136,6 +140,8 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testrun_bean_flows()
@@ -152,7 +158,8 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerUnitAbstract
     }
 
     public function testget_flow_beans()
-    {
+    {        
+        
         $aowWorkFlow = new AOW_WorkFlow();
         
         //test for AOS_Quotes. it will return null as no test data is available

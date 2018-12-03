@@ -48,18 +48,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 
 
-class MyContactsDashlet extends DashletGeneric
-{
-    public function __construct($id, $def = null)
-    {
+class MyContactsDashlet extends DashletGeneric {
+    function __construct($id, $def = null) {
         global $current_user, $app_strings;
-        require('modules/Contacts/Dashlets/MyContactsDashlet/MyContactsDashlet.data.php');
+		require('modules/Contacts/Dashlets/MyContactsDashlet/MyContactsDashlet.data.php');
 
         parent::__construct($id, $def);
 
-        if (empty($def['title'])) {
-            $this->title = translate('LBL_HOMEPAGE_TITLE', 'Contacts');
-        }
+        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'Contacts');
 
         $this->searchFields = $dashletData['MyContactsDashlet']['searchFields'];
         $this->columns = $dashletData['MyContactsDashlet']['columns'];
@@ -70,14 +66,16 @@ class MyContactsDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function MyContactsDashlet($id, $def = null)
-    {
+    function MyContactsDashlet($id, $def = null){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
     }
+
 }
+

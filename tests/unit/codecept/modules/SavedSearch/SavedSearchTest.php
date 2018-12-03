@@ -45,6 +45,8 @@ class SavedSearchTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertGreaterThan(0, strlen($result));
         
         // clean up
+        
+        
     }
 
     public function testgetSelect()
@@ -132,6 +134,8 @@ class SavedSearchTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function returnSavedSearchContents($id)
@@ -153,6 +157,8 @@ class SavedSearchTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testhandleRedirect()
@@ -167,12 +173,12 @@ class SavedSearchTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('saved_search');
 
-        // test
+	// test
         
         $savedSearch = new SavedSearch();
 
@@ -187,17 +193,18 @@ class SavedSearchTest extends SuiteCRM\StateCheckerUnitAbstract
         // clean up
         
         $state->popTable('saved_search');
+
     }
 
     public function testpopulateRequest()
     {
-        // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('saved_search');
         $state->pushGlobals();
 
-        // test
+	// test
         
         $savedSearch = new SavedSearch();
 
@@ -210,12 +217,13 @@ class SavedSearchTest extends SuiteCRM\StateCheckerUnitAbstract
 
         //verify thhat Request parameters are set
         $this->assertEquals('Accounts', $_REQUEST['search_module']);
-        $this->assertEquals('test text', $_REQUEST['description']);
+        $this->assertEquals('test text',  $_REQUEST['description']);
         $this->assertEquals('some content', $_REQUEST['test_content']);
 
         // clean up
         
         $state->popTable('saved_search');
         $state->popGlobals();
+
     }
 }

@@ -4,6 +4,7 @@ require_once 'include/utils/activity_utils.php';
 
 class activity_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
+
     public function setUp()
     {
         parent::setUp();
@@ -29,12 +30,13 @@ class activity_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));
 
-        //with rel_users_table set by default
+        //with rel_users_table set by default 
         $bean = new Meeting();
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));
         
         // clean up
         $state->popGlobals();
+        
     }
 }

@@ -142,7 +142,7 @@ class ErrorMessage
     }
 
     /**
-     *
+     * 
      * @param string $message
      * @param integer $level
      */
@@ -152,7 +152,7 @@ class ErrorMessage
     }
 
     /**
-     *
+     * 
      * @param string $message
      * @param integer $code
      */

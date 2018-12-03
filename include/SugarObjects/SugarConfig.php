@@ -47,10 +47,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarConfig
 {
-    public $_cached_values = array();
+    var $_cached_values = array();
 
-    public static function getInstance()
-    {
+    static function getInstance() {
         static $instance = null;
         if (is_null($instance)) {
             $instance = new SugarConfig();
@@ -58,12 +57,11 @@ class SugarConfig
         return $instance;
     }
 
-    public function get($key, $default = null)
-    {
+    function get($key, $default = null) {
         if (!isset($this->_cached_values[$key])) {
             if (!class_exists('SugarArray', true)) {
-                require 'include/utils/array_utils.php';
-            }
+				require 'include/utils/array_utils.php';
+			}
             $this->_cached_values[$key] = isset($GLOBALS['sugar_config']) ?
                 SugarArray::staticGet($GLOBALS['sugar_config'], $key, $default) :
                 $default;
@@ -71,8 +69,7 @@ class SugarConfig
         return $this->_cached_values[$key];
     }
 
-    public function clearCache($key = null)
-    {
+    function clearCache($key = null) {
         if (is_null($key)) {
             $this->_cached_values = array();
         } else {
@@ -80,3 +77,4 @@ class SugarConfig
         }
     }
 }
+

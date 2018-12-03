@@ -63,4 +63,5 @@ interface SuiteEditorInterface
      * @return string (html output)
      */
     public function getHtml();
+
 }

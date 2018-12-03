@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
  * @package Advanced OpenWorkflow for SugarCRM
@@ -27,7 +25,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class AOW_ProcessedViewList extends ViewList
 {
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
     }
@@ -35,18 +33,18 @@ class AOW_ProcessedViewList extends ViewList
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function AOW_ProcessedViewList()
-    {
+    function AOW_ProcessedViewList(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
-    public function Display()
+    function Display()
     {
         $this->lv->quickViewLinks = false;
         parent::Display();

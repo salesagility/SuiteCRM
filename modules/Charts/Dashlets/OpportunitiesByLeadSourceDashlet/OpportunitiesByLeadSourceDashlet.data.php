@@ -56,3 +56,4 @@ $dashletData['OpportunitiesByLeadSourceDashlet']['searchFields'] = array(
                 'type'  => 'user_name',
             ),
         );
+

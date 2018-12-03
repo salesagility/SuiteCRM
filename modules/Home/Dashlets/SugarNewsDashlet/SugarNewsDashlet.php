@@ -45,12 +45,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/Home/Dashlets/iFrameDashlet/iFrameDashlet.php');
 
-class SugarNewsDashlet extends iFrameDashlet
-{
-    public $displayTpl = 'modules/Home/Dashlets/SugarNewsDashlet/display.tpl';
-    public $configureTpl = 'modules/Home/Dashlets/SugarNewsDashlet/configure.tpl';
-    public $defaultURL = 'https://suitecrm.com/';
-    public $url;
+class SugarNewsDashlet extends iFrameDashlet {
+    var $displayTpl = 'modules/Home/Dashlets/SugarNewsDashlet/display.tpl';
+    var $configureTpl = 'modules/Home/Dashlets/SugarNewsDashlet/configure.tpl';
+    var $defaultURL = 'https://suitecrm.com/';
+    var $url;
 
     public function __construct($id, $options = null)
     {
@@ -61,14 +60,15 @@ class SugarNewsDashlet extends iFrameDashlet
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function SugarNewsDashlet($id, $options = null)
-    {
+    function SugarNewsDashlet($id, $options = null){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
+        if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
+        }
+        else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $options);
     }
+
 }

@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class CasesController extends SugarController
 {
+
     public function action_get_kb_articles()
     {
         global $mod_strings;
@@ -114,4 +115,5 @@ class CasesController extends SugarController
     {
         return (!isset($question) || trim($question) === '');
     }
+
 }

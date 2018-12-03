@@ -278,7 +278,7 @@ $dictionary['Campaign'] = array('audited' => true,
             'link_file' => 'modules/Campaigns/ProspectLink.php'
         ),
 
-        "survey" => array(
+        "survey" => array (
                 'name' => 'survey',
                 'type' => 'link',
                 'relationship' => 'surveys_campaigns',
@@ -290,7 +290,7 @@ $dictionary['Campaign'] = array('audited' => true,
                 'link_type'=>'one',
                 'side' => 'left',
         ),
-        "survey_name" => array(
+        "survey_name" => array (
                 'name' => 'survey_name',
                 'type' => 'relate',
                 'source' => 'non-db',
@@ -302,13 +302,13 @@ $dictionary['Campaign'] = array('audited' => true,
                 'module' => 'Surveys',
                 'rname' => 'name',
         ),
-        "survey_id" => array(
+        "survey_id" => array (
                 'name' => 'survey_id',
                 'type' => 'id',
                 'reportable' => false,
                 'vname' => 'LBL_CAMPAIGN_SURVEYS',
         ),
-        "surveyresponses_campaigns" => array(
+        "surveyresponses_campaigns" => array (
                 'name' => 'surveyresponses_campaigns',
                 'type' => 'link',
                 'relationship' => 'surveyresponses_campaigns',

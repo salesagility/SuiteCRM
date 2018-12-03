@@ -58,4 +58,5 @@ function install_reschedule()
     foreach ($hooks as $hook) {
         check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
     }
+
 }

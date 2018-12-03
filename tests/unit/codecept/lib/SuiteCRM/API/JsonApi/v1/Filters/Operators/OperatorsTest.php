@@ -16,7 +16,7 @@ class OperatorsTest extends SuiteCRM\StateCheckerUnitAbstract
     public function _before()
     {
         parent::_before();
-        if (self::$operator === null) {
+        if(self::$operator === null) {
             $containers = $this->tester->getContainerInterface();
             self::$operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator($containers);
         }
@@ -42,7 +42,7 @@ class OperatorsTest extends SuiteCRM\StateCheckerUnitAbstract
             new \SuiteCRM\Exception\InvalidArgumentException(
                 '[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'
             ),
-            function () {
+            function() {
                 self::$operator->isValid(array());
             }
         );
@@ -72,7 +72,7 @@ class OperatorsTest extends SuiteCRM\StateCheckerUnitAbstract
             new \SuiteCRM\Exception\InvalidArgumentException(
                 '[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'
             ),
-            function () {
+            function() {
                 self::$operator->isValid(array());
             }
         );

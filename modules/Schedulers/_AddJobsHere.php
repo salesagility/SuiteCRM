@@ -79,7 +79,8 @@ $job_strings = array(
     14 => 'cleanJobQueue',
     15 => 'removeDocumentsFromFS',
     16 => 'trimSugarFeeds',
-
+    17 => 'syncGoogleCalendar',
+    18 => 'runElasticSearchIndexerScheduler',
 );
 
 /**
@@ -97,6 +98,7 @@ function refreshJobs()
  */
 function pollMonitoredInboxes()
 {
+
     $_bck_up = array('team_id' => $GLOBALS['current_user']->team_id, 'team_set_id' => $GLOBALS['current_user']->team_set_id);
     $GLOBALS['log']->info('----->Scheduler fired job of type pollMonitoredInboxes()');
     global $dictionary;
@@ -113,8 +115,7 @@ function pollMonitoredInboxes()
     while ($a = $ie->db->fetchByAssoc($r)) {
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
         $ieX = new InboundEmail();
-        $ieX->retrieve($a['id']);
-        ;
+        $ieX->retrieve($a['id']);;
         $mailboxes = $ieX->mailboxarray;
         foreach ($mailboxes as $mbox) {
             $ieX->mailbox = $mbox;
@@ -242,6 +243,7 @@ function pollMonitoredInboxes()
                     if ($ieX->isMailBoxTypeCreateCase() && $distributionMethod == 'roundRobin') {
                         $emailUI->setLastRobin($ieX, $lastRobin);
                     } // if
+
                 } // if
                 if ($isGroupFolderExists) {
                     $leaveMessagesOnMailServer = $ieX->get_stored_options("leaveMessagesOnMailServer", 0);
@@ -270,6 +272,7 @@ function pollMonitoredInboxes()
 function runMassEmailCampaign()
 {
     if (!class_exists('LoggerManager')) {
+
     }
     $GLOBALS['log'] = LoggerManager::getLogger('emailmandelivery');
     $GLOBALS['log']->debug('Called:runMassEmailCampaign');
@@ -308,9 +311,7 @@ function pruneDatabase()
             // find tables with deleted=1
             $columns = $db->get_columns($table);
             // no deleted - won't delete
-            if (empty($columns['deleted'])) {
-                continue;
-            }
+            if (empty($columns['deleted'])) continue;
 
             $custom_columns = array();
             if (array_search($table . '_cstm', $tables)) {
@@ -520,6 +521,19 @@ function trimSugarFeeds()
 }
 
 
+/**
+ * + * Job 17
+ * + * this will sync the Google Calendars of users who are configured to do so
+ * + */
+function syncGoogleCalendar()
+{
+    require_once 'include/GoogleSync/GoogleSync.php';
+    $googleSync = new GoogleSync();
+    $googleSync->syncAllUsers();
+
+    return true;
+}
+
 function cleanJobQueue($job)
 {
     $td = TimeDate::getInstance();
@@ -662,6 +676,7 @@ function pollMonitoredInboxesAOP()
                         $current++;
                     } // foreach
                     // update Inbound Account with last robin
+
                 } // if
                 if ($isGroupFolderExists) {
                     $leaveMessagesOnMailServer = $aopInboundEmailX->get_stored_options("leaveMessagesOnMailServer", 0);
@@ -695,7 +710,7 @@ function aodIndexUnindexed()
     while ($total > 0) {
         $total = performLuceneIndexing();
         $sanityCount++;
-        if ($sanityCount > 100) {
+        if($sanityCount > 100){
             return true;
         }
     }
@@ -732,7 +747,7 @@ function performLuceneIndexing()
         $c = 0;
         while ($row = $db->fetchByAssoc($res)) {
             $suc = $index->index($beanModule, $row['id']);
-            if ($suc) {
+            if($suc){
                 $c++;
                 $total++;
             }
@@ -741,6 +756,7 @@ function performLuceneIndexing()
             $index->commit();
             $index->optimise();
         }
+
     }
     $index->optimise();
     return $total;
@@ -773,7 +789,7 @@ function aorRunScheduledReports()
             $jq->submitJob($job);
         }
     }
-    return true;
+    return true;  
 }
 
 function processAOW_Workflow()
@@ -849,6 +865,11 @@ EOF;
         $bean->save();
         return true;
     }
+}
+
+function runElasticSearchIndexerScheduler($data)
+{
+    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode($data));
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {

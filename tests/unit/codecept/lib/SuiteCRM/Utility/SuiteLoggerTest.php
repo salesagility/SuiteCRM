@@ -110,7 +110,7 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \Psr\Log\InvalidArgumentException(),
-            function () {
+            function() {
                 self::$logger->log('invalid-level', 'hello');
             }
         );
@@ -124,13 +124,12 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertNotEmpty($matches);
     }
 
-    private function getLastLogMessage()
-    {
+    private function getLastLogMessage() {
         $paths = new \SuiteCRM\Utility\Paths();
         $loggerPath = $paths->getProjectPath().'/suitecrm.log';
         $data = file($loggerPath);
 
-        if (empty($data)) {
+        if(empty($data)) {
             $line = '';
         } else {
             $line = $data[count($data)-1];

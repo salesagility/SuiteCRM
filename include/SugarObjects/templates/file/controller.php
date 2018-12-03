@@ -47,6 +47,7 @@ require_once 'include/formbase.php';
 
 class FileController extends SugarController
 {
+
     public function action_save()
     {
         $move = false;
@@ -65,4 +66,5 @@ class FileController extends SugarController
         }
         handleRedirect($return_id, $this->object_name);
     }
+
 }

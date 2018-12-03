@@ -32,11 +32,13 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         
         
         // clean up
+        
+        
     }
 
     public function testprocess()
     {
-        // save state
+	// save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
@@ -92,6 +94,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testpreDisplay()
@@ -114,6 +118,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testdisplay()
@@ -136,6 +142,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testdisplayHeader()
@@ -166,6 +174,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testgetModuleMenuHTML()
@@ -188,6 +198,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testincludeClassicFile()
@@ -211,11 +223,13 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
+        
+        
     }
 
     public function testgetJavascriptValidation()
     {
-        //check if it returns any text i-e JS code
+        //check if it returns any text i-e JS code    	
         $js = SugarView::getJavascriptValidation();
         $this->assertGreaterThan(0, strlen($js));
     }
@@ -245,6 +259,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testrenderJavascript()
@@ -273,6 +289,8 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testgetMenu()

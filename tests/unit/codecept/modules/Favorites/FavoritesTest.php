@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 class FavoritesTest extends SuiteCRM\StateCheckerUnitAbstract
 {
@@ -31,6 +31,8 @@ class FavoritesTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(false, $result);
         
         // clean up
+        
+        
     }
 
     public function testgetFavoriteID()

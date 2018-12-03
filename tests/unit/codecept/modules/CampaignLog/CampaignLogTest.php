@@ -41,6 +41,8 @@ class CampaignLogTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertSame(array(), $actual);
         
         // clean up
+        
+        
     }
 
     public function testretrieve_email_address()

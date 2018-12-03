@@ -21,6 +21,8 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testdisplay_flow_bar()
@@ -43,6 +45,8 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function teststart_flow_bar()
@@ -65,6 +69,8 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testdestroy_flow_bar()
@@ -87,6 +93,8 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testdisplay_progress_bar()
@@ -109,6 +117,8 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 
     public function testupdate_progress_bar()
@@ -131,5 +141,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
+        
+        
     }
 }
