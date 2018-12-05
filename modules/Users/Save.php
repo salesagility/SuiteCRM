@@ -224,7 +224,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 	    }
 	    else
 	    {
-	        $focus->setPreference('navigation_paradigm', 'gm', 0, 'global');
+	        $focus->setPreference('navigation_paradigm', $GLOBALS['sugar_config']['default_navigation_paradigm'] , 0, 'global');
 	    }
 
 	    if(isset($_POST['user_subpanel_tabs']))
