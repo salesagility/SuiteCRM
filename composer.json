@@ -44,7 +44,8 @@
     "jeroendesloovere/vcard": "v1.5",
     "browserstack/browserstack-local": "dev-master",
     "consolidation/robo": "^1.0.0",
-    "mockery/mockery": "^1.1.0"
+    "mockery/mockery": "^1.1.0",
+    "flow/jsonpath": "^0.3"
   },
   "scripts": {},
   "prefer-stable": true,
