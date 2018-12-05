@@ -416,7 +416,6 @@ class AOW_WorkFlow extends Basic
                     $params = @unserialize(base64_decode($condition->value));
                     if ($params === false) {
                         LoggerManager::getLogger()->error('Unserializable data given');
-                    } else {
                         $params = [null];
                     }
                     

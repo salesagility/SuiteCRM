@@ -134,5 +134,9 @@ $mod_strings = array(
      
 	'LBL_ACTIVITY_STATUS' => 'Activity Status',
 	'LBL_FP_EVENT_LOCATIONS_FP_EVENTS_1_FROM_FP_EVENTS_TITLE' => 'Event Locations from Events Title',
+
+    // Email links
+    'LBL_ACCEPT_LINK' => 'Accept',
+    'LBL_DECLINE_LINK' => 'Decline',
 );
 //LBL_ERROR_MSG_4 Begins with a number (controller.php line 581) for example 10 emails have failed to send. 
