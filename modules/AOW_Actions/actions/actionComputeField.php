@@ -41,6 +41,8 @@
  *
  */
 
+use SuiteCRM\Utility\SuiteValidator;
+
 require_once('modules/AOW_Actions/actions/actionBase.php');
 
 /**
@@ -208,7 +210,7 @@ class actionComputeField extends actionBase
     }
 
     /**
-     * @param $bean
+     * @param SugarBean $bean
      * @param $relationParameters
      * @param $relationParameterFields
      * @param $relationParameterTypes
@@ -221,6 +223,7 @@ class actionComputeField extends actionBase
         $relationParameterFields,
         $relationParameterTypes
     ) {
+        $isValidator = new SuiteValidator();
         $resolvedRelationParameters = array();
 
         $relateFields = $this->getAllRelatedFields($bean);
@@ -238,7 +241,27 @@ class actionComputeField extends actionBase
                     continue;
                 }
 
-                $entity = BeanFactory::getBean($relateFields[$relationParameters[$i]]['module'], $relatedEntityId);
+                if (is_object($relatedEntityId)) {
+                    // If this is a Link2 object then need to use the relationship
+                    // - because it's a one to many relationship's 'one' side
+                    $relationship = $relateFields[$relationParameters[$i]]['link'];
+                    if ($bean->load_relationship($relationship)) {
+                        foreach ($bean->$relationship->getBeans() as $relatedEntity) {
+                            $entity = $relatedEntity;
+                            break;
+                        }
+                    }
+                } elseif ($isValidator->isValidId($relatedEntityId)) {
+                    // If this is a string, it's probably an id of an object - really a relate field
+                    $entity = BeanFactory::getBean(
+                        $relateFields[$relationParameters[$i]]['module'],
+                        $relatedEntityId
+                    );
+                } else {
+                    // Skip if not recognized
+                    $resolvedRelationParameters[$i] = '';
+                    continue;
+                }
             } else {
                 if ($bean->load_relationship($relationParameters[$i])) {
                     foreach ($bean->{$relationParameters[$i]}->getBeans() as $relatedEntity) {
@@ -732,7 +755,7 @@ class actionComputeField extends actionBase
      */
     private function getOtherModuleForRelationship($relationship_name, $module)
     {
-        $db = $GLOBALS['db'];
+        $db = DBManagerFactory::getInstance();
 
         $query =
             "SELECT relationship_name, rhs_module, lhs_module FROM relationships WHERE deleted=0 AND relationship_name = '" .

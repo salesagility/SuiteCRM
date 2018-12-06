@@ -41,7 +41,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
+                
 $mod_strings = array(
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
@@ -126,4 +126,8 @@ $mod_strings = array(
 
     'LBL_ACTIVITY_STATUS' => 'Activity Status',
     'LBL_FP_EVENT_LOCATIONS_FP_EVENTS_1_FROM_FP_EVENTS_TITLE' => 'Event Locations from Events Title',
+    // Email links
+    'LBL_ACCEPT_LINK' => 'Accept',
+    'LBL_DECLINE_LINK' => 'Decline',
+    
 );

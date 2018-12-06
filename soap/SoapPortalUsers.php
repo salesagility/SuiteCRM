@@ -115,7 +115,7 @@ function portal_login($portal_auth, $user_name, $application_name)
         build_relationship_tree($contact);
         return array('id'=>session_id(), 'error'=>$error->get_soap_array());
     }
-    
+
     $error->set_error('invalid_login');
     return array('id'=>-1, 'error'=>$error->get_soap_array());
 }
@@ -138,13 +138,11 @@ function portal_validate_authenticated($session_id)
             $current_user = new User();
             $current_user->retrieve($_SESSION['portal_id']);
             login_success();
-            error_reporting($old_error_reporting);
             return true;
         }
     }
     session_destroy();
     $GLOBALS['log']->fatal('SECURITY: The session ID is invalid');
-    error_reporting($old_error_reporting);
     return false;
 }
 

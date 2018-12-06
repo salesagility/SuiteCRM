@@ -32,8 +32,6 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertInstanceOf('EmailMarketing', $result);
         
         // clean up
-        
-        
     }
 
     public function testget_summary_text()
@@ -50,7 +48,7 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testcreate_export_query()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();

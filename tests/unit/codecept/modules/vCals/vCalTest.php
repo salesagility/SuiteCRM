@@ -46,8 +46,6 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals('', $vcal->get_summary_text());
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_list_fields()
@@ -71,8 +69,6 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -96,8 +92,6 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testget_list_view_data()
@@ -121,8 +115,6 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testget_freebusy_lines_cache()
@@ -143,12 +135,12 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testcreate_sugar_freebusy()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         global $locale, $timedate;
 
@@ -169,12 +161,12 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testget_vcal_freebusy()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -221,7 +213,6 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->popTable('aod_index');
         $state->popTable('vcals');
         $state->popTable('tracker');
-        
     }
 
     public function testcache_sugar_vcal_freebusy()
@@ -251,7 +242,6 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
         $state->popGlobals();
         $state->popTable('vcals');
         $state->popTable('tracker');
-        
     }
 
     public function testfold_ical_lines()
@@ -328,7 +318,7 @@ class vCalTest extends SuiteCRM\StateCheckerUnitAbstract
         $meeting->location = 'test location';
         $meeting->description = 'test description';
 
-        $expectedStart = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SugarCRM//SugarCRM Calendar//EN\r\nBEGIN:VEVENT\r\nUID:1\r\nORGANIZED;CN=:\r\nDTSTART:20160211T173000Z\r\nDTEND:20160211T173000Z\r\n";
+        $expectedStart = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SugarCRM//SugarCRM Calendar//EN\r\nBEGIN:VEVENT\r\nUID:1\r\nORGANIZER;CN=:mailto:\r\nDTSTART:20160211T173000Z\r\nDTEND:20160211T173000Z\r\n";
         $expectedEnd = "\r\nSUMMARY:test\r\nLOCATION:test location\r\nDESCRIPTION:test description\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n";
 
         $result = vCal::get_ical_event($meeting, $user);

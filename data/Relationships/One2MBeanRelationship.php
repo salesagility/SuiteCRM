@@ -116,7 +116,7 @@ class One2MBeanRelationship extends One2MRelationship
         if (empty($GLOBALS['resavingRelatedBeans'])) {
             SugarRelationship::resaveRelatedBeans();
         }
-        
+
         return true;
     }
 
@@ -187,7 +187,14 @@ class One2MBeanRelationship extends One2MRelationship
         //If the link is RHS, just grab it from the focus.
         if ($link->getSide() == REL_RHS) {
             $rhsID = $this->def['rhs_key'];
-            $id = isset($link->getFocus()->$rhsID) ? $link->getFocus()->$rhsID : '';
+
+            $id = null;
+            if (isset($link->getFocus()->$rhsID)) {
+                $id = $link->getFocus()->$rhsID;
+            } else {
+                LoggerManager::getLogger()->warn('Incorrect linked relationship rhs ID: ' . get_class($link->getFocus()) . '::$' . $rhsID . ' is undefined');
+            }
+
             if (!empty($id)) {
                 $rows[$id] = array('id' => $id);
             }
@@ -223,14 +230,14 @@ class One2MBeanRelationship extends One2MRelationship
         $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
         $relatedSeed = BeanFactory::getBean($this->getRHSModule());
         $deleted = !empty($params['deleted']) ? 1 : 0;
-            
+
         if (!isset($link->getFocus()->$lhsKey)) {
             LoggerManager::getLogger()->warn('One2MBeanRelationship getQuery: Trying to get property of non-object');
             $linkFocusLhsKey = null;
         } else {
             $linkFocusLhsKey = $link->getFocus()->$lhsKey;
         }
-            
+
         $where = "WHERE $rhsTableKey = '{$linkFocusLhsKey}' AND {$rhsTable}.deleted=$deleted";
         $order_by = '';
 

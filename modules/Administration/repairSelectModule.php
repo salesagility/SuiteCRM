@@ -81,7 +81,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                         $mod_strings['LBL_QR_CBOX_CLEARVARDEFS'],
                                         $mod_strings['LBL_QR_CBOX_CLEARJSLANG'],
                                         $mod_strings['LBL_QR_CBOX_CLEARDASHLET'],
-                                        $mod_strings['LBL_QR_CBOX_CLEARSUGARFEEDCACHE'],
+                                        $mod_strings['LBL_QR_CBOX_CLEARSUITEFEEDCACHE'],
                                         $mod_strings['LBL_QR_CBOX_CLEARTHEMECACHE'],
                                         $mod_strings['LBL_QR_CBOX_REBUILDAUDIT'],
                                         $mod_strings['LBL_QR_CBOX_REBUILDEXT'],

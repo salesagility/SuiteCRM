@@ -116,6 +116,11 @@ class jjwg_Areas extends jjwg_Areas_sugar
                 }
             }
         }
+
+        if (!is_array($this->polygon)) {
+            LoggerManager::getLogger()->warn('Parameter must be an array or an object that implements Countable');
+        }
+
         if (count((array)$this->polygon) > 0) {
             return $this->polygon;
         }

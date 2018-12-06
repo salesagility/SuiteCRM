@@ -681,7 +681,7 @@ class EmailTemplate extends SugarBean
                     } else {
                         $contactFieldName = $contact->$fieldName;
                     }
-                    
+
                     $translated = translate($field_def['options'], 'Accounts', $contactFieldName);
 
                     if (isset($translated) && !is_array($translated)) {

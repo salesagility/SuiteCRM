@@ -64,7 +64,6 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerUnitAbstract
         // clean up
         
         $state->popTable('aow_actions');
-        
     }
 
     public function testbean_implements()
@@ -80,7 +79,5 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(false, $aowAction->bean_implements('ACL')); //test with valid value
         
         // clean up
-        
-        
     }
 }

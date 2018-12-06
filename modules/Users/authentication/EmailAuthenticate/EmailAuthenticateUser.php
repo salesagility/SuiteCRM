@@ -98,7 +98,7 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
             unset($_SESSION['emailAuthToken']);
             return true;
         }
-        
+
 
         $_SESSION['login_error'] = 'Please Enter Your User Name and Emailed Session Token';
         return false;

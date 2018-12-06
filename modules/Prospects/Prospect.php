@@ -146,8 +146,8 @@ class Prospect extends Person implements EmailInterface
     }
 
     /**
-    	builds a generic search based on the query string using or
-    	do not include any $this-> because this is called on without having the class instantiated
+        builds a generic search based on the query string using or
+        do not include any $this-> because this is called on without having the class instantiated
     */
     public function build_generic_where_clause($the_query_string)
     {

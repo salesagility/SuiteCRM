@@ -422,7 +422,7 @@ function get_subscription_lists_query($focus, $additional_fields = null)
         $all_news_type_pl_query .= " AND ( c.assigned_user_id ='".$current_user->id."' or ".$group_where.") ";
     }
     /* END - SECURITY GROUPS */
-        
+
     $all_news_type_list =$focus->db->query($all_news_type_pl_query);
 
     //build array of all newsletter campaigns
@@ -842,7 +842,7 @@ function process_subscriptions($subscription_string_to_parse)
             $errors['mailbox2'] = $mod_strings['LBL_MAILBOX_CHECK2_BAD'];
         }
         //do nothing, address has been changed
-        
+
         //if health counter is above 1, then show admin link
         if ($email_health>0) {
             if (is_admin($current_user)) {

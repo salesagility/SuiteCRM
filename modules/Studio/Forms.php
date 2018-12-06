@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,8 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 //for users
 function user_get_validate_record_js()
@@ -119,7 +117,7 @@ EOQ;
 						</td></tr></table>
 					<div id="s_fields_MSIlink" style="display:none">
 						<a href="#" onclick="toggleDisplay('s_fields_MSI');">
-							 $add_icon {$mod_strings['LBL_VIEW_SUGAR_FIELDS']}
+							 $add_icon {$mod_strings['LBL_VIEW_SUITE_FIELDS']}
 						</a>
 					</div>
 					<div id="s_fields_MSI" style="display:inline">
@@ -127,7 +125,7 @@ EOQ;
 						<table  cellpadding="0" cellspacing="0" border="0" width="100%" id="studio_fields">
 							<tr><td colspan='2'>
 
-									<a href="#" onclick="toggleDisplay('s_fields_MSI');">$min_icon</a>{$mod_strings['LBL_SUGAR_FIELDS_STAGE']}
+									<a href="#" onclick="toggleDisplay('s_fields_MSI');">$min_icon</a>{$mod_strings['LBL_SUITE_FIELDS_STAGE']}
 								    <br><select id='studio_display_type' onChange='filterStudioFields(this.value)'><option value='all'>All<option value='custom'>Custom</select>
 									</td>
 							</tr>

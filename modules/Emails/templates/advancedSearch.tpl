@@ -104,7 +104,7 @@
         <input id="data_parent_id_search" name="data_parent_id_search" type="hidden" value="">
         <br/><br/>
         <input class="sqsEnabled" id="data_parent_name_search" name="data_parent_name_search" type="text" value="">
-        <a href="javascript:void(0);"><img src="{sugar_getimagepath file='select.gif'}" align="absmiddle" border="0" alt=$mod_strings.LBL_EMAIL_SELECTOR onclick="SUGAR.email2.composeLayout.callopenpopupForEmail2('_search',{ldelim}'form_name':'advancedSearchForm'{rdelim} );">
+        <a href="javascript:void(0);"><img src="{sugar_getimagepath file='id-ff-select.gif'}" align="absmiddle" border="0" alt=$mod_strings.LBL_EMAIL_SELECTOR onclick="SUGAR.email2.composeLayout.callopenpopupForEmail2('_search',{ldelim}'form_name':'advancedSearchForm'{rdelim} );">
          </a>
         </td>
     </tr>

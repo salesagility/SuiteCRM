@@ -26,8 +26,7 @@ class ViewQuickTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testdisplay()
     {
-        
-        if(isset($_SESSION)) {
+        if (isset($_SESSION)) {
             $session = $_SESSION;
         }
         
@@ -45,7 +44,7 @@ class ViewQuickTest extends SuiteCRM\StateCheckerUnitAbstract
 
         // clean up
 
-        if(isset($session)) {
+        if (isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);

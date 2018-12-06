@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,30 +38,33 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description: TODO:  To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
+use SuiteCRM\Utility\SuiteValidator;
 
 if (isset($_POST['saveConfig'])) {
     require_once('modules/Users/User.php');
-    $focus = new User();
-    $focus->retrieve($_POST['record']);
-    if (!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {
-        SugarApplication::appendErrorMessage($focus->error_string);
-        SugarApplication::redirect("index.php?action=ChangePassword&module=Users&record=".$_POST['record']);
-    }
-    
-    // Send to new user wizard if it hasn't been run
-    $ut = $GLOBALS['current_user']->getPreference('ut');
-    if (empty($ut)) {
+	$focus = new User();
+	$isValidator = new SuiteValidator();
+        if (!$isValidator->isValidId($_POST['record'])) {
+            LoggerManager::getLogger()->warn('Invalid ID in post request');
+        } else {
+            $record = $_POST['record'];
+            $focus->retrieve($record);
+            if(!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {
+                SugarApplication::appendErrorMessage($focus->error_string);
+                SugarApplication::redirect('index.php?action=ChangePassword&module=Users&record=' . $record);
+            }
+
+            // Send to new user wizard if it hasn't been run
+            $ut = $GLOBALS['current_user']->getPreference('ut');
+        }
+    if(empty($ut)) {
         SugarApplication::redirect('index.php?module=Users&action=Wizard');
     }
-    
+
     // Otherwise, send to home page
     SugarApplication::redirect('index.php?module=Home&action=index');
 }

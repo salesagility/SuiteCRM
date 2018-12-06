@@ -950,7 +950,7 @@ AjaxObject.detailView = {
         fixedcenter: true,
         constraintoviewport: true,
         buttons: [{
-          text: app_strings.LBL_EMAIL_ARCHIVE_TO_SUGAR, isDefault: true, handler: function () {
+          text: app_strings.LBL_EMAIL_ARCHIVE_TO_SUITE, isDefault: true, handler: function () {
             AjaxObject.detailView.getImportAction(SED.importDialog.ret);
           }
         }]//,

@@ -38,8 +38,6 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertGreaterThan(0, count($jjwgMarkers->settings));
         
         // clean up
-        
-        
     }
 
     public function testdefine_loc()

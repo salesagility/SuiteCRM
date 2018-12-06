@@ -41,7 +41,7 @@
 
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
-<form class="email-import-view" id="EditView" name="EditView" method="POST" action="index.php?module=Emails&action=send">
+<form class="email-import-view" id="EditView" name="EditNonImported" method="POST" action="index.php?module=Emails&action=send">
     <input type="hidden" name="module" value="Emails">
     <input type="hidden" name="action" value="Import">
     <input type="hidden" name="record" value="">

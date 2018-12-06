@@ -98,7 +98,6 @@ class AOS_Contracts extends AOS_Contracts_sugar
             $this->createLink();
         }
         return $return_id;
-
     }
 
     public function mark_deleted($id)
@@ -162,7 +161,6 @@ class AOS_Contracts extends AOS_Contracts_sugar
     {
         require_once('modules/Calls/Call.php');
         $call = new call();
-
 
         if (!isset($this->call_id)) {
             LoggerManager::getLogger()->warn('Call ID not found for AOS Contract / delete call.');

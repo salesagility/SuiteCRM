@@ -58,7 +58,7 @@ foreach ($beanFiles as $beanname=>$beanpath) {
         continue;
     }
     $processed_tables[$focus->table_name]=$focus->table_name;
-    
+
 
     if (!empty($dictionary[$focus->object_name]['indices'])) {
         $indices=$dictionary[$focus->object_name]['indices'];

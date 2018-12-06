@@ -666,7 +666,7 @@ class AOR_Report extends Basic
         }
         $html = '<div class="list-view-rounded-corners" style="' . $report_style . '">';
         //End
-        
+
         $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive aor_reports">';
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
@@ -947,22 +947,22 @@ class AOR_Report extends Basic
             if (!$field['display']) {
                 continue;
             }
-            
+
             $fieldTotal = null;
             if (!isset($field['total'])) {
                 LoggerManager::getLogger()->warn('AOR_Report problem: field[total] is not set for getTotalHTML()');
             } else {
                 $fieldTotal = $field['total'];
             }
-            
+
             $appListStringsAorTotalOptionsFieldTotal = null;
             if (!isset($app_list_strings['aor_total_options'][$fieldTotal])) {
                 LoggerManager::getLogger()->warn('AOR_Report problem: app_list_strings[aor_total_options][fieldTotal] is not set for getTotalHTML()');
             } else {
                 $appListStringsAorTotalOptionsFieldTotal = $app_list_strings['aor_total_options'][$fieldTotal];
             }
-            
-            
+
+
             if ($fieldTotal) {
                 $showTotal = true;
                 $totalLabel = $field['label'] . ' ' . $appListStringsAorTotalOptionsFieldTotal;
@@ -1107,7 +1107,7 @@ class AOR_Report extends Basic
         if ($field->display) {
             $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
         }
-            
+
         $sql = $this->build_report_query();
         $result = $this->db->query($sql);
 

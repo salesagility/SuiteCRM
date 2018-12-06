@@ -113,6 +113,5 @@ class HistoryCest
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
-
     }
 }

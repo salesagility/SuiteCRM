@@ -20,9 +20,9 @@ use Faker\Factory;
 class AcceptanceTester extends \Codeception\Actor
 {
     use _generated\AcceptanceTesterActions;
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
 
     /**
      * @return \Faker\Generator
@@ -85,5 +85,4 @@ class AcceptanceTester extends \Codeception\Actor
         $I->dontSee('error');
         $I->dontSee('PHP');
     }
-
 }

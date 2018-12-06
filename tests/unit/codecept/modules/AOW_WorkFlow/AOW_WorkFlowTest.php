@@ -41,8 +41,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(true, $aowWorkFlow->bean_implements('ACL')); //test with valid value
         
         // clean up
-        
-        
     }
 
     public function testsave()
@@ -101,8 +99,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testrun_flows()
@@ -140,8 +136,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testrun_bean_flows()
@@ -158,8 +152,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerUnitAbstract
     }
 
     public function testget_flow_beans()
-    {        
-        
+    {
         $aowWorkFlow = new AOW_WorkFlow();
         
         //test for AOS_Quotes. it will return null as no test data is available
@@ -173,13 +166,9 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerUnitAbstract
         $aowWorkFlow = new AOW_WorkFlow();
         $query = array();
 
-        //test without type param
-        $result = $aowWorkFlow->build_flow_query_join('aos_products_quotes', new AOS_Quotes(), '', array());
-        $this->assertSame(array(), $result);
-
         //test with type custom
         $expected = array('join' => array('c' => 'LEFT JOIN calls_cstm c ON calls.id = c.id_c '));
-        $result = $aowWorkFlow->build_flow_query_join('c', new Call(), 'custom', array());
+        $result = $aowWorkFlow->build_flow_custom_query_join('calls', 'c', new Call(), array());
         $this->assertSame($expected, $result);
 
         //test with type relationship
@@ -187,7 +176,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerUnitAbstract
                 'join' => array('aos_products_quotes' => "LEFT JOIN aos_products_quotes aos_products_quotes ON aos_quotes.id=aos_products_quotes.parent_id AND aos_products_quotes.deleted=0\n\n"),
                 'select' => array("aos_products_quotes.id AS 'aos_products_quotes_id'"),
         );
-        $result = $aowWorkFlow->build_flow_query_join('aos_products_quotes', new AOS_Quotes(), 'relationship', array());
+        $result = $aowWorkFlow->build_flow_relationship_query_join('aos_products_quotes', new AOS_Quotes(), array());
         $this->assertSame($expected, $result);
     }
 

@@ -154,6 +154,7 @@ $dictionary['AOS_Contracts'] = array(
                     array(
                         'name' => 'getCurrencyDropDown',
                         'returns' => 'html',
+                        'onListView' => true,
                     ),
             ),
         'status' =>

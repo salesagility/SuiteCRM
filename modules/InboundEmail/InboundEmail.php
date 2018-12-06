@@ -2822,6 +2822,7 @@ class InboundEmail extends SugarBean
             $stored_options['reply_to_addr'] = trim($_REQUEST['reply_to_addr']);
 
             if (!$this->isPop3Protocol()) {
+                $stored_options['mailbox'] = (isset($_REQUEST['mailbox']) ? trim($_REQUEST['mailbox']) : "");
                 $stored_options['trashFolder'] = (isset($_REQUEST['trashFolder']) ? trim($_REQUEST['trashFolder']) : "");
                 $stored_options['sentFolder'] = (isset($_REQUEST['sentFolder']) ? trim($_REQUEST['sentFolder']) : "");
             } // if
@@ -5447,12 +5448,9 @@ class InboundEmail extends SugarBean
         ///////////////////////////////////////////////////////////////////////
         ////	DEAL WITH THE MAILBOX
         if (!$forDisplay) {
-            if (!$isGroupFolderExists)
-            {
+            if (!$isGroupFolderExists) {
                 $r = imap_setflag_full($this->conn, $msgNo, '\\SEEN');
-            }
-            else
-            {
+            } else {
                 $r = imap_clearflag_full($this->conn, $msgNo, '\\SEEN');
             }
 

@@ -315,7 +315,7 @@ class Lead extends Person implements EmailInterface
     public function get_list_view_data()
     {
         $temp_array = parent::get_list_view_data();
-                
+
         if (!isset($temp_array['ACCOUNT_NAME'])) {
             LoggerManager::getLogger()->warn('Leads get list view data error: account name is not defined in list view data.');
             $tempArrayAccountName = null;
@@ -558,7 +558,7 @@ class Lead extends Person implements EmailInterface
                         if (!isset($this->custom_fields->avail_fields)) {
                             LoggerManager::getLogger()->warn('Undefined property: $avail_fields');
                         }
-                                                
+
                         if (isset($this->custom_fields->avail_fields) && $this->custom_fields->avail_fields[$field]['type'] == 'int') {
                             $form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'int', false,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
                         } elseif (isset($this->custom_fields->avail_fields) && $this->custom_fields->avail_fields[$field]['type'] == 'float') {

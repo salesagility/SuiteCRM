@@ -134,7 +134,6 @@ class Popup_Picker
                 continue;
             }
 
-            $sort_date_time='';
             if (empty($task->date_due) || $task->date_due == '0000-00-00') {
                 $date_due = '';
             } else {
@@ -186,11 +185,10 @@ class Popup_Picker
         } // end Tasks
 
         foreach ($focus_meetings_list as $meeting) {
-
             if (!$meeting->ACLAccess('list')) {
                 continue;
             }
-          
+
             if (empty($meeting->contact_id) && empty($meeting->contact_name)) {
                 $meeting_contacts = $meeting->get_linked_beans('contacts', 'Contact');
                 if (!empty($meeting_contacts[0]->id) && !empty($meeting_contacts[0]->name)) {
@@ -239,7 +237,6 @@ class Popup_Picker
         } // end Meetings
 
         foreach ($focus_calls_list as $call) {
-          
             if (!$call->ACLAccess('list')) {
                 continue;
             }

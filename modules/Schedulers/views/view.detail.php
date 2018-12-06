@@ -41,6 +41,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/MVC/View/views/view.detail.php');
 
@@ -50,7 +53,7 @@ class SchedulersViewDetail extends ViewDetail
     /**
      * @see SugarView::_getModuleTitleListParam()
      */
-    protected function _getModuleTitleListParam()
+    protected function _getModuleTitleListParam($browserTitle = false)
     {
         global $mod_strings;
 

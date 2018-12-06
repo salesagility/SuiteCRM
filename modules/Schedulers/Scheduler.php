@@ -174,16 +174,16 @@ class Scheduler extends SugarBean
         $job->scheduler_id = $this->id;
         $job->name = $this->name;
         $job->execute_time = $GLOBALS['timedate']->nowDb();
-        
+
         $user = $this->getUser();
-        
+
         if (!is_object($user)) {
             LoggerManager::getLogger()->warn('Scheduler / create job: User object not found.');
             $job->assigned_user_id = null;
         } else {
             $job->assigned_user_id = $user->id;
         }
-        
+
         $job->target = $this->job;
         return $job;
     }
@@ -593,8 +593,10 @@ class Scheduler extends SugarBean
                     $value = str_replace('*/', '', $value);
 
                     return $value . $mod_strings['LBL_HOUR'];
-                } elseif (preg_match('/[^0-9]/',
-                    $mins)) { // got a range, or multiple of mins, so we return an 'Hours' label
+                } elseif (preg_match(
+                    '/[^0-9]/',
+                    $mins
+                )) { // got a range, or multiple of mins, so we return an 'Hours' label
                     return $value;
                 }    // got a "minutes" setting, so it will be at some o'clock.
                 $datef = $current_user->getUserDateTimePreferences();
@@ -988,7 +990,7 @@ class Scheduler extends SugarBean
         $sched14->save();
 
         $sched15 = new Scheduler();
-        $sched15->name               = $mod_strings['LBL_OOTB_SUGARFEEDS'];
+        $sched15->name               = $mod_strings['LBL_OOTB_SUITEFEEDS'];
         $sched15->job                = 'function::trimSugarFeeds';
         $sched15->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
         $sched15->date_time_end      = null;
@@ -1067,12 +1069,12 @@ class Scheduler extends SugarBean
             global $mod_strings;
             include_once('modules/Schedulers/_AddJobsHere.php');
 
-            // job functions
-            self::$job_strings = array('url::' => 'URL');
-            foreach ($job_strings as $k=>$v) {
-                self::$job_strings['function::' . $v] = $mod_strings['LBL_'.strtoupper($v)];
-            }
-        }
-        return self::$job_strings;
-    }
+			// job functions
+			self::$job_strings = array('url::' => 'URL');
+			foreach($job_strings as $k=>$v){
+				self::$job_strings['function::' . $v] = $mod_strings['LBL_'.strtoupper($v)];
+			}
+		}
+		return self::$job_strings;
+	}
 } // end class definition

@@ -41,23 +41,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
-
- * Description:
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Opportunity is used to store customer information.
 class Opportunity extends SugarBean
 {
@@ -277,7 +260,7 @@ class Opportunity extends SugarBean
         $query_array=$this->contacts->getQuery(true);
 
         if (is_string($query_array)) {
-            LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array)");
+            LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array) value id: $query_array");
         } else {
             //update the select clause in the retruned query.
             $query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
@@ -288,7 +271,6 @@ class Opportunity extends SugarBean
             $query.=' '.$qstring;
         }
         $temp = array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
-        
         $contact = new Contact();
         return $this->build_related_list2($query, $contact, $temp);
     }
@@ -349,8 +331,8 @@ class Opportunity extends SugarBean
 
 
     /**
-    	builds a generic search based on the query string using or
-    	do not include any $this-> because this is called on without having the class instantiated
+        builds a generic search based on the query string using or
+        do not include any $this-> because this is called on without having the class instantiated
     */
     public function build_generic_where_clause($the_query_string)
     {

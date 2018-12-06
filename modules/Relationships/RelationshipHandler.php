@@ -235,8 +235,9 @@ class RelationshipHandler extends Relationship
 
 
 
-    public function build_related_list($type="base", &$template, $row_offset = 0, $limit = -1)
+    public function build_related_list($query = 'base', &$template, $row_offset = 0, $limit = -1)
     {
+        $type = $query;
         //type can be base, rel1
 
         $target_list = "";
@@ -290,7 +291,7 @@ class RelationshipHandler extends Relationship
                 }
                 //end if many-to-many
             }
-        
+
             if ($rel_array['relationship_type']=="one-to-many") {
                 $RHSKey = $rel_array['rhs_key'];
                 $target_bean->$RHSKey = $this->base_bean->id;
@@ -321,7 +322,7 @@ class RelationshipHandler extends Relationship
                 }
                 //end if many-to-many
             }
-        
+
             if ($rel_array['relationship_type']=="one-to-many") {
                 $RHSKey = $rel_array['rhs_key'];
                 $target_bean->$RHSKey = $this->base_bean->id;

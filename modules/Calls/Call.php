@@ -181,7 +181,7 @@ class Call extends SugarBean
         }
         return parent::ACLAccess($view, $is_owner, $in_group);
     }
-    
+
     // save date_end by calculating user input
     // this is for calendar
     public function save($check_notify = false)
@@ -842,7 +842,7 @@ class Call extends SugarBean
             $keys = array_keys($app[$def['options']]);
             return $keys[0];
         }
-        
+
         return '';
     }
 

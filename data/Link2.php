@@ -274,7 +274,7 @@ class Link2
     {
         return $this->relationship_fields;
     }
-    
+
     /**
      * @param $name
      *
@@ -288,7 +288,7 @@ class Link2
         return null;
         //For now return null. Later try the relationship object directly.
     }
-    
+
     /**
      * @return SugarRelationship the relationship object this link references
      */
@@ -303,6 +303,14 @@ class Link2
     public function getSide()
     {
         //First try the relationship
+
+        $focusModuleName = null;
+        if (isset($this->focus->module_name)) {
+            $focusModuleName = $this->focus->module_name;
+        } else {
+            LoggerManager::getLogger()->error('Focus Module Name is not set for Link2 get side.');
+        }
+
         if ($this->relationship->getLHSLink() == $this->name &&
             ($this->relationship->getLHSModule() == (isset($this->focus->module_name) ? $this->focus->module_name : null))
         ) {
@@ -320,7 +328,7 @@ class Link2
         } else {
             $focusModuleName = $this->focus->module_name;
         }
-        
+
         if ($rhsLink == $this->name &&
             ($rhsModule == $focusModuleName)
         ) {

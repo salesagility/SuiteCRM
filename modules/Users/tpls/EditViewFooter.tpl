@@ -466,7 +466,7 @@
 </div>
 {if $ID}
     <div id="eapm_area" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};' class="user-tab-content">
-        <div style="text-align:center; width: 100%">{sugar_image name="loading"}</div>
+        <div style="text-align:center; width: 100%">{sugar_getimage name="loading"}</div>
     </div>
 {/if}
 <div class="user-tab-content">

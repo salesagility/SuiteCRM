@@ -49,7 +49,8 @@ require_once('include/utils/encryption_utils.php');
 function getSystemInfo($send_usage_info=true)
 {
     global $sugar_config;
-    global $db, $administration, $timedate;
+    global $administration, $timedate;
+    $db = DBManagerFactory::getInstance();
     $info=array();
     $info = getBaseSystemInfo($send_usage_info);
     if ($send_usage_info) {
@@ -143,7 +144,9 @@ function getBaseSystemInfo($send_usage_info=true)
 function check_now($send_usage_info=true, $get_request_data=false, $response_data = false, $from_install=false)
 {
     global $sugar_config, $timedate;
-    global $db, $license;
+    global $license;
+    $db = DBManagerFactory::getInstance();
+
     include('sugar_version.php');
 
 

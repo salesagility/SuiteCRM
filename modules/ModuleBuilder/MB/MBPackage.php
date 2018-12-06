@@ -836,7 +836,7 @@ class MBPackage
                             $return[$value][$va] = $mod_strings['LBL_EC_VIEWS'];
                             break;
                         case 'SugarFeeds':
-                            $return[$value][$va] = $mod_strings['LBL_EC_SUGARFEEDS'];
+                            $return[$value][$va] = $mod_strings['LBL_EC_SUITEFEEDS'];
                             break;
                         case 'Dashlets':
                             $return[$value][$va] = $mod_strings['LBL_EC_DASHLETS'];

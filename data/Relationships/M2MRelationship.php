@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,6 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once("data/Relationships/SugarRelationship.php");
 
@@ -132,7 +132,7 @@ class M2MRelationship extends SugarRelationship
         /* BEGIN - SECURITY GROUPS */
         //Need to hijack this as security groups will not contain a link on the module side
         //due to the way the module works. Plus it would remove the relative ease of adding custom module support
-        
+
         if (get_class($rhs) != 'User' && get_class($rhs) != 'ACLRole' && get_class($lhs) == 'SecurityGroup') {
             $rhs->$rhsLinkName->addBean($lhs);
             $this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
@@ -256,7 +256,7 @@ class M2MRelationship extends SugarRelationship
         /* BEGIN - SECURITY GROUPS */
         //Need to hijack this as security groups will not contain a link on the module side
         //due to the way the module works. Plus it would remove the relative ease of adding custom module support
-        
+
         if (get_class($lhs) == 'SecurityGroup' || get_class($rhs) == 'SecurityGroup') {
             $dataToRemove = array(
                 $this->def['join_key_lhs'] => $lhs->id,
@@ -277,7 +277,7 @@ class M2MRelationship extends SugarRelationship
             }
 
             $this->removeRow($dataToRemove);
-            
+
             if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes") {
                 if (get_class($lhs) != 'SecurityGroup' && $lhs->$lhsLinkName instanceof Link2) {
                     $lhs->$lhsLinkName->load();
@@ -420,7 +420,7 @@ class M2MRelationship extends SugarRelationship
         } else {
             $tmpId = $tmpFocus->id;
         }
-        
+
         $where = "$rel_table.$knownKey = '{$tmpId}'" . $this->getRoleWhere();
         $order_by = '';
 
