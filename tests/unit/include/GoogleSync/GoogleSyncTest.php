@@ -169,6 +169,16 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
         $this->assertEquals(3, count($return));
 
+        // Test for invalid user id exception handling
+        $object->workingUser->id = 'INVALID';
+        try {
+            $caught = false;
+            $return = $object->getUserMeetings();
+        } catch (Exception $e) {
+            $caught = true;
+        }
+        $this->assertTrue($caught);
+
         $state->popTable('meetings');
         $state->popTable('meetings_cstm');
         $state->popTable('users');
@@ -178,11 +188,6 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
     }
 
     public function testGetUserGoogleEvents()
-    {
-        $this->markTestIncomplete('TODO: Implement Tests');
-    }
-
-    public function testGetGoogleEventByMeetingId()
     {
         $this->markTestIncomplete('TODO: Implement Tests');
     }
@@ -434,11 +439,12 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
     {
         $object = new GoogleSync();
         $object->setTimeZone('Etc/UTC');
+        $testid = create_guid();
 
         // Create SuiteCRM Meeting Object
         $CRM_Meeting = new Meeting();
 
-        $CRM_Meeting->id = 'FAKE_MEETING_ID';
+        $CRM_Meeting->id = $testid;
         $CRM_Meeting->name = 'Unit Test Event';
         $CRM_Meeting->description = 'Unit Test Event';
         $CRM_Meeting->location = '123 Sesame Street';
@@ -462,7 +468,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
         $props = $return->getExtendedProperties();
         $private = $props->getPrivate();
-        $this->assertEquals('FAKE_MEETING_ID', $private['suitecrm_id']);
+        $this->assertEquals($testid, $private['suitecrm_id']);
         $this->assertEquals('Meeting', $private['suitecrm_type']);
     }
 
