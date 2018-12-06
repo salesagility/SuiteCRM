@@ -652,8 +652,6 @@ class User extends Person implements EmailInterface
 
         parent::save($check_notify);
 
-
-
         // set some default preferences when creating a new user
         if ($setNewUserPreferences) {
             if (!$this->getPreference('calendar_publish_key')) {
