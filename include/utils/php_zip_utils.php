@@ -50,12 +50,9 @@ function unzip($zip_archive, $zip_dir)
 function unzip_file($zip_archive, $archive_file, $zip_dir)
 {
     if (!is_dir($zip_dir)) {
+        $GLOBALS['log']->fatal("Specified directory for zip file extraction does not exist.");
         if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL')) {
-            $GLOBALS['log']->fatal("Specified directory '$zip_dir' for zip file '$zip_archive' extraction does not exist.");
-
             return false;
-        } else {
-            die("Specified directory for zip file extraction does not exist.");
         }
     }
 
@@ -64,14 +61,10 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
     $res = $zip->open(UploadFile::realpath($zip_archive)); // we need realpath here for PHP streams support
 
     if ($res !== true) {
+        $GLOBALS['log']->fatal(sprintf(sprintf("ZIP Error(%d): Status(%s)", $res, $zip->status)));
         if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL')) {
-            $GLOBALS['log']->fatal(sprintf("ZIP Error(%d): Status(%s): Arhive(%s): Directory(%s)", $res, $zip->status,
-                $zip_archive, $zip_dir));
             return false;
-        } else {
-            die(sprintf("ZIP Error(%d): Status(%s)", $res, $zip->status));
         }
-
     }
 
     if ($archive_file !== null) {
@@ -81,26 +74,18 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
     }
 
     if ($res !== true) {
+        $GLOBALS['log']->fatal(sprintf(sprintf("ZIP Error(%d): Status(%s)", $res, $zip->status)));
         if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL')) {
-            $GLOBALS['log']->fatal(sprintf("ZIP Error(%d): Status(%s): Arhive(%s): Directory(%s)", $res, $zip->status,
-                $zip_archive, $zip_dir));
-
             return false;
-        } else {
-            die(sprintf("ZIP Error(%d): Status(%s)", $res, $zip->status));
         }
     }
-
     return true;
 }
 
 function zip_dir($zip_dir, $zip_archive)
 {
     if (!is_dir($zip_dir)) {
-        if (!defined('SUITE_PHPUNIT_RUNNER')) {
-            die("Specified directory for zip file extraction does not exist.");
-        }
-
+        $GLOBALS['log']->fatal("Specified directory for zip file extraction does not exist.");
         return false;
     }
     $zip = new ZipArchive();
