@@ -93,7 +93,7 @@ script:
 
 after_script:
   - ./build/push_output.sh
-  - cat suitecrm.log
+  # - cat suitecrm.log TODO: Upload the suitecrm.log to an external file host.
   - sudo cat /var/log/apache2/error.log
   - echo $TRAVIS_COMMIT_RANGE
 
