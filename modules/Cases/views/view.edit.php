@@ -75,9 +75,9 @@ class CasesViewEdit extends ViewEdit
                     $('#internal_label').closest('.edit-view-row-item').hide();
                     $('#addFileButton').closest('.edit-view-row-item').hide();
                     $('#case_update_form_label').closest('.edit-view-row-item').hide();";
-            $script .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('description'));";
+            $newScript .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('description'));";
 
-            echo '<script>$(document).ready(function(){' . $script . '})</script>';
+            echo '<script>$(document).ready(function(){' . $newScript . '})</script>';
         }
     }
 }
