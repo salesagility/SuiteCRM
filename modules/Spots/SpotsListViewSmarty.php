@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,33 +34,36 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 require_once 'include/ListView/ListViewSmarty.php';
 
 class SpotsListViewSmarty extends ListViewSmarty
 {
-    public function SpotsListViewSmarty()
+
+    /**
+     * Constructor
+     *
+     */
+    public function __construct()
     {
-        parent::ListViewSmarty();
+        parent::__construct();
     }
 
-    /*
-    function buildExportLink($id = 'export_link') {
-
-        global $app_strings;
-
-        $script = "<a href='javascript:void(0)' id='export_listview_top' ".
-                "onclick=\"return sListView.send_form(true, '{$_REQUEST['module']}', " .
-                "'index.php?entryPoint=export', " .
-                "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_EXPORT']}</a>" .
-                "</li><li>". // List item hack
-                "<a href='javascript:void(0)' id='map_listview_top' " .
-                " onclick=\"return sListView.send_form(true, 'jjwg_Maps', " .
-                "'index.php?entryPoint=jjwg_Maps&display_module={$_REQUEST['module']}', " .
-                "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_MAP']}</a>";
-
-        return $script;
-    }*/
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0,
+     * please update your code, use __construct instead
+     */
+    public function SpotsListViewSmarty()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 8.0, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
 }

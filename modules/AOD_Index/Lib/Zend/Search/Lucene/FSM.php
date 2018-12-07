@@ -440,4 +440,3 @@ abstract class Zend_Search_Lucene_FSM
         $this->_currentState = $this->_states[0];
     }
 }
-

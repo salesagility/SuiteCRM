@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 *}
 <div align="right" id="dashletSearch">
@@ -65,9 +66,9 @@
 {/if}
 
 {if $moduleName == 'Home'}
-<div id="moduleDashlets" style="height:400px;display:;">
+<div id="moduleDashlets" style="height:400px;">
 	<h3>{sugar_translate label='LBL_MODULES' module='Home'}</h3>
-	<div id="moduleDashletsList" style="height:394px;overflow:auto;display:;">
+	<div id="moduleDashletsList" style="height:394px;overflow:auto;">
 	<table width="95%">
 		{counter assign=rowCounter start=0 print=false}
 		{foreach from=$modules item=module}
@@ -122,33 +123,23 @@
 
 {if $moduleName == 'Home'}
 <div id="webDashlets" style="height:400px;display:none;">
-	<h3>{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}</h3>
 	<div id="webDashletsList">
-	<table width="95%">
-	    <tr>
-	        <td scope="row"></td>
-	        <td><input type="text" id="web_address" value="http://" style="width: 400px"   title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" 
-                    onclick="return SUGAR.mySugar.addDashlet('iFrameDashlet', 'web', document.getElementById('web_address').value);" />
-            </td>
-        </tr>
-    </table>
-    <h3>{sugar_translate label='LBL_RSS_TITLE' module='Home'}</h3>
-	<table width="95%">
-        <tr>
-	        <td scope="row"></td>
-	        <td><input type="text" id="rss_address" value="http://" style="width: 400px"  title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" 
-                    onclick="return SUGAR.mySugar.addDashlet('RSSDashlet', 'web', document.getElementById('rss_address').value);" />
-            </td>
-        </tr>
-	</table>
+		<table width="95%">
+			<tr>
+				<td scope="row" width="20%">{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}</td>
+				<td>
+					<input type="text" id="web_address" value="http://" style="width: 280px"   title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/>
+					<input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" onclick="return SUGAR.mySugar.addDashlet('iFrameDashlet', 'web', document.getElementById('web_address').value);" />
+				</td>
+			</tr>
+			<tr>
+				<td scope="row">{sugar_translate label='LBL_RSS_TITLE' module='Home'}</td>
+				<td>
+					<input type="text" id="rss_address" value="http://" style="width: 280px"  title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" />
+					<input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" onclick="return SUGAR.mySugar.addDashlet('RSSDashlet', 'web', document.getElementById('rss_address').value);" />
+				</td>
+			</tr>
+		</table>
 	</div>
 </div>
 {/if}

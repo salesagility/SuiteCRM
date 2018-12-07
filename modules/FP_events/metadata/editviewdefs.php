@@ -1,35 +1,35 @@
 <?php
 $module_name = 'FP_events';
 $viewdefs [$module_name] =
-    array (
+    array(
         'EditView' =>
-            array (
+            array(
                 'templateMeta' =>
-                    array (
+                    array(
                         'maxColumns' => '2',
                         'widths' =>
-                            array (
+                            array(
                                 0 =>
-                                    array (
+                                    array(
                                         'label' => '10',
                                         'field' => '30',
                                     ),
                                 1 =>
-                                    array (
+                                    array(
                                         'label' => '10',
                                         'field' => '30',
                                     ),
                             ),
                         'useTabs' => true,
                         'tabDefs' =>
-                            array (
+                            array(
                                 'LBL_PANEL_OVERVIEW' =>
-                                    array (
+                                    array(
                                         'newTab' => true,
                                         'panelDefault' => 'expanded',
                                     ),
                                 'LBL_EMAIL_INVITE' =>
-                                    array (
+                                    array(
                                         'newTab' => true,
                                         'panelDefault' => 'expanded',
                                     ),
@@ -37,42 +37,42 @@ $viewdefs [$module_name] =
                         'syncDetailEditViews' => false,
                     ),
                 'panels' =>
-                    array (
+                    array(
                         'LBL_PANEL_OVERVIEW' =>
-                            array (
+                            array(
                                 0 =>
-                                    array (
+                                    array(
                                         0 => 'name',
                                         1 =>
-                                            array (
+                                            array(
                                                 'name' => 'fp_event_locations_fp_events_1_name',
                                             ),
                                     ),
                                 1 =>
-                                    array (
+                                    array(
                                         0 =>
-                                            array (
+                                            array(
                                                 'name' => 'date_start',
                                                 'type' => 'datetimecombo',
                                                 'displayParams' =>
-                                                    array (
+                                                    array(
                                                         'required' => true,
                                                     ),
                                             ),
                                         1 =>
-                                            array (
+                                            array(
                                                 'name' => 'date_end',
                                                 'type' => 'datetimecombo',
                                                 'displayParams' =>
-                                                    array (
+                                                    array(
                                                         'required' => true,
                                                     ),
                                             ),
                                     ),
                                 2 =>
-                                    array (
+                                    array(
                                         0 =>
-                                            array (
+                                            array(
                                                 'name' => 'duration',
                                                 'customCode' => '
                 @@FIELD@@
@@ -92,40 +92,40 @@ $viewdefs [$module_name] =
                                                 'customCodeReadOnly' => '{$fields.duration_hours.value}{$MOD.LBL_HOURS_ABBREV} {$fields.duration_minutes.value}{$MOD.LBL_MINSS_ABBREV} ',
                                             ),
                                         1 =>
-                                            array (
+                                            array(
                                                 'name' => 'budget',
                                                 'label' => 'LBL_BUDGET',
                                             ),
                                     ),
                                 3 =>
-                                    array (
+                                    array(
                                         0 => 'description',
                                     ),
                                 4 =>
-                                    array (
+                                    array(
                                         0 => 'assigned_user_name',
                                     ),
                             ),
                         'LBL_EMAIL_INVITE' =>
-                            array (
+                            array(
                                 0 =>
-                                    array (
+                                    array(
                                         0 =>
-                                            array (
+                                            array(
                                                 'name' => 'invite_templates',
                                                 'studio' => 'visible',
                                                 'label' => 'LBL_INVITE_TEMPLATES',
                                             ),
                                     ),
                                 1 =>
-                                    array (
+                                    array(
                                         0 =>
-                                            array (
+                                            array(
                                                 'name' => 'accept_redirect',
                                                 'label' => 'LBL_ACCEPT_REDIRECT',
                                             ),
                                         1 =>
-                                            array (
+                                            array(
                                                 'name' => 'decline_redirect',
                                                 'label' => 'LBL_DECLINE_REDIRECT',
                                             ),
@@ -134,4 +134,3 @@ $viewdefs [$module_name] =
                     ),
             ),
     );
-?>

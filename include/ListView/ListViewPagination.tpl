@@ -1,11 +1,12 @@
 {*
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +35,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -48,7 +49,7 @@
 {assign var="alt_prev" value=$navStrings.previous}
 {assign var="alt_end" value=$navStrings.end}
 
-	<tr id='pagination'  role='presentation'>
+	<tr id='pagination' class="pagination-unique"  role='presentation'>
 		<td colspan='{if $prerow}{$colCount+1}{else}{$colCount}{/if}'>
 			<table border='0' cellpadding='0' cellspacing='0' width='100%' class='paginationTable'>
 				<tr>
@@ -61,8 +62,15 @@
 
 						{sugar_action_menu id=$link_action_id params=$actionsLink}
 
-                        { if $actionDisabledLink ne "" }<div class='selectActionsDisabled' id='select_actions_disabled_{$action_menu_location}'>{$actionDisabledLink}<span class='ab'></span></div>{/if}
-						&nbsp;{$selectedObjectsSpan}		
+                        { if $actionDisabledLink ne "" }<div class='selectActionsDisabled' id='select_actions_disabled_{$action_menu_location}'>{$actionDisabledLink}</div>{/if}
+						{if $showFilterIcon}
+							{include file='include/ListView/ListViewSearchLink.tpl'}
+						{/if}
+                        {if empty($hideColumnFilter)}
+							{include file='include/ListView/ListViewColumnsFilterLink.tpl'}
+                        {/if}
+
+						&nbsp;{$selectedObjectsSpan}
 					</td>
 					<td  nowrap='nowrap' align="right" class='paginationChangeButtons' width="1%">
 						{if $pageData.urls.startPage}

@@ -1,12 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +20,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +38,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('include/ListView/ListViewSmarty.php');
@@ -88,7 +91,7 @@ class ImportListView
      * @param  array $params
      * @param string $tableIdentifier
      */
-    function __construct($dataSource, $params, $tableIdentifier = '')
+    public function __construct($dataSource, $params, $tableIdentifier = '')
     {
         global $sugar_config;
 
@@ -98,10 +101,11 @@ class ImportListView
         $this->dataSource = $dataSource;
         $this->headerColumns = $this->dataSource->getHeaderColumns();
 
-        if( !isset($params['offset']) )
+        if (!isset($params['offset'])) {
             throw new Exception("Missing required parameter offset for ImportListView");
-        else
-            $this->dataSource->setCurrentOffset($params['offset']);
+        }
+        $this->dataSource->setCurrentOffset($params['offset']);
+        
 
         $this->recordsPerPage = isset($params['totalRecords']) ? $params['totalRecords'] : ($sugar_config['list_max_entries_per_page'] + 0);
         $this->data = $this->dataSource->loadDataSet($this->recordsPerPage)->getDataSet();
@@ -114,27 +118,27 @@ class ImportListView
      * @param bool $return True if we should return the content rather than echoing.
      * @return
      */
-    public function display($return = FALSE)
+    public function display($return = false)
     {
         global $app_strings,$mod_strings;
 
         $navStrings = array('next' => $app_strings['LNK_LIST_NEXT'],'previous' => $app_strings['LNK_LIST_PREVIOUS'],'end' => $app_strings['LNK_LIST_END'],
                             'start' => $app_strings['LNK_LIST_START'],'of' => $app_strings['LBL_LIST_OF']);
         $this->ss->assign('navStrings', $navStrings);
-        $this->ss->assign('pageData', $this->generatePaginationData() );
+        $this->ss->assign('pageData', $this->generatePaginationData());
         $this->ss->assign('tableID', $this->tableID);
         $this->ss->assign('colCount', count($this->headerColumns));
-        $this->ss->assign('APP',$app_strings);
+        $this->ss->assign('APP', $app_strings);
         $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
-        $this->ss->assign('displayColumns',$this->headerColumns);
+        $this->ss->assign('displayColumns', $this->headerColumns);
         $this->ss->assign('data', $this->data);
         $this->ss->assign('maxColumns', $this->maxColumns);
         $this->ss->assign('MOD', $mod_strings);
         $contents = $this->ss->fetch('modules/Import/tpls/listview.tpl');
-        if($return)
+        if ($return) {
             return $contents;
-        else
-            echo $contents;
+        }
+        echo $contents;
     }
 
     /**
@@ -145,10 +149,10 @@ class ImportListView
     protected function getMaxColumnsForDataSet()
     {
         $maxColumns = 0;
-        foreach($this->data as $data)
-        {
-            if(count($data) > $maxColumns)
+        foreach ($this->data as $data) {
+            if (count($data) > $maxColumns) {
                 $maxColumns = count($data);
+            }
         }
         return $maxColumns;
     }
@@ -172,9 +176,5 @@ class ImportListView
 
         $pageData = array('offsets' => $offsets);
         return $pageData;
-
     }
-
-
-
 }

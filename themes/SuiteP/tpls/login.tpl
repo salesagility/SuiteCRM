@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 <script type='text/javascript'>
@@ -56,10 +56,15 @@
 	</div>
     
     <div class="p_login_middle">
+        {if $LOGIN_ERROR_MESSAGE}
+            <p align='center' class='error'>{$LOGIN_ERROR_MESSAGE}</p>
+        {/if}
+
+
     <div id="loginform">
         
         <form class="form-signin" role="form" action="index.php" method="post" name="DetailView" id="form"
-              onsubmit="return document.getElementById('cant_login').value == ''">
+              onsubmit="return document.getElementById('cant_login').value == ''" autocomplete="off">
             <div class="companylogo">{$LOGIN_IMAGE}</div>
         <span class="error" id="browser_warning" style="display:none">
             {sugar_translate label="WARN_BROWSER_VERSION_WARNING"}
@@ -84,22 +89,22 @@
                 <input type="hidden" name="{$key}" value="{$var}">
             {/foreach}
             {if !empty($SELECT_LANGUAGE)}
-                {sugar_translate module="Users" label="LBL_LANGUAGE"}:
-                <select name='login_language' onchange="switchLanguage(this.value)">{$SELECT_LANGUAGE}</select>
+                <div class="login-language-chooser" >
+                    {sugar_translate module="Users" label="LBL_LANGUAGE"}:
+                    <select name='login_language' onchange="switchLanguage(this.value)">{$SELECT_LANGUAGE}</select>
+                </div>
             {/if}
             <br>
             <div class="input-group">
-                <!--<span class="input-group-addon logininput glyphicon glyphicon-user"></span>-->
                 <input type="text" class="form-control"
                        placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}" required autofocus
-                       tabindex="1" id="user_name" name="user_name" value='{$LOGIN_USER_NAME}'/>
+                       tabindex="1" id="user_name" name="user_name" value='{$LOGIN_USER_NAME}' autocomplete="off">
             </div>
             <br>
             <div class="input-group">
-                <!--<span class="input-group-addon logininput glyphicon glyphicon-lock"></span>-->
                 <input type="password" class="form-control"
                        placeholder="{sugar_translate module="Users" label="LBL_PASSWORD"}" tabindex="2"
-                       id="user_password" name="user_password" value='{$LOGIN_PASSWORD}'/>
+                       id="username_password" name="username_password" value='{$LOGIN_PASSWORD}' autocomplete="off">
             </div>
             <br>
             <input id="bigbutton" class="btn btn-lg btn-primary btn-block" type="submit"
@@ -111,23 +116,22 @@
             </div>
         </form>
         
-        <form class="form-signin passform" role="form" action="index.php" method="post" name="DetailView" id="form"
-              name="fp_form" id="fp_form">
+        <form class="form-signin passform" role="form" action="index.php" method="post" name="DetailView" id="form" name="fp_form" id="fp_form" autocomplete="off">
             <div id="forgot_password_dialog" style="display:none">
                 <input type="hidden" name="entryPoint" value="GeneratePassword">
                 <div id="generate_success" class='error' style="display:inline;"></div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon logininput glyphicon glyphicon-user"></span>
+                    {*<span class="input-group-addon logininput glyphicon glyphicon-user"></span>*}
                     <input type="text" class="form-control" size='26' id="fp_user_name" name="fp_user_name"
                            value='{$LOGIN_USER_NAME}'
-                           placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}"/>
+                           placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}" autocomplete="off">
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon logininput glyphicon glyphicon-envelope"></span>
+                    {*<span class="input-group-addon logininput glyphicon glyphicon-envelope"></span>*}
                     <input type="text" class="form-control" size='26' id="fp_user_mail" name="fp_user_mail" value=''
-                           placeholder="{sugar_translate module="Users" label="LBL_EMAIL"}">
+                           placeholder="{sugar_translate module="Users" label="LBL_EMAIL"}" autocomplete="off">
                 </div>
                 <br>
                 {$CAPTCHA}
@@ -135,7 +139,7 @@
                 <input title="Email Temp Password" class="button  btn-block" type="button" style="display:inline"
                        onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''"
                        id="generate_pwd_button" name="fp_login"
-                       value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}">
+                       value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}" autocomplete="off">
             </div>
         </form>
         

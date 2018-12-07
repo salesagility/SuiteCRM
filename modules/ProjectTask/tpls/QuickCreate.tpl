@@ -1,11 +1,12 @@
 {*
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +35,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -71,33 +72,33 @@
 <td>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<th align="left" scope="row" colspan="4"><h4><slot>{$MOD.LBL_PROJECTTYPE_INFORMATION}</slot></h4></th>
+	<th align="left" scope="row" colspan="4"><h4><span>{$MOD.LBL_PROJECTTYPE_INFORMATION}</span></h4></th>
 	</tr>
 	<tr>
-	<td valign="top" scope="row"><slot>{$MOD.LBL_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td><slot><input name="name" tabindex="1" size="35" maxlength="50" type="text" value=""></slot></td>
+	<td valign="top" scope="row"><span>{$MOD.LBL_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td><span><input name="name" tabindex="1" size="35" maxlength="50" type="text" value=""></span></td>
 	<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr>
-	<td valign="top" scope="row" rowspan="2"><slot>{$MOD.LBL_DESCRIPTION}</slot></td>
-	<td rowspan="2"><slot><textarea name='description' tabindex='3' cols="50" rows="4">{$DESCRIPTION}</textarea></slot></td>
-	<td scope="row"><slot>{$MOD.LBL_PERCENT_COMPLETE}</slot></td>
-	<td ><slot><input name="percent_complete" type="text" tabindex="2"  size="4" maxlength="3"
-	/></slot></td>
+	<td valign="top" scope="row" rowspan="2"><span>{$MOD.LBL_DESCRIPTION}</span></td>
+	<td rowspan="2"><span><textarea name='description' tabindex='3' cols="50" rows="4">{$DESCRIPTION}</textarea></span></td>
+	<td scope="row"><span>{$MOD.LBL_PERCENT_COMPLETE}</span></td>
+	<td ><span><input name="percent_complete" type="text" tabindex="2"  size="4" maxlength="3"
+	/></span></td>
 	</tr>
 	<tr>
 	{if $REQUEST.project_id != ''}
-	<td scope="row"><slot>{$MOD.LBL_PARENT_ID}</slot></td>
-	<td ><slot>{$REQUEST.parent_name}<input id='project_name' name='project_name' type="hidden" value='{$REQUEST.parent_name}'><input id='project_id' name='project_id' type="hidden" value='{$REQUEST.project_id}'>&nbsp;</slot></td>
+	<td scope="row"><span>{$MOD.LBL_PARENT_ID}</span></td>
+	<td ><span>{$REQUEST.parent_name}<input id='project_name' name='project_name' type="hidden" value='{$REQUEST.parent_name}'><input id='project_id' name='project_id' type="hidden" value='{$REQUEST.project_id}'>&nbsp;</span></td>
 	{else}
-	<td scope="row"><slot>{$MOD.LBL_PARENT_ID}</slot></td>
-	<td ><slot><input type="text" class="sqsEnabled" tabindex="2" autocomplete="off" name="parent_name" id="parent_name"
+	<td scope="row"><span>{$MOD.LBL_PARENT_ID}</span></td>
+	<td ><span><input type="text" class="sqsEnabled" tabindex="2" autocomplete="off" name="parent_name" id="parent_name"
 	value="{$parent_name}" tabindex="16" /><input type="hidden" name="project_id" id="project_id"
 	value="{$project_id}" />&nbsp;<input
 	title="{$APP.LBL_SELECT_BUTTON_TITLE}" type="button" class="button"
 	value="{$APP.LBL_SELECT_BUTTON_LABEL}" name="change_parent" tabindex="2"
 	onclick='open_popup("Project", 600, 400, "", true, false, {$encoded_parent_popup_request_data});'
-	/></slot></td>	{/if}
+	/></span></td>	{/if}
 	</tr>
 	</table>
 	</form>

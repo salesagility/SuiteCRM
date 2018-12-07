@@ -55,7 +55,7 @@ foreach($ff AS $f) {
 			$ret[] = $ttf->extractCoreInfo($ttfdir.$f, $i);
 		}
 	}
-	else if (strtolower(substr($f,-4,4))=='.ttf' || strtolower(substr($f,-4,4))=='.otf' ) {
+	elseif (strtolower(substr($f,-4,4))=='.ttf' || strtolower(substr($f,-4,4))=='.otf' ) {
 		$ret[] = $ttf->extractCoreInfo($ttfdir.$f);
 	}
 	for ($i=0; $i<count($ret); $i++) {
@@ -84,8 +84,8 @@ foreach($ff AS $f) {
 
 		$ftype = $ret[$i][3];		// mono, sans or serif
 		if ($ftype=='sans') { $tempsansfonts[] = $fname; }
-		else if ($ftype=='serif') { $tempseriffonts[] = $fname; }
-		else if ($ftype=='mono') { $tempmonofonts[] = $fname; }
+		elseif ($ftype=='serif') { $tempseriffonts[] = $fname; }
+		elseif ($ftype=='mono') { $tempmonofonts[] = $fname; }
 	   }
 	}
 
@@ -105,10 +105,10 @@ foreach ($tempfontdata AS $fname => $v) {
 		if (isset($tempfontdata[$fname]['I']) && $tempfontdata[$fname]['I']) {
 			$tempfontdata[$fname]['R'] = $tempfontdata[$fname]['I'];
 		}
-		else if (isset($tempfontdata[$fname]['B']) && $tempfontdata[$fname]['B']) {
+		elseif (isset($tempfontdata[$fname]['B']) && $tempfontdata[$fname]['B']) {
 			$tempfontdata[$fname]['R'] = $tempfontdata[$fname]['B'];
 		}
-		else if (isset($tempfontdata[$fname]['BI']) && $tempfontdata[$fname]['BI']) {
+		elseif (isset($tempfontdata[$fname]['BI']) && $tempfontdata[$fname]['BI']) {
 			$tempfontdata[$fname]['R'] = $tempfontdata[$fname]['BI'];
 		}
 	}
@@ -123,7 +123,7 @@ foreach ($tempfontdata AS $fname => $v) {
 				$tempfontdata[($fm[1])]['sip-ext'] = $fname;
 				if (!$pdf) echo 'INFO - Font file '.$fname.' has been defined as a CJK ext-B for '.($fm[1]).'<br />';
 			}
-			else if (isset($tempfontdata[($fm[1].'-exta')]) && $tempfontdata[($fm[1].'-exta')]) {
+			elseif (isset($tempfontdata[($fm[1].'-exta')]) && $tempfontdata[($fm[1].'-exta')]) {
 				$tempfontdata[($fm[1].'-exta')]['sip-ext'] = $fname;
 				if (!$pdf) echo 'INFO - Font file '.$fname.' has been defined as a CJK ext-B for '.($fm[1].'-exta').'<br />';
 			}

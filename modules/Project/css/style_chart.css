@@ -306,3 +306,31 @@
 .qtip_table a:hover {
     text-decoration: underline;
 }
+
+#header_table_chart label {
+    display: inline-block;
+    font-weight: 700;
+    margin-bottom: 5px;
+    max-width: 100%;
+	vertical-align: top;
+}
+
+
+#header_table_chart td[scope="row_label"] {
+    padding: 5px 30px 5px 7px !important;
+    text-align: left;
+    vertical-align: top;
+	width:8.3333333333333% !important; 
+}
+
+#header_table_chart td[scope="row_val"]{
+    text-align: left;
+    vertical-align: top;
+	width: 25% !important;
+}
+
+
+#header_table_chart {
+	margin-top:50px;
+	margin-bottom:30px;
+}

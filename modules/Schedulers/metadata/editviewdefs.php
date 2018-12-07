@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -53,7 +56,7 @@ $viewdefs['Schedulers']['EditView'] = array(
                            ),
 
     'panels' => array(
-    		'default'=>array(
+            'default'=>array(
                            array('name', 'status'),
                            array('job_function', "job_url"),
                            array('adv_interval'),
@@ -83,7 +86,7 @@ $viewdefs['Schedulers']['EditView'] = array(
 				</table>
 				</div>
 				')),
-				array(array('name'=>'job_interval', 'label' => 'LBL_INTERVAL','customCode'=>'
+                array(array('name'=>'job_interval', 'label' => 'LBL_INTERVAL','customCode'=>'
 				<div id="job_interval_basic">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tr>
@@ -95,16 +98,16 @@ $viewdefs['Schedulers']['EditView'] = array(
 						<td valign="top" width="25%">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td><slot><input type="checkbox" name="all" value="true" id="all" {$ALL} onClick="allDays();">&nbsp;<i>{$MOD.LBL_ALL}</i></slot></td>
+								<td><span><input type="checkbox" name="all" value="true" id="all" {$ALL} onClick="allDays();">&nbsp;<i>{$MOD.LBL_ALL}</i></span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="mon" value="true" id="mon" {$MON}>&nbsp;{$MOD.LBL_MON}</slot></td>
+								<td><span><input type="checkbox" name="mon" value="true" id="mon" {$MON}>&nbsp;{$MOD.LBL_MON}</span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="tue" value="true" id="tue"  {$TUE}>&nbsp;{$MOD.LBL_TUE}</slot></td>
+								<td><span><input type="checkbox" name="tue" value="true" id="tue"  {$TUE}>&nbsp;{$MOD.LBL_TUE}</span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="wed" value="true" id="wed"  {$WED}>&nbsp;{$MOD.LBL_WED}</slot></td>
+								<td><span><input type="checkbox" name="wed" value="true" id="wed"  {$WED}>&nbsp;{$MOD.LBL_WED}</span></td>
 							</tr>
 						</table>
 						</td>
@@ -112,16 +115,16 @@ $viewdefs['Schedulers']['EditView'] = array(
 						<td valign="top" width="25%">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td><slot><input type="checkbox" name="thu" value="true" id="thu"  {$THU}>&nbsp;{$MOD.LBL_THU}</slot></td>
+								<td><span><input type="checkbox" name="thu" value="true" id="thu"  {$THU}>&nbsp;{$MOD.LBL_THU}</span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="fri" value="true" id="fri"  {$FRI}>&nbsp;{$MOD.LBL_FRI}</slot></td>
+								<td><span><input type="checkbox" name="fri" value="true" id="fri"  {$FRI}>&nbsp;{$MOD.LBL_FRI}</span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="sat" value="true" id="sat"  {$SAT}>&nbsp;{$MOD.LBL_SAT}</slot></td>
+								<td><span><input type="checkbox" name="sat" value="true" id="sat"  {$SAT}>&nbsp;{$MOD.LBL_SAT}</span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="sun" value="true" id="sun"  {$SUN}>&nbsp;{$MOD.LBL_SUN}</slot></td>
+								<td><span><input type="checkbox" name="sun" value="true" id="sun"  {$SUN}>&nbsp;{$MOD.LBL_SUN}</span></td>
 							</tr>
 						</table>
 						</td>
@@ -132,9 +135,9 @@ $viewdefs['Schedulers']['EditView'] = array(
                            ),
             'lbl_adv_options'=>array(
                             array(array('name' => 'catch_up', 'prefix' => '{sugar_help text=$MOD.LBL_CATCH_UP_WARNING}')),
-                           	array('date_time_start','time_from'),
-                           	array('date_time_end','time_to'),
-                           	),
-	),
+                               array('date_time_start','time_from'),
+                               array('date_time_end','time_to'),
+                               ),
+    ),
 
 );

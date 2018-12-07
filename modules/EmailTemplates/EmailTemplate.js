@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 var focus_obj=false;var label=SUGAR.language.get('app_strings','LBL_DEFAULT_LINK_TEXT');function remember_place(obj){focus_obj=obj;}
 function showVariable(form){if(!form){form='EditView';}
 document[form].variable_text.value=document[form].variable_name.options[document[form].variable_name.selectedIndex].value;}
@@ -55,11 +56,12 @@ function insert_variable_text(myField,myValue){if(document.selection){myField.fo
 else if(myField.selectionStart||myField.selectionStart=='0'){var startPos=myField.selectionStart;var endPos=myField.selectionEnd;myField.value=myField.value.substring(0,startPos)
 +myValue
 +myField.value.substring(endPos,myField.value.length);}else{myField.value+=myValue;}}
-function insert_variable_html(text){tinyMCE.activeEditor.execCommand('mceInsertRawHTML',false,text);}
+function insert_variable_html(text){SuiteEditor.insert(text);}
 function insert_variable_html_link(text,url){var thelink="<a href='"+url+"' > "+text+" </a>";insert_variable_html(thelink);}
-function insert_variable(text,mozaikId){if(mozaikId=='template_subject'){var value=$('#template_subject').val();var caret=parseInt($('#template_subject').attr('data-caret-position'));var before=value.substring(0,caret);var after=value.substring(caret);$('#template_subject').val(before+$('select[name=variable_name]').val()+after);return;}
-if(!mozaikId){mozaikId='mozaik';}
-if($('#'+mozaikId+' .mozaik-list .mozaik-elem').length>0){if(document.getElementById('toggle_textonly')&&document.getElementById('toggle_textonly').checked==true){insert_variable_text(document.getElementById('body_text_plain'),text);}else{insert_variable_html(text);}}}
+function insert_variable(text,elemId,forceIntoSubject){if(typeof forceIntoSubject==='undefined'){forceIntoSubject=false;}
+if(elemId=='template_subject'||forceIntoSubject){var $subject=$('#'+elemId);var value=$subject.val();var caret=parseInt($subject.attr('data-caret-position'));var before=value.substring(0,caret);var after=value.substring(caret);$subject.val(before+$('select[name=variable_name]').val()+after);return;}
+if(!elemId){throw'not element for insert variable';}
+if(document.getElementById('toggle_textonly')&&document.getElementById('toggle_textonly').checked==true){insert_variable_text(document.getElementById('body_text_plain'),text);}else{SuiteEditor.insert(text,elemId);}}
 var doGetCaretPosition=function(oField){var iCaretPos=0;if(document.selection){oField.focus();var oSel=document.selection.createRange();oSel.moveStart('character',-oField.value.length);iCaretPos=oSel.text.length;}
 else if(oField.selectionStart||oField.selectionStart=='0')
 iCaretPos=oField.selectionStart;return iCaretPos;}
@@ -68,11 +70,11 @@ var onClickTemplateBody=function(){$('#insert_variable_to_subject_btn').hide();$
 var $templateManagerDialogX=0;var $templateManagerDialogY=0;var $templateManagerDialog=null;function createTemplateManagerDialog(parent){$('#templateManagerDialog').dialog({width:'50%',position:{my:"left top",at:"left bottom",of:parent}});}
 var showTemplateSaveMessages=function(msgs){$('#template_messages').html('');$.each(msgs,function(i,msg){$('#template_messages').append(SUGAR.language.translate('Campaigns',msg)+'<br>');});setTimeout(function(){$('#template_messages').hide(1000,function(){$('#template_messages').html('');$('#template_messages').show();});},3000);};function EmailTemplateController(action){var lastNameValue=$('#template_name').val();var lastSubjectValue=$('#template_subject').val();var revertValues=function(){$('#template_name').val(lastNameValue);$('#template_subject').val(lastSubjectValue);window.parent.$('.ui-dialog-content:visible').dialog('close');}
 var save=function(update){if($('#template_name').val()==''){alert(SUGAR.language.translate('Campaigns','LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));$('#template_name').focus();return;}
-window.parent.$('.ui-dialog-content:visible').dialog('close');var func=emailTemplateCopyId||$('input[name="update_exists_template"]').prop('checked')?'update':'createCopy';$('#template_messages').html(SUGAR.language.translate('Campaigns','LBL_TEMPLATE_SAVING'));$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(),{'func':func,'emailTemplateId':emailTemplateCopyId?emailTemplateCopyId:$('#template_id').val(),'body_html':$('#email_template_editor').getMozaikValue(),'name':$('#template_name').val(),'subject':$('#template_subject').val(),},function(resp){resp=JSON.parse(resp);if(resp.error){console.error(resp.error);}
+window.parent.$('.ui-dialog-content:visible').dialog('close');var func=emailTemplateCopyId||$('input[name="update_exists_template"]').prop('checked')?'update':'createCopy';$('#template_messages').html(SUGAR.language.translate('Campaigns','LBL_TEMPLATE_SAVING'));$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(),{'func':func,'emailTemplateId':emailTemplateCopyId?emailTemplateCopyId:$('#template_id').val(),'body_html':SuiteEditor.getValue(),'name':$('#template_name').val(),'subject':$('#template_subject').val(),},function(resp){resp=JSON.parse(resp);if(resp.error){console.error(resp.error);}
 else{if(!emailTemplateCopyId&&func=='createCopy'){emailTemplateCopyId=resp.data.id;$('option[value='+resp.data.id+']').html($('#template_name').val());$('input[name="update_exists_template"]').prop('checked',true);}else{$('option[value='+resp.data.id+']').html($('#template_name').val());}
 $('#template_messages').html('');if(resp.msgs.length){showTemplateSaveMessages(resp.msgs);}}});}
 var create=function(){if($('#template_name').val()==''){alert(SUGAR.language.translate('Campaigns','LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));return}
-window.parent.$('.ui-dialog-content:visible').dialog('close');$('input[name="update_exists_template"]').prop('checked',false);var func=emailTemplateCopyId||$('input[name="update_exists_template"]').prop('checked')?'update':'createCopy';$('#template_messages').html(SUGAR.language.translate('Campaigns','LBL_TEMPLATE_SAVING'));$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(),{'func':func,'emailTemplateId':emailTemplateCopyId?emailTemplateCopyId:$('#template_id').val(),'body_html':$('#email_template_editor').getMozaikValue(),'name':$('#template_name').val(),'subject':$('#template_subject').val(),},function(resp){resp=JSON.parse(resp);if(resp.error){console.error(resp.error);}
+window.parent.$('.ui-dialog-content:visible').dialog('close');$('input[name="update_exists_template"]').prop('checked',false);var func=emailTemplateCopyId||$('input[name="update_exists_template"]').prop('checked')?'update':'createCopy';$('#template_messages').html(SUGAR.language.translate('Campaigns','LBL_TEMPLATE_SAVING'));$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(),{'func':func,'emailTemplateId':emailTemplateCopyId?emailTemplateCopyId:$('#template_id').val(),'body_html':SuiteEditor.getValue(),'name':$('#template_name').val(),'subject':$('#template_subject').val(),},function(resp){resp=JSON.parse(resp);if(resp.error){console.error(resp.error);}
 else{if(!emailTemplateCopyId&&func=='createCopy'){emailTemplateCopyId=resp.data.id;$('#template_id').append('<option value="'+resp.data.id+'">'+resp.data.name+'</option>');$('#template_id').val(resp.data.id);$('input[name="update_exists_template"]').prop('checked',true);$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().removeClass('hidden');$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');}
 $('#template_messages').html('');if(resp.msgs.length){showTemplateSaveMessages(resp.msgs);}
 $('#template_option_select').click();}});}

@@ -42,7 +42,6 @@ require_once 'Zend/Gdata/Extension/FeedLink.php';
  */
 class Zend_Gdata_Extension_Comments extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'comments';
     protected $_rel = null;
     protected $_feedLink = null;
@@ -70,7 +69,7 @@ class Zend_Gdata_Extension_Comments extends Zend_Gdata_Extension
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gd') . ':' . 'feedLink';
+            case $this->lookupNamespace('gd') . ':' . 'feedLink':
                 $feedLink = new Zend_Gdata_Extension_FeedLink();
                 $feedLink->transferFromDOM($child);
                 $this->_feedLink = $feedLink;
@@ -113,5 +112,4 @@ class Zend_Gdata_Extension_Comments extends Zend_Gdata_Extension
         $this->_feedLink = $value;
         return $this;
     }
-
 }

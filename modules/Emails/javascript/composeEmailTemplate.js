@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 SUGAR.email2.templates['compose'] = '<div id="composeLayout{idx}" class="ylayout-inactive-content"></div>' +
 '<div id="composeOverFrame{idx}" style="height:100%;width:100%;position:absolute;top:0px">' +
@@ -68,7 +69,7 @@ SUGAR.email2.templates['compose'] = '<div id="composeLayout{idx}" class="ylayout
 '					<button type="button" class="button" onclick="SUGAR.email2.composeLayout.saveDraft({idx}, false);"><img src="index.php?entryPoint=getImage&themeName='+SUGAR.themes.theme_name+'&imageName=icon_email_save.gif" align="absmiddle" border="0"> {app_strings.LBL_EMAIL_SAVE_DRAFT}</button>' +
 '					<button type="button" class="button" onclick="SUGAR.email2.composeLayout.showAttachmentPanel({idx}, false);"><img src="index.php?entryPoint=getImage&themeName='+SUGAR.themes.theme_name+'&imageName=icon_email_attach.gif" align="absmiddle" border="0"> {app_strings.LBL_EMAIL_ATTACHMENT}</button>' +
 '					<button type="button" class="button" onclick="SUGAR.email2.composeLayout.showOptionsPanel({idx}, false);"><img src="index.php?entryPoint=getImage&themeName='+SUGAR.themes.theme_name+'&imageName=icon_email_options.gif" align="absmiddle" border="0"> {app_strings.LBL_EMAIL_OPTIONS}</button>' +
-'</td><td style="padding: 0px !important;margin:0px; !important">&nbsp;&nbsp;{mod_strings.LBL_EMAIL_RELATE}:&nbsp;&nbsp;<select class="select" id="data_parent_type{idx}" onchange="document.getElementById(\'data_parent_name{idx}\').value=\'\';document.getElementById(\'data_parent_id{idx}\').value=\'\'; SUGAR.email2.composeLayout.enableQuickSearchRelate(\'{idx}\');" name="data_parent_type{idx}">{linkbeans_options}</select>' + 
+'</td><td style="padding: 0px !important;margin:0px; !important">&nbsp;&nbsp;{mod_strings.LBL_EMAIL_RELATE}:&nbsp;&nbsp;<select class="select" id="data_parent_type{idx}" onchange="document.getElementById(\'data_parent_name{idx}\').value=\'\';document.getElementById(\'data_parent_id{idx}\').value=\'\'; SUGAR.email2.composeLayout.enableQuickSearchRelate(\'{idx}\');" name="data_parent_type{idx}">{linkbeans_options}</select>' +
 '&nbsp;</td><td style="padding: 0px !important;margin:0px; !important"><input id="data_parent_id{idx}" name="data_parent_id{idx}" type="hidden" value="">' +
 '<input class="sqsEnabled" id="data_parent_name{idx}" name="data_parent_name{idx}" type="text" value="">&nbsp;<button type="button" class="button" onclick="SUGAR.email2.composeLayout.callopenpopupForEmail2({idx});"><img src="index.php?entryPoint=getImage&themeName=default&imageName=id-ff-select.png" align="absmiddle" border="0"></button>' +
 '			</td></tr></tbody></table></th>'     +
@@ -91,7 +92,7 @@ SUGAR.email2.templates['compose'] = '<div id="composeLayout{idx}" class="ylayout
 '							<td class="emailUILabel" NOWRAP>' +
 '								<br /><button class="button" type="button" onclick="SUGAR.email2.addressBook.selectContactsDialogue(\'addressTO{idx}\')">' +
 '                                   {app_strings.LBL_EMAIL_TO}:' +
-'                               </button>' + 
+'                               </button>' +
 '							</td>' +
 '							<td class="emailUIField" NOWRAP>' +
 '								<div class="ac_autocomplete">' +
@@ -107,23 +108,23 @@ SUGAR.email2.templates['compose'] = '<div id="composeLayout{idx}" class="ylayout
 '						</tr>'+
 '						<tr class="yui-hidden" id="cc_tr{idx}">' +
 '							<td class="emailUILabel" NOWRAP>' +
-'                               <button class="button" type="button" onclick="SUGAR.email2.addressBook.selectContactsDialogue(\'addressCC{idx}\')">' + 
+'                               <button class="button" type="button" onclick="SUGAR.email2.addressBook.selectContactsDialogue(\'addressCC{idx}\')">' +
 '								{app_strings.LBL_EMAIL_CC}:' +
-'                               </button>' + 
+'                               </button>' +
 '							</td>' +
 '							<td class="emailUIField" NOWRAP>' +
 '								<div class="ac_autocomplete">' +
 '									&nbsp;&nbsp;<input class="ac_input" type="text" size="96" id="addressCC{idx}" name="addressCC{idx}"   title="{app_strings.LBL_EMAIL_CC}" onkeyup="SE.composeLayout.showAddressDetails(this);">' +
-'									<span class="rolloverEmail"> <a id="MoreaddressCC{idx}" href="#"  style="display: none;">+<span id="DetailaddressCC{idx}">&nbsp;</span></a> </span>' + 
+'									<span class="rolloverEmail"> <a id="MoreaddressCC{idx}" href="#"  style="display: none;">+<span id="DetailaddressCC{idx}">&nbsp;</span></a> </span>' +
 '									<div class="ac_container" id="addressCcAC{idx}"></div>' +
 '								</div>' +
 '							</td>' +
 '						</tr>' +
 '						<tr class="yui-hidden" id="bcc_tr{idx}">' +
 '							<td class="emailUILabel" NOWRAP>' +
-'                               <button class="button" type="button" onclick="SUGAR.email2.addressBook.selectContactsDialogue(\'addressBCC{idx}\')">' + 
+'                               <button class="button" type="button" onclick="SUGAR.email2.addressBook.selectContactsDialogue(\'addressBCC{idx}\')">' +
 '                               {app_strings.LBL_EMAIL_BCC}:' +
-'                               </button>' + 
+'                               </button>' +
 '							</td>' +
 '							<td class="emailUIField" NOWRAP>' +
 '								<div class="ac_autocomplete">' +
@@ -210,7 +211,7 @@ SUGAR.email2.templates['compose'] = '<div id="composeLayout{idx}" class="ylayout
 '	</form>' +
 '		<div id="divOptions{idx}" class="ylayout-inactive-content"' +
 '             <div style="padding:5px;">' +
-'			<form name="composeOptionsForm{idx}" id="composeOptionsForm{idx}">' + 
+'			<form name="composeOptionsForm{idx}" id="composeOptionsForm{idx}">' +
 '				<table border="0" width="100%">' +
 '					<tr>' +
 '						<td NOWRAP style="padding:2px;">' +

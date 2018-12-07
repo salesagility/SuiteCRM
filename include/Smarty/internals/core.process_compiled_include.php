@@ -26,12 +26,12 @@ function smarty_core_process_compiled_include($params, &$smarty)
     }
 
     foreach ($smarty->_cache_info['cache_serials'] as $_include_file_path=>$_cache_serial) {
-        $_return = preg_replace_callback('!(\{nocache\:('.$_cache_serial.')#(\d+)\})!s',
+        $_return = preg_replace_callback(
+            '!(\{nocache\:('.$_cache_serial.')#(\d+)\})!s',
                                          array(&$smarty, '_process_compiled_include_callback'),
-                                         $_return);
+                                         $_return
+        );
     }
     $smarty->_cache_including = $_cache_including;
     return $_return;
 }
-
-?>

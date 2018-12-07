@@ -230,4 +230,3 @@ abstract class Zend_Search_Lucene_Search_Query
         return $doc->getHtmlBody();
     }
 }
-

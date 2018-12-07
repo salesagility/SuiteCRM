@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $dictionary['AOS_Quotes'] = array(
     'table' => 'aos_quotes',
@@ -255,7 +256,6 @@ $dictionary['AOS_Quotes'] = array(
             ),
         'number' =>
             array(
-                'required' => true,
                 'name' => 'number',
                 'vname' => 'LBL_QUOTE_NUMBER',
                 'type' => 'int',
@@ -338,6 +338,7 @@ $dictionary['AOS_Quotes'] = array(
                 'duplicate_merge_dom_value' => 0,
                 'audited' => false,
                 'reportable' => false,
+                'inline_edit' => false,
                 'function' =>
                     array(
                         'name' => 'display_lines',
@@ -627,6 +628,7 @@ $dictionary['AOS_Quotes'] = array(
                     array(
                         'name' => 'getCurrencyDropDown',
                         'returns' => 'html',
+                        'onListView' => true,
                     ),
             ),
         'stage' =>
@@ -756,6 +758,7 @@ $dictionary['AOS_Quotes'] = array(
         'accounts' =>
             array(
                 'name' => 'accounts',
+                'vname' => 'LBL_ACCOUNTS',
                 'type' => 'link',
                 'relationship' => 'account_aos_quotes',
                 'module' => 'Accounts',
@@ -765,6 +768,7 @@ $dictionary['AOS_Quotes'] = array(
         'contacts' =>
             array(
                 'name' => 'contacts',
+                'vname' => 'LBL_CONTACTS',
                 'type' => 'link',
                 'relationship' => 'contact_aos_quotes',
                 'module' => 'Contacts',
@@ -774,6 +778,7 @@ $dictionary['AOS_Quotes'] = array(
         'opportunities' =>
             array(
                 'name' => 'opportunities',
+                'vname' => 'LBL_OPPORTUNITIES',
                 'type' => 'link',
                 'relationship' => 'opportunity_aos_quotes',
                 'module' => 'Opportunities',
@@ -783,6 +788,7 @@ $dictionary['AOS_Quotes'] = array(
         'aos_quotes_project' =>
             array(
                 'name' => 'aos_quotes_project',
+                'vname' => 'LBL_AOS_QUOTES_PROJECT',
                 'type' => 'link',
                 'relationship' => 'aos_quotes_project',
                 'source' => 'non-db',
@@ -791,6 +797,7 @@ $dictionary['AOS_Quotes'] = array(
         'aos_quotes_aos_invoices' =>
             array(
                 'name' => 'aos_quotes_aos_invoices',
+                'vname' => 'LBL_AOS_QUOTES_AOS_INVOICES',
                 'type' => 'link',
                 'relationship' => 'aos_quotes_aos_invoices',
                 'source' => 'non-db',
@@ -799,6 +806,7 @@ $dictionary['AOS_Quotes'] = array(
         'aos_quotes_aos_contracts' =>
             array(
                 'name' => 'aos_quotes_aos_contracts',
+                'vname' => 'LBL_AOS_QUOTES_AOS_CONTRACTS',
                 'type' => 'link',
                 'relationship' => 'aos_quotes_aos_contracts',
                 'source' => 'non-db',
@@ -807,6 +815,7 @@ $dictionary['AOS_Quotes'] = array(
         'aos_products_quotes' =>
             array(
                 'name' => 'aos_products_quotes',
+                'vname' => 'LBL_AOS_PRODUCT_QUOTES',
                 'type' => 'link',
                 'relationship' => 'aos_quotes_aos_product_quotes',
                 'module' => 'AOS_Products_Quotes',
@@ -817,6 +826,7 @@ $dictionary['AOS_Quotes'] = array(
         'aos_line_item_groups' =>
             array(
                 'name' => 'aos_line_item_groups',
+                'vname' => 'LBL_AOS_LINE_ITEM_GROUPS',
                 'type' => 'link',
                 'relationship' => 'aos_quotes_aos_line_item_groups',
                 'module' => 'AOS_Line_Item_Groups',

@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,17 +34,17 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
  * Description:
  * Created On: Oct 17, 2005
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): Chris Nojima
- ********************************************************************************/
+ */
 -->
 
 <!-- BEGIN: main -->
@@ -78,66 +79,66 @@
 		</tr>
 	<tr>
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_NAME}:</slot></td>
+			<span>{MOD.LBL_NAME}:</span></td>
 		<td valign="top" width='30%'>
-			<slot>{NAME}&nbsp;</slot></td>
+			<span>{NAME}&nbsp;</span></td>
 		<td valign="top" scope='row'>
-			<slot>{MOD.LBL_STATUS}:</slot></td>
+			<span>{MOD.LBL_STATUS}:</span></td>
 		<td valign="top">
-			<slot>{STATUS}&nbsp;</slot></td>
+			<span>{STATUS}&nbsp;</span></td>
 	</tr>
 	<tr>
 		<td valign="top" scope='row'>
-			<slot>{MOD.LBL_SERVER_URL}:</slot></td>
+			<span>{MOD.LBL_SERVER_URL}:</span></td>
 		<td valign="top">
-			<slot>{SERVER_URL}&nbsp;</slot></td>
+			<span>{SERVER_URL}&nbsp;</span></td>
 		<td valign="top" scope='row'>
-			<slot>{MOD.LBL_LOGIN}:</slot></td>
+			<span>{MOD.LBL_LOGIN}:</span></td>
 		<td valign="top">
-			<slot>{USER}&nbsp;</slot></td>
+			<span>{USER}&nbsp;</span></td>
 	</tr>
 	<tr>
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_SERVER_TYPE}:</slot></td>
+			<span>{MOD.LBL_SERVER_TYPE}:</span></td>
 		<td valign="top" width='30%'>
-			<slot>{SERVER_TYPE}&nbsp;</slot></td>
+			<span>{SERVER_TYPE}&nbsp;</span></td>
 		<td valign="top" width='20%' scope='row'>
-			<slot>&nbsp;</slot>&nbsp;</td>
+			<span>&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot>&nbsp;</slot>&nbsp;
+			<span>&nbsp;</span>&nbsp;
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_PORT}:</slot></td>
+			<span>{MOD.LBL_PORT}:</span></td>
 		<td valign="top" width='30%'>
-			<slot>{PORT}&nbsp;</slot>&nbsp;
+			<span>{PORT}&nbsp;</span>&nbsp;
 		</td>
 		<td valign="top" scope='row'>
-			<slot>{MOD.LBL_MAILBOX}:</slot></td>
+			<span>{MOD.LBL_MAILBOX}:</span></td>
 		<td valign="top">
-			<slot>{MAILBOX}&nbsp;</slot></td>
+			<span>{MAILBOX}&nbsp;</span></td>
 	</tr>
 	<tr>
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_MAILBOX_SSL}:</slot></td>
+			<span>{MOD.LBL_MAILBOX_SSL}:</span></td>
 		<td valign="top" width='30%'>
-			<slot>{SSL}&nbsp;</slot></td>
+			<span>{SSL}&nbsp;</span></td>
 		<td valign="top" width='20%' scope='row'>
-			<slot><span style="{TRASH_SENT_FOLDER_STYLE}">{MOD.LBL_TRASH_FOLDER}:</span></slot></td>
+			<span><span style="{TRASH_SENT_FOLDER_STYLE}">{MOD.LBL_TRASH_FOLDER}:</span></span></td>
 		<td valign="top" width='30%'>
-			<slot><span style="{TRASH_SENT_FOLDER_STYLE}">{TRASHFOLDER}&nbsp;</span></slot></td>
+			<span><span style="{TRASH_SENT_FOLDER_STYLE}">{TRASHFOLDER}&nbsp;</span></span></td>
 	</tr>
 	<tr style="{TRASH_SENT_FOLDER_STYLE}">
 		<td valign="top" width='20%' scope='row'>
-			<slot>&nbsp;</slot>&nbsp;</td>
+			<span>&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot>&nbsp;</slot>&nbsp;
+			<span>&nbsp;</span>&nbsp;
 		</td>
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_SENT_FOLDER}:</slot></td>
+			<span>{MOD.LBL_SENT_FOLDER}:</span></td>
 		<td valign="top" width='30%'>
-			<slot>{SENTFOLDER}&nbsp;</slot>&nbsp;</td>
+			<span>{SENTFOLDER}&nbsp;</span>&nbsp;</td>
 	</tr>
 	</table>
 
@@ -154,95 +155,95 @@
 		&nbsp;
 		</td>
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_FROM_NAME}:&nbsp;</slot></td>
+			<span>{MOD.LBL_FROM_NAME}:&nbsp;</span></td>
 		<td valign="top" width='30%'>
-			<slot>{FROM_NAME}&nbsp;</slot>&nbsp;
+			<span>{FROM_NAME}&nbsp;</span>&nbsp;
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" width='20%' scope='row'>
-			<slot><div style="{EDIT_GROUP_FOLDER_STYLE}">{MOD.LBL_ENABLE_AUTO_IMPORT}:</div>&nbsp;</slot>&nbsp;</td>
+			<span><div style="{EDIT_GROUP_FOLDER_STYLE}">{MOD.LBL_ENABLE_AUTO_IMPORT}:</div>&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot><div style="{EDIT_GROUP_FOLDER_STYLE}">{IS_AUTO_IMPORT_ENABLED}</div>&nbsp;</slot>&nbsp;</td>
+			<span><div style="{EDIT_GROUP_FOLDER_STYLE}">{IS_AUTO_IMPORT_ENABLED}</div>&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_FROM_ADDR}:&nbsp;</slot>&nbsp;</td>
+			<span>{MOD.LBL_FROM_ADDR}:&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot>{FROM_ADDR}&nbsp;</slot>&nbsp;
+			<span>{FROM_ADDR}&nbsp;</span>&nbsp;
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" scope='row'>
-			<slot>{MOD.LBL_CREATE_CASE}:</slot></td>
+			<span>{MOD.LBL_CREATE_CASE}:</span></td>
 		<td valign="top">
-			<slot>{IS_CREATE_CASE}&nbsp;</slot></td>
+			<span>{IS_CREATE_CASE}&nbsp;</span></td>
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_REPLY_TO_NAME}:&nbsp;</slot>&nbsp;</td>
+			<span>{MOD.LBL_REPLY_TO_NAME}:&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot>{REPLY_TO_NAME}</slot>&nbsp;
+			<span>{REPLY_TO_NAME}</span>&nbsp;
 		</td>
 	</tr>
 	<tr style="{CREATE_CASE_ROW_STYLE}">
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_DISTRIBUTION_METHOD}:&nbsp;</slot>&nbsp;</td>
+			<span>{MOD.LBL_DISTRIBUTION_METHOD}:&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot>{DISTRIBUTION_METHOD}</slot>&nbsp;
+			<span>{DISTRIBUTION_METHOD}</span>&nbsp;
 		</td>
 		<td valign="top" width='20%' scope='row'>
-			<slot>&nbsp;</slot>&nbsp;</td>
+			<span>&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot>&nbsp;</slot>&nbsp;
+			<span>&nbsp;</span>&nbsp;
 		</td>
 	</tr>
 	<tr style="{CREATE_CASE_ROW_STYLE}">
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_CREATE_CASE_REPLY_TEMPLATE}:&nbsp;</slot>&nbsp;</td>
+			<span>{MOD.LBL_CREATE_CASE_REPLY_TEMPLATE}:&nbsp;</span>&nbsp;</td>
 		<td colspan="3" valign="top" width='30%'>
-			<slot>{CREATE_CASE_EMAIL_TEMPLATE}</slot>&nbsp;
+			<span>{CREATE_CASE_EMAIL_TEMPLATE}</span>&nbsp;
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" width='20%' scope='row'>
-			<slot>&nbsp;</slot>&nbsp;</td>
+			<span>&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot>&nbsp;</slot>&nbsp;
+			<span>&nbsp;</span>&nbsp;
 		</td>
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_REPLY_TO_ADDR}:&nbsp;</slot>&nbsp;</td>
+			<span>{MOD.LBL_REPLY_TO_ADDR}:&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot>{REPLY_TO_ADDR}</slot>&nbsp;
+			<span>{REPLY_TO_ADDR}</span>&nbsp;
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" scope='row'>
-			<slot>{MOD.LBL_AUTOREPLY}:</slot></td>
+			<span>{MOD.LBL_AUTOREPLY}:</span></td>
 		<td valign="top">
-			<slot>{EMAIL_TEMPLATE}&nbsp;</slot></td>
+			<span>{EMAIL_TEMPLATE}&nbsp;</span></td>
 		<td valign="top" width='20%' scope='row'>
-			<slot><div style="{EDIT_GROUP_FOLDER_STYLE}">{MOD.LBL_ALLOW_OUTBOUND_GROUP_USAGE}:</div></slot>&nbsp;</td>
+			<span><div style="{EDIT_GROUP_FOLDER_STYLE}">{MOD.LBL_ALLOW_OUTBOUND_GROUP_USAGE}:</div></span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot><div style="{EDIT_GROUP_FOLDER_STYLE}">{ALLOW_OUTBOUND_GROUP_USAGE}</div></slot>
+			<span><div style="{EDIT_GROUP_FOLDER_STYLE}">{ALLOW_OUTBOUND_GROUP_USAGE}</div></span>
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_FILTER_DOMAIN}:</slot></td>
+			<span>{MOD.LBL_FILTER_DOMAIN}:</span></td>
 		<td valign="top" width='30%'>
-			<slot>{FILTER_DOMAIN}&nbsp;</slot></td>
+			<span>{FILTER_DOMAIN}&nbsp;</span></td>
 		<td valign="top" width='20%' scope='row'>
-			<slot><div style="{EDIT_GROUP_FOLDER_STYLE}">{MOD.LBL_MAX_AUTO_REPLIES}:</div></slot>&nbsp;</td>
+			<span><div style="{EDIT_GROUP_FOLDER_STYLE}">{MOD.LBL_MAX_AUTO_REPLIES}:</div></span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot><div style="{EDIT_GROUP_FOLDER_STYLE}">{EMAIL_NUM_AUTOREPLIES_24_HOURS}</div></slot>&nbsp;
+			<span><div style="{EDIT_GROUP_FOLDER_STYLE}">{EMAIL_NUM_AUTOREPLIES_24_HOURS}</div></span>&nbsp;
 		</td>
 	</tr>
 	<tr style="{LEAVEMESSAGESONMAILSERVER_STYLE}">
 		<td valign="top" width='20%' scope='row'>
-			<slot>{MOD.LBL_MARK_READ}:</slot></td>
+			<span>{MOD.LBL_MARK_READ}:</span></td>
 		<td valign="top" width='30%'>
-			<slot>{LEAVEMESSAGESONMAILSERVER}&nbsp;</slot></td>
+			<span>{LEAVEMESSAGESONMAILSERVER}&nbsp;</span></td>
 		<td valign="top" width='20%' scope='row'>
-			<slot>&nbsp;</slot>&nbsp;</td>
+			<span>&nbsp;</span>&nbsp;</td>
 		<td valign="top" width='30%'>
-			<slot>&nbsp;</slot>&nbsp;
+			<span>&nbsp;</span>&nbsp;
 		</td>
 	</tr>
 	</table>

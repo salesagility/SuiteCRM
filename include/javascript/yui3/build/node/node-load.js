@@ -1,11 +1,8 @@
 /*
- Copyright (c) 2010, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.com/yui/license.html
- version: 3.3.0
- build: 3167
- */
-YUI.add('node-load',function(Y){Y.Node.prototype._ioComplete=function(code,response,args){var selector=args[0],callback=args[1],tmp,content;if(response&&response.responseText){content=response.responseText;if(selector){tmp=Y.DOM.create(content);content=Y.Selector.query(selector,tmp);}
-this.setContent(content);}
-if(callback){callback.call(this,code,response);}};Y.Node.prototype.load=function(url,selector,callback){if(typeof selector=='function'){callback=selector;selector=null;}
-var config={context:this,on:{complete:this._ioComplete},arguments:[selector,callback]};Y.io(url,config);return this;}},'3.3.0',{requires:['node-base','io-base']});
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+YUI.add("node-load",function(a){a.Node.prototype._ioComplete=function(g,c,d){var b=d[0],h=d[1],e,f;if(c&&c.responseText){f=c.responseText;if(b){e=a.DOM.create(f);f=a.Selector.query(b,e);}this.setContent(f);}if(h){h.call(this,g,c);}};a.Node.prototype.load=function(d,b,e){if(typeof b=="function"){e=b;b=null;}var c={context:this,on:{complete:this._ioComplete},arguments:[b,e]};a.io(d,c);return this;};},"3.3.0",{requires:["node-base","io-base"]});

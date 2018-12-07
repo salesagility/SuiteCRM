@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -69,38 +72,39 @@ $button .= "<input type='hidden' name='return_action' value='".$action."'>\n";
 $button .= "<input type='hidden' name='return_id' value='".$focus->id."'>\n";
 $button .= "<input type='hidden' name='action'>\n";
 if (!empty($focus->object_name) && $focus->object_name == 'Opportunity') {
- 	$button .= "<input type='hidden' name='account_id' value='$focus->account_id'>\n";
- 	$button .= "<input type='hidden' name='opportunity_name' value='$focus->name'>\n";
+    $button .= "<input type='hidden' name='account_id' value='$focus->account_id'>\n";
+    $button .= "<input type='hidden' name='opportunity_name' value='$focus->name'>\n";
 }
 $button .= "<input title='"
-	. $app_strings['LBL_NEW_BUTTON_TITLE']
-	. "' accessyKey='".$app_strings['LBL_NEW_BUTTON_KEY']
-	. "' class='button' onclick=\"this.form.action.value='EditView'\" type='submit' name='New' value='  "
-	. $app_strings['LBL_NEW_BUTTON_LABEL']."  '>\n";
+    . $app_strings['LBL_NEW_BUTTON_TITLE']
+    . "' accessyKey='".$app_strings['LBL_NEW_BUTTON_KEY']
+    . "' class='button' onclick=\"this.form.action.value='EditView'\" type='submit' name='New' value='  "
+    . $app_strings['LBL_NEW_BUTTON_LABEL']."  '>\n";
 
 $button .= "</form>\n";
 
 $ListView = new ListView();
-$ListView->initNewXTemplate( 'modules/Project/SubPanelView.html',$current_module_strings);
-$ListView->xTemplateAssign("EDIT_INLINE_PNG",
-	SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_EDIT']));
-$ListView->xTemplateAssign("RETURN_URL",
-	"&return_module=".$currentModule."&return_action=DetailView&return_id=".$focus->id);
-$ListView->setHeaderTitle($current_module_strings['LBL_PROJECT_SUBPANEL_TITLE'] );
+$ListView->initNewXTemplate('modules/Project/SubPanelView.html', $current_module_strings);
+$ListView->xTemplateAssign(
+    "EDIT_INLINE_PNG",
+    SugarThemeRegistry::current()->getImage('edit_inline', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_EDIT'])
+);
+$ListView->xTemplateAssign(
+    "RETURN_URL",
+    "&return_module=".$currentModule."&return_action=DetailView&return_id=".$focus->id
+);
+$ListView->setHeaderTitle($current_module_strings['LBL_PROJECT_SUBPANEL_TITLE']);
 
 $header_text = '';
-if(is_admin($current_user)
-	&& $_REQUEST['module'] != 'DynamicLayout'
-	&& !empty($_SESSION['editinplace']))
-{
-	$header_text = " <a href='index.php?action=index&module=DynamicLayout&from_action="
-		.$_REQUEST['action']
-		."&from_module=".$_REQUEST['module'] ."&record="
-		.$_REQUEST['record']. "'>"
-		.SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
+if (is_admin($current_user)
+    && $_REQUEST['module'] != 'DynamicLayout'
+    && !empty($_SESSION['editinplace'])) {
+    $header_text = " <a href='index.php?action=index&module=DynamicLayout&from_action="
+        .$_REQUEST['action']
+        ."&from_module=".$_REQUEST['module'] ."&record="
+        .$_REQUEST['record']. "'>"
+        .SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
 $ListView->setHeaderTitle($current_module_strings['LBL_PROJECT_SUBPANEL_TITLE'] . $header_text);
 
 $ListView->processListView($focus_list, "main", "PROJECT");
-
-?>
