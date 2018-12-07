@@ -2,8 +2,11 @@
 
 namespace Step\Acceptance;
 
-class EmailMan extends \AcceptanceTester
+class EmailManTester extends \AcceptanceTester
 {
+    private static $testerEmailAddress = 'sa.tester2@gmail.com';
+    private static $testerEmailPassword = 'chilisauce';
+    
     /**
      * Go to email settings
      */
@@ -21,6 +24,17 @@ class EmailMan extends \AcceptanceTester
      */
     public function createEmailSettings()
     {
+//        
+//        $I = new AcceptanceTester($scenario);
+//        $I->amOnPage('/SuiteCRM/index.php');
+//        $I->click('Gmail');
+//        $I->fillField('mail_smtpuser', 'sa.tester2@gmail.com');
+//        $I->fillField('mail_smtppass', 'chilisauce');
+//        $I->checkOption('notify_allow_default_outbound');
+//        $I->click('button');
+//        $I->seeCurrentURLEquals('/SuiteCRM/index.php');
+//        return ; // using different email settings in the future..
+        
         $I = new NavigationBar($this->getScenario());
         $EditView = new EditView($this->getScenario());
         $faker = $this->getFaker();
@@ -33,9 +47,9 @@ class EmailMan extends \AcceptanceTester
         $I->click('#gmail-button');
 
         $I->checkOption('#mail_smtpauth_req');
-        $I->fillField('#mail_smtpuser', $faker->email);
+        $I->fillField('#mail_smtpuser', self::$testerEmailAddress);
         $I->executeJS('SUGAR.util.setEmailPasswordEdit(\'mail_smtppass\')');
-        $I->fillField('#mail_smtppass', $faker->email);
+        $I->fillField('#mail_smtppass', self::$testerEmailPassword);
         $I->checkOption('#notify_allow_default_outbound');
 
         $EditView->clickSaveButton();

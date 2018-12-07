@@ -30,8 +30,9 @@ before_install:
   - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
   - unzip -o chromedriver_linux64.zip
   - ./chromedriver --url-base=/wd/hub &
-
+  
 install:
+  - phpenv config-add travis.php.ini
   - composer self-update && composer --version
 
 before_script:
