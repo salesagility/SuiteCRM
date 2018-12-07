@@ -108,7 +108,7 @@ class CampaignsCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Campaigns $campaign
      * @param \Step\Acceptance\InboundEmailTester $inboundEmailTester
-     * @param \Step\Acceptance\EmailMan $emailMan
+     * @param \Step\Acceptance\EmailMan $EmailManTester,
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a Newsletter campaign so that I can test
@@ -119,7 +119,7 @@ class CampaignsCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Campaigns $campaign,
-        \Step\Acceptance\EmailMan $emailMan,
+        \Step\Acceptance\EmailManTester $EmailManTester,
         \Step\Acceptance\InboundEmailTester $inboundEmailTester,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
