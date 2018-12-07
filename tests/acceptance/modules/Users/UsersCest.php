@@ -50,7 +50,7 @@ class UsersCest
         $I->fillField('email_user', 'testuser_name');
         $I->fillField('email_password', 'testuser_pass');
         $I->click('Test Settings');
-        $I->wait(3);
+        $I->wait(6);
         $I->see('Connection completed successfully.');
     }
 
