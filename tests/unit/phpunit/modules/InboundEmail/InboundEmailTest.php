@@ -2,6 +2,7 @@
 
 include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFakeData.php';
 include_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFake.php';
+require_once __DIR__ . '/../../../../../modules/InboundEmail/InboundEmail.php';
 
 class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -35,14 +36,23 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('inbound_email_autoreply');
         $state->popTable('inbound_email_cache_ts');
     }
-    
-    
-    
+
+
+    public function testThisCallback() {
+        $str = ['nope', '%foo', 'bar%', '%bazz%'];
+        $ret = this_callback($str);
+        $result = [];
+        for ($i = 0; $i < strlen($ret); $i++) {
+            $result[] = ord($ret[$i]);
+        }
+        $this->assertEquals([14, 15, 186, 186], $result);
+    }
+
     // ---------------------------------------------
     // ----- FOLLOWIN TESTS ARE USING FAKE IMAP ----
     // ------------------------------------------------->
-    
-    
+
+
     public function testConnectMailServerFolderInboundForceFirstMailbox()
     {
         $state = new SuiteCRM\StateSaver();
@@ -68,7 +78,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('true', $ret);
         $state->popGlobals();
     }
-    
+
     public function testConnectMailServerFolderInboundForceTestFolder()
     {
         $state = new SuiteCRM\StateSaver();
@@ -93,7 +103,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('true', $ret);
         $state->popGlobals();
     }
-    
+
     public function testConnectMailServerFolderInboundForce()
     {
         $state = new SuiteCRM\StateSaver();
@@ -117,7 +127,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('true', $ret);
         $state->popGlobals();
     }
-    
+
     public function testConnectMailServerFolderSentForce()
     {
         $state = new SuiteCRM\StateSaver();
@@ -141,12 +151,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('true', $ret);
         $state->popGlobals();
     }
-        
+
     public function testConnectMailserverNoGood()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
-        
+
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);
         $fake->add('setTimeout', [1, 60], [true]);
@@ -167,21 +177,21 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
         $imap = new ImapHandlerFake($fake);
-        
+
         $_REQUEST['ssl'] = 1;
-        
+
         $ie = new InboundEmail($imap);
         $ret = $ie->connectMailserver(true);
         $this->assertEquals(null, $ret);
-        
+
         $state->popGlobals();
     }
-    
+
     public function testConnectMailserverUseSsl()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
-        
+
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);
         $fake->add('setTimeout', [1, 60], [true]);
@@ -195,27 +205,27 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fake->add('ping', null, [true]);
         $fake->add('reopen', ['{:/service=}', 32768, 0], [true]);
         $imap = new ImapHandlerFake($fake);
-        
+
         $_REQUEST['ssl'] = 1;
-        
+
         $ie = new InboundEmail($imap);
         $ret = $ie->connectMailserver();
         $this->assertEquals('true', $ret);
-        
+
         $state->popGlobals();
     }
-    
+
     public function testConnectMailserverNoImap()
     {
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [false]);
         $imap = new ImapHandlerFake($fake);
-        
+
         $ie = new InboundEmail($imap);
         $ret = $ie->connectMailserver();
         $this->assertEquals(null, $ret);
     }
-    
+
     public function testFindOptimumSettingsFalsePositive()
     {
         $fake = new ImapHandlerFakeData();
@@ -234,24 +244,24 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
-        
+
         $exp = [
             'serial' => '::::::::novalidate-cert::notls::secure',
             'service' => 'foo/notls/novalidate-cert/secure',
         ];
-        
+
         $imap = new ImapHandlerFake($fake);
         $inboundEmail = new InboundEmail($imap);
         $ret = $inboundEmail->findOptimumSettings();
         $this->assertEquals($exp, $ret);
-        
+
         // other errors also cause same results..
-        
+
         $fake->add('getLastError', null, ["Mailbox is empty"]);
         $ret = $inboundEmail->findOptimumSettings();
         $this->assertEquals($exp, $ret);
     }
-    
+
     public function testFindOptimumSettingsFail()
     {
         $fake = new ImapHandlerFakeData();
@@ -270,33 +280,33 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
-        
+
         $exp = [
             'good' => [],
             'bad' => ['both-secure' => '{:/service=/notls/novalidate-cert/secure}'],
             'err' => ['both-secure' => null],
         ];
-        
+
         $imap = new ImapHandlerFake($fake);
         $inboundEmail = new InboundEmail($imap);
         $ret = $inboundEmail->findOptimumSettings();
         $this->assertEquals($exp, $ret);
-        
+
         // other errors also cause same results..
-        
+
         $fake->add('getLastError', null, ['[CLOSED] IMAP connection broken (server response)']);
         $ret = $inboundEmail->findOptimumSettings();
         $this->assertEquals($exp, $ret);
-        
+
         $fake->add('getLastError', null, ['[AUTHENTICATIONFAILED]']);
         $ret = $inboundEmail->findOptimumSettings();
         $this->assertEquals($exp, $ret);
-        
+
         $fake->add('getLastError', null, ['something.. AUTHENTICATE .. something .. failed .. something']);
         $ret = $inboundEmail->findOptimumSettings();
         $this->assertEquals($exp, $ret);
     }
-    
+
     public function testFindOptimumSettingsOk()
     {
         $fake = new ImapHandlerFakeData();
@@ -315,7 +325,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }]);
         $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
-        
+
         $imap = new ImapHandlerFake($fake);
         $inboundEmail = new InboundEmail($imap);
         $ret = $inboundEmail->findOptimumSettings();
@@ -324,13 +334,13 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'service' => 'foo/notls/novalidate-cert/secure',
         ], $ret);
     }
-    
+
     public function testFindOptimumSettingsNoImap()
     {
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [false]);
         $imap = new ImapHandlerFake($fake);
-        
+
         $ie = new InboundEmail($imap);
         $ret = $ie->findOptimumSettings();
         $this->assertEquals([
@@ -339,12 +349,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'err' => [null],
         ], $ret);
     }
-    
+
     public function testFindOptimumSettingsUseSsl()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
-        
+
         $fake = new ImapHandlerFakeData();
         $fake->add('isAvailable', null, [true]);
         $fake->add('setTimeout', [1, 60], [true]);
@@ -361,25 +371,25 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }]);
         $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
-        
+
         $imap = new ImapHandlerFake($fake);
-        
+
         $_REQUEST['ssl'] = 1;
-        
+
         $ie = new InboundEmail($imap);
         $ret = $ie->findOptimumSettings();
         $this->assertEquals([
             'serial' => 'tls::::ssl::::::::secure',
             'service' => 'foo/ssl/tls/validate-cert/secure',
         ], $ret);
-        
+
         $state->popGlobals();
     }
-    
+
     // ------------------------------------------------------------
     // ----- FOLLOWIN TESTS ARE USING REAL IMAP SO SHOULD FAIL ----
     // ---------------------------------------------------------------->
-    
+
     public function testInboundEmail()
     {
         // save state
@@ -659,11 +669,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->retrieve($id);
+        $this->assertFalse((bool)$inboundEmail->conn);
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $inboundEmail->renameFolder('mailbox1', 'new_mailbox');
-            $this->assertTrue(true);
+            $success = $inboundEmail->renameFolder('mailbox1', 'new_mailbox');
+            $this->assertFalse((bool)$success);
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }

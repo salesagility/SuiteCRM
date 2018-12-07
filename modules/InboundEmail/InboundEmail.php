@@ -1,4 +1,8 @@
 <?php
+
+use SuiteCRM\Imap;
+use SuiteCRM\ImapInterface;
+use SuiteCRM\StateSaver;
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -50,6 +54,7 @@ require_once('modules/InboundEmail/temp.php');
 
 function this_callback($str)
 {
+    $ret = '';
     foreach ($str as $match) {
         $ret .= chr(hexdec(str_replace("%", "", $match)));
     }
@@ -172,13 +177,13 @@ class InboundEmail extends SugarBean
     // prefix to use when importing inlinge images in emails
     public $imagePrefix;
     public $job_name = 'function::pollMonitoredInboxes';
-    
+
     /**
      *
      * @var ImapHandlerInterface
      */
     protected $imap;
-    
+
     /**
      * Email constructor
      */
@@ -191,11 +196,11 @@ class InboundEmail extends SugarBean
             $imapHandler = $imapHandlerFactory->getImapHandler();
         }
         $this->imap = $imapHandler;
-        
+
         $this->InboundEmailCachePath = sugar_cached('modules/InboundEmail');
         $this->EmailCachePath = sugar_cached('modules/Emails');
         parent::__construct();
-        
+
         if ($this->imap->isAvailable()) {
             /*
              * 1: Open
@@ -212,7 +217,7 @@ class InboundEmail extends SugarBean
         $this->overview = new Overview();
         $this->imagePrefix = "{$GLOBALS['sugar_config']['site_url']}/cache/images/";
     }
-    
+
     /**
      *
      * @return ImapHandlerInterface
@@ -312,7 +317,7 @@ class InboundEmail extends SugarBean
         $this->connectMailserver();
         $oldConnect = $this->getConnectString('', $oldName);
         $newConnect = $this->getConnectString('', $newName);
-        $state = new \SuiteCRM\StateSaver();
+        $state = new StateSaver();
         $state->pushErrorLevel();
         error_reporting(0);
         $imapRenameMailbox = $this->imap->renameMailbox($oldConnect, $newConnect);
@@ -337,6 +342,8 @@ class InboundEmail extends SugarBean
                 $sessionFoldersString
             );
         }
+
+        return $imapRenameMailbox;
     }
 
 
@@ -453,7 +460,7 @@ class InboundEmail extends SugarBean
             $lastMsg = $lastMsg > $totalMsgs ? $totalMsgs : $lastMsg;
 
             $sequence = $firstMsg . ':' . $lastMsg;
-            $emailSortedHeaders = $this->imap->fetchOverview($sequence); 
+            $emailSortedHeaders = $this->imap->fetchOverview($sequence);
 
             $uids = array_map(
                 function ($x) {
@@ -3219,11 +3226,11 @@ class InboundEmail extends SugarBean
             }
 
             $GLOBALS['log']->debug($l . ': I-E clearing error and alert stacks.');
-            
+
             $this->imap->getErrors(); // clear stacks
-            
+
             $this->imap->getAlerts();
-            
+
             // If you find a good connection, then don't do any further testing to find URL
             if ($foundGoodConnection) {
                 break;
@@ -5510,14 +5517,14 @@ class InboundEmail extends SugarBean
 
                 if (empty($email->date_entered)) {
                     $possibleFormats = [
-                        \DateTime::RFC2822.'+',
-                        str_replace(['D, '], '', \DateTime::RFC2822), // day-of-week is optional
-                        str_replace([':s'], '', \DateTime::RFC2822), // seconds are optional
-                        str_replace(['D, ', ':s'], '', \DateTime::RFC2822), // day-of-week is optional, seconds are optional
-                        \DateTime::RFC822,
-                        str_replace(['D, '], '', \DateTime::RFC822), // day is optional
-                        str_replace([':s'], '', \DateTime::RFC822), // seconds are optional
-                        str_replace(['D, ', ':s'], '', \DateTime::RFC822), // day is optional, seconds are optional
+                        DateTime::RFC2822.'+',
+                        str_replace(['D, '], '', DateTime::RFC2822), // day-of-week is optional
+                        str_replace([':s'], '', DateTime::RFC2822), // seconds are optional
+                        str_replace(['D, ', ':s'], '', DateTime::RFC2822), // day-of-week is optional, seconds are optional
+                        DateTime::RFC822,
+                        str_replace(['D, '], '', DateTime::RFC822), // day is optional
+                        str_replace([':s'], '', DateTime::RFC822), // seconds are optional
+                        str_replace(['D, ', ':s'], '', DateTime::RFC822), // day is optional, seconds are optional
                     ];
 
                     // Some IMAP server respond with different data formats.
@@ -5526,7 +5533,7 @@ class InboundEmail extends SugarBean
                     // decodes the date field it will exit the loop.
                     // As we no longer need to continue trying to decode the datetime format.
                     foreach ($possibleFormats  as $possibleFormat) {
-                        $dateTime = \DateTime::createFromFormat($possibleFormat, $parsedFullHeader->date);
+                        $dateTime = DateTime::createFromFormat($possibleFormat, $parsedFullHeader->date);
                         if ($dateTime !== false) {
                             break;
                         }
@@ -6146,16 +6153,16 @@ class InboundEmail extends SugarBean
     public function connectMailserver($test = false, $force = false)
     {
         global $mod_strings;
-        
+
         $msg = '';
-        
+
         if (!$this->imap->isAvailable()) {
             $GLOBALS['log']->debug('------------------------- IMAP libraries NOT available!!!! die()ing thread.----');
 
             return $mod_strings['LBL_WARN_NO_IMAP'];
         }
 
-        
+
         $this->imap->getErrors(); // clearing error stack
         //error_reporting(0); // turn off notices from IMAP
 
@@ -6270,7 +6277,7 @@ class InboundEmail extends SugarBean
             }
 
             $this->imap->getErrors(); // collapse error stack
-            
+
             if (is_resource($this->imap->getConnection())) {
                 $this->imap->close();
             } else {
@@ -6322,6 +6329,7 @@ class InboundEmail extends SugarBean
     {
         // if php is prior to 5.3.2, then return call without disable parameters as they are not supported yet
         if (version_compare(phpversion(), '5.3.2', '<')) {
+            LoggerManager::getLogger()->deprecated("current php version is not supported");
             return $this->imap->open($mailbox, $username, $password, $options);
         }
 
@@ -6337,11 +6345,8 @@ class InboundEmail extends SugarBean
                 $params = array();
             }
 
-//            $state = new \SuiteCRM\StateSaver();
-//            $state->pushErrorLevel();
-//            error_reporting(0);
-            $connection = $this->imap->open($mailbox, $username, $password, $options, 0, $params);
-//            $state->popErrorLevel();
+            $connection = $this->getImap()->open($mailbox, $username, $password, $options, 0, $params);
+
         }
 
         return $connection;

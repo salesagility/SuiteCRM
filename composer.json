@@ -40,7 +40,7 @@
     "consolidation/robo": "^1.0.0",
     "mockery/mockery": "^0.9.9",
     "symfony/yaml": "^3.4",
-    "flow/jsonpath": "^0.3"
+    "flow/jsonpath": "^0.4"
   },
   "scripts": {},
   "prefer-stable": true,
