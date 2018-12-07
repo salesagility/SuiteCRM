@@ -785,8 +785,9 @@ $mod_strings = array(
     'LBL_TOTAL_FILES' => 'Total files',
     'LBL_REMOVED_FILES' => 'Removed files',
 
-    'LBL_JJWG_MAPS_ADMIN_HEADER' => 'Google Maps',
-    'LBL_JJWG_MAPS_ADMIN_DESC' => 'Manage your geocoding, testing geocoding, view geocoding result totals and configure advanced settings.',
+    'LBL_GOOGLE_SUITE_ADMIN_HEADER' => 'Google Suite',
+    'LBL_GOOGLE_SUITE_ADMIN_DESC' => 'Manage your Google Suite Integration.',
+
     'LBL_JJWG_MAPS_ADMIN_CONFIG_TITLE' => 'Google Maps Settings',
     'LBL_JJWG_MAPS_ADMIN_CONFIG_DESC' => 'Configuration settings to adjust your Google Maps',
     'LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_TITLE' => 'Geocoded Counts',
@@ -800,6 +801,12 @@ $mod_strings = array(
     'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_TITLE' => 'Address Cache',
     'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC' => 'Provides access to Address Cache information. This is only cache.',
 
+    // Google Calendar
+    'LBL_GOOGLE_CALENDAR_SETTINGS_TITLE' => 'Google Calendar Settings',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_DESC' => 'Configuration settings to adjust your Google Calendar',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON' => 'Upload Google API Credentials File',
+    'LBL_GOOGLE_CALENDAR_SETTINGS_JSON_HELP' => 'Upload the JSON Credentials file you downloaded from Google Developers Console.',
+    'LBL_GOOGLE_CALENDAR_GET_API_KEY' => 'Get API Credentials',
 
     'LBL_DISPLAY_SIDEBAR' => 'Display Sidebar',
     'LBL_COLOUR_ADMIN_PAGEHEADER' => 'Page header colour',
