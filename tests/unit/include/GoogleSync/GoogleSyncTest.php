@@ -368,20 +368,25 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
 
+        // The event needs a start time method to pass
+        $startDateTime = new Google_Service_Calendar_EventDateTime;
+        $startDateTime->setDateTime(date(DATE_ATOM, strtotime('2018-01-01 13:00:00 UTC')));
+        $Google_Event->setStart($startDateTime);
+
         // Test with just an active Meeting. Should return 'push'
-        $this->assertEquals('push', $object->pushPullSkip($CRM_Meeting));
+        $this->assertEquals('push', $object->pushPullSkip($CRM_Meeting, null));
 
         // Test with just deleted Meeting. Should return 'skip'
         $CRM_Meeting->deleted = '1';
-        $this->assertEquals('skip', $object->pushPullSkip($CRM_Meeting));
+        $this->assertEquals('skip', $object->pushPullSkip($CRM_Meeting, null));
         
 
         // Test with just an active Google Event. Should return 'pull'
-        $this->assertEquals('pull', $object->pushPullSkip($Google_Event));
+        $this->assertEquals('pull', $object->pushPullSkip(null, $Google_Event));
 
         // Test with just a canceled Google Event. Should return 'skip'
         $Google_Event->status = 'cancelled';
-        $this->assertEquals('skip', $object->pushPullSkip($Google_Event));
+        $this->assertEquals('skip', $object->pushPullSkip(null, $Google_Event));
 
         // Test compare both Meeting & Event, but both deleted. Should return 'skip'
         $this->assertEquals('skip', $object->pushPullSkip($CRM_Meeting, $Google_Event));

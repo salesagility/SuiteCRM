@@ -511,179 +511,101 @@ class GoogleSync
      * Helper function for pushPullSkip.
      *
      * When given a single calendar object, determine its type and return an action.
+     * At least one of the params is required.
      *
-     * @param Meeting|\Google_Service_Calendar_Event $event Either the Meeting Bean or Google_Service_Calendar_Event Object
+     * @param Meeting $event_local (optional) Meeting Bean
+     * @param \Google_Service_Calendar_Event $event_remote (optional) Google_Service_Calendar_Event Object
      *
      * @return string push, pull, skip, or false on error
      */
-    public function singleEventAction($event)
+    private function singleEventAction(Meeting $event_local = null, Google_Service_Calendar_Event $event_remote = null)
     {
-        switch (get_class($event)) {
-            case "Google_Service_Calendar_Event":
-                if ($event->status !== 'cancelled') {
-                    // We only pull if the Google Event is not deleted/cancelled
-                    $return = "pull";
-                } else {
-                    $return = "skip";
-                }
-                break;
-            case "Meeting":
-                if ($event->deleted == '0') {
-                    // We only push if the meeting is not deleted
-                    $return = "push";
-                } else {
-                    $return = "skip";
-                }
-                break;
-            default:
-                $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'I don\'t understand the event type you used.');
-                $return = false;
+        if (empty($event_local) && empty($event_remote)) {
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass at least one event');
+            return false;
         }
-
-        return $return;
-    }
-
-    /**
-     * Helper function for pushPullSkip
-     *
-     * Takes two objects, and determines which one is local and which is remote.
-     *
-     * @param Meeting|\Google_Service_Calendar_Event $event_1 Either the Meeting Bean or Google_Service_Calendar_Event Object
-     * @param Meeting|\Google_Service_Calendar_Event $event_2 Either the Meeting Bean or Google_Service_Calendar_Event Object
-     *
-     * @return array ['local']=Meeting Bean, ['remote']=Google_Service_Calendar_Event object
-     */
-    public function sortEventObjects($event_1, $event_2)
-    {
-        if ($this->isValidEventPair($event_1, $event_2)) {
-            $events_array = array();
-
-            // We have two events... figure out which is which and set the internal objects
-            $event1Array = $this->getEventArray($event_1);
-            if (!$event1Array) {
-                return false;
+        if (empty($event_local)) {
+            if ( $event_remote->status === 'cancelled' || is_null($event_remote->getStart()->getDateTime()) ) {
+                // We only pull if the Google Event is not deleted/cancelled and not an all day event.
+                return "skip";
+            } else {
+                return "pull";
             }
-            $events_array = array_merge($events_array, $event1Array);
-
-            $event2Array = $this->getEventArray($event_2);
-            if (!$event2Array) {
-                return false;
+        } else {
+            if ($event_local->deleted == '0') {
+                // We only push if the meeting is not deleted
+                return "push";
+            } else {
+                return "skip";
             }
-            $events_array = array_merge($events_array, $event2Array);
-
-            return $events_array;
         }
         return false;
-    }
-
-    /**
-     * 
-     * @param array $event
-     * @return array
-     */
-    protected function getEventArray($event)
-    {
-        $events_array = array();
-        $obj_class = get_class($event);
-        if ($obj_class == 'Meeting') {
-            $events_array['local'] = $event;
-        } elseif ($obj_class == 'Google_Service_Calendar_Event') {
-            $events_array['remote'] = $event;
-        } else {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
-            return false;
-        }
-        return $events_array;
-    }
-
-    /**
-     * 
-     * @param array $event_1
-     * @param array $event_2
-     * @return boolean
-     */
-    protected function isValidEventPair($event_1, $event_2)
-    {
-        if (!isset($event_1) || empty($event_1) || !isset($event_2) || empty($event_2)) {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass two events event');
-            return false;
-        }
-        return true;
     }
 
     /**
      * Figure out if we need to push/pull an update, or do nothing.
      *
      * Used when an event w/ a matching ID is on both ends of the sync.
+     * At least one of the params is required.
      *
-     * @param Meeting|\Google_Service_Calendar_Event $event_1 Either the Meeting Bean or Google_Service_Calendar_Event Object
-     * @param \Google_Service_Calendar_Event $event_2 (optional) Google Event
+     * @param Meeting|null $event_local (optional) Meeting Bean or Google_Service_Calendar_Event Object
+     * @param \Google_Service_Calendar_Event|null $event_remote (optional) Google_Service_Calendar_Event Object
      *
-     * @return string|bool push(_delete), pull(_delete), skip
+     * @return string|bool 'push(_delete)', 'pull(_delete)', 'skip', false (on error)
      */
-    public function pushPullSkip($event_1, $event_2 = null)
+    public function pushPullSkip(Meeting $event_local = null, Google_Service_Calendar_Event $event_remote = null)
     {
-        if ((!isset($event_1) || empty($event_1)) && (!isset($event_2) || empty($event_2))) {
+        if (empty($event_local) && empty($event_remote)) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass at least one event');
             return false;
         }
 
         // Did we only get one event?
-        if (!isset($event_2) || empty($event_2)) {
+        if (empty($event_local) || empty($event_remote)) {
             // If we only got one event, figure out which kind it is, and pass the return from the helper function
-            return $this->singleEventAction($event_1);
+            return $this->singleEventAction($event_local, $event_remote);
+            
         } else {
-            // For two events, pass to the helper function that sorts them and returns an array of objects
-            $events_array = $this->sortEventObjects($event_1, $event_2);
-
-            if (empty($events_array)) {
-                throw new Exception('Event Objects Failed To Sort');
-            }
-
-            // We don't need the original vars now
-            unset($event_1);
-            unset($event_2);
-
             // Check if we already sync'ed this event on this run
-            if (in_array($events_array['local']->id, $this->syncedList, true)) {
+            if (in_array($event_local->id, $this->syncedList, true)) {
                 $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We already synced this meeting. Marking to skip.');
                 return "skip";
             }
 
             // Before we get further, if both events are deleted, skip
-            if ($events_array['local']->deleted == '1' && $events_array['remote']->status == 'cancelled') {
+            if ($event_local->deleted == '1' && $event_remote->status == 'cancelled') {
                 return "skip";
             }
 
             // Get the last modified time from google event
-            $gModified = strtotime($events_array['remote']->getUpdated());
+            $gModified = strtotime($event_remote->getUpdated());
 
             // Get last modified of SuiteCRM event
-            $sModified = strtotime($events_array['local']->fetched_row['date_modified'] . ' UTC'); // SuiteCRM stores the timedate as UTC in the DB
+            $sModified = strtotime($event_local->fetched_row['date_modified'] . ' UTC'); // SuiteCRM stores the timedate as UTC in the DB
             // Get the last sync time of SuiteCRM event
-            if (isset($events_array['local']->fetched_row['gsync_lastsync'])) {
-                $lastSync = $events_array['local']->fetched_row['gsync_lastsync'];
+            if (isset($event_local->fetched_row['gsync_lastsync'])) {
+                $lastSync = $event_local->fetched_row['gsync_lastsync'];
             } else {
                 $lastSync = 0;
             }
 
             // Event has not been modified since last sync... skip
             if ($gModified <= $lastSync && $sModified <= $lastSync) {
-                $this->syncedList[] = $events_array['local']->id;
+                $this->syncedList[] = $event_local->id;
                 return "skip";
             }
 
             // Event was modified since last sync
             if ($gModified > $lastSync || $sModified > $lastSync) {
                 if ($gModified > $sModified) {
-                    if ($events_array['remote']->status == 'cancelled') {
+                    if ($event_remote->status == 'cancelled') {
                         // if the remote event is deleted, delete it here
                         return "pull_delete";
                     } else {
                         return "pull";
                     }
                 } else {
-                    if ($events_array['local']->deleted == '1') {
+                    if ($event_local->deleted == '1') {
                         return "push_delete";
                     } else {
                         return "push";
@@ -925,13 +847,21 @@ class GoogleSync
             return false;
         }
 
-        $event_local->name = $event_remote->getSummary();
-        $event_local->description = $event_remote->getDescription();
-        $event_local->location = $event_remote->getLocation();
+        if (is_null($event_remote->getSummary())) { // Google doesn't require titles on events.
+            $event_local->name = '(No title)'; // This is what they look like in google, so it should be seamless.
+        } else {
+            $event_local->name = (string) $event_remote->getSummary();
+        }
 
-        // Get Start/End/Duration from Google Event
-        $starttime = strtotime($event_remote->getStart()['dateTime']);
-        $endtime = strtotime($event_remote->getEnd()['dateTime']);
+        $event_local->description = (string) $event_remote->getDescription();
+        $event_local->location = (string) $event_remote->getLocation();
+
+        // Get Start/End/Duration from Google Event TODO: This is where all day event conversion will need to happen.
+        $starttime = strtotime($event_remote->getStart()->getDateTime());
+        $endtime = strtotime($event_remote->getEnd()->getDateTime());
+        if (!$starttime || !$endtime) { // Verify we have valid time objects (All day events will fail here.)
+            throw new Exception('Unable to retrieve times from Google Event');
+        }
         $diff = abs($starttime - $endtime);
         $tmins = $diff / 60;
         $hours = floor($tmins / 60);
@@ -1247,7 +1177,7 @@ class GoogleSync
                 $meeting = null;
             }
 
-            $action = $this->pushPullSkip($gevent, $meeting);
+            $action = $this->pushPullSkip($meeting, $gevent);
             $actionResult = $this->doAction($meeting, $gevent, $action);
 
             if (!$actionResult) {
@@ -1304,11 +1234,11 @@ class GoogleSync
         try {
             $ret = $this->setSyncUsers();
         } catch (Exception $e) {
-            $this->logger->error('Exception: ' . $e->getMessage());
+            $this->logger->error(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . '- setSyncUsers() Exception: ' . $e->getMessage());
         }
 
         if (!$ret) {
-            $this->logger->warn('There is no user to sync..');
+            $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - There is no user to sync..');
         }
 
         // We count failures here
@@ -1317,19 +1247,20 @@ class GoogleSync
         // Then we go though the array and sync the users with doSync()
         if (isset($this->users) && !empty($this->users)) {
             foreach (array_keys($this->users) as $key) {
+                $return = null;
                 try {
                     $return = $this->doSync($key);
                 } catch (Exception $e) {
-                    $this->logger->error('doSync() Exception: ' . $e->getMessage());
+                    $this->logger->error(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - doSync() Exception: ' . $e->getMessage());
                 }
                 if (!$return) {
-                    $this->logger->error('Something went wrong syncing for user id: ' . $key);
+                    $this->logger->error(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - Something went wrong syncing for user id: ' . $key);
                     $failures++;
                 }
             }
         }
         if ($failures > 0) {
-            $this->logger->warn($failures . ' failure(s) found at syncAllUsers method.');
+            $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $failures . ' failure(s) found at syncAllUsers method.');
             return false;
         } else {
             return true;
