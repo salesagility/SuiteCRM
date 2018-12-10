@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,47 +38,39 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-namespace SuiteCRM;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/ImapHandlerFactory.php';
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+global $sugar_config;
 
-include_once __DIR__ . '/../../../include/utils.php';
+if (!isset($sugar_config['imap_test']) || !$sugar_config['imap_test']) {
+    throw new Exception('IMAP test required');
+}
 
-class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
-{
-    public function testGetAppString()
-    {
-        global $app_strings;
-        
-        // setup: test works only if it is not exists
-        $this->assertTrue(!isset($app_strings['TEST_NONEXISTS_LABEL']));
-        
-        // test if label is not set
-        
-        $result = getAppString('TEST_NONEXISTS_LABEL');
-        $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
-        
-        // test if label is empty (bool:false)
-        
-        $app_strings['TEST_NONEXISTS_LABEL'] = '';
-        
-        $result = getAppString('TEST_NONEXISTS_LABEL');
-        $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
-        
-        // test if it founds
-        
-        $app_strings['TEST_NONEXISTS_LABEL'] = 'Hello test';
-        
-        $result = getAppString('TEST_NONEXISTS_LABEL');
-        $this->assertEquals('Hello test', $result);
-        
-        // clean up
-        unset($app_strings['TEST_NONEXISTS_LABEL']);
+$var = 'imap_test_settings';
+$key = isset($_REQUEST[$var]) && $_REQUEST[$var] ? $_REQUEST[$var] : null;
+if (!$key) {
+    // TODO: should it be translatable?
+    $error = "Invalud request, use '$var' value.";
+} else {
+    $imapHandlerFactory = new ImapHandlerFactory();
+    try {
+        if (!$imapHandlerFactory->saveTestSettingsKey($key)) {
+            // TODO: should it be translatable?
+            $error = 'Unknown error occured, key not saved.';
+        }
+    } catch (Exception $e) {
+        // TODO: should we use exception code in a switch and message is translatable?
+        $error = $e->getMessage();
     }
 }
+if (!empty($error)) {
+    echo "ERROR: $error";
+} else {
+    // TODO: should it be translatable?
+    echo "OK: test settings changed to '$key'\n";
+}
+exit;

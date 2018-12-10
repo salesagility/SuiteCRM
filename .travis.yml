@@ -78,7 +78,7 @@ script:
   # Install demo user data
   - mysql -u root -D automated_tests -v -e "source tests/_data/demo_users.sql"
   # set the log level to error
-  - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
+  - echo "\$sugar_config['logger']['level'] = 'debug';" >> config_override.php
   # add keys
   - sudo chmod -R 777 .
   - openssl genrsa -out Api/V8/OAuth2/private.key 2048
@@ -88,11 +88,12 @@ script:
   # Run API functional tests
   - ./vendor/bin/codecept run tests/api/V8/ -f -vvv -d
   # RUN Basic Acceptance test
+  - echo "\$sugar_config['imap_test'] = true;" >> config_override.php
   - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d
 
 after_script:
   - ./build/push_output.sh
-  - cat suitecrm.log
+  # - cat suitecrm.log TODO: Upload the suitecrm.log to an external file host.
   - sudo cat /var/log/apache2/error.log
   - echo $TRAVIS_COMMIT_RANGE
 

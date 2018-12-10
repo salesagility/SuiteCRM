@@ -38,7 +38,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        ////error_reporting(E_ERROR | E_PARSE);
+        //
 
         //test with a valid module but invalid action. it should return false.
         $view = new ViewClassic();

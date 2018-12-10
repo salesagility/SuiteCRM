@@ -104,7 +104,22 @@ if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] =
     $useSsl = true;
 }
 
-
+//if (isset($this->bean) && $this->bean instanceof InboundEmail) {
+//    $ie = $this->bean;
+//} else {
+//    $ie = new InboundEmail();
+//}
+//if (!empty($_REQUEST['ie_id'])) {
+//    
+//    if (!$ie->id) {
+//        $ie->retrieve($_REQUEST['ie_id']);
+//    }
+//    
+//    if ($_REQUEST['ie_id'] != $ie->id) {
+//        throw new Exception('Popup given an ambiguous Inbound Email ID.');
+//    }
+//}
+        
 $ie                 = new InboundEmail();
 if (!empty($_REQUEST['ie_id'])) {
     $ie->retrieve($_REQUEST['ie_id']);

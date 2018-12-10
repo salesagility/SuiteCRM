@@ -77,7 +77,7 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         // execute the method and test it returns 1 role
         // if the test suite run runs RolesTest first.
