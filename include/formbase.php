@@ -277,7 +277,11 @@ function buildRedirectURL($return_id='', $return_module='')
             	$additionalFlags = array('meetingIntegrationShowForm' => '1');
             }
             // END Meeting Integration
-        } 
+
+			//Set redirection to the new record created
+			$_REQUEST['return_id'] = $return_id?$return_id:$_REQUEST['return_id'];
+
+		}
 		// if we create a new record "Save", we want to redirect to the DetailView
 		else if(isset($_REQUEST['action']) && $_REQUEST['action'] == "Save" 
 			&& $_REQUEST['return_module'] != 'Activities'
