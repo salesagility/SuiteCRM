@@ -8,7 +8,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
     protected $tester;
 
     /** @var ReflectionClass */
-    protected static $relection;
+    protected static $reflection;
 
     /** @var ReflectionProperty */
     protected static $dbProperty;
@@ -18,9 +18,9 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         parent::_before();
 
         // Use reflection to access private properties and methods
-        if (self::$relection === null) {
-            self::$relection = new ReflectionClass(GoogleSync::class);
-            self::$dbProperty = self::$relection->getProperty('db');
+        if (self::$reflection === null) {
+            self::$reflection = new ReflectionClass(GoogleSync::class);
+            self::$dbProperty = self::$reflection->getProperty('db');
             self::$dbProperty->setAccessible(true);
         }
     }
@@ -36,12 +36,16 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $object = new GoogleSync();
 
         // Test GoogleSync::timezone
-        $this->assertNotEmpty($object->timezone);
-        $this->assertEquals("string", gettype($object->timezone));
+        $timezone = self::$reflection->getProperty('timezone');
+        $timezone->setAccessible(true);
+        $this->assertNotEmpty($timezone->getValue($object));
+        $this->assertEquals("string", gettype($timezone->getValue($object)));
 
         // Test GoogleSync::authJson
-        $this->assertNotEmpty($object->authJson);
-        $this->assertEquals("array", gettype($object->authJson));
+        $authJson = self::$reflection->getProperty('authJson');
+        $authJson->setAccessible(true);
+        $this->assertNotEmpty($authJson->getValue($object));
+        $this->assertEquals("array", gettype($authJson->getValue($object)));
 
         // Test GoogleSync::db
         $expectedClass = DBManager::class;
@@ -70,6 +74,9 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
     {
         $state = new \SuiteCrm\StateSaver();
         $state->pushGlobals();
+
+        $method = self::$reflection->getMethod('getAuthJson');
+        $method->setAccessible(true);
     
         // Set up object for testing
         global $sugar_config;
@@ -80,7 +87,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $object = new GoogleSync();
 
         $expectedAuthJson = json_decode(base64_decode('eyJ3ZWIiOiJ0ZXN0In0'), true);
-        $actualAuthJson = $object->getAuthJson();
+        $actualAuthJson = $method->invoke($object);
 
         $this->assertEquals($expectedAuthJson, $actualAuthJson);
         $this->assertArrayHasKey('web', $actualAuthJson);
@@ -90,12 +97,17 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testAddUser()
     {
+        $method = self::$reflection->getMethod('addUser');
+        $method->setAccessible(true);
+
+        $property = self::$reflection->getProperty('users');
+        $property->setAccessible(true);
 
         $object = new GoogleSync();
-        $return = $object->addUser('ABC123', 'End User');
+        $return = $method->invoke($object, 'ABC123', 'End User');
 
         $this->assertTrue($return);
-        $this->assertArrayHasKey('ABC123', $object->users);
+        $this->assertArrayHasKey('ABC123', $property->getValue($object));
 
     }
 
@@ -162,18 +174,28 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $meeting3->date_end = '2016-02-11 17:30:00';
         $meeting3_id = $meeting3->save();
 
-        $object = new GoogleSync();
-        $object->workingUser = $user;
+        $method = self::$reflection->getMethod('getUserMeetings');
+        $method->setAccessible(true);
 
-        $return = $object->getUserMeetings();
+        $property = self::$reflection->getProperty('workingUser');
+        $property->setAccessible(true);
+
+        $object = new GoogleSync();
+        $property->setValue($object, $user);
+        //$object->workingUser = $user;
+
+        $return = $method->invoke($object);
+
+        //$return = $object->getUserMeetings();
 
         $this->assertEquals(3, count($return));
 
         // Test for invalid user id exception handling
-        $object->workingUser->id = 'INVALID';
+        $user->id = 'INVALID';
+        $property->setValue($object, $user);
         try {
             $caught = false;
-            $return = $object->getUserMeetings();
+            $return = $method->invoke($object);
         } catch (Exception $e) {
             $caught = true;
         }
@@ -197,6 +219,9 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('reminders');
         $state->pushTable('reminders_invitees');
+
+        $method = self::$reflection->getMethod('createSuitecrmMeetingEvent');
+        $method->setAccessible(true);
 
         $object = new GoogleSync();
 
@@ -243,11 +268,13 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         // END: Create Google Event Object
 
         // Set id of fake user
-        $object->workingUser = new User;
-        $object->workingUser->id = 'FAKEUSER';
-        $this->assertEquals('FAKEUSER', $object->workingUser->id);
+        $property = self::$reflection->getProperty('workingUser');
+        $property->setAccessible(true);
+        $user = new User;
+        $user->id = 'FAKEUSER';
+        $property->setValue($object, $user);
 
-        $return = $object->createSuitecrmMeetingEvent($Google_Event);
+        $return = $method->invoke($object, $Google_Event);
         $this->assertEquals('Meeting', get_class($return));
         $this->assertNotNull($return->id);
         $this->assertEquals('0', $return->deleted);
@@ -278,6 +305,9 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $state->pushTable('aod_indexevent');
 
         $db = DBManagerFactory::getInstance();
+
+        $method = self::$reflection->getMethod('getMeetingByEventId');
+        $method->setAccessible(true);
 
         $object = new GoogleSync();
 
@@ -324,20 +354,21 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $res = $db->query($sql);
         $this->assertEquals(true, $res);
 
-        // Give meetings 1 and 2 a duplicate gsync_id
+        // Give meetings 2 and 3 a duplicate gsync_id
         $sql = "UPDATE meetings SET gsync_id = 'duplicate_gsync_id' WHERE id = '{$meeting2_id}' OR id = '{$meeting3_id}'";
         $res = $db->query($sql);
         $this->assertEquals(true, $res);
 
-        $return = $object->getMeetingByEventId('valid_gsync_id');
+
+        $return = $method->invoke($object, 'valid_gsync_id');
         $this->assertInstanceOf('Meeting', $return);
         $this->assertInstanceOf('SugarBean', $return);
         $this->assertEquals($meeting1_id, $return->id);
 
-        $return = $object->getMeetingByEventId('duplicate_gsync_id');
+        $return = $method->invoke($object, 'duplicate_gsync_id');
         $this->assertEquals(false, $return);
 
-        $return = $object->getMeetingByEventId('NOTHING_MATCHES');
+        $return = $method->invoke($object, 'NOTHING_MATCHES');
         $this->assertEquals(null, $return);
 
         $state->popTable('meetings');
@@ -353,6 +384,9 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testPushPullSkip()
     {
+        $method = self::$reflection->getMethod('pushPullSkip');
+        $method->setAccessible(true);
+
         $object = new GoogleSync();
 
         // Create SuiteCRM Meeting Object
@@ -374,22 +408,22 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $Google_Event->setStart($startDateTime);
 
         // Test with just an active Meeting. Should return 'push'
-        $this->assertEquals('push', $object->pushPullSkip($CRM_Meeting, null));
+        $this->assertEquals('push', $method->invoke($object, $CRM_Meeting, null));
 
         // Test with just deleted Meeting. Should return 'skip'
         $CRM_Meeting->deleted = '1';
-        $this->assertEquals('skip', $object->pushPullSkip($CRM_Meeting, null));
+        $this->assertEquals('skip', $method->invoke($object, $CRM_Meeting, null));
         
 
         // Test with just an active Google Event. Should return 'pull'
-        $this->assertEquals('pull', $object->pushPullSkip(null, $Google_Event));
+        $this->assertEquals('pull', $method->invoke($object, null, $Google_Event));
 
         // Test with just a canceled Google Event. Should return 'skip'
         $Google_Event->status = 'cancelled';
-        $this->assertEquals('skip', $object->pushPullSkip(null, $Google_Event));
+        $this->assertEquals('skip', $method->invoke($object, null, $Google_Event));
 
         // Test compare both Meeting & Event, but both deleted. Should return 'skip'
-        $this->assertEquals('skip', $object->pushPullSkip($CRM_Meeting, $Google_Event));
+        $this->assertEquals('skip', $method->invoke($object, $CRM_Meeting, $Google_Event));
 
         // Set records to active
         $CRM_Meeting->deleted = '0';
@@ -399,20 +433,20 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $CRM_Meeting->fetched_row['date_modified'] = '2018-01-02 12:00:00';
         $CRM_Meeting->fetched_row['gsync_lastsync'] = strtotime('2018-01-01 13:00:00 UTC');
         $Google_Event->updated = '2018-01-01 12:00:00 UTC';
-        $this->assertEquals('push', $object->pushPullSkip($CRM_Meeting, $Google_Event));
+        $this->assertEquals('push', $method->invoke($object, $CRM_Meeting, $Google_Event));
 
         // Test with newer Google Event. Should return 'pull'
         $CRM_Meeting->fetched_row['date_modified'] = '2018-01-01 12:00:00';
         $CRM_Meeting->fetched_row['gsync_lastsync'] = strtotime('2018-01-01 13:00:00 UTC');
         $Google_Event->updated = '2018-01-02 12:00:00 UTC';
-        $this->assertEquals('pull', $object->pushPullSkip($CRM_Meeting, $Google_Event));
+        $this->assertEquals('pull', $method->invoke($object, $CRM_Meeting, $Google_Event));
 
         // Test with newer, deleted meeting. Should return 'push_delete'
         $CRM_Meeting->deleted = '1';
         $CRM_Meeting->fetched_row['date_modified'] = '2018-01-03 12:00:00';
         $CRM_Meeting->fetched_row['gsync_lastsync'] = strtotime('2018-01-02 12:00:00 UTC');
         $Google_Event->updated = '2018-01-01 12:00:00 UTC';
-        $this->assertEquals('push_delete', $object->pushPullSkip($CRM_Meeting, $Google_Event));
+        $this->assertEquals('push_delete', $method->invoke($object, $CRM_Meeting, $Google_Event));
         $CRM_Meeting->deleted = '0';
 
         // Test with newer, deleted Google Event Should return 'pull_delete'
@@ -420,7 +454,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $CRM_Meeting->fetched_row['date_modified'] = '2018-01-01 12:00:00';
         $CRM_Meeting->fetched_row['gsync_lastsync'] = strtotime('2018-01-01 13:00:00 UTC');
         $Google_Event->updated = '2018-01-02 12:00:00 UTC';
-        $this->assertEquals('pull_delete', $object->pushPullSkip($CRM_Meeting, $Google_Event));
+        $this->assertEquals('pull_delete', $method->invoke($object, $CRM_Meeting, $Google_Event));
         $Google_Event->status = '';
 
         // Set records to active
@@ -431,7 +465,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $CRM_Meeting->fetched_row['date_modified'] = '2018-01-01 12:00:00';
         $CRM_Meeting->fetched_row['gsync_lastsync'] = strtotime('2018-01-01 13:00:00 UTC');
         $Google_Event->updated = '2018-01-01 12:00:00 UTC';
-        $this->assertEquals('skip', $object->pushPullSkip($CRM_Meeting, $Google_Event));
+        $this->assertEquals('skip', $method->invoke($object, $CRM_Meeting, $Google_Event));
 
     }
 
@@ -442,8 +476,15 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testCreateGoogleCalendarEvent()
     {
+        $method = self::$reflection->getMethod('createGoogleCalendarEvent');
+        $method->setAccessible(true);
+
+        $setTimeZone = self::$reflection->getMethod('setTimeZone');
+        $setTimeZone->setAccessible(true);
+        
         $object = new GoogleSync();
-        $object->setTimeZone('Etc/UTC');
+
+        $setTimeZone->invoke($object, 'Etc/UTC');
         $testid = create_guid();
 
         // Create SuiteCRM Meeting Object
@@ -457,7 +498,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $CRM_Meeting->date_end = '2018-01-01 13:00:00';
         $CRM_Meeting->module_name = 'Meeting';
 
-        $return = $object->createGoogleCalendarEvent($CRM_Meeting);
+        $return = $method->invoke($object, $CRM_Meeting);
 
         $this->assertEquals('Google_Service_Calendar_Event', get_class($return));
         $this->assertEquals('Unit Test Event', $return->getSummary());
@@ -519,19 +560,27 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testSetTimezone()
     {
+        $method = self::$reflection->getMethod('setTimezone');
+        $method->setAccessible(true);
+        $property = self::$reflection->getProperty('timezone');
+        $property->setAccessible(true);
+
         $object = new GoogleSync();
 
         $expectedTimezone = 'Etc/GMT';
 
-        $return = $object->setTimezone($expectedTimezone);
+        $return = $method->invoke($object, $expectedTimezone);
 
         $this->assertTrue($return);
-        $this->assertEquals($expectedTimezone, $object->timezone);
+        $this->assertEquals($expectedTimezone, $property->getValue($object));
         $this->assertEquals($expectedTimezone, date_default_timezone_get());
     }
 
     public function testReturnExtendedProperties()
     {
+        $method = self::$reflection->getMethod('returnExtendedProperties');
+        $method->setAccessible(true);
+
         $object = new GoogleSync();
 
         // BEGIN: Create Google Event Object
@@ -586,7 +635,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $CRM_Meeting->date_end = '2018-01-01 13:00:00';
         $CRM_Meeting->module_name = 'Meeting';
 
-        $return = $object->returnExtendedProperties($Google_Event, $CRM_Meeting);
+        $return = $method->invoke($object, $Google_Event, $CRM_Meeting);
         $returnPrivate = $return->getPrivate();
 
         $this->assertEquals('FAKE_MEETING_ID', $returnPrivate['suitecrm_id']);
