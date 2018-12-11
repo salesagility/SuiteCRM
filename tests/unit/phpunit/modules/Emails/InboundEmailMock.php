@@ -54,9 +54,11 @@ class InboundEmailMock extends InboundEmail
     
     /**
      *
-     * @return boolean
+     * @param bool test Flag to test connection
+     * @param bool force Force reconnect
+     * @return string "true" on success, "false" or $errorMessage on failure
      */
-    public function connectMailserver()
+    public function connectMailserver($test = false, $force = false)
     {
         return true; // emulate a success connection
     }
