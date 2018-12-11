@@ -636,12 +636,18 @@ if(typeof form[id]=="object"){form[id].value='';SUGAR.util.callOnChangeListers(f
 return return_arr;}
 if(typeof(SUGAR.MultiEnumAutoComplete)=='undefined')SUGAR.MultiEnumAutoComplete={};SUGAR.MultiEnumAutoComplete.getMultiSelectKeysFromValues=function(options_index,val_string){var opts=SUGAR.language.get('app_list_strings',options_index);var selected_values=val_string.split(", ");if(selected_values.length>0&&selected_values.indexOf('')==selected_values.length-1){selected_values.pop();}
 var final_arr=new Array();for(idx in selected_values){for(o_idx in opts){if(selected_values[idx]==opts[o_idx]){final_arr.push(o_idx);}}}
-return final_arr;}
-SUGAR.MultiEnumAutoComplete.getMultiSelectValuesFromKeys=function(options_index,val_string){var opts=SUGAR.language.get('app_list_strings',options_index);val_string=val_string.replace(/^\^/,'').replace(/\^$/,'')
+return final_arr;};SUGAR.MultiEnumAutoComplete.getMultiSelectValuesFromKeys=function(options_index,val_string){var opts=SUGAR.language.get('app_list_strings',options_index);val_string=val_string.replace(/^\^/,'').replace(/\^$/,'')
 var selected_values=val_string.split("^,^");if(selected_values.length>0&&selected_values.indexOf('')==selected_values.length-1){selected_values.pop();}
 var final_arr=new Array();for(idx in selected_values){for(o_idx in opts){if(selected_values[idx]==o_idx){final_arr.push(opts[o_idx]);}}}
-return final_arr;}
-function convertReportDateTimeToDB(dateValue,timeValue){var date_match=dateValue.match(date_reg_format);var time_match=timeValue.match(/([0-9]{1,2})\:([0-9]{1,2})([ap]m)/);if(date_match!=null&&time_match!=null){time_match[1]=parseInt(time_match[1]);if(time_match[3]=='pm'){time_match[1]=time_match[1]+12;if(time_match[1]>=24){time_match[1]=time_match[1]-24;}}else if(time_match[3]=='am'&&time_match[1]==12){time_match[1]=0;}
+return final_arr;};function convertReportDateTimeToDB(dateValue,timeValue){var date_match=dateValue.match(date_reg_format);var time_match=timeValue.match(/([0-9]{1,2})\:([0-9]{1,2})([ap]m)/);if(date_match!=null&&time_match!=null){time_match[1]=parseInt(time_match[1]);if(time_match[3]=='pm'){time_match[1]=time_match[1]+12;if(time_match[1]>=24){time_match[1]=time_match[1]-24;}}else if(time_match[3]=='am'&&time_match[1]==12){time_match[1]=0;}
 if(time_match[1]<10){time_match[1]='0'+time_match[1];}
 return date_match[date_reg_positions['Y']]+"-"+date_match[date_reg_positions['m']]+"-"+date_match[date_reg_positions['d']]+' '+time_match[1]+':'+time_match[2]+':00';}
 return'';}
+function displayMessage(type,message)
+{if($('#pagecontent .message').length!=0){$('div.message').last().after(renderHtmlMessage(type,message));}else{$('#pagecontent').prepend(renderHtmlMessage(type,message));}}
+function displayMessageAfterSelector(type,message,selector)
+{$(selector).after(renderHtmlMessage(type,message));}
+function clearMessagesByType(type,selector)
+{if(typeof(selector)!='undefined'){$('.message.'+type,selector).remove();}else{$('.message.'+type).remove();}}
+function renderHtmlMessage(type,message)
+{htmlMessage=$('<div />');htmlMessage.addClass('message '+type).html(message);return(htmlMessage);}

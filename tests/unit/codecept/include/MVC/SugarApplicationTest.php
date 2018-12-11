@@ -472,10 +472,10 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         
         //execute the method and check that the method adds the message to user_error_message array.
         //there should be one more array element after method execution.
-        $_SESSION['user_error_message'] = [];
-        $user_error_message_count = count($_SESSION['user_error_message']);
+        $_SESSION['suite_messages']['error'] = [];
+        $user_error_message_count = count($_SESSION['suite_messages']['error']);
         SugarApplication::appendErrorMessage('some error');
-        $this->assertGreaterThan($user_error_message_count, count($_SESSION['user_error_message']));
+        $this->assertGreaterThan($user_error_message_count, count($_SESSION['suite_messages']['error']));
         
         // cleanup
         
@@ -484,6 +484,31 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
         } else {
             unset($_SESSION);
         }
+    }
+
+    public function testappendMessage()
+    {
+        //execute the method and check that the method adds one message for each type.
+        //there should be one more array element at the end of each iteration.
+        $types = array(
+            'error',
+            'info',
+            'alert',
+            'okay',
+            'working'
+        );
+        foreach ($types as $type) {
+            $user_error_message_count = count($_SESSION['suite_messages'][$type]);
+            SugarApplication::appendMessage('a new message', $type);
+            $this->assertGreaterThan($user_error_message_count, count($_SESSION['suite_messages'][$type]));
+        }
+    }
+
+    public function testgetMessages()
+    {
+        //execute the method and check if it returns a array.
+        $messages = SugarApplication::getMessages();
+        $this->assertTrue(is_array($messages));
     }
 
     public function testgetErrorMessages()

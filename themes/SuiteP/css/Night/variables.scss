@@ -1244,6 +1244,22 @@ $aor-droparea: $color-75;
 // Line Items
 $line-item-group-width: 100%;
 
+// Messages
+$alert-message-bg-color: #F5E79E;
+$alert-message-text-color: #ad9d4a;
+$error-message-bg-color: #f08377;
+$error-message-text-color: #fff;
+$info-message-bg-color: #d8f5ee;
+$info-message-text-color: #778591;
+$message-border-radius: 4px; 
+$message-border: 1px solid transparent;
+$message-margin-bottom: 20px;
+$message-padding: 10px;
+$okay-message-bg-color: #83c489;
+$okay-message-text-color: #fff;
+$working-message-bg-color: #e6e6e6;
+$working-message-text-color: #898a8a;
+
 // Workflow
 $workflow-action-bg: $color-39;
 

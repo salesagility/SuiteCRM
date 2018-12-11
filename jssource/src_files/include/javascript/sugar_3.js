@@ -5118,7 +5118,7 @@ SUGAR.MultiEnumAutoComplete.getMultiSelectKeysFromValues = function (options_ind
     }
   }
   return final_arr;
-}
+};
 
 SUGAR.MultiEnumAutoComplete.getMultiSelectValuesFromKeys = function (options_index, val_string) {
   var opts = SUGAR.language.get('app_list_strings', options_index);
@@ -5139,7 +5139,7 @@ SUGAR.MultiEnumAutoComplete.getMultiSelectValuesFromKeys = function (options_ind
     }
   }
   return final_arr;
-}
+};
 
 function convertReportDateTimeToDB(dateValue, timeValue) {
   var date_match = dateValue.match(date_reg_format);
@@ -5160,4 +5160,56 @@ function convertReportDateTimeToDB(dateValue, timeValue) {
     return date_match[date_reg_positions['Y']] + "-" + date_match[date_reg_positions['m']] + "-" + date_match[date_reg_positions['d']] + ' ' + time_match[1] + ':' + time_match[2] + ':00';
   }
   return '';
+}
+
+/**
+ *  Displays a message after the last message shown, into a div
+ *  with the specified class according to the type passed.
+ *  Useful for SuiteP and SuiteR themes.
+ */
+function displayMessage(type, message)
+{
+    if($('#pagecontent .message').length != 0){
+	$('div.message').last().after(
+	    renderHtmlMessage(type, message)
+	);
+    } else {
+	$('#pagecontent').prepend(
+	    renderHtmlMessage(type, message)
+	);
+    }
+}
+/**
+ *  Displays a message after the selector passed, into a div
+ *  with the specified class according to the type passed.
+ *  Useful for default and Suite7 themes.
+ */
+function displayMessageAfterSelector(type, message, selector)
+{
+    $(selector).after(renderHtmlMessage(type, message));
+}
+/**
+ * Deletes all messages of the type passed.
+ * If a selector is passed it only deletes messages inside that selector.
+ *
+ */
+function clearMessagesByType(type, selector)
+{
+    if(typeof(selector) != 'undefined'){
+     $('.message.' + type , selector).remove();
+    }else{
+     $('.message.' + type).remove();
+    }
+}
+/**
+* Displays a message into a div  with the specified class according to the type passed.
+* Types allowed: error, info, alert, working, okay.
+*/
+function renderHtmlMessage(type, message)
+{
+  htmlMessage = $('<div />');
+  htmlMessage
+    .addClass('message ' + type)
+	.html(message);
+  return(htmlMessage);
 }
