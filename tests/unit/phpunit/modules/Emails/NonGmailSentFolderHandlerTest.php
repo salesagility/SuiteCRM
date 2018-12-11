@@ -51,28 +51,31 @@ require_once __DIR__ . '/InboundEmailMock.php';
  *
  * @author gyula
  */
-class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract {
-    
-    public function testDestruct() {
+class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
+{
+    public function testDestruct()
+    {
         $handler = new NonGmailSentFolderHandler();
         $handler->setLastError(4444123);
         try {
+            $handler = null;
             gc_collect_cycles();
-            unset($handler);
             $this->assertTrue(false);
         } catch (NonGmailSentFolderHandlerException $e) {
             $this->assertEquals(NonGmailSentFolderHandlerException::UNHANDLER_ERROR, $e->getError());
         }
     }
     
-    public function testClearLastError() {
+    public function testClearLastError()
+    {
         $handler = new NonGmailSentFolderHandler();
         $handler->clearLastError();
         $err = $handler->getLastError();
         $this->assertNull($err);
     }
     
-    public function testSetLastErrorNoInt() {
+    public function testSetLastErrorNoInt()
+    {
         $handler = new NonGmailSentFolderHandler();
         
         try {
@@ -83,7 +86,8 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract 
         }
     }
     
-    public function storeInSentFolder() {
+    public function storeInSentFolder()
+    {
         $handler = new NonGmailSentFolderHandler();
         $ret = $handler->storeInSentFolder(null, null);
         $this->assertFalse($ret);
@@ -119,7 +123,8 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract 
         $this->assertEquals(NonGmailSentFolderHandler::NO_ERROR, $handler->getLastError());
     }
     
-    public function testGetProblemOfStoringInNonGmailSentFolder() {
+    public function testGetProblemOfStoringInNonGmailSentFolder()
+    {
         $handler = new NonGmailSentFolderHandler();
         $ie = new InboundEmail();
         $mail = new SugarPHPMailer();
@@ -153,7 +158,8 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract 
     }
     
     
-    public function testConnectToNonGmailServer() {
+    public function testConnectToNonGmailServer()
+    {
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = new InboundEmail();
         $mail = new SugarPHPMailer();
@@ -173,7 +179,5 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract 
         $ie = new InboundEmailMock();
         $ret = $handler->connectToNonGmailServerPublic($ie, $mail, $sentFolder);
         $this->assertTrue($ret);
-        
     }
-    
 }

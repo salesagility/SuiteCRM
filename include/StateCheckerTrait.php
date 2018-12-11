@@ -161,7 +161,7 @@ trait StateCheckerTrait
      * @throws StateCheckerException
      */
     protected function afterStateCheck()
-    {        
+    {
         $mode = StateCheckerConfig::get('testStateCheckMode');
         
         switch ($mode) {

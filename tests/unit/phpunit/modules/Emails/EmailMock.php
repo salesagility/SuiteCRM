@@ -58,5 +58,4 @@ class EmailMock extends Email
     {
         return parent::setLastSaveAndStoreInSentError($err);
     }
-    
 }

@@ -49,14 +49,15 @@ require_once __DIR__ . '/../../../../../include/SugarPHPMailer.php';
  *
  * @author gyula
  */
-class SugarPHPMailerMock extends SugarPHPMailer {
+class SugarPHPMailerMock extends SugarPHPMailer
+{
     
     /**
-     * 
+     *
      * @return bool
      */
-    public function send() {
+    public function send()
+    {
         return true; // emulate a successfull email sending
     }
-    
 }

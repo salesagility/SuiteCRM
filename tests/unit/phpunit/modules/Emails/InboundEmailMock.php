@@ -49,14 +49,15 @@ require_once __DIR__ . '/../../../../../modules/InboundEmail/InboundEmail.php';
  *
  * @author gyula
  */
-class InboundEmailMock extends InboundEmail {
+class InboundEmailMock extends InboundEmail
+{
     
     /**
-     * 
+     *
      * @return boolean
      */
-    public function connectMailserver() {
+    public function connectMailserver()
+    {
         return true; // emulate a success connection
     }
-    
 }

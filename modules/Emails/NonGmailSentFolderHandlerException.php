@@ -47,8 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class NonGmailSentFolderHandlerException extends Exception {
-    
+class NonGmailSentFolderHandlerException extends Exception
+{
     const UNHANDLER_ERROR = 1;
-    
 }

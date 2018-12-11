@@ -59,14 +59,15 @@ class NonGmailSentFolderHandler
     
     /**
      *
-     * @var int|null 
+     * @var int|null
      */
     protected $lastError = null;
     
     /**
-     * 
+     *
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $err = $this->getLastError();
         if (null !== $err) {
             throw new NonGmailSentFolderHandlerException(
@@ -76,9 +77,10 @@ class NonGmailSentFolderHandler
     }
     
     /**
-     * 
+     *
      */
-    public function clearLastError() {
+    public function clearLastError()
+    {
         if (null !== $this->lastError) {
             LoggerManager::getLogger()->fatal(
                 'Clear an unused Last Error of NonGmailSentFolderHandler: ' . $this->lastError);
@@ -87,7 +89,7 @@ class NonGmailSentFolderHandler
     }
     
     /**
-     * 
+     *
      * @return int
      */
     public function getLastError()
@@ -98,7 +100,7 @@ class NonGmailSentFolderHandler
     }
     
     /**
-     * 
+     *
      * @param int $err
      */
     public function setLastError($err)

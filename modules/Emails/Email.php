@@ -516,25 +516,28 @@ class Email extends Basic
     }
     
     /**
-     * 
+     *
      */
-    protected function clearTempEmailAtSend() {
+    protected function clearTempEmailAtSend()
+    {
         $this->tempEmailAtSend = null;
     }
     
     /**
-     * 
+     *
      * @param Email $email
      */
-    protected function createTempEmailAtSend(Email $email = null) {
+    protected function createTempEmailAtSend(Email $email = null)
+    {
         $this->tempEmailAtSend = $email ? $email : new Email();
     }
     
     /**
-     * 
+     *
      * @return Email
      */
-    public function getTempEmailAtSend() {
+    public function getTempEmailAtSend()
+    {
         return $this->tempEmailAtSend;
     }
 
@@ -554,9 +557,10 @@ class Email extends Basic
     }
     
     /**
-     * 
+     *
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $err = $this->getLastSaveAndStoreInSentError();
         if (null !== $err) {
             throw new EmailException('Unhandled email save and store as sent error: ' . $err, EmailException::UNHANDLED_LAST_ERROR);
@@ -3078,7 +3082,6 @@ class Email extends Basic
                 $nonGmailSentFolder = $nonGmailSentFolder ? $nonGmailSentFolder : new NonGmailSentFolderHandler();
                 $ieMailId = $this->getTempEmailAtSend()->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder);
                 LoggerManager::getLogger()->debug('IE Mail ID is ' . ($ieMailId === null ? 'null' : $ieMailId) . ' after save and store in non-gmail sent folder.');
-
             }
             $GLOBALS['log']->debug(' --------------------- buh bye -- sent successful');
             ////	END INBOUND EMAIL HANDLING
@@ -3136,7 +3139,7 @@ class Email extends Basic
         InboundEmail $ie,
         NonGmailSentFolderHandler $nonGmailSentFolder = null,
         $check_notify = false)
-    {        
+    {
         $ieMailId = $this->save($check_notify);
         if ($ieMailId) {
             // mark SEEN (STORE MAIL IN SENT BOX)

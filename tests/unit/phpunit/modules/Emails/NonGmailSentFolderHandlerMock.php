@@ -49,7 +49,8 @@ require_once __DIR__ . '/../../../../../modules/Emails/NonGmailSentFolderHandler
  *
  * @author gyula
  */
-class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler {
+class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler
+{
     
     /**
      *
@@ -58,7 +59,8 @@ class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler {
      * @param string $sentFolder
      * @return bool
      */
-    protected function connectToNonGmailServer(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder) {
+    protected function connectToNonGmailServer(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder)
+    {
         LoggerManager::getLogger()->debug('NonGmailSentFolderHandlerMock::connectToNonGmailServer() is called');
         return true; // emulate a success connection
     }
@@ -69,7 +71,8 @@ class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler {
      * @param SugarPHPMailer $mail
      * @return string
      */
-    public function getProblemOfStoringInNonGmailSentFolderPublic(InboundEmail $ie, SugarPHPMailer $mail) {
+    public function getProblemOfStoringInNonGmailSentFolderPublic(InboundEmail $ie, SugarPHPMailer $mail)
+    {
         return parent::getProblemOfStoringInNonGmailSentFolder($ie, $mail);
     }
     
@@ -80,7 +83,8 @@ class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler {
      * @param string $sentFolder
      * @return bool
      */
-    public function connectToNonGmailServerPublic(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder) {
+    public function connectToNonGmailServerPublic(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder)
+    {
         return parent::connectToNonGmailServer($ie, $mail, $sentFolder);
     }
 }

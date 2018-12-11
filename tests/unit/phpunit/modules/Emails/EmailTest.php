@@ -243,7 +243,6 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
     
     public function testSetLastSaveAndStoreInSentError()
     {
-        
         $email = new EmailMock();
         try {
             $email->setLastSaveAndStoreInSentErrorPublic(null);
