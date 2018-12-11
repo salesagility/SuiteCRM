@@ -65,6 +65,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $storedOption = $ie->getStoredOptions();
         $storedOption['sentFolder'] = 'testSentFolder';
         $ie->setStoredOptions($storedOption);
+        $mailer->oe->mail_smtptype == 'foomail';
         $ret = $email->send($mailer, $nonGmailSentFolder, $ie);
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
