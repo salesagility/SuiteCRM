@@ -31,7 +31,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $securityGroup = new SecurityGroup();
 
@@ -143,7 +143,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $account = new Account();
@@ -169,7 +169,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $account = new Account();
@@ -191,7 +191,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $account = new Account();
@@ -213,7 +213,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $account = new Account();
@@ -236,7 +236,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $account = new Account();
@@ -258,7 +258,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $account = new Account();
@@ -432,7 +432,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('aclroles', $result);
 
         //error_reporting(E_ALL);
-        ////error_reporting(E_ERROR | E_PARSE);
+        //
         
         // clean up
     }
@@ -443,7 +443,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushTable('securitygroups_records');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -472,7 +472,7 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //unset and reconnect Db to resolve mysqli fetch exeception

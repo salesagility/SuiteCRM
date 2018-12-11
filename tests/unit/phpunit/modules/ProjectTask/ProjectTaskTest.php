@@ -55,7 +55,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $projectTask = new ProjectTask();
 
@@ -130,7 +130,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $projectTask = new ProjectTask();
@@ -169,7 +169,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $projectTask = new ProjectTask();

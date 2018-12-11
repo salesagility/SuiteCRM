@@ -36,7 +36,7 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $oauthKey = new OAuthKey();
 

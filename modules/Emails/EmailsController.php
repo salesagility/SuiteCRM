@@ -830,6 +830,7 @@ class EmailsController extends SugarController
         
         
         if (isset($request['record']) && !empty($request['record'])) {
+            $parent_name = $this->bean->parent_name;
             $this->bean->retrieve($request['record']);
         } else {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($request['inbound_email_record']));
@@ -841,21 +842,21 @@ class EmailsController extends SugarController
         $_REQUEST['return_module'] = 'Emails';
         $_REQUEST['return_Action'] = 'index';
 
+        if (isset($parent_name)) {
+            $this->bean->parent_name = $parent_name;
+        }
+
         if ($mode === self::COMPOSE_BEAN_MODE_REPLY_TO || $mode === self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
             // Move email addresses from the "from" field to the "to" field
             $this->bean->to_addrs = $this->bean->from_addr;
             isValidEmailAddress($this->bean->to_addrs);
             $this->bean->to_addrs_names = $this->bean->from_addr_name;
-        } else {
-            if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
-                $this->bean->to_addrs = '';
-                $this->bean->to_addrs_names = '';
-            } else {
-                if ($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
-                    // Get Related To Field
-                    // Populate to
-                }
-            }
+        } elseif ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
+            $this->bean->to_addrs = '';
+            $this->bean->to_addrs_names = '';
+        } elseif ($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
+            // Get Related To Field
+            // Populate to
         }
 
         if ($mode !== self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {

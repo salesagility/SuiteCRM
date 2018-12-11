@@ -222,7 +222,7 @@ class array_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = array_search_insensitive('value4', $tempArray);
         $this->assertTrue($actual);
 
-        //var_dump($actual);
+        
     }
 
     public function testget()

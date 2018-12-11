@@ -42,7 +42,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $scheduler = new Scheduler();
 
@@ -77,7 +77,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $scheduler = new Scheduler();
@@ -191,7 +191,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $scheduler = new Scheduler();
@@ -243,7 +243,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $scheduler = new Scheduler();
@@ -298,7 +298,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('schedulers');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $scheduler = new Scheduler();
@@ -321,7 +321,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $scheduler = new Scheduler();

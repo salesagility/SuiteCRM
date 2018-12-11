@@ -146,7 +146,9 @@ require_once('include/SugarLogger/SugarLogger.php');
 $sugar_smarty = new Sugar_Smarty();
 
 // if no IMAP libraries available, disable Save/Test Settings
-if (!function_exists('imap_open')) {
+$imapFactory = new ImapHandlerFactory();
+$imap = $imapFactory->getImapHandler();
+if (!$imap->isAvailable()) {
     $sugar_smarty->assign('IE_DISABLED', 'DISABLED');
 }
 

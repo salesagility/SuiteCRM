@@ -25,7 +25,7 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         global $app_list_strings;
 

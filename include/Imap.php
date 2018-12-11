@@ -45,39 +45,40 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 
-include_once __DIR__ . '/../../../include/utils.php';
-
-class UtilsTest extends StateCheckerPHPUnitTestCaseAbstract
+/**
+ * IMAP Wrapper class
+ *
+ * @author gyula
+ */
+class Imap implements ImapInterface
 {
-    public function testGetAppString()
+    
+    /**
+     *
+     * @var resource
+     */
+    protected $resource;
+    
+    /**
+     * see more at imap_open()
+     *
+     * @param string $mailbox
+     * @param string $username
+     * @param string $password
+     * @param int $options
+     * @param int $n_retries
+     * @param array $params
+     *
+     * @return resource or <b>FALSE</b> on error.
+     */
+    public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, array $params = null)
     {
-        global $app_strings;
-        
-        // setup: test works only if it is not exists
-        $this->assertTrue(!isset($app_strings['TEST_NONEXISTS_LABEL']));
-        
-        // test if label is not set
-        
-        $result = getAppString('TEST_NONEXISTS_LABEL');
-        $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
-        
-        // test if label is empty (bool:false)
-        
-        $app_strings['TEST_NONEXISTS_LABEL'] = '';
-        
-        $result = getAppString('TEST_NONEXISTS_LABEL');
-        $this->assertEquals('TEST_NONEXISTS_LABEL', $result);
-        
-        // test if it founds
-        
-        $app_strings['TEST_NONEXISTS_LABEL'] = 'Hello test';
-        
-        $result = getAppString('TEST_NONEXISTS_LABEL');
-        $this->assertEquals('Hello test', $result);
-        
-        // clean up
-        unset($app_strings['TEST_NONEXISTS_LABEL']);
+        $state = new StateSaver();
+        $state->pushErrorLevel();
+        error_reporting(0);
+        $this->resource = imap_open($mailbox, $username, $password, $options, $n_retries, $params);
+        $state->popErrorLevel();
+        return $this->resource;
     }
 }

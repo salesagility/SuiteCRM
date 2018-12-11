@@ -216,8 +216,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
-        
         
         $prospectList = new ProspectList();
 
@@ -237,9 +235,6 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfill_in_additional_list_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        
-        
-        //error_reporting(E_ERROR | E_PARSE);
         
         
         $prospectList = new ProspectList();
@@ -271,7 +266,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
 
