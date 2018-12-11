@@ -56,6 +56,9 @@ class NonGmailSentFolderHandler
     const ERR_DONT_HAVE_TO_STORE = 4;
     const ERR_SHOULD_BE_INT = 5;
     const ERR_SHOULD_BE_STRING = 6;
+    const ERR_NO_IE_FOUND = 7;
+    const ERR_IS_POP3 = 8;
+    const ERR_IS_GMAIL = 9;
     
     /**
      *
@@ -115,7 +118,6 @@ class NonGmailSentFolderHandler
         $this->lastError = $err;
     }
     
-
     
     /**
      *
