@@ -3590,6 +3590,15 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $this->restoreStateAll($state);
     }
+    
+    public function testSetStoredOptions() {
+        $ie = new InboundEmail();
+        $so = $ie->getStoredOptions();
+        $so['something'] = 'testinfo';
+        $ie->setStoredOptions($so);
+        $ret = $ie->getStoredOptions();
+        $this->assertEquals('testinfo', $ret['something']);
+    }
 
     public function testgetRelatedId()
     {

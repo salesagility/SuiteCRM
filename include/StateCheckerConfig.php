@@ -40,6 +40,8 @@
 
 namespace SuiteCRM;
 
+use function inDeveloperMode;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -185,7 +187,7 @@ class StateCheckerConfig
      */
     protected static $phpConfigOptionKeys = ['max_execution_time', 'display_errors', 'display_startup_errors'];
     
-    
+
     /**
      *
      * @var boolean

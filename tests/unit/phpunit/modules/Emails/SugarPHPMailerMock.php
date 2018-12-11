@@ -42,13 +42,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/../../../../../include/SugarPHPMailer.php';
+
 /**
- * Class EmailException
+ * SugarPHPMailerMock
+ *
+ * @author gyula
  */
-class EmailException extends Exception
-{
-    const NO_DEFAULT_FROM_ADDR = 10;
-    const NO_DEFAULT_FROM_EMAIL = 20;
-    const NO_PROBLEM_MSG_FOUND = 30;
-    const UNHANDLED_LAST_ERROR = 40;
+class SugarPHPMailerMock extends SugarPHPMailer {
+    
+    /**
+     * 
+     * @return bool
+     */
+    public function send() {
+        return true; // emulate a successfull email sending
+    }
+    
 }

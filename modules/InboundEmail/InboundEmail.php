@@ -1,8 +1,4 @@
 <?php
-
-use SuiteCRM\Imap;
-use SuiteCRM\ImapInterface;
-use SuiteCRM\StateSaver;
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,6 +37,10 @@ use SuiteCRM\StateSaver;
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+use SuiteCRM\Imap;
+use SuiteCRM\ImapInterface;
+use SuiteCRM\StateSaver;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -5989,7 +5989,7 @@ class InboundEmail extends SugarBean
      * @param $option_name
      * @param null $default_value
      * @param null $stored_options
-     * @return null
+     * @return mixed
      */
     public function get_stored_options($option_name, $default_value = null, $stored_options = null)
     {
@@ -6014,7 +6014,7 @@ class InboundEmail extends SugarBean
      */
     public function setStoredOptions($options)
     {
-        $this->stored_options = base64_encode(serialize($this->stored_options));
+        $this->stored_options = base64_encode(serialize($options));
     }
 
 
@@ -6022,7 +6022,7 @@ class InboundEmail extends SugarBean
      * @param $option_name
      * @param null $default_value
      * @param null $stored_options
-     * @return null
+     * @return mixed
      */
     public static function get_stored_options_static($option_name, $default_value = null, $stored_options = null)
     {

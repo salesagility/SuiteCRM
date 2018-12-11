@@ -42,13 +42,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/../../../../../modules/InboundEmail/InboundEmail.php';
+
 /**
- * Class EmailException
+ * InboundEmailMock
+ *
+ * @author gyula
  */
-class EmailException extends Exception
-{
-    const NO_DEFAULT_FROM_ADDR = 10;
-    const NO_DEFAULT_FROM_EMAIL = 20;
-    const NO_PROBLEM_MSG_FOUND = 30;
-    const UNHANDLED_LAST_ERROR = 40;
+class InboundEmailMock extends InboundEmail {
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function connectMailserver() {
+        return true; // emulate a success connection
+    }
+    
 }

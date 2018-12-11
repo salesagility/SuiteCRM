@@ -43,12 +43,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Class EmailException
+ * EmailMock
+ *
+ * @author gyula
  */
-class EmailException extends Exception
+class EmailMock extends Email
 {
-    const NO_DEFAULT_FROM_ADDR = 10;
-    const NO_DEFAULT_FROM_EMAIL = 20;
-    const NO_PROBLEM_MSG_FOUND = 30;
-    const UNHANDLED_LAST_ERROR = 40;
+    
+    /**
+     *
+     * @param int $err
+     */
+    public function setLastSaveAndStoreInSentErrorPublic($err)
+    {
+        return parent::setLastSaveAndStoreInSentError($err);
+    }
+    
 }
