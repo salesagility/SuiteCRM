@@ -118,6 +118,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         }
 
         // Get emails from email server
+        // TODO: PHP Warning:  imap_fetchbody(): Bad message number
         $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter, $filter_fields);
 
         $total = $emailServerEmails['mailbox_info']['Nmsgs']; // + count($importedEmails['data']);
@@ -129,6 +130,8 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         /// Populate the data and its fields from the email server
         $request['uids'] = array();
 
+        // TODO: $emailServerEmails['data'] is undefined!
+        // TODO: $emailServerEmails['data'] should be an array!
         foreach ($emailServerEmails['data'] as $h => $emailHeader) {
             $emailRecord = $this->lvde->getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder);
             if ($emailRecord === false) {
@@ -349,6 +352,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: qurey string is not set');
         }
 
+        // TODO: $data could be undefined
         $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
 
         return $ret;

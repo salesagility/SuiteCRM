@@ -656,6 +656,7 @@ class ListViewDataEmails extends ListViewData
     public function getEmailUIds($data)
     {
         $emailUIds = array();
+        // TODO: $data could be invalid for foreach
         foreach ($data as $row) {
             $emailUIds[] = $row['UID'];
         }
@@ -784,7 +785,7 @@ class ListViewDataEmails extends ListViewData
             );
         }
 
-        // TODO: don't override the superglobals!!!!
+        // TODO: don't override the superglobals!
         $_REQUEST = $request;
 
         return $ret;
