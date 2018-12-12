@@ -43,10 +43,35 @@ use SuiteCRM\StateSaver;
 class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     protected $folderId = null;
+    protected $state    = null;
+
+    protected function pushState()
+    {
+        $this->state->pushTable('folders');
+        $this->state->pushTable('folders_rel');
+        $this->state->pushTable('folders_subscriptions');
+        $this->state->pushTable('emails');
+        $this->state->pushTable('emails_text');
+        $this->state->pushTable('job_queue');
+    }
+
+    protected function popState()
+    {
+        $this->state->popTable('folders');
+        $this->state->popTable('folders_rel');
+        $this->state->popTable('folders_subscriptions');
+        $this->state->popTable('emails');
+        $this->state->popTable('emails_text');
+        $this->state->popTable('job_queue');
+    }
+
+
 
     public function setUp()
     {
         parent::setUp();
+
+        $this->state = new StateSaver();
 
         include_once __DIR__ . '/../../../../../modules/Users/User.php';
         include_once __DIR__ . '/../../../../../include/SugarFolders/SugarFolders.php';
@@ -62,65 +87,6 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $sugarfolder = new SugarFolder();
 
         $this->assertTrue(is_object($sugarfolder));
-    }
-
-    public function testFunctions()
-    {
-
-
-        /*
-            // Public attributes
-            public $id;
-            public $name;
-            public $parent_folder;
-            public $has_child = 0; // flag node has child
-            public $is_group = 0;
-            public $is_dynamic = 0;
-            public $dynamic_query = '';
-            public $assign_to_id;
-            public $created_by;
-            public $modified_by;
-            public $date_created;
-            public $date_modified;
-            public $deleted;
-            public $folder_type;
-
-            public $db;
-            public $new_with_id = true;
-
-            // Core queries
-            public $core;
-            public $coreSubscribed;
-            public $coreWhere;
-            public $coreWhereSubscribed;
-            public $coreOrderBy;
-
-            public $hrSortLocal;
-            public $defaultSort = 'date';
-            public $defaultDirection = "DESC";
-
-            // Private attributes
-            public $_depth;
-         */
-
-        // $sugarfolder->getListItemsForEmailXML($folderId, $page = 1, $pageSize = 10, $sort = '', $direction = '');
-
-        // $sugarfolder->retrieveFoldersForProcessing($user, $subscribed = true);
-        // $sugarfolder->getGroupFoldersForSettings($focusUser = null);
-        //
-        // $sugarfolder->getFoldersForSettings($focusUser = null);
-        //
-        // $sugarfolder->getFoldersChildForSettings($a, $collection, $subscriptions);
-        //
-        // $sugarfolder->getCountNewItems($id, $criteria, $folder);
-        //
-        // $sugarfolder->getUserFolders(&$rootNode, $folderStates, $user = null, $forRefresh = false);
-        //
-        // $sugarfolder->buildTreeNodeRefresh($folderNode, $subscriptions);
-        // $sugarfolder->buildTreeNodeFolders($a, $nodePath, $folderStates, $subscriptions);
-
-
-        // $sugarfolder->deleteChildrenCascade($id);
     }
 
     public function testGenerateArchiveFolderQuery()
@@ -173,12 +139,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testFolderSubscriptions()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -214,29 +175,17 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $sugarfolder->addSubscriptionsToGroupFolder();
 
         // $sugarfolder->createSubscriptionForUser($user_id);
+        // $sugarfolder->clearSubscriptionsForFolder($folder_id);
         // $sugarfolder->getSubscriptions($user);
         // $sugarfolder->insertFolderSubscription($folderId, $userID)
         // $sugarfolder->clearSubscriptions($user = null)
-        // $sugarfolder->clearSubscriptionsForFolder($folder_id)
-        // $sugarfolder->addSubscriptionsToGroupFolder();
-        // $sugarfolder->setSubscriptions($subs, $user = null);
 
-
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
     public function testClearSubscriptionsForFolder()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -256,11 +205,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $sugarfolder->clearSubscriptionsForFolder($sugarfolder->id);
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
     public function testUnreadCountOfItems()
@@ -270,12 +215,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGetFoldersForSettings()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -314,21 +254,12 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(in_array($sugarfolder->id, $ret));
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
     public function testCrudFolder()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -385,21 +316,12 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue($deleted);
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
     public function testCheckFalseIdForDelete()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $sugarfolder = new SugarFolder();
 
@@ -407,21 +329,12 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertFalse($ret);
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
     public function testCopyBean()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -465,22 +378,13 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue($existInFolderTwo);
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
 
     public function testMoveFolder()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -528,21 +432,12 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue($success);
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
     public function testGetListItemsForEmailXML()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -574,21 +469,12 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $results = $sugarFolder->getListItemsForEmailXML($sugarFolder->id);
         $this->assertTrue(is_array($results));
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
     public function testCountOfItems()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -643,22 +529,12 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $parentFolder->addBean($newBean);
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
     public function testNonExistingRetrieve()
     {
-        $state = new StateSaver();
-
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -671,21 +547,12 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertFalse($ret);
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
     public function testDeleteEmailsFromFolder()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -712,22 +579,13 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $parentFolder->deleteEmailFromFolder($bean->id);
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
 
     public function testDeleteEmailsFromAllFolders()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -778,21 +636,12 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertFalse($existInFolderOne);
         $this->assertFalse($existInFolderTwo);
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
     public function testGetUserFolders()
     {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
+        $this->pushState();
 
         $user = new User();
         $user->id = 1;
@@ -845,59 +694,32 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'parent_folder'    => $parentFolderOne->id
         );
 
-        $parentFolderOne->getUserFolders($rootNode, $folderStates = array(), $user = null, $forRefresh = true);
+        $subs = array($anotherChildFolder->id, $parentFolderOne->id, $childFolder->id, $subChildFolderOne->id, $subChildFolderTwo->id);
+        $parentFolderOne->setSubscriptions($subs);
+
+        $email = new Email();
+        $email->email2init();
+
+        $ie = new InboundEmail();
+        $ie->email = $email;
+
+        $rootNode = new ExtNode('', '');
+
+        $folderOpenState = $user->getPreference('folderOpenState', 'Emails');
+        $folderOpenState = empty($folderOpenState) ? '' : $folderOpenState;
+
+        try {
+            $parentFolderOne->getUserFolders($rootNode, sugar_unserialize($folderOpenState), null, true);
+        } catch(SugarFolderEmptyException $e) {
+
+        }
 
         $this->assertTrue(is_object($rootNode));
 
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
+        $this->popState();
     }
 
-    public function testBuildTreeNodeFolders()
-    {
-        $state = new StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_rel');
-        $state->pushTable('folders_subscriptions');
-        $state->pushTable('emails');
-        $state->pushTable('emails_text');
 
-        $user = new User();
-        $user->id = 1;
-
-        $parentFolderOne = new SugarFolder($user);
-
-        $fields = array(
-            'name'             => 'Parent Folder One',
-            'parent_folder'    => ''
-        );
-
-        $saved = $parentFolderOne->setFolder($fields);
-
-        $this->assertTrue($saved);
-
-        // reset saved
-        $saved = false;
-
-        $parentFolderTwo = new SugarFolder($user);
-
-        $parentFolderOne->buildTreeNodeRefresh();
-
-
-        $state->popTable('folders');
-        $state->popTable('folders_rel');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('emails');
-        $state->popTable('emails_text');
-    }
-
-    public function testBuildTreeNodeRefresh()
-    {
-
-    }
 
 
 }

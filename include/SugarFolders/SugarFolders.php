@@ -156,7 +156,7 @@ class SugarFolder
         " f.folder_type, f.created_by, f.deleted FROM folders f ";
         $this->coreSubscribed = "SELECT f.id, f.name, f.has_child, f.is_group, f.is_dynamic,".
         " f.dynamic_query, f.folder_type, f.created_by, f.deleted FROM folders f LEFT JOIN folders_subscriptions".
-        " fs ON f.id = fs.folder_id LEFT JOIN inbound_email i on  i.id = f.id ";
+        " fs ON f.id = fs.folder_id LEFT JOIN inbound_email i on i.id = f.id ";
         $this->coreWhere = "WHERE f.deleted != 1 ";
         $this->coreWhereSubscribed = "WHERE f.deleted != 1 AND i.deleted != 1 AND fs.assigned_user_id = ";
         $this->coreOrderBy = " ORDER BY f.is_dynamic, f.is_group, f.name ASC ";
@@ -341,8 +341,6 @@ class SugarFolder
             }
         }
 
-        $this->clearSubscriptions($user);
-
         foreach ($cleanSubscriptions as $id) {
             $this->insertFolderSubscription($id, $user->id);
         }
@@ -360,7 +358,8 @@ class SugarFolder
         $guid = create_guid();
         $query = "INSERT INTO `folders_subscriptions`" .
             " (`id`, `folder_id`, `assigned_user_id`) VALUES (" .
-            $this->db->quoted($guid) . ", " . $this->db->quoted($folderId) . ", " . $this->db->quoted($userID);
+            $this->db->quoted($guid) . ", " . $this->db->quoted($folderId) . ", " . $this->db->quoted($userID) . ')';
+
         $r = $this->db->query($query);
 
         return $guid;
@@ -664,7 +663,7 @@ class SugarFolder
 
         $rootWhere = '';
         $teamSecurityClause = '';
-        $rootWhere .= "AND (f.parent_folder IS NULL OR f.parent_folder = '')";
+        $rootWhere .= " AND (f.parent_folder IS NULL OR f.parent_folder = '')";
 
         if ($subscribed) {
             $q = $this->coreSubscribed . $teamSecurityClause .
@@ -677,6 +676,7 @@ class SugarFolder
         $return = array();
 
         $found = array();
+
         while ($a = $this->db->fetchByAssoc($r)) {
             if (!empty($a['folder_type']) &&
                 $a['folder_type'] !== $myArchiveTypeString
@@ -908,6 +908,7 @@ class SugarFolder
         }
 
         $folders = $this->retrieveFoldersForProcessing($user, true);
+
         $subscriptions = $this->getSubscriptions($user);
 
         $refresh = ($forRefresh) ? array() : null;
