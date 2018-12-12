@@ -71,6 +71,7 @@ script:
   # Run the unit tests
   # - ./vendor/bin/codecept run unit --steps -f -vvv -d
   - cd tests
+  # TODO: run all test! ->
   - ../vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration $(pwd)/phpunit.xml.dist ./tests/unit/phpunit $(pwd)/unit/phpunit/modules/Emails/EmailTest.php
   - cd ..
   # Install OAuth2 demo data

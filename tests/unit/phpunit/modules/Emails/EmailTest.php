@@ -57,7 +57,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $ieId = $ie->save();
         $this->assertTrue((bool)$ieId);
         $_REQUEST['inbound_email_id'] = $ieId;
-        $email = new Email();
+        $email = new EmailMock();
         $email->to_addrs_arr = ['foo@bazz.bar'];
         $email->saved_attachments = [];
         $nonGmailSentFolder = new NonGmailSentFolderHandlerMock();
@@ -87,7 +87,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $ieId = $ie->save();
         $this->assertTrue((bool)$ieId);
         $_REQUEST['inbound_email_id'] = $ieId;
-        $email = new Email();
+        $email = new EmailMock();
         $email->to_addrs_arr = ['foo@bazz.bar'];
         $email->saved_attachments = [];
         $nonGmailSentFolder = new NonGmailSentFolderHandlerMock();
@@ -95,12 +95,13 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $storedOption = $ie->getStoredOptions();
         $storedOption['sentFolder'] = 'testSentFolder';
         $ie->setStoredOptions($storedOption);
+        $mailer->oe->mail_smtptype = 'foomail';
         $ret = $email->send($mailer, $nonGmailSentFolder, $ie);
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
-        $this->assertEquals(Email::NO_ERROR, $email->getTempEmailAtSend()->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getTempEmailAtSend()->getNonGmailSentFolderHandler()->getLastError());
+        $this->assertEquals(Email::NO_ERROR, $email->getTempEmailAtSend()->getLastSaveAndStoreInSentError());
         
         $this->restoreState($state);
     }
@@ -115,11 +116,12 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $ieId = $ie->save();
         $this->assertTrue((bool)$ieId);
         $_REQUEST['inbound_email_id'] = $ieId;
-        $email = new Email();
+        $email = new EmailMock();
         $email->to_addrs_arr = ['foo@bazz.bar'];
         $email->saved_attachments = [];
         $nonGmailSentFolder = new NonGmailSentFolderHandlerMock();
         $ie->mailbox = 'testmailbox';
+        $mailer->oe->mail_smtptype = 'foomail';
         $ret = $email->send($mailer, $nonGmailSentFolder, $ie);
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
@@ -141,9 +143,10 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $ieId = $ie->save();
         $this->assertTrue((bool)$ieId);
         $_REQUEST['inbound_email_id'] = $ieId;
-        $email = new Email();
+        $email = new EmailMock();
         $email->to_addrs_arr = ['foo@bazz.bar'];
         $email->saved_attachments = [];
+        $mailer->oe->mail_smtptype = 'foomail';
         $ret = $email->send($mailer);
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());

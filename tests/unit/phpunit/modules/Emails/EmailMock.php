@@ -58,4 +58,16 @@ class EmailMock extends Email
     {
         return parent::setLastSaveAndStoreInSentError($err);
     }
+    
+    /**
+     * preps SMTP info for email transmission
+     * @param object $mail SugarPHPMailer object
+     * @param string $mailer_id
+     * @param string $ieId
+     * @global $current_user
+     * @return object mail SugarPHPMailer object
+     */
+    public function setMailer($mail, $mailer_id = '', $ieId = '') {
+        return $mail; // skipp oe settings
+    }
 }

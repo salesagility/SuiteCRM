@@ -142,7 +142,6 @@ class NonGmailSentFolderHandler
         }
         $isGmail = $mail->oe->mail_smtptype == 'gmail';
         if ($ok && $isGmail) {
-            debug_print_backtrace(); exit(1);
             $this->setLastError(self::ERR_IS_GMAIL);
             $ok = false;
         }
