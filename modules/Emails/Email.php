@@ -3148,12 +3148,15 @@ class Email extends Basic
             if (!($ie && $ie->id)) {
                 LoggerManager::getLogger()->warn('Exists and retrieved InboundEmail needed for storing email as sent.');
                 $this->setLastSaveAndStoreInSentError(self::ERR_NO_IE);
-            } elseif (!$this->getNonGmailSentFolderHandler()->storeInSentFolder($ie, $mail)) {
-                LoggerManager::getLogger()->warn('Email storing in non gmail sent folder was not necessary. Inbound email ID was: ' . $ie->id);
-                $this->setLastSaveAndStoreInSentError(self::ERR_NOT_STORED_AS_SENT);
             } else {
-                LoggerManager::getLogger()->debug('Email storing in non gmail sent folder success. Inbound email ID was: ' . $ie->id);
-                $this->setLastSaveAndStoreInSentError(self::NO_ERROR);
+                $stored = $this->getNonGmailSentFolderHandler()->storeInSentFolder($ie, $mail);
+                if (!$stored) {
+                    LoggerManager::getLogger()->warn('Email storing in non gmail sent folder was not necessary. Inbound email ID was: ' . $ie->id);
+                    $this->setLastSaveAndStoreInSentError(self::ERR_NOT_STORED_AS_SENT);
+                } else {
+                    LoggerManager::getLogger()->debug('Email storing in non gmail sent folder success. Inbound email ID was: ' . $ie->id);
+                    $this->setLastSaveAndStoreInSentError(self::NO_ERROR);
+                }
             }
         } else {
             $this->setLastSaveAndStoreInSentError(self::ERR_NO_IE_MAIL_ID);

@@ -59,7 +59,8 @@ class NonGmailSentFolderHandler
     const ERR_NO_IE_FOUND = 7;
     const ERR_IS_POP3 = 8;
     const ERR_IS_GMAIL = 9;
-    const UNHANDLER_ERROR = 10;
+    const ERR_COULDNT_COPY_TO_SENT = 10;
+    const UNHANDLER_ERROR = 100;
     
     /**
      *
@@ -241,8 +242,10 @@ class NonGmailSentFolderHandler
         $data = $emailheader . "\r\n" . $emailbody . "\r\n";
         $ie->mailbox = $sentFolder;
         $connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
-        $returnData = imap_append($ie->conn, $connectString, $data, "\\Seen");
+        $returnData = $ie->getImap()->append($connectString, $data, "\\Seen");
+        //$returnData = imap_append($ie->conn, $connectString, $data, "\\Seen");
         if (!$returnData) {
+            $this->setLastError(self::ERR_COULDNT_COPY_TO_SENT);
             LoggerManager::getLogger()->warn("could not copy email to {$ie->mailbox} for {$ie->name}");
         }
         return $returnData;
