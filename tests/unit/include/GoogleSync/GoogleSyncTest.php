@@ -525,7 +525,40 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testSetSyncUsers()
     {
-        $this->markTestIncomplete('TODO: Implement Tests');
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        $state->pushTable('user_preferences');
+
+        $method = self::$reflection->getMethod('setSyncUsers');
+        $method->setAccessible(true);
+
+        $object = new GoogleSync();
+
+        // base64 encoded of {"web":"test"}
+        $json = 'eyJ3ZWIiOiJ0ZXN0In0=';
+
+        $user1 = new User();
+        $user1->last_name = 'UNIT_TESTS1';
+        $user1->user_name = 'UNIT_TESTS1';
+        $user1->save();
+        $user1->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
+        $user1->setPreference('syncGCal', 1, 0, 'GoogleSync');
+        $user1->savePreferencesToDB();
+
+        $user2 = new User();
+        $user2->last_name = 'UNIT_TESTS2';
+        $user2->user_name = 'UNIT_TESTS2';
+        $user2->save();
+        $user2->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
+        $user2->setPreference('syncGCal', 1, 0, 'GoogleSync');
+        $user2->savePreferencesToDB();
+
+        $countOfSyncUsers = $method->invoke($object);
+
+        $state->popTable('users');
+        $state->popTable('user_preferences');
+
+        $this->assertGreaterThanOrEqual(2, $countOfSyncUsers);
     }
 
     public function testDelMeeting()
