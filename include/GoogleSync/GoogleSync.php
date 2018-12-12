@@ -57,6 +57,31 @@ class GoogleSync extends GoogleSyncBase
     protected $users = array();
 
     /**
+     * Gets the combined titles of a Meeting/Event pair for Logging
+     * 
+     * @param Meeting $meeting The CRM Meeting
+     * @param \Google_Service_Calendar_Event $event The Google Event
+     * 
+     * @return string The combined title
+     */
+    protected function getTitle($meeting = null, $event = null)
+    {
+        $meetingTitle = isset($meeting) ? $meeting->name : null;
+        $eventTitle = isset($event) ? $event->getSummary() : null;
+
+        if ( !empty($meetingTitle) && !empty($eventTitle) ) {
+            $title = $meetingTitle . " / " . $eventTitle;
+        }
+        if ( empty($meetingTitle) || empty($eventTitle) ) {
+            $title = $meetingTitle . $eventTitle;
+        }
+        if ( empty($meetingTitle) && empty($eventTitle) ) {
+            $title = "UNNAMED RECORD";
+        }
+        return $title;
+    }
+
+    /**
      * Helper method for doSync
      * 
      * @param string $action The action to take with the two events
@@ -67,15 +92,8 @@ class GoogleSync extends GoogleSyncBase
      */
     protected function doAction($action, Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
     {
-        if ( !empty($meeting) && !empty($event) ) {
-            $title = $meeting->name . " / " . $event->getSummary();
-        } elseif ( !empty($meeting) ) {
-            $title = $meeting->name;
-        } elseif ( !empty($event) ) {
-            $title = $event->getSummary();
-        } else {
-            $title = "UNNAMED RECORD"; // Google doesn't require an event to be named.
-        }
+
+        $title = $this->getTitle($meeting, $event);
 
         switch ($action) {
             case "push":
@@ -113,27 +131,11 @@ class GoogleSync extends GoogleSyncBase
      */
     public function doSync($id)
     {
-        if (!$this->setClient($id)) {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Client');
-            return false;
-        }
-
-        if ($this->workingUser->id == $id) {
-            $tz = $this->workingUser->getPreference('timezone', 'global');
-            $this->setTimezone($tz);
-        } else {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set the working user and timezone');
-            return false;
-        }
-
-        if (!$this->setGService()) {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Service');
-            return false;
-        }
-
-        if (!$this->setUsersGoogleCalendar()) {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Calendar Id');
-            return false;
+        try {
+            $this->initUserService($id);
+        } catch (Exception $e) {
+            $this->logger->fatal('Caught exception: ',  $e->getMessage());
+            throw new Exception('Unable to init the User Service');
         }
 
         $meetings = $this->getUserMeetings();
@@ -144,10 +146,9 @@ class GoogleSync extends GoogleSyncBase
 
         // First, we look for SuiteCRM meetings that are not on Google
         foreach ($meetings as $meeting) {
+            $gevent = null;
             if ( !empty($meeting->gsync_id) ) {
                 $gevent = $this->getGoogleEventById($meeting->gsync_id);
-            } else {
-                $gevent = null;
             }
             
             $action = $this->pushPullSkip($meeting, $gevent);
@@ -166,10 +167,7 @@ class GoogleSync extends GoogleSyncBase
         }
 
         foreach ($googleEvents as $gevent) {
-            if (!$meeting = $this->getMeetingByEventId($gevent->getId())) {
-                $meeting = null;
-            }
-
+            $meeting = $this->getMeetingByEventId($gevent->getId());
             $action = $this->pushPullSkip($meeting, $gevent);
             $actionResult = $this->doAction($action, $meeting, $gevent);
 
@@ -196,11 +194,10 @@ class GoogleSync extends GoogleSyncBase
         if (array_key_exists($id, $this->users)) {
             $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' already set');
             return false;
-        } else {
-            $this->users[$id] = $name;
-            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' set to ' . $this->users[$id]);
-            return true;
         }
+        $this->users[$id] = $name;
+        $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' set to ' . $this->users[$id]);
+        return true;
     }
 
     /**
@@ -209,33 +206,23 @@ class GoogleSync extends GoogleSyncBase
      * When given a single calendar object, determine its type and return an action.
      * At least one of the params is required.
      *
-     * @param Meeting $event_local (optional) Meeting Bean
-     * @param \Google_Service_Calendar_Event $event_remote (optional) Google_Service_Calendar_Event Object
+     * @param Meeting $meeting (optional) Meeting Bean
+     * @param \Google_Service_Calendar_Event $event (optional) Google_Service_Calendar_Event Object
      *
      * @return string push, pull, skip, or false on error
      */
-    protected function singleEventAction(Meeting $event_local = null, Google_Service_Calendar_Event $event_remote = null)
+    protected function singleEventAction(Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
     {
-        if (empty($event_local) && empty($event_remote)) {
+        if (empty($meeting) && empty($event)) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass at least one event');
             return false;
         }
-        if (empty($event_local)) {
-            if ( $event_remote->status === 'cancelled' || is_null($event_remote->getStart()->getDateTime()) ) {
-                // We only pull if the Google Event is not deleted/cancelled and not an all day event.
-                return "skip";
-            } else {
+        if (empty($meeting) && $event->status !== 'cancelled' && $event->getStart()->getDateTime() !== null) { // We only pull if the Google Event is not deleted/cancelled and not an all day event.
                 return "pull";
-            }
-        } else {
-            if ($event_local->deleted == '0') {
-                // We only push if the meeting is not deleted
+        } elseif (empty($event) && $meeting->deleted == '0') {
                 return "push";
-            } else {
-                return "skip";
-            }
         }
-        return false;
+        return "skip";
     }
 
     /**
@@ -244,73 +231,65 @@ class GoogleSync extends GoogleSyncBase
      * Used when an event w/ a matching ID is on both ends of the sync.
      * At least one of the params is required.
      *
-     * @param Meeting|null $event_local (optional) Meeting Bean or Google_Service_Calendar_Event Object
-     * @param \Google_Service_Calendar_Event|null $event_remote (optional) Google_Service_Calendar_Event Object
+     * @param Meeting|null $meeting (optional) Meeting Bean or Google_Service_Calendar_Event Object
+     * @param \Google_Service_Calendar_Event|null $event (optional) Google_Service_Calendar_Event Object
      *
      * @return string|bool 'push(_delete)', 'pull(_delete)', 'skip', false (on error)
      */
-    protected function pushPullSkip(Meeting $event_local = null, Google_Service_Calendar_Event $event_remote = null)
+    protected function pushPullSkip(Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
     {
-        if (empty($event_local) && empty($event_remote)) {
+        if (empty($meeting) && empty($event)) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass at least one event');
             return false;
         }
 
         // Did we only get one event?
-        if (empty($event_local) || empty($event_remote)) {
+        if (empty($meeting) || empty($event)) {
             // If we only got one event, figure out which kind it is, and pass the return from the helper method
-            return $this->singleEventAction($event_local, $event_remote);
-            
-        } else {
-            // Check if we already sync'ed this event on this run
-            if (in_array($event_local->id, $this->syncedList, true)) {
-                $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We already synced this meeting. Marking to skip.');
-                return "skip";
-            }
-
-            // Before we get further, if both events are deleted, skip
-            if ($event_local->deleted == '1' && $event_remote->status == 'cancelled') {
-                return "skip";
-            }
-
-            // Get the last modified time from google event
-            $gModified = strtotime($event_remote->getUpdated());
-
-            // Get last modified of SuiteCRM event
-            $sModified = strtotime($event_local->fetched_row['date_modified'] . ' UTC'); // SuiteCRM stores the timedate as UTC in the DB
-            // Get the last sync time of SuiteCRM event
-            if (isset($event_local->fetched_row['gsync_lastsync'])) {
-                $lastSync = $event_local->fetched_row['gsync_lastsync'];
-            } else {
-                $lastSync = 0;
-            }
-
-            // Event has not been modified since last sync... skip
-            if ($gModified <= $lastSync && $sModified <= $lastSync) {
-                $this->syncedList[] = $event_local->id;
-                return "skip";
-            }
-
-            // Event was modified since last sync
-            if ($gModified > $lastSync || $sModified > $lastSync) {
-                if ($gModified > $sModified) {
-                    if ($event_remote->status == 'cancelled') {
-                        // if the remote event is deleted, delete it here
-                        return "pull_delete";
-                    } else {
-                        return "pull";
-                    }
-                } else {
-                    if ($event_local->deleted == '1') {
-                        return "push_delete";
-                    } else {
-                        return "push";
-                    }
-                }
-            }
+            return $this->singleEventAction($meeting, $event);
         }
 
-        return false; // we should never get here
+        // Check if we already sync'ed this event on this run
+        if (in_array($meeting->id, $this->syncedList, true)) {
+            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We already synced this meeting. Marking to skip.');
+            return "skip";
+        }
+
+        // Before we get further, if both events are deleted, skip
+        if ($meeting->deleted == '1' && $event->status == 'cancelled') {
+            return "skip";
+        }
+
+        // Get the last modified time from google event
+        $gModified = strtotime($event->getUpdated());
+
+        // Get last modified of SuiteCRM event
+        $sModified = strtotime($meeting->fetched_row['date_modified'] . ' UTC'); // SuiteCRM stores the timedate as UTC in the DB
+
+        // Get the last sync time of SuiteCRM event
+        $lastSync = 0;
+        if (isset($meeting->fetched_row['gsync_lastsync'])) {
+            $lastSync = $meeting->fetched_row['gsync_lastsync'];
+        }
+
+        // Event has not been modified since last sync... skip
+        if ($gModified <= $lastSync && $sModified <= $lastSync) {
+            $this->syncedList[] = $meeting->id;
+            return "skip";
+        }
+
+        // Event was modified since last sync
+        if ($gModified > $sModified) {
+            if ($event->status == 'cancelled') {
+                // if the remote event is deleted, delete it here
+                return "pull_delete";
+            }
+            return "pull";
+        }
+        if ($meeting->deleted == '1') {
+            return "push_delete";
+        }
+        return "push";
     }
 
     /**
@@ -385,12 +364,11 @@ class GoogleSync extends GoogleSyncBase
                 }
             }
         }
-        if ($failures > 0) {
-            $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $failures . ' failure(s) found at syncAllUsers method.');
-            return false;
-        } else {
+        if ($failures == 0) {
             return true;
         }
+        $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $failures . ' failure(s) found at syncAllUsers method.');
+        return false;
     }
 
 }

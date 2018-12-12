@@ -135,9 +135,8 @@ class GoogleSyncBase
             // The authconfig is valid json, but the 'web' key is missing. This is not a valid authconfig.
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'AuthConfig is missing required [web] key');
             return false;
-        } else {
-            return $authJson_local;
         }
+        return $authJson_local;
     }
 
     /**
@@ -151,10 +150,9 @@ class GoogleSyncBase
     {
         if (!$gClient_local = $this->getClient($id)) {
             return false;
-        } else {
-            $this->gClient = $gClient_local;
-            return true;
         }
+        $this->gClient = $gClient_local;
+        return true;
     }
 
     /**
@@ -192,17 +190,15 @@ class GoogleSyncBase
         } catch (Exception $e) {
             $this->logger->fatal('Caught exception: ',  $e->getMessage());
         }
-        
 
         if (!$client) {
             return false;
-        } else {
-            return $client;
         }
+        return $client;
     }
 
     /**
-     * New Google Client anf refresh the token if needed
+     * New Google Client and refresh the token if needed
      *
      * @param array $accessToken
      * @return \Google_Client or false on Exception
@@ -231,11 +227,47 @@ class GoogleSyncBase
                 // Save new token to user preference
                 $this->workingUser->setPreference('GoogleApiToken', base64_encode(json_encode($client->getAccessToken())), 'GoogleSync');
                 $this->workingUser->savePreferencesToDB();    
-            } else { // (!empty($refreshToken))
+            } elseif (empty($refreshToken)) {
                 throw new Exception('Refresh token is missing');
             }
         }
         return $client;
+    }
+
+    /**
+     * Initialize Service for User
+     * 
+     * @param string $id The SuiteCRM user id
+     * 
+     * @return bool Success/Failure
+     */
+    protected function initUserService($id)
+    {
+        $isValidator = new SuiteValidator();
+        if (!$isValidator->isValidId($this->db->quote($id))) {
+            throw new Exception('Invalid ID requested in initUserService');
+        }
+
+        if (!$this->setClient($id)) {
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Client');
+            throw new Exception('Unable to setup Google Client');
+        }
+
+        if (!$this->setTimezone($this->workingUser->getPreference('timezone', 'global'))) {
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set the working user and timezone');
+            throw new Exception('Failed to set the working user\'s timezone');
+        }
+
+        if (!$this->setGService()) {
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Service');
+            throw new Exception('Unable to setup Google Service');
+        }
+
+        if (!$this->setUsersGoogleCalendar()) {
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Calendar Id');
+            throw new Exception('Unable to setup Google Calendar Id');
+        }
+        return true;
     }
 
     /**
@@ -303,9 +335,8 @@ class GoogleSyncBase
         // Final check to make sure we have an ID
         if (!$this->isCalendarExists()) {
             return false;
-        } else {
-            return $this->calendarId;
         }
+        return $this->calendarId;
     }
 
     /**
@@ -325,9 +356,8 @@ class GoogleSyncBase
         }
         if (empty($return)) {
             return null;
-        } else {
-            return $return;
         }
+        return $return;
     }
 
     /**
@@ -362,10 +392,10 @@ class GoogleSyncBase
         if (empty($results)) {
             $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'No events found.');
             return array();
-        } else {
-            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Found ' . count($results) . ' Google Events');
-            return $results;
         }
+        $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Found ' . count($results) . ' Google Events');
+        return $results;
+
     }
 
     /**
@@ -422,9 +452,8 @@ class GoogleSyncBase
 
         if (!empty($gEvent->getId())) {
             return $gEvent;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -432,7 +461,7 @@ class GoogleSyncBase
      *
      * @param string $event_id The Google Event ID
      *
-     * @return \Meeting|bool SuiteCRM Meeting Bean if found, false on error, null if not found
+     * @return \Meeting|null SuiteCRM Meeting Bean if found, null if not found
      */
     protected function getMeetingByEventId($event_id)
     {
@@ -445,9 +474,9 @@ class GoogleSyncBase
         // This checks to make sure we only get one result. If we get more than one, something is inconsistant in the DB
         if ($result->num_rows > 1) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'More than one meeting matches Google Id: ' . $eventIdQuoted);
-            return false;
+            throw new Exception('More than one meeting matches Google Id!');
         } elseif ($result->num_rows == 0) {
-            return; // No matches Found
+            return null; // No matches Found
         }
 
         $meeting = BeanFactory::getBean('Meetings');
@@ -477,10 +506,9 @@ class GoogleSyncBase
         $this->gService = new Google_Service_Calendar($this->gClient);
         if ($this->isServiceExists()) {
             return true;
-        } else {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Setting $this->gService Failed');
-            return false;
         }
+        $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Setting $this->gService Failed');
+        return false;
     }
 
     /**
@@ -500,7 +528,7 @@ class GoogleSyncBase
         if (!isset($event_remote) || empty($event_remote)) {
             $event = $this->createGoogleCalendarEvent($event_local);
             $return = $this->gService->events->insert($this->calendarId, $event);
-        } else {
+        } elseif (isset($event_remote)) {
             $event = $this->updateGoogleCalendarEvent($event_local, $event_remote);
             $return = $this->gService->events->update($this->calendarId, $event->getId(), $event);
         }
@@ -518,9 +546,8 @@ class GoogleSyncBase
          */
         if (isset($return->id)) {
             return $return->id;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -541,7 +568,7 @@ class GoogleSyncBase
 
         if (!empty($extendedProperties)) {
             $private = $extendedProperties->getPrivate();
-        } else {
+        } elseif (empty($extendedProperties)) {
             $extendedProperties = new Google_Service_Calendar_EventExtendedProperties;
             $private = array();
         }
@@ -569,7 +596,7 @@ class GoogleSyncBase
     {
         if (!isset($event_local) || empty($event_local)) {
             $event = $this->createSuitecrmMeetingEvent($event_remote);
-        } else {
+        } elseif (isset($event_local)) {
             $event = $this->updateSuitecrmMeetingEvent($event_local, $event_remote);
         }
 
@@ -591,9 +618,8 @@ class GoogleSyncBase
          */
         if (isset($greturn->id)) {
             return $this->setLastSync($event, $event_remote->getId());
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -702,10 +728,10 @@ class GoogleSyncBase
             return false;
         }
 
-        if (is_null($event_remote->getSummary())) { // Google doesn't require titles on events.
+        $event_local->name = (string) $event_remote->getSummary();
+
+        if (empty($event_local->name)) { // Google doesn't require titles on events.
             $event_local->name = '(No title)'; // This is what they look like in google, so it should be seamless.
-        } else {
-            $event_local->name = (string) $event_remote->getSummary();
         }
 
         $event_local->description = (string) $event_remote->getDescription();
@@ -875,14 +901,13 @@ class GoogleSyncBase
      */
     protected function setTimezone($timezone)
     {
-        if (!date_default_timezone_set($timezone)) {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set timezone to \'' . $timezone . '\'');
-            return false;
-        } else {
+        if (date_default_timezone_set($timezone)) {
             $this->timezone = date_default_timezone_get();
             $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Timezone set to \'' . $this->timezone . '\'');
             return true;
         }
+        $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set timezone to \'' . $timezone . '\'');
+        return false;
     }
 
     /**
@@ -911,9 +936,8 @@ class GoogleSyncBase
             $event_local->set_accept_status($this->workingUser, 'accept');  // Set the meeting as accepted by the user, otherwise it doesn't show up on the calendar. We do it here because it must be saved first.
             $this->syncedList[] = $event_local->id;
             return true;
-        } else {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Something went wrong saving the local record.');
-            return false;
         }
+        $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Something went wrong saving the local record.');
+        return false;
     }
 }
