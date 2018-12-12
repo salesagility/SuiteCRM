@@ -84,6 +84,7 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
     
     public function storeInSentFolderNoIE()
     {
+        $handler = new NonGmailSentFolderHandler();
         $ret = $handler->storeInSentFolder(new InboundEmail(), null);
         $this->assertFalse($ret);
         $this->assertEquals(NonGmailSentFolderHandler::ERR_NO_IE_FOUND, $handler->getLastError());        
@@ -91,6 +92,7 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
     
     public function storeInSentFolderIsPop3()
     {
+        $handler = new NonGmailSentFolderHandler();
         $ie = new InboundEmail();
         $ie->id = '123';
         $ie->protocol = 'pop3';
@@ -101,11 +103,12 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
     
     public function storeInSentFolderIsGmail()
     {        
+        $handler = new NonGmailSentFolderHandler();
         $ie = new InboundEmail();
         $ie->id = '123';
         $ie->protocol = 'smtp';
         $mail = new SugarPHPMailer();
-        $mail->oe->mail_smtptype == 'gmail';
+        $mail->oe->mail_smtptype = 'gmail';
         $ret = $handler->storeInSentFolder($ie, $mail);
         $this->assertFalse($ret);
         $this->assertEquals(NonGmailSentFolderHandler::ERR_IS_GMAIL, $handler->getLastError());
@@ -113,17 +116,18 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
     
     public function storeInSentFolderOk()
     {        
+        $handler = new NonGmailSentFolderHandler();
         $ie = new InboundEmail();
         $ie->id = '123';
         $ie->protocol = 'smtp';
         $mail = new SugarPHPMailer();
-        $mail->oe->mail_smtptype == 'foo';
+        $mail->oe->mail_smtptype = 'foo';
         $ret = $handler->storeInSentFolder($ie, $mail);
         $this->assertFalse($ret);
         $this->assertEquals(NonGmailSentFolderHandler::NO_ERROR, $handler->getLastError());
     }
     
-    public function testGetProblemOfStoringInNonGmailSentFolder()
+    public function testGetProblemOfStoringInNonGmailSentFolderNoIEID()
     {
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = new InboundEmail();
@@ -131,14 +135,20 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
         unset($ie->id);
         $ret = $handler->getProblemOfStoringInNonGmailSentFolderPublic($ie, $mail);
         $this->assertContains('IE ID is not set.', $ret);
-        
+    }
+    
+    public function testGetProblemOfStoringInNonGmailSentFolderNoIEIDValue()
+    {
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = new InboundEmail();
         $mail = new SugarPHPMailer();
         $ie->id = '';
         $ret = $handler->getProblemOfStoringInNonGmailSentFolderPublic($ie, $mail);
         $this->assertContains('IE ID is set but no value.', $ret);
-        
+    }
+    
+    public function testGetProblemOfStoringInNonGmailSentFolderIsPop3()
+    {        
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = new InboundEmail();
         $mail = new SugarPHPMailer();
@@ -146,7 +156,10 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
         $ie->protocol = 'pop3';
         $ret = $handler->getProblemOfStoringInNonGmailSentFolderPublic($ie, $mail);
         $this->assertContains('It is a pop3 protocoll.', $ret);
-        
+    }
+    
+    public function testGetProblemOfStoringInNonGmailSentFolderIsGmail()
+    {    
         $handler = new NonGmailSentFolderHandlerMock();
         $ie = new InboundEmail();
         $mail = new SugarPHPMailer();
