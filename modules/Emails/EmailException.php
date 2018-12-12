@@ -50,5 +50,4 @@ class EmailException extends Exception
     const NO_DEFAULT_FROM_ADDR = 10;
     const NO_DEFAULT_FROM_EMAIL = 20;
     const NO_PROBLEM_MSG_FOUND = 30;
-    const UNHANDLED_LAST_ERROR = 40;
 }

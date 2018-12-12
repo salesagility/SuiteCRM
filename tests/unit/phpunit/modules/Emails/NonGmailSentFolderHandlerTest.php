@@ -53,15 +53,6 @@ require_once __DIR__ . '/InboundEmailMock.php';
  */
 class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
 {
-    public function testDestruct()
-    {
-        $handler = new NonGmailSentFolderHandler();
-        $handler->setLastError(4444123);
-        $handler = null;
-        gc_collect_cycles();
-        $this->assertTrue(false);
-        $this->assertEquals(NonGmailSentFolderHandler::UNHANDLER_ERROR, $handler->getLastError());
-    }
     
     public function testClearLastError()
     {

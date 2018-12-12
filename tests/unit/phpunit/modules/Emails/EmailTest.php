@@ -65,7 +65,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $storedOption = $ie->getStoredOptions();
         $storedOption['sentFolder'] = 'testSentFolder';
         $ie->setStoredOptions($storedOption);
-        $mailer->oe->mail_smtptype == 'foomail';
+        $mailer->oe->mail_smtptype = 'foomail';
         $ret = $email->send($mailer, $nonGmailSentFolder, $ie);
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
@@ -119,9 +119,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $email->to_addrs_arr = ['foo@bazz.bar'];
         $email->saved_attachments = [];
         $nonGmailSentFolder = new NonGmailSentFolderHandlerMock();
-        $ie = new InboundEmail();
         $ie->mailbox = 'testmailbox';
-        $ie->id = 'test123';
         $ret = $email->send($mailer, $nonGmailSentFolder, $ie);
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
@@ -242,24 +240,14 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->restoreState($state);
     }
     
-    public function testSetLastSaveAndStoreInSentError()
+    public function testSetLastSaveAndStoreInSentErrorNo()
     {
         $email = new EmailMock();
         try {
-            $email->setLastSaveAndStoreInSentErrorPublic(null);
+            $email->sentParamtLastSaveAndStoreInSentErrorPublic(null);
             $this->assertTrue(false);
         } catch (InvalidArgumentException $e) {
             $this->assertEquals(Email::ERR_CODE_SHOULD_BE_INT, $e->getCode());
-        }
-        
-        
-        $email->setLastSaveAndStoreInSentErrorPublic(12341234);
-        try {
-            $email = null;
-            gc_collect_cycles();
-            $this->assertTrue(false);
-        } catch (EmailException $e) {
-            $this->assertEquals(EmailException::UNHANDLED_LAST_ERROR, $e->getCode());
         }
     }
     

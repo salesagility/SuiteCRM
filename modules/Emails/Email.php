@@ -449,6 +449,7 @@ class Email extends Basic
     const ERR_NO_IE_MAIL_ID = 3;
     const ERR_CODE_SHOULD_BE_INT = 4;
     const ERR_IE_RETRIEVE = 5;
+    const UNHANDLED_LAST_ERROR = 6;
     
     /**
      *
@@ -481,7 +482,7 @@ class Email extends Basic
         if (null !== $this->lastSaveAndStoreInSentError) {
             throw new EmailException(
                 'Last Error for method SaveAndStoreInSentFolder() already set but never checked: ' .
-                $this->lastSaveAndStoreInSentError, EmailException::UNHANDLED_LAST_ERROR);
+                $this->lastSaveAndStoreInSentError, self::UNHANDLED_LAST_ERROR);
         }
         $this->lastSaveAndStoreInSentError = $err;
     }
@@ -563,7 +564,7 @@ class Email extends Basic
     {
         $err = $this->getLastSaveAndStoreInSentError();
         if (null !== $err) {
-            throw new EmailException('Unhandled email save and store as sent error: ' . $err, EmailException::UNHANDLED_LAST_ERROR);
+            LoggerManager::getLogger()->error('Unhandled email save and store as sent error: ' . $err, self::UNHANDLED_LAST_ERROR);
         }
     }
     
