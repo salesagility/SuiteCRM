@@ -217,16 +217,15 @@ class NonGmailSentFolderHandler
             throw new InvalidArgumentException('Sent folder should be a valid folder name string.', self::ERR_SHOULD_BE_STRING);
         }
         
-        $ret = $ie->connectMailserver() == 'true';
+        $msg = $ie->connectMailserver();
+        $ret = $msg == 'true';
         if ($ret) {
             $ret = $this->copyToNonGmailSentFolder($ie, $mail, $sentFolder);
-        } else {
-            LoggerManager::getLogger()->warn(
-                "could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}" .
-                ($ret ? "error message: $ret" : ''));
-            return false;
+            return $ret;
         }
-        return $ret;
+        LoggerManager::getLogger()->warn(
+            "could not connect to mail serve for folder {$ie->mailbox} for {$ie->name} error message: $msg");
+        return false;
     }
     
     /**
