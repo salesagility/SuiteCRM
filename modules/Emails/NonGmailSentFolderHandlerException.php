@@ -49,5 +49,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class NonGmailSentFolderHandlerException extends Exception
 {
-    const UNHANDLER_ERROR = 1;
 }

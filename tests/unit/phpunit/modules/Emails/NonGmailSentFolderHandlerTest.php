@@ -57,13 +57,10 @@ class NonGmailSentFolderHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         $handler = new NonGmailSentFolderHandler();
         $handler->setLastError(4444123);
-        try {
-            $handler = null;
-            gc_collect_cycles();
-            $this->assertTrue(false);
-        } catch (NonGmailSentFolderHandlerException $e) {
-            $this->assertEquals(NonGmailSentFolderHandlerException::UNHANDLER_ERROR, $e->getError());
-        }
+        $handler = null;
+        gc_collect_cycles();
+        $this->assertTrue(false);
+        $this->assertEquals(NonGmailSentFolderHandler::UNHANDLER_ERROR, $handler->getLastError());
     }
     
     public function testClearLastError()

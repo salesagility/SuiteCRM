@@ -61,6 +61,7 @@ class NonGmailSentFolderHandler
     const ERR_NO_IE_FOUND = 7;
     const ERR_IS_POP3 = 8;
     const ERR_IS_GMAIL = 9;
+    const UNHANDLER_ERROR = 10;
     
     /**
      *
@@ -75,9 +76,9 @@ class NonGmailSentFolderHandler
     {
         $err = $this->getLastError();
         if (null !== $err) {
-            throw new NonGmailSentFolderHandlerException(
+            LoggerManager::getLogger()->error(
                 'Unhandled non gmail sent folder hander error: ' . $err,
-                NonGmailSentFolderHandlerException::UNHANDLER_ERROR);
+                self::UNHANDLER_ERROR);
         }
     }
     
