@@ -365,8 +365,13 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->assertInstanceOf('SugarBean', $return);
         $this->assertEquals($meeting1_id, $return->id);
 
-        $return = $method->invoke($object, 'duplicate_gsync_id');
-        $this->assertEquals(false, $return);
+        $return = null;
+        try {
+            $method->invoke($object, 'duplicate_gsync_id');
+        } catch (Exception $e) {
+            $return = $e->getMessage();
+        }
+        $this->assertEquals('More than one meeting matches Google Id!', $return);
 
         $return = $method->invoke($object, 'NOTHING_MATCHES');
         $this->assertEquals(null, $return);
