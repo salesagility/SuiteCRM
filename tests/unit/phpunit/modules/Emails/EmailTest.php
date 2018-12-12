@@ -70,8 +70,8 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($ret);
         $this->assertNull($email->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getNonGmailSentFolderHandler());
-        $this->assertEquals(Email::NO_ERROR, $email->getTempEmailAtSend()->getLastSaveAndStoreInSentError());
         $this->assertNull($email->getTempEmailAtSend()->getNonGmailSentFolderHandler()->getLastError());
+        $this->assertEquals(Email::NO_ERROR, $email->getTempEmailAtSend()->getLastSaveAndStoreInSentError());
         
         $this->restoreState($state);
     }
@@ -244,7 +244,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         $email = new EmailMock();
         try {
-            $email->sentParamtLastSaveAndStoreInSentErrorPublic(null);
+            $email->setLastSaveAndStoreInSentErrorPublic(null);
             $this->assertTrue(false);
         } catch (InvalidArgumentException $e) {
             $this->assertEquals(Email::ERR_CODE_SHOULD_BE_INT, $e->getCode());
