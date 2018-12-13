@@ -120,10 +120,14 @@ class ImapHandler implements ImapHandlerInterface
      */
     protected function log($errors)
     {
-        if ($errors && $this->logErrors) {
-            foreach ($errors as $error) {
-                if ($error) {
-                    $this->logger->warn('An Imap error detected: ' . json_encode($error));
+        if (is_string($errors)) {
+            $this->log([$errors]);
+        } else {
+            if ($errors && $this->logErrors) {
+                foreach ($errors as $error) {
+                    if ($error) {
+                        $this->logger->warn('An Imap error detected: ' . json_encode($error));
+                    }
                 }
             }
         }
@@ -387,7 +391,12 @@ class ImapHandler implements ImapHandlerInterface
     public function append($mailbox, $message, $options = null, $internal_date = null)
     {
         $this->logCall(__FUNCTION__, func_get_args());
-        $ret = imap_append($this->getStream(), $mailbox, $message, $options, $internal_date);
+        
+        if (null === $internal_date) { // <-- to evolve a warning about an invalid internal date format
+            $ret = imap_append($this->getStream(), $mailbox, $message, $options);
+        } else {
+            $ret = imap_append($this->getStream(), $mailbox, $message, $options, $internal_date);
+        }
         if (!$ret) {
             $this->log(['IMAP append error']);
         }

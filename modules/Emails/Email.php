@@ -893,7 +893,6 @@ class Email extends Basic
      * Sends Email for Email 2.0
      *
      * @param $request
-     * @param ImapHandlerInterface $imap
      * @global $mod_strings
      * @global $app_strings
      * @global $current_user
@@ -904,7 +903,7 @@ class Email extends Basic
      * @global $beanFiles
      * @return bool
      */
-    public function email2Send($request, ImapHandlerInterface $imap = null)
+    public function email2Send($request)
     {
         global $mod_strings;
         global $app_strings;
@@ -914,11 +913,6 @@ class Email extends Basic
         global $timedate;
         global $beanList;
         global $beanFiles;
-        
-        if (null === $imap) {
-            $imapFactory = new ImapHandlerFactory();
-            $imap = $imapFactory->getImapHandler();
-        }
         
         $OBCharset = $locale->getPrecedentPreference('default_email_charset');
 
@@ -1443,7 +1437,7 @@ class Email extends Basic
                     $ie->mailbox = $sentFolder;
                     if ($ie->connectMailserver() == 'true') {
                         $connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
-                        $returnData = $imap->append($ie->conn, $connectString, $data, "\\Seen");
+                        $returnData = $ie->getImap()->append($connectString, $data, "\\Seen");
                         if (!$returnData) {
                             $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
                         } // if

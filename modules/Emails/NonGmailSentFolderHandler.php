@@ -242,8 +242,7 @@ class NonGmailSentFolderHandler
         $data = $emailheader . "\r\n" . $emailbody . "\r\n";
         $ie->mailbox = $sentFolder;
         $connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
-        $returnData = $ie->getImap()->append($connectString, $data, "\\Seen");
-        //$returnData = imap_append($ie->conn, $connectString, $data, "\\Seen");
+        $returnData = $ie->getImap()->append($connectString, $data, $sentFolder);
         if (!$returnData) {
             $this->setLastError(self::ERR_COULDNT_COPY_TO_SENT);
             LoggerManager::getLogger()->warn("could not copy email to {$ie->mailbox} for {$ie->name}");

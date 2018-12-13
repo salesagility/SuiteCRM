@@ -222,8 +222,17 @@ class InboundEmail extends SugarBean
      *
      * @return ImapHandlerInterface
      */
-    public function getImap()
+    public function getImap(ImapHandlerInterface $imap = null)
     {
+        
+        if (null === $this->imap) {
+            if (null === $imap) {
+                $imapFactory = new ImapHandlerFactory();
+                $imap = $imapFactory->getImapHandler();
+            }
+            $this->imap = $imap;
+        }
+        
         return $this->imap;
     }
 
