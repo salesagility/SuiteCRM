@@ -53,12 +53,22 @@ require_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFactory.php';
  */
 class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
 {
+    /**
+     * FAIL: invalid key argument for save test settings key
+     */
     public function testSaveTestSettingsKeyInvalidKey()
     {
         $factory = new ImapHandlerFactory();
         
         try {
             $factory->saveTestSettingsKey(null);
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $e) {
+            $this->assertTrue(true);
+        }
+        
+        try {
+            $factory->saveTestSettingsKey(123);
             $this->assertTrue(false);
         } catch (InvalidArgumentException $e) {
             $this->assertTrue(true);
@@ -72,6 +82,9 @@ class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
         }
     }
     
+    /**
+     * FAIL: when key not found in calls settings file
+     */
     public function testSaveTestSettingsKeyKeyNotFound()
     {
         $factory = new ImapHandlerFactory();
@@ -83,8 +96,9 @@ class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
         }
     }
     
-    
-    
+    /**
+     * OK: should successfully saving a key
+     */
     public function testSaveTestSettingsKeyOK()
     {
         $settingsFile = __DIR__ . '/../../../../../include/Imap' . ImapHandlerFactory::SETTINGS_KEY_FILE;
@@ -98,8 +112,13 @@ class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($results);
     }
     
-    public function testGetImapHandler()
+    /**
+     * OK: should retrieves an ImapHandler
+     */
+    public function testGetImapHandlerOk()
     {
-        
+        $factory = new ImapHandlerFactory();
+        $results = $factory->getImapHandler();
+        $this->assertInstanceOf(ImapHandlerInterface, $results);
     }
 }

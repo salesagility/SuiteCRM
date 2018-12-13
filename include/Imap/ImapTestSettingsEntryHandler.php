@@ -70,6 +70,9 @@ class ImapTestSettingsEntryHandler
         
         $var = 'imap_test_settings';
         $key = isset($request[$var]) && $request[$var] ? $request[$var] : null;
+        if (null === $key) {
+            throw new InvalidArgumentException("Invalid request variable at '$var'.");
+        }
         
         $error = $this->doSaveTestSettingsKey($key, $var);
         
