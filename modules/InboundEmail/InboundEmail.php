@@ -470,8 +470,7 @@ class InboundEmail extends SugarBean
             $firstMsg = $firstMsg > $totalMsgs ? $totalMsgs : $firstMsg;
             $lastMsg = $lastMsg < $firstMsg ? $firstMsg : $lastMsg;
             $lastMsg = $lastMsg > $totalMsgs ? $totalMsgs : $lastMsg;
-
-            // TODO: sequence should be an integer!
+            
             $sequence = $firstMsg . ':' . $lastMsg;
             $emailSortedHeaders = $this->getImap()->fetchOverview($sequence);
 

@@ -78,7 +78,12 @@ class ImapHandlerFactory
         'calls' => 'include/Imap/ImapHandlerFakeCalls.php',
     ];
     
-    protected function setInterfaceObject(ImapHandlerInterface $interfaceObject) {
+    /**
+     *
+     * @param ImapHandlerInterface $interfaceObject
+     */
+    protected function setInterfaceObject(ImapHandlerInterface $interfaceObject)
+    {
         $class = get_class($interfaceObject);
         LoggerManager::getLogger()->debug('ImapHandlerFactory will using a ' . $class);
         $this->interfaceObject = $interfaceObject;
@@ -103,21 +108,14 @@ class ImapHandlerFactory
     protected function loadTestSettings($testSettings = null)
     {
         if (!$testSettings) {
-            if (file_exists(__DIR__ . self::SETTINGS_KEY_FILE)) {
-                $testSettings = file_get_contents(__DIR__ . self::SETTINGS_KEY_FILE);
-            }
-            if (!$testSettings) {
-                LoggerManager::getLogger()->warn("Test settings not set, create one with default key");
-                $testSettings = self::DEFAULT_SETTINGS_KEY;
-                $this->saveTestSettingsKey($testSettings);
-            }
+            $testSettings = $this->getTestSettings();
         }
         $this->includeFakeInterface();
         $interfaceClass = $this->imapHandlerTestInterface['class'];
         $interfaceCallsSettings = include $this->imapHandlerTestInterface['calls'];
 
         if (!isset($interfaceCallsSettings[$testSettings])) {
-            $info = "[debug testSettings] " . var_dump($testSettings, true); 
+            $info = "[debug testSettings] " . var_dump($testSettings, true);
             $info .= "\n[debug info this] " . var_dump($this, true);
             $info .= "\n[debug info callset] " . var_dump($interfaceCallsSettings, true);
             LoggerManager::getLogger()->debug('Imap test setting failure: ' . $info);
@@ -128,6 +126,25 @@ class ImapHandlerFactory
         $interfaceFakeData = new ImapHandlerFakeData();
         $interfaceFakeData->retrieve($interfaceCalls);
         $this->setInterfaceObject(new $interfaceClass($interfaceFakeData));
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    protected function getTestSettings()
+    {
+        $testSettings = null;
+        if (file_exists(__DIR__ . self::SETTINGS_KEY_FILE)) {
+            $testSettings = file_get_contents(__DIR__ . self::SETTINGS_KEY_FILE);
+        }
+        if (!$testSettings) {
+            LoggerManager::getLogger()->warn("Test settings not set, create one with default key");
+            $testSettings = self::DEFAULT_SETTINGS_KEY;
+            $this->saveTestSettingsKey($testSettings);
+        }
+
+        return $testSettings;
     }
     
     /**
