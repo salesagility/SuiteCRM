@@ -649,11 +649,11 @@ class SugarFolder
     /**
      * Convenience method, pass a SugarBean
      *
-     * @param string $bean
+     * @param SugarBean $bean
      *
      * @return boolean
      */
-    public function addBean($bean)
+    public function addBean(SugarBean $bean)
     {
         if (empty($bean->id) || empty($bean->module_dir)) {
             $GLOBALS['log']->fatal("*** FOLDERS: addBean() got empty bean - not saving");
