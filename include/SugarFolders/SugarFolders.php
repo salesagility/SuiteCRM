@@ -52,13 +52,25 @@ require_once(__DIR__ . '/../TimeDate.php');
  */
 class SugarFolder
 {
-    // Protected globals
+    // @var User
     protected $currentUser     = null;
+
+    // @var array
     protected $appStrings      = null;
+
+    // @var array
     protected $modStrings      = null;
+
+    // @var array
     protected $sugarConfig     = null;
+
+    // @var timedate
     protected $timeDate        = null;
+
+    // @var array
     protected $beanList        = null;
+
+    // @var array
     protected $currentLanguage = null;
 
     // Public attributes
@@ -613,13 +625,13 @@ class SugarFolder
 
 
     /**
-     * Convenience method, pass a SugarBean and User to this to add anything to a given folder
+     * Convenience method, pass a SugarBean
      *
      * @param string $bean
-     * @param User   $user
+     *
      * @return boolean
      */
-    public function addBean($bean, $user = null)
+    public function addBean($bean)
     {
         if (empty($bean->id) || empty($bean->module_dir)) {
             $GLOBALS['log']->fatal("*** FOLDERS: addBean() got empty bean - not saving");
