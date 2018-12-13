@@ -247,19 +247,18 @@ function buildRedirectURL($return_id='', $return_module='')
 	}
 	if(isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "")
 	{
-	    
-	   //if we are doing a "Close and Create New"
-        if(isCloseAndCreateNewPressed())
-        {
-            $return_action = "EditView";    
-            $isDuplicate = "true";        
+
+        //if we are doing a "Close and Create New"
+        if (isCloseAndCreateNewPressed()) {
+            $return_action = "EditView";
+            $isDuplicate = "true";
             $status = "";
-            
+
             // Meeting Integration
-            if(isset($_REQUEST['meetingIntegrationFlag']) && $_REQUEST['meetingIntegrationFlag'] == 1) {
-            	$additionalFlags = array('meetingIntegrationShowForm' => '1');
-				//Set redirection to the new record created
-				$_REQUEST['return_id'] = $return_id?$return_id:$_REQUEST['return_id'];
+            if (isset($_REQUEST['meetingIntegrationFlag']) && $_REQUEST['meetingIntegrationFlag'] == 1) {
+                $additionalFlags = array('meetingIntegrationShowForm' => '1');
+                //Set redirection to the new record created
+                $_REQUEST['return_id'] = $return_id ? $return_id : $_REQUEST['return_id'];
             }
             // END Meeting Integration
         } 
