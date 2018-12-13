@@ -59,7 +59,7 @@ class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler
      * @param string $sentFolder
      * @return bool
      */
-    protected function connectToNonGmailServer(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder)
+    protected function connectToNonGmailServer(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = "\\Seen")
     {
         LoggerManager::getLogger()->debug('NonGmailSentFolderHandlerMock::connectToNonGmailServer() is called');
         return true; // emulate a success connection
@@ -83,8 +83,8 @@ class NonGmailSentFolderHandlerMock extends NonGmailSentFolderHandler
      * @param string $sentFolder
      * @return bool
      */
-    public function connectToNonGmailServerPublic(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder)
+    public function connectToNonGmailServerPublic(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = "\\Seen")
     {
-        return parent::connectToNonGmailServer($ie, $mail, $sentFolder);
+        return parent::connectToNonGmailServer($ie, $mail, $sentFolder, $options);
     }
 }

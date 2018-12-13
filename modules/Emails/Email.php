@@ -2882,7 +2882,9 @@ class Email extends Basic
         SugarPHPMailer $mail = null,
         NonGmailSentFolderHandler $nonGmailSentFolder = null,
         InboundEmail $ie = null,
-        Email $tempEmail = null)
+        Email $tempEmail = null,
+        $check_notify = false,
+        $options = "\\Seen")
     {
         global $mod_strings, $app_strings;
         global $current_user;
@@ -3075,7 +3077,7 @@ class Email extends Basic
                 $this->getTempEmailAtSend()->status = 'replied';
                 $ie = $ie ? $ie : new InboundEmail();
                 $nonGmailSentFolder = $nonGmailSentFolder ? $nonGmailSentFolder : new NonGmailSentFolderHandler();
-                $ieMailId = $this->getTempEmailAtSend()->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder);
+                $ieMailId = $this->getTempEmailAtSend()->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder, $check_notify, $options);
                 LoggerManager::getLogger()->debug('IE Mail ID is ' . ($ieMailId === null ? 'null' : $ieMailId) . ' after save and store in non-gmail sent folder.');
             }
             $GLOBALS['log']->debug(' --------------------- buh bye -- sent successful');
@@ -3100,7 +3102,9 @@ class Email extends Basic
         InboundEmail $ie,
         $ieId,
         SugarPHPMailer $mail,
-        NonGmailSentFolderHandler $nonGmailSentFolder)
+        NonGmailSentFolderHandler $nonGmailSentFolder,
+        $check_notify = false,
+        $options = "\\Seen")
     {
         $ieMailId = null;
         if (!$ie) {
@@ -3113,7 +3117,7 @@ class Email extends Basic
             }
         }
         if ($ie && $ie->id) {
-            $ieMailId = $this->saveAndStoreInSent($mail, $ie, $nonGmailSentFolder);
+            $ieMailId = $this->saveAndStoreInSent($mail, $ie, $nonGmailSentFolder, $check_notify, $options);
             if (!$ieMailId) {
                 LoggerManager::getLogger()->warn('Email save and store in sent folder error. Inbound email ID was: ' . $ieId);
             }
@@ -3133,7 +3137,8 @@ class Email extends Basic
         SugarPHPMailer $mail,
         InboundEmail $ie,
         NonGmailSentFolderHandler $nonGmailSentFolder = null,
-        $check_notify = false)
+        $check_notify = false,
+        $options = "\\Seen")
     {
         $ieMailId = $this->save($check_notify);
         if ($ieMailId) {
@@ -3143,7 +3148,7 @@ class Email extends Basic
                 LoggerManager::getLogger()->warn('Exists and retrieved InboundEmail needed for storing email as sent.');
                 $this->setLastSaveAndStoreInSentError(self::ERR_NO_IE);
             } else {
-                $stored = $this->getNonGmailSentFolderHandler()->storeInSentFolder($ie, $mail);
+                $stored = $this->getNonGmailSentFolderHandler()->storeInSentFolder($ie, $mail, $options);
                 if (!$stored) {
                     LoggerManager::getLogger()->warn('Email storing in non gmail sent folder was not necessary. Inbound email ID was: ' . $ie->id);
                     $this->setLastSaveAndStoreInSentError(self::ERR_NOT_STORED_AS_SENT);

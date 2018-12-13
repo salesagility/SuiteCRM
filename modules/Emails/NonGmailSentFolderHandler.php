@@ -127,7 +127,7 @@ class NonGmailSentFolderHandler
      * @return bool
      * @param SugarPHPMailer $mail
      */
-    public function storeInSentFolder(InboundEmail $ie, SugarPHPMailer $mail)
+    public function storeInSentFolder(InboundEmail $ie, SugarPHPMailer $mail, $options = "\\Seen")
     {
         $ret = false;
         $ok = !$this->lastError;
@@ -147,7 +147,7 @@ class NonGmailSentFolderHandler
             $ok = false;
         }
         if ($ok) {
-            $ret = $this->storeInNonGmailSentMailBox($ie, $mail);
+            $ret = $this->storeInNonGmailSentMailBox($ie, $mail, $options);
         } else {
             LoggerManager::getLogger()->error($this->getProblemOfStoringInNonGmailSentFolder($ie, $mail));
         }
@@ -161,13 +161,13 @@ class NonGmailSentFolderHandler
      * @return bool
      * @throws EmailException
      */
-    protected function storeInNonGmailSentMailBox(InboundEmail $ie, SugarPHPMailer $mail)
+    protected function storeInNonGmailSentMailBox(InboundEmail $ie, SugarPHPMailer $mail, $options = "\\Seen")
     {
         $ret = false;
         $this->clearLastError();
         $sentFolder = $ie->get_stored_options("sentFolder");
         if (!empty($sentFolder)) {
-            $ret = $this->connectToNonGmailServer($ie, $mail, $sentFolder);
+            $ret = $this->connectToNonGmailServer($ie, $mail, $sentFolder, $options);
         } else {
             if (!$ie->mailbox) {
                 LoggerManager::getLogger()->warn("could not copy email to sent folder, mailbox is not set or empty");
@@ -210,7 +210,7 @@ class NonGmailSentFolderHandler
      * @param string $sentFolder
      * @return bool
      */
-    protected function connectToNonGmailServer(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder)
+    protected function connectToNonGmailServer(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = "\\Seen")
     {
         if (!is_string($sentFolder) || !$sentFolder) {
             throw new InvalidArgumentException('Sent folder should be a valid folder name string.', self::ERR_SHOULD_BE_STRING);
@@ -219,7 +219,7 @@ class NonGmailSentFolderHandler
         $msg = $ie->connectMailserver();
         $ret = $msg == 'true';
         if ($ret) {
-            $ret = $this->copyToNonGmailSentFolder($ie, $mail, $sentFolder);
+            $ret = $this->copyToNonGmailSentFolder($ie, $mail, $sentFolder, $options);
             return $ret;
         }
         LoggerManager::getLogger()->warn(
@@ -234,7 +234,7 @@ class NonGmailSentFolderHandler
      * @param string $sentFolder
      * @return @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      */
-    protected function copyToNonGmailSentFolder(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder)
+    protected function copyToNonGmailSentFolder(InboundEmail $ie, SugarPHPMailer $mail, $sentFolder, $options = "\\Seen")
     {
         // Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
         $emailbody = $mail->CreateBody();
@@ -242,7 +242,7 @@ class NonGmailSentFolderHandler
         $data = $emailheader . "\r\n" . $emailbody . "\r\n";
         $ie->mailbox = $sentFolder;
         $connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
-        $returnData = $ie->getImap()->append($connectString, $data, $sentFolder);
+        $returnData = $ie->getImap()->append($connectString, $data, $options);
         if (!$returnData) {
             $this->setLastError(self::ERR_COULDNT_COPY_TO_SENT);
             LoggerManager::getLogger()->warn("could not copy email to {$ie->mailbox} for {$ie->name}");
