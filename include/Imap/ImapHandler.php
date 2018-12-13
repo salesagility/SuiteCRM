@@ -91,11 +91,12 @@ class ImapHandler implements ImapHandlerInterface
     }
     
     /**
-     * 
+     *
      * @param resource $stream
      * @param bool $validate
      */
-    protected function setStream($stream, $validate = true) {
+    protected function setStream($stream, $validate = true)
+    {
         if ($validate && !is_resource($stream)) {
             $this->logger->error('ImapHandler trying to set a non valid resource az stream.');
         }
@@ -103,11 +104,12 @@ class ImapHandler implements ImapHandlerInterface
     }
     
     /**
-     * 
+     *
      * @param bool $validate
      * @return resource
      */
-    protected function getStream($validate = true) {
+    protected function getStream($validate = true)
+    {
         if ($validate && !is_resource($this->stream)) {
             $this->logger->error('ImapHandler trying to use a non valid resource stream.');
         }
@@ -395,7 +397,7 @@ class ImapHandler implements ImapHandlerInterface
         // ..to evolve a warning about an invalid internal date format
         // BUG at: https://github.com/php/php-src/blob/master/ext/imap/php_imap.c#L1357
         // -->
-        if (null === $internal_date) { 
+        if (null === $internal_date) {
             $ret = imap_append($this->getStream(), $mailbox, $message, $options);
         } else {
             $ret = imap_append($this->getStream(), $mailbox, $message, $options, $internal_date);

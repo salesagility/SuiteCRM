@@ -71,15 +71,15 @@ return $calls = [
                     return $ret;
                 }],
             ],
-        ],           
+        ],
         'getLastError' => [
             ['args' => null, 'return' => [false]],
-        ],           
+        ],
         'getAlerts' => [
             ['args' => null, 'return' => [false]],
         ],
-        'getConnection' => [],    
-    ],    
+        'getConnection' => [],
+    ],
                         
                         
     'testSettingsWrongUser' => [
