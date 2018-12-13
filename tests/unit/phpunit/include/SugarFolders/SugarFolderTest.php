@@ -34,7 +34,7 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical 169reasons, the Appropriate Legal Notices must
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
@@ -45,8 +45,16 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     protected $folderId = null;
     protected $state    = null;
 
+    public function setUp()
+    {
+        parent::setUp();
+        include_once __DIR__ . '/../../../../../modules/Users/User.php';
+        include_once __DIR__ . '/../../../../../include/SugarFolders/SugarFolders.php';
+    }
+
     protected function pushState()
     {
+        $this->state = new StateSaver();
         $this->state->pushTable('folders');
         $this->state->pushTable('folders_rel');
         $this->state->pushTable('folders_subscriptions');
@@ -63,18 +71,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->state->popTable('emails');
         $this->state->popTable('emails_text');
         $this->state->popTable('job_queue');
-    }
-
-
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->state = new StateSaver();
-
-        include_once __DIR__ . '/../../../../../modules/Users/User.php';
-        include_once __DIR__ . '/../../../../../include/SugarFolders/SugarFolders.php';
+        $this->state = null;
     }
 
     /**
@@ -123,7 +120,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $sql = $sugarfolder->generateSugarsDynamicFolderQuery();
 
-        $expected = "SELECT emails.id, emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails' polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id WHERE (type = 'out' OR status = 'sent'') AND assigned_user_id = '1' AND emails.deleted = 0 AND emails.status NOT IN ('archived') AND emails.type NOT IN ('archived')";
+        $expected = "SELECT emails.id, emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails' polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id WHERE (type = 'out' OR status = 'sent') AND assigned_user_id = '1' AND emails.deleted = 0 AND emails.status NOT IN ('archived') AND emails.type NOT IN ('archived')";
 
         $this->assertEquals($sql, $expected);
 
@@ -131,7 +128,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $sql = $sugarfolder->generateSugarsDynamicFolderQuery();
 
-        $expected = "SELECT emails.id, emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails' polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id WHERE (type = 'inbound' OR status = 'inbound'') AND assigned_user_id = '1' AND emails.deleted = 0 AND emails.status NOT IN ('sent', 'archived', 'draft') AND emails.type NOT IN ('out', 'archived', 'draft')";
+        $expected = "SELECT emails.id, emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails' polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id WHERE (type = 'inbound' OR status = 'inbound') AND assigned_user_id = '1' AND emails.deleted = 0 AND emails.status NOT IN ('sent', 'archived', 'draft') AND emails.type NOT IN ('out', 'archived', 'draft')";
 
         $this->assertEquals($sql, $expected);
     }
@@ -206,11 +203,6 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $sugarfolder->clearSubscriptionsForFolder($sugarfolder->id);
 
         $this->popState();
-    }
-
-    public function testUnreadCountOfItems()
-    {
-        $this->assertTrue(true);
     }
 
     public function testGetFoldersForSettings()
@@ -443,15 +435,11 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $user->id = 1;
 
         $sugarFolder = new SugarFolder($user);
-
-        $fields = array(
-            'name'             => 'Parent Folder',
-            'parent_folder'    => ''
-        );
-
-        $saved = $sugarFolder->setFolder($fields);
+        $sugarFolder->name = 'Parent Folder';
+        $saved = $sugarFolder->save();
 
         $this->assertTrue($saved);
+        $saved = false;
 
         for ($i = 0; $i < 10; $i++) {
             $arrayOfEmailBeans[$i] = BeanFactory::newBean('Emails');
@@ -462,11 +450,26 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $results = $sugarFolder->getListItemsForEmailXML($sugarFolder->id);
         $this->assertTrue(is_array($results));
+        $results = false;
 
-        $sugarFolder->is_dynamic = true;
-        $sugarFolder->hrSortLocal = array();
+        $dynamicSugarFolder = new SugarFolder($user);
+        $dynamicSugarFolder->name = 'Dynamic Parent Folder';
 
-        $results = $sugarFolder->getListItemsForEmailXML($sugarFolder->id);
+        $dynamicSugarFolder->is_dynamic = true;
+        $dynamicSugarFolder->is_group   = true;
+        $dynamicSugarFolder->hrSortLocal = array();
+
+        $saved = $dynamicSugarFolder->save();
+        $this->assertTrue($saved);
+
+        for ($i = 0; $i < 10; $i++) {
+            $arrayOfEmailBeans[$i] = BeanFactory::newBean('Emails');
+            $arrayOfEmailBeans[$i]->save();
+
+            $dynamicSugarFolder->addBean($arrayOfEmailBeans[$i]);
+        }
+
+        $results = $dynamicSugarFolder->getListItemsForEmailXML($dynamicSugarFolder->id);
         $this->assertTrue(is_array($results));
 
         $this->popState();
@@ -487,8 +490,9 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
 
         $saved = $parentFolder->setFolder($fields);
-
         $this->assertTrue($saved);
+
+        $saved = false;
 
         $arrayOfEmailBeans = array();
 
@@ -513,21 +517,44 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $count = $parentFolder->getCountUnread($parentFolder->id);
         $this->assertEquals(0, $count);
 
-        $parentFolder->is_dynamic = true;
-
-        $count = $parentFolder->getCountItems($parentFolder->id);
-        $this->assertEquals(10, $count);
-
-        $count = $parentFolder->getCountUnread($parentFolder->id);
-        $this->assertEquals(0, $count);
 
         // non-existent folder
         $newBean = BeanFactory::newBean('Emails');
         $newBean->save();
 
         $parentFolder->id = null;
-
         $parentFolder->addBean($newBean);
+
+        // create with dynamic and group
+
+        $user = new User();
+        $user->id = 1;
+
+        $parentFolder = new SugarFolder($user);
+
+        $parentFolder->name       = 'Parent Folder';
+        $parentFolder->is_dynamic = true;
+        $parentFolder->is_group   = true;
+
+        $saved = $parentFolder->save();
+
+        $this->assertTrue($saved);
+        $saved = false;
+
+        $arrayOfEmailBeans = array();
+
+        for ($i = 0; $i < 10; $i++) {
+            $arrayOfEmailBeans[$i] = BeanFactory::newBean('Emails');
+            $arrayOfEmailBeans[$i]->save();
+
+            $parentFolder->addBean($arrayOfEmailBeans[$i]);
+        }
+
+        $count = $parentFolder->getCountItems($parentFolder->id);
+        $this->assertEquals(0, $count);
+
+        $count = $parentFolder->getCountUnread($parentFolder->id);
+        $this->assertEquals(0, $count);
 
         $this->popState();
     }
@@ -648,12 +675,10 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $parentFolderOne = new SugarFolder($user);
 
-        $fields = array(
-            'name'             => 'Parent Folder',
-            'parent_folder'    => ''
-        );
+        $parentFolderOne->name        = 'Parent Folder';
+        $parentFolderOne->folder_type = 'inbound';
 
-        $saved = $parentFolderOne->setFolder($fields);
+        $saved = $parentFolderOne->save();
 
         $this->assertTrue($saved);
 
@@ -719,7 +744,54 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->popState();
     }
 
+    public function testSetSubscriptionWithNoUser()
+    {
+        $this->pushState();
 
+        $user = new User();
+        $user->id = 1;
 
+        $parentFolderOne = new SugarFolder($user);
 
+        $fields = array(
+            'name'             => 'Parent Folder',
+            'parent_folder'    => ''
+        );
+
+        $saved = $parentFolderOne->setFolder($fields);
+
+        $this->assertTrue($saved);
+
+        $subs = array($parentFolderOne->id);
+
+        $ret = $parentFolderOne->setSubscriptions($subs, 0);
+
+        $this->assertFalse($ret);
+
+        $this->popState();
+    }
+
+    public function testUpdateSave()
+    {
+        $this->pushState();
+
+        $user = new User();
+        $user->id = 1;
+
+        $parentFolderOne = new SugarFolder($user);
+
+        $fields = array(
+            'name'             => 'Parent Folder',
+            'parent_folder'    => ''
+        );
+
+        $saved = $parentFolderOne->setFolder($fields);
+
+        $this->assertTrue($saved);
+
+        $parentFolderOne->new_with_id = true;
+        $parentFolderOne->save();
+
+        $this->popState();
+    }
 }
