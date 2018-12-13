@@ -151,6 +151,11 @@ class ImapHandlerFactory
      */
     public function saveTestSettingsKey($key)
     {
+        if (!is_string($key) || !$key) {
+            $type = gettype($key);
+            throw new InvalidArgumentException('Key should be a non-empty string, ' . ($type == 'string' ? 'empty string' : $type) . ' given.');
+        }
+        
         $calls = include $this->imapHandlerTestInterface['calls'];
 
         if (!isset($calls[$key])) {
