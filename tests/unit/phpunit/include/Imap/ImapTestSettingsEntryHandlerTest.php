@@ -53,13 +53,54 @@ require_once __DIR__ . '/../../../../../include/Imap/ImapTestSettingsEntryHandle
  */
 class ImapTestSettingsEntryHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
 {
+    
     /**
-     * 
+     * FAIL: sugar_config parameter does not contains imap_test
+     */
+    public function testHandleEntryPointRequestWrongConfig()
+    {
+        $handler = new ImapTestSettingsEntryHandler();
+        try {
+            $handler->handleEntryPointRequest([], []);
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $e) {
+            $this->assertTrue(true);
+        }
+    }
+    
+    /**
+     * FAIL: $_REQUEST does not contains imap_test_settings
+     */
+    public function testHandleEntryPointRequestWrongRequest()
+    {
+        $handler = new ImapTestSettingsEntryHandler();
+        try {
+            $handler->handleEntryPointRequest(['imap_test' => 'foo'], []);
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $e) {
+            $this->assertTrue(true);
+        }
+    }
+    
+    /**
+     * FAIL: Key not found.; key was: "bar"
+     */
+    public function testHandleEntryPointRequestWrongKey()
+    {
+        $handler = new ImapTestSettingsEntryHandler();
+        $results = $handler->handleEntryPointRequest(['imap_test' => 'foo'], ['imap_test_settings' => 'bar']);
+        $this->assertEquals('ERROR: Key not found.; key was: "bar".', $results);
+    }
+    
+    /**
+     * OK: should returns a success output from entry point handling.
      */
     public function testHandleEntryPointRequest()
-    {// TODO...!@#
+    {
+        $settingsFile = __DIR__ . '/../../../../../include/Imap' . ImapHandlerFactory::SETTINGS_KEY_FILE;
         $handler = new ImapTestSettingsEntryHandler();
-        $results = $handler->handleEntryPointRequest();
-        $this->assertEquals('', $results);
+        $results = $handler->handleEntryPointRequest(['imap_test' => 'foo'], ['imap_test_settings' => 'testCaseExample']);
+        $this->assertEquals('OK: test settings changed to "testCaseExample"', $results);
+        $this->assertTrue(unlink($settingsFile));
     }
 }

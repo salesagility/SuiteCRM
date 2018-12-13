@@ -3660,7 +3660,7 @@ $app_strings['MSG_BROWSER_NOTIFICATIONS_DISABLED'] = 'Desktop notifications are 
 $app_strings['MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED'] = 'This browser does not support desktop notifications.';
 
 $app_strings['IMAP_HANDLER_ERROR'] = 'ERROR: {error}; key was: "{key}".';
-$app_strings['IMAP_HANDLER_SUCCESS'] = 'OK: test settings changed to "{key}"\n';
+$app_strings['IMAP_HANDLER_SUCCESS'] = 'OK: test settings changed to "{key}"';
 $app_strings['IMAP_HANDLER_ERROR_INVALID_REQUEST'] = 'Invalud request, use "{var}" value.';
 $app_strings['IMAP_HANDLER_ERROR_UNKNOWN_BY_KEY'] = 'Unknown error occured, key "{key}" not saved.';
 $app_strings['IMAP_HANDLER_ERROR_NO_TEST_SET'] = 'Test settings does not exists.';

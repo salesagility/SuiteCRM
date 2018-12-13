@@ -119,6 +119,6 @@ class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         $factory = new ImapHandlerFactory();
         $results = $factory->getImapHandler();
-        $this->assertInstanceOf(ImapHandlerInterface, $results);
+        $this->assertInstanceOf(ImapHandlerInterface::class, $results);
     }
 }
