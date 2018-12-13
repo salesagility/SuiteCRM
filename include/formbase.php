@@ -258,6 +258,8 @@ function buildRedirectURL($return_id='', $return_module='')
             // Meeting Integration
             if(isset($_REQUEST['meetingIntegrationFlag']) && $_REQUEST['meetingIntegrationFlag'] == 1) {
             	$additionalFlags = array('meetingIntegrationShowForm' => '1');
+				//Set redirection to the new record created
+				$_REQUEST['return_id'] = $return_id?$return_id:$_REQUEST['return_id'];
             }
             // END Meeting Integration
         } 
