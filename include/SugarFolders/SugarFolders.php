@@ -52,26 +52,48 @@ require_once(__DIR__ . '/../TimeDate.php');
  */
 class SugarFolder
 {
-    // @var User
+    /**
+     *
+     * @var User
+     */
     protected $currentUser     = null;
 
-    // @var array
+    /**
+     *
+     * @var array
+     */
     protected $appStrings      = null;
 
-    // @var array
+    /**
+     *
+     * @var array
+     */
     protected $modStrings      = null;
 
-    // @var array
+    /**
+     *
+     * @var array
+     */
     protected $sugarConfig     = null;
 
-    // @var timedate
+    /**
+     *
+     * @var timedate
+     */
     protected $timeDate        = null;
 
-    // @var array
+    /**
+     *
+     * @var array
+     */
     protected $beanList        = null;
 
-    // @var array
+    /**
+     *
+     * @var array
+     */
     protected $currentLanguage = null;
+
 
     // Public attributes
     public $id;
