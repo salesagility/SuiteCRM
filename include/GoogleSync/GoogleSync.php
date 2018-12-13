@@ -50,6 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author Benjamin Long <ben@offsite.guru>
  */
 require_once "GoogleSyncBase.php";
+require_once "GoogleSyncHelper.php";
 
 class GoogleSync extends GoogleSyncBase
 {
@@ -98,28 +99,35 @@ class GoogleSync extends GoogleSyncBase
         switch ($action) {
             case "push":
                 $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pushing Record: ' . $title);
-                return $this->pushEvent($meeting, $event);
+                $ret = $this->pushEvent($meeting, $event);
                 break;
             case "pull":
                 $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pulling Record: ' . $title);
-                return $this->pullEvent($event, $meeting);
+                $ret = $this->pullEvent($event, $meeting);
                 break;
             case "skip":
                 $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Skipping Record: ' . $title);
-                return true;
+                $ret = true;
                 break;
             case "push_delete":
                 $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Push Deleting Record: ' . $title);
-                return $this->delEvent($event, $meeting->id);
+                $ret = $this->delEvent($event, $meeting->id);
                 break;
             case "pull_delete":
                 $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pull Deleting Record: ' . $title);
-                return $this->delMeeting($meeting);
+                $ret = $this->delMeeting($meeting);
                 break;
             default:
                 $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unknown Action: ' . $action . ' for record: ' . $title);
                 throw new \InvalidArgumentException('Invalid Action');
         }
+
+        if ($ret) {
+            $this->syncedList[] = $ret;
+            return true;
+        }
+        //else
+        throw new Exception('Something went wrong with the requested action');
     }
 
     /**
@@ -201,31 +209,6 @@ class GoogleSync extends GoogleSyncBase
     }
 
     /**
-     * Helper method for pushPullSkip.
-     *
-     * When given a single calendar object, determine its type and return an action.
-     * At least one of the params is required.
-     *
-     * @param Meeting $meeting (optional) Meeting Bean
-     * @param \Google_Service_Calendar_Event $event (optional) Google_Service_Calendar_Event Object
-     *
-     * @return string push, pull, skip, or false on error
-     */
-    protected function singleEventAction(Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
-    {
-        if (empty($meeting) && empty($event)) {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass at least one event');
-            return false;
-        }
-        if (empty($meeting) && $event->status !== 'cancelled' && $event->getStart()->getDateTime() !== null) { // We only pull if the Google Event is not deleted/cancelled and not an all day event.
-                return "pull";
-        } elseif (empty($event) && $meeting->deleted == '0') {
-                return "push";
-        }
-        return "skip";
-    }
-
-    /**
      * Figure out if we need to push/pull an update, or do nothing.
      *
      * Used when an event w/ a matching ID is on both ends of the sync.
@@ -246,50 +229,19 @@ class GoogleSync extends GoogleSyncBase
         // Did we only get one event?
         if (empty($meeting) || empty($event)) {
             // If we only got one event, figure out which kind it is, and pass the return from the helper method
-            return $this->singleEventAction($meeting, $event);
+            return GoogleSyncHelper::singleEventAction($meeting, $event);
         }
 
-        // Check if we already sync'ed this event on this run
-        if (in_array($meeting->id, $this->syncedList, true)) {
-            $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We already synced this meeting. Marking to skip.');
-            return "skip";
-        }
+        // Get array of timestamps for this event
+        $timeArray = GoogleSyncHelper::getTimeStrings($meeting, $event);
 
-        // Before we get further, if both events are deleted, skip
-        if ($meeting->deleted == '1' && $event->status == 'cancelled') {
-            return "skip";
-        }
-
-        // Get the last modified time from google event
-        $gModified = strtotime($event->getUpdated());
-
-        // Get last modified of SuiteCRM event
-        $sModified = strtotime($meeting->fetched_row['date_modified'] . ' UTC'); // SuiteCRM stores the timedate as UTC in the DB
-
-        // Get the last sync time of SuiteCRM event
-        $lastSync = 0;
-        if (isset($meeting->fetched_row['gsync_lastsync'])) {
-            $lastSync = $meeting->fetched_row['gsync_lastsync'];
-        }
-
-        // Event has not been modified since last sync... skip
-        if ($gModified <= $lastSync && $sModified <= $lastSync) {
-            $this->syncedList[] = $meeting->id;
+        // Can we skip this event?
+        if (GoogleSyncHelper::isSkippable($meeting, $event, $timeArray, $this->syncedList)) {
             return "skip";
         }
 
         // Event was modified since last sync
-        if ($gModified > $sModified) {
-            if ($event->status == 'cancelled') {
-                // if the remote event is deleted, delete it here
-                return "pull_delete";
-            }
-            return "pull";
-        }
-        if ($meeting->deleted == '1') {
-            return "push_delete";
-        }
-        return "push";
+        return GoogleSyncHelper::getNewestMeetingResponse($meeting, $event, $timeArray);
     }
 
     /**

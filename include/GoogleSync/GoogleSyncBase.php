@@ -319,7 +319,7 @@ class GoogleSyncBase
         $calendarList = $this->gService->calendarList->listCalendarList();
 
         // find the id of the 'SuiteCRM' calendar ... in the future, this will set the calendar of the users choosing.
-        $this->calendarId = $this->findSuiteCRMCalendar($calendarList);
+        $this->calendarId = $this->getSuiteCRMCalendar($calendarList);
 
         // if the SuiteCRM calendar doesn't exist... Create it!
         if (!$this->isCalendarExists()) {
@@ -346,7 +346,7 @@ class GoogleSyncBase
      * 
      * @return string|null Matching Google Calendar ID or null.
      */
-    protected function findSuiteCRMCalendar(Google_Service_Calendar_CalendarList $calendarList)
+    protected function getSuiteCRMCalendar(Google_Service_Calendar_CalendarList $calendarList)
     {
         foreach ($calendarList->getItems() as $calendarListEntry) {
             if ($calendarListEntry->getSummary() == 'SuiteCRM') {
@@ -521,7 +521,7 @@ class GoogleSyncBase
      * @param Meeting $event_local : SuiteCRM Meeting Bean
      * @param \Google_Service_Calendar_Event $event_remote (optional) \Google_Service_Calendar_Event Object
      *
-     * @return bool Success/Failure
+     * @return string|bool Meeting Id on success, false on failure
      */
     protected function pushEvent(Meeting $event_local, Google_Service_Calendar_Event $event_remote = null)
     {
@@ -545,7 +545,7 @@ class GoogleSyncBase
          * So we check to make sure it has an ID to determine Success/Failure.
          */
         if (isset($return->id)) {
-            return $return->id;
+            return $event->id;
         }
         return false;
     }
@@ -627,7 +627,7 @@ class GoogleSyncBase
      *
      * @param Meeting $meeting SuiteCRM Meeting Bean
      *
-     * @return bool Success/Failure of setLastSync, since that's what saves the record
+     * @return string|bool Meeting Id on success, false on failure (from setLastSync, since that's what saves the record)
      */
     protected function delMeeting(Meeting $meeting)
     {
@@ -642,7 +642,7 @@ class GoogleSyncBase
      * @param \Google_Service_Calendar_Event $event \Google_Service_Calendar_Event Object
      * @param String $meeting_id SuiteCRM Meeting Id
      *
-     * @return bool Success/Failure
+     * @return string|bool Meeting Id on success, false on failure
      */
     protected function delEvent(Google_Service_Calendar_Event $event, $meeting_id)
     {
@@ -681,8 +681,8 @@ class GoogleSyncBase
             if (!$res) {
                 $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to remove gsync_id from record' . $valMeetingId);
             }
-            $this->syncedList[] = $meeting_id;
-            return true;
+            //$this->syncedList[] = $meeting_id;
+            return $meeting_id;
         }
         $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Failure Status Code: ' . $statusCode . ' on delete!');
         return false;
@@ -723,10 +723,6 @@ class GoogleSyncBase
      */
     protected function updateSuitecrmMeetingEvent(Meeting $event_local, Google_Service_Calendar_Event $event_remote)
     {
-        if ((!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote))) {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'ERROR:Missing Variables');
-            return false;
-        }
 
         $event_local->name = (string) $event_remote->getSummary();
 
@@ -767,28 +763,18 @@ class GoogleSyncBase
         $overrides = $gReminders->getOverrides();
 
         // Create a new popup reminder for each google reminder
-        foreach ($overrides as $override) {
-            if ($override->getMethod() == 'popup') {
-                $sReminder = BeanFactory::getBean('Reminders');
-                if (!$sReminder) {
-                    throw new Exception('Unable to get Reminder bean.');
-                }
-                $sReminder->popup = '1';
-                $sReminder->timer_popup = $override->getMinutes() * 60;
-                $sReminder->related_event_module = $event_local->module_name;
-                $sReminder->related_event_module_id = $event_local->id;
-                $reminderId = $sReminder->save(false);
+        $nestedArray = GoogleSyncHelper::createSuitecrmReminders($overrides, $event_local);
+        $reminders = $nestedArray[0];
+        $invitees = $nestedArray[1];
 
-                $reminderInvitee = BeanFactory::getBean('Reminders_Invitees');
-                if (!$reminderInvitee) {
-                    throw new Exception('Unable to get Reminders_Invitees bean.');
-                }
-                $reminderInvitee->reminder_id = $reminderId;
-                $reminderInvitee->related_invitee_module = 'Users';
-                $reminderInvitee->related_invitee_module_id = $this->workingUser->id;
-                $reminderInvitee->save(false);
-            }
+        foreach($reminders as $reminder) {
+            $reminder->save(false);
         }
+
+        foreach($invitees as $invitee) {
+            $invitee->save(false);
+        }
+
         return $event_local;
     }
 
@@ -920,7 +906,7 @@ class GoogleSyncBase
      * @param Meeting $event_local SuiteCRM Meeting bean
      * @param string $gEventId (optional) The ID that Google has for the event.
      *
-     * @return bool Success/Failure
+     * @return string|bool Meeting Id on success, false on failure
      */
     protected function setLastSync(Meeting $event_local, $gEventId = null)
     {
@@ -934,8 +920,8 @@ class GoogleSyncBase
         $isValidator = new SuiteValidator();
         if ($isValidator->isValidId($return)) {
             $event_local->set_accept_status($this->workingUser, 'accept');  // Set the meeting as accepted by the user, otherwise it doesn't show up on the calendar. We do it here because it must be saved first.
-            $this->syncedList[] = $event_local->id;
-            return true;
+            //$this->syncedList[] = $event_local->id;
+            return $event_local->id;
         }
         $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Something went wrong saving the local record.');
         return false;
