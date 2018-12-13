@@ -733,11 +733,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $folderOpenState = $user->getPreference('folderOpenState', 'Emails');
         $folderOpenState = empty($folderOpenState) ? '' : $folderOpenState;
 
-        try {
-            $parentFolderOne->getUserFolders($rootNode, sugar_unserialize($folderOpenState), null, true);
-        } catch(SugarFolderEmptyException $e) {
-
-        }
+        $parentFolderOne->getUserFolders($rootNode, sugar_unserialize($folderOpenState), null, true);
 
         $this->assertTrue(is_object($rootNode));
 
