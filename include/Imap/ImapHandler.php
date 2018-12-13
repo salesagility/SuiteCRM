@@ -392,7 +392,10 @@ class ImapHandler implements ImapHandlerInterface
     {
         $this->logCall(__FUNCTION__, func_get_args());
         
-        if (null === $internal_date) { // <-- to evolve a warning about an invalid internal date format
+        // ..to evolve a warning about an invalid internal date format
+        // BUG at: https://github.com/php/php-src/blob/master/ext/imap/php_imap.c#L1357
+        // -->
+        if (null === $internal_date) { 
             $ret = imap_append($this->getStream(), $mailbox, $message, $options);
         } else {
             $ret = imap_append($this->getStream(), $mailbox, $message, $options, $internal_date);
