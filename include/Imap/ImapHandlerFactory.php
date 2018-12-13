@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 require_once __DIR__ . '/ImapHandler.php';
+require_once __DIR__ . '/ImapHandlerException.php';
 
 /**
  * ImapHandlerFactory
@@ -54,11 +54,6 @@ require_once __DIR__ . '/ImapHandler.php';
  */
 class ImapHandlerFactory
 {
-    const ERR_TEST_SET_NOT_FOUND = 1;
-    const ERR_TEST_SET_NOT_EXISTS = 2;
-    const ERR_KEY_NOT_FOUND = 3;
-    const ERR_KEY_SAVE_ERROR = 4;
-    
     const SETTINGS_KEY_FILE = '/ImapTestSettings.txt';
     const DEFAULT_SETTINGS_KEY = 'testSettingsOk';
     
@@ -103,7 +98,7 @@ class ImapHandlerFactory
      *
      * @global array $sugar_config
      * @param string $testSettings
-     * @throws Exception
+     * @throws ImapHandlerException
      */
     protected function loadTestSettings($testSettings = null)
     {
@@ -119,7 +114,8 @@ class ImapHandlerFactory
             $info .= "\n[debug info this] " . var_dump($this, true);
             $info .= "\n[debug info callset] " . var_dump($interfaceCallsSettings, true);
             LoggerManager::getLogger()->debug('Imap test setting failure: ' . $info);
-            throw new Exception("Test settings does not exists: $testSettings", self::ERR_TEST_SET_NOT_EXISTS);
+            throw new ImapHandlerException("Test settings does not exists: $testSettings",
+                ImapHandlerException::ERR_TEST_SET_NOT_EXISTS);
         }
 
         $interfaceCalls = $interfaceCallsSettings[$testSettings];
@@ -151,17 +147,18 @@ class ImapHandlerFactory
      *
      * @param string $key
      * @return boolean
-     * @throws Exception
+     * @throws ImapHandlerException
      */
     public function saveTestSettingsKey($key)
     {
         $calls = include $this->imapHandlerTestInterface['calls'];
 
         if (!isset($calls[$key])) {
-            throw new Exception('Key not found: ' . $key, self::ERR_KEY_NOT_FOUND);
+            throw new ImapHandlerException('Key not found: ' . $key,
+                ImapHandlerException::ERR_KEY_NOT_FOUND);
         } else {
             if (!file_put_contents(__DIR__ . self::SETTINGS_KEY_FILE, $key)) {
-                throw new Exception('Key save error', self::ERR_KEY_SAVE_ERROR);
+                throw new ImapHandlerException('Key saving error', ImapHandlerException::ERR_KEY_SAVE_ERROR);
             } else {
                 return true;
             }
@@ -174,7 +171,7 @@ class ImapHandlerFactory
      * @global array $sugar_config
      * @param string $testSettings
      * @return ImapHandlerInterface
-     * @throws Exception
+     * @throws ImapHandlerException
      */
     public function getImapHandler($testSettings = null)
     {
