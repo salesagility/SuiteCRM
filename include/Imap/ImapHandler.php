@@ -503,7 +503,7 @@ class ImapHandler implements ImapHandlerInterface
     public function fetchOverview($sequence, $options = 0)
     {
         $this->logCall(__FUNCTION__, func_get_args());
-        $ret = imap_fetchbody($this->stream, $sequence, $options);
+        $ret = imap_fetch_overview($this->stream, $sequence, $options);
         $this->logReturn(__FUNCTION__, $ret);
         return $ret;
     }

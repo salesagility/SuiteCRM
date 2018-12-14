@@ -440,6 +440,12 @@ class Email extends Basic
         'cc',
         'bcc'
     );
+    
+    /**
+     *
+     * @var string
+     */
+    public $assigned_user_name;
 
     /**
      * sole constructor
