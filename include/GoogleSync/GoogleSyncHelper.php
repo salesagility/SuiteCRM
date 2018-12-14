@@ -42,6 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/../../modules/Users/User.php';
+require_once __DIR__ . '/../../modules/Meetings/Meeting.php';
+
 /**
  * Implements Google Calendar Syncing
  *
@@ -49,9 +52,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * GNU Affero General Public License version 3
  * @author Benjamin Long <ben@offsite.guru>
  */
-
-require_once __DIR__ . '/../../modules/Users/User.php';
-require_once __DIR__ . '/../../modules/Meetings/Meeting.php';
 
 class GoogleSyncHelper
 {
@@ -138,7 +138,7 @@ class GoogleSyncHelper
      /**
      * Helper method for GoogleSync::pushPullSkip.
      * 
-     * Takes two calendar events and the timeArray from getTimeStrings, and returns a push/pull[_delete] string.
+     * Takes two calendar events and the timeArray from getTimeStrings, and returns bool (should we skip this record).
      * 
      * @param Meeting $meeting Meeting Bean
      * @param \Google_Service_Calendar_Event $event Google_Service_Calendar_Event Object

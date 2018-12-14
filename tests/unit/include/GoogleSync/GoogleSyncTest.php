@@ -89,10 +89,11 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $expectedAuthJson = json_decode(base64_decode('eyJ3ZWIiOiJ0ZXN0In0'), true);
         $actualAuthJson = $method->invoke($object);
 
+        $state->popGlobals();
+
         $this->assertEquals($expectedAuthJson, $actualAuthJson);
         $this->assertArrayHasKey('web', $actualAuthJson);
 
-        $state->popGlobals();
     }
 
     public function testAddUser()
@@ -148,7 +149,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $meeting1->duration_minutes = 1;
         $meeting1->date_start = '2016-02-11 17:30:00';
         $meeting1->date_end = '2016-02-11 17:30:00';
-        $meeting1_id = $meeting1->save();
+        $meeting1->save();
 
         $meeting2 = new Meeting();
         $meeting2->name = 'test2';
@@ -160,7 +161,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $meeting2->duration_minutes = 1;
         $meeting2->date_start = '2016-02-11 17:30:00';
         $meeting2->date_end = '2016-02-11 17:30:00';
-        $meeting2_id = $meeting2->save();
+        $meeting2->save();
 
         $meeting3 = new Meeting();
         $meeting3->name = 'test3';
@@ -172,7 +173,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $meeting3->duration_minutes = 1;
         $meeting3->date_start = '2016-02-11 17:30:00';
         $meeting3->date_end = '2016-02-11 17:30:00';
-        $meeting3_id = $meeting3->save();
+        $meeting3->save();
 
         $method = self::$reflection->getMethod('getUserMeetings');
         $method->setAccessible(true);
@@ -182,13 +183,11 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
         $object = new GoogleSync();
         $property->setValue($object, $user);
-        //$object->workingUser = $user;
 
-        $return = $method->invoke($object);
+        $return_count = $method->invoke($object);
 
-        //$return = $object->getUserMeetings();
 
-        $this->assertEquals(3, count($return));
+        
 
         // Test for invalid user id exception handling
         $user->id = 'INVALID';
@@ -199,7 +198,6 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         } catch (Exception $e) {
             $caught = true;
         }
-        $this->assertTrue($caught);
 
         $state->popTable('meetings');
         $state->popTable('meetings_cstm');
@@ -207,6 +205,9 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $state->popTable('user_preferences');
         $state->popTable('aod_indexevent');
         $state->popTable('vcals');
+
+        $this->assertEquals(3, count($return_count));
+        $this->assertTrue($caught);
     }
 
     public function testGetUserGoogleEvents()
@@ -275,6 +276,10 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $property->setValue($object, $user);
 
         $return = $method->invoke($object, $Google_Event);
+
+        $state->popTable('reminders');
+        $state->popTable('reminders_invitees');
+
         $this->assertEquals('Meeting', get_class($return));
         $this->assertNotNull($return->id);
         $this->assertEquals('0', $return->deleted);
@@ -286,9 +291,6 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals('1', $return->duration_hours);
         $this->assertEquals('0', $return->duration_minutes);
         $this->assertEquals('FAKEUSER', $return->assigned_user_id);
-
-        $state->popTable('reminders');
-        $state->popTable('reminders_invitees');
     }
 
     public function testUpdateGoogleCalendarEvent()
@@ -348,38 +350,37 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $meeting3->date_end = '2016-02-11 17:30:00';
         $meeting3_id = $meeting3->save();
 
-
         // Give meeting 1 a gsync_id
         $sql = "UPDATE meetings SET gsync_id = 'valid_gsync_id' WHERE id = '{$meeting1_id}'";
-        $res = $db->query($sql);
-        $this->assertEquals(true, $res);
-
+        $res1 = $db->query($sql);
+        
         // Give meetings 2 and 3 a duplicate gsync_id
         $sql = "UPDATE meetings SET gsync_id = 'duplicate_gsync_id' WHERE id = '{$meeting2_id}' OR id = '{$meeting3_id}'";
-        $res = $db->query($sql);
-        $this->assertEquals(true, $res);
-
-
-        $return = $method->invoke($object, 'valid_gsync_id');
-        $this->assertInstanceOf('Meeting', $return);
-        $this->assertInstanceOf('SugarBean', $return);
-        $this->assertEquals($meeting1_id, $return->id);
+        $res2 = $db->query($sql);
+        
+        $ret3 = $method->invoke($object, 'valid_gsync_id');
 
         $return = null;
         try {
             $method->invoke($object, 'duplicate_gsync_id');
-        } catch (Exception $e) {
-            $return = $e->getMessage();
-        }
-        $this->assertEquals('More than one meeting matches Google Id!', $return);
+        } catch (Exception $e11) {}
 
-        $return = $method->invoke($object, 'NOTHING_MATCHES');
-        $this->assertEquals(null, $return);
-
+        $ret4 = $method->invoke($object, 'NOTHING_MATCHES');
+        
         $state->popTable('meetings');
         $state->popTable('meetings_cstm');
         $state->popTable('vcals');
         $state->popTable('aod_indexevent');
+
+        $this->assertEquals(true, $res1);
+        $this->assertEquals(true, $res2);
+        $this->assertInstanceOf('Meeting', $ret3);
+        $this->assertInstanceOf('SugarBean', $ret3);
+        $this->assertEquals($meeting1_id, $ret3->id);
+        $this->assertEquals('E_DbDataError', get_class($e11));
+        $this->assertEquals('More than one meeting matches Google Id!', $e11->getMessage());
+        $this->assertEquals(11, $e11->getCode());
+        $this->assertEquals(null, $ret4);
     }
 
     public function testDelEvent()
@@ -679,5 +680,98 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals('FAKE_MEETING_ID', $returnPrivate['suitecrm_id']);
         $this->assertEquals('Meeting', $returnPrivate['suitecrm_type']);
         $this->assertEquals('VALID', $returnPrivate['remain_unchanged']);
+    }
+
+    public function testCustomExceptions()
+    {
+        $object = new GoogleSync();
+
+        $e = null;
+        try {
+            throw new E_MissingParameters;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(1, $e->getCode());
+        $this->assertEquals('Missing Parameters When Calling A Method', $e->getMessage());
+
+        $e = null;
+        try {
+            throw new E_InvalidParameters;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(2, $e->getCode());
+        $this->assertEquals('Invalid Parameters When Calling A Method', $e->getMessage());
+
+        $e = null;
+        try {
+            throw new E_ValidationFailure;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(3, $e->getCode());
+        $this->assertEquals('Value Failed Validation', $e->getMessage());
+
+        $e = null;
+        try {
+            throw new E_RecordRetrievalFail;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(4, $e->getCode());
+        $this->assertEquals('Failed To Retrive A SuiteCRM Record', $e->getMessage());
+
+        $e = null;
+        try {
+            throw new E_TimezoneSetFailure;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(5, $e->getCode());
+        $this->assertEquals('Failed To Set The Timezone', $e->getMessage());
+
+        $e = null;
+        try {
+            throw new E_NoRefreshToken;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(6, $e->getCode());
+        $this->assertEquals('Refresh Token Missing From Google Client', $e->getMessage());
+
+        $e = null;
+        try {
+            throw new E_GoogleClientFailure;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(7, $e->getCode());
+        $this->assertEquals('Google Client Failed To Initialize', $e->getMessage());
+
+        $e = null;
+        try {
+            throw new E_GoogleServiceFailure;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(8, $e->getCode());
+        $this->assertEquals('Google Client Failed To Initialize', $e->getMessage());
+
+        $e = null;
+        try {
+            throw new E_GoogleCalendarFailure;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(9, $e->getCode());
+        $this->assertEquals('Google Calendar Service Failure', $e->getMessage());
+
+        $e = null;
+        try {
+            throw new E_GoogleRecordParseFailure;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(10, $e->getCode());
+        $this->assertEquals('Failed To Parse Google Record', $e->getMessage());
+
+        $e = null;
+        try {
+            throw new E_DbDataError;
+        } catch (Exception $e) {
+        }
+        $this->assertEquals(11, $e->getCode());
+        $this->assertEquals('SuiteCRM DB Data Unexpected Or Corrupt', $e->getMessage());
     }
 }

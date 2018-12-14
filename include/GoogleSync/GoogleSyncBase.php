@@ -42,6 +42,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/../../modules/Users/User.php';
+require_once __DIR__ . '/../../modules/Meetings/Meeting.php';
+require_once 'GoogleSyncExceptions.php';
+
+use SuiteCRM\Utility\SuiteValidator;
+
 /**
  * Implements Google Calendar Syncing
  *
@@ -49,10 +55,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * GNU Affero General Public License version 3
  * @author Benjamin Long <ben@offsite.guru>
  */
-require_once __DIR__ . '/../../modules/Users/User.php';
-require_once __DIR__ . '/../../modules/Meetings/Meeting.php';
-
-use SuiteCRM\Utility\SuiteValidator;
 
 class GoogleSyncBase
 {
@@ -161,6 +163,7 @@ class GoogleSyncBase
      * @param string $id : the SuiteCRM user id
      *
      * @return \Google_Client|false Google_Client on success. False on failure.
+     * @throws E_RecordRetrievalFail if unable to retrive the user
      */
     protected function getClient($id)
     {
@@ -168,7 +171,7 @@ class GoogleSyncBase
         if (!isset($this->workingUser)) {
             $this->workingUser = BeanFactory::getBean('Users', $id);
             if (!$this->workingUser) {
-                throw new Exception('Unable to retrieve a User bean');
+                throw new E_RecordRetrievalFail('Unable to retrieve a User bean');
             }
         }
 
@@ -202,6 +205,8 @@ class GoogleSyncBase
      *
      * @param array $accessToken
      * @return \Google_Client or false on Exception
+     * @throws E_NoRefreshToken If the refresh token is missing
+     * @throws Exception rethrows if caught from Google_Client::fetchAccessTokenWithRefreshToken
      */
     protected function getGoogleClient($accessToken)
     {
@@ -221,14 +226,14 @@ class GoogleSyncBase
                 try {
                     $client->fetchAccessTokenWithRefreshToken($refreshToken);
                 } catch (Exception $e) {
-                    $this->logger->fatal('Caught exception: ',  $e->getMessage());
+                    $this->logger->fatal('Caught exception: ' . $e->getMessage());
                     throw $e;
                 }
                 // Save new token to user preference
                 $this->workingUser->setPreference('GoogleApiToken', base64_encode(json_encode($client->getAccessToken())), 'GoogleSync');
                 $this->workingUser->savePreferencesToDB();    
             } elseif (empty($refreshToken)) {
-                throw new Exception('Refresh token is missing');
+                throw new E_NoRefreshToken('Refresh token is missing');
             }
         }
         return $client;
@@ -240,32 +245,37 @@ class GoogleSyncBase
      * @param string $id The SuiteCRM user id
      * 
      * @return bool Success/Failure
+     * @throws E_ValidationFailureif $id is invalid
+     * @throws E_GoogleClientFailure if Google Client fails to set up
+     * @throws E_TimezoneSetFailure if timezone set fails
+     * @throws E_GoogleServiceFailure if unable to setup Google Service
+     * @throws E_GoogleCalendarFailure if unable to setup Google Calendar Id
      */
     protected function initUserService($id)
     {
         $isValidator = new SuiteValidator();
         if (!$isValidator->isValidId($this->db->quote($id))) {
-            throw new Exception('Invalid ID requested in initUserService');
+            throw new E_ValidationFailure('Invalid ID requested in initUserService');
         }
 
         if (!$this->setClient($id)) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Client');
-            throw new Exception('Unable to setup Google Client');
+            throw new E_GoogleClientFailure('Unable to setup Google Client');
         }
 
         if (!$this->setTimezone($this->workingUser->getPreference('timezone', 'global'))) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set the working user and timezone');
-            throw new Exception('Failed to set the working user\'s timezone');
+            throw new E_TimezoneSetFailure('Failed to set the working user\'s timezone');
         }
 
         if (!$this->setGService()) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Service');
-            throw new Exception('Unable to setup Google Service');
+            throw new E_GoogleServiceFailure('Unable to setup Google Service');
         }
 
         if (!$this->setUsersGoogleCalendar()) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Calendar Id');
-            throw new Exception('Unable to setup Google Calendar Id');
+            throw new E_GoogleCalendarFailure('Unable to setup Google Calendar Id');
         }
         return true;
     }
@@ -275,6 +285,8 @@ class GoogleSyncBase
      *
      *
      * @return array Array of SuiteCRM Meeting Beans
+     * @throws E_ValidationFailure if $this->workingUser->id is invalid
+     * @throws E_RecordRetrievalFail if unable to get Meetings bean
      */
     protected function getUserMeetings()
     {
@@ -282,7 +294,7 @@ class GoogleSyncBase
         $userId = $this->db->quote($this->workingUser->id);
         $isValidator = new SuiteValidator();
         if (!$isValidator->isValidId($userId)) {
-            throw new Exception('Invalid ID requested in getUserMeetings');
+            throw new E_ValidationFailure('Invalid ID requested in getUserMeetings');
         }
 
         // We do it this way so we also get deleted meetings
@@ -293,7 +305,7 @@ class GoogleSyncBase
         while ($row = $this->db->fetchByAssoc($result)) {
             $meeting = BeanFactory::getBean('Meetings');
             if (!$meeting) {
-                throw new Exception('Unable to get Meetings bean.');
+                throw new E_RecordRetrievalFail('Unable to get Meetings bean.');
             }
             $meeting->retrieve($row['id'], true, false);
             $meetings[] = $meeting;
@@ -434,18 +446,20 @@ class GoogleSyncBase
      * @param string $event_id Google Event ID
      *
      * @return \Google_Service_Calendar_Event|null Google_Service_Calendar_Event if found, null if not found
+     * @throws E_MissingParameters if $event_id is empty
+     * @throws E_GoogleServiceFailure if Google Service not set up
      */
     protected function getGoogleEventById($event_id)
     {
 
         if (empty($event_id)) {
             // If we didn't get passed an event id, throw an exception
-            throw new \InvalidArgumentException('event ID is empty');
+            throw new E_MissingParameters('event ID is empty');
         }
 
         // Make sure the calendar service is set up
         if (!$this->isServiceExists()) {
-            throw new \RuntimeException('Cannot Continue Without Google Service');
+            throw new E_GoogleServiceFailure('Cannot Continue Without Google Service');
         }
 
         $gEvent = $this->gService->events->get($this->calendarId, $event_id);
@@ -462,6 +476,8 @@ class GoogleSyncBase
      * @param string $event_id The Google Event ID
      *
      * @return \Meeting|null SuiteCRM Meeting Bean if found, null if not found
+     * @throws E_DbDataError if more than one meeting matches $event_id
+     * @throws E_RecordRetrievalFail If unable to retrieve meeting bean
      */
     protected function getMeetingByEventId($event_id)
     {
@@ -474,14 +490,14 @@ class GoogleSyncBase
         // This checks to make sure we only get one result. If we get more than one, something is inconsistant in the DB
         if ($result->num_rows > 1) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'More than one meeting matches Google Id: ' . $eventIdQuoted);
-            throw new Exception('More than one meeting matches Google Id!');
+            throw new E_DbDataError('More than one meeting matches Google Id!');
         } elseif ($result->num_rows == 0) {
             return null; // No matches Found
         }
 
         $meeting = BeanFactory::getBean('Meetings');
         if (!$meeting) {
-            throw new Exception('Unable to get Meetings bean.');
+            throw new E_RecordRetrievalFail('Unable to get Meetings bean.');
         }
         $row = $this->db->fetchByAssoc($result);
         $meeting->retrieve($row['id'], true, false);
@@ -720,6 +736,7 @@ class GoogleSyncBase
      * @param \Google_Service_Calendar_Event $event_remote Google_Service_Calendar_Event Object
      *
      * @return Meeting|bool SuiteCRM Meeting Bean or false on failure
+     * @throws E_GoogleRecordParseFailure if the Google Event is missing required data
      */
     protected function updateSuitecrmMeetingEvent(Meeting $event_local, Google_Service_Calendar_Event $event_remote)
     {
@@ -737,7 +754,7 @@ class GoogleSyncBase
         $starttime = strtotime($event_remote->getStart()->getDateTime());
         $endtime = strtotime($event_remote->getEnd()->getDateTime());
         if (!$starttime || !$endtime) { // Verify we have valid time objects (All day events will fail here.)
-            throw new Exception('Unable to retrieve times from Google Event');
+            throw new E_GoogleRecordParseFailure('Unable to retrieve times from Google Event');
         }
         $diff = abs($starttime - $endtime);
         $tmins = $diff / 60;
@@ -784,13 +801,14 @@ class GoogleSyncBase
      * @param \Google_Service_Calendar_Event $event_remote The Google_Service_Calendar_Event we're creating a SuiteCRM Meeting for
      *
      * @return Meeting|bool SuiteCRM Meeting Bean or false on failure
+     * @throws E_RecordRetrievalFail if fails to retrive meeting
      */
     protected function createSuitecrmMeetingEvent(Google_Service_Calendar_Event $event_remote)
     {
         $this->logger->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Creating New SuiteCRM Meeting');
         $meeting = BeanFactory::getBean('Meetings');
         if (!$meeting) {
-            throw new Exception('Unable to get Meeting bean.');
+            throw new E_RecordRetrievalFail('Unable to get Meeting bean.');
         }
         $meeting->id = create_guid();
         $meeting->new_with_id = true;

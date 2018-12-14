@@ -42,6 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once "GoogleSyncBase.php";
+require_once "GoogleSyncHelper.php";
+
 /**
  * Implements Google Calendar Syncing
  *
@@ -49,8 +52,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * GNU Affero General Public License version 3
  * @author Benjamin Long <ben@offsite.guru>
  */
-require_once "GoogleSyncBase.php";
-require_once "GoogleSyncHelper.php";
 
 class GoogleSync extends GoogleSyncBase
 {
@@ -90,6 +91,8 @@ class GoogleSync extends GoogleSyncBase
      * @param \Google_Service_Calendar_Event $event The Google Event
      * 
      * @return bool Success/Failure
+     * @throws E_InvalidParameters if $action is invalid.
+     * @throws Exception if something else fails.
      */
     protected function doAction($action, Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
     {
@@ -119,7 +122,7 @@ class GoogleSync extends GoogleSyncBase
                 break;
             default:
                 $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unknown Action: ' . $action . ' for record: ' . $title);
-                throw new \InvalidArgumentException('Invalid Action');
+                throw new E_InvalidParameters('Invalid Action');
         }
 
         if ($ret) {
@@ -136,6 +139,7 @@ class GoogleSync extends GoogleSyncBase
      * @param string $id The SuiteCRM user id
      *
      * @return bool Success/Failure
+     * @throws Exception Rethrows if caught from GoogleSyncBase::initUserService
      */
     public function doSync($id)
     {
@@ -143,7 +147,7 @@ class GoogleSync extends GoogleSyncBase
             $this->initUserService($id);
         } catch (Exception $e) {
             $this->logger->fatal('Caught exception: ',  $e->getMessage());
-            throw new Exception('Unable to init the User Service');
+            throw $e;
         }
 
         $meetings = $this->getUserMeetings();
@@ -250,6 +254,7 @@ class GoogleSync extends GoogleSyncBase
      * Fills the $users array with users that are configured to sync
      *
      * @return int added users
+     * @throws E_RecordRetrievalFail if unable to get user bean
      */
     protected function setSyncUsers()
     {
@@ -260,7 +265,7 @@ class GoogleSync extends GoogleSyncBase
         while ($row = $this->db->fetchByAssoc($result)) {
             $user = BeanFactory::getBean('Users', $row['id']);
             if (!$user) {
-                throw new Exception('Unable to get User bean.');
+                throw new E_RecordRetrievalFail('Unable to get User bean.');
             }
 
             if (!empty($user->getPreference('GoogleApiToken', 'GoogleSync')) &&
