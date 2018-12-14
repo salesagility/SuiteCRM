@@ -1,4 +1,4 @@
-{*
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,18 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-*}
-<a href="index.php?entryPoint=download&id={$parentFieldArray.ID}&type={if empty($vardef.displayParams.module)}{$displayParams.module}{else}{$vardef.displayParams.module}{/if}" class="tabDetailViewDFLink" target='_blank'>{sugar_fetch object=$parentFieldArray key=$col}
-{if isset($vardef.allowEapm) && $vardef.allowEapm && isset($parentFieldArray.DOC_TYPE) }
-{capture name=imageNameCapture assign=imageName}
-{sugar_fetch object=$parentFieldArray key=DOC_TYPE}_image_inline.png
-{/capture}
-{capture name=imageURLCapture assign=imageURL}
-{sugar_getimagepath file=$imageName}
-{/capture}
-{if strlen($imageURL)>1}{sugar_getimage name=$imageName alt=$imageName other_attributes='border="0" '}{/if}
-{/if}
-</a>&nbsp;
-<a href="index.php?preview=yes&entryPoint=download&id={$parentFieldArray.ID}&type={if empty($vardef.displayParams.module)}{$displayParams.module}{else}{$vardef.displayParams.module}{/if}" class="tabDetailViewDFLink" target='_blank' style="border-bottom: 0px;">
-	<i class="glyphicon glyphicon-eye-open"></i>
-</a>
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+class SugarFolderEmptyException extends Exception
+{
+}

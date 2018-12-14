@@ -443,6 +443,11 @@ class Email extends Basic
         'bcc'
     );
     
+    /**
+     *
+     * @var string
+     */
+    public $assigned_user_name;
     const NO_ERROR = 0;
     const ERR_NOT_STORED_AS_SENT = 1;
     const ERR_NO_IE = 2;
