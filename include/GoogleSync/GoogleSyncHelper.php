@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -69,7 +68,6 @@ class GoogleSyncHelper
     public function singleEventAction(Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
     {
         if (empty($meeting) && empty($event)) {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass at least one event');
             return false;
         }
         if (empty($meeting) && $event->status !== 'cancelled' && $event->getStart()->getDateTime() !== null) { // We only pull if the Google Event is not deleted/cancelled and not an all day event.

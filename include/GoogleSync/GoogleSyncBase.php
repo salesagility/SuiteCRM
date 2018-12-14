@@ -150,6 +150,11 @@ class GoogleSyncBase
      */
     protected function setClient($id)
     {
+        $isValidator = new SuiteValidator();
+        if (!$isValidator->isValidId($id)) {
+            throw new E_ValidationFailure();
+        }
+        
         if (!$gClient_local = $this->getClient($id)) {
             return false;
         }
@@ -167,6 +172,11 @@ class GoogleSyncBase
      */
     protected function getClient($id)
     {
+        $isValidator = new SuiteValidator();
+        if (!$isValidator->isValidId($id)) {
+            throw new E_ValidationFailure();
+        }
+
         // Retrieve user bean
         if (!isset($this->workingUser)) {
             $this->workingUser = BeanFactory::getBean('Users', $id);
