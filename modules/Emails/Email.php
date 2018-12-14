@@ -530,12 +530,15 @@ class Email extends Basic
     }
     
     /**
-     *
+     * 
      * @param Email $email
      */
     protected function createTempEmailAtSend(Email $email = null)
     {
         $this->tempEmailAtSend = $email ? $email : new Email();
+        if (!$this->tempEmailAtSend->date_sent) {
+            $this->tempEmailAtSend->date_sent = TimeDate::getInstance()->nowDb();
+        }
     }
     
     /**
