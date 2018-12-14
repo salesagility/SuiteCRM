@@ -789,6 +789,9 @@ class ListViewDataEmails extends ListViewData
                 ")\ntrace info:\n" . $e->getTraceAsString()
             );
         }
+        
+        // TODO: don't override the superglobals!!!!
+        $_REQUEST = $request;
 
         return $ret;
     }
