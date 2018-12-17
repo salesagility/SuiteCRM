@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,16 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
-
- * Description:
- */
-
-
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class ProspectList extends SugarBean
 {
@@ -404,7 +394,7 @@ FROM prospect_lists_prospects plp
     {
         $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
-        array_push($where_clauses, "prospect_lists.name like '$the_query_string%'");
+        $where_clauses[] = "prospect_lists.name like '$the_query_string%'";
 
         $the_where = "";
         foreach ($where_clauses as $clause) {

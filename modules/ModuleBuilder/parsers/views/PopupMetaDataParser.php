@@ -286,7 +286,7 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
                 $targetDefs[$key] = $this->__getTargetModuleName($def) . '.' . $key;
             } else {
                 if (!in_array($key, $targetDefs) && !$forWhere) {
-                    array_push($targetDefs, $key);
+                    $targetDefs[] = $key;
                 }
             }
         }

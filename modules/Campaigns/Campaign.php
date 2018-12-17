@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
 
@@ -232,7 +233,7 @@ class Campaign extends SugarBean
     {
         $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
-        array_push($where_clauses, "campaigns.name like '$the_query_string%'");
+        $where_clauses[] = "campaigns.name like '$the_query_string%'";
 
         $the_where = "";
         foreach ($where_clauses as $clause) {

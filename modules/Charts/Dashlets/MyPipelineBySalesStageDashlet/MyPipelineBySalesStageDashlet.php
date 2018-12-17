@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,9 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
@@ -319,7 +316,7 @@ EOD;
         if (count($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['sales_stage_dom'][$key];
-                array_push($selected_datax, $key);
+                $selected_datax[] = $key;
             }
         } else {
             $datax = $app_list_strings['sales_stage_dom'];
@@ -394,7 +391,7 @@ EOD;
     {
         $groupBy = array('sales_stage');
 
-        array_push($groupBy, 'user_name');
+        $groupBy[] = 'user_name';
         return $groupBy;
     }
 

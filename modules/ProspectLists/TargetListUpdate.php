@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,6 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*
  ARGS:
@@ -88,7 +88,7 @@ if ($_REQUEST['select_entire_list'] == '1') {
     $result = DBManagerFactory::getInstance()->query($query, true);
     $uids = array();
     while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result, false)) {
-        array_push($uids, $val['id']);
+        $uids[] = $val['id'];
     }
 } else {
     $uids = explode(',', $_POST['uids']);

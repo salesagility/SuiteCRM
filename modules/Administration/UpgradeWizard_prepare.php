@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,9 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/Administration/UpgradeWizardCommon.php');
 
@@ -372,10 +369,10 @@ if ($show_files == true) {
     $cache_html_files = findAllFilesRelative(sugar_cached("layout"), array());
 
     foreach ($new_files as $the_file) {
-        if (substr(strtolower($the_file), -5, 5) == '.html' && in_array($the_file, $cache_html_files)) {
-            array_push($new_studio_mod_files, $the_file);
+        if (substr(strtolower($the_file), -5, 5) === '.html' && in_array($the_file, $cache_html_files)) {
+            $new_studio_mod_files[] = $the_file;
         } else {
-            array_push($new_sugar_mod_files, $the_file);
+            $new_sugar_mod_files[] = $the_file;
         }
     }
 

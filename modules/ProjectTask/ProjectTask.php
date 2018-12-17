@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,17 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
-
-
-
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class ProjectTask extends SugarBean
 {
@@ -262,8 +251,7 @@ class ProjectTask extends SugarBean
     {
         $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
-        array_push($where_clauses, "project_task.name like '$the_query_string%'");
-
+        $projectTasks[] = "project_task.name like '$the_query_string%'";
         $the_where = "";
         foreach ($where_clauses as $clause) {
             if ($the_where != "") {
@@ -427,7 +415,7 @@ class ProjectTask extends SugarBean
                 $subProjectTasks = $parentProjectTask->getAllSubProjectTasks();
                 $tasks = array();
                 foreach ($subProjectTasks as &$task) {
-                    array_push($tasks, $task->toArray(true));
+                    $tasks[] = $task->toArray(true);
                 }
                 $parentProjectTask->percent_complete = $this->_calculateCompletePercent($tasks);
                 unset($tasks);
@@ -546,7 +534,7 @@ class ProjectTask extends SugarBean
                 //ignore tasks that are parents
                 if (!in_array($values['project_task_id'], $actualParentTaskIds)) {
                     $projectTaskBean = BeanFactory::getBean('ProjectTask', $id);
-                    array_push($projectTasksBeans, $projectTaskBean);
+                    $projectTasksBeans[] = $projectTaskBean;
                 }
             }
         }
@@ -608,7 +596,7 @@ class ProjectTask extends SugarBean
         $this->disable_row_level_security = false;
         $res = $db->query($query);
         while ($row = $db->fetchByAssoc($res)) {
-            array_push($list, $row);
+            $list[] = $row;
         }
         // fill in $tree
         foreach ($list as $k => &$v) {
@@ -651,9 +639,9 @@ class ProjectTask extends SugarBean
                     }
                     if ($taskRow['parent_task_id'] == $i) {
                         if (!in_array($taskRow['project_task_id'], array_keys($nodes))) {
-                            array_push($currChildren, $taskRow);
+                            $currChildren[] = $taskRow;
                         } else {
-                            array_push($tmp, $taskRow['project_task_id']);
+                            $tmp[] =  $taskRow['project_task_id'];
                         }
                     }
                 }
@@ -667,7 +655,7 @@ class ProjectTask extends SugarBean
             $subres = $this->_calculateCompletePercent($currChildren);
             if ($subres != $list[$currRow]['percent_complete']) {
                 $list[$currRow]['percent_complete'] = $subres;
-                array_push($changed, $currRow);
+                $changed[] = $currRow;
             }
         }
         unset($v);

@@ -157,7 +157,7 @@ class Chart_pipeline_by_sales_stage
         if (count($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['sales_stage_dom'][$key];
-                array_push($datax_selected, $key);
+                $datax_selected[] = $key;
             }
         } else {
             $datax = $app_list_strings['sales_stage_dom'];
@@ -534,7 +534,7 @@ echo get_validate_chart_js();
         if (count($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['sales_stage_dom'][$key];
-                array_push($datax_selected, $key);
+                $datax_selected[] = $key;
             }
         } else {
             $datax = $app_list_strings['sales_stage_dom'];

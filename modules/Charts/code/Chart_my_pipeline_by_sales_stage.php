@@ -123,7 +123,7 @@ if (!empty($user_sales_stage) && count($user_sales_stage) > 0 && !isset($_REQUES
 if (count($tempx) > 0) {
     foreach ($tempx as $key) {
         $datax[$key] = $app_list_strings['sales_stage_dom'][$key];
-        array_push($selected_datax, $key);
+        $selected_datax[] = $key;
     }
 } else {
     $datax = $app_list_strings['sales_stage_dom'];

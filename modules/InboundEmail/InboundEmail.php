@@ -3,6 +3,7 @@
 use SuiteCRM\Imap;
 use SuiteCRM\ImapInterface;
 use SuiteCRM\StateSaver;
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -7894,7 +7895,7 @@ eoq;
                             $this->compoundMessageId = str_replace($bad, "", $this->compoundMessageId);
                         }
                     }
-                    array_push($tmpMsgs, array('msgNo' => $msgNo, 'msgId' => $this->compoundMessageId, 'exists' => 0));
+                    $tmpMsgs[] = array('msgNo' => $msgNo, 'msgId' => $this->compoundMessageId, 'exists' => 0);
                     if ($counter == $limit) {
                         $counter = 0;
                         $query = array();
@@ -7918,7 +7919,7 @@ eoq;
                         foreach ($tmpMsgs as $k1 => $v1) {
                             if ($v1['exists'] == 0) {
                                 $repeats = 0;
-                                array_push($result, $v1['msgNo']);
+                                $result[] = $v1['msgNo'];
                             } else {
                                 $repeats++;
                             }

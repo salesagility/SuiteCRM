@@ -2173,7 +2173,7 @@ class Email extends Basic
             if (empty($field)) {
                 continue;
             }
-            array_push($newarr, $field);
+            $newarr[] = $field;
         }
 
         return $newarr;
@@ -2310,7 +2310,7 @@ class Email extends Basic
         $this->saved_attachments = array();
         foreach ($this->attachments as $note) {
             if (!empty($note->id)) {
-                array_push($this->saved_attachments, $note);
+                $this->saved_attachments[] = $note;
                 continue;
             }
             $note->parent_id = $this->id;

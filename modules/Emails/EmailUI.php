@@ -2802,7 +2802,7 @@ eoq;
                 $parent_id = $row['id'];
             }
             if (!in_array($row['folder_type'], $folder_types)) {
-                array_push($folder_types, $row['folder_type']);
+                $folder_types[] = $row['folder_type'];
             }
             if (isset($params[$row['folder_type']])) {
                 unset($params[$row['folder_type']]);

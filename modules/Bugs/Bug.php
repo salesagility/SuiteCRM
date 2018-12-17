@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,27 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 // Bug is used to store customer information.
 class Bug extends SugarBean
@@ -350,9 +329,9 @@ class Bug extends SugarBean
     {
         $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
-        array_push($where_clauses, "bugs.name like '$the_query_string%'");
+        $where_clauses[] = "bugs.name like '$the_query_string%'";
         if (is_numeric($the_query_string)) {
-            array_push($where_clauses, "bugs.bug_number like '$the_query_string%'");
+            $where_clauses[] = "bugs.bug_number like '$the_query_string%'";
         }
 
         $the_where = "";

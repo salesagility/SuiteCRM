@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,13 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarObjects/templates/person/Person.php');
 require_once __DIR__ . '/../../include/EmailInterface.php';
@@ -154,17 +147,17 @@ class Prospect extends Person implements EmailInterface
         $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 
-        array_push($where_clauses, "prospects.last_name like '$the_query_string%'");
-        array_push($where_clauses, "prospects.first_name like '$the_query_string%'");
-        array_push($where_clauses, "prospects.assistant like '$the_query_string%'");
+        $where_clauses[] = "prospects.last_name like '$the_query_string%'";
+        $where_clauses[] = "prospects.first_name like '$the_query_string%'";
+        $where_clauses[] = "prospects.assistant like '$the_query_string%'";
 
         if (is_numeric($the_query_string)) {
-            array_push($where_clauses, "prospects.phone_home like '%$the_query_string%'");
-            array_push($where_clauses, "prospects.phone_mobile like '%$the_query_string%'");
-            array_push($where_clauses, "prospects.phone_work like '%$the_query_string%'");
-            array_push($where_clauses, "prospects.phone_other like '%$the_query_string%'");
-            array_push($where_clauses, "prospects.phone_fax like '%$the_query_string%'");
-            array_push($where_clauses, "prospects.assistant_phone like '%$the_query_string%'");
+            $where_clauses[] = "prospects.phone_home like '%$the_query_string%'";
+            $where_clauses[] = "prospects.phone_mobile like '%$the_query_string%'";
+            $where_clauses[] = "prospects.phone_work like '%$the_query_string%'";
+            $where_clauses[] = "prospects.phone_other like '%$the_query_string%'";
+            $where_clauses[] = "prospects.phone_fax like '%$the_query_string%'";
+            $where_clauses[] = "prospects.assistant_phone like '%$the_query_string%'";
         }
 
         $the_where = "";

@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,13 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*
  *returns a list of objects a message can be scoped by, the list contacts the current campaign
@@ -1142,7 +1135,7 @@ function filterFieldsFromBeans($beans)
                 $col_arr[1]=$field_def['name'];
             }
             if (! in_array($cols_name, $formattedFields)) {
-                array_push($formattedFields, $col_arr);
+                $formattedFields[] = $col_arr;
             }
         }
 

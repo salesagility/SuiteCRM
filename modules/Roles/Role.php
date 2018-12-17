@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,17 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
-
- * Description:
- */
-
-
-
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class Role extends SugarBean
 {
@@ -113,7 +102,7 @@ class Role extends SugarBean
         $return_array = array();
 
         while ($row = $this->db->fetchByAssoc($result)) {
-            array_push($return_array, $row['module_id']);
+            $return_array[] = $row['module_id'];
         }
 
         return $return_array;

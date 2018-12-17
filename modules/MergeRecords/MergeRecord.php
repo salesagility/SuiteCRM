@@ -355,28 +355,28 @@ class MergeRecord extends SugarBean
 
             //Should move these if's into a central location for extensibility and addition for other search filters
             //Must do the same for pulling values in js dropdown
-            if (isset($vDefArray['search_type']) && $vDefArray['search_type'] == 'like') {
-                if ($merge_field != 'email1' && $merge_field != 'email2' && $merge_field != 'release_name') {
+            if (isset($vDefArray['search_type']) && $vDefArray['search_type'] === 'like') {
+                if ($merge_field !== 'email1' && $merge_field !== 'email2' && $merge_field !== 'release_name') {
                     if ($vDefArray['value'] != '') {
-                        array_push($where_clauses, $table_name.'.'.$merge_field." LIKE '%".DBManagerFactory::getInstance()->quote($vDefArray['value'])."%'");
+                        $where_clauses[] = $table_name.'.'.$merge_field." LIKE '%".DBManagerFactory::getInstance()->quote($vDefArray['value'])."%'";
                     }
-                } elseif ($merge_field == 'release_name') {
+                } elseif ($merge_field === 'release_name') {
                     if (isset($vDefArray['value'])) {
                         $in = $this->release_name_query('like', $vDefArray['value']);
-                        array_push($where_clauses, $table_name.".found_in_release IN ($in)");
+                        $where_clauses[] = $table_name.".found_in_release IN ($in)";
                     }
                 } else {
                     $query = $this->email_addresses_query($table_name, $this->merge_module, $this->merge_bean->id);
                     $query .= " AND ea.email_address LIKE '%".DBManagerFactory::getInstance()->quote($vDefArray['value'])."%')";
                     $where_clauses[] = $query;
                 }
-            } elseif (isset($vDefArray['search_type']) && $vDefArray['search_type'] == 'start') {
-                if ($merge_field != 'email1' && $merge_field != 'email2' && $merge_field != 'release_name') {
-                    array_push($where_clauses, $table_name.'.'.$merge_field." LIKE '".DBManagerFactory::getInstance()->quote($vDefArray['value'])."%'");
-                } elseif ($merge_field == 'release_name') {
+            } elseif (isset($vDefArray['search_type']) && $vDefArray['search_type'] === 'start') {
+                if ($merge_field !== 'email1' && $merge_field !== 'email2' && $merge_field !== 'release_name') {
+                    $where_clauses[] = $table_name.'.'.$merge_field." LIKE '".DBManagerFactory::getInstance()->quote($vDefArray['value'])."%'";
+                } elseif ($merge_field === 'release_name') {
                     if (isset($vDefArray['value'])) {
                         $in = $this->release_name_query('start', $vDefArray['value']);
-                        array_push($where_clauses, $table_name.".found_in_release IN ($in)");
+                        $where_clauses[] = $table_name.".found_in_release IN ($in)";
                     }
                 } else {
                     $query = $this->email_addresses_query($table_name, $this->merge_module, $this->merge_bean->id);
@@ -384,12 +384,12 @@ class MergeRecord extends SugarBean
                     $where_clauses[] = $query;
                 }
             } else {
-                if ($merge_field != 'email1' && $merge_field != 'email2' && $merge_field != 'release_name') {
-                    array_push($where_clauses, $table_name.'.'.$merge_field."='".DBManagerFactory::getInstance()->quote($vDefArray['value'])."'");
-                } elseif ($merge_field == 'release_name') {
+                if ($merge_field !== 'email1' && $merge_field !== 'email2' && $merge_field !== 'release_name') {
+                    $where_clauses[] = $table_name.'.'.$merge_field."='".DBManagerFactory::getInstance()->quote($vDefArray['value'])."'";
+                } elseif ($merge_field === 'release_name') {
                     if (isset($vDefArray['value'])) {
                         $in = $this->release_name_query('exact', $vDefArray['value']);
-                        array_push($where_clauses, $table_name.".found_in_release IN ($in)");
+                        $where_clauses[] = $table_name.".found_in_release IN ($in)";
                     }
                 } else {
                     $query = $this->email_addresses_query($table_name, $this->merge_module, $this->merge_bean->id);
@@ -403,7 +403,7 @@ class MergeRecord extends SugarBean
             global $current_user;
             $where_clauses[] = $this->merge_bean->getOwnerWhere($current_user->id);
         }
-        array_push($where_clauses, $this->merge_bean->table_name.".id !='".DBManagerFactory::getInstance()->quote($this->merge_bean->id)."'");
+        $where_clauses[] = $this->merge_bean->table_name.".id !='".DBManagerFactory::getInstance()->quote($this->merge_bean->id)."'";
 
         return $where_clauses;
     }

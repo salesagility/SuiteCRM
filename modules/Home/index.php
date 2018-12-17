@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,9 +38,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 global $current_user, $sugar_version, $sugar_config, $beanFiles;
-
 
 require_once('include/MySugar/MySugar.php');
 
@@ -138,9 +137,9 @@ if (!$hasUserPreferences) {
 
         foreach ($dashlets as $guid=>$dashlet) {
             if ($dashlet['forceColumn'] == 0) {
-                array_push($columns[0]['dashlets'], $guid);
+                $columns[0]['dashlets'][] = $guid;
             } else {
-                array_push($columns[1]['dashlets'], $guid);
+                $columns[1]['dashlets'][] = $guid;
             }
             $count++;
         }

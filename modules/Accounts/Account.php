@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
 
@@ -276,11 +277,11 @@ class Account extends Company implements EmailInterface
     {
         $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
-        array_push($where_clauses, "accounts.name like '$the_query_string%'");
+        $where_clauses[] = "accounts.name like '$the_query_string%'";
         if (is_numeric($the_query_string)) {
-            array_push($where_clauses, "accounts.phone_alternate like '%$the_query_string%'");
-            array_push($where_clauses, "accounts.phone_fax like '%$the_query_string%'");
-            array_push($where_clauses, "accounts.phone_office like '%$the_query_string%'");
+            $where_clauses[] = "accounts.phone_alternate like '%$the_query_string%'";
+            $where_clauses[] = "accounts.phone_fax like '%$the_query_string%'";
+            $where_clauses[] = "accounts.phone_office like '%$the_query_string%'";
         }
 
         $the_where = "";

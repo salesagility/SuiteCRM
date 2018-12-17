@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,13 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 if (isset($_REQUEST['uid'])) {
     $merge_ids = explode(',', $_REQUEST['uid']);
@@ -98,8 +91,7 @@ if (isset($_REQUEST['uid'])) {
     $row = $focus->db->fetchByAssoc($result);
     
     while ($row != null) {
-        //$beanObj = new $bean;
-        array_push($merge_ids, $row['id']);
+        $merge_ids[] = $row['id'];
         $row = $focus->db->fetchByAssoc($result);
     }
     $_REQUEST['record']=$merge_ids[0];

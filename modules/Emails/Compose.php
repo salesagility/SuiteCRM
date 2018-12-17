@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 //Shorten name.
 $data = $_REQUEST;
@@ -258,7 +259,7 @@ function generateComposeDataPackage($data, $forFullCompose = true)
 
             $myEmailAddresses = array();
             foreach ($current_user->emailAddress->addresses as $p) {
-                array_push($myEmailAddresses, $p['email_address']);
+                $myEmailAddresses[] = $p['email_address'];
             }
 
             //remove current user's email address (if contained in To/CC)

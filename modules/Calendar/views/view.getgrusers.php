@@ -38,6 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once('include/MVC/View/SugarView.php');
 
 class CalendarViewGetGRUsers extends SugarView
@@ -71,7 +75,7 @@ class CalendarViewGetGRUsers extends SugarView
             }
             $bean = new User();
             $bean->retrieve($u_id);
-            array_push($users_arr, $json_config->populateBean($bean));
+            $users_arr[] = $json_config->populateBean($bean);
         }
         
         $GRjavascript = "\n" . $json_config->global_registry_var_name."['focus'].users_arr = " . $json->encode($users_arr) . ";\n";

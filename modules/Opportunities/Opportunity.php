@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 // Opportunity is used to store customer information.
 class Opportunity extends SugarBean
@@ -338,8 +339,8 @@ class Opportunity extends SugarBean
     {
         $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
-        array_push($where_clauses, "opportunities.name like '$the_query_string%'");
-        array_push($where_clauses, "accounts.name like '$the_query_string%'");
+        $where_clauses[] = "opportunities.name like '$the_query_string%'";
+        $where_clauses[] = "accounts.name like '$the_query_string%'";
 
         $the_where = "";
         foreach ($where_clauses as $clause) {

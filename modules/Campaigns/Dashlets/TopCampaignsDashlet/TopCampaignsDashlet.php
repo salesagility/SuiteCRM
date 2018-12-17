@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,8 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/Dashlets/Dashlet.php');
 
@@ -85,7 +83,7 @@ class TopCampaignsDashlet extends Dashlet
         $row = $this->seedBean->db->fetchByAssoc($result);
 
         while ($row != null) {
-            array_push($this->top_campaigns, $row);
+            $this->top_campaigns[] = $row;
             $row = $this->seedBean->db->fetchByAssoc($result);
         }
     }

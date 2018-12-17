@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,10 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/formbase.php');
 
@@ -70,7 +66,7 @@ if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQU
         $projectTaskBean->retrieve();
         $projectTaskBean->date_entered = '';
         $projectTaskBean->date_modified = '';
-        array_push($projectTasks, $projectTaskBean);
+        $projectTasks[] = $projectTaskBean;
         $row = $sugarbean->db->fetchByAssoc($result);
     }
 }

@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*
  * Created on Oct 4, 2005
@@ -112,7 +113,7 @@ if (!empty($_REQUEST['record'])) {
 
     $new_arr = array();
     while ($val = $db->fetchByAssoc($result, false)) {
-        array_push($new_arr, $val['id']);
+        $new_arr[] = $val['id'];
     }
     $_SESSION['MAILMERGE_RECORD'] = $new_arr;
 } elseif (isset($_SESSION['MAILMERGE_RECORDS'])) {

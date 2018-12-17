@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,6 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class Project extends SugarBean
 {
@@ -235,8 +235,7 @@ class Project extends SugarBean
     {
         $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
-        array_push($where_clauses, "project.name LIKE '%$the_query_string%'");
-
+        $where_clauses[] = "project.name LIKE '%$the_query_string%'";
         $the_where = '';
         foreach ($where_clauses as $clause) {
             if ($the_where != '') {
@@ -311,8 +310,7 @@ class Project extends SugarBean
             $projectTaskBean = new ProjectTask();
             $projectTaskBean->id = $row['id'];
             $projectTaskBean->retrieve();
-            array_push($projectTasks, $projectTaskBean);
-
+            $projectTasks[] = $projectTaskBean;
             $row = $this->db->fetchByAssoc($result);
         }
 

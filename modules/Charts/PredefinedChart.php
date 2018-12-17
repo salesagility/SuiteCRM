@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,15 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
-
- * Description: Class defining queries of predefined charts.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________.
- */
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class PredefinedChart
 {
@@ -159,7 +150,7 @@ class PredefinedChart
         if (count($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['sales_stage_dom'][$key];
-                array_push($datax_selected, $key);
+                $datax_selected[] = $key;
             }
         } else {
             $datax = $app_list_strings['sales_stage_dom'];
@@ -268,7 +259,7 @@ class PredefinedChart
         if (!empty($tempx) && sizeof($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['lead_source_dom'][$key];
-                array_push($selected_datax, $key);
+                $selected_datax[] = $key;
             }
         } else {
             $datax = $app_list_strings['lead_source_dom'];
@@ -436,7 +427,7 @@ class PredefinedChart
         if (count($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['lead_source_dom'][$key];
-                array_push($selected_datax, $key);
+                $selected_datax[] = $key;
             }
         } else {
             $datax = $app_list_strings['lead_source_dom'];

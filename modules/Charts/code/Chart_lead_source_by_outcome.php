@@ -101,7 +101,7 @@ class Chart_lead_source_by_outcome
         if (!empty($tempx) && sizeof($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['lead_source_dom'][$key];
-                array_push($selected_datax, $key);
+                $selected_datax[] = $key;
             }
         } else {
             $datax = $app_list_strings['lead_source_dom'];
@@ -388,7 +388,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
         if (!empty($tempx) && sizeof($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['lead_source_dom'][$key];
-                array_push($selected_datax, $key);
+                $selected_datax[] = $key;
             }
         } else {
             $datax = $app_list_strings['lead_source_dom'];
