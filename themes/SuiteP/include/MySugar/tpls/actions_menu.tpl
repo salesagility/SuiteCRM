@@ -1,17 +1,14 @@
 <ul class="dropdown-menu tab-actions">
     {if !$lock_homepage}
+
         <li>
-            <a class="button addDashlets"  data-toggle="modal" data-target=".modal-add-dashlet">{$lblAddDashlets}</a>
+            <input class="button addDashlets" type="button" name="Edit"  data-toggle="modal" data-target=".modal-add-dashlet" value="{$lblAddDashlets}">
         </li>
         <li>
-            <a class="button addDashboard"  data-toggle="modal" data-target=".modal-add-dashboard">
-                <span>{$lblAddTab}</span>
-            </a>
+            <input class="button addDashboard" type="button" name="Edit"  data-toggle="modal" data-target=".modal-add-dashboard" value="{$lblAddTab}">
         </li>
         <li>
-            <a class="button addDashboard"  data-toggle="modal" data-target=".modal-edit-dashboard">
-                <span>{$app.LBL_EDIT_TAB}</span>
-            </a>
+            <input class="button addDashboard" type="button" name="Edit"  data-toggle="modal" data-target=".modal-edit-dashboard" value="{$app.LBL_EDIT_TAB}">
         </li>
     {/if}
 </ul>

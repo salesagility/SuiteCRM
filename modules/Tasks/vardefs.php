@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,11 +34,16 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-$dictionary['Task'] = array('table' => 'tasks',
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+$dictionary['Task'] = array(
+    'table' => 'tasks',
     'unified_search' => true,
     'full_text_search' => true,
     'fields' => array(
@@ -118,7 +123,7 @@ $dictionary['Task'] = array('table' => 'tasks',
         'parent_type' =>
             array(
                 'name' => 'parent_type',
-                'vname' => 'LBL_PARENT_NAME',
+                'vname' => 'LBL_PARENT_TYPE',
                 'type' => 'parent_type',
                 'dbType' => 'varchar',
                 'group' => 'parent_name',
@@ -309,31 +314,59 @@ $dictionary['Task'] = array('table' => 'tasks',
         ),
 
         'tasks_assigned_user' =>
-            array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'Tasks', 'rhs_table' => 'tasks', 'rhs_key' => 'assigned_user_id',
-                'relationship_type' => 'one-to-many')
+            array(
+                'lhs_module' => 'Users',
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'Tasks',
+                'rhs_table' => 'tasks',
+                'rhs_key' => 'assigned_user_id',
+                'relationship_type' => 'one-to-many'
+            )
 
-    , 'tasks_modified_user' =>
-            array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'Tasks', 'rhs_table' => 'tasks', 'rhs_key' => 'modified_user_id',
-                'relationship_type' => 'one-to-many')
+    ,
+        'tasks_modified_user' =>
+            array(
+                'lhs_module' => 'Users',
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'Tasks',
+                'rhs_table' => 'tasks',
+                'rhs_key' => 'modified_user_id',
+                'relationship_type' => 'one-to-many'
+            )
 
-    , 'tasks_created_by' =>
-            array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'Tasks', 'rhs_table' => 'tasks', 'rhs_key' => 'created_by',
-                'relationship_type' => 'one-to-many')
+    ,
+        'tasks_created_by' =>
+            array(
+                'lhs_module' => 'Users',
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'Tasks',
+                'rhs_table' => 'tasks',
+                'rhs_key' => 'created_by',
+                'relationship_type' => 'one-to-many'
+            )
     )
-, 'indices' => array(
+,
+    'indices' => array(
         array('name' => 'idx_tsk_name', 'type' => 'index', 'fields' => array('name')),
         array('name' => 'idx_task_con_del', 'type' => 'index', 'fields' => array('contact_id', 'deleted')),
-        array('name' => 'idx_task_par_del', 'type' => 'index', 'fields' => array('parent_id', 'parent_type', 'deleted')),
+        array(
+            'name' => 'idx_task_par_del',
+            'type' => 'index',
+            'fields' => array('parent_id', 'parent_type', 'deleted')
+        ),
         array('name' => 'idx_task_assigned', 'type' => 'index', 'fields' => array('assigned_user_id')),
         array('name' => 'idx_task_status', 'type' => 'index', 'fields' => array('status')),
     )
 
     //This enables optimistic locking for Saves From EditView
-, 'optimistic_locking' => true,
+,
+    'optimistic_locking' => true,
 );
-VardefManager::createVardef('Tasks', 'Task', array('default', 'assignable', 'security_groups',
+VardefManager::createVardef('Tasks', 'Task', array(
+    'default',
+    'assignable',
+    'security_groups',
 ));
-?>

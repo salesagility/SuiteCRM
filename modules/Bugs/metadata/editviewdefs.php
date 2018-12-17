@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,15 +34,15 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $viewdefs['Bugs']['EditView'] = array(
     'templateMeta' => array('form'=>array('hidden'=>array('<input type="hidden" name="account_id" value="{$smarty.request.account_id}">',
-    											          '<input type="hidden" name="contact_id" value="{$smarty.request.contact_id}">')
-    											          ),
-							'maxColumns' => '2',
+                                                          '<input type="hidden" name="contact_id" value="{$smarty.request.contact_id}">')
+                                                          ),
+                            'maxColumns' => '2',
                             'widths' => array(
                                             array('label' => '10', 'field' => '30'),
                                             array('label' => '10', 'field' => '30')
@@ -49,64 +50,64 @@ $viewdefs['Bugs']['EditView'] = array(
                                             ),
 
 
- 'panels' =>array (
-	  'lbl_bug_information' =>
-		  array (
+ 'panels' =>array(
+      'lbl_bug_information' =>
+          array(
 
-		    array (
-		      array (
-		        'name' => 'bug_number',
-		        'type' => 'readonly',
-		      ),
-		    ),
+            array(
+              array(
+                'name' => 'bug_number',
+                'type' => 'readonly',
+              ),
+            ),
 
-		    array (
-		      array('name'=>'name', 'displayParams'=>array('size'=>60, 'required'=>true)),
-		    ),
+            array(
+              array('name'=>'name', 'displayParams'=>array('size'=>60, 'required'=>true)),
+            ),
 
-		    array (
-		      'priority',
-		      'type',
-		    ),
+            array(
+              'priority',
+              'type',
+            ),
 
-		    array (
-		      'source',
-		      'status',
+            array(
+              'source',
+              'status',
 
-		    ),
+            ),
 
-		    array (
-		      'product_category',
-		      'resolution',
-		    ),
-
-
-		    array (
-		      'found_in_release',
-		      'fixed_in_release'
-		    ),
-
-		    array (
-		      array (
-			      'name' => 'description',
-			      'nl2br' => true,
-		      ),
-		    ),
+            array(
+              'product_category',
+              'resolution',
+            ),
 
 
-		    array (
-		      array (
-			      'name' => 'work_log',
-			      'nl2br' => true,
-		      ),
-		    ),
+            array(
+              'found_in_release',
+              'fixed_in_release'
+            ),
 
-	  ),
+            array(
+              array(
+                  'name' => 'description',
+                  'nl2br' => true,
+              ),
+            ),
+
+
+            array(
+              array(
+                  'name' => 'work_log',
+                  'nl2br' => true,
+              ),
+            ),
+
+      ),
 
       'LBL_PANEL_ASSIGNMENT' =>
-      array (
-        array (
-            array (
+      array(
+        array(
+            array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),
@@ -115,4 +116,3 @@ $viewdefs['Bugs']['EditView'] = array(
 ),
 
 );
-?>

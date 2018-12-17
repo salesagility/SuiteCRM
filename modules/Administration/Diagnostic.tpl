@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- ********************************************************************************/
+ */
 *}
 
 <form name="Diagnostic" method="POST" action="index.php">
@@ -57,45 +58,45 @@
 <div id="table" style="visibility:visible">
 <table id="maintable" width="430" border="0" cellspacing="0" cellpadding="0" class="edit view">
 <tr>
-	<td scope="row"><slot>{$MOD.LBL_DIAGNOSTIC_CONFIGPHP}</slot></td>
-	<td ><slot><input name='configphp' class="checkbox" type="checkbox" tabindex='1' checked></slot></td>
+	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_CONFIGPHP}</span></td>
+	<td ><span><input name='configphp' class="checkbox" type="checkbox" tabindex='1' checked></span></td>
 	</tr><tr>
-	<td scope="row"><slot>{$MOD.LBL_DIAGNOSTIC_CUSTOMDIR}</slot></td>
-	<td ><slot><input name='custom_dir' class="checkbox" type="checkbox" tabindex='2' checked></slot></td>
-	</tr><tr>
-
-	<td scope="row"><slot>{$MOD.LBL_DIAGNOSTIC_PHPINFO}</slot></td>
-	<td ><slot><input name='phpinfo' class="checkbox" type="checkbox" tabindex='3' checked></slot></td>
-	</tr><tr>
-	<td scope="row"><slot>{$DB_NAME} - {$MOD.LBL_DIAGNOSTIC_MYSQLDUMPS}</slot></td>
-	<td ><slot><input name='mysql_dumps' class="checkbox" type="checkbox" tabindex='4' checked></slot></td>
-	</tr><tr>
-	<td scope="row"><slot>{$DB_NAME} - {$MOD.LBL_DIAGNOSTIC_MYSQLSCHEMA}</slot></td>
-
-	<td ><slot><input name='mysql_schema' class="checkbox" type="checkbox" tabindex='5' checked></slot></td>
-	</tr><tr>
-	<td scope="row"><slot>{$DB_NAME} - {$MOD.LBL_DIAGNOSTIC_MYSQLINFO}</slot></td>
-	<td ><slot><input name='mysql_info' class="checkbox" type="checkbox" tabindex='6' checked></slot></td>
-	</tr><tr>
-	<td scope="row"><slot>{$MOD.LBL_DIAGNOSTIC_MD5}</slot></td>
-	<td ><slot><input name='md5' class="checkbox" type="checkbox" tabindex='7' onclick="md5checkboxes()" checked></slot></td>
+	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_CUSTOMDIR}</span></td>
+	<td ><span><input name='custom_dir' class="checkbox" type="checkbox" tabindex='2' checked></span></td>
 	</tr><tr>
 
-	<td scope="row"><slot>{$MOD.LBL_DIAGNOSTIC_FILESMD5}</slot></td>
-	<td ><slot><input name='md5filesmd5' class="checkbox" type="checkbox" tabindex='8' ></slot></td>
+	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_PHPINFO}</span></td>
+	<td ><span><input name='phpinfo' class="checkbox" type="checkbox" tabindex='3' checked></span></td>
 	</tr><tr>
-	<td scope="row"><slot>{$MOD.LBL_DIAGNOSTIC_CALCMD5}</slot></td>
-	<td ><slot><input name='md5calculated' class="checkbox" type="checkbox" tabindex='9' ></slot></td>
+	<td scope="row"><span>{$DB_NAME} - {$MOD.LBL_DIAGNOSTIC_MYSQLDUMPS}</span></td>
+	<td ><span><input name='mysql_dumps' class="checkbox" type="checkbox" tabindex='4' checked></span></td>
 	</tr><tr>
-	<td scope="row"><slot>{$MOD.LBL_DIAGNOSTIC_BLBF}</slot></td>
+	<td scope="row"><span>{$DB_NAME} - {$MOD.LBL_DIAGNOSTIC_MYSQLSCHEMA}</span></td>
 
-	<td ><slot><input name='beanlistbeanfiles' class="checkbox" type="checkbox" tabindex='10' checked></slot></td>
+	<td ><span><input name='mysql_schema' class="checkbox" type="checkbox" tabindex='5' checked></span></td>
 	</tr><tr>
-	<td scope="row"><slot>{$MOD.LBL_DIAGNOSTIC_SUGARLOG}</slot></td>
-	<td ><slot><input name='sugarlog' class="checkbox" type="checkbox" tabindex='11' checked></slot></td>
+	<td scope="row"><span>{$DB_NAME} - {$MOD.LBL_DIAGNOSTIC_MYSQLINFO}</span></td>
+	<td ><span><input name='mysql_info' class="checkbox" type="checkbox" tabindex='6' checked></span></td>
 	</tr><tr>
-	<td scope="row"><slot>{$MOD.LBL_DIAGNOSTIC_VARDEFS}</slot></td>
-	<td ><slot><input name='vardefs' class="checkbox" type="checkbox" tabindex='11' checked></slot></td>
+	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_MD5}</span></td>
+	<td ><span><input name='md5' class="checkbox" type="checkbox" tabindex='7' onclick="md5checkboxes()" checked></span></td>
+	</tr><tr>
+
+	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_FILESMD5}</span></td>
+	<td ><span><input name='md5filesmd5' class="checkbox" type="checkbox" tabindex='8' ></span></td>
+	</tr><tr>
+	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_CALCMD5}</span></td>
+	<td ><span><input name='md5calculated' class="checkbox" type="checkbox" tabindex='9' ></span></td>
+	</tr><tr>
+	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_BLBF}</span></td>
+
+	<td ><span><input name='beanlistbeanfiles' class="checkbox" type="checkbox" tabindex='10' checked></span></td>
+	</tr><tr>
+	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_SUITELOG}</span></td>
+	<td ><span><input name='sugarlog' class="checkbox" type="checkbox" tabindex='11' checked></span></td>
+	</tr><tr>
+	<td scope="row"><span>{$MOD.LBL_DIAGNOSTIC_VARDEFS}</span></td>
+	<td ><span><input name='vardefs' class="checkbox" type="checkbox" tabindex='11' checked></span></td>
 	</tr>
 </table>
 </div>

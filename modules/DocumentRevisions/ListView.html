@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- ********************************************************************************/
+ */
 -->
 <!-- BEGIN: main -->
 <script language="JavaScript">
@@ -84,21 +85,21 @@
 {PAGINATION}
 <!-- END: list_nav_row -->
 	<tr height="20" >
-		<td scope="col" width="2%"  NOWRAP><slot>&nbsp;</slot></td>
-		<td scope="col" width="10%"  NOWRAP><slot>{MOD.LBL_REV_LIST_REVISION}</slot></td>
-		<td scope="col" width="15%"  NOWRAP><slot>{MOD.LBL_REV_LIST_ENTERED}</slot></td>
-		<td scope="col" width="10%"  NOWRAP><slot>{MOD.LBL_REV_LIST_CREATED}</slot></td>
-		<td scope="col" width="55%"  NOWRAP><slot>{MOD.LBL_REV_LIST_LOG}</slot></td>
+		<td scope="col" width="2%"  NOWRAP><span>&nbsp;</span></td>
+		<td scope="col" width="10%"  NOWRAP><span>{MOD.LBL_REV_LIST_REVISION}</span></td>
+		<td scope="col" width="15%"  NOWRAP><span>{MOD.LBL_REV_LIST_ENTERED}</span></td>
+		<td scope="col" width="10%"  NOWRAP><span>{MOD.LBL_REV_LIST_CREATED}</span></td>
+		<td scope="col" width="55%"  NOWRAP><span>{MOD.LBL_REV_LIST_LOG}</span></td>
 		<td width="8%" ><img src="include/images/blank.gif" width="1" height="1" alt=""></td>
 	</tr>
 
 <!-- BEGIN: row -->
 	<tr height="20"  class="{ROW_COLOR}S1">
-    	<td valign=TOP ><slot>{DOCREVISION.FILE_URL}</slot></td>	
-		<td scope="row" valign=TOP ><slot>{DOCREVISION.REVISION}</slot></td>
-    	<td valign=TOP ><slot>{DOCREVISION.DATE_ENTERED}</slot></td>
-    	<td valign=TOP ><slot>{DOCREVISION.FIRST_NAME} {DOCREVISION.LAST_NAME}</slot></td>
-    	<td valign=TOP ><slot>{DOCREVISION.CHANGE_LOG}</slot></td>
+    	<td valign=TOP ><span>{DOCREVISION.FILE_URL}</span></td>
+		<td scope="row" valign=TOP ><span>{DOCREVISION.REVISION}</span></td>
+    	<td valign=TOP ><span>{DOCREVISION.DATE_ENTERED}</span></td>
+    	<td valign=TOP ><span>{DOCREVISION.FIRST_NAME} {DOCREVISION.LAST_NAME}</span></td>
+    	<td valign=TOP ><span>{DOCREVISION.CHANGE_LOG}</span></td>
      	<td nowrap align="center" valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1"><a class="listViewTdToolsS1" onclick="return delete_version('{DOCREVISION.REVISION}')" href="{URL_PREFIX}index.php?action=Delete&module=Documents&record={DOCREVISION.ID}&revision_id={DOCREVISION.ID}&filename={DOCREVISION.FILENAME}&object=documentrevision&{RETURN_URL}">{DELETE_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" onclick="return delete_version('{DOCREVISION.REVISION}')" href="{URL_PREFIX}index.php?action=Delete&module=Documents&record={DOCREVISION.ID}&revision_id={DOCREVISION.ID}&filename={DOCREVISION.FILENAME}&{RETURN_URL}">{APP.LNK_DELETE}</a></td>
 	</tr>
 	<tr>

@@ -1,19 +1,24 @@
 <?php
-class smpl_Lead_Sample{
-		function getType() {
-			return 'Leads';
-		}
-		
-		function getBody() {
-		global $locale;
-		$d_image = explode('?',SugarThemeRegistry::current()->getImageURL('company_logo.png'));
-			return '<table style="width: 100%;" border="0" cellspacing="2" cellpadding="2">
+
+require_once __DIR__ . '/../TemplateSampleService.php';
+
+class smpl_Lead_Sample
+{
+    public function getType()
+    {
+        return 'Leads';
+    }
+        
+    public function getBody()
+    {
+        global $locale;
+        return '<table style="width: 100%;" border="0" cellspacing="2" cellpadding="2">
 <tbody style="text-align: left;">
 <tr>
 <td valign="top">
-<p><img src="'.$d_image[0].'" style="float: left;"/>&nbsp;</p>
+<p><img src="'. TemplateSampleService::getAbsoluteLogoUrl() .'" style="float: left;"/>&nbsp;</p>
 </td>
-<td style="font-weight: bold; text-align: right;"><div>'.translate('LBL_BROWSER_TITLE').' Ltd<br />'.translate('LBL_ANY_STREET','AOS_PDF_Templates').'<br />'.translate('LBL_ANY_TOWN','AOS_PDF_Templates').'</span><br />'.translate('LBL_ANY_WHERE','AOS_PDF_Templates').'</div></td>
+<td style="font-weight: bold; text-align: right;"><div>'.translate('LBL_BROWSER_TITLE').' Ltd<br />'.translate('LBL_ANY_STREET', 'AOS_PDF_Templates').'<br />'.translate('LBL_ANY_TOWN', 'AOS_PDF_Templates').'</span><br />'.translate('LBL_ANY_WHERE', 'AOS_PDF_Templates').'</div></td>
 </tr>
 </tbody>
 </table>
@@ -41,14 +46,15 @@ class smpl_Lead_Sample{
 </tr>
 </tbody>
 </table>';
-		}
-		
-		function getHeader() {
-			return '';
-		}
-		
-		function getFooter() {
-			return '';
-		}
+    }
+
+    public function getHeader()
+    {
+        return '';
+    }
+
+    public function getFooter()
+    {
+        return '';
+    }
 }
-?>

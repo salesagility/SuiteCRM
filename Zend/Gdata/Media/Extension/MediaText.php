@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/App/Extension.php';
  */
 class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'text';
     protected $_rootNamespace = 'media';
 
@@ -70,9 +69,13 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
      * @param $start string
      * @param $end string
      */
-    public function __construct($text = null, $type = null, $lang = null,
-            $start = null, $end = null)
-    {
+    public function __construct(
+        $text = null,
+        $type = null,
+        $lang = null,
+            $start = null,
+        $end = null
+    ) {
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
         $this->_text = $text;

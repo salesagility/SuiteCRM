@@ -98,9 +98,11 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Term extends Zend_Search_Luc
 
             require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Term.php';
             foreach ($searchFields as $fieldName) {
-                $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Term($this->_word,
+                $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Term(
+                    $this->_word,
                                                                                    $this->_encoding,
-                                                                                   $fieldName);
+                                                                                   $fieldName
+                );
                 $rewrittenSubquery = $subquery->rewrite($index);
                 foreach ($rewrittenSubquery->getQueryTerms() as $term) {
                     $query->addTerm($term);
@@ -116,10 +118,9 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Term extends Zend_Search_Luc
                 if ($hasInsignificantSubqueries) {
                     require_once 'Zend/Search/Lucene/Search/Query/Insignificant.php';
                     return new Zend_Search_Lucene_Search_Query_Insignificant();
-                } else {
-                    require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
-                    return new Zend_Search_Lucene_Search_Query_Empty();
                 }
+                require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+                return new Zend_Search_Lucene_Search_Query_Empty();
             }
 
             $this->_matches = $query->getQueryTerms();

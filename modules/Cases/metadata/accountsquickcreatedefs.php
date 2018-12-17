@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,43 +34,43 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $viewdefs['Cases']['AccountsQuickCreate'] = array(
-'templateMeta' => array('form' => 
-                            array (
-                              'hidden' => 
-                              array (
+'templateMeta' => array('form' =>
+                            array(
+                              'hidden' =>
+                              array(
                                 0 => '<input type="hidden" name="account_id" value="{$smarty.request.account_id}">',
                                 1 => '<input type="hidden" name="account_name" value="{$smarty.request.account_name}">',
                               ),
                             ),
-                        'maxColumns' => '2', 
+                        'maxColumns' => '2',
                         'widths' => array(
-                                        array('label' => '10', 'field' => '30'), 
+                                        array('label' => '10', 'field' => '30'),
                                         array('label' => '10', 'field' => '30')
                                         ),
                        ),
 'panels' =>
 
-array (
+array(
   
-  array (
-    array ('name'=>'name', 'displayParams'=>array('size'=>65, 'required'=>true)),
+  array(
+    array('name'=>'name', 'displayParams'=>array('size'=>65, 'required'=>true)),
     'priority'
   ),
   
-  array (
+  array(
     'status',
     array('name'=>'account_name', 'type'=>'readonly'),
   ),
   
-  array (
-    array (
+  array(
+    array(
       'name' => 'description',
-      'displayParams' => array ('rows' => '4','cols' => '60'),
+      'displayParams' => array('rows' => '4','cols' => '60'),
       'nl2br' => true,
     ),
   ),
@@ -77,4 +78,3 @@ array (
 ),
 
 );
-?>

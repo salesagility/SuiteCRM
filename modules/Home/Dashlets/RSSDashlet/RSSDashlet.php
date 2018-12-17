@@ -1,12 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 require_once('include/Dashlets/Dashlet.php');
@@ -45,7 +48,7 @@ require_once('include/Sugar_Smarty.php');
 
 class RSSDashlet extends Dashlet
 {
-    protected $url = 'http://www.sugarcrm.com/crm/aggregator/rss/1';
+    protected $url = 'https://salesagility.com/component/easyblog/tags/suitecrm?format=feed&type=rss';
     protected $height = '200'; // height of the pad
     protected $images_dir = 'modules/Home/Dashlets/RSSDashlet/images';
 
@@ -60,18 +63,23 @@ class RSSDashlet extends Dashlet
     {
         $this->loadLanguage('RSSDashlet', 'modules/Home/Dashlets/'); // load the language strings here
 
-        if(!empty($def['height'])) // set a default height if none is set
+        if (!empty($def['height'])) { // set a default height if none is set
             $this->height = $def['height'];
+        }
 
-        if(!empty($def['url']))
+        if (!empty($def['url'])) {
             $this->url = $def['url'];
+        }
 
-        if(!empty($def['title']))
+        if (!empty($def['title'])) {
             $this->title = $def['title'];
-        else
+        } else {
             $this->title = $this->dashletStrings['LBL_TITLE'];
+        }
 
-        if(isset($def['autoRefresh'])) $this->autoRefresh = $def['autoRefresh'];
+        if (isset($def['autoRefresh'])) {
+            $this->autoRefresh = $def['autoRefresh'];
+        }
 
         parent::__construct($id); // call parent constructor
 
@@ -93,7 +101,9 @@ class RSSDashlet extends Dashlet
         $ss->assign('height', $this->height);
         $ss->assign('rss_output', $this->getRSSOutput($this->url));
         $str = $ss->fetch('modules/Home/Dashlets/RSSDashlet/RSSDashlet.tpl');
-        return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . $str; // return parent::display for title and such
+
+        // Return parent::display for title and such
+        return parent::display() . $str . '<br />';
     }
 
     /**
@@ -101,7 +111,8 @@ class RSSDashlet extends Dashlet
      *
      * @return string html to display form
      */
-    public function displayOptions() {
+    public function displayOptions()
+    {
         global $app_strings, $sugar_version, $sugar_config;
 
         $ss = new Sugar_Smarty();
@@ -114,12 +125,12 @@ class RSSDashlet extends Dashlet
         $ss->assign('height', $this->height);
         $ss->assign('url', $this->url);
         $ss->assign('id', $this->id);
-        if($this->isAutoRefreshable()) {
-       		$ss->assign('isRefreshable', true);
-			$ss->assign('autoRefresh', $GLOBALS['app_strings']['LBL_DASHLET_CONFIGURE_AUTOREFRESH']);
-			$ss->assign('autoRefreshOptions', $this->getAutoRefreshOptions());
-			$ss->assign('autoRefreshSelect', $this->autoRefresh);
-		}
+        if ($this->isAutoRefreshable()) {
+            $ss->assign('isRefreshable', true);
+            $ss->assign('autoRefresh', $GLOBALS['app_strings']['LBL_DASHLET_CONFIGURE_AUTOREFRESH']);
+            $ss->assign('autoRefreshOptions', $this->getAutoRefreshOptions());
+            $ss->assign('autoRefreshSelect', $this->autoRefresh);
+        }
 
         return parent::displayOptions() . $ss->fetch('modules/Home/Dashlets/RSSDashlet/RSSDashletOptions.tpl');
     }
@@ -132,8 +143,7 @@ class RSSDashlet extends Dashlet
      */
     public function saveOptions(
         array $req
-        )
-    {
+        ) {
         $options = array();
         $options['title'] = $req['title'];
         $options['url'] = $req['url'];
@@ -145,8 +155,7 @@ class RSSDashlet extends Dashlet
 
     protected function getRSSOutput(
         $url
-        )
-    {
+        ) {
         // suppress XML errors
         libxml_use_internal_errors(true);
         $data = file_get_contents($url);
@@ -157,39 +166,39 @@ class RSSDashlet extends Dashlet
         if ($urlparse['scheme'] != 'http' && $urlparse['scheme'] != 'https') {
             return $this->dashletStrings['ERR_LOADING_FEED'];
         }
-        if(!$data) {
+        if (!$data) {
             return $this->dashletStrings['ERR_LOADING_FEED'];
         }
         libxml_disable_entity_loader(true);
         $rssdoc = simplexml_load_string($data);
         // return back the error message if the loading wasn't successful
-        if (!$rssdoc)
+        if (!$rssdoc) {
             return $this->dashletStrings['ERR_LOADING_FEED'];
+        }
 
         $output = "<table class='edit view'>";
-        if ( isset($rssdoc->channel) ) {
-            foreach ( $rssdoc->channel as $channel ) {
-                if ( isset($channel->item ) ) {
-                    foreach ( $channel->item as $item ) {
+        if (isset($rssdoc->channel)) {
+            foreach ($rssdoc->channel as $channel) {
+                if (isset($channel->item)) {
+                    foreach ($channel->item as $item) {
                         $link = htmlspecialchars($item->link, ENT_QUOTES, 'UTF-8');
                         $title = htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8');
                         $description = htmlspecialchars($item->description, ENT_QUOTES, 'UTF-8');
                         $output .= <<<EOHTML
 <tr>
 <td>
-    <h3><a href="{$link}" target="_child">{$title}</a></h3>
-    {$description}
+    <h3><a href="{$item->link}" target="_child">{$item->title}</a></h3>
+    {$item->description}
 </td>
 </tr>
 EOHTML;
                     }
                 }
             }
-        }
-        else {
-            foreach ( $rssdoc->entry as $entry ) {
+        } else {
+            foreach ($rssdoc->entry as $entry) {
                 $link = trim($entry->link);
-                if ( empty($link) ) {
+                if (empty($link)) {
                     $link = $entry->link[0]['href'];
                 }
                 $link = htmlspecialchars($link, ENT_QUOTES, 'UTF-8');
@@ -198,8 +207,8 @@ EOHTML;
                 $output .= <<<EOHTML
 <tr>
 <td>
-    <h3><a href="{$link}" target="_child">{$title}</a></h3>
-    {$summary}
+    <h3><a href="{$link}" target="_child">{$entry->title}</a></h3>
+    {$entry->summary}
 </td>
 </tr>
 EOHTML;

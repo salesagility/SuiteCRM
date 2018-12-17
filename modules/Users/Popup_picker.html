@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 -->
 
@@ -58,10 +59,10 @@
 <td scope="row" valign="top" nowrap="nowrap">{MOD.LBL_USER_NAME}</td>
 <td ><input type="text" size="10" tabindex='2' name="user_name"  value="{USER_NAME}" /></td>
 <td scope="row">
-<slot>{MOD.LBL_GROUP_USER}</slot>
+<span>{MOD.LBL_GROUP_USER}</span>
 </td>
 <td>
-<slot><input name='is_group' class="checkbox" value='1' type="checkbox" tabindex='2' {IS_GROUP}></slot>
+<span><input name='is_group' class="checkbox" value='1' type="checkbox" tabindex='2' {IS_GROUP}></span>
 </td>
 <td rowspan='2' valign="top" align="right">
 <input type="hidden" name="module" value="{MODULE_NAME}" />
@@ -92,7 +93,7 @@
 <td scope="col"  NOWRAP>{CHECKALL}</td>
 <td scope="col" width="50%"  nowrap="nowrap"><a href="{ORDER_BY}last_name" class="listViewThLinkS1">{MOD.LBL_LIST_NAME}{arrow_start}{first_name_arrow}{arrow_end}</a></td>
 <td scope="col" width="50%"  nowrap="nowrap"><a href="{ORDER_BY}user_name" class="listViewThLinkS1" >{MOD.LBL_LIST_USER_NAME}{arrow_start}{user_name_arrow}{arrow_end}</a></td>
-<td scope="col"  NOWRAP><slot><a href="{ORDER_BY}IS_GROUP" class="listViewThLinkS1">{MOD.LBL_LIST_GROUP}{arrow_start}{IS_GROUP_arrow}{arrow_end}</a></slot></td>
+<td scope="col"  NOWRAP><span><a href="{ORDER_BY}IS_GROUP" class="listViewThLinkS1">{MOD.LBL_LIST_GROUP}{arrow_start}{IS_GROUP_arrow}{arrow_end}</a></span></td>
 </tr>
 <!-- BEGIN: row -->
 <tr height="20" class="{ROW_COLOR}S1">

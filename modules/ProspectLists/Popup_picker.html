@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 -->
 
@@ -50,8 +51,8 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td scope="row" nowrap="nowrap">{MOD.LBL_PROSPECTLIST_NAME}&nbsp;&nbsp;<input type="text" size="20" name="name"  value="{NAME}" /></td>
-<td scope="row" noWrap><slot>{MOD.LBL_LIST_TYPE}</slot></td>
-<td  ><slot><select name='list_type' tabindex='1'>{LIST_OPTIONS}</select></slot></td>
+<td scope="row" noWrap><span>{MOD.LBL_LIST_TYPE}</span></td>
+<td  ><span><select name='list_type' tabindex='1'>{LIST_OPTIONS}</select></span></td>
 <td align="right">
 <input type="hidden" name="module" value="{MODULE_NAME}" />
 <input type="hidden" name="action" value="Popup" />
@@ -101,14 +102,14 @@
 <tr height="20">
 <td scope="col"  NOWRAP>{CHECKALL}</td>
 <td scope="col" width="40%"  nowrap="nowrap"><a href="{ORDER_BY}name" class="listViewThLinkS1">{MOD.LBL_LIST_PROSPECTLIST_NAME}{arrow_start}{name_arrow}{arrow_end}</a></td>
-<td scope="col"  width="15%"  NOWRAP>&nbsp;<slot><a href="{ORDER_BY}list_type" class="listViewThLinkS1">{MOD.LBL_LIST_TYPE_LIST_NAME}{arrow_start}{list_type_arrow}{arrow_end}</a></slot></td>
+<td scope="col"  width="15%"  NOWRAP>&nbsp;<span><a href="{ORDER_BY}list_type" class="listViewThLinkS1">{MOD.LBL_LIST_TYPE_LIST_NAME}{arrow_start}{list_type_arrow}{arrow_end}</a></span></td>
 <td scope="col" width="45%"  nowrap="nowrap">{MOD.LBL_LIST_DESCRIPTION}</a></td>	
 </tr>
 <!-- BEGIN: row -->
 <tr height="20" class="{ROW_COLOR}S1">
 <td valign="top">{PREROW}</td>
 <td scope="row" valign="top"><a href="#" onclick="send_back('ProspectLists','{PROSPECTLIST.ID}');" >{PROSPECTLIST.NAME}</a></td>
-<td valign=TOP><slot>{PROSPECTLIST.LIST_TYPE}</slot></td>
+<td valign=TOP><span>{PROSPECTLIST.LIST_TYPE}</span></td>
 <td scope="row" valign="top">{PROSPECTLIST.DESCRIPTION}</td>
 </tr>
 

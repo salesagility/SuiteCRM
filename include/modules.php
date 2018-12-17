@@ -1,15 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -20,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -38,9 +34,21 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+global $moduleList;
+global $beanList;
+global $beanFiles;
+global $modInvisList;
+global $adminOnlyList;
+global $report_include_modules;
 
 $moduleList = array();
 // this list defines the modules shown in the top tab list of the app
@@ -57,6 +65,7 @@ $moduleList[] = 'Accounts';
 $moduleList[] = 'Opportunities';
 
 $moduleList[] = 'Emails';
+$moduleList[] = 'EmailTemplates';
 $moduleList[] = 'Campaigns';
 $moduleList[] = 'Prospects';
 $moduleList[] = 'ProspectLists';
@@ -67,7 +76,6 @@ $moduleList[] = 'Project';
 $moduleList[] = 'Bugs';
 $moduleList[] = 'ResourceCalendar';
 $moduleList[] = 'AOBH_BusinessHours';
-
 
 $moduleList[] = 'Spots';
 
@@ -117,11 +125,11 @@ $beanList['vCals'] = 'vCal';
 $beanList['CustomFields'] = 'CustomFields';
 $beanList['Alerts'] = 'Alert';
 
-$beanList['Documents']  = 'Document';
-$beanList['DocumentRevisions']  = 'DocumentRevision';
-$beanList['Roles']  = 'Role';
+$beanList['Documents'] = 'Document';
+$beanList['DocumentRevisions'] = 'DocumentRevision';
+$beanList['Roles'] = 'Role';
 
-$beanList['Audit']  = 'Audit';
+$beanList['Audit'] = 'Audit';
 
 // deferred
 //$beanList['Queues'] = 'Queue';
@@ -210,23 +218,61 @@ $beanFiles['AOBH_BusinessHours'] = 'modules/AOBH_BusinessHours/AOBH_BusinessHour
 
 
 // added these lists for security settings for tabs
-$modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connectors',
-    'Dropdown', 'Dynamic', 'DynamicFields', 'DynamicLayout', 'EditCustomFields',
-    'Help', 'Import', 'MySettings', 'EditCustomFields', 'FieldsMetaData',
-    'UpgradeWizard', 'Trackers', 'Connectors', 'Employees', 'Calendar',
-    'Releases', 'Sync',
-    'Users', 'Versions', 'LabelEditor', 'Roles', 'EmailMarketing', 'OptimisticLock', 'TeamMemberships', 'TeamSets', 'TeamSetModule', 'Audit', 'MailMerge', 'MergeRecords', 'EmailAddresses', 'EmailText',
-    'Schedulers', 'Schedulers_jobs', /*'Queues', 'EmailTemplates',*/
-    'CampaignTrackers', 'CampaignLog', 'EmailMan', 'Prospects', 'ProspectLists',
-    'Groups','InboundEmail',
-    'ACLActions', 'ACLRoles',
+$modInvisList = array(
+    'Administration',
+    'Currencies',
+    'CustomFields',
+    'Connectors',
+    'Dropdown',
+    'Dynamic',
+    'DynamicFields',
+    'DynamicLayout',
+    'EditCustomFields',
+    'Help',
+    'Import',
+    'MySettings',
+    'EditCustomFields',
+    'FieldsMetaData',
+    'UpgradeWizard',
+    'Trackers',
+    'Connectors',
+    'Employees',
+    'Calendar',
+    'Releases',
+    'Sync',
+    'Users',
+    'Versions',
+    'LabelEditor',
+    'Roles',
+    'EmailMarketing',
+    'OptimisticLock',
+    'TeamMemberships',
+    'TeamSets',
+    'TeamSetModule',
+    'Audit',
+    'MailMerge',
+    'MergeRecords',
+    'EmailAddresses',
+    'EmailText',
+    'Schedulers',
+    'Schedulers_jobs',
+    'CampaignTrackers',
+    'CampaignLog',
+    'EmailMan',
+    'Prospects',
+    'ProspectLists',
+    'Groups',
+    'InboundEmail',
+    'ACLActions',
+    'ACLRoles',
     'DocumentRevisions',
     'ProjectTask',
     'ModuleBuilder',
     'Alert',
-	'ResourceCalendar',
-	'AOBH_BusinessHours',
-    );
+    'ResourceCalendar',
+    'AOBH_BusinessHours',
+);
+
 $adminOnlyList = array(
     //module => list of actions  (all says all actions are admin only)
     //'Administration'=>array('all'=>1, 'SupportPortal'=>'allow'),
@@ -281,7 +327,6 @@ $GLOBALS['moduleTabMap'] = array(
     'Currencies' => 'Administration',
     'SugarFeed' => 'Administration',
     'DocumentRevisions' => 'Documents',
-    'EmailTemplates' => 'EmailTemplates',
     'EmailMarketing' => 'Campaigns',
 );
 $beanList['EAPM'] = 'EAPM';
@@ -468,10 +513,45 @@ $modules_exempt_from_availability_check['TemplateSectionLine'] = 'TemplateSectio
 $report_include_modules['TemplateSectionLine'] = 'TemplateSectionLine';
 $modInvisList[] = 'TemplateSectionLine';
 
+$beanList['OAuth2Tokens'] = 'OAuth2Tokens';
+$beanFiles['OAuth2Tokens'] = 'modules/OAuth2Tokens/OAuth2Tokens.php';
+$modInvisList[] = 'OAuth2Tokens';
+
+$beanList['OAuth2Clients'] = 'OAuth2Clients';
+$beanFiles['OAuth2Clients'] = 'modules/OAuth2Clients/OAuth2Clients.php';
+$modInvisList[] = 'OAuth2Clients';
+
+
+
+$beanList['SurveyResponses'] = 'SurveyResponses';
+$beanFiles['SurveyResponses'] = 'modules/SurveyResponses/SurveyResponses.php';
+$modules_exempt_from_availability_check['SurveyResponses'] = 'SurveyResponses';
+$report_include_modules['SurveyResponses'] = 'SurveyResponses';
+$modInvisList[] = 'SurveyResponses';
+$beanList['Surveys'] = 'Surveys';
+$beanFiles['Surveys'] = 'modules/Surveys/Surveys.php';
+$moduleList[] = 'Surveys';
+$beanList['SurveyQuestionResponses'] = 'SurveyQuestionResponses';
+$beanFiles['SurveyQuestionResponses'] = 'modules/SurveyQuestionResponses/SurveyQuestionResponses.php';
+$modules_exempt_from_availability_check['SurveyQuestionResponses'] = 'SurveyQuestionResponses';
+$report_include_modules['SurveyQuestionResponses'] = 'SurveyQuestionResponses';
+$modInvisList[] = 'SurveyQuestionResponses';
+$beanList['SurveyQuestions'] = 'SurveyQuestions';
+$beanFiles['SurveyQuestions'] = 'modules/SurveyQuestions/SurveyQuestions.php';
+$modules_exempt_from_availability_check['SurveyQuestions'] = 'SurveyQuestions';
+$report_include_modules['SurveyQuestions'] = 'SurveyQuestions';
+$modInvisList[] = 'SurveyQuestions';
+$beanList['SurveyQuestionOptions'] = 'SurveyQuestionOptions';
+$beanFiles['SurveyQuestionOptions'] = 'modules/SurveyQuestionOptions/SurveyQuestionOptions.php';
+$modules_exempt_from_availability_check['SurveyQuestionOptions'] = 'SurveyQuestionOptions';
+$report_include_modules['SurveyQuestionOptions'] = 'SurveyQuestionOptions';
+$modInvisList[] = 'SurveyQuestionOptions';
+
+
+
 if (file_exists('include/modules_override.php')) {
     include 'include/modules_override.php';
 }
 if (file_exists('custom/application/Ext/Include/modules.ext.php')) {
     include('custom/application/Ext/Include/modules.ext.php');
 }
-?>

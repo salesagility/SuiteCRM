@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +37,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
-class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart 
+class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
 {
     public $lsbo_lead_sources = array();
     public $lsbo_ids          = array();
@@ -61,17 +64,20 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
         global $app_list_strings;
 
         $selected_datax = array();
-        if (!empty($this->lsbo_lead_sources) && sizeof($this->lsbo_lead_sources) > 0)
-            foreach ($this->lsbo_lead_sources as $key)
+        if (!empty($this->lsbo_lead_sources) && sizeof($this->lsbo_lead_sources) > 0) {
+            foreach ($this->lsbo_lead_sources as $key) {
                 $selected_datax[] = $key;
-        else
+            }
+        } else {
             $selected_datax = array_keys($app_list_strings['lead_source_dom']);
+        }
 
         $this->_searchFields['lsbo_lead_sources']['options'] = array_filter($app_list_strings['lead_source_dom']);
         $this->_searchFields['lsbo_lead_sources']['input_name0'] = $selected_datax;
 
-        if (!isset($this->lsbo_ids) || count($this->lsbo_ids) == 0)
+        if (!isset($this->lsbo_ids) || count($this->lsbo_ids) == 0) {
             $this->_searchFields['lsbo_ids']['input_name0'] = array_keys(get_user_array(false));
+        }
 
         return parent::displayOptions();
     }
@@ -114,8 +120,7 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
         */
 
         $currency_symbol = $sugar_config['default_currency_symbol'];
-        if ($current_user->getPreference('currency')){
-
+        if ($current_user->getPreference('currency')) {
             $currency = new Currency();
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
@@ -131,8 +136,9 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
 
 
         $url_params = array();
-        if ( count($this->lsbo_ids) > 0 )
+        if (count($this->lsbo_ids) > 0) {
             $url_params['assigned_user_id'] = array_values($this->lsbo_ids);
+        }
 
 
         $data = $this->getChartData($this->constructQuery());
@@ -157,8 +163,7 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
-        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
-        {
+        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
             return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
@@ -240,9 +245,6 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
 EOD;
 
         return $chart;
-
-
-
     }
 
     /**
@@ -253,18 +255,20 @@ EOD;
         $query = "SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total, ".
             "count(*) as opp_count FROM opportunities ";
         $query .= " WHERE opportunities.deleted=0 ";
-        if ( count($this->lsbo_ids) > 0 )
-            $query .= "AND opportunities.assigned_user_id IN ('".implode("','",$this->lsbo_ids)."') ";
-        if ( count($this->lsbo_lead_sources) > 0 )
-            $query .= "AND opportunities.lead_source IN ('".implode("','",$this->lsbo_lead_sources)."') ";
-        else
-            $query .= "AND opportunities.lead_source IN ('".implode("','",array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
+        if (count($this->lsbo_ids) > 0) {
+            $query .= "AND opportunities.assigned_user_id IN ('".implode("','", $this->lsbo_ids)."') ";
+        }
+        if (count($this->lsbo_lead_sources) > 0) {
+            $query .= "AND opportunities.lead_source IN ('".implode("','", $this->lsbo_lead_sources)."') ";
+        } else {
+            $query .= "AND opportunities.lead_source IN ('".implode("','", array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
+        }
         $query .= " GROUP BY sales_stage,lead_source ORDER BY lead_source,sales_stage";
 
         return $query;
     }
 
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
         $chart['labels'] = array();
@@ -273,19 +277,18 @@ EOD;
         $chart['key'] = array();
         $chart['tooltips']= array();
 
-        foreach($data as $i)
-        {
+        foreach ($data as $i) {
             $key = $i["lead_source"];
             $keyDom = $i["lead_source_dom_option"];
             $stage = $i["sales_stage"];
             $stageDom = $i["sales_stage_dom_option"];
-            if(!in_array($key,$chart['labels']))
-            {
+            if (!in_array($key, $chart['labels'])) {
                 $chart['labels'][] = $key;
                 $chart['data'][] = array();
             }
-            if(!in_array($stage,$chart['key']))
+            if (!in_array($stage, $chart['key'])) {
                 $chart['key'][] = $stage;
+            }
 
             $formattedFloat = (float)number_format((float)$i["total"], 2, '.', '');
             $chart['data'][count($chart['data'])-1][] = $formattedFloat;
@@ -293,6 +296,4 @@ EOD;
         }
         return $chart;
     }
-
-
 }

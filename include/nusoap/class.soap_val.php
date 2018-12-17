@@ -13,7 +13,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -39,7 +39,9 @@ r354 - 2004-08-02 23:00:37 -0700 (Mon, 02 Aug 2004) - sugarjacob - Adding Soap
 */
 
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 
@@ -55,94 +57,93 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access   public
 */
-class soapval extends nusoap_base {
-	/**
-	 * The XML element name
-	 *
-	 * @var string
-	 * @access private
-	 */
-	var $name;
-	/**
-	 * The XML type name (string or false)
-	 *
-	 * @var mixed
-	 * @access private
-	 */
-	var $type;
-	/**
-	 * The PHP value
-	 *
-	 * @var mixed
-	 * @access private
-	 */
-	var $value;
-	/**
-	 * The XML element namespace (string or false)
-	 *
-	 * @var mixed
-	 * @access private
-	 */
-	var $element_ns;
-	/**
-	 * The XML type namespace (string or false)
-	 *
-	 * @var mixed
-	 * @access private
-	 */
-	var $type_ns;
-	/**
-	 * The XML element attributes (array or false)
-	 *
-	 * @var mixed
-	 * @access private
-	 */
-	var $attributes;
+class soapval extends nusoap_base
+{
+    /**
+     * The XML element name
+     *
+     * @var string
+     * @access private
+     */
+    public $name;
+    /**
+     * The XML type name (string or false)
+     *
+     * @var mixed
+     * @access private
+     */
+    public $type;
+    /**
+     * The PHP value
+     *
+     * @var mixed
+     * @access private
+     */
+    public $value;
+    /**
+     * The XML element namespace (string or false)
+     *
+     * @var mixed
+     * @access private
+     */
+    public $element_ns;
+    /**
+     * The XML type namespace (string or false)
+     *
+     * @var mixed
+     * @access private
+     */
+    public $type_ns;
+    /**
+     * The XML element attributes (array or false)
+     *
+     * @var mixed
+     * @access private
+     */
+    public $attributes;
 
-	/**
-	* constructor
-	*
-	* @param    string $name optional name
-	* @param    mixed $type optional type name
-	* @param	mixed $value optional value
-	* @param	mixed $element_ns optional namespace of value
-	* @param	mixed $type_ns optional namespace of type
-	* @param	mixed $attributes associative array of attributes to add to element serialization
-	* @access   public
-	*/
-  	function soapval($name='soapval',$type=false,$value=-1,$element_ns=false,$type_ns=false,$attributes=false) {
-		parent::nusoap_base();
-		$this->name = $name;
-		$this->type = $type;
-		$this->value = $value;
-		$this->element_ns = $element_ns;
-		$this->type_ns = $type_ns;
-		$this->attributes = $attributes;
+    /**
+    * constructor
+    *
+    * @param    string $name optional name
+    * @param    mixed $type optional type name
+    * @param	mixed $value optional value
+    * @param	mixed $element_ns optional namespace of value
+    * @param	mixed $type_ns optional namespace of type
+    * @param	mixed $attributes associative array of attributes to add to element serialization
+    * @access   public
+    */
+    public function soapval($name='soapval', $type=false, $value=-1, $element_ns=false, $type_ns=false, $attributes=false)
+    {
+        parent::nusoap_base();
+        $this->name = $name;
+        $this->type = $type;
+        $this->value = $value;
+        $this->element_ns = $element_ns;
+        $this->type_ns = $type_ns;
+        $this->attributes = $attributes;
     }
 
-	/**
-	* return serialized value
-	*
-	* @param	string $use The WSDL use value (encoded|literal)
-	* @return	string XML data
-	* @access   public
-	*/
-	function serialize($use='encoded') {
-		return $this->serialize_val($this->value, $this->name, $this->type, $this->element_ns, $this->type_ns, $this->attributes, $use, true);
+    /**
+    * return serialized value
+    *
+    * @param	string $use The WSDL use value (encoded|literal)
+    * @return	string XML data
+    * @access   public
+    */
+    public function serialize($use='encoded')
+    {
+        return $this->serialize_val($this->value, $this->name, $this->type, $this->element_ns, $this->type_ns, $this->attributes, $use, true);
     }
 
-	/**
-	* decodes a soapval object into a PHP native type
-	*
-	* @return	mixed
-	* @access   public
-	*/
-	function decode(){
-		return $this->value;
-	}
+    /**
+    * decodes a soapval object into a PHP native type
+    *
+    * @return	mixed
+    * @access   public
+    */
+    public function decode()
+    {
+        return $this->value;
+    }
 }
-
-
-
-
-?>

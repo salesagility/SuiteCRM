@@ -31,7 +31,7 @@ class PHPMailer
      * The PHPMailer Version number.
      * @var string
      */
-    public $Version = '5.2.21';
+    public $Version = '5.2.25';
 
     /**
      * Email priority.
@@ -440,9 +440,9 @@ class PHPMailer
      *
      * Parameters:
      *   boolean $result        result of the send action
-     *   string  $to            email address of the recipient
-     *   string  $cc            cc email addresses
-     *   string  $bcc           bcc email addresses
+     *   array   $to            email addresses of the recipients
+     *   array   $cc            cc email addresses
+     *   array   $bcc           bcc email addresses
      *   string  $subject       the subject
      *   string  $body          the email body
      *   string  $from          email address of sender
@@ -1029,6 +1029,7 @@ class PHPMailer
         if ($auto) {
             if (empty($this->Sender)) {
                 $this->Sender = $address;
+                isValidEmailAddress($this->Sender);
             }
         }
         return true;
@@ -1295,7 +1296,8 @@ class PHPMailer
             // Sign with DKIM if enabled
             if (!empty($this->DKIM_domain)
                 && !empty($this->DKIM_selector)
-                && (!empty($this->DKIM_private_string)
+                && (
+                    !empty($this->DKIM_private_string)
                    || (!empty($this->DKIM_private) && file_exists($this->DKIM_private))
                 )
             ) {
@@ -1622,8 +1624,13 @@ class PHPMailer
 
         foreach ($hosts as $hostentry) {
             $hostinfo = array();
-            if (!preg_match('/^((ssl|tls):\/\/)*([a-zA-Z0-9\.-]*):?([0-9]*)$/', trim($hostentry), $hostinfo)) {
+            if (!preg_match(
+                '/^((ssl|tls):\/\/)*([a-zA-Z0-9\.-]*|\[[a-fA-F0-9:]+\]):?([0-9]*)$/',
+                trim($hostentry),
+                $hostinfo
+            )) {
                 // Not a valid host entry
+                $this->edebug('Ignoring invalid host: ' . $hostentry);
                 continue;
             }
             // $hostinfo[2]: optional ssl or tls prefix
@@ -1742,6 +1749,7 @@ class PHPMailer
             'dk' => 'da',
             'no' => 'nb',
             'se' => 'sv',
+            'sr' => 'rs'
         );
 
         if (isset($renamed_langcodes[$langcode])) {
@@ -1834,11 +1842,10 @@ class PHPMailer
     {
         if (empty($addr[1])) { // No name provided
             return $this->secureHeader($addr[0]);
-        } else {
-            return $this->encodeHeader($this->secureHeader($addr[1]), 'phrase') . ' <' . $this->secureHeader(
+        }
+        return $this->encodeHeader($this->secureHeader($addr[1]), 'phrase') . ' <' . $this->secureHeader(
                 $addr[0]
             ) . '>';
-        }
     }
 
     /**
@@ -2024,10 +2031,7 @@ class PHPMailer
     {
         $result = '';
 
-        if ($this->MessageDate == '') {
-            $this->MessageDate = self::rfcDate();
-        }
-        $result .= $this->headerLine('Date', $this->MessageDate);
+        $result .= $this->headerLine('Date', $this->MessageDate == '' ? self::rfcDate() : $this->MessageDate);
 
         // To be created automatically by mail()
         if ($this->SingleTo) {
@@ -2182,7 +2186,8 @@ class PHPMailer
      * Create unique ID
      * @return string
      */
-    protected function generateId() {
+    protected function generateId()
+    {
         return md5(uniqid(time()));
     }
 
@@ -2492,6 +2497,7 @@ class PHPMailer
 
     /**
      * Add an attachment from a path on the filesystem.
+     * Never use a user-supplied path to a file!
      * Returns false if the file could not be found or read.
      * @param string $path Path to the attachment.
      * @param string $name Overrides the attachment name.
@@ -2528,7 +2534,6 @@ class PHPMailer
                 6 => $disposition,
                 7 => 0
             );
-
         } catch (phpmailerException $exc) {
             $this->setError($exc->getMessage());
             $this->edebug($exc->getMessage());
@@ -2769,9 +2774,8 @@ class PHPMailer
                     $encoded = addcslashes($str, "\0..\37\177\\\"");
                     if (($str == $encoded) && !preg_match('/[^A-Za-z0-9!#$%&\'*+\/=?^_`{|}~ -]/', $str)) {
                         return ($encoded);
-                    } else {
-                        return ("\"$encoded\"");
                     }
+                    return ("\"$encoded\"");
                 }
                 $matchcount = preg_match_all('/[^\040\041\043-\133\135-\176]/', $str, $matches);
                 break;
@@ -2779,6 +2783,7 @@ class PHPMailer
             case 'comment':
                 $matchcount = preg_match_all('/[()"]/', $str, $matches);
                 // Intentional fall-through
+                // no break
             case 'text':
             default:
                 $matchcount += preg_match_all('/[\000-\010\013\014\016-\037\177-\377]/', $str, $matches);
@@ -2827,9 +2832,8 @@ class PHPMailer
     {
         if (function_exists('mb_strlen')) {
             return (strlen($str) > mb_strlen($str, $this->CharSet));
-        } else { // Assume no multibytes (we can't handle without mbstring functions anyway)
-            return false;
-        }
+        }   // Assume no multibytes (we can't handle without mbstring functions anyway)
+        return false;
     }
 
     /**
@@ -2951,6 +2955,7 @@ class PHPMailer
                 $pattern = '\(\)"';
                 // intentional fall-through
                 // for this reason we build the $pattern without including delimiters and []
+                // no break
             case 'text':
             default:
                 // RFC 2047 section 5.1
@@ -3017,6 +3022,7 @@ class PHPMailer
      * displayed inline with the message, not just attached for download.
      * This is used in HTML messages that embed the images
      * the HTML refers to using the $cid value.
+     * Never use a user-supplied path to a file!
      * @param string $path Path to the attachment.
      * @param string $cid Content ID of the attachment; Use this to reference
      *        the content when using an embedded image in HTML.
@@ -3314,10 +3320,9 @@ class PHPMailer
                 return $this->language[$key] . ' https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting';
             }
             return $this->language[$key];
-        } else {
-            //Return the key as a fallback
-            return $key;
         }
+        //Return the key as a fallback
+        return $key;
     }
 
     /**
@@ -3380,12 +3385,14 @@ class PHPMailer
      * Create a message body from an HTML string.
      * Automatically inlines images and creates a plain-text version by converting the HTML,
      * overwriting any existing values in Body and AltBody.
-     * $basedir is used when handling relative image paths, e.g. <img src="images/a.png">
+     * Do not source $message content from user input!
+     * $basedir is prepended when handling relative URLs, e.g. <img src="/images/a.png"> and must not be empty
      * will look for an image file in $basedir/images/a.png and convert it to inline.
-     * If you don't want to apply these transformations to your HTML, just set Body and AltBody yourself.
+     * If you don't provide a $basedir, relative paths will be left untouched (and thus probably break in email)
+     * If you don't want to apply these transformations to your HTML, just set Body and AltBody directly.
      * @access public
      * @param string $message HTML message string
-     * @param string $basedir base directory for relative paths to images
+     * @param string $basedir Absolute path to a base directory to prepend to relative paths to images
      * @param boolean|callable $advanced Whether to use the internal HTML to text converter
      *    or your own custom converter @see PHPMailer::html2text()
      * @return string $message The transformed message Body
@@ -3394,6 +3401,10 @@ class PHPMailer
     {
         preg_match_all('/(src|background)=["\'](.*)["\']/Ui', $message, $images);
         if (array_key_exists(2, $images)) {
+            if (strlen($basedir) > 1 && substr($basedir, -1) != '/') {
+                // Ensure $basedir has a trailing /
+                $basedir .= '/';
+            }
             foreach ($images[2] as $imgindex => $url) {
                 // Convert data URIs into embedded images
                 if (preg_match('#^data:(image[^;,]*)(;base64)?,#', $url, $match)) {
@@ -3411,18 +3422,24 @@ class PHPMailer
                             $message
                         );
                     }
-                } elseif (substr($url, 0, 4) !== 'cid:' && !preg_match('#^[a-z][a-z0-9+.-]*://#i', $url)) {
-                    // Do not change urls for absolute images (thanks to corvuscorax)
+                    continue;
+                }
+                if (
+                    // Only process relative URLs if a basedir is provided (i.e. no absolute local paths)
+                    !empty($basedir)
+                    // Ignore URLs containing parent dir traversal (..)
+                    && (strpos($url, '..') === false)
                     // Do not change urls that are already inline images
+                    && substr($url, 0, 4) !== 'cid:'
+                    // Do not change absolute URLs, including anonymous protocol
+                    && !preg_match('#^[a-z][a-z0-9+.-]*:?//#i', $url)
+                ) {
                     $filename = basename($url);
                     $directory = dirname($url);
                     if ($directory == '.') {
                         $directory = '';
                     }
                     $cid = md5($url) . '@phpmailer.0'; // RFC2392 S 2
-                    if (strlen($basedir) > 1 && substr($basedir, -1) != '/') {
-                        $basedir .= '/';
-                    }
                     if (strlen($directory) > 1 && substr($directory, -1) != '/') {
                         $directory .= '/';
                     }
@@ -3685,10 +3702,9 @@ class PHPMailer
         if (property_exists($this, $name)) {
             $this->$name = $value;
             return true;
-        } else {
-            $this->setError($this->lang('variable_set') . $name);
-            return false;
         }
+        $this->setError($this->lang('variable_set') . $name);
+        return false;
     }
 
     /**
@@ -4019,7 +4035,7 @@ class phpmailerException extends Exception
      */
     public function errorMessage()
     {
-        $errorMsg = '<strong>' . $this->getMessage() . "</strong><br />\n";
+        $errorMsg = '<strong>' . htmlspecialchars($this->getMessage()) . "</strong><br />\n";
         return $errorMsg;
     }
 }

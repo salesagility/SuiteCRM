@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,107 +34,134 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-require_once('include/SugarObjects/templates/basic/Basic.php');
-require_once('include/upload_file.php');
-require_once('include/formbase.php');
+require_once 'include/SugarObjects/templates/basic/Basic.php';
+require_once 'include/upload_file.php';
+require_once 'include/formbase.php';
 
 class File extends Basic
 {
-	public $file_url;
-	public $file_url_noimage;
+    public $file_url;
+    public $file_url_noimage;
     public $file_ext;
+    public $document_name;
+    public $filename;
+    public $uploadfile;
+    public $status;
+    public $file_mime_type;
 
-    function __construct(){
-		parent::__construct();
-	}
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * File constructor.
      */
-    function File(){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be removed in 8.0,
+     *     please update your code, use __construct instead
+     */
+    public function File()
+    {
+        $deprecatedMessage =
+            'PHP4 Style Constructors are deprecated and will be remove in 8.0, please update your code';
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
+    /**
+     * @see SugarBean::save()
+     *
+     * @param bool $check_notify
+     *
+     * @return string
+     */
+    public function save($check_notify = false)
+    {
+        if (!empty($this->uploadfile)) {
+            $this->filename = $this->uploadfile;
+        }
 
-	/**
-	 * @see SugarBean::save()
-	 */
-	public function save($check_notify=false)
-	{
-		if (!empty($this->uploadfile)) {
-			$this->filename = $this->uploadfile;
-		}
+        return parent::save($check_notify);
+    }
 
-		return parent::save($check_notify);
- 	}
+    /**
+     * @see SugarBean::fill_in_additional_detail_fields()
+     */
+    public function fill_in_additional_detail_fields()
+    {
+        global $app_list_strings;
+        global $img_name;
+        global $img_name_bare;
 
- 	/**
-	 * @see SugarBean::fill_in_additional_detail_fields()
-	 */
-	public function fill_in_additional_detail_fields()
- 	{
-		global $app_list_strings;
-		global $img_name;
-		global $img_name_bare;
+        $this->uploadfile = $this->filename;
 
-		$this->uploadfile = $this->filename;
+        // Bug 41453 - Make sure we call the parent method as well
+        parent::fill_in_additional_detail_fields();
 
-		// Bug 41453 - Make sure we call the parent method as well
-		parent::fill_in_additional_detail_fields();
+        if (!empty($this->file_ext)) {
+            $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($this->file_ext) . '_image_inline.gif');
+            $img_name_bare = strtolower($this->file_ext) . '_image_inline';
+        }
 
-		if (!$this->file_ext) {
-			$img_name = SugarThemeRegistry::current()->getImageURL(strtolower($this->file_ext)."_image_inline.gif");
-			$img_name_bare = strtolower($this->file_ext)."_image_inline";
-		}
+        //set default file name.
+        if (!empty($img_name) && file_exists($img_name)) {
+            $img_name = $img_name_bare;
+        } else {
+            $img_name = 'def_image_inline'; //todo change the default image.
+        }
+        $this->file_url_noimage = $this->id;
 
-		//set default file name.
-		if (!empty ($img_name) && file_exists($img_name)) {
-			$img_name = $img_name_bare;
-		}
-		else {
-			$img_name = "def_image_inline"; //todo change the default image.
-		}
-		$this->file_url_noimage = $this->id;
+        if (!empty($this->status_id)) {
+            $this->status = $app_list_strings['document_status_dom'][$this->status_id];
+        }
+    }
 
-		if(!empty($this->status_id)) {
-	       $this->status = $app_list_strings['document_status_dom'][$this->status_id];
-	    }
-	}
+    /**
+     * @see SugarBean::retrieve()
+     *
+     * @param int $id
+     * @param bool $encode
+     * @param bool $deleted
+     *
+     * @return SugarBean
+     */
+    public function retrieve($id = -1, $encode = true, $deleted = true)
+    {
+        $ret_val = parent::retrieve($id, $encode, $deleted);
 
-	/**
-	 * @see SugarBean::retrieve()
-	 */
-	public function retrieve($id = -1, $encode=true, $deleted=true)
-	{
-		$ret_val = parent::retrieve($id, $encode, $deleted);
+        //If statement added to prevent the 'name' from being overwritten with a null value
+        if ($this->document_name !== null) {
+            $this->name = $this->document_name;
+        }
 
-		$this->name = $this->document_name;
-
-		return $ret_val;
-	}
+        return $ret_val;
+    }
 
     /**
      * Method to delete an attachment
      *
-     * @param string $isduplicate
+     * @param string $isDuplicate
+     *
      * @return bool
      */
-    public function deleteAttachment($isduplicate = "false")
+    public function deleteAttachment($isDuplicate = 'false')
     {
         if ($this->ACLAccess('edit')) {
-            if ($isduplicate == "true") {
+            if ($isDuplicate === 'true') {
                 return true;
             }
             $removeFile = "upload://{$this->id}";
@@ -143,11 +170,12 @@ class File extends Basic
             if (!unlink($removeFile)) {
                 $GLOBALS['log']->error("*** Could not unlink() file: [ {$removeFile} ]");
             } else {
-                $this->uploadfile = '';$this->uploadfile = '';
+                $this->uploadfile = '';
                 $this->filename = '';
                 $this->file_mime_type = '';
                 $this->file_ext = '';
                 $this->save();
+
                 return true;
             }
         } else {
@@ -156,8 +184,10 @@ class File extends Basic
             $this->file_mime_type = '';
             $this->file_ext = '';
             $this->save();
+
             return true;
         }
+
         return false;
     }
 }

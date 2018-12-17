@@ -482,7 +482,6 @@ temporary rendered events).
 .fc-row .fc-content-skeleton td,
 .fc-row .fc-helper-skeleton td {
 	/* see-through to the background below */
-	background: none; /* in case <td>s are globally styled */
 	border-color: transparent;
 
 	/* don't put a border between events and/or the day number */

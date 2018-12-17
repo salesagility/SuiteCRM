@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,44 +34,144 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $viewdefs['Users']['DetailView'] = array(
-    'templateMeta' => array('maxColumns' => '2', 
-                            'widths' => array(
-                                array('label' => '10', 'field' => '30'), 
-                                array('label' => '10', 'field' => '30')
-                            ),
-                            'form' => array(
-                                'headerTpl'=>'modules/Users/tpls/DetailViewHeader.tpl',
-                                'footerTpl'=>'modules/Users/tpls/DetailViewFooter.tpl',
-                            ),
-                      ),
-    'panels' => array (
-        'LBL_USER_INFORMATION' => array (
-            array('full_name','user_name'),
-            array('status',
-                  array(
-                      'name'=>'UserType',
-                      'customCode'=>'{$USER_TYPE_READONLY}',
-                  ),
-            ),
-            array('photo'),
+    'templateMeta' =>
+        array(
+            'form' =>
+                array(
+                    /**
+                     * Actions for users are configured in modules/Users/views/view.detail.php
+                     * This is to control security access to the actions based on the user and system preferences.
+                     * To customise in an upgrade safe way, You need to create custom view instead.
+                     * Then override UsersViewDetail::preDisplay().
+                     */
+                    'buttons' => array(),
+                ),
+            'maxColumns' => '2',
+            'widths' =>
+                array(
+                    0 =>
+                        array(
+                            'label' => '10',
+                            'field' => '30',
+                        ),
+                    1 =>
+                        array(
+                            'label' => '10',
+                            'field' => '30',
+                        ),
+                ),
+            'useTabs' => true,
+            'tabDefs' =>
+                array(
+                    'LBL_USER_INFORMATION' =>
+                        array(
+                            'newTab' => true,
+                            'panelDefault' => 'expanded',
+                        ),
+                    'LBL_EMPLOYEE_INFORMATION' =>
+                        array(
+                            'newTab' => false,
+                            'panelDefault' => 'collapsed',
+                        ),
+                ),
         ),
-        'LBL_EMPLOYEE_INFORMATION' => array(
-            array('employee_status','show_on_employees'),
-            array('title','phone_work'),
-            array('department','phone_mobile'),
-            array('reports_to_name','phone_other'),
-            array('','phone_fax'),
-            array('','phone_home'),
-            array('messenger_type','messenger_id'),
-            array('address_street','address_city'),
-            array('address_state','address_postalcode'),
-            array('address_country'),
-            array('description'),
+    'useTabs' => true,
+    'tabDefs' =>
+        array(
+            'LBL_USER_INFORMATION' =>
+                array(
+                    'newTab' => true,
+                    'panelDefault' => 'expanded',
+                ),
+            'LBL_EMPLOYEE_INFORMATION' =>
+                array(
+                    'newTab' => true,
+                    'panelDefault' => 'expanded',
+                ),
         ),
-    ),
+    'panels' =>
+        array(
+            'LBL_USER_INFORMATION' =>
+                array(
+                    0 =>
+                        array(
+                            0 => 'full_name',
+                            1 => 'user_name',
+                        ),
+                    1 =>
+                        array(
+                            0 => 'status',
+                            1 =>
+                                array(
+                                    'name' => 'UserType',
+                                    'customCode' => '{$USER_TYPE_READONLY}',
+                                ),
+                        ),
+                    2 =>
+                        array(
+                            0 => 'photo',
+                        ),
+                ),
+            'LBL_EMPLOYEE_INFORMATION' =>
+                array(
+                    0 =>
+                        array(
+                            0 => 'employee_status',
+                            1 => 'show_on_employees',
+                        ),
+                    1 =>
+                        array(
+                            0 => 'title',
+                            1 => 'phone_work',
+                        ),
+                    2 =>
+                        array(
+                            0 => 'department',
+                            1 => 'phone_mobile',
+                        ),
+                    3 =>
+                        array(
+                            0 => 'reports_to_name',
+                            1 => 'phone_other',
+                        ),
+                    4 =>
+                        array(
+                            0 => '',
+                            1 => 'phone_fax',
+                        ),
+                    5 =>
+                        array(
+                            0 => '',
+                            1 => 'phone_home',
+                        ),
+                    6 =>
+                        array(
+                            0 => 'messenger_type',
+                            1 => 'messenger_id',
+                        ),
+                    7 =>
+                        array(
+                            0 => 'address_street',
+                            1 => 'address_city',
+                        ),
+                    8 =>
+                        array(
+                            0 => 'address_state',
+                            1 => 'address_postalcode',
+                        ),
+                    9 =>
+                        array(
+                            0 => 'address_country',
+                        ),
+                    10 =>
+                        array(
+                            0 => 'description',
+                        ),
+                ),
+        ),
 );

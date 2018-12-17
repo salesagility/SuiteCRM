@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,22 +34,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+
+/* * *******************************************************************************
 
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
- ********************************************************************************/
+ * ****************************************************************************** */
 
 // logic will be added here at a later date to track campaigns
 // this script; currently forwards to site_URL variable of $sugar_config
 // redirect URL will also be added so specified redirect URL can be used
-
 // additionally, another script using fopen will be used to call this
 // script externally
 
@@ -59,46 +63,33 @@ $GLOBALS['log'] = LoggerManager::getLogger('Campaign Tracker v2');
 
 $db = DBManagerFactory::getInstance();
 
-if(empty($_REQUEST['track'])) {
-	$track = "";
+if (empty($_REQUEST['track'])) {
+    $track = "";
 } else {
-	$track = $_REQUEST['track'];
+    $track = $_REQUEST['track'];
 }
-if(!empty($_REQUEST['identifier'])) {
-	$keys=log_campaign_activity($_REQUEST['identifier'],'link',true,$track);
-    
-}else{
+if (!empty($_REQUEST['identifier'])) {
+    $keys = log_campaign_activity($_REQUEST['identifier'], 'link', true, $track);
+} else {
     //if this has no identifier, then this is a web/banner campaign
     //pass in with id set to string 'BANNER'
-    $keys=log_campaign_activity('BANNER','link',true,$track);
-
+    $keys = log_campaign_activity('BANNER', 'link', true, $track);
 }
 
-$track = $db->quote($track);
 
-if(preg_match('/^[0-9A-Za-z\-]*$/', $track))
-{
-	$query = "SELECT tracker_url FROM campaign_trkrs WHERE id='$track'";
-	$res = $db->query($query);
 
-	$row = $db->fetchByAssoc($res);
+if (preg_match('/^[0-9A-Za-z\-]*$/', $track)) {
+    $track = $db->quote($track);
+    $query = "SELECT tracker_url FROM campaign_trkrs WHERE id='$track'";
+    $res = $db->query($query);
 
-	$redirect_URL = $row['tracker_url'];
-	sugar_cleanup();
-	$header_URL = "Location: $redirect_URL";
+    $row = $db->fetchByAssoc($res);
 
-	if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
-		$href = $matches[1];
-		SugarApplication::redirect($href);
-	}
-	else {
-		header($header_URL);
-	}
-
-}
-else
-{
-	sugar_cleanup();
+    $redirect_URL = $row['tracker_url'];
+    sugar_cleanup();
+    $header_URL = "Location: $redirect_URL";
+    SugarApplication::headerRedirect($header_URL);
+} else {
+    sugar_cleanup();
 }
 exit;
-?>

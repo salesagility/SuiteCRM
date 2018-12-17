@@ -60,7 +60,7 @@ foreach($unifile AS $line) {
 	if ($smp && preg_match('/^(1[0-9A-Za-z]{4});/',$line,$m)) { 
 	  $unichars[hexdec($m[1])] = hexdec($m[1]);
 	}
-	else if (preg_match('/^([0-9A-Za-z]{4});/',$line,$m)) { 
+	elseif (preg_match('/^([0-9A-Za-z]{4});/',$line,$m)) { 
 	  $unichars[hexdec($m[1])] = hexdec($m[1]);
 	}
 }
@@ -146,12 +146,12 @@ $justfinishedblankinvalid = false;
 					}
 					$justfinishedblankinvalid = true;
 				}
-    				else if (!$justfinishedblank ) { 
+    				elseif (!$justfinishedblank ) { 
 					$html .= '<tr><td colspan="18" style="background-color:#FFAAAA; font-size: 4pt;">&nbsp;</td></tr>'; 
 					$justfinishedblank = true;
 				}
 			}
-			else if($range) {
+			elseif($range) {
 				$html .= '</tr></table><br />';
 				$mpdf->WriteHTML($html); $html = '';
 				$html .= '<table cellpadding="2" cellspacing="0" style="font-family:'.$font.';text-align:center; border-collapse: collapse; ">';
@@ -198,7 +198,7 @@ $justfinishedblankinvalid = false;
             $html .= '<td><b>'.sprintf('%03X', floor($i / 16)).'-</b></td>';
         }
 	  if ($mpdf->_charDefined($cw, $i)) { $html .= '<td>&#'.$i.';</td>'; $counter++; }
-	  else if (isset($unichars[$i])) { $html .= '<td style="background-color: #FFAAAA;"></td>'; }
+	  elseif (isset($unichars[$i])) { $html .= '<td style="background-color: #FFAAAA;"></td>'; }
 	  else { $html .= '<td style="background-color: #555555;"></td>'; }
     }
 
