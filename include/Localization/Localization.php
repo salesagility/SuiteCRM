@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Localization manager
@@ -122,19 +123,19 @@ class Localization
     public function getLocaleConfigDefaults()
     {
         $coreDefaults = array(
-            'currency'								=> '',
-            'datef'									=> 'm/d/Y',
-            'timef'									=> 'H:i',
-            'default_currency_significant_digits'	=> 2,
-            'default_currency_symbol'				=> '$',
-            'default_export_charset'				=> $this->default_export_charset,
-            'default_locale_name_format'			=> 's f l',
+            'currency'                                => '',
+            'datef'                                    => 'm/d/Y',
+            'timef'                                    => 'H:i',
+            'default_currency_significant_digits'    => 2,
+            'default_currency_symbol'                => '$',
+            'default_export_charset'                => $this->default_export_charset,
+            'default_locale_name_format'            => 's f l',
             'name_formats'                          => array('s f l' => 's f l', 'f l' => 'f l', 's l' => 's l', 'l, s f' => 'l, s f',
                                                             'l, f' => 'l, f', 's l, f' => 's l, f', 'l s f' => 'l s f', 'l f s' => 'l f s'),
-            'default_number_grouping_seperator'		=> ',',
-            'default_decimal_seperator'				=> '.',
-            'export_delimiter'						=> ',',
-            'default_email_charset'					=> $this->default_email_charset,
+            'default_number_grouping_seperator'        => ',',
+            'default_decimal_seperator'                => '.',
+            'export_delimiter'                        => ',',
+            'default_email_charset'                    => $this->default_email_charset,
         );
 
         return $coreDefaults;
@@ -205,8 +206,8 @@ class Localization
         if (!is_array($load)) {
             // load default from config.php
             $this->currencies['-99'] = array(
-                'name'		=> $sugar_config['default_currency_name'],
-                'symbol'	=> $sugar_config['default_currency_symbol'],
+                'name'        => $sugar_config['default_currency_name'],
+                'symbol'    => $sugar_config['default_currency_symbol'],
                 'conversion_rate' => 1
                 );
 
@@ -243,51 +244,51 @@ class Localization
     public function getDefaultCurrencies()
     {
         $ret = array(
-            'AUD' => array(	'name'		=> 'Australian Dollars',
-                            'iso4217'	=> 'AUD',
-                            'symbol'	=> '$'),
-            'BRL' => array(	'name'		=> 'Brazilian Reais',
-                            'iso4217'	=> 'BRL',
-                            'symbol'	=> 'R$'),
-            'GBP' => array(	'name'		=> 'British Pounds',
-                            'iso4217'	=> 'GBP',
-                            'symbol'	=> '£'),
-            'CAD' => array(	'name'		=> 'Canadian Dollars',
-                            'iso4217'	=> 'CAD',
-                            'symbol'	=> '$'),
-            'CNY' => array(	'name'		=> 'Chinese Yuan',
-                            'iso4217'	=> 'CNY',
-                            'symbol'	=> '￥'),
-            'EUR' => array(	'name'		=> 'Euro',
-                            'iso4217'	=> 'EUR',
-                            'symbol'	=> '€'),
-            'HKD' => array(	'name'		=> 'Hong Kong Dollars',
-                            'iso4217'	=> 'HKD',
-                            'symbol'	=> '$'),
-            'INR' => array(	'name'		=> 'Indian Rupees',
-                            'iso4217'	=> 'INR',
-                            'symbol'	=> '₨'),
-            'KRW' => array(	'name'		=> 'Korean Won',
-                            'iso4217'	=> 'KRW',
-                            'symbol'	=> '₩'),
-            'YEN' => array(	'name'		=> 'Japanese Yen',
-                            'iso4217'	=> 'JPY',
-                            'symbol'	=> '¥'),
-            'MXN' => array(	'name'		=> 'Mexican Pesos',
-                            'iso4217'	=> 'MXN',
-                            'symbol'	=> '$'),
-            'SGD' => array(	'name'		=> 'Singaporean Dollars',
-                            'iso4217'	=> 'SGD',
-                            'symbol'	=> '$'),
-            'CHF' => array(	'name'		=> 'Swiss Franc',
-                            'iso4217'	=> 'CHF',
-                            'symbol'	=> 'SFr.'),
-            'THB' => array(	'name'		=> 'Thai Baht',
-                            'iso4217'	=> 'THB',
-                            'symbol'	=> '฿'),
-            'USD' => array(	'name'		=> 'US Dollars',
-                            'iso4217'	=> 'USD',
-                            'symbol'	=> '$'),
+            'AUD' => array(    'name'        => 'Australian Dollars',
+                            'iso4217'    => 'AUD',
+                            'symbol'    => '$'),
+            'BRL' => array(    'name'        => 'Brazilian Reais',
+                            'iso4217'    => 'BRL',
+                            'symbol'    => 'R$'),
+            'GBP' => array(    'name'        => 'British Pounds',
+                            'iso4217'    => 'GBP',
+                            'symbol'    => '£'),
+            'CAD' => array(    'name'        => 'Canadian Dollars',
+                            'iso4217'    => 'CAD',
+                            'symbol'    => '$'),
+            'CNY' => array(    'name'        => 'Chinese Yuan',
+                            'iso4217'    => 'CNY',
+                            'symbol'    => '￥'),
+            'EUR' => array(    'name'        => 'Euro',
+                            'iso4217'    => 'EUR',
+                            'symbol'    => '€'),
+            'HKD' => array(    'name'        => 'Hong Kong Dollars',
+                            'iso4217'    => 'HKD',
+                            'symbol'    => '$'),
+            'INR' => array(    'name'        => 'Indian Rupees',
+                            'iso4217'    => 'INR',
+                            'symbol'    => '₨'),
+            'KRW' => array(    'name'        => 'Korean Won',
+                            'iso4217'    => 'KRW',
+                            'symbol'    => '₩'),
+            'YEN' => array(    'name'        => 'Japanese Yen',
+                            'iso4217'    => 'JPY',
+                            'symbol'    => '¥'),
+            'MXN' => array(    'name'        => 'Mexican Pesos',
+                            'iso4217'    => 'MXN',
+                            'symbol'    => '$'),
+            'SGD' => array(    'name'        => 'Singaporean Dollars',
+                            'iso4217'    => 'SGD',
+                            'symbol'    => '$'),
+            'CHF' => array(    'name'        => 'Swiss Franc',
+                            'iso4217'    => 'CHF',
+                            'symbol'    => 'SFr.'),
+            'THB' => array(    'name'        => 'Thai Baht',
+                            'iso4217'    => 'THB',
+                            'symbol'    => '฿'),
+            'USD' => array(    'name'        => 'US Dollars',
+                            'iso4217'    => 'USD',
+                            'symbol'    => '$'),
         );
 
         return $ret;
@@ -495,13 +496,13 @@ class Localization
      */
     public function getLocaleFormattedNumber($number, $currencySymbol='', $is_currency=true, $user=null)
     {
-        $fnum			= $number;
-        $majorDigits	= '';
-        $minorDigits	= '';
-        $dec			= $this->getDecimalSeparator($user);
-        $thou			= $this->getNumberGroupingSeparator($user);
-        $precision		= $this->getPrecision($user);
-        $symbol			= empty($currencySymbol) ? $this->getCurrencySymbol($user) : $currencySymbol;
+        $fnum            = $number;
+        $majorDigits    = '';
+        $minorDigits    = '';
+        $dec            = $this->getDecimalSeparator($user);
+        $thou            = $this->getNumberGroupingSeparator($user);
+        $precision        = $this->getPrecision($user);
+        $symbol            = empty($currencySymbol) ? $this->getCurrencySymbol($user) : $currencySymbol;
 
         $exNum = explode($dec, $number);
         // handle grouping
@@ -665,10 +666,10 @@ eoq;
         //check to see if passed in variables are set, if so, then populate array with value,
         //if not, then populate array with blank ''
         $names = array();
-        $names['f'] = (empty($firstName)	&& $firstName	!= 0) ? '' : $firstName;
-        $names['l'] = (empty($lastName)	&& $lastName	!= 0) ? '' : $lastName;
-        $names['s'] = (empty($salutation)	&& $salutation	!= 0) ? '' : $salutation;
-        $names['t'] = (empty($title)		&& $title		!= 0) ? '' : $title;
+        $names['f'] = (empty($firstName)    && $firstName    != 0) ? '' : $firstName;
+        $names['l'] = (empty($lastName)    && $lastName    != 0) ? '' : $lastName;
+        $names['s'] = (empty($salutation)    && $salutation    != 0) ? '' : $salutation;
+        $names['t'] = (empty($title)        && $title        != 0) ? '' : $title;
 
         //Bug: 39936 - if all of the inputs are empty, then don't try to format the name.
         $allEmpty = true;
@@ -717,10 +718,10 @@ eoq;
     {
         global $app_strings;
 
-        $salutation	= !empty($salutation) ? $salutation : $app_strings['LBL_LOCALE_NAME_EXAMPLE_SALUTATION'];
-        $first		= !empty($first) ? $first : $app_strings['LBL_LOCALE_NAME_EXAMPLE_FIRST'];
-        $last		= !empty($last) ? $last : $app_strings['LBL_LOCALE_NAME_EXAMPLE_LAST'];
-        $title		= !empty($title) ? $title : $app_strings['LBL_LOCALE_NAME_EXAMPLE_TITLE'];
+        $salutation    = !empty($salutation) ? $salutation : $app_strings['LBL_LOCALE_NAME_EXAMPLE_SALUTATION'];
+        $first        = !empty($first) ? $first : $app_strings['LBL_LOCALE_NAME_EXAMPLE_FIRST'];
+        $last        = !empty($last) ? $last : $app_strings['LBL_LOCALE_NAME_EXAMPLE_LAST'];
+        $title        = !empty($title) ? $title : $app_strings['LBL_LOCALE_NAME_EXAMPLE_TITLE'];
 
         $ret = "
 		function setPreview() {

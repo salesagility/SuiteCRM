@@ -523,25 +523,30 @@ class ListViewDataEmails extends ListViewData
                 $ret = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
                 break;
             case 'date_entered':
-                $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
-
-                $dateTime = DateTime::createFromFormat(
-                    'D, d M Y H:i:s O',
-                    $date
-                );
-                if ($dateTime == false) {
-                    // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMap
-                    $dateTime = DateTime::createFromFormat(
-                        'd M Y H:i:s O',
-                        $date
-                    );
-                }
-
-                if ($dateTime == false) {
+                if (!isset($emailHeader['date'])) {
+                    LoggerManager::getLogger()->warn('Given email header does not contains date field.');
                     $ret = '';
                 } else {
-                    $timeDate = new TimeDate();
-                    $ret = $timeDate->asUser($dateTime, $currentUser);
+                    $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
+
+                    $dateTime = DateTime::createFromFormat(
+                        'D, d M Y H:i:s O',
+                        $date
+                    );
+                    if ($dateTime == false) {
+                        // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMap
+                        $dateTime = DateTime::createFromFormat(
+                            'd M Y H:i:s O',
+                            $date
+                        );
+                    }
+
+                    if ($dateTime == false) {
+                        $ret = '';
+                    } else {
+                        $timeDate = new TimeDate();
+                        $ret = $timeDate->asUser($dateTime, $currentUser);
+                    }
                 }
                 break;
             case 'is_imported':
@@ -585,7 +590,7 @@ class ListViewDataEmails extends ListViewData
                 $ret = $emailHeader['msgno'];
                 break;
             case 'has_attachment':
-                $ret = $emailHeader['has_attachment'];
+                $ret = isset($emailHeader['has_attachment']) ? $emailHeader['has_attachment'] : false;
                 break;
             case 'status':
                 $ret = $this->getEmailHeaderStatus($emailHeader);
@@ -656,7 +661,8 @@ class ListViewDataEmails extends ListViewData
     public function getEmailUIds($data)
     {
         $emailUIds = array();
-        foreach ($data as $row) {
+        
+        foreach ((array)$data as $row) {
             $emailUIds[] = $row['UID'];
         }
 
@@ -783,7 +789,7 @@ class ListViewDataEmails extends ListViewData
                 ")\ntrace info:\n" . $e->getTraceAsString()
             );
         }
-
+        
         // TODO: don't override the superglobals!!!!
         $_REQUEST = $request;
 
