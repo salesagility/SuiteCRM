@@ -177,7 +177,7 @@ $mod_strings = array(
     'LBL_UW_SKIPPED_FILES_TITLE' => 'Skipped Files',
     'LBL_UW_SQL_RUN' => 'Check when SQL has been manually run',
     'LBL_UW_START_DESC' => 'This wizard will assist you in upgrading this SuiteCRM instance.',
-    'LBL_UW_START_DESC2' => 'Note: We recommend that you backup the SuiteCRM database and the system files (all of the files in the SuiteCRM folder) before upgrading your production system. We highly recommend that you perform a test upgrade on a cloned instance of your production system first.',
+    'LBL_UW_START_DESC2' => 'Note: We highly recommend that you create a copy of the SuiteCRM instance you use in production, and test the upgrade package before deploying the new version. If you have changed the "composer.json" file, then please, after the upgrade process has completed, run this command:<br/><br/><pre>composer update</pre>', // Keep the <pre>composer update</pre> words at the end of the sentence and do not translate it
     'LBL_UW_START_DESC3' => 'Click Next to perform a check on your system to make sure that the system is ready for the upgrade. The check includes file permissions, database privileges and server settings.',
     'LBL_UW_START_UPGRADED_UW_DESC' => 'The new Upgrade Wizard will now resume the upgrade process. Please continue your upgrade.',
     'LBL_UW_START_UPGRADED_UW_TITLE' => 'Welcome to the new Upgrade Wizard',
@@ -249,7 +249,6 @@ $mod_strings = array(
     'ERROR_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
     'ERROR_PHP_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of PHP: ',
     'ERROR_SUITECRM_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
-    'ERROR_FLAVOR_INCOMPATIBLE' => 'The uploaded file is not compatible with this flavor (Community Edition, Professional, or Enterprise) of SuiteCRM: ',
     'LBL_LANGPACKS' => 'Language Packs' /*for 508 compliance fix*/,
     'LBL_MODULELOADER' => 'Module Loader' /*for 508 compliance fix*/,
     'LBL_PATCHUPGRADES' => 'Patch Upgrades' /*for 508 compliance fix*/,
@@ -269,4 +268,6 @@ $mod_strings = array(
         7 => 'Failed to write file to disk.',
         8 => 'File upload stopped by extension.',
     ),
+    'LBL_PASSWORD_EXPIRATON_CHANGED' => 'Warning: password expiration is set to none!',
+    'LBL_PASSWORD_EXPIRATON_REDIRECT' => 'Please update your settings here',
 );

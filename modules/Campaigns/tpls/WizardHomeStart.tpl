@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- ********************************************************************************/
+ */
 *}
 
 <div id='wiz_stage'>
@@ -73,6 +74,7 @@
 									<input type="radio"  id="wizardtype_nl" name="wizardtype" value='1'checked ><label for='wizardtype_nl'>{$MOD.LBL_NEWSLETTER}</label><br>
 									<input type="radio"  id="wizardtype_em" name="wizardtype" value='2'><label for='wizardtype_em'>{$MOD.LBL_EMAIL}</label><br>
 									<input type="radio"  id="wizardtype_ot" name='wizardtype' value='3'><label for='wizardtype_ot'>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</label><br>
+									<input type="radio"  id="wizardtype_survey" name='wizardtype' value='4'><label for='wizardtype_survey'>{$MOD.LBL_CAMPAIGN_SURVEY}</label><br>
 								</p>
 
 
@@ -80,7 +82,7 @@
 								<ul class="icon-btn-lst">
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_nl').click(); $(this).closest('form').submit();" title="{$MOD.LBL_NEWSLETTER_TITLE}">
-											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-newsletter.png"}" />
+											<span class="suitepicon suitepicon-action-view-news"></span>
 											<br />
 											<span>{$MOD.LBL_NEWSLETTER}</span>
 										</a>
@@ -88,7 +90,7 @@
 
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_em').click(); $(this).closest('form').submit();" title="{$MOD.LBL_EMAIL_TITLE}">
-											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-email.png"}" />
+											<span class="suitepicon suitepicon-module-emails"></span>
 											<br />
 											<span>{$MOD.LBL_EMAIL}</span>
 										</a>
@@ -96,9 +98,16 @@
 
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_ot').click(); $(this).closest('form').submit();" title="{$MOD.LBL_NON_EMAIL_TITLE}">
-											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-nonemail.png"}" />
+											<span class="suitepicon suitepicon-action-megaphone"></span>
 											<br />
 											<span>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</span>
+										</a>
+									</li>
+									<li class="icon-btn">
+										<a href="javascript:" onclick="$('#wizardtype_survey').click(); $(this).closest('form').submit();" title="{$MOD.LBL_CAMPAIGN_SURVEY}">
+											<span class="suitepicon suitepicon-module-surveys"></span>
+											<br />
+											<span>{$MOD.LBL_CAMPAIGN_SURVEY}</span>
 										</a>
 									</li>
 								</ul>

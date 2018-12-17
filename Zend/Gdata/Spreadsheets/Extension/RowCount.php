@@ -42,7 +42,6 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_Spreadsheets_Extension_RowCount extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'rowCount';
     protected $_rootNamespace = 'gs';
 
@@ -56,5 +55,4 @@ class Zend_Gdata_Spreadsheets_Extension_RowCount extends Zend_Gdata_Extension
         parent::__construct();
         $this->_text = $text;
     }
-
 }

@@ -55,6 +55,9 @@ $mod_strings = array(
     'LBL_DEFAULT_LOCATION' => 'Default',
 
     'LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS' => 'Delete related notes & attachments with deleted Emails',
+    'LBL_EMAIL_ENABLE_CONFIRM_OPT_IN' => 'Opt In Settings',
+    'LBL_EMAIL_ENABLE_SEND_OPT_IN' => 'Automatically Send Opt In Email',
+    'LBL_EMAIL_CONFIRM_OPT_IN_TEMPLATE_ID' => 'Confirm Opt In Email Template',
     'LBL_EMAIL_OUTBOUND_CONFIGURATION' => 'Outgoing Mail Configuration',
     'LBL_EMAILS_PER_RUN' => 'Number of emails sent per batch:',
     'LBL_ID' => 'Id',
@@ -129,9 +132,11 @@ $mod_strings = array(
     'LBL_PREPEND_TEST' => '[Test]: ',
     'LBL_SEND_ATTEMPTS' => 'Send Attempts',
     'LBL_OUTGOING_SECTION_HELP' => 'Configure the default outgoing mail server for sending email notifications, including workflow alerts.',
-    'LBL_ALLOW_DEFAULT_SELECTION' => 'Allow users to use this account for outgoing email:',
-    'LBL_ALLOW_DEFAULT_SELECTION_HELP' => 'When this option selected, all users will be able to send emails using the same outgoing<br> mail account used to send system notifications and alerts. If the option is not selected,<br> users can still use the outgoing mail server after providing their own account information.',
+    'LBL_ALLOW_DEFAULT_SELECTION' => "Users may send as this account's identity:",
+    'LBL_ALLOW_DEFAULT_SELECTION_HELP' => 'When this option selected, all users will be able to send emails using the same outgoing mail account used to send system notifications and alerts.<br> If the option is not selected, users can still use the outgoing mail server after providing their own account information.',
     'LBL_FROM_ADDRESS_HELP' => 'When enabled, the assigning user\\\'s name and email address will be included in the From field of the email. This feature might not work with SMTP servers that do not allow sending from a different email account than the server account.',
     'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
     'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
+    'LBL_ALLOW_SEND_AS_USER' => 'Users may send as themselves:',
+    'LBL_ALLOW_SEND_AS_USER_DESC' => 'When enabled, <b>all</b> users can send email using the outgoing mail server, using their own primary email address as the &quot;From:&quot; address.<br>This feature might not work with SMTP servers that do not allow sending from a different email account than the server account.',
 );

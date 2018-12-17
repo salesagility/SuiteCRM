@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -111,7 +111,7 @@ function insertActionLine(){
     var c1 = x.insertCell(2);
     c1.scope="row";
     c1.setAttribute("field", "delete");
-  c1.innerHTML = "<span class='delete-btn'><a style='cursor: pointer;' id='aow_actions_delete_line" + actln + "' tabindex='116' onclick='markActionLineDeleted(" + actln + ")' class='btn btn-danger'><img src='themes/"+SUGAR.themes.theme_name+"/images/id-ff-clear.png' alt='X'></a></span>";
+  c1.innerHTML = "<span class='delete-btn'><a style='cursor: pointer;' id='aow_actions_delete_line" + actln + "' tabindex='116' onclick='markActionLineDeleted(" + actln + ")' class='btn btn-danger'><span class=\"suitepicon suitepicon-action-clear\"></span></a></span>";
     c1.innerHTML += "<input type='hidden' name='aow_actions_deleted[" + actln + "]' id='aow_actions_deleted" + actln + "' value='0'><input type='hidden' name='aow_actions_id[" + actln + "]' id='aow_actions_id" + actln + "' value=''>";
 
 

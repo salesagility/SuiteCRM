@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -757,8 +757,8 @@ function addFilterInputDate(row, filter) {
 
   var cell = document.createElement("td");
   cell.setAttribute('valign', 'middle');
-  var img_element = document.createElement("img");
-  img_element.setAttribute('src', 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name + '&imageName=jscalendar.gif');
+  var img_element = document.createElement("span");
+  img_element.className = 'suitepicon suitepicon-module-calendar';
   img_element.setAttribute('id', 'jscal_trigger');
   cell.appendChild(img_element);
   row.appendChild(cell);
@@ -954,8 +954,8 @@ function addFilterInputDateBetween(row, filter) {
 
   var cell = document.createElement("td");
   cell.setAttribute('valign', 'middle');
-  var img_element = document.createElement("img");
-  img_element.setAttribute('src', 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name + '&imageName=jscalendar.gif');
+  var img_element = document.createElement("span");
+  img_element.className = 'suitepicon suitepicon-module-calendar';
   img_element.setAttribute('id', 'jscal_trigger');
   cell.appendChild(img_element);
   row.appendChild(cell);
@@ -994,8 +994,8 @@ function addFilterInputDateBetween(row, filter) {
   filter_row.input_field1 = new_input;
 
   var cell = document.createElement("td");
-  var img_element = document.createElement("img");
-  img_element.setAttribute('src', 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name + '&imageName=jscalendar.gif');
+  var img_element = document.createElement("span");
+  img_element.className = 'suitepicon suitepicon-module-calendar';
   img_element.setAttribute('id', 'jscal_trigger2');
   cell.appendChild(img_element);
   row.appendChild(cell);

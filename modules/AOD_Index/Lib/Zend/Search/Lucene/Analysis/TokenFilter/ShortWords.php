@@ -48,7 +48,8 @@ class Zend_Search_Lucene_Analysis_TokenFilter_ShortWords extends Zend_Search_Luc
      *
      * @param integer $short  minimum allowed length of term which passes this filter (default 2)
      */
-    public function __construct($length = 2) {
+    public function __construct($length = 2)
+    {
         $this->length = $length;
     }
 
@@ -58,12 +59,11 @@ class Zend_Search_Lucene_Analysis_TokenFilter_ShortWords extends Zend_Search_Luc
      * @param Zend_Search_Lucene_Analysis_Token $srcToken
      * @return Zend_Search_Lucene_Analysis_Token
      */
-    public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken) {
+    public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken)
+    {
         if (strlen($srcToken->getTermText()) < $this->length) {
             return null;
-        } else {
-            return $srcToken;
         }
+        return $srcToken;
     }
 }
-

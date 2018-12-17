@@ -57,4 +57,12 @@ $mod_strings = array(
     'LBL_LIST_NAME' => 'Name',
     'LBL_EDIT_BUTTON' => 'Edit',
     'LBL_REMOVE' => 'Remove',
+
+    'LBL_ASCENDING' => 'Ascending',
+    'LBL_DESCENDING' => 'Descending',
+    // Emails
+    'LBL_OPT_IN' => 'Opt In',
+    'LBL_OPT_IN_PENDING_EMAIL_NOT_SENT' => 'Pending Confirm opt in, Confirm opt in not sent',
+    'LBL_OPT_IN_PENDING_EMAIL_SENT' => 'Pending Confirm opt in, Confirm opt in sent',
+    'LBL_OPT_IN_CONFIRMED' => 'Opted in',
 );

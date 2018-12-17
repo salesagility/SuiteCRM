@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
  * Smarty plugin
@@ -122,41 +125,41 @@ function smarty_function_sugar_action_menu($params, &$smarty)
 {
     global $sugar_config;
 
-    if( !empty($params['params']) ) {
+    if (!empty($params['params'])) {
         $addition_params = $params['params'];
         unset($params['params']);
         $params = array_merge_recursive($params, $addition_params);
     }
     $flat = isset($params['flat']) ? $params['flat'] : (isset($sugar_config['enable_action_menu']) ? !$sugar_config['enable_action_menu'] : false);
     //if buttons have not implemented, it returns empty string;
-    if(empty($params['buttons']))
+    if (empty($params['buttons'])) {
         return '';
+    }
 
-    if(is_array($params['buttons']) && !$flat) {
-
+    if (is_array($params['buttons']) && !$flat) {
         $menus = array(
             'html' => array_shift($params['buttons']),
             'items' => array()
         );
 
-        foreach($params['buttons'] as $item) {
-            if(is_array($item)) {
+        foreach ($params['buttons'] as $item) {
+            if (is_array($item)) {
                 $sub = array();
                 $sub_first = array_shift($item);
-                foreach($item as $subitem) {
+                foreach ($item as $subitem) {
                     $sub[] = array(
                         'html' => $subitem
                     );
                 }
-                array_push($menus['items'],array(
+                array_push($menus['items'], array(
                     'html' => $sub_first,
                     'items' => $sub,
                     'submenuHtmlOptions' => array(
                         'class' => 'subnav-sub'
                     )
                 ));
-            } else if(strlen($item)) {
-                array_push($menus['items'],array(
+            } elseif (strlen($item)) {
+                array_push($menus['items'], array(
                     'html' => $item
                 ));
             }
@@ -183,25 +186,25 @@ function smarty_function_sugar_action_menu($params, &$smarty)
 
         require_once('function.sugar_menu.php');
         return smarty_function_sugar_menu($action_menu, $smarty);
-
     }
 
     if (is_array($params['buttons'])) {
         return '<div class="action_buttons">' . implode_r(' ', $params['buttons'], true).'<div class="clear"></div></div>';
-    } else if(is_array($params)) {
+    } elseif (is_array($params)) {
         return '<div class="action_buttons">' . implode_r(' ', $params, true).'<div class="clear"></div></div>';
     }
 
     return $params['buttons'];
 }
 
-function implode_r($glue, $pieces, $extract_first_item = false) {
+function implode_r($glue, $pieces, $extract_first_item = false)
+{
     $result = array_shift($pieces);
-    if(is_array($result)) {
+    if (is_array($result)) {
         $result = implode_r($glue, $result);
     }
-    foreach($pieces as $item) {
-        if(is_array($item)) {
+    foreach ($pieces as $item) {
+        if (is_array($item)) {
             $result .= empty($extract_first_item) ? implode_r($glue, $item) : $glue.$item[0];
         } else {
             $result .= $glue.$item;
@@ -209,4 +212,3 @@ function implode_r($glue, $pieces, $extract_first_item = false) {
     }
     return $result;
 }
-?>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -54,12 +54,14 @@ abstract class AbstractMetaDataParser
      * @var array $_viewdefs
      */
     public $_viewdefs;
+
     /**
      * @var string $_moduleName
      */
     protected $_moduleName;
+
     /**
-     * @var DeployedMetaDataImplementation|UndeployedMetaDataImplementation $implementation
+     * @var AbstractMetaDataImplementation|DeployedMetaDataImplementation|DeployedSubpanelImplementation|UndeployedMetaDataImplementation|UndeployedSubpanelImplementation $implementation
      * object to handle the reading and writing of files and field data
      */
     protected $implementation;
@@ -80,11 +82,16 @@ abstract class AbstractMetaDataParser
     protected $view;
 
     /**
+     * @var array $_panels
+     */
+    protected $_panels;
+
+    /**
      * @see AbstractMetaDataParser::_panels
      */
     public function getLayoutAsArray()
     {
-        $viewdefs = $this->_panels;
+        return $this->_panels;
     }
 
     /**
@@ -129,7 +136,7 @@ abstract class AbstractMetaDataParser
     public static function validField($def, $view = '')
     {
         //Studio invisible fields should always be hidden
-        if (isset ($def['studio'])) {
+        if (isset($def['studio'])) {
             if (is_array($def ['studio'])) {
                 if (!empty($view) && isset($def ['studio'][$view])) {
                     return $def ['studio'][$view] !== false && $def ['studio'][$view] !== 'false' && $def ['studio'][$view] !== 'hidden';
@@ -146,14 +153,14 @@ abstract class AbstractMetaDataParser
         return
             (
                 (
-                    (empty ($def ['source']) || $def ['source'] === 'db' || $def ['source'] === 'custom_fields')
+                    (empty($def ['source']) || $def ['source'] === 'db' || $def ['source'] === 'custom_fields')
                     && isset($def ['type']) && $def ['type'] !== 'id' && $def ['type'] !== 'parent_type'
-                    && (empty ($def ['dbType']) || $def ['dbType'] !== 'id')
-                    && (isset ($def ['name']) && strcmp($def ['name'], 'deleted') != 0)
+                    && (empty($def ['dbType']) || $def ['dbType'] !== 'id')
+                    && (isset($def ['name']) && strcmp($def ['name'], 'deleted') != 0)
                 ) // db and custom fields that aren't ID fields
                 ||
                 // exclude fields named *_name regardless of their type...just convention
-                (isset ($def ['name']) && substr($def ['name'], -5) === '_name'));
+                (isset($def ['name']) && substr($def ['name'], -5) === '_name'));
     }
 
     /**
@@ -162,19 +169,22 @@ abstract class AbstractMetaDataParser
     protected function _standardizeFieldLabels(&$fielddefs)
     {
         foreach ($fielddefs as $key => $def) {
-            if (!isset ($def ['label'])) {
-                $fielddefs [$key] ['label'] = (isset ($def ['vname'])) ? $def ['vname'] : $key;
+            if (!isset($def ['label'])) {
+                $fielddefs [$key] ['label'] = (isset($def ['vname'])) ? $def ['vname'] : $key;
             }
         }
     }
 
     /**
-     * @param array $def
+     * @param array $fieldDefinitions
      */
-    public static function _trimFieldDefs($def)
+    public static function _trimFieldDefs($fieldDefinitions)
     {
     }
 
+    /**
+     * @return array
+     */
     public function getRequiredFields()
     {
         $fieldDefs = $this->implementation->getFielddefs();
@@ -201,10 +211,9 @@ abstract class AbstractMetaDataParser
             $str = strtolower($val);
 
             return ($str !== '0' && $str !== 'false' && $str !== '');
-        } //For non-string types, juse use PHP's normal boolean conversion
-        else {
-            return ($val === true);
         }
+        // For non-string types, juse use PHP's normal boolean conversion
+        return ($val === true);
     }
 
     /**
@@ -212,5 +221,3 @@ abstract class AbstractMetaDataParser
      */
     abstract public function handleSave($populate = true);
 }
-
-?>

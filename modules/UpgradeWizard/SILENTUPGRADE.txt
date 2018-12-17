@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 README.txt for silentupgrade.php
@@ -44,14 +45,14 @@ Version 6.4.4
 What is silentupgrade.php?
 ---------------------------
 
-The silentupgrade.php is a stand-alone PHP script that can be run from the command prompt for upgrading a Sugar instance.
-SugarCRM comes with built-in Upgrade Wizard as part of the application that you invoke through a browser.  The Silent Upgrader is executed at the
-commmand line on the server where the Sugar instance is installed.
+The silentupgrade.php is a stand-alone PHP script that can be run from the command prompt for upgrading a SuiteCRM instance.
+SuiteCRM comes with built-in Upgrade Wizard as part of the application that you invoke through a browser.  The Silent Upgrader is executed at the
+commmand line on the server where the SuiteCRM instance is installed.
 
 Why is silentupgrade.php useful for Upgrades?
 ------------------------------------------------------
 
-Sugar upgrades can potentially require resources that are sometimes beyond the Web execution environment settings.
+SuiteCRM upgrades can potentially require resources that are sometimes beyond the Web execution environment settings.
 Using the Silent Upgrader enables you to avoid some of the limitations that the Web application environment may have
 that prevent the Upgrade Wizard from completing the upgrade.  The upload size limit (by PHP and sometimes even by Web server),
 the CGI (or equivalent) timeout limit, and the MySQL (or equivalent) session timeout limit are some of the challenges people run into when upgrading.  The Silent Upgrader either avoids the limitations or better controls the settings in its stand-alone
@@ -65,20 +66,20 @@ How do you run silentupgrade.php?
 To execute the silentupgrade.php script, you need to supply the three parameters, as described in the Arguments section below.
 
 
-Usage: php -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSugarInstance] [adminUser]
+Usage: php -f silentUpgrade.php [upgradeZipFile] [logFile] [pathToSuiteCRMInstance] [adminUser]
 
 Arguments:
 
     upgradeZipFile      Full path to the upgrade zip file.
-                        Such as SugarCE-Upgrade-6.3.X-to-6.4.4.zip
+                        Such as SuiteCRM-Upgrade-7.10-to-7.10.7.zip
 
     logFile             Full path to an alternate log file.
 
-    pathToSugarInstance Full path to the instance being upgraded.
+    pathToSuiteCRMInstance Full path to the instance being upgraded.
                         
     adminUser           A valid admin user name 
 
-Upgrading the Sugar Database Schema:
+Upgrading the SuiteCRM Database Schema:
 -------------------------------------
 The Silent Upgrader will automatically replace the current database schema with the 6.4.4 schema.
 
@@ -88,10 +89,10 @@ Compatibility matrix for the Silent Upgrader:
   PHP  versions     			:  5.2,5.3
   Databases              		:  MySQL, MSSQL, Oracle, DB2
   Operating systems    			:  Windows, Linux, Mac, IBM i
-  Upgrade from Sugar Instances      :  6.3.x, and 6.4.x
+  Upgrade from SuiteCRM Instances      :  6.3.x, and 6.4.x
 
 You can also view the compatibility matrix online at:
-http://www.sugarcrm.com/crm/products/supported-platforms/6.4.x
+https://suitecrm.com/upgrade-suitecrm/
 
 Note: The silentUpgrade.php script creates new files for the user who is running it. For example, for
 the root user it create files as user/group root. Because Apache cannot read this, you must ensure that

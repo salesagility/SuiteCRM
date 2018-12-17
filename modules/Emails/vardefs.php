@@ -118,7 +118,7 @@ $dictionary['Email'] = array(
         ),
         'description_html' => array(
             'name' => 'description_html',
-            'type' => 'html',
+            'type' => 'emailbody',
             'vname' => 'description_html',
             'source' => 'non-db',
             'inline_edit' => false,
@@ -552,7 +552,7 @@ $dictionary['Email'] = array(
             'reportable' => true,
         ),
 
-        "emails_email_templates" => array (
+        "emails_email_templates" => array(
             'name' => 'emails_email_templates',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
@@ -562,7 +562,7 @@ $dictionary['Email'] = array(
             'vname' => 'LBL_EMAIL_TEMPLATE',
             'id_name' => 'emails_email_templates_idb',
         ),
-        "emails_email_templates_name" => array (
+        "emails_email_templates_name" => array(
             'name' => 'emails_email_templates_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -574,7 +574,7 @@ $dictionary['Email'] = array(
             'module' => 'EmailTemplates',
             'rname' => 'name',
         ),
-        "emails_email_templates_idb" => array (
+        "emails_email_templates_idb" => array(
             'name' => 'emails_email_templates_idb',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
@@ -582,6 +582,23 @@ $dictionary['Email'] = array(
             'reportable' => false,
             'side' => 'left',
             'vname' => 'LBL_EMAIL_TEMPLATE',
+        ),
+        'opt_in' => array(
+            'name' => 'opt_in',
+            'vname' => 'LBL_OPT_IN',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'studio' => 'visible',
+            'inline_edit' => false,
+            'function' => array(
+                'name' => 'displayEmailAddressOptInField',
+                'returns' => 'html',
+                'include' => 'modules/Emails/include/displayEmailAddressOptInField.php',
+                'onListView' =>  true
+            ),
         ),
     ), /* end fields() array */
     'relationships' => array(

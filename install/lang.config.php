@@ -3,5 +3,3 @@
 // ADDITIONAL LANGUAGES
 $config['languages'] = array(
 );
-
-?>

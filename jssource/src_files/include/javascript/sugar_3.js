@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -242,7 +242,7 @@ RegExp.escape = function (text) { // http://simon.incutio.com/archive/2006/01/20
   return text.replace(arguments.callee.sRE, '\\$1');
 }
 
-function addAlert(type, name, subtitle, description, time, redirect) {
+function addAlert(type, name, subtitle, description, time, redirect, reminder_id) {
   var addIndex = alertList.length;
   alertList[addIndex] = new Array();
   alertList[addIndex]['name'] = name;
@@ -252,6 +252,9 @@ function addAlert(type, name, subtitle, description, time, redirect) {
   alertList[addIndex]['time'] = time;
   alertList[addIndex]['done'] = 0;
   alertList[addIndex]['redirect'] = redirect;
+  if (typeof reminder_id !== 'undefined') {
+    alertList[addIndex]['reminder_id'] = reminder_id;
+  }
 }
 function checkAlerts() {
   var secondsSinceLoad = (Date.now() - scriptStartedTime) / 1000;
@@ -264,13 +267,14 @@ function checkAlerts() {
         if (typeof Alerts !== "undefined") {
           //
           // Use Alerts module
-          Alerts.prototype.show(
+          Alerts.prototype.addToManager(
             {
               title: alertList[mj]['type'] + ": " + alertList[mj]['name'],
               options: {
                 body: alertList[mj]['subtitle'] + "\n" + alertList[mj]['description'] + "\n\n",
                 url_redirect: alertList[mj]['redirect'],
-                target_module: alertList[mj]['type']
+                target_module: alertList[mj]['type'],
+                reminder_id: alertList[mj]['reminder_id']
               }
             }
           );
@@ -2207,7 +2211,7 @@ sugarListView.prototype.send_form_for_emails = function (select, currentModule, 
   return false;
 }
 
-sugarListView.prototype.send_form = function (select, currentModule, action, no_record_txt, action_module, return_info) {
+sugarListView.prototype.send_form = function (select, currentModule, action, no_record_txt, action_module, return_info, ajax, callback) {
   if (document.MassUpdate.select_entire_list.value == 1) {
 
     if (sugarListView.get_checks_count() < 1) {
@@ -2300,8 +2304,17 @@ sugarListView.prototype.send_form = function (select, currentModule, action, no_
   }
 
   document.MassUpdate.parentNode.appendChild(newForm);
-
-  newForm.submit();
+  if (ajax) {
+    var _callback = callback ? callback : null;
+    $.post($('form[name="newForm"]').attr('action'), $('form[name="newForm"]').serialize(), function (resp) {
+      if (_callback) {
+        _callback(resp);
+      }
+    });
+    return false;
+  } else {
+    newForm.submit();
+  }
   // awu Bug 18624: Fixing issue where a canceled Export and unselect of row will persist the uid field, clear the field
   document.MassUpdate.uid.value = '';
 
@@ -2425,25 +2438,50 @@ sugarListView.prototype.check_item = function (cb, form) {
 
 sugarListView.prototype.toggleSelected = function () {
 
-  var numSelected = sugarListView.get_num_selected();
-  var selectedRecords = document.getElementById("selectedRecordsTop");
-  var selectActions = document.getElementById("selectActions");
-  var selectActionsDisabled = document.getElementById("selectActionsDisabled");
-  if (numSelected > 0) {
-    $(selectedRecords).removeAttr("style").addClass("show");
-    $(".selectActionsDisabled").hide();
-    jQuery('ul[name=selectActions]').each(function () {
-      jQuery(this).removeAttr("style").addClass("show");
-    });
+    var numSelected = sugarListView.get_num_selected();
+    var selectedRecords = document.getElementById("selectedRecordsTop");
+    var selectActions = document.getElementById("actionLinkTop");
+    var selectActionsDisabled = document.getElementById("select_actions_disabled_top");
+    var selectActionsBottom = document.getElementById("actionLinkBottom");
+    var selectActionsDisabledBottom = document.getElementById("select_actions_disabled_bottom");
 
-  } else {
-    $(selectedRecords).hide();
-    $(".selectActionsDisabled").removeAttr("style").addClass("show");
-    jQuery('ul[name=selectActions]').each(function () {
-      jQuery(this).hide();
-    });
-  }
-
+    if (numSelected > 0) {
+        $(selectedRecords).removeAttr("style").addClass("show");
+        $(".selectActionsDisabled").hide();
+        jQuery('ul[name=selectActions]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+        jQuery('ul[name=selectActionsBottom]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+        $(selectActionsDisabled).removeAttr("style").removeClass("show").addClass("hide");
+        $(selectActionsDisabledBottom).removeAttr("style").removeClass("show").addClass("hide");
+        jQuery('div[id=selectActionsDisabled]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+        jQuery('div[id=selectActionsDisabledBottom]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+    } else {
+        $(selectedRecords).hide();
+        $(selectActions).removeAttr("style").removeClass("show").addClass("hide");
+        $(selectActionsBottom).removeAttr("style").removeClass("show").addClass("hide");
+        $(".selectActionsDisabled").removeAttr("style").addClass("show");
+        jQuery('ul[name=selectActions]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+        jQuery('ul[name=selectActions]').each(function () {
+            jQuery(this).removeAttr("style").addClass("hide");
+        });
+        $(selectActionsDisabled).removeAttr("style").removeClass("hide").addClass("show");
+        $(selectActionsDisabledBottom).removeAttr("style").removeClass("hide").addClass("show");
+        jQuery('div[id=selectActionsDisabled]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+        jQuery('div[id=selectActionsDisabledBottom]').each(function () {
+            jQuery(this).removeAttr("style").addClass("show");
+        });
+    }
 }
 
 /**#28000, remove the  unselect record id from MassUpdate.uid **/
@@ -3363,8 +3401,8 @@ SUGAR.util = function () {
             $dialog.dialog("option", "position", {my: 'left top', at: 'right top', of: $(el)});
           }
 
-          $dialog.dialog('open');
           $(".ui-dialog").appendTo("#content");
+          $dialog.dialog('open');
         }
 
 				success = function (data) {
@@ -3695,7 +3733,7 @@ SUGAR.savedViews = function () {
       }
       //add showSSDIV to url if it is available.  This determines whether saved search sub form should
       //be rendered open or not
-      if (document.getElementById('showSSDIV') && typeof(document.getElementById('showSSDIV') != 'undefined')) {
+      if (document.getElementById('showSSDIV') && (typeof(document.getElementById('showSSDIV')) != 'undefined')) {
         selecturl = selecturl + '&showSSDIV=' + document.getElementById('showSSDIV').value;
       }
       //use created url to navigate
@@ -4915,7 +4953,7 @@ SUGAR.append(SUGAR.util, {
       if (SUGAR.util.closeActivityPanel.panel)
         SUGAR.util.closeActivityPanel.panel.destroy();
       var singleModule = SUGAR.language.get("app_list_strings", "moduleListSingular")[module];
-      singleModule = typeof(singleModule != 'undefined') ? singleModule.toLowerCase() : '';
+      singleModule = (typeof(singleModule) != 'undefined') ? singleModule.toLowerCase() : '';
       var closeText = SUGAR.language.get("app_strings", "LBL_CLOSE_ACTIVITY_CONFIRM").replace("#module#", singleModule);
       SUGAR.util.closeActivityPanel.panel =
         new YAHOO.widget.SimpleDialog("closeActivityDialog",

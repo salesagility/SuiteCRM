@@ -82,4 +82,3 @@ abstract class Zend_Search_Lucene_Search_Weight
      */
     abstract public function normalize($norm);
 }
-

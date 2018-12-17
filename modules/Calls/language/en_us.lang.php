@@ -114,7 +114,7 @@ $mod_strings = array(
     'LBL_ASSIGNED_TO_ID' => 'Assigned User',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
     'LBL_CALL_INFORMATION' => 'OVERVIEW',
-    'LBL_REMOVE' => 'rem',
+    'LBL_REMOVE' => 'Remove',
     'LBL_ACCEPT_STATUS' => 'Accept Status',
     'LBL_ACCEPT_LINK' => 'Accept Link',
 
@@ -163,4 +163,3 @@ $mod_strings = array(
     'LBL_LIST_DATE_MODIFIED'=>'Date Modified',
     'LBL_LIST_DUE_DATE'=>'Due Date',
 );
-

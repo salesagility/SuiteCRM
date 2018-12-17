@@ -108,5 +108,4 @@ class Zend_Gdata_Books_VolumeQuery extends Zend_Gdata_Query
         $url = $url . $this->getQueryString();
         return $url;
     }
-
 }

@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -674,11 +674,18 @@ if (typeof('console') == 'undefined') {
 
           // get bookmarked url state
           var YUI_HistoryBookmarkedState = YAHOO.util.History.getBookmarkedState('mbContent');
-          var urlVars = {};
-          var splits = YUI_HistoryBookmarkedState.split('&');
-          for (key in splits) {
-            var urlVar = splits[key].split('=');
-            urlVars[urlVar[0]] = urlVar[1];
+            var urlVars = {};
+
+            if (YUI_HistoryBookmarkedState === null) {
+                urlVars.module = '';
+                urlVars.action = '';
+                urlVars.vie_package = '';
+          } else {
+              var splits = YUI_HistoryBookmarkedState.split('&');
+              for (key in splits) {
+                var urlVar = splits[key].split('=');
+                urlVars[urlVar[0]] = urlVar[1];
+              }
           }
 
           // check where we are and do it if we are in field editor in module builder

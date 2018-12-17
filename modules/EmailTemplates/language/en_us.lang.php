@@ -70,7 +70,7 @@ $mod_strings = array(
     'LBL_SEARCH_FORM_TITLE' => 'Email Templates Search',
     'LBL_SHOW_ALT_TEXT' => 'Show Plain Text',
     'LBL_SUBJECT' => 'Subject:',
-    'LBL_SUGAR_DOCUMENT' => 'Document',
+    'LBL_SUITE_DOCUMENT' => 'Document',
     'LBL_TEXT_BODY' => 'Text Body',
     'LBL_USERS' => 'Users',
 
@@ -99,5 +99,5 @@ $mod_strings = array(
     'LBL_ID_FF_CLEAR' => 'Clear' /*for 508 compliance fix*/,
     'LBL_TYPE' => 'Type',
     'LBL_WIDTH' => 'Width Default',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 );
-

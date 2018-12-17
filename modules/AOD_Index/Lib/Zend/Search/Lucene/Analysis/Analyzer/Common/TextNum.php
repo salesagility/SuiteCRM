@@ -92,4 +92,3 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum extends Zend_Search_Lu
         return $token;
     }
 }
-
