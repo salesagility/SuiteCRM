@@ -22,7 +22,7 @@ addons:
   chrome: stable
 
 env:
-  - INSTANCE_URL=http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1
+  - INSTANCE_URL=http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1 GSYNC_LOGLEVEL=info
 
 before_install:
   # Install chrome driver#
@@ -74,7 +74,7 @@ script:
   # Install demo user data
   - mysql -u root -D automated_tests -v -e "source tests/_data/demo_users.sql"
   # set the log level to error
-  - echo "\$sugar_config['logger']['level']='info';" >> config_override.php
+  - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
   # add keys
   - sudo chmod -R 777 .
   - openssl genrsa -out Api/V8/OAuth2/private.key 2048
