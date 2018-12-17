@@ -889,36 +889,36 @@ EOHTML;
      * Returns the URL for an image in the current theme. If not found in the current theme, will revert
      * to looking in the base theme.
      * @param  string $imageName image file name
-     * @param  bool   $addJSPath call getJSPath() with the results to add some unique image tracking support
+     * @param  bool $addJSPath call getJSPath() with the results to add some unique image tracking support
      * @return string path to image
      */
     public function getImageURL(
         $imageName,
         $addJSPath = true
-        ){
-        if ( isset($this->_imageCache[$imageName]) ) {
+    )
+    {
+        if (isset($this->_imageCache[$imageName])) {
             if ($addJSPath) {
                 return getJSPath($this->_imageCache[$imageName]);
-	    }
-            else {
+            } else {
                 return $this->_imageCache[$imageName];
-	    }
+            }
         }
         $imagePath = '';
-        if (($filename = $this->_getImageFileName('custom/'.$this->getImagePath().'/'.$imageName)) != '')
+        if (($filename = $this->_getImageFileName('custom/' . $this->getImagePath() . '/' . $imageName)) != '')
             $imagePath = $filename;
-        elseif (($filename = $this->_getImageFileName($this->getImagePath().'/'.$imageName)) != '')
+        elseif (($filename = $this->_getImageFileName($this->getImagePath() . '/' . $imageName)) != '')
             $imagePath = $filename;
         elseif (isset($this->parentTheme)
-                && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
-                && ($filename = SugarThemeRegistry::get($this->parentTheme)->getImageURL($imageName,false)) != '')
+            && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
+            && ($filename = SugarThemeRegistry::get($this->parentTheme)->getImageURL($imageName, false)) != '')
             $imagePath = $filename;
-        elseif (($filename = $this->_getImageFileName('custom/'.$this->getDefaultImagePath().'/'.$imageName)) != '')
+        elseif (($filename = $this->_getImageFileName('custom/' . $this->getDefaultImagePath() . '/' . $imageName)) != '')
             $imagePath = $filename;
-        elseif (($filename = $this->_getImageFileName($this->getDefaultImagePath().'/'.$imageName)) != '')
+        elseif (($filename = $this->_getImageFileName($this->getDefaultImagePath() . '/' . $imageName)) != '')
             $imagePath = $filename;
-		elseif (($filename = $this->_getImageFileName('include/images/'.$imageName)) != '')
-			$imagePath = $filename;
+        elseif (($filename = $this->_getImageFileName('include/images/' . $imageName)) != '')
+            $imagePath = $filename;
         else {
             $GLOBALS['log']->warn("Image $imageName not found");
             return false;
@@ -928,7 +928,7 @@ EOHTML;
 
         if ($addJSPath) {
             return getJSPath($imagePath);
-	}
+        }
 
         return $imagePath;
     }
