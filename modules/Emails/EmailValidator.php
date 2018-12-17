@@ -1,0 +1,413 @@
+<?php
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+require_once __DIR__ . '/Email.php';
+require_once __DIR__ . '/EmailFixer.php';
+require_once __DIR__ . '/EmailValidatorException.php';
+
+/**
+ * EmailValidator
+ * Specially for validate and handling any confusion From Address / From Name issue.
+ *
+ * @author gyula
+ */
+class EmailValidator
+{
+    const ERR_FIELD_FROM_IS_NOT_SET = 1;
+    const ERR_FIELD_FROM_IS_EMPTY = 2;
+    const ERR_FIELD_FROM_IS_INVALID = 3;
+    const ERR_FIELD_FROM_ADDR_IS_NOT_SET = 4;
+    const ERR_FIELD_FROM_ADDR_IS_EMPTY = 5;
+    const ERR_FIELD_FROM_ADDR_IS_INVALID = 6;
+    const ERR_FIELD_FROMNAME_IS_NOT_SET = 7;
+    const ERR_FIELD_FROMNAME_ADDR_IS_EMPTY = 8;
+    const ERR_FIELD_FROMNAME_ADDR_IS_INVALID = 9;
+    const ERR_FIELD_FROM_NAME_IS_NOT_SET = 10;
+    const ERR_FIELD_FROM_NAME_IS_EMPTY = 11;
+    const ERR_FIELD_FROM_NAME_IS_INVALID = 12;
+    const ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET = 13;
+    const ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY = 14;
+    const ERR_FIELD_FROM_ADDR_NAME_IS_INVALID = 15;
+    const ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX = 16;
+    const ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART = 17;
+    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART = 18;
+    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM = 19;
+    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR = 20;
+    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROMNAME = 21;
+    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_NAME = 22;
+    
+    /**
+     *
+     * @var Email;
+     */
+    protected $email;
+    
+    /**
+     *
+     * @var array
+     */
+    protected $errors;
+    
+    
+    /**
+     * Specially use before email sending.
+     *
+     * @param Email $email
+     * @return array
+     */
+    public function isValid(Email $email)
+    {
+        $this->setEmail($email);
+        $this->clearErrors();
+        $this->addErrors($this->validateFrom());
+        $this->addErrors($this->validateFromAddr());
+        $this->addErrors($this->validateFromName());
+        $this->addErrors($this->validateFrom_Name());
+        $this->addErrors($this->validateFromAddrName());
+        $this->addErrors($this->validateTo());
+        $this->addErrors($this->validateCCs());
+        $this->addErrors($this->validateBCCs());
+        return !$this->hasErrors();
+    }
+    
+    /**
+     *
+     * @param Email $email
+     */
+    protected function setEmail(Email $email)
+    {
+        $this->email = $email;
+    }
+    
+    /**
+     *
+     * @return Email
+     */
+    protected function getEmail()
+    {
+        if (!$this->email) {
+            throw new EmailValidatorException('Trying to get Email but previously is not set.',
+                EmailValidatorException::EMAIL_IS_NOT_SET);
+        }
+        if (!($this->email instanceof Email)) {
+            throw new EmailValidatorException('Trying to get Email but object type is incorrect:' . gettype($this->email),
+                EmailValidatorException::EMAIL_ISNT_EMAILOBJ);
+        }
+        return $this->email;
+    }
+    
+    /**
+     *
+     */
+    protected function clearErrors()
+    {
+        $this->errors = [];
+    }
+    
+    /**
+     *
+     * @param int $error
+     */
+    protected function addError($error)
+    {
+        if (!in_array($error, $this->errors)) {
+            $this->errors[] = $error;
+        }
+    }
+    
+    /**
+     *
+     * @param array $errors
+     */
+    protected function addErrors($errors)
+    {
+        $this->errors = array_merge($this->errors, $errors);
+        $this->errors = array_unique($this->errors);
+    }
+    
+    /**
+     *
+     * @return array
+     */
+    public function getErrors()
+    {
+        $errors = $this->errors;
+        $this->clearErrors();
+        return $errors;
+    }
+    
+    protected function hasErrors() {
+        return !empty($this->errors);
+    }
+    
+    /**
+     *
+     * @param string $emailAddress
+     * @return bool
+     */
+    protected function isValidEmailAddress($emailAddress)
+    {
+        $valid = is_string($emailAddress) && isValidEmailAddress($emailAddress, '', false, '');
+        return $valid;
+    }
+    
+    protected function isValidNonEmailAddress($nonEmailAddress)
+    {
+        $valid = true;
+        if (!is_string($nonEmailAddress) || !$nonEmailAddress || isValidEmailAddress($nonEmailAddress, '', false, '')) {
+            $valid = false;
+        }
+        return $valid;
+    }
+    
+    
+    /**
+     *
+     * @param string $fromAddress
+     * @return bool
+     */
+    protected function isValidFromAddress($fromAddress)
+    {
+        $valid = $this->isValidEmailAddress($fromAddress);
+        return $valid;
+    }
+    
+    /**
+     *
+     * @param string $fromName
+     * @return boolean
+     */
+    protected function isValidFromName($fromName)
+    {
+        $valid = $this->isValidNonEmailAddress($fromName);
+        return $valid;
+    }
+    
+    protected function isValidFromAddrName($fromAddrName)
+    {
+        $valid = false;
+        $matches = null;
+        $results = preg_match('/([^<]+)\s+<([^>]+)>/', $fromAddrName, $matches);
+        if ($results === false) {
+            throw new EmailValidatorException('preg_match error occured at from_addr_name check.', EmailValidatorException::PREG_MATCH_ERROR_AT_FROMADDRNAME);
+        }
+        if (!$results) {
+            $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX);
+        } else {
+            $name = $matches[1];
+            $email = $matches[2];
+            
+            $ok = true;
+            if (!$this->isValidNonEmailAddress($name)) {
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART);
+                $ok = false;
+            }
+            
+            if (!$this->isValidEmailAddress($email)) {
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART);
+                $ok = false;
+            }
+            
+            $emailObj = $this->getEmail();
+            
+            if (isset($emailObj->From) && $email !== $emailObj->From) {
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM);
+                $ok = false;
+            }
+            
+            if (isset($emailObj->from_addr) && $email !== $emailObj->from_addr) {
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR);
+                $ok = false;
+            }
+            
+            if (isset($emailObj->FromName) && $name !== $emailObj->FromName) {
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROMNAME);
+                $ok = false;
+            }
+            
+            if (isset($emailObj->from_name) && $name !== $emailObj->from_name) {
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_NAME);
+                $ok = false;
+            }
+            
+            if ($ok) {
+                $valid = true;
+            }
+        }
+        return $valid;
+    }
+
+
+    /**
+     * validate field 'From' - should be a valid email address
+     *
+     * @return array
+     */
+    protected function validateFrom()
+    {
+        $email = $this->getEmail();
+        if (!isset($email->From)) {
+            $this->addError(self::ERR_FIELD_FROM_IS_NOT_SET);
+        } else {
+            if (!$email->From) {
+                $this->addError(self::ERR_FIELD_FROM_IS_EMPTY);
+            } else {
+                if (!$this->isValidFromAddress($email->From)) {
+                    $this->addError(self::ERR_FIELD_FROM_IS_INVALID);
+                }
+            }
+        }
+        return $this->getErrors();
+    }
+    
+    /**
+     * validate field 'from_addr' - should be a valid email address
+     *
+     * @return array
+     */
+    protected function validateFromAddr()
+    {
+        $email = $this->getEmail();
+        if (!isset($email->from_addr)) {
+            $this->addError(self::ERR_FIELD_FROM_ADDR_IS_NOT_SET);
+        } else {
+            if (!$email->from_addr) {
+                $this->addError(self::ERR_FIELD_FROM_ADDR_IS_EMPTY);
+            } else {
+                if (!$this->isValidFromAddress($email->from_addr)) {
+                    $this->addError(self::ERR_FIELD_FROM_ADDR_IS_INVALID);
+                }
+            }
+        }
+        return $this->getErrors();
+    }
+    
+    /**
+     * validate field 'FromName' - should be a valid name string
+     *
+     * @return array
+     */
+    protected function validateFromName()
+    {
+        $email = $this->getEmail();
+        if (!isset($email->FromName)) {
+            $this->addError(self::ERR_FIELD_FROMNAME_IS_NOT_SET);
+        } else {
+            if (!$email->FromName) {
+                $this->addError(self::ERR_FIELD_FROMNAME_IS_EMPTY);
+            } else {
+                if (!$this->isValidFromName($email->FromName)) {
+                    $this->addError(self::ERR_FIELD_FROMNAME_IS_INVALID);
+                }
+            }
+        }
+        return $this->getErrors();
+    }
+    
+    /**
+     * validate field 'from_name' - should be a valid name string
+     *
+     * @return array
+     */
+    protected function validateFrom_Name()
+    {
+        $email = $this->getEmail();
+        if (!isset($email->from_name)) {
+            $this->addError(self::ERR_FIELD_FROM_NAME_IS_NOT_SET);
+        } else {
+            if (!$email->from_name) {
+                $this->addError(self::ERR_FIELD_FROM_NAME_IS_EMPTY);
+            } else {
+                if (!$this->isValidFromName($email->from_name)) {
+                    $this->addError(self::ERR_FIELD_FROM_NAME_IS_INVALID);
+                }
+            }
+        }
+        return $this->getErrors();
+    }
+    
+    /**
+     * validate field 'from_addr_name' - should be a valid name string and email address pair
+     * where email address in between '<' and '>' characters
+     *
+     * @return array
+     */
+    protected function validateFromAddrName()
+    {
+        $email = $this->getEmail();
+        if (!isset($email->from_addr_name)) {
+            $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET);
+        } else {
+            if (!$email->from_addr_name) {
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY);
+            } else {
+                if (!$this->isValidFromAddrName($email->from_addr_name)) {
+                    $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID);
+                }
+            }
+        }
+        return $this->getErrors();
+    }
+    
+    protected function validateTo()
+    {
+
+        // todo
+        return $this->getErrors();
+    }
+    
+    protected function validateCCs()
+    {
+
+        // todo
+        return $this->getErrors();
+    }
+    
+    protected function validateBCCs()
+    {
+
+        // todo
+        return $this->getErrors();
+    }
+}

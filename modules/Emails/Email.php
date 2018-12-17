@@ -403,11 +403,15 @@ class Email extends Basic
     public $notes;
 
     /**
+     * Should be a From Address (From Name should be stored in $FromName class variable)
+     * 
      * @var string
      */
     public $From;
 
     /**
+     * Should be a From Name (From Address should be stored in $From class variable)
+     * 
      * @var string
      */
     public $FromName;

@@ -70,6 +70,12 @@ class SugarPHPMailer extends PHPMailer
     public $Body_html;
     
     private static $FromNameOrigin = null;
+    
+    /**
+     *
+     * @var EmailValidator
+     */
+    protected $emailValidator;
 
     /**
      * Constructor.
@@ -440,6 +446,14 @@ eoq;
         $this->Body_html = preg_replace('/\$' . $key . '\b/', $value, $this->Body_html);
         $this->AltBody = preg_replace('/\$' . $key . '\b/', $value, $this->AltBody);
     }
+    
+    public function setEmailValidator(EmailValidator $emailValidator) {
+        $this->emailValidator = $emailValidator;
+    }
+    
+    public function getEmailValidator() {
+        return $this->emailValidator;
+    }
 
     /**
      * overloads PHPMailer::Send() to allow for better logging and debugging SMTP issues
@@ -455,7 +469,8 @@ eoq;
         //$this->Sender   = 'me@here.com';
         //$this->Password = 'wrong';
         //$GLOBALS['log']->debug("PHPMailer Send Function: { FromName: $this->FromName From: $this->From Host: $this->Host UserName: $this->Username }");
-
+       
+        
         $ret = null;
         
         $this->fullSmtpLog='';
