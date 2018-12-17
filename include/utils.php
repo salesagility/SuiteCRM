@@ -3959,7 +3959,12 @@ function string_format($format, $args)
     /* End of fix */
 
     for ($i = 0; $i < count($args); ++$i) {
-        $result = str_replace('{' . $i . '}', $args[$i], $result);
+        if(strpos($args[$i], ',') !== false) {
+            $values = explode(',', $args[$i]);
+            $args[$i] = implode("','",$values);
+        }
+
+        $result = str_replace('{'.$i.'}',"'" . $args[$i] . "'", $result);
     }
 
     return $result;
