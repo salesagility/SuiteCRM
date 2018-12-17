@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/EditView/SugarVCR.php');
 /**
@@ -285,8 +288,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
         $this->xTemplate->assign("COL_COUNT", count($thepanel->get_list_fields()));
         $this->xTemplate->parse($xtemplateSection.".nodata");
     }
-    while(list($aVal, $aItem) = each($data))
-    {
+     foreach($data as $aVal => $aItem) {
         $subpanel_item_count++;
         $aItem->check_date_relationships_load();
         // TODO: expensive and needs to be removed and done better elsewhere
@@ -332,7 +334,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
             } else {
                 $this->xTemplate->assign('TAG_NAME','span');
             }
-            $this->xTemplate->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input type='checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."' class='bootstrap-checkbox-hidden checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />");
+            $this->xTemplate->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"><span class='suitepicon suitepicon-action-caret'></span></label><input type='checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."' class='bootstrap-checkbox-hidden checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />");
         }
 
         if($oddRow)
@@ -1034,7 +1036,13 @@ function getUserVariable($localVarName, $varName) {
 
 
 
-    function processUnionBeans($sugarbean, $subpanel_def, $html_var = 'CELL') {
+    public function processUnionBeans($sugarbean, $subpanel_def, $html_var = 'CELL', $countOnly = false)
+    {
+        $last_detailview_record = $this->getSessionVariable("detailview", "record");
+        if (!empty($last_detailview_record) && $last_detailview_record != $sugarbean->id) {
+            $GLOBALS['record_has_changed'] = true;
+        }
+        $this->setSessionVariable("detailview", "record", $sugarbean->id);
 
 		$last_detailview_record = $this->getSessionVariable("detailview", "record");
 		if(!empty($last_detailview_record) && $last_detailview_record != $sugarbean->id){
@@ -1098,20 +1106,35 @@ function getUserVariable($localVarName, $varName) {
         if(!empty($this->response)){
             $response =& $this->response;
             echo 'cached';
-        }else{
-            $response = SugarBean::get_union_related_list($sugarbean,$this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page,$this->query_limit,$subpanel_def);
+        } else {
+            $response = SugarBean::get_union_related_list(
+                $sugarbean, 
+                $this->sortby, 
+                $this->sort_order, 
+                $this->query_where, 
+                $current_offset, 
+                -1, 
+                $this->records_per_page, 
+                $this->query_limit, 
+                $subpanel_def
+            );
             $this->response =& $response;
         }
         $list = $response['list'];
-        $row_count = $response['row_count'];
-        $next_offset = $response['next_offset'];
-        $previous_offset = $response['previous_offset'];
-        if(!empty($response['current_offset']))$current_offset = $response['current_offset'];
-        global $list_view_row_count;
-        $list_view_row_count = $row_count;
-        $this->processListNavigation('dyn_list_view', $html_var, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean,$subpanel_def);
-
-        return array('list'=>$list, 'parent_data'=>$response['parent_data'], 'query'=>$response['query']);
+        
+        if (!$countOnly) {
+            $row_count = $response['row_count'];
+            $next_offset = $response['next_offset'];
+            $previous_offset = $response['previous_offset'];
+            if (!empty($response['current_offset'])) {
+                $current_offset = $response['current_offset'];
+            }
+            global $list_view_row_count;
+            $list_view_row_count = $row_count;
+            $this->processListNavigation('dyn_list_view', $html_var, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean, $subpanel_def);
+        }
+        
+        return $response;
     }
 
     function getBaseURL($html_varName) {
@@ -1186,7 +1209,7 @@ function getUserVariable($localVarName, $varName) {
         global $currentModule;
         global $app_strings;
 
-        $start_record = $current_offset + 1;
+        $start_record = (int)$current_offset + 1;
 
         if(!is_numeric($col_count))
             $col_count = 20;
@@ -1355,7 +1378,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
                 //Bug#52931: Replace with actionMenu
                 //$select_link = "<a id='select_link' onclick='return select_dialog();' href=\"javascript:void(0)\">".$this->local_app_strings['LBL_LINK_SELECT']."&nbsp;".SugarThemeRegistry::current()->getImage('MoreDetail', 'border=0', 11, 7, '.png', $app_strings['LBL_MOREDETAIL'])."</a>";
                 $menuItems = array(
-                    "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input title=\"".$app_strings['LBL_SELECT_ALL_TITLE']."\" type='checkbox' class='bootstrap-checkbox-hidden checkbox massall' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' /><a href='javascript: void(0);'></a>",
+                    "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"><span class='suitepicon suitepicon-action-caret'></span></label><input title=\"".$app_strings['LBL_SELECT_ALL_TITLE']."\" type='checkbox' class='bootstrap-checkbox-hidden checkbox massall' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' /><a href='javascript: void(0);'></a>",
                     "<a  name='thispage' id='button_select_this_page' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $pageTotal)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};' href='#'>{$app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$pageTotal}&#x29;&#x200E;</a>",
                     "<a  name='selectall' id='button_select_all' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$total});' href='#'>{$app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$total_label}&#x29;&#x200E;</a>",
                     "<a name='deselect' id='button_deselect' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='sListView.clear_all(document.MassUpdate, \"mass[]\", false);' href='#'>{$app_strings['LBL_LISTVIEW_NONE']}</a>",
@@ -1574,7 +1597,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
         reset($data);
 
         //GETTING OFFSET
-        $offset = $this->getOffset($html_varName);
+        $offset = intval($this->getOffset($html_varName));
         $timeStamp = $this->unique_id();
         $_SESSION[$html_varName."_FROM_LIST_VIEW"] = $timeStamp;
 
@@ -1584,8 +1607,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
         $mergeList = array();
         $module = '';
         //todo what is this?  It is using an array as a boolean
-        while(list($aVal, $aItem) = each($data))
-        {
+        foreach($data as $aVal => $aItem) {
             if(isset($this->data_array)) {
                 $fields = $this->data_array;
             } else {
@@ -1602,7 +1624,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
             }
             //ADD OFFSET TO ARRAY
 
-                $fields['OFFSET'] = ($offset + $count + 1);
+            $fields['OFFSET'] = ($offset + $count + 1);
 
             $fields['STAMP'] = $timeStamp;
             if($this->shouldProcess) {
@@ -1613,7 +1635,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
             }
             $this->xTemplate->assign('PREROW', $prerow);
 
-            $this->xTemplate->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input type='checkbox' class='bootstrap-checkbox-hidden checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."'  name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked)'>");
+            $this->xTemplate->assign('CHECKALL', "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><span class='suitepicon suitepicon-action-caret'></span><input type='checkbox' class='bootstrap-checkbox-hidden checkbox'  title='".$GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE']."'  name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked)'>");
             }
             if(!isset($this->data_array)) {
                 $tag = $aItem->listviewACLHelper();
@@ -1884,45 +1906,53 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
         }
     }
 
-    function getArrowStart() {
-        $imgFileParts = pathinfo(SugarThemeRegistry::current()->getImageURL("arrow.gif"));
-
-        return "&nbsp;<!--not_in_theme!--><img border='0' src='".$imgFileParts['dirname']."/".$imgFileParts['filename']."";
+    /**
+     * @deprecated
+     * @return string
+     */
+    function getArrowStart()
+    {
+        global $log;
+        $log->deprecated('ListView::getArrowStart is now deprecate and will be removed in a future release');
+        return '';
     }
 
-    function getArrowUpDownStart($upDown) {
-        $ext = ( SugarThemeRegistry::current()->pngSupport ? "png" : "gif" );
-
-        if (!isset($upDown) || empty($upDown)) {
-            $upDown = "";
+    /**
+     * @param $upDown
+     * @return string
+     */
+    function getArrowUpDownStart($upDown)
+    {
+        if ($upDown === '_down') {
+            return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
+        } elseif (($upDown === '_up')) {
+            return '<span class="suitepicon suitepicon-action-sorting-descending"></span>';
+        } else {
+            return '<span class="suitepicon suitepicon-action-sorting-none"></span>';
         }
-        return "&nbsp;<img border='0' src='".SugarThemeRegistry::current()->getImageURL("arrow{$upDown}.{$ext}")."' ";
     }
 
-	function getArrowEnd() {
-		$imgFileParts = pathinfo(SugarThemeRegistry::current()->getImageURL("arrow.gif"));
-
-        list($width,$height) = ListView::getArrowImageSize();
-
-		return '.'.$imgFileParts['extension']."' width='$width' height='$height' align='absmiddle' alt=".translate('LBL_SORT').">";
+    /**
+     * @deprecated
+     * @return string
+     */
+	function getArrowEnd()
+    {
+        global $log;
+        $log->deprecated('ListView::getArrowEnd is now deprecate and will be removed in a future release');
+        return '';
     }
 
-    function getArrowUpDownEnd($upDown) {
-        if (!isset($upDown) || empty($upDown)) {
-            $upDown = "";
-        }
-        $imgFileParts = pathinfo(SugarThemeRegistry::current()->getImageURL("arrow{$upDown}.gif"));
-
-        list($width,$height) = ListView::getArrowUpDownImageSize($upDown);
-
-        //get the right alt tag for the sort
-        $sortStr = translate('LBL_ALT_SORT');
-        if($upDown == '_down'){
-            $sortStr = translate('LBL_ALT_SORT_DESC');
-        }elseif($upDown == '_up'){
-            $sortStr = translate('LBL_ALT_SORT_ASC');
-        }
-        return " width='$width' height='$height' align='absmiddle' alt='$sortStr'>";
+    /**
+     * @deprecated
+     * @param $upDown
+     * @return string
+     */
+    function getArrowUpDownEnd($upDown)
+    {
+        global $log;
+        $log->deprecated('ListView::getArrowUpDownEnd is now deprecate and will be removed in a future release');
+        return '';
     }
 
 	function getArrowImageSize() {
@@ -2064,4 +2094,3 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
  }
 
 }
-?>

@@ -105,7 +105,7 @@ $(document).ready(function() {
     $("#popup_form").validate({
 
         rules: {
-            name: "required",
+            task_name: "required",
             Start: {
                 required: true
             },
@@ -120,7 +120,7 @@ $(document).ready(function() {
             }
         },
         messages: {
-            name: "The task name is required",
+            task_name: "The task name is required",
             Start: "Start date is required",
             Duration: {
                 required: "The duration is required",
@@ -148,7 +148,7 @@ $(document).ready(function() {
             $('#Duration').val('0').attr('readonly', false);
             $('#Duration_unit').attr('readonly', false);
 
-            $( "#dialog" ).dialog({
+            $( "#template_dialog" ).dialog({
                 autoOpen: true,
                 show: {
                     effect: "none",
@@ -165,7 +165,7 @@ $(document).ready(function() {
                         var Project_id = $('#project_template_id').val();
 						var override_business_hours = $('#override_business_hours').val();
                         //var Parent_task = $('#parent_task').val();
-                        var Task_name = $('#name').val();
+                        var Task_name = $('#task_name').val();
                         var milestone = milestone_flag;
                         var Task_pre = $('#Predecessor').val();
                         var rel_type = $('#relation_type').val();
@@ -182,6 +182,9 @@ $(document).ready(function() {
 
                             var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes;
                             //block();
+
+							var this_dialog = $(this);
+
                             $.ajax({
                                 type: "POST",
                                 url: "index.php?module=AM_ProjectTemplates&action=update_GanttChart",
@@ -189,7 +192,7 @@ $(document).ready(function() {
                                 success: function() {
                                     //close and clear form
                                     $("#popup_form").trigger("reset");
-                                    $( "#dialog" ).dialog( "close" );
+                                    this_dialog.dialog( "close" );
                                 }
                             });
                         }
@@ -227,7 +230,7 @@ function gen_chart(blockui){
     var dataString = '&pid=' + pid;
 
     var msg = '<div><br />' +
-        '<h1><img align="absmiddle" src="themes/'+SUGAR.themes.theme_name+'/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
+        '<h1><img align="absmiddle" src="themes/default/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
     //call blockui
     if(blockui == '1'){
         block();
@@ -391,7 +394,7 @@ function get_predecessors(){
 //Used to create ajax loading effect using the blockUI jquery plugin
 function block(){
     var msg = '<div><br />' +
-        '<h1><img align="absmiddle" src="themes/'+SUGAR.themes.theme_name+'/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
+        '<h1><img align="absmiddle" src="themes/default/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
 
     $.blockUI({//ajax loading screen
         message:msg,
@@ -425,7 +428,7 @@ function edit_task(task){
     var milestone_flag ='Task';
 
     $('#task_id').val(data[0]);
-    $('#name').val(task.text());
+    $('#task_name').val(task.text());
     $('#Start').val(data[3]);
     if(data[7] == '1'){
         $('#Subtask').prop('checked', false);
@@ -448,7 +451,7 @@ function edit_task(task){
     $('#Notes').val(data[9]);
     $('#Actual_duration').val(data[10]);
 
-    $( "#dialog" ).dialog({
+    $( "#template_dialog" ).dialog({
         autoOpen: true,
         show: {
             effect: "none",
@@ -466,10 +469,10 @@ function edit_task(task){
                 var override_business_hours = $('#override_business_hours').val();
 				var Task_id = $('#task_id').val();
                 //var Parent_task = $('#parent_task').val();
-                var Task_name = $('#name').val();
+                var Task_name = $('#task_name').val();
 
                 if($('[name="Milestone"]:checked').val() == 'Milestone'){
-                    milestone_flag = 'Milestone'
+                    milestone_flag = 'Milestone';
                 }
 
                 var milestone = milestone_flag;
@@ -481,24 +484,24 @@ function edit_task(task){
                 var Task_Resource = $('#Resources').val();
                 var Task_Percent = $('#Complete').val();
                 var Task_Notes = $('#Notes').val();
-                var Actual_duration = $('#Actual_duration').val();
-                var rowCount = $('#Task_table tr').length -1;
-                var dateStart = "Start_date_"+rowCount ;
+                var Actual_duration = 0;
 
                 get_predecessors();
 
                 if($("#popup_form").valid()){
 
-                    var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&task_id=' + Task_id + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes + '&actual_duration=' + Actual_duration;
-                    //block();
-                    $.ajax({
+                	var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&task_id=' + Task_id + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes + '&actual_duration=' + Actual_duration;
+                    	//block();
+                
+		var this_dialog = $(this);
+		$.ajax({
                         type: "POST",
                         url: "index.php?module=AM_ProjectTemplates&action=update_GanttChart",
                         data: dataString,
                         success: function() {
                             //close and clear form
                             $("#popup_form").trigger("reset");
-                            $( "#dialog" ).dialog( "close" );
+                            this_dialog.dialog( "close" );
                         }
                     });
                 }
@@ -511,8 +514,8 @@ function edit_task(task){
             }
         },
         close: function () {
-            $(this).parent().promise().done(function () {
-                get_predecessors();
+			$(this).parent().promise().done(function () {
+				get_predecessors();
                 gen_chart(1);
             });
         }

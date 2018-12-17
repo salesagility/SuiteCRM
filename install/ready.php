@@ -1,11 +1,12 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +35,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 if( !isset( $install_script ) || !$install_script ){
 	die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
@@ -269,7 +271,7 @@ if(is_windows()) {
         }
     }
     $cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_WINDOWS_DESC'].'</b><br>
-						cd '.realpath('./').'<br>
+						cd /D '.realpath('./').'<br>
 						php.exe -f cron.php
 						<br>'.$error.'</p>
 			   ';
@@ -279,10 +281,17 @@ if(is_windows()) {
 //        $error = '<em>'.$mod_strings_scheduler['LBL_NO_PHP_CLI'].'</em>';
         }
     }
-    $cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_INSTRUCTIONS_LINUX'].'</b><br> '.$mod_strings_scheduler['LBL_CRON_LINUX_DESC'].'<br>
-						*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
+    require_once 'install/install_utils.php';
+    $webServerUser = getRunningUser();
+    if ($webServerUser == '') {
+        $webServerUser = '<web_server_user>';
+    }
+    $cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_INSTRUCTIONS_LINUX'].'</b><br> '.$mod_strings_scheduler['LBL_CRON_LINUX_DESC1'].'<br>
+                        <span style=\'background-color:#dfdfdf\'>sudo crontab -e -u '.$webServerUser.'</span><br> '.$mod_strings_scheduler['LBL_CRON_LINUX_DESC2'].'<br>
+						<span style=\'background-color:#dfdfdf\'>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
 						cd '.realpath('./').'; php -f cron.php > /dev/null 2>&1
-						<br><br><hr><br>'.$error.'</p>
+						</span><br>'.$mod_strings_scheduler['LBL_CRON_LINUX_DESC3'].'
+                        <br><br><hr><br>'.$error.'</p>
               ';
 }
 
@@ -380,11 +389,11 @@ $out = <<<EOQ
     </script>
 </div>
 <footer id="install_footer">
-    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </div>
 </body>
 </html>
 EOQ;
 echo $out;
-?>
+

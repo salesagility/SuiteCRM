@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 global $mod_strings;
@@ -258,8 +261,8 @@ else if(!isset($_GET['execute'])){
 	$tousername = $_POST['touser'];
 
 	$query = "select user_name, id from users where id in ('{$_POST['fromuser']}', '{$_POST['touser']}')";
-	$res = $GLOBALS['db']->query($query, true);
-	while($row = $GLOBALS['db']->fetchByAssoc($res)){
+	$res = DBManagerFactory::getInstance()->query($query, true);
+	while($row = DBManagerFactory::getInstance()->fetchByAssoc($res)){
 		if($row['id'] == $_POST['fromuser'])
 			$fromusername = $row['user_name'];
 		if($row['id'] == $_POST['touser'])
@@ -357,8 +360,8 @@ else if(!isset($_GET['execute'])){
 		$_SESSION['reassignRecords']['modules'][$module]['query'] = $query;
 		$_SESSION['reassignRecords']['modules'][$module]['update'] = $updatequery;
 
-		$res = $GLOBALS['db']->query($countquery, true);
-		$row = $GLOBALS['db']->fetchByAssoc($res);
+		$res = DBManagerFactory::getInstance()->query($countquery, true);
+		$row = DBManagerFactory::getInstance()->fetchByAssoc($res);
 
 		echo "{$row['count']} {$mod_strings_users['LBL_REASS_RECORDS_FROM']} {$app_list_strings['moduleList'][$p_module]} {$mod_strings_users['LBL_REASS_WILL_BE_UPDATED']}\n<BR>\n";
 		echo "<input type=checkbox name={$module}_workflow> {$mod_strings_users['LBL_REASS_WORK_NOTIF_AUDIT']}<BR>\n";
@@ -394,14 +397,14 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 
 		echo "<h5>{$mod_strings_users['LBL_PROCESSING']} {$app_list_strings['moduleList'][$p_module]}</h5>";
 
-		$res = $GLOBALS['db']->query($query, true);
+		$res = DBManagerFactory::getInstance()->query($query, true);
 
 		//echo "<i>Workflow and Notifications <b>".($workflow ? "enabled" : "disabled")."</b> for this module record reassignment</i>\n<BR>\n";
 		echo "<table border='0' cellspacing='0' cellpadding='0'  class='detail view'>\n";
 		echo "<tr>\n";
 		echo "<td>\n";
 		if(! $workflow){
-			$affected_rows = $GLOBALS['db']->getAffectedRowCount($res);
+			$affected_rows = DBManagerFactory::getInstance()->getAffectedRowCount($res);
 			echo "{$mod_strings_users['LBL_UPDATE_FINISH']}: $affected_rows {$mod_strings_users['LBL_AFFECTED']}<BR>\n";
 		}
 		else{
@@ -409,7 +412,7 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 			$failarr = array();
 
 			require_once($beanFiles[$module]);
-			while($row = $GLOBALS['db']->fetchByAssoc($res)){
+			while($row = DBManagerFactory::getInstance()->fetchByAssoc($res)){
 				$bean = new $module();
 				if(empty($row['id'])){
 					continue;

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -141,6 +142,9 @@ class UserViewHelper {
         $edit_self = $current_user->id == $this->bean->id;
         $admin_edit_self = is_admin($current_user) && $edit_self;
 
+        if(isset($_REQUEST['showEmailSettingsPopup']) && $_REQUEST['showEmailSettingsPopup']) {
+            $this->ss->assign('showEmailSettingsPopup', true);
+        }
 
         $this->ss->assign('IS_FOCUS_ADMIN', is_admin($this->bean));
 
@@ -323,7 +327,8 @@ class UserViewHelper {
         }
         if($this->usertype=='GROUP' || $this->usertype=='PORTAL_ONLY') {
             $this->ss->assign('HIDE_FOR_GROUP_AND_PORTAL', 'none');
-            $this->ss->assign('HIDE_CHANGE_USERTYPE','none');
+            $this->ss->assign('HIDE_CHANGE_USERTYPE', 'none');
+            $this->ss->assign('HIDE_IF_GAUTH_UNCONFIGURED', 'none');
         } else {
             $this->ss->assign('HIDE_FOR_NORMAL_AND_ADMIN','none');
             if (!$this->is_current_admin) {
@@ -469,6 +474,39 @@ class UserViewHelper {
 
         $this->ss->assign("SETTINGS_URL", $sugar_config['site_url']);
 
+        // Set Google Auth variables
+        $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "none"); // Hide new token button by default
+        $this->ss->assign("GOOGLE_API_TOKEN_NEW_URL", $sugar_config['site_url']."/index.php?entryPoint=saveGoogleApiKey&getnew");
+        $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Disabled");
+        if(isset($sugar_config['google_auth_json']) && !empty($sugar_config['google_auth_json'])) {
+            $json = base64_decode($sugar_config['google_auth_json']);
+            if (!$config = json_decode($json, true)) { // Check if the JSON is valid
+                $this->ss->assign("GOOGLE_API_TOKEN", "INVALID AUTH KEY");
+                $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "red");
+                $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "inline");
+            } else {
+                $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')));
+                if (!empty($this->bean->getPreference('GoogleApiToken', 'GoogleSync')) && $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')))) { // Check if the user has a token
+                    $this->ss->assign("GOOGLE_API_TOKEN", "CONFIGURED");
+                    $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "green");
+                    $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Reauthorize");
+                    $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "inline");
+                } else {
+                    $this->ss->assign("GOOGLE_API_TOKEN", "UNCONFIGURED");
+                    $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "black");
+                    $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "inline");
+                    $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Authorize");
+                }
+            }
+        } else {
+            $this->ss->assign("GOOGLE_API_TOKEN", "DISABLED");
+            $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "black");
+            $this->ss->assign("HIDE_IF_GAUTH_UNCONFIGURED", "none");
+        }
+
+        if($this->bean->getPreference('syncGCal', 'GoogleSync') == '1') {
+            $this->ss->assign('GSYNC_CAL', ' checked');
+        }
     }
 
     protected function setupAdvancedTabTeamSettings() {
@@ -510,6 +548,10 @@ class UserViewHelper {
         }
         $this->ss->assign("USE_GROUP_TABS",($useGroupTabs=='gm')?'checked':'');
 
+        if ($this->bean->getPreference('sort_modules_by_name')) {
+            $this->ss->assign('SORT_MODULES_BY_NAME', ' checked');
+        }
+
         $user_subpanel_tabs = $this->bean->getPreference('subpanel_tabs');
         if(isset($user_subpanel_tabs)) {
             $this->ss->assign("SUBPANEL_TABS", $user_subpanel_tabs?'checked':'');
@@ -517,9 +559,13 @@ class UserViewHelper {
             $this->ss->assign("SUBPANEL_TABS", $GLOBALS['sugar_config']['default_subpanel_tabs']?'checked':'');
         }
 
+        if ($this->bean->getPreference('count_collapsed_subpanels')) {
+            $this->ss->assign("COUNT_COLLAPSED_SUBPANELS", 'checked');
+        }
+
         /* Module Tab Chooser */
-        require_once('include/templates/TemplateGroupChooser.php');
-        require_once('modules/MySettings/TabController.php');
+        require_once(get_custom_file_if_exists('include/templates/TemplateGroupChooser.php'));
+        require_once(get_custom_file_if_exists('modules/MySettings/TabController.php'));
         $chooser = new TemplateGroupChooser();
         $controller = new TabController();
 
@@ -549,7 +595,7 @@ class UserViewHelper {
 
         $chooser->args['left_label'] =  translate('LBL_DISPLAY_TABS','Users');
         $chooser->args['right_label'] =  translate('LBL_HIDE_TABS','Users');
-        require_once('include/Smarty/plugins/function.sugar_help.php');
+        require_once(get_custom_file_if_exists('include/Smarty/plugins/function.sugar_help.php'));
         $chooser->args['title'] =  translate('LBL_EDIT_TABS','Users').smarty_function_sugar_help(array("text"=>translate('LBL_CHOOSE_WHICH','Users')),$ss);
 
         $this->ss->assign('TAB_CHOOSER', $chooser->display());
@@ -615,7 +661,7 @@ class UserViewHelper {
         $this->ss->assign("FDOWDISPLAY", $fdowDays[$currentFDOW]);
 
         //// Numbers and Currency display
-        require_once('modules/Currencies/ListCurrency.php');
+        require_once(get_custom_file_if_exists('modules/Currencies/ListCurrency.php'));
         $currency = new ListCurrency();
 
         // 10/13/2006 Collin - Changed to use Localization.getConfigPreference
@@ -705,6 +751,12 @@ class UserViewHelper {
             $this->ss->assign('EMAIL_LINK_TYPE', $app_list_strings['dom_email_link_type'][$raw_email_link_type]);
         }
 
+        $rawEditorType = $this->bean->getEditorType();
+        if ( $this->viewType == 'EditView' ) {
+            $this->ss->assign('EDITOR_TYPE', get_select_options_with_id($app_list_strings['dom_editor_type'], $rawEditorType));
+        } else {
+            $this->ss->assign('EDITOR_TYPE', $app_list_strings['dom_editor_type'][$rawEditorType]);
+        }
         /////	END EMAIL OPTIONS
         ///////////////////////////////////////////////////////////////////////////////
 
@@ -712,7 +764,6 @@ class UserViewHelper {
         /////////////////////////////////////////////
         /// Handle email account selections for users
         /////////////////////////////////////////////
-        $hide_if_can_use_default = true;
         if( !($this->usertype=='GROUP' || $this->usertype=='PORTAL_ONLY') ) {
             // email smtp
             $systemOutboundEmail = new OutboundEmail();
@@ -734,12 +785,6 @@ class UserViewHelper {
                     $mail_smtppass = $userOverrideOE->mail_smtppass;
                 }
 
-
-                if(!$mail_smtpauth_req && (empty($systemOutboundEmail->mail_smtpserver) || empty($systemOutboundEmail->mail_smtpuser) || empty($systemOutboundEmail->mail_smtppass))) {
-                    $hide_if_can_use_default = true;
-                } else{
-                    $hide_if_can_use_default = false;
-                }
             }
 
             $this->ss->assign("mail_smtpdisplay", $mail_smtpdisplay);
@@ -751,8 +796,6 @@ class UserViewHelper {
             $this->ss->assign('MAIL_SMTPPORT',$mail_smtpport);
             $this->ss->assign('MAIL_SMTPSSL',$mail_smtpssl);
         }
-        $this->ss->assign('HIDE_IF_CAN_USE_DEFAULT_OUTBOUND',$hide_if_can_use_default );
-
     }
 
 

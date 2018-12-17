@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -99,6 +102,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         $chartHeight    = 500;
 
         $jsonData = json_encode($chartReadyData['data']);
+        $jsonKeys = json_encode($chartReadyData['keys']);
         $jsonLabels = json_encode($chartReadyData['labels']);
         $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
 
@@ -128,6 +132,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         <input type='hidden' class='searchFormTab' value='$searchFormTab' />
         $autoRefresh
         <script>
+           window["chartHBarKeys$canvasId"] = $jsonKeys;
            var pie = new RGraph.Pie({
                 id: '$canvasId',
                 data: $jsonData,
@@ -203,33 +208,38 @@ EOD;
     function getChartData($query)
     {
         global $app_list_strings, $db;
-        $dataSet = array();
+        $dataSet = [];
         $result = $db->query($query);
 
         $row = $db->fetchByAssoc($result);
 
-        while ($row != null){
+        while ($row != null) {
+            if (isset($row['lead_source']) && $app_list_strings['lead_source_dom'][$row['lead_source']]) {
+                $row['lead_source_key'] = $row['lead_source'];
+                $row['lead_source'] = $app_list_strings['lead_source_dom'][$row['lead_source']];
+            }
             $dataSet[] = $row;
             $row = $db->fetchByAssoc($result);
         }
         return $dataSet;
     }
 
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //return $data;
-        $chart['labels']=array();
-        $chart['data']=array();
+        $chart['labels'] = [];
+        $chart['data'] = [];
+        $chart['keys'] = [];
         $total = 0;
-        foreach($data as $i)
-        {
-            $chart['labelsAndValues'][]=$i['lead_source'].' ('.$currency_symbol.(int)$i['total'].$thousands_symbol.')';
+        foreach ($data as $i) {
+            $chart['labelsAndValues'][] = $i['lead_source'] . ' (' . $currency_symbol . (int)$i['total'] . $thousands_symbol . ')';
             //$chart['labelsAndValues'][]=$currency_symbol.(int)$i['total'].$thousands_symbol;
-            $chart['labels'][]=$i['lead_source'];
-            $chart['data'][]=(int)$i['total'];
-            $total+=(int)$i['total'];
+            $chart['labels'][] = $i['lead_source'];
+            $chart['keys'][] = $i['lead_source_key'];
+            $chart['data'][] = (int)$i['total'];
+            $total += (int)$i['total'];
         }
-        $chart['total']=$total;
+        $chart['total'] = $total;
         return $chart;
     }
 

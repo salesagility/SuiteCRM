@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 class TabController{
@@ -265,38 +268,10 @@ function get_tabs($user)
 			$display_tabs[$key] = $value;
 	}
 
-    ////////////////////////////////////////////////////////////////////
-    // Jenny - Bug 6286: If someone has "old school roles" defined (before 4.0) and upgrades, 
-    // then they can't remove those old roles through the UI. Also, when new tabs are added, 
-    // users who had any of those "old school roles" defined have no way of being able to see 
-    // those roles. We need to disable role checking.
-	
-    //$roleCheck = query_user_has_roles($user->id);
-    $roleCheck = 0;
-    ////////////////////////////////////////////////////////////////////
-		if($roleCheck)
-		{
-			//grabs modules a user has access to via roles
-			$role_tabs = get_user_allowed_modules($user->id);
-	
-			// adds modules to display_tabs if existant in roles
-			foreach($role_tabs as $key=>$value)
-			{
-				if(!isset($display_tabs[$key]))
-					$display_tabs[$key] = $value;
-			}
-		}
-		
 		// removes tabs from display_tabs if not existant in roles
 		// or exist in the hidden tabs
 		foreach($display_tabs as $key=>$value)
 		{
-			if($roleCheck)
-			{			
-				if(!isset($role_tabs[$key]))
-					unset($display_tabs[$key]);
-			}
-			
 			if(!isset($system_tabs[$key]))
 				unset($display_tabs[$key]);
 			if(isset($hide_tabs[$key]))
@@ -306,12 +281,6 @@ function get_tabs($user)
 		// removes tabs from hide_tabs if not existant in roles
 		foreach($hide_tabs as $key=>$value)
 		{
-			if($roleCheck)
-			{
-				if(!isset($role_tabs[$key]))
-					unset($hide_tabs[$key]);
-			}
-			
 			if(!isset($system_tabs[$key]))
 				unset($hide_tabs[$key]);
 		}

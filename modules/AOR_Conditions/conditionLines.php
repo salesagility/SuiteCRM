@@ -38,7 +38,7 @@ function display_condition_lines($focus, $field, $value, $view){
     if($view == 'EditView'){
 
         $html .= '<script src="modules/AOR_Conditions/conditionLines.js"></script>';
-        $html .= "<table border='0' cellspacing='4' width='100%' id='conditionLines'></table>";
+        $html .= "<table border='0' cellspacing='4' width='100%' id='aor_conditionLines'></table>";
 
         $html .= "<div style='padding-top: 10px; padding-bottom:10px;'>";
         $html .= "<input type=\"button\" tabindex=\"116\" class=\"button\" value=\"".$mod_strings['LBL_ADD_CONDITION']."\" id=\"btn_ConditionLine\" onclick=\"insertConditionLine()\" disabled/>";
@@ -73,7 +73,7 @@ function display_condition_lines($focus, $field, $value, $view){
     }
     else if($view == 'DetailView'){
         $html .= '<script src="modules/AOR_Conditions/conditionLines.js"></script>';
-        $html .= "<table border='0' cellspacing='0' width='100%' id='conditionLines'></table>";
+        $html .= "<table border='0' cellspacing='0' width='100%' id='aor_conditionLines'></table>";
 
 
         if(isset($focus->report_module) && $focus->report_module != ''){
@@ -99,5 +99,3 @@ function display_condition_lines($focus, $field, $value, $view){
     }
     return $html;
 }
-
-?>

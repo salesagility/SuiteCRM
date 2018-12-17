@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if(!defined('sugarEntry') || !sugarEntry) {
@@ -50,25 +50,27 @@ require_once('include/contextMenus/contextMenu.php');
 class ListViewSmarty extends ListViewDisplay
 {
 
-    var $data;
-    var $ss; // the smarty object
-    var $displayColumns;
-    var $searchColumns; // set by view.list.php
-    var $tpl;
-    var $moduleString;
-    var $export = true;
-    var $delete = true;
-    var $select = true;
-    var $mailMerge = true;
-    var $email = true;
-    var $targetList = false;
-    var $multiSelect = true;
-    var $quickViewLinks = true;
-    var $lvd;
-    var $mergeduplicates = true;
-    var $contextMenus = true;
-    var $showMassupdateFields = true;
-    var $menu_location = 'top';
+    public $data;
+    public $ss; // the smarty object
+    public $displayColumns;
+    public $searchColumns; // set by view.list.php
+    public $tpl;
+    public $moduleString;
+    public $export = true;
+    public $delete = true;
+    public $select = true;
+    public $mailMerge = true;
+    public $email = true;
+    public $targetList = false;
+    public $multiSelect = true;
+    public $quickViewLinks = true;
+    public $lvd;
+    public $mergeduplicates = true;
+    public $contextMenus = true;
+    public $showMassupdateFields = true;
+    public $menu_location = 'top';
+    public $templateMeta = array();
+
     /**
      * Constructor, Smarty object immediately available after
      *
@@ -79,31 +81,62 @@ class ListViewSmarty extends ListViewDisplay
     }
 
     /**
+     *
+     * @return string|boolean
+     */
+    public function buildSendConfirmOptInEmailToPersonAndCompany()
+    {
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
+            return false;
+        }
+
+        $linkTpl = new Sugar_Smarty();
+        $linkTpl->assign('module_name', $this->seed->module_name);
+        $linkHTML = $linkTpl->fetch('include/ListView/ListViewBulkActionSendOptInLink.tpl');
+
+        return $linkHTML;
+    }
+
+    /**
      * Processes the request. Calls ListViewData process. Also assigns all lang strings, export links,
      * This is called from ListViewDisplay
      *
-     * @param file file Template file to use
-     * @param data array from ListViewData
-     * @param html_var string the corresponding html var in xtpl per row
+     * @param file $file Template file to use
+     * @param array $data from ListViewData
+     * @param string $htmlVar the corresponding html public in xtpl per row
      *
      */
-    function process($file, $data, $htmlVar) {
+    function process($file, $data, $htmlpublic) {
+        global $mod_strings;
         if(!$this->should_process)return;
         global $odd_bg, $even_bg, $hilite_bg, $app_strings, $sugar_config;
-        parent::process($file, $data, $htmlVar);
+
+        $seedClass = get_parent_class($this->seed);
+        if (in_array($seedClass, array('Company', 'Person'), true)) {
+            $configurator = new Configurator();
+            if ($configurator->isConfirmOptInEnabled()) {
+                $sendConfirmOptInEmailToPersonAndCompany = $this->buildSendConfirmOptInEmailToPersonAndCompany();
+                if (!in_array($sendConfirmOptInEmailToPersonAndCompany, $this->actionsMenuExtraItems, true)) {
+                    $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
+                }
+            }
+        }
+
+        parent::process($file, $data, $htmlpublic);
 
         $this->tpl = $file;
         $this->data = $data;
 
         $totalWidth = 0;
-        foreach($this->displayColumns as $name => $params) {
-            $totalWidth += $params['width'];
+        foreach((array)$this->displayColumns as $name => $params) {
+            $totalWidth += (int)$params['width'];
         }
         $adjustment = $totalWidth / 100;
 
         $contextMenuObjectsTypes = array();
-        foreach($this->displayColumns as $name => $params) {
-            $this->displayColumns[$name]['width'] = floor($this->displayColumns[$name]['width'] / $adjustment);
+        foreach((array)$this->displayColumns as $name => $params) {
+            $this->displayColumns[$name]['width'] = floor(((int)$this->displayColumns[$name]['width']) / $adjustment);
             // figure out which contextMenu objectsTypes are required
             if(!empty($params['contextMenu']['objectType']))
                 $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
@@ -120,11 +153,16 @@ class ListViewSmarty extends ListViewDisplay
 
         $this->ss->assign('sugarconfig', $this->displayColumns);
         $this->ss->assign('displayColumns', $this->displayColumns);
+        $this->ss->assign('options', isset($this->templateMeta['options']) ? $this->templateMeta['options'] : null);
+        $this->ss->assign('form', isset($this->templateMeta['form']) ? $this->templateMeta['form'] : null);
+        $this->ss->assign('includes', isset($this->templateMeta['includes']) ? $this->templateMeta['includes'] : null);
+
         $this->ss->assign('APP',$app_strings);
+        $this->ss->assign('MOD',$mod_strings);
 
         $this->ss->assign('bgHilite', $hilite_bg);
-        $this->ss->assign('colCount', count($this->displayColumns) + 10);
-        $this->ss->assign('htmlVar', strtoupper($htmlVar));
+        $this->ss->assign('colCount', count((array)$this->displayColumns) + 10);
+        $this->ss->assign('htmlpublic', strtoupper($htmlpublic));
         $this->ss->assign('moduleString', $this->moduleString);
         $this->ss->assign('editLinkString', $app_strings['LBL_EDIT_BUTTON']);
         $this->ss->assign('viewLinkString', $app_strings['LBL_VIEW_BUTTON']);
@@ -133,14 +171,19 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('recordsLinkString',$app_strings['LBL_LINK_RECORDS']);
         $this->ss->assign('selectLinkString',$app_strings['LBL_LINK_SELECT']);
 
-        // Bug 24677 - Correct the page total amount on the last page of listviews
-        $pageTotal = $this->data['pageData']['offsets']['next']-$this->data['pageData']['offsets']['current'];
-        if ( $this->data['pageData']['offsets']['next'] < 0 ) {
-            $pageTotal = $this->data['pageData']['offsets']['total'] - $this->data['pageData']['offsets']['current'];
-        }
+        if(!isset($this->data['pageData']['offsets'])) {
+            $GLOBALS['log']->warn('Incorrect pageData: offset is not set');
+        } else {
+            // Bug 24677 - Correct the page total amount on the last page of listviews
+            $pageTotal = $this->data['pageData']['offsets']['next'] - $this->data['pageData']['offsets']['current'];
+            if ($this->data['pageData']['offsets']['next'] < 0) {
+                $pageTotal = $this->data['pageData']['offsets']['total'] - $this->data['pageData']['offsets']['current'];
+            }
 
-        if($this->select)$this->ss->assign('selectLinkTop', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal));
-        if($this->select)$this->ss->assign('selectLinkBottom', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal, "bottom"));
+            if($this->select)$this->ss->assign('selectLinkTop', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal));
+            if($this->select)$this->ss->assign('selectLinkBottom', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal, "bottom"));
+
+        }
 
         if($this->show_action_dropdown)
         {
@@ -167,7 +210,13 @@ class ListViewSmarty extends ListViewDisplay
             && ACLController::checkAccess('ProspectLists','edit',true)) {
             $this->ss->assign( 'targetLink', $this->buildTargetList() ) ;
         }
-        $this->processArrows($data['pageData']['ordering']);
+
+        if(!isset($data['pageData']['ordering'])) {
+            $GLOBALS['log']->warn("Incorrect pageData: ordering is not set");
+        } else {
+            $this->processArrows($data['pageData']['ordering']);
+        }
+
         $this->ss->assign('prerow', $this->multiSelect);
         $this->ss->assign('clearAll', $app_strings['LBL_CLEARALL']);
         $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
@@ -188,8 +237,9 @@ class ListViewSmarty extends ListViewDisplay
             $this->ss->assign('contextMenuScript', $script);
         }
 
-        $this->ss->assign('showFilterIcon', !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
-	}
+        $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+        $this->ss->assign('showFilterIcon', !in_array($module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
+    }
 
     /**
      * Assigns the sort arrows in the tpl
@@ -219,7 +269,7 @@ class ListViewSmarty extends ListViewDisplay
      */
     function display($end = true) {
 
-        if(!$this->should_process) return $GLOBALS['app_strings']['LBL_SEARCH_POPULATE_ONLY'];
+        if(!$this->should_process) return $this->getSearchIcon().$GLOBALS['app_strings']['LBL_SEARCH_POPULATE_ONLY'];
         global $app_strings, $sugar_version, $sugar_flavor, $currentModule, $app_list_strings;
         $this->ss->assign('moduleListSingular', $app_list_strings["moduleListSingular"]);
         $this->ss->assign('moduleList', $app_list_strings['moduleList']);
@@ -227,7 +277,13 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('query', $this->data['query']);
         $this->ss->assign('sugar_info', array("sugar_version" => $sugar_version,
             "sugar_flavor" => $sugar_flavor));
-        $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
+
+        if(!isset($this->data['pageData']['offsets'])) {
+            $GLOBALS['log']->warn("Incorrect pageData: trying to display but offset is not set");
+        } else {
+            $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
+        }
+
         $this->ss->assign('pageData', $this->data['pageData']);
 
         $navStrings = array('next' => $app_strings['LNK_LIST_NEXT'],
@@ -252,6 +308,21 @@ class ListViewSmarty extends ListViewDisplay
 
         return $str . $this->ss->fetch($this->tpl) . (($end) ? $strend : '');
     }
+
+
+    private function getSearchIcon() {
+        global $sugar_config;
+
+        $searchFormInPopup = !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
+        if($sugar_config['save_query'] == 'populate_only' && !$searchFormInPopup) {
+            return ;
+        }
+        $ss = new Sugar_Smarty();
+        $ss->assign('currentModule', $_REQUEST['module']);
+        return $ss->fetch('include/ListView/ListViewSearchLink.tpl') . '<br>';
+    }
+
+
     function displayEnd() {
         $str = '';
         if($this->show_mass_update_form) {
@@ -264,5 +335,3 @@ class ListViewSmarty extends ListViewDisplay
         return $str;
     }
 }
-
-?>

@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -66,9 +69,8 @@ global $admin_group_header;  ///variable defined in the file above.
 
 
 $tab = array();
-$header_image = array();
+$icons = array();
 $url = array();
-$onclick = array();
 $label_tab = array();
 $id_tab = array();
 $description = array();
@@ -119,23 +121,10 @@ foreach ($admin_group_header as $key=>$values) {
                     continue;
                 }
                 $colnum+=1;
-                $header_image[$j][$i]= SugarThemeRegistry::current()->getImage(
-                    $admin_option[0],
-                    'border="0" align="absmiddle"',
-                    null,
-                    null,
-                    '.svg',
-                    translate($admin_option[1],'Administration')
-                );
+                $icons[$j][$i] = isset($admin_option[4]) ? $admin_option[4] : 'default';
                 $url[$j][$i] = $admin_option[3];
-                if(!empty($admin_option[5])) {
-                	$onclick[$j][$i] = $admin_option[5];
-                }
                 $label = translate($admin_option[1],'Administration');
                 if(!empty($admin_option['additional_label']))$label.= ' '. $admin_option['additional_label'];
-                if(!empty($admin_option[4])){
-                	$label = ' <font color="red">'. $label . '</font>';
-                }
 
                 $label_tab[$j][$i]= $label;
                 $id_tab[$j][$i] = $link_idx;
@@ -163,14 +152,11 @@ foreach ($admin_group_header as $key=>$values) {
 $sugar_smarty->assign("VALUES_3_TAB", $values_3_tab);
 $sugar_smarty->assign("ADMIN_GROUP_HEADER", $admin_group_header_tab);
 $sugar_smarty->assign("GROUP_HEADER", $group);
-$sugar_smarty->assign("ITEM_HEADER_IMAGE", $header_image);
+$sugar_smarty->assign("ICONS", $icons);
 $sugar_smarty->assign("ITEM_URL", $url);
-$sugar_smarty->assign("ITEM_ONCLICK", $onclick);
 $sugar_smarty->assign("ITEM_HEADER_LABEL",$label_tab);
 $sugar_smarty->assign("ITEM_DESCRIPTION", $description);
 $sugar_smarty->assign("COLNUM", $tab);
 $sugar_smarty->assign('ID_TAB', $id_tab);
 
 echo $sugar_smarty->fetch('modules/Administration/index.tpl');
-
-?>

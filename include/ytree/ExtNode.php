@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,99 +34,130 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-//node the tree view. no need to add a root node,a invisible root node will be added to the
-//tree by default.
-//predefined properties for a node are  id, label, target and href. label is required property.
-//set the target and href property for cases where target is an iframe.
-class ExtNode {
-	//predefined node properties.
-	var $_label;		//this is the only required property for a node.
-	var $_href;
-	var $id;
+/**
+ * @package ExtNode
+ * node the tree view. no need to add a root node,a invisible root node will be added to the
+ * tree by default.
+ * predefined properties for a node are  id, label, target and href. label is required property.
+ * set the target and href property for cases where target is an iframe.
+ */
+class ExtNode
+{
+    // predefined node properties.
+    // this is the only required property for a node.
+    public $_label;
+    public $_href;
+    public $id;
+    // ad-hoc collection of node properties
+    public $_properties = array();
+    // collection of parmeter properties;
+    public $_params = array();
+    // sent to the javascript.
+    // unique id for the node.
+    public $uid;
+    public $nodes = array();
+    // false means child records are pre-loaded.
+    public $dynamic_load = false;
+    //default script to load node data (children)
+    public $dynamicloadfunction = 'loadDataForNode';
+    //show node expanded during initial load.
+    public $expanded = false;
 
-	//ad-hoc collection of node properties
-	var $_properties=array();
-	//collection of parmeter properties;
-	var $_params=array();
-
-	//sent to the javascript.
-	var $uid; 		//unique id for the node.
-
-	var $nodes=array();
-	var $dynamic_load=false; //false means child records are pre-loaded.
-	var $dynamicloadfunction='loadDataForNode'; //default script to load node data (children)
-	var $expanded=false;  //show node expanded during initial load.
-
-	function __construct($id,$label,$show_expanded=true) {
-		$this->_label=$label;
-		$this->id = $id;
-		$this->_properties['text']=$label;
-		$this->uid=microtime();
-		$this->set_property('id',$id);
+    /**
+     * ExtNode constructor.
+     * @param $id
+     * @param $label
+     * @param bool $show_expanded
+     *
+     * properties set here will be accessible via
+     * node.data object in javascript.
+     * users can add a collection of paramaters that will
+     * be passed to objects responding to tree events
+     */
+    public function __construct($id, $label, $show_expanded = true)
+    {
+        $this->_label = $label;
+        $this->id = $id;
+        $this->_properties['text'] = $label;
+        $this->uid = microtime();
+        $this->set_property('id', $id);
         $this->expanded = $show_expanded;
-	}
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ExtNode($id,$label,$show_expanded=true){
+    public function ExtNode($id, $label, $show_expanded = true)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $label, $show_expanded);
     }
 
 
-	//properties set here will be accessible via
-	//node.data object in javascript.
-	//users can add a collection of paramaters that will
-	//be passed to objects responding to tree events
- 	function set_property($name, $value, $is_param=false) {
- 		if(!empty($name) && ($value === 0 || !empty($value))) {
- 			if ($is_param==false) {
- 				$this->_properties[$name]=$value;
- 			} else {
- 				$this->_params[$name]=$value;
- 			}
- 		}
- 	}
+    /**
+     * @param $name
+     * @param $value
+     * @param bool $is_param
+     */
+    public function set_property($name, $value, $is_param = false)
+    {
+        if (!empty($name) && ($value === 0 || !empty($value))) {
+            if ($is_param == false) {
+                $this->_properties[$name] = $value;
+            } else {
+                $this->_params[$name] = $value;
+            }
+        }
+    }
 
-	//add a child node.
- 	function add_node($node) {
-  		$this->nodes[$node->uid]=$node;
-  	}
+    /**
+     * add a child node.
+     * @param $node
+     */
+    function add_node($node)
+    {
+        $this->nodes[$node->uid] = $node;
+    }
 
-	//return definition of the node. the definition is a multi-dimension array and has 3 parts.
-	// data-> definition of the current node.
-	// attributes=> collection of additional attributes such as style class etc..
-	// nodes: definition of children nodes.
- 	function get_definition() {
- 		$ret=array();
+    /**
+     * @return array - definition of the node. the definition is a multi-dimension array and has 3 parts.
+     * data-> definition of the current node.
+     * attributes=> collection of additional attributes such as style class etc..
+     * nodes: definition of children nodes.
+     *
+     */
+    function get_definition()
+    {
+        $ret = array();
 
- 		$ret = $this->_properties;
- 		if (!empty($this->_params)) {
- 			$ret[] = $this->_params;
- 		}
+        $ret = $this->_properties;
+        if (!empty($this->_params)) {
+            $ret[] = $this->_params;
+        }
 
-		$ret['dynamicload']=$this->dynamic_load;
-		$ret['dynamicloadfunction']=$this->dynamicloadfunction;
-		$ret['expanded']=$this->expanded;
-		$ret['children'] = array();
-		$ret['type'] = 1;
+        $ret['dynamicload'] = $this->dynamic_load;
+        $ret['dynamicloadfunction'] = $this->dynamicloadfunction;
+        $ret['expanded'] = $this->expanded;
+        $ret['children'] = array();
+        $ret['type'] = 1;
 
- 		foreach ($this->nodes as $node) {
- 			$ret['children'][]=$node->get_definition();
- 		}
-		//$ret['leaf'] = empty($ret['children']);
-		return $ret;
- 	}
+        foreach ($this->nodes as $node) {
+            $ret['children'][] = $node->get_definition();
+        }
+
+        //$ret['leaf'] = empty($ret['children']);
+        return $ret;
+    }
 }
-?>

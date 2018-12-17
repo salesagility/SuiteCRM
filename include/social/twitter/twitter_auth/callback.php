@@ -11,8 +11,8 @@ global $sugar_config;
 
 /* Start session and load lib */
 session_start();
-require_once('twitteroauth/twitteroauth.php');
-include_once('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
+require_once('include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
+include_once('modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
 /* If the oauth_token is old redirect to the connect page. */
 if (isset($_REQUEST['oauth_token']) && $_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 {{include file=$headerTpl}}
@@ -238,106 +238,106 @@ class="yui-navset detailview_tabs"
                     <tr>
                         <th colspan='4' align="left" width="100%" valign="top">
                             <h4>
-                                <slot>{$MOD.LBL_USER_SETTINGS}</slot>
+                                <span>{$MOD.LBL_USER_SETTINGS}</span>
                             </h4>
                         </th>
                     </tr>
                     <tr>
                         <td scope="row">
-                            <slot>{$MOD.LBL_RECEIVE_NOTIFICATIONS|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_RECEIVE_NOTIFICATIONS|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot><input class="checkbox" type="checkbox" disabled {$RECEIVE_NOTIFICATIONS}></slot>
+                            <span><input class="checkbox" type="checkbox" disabled {$RECEIVE_NOTIFICATIONS}></span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_RECEIVE_NOTIFICATIONS_TEXT}&nbsp;</slot>
+                            <span>{$MOD.LBL_RECEIVE_NOTIFICATIONS_TEXT}&nbsp;</span>
                         </td>
                     </tr>
 
                     <tr>
                         <td scope="row" valign="top">
-                            <slot>{$MOD.LBL_REMINDER|strip_semicolon}:
+                            <span>{$MOD.LBL_REMINDER|strip_semicolon}:
                         </td>
                         <!--
-                    <td valign="top" nowrap><slot>{include file="modules/Meetings/tpls/reminders.tpl"}</slot></td>
+                    <td valign="top" nowrap><span>{include file="modules/Meetings/tpls/reminders.tpl"}</span></td>
                     -->
                         <td valign="top" nowrap>
-                            <slot>{include file="modules/Reminders/tpls/remindersDefaults.tpl"}</slot>
+                            <span>{include file="modules/Reminders/tpls/remindersDefaults.tpl"}</span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_REMINDER_TEXT}&nbsp;</slot>
+                            <span>{$MOD.LBL_REMINDER_TEXT}&nbsp;</span>
                         </td>
 
                     </tr>
 
                     <tr>
                         <td valign="top" scope="row">
-                            <slot>{$MOD.LBL_MAILMERGE|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_MAILMERGE|strip_semicolon}:</span>
                         </td>
                         <td valign="top" nowrap>
-                            <slot><input tabindex='3' name='mailmerge_on' disabled class="checkbox"
-                                         type="checkbox" {$MAILMERGE_ON}></slot>
+                            <span><input tabindex='3' name='mailmerge_on' disabled class="checkbox"
+                                         type="checkbox" {$MAILMERGE_ON}></span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_MAILMERGE_TEXT}&nbsp;</slot>
+                            <span>{$MOD.LBL_MAILMERGE_TEXT}&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
                         <td valign="top" scope="row">
-                            <slot>{$MOD.LBL_SETTINGS_URL|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_SETTINGS_URL|strip_semicolon}:</span>
                         </td>
                         <td valign="top" nowrap>
-                            <slot>{$SETTINGS_URL}</slot>
+                            <span>{$SETTINGS_URL}</span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_SETTINGS_URL_DESC}&nbsp;</slot>
+                            <span>{$MOD.LBL_SETTINGS_URL_DESC}&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
                         <td scope="row" valign="top">
-                            <slot>{$MOD.LBL_EXPORT_DELIMITER|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_EXPORT_DELIMITER|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot>{$EXPORT_DELIMITER}</slot>
+                            <span>{$EXPORT_DELIMITER}</span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_EXPORT_DELIMITER_DESC}</slot>
+                            <span>{$MOD.LBL_EXPORT_DELIMITER_DESC}</span>
                         </td>
                     </tr>
                     <tr>
                         <td scope="row" valign="top">
-                            <slot>{$MOD.LBL_EXPORT_CHARSET|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_EXPORT_CHARSET|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot>{$EXPORT_CHARSET_DISPLAY}</slot>
+                            <span>{$EXPORT_CHARSET_DISPLAY}</span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_EXPORT_CHARSET_DESC}</slot>
+                            <span>{$MOD.LBL_EXPORT_CHARSET_DESC}</span>
                         </td>
                     </tr>
                     <tr>
                         <td scope="row" valign="top">
-                            <slot>{$MOD.LBL_USE_REAL_NAMES|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_USE_REAL_NAMES|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot><input tabindex='3' name='use_real_names' disabled class="checkbox"
-                                         type="checkbox" {$USE_REAL_NAMES}></slot>
+                            <span><input tabindex='3' name='use_real_names' disabled class="checkbox"
+                                         type="checkbox" {$USE_REAL_NAMES}></span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_USE_REAL_NAMES_DESC}</slot>
+                            <span>{$MOD.LBL_USE_REAL_NAMES_DESC}</span>
                         </td>
                     </tr>
                     {if $DISPLAY_EXTERNAL_AUTH}
                         <tr>
                             <td scope="row" valign="top">
-                                <slot>{$EXTERNAL_AUTH_CLASS|strip_semicolon}:</slot>
+                                <span>{$EXTERNAL_AUTH_CLASS|strip_semicolon}:</span>
                             </td>
                             <td valign="top" nowrap>
-                                <slot><input id="external_auth_only" name="external_auth_only" type="checkbox"
-                                             class="checkbox" {$EXTERNAL_AUTH_ONLY_CHECKED}></slot>
+                                <span><input id="external_auth_only" name="external_auth_only" type="checkbox"
+                                             class="checkbox" {$EXTERNAL_AUTH_ONLY_CHECKED}></span>
                             </td>
                             <td>
-                                <slot>{$MOD.LBL_EXTERNAL_AUTH_ONLY} {$EXTERNAL_AUTH_CLASS}</slot>
+                                <span>{$MOD.LBL_EXTERNAL_AUTH_ONLY} {$EXTERNAL_AUTH_CLASS}</span>
                             </td>
                         </tr>
                     {/if}
@@ -348,96 +348,96 @@ class="yui-navset detailview_tabs"
                     <tr>
                         <th colspan='4' align="left" width="100%" valign="top">
                             <h4>
-                                <slot>{$MOD.LBL_USER_LOCALE}</slot>
+                                <span>{$MOD.LBL_USER_LOCALE}</span>
                             </h4>
                         </th>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_DATE_FORMAT|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_DATE_FORMAT|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot>{$DATEFORMAT}&nbsp;</slot>
+                            <span>{$DATEFORMAT}&nbsp;</span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_DATE_FORMAT_TEXT}&nbsp;</slot>
+                            <span>{$MOD.LBL_DATE_FORMAT_TEXT}&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_TIME_FORMAT|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_TIME_FORMAT|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot>{$TIMEFORMAT}&nbsp;</slot>
+                            <span>{$TIMEFORMAT}&nbsp;</span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_TIME_FORMAT_TEXT}&nbsp;</slot>
+                            <span>{$MOD.LBL_TIME_FORMAT_TEXT}&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_TIMEZONE|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_TIMEZONE|strip_semicolon}:</span>
                         </td>
                         <td nowrap>
-                            <slot>{$TIMEZONE}&nbsp;</slot>
+                            <span>{$TIMEZONE}&nbsp;</span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_ZONE_TEXT}&nbsp;</slot>
+                            <span>{$MOD.LBL_ZONE_TEXT}&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_CURRENCY|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_CURRENCY|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot>{$CURRENCY_DISPLAY}&nbsp;</slot>
+                            <span>{$CURRENCY_DISPLAY}&nbsp;</span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_CURRENCY_TEXT}&nbsp;</slot>
+                            <span>{$MOD.LBL_CURRENCY_TEXT}&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_CURRENCY_SIG_DIGITS|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_CURRENCY_SIG_DIGITS|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot>{$CURRENCY_SIG_DIGITS}&nbsp;</slot>
+                            <span>{$CURRENCY_SIG_DIGITS}&nbsp;</span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_CURRENCY_SIG_DIGITS_DESC}&nbsp;</slot>
+                            <span>{$MOD.LBL_CURRENCY_SIG_DIGITS_DESC}&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_NUMBER_GROUPING_SEP|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_NUMBER_GROUPING_SEP|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot>{$NUM_GRP_SEP}&nbsp;</slot>
+                            <span>{$NUM_GRP_SEP}&nbsp;</span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_NUMBER_GROUPING_SEP_TEXT}&nbsp;</slot>
+                            <span>{$MOD.LBL_NUMBER_GROUPING_SEP_TEXT}&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_DECIMAL_SEP|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_DECIMAL_SEP|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot>{$DEC_SEP}&nbsp;</slot>
+                            <span>{$DEC_SEP}&nbsp;</span>
                         </td>
                         <td>
-                            <slot></slot>{$MOD.LBL_DECIMAL_SEP_TEXT}&nbsp;</td>
+                            <span></span>{$MOD.LBL_DECIMAL_SEP_TEXT}&nbsp;</td>
                     </tr>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_LOCALE_DEFAULT_NAME_FORMAT|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_LOCALE_DEFAULT_NAME_FORMAT|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot>{$NAME_FORMAT}&nbsp;</slot>
+                            <span>{$NAME_FORMAT}&nbsp;</span>
                         </td>
                         <td>
-                            <slot></slot>{$MOD.LBL_LOCALE_NAME_FORMAT_DESC}&nbsp;</td>
+                            <span></span>{$MOD.LBL_LOCALE_NAME_FORMAT_DESC}&nbsp;</td>
                     </tr>
                 </table>
             </div>
@@ -446,54 +446,80 @@ class="yui-navset detailview_tabs"
                     <tr>
                         <th colspan='4' align="left" width="100%" valign="top">
                             <h4>
-                                <slot>{$MOD.LBL_CALENDAR_OPTIONS}</slot>
+                                <span>{$MOD.LBL_CALENDAR_OPTIONS}</span>
                             </h4>
                         </th>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_PUBLISH_KEY|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_PUBLISH_KEY|strip_semicolon}:</span>
                         </td>
                         <td width="20%">
-                            <slot>{$CALENDAR_PUBLISH_KEY}&nbsp;</slot>
+                            <span>{$CALENDAR_PUBLISH_KEY}&nbsp;</span>
                         </td>
                         <td width="65%">
-                            <slot>{$MOD.LBL_CHOOSE_A_KEY}&nbsp;</slot>
+                            <span>{$MOD.LBL_CHOOSE_A_KEY}&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>
+                            <span>
                                 <nobr>{$MOD.LBL_YOUR_PUBLISH_URL|strip_semicolon}:</nobr>
-                            </slot>
+                            </span>
                         </td>
                         <td colspan=2>{if $CALENDAR_PUBLISH_KEY}{$CALENDAR_PUBLISH_URL}{else}{$MOD.LBL_NO_KEY}{/if}</td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_SEARCH_URL|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_SEARCH_URL|strip_semicolon}:</span>
                         </td>
                         <td colspan=2>
-                            <slot>{if $CALENDAR_PUBLISH_KEY}{$CALENDAR_SEARCH_URL}{else}{$MOD.LBL_NO_KEY}{/if}</slot>
+                            <span>{if $CALENDAR_PUBLISH_KEY}{$CALENDAR_SEARCH_URL}{else}{$MOD.LBL_NO_KEY}{/if}</span>
                         </td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_ICAL_PUB_URL|strip_semicolon}: {sugar_help text=$MOD.LBL_ICAL_PUB_URL_HELP}</slot>
+                            <span>{$MOD.LBL_ICAL_PUB_URL|strip_semicolon}: {sugar_help text=$MOD.LBL_ICAL_PUB_URL_HELP}</span>
                         </td>
                         <td colspan=2>
-                            <slot>{if $CALENDAR_PUBLISH_KEY}{$CALENDAR_ICAL_URL}{else}{$MOD.LBL_NO_KEY}{/if}</slot>
+                            <span>{if $CALENDAR_PUBLISH_KEY}{$CALENDAR_ICAL_URL}{else}{$MOD.LBL_NO_KEY}{/if}</span>
                         </td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_FDOW|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_FDOW|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot>{$FDOWDISPLAY}&nbsp;</slot>
+                            <span>{$FDOWDISPLAY}&nbsp;</span>
                         </td>
                         <td>
-                            <slot></slot>{$MOD.LBL_FDOW_TEXT}&nbsp;</td>
+                            <span></span>{$MOD.LBL_FDOW_TEXT}&nbsp;</td>
+                    </tr>
+                </table>
+            </div>
+            <div id='google_options'>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="detail view">
+                    <tr>
+                        <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_GOOGLE_API_SETTINGS}</h4></th>
+                    </tr>
+                    <tr>
+                        <td width="17%" scope="row">
+                            <slot>{$MOD.LBL_GOOGLE_API_TOKEN}:</slot>&nbsp;{sugar_help text=$MOD.LBL_GOOGLE_API_TOKEN_HELP}
+                        </td>
+                            <td width="20%">
+                            Current API Token is: <span style="color:{$GOOGLE_API_TOKEN_COLOR}">{$GOOGLE_API_TOKEN}</span>
+                        </td>
+                        <td width="63%">
+                            <slot>&nbsp;</slot>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="17%" scope="row">
+                            <slot>{$MOD.LBL_GSYNC_CAL}:</slot>
+                        </td>
+                        <td>
+                            <slot><input class="checkbox" type="checkbox" disabled {$GSYNC_CAL}></slot>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -502,30 +528,30 @@ class="yui-navset detailview_tabs"
                     <tr>
                         <th colspan='4' align="left" width="100%" valign="top">
                             <h4>
-                                <slot>{$MOD.LBL_LAYOUT_OPTIONS}</slot>
+                                <span>{$MOD.LBL_LAYOUT_OPTIONS}</span>
                             </h4>
                         </th>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_USE_GROUP_TABS|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_USE_GROUP_TABS|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot><input class="checkbox" type="checkbox" disabled {$USE_GROUP_TABS}></slot>
+                            <span><input class="checkbox" type="checkbox" disabled {$USE_GROUP_TABS}></span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_NAVIGATION_PARADIGM_DESCRIPTION}&nbsp;</slot>
+                            <span>{$MOD.LBL_NAVIGATION_PARADIGM_DESCRIPTION}&nbsp;</span>
                         </td>
                     </tr>
                     <tr>
                         <td width="15%" scope="row">
-                            <slot>{$MOD.LBL_SUBPANEL_TABS|strip_semicolon}:</slot>
+                            <span>{$MOD.LBL_SUBPANEL_TABS|strip_semicolon}:</span>
                         </td>
                         <td>
-                            <slot><input class="checkbox" type="checkbox" disabled {$SUBPANEL_TABS}></slot>
+                            <span><input class="checkbox" type="checkbox" disabled {$SUBPANEL_TABS}></span>
                         </td>
                         <td>
-                            <slot>{$MOD.LBL_SUBPANEL_TABS_DESCRIPTION}&nbsp;</slot>
+                            <span>{$MOD.LBL_SUBPANEL_TABS_DESCRIPTION}&nbsp;</span>
                         </td>
                     </tr>
                 </table>

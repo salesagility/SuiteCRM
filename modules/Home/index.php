@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 global $current_user, $sugar_version, $sugar_config, $beanFiles;
@@ -309,7 +312,7 @@ $sugar_smarty->assign('chartResources', $resources);
 $sugar_smarty->assign('mySugarChartResources', $mySugarResources);
 
 if (file_exists("custom/themes/" . $theme ."/tpls/MySugar.tpl")) {
-    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
+    echo $sugar_smarty->fetch('custom/themes/' . $theme . '/tpls/MySugar.tpl');
 }
 else if(file_exists('custom/include/MySugar/tpls/MySugar.tpl')) {
     echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
@@ -321,7 +324,7 @@ else if(file_exists('include/MySugar/tpls/MySugar.tpl')) {
     echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
 }
 else if(file_exists("custom/themes/" . $theme .'include/MySugar/tpls/MySugar.tpl')) {
-    echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
+    echo $sugar_smarty->fetch('custom/themes/' . $theme . 'include/MySugar/tpls/MySugar.tpl');
 }
 else {
     $GLOBALS['log']->fatal('MySugar.tpl not found');
@@ -332,4 +335,4 @@ else {
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";
 echo"<script> $( '#pageNum_'+ 0 +'_anchor').addClass( 'current' );</script>";
 echo"<script> $( '#pageNum_'+ 0).addClass( 'active' );</script>";
-?>
+

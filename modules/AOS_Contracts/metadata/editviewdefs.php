@@ -88,6 +88,10 @@ array (
             'name' => 'contact',
             'studio' => 'visible',
             'label' => 'LBL_CONTACT',
+            'displayParams' =>
+            array(
+              'initial_filter' => '&account_name="+this.form.{$fields.contract_account.name}.value+"',
+            ),
           ),
         ),
         4 => 
@@ -222,4 +226,3 @@ array (
     ),
   ),
 );
-?>

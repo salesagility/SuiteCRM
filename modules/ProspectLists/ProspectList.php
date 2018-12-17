@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +37,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
 
 
 
@@ -181,6 +184,8 @@ class ProspectList extends SugarBean {
 
 	function create_export_members_query($record_id)
 	{
+		global $beanList, $beanFiles;
+
 		$members = array(	'Accounts' 	=> array('has_custom_fields' => false, 'fields' => array()),
 					'Contacts' 	=> array('has_custom_fields' => false, 'fields' => array()),
 					'Users' 	=> array('has_custom_fields' => false, 'fields' => array()),
@@ -190,11 +195,7 @@ class ProspectList extends SugarBean {
 
 		// query all custom fields in the fields_meta_data table for the modules which are being exported
 		$db = DBManagerFactory::getInstance();
-		$typeField = '`type`';
-		if($db->dbType=='mssql') {
-			$typeField = '[type]';
-		}
-		$result = $db->query("select name, custom_module, $typeField, ext1, ext2, ext3, ext4 from fields_meta_data where custom_module in ('" .
+		$result = $db->query("select name, custom_module, type, ext1, ext2, ext3, ext4 from fields_meta_data where custom_module in ('" .
 			implode("', '", array_keys($members)) . "')",
 			true,
 			"ProspectList::create_export_members_query() : error querying custom fields");
@@ -208,11 +209,14 @@ class ProspectList extends SugarBean {
 
 			foreach($members as $membername => &$memberarr)
 			{
+				$module_name = $beanList[$membername];
+				require_once($beanFiles[$module_name]);
+				$relatedBean = BeanFactory::getBean($membername);
 				// if the field belongs to this module, then query it in the cstm table
-				if ($membername == $val['custom_module'])
+				if ($membername === $val['custom_module'] && $relatedBean->field_defs[$val['name']]['source'] !== 'non-db')
 				{
 					$memberarr['has_custom_fields'] = true;
-					if($val['type']=='relate') {
+					if($val['type'] === 'relate') {
 						// show related value in report..
 						$memberarr['fields'][$fieldname] = "'{{$val['type']} from=\"{$val['custom_module']}.{$val['name']}\" to=\"{$val['ext2']}.{$val['ext3']}\"}' AS " . $fieldname;
 					}
@@ -382,20 +386,29 @@ FROM prospect_lists_prospects plp
 	}
 
 
-	function get_list_view_data(){
-		$temp_array = $this->get_list_view_array();
-		$temp_array["ENTRY_COUNT"] = $this->get_entry_count();
-		return $temp_array;
-	}
-	/**
-		builds a generic search based on the query string using or
-		do not include any $this-> because this is called on without having the class instantiated
-	*/
-	function build_generic_where_clause ($the_query_string)
-	{
-		$where_clauses = Array();
-		$the_query_string = $GLOBALS['db']->quote($the_query_string);
-		array_push($where_clauses, "prospect_lists.name like '$the_query_string%'");
+    public function get_list_view_data()
+    {
+        $temp_array = $this->get_list_view_array();
+        $temp_array["ENTRY_COUNT"] = $this->get_entry_count();
+        return $temp_array;
+    }
+    /**
+        builds a generic search based on the query string using or
+        do not include any $this-> because this is called on without having the class instantiated
+    */
+    public function build_generic_where_clause($the_query_string)
+    {
+        $where_clauses = array();
+        $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
+        array_push($where_clauses, "prospect_lists.name like '$the_query_string%'");
+
+        $the_where = "";
+        foreach ($where_clauses as $clause) {
+            if ($the_where != "") {
+                $the_where .= " or ";
+            }
+            $the_where .= $clause;
+        }
 
 		$the_where = "";
 		foreach($where_clauses as $clause)
@@ -428,9 +441,3 @@ FROM prospect_lists_prospects plp
 	}
 
 }
-
-
-
-
-
-?>

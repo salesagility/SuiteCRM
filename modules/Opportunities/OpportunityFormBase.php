@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -58,7 +61,7 @@ function checkForDuplicates($prefix){
 
 	if(!empty($query)){
 		$rows = array();
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		$result = $db->query($query.')');
 		$i=-1;
 		while(($row=$db->fetchByAssoc($result)) != null) {
@@ -233,7 +236,6 @@ if (isset($lead->opportunity_amount)) {
 } else {
  	$opp_amount='';
 }
-$jsCalendarImage = SugarThemeRegistry::current()->getImageURL('jscalendar.gif');
 $the_form .= <<<EOQ
 
 			<input type="hidden" name="{$prefix}record" value="">
@@ -253,7 +255,7 @@ $the_form .= <<<EOQ
     <td scope="row">$lbl_date_closed&nbsp;<span class="required">$lbl_required_symbol</span></td>
 </tr>
 <tr>
-<td ><input name='{$prefix}date_closed' onblur="parseDate(this, '$cal_dateformat');" size='12' maxlength='10' id='${prefix}jscal_field' type="text" value="">&nbsp;<!--not_in_theme!--><img src="{$jsCalendarImage}" alt="{$app_strings['LBL_ENTER_DATE']}"  id="${prefix}jscal_trigger" align="absmiddle"></td>
+<td ><input name='{$prefix}date_closed' onblur="parseDate(this, '$cal_dateformat');" size='12' maxlength='10' id='${prefix}jscal_field' type="text" value="">&nbsp;<!--not_in_theme!--><span class="suitepicon suitepicon-module-calendar"></span></td>
 </tr>
 EOQ;
 if($showaccount){
@@ -383,10 +385,9 @@ $the_form .= <<<EOQ
 			onclick='open_popup("Accounts", 600, 400, "", true, false, {$encoded_popup_request_data});' /><br>
 EOQ;
 }
-$jsCalendarImage = SugarThemeRegistry::current()->getImageURL('jscalendar.gif');
 $the_form .= <<<EOQ
 		$lbl_date_closed&nbsp;<span class="required">$lbl_required_symbol</span> <br><span class="dateFormat">$ntc_date_format</span><br>
-		<input name='{$prefix}date_closed' size='12' maxlength='10' id='{$prefix}jscal_field' type="text" value=""> <!--not_in_theme!--><img src="{$jsCalendarImage}" alt="{$app_strings['LBL_ENTER_DATE']}"  id="jscal_trigger" align="absmiddle"><br>
+		<input name='{$prefix}date_closed' size='12' maxlength='10' id='{$prefix}jscal_field' type="text" value=""> <!--not_in_theme!--><span class="suitepicon suitepicon-module-calendar"></span><br>
 		$lbl_sales_stage&nbsp;<span class="required">$lbl_required_symbol</span><br>
 		<select name='{$prefix}sales_stage'>
 EOQ;
@@ -467,4 +468,3 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
 }
 
 }
-?>

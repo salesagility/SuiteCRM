@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once("data/Relationships/SugarRelationship.php");
 
@@ -135,41 +138,39 @@ class M2MRelationship extends SugarRelationship
         $lhsLinkName = $this->lhsLink;
         $rhsLinkName = $this->rhsLink;
         
-    	/* BEGIN - SECURITY GROUPS */
-    	//Need to hijack this as security groups will not contain a link on the module side
-    	//due to the way the module works. Plus it would remove the relative ease of adding custom module support
-    	
-    	if(get_class($rhs) != 'User' && get_class($rhs) != 'ACLRole' && get_class($lhs) == 'SecurityGroup') {
-			$rhs->$rhsLinkName->addBean($lhs);			
-			$this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
+        /* BEGIN - SECURITY GROUPS */
+        //Need to hijack this as security groups will not contain a link on the module side
+        //due to the way the module works. Plus it would remove the relative ease of adding custom module support
 
-			$dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
-			$this->addRow($dataToInsert);
-    		$rhs->$rhsLinkName->addBean($lhs);
-    		$this->callAfterAdd($lhs, $rhs, $lhsLinkName);
-    	} else if(get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
-			$lhs->$lhsLinkName->addBean($rhs);			
-			$this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
+        if (get_class($rhs) != 'User' && get_class($rhs) != 'ACLRole' && get_class($lhs) == 'SecurityGroup') {
+            $rhs->$rhsLinkName->addBean($lhs);
+            $this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
 
-			$dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
-			$this->addRow($dataToInsert);
-    		$lhs->$lhsLinkName->addBean($rhs);
-    		$this->callAfterAdd($rhs, $lhs, $rhsLinkName);
-    	} else {
-    	/* END - SECURITY GROUPS */
+            $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
+            $this->addRow($dataToInsert);
+            $rhs->$rhsLinkName->addBean($lhs);
+            $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
+        } elseif (get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
+            $lhs->$lhsLinkName->addBean($rhs);
+            $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
 
-        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
-        {
-            $lhsClass = get_class($lhs);
-            $GLOBALS['log']->fatal("could not load LHS $lhsLinkName in $lhsClass");
-            return false;
-        }
-        if (empty($rhs->$rhsLinkName) && !$rhs->load_relationship($rhsLinkName))
-        {
-            $rhsClass = get_class($rhs);
-            $GLOBALS['log']->fatal("could not load RHS $rhsLinkName in $rhsClass");
-            return false;
-        }
+            $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
+            $this->addRow($dataToInsert);
+            $lhs->$lhsLinkName->addBean($rhs);
+            $this->callAfterAdd($rhs, $lhs, $rhsLinkName);
+        } else {
+            /* END - SECURITY GROUPS */
+
+            if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
+                $lhsClass = get_class($lhs);
+                $GLOBALS['log']->fatal("could not load LHS $lhsLinkName in $lhsClass");
+                return false;
+            }
+            if (empty($rhs->$rhsLinkName) && !$rhs->load_relationship($rhsLinkName)) {
+                $rhsClass = get_class($rhs);
+                $GLOBALS['log']->fatal("could not load RHS $rhsLinkName in $rhsClass");
+                return false;
+            }
 
             $lhs->$lhsLinkName->addBean($rhs);
             $rhs->$rhsLinkName->addBean($lhs);
@@ -430,7 +431,22 @@ class M2MRelationship extends SugarRelationship
         }
         $rel_table = $this->getRelationshipTable();
 
-        $where = "$rel_table.$knownKey = '{$link->getFocus()->id}'" . $this->getRoleWhere();
+        $tmpFocus = $link->getFocus();
+        if(!isset($tmpFocus->id)) {
+            if (is_object($tmpFocus)) {
+                $focusInfo = get_class($tmpFocus);
+            } elseif(is_bool($tmpFocus)) {
+                $focusInfo = ' (bool)' . ($tmpFocus ? 'TRUE' : 'FALSE');
+            } else {
+                $focusInfo = ' (' . gettype($tmpFocus) . ')' . $tmpFocus;
+            }
+            LoggerManager::getLogger()->warn('No focus from link when M2MRelationship get query. Focus was: ' . $focusInfo);
+            $tmpId = null;
+        } else {
+            $tmpId = $tmpFocus->id;
+        }
+
+        $where = "$rel_table.$knownKey = '{$tmpId}'" . $this->getRoleWhere();
         $order_by = '';
 
         //Add any optional where clause
@@ -456,8 +472,21 @@ class M2MRelationship extends SugarRelationship
             $where .= " AND $rel_table.$targetKey=$whereTable.id";
         }
 
+        $SelectIncludedMiddleTableFields = '';
+        if (isset($params['include_middle_table_fields']) && $params['include_middle_table_fields'] === true) {
+             $middle_table_field_defs = $this->def['fields'];
+             $middle_table = array();
+             foreach($middle_table_field_defs as $field_def) {
+                if($field_def['name'] === 'id') {
+                     continue;
+                }
+                $middle_table[] = $field_def['name'];
+             }
+             $SelectIncludedMiddleTableFields = ', ' . implode(',', $middle_table);
+        }
+
         if (empty($params['return_as_array'])) {
-            $query = "SELECT $targetKey id FROM $from WHERE $where AND $rel_table.deleted=$deleted";
+            $query = "SELECT $targetKey id $SelectIncludedMiddleTableFields FROM $from WHERE $where AND $rel_table.deleted=$deleted";
             if(!empty($order_by)) $query .= ' ORDER BY '.$order_by;
             //Limit is not compatible with return_as_array
             if (!empty($params['limit']) && $params['limit'] > 0) {
@@ -619,7 +648,7 @@ class M2MRelationship extends SugarRelationship
         //Roles can allow for multiple links between two records with different roles
         $query .= $this->getRoleWhere() . " and deleted = 0";
 
-        return $GLOBALS['db']->getOne($query);
+        return DBManagerFactory::getInstance()->getOne($query);
     }
 
     /**

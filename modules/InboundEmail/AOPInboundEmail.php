@@ -20,11 +20,13 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 require_once 'modules/InboundEmail/InboundEmail.php';
 require_once 'include/clean.php';
-class AOPInboundEmail extends InboundEmail {
+class AOPInboundEmail extends InboundEmail
+{
+    public $job_name = 'function::pollMonitoredInboxesAOP';
 
     /**
      * Replaces embedded image links with links to the appropriate note in the CRM.
@@ -53,7 +55,8 @@ class AOPInboundEmail extends InboundEmail {
     }
 
 
-    function handleCreateCase($email, $userId) {
+    public function handleCreateCase(Email $email, $userId)
+    {
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
         $GLOBALS['log']->debug('In handleCreateCase in AOPInboundEmail');
@@ -86,6 +89,7 @@ class AOPInboundEmail extends InboundEmail {
             } else {
                 $contactAddr = $email->from_addr;
             }
+            isValidEmailAddress($contactAddr);
 
             $GLOBALS['log']->debug('finding related accounts with address ' . $contactAddr);
             if($accountIds = $this->getRelatedId($contactAddr, 'accounts')) {
@@ -103,9 +107,7 @@ class AOPInboundEmail extends InboundEmail {
             }
 
             $c->save(true);
-            $caseId = $c->id;
-            $c = new aCase();
-            $c->retrieve($caseId);
+            $c->retrieve($c->id);
             if($c->load_relationship('emails')) {
                 $c->emails->add($email->id);
             } // if
@@ -138,7 +140,7 @@ class AOPInboundEmail extends InboundEmail {
 
             $c->email_id = $email->id;
             $email->parent_type = "Cases";
-            $email->parent_id = $caseId;
+            $email->parent_id = $c->id;
             // assign the email to the case owner
             $email->assigned_user_id = $c->assigned_user_id;
             $email->name = str_replace('%1', $c->case_number, $c->getEmailSubjectMacro()) . " ". $email->name;
@@ -153,12 +155,14 @@ class AOPInboundEmail extends InboundEmail {
                 $fromAddress = "";
                 if (!empty($this->stored_options)) {
                     $fromAddress = $storedOptions['from_addr'];
+                    isValidEmailAddress($fromAddress);
                     $fromName = from_html($storedOptions['from_name']);
                     $replyToName = (!empty($storedOptions['reply_to_name']))? from_html($storedOptions['reply_to_name']) :$fromName ;
                     $replyToAddr = (!empty($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : $fromAddress;
                 } // if
                 $defaults = $current_user->getPreferredEmail();
                 $fromAddress = (!empty($fromAddress)) ? $fromAddress : $defaults['email'];
+                isValidEmailAddress($fromAddress);
                 $fromName = (!empty($fromName)) ? $fromName : $defaults['name'];
                 $to[0]['email'] = $contactAddr;
 
@@ -182,6 +186,7 @@ class AOPInboundEmail extends InboundEmail {
 
                 $email->email2init();
                 $email->from_addr = $email->from_addr_name;
+                isValidEmailAddress($email->from_addr);
                 $email->to_addrs = $email->to_addrs_names;
                 $email->cc_addrs = $email->cc_addrs_names;
                 $email->bcc_addrs = $email->bcc_addrs_names;
@@ -213,10 +218,13 @@ class AOPInboundEmail extends InboundEmail {
 
         } else {
             echo "First if not matching\n";
-            if(!empty($email->reply_to_email)) {
+            if (!empty($email->reply_to_email) && isValidEmailAddress($email->reply_to_email)) {
                 $contactAddr = $email->reply_to_email;
-            } else {
+            } elseif (!empty($email->from_addr) && isValidEmailAddress($email->from_addr)) {
                 $contactAddr = $email->from_addr;
+            } else {
+                $contactAddr = null;
+                LoggerManager::getLogger()->error('Contact address is incorrect to Email: ' . $email->id);
             }
             $this->handleAutoresponse($email, $contactAddr);
         }

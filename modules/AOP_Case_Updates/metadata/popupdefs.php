@@ -19,7 +19,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
@@ -35,6 +35,3 @@ $popupMeta = array('moduleMain' => $module_name,
 						    'searchInputs'=> array($_module_name. '_number', 'name', 'priority','status'),
 							
 						);
-?>
- 
- 

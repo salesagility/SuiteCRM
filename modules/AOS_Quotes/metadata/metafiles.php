@@ -31,4 +31,3 @@ $module_name = 'AOS_Quotes';
  	'popupdefs'	      =>    'modules/'. $module_name. '/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/'. $module_name. '/metadata/SearchFields.php',
  );
-?>

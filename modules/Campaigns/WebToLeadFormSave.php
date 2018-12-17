@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -57,8 +60,6 @@ global $app_strings;
 //-----------begin replacing text input tags that have been marked with text area tags
 //get array of text areas strings to process
 $bodyHTML = html_entity_decode($_REQUEST['body_html'],ENT_QUOTES);
-//Bug53791
-$bodyHTML = str_replace(chr(160), " ", $bodyHTML);
 
 while (strpos($bodyHTML, "ta_replace") !== false){
 
@@ -97,7 +98,13 @@ if (stripos($html, "<html") === false) {
     $langHeader = get_language_header();
     $html = "<html {$langHeader}><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><body>" . $html . "</body></html>";
 }
+
+if (!mb_detect_encoding($str, 'UTF-8')) {
+    $html = utf8_encode($html);
+}
+$html = str_replace('Â', ' ', $html);
 file_put_contents($form_file, $html);
+$html = htmlspecialchars($html, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
 $xtpl=new XTemplate ('modules/Campaigns/WebToLeadDownloadForm.html');
 $xtpl->assign("MOD", $mod_strings);
@@ -105,7 +112,7 @@ $xtpl->assign("APP", $app_strings);
 $webformlink = "<b>$mod_strings[LBL_DOWNLOAD_TEXT_WEB_TO_LEAD_FORM]</b><br/>";
 $webformlink .= "<a href=\"index.php?entryPoint=download&id={$guid}&isTempFile=1&tempName=WebToLeadForm.html&type=temp\">$mod_strings[LBL_DOWNLOAD_WEB_TO_LEAD_FORM]</a>";
 $xtpl->assign("LINK_TO_WEB_FORM",$webformlink);
-$xtpl->assign("RAW_SOURCE", htmlspecialchars($html, ENT_QUOTES, 'iso8859-1'));
+$xtpl->assign("RAW_SOURCE", $html);
 $xtpl->parse("main.copy_source");
 $xtpl->parse("main");
 $xtpl->out("main");

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once 'data/SugarBean.php';
 require_once 'include/SugarObjects/templates/basic/Basic.php';
@@ -179,12 +180,12 @@ class EAPM extends Basic
             return false;
         }
         // Don't use save, it will attempt to revalidate
-       $adata = $GLOBALS['db']->quote($this->api_data);
-        $GLOBALS['db']->query("UPDATE eapm SET validated=1,api_data='$adata'  WHERE id = '{$this->id}' AND deleted = 0");
+       $adata = DBManagerFactory::getInstance()->quote(isset($this->api_data) ? $this->api_data : null);
+        DBManagerFactory::getInstance()->query("UPDATE eapm SET validated=1,api_data='$adata'  WHERE id = '{$this->id}' AND deleted = 0");
         if (!$this->deleted && !empty($this->application)) {
             // deactivate other EAPMs with same app
            $sql = "UPDATE eapm SET deleted=1 WHERE application = '{$this->application}' AND id != '{$this->id}' AND deleted = 0 AND assigned_user_id = '{$this->assigned_user_id}'";
-            $GLOBALS['db']->query($sql, true);
+            DBManagerFactory::getInstance()->query($sql, true);
         }
 
        // Nuke the EAPM cache for this record
@@ -230,7 +231,7 @@ class EAPM extends Basic
     public function delete_user_accounts($user_id)
     {
         $sql = "DELETE FROM {$this->table_name} WHERE assigned_user_id = '{$user_id}'";
-        $GLOBALS['db']->query($sql, true);
+        DBManagerFactory::getInstance()->query($sql, true);
     }
 }
 

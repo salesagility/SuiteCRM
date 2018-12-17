@@ -84,7 +84,7 @@ class ProjectTable {
                         <td class="project_table_cells"><input class="order_number" name="order_number[]" rel="'.$task->id.'" type="hidden" value="'.$task->order_number.'" />'.$task->project_task_id.'</td>';
 
                         if(ACLController::checkAccess('Project', 'edit', true)){
-                            echo '<td class="project_table_cells" ><span class="Task_name" ><a data = "'.$task->id.','.$task->predecessors.','.$task->relationship_type.','.$timeDate->to_display_date($task->date_start, true).','.$task->duration.','.$task->duration_unit.','.$task->assigned_user_id.','.$task->milestone_flag.','.$task->percent_complete.','.$task->description.','.$task->actual_duration.'" onclick = "edit_task($(this));"title = "'.$mod_strings['LBL_TASK_TITLE'].'" href = "#" > '.$task->name.'</a ></span ></td>';
+                            echo '<td class="project_table_cells" ><span class="Task_name" ><a data = "'.$task->id.','.$task->predecessors.','.$task->relationship_type.','.$timeDate->to_display_date($task->date_start, true).','.$task->duration.','.$task->duration_unit.','.$task->assigned_user_id.','.$task->milestone_flag.','.$task->percent_complete.','.$task->description.','.$task->actual_duration.'" onclick = "edit_task($(this));"title = "'.$mod_strings['LBL_TASK_TITLE'].'" href = "#" >'.$task->name.'</a ></span ></td>';
                         }
                         else{
                             echo '<td class="project_table_cells" ><span class="Task_name" >'.$task->name.'</span ></td>';

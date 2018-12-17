@@ -21,7 +21,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
  
 require_once('include/MVC/Controller/SugarController.php');
@@ -78,5 +78,3 @@ class AOS_InvoicesController extends SugarController {
     	}
 
 }
-
-?> 

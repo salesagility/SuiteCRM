@@ -119,7 +119,22 @@ HTML;
         return $html;
     }
 
-    public function getElementHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = 'initial', $thumbs = array(), $tinyMCESetup = 'tinyMCE: {}') {
+    private function tinyMCESetupArgumentFixer($tinyMCESetup = '{}') {
+        if(!$tinyMCESetup) {
+            $tinyMCESetup = '{}';
+        }
+
+        if(is_array($tinyMCESetup) || is_object($tinyMCESetup)) {
+            $tinyMCESetup = json_encode($tinyMCESetup);
+        }
+
+        if(!preg_match('/^tinyMCE\s*:\s*/', $tinyMCESetup)) {
+            $tinyMCESetup = "tinyMCE: $tinyMCESetup";
+        }
+        return $tinyMCESetup;
+    }
+
+    public function getElementHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = '600', $thumbs = array(), $tinyMCESetup = '{}') {
         if(is_numeric($width)) {
             $width .= 'px';
         }
@@ -127,6 +142,9 @@ HTML;
             $thumbs = self::$defaultThumbnails;
         }
         $thumbsJSON = json_encode($thumbs);
+
+        $tinyMCESetup = $this->tinyMCESetupArgumentFixer($tinyMCESetup);
+
         $refreshTextareaScript = '';
         if($textareaId) {
             $refreshTextareaScript = $this->getRefreshTextareaScript($textareaId, $elementId, $width);
@@ -158,7 +176,7 @@ HTML;
             style: 'tpls/default/styles/default.css',
             namespace: false,
             ace: false,
-            width: '{$width}',
+            width: '{$width}', // default value
             {$tinyMCESetup}
 
         };
@@ -181,10 +199,11 @@ HTML;
         return $html;
     }
 
-    public function getAllHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = 'initial', $group = '', $tinyMCESetup = 'tinyMCE: {}') {
+    public function getAllHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = '600', $group = '', $tinyMCESetup = '{}') {
         if(is_numeric($width)) {
             $width .= 'px';
         }
+        $tinyMCESetup = $this->tinyMCESetupArgumentFixer($tinyMCESetup);
         $mozaikHTML = $this->getDependenciesHTML();
         $mozaikHTML .= $this->getIncludeHTML();
         $thumbs = $this->getThumbs($group);

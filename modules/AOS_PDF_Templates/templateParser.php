@@ -22,8 +22,11 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
+
+use SuiteCRM\Utility\SuiteValidator as SuiteValidator;
+
 class templateParser
 {
     static function parse_template($string, $bean_arr)
@@ -54,6 +57,7 @@ class templateParser
     {
         global $app_strings, $sugar_config;
         $repl_arr = array();
+        $isValidator = new SuiteValidator();
 
         foreach ($focus->field_defs as $field_def) {
             if (isset($field_def['name']) && $field_def['name'] != '') {
@@ -63,10 +67,22 @@ class templateParser
                 } else if (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
                     $repl_arr[$key . "_" . $fieldName] = translate($field_def['options'], $focus->module_dir, $focus->$fieldName);
                 } else if ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
-                    $repl_arr[$key . "_" . $fieldName] = implode(', ', unencodeMultienum($focus->$fieldName));
+                    $mVals = unencodeMultienum($focus->$fieldName);
+                    $translatedVals = array();
+                    foreach($mVals as $mVal){
+                        $translatedVals[] = translate($field_def['options'], $focus->module_dir, $mVal);
+                    }
+                    $repl_arr[$key . "_" . $fieldName] = implode(", ", $translatedVals);
                 } //Fix for Windows Server as it needed to be converted to a string.
                 else if ($field_def['type'] == 'int') {
                     $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
+                } else if ($field_def['type'] == 'bool') {
+                    if($focus->$fieldName == "1"){
+                        $repl_arr[$key . "_" . $fieldName] = "true";
+                    }else{
+                        $repl_arr[$key . "_" . $fieldName] = "false";
+                    }
+
                 } else if ($field_def['type'] == 'image') {
                     $secureLink = $sugar_config['site_url'] . '/' . "public/". $focus->id .  '_' . $fieldName;
                     $file_location = $sugar_config['upload_dir'] . '/'  . $focus->id .  '_' . $fieldName;
@@ -77,8 +93,13 @@ class templateParser
                     if(!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
                         $secureLink = $sugar_config['site_url'] . '/'. $file_location;
                     }
-                    $link = $secureLink;
-                    $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
+
+                    if (empty($focus->$fieldName)) {
+                        $repl_arr[$key . "_" . $fieldName] = "";
+                    } else {
+                        $link = $secureLink;
+                        $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
+                    }
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
                 }
@@ -89,33 +110,41 @@ class templateParser
         reset($repl_arr);
 
         foreach ($repl_arr as $name => $value) {
-            if (strpos($name, 'product_discount') > 0) {
+            if (strpos($name, 'product_discount') !== false || strpos($name, 'quotes_discount') !== false) {
                 if ($value != '' && $value != '0.00') {
-                    if ($repl_arr['aos_products_quotes_discount'] == 'Percentage') {
+                    if ($isValidator->isPercentageField($repl_arr['aos_products_quotes_discount'])) {
                         $sep = get_number_seperators();
-                        $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);//.$app_strings['LBL_PERCENTAGE_SYMBOL'];
-                    } else {
-                        $value = currency_format_number($value, $params = array('currency_symbol' => false));
+                        $value = rtrim(
+                            rtrim(format_number($value), '0'),
+                                $sep[1]
+                        ) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
                 } else {
                     $value = '';
                 }
             }
             if ($name === 'aos_products_product_image' && !empty($value)) {
-                $value = '<img src="' . $value . '"width="50" height="50"/>';
+                $value = '<img src="' . $value . '" class="img-responsive"/>';
             }
             if ($name === 'aos_products_quotes_product_qty') {
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);
             }
-            if ($name === 'aos_products_quotes_vat' || strpos($name, 'pct') > 0 || strpos($name, 'percent') > 0 || strpos($name, 'percentage') > 0) {
+
+            if ($isValidator->isPercentageField($name)) {
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
-            if (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0) {
+            if ($focus->field_defs[$name][dbType] == 'datetime' &&
+                (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0) ) {
                 if ($value != '') {
                     $dt = explode(' ', $value);
                     $value = $dt[0];
+                    if(isset($dt[1]) && $dt[1]!=''){
+                        if (strpos($dt[1], 'am') > 0 || strpos($dt[1], 'pm') > 0) {
+                            $value = $dt[0].' '.$dt[1];
+                        }
+                    }
                 }
             }
             if ($value != '' && is_string($value)) {
@@ -134,5 +163,3 @@ class templateParser
         return $string;
     }
 }
-
-?>

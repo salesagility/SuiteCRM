@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -173,7 +176,7 @@ class CalendarDisplay {
 		$user_default_date_start  = $timedate->asUser($timedate->getNow());
 		$ss->assign('user_default_date_start',$user_default_date_start);
 		// end form
-		$location_array = "";
+		$location_array = array();
 		foreach($this->views as $view){
 			$location_array[] = $view;
 		}
@@ -547,7 +550,7 @@ class CalendarDisplay {
 			$ss->assign('tabs_params',$tabs_params);
 			$ss->assign('current_date',$current_date);
 			$ss->assign('start_weekday',$GLOBALS['current_user']->get_first_day_of_week());
-			$ss->assign('cal_img',SugarThemeRegistry::current()->getImageURL("jscalendar.gif",false));
+			$ss->assign('cal_img', '<span class="suitepicon suitepicon-module-calendar"></span>');
 		}
 
 		$ss->assign('previous',$this->get_previous_calendar());
@@ -673,5 +676,3 @@ class CalendarDisplay {
 	}
 
 }
-
-?>

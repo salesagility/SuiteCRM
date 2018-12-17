@@ -75,7 +75,7 @@ class AOR_Chart extends Basic {
         $seenIds = array();
         if(isset($post[$postKey.'id'])) {
             foreach ($post[$postKey . 'id'] as $key => $id) {
-                if ($id) {
+                if ($id && $post['record']!='') {
                     $aorChart = BeanFactory::getBean('AOR_Charts', $id);
                 } else {
                     $aorChart = BeanFactory::newBean('AOR_Charts');
@@ -222,7 +222,7 @@ class AOR_Chart extends Basic {
             $chartPicture->replaceImageMapTitle("data", $labels);
         }
         ob_start();
-        $chartPicture->render('');
+        $chartPicture->render(null);
         $img = ob_get_clean();
         if($asDataURI){
             return 'data:image/png;base64,'.base64_encode($img);
@@ -377,15 +377,14 @@ EOF;
                 backgroundGrid:false,
                 backgroundGrid:false,
                 gutterBottom: 150,
-                //gutterTop:40,
-                //gutterLeft:30,
+                gutterTop:25,
+                gutterLeft:128,
                 title: '$chartName',
 
                 tooltips:$chartTooltips,
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
-                gutterLeft:50,
                 shadow:false,
                 titleSize:10,
                 labels: $chartLabelValues,
@@ -419,8 +418,8 @@ EOF;
             options: {
             title: '$chartName',
                 gutterBottom: 150,
-                gutterLeft:50,
-                //gutterTop:50,
+                gutterLeft: 128,
+                gutterTop: 25,
                 //title: '$chartName',
                 labels: $chartLabelValues,
                 colorsSequential:true,
@@ -532,7 +531,7 @@ EOF;
                 tickmarks:'encircle',
                 textSize:10,
                 titleSize:10,
-                gutterLeft:70,
+                gutterLeft:128,
                 //title: '$chartName',
                 labels: $chartLabelValues,
 
@@ -569,11 +568,6 @@ EOF;
         $yName = str_replace(' ','_',$y->label) . $this->y_field;
 
         switch($this->type){
-            case 'polar':
-                $chartFunction = 'PolarArea';
-                $data = $this->getPolarChartData($reportData, $xName,$yName);
-                $config = $this->getPolarChartConfig();
-                break;
             case 'radar':
                 $chartFunction = 'Radar';
                 $data = $this->getRadarChartData($reportData, $xName,$yName);
@@ -778,17 +772,10 @@ EOF;
         return $this->getBarChartData($reportData, $xName,$yName);
     }
 
-    private function getPolarChartData($reportData, $xName,$yName){
-        return $this->getPieChartData($reportData, $xName,$yName);
-    }
-
     private function getRadarChartConfig(){
         return array();
     }
 
-    private function getPolarChartConfig(){
-        return $this->getPieChartConfig();
-    }
     private function getPieChartConfig(){
         $config = array();
         $config['legendTemplate'] = "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>";

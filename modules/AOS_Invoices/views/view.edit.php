@@ -40,4 +40,3 @@ class AOS_InvoicesViewEdit extends ViewEdit {
 		}
 	}
 }
-?>

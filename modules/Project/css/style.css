@@ -122,11 +122,34 @@
     font-size:12px;
     table-layout:fixed;
 }
-.main_table th, td {
+.main_table th, .main_table td {
     padding: 0px;
     overflow: hidden;
     width: 24px;
 }
+
+.table_inner th, .table_inner td {
+    padding: 0px;
+    overflow: hidden;
+    width: 24px;
+}
+
+.task_td {
+    padding: 0px;
+    overflow: hidden;
+    width: 24px;
+}
+
+
+/*
+.panelContainer > td {
+	width: auto !important;
+}*/
+
+.buttons {
+    overflow: visible;
+}
+
 .month_row {
     border-bottom: 1px solid #DDDDDD;
 }
@@ -224,7 +247,7 @@
     position: 'absolute';
 }
 .task_td {
-    width:100%;
+    width:100% !important;
     border-right: 1px solid #DDDDDD;
     border-bottom: 1px solid #DDDDDD;
 }

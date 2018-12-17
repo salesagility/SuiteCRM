@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 {{capture name=idname assign=idname}}{{sugarvar key='name'}}{{/capture}}
 {{if !empty($displayParams.idName)}}
@@ -46,13 +46,12 @@
 {{assign var=flag_field value=$vardef.name|cat:_flag}}
 <table border="0" cellpadding="0" cellspacing="0" class="dateTime">
 <tr valign="middle">
-<td nowrap>
+<td nowrap class="dateTimeComboColumn">
 <input autocomplete="off" type="text" id="{{$idname}}_date" class="datetimecombo_date" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}" size="11" maxlength="10" title='{{$vardef.help}}' tabindex="{{$tabindex}}" onblur="combo_{{$idname}}.update();" onchange="combo_{{$idname}}.update(); {{if isset($displayParams.updateCallback)}}{{$displayParams.updateCallback}}{{/if}}"   {{if !empty($displayParams.accesskey)}} accesskey='{{$displayParams.accesskey}}' {{/if}} >
-{capture assign="other_attributes"}alt="{$APP.LBL_ENTER_DATE}" style="position:relative; top:6px" border="0" id="{{$idname}}_trigger"{/capture}
-{sugar_getimage name="jscalendar" ext=".gif" other_attributes="$other_attributes"}&nbsp;
+	<button type="button" id="{{$idname}}_trigger" class="btn btn-danger" onclick="return false;"><span class="suitepicon suitepicon-module-calendar"  alt="{$APP.LBL_ENTER_DATE}"></span></button>
 {{if empty($displayParams.splitDateTime)}}
 </td>
-<td nowrap>
+<td nowrap class="dateTimeComboColumn">
 {{else}}
 <br>
 {{/if}}
@@ -84,7 +83,11 @@ function set_{{$idname}}_values(form) {ldelim}
 </tr>
 {{/if}}
 </table>
+{{if !empty($displayParams.originalFieldName)}}
+<input type="hidden" class="DateTimeCombo" id="{{$idname}}" name="{{$displayParams.originalFieldName}}" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}">
+{{else}}
 <input type="hidden" class="DateTimeCombo" id="{{$idname}}" name="{{$idname}}" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}">
+{{/if}}
 <script type="text/javascript" src="{sugar_getjspath file="include/SugarFields/Fields/Datetimecombo/Datetimecombo.js"}"></script>
 <script type="text/javascript">
 var combo_{{$idname}} = new Datetimecombo("{$fields[{{sugarvar key='name' stringFormat=true}}].value}", "{{$idname}}", "{$TIME_FORMAT}", "{{$tabindex}}", '{{$displayParams.showNoneCheckbox}}', false, true);
@@ -95,9 +98,6 @@ document.getElementById('{{$idname}}_time_section').innerHTML = text;
 //Call eval on the update function to handle updates to calendar picker object
 eval(combo_{{$idname}}.jsscript('{{$displayParams.updateCallback}}'));
 
-//bug 47718: this causes too many addToValidates to be called, resulting in the error messages being displayed multiple times
-//    removing it here to mirror the Datetime SugarField, where the validation is not added at this level
-//addToValidate('{$form_name}',"{{$idname}}_date",'date',false,"{{$idname}}");
 addToValidateBinaryDependency('{$form_name}',"{{$idname}}_hours", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_HOURS}" ,"{{$idname}}_date");
 addToValidateBinaryDependency('{$form_name}', "{{$idname}}_minutes", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_MINUTES}" ,"{{$idname}}_date");
 addToValidateBinaryDependency('{$form_name}', "{{$idname}}_meridiem", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_MERIDIEM}","{{$idname}}_date");

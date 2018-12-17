@@ -21,7 +21,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 $dictionary['AOS_Line_Item_Groups'] = array(
@@ -274,6 +274,7 @@ $dictionary['AOS_Line_Item_Groups'] = array(
     'duplicate_merge_dom_value' => 0,
     'audited' => 0,
     'reportable' => 0,
+    'options' => 'parent_line_items',
     'len' => 100,
     'dbType' => 'varchar',
     'studio' => 'hidden',
@@ -332,11 +333,13 @@ $dictionary['AOS_Line_Item_Groups'] = array(
             array (
                 'name' => 'getCurrencyDropDown',
                 'returns' => 'html',
+                'onListView' => true,
             ),
     ),
   'aos_products_quotes' =>
   array (
-  'name' => 'aos_products_quotes',
+    'name' => 'aos_products_quotes',
+    'vname' => 'AOS_PRODUCT_QUOTES',
     'type' => 'link',
     'relationship' => 'groups_aos_product_quotes',
     'module'=>'AOS_Products_Quotes',

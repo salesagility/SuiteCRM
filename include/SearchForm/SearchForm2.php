@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/tabs.php');
 require_once('include/ListView/ListViewSmarty.php');
@@ -121,7 +124,7 @@ class SearchForm
         return $this->savedSearchData;
     }
 
-    function setup($searchdefs, $searchFields = array(), $tpl, $displayView = 'basic_search', $listViewDefs = array())
+    function setup($searchdefs, $searchFields = array(), $tpl = 'SubpanelSearchFormGeneric.tpl', $displayView = 'basic_search', $listViewDefs = array())
     {
         $this->searchdefs = isset($searchdefs[$this->module]) ? $searchdefs[$this->module] : null;
         $this->tpl = $tpl;
@@ -289,13 +292,43 @@ class SearchForm
         $searchFormInPopup = !in_array($this->module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
         $this->th->ss->assign('searchFormInPopup', $searchFormInPopup);
 
-        $return_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchForm_' . $this->parsedView, $this->locateFile($this->tpl));
+        if (isset($this->th)) {
+            $moduleDir = null;
+            if (isset($this->seed->module_dir)) {
+                $moduleDir = $this->seed->module_dir;
+            } else {
+                LoggerManager::getLogger()->warn('Trying to get property of non-object (module_dir)');
+            }
+
+            $return_txt = $this->th->displayTemplate($moduleDir, 'SearchForm_' . $this->parsedView, $this->locateFile($this->tpl));
+        } else {
+            $return_txt = null;
+            LoggerManager::getLogger()->warn('Trying to get property of non-object for return_txt from th');
+        }
 
         if ($header) {
             $this->th->ss->assign('return_txt', $return_txt);
-            $header_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchFormHeader', $this->locateFile('header.tpl'));
+
+            $moduleDir = null;
+            if (isset($this->seed->module_dir)) {
+                $moduleDir = $this->seed->module_dir;
+            } else {
+                LoggerManager::getLogger()->warn('Trying to get property of non-object (module_dir)');
+            }
+
+            $header_txt = $this->th->displayTemplate($moduleDir, 'SearchFormHeader', $this->locateFile('header.tpl'));
             //pass in info to render the select dropdown below the form
-            $footer_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchFormFooter', $this->locateFile('footer.tpl'));
+
+
+
+            $moduleDir = null;
+            if (isset($this->seed->module_dir)) {
+                $moduleDir = $this->seed->module_dir;
+            } else {
+                LoggerManager::getLogger()->warn('Trying to get property of non-object (module_dir)');
+            }
+
+            $footer_txt = $this->th->displayTemplate($moduleDir, 'SearchFormFooter', $this->locateFile('footer.tpl'));
             $return_txt = $header_txt . $footer_txt;
         }
 
@@ -321,7 +354,12 @@ class SearchForm
         global $app_strings, $mod_strings;
         $data = array();
         $fields = array_merge($this->fieldDefs, (array)$this->customFieldDefs);
-        $fields = array_merge($fields, $this->searchFields);
+
+        if (!is_array($this->searchFields)) {
+            LoggerManager::getLogger()->warn('search fields is not an array');
+        }
+
+        $fields = array_merge($fields, (array)$this->searchFields);
         foreach ($fields as $name => $defs) {
             if (preg_match('/(.*)_basic$/', $name, $match)) {
                 if (isset($fields[$match[1]]['value']) && $fields[$match[1]]['value'] && (!isset($defs['value']) || !$defs['value'])) {
@@ -334,7 +372,12 @@ class SearchForm
                 }
             }
         }
-        $searchFieldsKeys = array_keys($this->searchFields);
+
+        if (!is_array($this->searchFields)) {
+            LoggerManager::getLogger()->warn('search fields is not an array');
+        }
+
+        $searchFieldsKeys = array_keys((array)$this->searchFields);
         foreach ($fields as $name => $defs) {
             $searchTypeKey = false;
             if (preg_match('/(.*)_basic$/', $name, $match)) {
@@ -406,7 +449,7 @@ class SearchForm
                 }
             }
         }
-        throw new Exception('Not found');
+        throw new Exception('Find Field Option Value: Not found');
     }
 
     /**
@@ -494,7 +537,28 @@ class SearchForm
 
     function displaySavedSearchSelect()
     {
-        $savedSearch = new SavedSearch($this->listViewDefs[$this->module], $this->lv->data['pageData']['ordering']['orderBy'], $this->lv->data['pageData']['ordering']['sortOrder']);
+        if (!isset($this->listViewDefs[$this->module])) {
+            LoggerManager::getLogger()->warn('Undefined index (displaySavedSearchSelect)');
+            $listViewDefsModule = null;
+        } else {
+            $listViewDefsModule = $this->listViewDefs[$this->module];
+        }
+
+        $orderBy = null;
+        if (isset($this->lv->data['pageData']['ordering']['orderBy'])) {
+            $orderBy = $this->lv->data['pageData']['ordering']['orderBy'];
+        } else {
+            LoggerManager::getLogger()->warn('Trying to get property of non-object: list view data "order by" is not defined');
+        }
+
+        $sortOrder = null;
+        if (isset($this->lv->data['pageData']['ordering']['sortOrder'])) {
+            $sortOrder = $this->lv->data['pageData']['ordering']['sortOrder'];
+        } else {
+            LoggerManager::getLogger()->warn('Trying to get property of non-object: list view data "sort order" is not defined');
+        }
+
+        $savedSearch = new SavedSearch($listViewDefsModule, $orderBy, $sortOrder);
         $savedSearchSelect = $savedSearch->getSelect($this->module, $savedSearchData);
         $this->savedSearchData = $savedSearchData;
 
@@ -575,7 +639,7 @@ class SearchForm
                     $this->fieldDefs[$fvName] = array_merge($this->seed->field_defs[$name], $this->fieldDefs[$fvName]);
                 else {
                     $this->fieldDefs[$fvName] = $this->seed->field_defs[$name];
-                    $this->fieldDefs[$fvName]['name'] = $this->fieldDefs[$fvName]['name'] . '_' . $this->parsedView;
+                    $this->fieldDefs[$fvName]['name'] = (isset($this->fieldDefs[$fvName]['name']) ? $this->fieldDefs[$fvName]['name'] : null) . '_' . $this->parsedView;
                 }
 
                 if (isset($this->fieldDefs[$fvName]['type']) && $this->fieldDefs[$fvName]['type'] == 'relate') {
@@ -735,7 +799,7 @@ class SearchForm
                                 ) {
                                     require_once('include/SugarFields/SugarFieldHandler.php');
                                     $sfh = new SugarFieldHandler();
-                                    $sf = $sfh->getSugarField('Parent');
+                                    $sf = $sfh::getSugarField('Parent');
 
                                     $this->searchFields[$params['type_name']] = array('query_type' => 'default',
                                         'value' => $sf->getSearchInput($params['type_name'], $array));

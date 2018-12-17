@@ -8878,7 +8878,7 @@ function _putimages()
 {
 	$filter=($this->compress) ? '/Filter /FlateDecode ' : '';
 	reset($this->images);
-	while(list($file,$info)=each($this->images)) {
+	foreach ($this->images as $file => $info) {
 		$this->_newobj();
 		$this->images[$file]['n']=$this->n;
 		$this->_out('<</Type /XObject');
@@ -9667,7 +9667,7 @@ function _getImage(&$file, $firsttime=true, $allowvector=true, $orig_srcpath=fal
 	// firsttime i.e. whether to add to this->images - use false when calling iteratively
 	// Image Data passed directly as var:varname
 	if (preg_match('/var:\s*(.*)/',$file, $v)) { 
-		$data = $this->$v[1];
+		$data = $this->{$v[1]};
 		$file = md5($data);
 	}
 	// mPDF 5.5.13
@@ -10440,7 +10440,7 @@ function _imageTypeFromString(&$data) {
 // Moved outside WMF as also needed for SVG
 function _putformobjects() {
 	reset($this->formobjects);
-	while(list($file,$info)=each($this->formobjects)) {
+	foreach ($this->formobjects as $file => $into) {
 		$this->_newobj();
 		$this->formobjects[$file]['n']=$this->n;
 		$this->_out('<</Type /XObject');
@@ -32370,7 +32370,8 @@ function pdf_write_value(&$value) {
 			// A dictionary.
 			$this->_out("<<",false);
 			reset ($value[1]);
-			while (list($k, $v) = each($value[1])) {
+
+			foreach ($value[1] as $k => $v) {
 				$this->_out($k . " ",false);
 				$this->pdf_write_value($v);
 			}

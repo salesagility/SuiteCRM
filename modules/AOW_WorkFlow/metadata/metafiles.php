@@ -31,4 +31,3 @@
  	'popupdefs'	      =>    'modules/AOW_WorkFlow/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/AOW_WorkFlow/metadata/SearchFields.php',
  );
-?>

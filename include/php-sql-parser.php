@@ -588,6 +588,7 @@ EOREGEX
 		private function process_set_list($tokens) {
 			$column="";
 			$expression="";
+			$expr=array();
 			foreach($tokens as $token) {
 				$token=trim($token);
 				if(!$column) {
@@ -982,7 +983,7 @@ EOREGEX
 			$direction="ASC";
 		        $type = "expression";
 			if(!$tokens) return false;
-
+	
 			foreach($tokens as $token) {
 				switch(strtoupper($token)) {
 					case ',':
@@ -1071,7 +1072,7 @@ EOREGEX
 	           processes these sections.  Recursive.
 		*/
 		private function process_expr_list($tokens) {
-			$expr = "";
+			$expr = array();
 			$type = "";
 			$prev_token = "";
 			$skip_next = false;

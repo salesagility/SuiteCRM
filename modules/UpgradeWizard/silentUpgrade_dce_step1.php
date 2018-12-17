@@ -1,9 +1,12 @@
 <?php
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
@@ -13,7 +16,7 @@
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  * 
  * You should have received a copy of the GNU Affero General Public License along with
@@ -30,15 +33,15 @@
  * 
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //// This is a stand alone file that can be run from the command prompt for upgrading a
-//// Sugar Instance. Three parameters are required to be defined in order to execute this file.
+//// SuiteCRM Instance. Three parameters are required to be defined in order to execute this file.
 //// php.exe -f silentUpgrade.php [Path to Upgrade Package zip] [Path to Log file] [Path to Instance]
 //// See below the Usage for more details.
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -159,35 +162,35 @@ function createMissingRels(){
 		//assigned_user
 		$guid = create_guid();
 		$query = "SELECT id FROM relationships WHERE relationship_name = '{$relObjName}_assigned_user'";
-		$result= $GLOBALS['db']->query($query, true);
+		$result= DBManagerFactory::getInstance()->query($query, true);
 		$a = null;
-		$a = $GLOBALS['db']->fetchByAssoc($result);
+		$a = DBManagerFactory::getInstance()->fetchByAssoc($result);
 		if(!isset($a['id']) && empty($a['id']) ){
 			$qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_assigned_user','Users','users','id','{$relModName}','{$relObjName}','assigned_user_id',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
-			$GLOBALS['db']->query($qRel);
+			DBManagerFactory::getInstance()->query($qRel);
 		}
 		//modified_user
 		$guid = create_guid();
 		$query = "SELECT id FROM relationships WHERE relationship_name = '{$relObjName}_modified_user'";
-		$result= $GLOBALS['db']->query($query, true);
+		$result= DBManagerFactory::getInstance()->query($query, true);
 		$a = null;
-		$a = $GLOBALS['db']->fetchByAssoc($result);
+		$a = DBManagerFactory::getInstance()->fetchByAssoc($result);
 		if(!isset($a['id']) && empty($a['id']) ){
 			$qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_modified_user','Users','users','id','{$relModName}','{$relObjName}','modified_user_id',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
-			$GLOBALS['db']->query($qRel);
+			DBManagerFactory::getInstance()->query($qRel);
 		}
 		//created_by
 		$guid = create_guid();
 		$query = "SELECT id FROM relationships WHERE relationship_name = '{$relObjName}_created_by'";
-		$result= $GLOBALS['db']->query($query, true);
+		$result= DBManagerFactory::getInstance()->query($query, true);
 		$a = null;
-		$a = $GLOBALS['db']->fetchByAssoc($result);
+		$a = DBManagerFactory::getInstance()->fetchByAssoc($result);
     	if(!isset($a['id']) && empty($a['id']) ){
 			$qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_created_by','Users','users','id','{$relModName}','{$relObjName}','created_by',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
-			$GLOBALS['db']->query($qRel);
+			DBManagerFactory::getInstance()->query($qRel);
     	}
 	}
 	//Also add tracker perf relationship
@@ -214,6 +217,7 @@ function merge_passwordsetting($sugar_config, $sugar_version) {
         'systexpirationtime' => '',
         'systexpirationtype' => '0',
         'systexpirationlogin' => '',
+        'factoremailtmpl' => '',
         ) ,
     );
 
@@ -238,14 +242,14 @@ function addDefaultModuleRoles($defaultRoles = array()) {
         foreach($role as $category=>$actions){
             foreach($actions as $name=>$access_override){
                     $query = "SELECT * FROM acl_actions WHERE name='$name' AND category = '$category' AND acltype='$roleName' AND deleted=0 ";
-					$result = $GLOBALS['db']->query($query);
+					$result = DBManagerFactory::getInstance()->query($query);
 					//only add if an action with that name and category don't exist
-					$row=$GLOBALS['db']->fetchByAssoc($result);
+					$row=DBManagerFactory::getInstance()->fetchByAssoc($result);
 					if ($row == null) {
 	                	$guid = create_guid();
 	                	$currdate = gmdate($GLOBALS['timedate']->get_db_date_time_format());
 	                	$query= "INSERT INTO acl_actions (id,date_entered,date_modified,modified_user_id,name,category,acltype,aclaccess,deleted ) VALUES ('$guid','$currdate','$currdate','1','$name','$category','$roleName','$access_override','0')";
-						$GLOBALS['db']->query($query);
+						DBManagerFactory::getInstance()->query($query);
 	                }
             }
         }
@@ -631,4 +635,3 @@ if(count($errors) > 0) {
 	}
 	echo "FAILED\n";
 }
-?>

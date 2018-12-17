@@ -52,29 +52,22 @@
 				</tr><tr>
 				{counter start=0 name="buttonCounter" print=false assign="buttonCounter"}
 			{/if}
-			{ if !isset($button.size)}
-				{assign var='buttonsize' value=''}
-			{else}
-				{assign var='buttonsize' value=$button.size}
-			{/if}
 			<td {if isset($button.help)}id="{$button.help}"{/if} width="16%" name=helpable" style="padding: 5px;"  valign="top" align="center">
 			     <table onclick='{if $button.action|substr:0:11 == "javascript:"}{$button.action|substr:11}{else}ModuleBuilder.getContent("{$button.action}");{/if}' 
 			         class='wizardButton' onmousedown="ModuleBuilder.buttonDown(this);return false;" onmouseout="ModuleBuilder.buttonOut(this);">
 			         <tr>
-						<td align="center"><a class='studiolink' href="javascript:void(0)" >
-						{if isset($button.imageName)}
-                            {if isset($button.altImageName)}
-                                {sugar_image name=$button.imageTitle width=$button.size height=$button.size image=$button.imageName altimage=$button.altImageName}
-                            {else}
-                                {sugar_image name=$button.imageTitle width=$button.size height=$button.size image=$button.imageName}                            
-                            {/if}
-						{else}
-							{sugar_image name=$button.imageTitle width=$button.size height=$button.size}
-						{/if}</a></td>
+						<td align="center">
+							<a class='studiolink' href="javascript:void(0)">
+								<span class="suitepicon suitepicon-module-{$button.icon}"></span>
+							</a>
+						</td>
 					 </tr>
 					 <tr>
-						 <td align="center"><a class='studiolink' id='{$button.linkId}' href="javascript:void(0)">
-				            {if (isset($button.imageName))}{$button.imageTitle}{else}{$buttonName}{/if}</a></td>
+						 <td align="center">
+							 <a class='studiolink' id='{$button.linkId}' href="javascript:void(0)">
+                                 {$buttonName}
+							 </a>
+						 </td>
 				     </tr>
 				 </table>
 			</td>

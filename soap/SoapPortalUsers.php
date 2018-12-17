@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('soap/SoapHelperFunctions.php');
@@ -48,7 +51,7 @@ require_once('soap/SoapPortalHelper.php');
 
 
 
-/*************************************************************************************
+/******
 
 THIS IS FOR PORTAL USERS
 
@@ -111,7 +114,7 @@ function portal_login($portal_auth, $user_name, $application_name){
         build_relationship_tree($contact);
         return array('id'=>session_id(), 'error'=>$error->get_soap_array());
     }
-    }
+
     $error->set_error('invalid_login');
     return array('id'=>-1, 'error'=>$error->get_soap_array());
 }
@@ -120,7 +123,8 @@ function portal_login($portal_auth, $user_name, $application_name){
 this validates the session and starts the session;
 */
 function portal_validate_authenticated($session_id){
-    $old_error_reporting = error_reporting(0);
+    $old_error_reporting = error_reporting();
+    error_reporting(0);
     session_id($session_id);
 
     // This little construct checks to see if the session validated
@@ -132,13 +136,11 @@ function portal_validate_authenticated($session_id){
             $current_user = new User();
             $current_user->retrieve($_SESSION['portal_id']);
             login_success();
-            error_reporting($old_error_reporting);
             return true;
         }
     }
     session_destroy();
     $GLOBALS['log']->fatal('SECURITY: The session ID is invalid');
-    error_reporting($old_error_reporting);
     return false;
 }
 
@@ -263,16 +265,16 @@ function portal_get_entry_list_filter($session, $module_name, $order_by, $select
 
                         $where .=  "$sugar->table_name$cstm.$name $operator ";
                         if($sugar->field_defs['name']['type'] == 'datetime'){
-                            $where .= db_convert("'".$GLOBALS['db']->quote($value)."'", 'datetime');
+                            $where .= db_convert("'".DBManagerFactory::getInstance()->quote($value)."'", 'datetime');
                         }else{
                             if(empty($value)) {
                                 $tmp = array();
                                 foreach($value_array as $v) {
-                                    $tmp[] = $GLOBALS['db']->quote($v);
+                                    $tmp[] = DBManagerFactory::getInstance()->quote($v);
                                 }
                                 $where .= "('" . implode("', '", $tmp) . "')";
                             } else {
-                                $where .= "'".$GLOBALS['db']->quote($value)."'";
+                                $where .= "'".DBManagerFactory::getInstance()->quote($value)."'";
                             }
                         }
                     }
@@ -412,7 +414,7 @@ function portal_set_entry($session,$module_name, $name_value_list){
         $seed->portal_viewable = true;
     }
     $id = $seed->save();
-    set_module_in(array('in'=>"('".$GLOBALS['db']->quote($id)."')", 'list'=>array($id)), $module_name);
+    set_module_in(array('in'=>"('".DBManagerFactory::getInstance()->quote($id)."')", 'list'=>array($id)), $module_name);
     if($_SESSION['type'] == 'contact' && $module_name != 'Contacts' && !$is_update){
         if($module_name == 'Notes'){
             $seed->contact_id = $_SESSION['user_id'];
@@ -598,9 +600,9 @@ function portal_get_related_notes($session,$module_name, $module_id, $select_fie
             $error->set_error('no_access');
             return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
         }
-        $list = get_notes_in_contacts("('".$GLOBALS['db']->quote($module_id)."')", $order_by);
+        $list = get_notes_in_contacts("('".DBManagerFactory::getInstance()->quote($module_id)."')", $order_by);
     }else{
-        $list = get_notes_in_module("('".$GLOBALS['db']->quote($module_id)."')", $module_name, $order_by);
+        $list = get_notes_in_module("('".DBManagerFactory::getInstance()->quote($module_id)."')", $module_name, $order_by);
     }
 
 
@@ -648,7 +650,7 @@ function portal_get_related_list($session, $module_name, $rel_module, $module_id
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
 
-    $list = get_related_in_module("('".$GLOBALS['db']->quote($module_id)."')", $module_name, $rel_module, $order_by, $offset, $limit);
+    $list = get_related_in_module("('".DBManagerFactory::getInstance()->quote($module_id)."')", $module_name, $rel_module, $order_by, $offset, $limit);
 
     $output_list = Array();
     $field_list = Array();
@@ -781,5 +783,3 @@ function portal_set_newsletters($session, $subscribe_ids, $unsubscribe_ids){
 
     return $error->get_soap_array();
 }
-
-?>

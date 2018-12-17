@@ -21,7 +21,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 /**
@@ -73,8 +73,9 @@ class AOS_Contracts extends AOS_Contracts_sugar {
         self::__construct();
     }
 
-	function save($check_notify = FALSE){
-        if (empty($this->id)){
+    function save($check_notify = false)
+    {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['group_id']);
             unset($_POST['product_id']);
             unset($_POST['service_id']);
@@ -88,17 +89,17 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 
         perform_aos_save($this);
 
-		parent::save($check_notify);
+        $return_id = parent::save($check_notify);
 
         require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
         $productQuoteGroup = new AOS_Line_Item_Groups();
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
 
-		if(isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])){
-			$this->createLink();
-		}
-
-	}
+        if (isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])) {
+            $this->createLink();
+        }
+        return $return_id;
+    }
 
 	function mark_deleted($id)
 	{
@@ -115,7 +116,12 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 
         if($this->renewal_reminder_date != 0){
 
-            $call->id = $this->call_id;
+            if(!isset($this->call_id)) {
+                LoggerManager::getLogger()->warn('Call is not set for reminder creation.');
+                $call->id = null;
+            } else {
+                $call->id = $this->call_id;
+            }
             $call->parent_id = $this->id;
             $call->parent_type = 'AOS_Contracts';
             $call->date_start = $this->renewal_reminder_date;
@@ -138,22 +144,36 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 
 		if($this->renewal_reminder_date != 0){
             $call->id = $this->call_id;
-            $call->parent_id = $this->contract_account_id;
+
+            if (!isset($this->contract_account_id)) {
+                LoggerManager::getLogger()->warn('Contract Account ID not defined for AOS Contracts / create link.');
+                $contractAccountId = null;
+            } else {
+                $contractAccountId = $this->contract_account_id;
+            }
+            $call->parent_id = $contractAccountId;
             $call->parent_type = 'Accounts';
             $call->reminder_time = 60;
             $call->save();
 		}
 	}
 
-	function deleteCall(){
-	    require_once('modules/Calls/Call.php');
-	    $call = new call();
+    public function deleteCall()
+    {
+        require_once('modules/Calls/Call.php');
+        $call = new call();
 
-		if($this->call_id != null){
+        if (!isset($this->call_id)) {
+            LoggerManager::getLogger()->warn('Call ID not found for AOS Contract / delete call.');
+            $callId = null;
+        } else {
+            $callId = $this->call_id;
+        }
+
+		if($callId != null){
             $call->id = $this->call_id;
             $call->mark_deleted($call->id);
 		}
 	}
 
 }
-?>

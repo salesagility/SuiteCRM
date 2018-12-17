@@ -1,8 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -13,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -30,10 +36,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 /**
@@ -70,7 +76,7 @@ class DetailView extends ListView {
     }
 
 
-	function processSugarBean($html_varName, $seed, $offset/*, $isfirstview=0*/) {
+	function processSugarBean($html_varName, $seed, $offset) {
 		global $row_count, $sugar_config;
 
 		global $next_offset;
@@ -88,17 +94,6 @@ class DetailView extends ListView {
 		$nav_offset='';
 		$nav_ids_visited=array();
 		$nav_stamp='';
-
-		//get the session variable DETAIL_NAV_HISTORY,
-		//the format of the variable stamp,offset, array of IDs visited.
-        $nav_history=$this->getLocalSessionVariable($html_varName, "DETAIL_NAV_HISTORY");
-		if (!empty($nav_history)) {
-			$nav_history_set=true;
-			$nav_history_array=explode(":",$nav_history);
-			$nav_stamp=$nav_history_array[0];
-			$nav_offset=$nav_history_array[1];
-			eval("\$nav_ids_visited= ".$nav_history_array[2].";");
-		}
 
 		//from list				 					offset is there but $bNavHistorySet is false.
 		//from next,previous,start and end buttons	offset and $bNavHistorySet is true.
@@ -239,15 +234,6 @@ class DetailView extends ListView {
 		if (empty($nav_offset)) {
 			$nav_offset=$offset;
 		}
-		//store a maximum of 20 entries in the nav_ids_visited array.
-		//remove the oldest entry when this limit is reached.
-		if (count($nav_ids_visited) >= 20) {
-			reset($nav_ids_visited);
-			unset($nav_ids_visited[key($nav_ids_visited)]);
-		}
-		$nav_ids_visited[$offset]=$object->id;
-		$nav_history=sprintf("%s:%s:%s",$nav_stamp,$nav_offset,var_export($nav_ids_visited,true));
-        $this->setLocalSessionVariable($html_varName, "DETAIL_NAV_HISTORY",$nav_history);
 
 		return $object;
 	}
@@ -481,4 +467,3 @@ class DetailView extends ListView {
     }
 
 	}
-?>

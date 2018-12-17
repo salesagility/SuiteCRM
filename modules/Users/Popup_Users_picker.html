@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- ********************************************************************************/
+ */
 -->
 <!-- BEGIN: main -->
 <!-- BEGIN: SearchHeader -->
@@ -51,10 +52,10 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <form class="edit view">
-<td scope="row" nowrap="nowrap"><slot>{MOD.LBL_FIRST_NAME}</slot></td>
-<td ><slot><input type="text" size="10" tabindex='1' name="first_name"  value="{LAST_SEARCH.FIRST_NAME}" /></slot></td>
-<td scope="row" valign="top" nowrap="nowrap"><slot>{MOD.LBL_USER_NAME}</slot></td>
-<td ><slot><input type="text" size="10" tabindex='2' name="user_name"  value="{LAST_SEARCH.USER_NAME}" /></slot></td>
+<td scope="row" nowrap="nowrap"><span>{MOD.LBL_FIRST_NAME}</span></td>
+<td ><span><input type="text" size="10" tabindex='1' name="first_name"  value="{LAST_SEARCH.FIRST_NAME}" /></span></td>
+<td scope="row" valign="top" nowrap="nowrap"><span>{MOD.LBL_USER_NAME}</span></td>
+<td ><span><input type="text" size="10" tabindex='2' name="user_name"  value="{LAST_SEARCH.USER_NAME}" /></span></td>
 <td rowspan='2' valign="top" align="right"><input type="hidden" name="action" value="PopupUsers"/>
 <input type="hidden" name="query" value="true"/>
 <input type="hidden" name="module" value="{MODULE_NAME}" />
@@ -63,12 +64,12 @@
 <input type="hidden" name="form" value="{FORM}" />
 <input type="hidden" name="parent_id" value="{parent_id}" />
 <input type="hidden" name="parent_name" value="{parent_name}" />
-<input class="button" type="submit" name="button" tabindex='2' value="{APP.LBL_SEARCH_BUTTON_LABEL}" /></slot></td>
+<input class="button" type="submit" name="button" tabindex='2' value="{APP.LBL_SEARCH_BUTTON_LABEL}" /></span></td>
 </tr><tr>
-<td scope="row" nowrap="nowrap"><slot>{MOD.LBL_LAST_NAME}</slot></td>
-<td ><slot><input type="text" size="10" tabindex='1' name="last_name"  value="{LAST_SEARCH.LAST_NAME}" /></slot></td>
-<td scope="row" nowrap="nowrap"><slot>&nbsp;</slot></td>
-<td ><slot>&nbsp;</slot></td>
+<td scope="row" nowrap="nowrap"><span>{MOD.LBL_LAST_NAME}</span></td>
+<td ><span><input type="text" size="10" tabindex='1' name="last_name"  value="{LAST_SEARCH.LAST_NAME}" /></span></td>
+<td scope="row" nowrap="nowrap"><span>&nbsp;</span></td>
+<td ><span>&nbsp;</span></td>
 </form>
 </tr>
 </table>
@@ -88,15 +89,15 @@
 <!-- END: list_nav_row -->
 <tr height="20" >
 <td scope="col"  nowrap="nowrap">{CHECKALL}</td>
-<td scope="col" width="50%"  nowrap="nowrap"><slot><a href="{ORDER_BY}last_name" class="listViewThLinkS1">{MOD.LBL_LIST_NAME}{arrow_start}{first_name_arrow}{arrow_end}</a></slot></td>
-<td scope="col" width="50%"  nowrap="nowrap"><slot><a href="{ORDER_BY}user_name" class="listViewThLinkS1" >{MOD.LBL_LIST_USER_NAME}{arrow_start}{user_name_arrow}{arrow_end}</a></slot></td>
+<td scope="col" width="50%"  nowrap="nowrap"><span><a href="{ORDER_BY}last_name" class="listViewThLinkS1">{MOD.LBL_LIST_NAME}{arrow_start}{first_name_arrow}{arrow_end}</a></span></td>
+<td scope="col" width="50%"  nowrap="nowrap"><span><a href="{ORDER_BY}user_name" class="listViewThLinkS1" >{MOD.LBL_LIST_USER_NAME}{arrow_start}{user_name_arrow}{arrow_end}</a></span></td>
 </tr>
 
 <!-- BEGIN: row -->
 <tr height="20" class="{ROW_COLOR}S1">
 <td valign="top">{PREROW}</td>
-<td scope='row' valign="top" ><slot>{USER.FIRST_NAME} {USER.LAST_NAME}</slot></td>
-<td valign="top" ><slot>{USER.USER_NAME}</slot></td>
+<td scope='row' valign="top" ><span>{USER.FIRST_NAME} {USER.LAST_NAME}</span></td>
+<td valign="top" ><span>{USER.USER_NAME}</span></td>
 </tr>
 
 <!-- END: row -->

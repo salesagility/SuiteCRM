@@ -85,7 +85,7 @@ function check_auth($url)
     $config = '';
 
     require_once('include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
-    require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
+    require('modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
 
     $settings = array(
