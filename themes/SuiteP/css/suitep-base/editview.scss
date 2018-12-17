@@ -4319,6 +4319,11 @@ h3 span {
   cursor: pointer;
 }
 
+.fix-inlineEdit-textarea {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
 .inlineEditIcon {
   color: #F08377;
   padding-left: 3px;
