@@ -736,6 +736,12 @@ class User extends Person implements EmailInterface
                 $this->setPreference('subpanel_tabs', '', 0, 'global');
             }
 
+            if (isset($_POST['user_count_collapsed_subpanels'])) {
+                $this->setPreference('count_collapsed_subpanels', $_POST['user_count_collapsed_subpanels'], 0, 'global');
+            } else {
+                $this->setPreference('count_collapsed_subpanels', '', 0, 'global');
+            }
+
             if (isset($_POST['user_theme'])) {
                 $this->setPreference('user_theme', $_POST['user_theme'], 0, 'global');
                 $_SESSION['authenticated_user_theme'] = $_POST['user_theme'];
