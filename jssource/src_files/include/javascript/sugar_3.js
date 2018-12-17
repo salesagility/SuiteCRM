@@ -5169,8 +5169,8 @@ function convertReportDateTimeToDB(dateValue, timeValue) {
  */
 function displayMessage(type, message)
 {
-    if($('#pagecontent .message').length != 0){
-	$('div.message').last().after(
+    if($('#pagecontent .alert').length != 0){
+	$('div.alert').last().after(
 	    renderHtmlMessage(type, message)
 	);
     } else {
@@ -5196,20 +5196,26 @@ function displayMessageAfterSelector(type, message, selector)
 function clearMessagesByType(type, selector)
 {
     if(typeof(selector) != 'undefined'){
-     $('.message.' + type , selector).remove();
+     $('.alert.' + type , selector).remove();
     }else{
-     $('.message.' + type).remove();
+     $('.alert.' + type).remove();
     }
 }
 /**
 * Displays a message into a div  with the specified class according to the type passed.
 * Types allowed: error, info, alert, working, okay.
 */
-function renderHtmlMessage(type, message)
-{
-  htmlMessage = $('<div />');
-  htmlMessage
-    .addClass('message ' + type)
-	.html(message);
-  return(htmlMessage);
+function renderHtmlMessage(type, message) {
+    var typesClass = {
+        error: "alert-danger",
+        info: "alert-info",
+        alert: "alert-warning",
+        okay: "alert-success",
+    };
+    htmlMessage = $('<div />');
+
+    htmlMessage
+        .addClass('alert ' + typesClass[type])
+	    .html(message);
+    return(htmlMessage);
 }

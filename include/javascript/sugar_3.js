@@ -644,10 +644,9 @@ if(time_match[1]<10){time_match[1]='0'+time_match[1];}
 return date_match[date_reg_positions['Y']]+"-"+date_match[date_reg_positions['m']]+"-"+date_match[date_reg_positions['d']]+' '+time_match[1]+':'+time_match[2]+':00';}
 return'';}
 function displayMessage(type,message)
-{if($('#pagecontent .message').length!=0){$('div.message').last().after(renderHtmlMessage(type,message));}else{$('#pagecontent').prepend(renderHtmlMessage(type,message));}}
+{if($('#pagecontent .alert').length!=0){$('div.alert').last().after(renderHtmlMessage(type,message));}else{$('#pagecontent').prepend(renderHtmlMessage(type,message));}}
 function displayMessageAfterSelector(type,message,selector)
 {$(selector).after(renderHtmlMessage(type,message));}
 function clearMessagesByType(type,selector)
-{if(typeof(selector)!='undefined'){$('.message.'+type,selector).remove();}else{$('.message.'+type).remove();}}
-function renderHtmlMessage(type,message)
-{htmlMessage=$('<div />');htmlMessage.addClass('message '+type).html(message);return(htmlMessage);}
+{if(typeof(selector)!='undefined'){$('.alert.'+type,selector).remove();}else{$('.alert.'+type).remove();}}
+function renderHtmlMessage(type,message){var typesClass={error:"alert-danger",info:"alert-info",alert:"alert-warning",okay:"alert-success",};htmlMessage=$('<div />');htmlMessage.addClass('alert '+typesClass[type]).html(message);return(htmlMessage);}

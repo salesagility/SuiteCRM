@@ -68,6 +68,17 @@
 {/if}
 {foreach from=$messages item=typedmessages key=type}
     {foreach from=$typedmessages item=msg}
-        <div role="alert" class="message {$type}">{$msg}</div>
+        {if $type == 'error'}
+            <div role="alert" class="alert alert-danger">{$msg}</div>
+        {/if}
+        {if $type == 'info'}
+            <div role="alert" class="alert alert-info">{$msg}</div>
+        {/if}
+        {if $type == 'alert'}
+            <div role="alert" class="alert alert-warning">{$msg}</div>
+        {/if}
+        {if $type == 'okay'}
+            <div role="alert" class="alert alert-success">{$msg}</div>
+        {/if}
     {/foreach}
 {/foreach}
