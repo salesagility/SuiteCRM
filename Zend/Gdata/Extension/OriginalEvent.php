@@ -47,7 +47,6 @@ require_once 'Zend/Gdata/Extension/When.php';
  */
 class Zend_Gdata_Extension_OriginalEvent extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'originalEvent';
     protected $_id = null;
     protected $_href = null;
@@ -94,7 +93,7 @@ class Zend_Gdata_Extension_OriginalEvent extends Zend_Gdata_Extension
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gd') . ':' . 'when';
+            case $this->lookupNamespace('gd') . ':' . 'when':
                 $when = new Zend_Gdata_Extension_When();
                 $when->transferFromDOM($child);
                 $this->_when = $when;
@@ -137,6 +136,4 @@ class Zend_Gdata_Extension_OriginalEvent extends Zend_Gdata_Extension
         $this->_when = $value;
         return $this;
     }
-
-
 }

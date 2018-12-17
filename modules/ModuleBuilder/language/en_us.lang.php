@@ -331,7 +331,7 @@ $mod_strings = array(
     'LBL_STUDIO' => 'Studio',
     'LBL_DROPDOWNEDITOR' => 'Dropdown Editor',
     'LBL_DEVELOPER_TOOLS' => 'Developer Tools',
-    'LBL_SUGARPORTAL' => 'SuiteCRM Portal Editor',
+    'LBL_SUITEPORTAL' => 'SuiteCRM Portal Editor',
     'LBL_PACKAGE_LIST' => 'Package List',
     'LBL_HOME' => 'Home',
     'LBL_NONE' => '-None-',
@@ -572,7 +572,7 @@ $mod_strings = array(
     'LBL_MODULE_DEPLOYED' => 'Module has been deployed.',
     'LBL_UNDEFINED' => 'undefined',
     'LBL_EC_VIEWS' => 'customized view(s)',
-    'LBL_EC_SUGARFEEDS' => 'customized Feed(s)',
+    'LBL_EC_SUITEFEEDS' => 'customized Feed(s)',
     'LBL_EC_DASHLETS' => 'customized Dashlet(s)',
     'LBL_EC_CSS' => 'customized css(s)',
     'LBL_EC_TPLS' => 'customized tpls(s)',
@@ -662,4 +662,3 @@ $mod_strings = array(
     'LBL_ALL_MODULES' => 'All Modules',
     'LBL_RELATED_FIELD_ID_NAME_LABEL' => '{0} (related {1} ID)',
 );
-

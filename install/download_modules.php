@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,26 +37,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 global $sugar_version, $js_custom_version;
 $lang_curr = $_SESSION['language'];
 require_once('ModuleInstall/PackageManager/PackageManagerDisplay.php');
 
-if(!isset( $install_script ) || !$install_script || empty($_SESSION['setup_db_admin_user_name'])){
+if (!isset($install_script) || !$install_script || empty($_SESSION['setup_db_admin_user_name'])) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 ///////////////////////////////////////////////////////////////////////////////
 ////    PREFILL $sugar_config VARS
-if(empty($sugar_config['upload_dir'])) {
+if (empty($sugar_config['upload_dir'])) {
     $sugar_config['upload_dir'] = 'upload/';
 }
-if(empty($sugar_config['upload_maxsize'])) {
+if (empty($sugar_config['upload_maxsize'])) {
     $sugar_config['upload_maxsize'] = 8192000;
 }
-if(empty($sugar_config['upload_badext'])) {
+if (empty($sugar_config['upload_badext'])) {
     $sugar_config['upload_badext'] = array('php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py', 'asp', 'cfm', 'js', 'vbs', 'html', 'htm');
 }
 ////    END PREFILL $sugar_config VARS
@@ -77,27 +80,26 @@ $GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
 $errors = array();
 $uploadResult = '';
 //commitModules();
-if(isset($_REQUEST['languagePackAction']) && !empty($_REQUEST['languagePackAction'])) {
-    switch($_REQUEST['languagePackAction']) {
+if (isset($_REQUEST['languagePackAction']) && !empty($_REQUEST['languagePackAction'])) {
+    switch ($_REQUEST['languagePackAction']) {
         case 'upload':
         $perform = false;
         $tempFile = '';
-        if(isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != ""){
+        if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != "") {
             require_once('ModuleInstall/PackageManager/PackageManager.php');
             $pm = new PackageManager();
             $tempFile = $pm->download($_REQUEST['release_id']);
             $perform = true;
-            //$base_filename = urldecode($tempFile);
-        }else{
+        //$base_filename = urldecode($tempFile);
+        } else {
             $file = new UploadFile('language_pack');
-            if($file->confirm_upload()){
-            $perform = true;
-             if(strpos($file->mime_type, 'zip') !== false) { // only .zip files
-					$tempFile = $file->get_stored_filename();
-					if($file->final_move($tempFile)) {
+            if ($file->confirm_upload()) {
+                $perform = true;
+                if (strpos($file->mime_type, 'zip') !== false) { // only .zip files
+                    $tempFile = $file->get_stored_filename();
+                    if ($file->final_move($tempFile)) {
                         $perform = true;
-                    }
-                    else {
+                    } else {
                         $errors[] = $mod_strings['ERR_LANG_UPLOAD_3'];
                     }
                 } else {
@@ -107,15 +109,15 @@ if(isset($_REQUEST['languagePackAction']) && !empty($_REQUEST['languagePackActio
         }
 
 
-            if($perform) { // check for a real file
-                        $uploadResult = $mod_strings['LBL_LANG_SUCCESS'];
-                        $result = langPackUnpack('langpack', $tempFile);
+            if ($perform) { // check for a real file
+                $uploadResult = $mod_strings['LBL_LANG_SUCCESS'];
+                $result = langPackUnpack('langpack', $tempFile);
             } else {
                 $errors[] = $mod_strings['ERR_LANG_UPLOAD_1'];
             }
 
-            if(count($errors) > 0) {
-                foreach($errors as $error) {
+            if (count($errors) > 0) {
+                foreach ($errors as $error) {
                     $uploadResult .= $error."<br />";
                 }
             }
@@ -142,24 +144,24 @@ if(isset($_REQUEST['languagePackAction']) && !empty($_REQUEST['languagePackActio
 $upload_max_filesize = ini_get('upload_max_filesize');
 $upload_max_filesize_bytes = return_bytes($upload_max_filesize);
 $fileMaxSize ='';
-if(!defined('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')){
+if (!defined('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
     define('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES', 6 * 1024 * 1024);
 }
 
-if($upload_max_filesize_bytes < constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
+if ($upload_max_filesize_bytes < constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
     $GLOBALS['log']->debug("detected upload_max_filesize: $upload_max_filesize");
     $fileMaxSize = '<p class="error">'.$mod_strings['ERR_UPLOAD_MAX_FILESIZE']."</p>\n";
 }
 $availablePatches = getLangPacks(true);
 $installedLanguagePacks = getInstalledLangPacks();
 $errs = '';
-if(isset($validation_errors)) {
-    if(count($validation_errors) > 0) {
+if (isset($validation_errors)) {
+    if (count($validation_errors) > 0) {
         $errs  = '<div id="errorMsgs">';
         $errs .= "<p>{$mod_strings['LBL_SYSOPTS_ERRS_TITLE']}</p>";
         $errs .= '<ul>';
 
-        foreach($validation_errors as $error) {
+        foreach ($validation_errors as $error) {
             $errs .= '<li>' . $error . '</li>';
         }
 

@@ -23,40 +23,40 @@
  */
 
 $viewdefs ['AOW_WorkFlow'] =
-    array (
+    array(
         'EditView' =>
-        array (
+        array(
             'templateMeta' =>
-            array (
+            array(
                 'maxColumns' => '2',
                 'widths' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         'label' => '10',
                         'field' => '30',
                     ),
                     1 =>
-                    array (
+                    array(
                         'label' => '10',
                         'field' => '30',
                     ),
                 ),
                 'useTabs' => false,
                 'tabDefs' =>
-                array (
+                array(
                     'DEFAULT' =>
-                    array (
+                    array(
                         'newTab' => false,
                         'panelDefault' => 'expanded',
                     ),
                     'CONDITIONS' =>
-                    array (
+                    array(
                         'newTab' => false,
                         'panelDefault' => 'expanded',
                     ),
                     'ACTIONS' =>
-                    array (
+                    array(
                         'newTab' => false,
                         'panelDefault' => 'expanded',
                     ),
@@ -64,67 +64,67 @@ $viewdefs ['AOW_WorkFlow'] =
                 'syncDetailEditViews' => false,
             ),
             'panels' =>
-            array (
+            array(
                 'default' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         0 => 'name',
                         1 => 'assigned_user_name',
                     ),
                     1 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'flow_module',
                             'studio' => 'visible',
                             'label' => 'LBL_FLOW_MODULE',
                         ),
                         1 =>
-                        array (
+                        array(
                             'name' => 'status',
                             'studio' => 'visible',
                             'label' => 'LBL_STATUS',
                         ),
                     ),
                     2 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'run_when',
                             'label' => 'LBL_RUN_WHEN',
                         ),
                         1 =>
-                            array (
+                            array(
                                 'name' => 'flow_run_on',
                                 'studio' => 'visible',
                                 'label' => 'LBL_FLOW_RUN_ON',
                             ),
                     ),
                     3 =>
-                    array (
+                    array(
                         0 =>
-                        array (
+                        array(
                             'name' => 'multiple_runs',
                             'label' => 'LBL_MULTIPLE_RUNS',
                         ),
                     ),
                     4 =>
-                    array (
+                    array(
                         0 => 'description',
                     ),
                 ),
                 'LBL_CONDITION_LINES' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         0 => 'condition_lines',
                     ),
                 ),
                 'LBL_ACTION_LINES' =>
-                array (
+                array(
                     0 =>
-                    array (
+                    array(
                         0 => 'action_lines',
                     ),
                 ),

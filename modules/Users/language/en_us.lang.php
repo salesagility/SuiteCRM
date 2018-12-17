@@ -214,6 +214,7 @@ $mod_strings = array(
     'LBL_MODULE_TITLE' => 'Users: Home',
     'LBL_NAME' => 'Full Name',
     'LBL_SIGNATURE_NAME' => 'Name',
+    'LBL_NAVIGATION_PARADIGM_DESCRIPTION' => 'Select to be able to view modules in the navigation bar based on pre-defined groups. When selected, the "Filter Menu By" feature will appear in the "More" menu.',
     'LBL_USE_GROUP_TABS' => 'Module Menu Filters',
     'LBL_NEW_FORM_TITLE' => 'New User',
     'LBL_NEW_PASSWORD' => 'New Password',
@@ -291,7 +292,9 @@ $mod_strings = array(
     'LBL_SUBPANEL_TABS_DESCRIPTION' => 'In Detail Views, group Subpanels into tabs and display one tab at a time.',
     'LBL_SORT_MODULES' => 'Sort modules alphabetically',
     'LBL_SORT_MODULES_DESCRIPTION' => 'Order modules by name in the navigation drop down.',
-    'LBL_SUGAR_LOGIN' => 'Is SuiteCRM User',
+    'LBL_COUNT_COLLAPSED_SUBPANELS' => 'Show collapsed subpanel hint',
+    'LBL_COUNT_COLLAPSED_SUBPANELS_DESCRIPTION' => 'When subpanels are collapsed, shows a hint to indicate if the subpanel is empty or contains records.',
+    'LBL_SUITE_LOGIN' => 'Is SuiteCRM User',
     'LBL_THEME' => 'Themes',
     'LBL_TIME_FORMAT_TEXT' => 'Set the display format for time stamps',
     'LBL_TIME_FORMAT' => 'Time Format',
@@ -604,7 +607,7 @@ $mod_strings = array(
     'LBL_EMAIL_FLAGGED' => 'Flagged:',
     'LBL_EMAIL_REPLY_TO_STATUS' => 'Reply To Status:',
     'LBL_TYPE' => 'Type:',
-    //#20680 EmialTemplate Ext.Message.show;
+    //#20680 EmailTemplate Ext.Message.show;
     'LBL_EMAILTEMPLATE_MESSAGE_SHOW_TITLE' => 'Please check!',
     'LBL_EMAILTEMPLATE_MESSAGE_SHOW_MSG' => 'Selecting this template will overwrite any data already entered within the email body. Do you wish to continue?',
     'LBL_EMAILTEMPLATE_MESSAGE_CLEAR_MSG' => 'Selecting "--None--" will clear any data already entered within the email body. Do you wish to continue?',

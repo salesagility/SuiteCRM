@@ -110,37 +110,43 @@ $server->register(
     'create_session',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'end_session',
     array('user_name' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'contact_by_email',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string', 'email_address' => 'xsd:string'),
     array('return' => 'tns:contact_detail_array'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'get_contact_relationships',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string', 'id' => 'xsd:string'),
     array('return' => 'tns:contact_detail_array'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'user_list',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string'),
     array('return' => 'tns:user_detail_array'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'search',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string', 'name' => 'xsd:string'),
     array('return' => 'tns:contact_detail_array'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'track_email',
@@ -154,7 +160,8 @@ $server->register(
         'email_body' => 'xsd:string'
     ),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'create_contact',
@@ -166,7 +173,8 @@ $server->register(
         'email_address' => 'xsd:string'
     ),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 $server->register(
     'create_lead',
     array(
@@ -177,7 +185,8 @@ $server->register(
         'email_address' => 'xsd:string'
     ),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 $server->register(
     'create_account',
     array(
@@ -188,19 +197,22 @@ $server->register(
         'website' => 'xsd:string'
     ),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'create_opportunity',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string', 'name' => 'xsd:string', 'amount' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 $server->register(
     'create_case',
     array('user_name' => 'xsd:string', 'password' => 'xsd:string', 'name' => 'xsd:string'),
     array('return' => 'xsd:string'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 /**
  * Create a new session.  This method is required before calling any other functions.
  *
@@ -257,24 +269,22 @@ function validate_user($user_name, $password)
         login_success();
 
         return true;
-    } else {
-        if (function_exists('openssl_decrypt')) {
-            $password = decrypt_string($password);
-            if ($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])) {
-                $user->retrieve($_SESSION['authenticated_user_id']);
-                $current_user = $user;
-                login_success();
-
-                return true;
-            }
-        } else {
-            $GLOBALS['log']->fatal("SECURITY: failed attempted login for $user_name using SOAP api");
-            $server->setError("Invalid username and/or password");
-
-            return false;
-        }
     }
+    if (function_exists('openssl_decrypt')) {
+        $password = decrypt_string($password);
+        if ($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])) {
+            $user->retrieve($_SESSION['authenticated_user_id']);
+            $current_user = $user;
+            login_success();
 
+            return true;
+        }
+    } else {
+        $GLOBALS['log']->fatal("SECURITY: failed attempted login for $user_name using SOAP api");
+        $server->setError("Invalid username and/or password");
+
+        return false;
+    }
 }
 
 /**
@@ -305,7 +315,7 @@ function add_contacts_matching_email_address(&$output_list, $email_address, &$se
             continue;
         }
 
-        $output_list[] = Array(
+        $output_list[] = array(
             "name1" => $contact->first_name,
             "name2" => $contact->last_name,
             "association" => $contact->account_name,
@@ -367,7 +377,7 @@ function add_leads_matching_email_address(&$output_list, $email_address, &$seed_
             continue;
         }
 
-        $output_list[] = Array(
+        $output_list[] = array(
             "name1" => $lead->first_name,
             "name2" => $lead->last_name,
             "association" => $lead->account_name,
@@ -406,7 +416,7 @@ function get_contact_relationships($user_name, $password, $id)
     $msi_id = 1;
     $seed_contact->retrieve($id);
 
-    $output_list[] = Array(
+    $output_list[] = array(
         "name1" => $seed_contact->first_name,
         "name2" => $seed_contact->last_name,
         "association" => $seed_contact->account_name,
@@ -466,11 +476,11 @@ function contact_by_email($user_name, $password, $email_address)
 
     $seed_contact = new Contact();
     $seed_lead = new Lead();
-    $output_list = Array();
+    $output_list = array();
     $email_address_list = explode("; ", $email_address);
 
     // remove duplicate email addresses
-    $non_duplicate_email_address_list = Array();
+    $non_duplicate_email_address_list = array();
     foreach ($email_address_list as $single_address) {
         // Check to see if the current address is a match of an existing address
         $found_match = false;
@@ -517,7 +527,7 @@ function get_contact_array($contact, $msi_id = '0')
 {
     $contact->emailAddress->handleLegacyRetrieve($contact);
 
-    return Array(
+    return array(
         "name1" => $contact->first_name,
         "name2" => $contact->last_name,
         "association" => $contact->account_name,
@@ -526,7 +536,6 @@ function get_contact_array($contact, $msi_id = '0')
         "msi_id" => $msi_id,
         "email_address" => $contact->email1
     );
-
 }
 
 /**
@@ -537,7 +546,7 @@ function get_contact_array($contact, $msi_id = '0')
  */
 function get_user_list_array($user)
 {
-    return Array(
+    return array(
         'email_address' => $user->email1,
         'user_name' => $user->user_name,
         'first_name' => $user->first_name,
@@ -564,7 +573,7 @@ function user_list($user, $password)
     }
 
     $seed_user = new User();
-    $output_list = Array();
+    $output_list = array();
     if (!$seed_user->ACLAccess('ListView')) {
         return $output_list;
     }
@@ -599,7 +608,7 @@ function contact_by_search($name, $where = '', $msi_id = '0')
     $response = $seed_contact->get_list("last_name, first_name", $where, 0);
     $contactList = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($contactList as $contact) {
@@ -620,7 +629,7 @@ function get_lead_array($lead, $msi_id = '0')
 {
     $lead->emailAddress->handleLegacyRetrieve($lead);
 
-    return Array(
+    return array(
         "name1" => $lead->first_name,
         "name2" => $lead->last_name,
         "association" => $lead->account_name,
@@ -643,7 +652,7 @@ function lead_by_search($name, $where = '', $msi_id = '0')
     $response = $seed_lead->get_list("last_name, first_name", $where, 0);
     $lead_list = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($lead_list as $lead) {
@@ -662,7 +671,7 @@ function lead_by_search($name, $where = '', $msi_id = '0')
  */
 function get_account_array($account, $msi_id)
 {
-    return Array(
+    return array(
         "name1" => '',
         "name2" => $account->name,
         "association" => $account->billing_address_city,
@@ -685,7 +694,7 @@ function account_by_search($name, $where = '', $msi_id = '0')
     $response = $seed_account->get_list("name", $where, 0);
     $accountList = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($accountList as $account) {
@@ -704,7 +713,7 @@ function account_by_search($name, $where = '', $msi_id = '0')
  */
 function get_opportunity_array($value, $msi_id = '0')
 {
-    return Array(
+    return array(
         "name1" => '',
         "name2" => $value->name,
         "association" => $value->account_name,
@@ -713,7 +722,6 @@ function get_opportunity_array($value, $msi_id = '0')
         "msi_id" => $msi_id,
         "email_address" => ''
     );
-
 }
 
 function opportunity_by_search($name, $where = '', $msi_id = '0')
@@ -728,7 +736,7 @@ function opportunity_by_search($name, $where = '', $msi_id = '0')
     $response = $seed->get_list("name", $where, 0);
     $list = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($list as $value) {
@@ -747,7 +755,7 @@ function opportunity_by_search($name, $where = '', $msi_id = '0')
  */
 function get_bean_array($value, $msi_id, $type)
 {
-    return Array(
+    return array(
         "name1" => '',
         "name2" => $value->get_summary_text(),
         "association" => '',
@@ -756,7 +764,6 @@ function get_bean_array($value, $msi_id, $type)
         "msi_id" => $msi_id,
         "email_address" => ''
     );
-
 }
 
 /**
@@ -768,7 +775,7 @@ function get_bean_array($value, $msi_id, $type)
  */
 function get_case_array($value, $msi_id)
 {
-    return Array(
+    return array(
         "name1" => '',
         "name2" => $value->get_summary_text(),
         "association" => $value->account_name,
@@ -777,7 +784,6 @@ function get_case_array($value, $msi_id)
         "msi_id" => $msi_id,
         "email_address" => ''
     );
-
 }
 
 function bug_by_search($name, $where = '', $msi_id = '0')
@@ -792,7 +798,7 @@ function bug_by_search($name, $where = '', $msi_id = '0')
     $response = $seed->get_list("name", $where, 0);
     $list = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($list as $value) {
@@ -814,7 +820,7 @@ function case_by_search($name, $where = '', $msi_id = '0')
     $response = $seed->get_list("name", $where, 0);
     $list = $response['list'];
 
-    $output_list = Array();
+    $output_list = array();
 
     // create a return array of names and email addresses.
     foreach ($list as $value) {
@@ -969,7 +975,6 @@ function create_account($user_name, $password, $name, $phone, $website)
     $account->save();
 
     return $account->id;
-
 }
 
 function create_case($user_name, $password, $name)

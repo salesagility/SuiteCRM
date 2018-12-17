@@ -46,6 +46,7 @@ global $app_language;
 global $sugar_config;
 global $app_list_strings;
 global $app_strings;
+global $mod_strings;
 global $current_language;
 /** @var DBManager $db */
 $db = DBManagerFactory::getInstance();
@@ -61,9 +62,8 @@ if (getRecaptchaChallengeField() !== false) {
     if ($response === 'Success') {
         echo $response;
         return;
-    } else {
-        die($response);
     }
+    die($response);
 }
 ////	RECAPTCHA CHECK ONLY
 ///////////////////////////////////////////////////////////////////////////////
@@ -75,6 +75,7 @@ if (getRecaptchaChallengeField() !== false) {
 //// This script :  - check the link expiration
 ////			   - send the filled form to authenticate.php after changing the password in the database
 $redirect = '1';
+$errors = '';
 if (isset($_REQUEST['guid'])) {
     // Change 'deleted = 0' clause to 'COALESCE(deleted, 0) = 0' because by default the values were NULL
     $Q = "SELECT * FROM users_password_link WHERE id = '" . $db->quote($_REQUEST['guid']) . "' AND COALESCE(deleted, 0) = '0'";
@@ -97,28 +98,32 @@ if (isset($_REQUEST['guid'])) {
             // if the form is filled and we want to login
             if (isset($_REQUEST['login']) && $_REQUEST['login'] == '1') {
                 if ($row['username'] == $_POST['user_name']) {
-
+                    $password = $_POST['new_password'];
                     $usr = new user();
-                    $usr_id = $usr->retrieve_user_id($_POST['user_name']);
-                    $usr->retrieve($usr_id);
-                    $usr->setNewPassword($_POST['new_password']);
-                    $query2 = "UPDATE users_password_link SET deleted='1' where id='" . $db->quote($_REQUEST['guid']) . "'";
-                    DBManagerFactory::getInstance()->query($query2, true, "Error setting link for $usr->user_name: ");
-                    $_POST['user_name'] = $_REQUEST['user_name'];
-                    $_POST['username_password'] = $_REQUEST['new_password'];
-                    $_POST['module'] = 'Users';
-                    $_POST['action'] = 'Authenticate';
-                    $_POST['login_module'] = 'Home';
-                    $_POST['login_action'] = 'index';
-                    $_POST['Login'] = 'Login';
-                    foreach ($_POST as $k => $v) {
-                        $_REQUEST[$k] = $v;
-                        $_GET[$k] = $v;
+                    $errors = $usr->passwordValidationCheck($password);
+                    if (!$errors) {
+                        $usr_id = $usr->retrieve_user_id($_POST['user_name']);
+                        $usr->retrieve($usr_id);
+                        $usr->setNewPassword($password);
+                        $query2 = "UPDATE users_password_link SET deleted='1' where id='" . $db->quote($_REQUEST['guid']) . "'";
+                        DBManagerFactory::getInstance()->query($query2, true, "Error setting link for $usr->user_name: ");
+                        $_POST['user_name'] = $_REQUEST['user_name'];
+                        $_POST['username_password'] = $_REQUEST['new_password'];
+                        $_POST['module'] = 'Users';
+                        $_POST['action'] = 'Authenticate';
+                        $_POST['login_module'] = 'Home';
+                        $_POST['login_action'] = 'index';
+                        $_POST['Login'] = 'Login';
+                        foreach ($_POST as $k => $v) {
+                            $_REQUEST[$k] = $v;
+                            $_GET[$k] = $v;
+                        }
+                        unset($_REQUEST['entryPoint']);
+                        unset($_GET['entryPoint']);
+                        $GLOBALS['app']->execute();
+                        die();
                     }
-                    unset($_REQUEST['entryPoint']);
-                    unset($_GET['entryPoint']);
-                    $GLOBALS['app']->execute();
-                    die();
+                    $redirect = 0;
                 }
             } else {
                 $redirect = '0';
@@ -132,7 +137,7 @@ if (isset($_REQUEST['guid'])) {
 
 if ($redirect != '0') {
     header('location:index.php?action=Login&module=Users');
-    exit ();
+    exit();
 }
 
 ////	PASSWORD GENERATED LINK CHECK USING
@@ -155,8 +160,11 @@ $sugar_smarty->assign("ENTRY_POINT", 'Changenewpassword');
 $sugar_smarty->assign('return_action', 'login');
 $sugar_smarty->assign("APP", $app_strings);
 $sugar_smarty->assign("INSTRUCTION", $app_strings['NTC_LOGIN_MESSAGE']);
-$sugar_smarty->assign("USERNAME_FIELD",
-    '<td scope="row" width="30%">' . $mod_strings['LBL_USER_NAME'] . ':</td><td width="70%"><input type="text" size="20" tabindex="1" id="user_name" name="user_name"  value=""></td>');
+$sugar_smarty->assign("ERRORS", $errors);
+$sugar_smarty->assign(
+    "USERNAME_FIELD",
+    '<td scope="row" width="30%">' . $mod_strings['LBL_USER_NAME'] . ':</td><td width="70%"><input type="text" size="20" tabindex="1" id="user_name" name="user_name"  value=""></td>'
+);
 $sugar_smarty->assign('PWDSETTINGS', $GLOBALS['sugar_config']['passwordsetting']);
 
 

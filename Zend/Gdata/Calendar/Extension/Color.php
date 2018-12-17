@@ -38,7 +38,6 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'gCal';
     protected $_rootElement = 'color';
     protected $_value = null;
@@ -121,5 +120,4 @@ class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
     {
         return $this->_value;
     }
-
 }

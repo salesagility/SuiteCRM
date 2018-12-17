@@ -143,8 +143,8 @@ $mod_strings = array(
     'LBL_DASHLET_INCORRECT_URL' => 'Incorrect website location is specified',
     'LBL_DASHLET_OPT_URL' => 'Website Location',
     'LBL_DASHLET_OPT_HEIGHT' => 'Dashlet Height (in pixels)',
-    'LBL_DASHLET_SUGAR_NEWS' => 'SuiteCRM News',
-    'LBL_DASHLET_DISCOVER_SUGAR_PRO' => 'Discover SuiteCRM',
+    'LBL_DASHLET_SUITE_NEWS' => 'SuiteCRM News',
+    'LBL_DASHLET_DISCOVER_SUITE' => 'Discover SuiteCRM',
     'LBL_BASIC_SEARCH' => 'Quick Filter' /*for 508 compliance fix*/,
     'LBL_ADVANCED_SEARCH' => 'Advanced Filter' /*for 508 compliance fix*/,
     'LBL_TOUR_HOME' => 'Home Icon',
@@ -224,4 +224,18 @@ $mod_strings = array(
     'LBL_REPEAT_UNTIL' => 'Repeat Until',
     'LBL_REPEAT_COUNT' => 'Number of recurrences',
     'LBL_REPEAT_LIMIT_ERROR' => 'Your request was going to create more than $limit meetings.',
+
+    //Events
+    'LNK_EVENT' => 'Event',
+    'LNK_EVENT_VIEW' => 'View Event',
+    'LBL_DATE' => 'Date: ',
+    'LBL_DURATION' => 'Duration: ',
+    'LBL_NAME' => 'Title: ',
+    'LBL_HOUR_ABBREV' => 'hour',
+    'LBL_HOURS_ABBREV' => 'hours',
+    'LBL_MINSS_ABBREV' => 'minutes',
+    'LBL_LOCATION' => 'Location: ',
+    'LBL_STATUS' => 'Status: ',
+    'LBL_DESCRIPTION' => 'Description: ',
+    //End Events
 );

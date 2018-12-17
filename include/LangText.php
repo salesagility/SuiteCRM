@@ -41,7 +41,6 @@
 
 namespace SuiteCRM;
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -103,6 +102,18 @@ class LangText
      * @var boolean
      */
     protected $throw;
+    
+    /**
+     *
+     * @var string
+     */
+    protected $module;
+    
+    /**
+     *
+     * @var string
+     */
+    protected $lang;
 
     /**
      *
@@ -112,13 +123,15 @@ class LangText
      * @param boolean $log
      * @param boolean $throw
      */
-    public function __construct($key = null, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true)
+    public function __construct($key = null, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true, $module = null, $lang = null)
     {
         $this->key = $key;
         $this->args = $args;
         $this->use = $use;
         $this->log = $log;
         $this->throw = $throw;
+        $this->module = $module;
+        $this->lang = $lang;
     }
 
     /**
@@ -131,11 +144,20 @@ class LangText
      * @return string
      * @throws ErrorMessageException
      */
-    public function getText($key = null, $args = null, $use = null)
+    public function getText($key = null, $args = null, $use = null, $module = null, $lang = null)
     { // TODO: rename the methode to LangText::translate()
 
         // TODO: app_strings and mod_strings could be in separated methods
-        global $app_strings, $mod_strings;
+        global $app_strings, $mod_strings, $app_list_strings;
+        
+        $module = $module ? $module : $this->module;
+        
+        if (!$mod_strings && $module) {
+            // retrieve translation for specified module
+            $lang = $lang ? $lang : ($this->lang ? $this->lang : $GLOBALS['current_language']);
+            include_once __DIR__ . '/SugarObjects/LanguageManager.php';
+            \LanguageManager::loadModuleLanguage($module, $lang);
+        }
 
         if (!is_null($key)) {
             $this->key = $key;
@@ -155,7 +177,9 @@ class LangText
             $text = isset($app_strings[$this->key]) && $app_strings[$this->key] ? $app_strings[$this->key] : null;
         } elseif ($this->use === self::USING_ALL_STRINGS) {
             $text = isset($mod_strings[$this->key]) && $mod_strings[$this->key] ? $mod_strings[$this->key] : (
-                isset($app_strings[$this->key]) ? $app_strings[$this->key] : null
+                isset($app_strings[$this->key]) ? $app_strings[$this->key] : (
+                    isset($app_list_strings[$this->key]) ? $app_list_strings[$this->key] : null
+                )
             );
         } else {
             ErrorMessage::drop('Unknown use case for translation: ' . $this->use);

@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,136 +37,153 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 class MailMerge
 {
-	var $mm_data_dir;
-	var $obj;
-	var $datasource_file = 'ds.doc';
-	var $header_file = 'header.doc';
-	var $fieldcnt;
-	var $rowcnt;
-	var $template;
-	var $visible = false;
-	var $list;
-	var $fieldList;
+    public $mm_data_dir;
+    public $obj;
+    public $datasource_file = 'ds.doc';
+    public $header_file = 'header.doc';
+    public $fieldcnt;
+    public $rowcnt;
+    public $template;
+    public $visible = false;
+    public $list;
+    public $fieldList;
 
-	function __construct($list = NULL, $fieldList = null, $data_dir = 'data') {
-		// this is the path to your data dir.
-		$this->mm_data_dir = $data_dir;
-		$this->list = $list;
-		$this->fieldList = $fieldList;
-	}
+    public function __construct($list = null, $fieldList = null, $data_dir = 'data')
+    {
+        // this is the path to your data dir.
+        $this->mm_data_dir = $data_dir;
+        $this->list = $list;
+        $this->fieldList = $fieldList;
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MailMerge($list = NULL, $fieldList = null, $data_dir = 'data'){
+    public function MailMerge($list = null, $fieldList = null, $data_dir = 'data')
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($list, $fieldList, $data_dir);
     }
 
 
-	function Execute() {
-		$this->Initialize();
-		if( count( $this->list ) > 0 ) {
-			if(isset($this->template)) {
-				$this->CreateHeaderFile();
-				$this->CreateDataSource();
-				$file = $this->CreateDocument($this->template);
-				return $file;
-			}
-		} else return '';
-	}
+    public function Execute()
+    {
+        $this->Initialize();
+        if (count($this->list) > 0) {
+            if (isset($this->template)) {
+                $this->CreateHeaderFile();
+                $this->CreateDataSource();
+                $file = $this->CreateDocument($this->template);
+                return $file;
+            }
+        } else {
+            return '';
+        }
+    }
 
-	function Template($template = NULL) {
-		if(is_array($template)) $this->template = $template;
-	}
+    public function Template($template = null)
+    {
+        if (is_array($template)) {
+            $this->template = $template;
+        }
+    }
 
-	function CleanUp() {
-		//remove the temp files
-		unlink($this->mm_data_dir.'/Temp/'.$this->datasource_file);
-		unlink($this->mm_data_dir.'/Temp/'.$this->header_file);
-		rmdir($this->mm_data_dir);
-		rmdir($this->mm_data_dir.'/Temp/');
-		$this->Quit();
-	}
+    public function CleanUp()
+    {
+        //remove the temp files
+        unlink($this->mm_data_dir.'/Temp/'.$this->datasource_file);
+        unlink($this->mm_data_dir.'/Temp/'.$this->header_file);
+        rmdir($this->mm_data_dir);
+        rmdir($this->mm_data_dir.'/Temp/');
+        $this->Quit();
+    }
 
-	function CreateHeaderFile() {
-		$this->obj->Documents->Add();
+    public function CreateHeaderFile()
+    {
+        $this->obj->Documents->Add();
 
-		$this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range,1,$this->fieldcnt);
-		foreach($this->fieldList as $key => $value) {
-			$this->obj->Selection->TypeText($key);
-			$this->obj->Selection->MoveRight();
-		}
+        $this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range, 1, $this->fieldcnt);
+        foreach ($this->fieldList as $key => $value) {
+            $this->obj->Selection->TypeText($key);
+            $this->obj->Selection->MoveRight();
+        }
 
-		$this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/Temp/'.$this->header_file);
-		$this->obj->ActiveDocument->Close();
-	}
+        $this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/Temp/'.$this->header_file);
+        $this->obj->ActiveDocument->Close();
+    }
 
-	function CreateDataSource() {
-		$this->obj->Documents->Add();
-		$this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range,$this->rowcnt,$this->fieldcnt);
+    public function CreateDataSource()
+    {
+        $this->obj->Documents->Add();
+        $this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range, $this->rowcnt, $this->fieldcnt);
 
-		for($i = 0; $i < $this->rowcnt; $i++) {
-			foreach($this->fieldList as $field => $value)
-         	{
-				$this->obj->Selection->TypeText($this->list[$i]->$field);
-				$this->obj->Selection->MoveRight();
-			}
-		}
-		$this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/Temp/'.$this->datasource_file);
-		$this->obj->ActiveDocument->Close();
-	}
+        for ($i = 0; $i < $this->rowcnt; $i++) {
+            foreach ($this->fieldList as $field => $value) {
+                $this->obj->Selection->TypeText($this->list[$i]->$field);
+                $this->obj->Selection->MoveRight();
+            }
+        }
+        $this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/Temp/'.$this->datasource_file);
+        $this->obj->ActiveDocument->Close();
+    }
 
-	function CreateDocument($template) {
-		//$this->obj->Documents->Open($this->mm_data_dir.'/Templates/'.$template[0].'.dot');
-		$this->obj->Documents->Open($template[0]);
+    public function CreateDocument($template)
+    {
+        //$this->obj->Documents->Open($this->mm_data_dir.'/Templates/'.$template[0].'.dot');
+        $this->obj->Documents->Open($template[0]);
 
-		$this->obj->ActiveDocument->MailMerge->OpenHeaderSource($this->mm_data_dir.'/Temp/'.$this->header_file);
+        $this->obj->ActiveDocument->MailMerge->OpenHeaderSource($this->mm_data_dir.'/Temp/'.$this->header_file);
 
-		$this->obj->ActiveDocument->MailMerge->OpenDataSource($this->mm_data_dir.'/Temp/'.$this->datasource_file);
+        $this->obj->ActiveDocument->MailMerge->OpenDataSource($this->mm_data_dir.'/Temp/'.$this->datasource_file);
 
-		$this->obj->ActiveDocument->MailMerge->Execute();
-		$this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/'.$template[1].'.doc');
-		//$this->obj->Documents[$template[0]]->Close();
-		//$this->obj->Documents[$template[1].'.doc']->Close();
-		$this->obj->ActiveDocument->Close();
-		return $template[1].'.doc';
-	}
+        $this->obj->ActiveDocument->MailMerge->Execute();
+        $this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/'.$template[1].'.doc');
+        //$this->obj->Documents[$template[0]]->Close();
+        //$this->obj->Documents[$template[1].'.doc']->Close();
+        $this->obj->ActiveDocument->Close();
+        return $template[1].'.doc';
+    }
 
-	function Initialize() {
-		$this->rowcnt = count($this->list);
-		$this->fieldcnt = count($this->fieldList);
-		$this->obj = new COM("word.application") or die("Unable to instanciate Word");
-		$this->obj->Visible = $this->visible;
+    public function Initialize()
+    {
+        $this->rowcnt = count($this->list);
+        $this->fieldcnt = count($this->fieldList);
+        $this->obj = new COM("word.application") or die("Unable to instanciate Word");
+        $this->obj->Visible = $this->visible;
 
-		//try to make the temp dir
-		sugar_mkdir($this->mm_data_dir);
-		sugar_mkdir($this->mm_data_dir.'/Temp/');
-	}
+        //try to make the temp dir
+        sugar_mkdir($this->mm_data_dir);
+        sugar_mkdir($this->mm_data_dir.'/Temp/');
+    }
 
-	function Quit() {
-		$this->obj->Quit();
-	}
+    public function Quit()
+    {
+        $this->obj->Quit();
+    }
 
-	function SetDataList($list = NULL) {
-		if(is_array($list)) $this->list = $list;
-	}
+    public function SetDataList($list = null)
+    {
+        if (is_array($list)) {
+            $this->list = $list;
+        }
+    }
 
-	function SetFieldList($list = NULL) {
-		if(is_array($list)) $this->fieldList = $list;
-	}
-
+    public function SetFieldList($list = null)
+    {
+        if (is_array($list)) {
+            $this->fieldList = $list;
+        }
+    }
 }

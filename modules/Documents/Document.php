@@ -48,61 +48,60 @@ require_once('include/SugarObjects/templates/file/File.php');
 // User is used to store Forecast information.
 class Document extends File
 {
+    public $id;
+    public $document_name;
+    public $description;
+    public $category_id;
+    public $subcategory_id;
+    public $status_id;
+    public $status;
+    public $created_by;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $active_date;
+    public $exp_date;
+    public $document_revision_id;
+    public $filename;
+    public $doc_type;
 
-    var $id;
-    var $document_name;
-    var $description;
-    var $category_id;
-    var $subcategory_id;
-    var $status_id;
-    var $status;
-    var $created_by;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $assigned_user_id;
-    var $active_date;
-    var $exp_date;
-    var $document_revision_id;
-    var $filename;
-    var $doc_type;
-
-    var $img_name;
-    var $img_name_bare;
-    var $related_doc_id;
-    var $related_doc_name;
-    var $related_doc_rev_id;
-    var $related_doc_rev_number;
-    var $is_template;
-    var $template_type;
+    public $img_name;
+    public $img_name_bare;
+    public $related_doc_id;
+    public $related_doc_name;
+    public $related_doc_rev_id;
+    public $related_doc_rev_number;
+    public $is_template;
+    public $template_type;
 
     //additional fields.
-    var $revision;
-    var $last_rev_create_date;
-    var $last_rev_created_by;
-    var $last_rev_created_name;
-    var $file_url;
-    var $file_url_noimage;
+    public $revision;
+    public $last_rev_create_date;
+    public $last_rev_created_by;
+    public $last_rev_created_name;
+    public $file_url;
+    public $file_url_noimage;
 
-    var $table_name = "documents";
-    var $object_name = "Document";
-    var $user_preferences;
+    public $table_name = "documents";
+    public $object_name = "Document";
+    public $user_preferences;
 
-    var $encodeFields = Array();
+    public $encodeFields = array();
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array('revision');
+    public $additional_column_fields = array('revision');
 
-    var $new_schema = true;
-    var $module_dir = 'Documents';
+    public $new_schema = true;
+    public $module_dir = 'Documents';
 
-    var $relationship_fields = Array(
+    public $relationship_fields = array(
         'contract_id' => 'contracts',
     );
 
     public $authenticated = null;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->setupCustomFields('Documents'); //parameter is module name
@@ -112,7 +111,7 @@ class Document extends File
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Document()
+    public function Document()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -124,9 +123,8 @@ class Document extends File
     }
 
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
-
         if (empty($this->doc_type)) {
             $this->doc_type = 'Sugar';
         }
@@ -221,22 +219,26 @@ class Document extends File
         return parent:: save($check_notify);
     }
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return "$this->document_name";
     }
 
-    function is_authenticated()
+    public function is_authenticated()
     {
+        if (!isset($this->authenticated)) {
+            LoggerManager::getLogger()->warn('Document::$authenticated is not set');
+            return null;
+        }
         return $this->authenticated;
     }
 
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         $this->fill_in_additional_detail_fields();
     }
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         global $theme;
         global $current_language;
@@ -248,7 +250,6 @@ class Document extends File
         $mod_strings = return_module_language($current_language, 'Documents');
 
         if (!empty($this->document_revision_id)) {
-
             $query = "SELECT users.first_name AS first_name, users.last_name AS last_name, document_revisions.date_entered AS rev_date,
             	 document_revisions.filename AS filename, document_revisions.revision AS revision,
             	 document_revisions.file_ext AS file_ext, document_revisions.file_mime_type AS file_mime_type
@@ -275,25 +276,37 @@ class Document extends File
             //if file is not found then default image file will be used.
             global $img_name;
             global $img_name_bare;
-            if (!empty ($row['file_ext'])) {
+            if (!empty($row['file_ext'])) {
                 $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($row['file_ext']) . "_image_inline.gif");
                 $img_name_bare = strtolower($row['file_ext']) . "_image_inline";
             }
         }
 
         //set default file name.
-        if (!empty ($img_name) && file_exists($img_name)) {
+        if (!empty($img_name) && file_exists($img_name)) {
             $img_name = $img_name_bare;
         } else {
             $img_name = "def_image_inline"; //todo change the default image.
         }
         if ($this->ACLAccess('DetailView')) {
             if (!empty($this->doc_type) && $this->doc_type != 'Sugar' && !empty($this->doc_url)) {
-                $file_url = "<a href='" . $this->doc_url . "' target='_blank'>" . SugarThemeRegistry::current()->getImage($this->doc_type . '_image_inline',
-                        'border="0"', null, null, '.png', $mod_strings['LBL_LIST_VIEW_DOCUMENT']) . "</a>";
+                $file_url = "<a href='" . $this->doc_url . "' target='_blank'>" . SugarThemeRegistry::current()->getImage(
+                    $this->doc_type . '_image_inline',
+                        'border="0"',
+                    null,
+                    null,
+                    '.png',
+                    $mod_strings['LBL_LIST_VIEW_DOCUMENT']
+                ) . "</a>";
             } else {
-                $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage($img_name,
-                        'border="0"', null, null, '.gif', $mod_strings['LBL_LIST_VIEW_DOCUMENT']) . "</a>";
+                $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage(
+                    $img_name,
+                        'border="0"',
+                    null,
+                    null,
+                    '.gif',
+                    $mod_strings['LBL_LIST_VIEW_DOCUMENT']
+                ) . "</a>";
             }
 
             $this->file_url = $file_url;
@@ -304,11 +317,13 @@ class Document extends File
         }
 
         //get last_rev_by user name.
-        if (!empty ($row)) {
+        if (!empty($row)) {
             $this->last_rev_created_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
 
-            $this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert($row['rev_date'],
-                'datetime'));
+            $this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert(
+                $row['rev_date'],
+                'datetime'
+            ));
             $this->last_rev_mime_type = $row['file_mime_type'];
         }
 
@@ -323,12 +338,12 @@ class Document extends File
         }
     }
 
-    function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/)
+    public function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/)
     {
         return $list_form;
     }
 
-    function create_export_query($order_by, $where, $relate_link_join = '')
+    public function create_export_query($order_by, $where, $relate_link_join = '')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -355,7 +370,7 @@ class Document extends File
         return $query;
     }
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         global $current_language;
         $app_list_strings = return_app_list_strings_language($current_language);
@@ -376,23 +391,23 @@ class Document extends File
                 LoggerManager::getLogger()->warn('In language app strings[document_category_dom] does not found for category id for document list view data: ' . $this->category_id);
             }
         }
-        
+
         if (!isset($app_list_strings['document_category_dom'][$this->category_id])) {
             LoggerManager::getLogger()->warn('Category ID is not found in document_category_dom in app_list_string for getting list view date of Document.');
             $appListStringDocumentCategoryDomForThisCategoryId = null;
         } else {
             $appListStringDocumentCategoryDomForThisCategoryId = $app_list_strings['document_category_dom'][$this->category_id];
         }
-        
+
         if (!isset($app_list_strings['document_category_dom'][$this->category_id])) {
             LoggerManager::getLogger()->warn('Category ID is not found in document_category_dom in app_list_string for getting list view date of Document.');
             $appListStringDocumentCategoryDomForThisSubCategoryId = null;
         } else {
             $appListStringDocumentCategoryDomForThisSubCategoryId = $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
         }
-        
-        $document_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $appListStringDocumentCategoryDomForThisCategoryId;
-        $document_fields['SUBCATEGORY_ID'] = empty ($this->subcategory_id) ? "" : $appListStringDocumentCategoryDomForThisSubCategoryId;
+
+        $document_fields['CATEGORY_ID'] = empty($this->category_id) ? "" : $appListStringDocumentCategoryDomForThisCategoryId;
+        $document_fields['SUBCATEGORY_ID'] = empty($this->subcategory_id) ? "" : $appListStringDocumentCategoryDomForThisSubCategoryId;
         $document_fields['NAME'] = $this->document_name;
         $document_fields['DOCUMENT_NAME_JAVASCRIPT'] = DBManagerFactory::getInstance()->quote($document_fields['DOCUMENT_NAME']);
 
@@ -408,7 +423,7 @@ class Document extends File
      *
      * @param $id String The record id of the Document instance
      */
-    function mark_relationships_deleted($id)
+    public function mark_relationships_deleted($id)
     {
         $this->load_relationships('revisions');
         $revisions = $this->get_linked_beans('revisions', 'DocumentRevision');
@@ -420,16 +435,15 @@ class Document extends File
                 $version->mark_deleted($version->id);
             }
         }
-
     }
 
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
-            case 'ACL' :
+            case 'ACL':
                 return true;
-            case 'FILE' :
+            case 'FILE':
                 return true;
         }
 
@@ -437,7 +451,7 @@ class Document extends File
     }
 
     //static function.
-    function get_document_name($doc_id)
+    public function get_document_name($doc_id)
     {
         if (empty($doc_id)) {
             return null;
@@ -458,4 +472,3 @@ class Document extends File
 }
 
 require_once('modules/Documents/DocumentExternalApiDropDown.php');
-

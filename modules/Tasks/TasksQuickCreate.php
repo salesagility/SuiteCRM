@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,20 +37,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
  
 require_once('include/EditView/QuickCreate.php');
 
 
 
-class TasksQuickCreate extends QuickCreate {
+class TasksQuickCreate extends QuickCreate
+{
+    public $javascript;
     
-    var $javascript;
-    
-    function process() {
+    public function process()
+    {
         global $current_user, $timedate, $app_list_strings, $current_language, $mod_strings;
         $mod_strings = return_module_language($current_language, 'Tasks');
         
@@ -55,33 +59,33 @@ class TasksQuickCreate extends QuickCreate {
 
         $this->ss->assign("PRIORITY_OPTIONS", get_select_options_with_id($app_list_strings['task_priority_dom'], $app_list_strings['task_priority_default']));
         $this->ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['task_status_dom'], $app_list_strings['task_status_default']));
-		$this->ss->assign("TIME_FORMAT", '('. $timedate->get_user_time_format().')');
+        $this->ss->assign("TIME_FORMAT", '('. $timedate->get_user_time_format().')');
         
         $focus = new Task();
         $time_start_hour = intval(substr($focus->time_start, 0, 2));
-	    $time_start_minutes = substr($focus->time_start, 3, 5);
-		if($time_start_minutes > 45) {
-		   $time_start_hour += 1;
-		}
+        $time_start_minutes = substr($focus->time_start, 3, 5);
+        if ($time_start_minutes > 45) {
+            $time_start_hour += 1;
+        }
 
         $time_pref = $timedate->get_time_format();
-		if (strpos($time_pref, 'a')) {
-               if(!isset($focus->meridiem_am_values)) {
-                  $focus->meridiem_am_values = array('am'=>'am', 'pm'=>'pm');
-               } 		
-               $this->ss->assign("TIME_MERIDIEM", get_select_options_with_id($focus->meridiem_am_values, $time_start_hour < 12 ? 'am' : 'pm'));               
-		} else if(strpos($time_pref, 'A')) {
-		       if(!isset($focus->meridiem_AM_values)) {
-		          $focus->meridiem_AM_values = array('AM'=>'AM', 'PM'=>'PM');
-		       }       
-		       $this->ss->assign("TIME_MERIDIEM", get_select_options_with_id($focus->meridiem_AM_values, $time_start_hour < 12 ? 'AM' : 'PM'));
-		} //if-else
+        if (strpos($time_pref, 'a')) {
+            if (!isset($focus->meridiem_am_values)) {
+                $focus->meridiem_am_values = array('am'=>'am', 'pm'=>'pm');
+            }
+            $this->ss->assign("TIME_MERIDIEM", get_select_options_with_id($focus->meridiem_am_values, $time_start_hour < 12 ? 'am' : 'pm'));
+        } elseif (strpos($time_pref, 'A')) {
+            if (!isset($focus->meridiem_AM_values)) {
+                $focus->meridiem_AM_values = array('AM'=>'AM', 'PM'=>'PM');
+            }
+            $this->ss->assign("TIME_MERIDIEM", get_select_options_with_id($focus->meridiem_AM_values, $time_start_hour < 12 ? 'AM' : 'PM'));
+        } //if-else
 
-		$this->ss->assign("USER_DATEFORMAT", '('. $timedate->get_user_date_format().')');
-		$this->ss->assign("CALENDAR_DATEFORMAT", $timedate->get_cal_date_format());
+        $this->ss->assign("USER_DATEFORMAT", '('. $timedate->get_user_date_format().')');
+        $this->ss->assign("CALENDAR_DATEFORMAT", $timedate->get_cal_date_format());
 
         
-        if($this->viaAJAX) { // override for ajax call
+        if ($this->viaAJAX) { // override for ajax call
             $this->ss->assign('saveOnclick', "onclick='if(check_form(\"tasksQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"activities\"); else return false;'");
             $this->ss->assign('cancelOnclick', "onclick='return SUGAR.subpanelUtils.cancelCreate(\"subpanel_activities\")';");
         }
@@ -96,5 +100,5 @@ class TasksQuickCreate extends QuickCreate {
         $this->javascript->addAllFields('');
 
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
-    }   
+    }
 }

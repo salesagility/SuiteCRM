@@ -44,7 +44,6 @@ require_once 'Zend/Gdata/Gapps.php';
  */
 class Zend_Gdata_Gapps_Extension_Nickname extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'apps';
     protected $_rootElement = 'nickname';
 
@@ -138,5 +137,4 @@ class Zend_Gdata_Gapps_Extension_Nickname extends Zend_Gdata_Extension
     {
         return $this->getName();
     }
-
 }

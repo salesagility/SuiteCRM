@@ -77,7 +77,6 @@ require_once 'Zend/Gdata/YouTube/Extension/QueryString.php';
  */
 class Zend_Gdata_YouTube_SubscriptionEntry extends Zend_Gdata_Entry
 {
-
     protected $_entryClassName = 'Zend_Gdata_YouTube_SubscriptionEntry';
 
     /**
@@ -442,5 +441,4 @@ class Zend_Gdata_YouTube_SubscriptionEntry extends Zend_Gdata_Entry
         $this->_username = $username;
         return $this;
     }
-
 }

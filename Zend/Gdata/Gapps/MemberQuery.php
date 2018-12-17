@@ -68,9 +68,12 @@ class Zend_Gdata_Gapps_MemberQuery extends Zend_Gdata_Gapps_Query
      * @param string $startMemberId (optional) Value for the
      *          startMemberId property.
      */
-    public function __construct($domain = null, $groupId = null, $memberId = null,
-            $startMemberId = null)
-    {
+    public function __construct(
+        $domain = null,
+        $groupId = null,
+        $memberId = null,
+            $startMemberId = null
+    ) {
         parent::__construct($domain);
         $this->setGroupId($groupId);
         $this->setMemberId($memberId);
@@ -170,7 +173,6 @@ class Zend_Gdata_Gapps_MemberQuery extends Zend_Gdata_Gapps_Query
      */
     public function getQueryUrl()
     {
-
         $uri = Zend_Gdata_Gapps::APPS_BASE_FEED_URI;
         $uri .= Zend_Gdata_Gapps::APPS_GROUP_PATH;
         $uri .= '/' . $this->_domain;
@@ -179,7 +181,8 @@ class Zend_Gdata_Gapps_MemberQuery extends Zend_Gdata_Gapps_Query
         } else {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
-                    'groupId must not be null');
+                    'groupId must not be null'
+            );
         }
 
         $uri .= '/member';
@@ -190,5 +193,4 @@ class Zend_Gdata_Gapps_MemberQuery extends Zend_Gdata_Gapps_Query
         $uri .= $this->getQueryString();
         return $uri;
     }
-
 }

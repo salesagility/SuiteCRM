@@ -45,13 +45,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/jjwg_Maps/jjwg_Maps_sugar.php');
 require_once('modules/Administration/Administration.php');
 
-class jjwg_Maps extends jjwg_Maps_sugar {
+class jjwg_Maps extends jjwg_Maps_sugar
+{
 
     /**
      * @var settings array
      *
      */
-    var $settings = array(
+    public $settings = array(
         'google_maps_api_key' => '',
         /**
          * 'valid_geocode_modules' defines the valid module names used with geocoding.
@@ -196,90 +197,92 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * relate_object - related module's object (flex relate field)
      * @var object
      */
-    var $relate_object;
+    public $relate_object;
 
     /**
      * jjwg_Address_Cache - Address cache module's object
      * @var object
      */
-    var $jjwg_Address_Cache;
+    public $jjwg_Address_Cache;
 
 
     /**
      * geocoded_counts - Geocoding totals
      * @var array
      */
-    var $geocoded_counts = null;
+    public $geocoded_counts = null;
 
     /**
      * geocoded_headings - Display headings
      * @var array
      */
-    var $geocoded_headings = null;
+    public $geocoded_headings = null;
 
     /**
      * geocoded_module_totals - Geocoded module totals
      * @var array
      */
-    var $geocoded_module_totals = null;
+    public $geocoded_module_totals = null;
 
     /**
      * geocoding_results - Google Geocoding API Results
      * @var array
      */
-    var $geocoding_results = null;
+    public $geocoding_results = null;
 
     /**
      * map_center - Map Center (Related)
      * @var array
      */
-    var $map_center = null;
+    public $map_center = null;
 
     /**
      * map_markers - Map Marker Data (Display)
      * @var array
      */
-    var $map_markers = null;
+    public $map_markers = null;
 
     /**
      * map_markers_groups - Sets the array of map groups
      * @var array
      */
-    var $map_markers_groups = array();
+    public $map_markers_groups = array();
 
     /**
      * map_markers - Custom Markers Data (jjwg_Markers)
      * @var array
      */
-    var $custom_markers = null;
+    public $custom_markers = null;
 
     /**
      * custom_areas - Custom Areas Data (jjwg_Areas)
      * @var array
      */
-    var $custom_areas = null;
+    public $custom_areas = null;
 
 
 
     /**
      * Constructor
      */
-    function __construct($init=true) {
-
+    public function __construct($init=true)
+    {
         parent::__construct();
         // Admin Config Setting
-        if($init)$this->configuration();
+        if ($init) {
+            $this->configuration();
+        }
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function jjwg_Maps($init=true){
+    public function jjwg_Maps($init=true)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($init);
@@ -290,7 +293,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * Load Configuration Settings using Administration Module
      *
      */
-    function configuration() {
+    public function configuration()
+    {
 
         // Set defaults
         $GLOBALS['jjwg_config_defaults'] = $this->settings;
@@ -307,7 +311,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $rev = array();
         if (!empty($settings) && count($settings) > 0) {
             foreach ($settings as $category_name => $value) {
-
                 if (substr($category_name, 0, 5) == 'jjwg_') {
                     $name = substr($category_name, 5);
                     // Set revised settings array
@@ -317,7 +320,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         }
 
         if (!empty($rev) && count($rev) > 0) {
-
             foreach ($rev as $name => $value) {
 
                 // Set geocode_modules_to_address_type
@@ -335,7 +337,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                         $this->settings['map_markers_grouping_field'][$module] = $value;
                     }
                 }
-
             }
 
             if (!empty($rev['valid_geocode_modules'])) {
@@ -390,7 +391,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 $this->settings['geocoding_api_secret'] = $rev['geocoding_api_secret'];
             }
             // Set Google Maps API Key
-            if(!isset($rev['google_maps_api_key'])) {
+            if (!isset($rev['google_maps_api_key'])) {
                 $GLOBALS['log']->warn('Undefined index: google_maps_api_key');
                 $this->settings['google_maps_api_key'] = null;
             } else {
@@ -407,15 +408,14 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      *
      * @param $data array of post data
      */
-    function saveConfiguration($data = array()) {
-
+    public function saveConfiguration($data = array())
+    {
         $admin = new Administration();
         //$admin->retrieveSettings('jjwg', true);
         //$settings = $admin->settings;
         $category = 'jjwg';
 
         if (!empty($data) && count($data) > 0) {
-
             if (isset($data['google_maps_api_key'])) {
                 $admin->saveSetting($category, 'google_maps_api_key', $data['google_maps_api_key']);
             }
@@ -457,7 +457,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                         }
                     }
                 }
-
             }
 
             // Integer Settings
@@ -476,60 +475,64 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($data['map_default_unit_type']) && in_array(trim($data['map_default_unit_type']), array('mi', 'km'))) {
                 $admin->saveSetting($category, 'map_default_unit_type', trim($data['map_default_unit_type']));
             }
-            if (empty($data['map_duplicate_marker_adjustment'])) $data['map_duplicate_marker_adjustment'] = 0.00002;
+            if (empty($data['map_duplicate_marker_adjustment'])) {
+                $data['map_duplicate_marker_adjustment'] = 0.00002;
+            }
             if (isset($data['map_duplicate_marker_adjustment']) && is_numeric(trim($data['map_duplicate_marker_adjustment']))) {
                 $admin->saveSetting($category, 'map_duplicate_marker_adjustment', (float) trim($data['map_duplicate_marker_adjustment']));
             }
-            
+
             if (!isset($data['map_default_center_latitude'])) {
                 LoggerManager::getLogger()->warn('jjwg_Maps saveConfiguration: Undefined index: map_default_center_latitude');
                 $dataMapDefaultCenterLatitude = null;
             } else {
                 $dataMapDefaultCenterLatitude = $data['map_default_center_latitude'];
             }
-            
+
             if (!$this->is_valid_lat($dataMapDefaultCenterLatitude)) {
                 $data['map_default_center_latitude'] = 39.5;
             }
-            
+
             if (isset($data['map_default_center_latitude']) && is_numeric(trim($data['map_default_center_latitude']))) {
                 $admin->saveSetting($category, 'map_default_center_latitude', (float) trim($data['map_default_center_latitude']));
             }
-            
+
             if (!isset($data['map_default_center_longitude'])) {
                 LoggerManager::getLogger()->warn('jjwg_Maps saveConfiguration: Undefined index: map_default_center_longitude');
                 $dataMapDefaultCenterLongitude = null;
             } else {
                 $dataMapDefaultCenterLongitude = $data['map_default_center_longitude'];
             }
-            
-            
+
+
             if (!$this->is_valid_lng($dataMapDefaultCenterLongitude)) {
                 $data['map_default_center_longitude'] = -99.5;
             }
-            
+
             if (isset($data['map_default_center_longitude']) && is_numeric(trim($data['map_default_center_longitude']))) {
                 $admin->saveSetting($category, 'map_default_center_longitude', (float) trim($data['map_default_center_longitude']));
             }
 
             // Set Geocoding API URL or Proxy URL
-            
+
             if (!isset($data['geocoding_api_url'])) {
                 LoggerManager::getLogger()->warn('jjwg_Maps saveConfiguration: Undefined index: geocoding_api_url ');
                 $dataGeocodingApiUrl = null;
             } else {
                 $dataGeocodingApiUrl = $data['geocoding_api_url'];
             }
-            
+
             if (substr($dataGeocodingApiUrl, 0, 4) != 'http' && substr($dataGeocodingApiUrl, 0, 2) != '//') {
                 $data['geocoding_api_url'] = $this->settings['geocoding_api_url'];
             }
-            
+
             if (isset($data['geocoding_api_url'])) {
                 $admin->saveSetting($category, 'geocoding_api_url', trim($data['geocoding_api_url']));
             }
             // Set Google Maps API Secret
-            if (empty($data['geocoding_api_secret'])) $data['geocoding_api_secret'] = '';
+            if (empty($data['geocoding_api_secret'])) {
+                $data['geocoding_api_secret'] = '';
+            }
             if (isset($data['geocoding_api_secret'])) {
                 $admin->saveSetting($category, 'geocoding_api_secret', trim($data['geocoding_api_secret']));
             }
@@ -553,8 +556,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * $bean passed by reference
      *
      */
-    function updateGeocodeInfo(&$bean, $after_save = false) {
-
+    public function updateGeocodeInfo(&$bean, $after_save = false)
+    {
         $GLOBALS['log']->info(__METHOD__.' START');
         if (empty($bean->id) || empty($bean->object_name) || empty($bean->module_name)) {
             return false;
@@ -582,7 +585,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             }
             // Check Cache, if address is set
             if (!empty($aInfo['address']) && is_object($this->jjwg_Address_Cache)) {
-
                 $aInfoCache = $this->jjwg_Address_Cache->getAddressCacheInfo($aInfo);
                 $GLOBALS['log']->debug(__METHOD__.' $aInfoCache: '.print_r($aInfoCache, true));
                 if (!empty($aInfoCache['address'])) {
@@ -594,9 +596,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $bean->jjwg_maps_lng_c = (!empty($aInfo['lng'])) ? $aInfo['lng'] : 0;
             $bean->jjwg_maps_geocode_status_c = (!empty($aInfo['status'])) ? $aInfo['status'] : '';
             $bean->jjwg_maps_address_c = (!empty($aInfo['address'])) ? $aInfo['address'] : '';
-
         }
-
     }
 
     /**
@@ -615,8 +615,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      *
      * @param $bean
      */
-    function updateRelatedMeetingsGeocodeInfo(&$bean) {
-
+    public function updateRelatedMeetingsGeocodeInfo(&$bean)
+    {
         $GLOBALS['log']->info(__METHOD__.' START');
         if (empty($bean->id) || empty($bean->object_name) || empty($bean->module_name)) {
             return false;
@@ -635,7 +635,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         }
         // Check Cache, if address is set
         if (!empty($aInfo['address']) && is_object($this->jjwg_Address_Cache)) {
-
             $aInfoCache = $this->jjwg_Address_Cache->getAddressCacheInfo($aInfo);
             $GLOBALS['log']->debug(__METHOD__.' $aInfoCache: '.$aInfoCache);
             if (!empty($aInfoCache['address'])) {
@@ -657,7 +656,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $result = $this->db->query($query);
 
         while ($row = $this->db->fetchByAssoc($result)) {
-
             $idQ = $this->db->quote($row['id']);
             if (!empty($row['id_c'])) {
                 // Update Custom Fields
@@ -675,7 +673,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                         " VALUES ('" . $idQ . "', '" . $latQ . "', '" . $lngQ . "', '".$statusQ."', '" . $addressQ . "') ";
                 $insert_result = $this->db->query($query);
             }
-
         }
     }
 
@@ -691,8 +688,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      *
      * $bean passed by reference
      */
-    function updateMeetingGeocodeInfo(&$bean) {
-
+    public function updateMeetingGeocodeInfo(&$bean)
+    {
         $GLOBALS['log']->info(__METHOD__.' START');
         if (empty($bean->object_name)) {
             return false;
@@ -718,7 +715,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             }
             // Check Cache, if address is set
             if (!empty($aInfo['address']) && is_object($this->jjwg_Address_Cache)) {
-
                 $aInfoCache = $this->jjwg_Address_Cache->getAddressCacheInfo($aInfo);
                 $GLOBALS['log']->debug(__METHOD__.' $aInfoCache: '.print_r($aInfoCache, true));
                 if (!empty($aInfoCache['address'])) {
@@ -728,7 +724,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             // Update/Reset the Geocode fields using Queries (not save() bean method)
             $update_result = $this->updateGeocodeInfoByBeanQuery($bean, $aInfo);
         }
-
     }
 
     /**
@@ -739,8 +734,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * @param type $display array (fetched_row)
      * @param type $aInfo   array
      */
-    function updateGeocodeInfoByAssocQuery($table_name, $display, $aInfo = array()) {
-
+    public function updateGeocodeInfoByAssocQuery($table_name, $display, $aInfo = array())
+    {
         $GLOBALS['log']->info(__METHOD__.' START');
         if (empty($display['id']) || empty($table_name)) {
             return false;
@@ -779,7 +774,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                     " VALUES ('" . $idQ . "', '" . $latQ . "', '" . $lngQ . "', '".$statusQ."', '" . $addressQ . "') ";
             $insert_result = $this->db->query($query);
         }
-
     }
 
     /**
@@ -789,8 +783,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * @param type $bean    object
      * @param type $aInfo   array
      */
-    function updateGeocodeInfoByBeanQuery(&$bean, $aInfo = array()) {
-
+    public function updateGeocodeInfoByBeanQuery(&$bean, $aInfo = array())
+    {
         $GLOBALS['log']->info(__METHOD__.' START');
         if (empty($bean->id) || empty($bean->object_name) || empty($bean->table_name)) {
             return false;
@@ -830,7 +824,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                     " VALUES ('" . $idQ . "', '" . $latQ . "', '" . $lngQ . "', '".$statusQ."', '" . $addressQ . "') ";
             $insert_result = $this->db->query($query);
         }
-
     }
 
     /**
@@ -839,8 +832,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      *
      * @param type $bean    object
      */
-    function deleteAllGeocodeInfoByBeanQuery(&$bean) {
-
+    public function deleteAllGeocodeInfoByBeanQuery(&$bean)
+    {
         $GLOBALS['log']->info(__METHOD__.' START');
         if (empty($bean->object_name) || empty($bean->table_name)) {
             return false;
@@ -868,8 +861,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * @param $limit integer
      * @param $id string
      */
-    function getGeocodeAddressesResult($table_name, $limit = 0, $id = '') {
-
+    public function getGeocodeAddressesResult($table_name, $limit = 0, $id = '')
+    {
         if (!(in_array($table_name, $this->settings['valid_geocode_tables']))) {
             return false;
         }
@@ -910,8 +903,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * @var $return_full_array boolean
      * @var $allow_approximate boolean
      */
-    function getGoogleMapsGeocode($address, $return_full_array = false, $allow_approximate = true) {
-
+    public function getGoogleMapsGeocode($address, $return_full_array = false, $allow_approximate = true)
+    {
         $GLOBALS['log']->debug(__METHOD__.' START');
         $GLOBALS['log']->info(__METHOD__.' $address: '.$address);
 
@@ -926,14 +919,12 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          * New Default: https://maps.googleapis.com/maps/api/geocode/json?sensor=false
          */
         $base_url = $this->settings['geocoding_api_url'];
-        if (!(strpos($base_url, '?') > 0)) $base_url .= '?';
+        if (!(strpos($base_url, '?') > 0)) {
+            $base_url .= '?';
+        }
         // Add Address Parameter
         $request_url = $base_url . "&address=" . urlencode($address);
-        // Add Hash Parameter as MD5 of Concatenation of Address and Secret
-        if (!empty($this->settings['geocoding_api_secret'])) {
-            $hash = md5($address.$this->settings['geocoding_api_secret']);
-            $request_url .= '&hash='.urlencode($hash);
-        }
+        $request_url.="&key=".urlencode($this->settings['google_maps_api_key']);
 
         $GLOBALS['log']->info(__METHOD__.' cURL Request URL: '.$request_url);
 
@@ -943,11 +934,11 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        
+
         // Add proxy option if user enabled proxy
         $admin_config = new Administration();
         $admin_config->retrieveSettings('proxy');
-        if(!empty($admin_config->settings['proxy_on'])) {
+        if (!empty($admin_config->settings['proxy_on'])) {
             $proxy_host = $admin_config->settings['proxy_host'];
             $proxy_port = $admin_config->settings['proxy_port'];
 
@@ -955,13 +946,13 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             curl_setopt($ch, CURLOPT_PROXYPORT, $proxy_port);
 
             // Check if use proxy auth
-            if(!empty($admin_config->settings['proxy_auth'])) {
+            if (!empty($admin_config->settings['proxy_auth'])) {
                 $proxy_userpwd = $admin_config->settings['proxy_username'] . ':' . $admin_config->settings['proxy_password'];
                 curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy_userpwd);
             }
         }
         // End
-        
+
         $json_contents = curl_exec($ch);
 
         // Debug: Error Handling
@@ -974,7 +965,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         curl_close($ch);
         $GLOBALS['log']->debug(__METHOD__.' $json_contents: '.$json_contents);
         $googlemaps = json_decode($json_contents, true);
-        $GLOBALS['log']->debug(__METHOD__.' $googlemaps: '.$googlemaps);
+        $GLOBALS['log']->debug(__METHOD__.' $googlemaps: '. (is_array($googlemaps) ? '[Array]' : $googlemaps));
 
         /**
          * https://developers.google.com/maps/documentation/geocoding/#Results
@@ -988,7 +979,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $aInfo = array('address' => $address);
         if (!empty($googlemaps) && isset($googlemaps['status'])) {
             if ($googlemaps['status'] == 'OVER_QUERY_LIMIT') {
-            // Debug: Log Over Limit
+                // Debug: Log Over Limit
                 $GLOBALS['log']->warn(__METHOD__.' Google Maps API Status of OVER_QUERY_LIMIT: Over Your Quota');
             } elseif (!$allow_approximate && $googlemaps['results'][0]['geometry']['location_type'] == 'APPROXIMATE') {
                 // Consider 'APPROXIMATE' to be similar to 'ZERO_RESULTS'
@@ -1012,10 +1003,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         if ($return_full_array) {
             $GLOBALS['log']->debug(__METHOD__.' $googlemaps: '.print_r($googlemaps, true));
             return $googlemaps;
-        } else {
-            $GLOBALS['log']->debug(__METHOD__.' $aInfo: '.print_r($aInfo, true));
-            return $aInfo;
         }
+        $GLOBALS['log']->debug(__METHOD__.' $aInfo: '.print_r($aInfo, true));
+        return $aInfo;
     }
 
     /**
@@ -1036,8 +1026,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * @param $object_name  signular object name
      * @param $display      fetched row
      */
-    function defineMapsAddress($object_name, $display) {
-
+    public function defineMapsAddress($object_name, $display)
+    {
         $address = false;
         $fields = false;
         $parent = null;
@@ -1052,25 +1042,15 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         // Some modules do not have an address, so a related account needs to be found first.
 
         if ($object_name == 'Account') {
-
             $address = $this->defineMapsFormattedAddress($display, $this->settings['geocode_modules_to_address_type']['Accounts']);
-
         } elseif ($object_name == 'Contact') {
-
             $address = $this->defineMapsFormattedAddress($display, $this->settings['geocode_modules_to_address_type']['Contacts']);
-
         } elseif ($object_name == 'Lead') {
-
             $address = $this->defineMapsFormattedAddress($display, $this->settings['geocode_modules_to_address_type']['Leads']);
-
         } elseif ($object_name == 'Prospect') {
-
             $address = $this->defineMapsFormattedAddress($display, $this->settings['geocode_modules_to_address_type']['Prospects']);
-
         } elseif ($object_name == 'User') {
-
             $address = $this->defineMapsFormattedAddress($display, $this->settings['geocode_modules_to_address_type']['Users']);
-
         } elseif ($object_name == 'Opportunity') {
 
             // Find Account - Assume only one related Account
@@ -1084,18 +1064,17 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (!empty($fields)) {
                 $address = $this->defineMapsFormattedAddress($fields, $this->settings['geocode_modules_to_address_type']['Opportunities']);
             }
-
         } elseif (in_array($object_name, array('aCase', 'Case'))) {
 
             // Find Account from Case (account_id field)
-            
+
             if (!isset($display['account_id'])) {
                 LoggerManager::getLogger()->warn('jjwg_Maps defineMapsAddress: Undefined index: account_id  ');
                 $displayAccountId = null;
             } else {
                 $displayAccountId = $display['account_id'];
             }
-            
+
             $query = "SELECT accounts.*, accounts_cstm.* FROM accounts LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c " .
                     " WHERE accounts.deleted = 0 AND id = '" . $displayAccountId . "'";
             $GLOBALS['log']->debug(__METHOD__.' Case to Account');
@@ -1115,7 +1094,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (!empty($fields)) {
                 $address = $this->defineMapsFormattedAddress($fields, $this->settings['geocode_modules_to_address_type']['Cases']);
             }
-
         } elseif ($object_name == 'Project') {
 
             // Check relationship from Project to Account - Assume only one related Account
@@ -1146,7 +1124,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (!empty($fields)) {
                 $address = $this->defineMapsFormattedAddress($fields, $this->settings['geocode_modules_to_address_type']['Project']);
             }
-
         } elseif ($object_name == 'Meeting') {
 
             // Find Meeting - Flex Relate Fields: meetings.parent_type and meetings.parent_id
@@ -1180,7 +1157,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 $GLOBALS['log']->debug(__METHOD__.' Meeting $address Found $aInfo: '.print_r($aInfo, true));
                 return $aInfo;
             }
-
         }
 
 
@@ -1202,10 +1178,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             );
             $GLOBALS['log']->debug(__METHOD__.' $address Found $aInfo: '.print_r($aInfo, true));
             return $aInfo;
-        } else {
-            return false;
         }
-
+        return false;
     }
 
     /**
@@ -1213,11 +1187,12 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * @param $display bean fields array
      * @param $type type of address: 'billing', 'shipping', 'primary', 'alt', 'custom', 'address'
      */
-    function defineMapsFormattedAddress($display, $type = 'billing') {
-
+    public function defineMapsFormattedAddress($display, $type = 'billing')
+    {
         $type = strtolower($type);
-        if (!in_array($type, array('billing', 'shipping', 'primary', 'alt', 'custom', 'address')))
+        if (!in_array($type, array('billing', 'shipping', 'primary', 'alt', 'custom', 'address'))) {
             $type = 'billing';
+        }
         $GLOBALS['log']->debug(__METHOD__.' $type: '.print_r($type, true));
         $address_fields = array('billing_address_street', 'billing_address_city', 'billing_address_state', 'billing_address_postalcode', 'billing_address_country');
         $address_parts = array();
@@ -1240,10 +1215,12 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         }
         $GLOBALS['log']->debug(__METHOD__.' $address_fields: '.print_r($address_fields, true));
         foreach ($address_fields as $field) {
-            if (!isset($display[$field]))
+            if (!isset($display[$field])) {
                 $display[$field] = '';
-            if (!empty($display[$field]))
+            }
+            if (!empty($display[$field])) {
                 $address_parts[] = trim($display[$field]);
+            }
         }
         if (strlen(implode('', $address_parts)) > 3) {
             $address = implode(', ', $address_parts);
@@ -1251,16 +1228,16 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $address = preg_replace("/[\t\s]+/", ' ', $address);
             $GLOBALS['log']->debug(__METHOD__.' $address: '.print_r($address, true));
             return trim($address);
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
      * Check for valid longitude
      * @param $lng float
      */
-    function is_valid_lng($lng) {
+    public function is_valid_lng($lng)
+    {
         return (is_numeric($lng) && $lng >= -180 && $lng <= 180);
     }
 
@@ -1268,7 +1245,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * Check for valid latitude
      * @param $lat float
      */
-    function is_valid_lat($lat) {
+    public function is_valid_lat($lat)
+    {
         return (is_numeric($lat) && $lat >= -90 && $lat <= 90);
     }
 
@@ -1276,8 +1254,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      * Bean Log Special
      * This log method filters the $bean into a more readable array
      */
-    function logGeocodeInfo($bean) {
-
+    public function logGeocodeInfo($bean)
+    {
         $log_keys = array(
             'jjwg_maps_lat_c', 'jjwg_maps_lng_c', 'jjwg_maps_address_c', 'jjwg_maps_geocode_status_c',
             'fetched_row', 'parent_id', 'parent_type', 'last_parent_id', 'rel_fields_before_value'

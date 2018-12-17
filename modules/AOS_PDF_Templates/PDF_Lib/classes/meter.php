@@ -1,6 +1,7 @@
 <?php
 
-class meter {
+class meter
+{
 
 
 function __construct() {
@@ -55,7 +56,7 @@ function makeSVG($tag, $type, $value, $max, $min, $optimum, $low, $high) {
 	// VALUE Marker
 	if ($value) {
 	  if ($min != $low && $value < $low) { $col = 'orange'; }
-	  else if ($max != $high && $value > $high) { $col = 'orange'; }
+	  elseif ($max != $high && $value > $high) { $col = 'orange'; }
 	  else { $col = '#008800'; }
 	  $cx = (($value-$min) / ($max-$min) ) * $w;
 	  $cy = $h/2;
@@ -125,17 +126,17 @@ function makeSVG($tag, $type, $value, $max, $min, $optimum, $low, $high) {
 	  $barw = (($value-$min) / ($max-$min) ) * $w;
 	  if ($optimum < $low) {
 		if ($value < $low) { $barcol = 'url(#GrGREEN)'; }
-		else if ($value > $high) { $barcol = 'url(#GrRED)'; }
+		elseif ($value > $high) { $barcol = 'url(#GrRED)'; }
 		else { $barcol = 'url(#GrORANGE)'; }
 	  }
-	  else if ($optimum > $high) {
+	  elseif ($optimum > $high) {
 		if ($value < $low) { $barcol = 'url(#GrRED)'; }
-		else if ($value > $high) { $barcol = 'url(#GrGREEN)'; }
+		elseif ($value > $high) { $barcol = 'url(#GrGREEN)'; }
 		else { $barcol = 'url(#GrORANGE)'; }
 	  }
 	  else {
 		if ($value < $low) { $barcol = 'url(#GrORANGE)'; }
-		else if ($value > $high) { $barcol = 'url(#GrORANGE)'; }
+		elseif ($value > $high) { $barcol = 'url(#GrORANGE)'; }
 		else { $barcol = 'url(#GrGREEN)'; }
 	  }
 	  $svg .= '<rect x="0" y="0" rx="'.($h*$border_radius).'px" ry="'.($h*$border_radius).'px" width="'.$barw.'" height="'.$h.'" fill="'.$barcol.'" stroke="none" />';

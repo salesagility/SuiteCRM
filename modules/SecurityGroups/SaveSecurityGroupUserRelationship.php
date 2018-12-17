@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/SecurityGroups/SecurityGroupUserRelationship.php');
 
@@ -10,29 +12,32 @@ $focus = new SecurityGroupUserRelationship();
 
 $focus->retrieve($_REQUEST['record']);
 
-foreach($focus->column_fields as $field)
-{
+foreach ($focus->column_fields as $field) {
     safe_map($field, $focus, true);
 }
 
-foreach($focus->additional_column_fields as $field)
-{
+foreach ($focus->additional_column_fields as $field) {
     safe_map($field, $focus, true);
+}
+
+if (!is_admin($GLOBALS['current_user']) && (empty($focus->fetched_row['id'])
+        || $focus->fetched_row['securitygroup_id'] != $focus->securitygroup_id
+        || $focus->fetched_row['user_id'] != $focus->user_id)) {
+    sugar_die('Access denied');
 }
 
 // send them to the edit screen.
-if(isset($_REQUEST['record']) && $_REQUEST['record'] != "")
-{
+if (isset($_REQUEST['record']) && $_REQUEST['record'] != "") {
     $recordID = $_REQUEST['record'];
 }
 
-    if( isset($_POST['noninheritable']) && $_POST['noninheritable'] == '1') {
+    if (isset($_POST['noninheritable']) && $_POST['noninheritable'] == '1') {
         $focus->noninheritable = 1;
     } else {
         $focus->noninheritable = 0;
     }
 
-    if( isset($_POST['primary_group']) && $_POST['primary_group'] == '1') {
+    if (isset($_POST['primary_group']) && $_POST['primary_group'] == '1') {
         $focus->primary_group = 1;
         //unset all other primary groups for this user
         $db = DBManagerFactory::getInstance();

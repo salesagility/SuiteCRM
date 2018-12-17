@@ -16,19 +16,22 @@
  */
 function smarty_make_timestamp($string)
 {
-    if(empty($string)) {
+    if (empty($string)) {
         // use "now":
         $time = time();
-
     } elseif (preg_match('/^\d{14}$/', $string)) {
-        // it is mysql timestamp format of YYYYMMDDHHMMSS?            
-        $time = mktime(substr($string, 8, 2),substr($string, 10, 2),substr($string, 12, 2),
-                       substr($string, 4, 2),substr($string, 6, 2),substr($string, 0, 4));
-        
+        // it is mysql timestamp format of YYYYMMDDHHMMSS?
+        $time = mktime(
+            substr($string, 8, 2),
+            substr($string, 10, 2),
+            substr($string, 12, 2),
+                       substr($string, 4, 2),
+            substr($string, 6, 2),
+            substr($string, 0, 4)
+        );
     } elseif (is_numeric($string)) {
         // it is a numeric string, we handle it as timestamp
         $time = (int)$string;
-        
     } else {
         // strtotime should handle it
         $time = strtotime($string);
@@ -38,9 +41,6 @@ function smarty_make_timestamp($string)
         }
     }
     return $time;
-
 }
 
 /* vim: set expandtab: */
-
-?>

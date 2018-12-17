@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,19 +37,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
 
 class SugarWidgetFieldDateTime extends SugarWidgetReportField
 {
-	var $reporter;
-	var $assigned_user=null;
+    public $reporter;
+    public $assigned_user=null;
 
-    function __construct($layout_manager)
+    public function __construct($layout_manager)
     {
         parent::__construct($layout_manager);
     }
@@ -54,43 +57,46 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetFieldDateTime($layout_manager){
+    public function SugarWidgetFieldDateTime($layout_manager)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($layout_manager);
     }
 
 
-	// get the reporter attribute
+    // get the reporter attribute
     // deprecated, now called in the constructor
     /**
      * @deprecated
      */
-	function getReporter() {
-	}
+    public function getReporter()
+    {
+    }
 
-	// get the assigned user of the report
-	function getAssignedUser()
-	{
-		$json_obj = getJSONobj();
+    // get the assigned user of the report
+    public function getAssignedUser()
+    {
+        $json_obj = getJSONobj();
 
-		$report_def_str = $json_obj->decode($this->reporter->report_def_str);
+        $report_def_str = $json_obj->decode($this->reporter->report_def_str);
 
-		if(empty($report_def_str['assigned_user_id'])) return null;
+        if (empty($report_def_str['assigned_user_id'])) {
+            return null;
+        }
 
-		$this->assigned_user = new User();
-		$this->assigned_user->retrieve($report_def_str['assigned_user_id']);
-		return $this->assigned_user;
-	}
+        $this->assigned_user = new User();
+        $this->assigned_user->retrieve($report_def_str['assigned_user_id']);
+        return $this->assigned_user;
+    }
 
-	function queryFilterOn($layout_def)
-	{
-		global $timedate;
+    public function queryFilterOn($layout_def)
+    {
+        global $timedate;
         $begin = $layout_def['input_name0'];
         $hasTime = $this->hasTime($begin);
         $date = $timedate->fromString($begin);
@@ -108,7 +114,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
             '=',
             "datetime"
         );
-	}
+    }
 
     /**
      * expandDate
@@ -123,61 +129,59 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param bool $end Boolean value indicating whether or not this is for an end time period or not
      * @return $date TimeDate object with time value applied
      */
-	protected function expandDate($date, $end = false)
-	{
-	    global $timedate;
-	    if($this->hasTime($date)) {
-	        return $date;
-	    }
+    protected function expandDate($date, $end = false)
+    {
+        global $timedate;
+        if ($this->hasTime($date)) {
+            return $date;
+        }
 
         //C.L. Bug 48616 - If the $date is set to the Today macro, then adjust accordingly
-        if(strtolower($date) == 'today')
-        {
-           $startEnd = $timedate->getDayStartEndGMT($timedate->getNow(true));
-           return $end ? $startEnd['end'] : $startEnd['start'];
+        if (strtolower($date) == 'today') {
+            $startEnd = $timedate->getDayStartEndGMT($timedate->getNow(true));
+            return $end ? $startEnd['end'] : $startEnd['start'];
         }
 
         $parsed = $timedate->fromDbDate($date);
         $date = $timedate->tzUser(new SugarDateTime());
         $date->setDate($parsed->year, $parsed->month, $parsed->day);
 
-	    if($end) {
-	        return $date->setTime(23, 59, 59);
-	    } else {
-	        return $date->setTime(0, 0, 0);
-	    }
-	}
+        if ($end) {
+            return $date->setTime(23, 59, 59);
+        }
+        return $date->setTime(0, 0, 0);
+    }
 
-	function queryFilterBefore($layout_def)
-	{
+    public function queryFilterBefore($layout_def)
+    {
         $begin = $this->expandDate($layout_def['input_name0']);
         return $this->queryDateOp($this->_get_column_select($layout_def), $begin, '<', "datetime");
-	}
+    }
 
-	function queryFilterAfter($layout_def)
-	{
+    public function queryFilterAfter($layout_def)
+    {
         $begin = $this->expandDate($layout_def['input_name0'], true);
         return $this->queryDateOp($this->_get_column_select($layout_def), $begin, '>', "datetime");
-	}
+    }
 
-	function queryFilterBetween_Dates($layout_def)
-	{
+    public function queryFilterBetween_Dates($layout_def)
+    {
         $begin = $this->expandDate($layout_def['input_name0']);
-     	$end = $this->expandDate($layout_def['input_name1'], true);
+        $end = $this->expandDate($layout_def['input_name1'], true);
         $column = $this->_get_column_select($layout_def);
-	    return "(".$this->queryDateOp($column, $begin, ">=", "datetime")." AND ".
+        return "(".$this->queryDateOp($column, $begin, ">=", "datetime")." AND ".
             $this->queryDateOp($column, $end, "<=", "datetime").")\n";
-	}
+    }
 
-	function queryFilterNot_Equals_str($layout_def)
-	{
-		global $timedate;
+    public function queryFilterNot_Equals_str($layout_def)
+    {
+        global $timedate;
 
         $column = $this->_get_column_select($layout_def);
         $begin = $layout_def['input_name0'];
         $hasTime = $this->hasTime($begin);
-        if(!$hasTime){
-     	    $end = $this->expandDate($begin, true);
+        if (!$hasTime) {
+            $end = $this->expandDate($begin, true);
             $begin = $this->expandDate($begin);
             $cond = $this->queryDateOp($column, $begin, "<", "datetime")." OR ".
                 $this->queryDateOp($column, $end, ">", "datetime");
@@ -185,51 +189,49 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
             $cond =  $this->queryDateOp($column, $begin, "!=", "datetime");
         }
         return "($column IS NULL OR $cond)";
-	}
+    }
 
     /**
      * Get assigned or logged in user's current date and time value.
      * @param boolean $timestamp Format of return value, if set to true, return unix like timestamp , else a formatted date.
      */
-	function get_users_current_date_time($timestamp=false)
-	{
-	 	global $current_user;
+    public function get_users_current_date_time($timestamp=false)
+    {
+        global $current_user;
         global $timedate;
 
         $begin = TimeDate::getInstance()->nowDb();
         //kbrill bug #13884
-       	//$begin = $timedate->to_display_date_time($begin,true,true,$this->assigned_user);
-		$begin = $timedate->handle_offset($begin, $timedate->get_db_date_time_format(), false, $this->assigned_user);
+        //$begin = $timedate->to_display_date_time($begin,true,true,$this->assigned_user);
+        $begin = $timedate->handle_offset($begin, $timedate->get_db_date_time_format(), false, $this->assigned_user);
 
         if (!$timestamp) {
-        	return $begin;
-        } else {
-        	$begin_parts = explode(' ', $begin);
-        	$date_parts=explode('-', $begin_parts[0]);
-        	$time_parts=explode(':', $begin_parts[1]);
-        	$curr_timestamp=mktime($time_parts[0],$time_parts[1],0,$date_parts[1], $date_parts[2],$date_parts[0]);
-        	return $curr_timestamp;
+            return $begin;
         }
-
-	}
-	/**
-	 * Get specified date and time for a particalur day, in current user's timezone.
-	 * @param int $days Adjust date by this number of days, negative values are valid.
-	 * @param time string falg for desired time value, start: minimum time, end: maximum time, default: current time
-	 */
-	function get_db_date($days,$time) {
+        $begin_parts = explode(' ', $begin);
+        $date_parts=explode('-', $begin_parts[0]);
+        $time_parts=explode(':', $begin_parts[1]);
+        $curr_timestamp=mktime($time_parts[0], $time_parts[1], 0, $date_parts[1], $date_parts[2], $date_parts[0]);
+        return $curr_timestamp;
+    }
+    /**
+     * Get specified date and time for a particalur day, in current user's timezone.
+     * @param int $days Adjust date by this number of days, negative values are valid.
+     * @param time string falg for desired time value, start: minimum time, end: maximum time, default: current time
+     */
+    public function get_db_date($days, $time)
+    {
         global $timedate;
 
         $begin = date($GLOBALS['timedate']->get_db_date_time_format(), time()+(86400 * $days));  //gmt date with day adjustment applied.
         //kbrill bug #13884
         //$begin = $timedate->to_display_date_time($begin,true,true,$this->assigned_user);
-		$begin = $timedate->handle_offset($begin, $timedate->get_db_date_time_format(), false, $this->assigned_user);
+        $begin = $timedate->handle_offset($begin, $timedate->get_db_date_time_format(), false, $this->assigned_user);
 
         if ($time=='start') {
             $begin_parts = explode(' ', $begin);
             $be = $begin_parts[0] . ' 00:00:00';
-        }
-        else if ($time=='end') {
+        } elseif ($time=='end') {
             $begin_parts = explode(' ', $begin);
             $be = $begin_parts[0] . ' 23:59:59';
         } else {
@@ -240,42 +242,42 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $begin = $timedate->handle_offset($be, $timedate->get_db_date_time_format(), false, $this->assigned_user);
 
         return $begin;
-	}
+    }
 
-	/**
-	 * Get filter string for a date field.
-	 * @param array layout_def field def for field being filtered
-	 * @param string $begin start date value (in DB format)
-	 * @param string $end End date value (in DB format)
-	 */
-	function get_start_end_date_filter(& $layout_def, $begin,$end)
-	{
-	    if (isset ($layout_def['rel_field'])) {
-	        $field_name = $this->reporter->db->convert(
-	            $this->reporter->db->convert($this->_get_column_select($layout_def), 'date_format', '%Y-%m-%d'),
-	            "CONCAT",
-	            array("' '", $this->reporter->db->convert($layout_def['rel_field'], 'time_format'))
-	        );
-	    } else {
-	       $field_name = $this->_get_column_select($layout_def);
-	    }
-	    return $field_name.">=".$this->reporter->db->quoted($begin)." AND ".$field_name."<=".$this->reporter->db->quoted($end)."\n";
-	}
+    /**
+     * Get filter string for a date field.
+     * @param array layout_def field def for field being filtered
+     * @param string $begin start date value (in DB format)
+     * @param string $end End date value (in DB format)
+     */
+    public function get_start_end_date_filter(& $layout_def, $begin, $end)
+    {
+        if (isset($layout_def['rel_field'])) {
+            $field_name = $this->reporter->db->convert(
+                $this->reporter->db->convert($this->_get_column_select($layout_def), 'date_format', '%Y-%m-%d'),
+                "CONCAT",
+                array("' '", $this->reporter->db->convert($layout_def['rel_field'], 'time_format'))
+            );
+        } else {
+            $field_name = $this->_get_column_select($layout_def);
+        }
+        return $field_name.">=".$this->reporter->db->quoted($begin)." AND ".$field_name."<=".$this->reporter->db->quoted($end)."\n";
+    }
 
-	/**
-	 * Create query for binary operation of field of certain type
-	 * Produces query like:
-	 * arg1 op to_date(arg2), e.g.:
-	 * 		date_closed < '2009-12-01'
-	 * @param string $arg1 1st arg - column name
-	 * @param string|DateTime $arg2 2nd arg - value to be converted
-	 * @param string $op
-	 * @param string $type
-	 */
+    /**
+     * Create query for binary operation of field of certain type
+     * Produces query like:
+     * arg1 op to_date(arg2), e.g.:
+     * 		date_closed < '2009-12-01'
+     * @param string $arg1 1st arg - column name
+     * @param string|DateTime $arg2 2nd arg - value to be converted
+     * @param string $op
+     * @param string $type
+     */
     protected function queryDateOp($arg1, $arg2, $op, $type)
     {
         global $timedate;
-        if($arg2 instanceof DateTime) {
+        if ($arg2 instanceof DateTime) {
             $arg2 = $timedate->asDbType($arg2, $type);
         }
         return "$arg1 $op ".$this->reporter->db->convert($this->reporter->db->quoted($arg2), $type)."\n";
@@ -291,7 +293,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         return $timedate->tzUser($timedate->getNow(), $this->getAssignedUser());
     }
 
-	/**
+    /**
      * Create query from the beginning to the end of certain day
      * @param array $layout_def
      * @param SugarDateTime $day
@@ -300,46 +302,46 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     {
         $begin = $day->get_day_begin();
         $end = $day->get_day_end();
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
-	function queryFilterTP_yesterday($layout_def)
-	{
-		global $timedate;
-		return $this->queryDay($layout_def, $this->now()->get("-1 day"));
-	}
+    public function queryFilterTP_yesterday($layout_def)
+    {
+        global $timedate;
+        return $this->queryDay($layout_def, $this->now()->get("-1 day"));
+    }
 
-	function queryFilterTP_today($layout_def)
-	{
-		global $timedate;
-		return $this->queryDay($layout_def, $this->now());
-	}
+    public function queryFilterTP_today($layout_def)
+    {
+        global $timedate;
+        return $this->queryDay($layout_def, $this->now());
+    }
 
-	function queryFilterTP_tomorrow(& $layout_def)
-	{
-		global $timedate;
-		return $this->queryDay($layout_def, $this->now()->get("+1 day"));
-	}
+    public function queryFilterTP_tomorrow(& $layout_def)
+    {
+        global $timedate;
+        return $this->queryDay($layout_def, $this->now()->get("+1 day"));
+    }
 
-	function queryFilterTP_last_7_days($layout_def)
-	{
-		global $timedate;
+    public function queryFilterTP_last_7_days($layout_def)
+    {
+        global $timedate;
 
-		$begin = $this->now()->get("-6 days")->get_day_begin();
-		$end = $this->now()->get_day_end();
+        $begin = $this->now()->get("-6 days")->get_day_begin();
+        $end = $this->now()->get_day_end();
 
-		return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
-	}
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
+    }
 
-	function queryFilterTP_next_7_days($layout_def)
-	{
-		global $timedate;
+    public function queryFilterTP_next_7_days($layout_def)
+    {
+        global $timedate;
 
-		$begin = $this->now()->get_day_begin();
-		$end = $this->now()->get("+6 days")->get_day_end();
+        $begin = $this->now()->get_day_begin();
+        $end = $this->now()->get("+6 days")->get_day_end();
 
-		return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
-	}
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
+    }
 
     /**
      * Create query from the beginning to the end of certain month
@@ -350,20 +352,20 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     {
         $begin = $month->setTime(0, 0, 0);
         $end = clone($begin);
-		$end->setDate($begin->year, $begin->month, $begin->days_in_month)->setTime(23, 59, 59);
-        return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
+        $end->setDate($begin->year, $begin->month, $begin->days_in_month)->setTime(23, 59, 59);
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
     }
 
-    function queryFilterTP_last_month($layout_def)
-	{
-		global $timedate;
-		$month = $this->now();
-		return $this->queryMonth($layout_def, $month->setDate($month->year, $month->month-1, 1));
-	}
+    public function queryFilterTP_last_month($layout_def)
+    {
+        global $timedate;
+        $month = $this->now();
+        return $this->queryMonth($layout_def, $month->setDate($month->year, $month->month-1, 1));
+    }
 
-	function queryFilterTP_this_month($layout_def)
-	{
-		global $timedate;
+    public function queryFilterTP_this_month($layout_def)
+    {
+        global $timedate;
 
         //Bug 62414 - take timezone into account when determining current month
         $now = $this->now();
@@ -372,30 +374,30 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $now->modify($timezoneOffset);
 
         return $this->queryMonth($layout_def, $now->get_day_by_index_this_month(0));
-	}
+    }
 
-	function queryFilterTP_next_month($layout_def)
-	{
-		global $timedate;
-		$month = $this->now();
-		return $this->queryMonth($layout_def, $month->setDate($month->year, $month->month+1, 1));
-	}
+    public function queryFilterTP_next_month($layout_def)
+    {
+        global $timedate;
+        $month = $this->now();
+        return $this->queryMonth($layout_def, $month->setDate($month->year, $month->month+1, 1));
+    }
 
-	function queryFilterTP_last_30_days($layout_def)
-	{
-		global $timedate;
-		$begin = $this->now()->get("-29 days")->get_day_begin();
-		$end = $this->now()->get_day_end();
-		return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
-	}
+    public function queryFilterTP_last_30_days($layout_def)
+    {
+        global $timedate;
+        $begin = $this->now()->get("-29 days")->get_day_begin();
+        $end = $this->now()->get_day_end();
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
+    }
 
-	function queryFilterTP_next_30_days($layout_def)
-	{
-		global $timedate;
-		$begin = $this->now()->get_day_begin();
-		$end = $this->now()->get("+29 days")->get_day_end();
-		return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
-	}
+    public function queryFilterTP_next_30_days($layout_def)
+    {
+        global $timedate;
+        $begin = $this->now()->get_day_begin();
+        $end = $this->now()->get("+29 days")->get_day_end();
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
+    }
 
     /**
      * Return the between WHERE query for Quarter filter
@@ -468,137 +470,139 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         return $this->getQuarterFilter($layout_def, '+3 month');
     }
 
-	function queryFilterTP_last_year($layout_def)
-	{
-		global $timedate;
-		$begin = $this->now();
-		$begin->setDate($begin->year-1, 1, 1)->setTime(0, 0);
-		$end = clone $begin;
-		$end->setDate($end->year, 12, 31)->setTime(23, 59, 59);
-		return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
-	}
+    public function queryFilterTP_last_year($layout_def)
+    {
+        global $timedate;
+        $begin = $this->now();
+        $begin->setDate($begin->year-1, 1, 1)->setTime(0, 0);
+        $end = clone $begin;
+        $end->setDate($end->year, 12, 31)->setTime(23, 59, 59);
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
+    }
 
-	function queryFilterTP_this_year($layout_def)
-	{
-		global $timedate;
-		$begin = $this->now();
-		$begin->setDate($begin->year, 1, 1)->setTime(0, 0);
-		$end = clone $begin;
-		$end->setDate($end->year, 12, 31)->setTime(23, 59, 59);
-		return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
-	}
+    public function queryFilterTP_this_year($layout_def)
+    {
+        global $timedate;
+        $begin = $this->now();
+        $begin->setDate($begin->year, 1, 1)->setTime(0, 0);
+        $end = clone $begin;
+        $end->setDate($end->year, 12, 31)->setTime(23, 59, 59);
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
+    }
 
-	function queryFilterTP_next_year(& $layout_def)
-	{
-		global $timedate;
-		$begin = $this->now();
-		$begin->setDate($begin->year+1, 1, 1)->setTime(0, 0);
-		$end = clone $begin;
-		$end->setDate($end->year, 12, 31)->setTime(23, 59, 59);
-		return $this->get_start_end_date_filter($layout_def,$begin->asDb(),$end->asDb());
-	}
+    public function queryFilterTP_next_year(& $layout_def)
+    {
+        global $timedate;
+        $begin = $this->now();
+        $begin->setDate($begin->year+1, 1, 1)->setTime(0, 0);
+        $end = clone $begin;
+        $end->setDate($end->year, 12, 31)->setTime(23, 59, 59);
+        return $this->get_start_end_date_filter($layout_def, $begin->asDb(), $end->asDb());
+    }
 
-	function queryGroupBy($layout_def)
-	{
-		// i guess qualifier and column_function are the same..
-		if (!empty ($layout_def['qualifier'])) {
-			$func_name = 'queryGroupBy'.$layout_def['qualifier'];
-			if (method_exists($this, $func_name)) {
-				return $this-> $func_name ($layout_def)." \n";
-			}
-		}
-		return parent :: queryGroupBy($layout_def)." \n";
-	}
+    public function queryGroupBy($layout_def)
+    {
+        // i guess qualifier and column_function are the same..
+        if (!empty($layout_def['qualifier'])) {
+            $func_name = 'queryGroupBy'.$layout_def['qualifier'];
+            if (method_exists($this, $func_name)) {
+                return $this-> $func_name($layout_def)." \n";
+            }
+        }
+        return parent :: queryGroupBy($layout_def)." \n";
+    }
 
-	function queryOrderBy($layout_def)
-	{
-        if (!empty ($layout_def['qualifier'])) {
-			$func_name ='queryOrderBy'.$layout_def['qualifier'];
-			if (method_exists($this, $func_name)) {
-				return $this-> $func_name ($layout_def)."\n";
-			}
-		}
-		$order_by = parent :: queryOrderBy($layout_def)."\n";
-		return $order_by;
-	}
+    public function queryOrderBy($layout_def)
+    {
+        if (!empty($layout_def['qualifier'])) {
+            $func_name ='queryOrderBy'.$layout_def['qualifier'];
+            if (method_exists($this, $func_name)) {
+                return $this-> $func_name($layout_def)."\n";
+            }
+        }
+        $order_by = parent :: queryOrderBy($layout_def)."\n";
+        return $order_by;
+    }
 
-    function displayListPlain($layout_def) {
+    public function displayListPlain($layout_def)
+    {
         global $timedate;
         $content = parent:: displayListPlain($layout_def);
         // awu: this if condition happens only in Reports where group by month comes back as YYYY-mm format
-        if (count(explode('-',$content)) == 2){
+        if (count(explode('-', $content)) == 2) {
             return $content;
         // if date field
-        }elseif(substr_count($layout_def['type'], 'date') > 0){
+        } elseif (substr_count($layout_def['type'], 'date') > 0) {
             // if date time field
-            if(substr_count($layout_def['type'], 'time') > 0 && $this->get_time_part($content)!= false){
+            if (substr_count($layout_def['type'], 'time') > 0 && $this->get_time_part($content)!= false) {
                 $td = $timedate->to_display_date_time($content);
                 return $td;
-            }else{// if date only field
+            }  // if date only field
                 $td = $timedate->to_display_date($content, false); // Avoid PHP notice of returning by reference.
                 return $td;
-            }
         }
     }
 
-    function get_time_part($date_time_value)
+    public function get_time_part($date_time_value)
     {
         global $timedate;
 
         $date_parts=$timedate->split_date_time($date_time_value);
         if (count($date_parts) > 1) {
             return $date_parts[1];
-        } else {
-            return false;
         }
+        return false;
     }
 
-    function displayList(&$layout_def) {
+    public function displayList(&$layout_def)
+    {
         global $timedate;
         // i guess qualifier and column_function are the same..
-        if (!empty ($layout_def['column_function'])) {
+        if (!empty($layout_def['column_function'])) {
             $func_name = 'displayList'.$layout_def['column_function'];
             if (method_exists($this, $func_name)) {
-                return $this-> $func_name ($layout_def);
+                return $this-> $func_name($layout_def);
             }
         }
         $content = parent :: displayListPlain($layout_def);
         return $timedate->to_display_date_time($content);
     }
 
-	function querySelect(& $layout_def) {
-		// i guess qualifier and column_function are the same..
-		if (!empty ($layout_def['column_function'])) {
-			$func_name = 'querySelect'.$layout_def['column_function'];
-			if (method_exists($this, $func_name)) {
-				return $this-> $func_name ($layout_def)." \n";
-			}
-		}
-		return parent :: querySelect($layout_def)." \n";
-	}
-	function & displayListday(& $layout_def) {
+    public function querySelect(& $layout_def)
+    {
+        // i guess qualifier and column_function are the same..
+        if (!empty($layout_def['column_function'])) {
+            $func_name = 'querySelect'.$layout_def['column_function'];
+            if (method_exists($this, $func_name)) {
+                return $this-> $func_name($layout_def)." \n";
+            }
+        }
+        return parent :: querySelect($layout_def)." \n";
+    }
+    public function & displayListday(& $layout_def)
+    {
         $value = parent:: displayListPlain($layout_def);
         return $value;
-	}
+    }
 
-	function & displayListyear(& $layout_def) {
-		global $app_list_strings;
-    	$value = parent:: displayListPlain($layout_def);
-    	return $value;
-	}
+    public function & displayListyear(& $layout_def)
+    {
+        global $app_list_strings;
+        $value = parent:: displayListPlain($layout_def);
+        return $value;
+    }
 
-	function displayListmonth($layout_def)
-	{
-		global $app_list_strings;
-		$display = '';
-		$match = array();
+    public function displayListmonth($layout_def)
+    {
+        global $app_list_strings;
+        $display = '';
+        $match = array();
         if (preg_match('/(\d{4})-(\d\d)/', $this->displayListPlain($layout_def), $match)) {
-			$match[2] = preg_replace('/^0/', '', $match[2]);
-			$display = $app_list_strings['dom_cal_month_long'][$match[2]]." {$match[1]}";
-		}
-		return $display;
-
-	}
+            $match[2] = preg_replace('/^0/', '', $match[2]);
+            $display = $app_list_strings['dom_cal_month_long'][$match[2]]." {$match[1]}";
+        }
+        return $display;
+    }
 
     /**
      * Returns part of query for select
@@ -606,11 +610,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param array $layout_def for field
      * @return string part of select query with year & month only
      */
-    function querySelectmonth($layout_def)
+    public function querySelectmonth($layout_def)
     {
         $return = $this->_get_column_select($layout_def);
-        if ($layout_def['type'] == 'datetime')
-        {
+        if ($layout_def['type'] == 'datetime') {
             $return = $this->reporter->db->convert($return, 'add_tz_offset');
         }
         return $this->reporter->db->convert($return, "date_format", array('%Y-%m')) . ' ' . $this->_get_column_alias($layout_def) . "\n";
@@ -622,11 +625,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param array $layout_def for field
      * @return string part of group by query with year & month only
      */
-    function queryGroupByMonth($layout_def)
+    public function queryGroupByMonth($layout_def)
     {
         $return = $this->_get_column_select($layout_def);
-        if ($layout_def['type'] == 'datetime')
-        {
+        if ($layout_def['type'] == 'datetime') {
             $return = $this->reporter->db->convert($return, 'add_tz_offset');
         }
         return $this->reporter->db->convert($return, "date_format", array('%Y-%m')) . "\n";
@@ -638,23 +640,18 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param array $layout_def definition of field
      * @return string order by string for field
      */
-    function queryOrderByMonth($layout_def)
+    public function queryOrderByMonth($layout_def)
     {
         $return = $this->_get_column_select($layout_def);
-        if ($layout_def['type'] == 'datetime')
-        {
+        if ($layout_def['type'] == 'datetime') {
             $return = $this->reporter->db->convert($return, 'add_tz_offset');
         }
         $orderBy = $this->reporter->db->convert($return, "date_format", array('%Y-%m'));
 
-        if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a')
-        {
+        if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
             return $orderBy . " ASC\n";
         }
-        else
-        {
-            return $orderBy . " DESC\n";
-        }
+        return $orderBy . " DESC\n";
     }
 
     /**
@@ -663,11 +660,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param array $layout_def for field
      * @return string part of select query with year & month & day
      */
-    function querySelectday($layout_def)
+    public function querySelectday($layout_def)
     {
         $return = $this->_get_column_select($layout_def);
-        if ($layout_def['type'] == 'datetime')
-        {
+        if ($layout_def['type'] == 'datetime') {
             $return = $this->reporter->db->convert($return, 'add_tz_offset');
         }
         return $this->reporter->db->convert($return, "date_format", array('%Y-%m-%d')) . ' ' . $this->_get_column_alias($layout_def) . "\n";
@@ -679,11 +675,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param array $layout_def for field
      * @return string part of group by query with year & month & day
      */
-    function queryGroupByDay($layout_def)
+    public function queryGroupByDay($layout_def)
     {
         $return = $this->_get_column_select($layout_def);
-        if ($layout_def['type'] == 'datetime')
-        {
+        if ($layout_def['type'] == 'datetime') {
             $return = $this->reporter->db->convert($return, 'add_tz_offset');
         }
         return $this->reporter->db->convert($return, "date_format", array('%Y-%m-%d')) . "\n";
@@ -695,11 +690,10 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param array $layout_def for field
      * @return string part of select query with year only
      */
-    function querySelectyear($layout_def)
+    public function querySelectyear($layout_def)
     {
         $return = $this->_get_column_select($layout_def);
-        if ($layout_def['type'] == 'datetime')
-        {
+        if ($layout_def['type'] == 'datetime') {
             $return = $this->reporter->db->convert($return, 'add_tz_offset');
         }
         return $this->reporter->db->convert($return, "date_format", array('%Y')) . ' ' . $this->_get_column_alias($layout_def) . "\n";
@@ -711,42 +705,45 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
      * @param array $layout_def for field
      * @return string part of group by query with year only
      */
-    function queryGroupByYear($layout_def)
+    public function queryGroupByYear($layout_def)
     {
         $return = $this->_get_column_select($layout_def);
-        if ($layout_def['type'] == 'datetime')
-        {
+        if ($layout_def['type'] == 'datetime') {
             $return = $this->reporter->db->convert($return, 'add_tz_offset');
         }
         return $this->reporter->db->convert($return, "date_format", array('%Y')) . "\n";
     }
 
-	function querySelectquarter($layout_def)
-	{
-	    $column = $this->_get_column_select($layout_def);
-	    return $this->reporter->db->convert($this->reporter->db->convert($column, "date_format", array('%Y')),
-	        	'CONCAT',
-	            array("'-'", $this->reporter->db->convert($column, "quarter")))
-	        ." ".$this->_get_column_alias($layout_def)."\n";
-	}
-
-	function displayListquarter(& $layout_def) {
-		$match = array();
-        if (preg_match('/(\d{4})-(\d)/', $this->displayListPlain($layout_def), $match)) {
-			return "Q".$match[2]." ".$match[1];
-		}
-		return '';
-
-	}
-
-	function queryGroupByQuarter($layout_def)
-	{
-		$this->getReporter();
+    public function querySelectquarter($layout_def)
+    {
         $column = $this->_get_column_select($layout_def);
-	    return $this->reporter->db->convert($this->reporter->db->convert($column, "date_format", array('%Y')),
-	        	'CONCAT',
-	            array("'-'", $this->reporter->db->convert($column, "quarter")));
-	}
+        return $this->reporter->db->convert(
+            $this->reporter->db->convert($column, "date_format", array('%Y')),
+                'CONCAT',
+                array("'-'", $this->reporter->db->convert($column, "quarter"))
+        )
+            ." ".$this->_get_column_alias($layout_def)."\n";
+    }
+
+    public function displayListquarter(& $layout_def)
+    {
+        $match = array();
+        if (preg_match('/(\d{4})-(\d)/', $this->displayListPlain($layout_def), $match)) {
+            return "Q".$match[2]." ".$match[1];
+        }
+        return '';
+    }
+
+    public function queryGroupByQuarter($layout_def)
+    {
+        $this->getReporter();
+        $column = $this->_get_column_select($layout_def);
+        return $this->reporter->db->convert(
+            $this->reporter->db->convert($column, "date_format", array('%Y')),
+                'CONCAT',
+                array("'-'", $this->reporter->db->convert($column, "quarter"))
+        );
+    }
 
     /**
      * For oracle we have to return order by string like group by string instead of return field alias
@@ -764,18 +761,15 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         );
 
 
-        if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a')
-        {
+        if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
             return $orderBy . " ASC\n";
         }
-        else
-        {
-            return $orderBy . " DESC\n";
-        }
+        return $orderBy . " DESC\n";
     }
 
-    function displayInput($layout_def) {
-    	global $timedate, $current_language, $app_strings;
+    public function displayInput($layout_def)
+    {
+        global $timedate, $current_language, $app_strings;
         $home_mod_strings = return_module_language($current_language, 'Home');
         $filterTypes = array(' '                 => $app_strings['LBL_NONE'],
                              'TP_today'         => $home_mod_strings['LBL_TODAY'],
@@ -813,5 +807,4 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
     {
         return strlen(trim($date)) < 11 ? false : true;
     }
-
 }

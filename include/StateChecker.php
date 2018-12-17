@@ -53,15 +53,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * StateChecker
- * 
- * Save and check the system state and reports you about any state change in the following: 
- * 
- * - Database 
- * - File system 
- * - Super globals 
- * - PHP error reporting level 
+ *
+ * Save and check the system state and reports you about any state change in the following:
+ *
+ * - Database
+ * - File system
+ * - Super globals
+ * - PHP error reporting level
  * - PHP configuration options
- * 
+ *
  * See more about the StateChecker configuration at the StateCheckerConfig class.
  *
  * @author SalesAgility
@@ -98,6 +98,12 @@ class StateChecker
      * @var integer
      */
     protected $memoryLimit;
+    
+    /**
+     *
+     * @var array
+     */
+    protected $excludedTables = ['job_queue', 'schedulers'];
     
     /**
      *
@@ -217,7 +223,7 @@ class StateChecker
             $hash = md5($serialized);
         }
         $this->lastHash = $hash;
-        
+
         if (!$this->checkHash($hash, $key)) {
             if ($key != 'errlevel') { // TODO: temporary remove the error level check from state
                 throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
@@ -279,8 +285,10 @@ class StateChecker
         $tables = $this->getDatabaseTables();
         $hashes = [];
         foreach ($tables as $table) {
-            $rows = $this->getMysqliResults($this->db->query('SELECT * FROM ' . $table));
-            $hashes[] = $this->getHash($rows, 'database::' . $table);
+            if (!in_array($table, $this->excludedTables)) {
+                $rows = $this->getMysqliResults($this->db->query('SELECT * FROM ' . $table));
+                $hashes[] = $this->getHash($rows, 'database::' . $table);
+            }
         }
         $hash = $this->getHash($hashes, 'database');
         return $hash;
@@ -322,7 +330,8 @@ class StateChecker
         foreach ($objects as $name => $object) {
             if (!$object->isDir() && !$this->isExcludedFile($name)) {
                 $fileObject = $object;
-                $fileObject->modifyTime = filemtime($name);
+//                $fileObject->modifyTime = filemtime($name);
+                $fileObject->fileSize = filesize($name);
                 $fileObject->hash = $this->getHash((array)$fileObject, 'filesys::' . $fileObject);
                 $files[] = $name;
             }
@@ -385,13 +394,14 @@ class StateChecker
     
     protected $lashHashAll = null;
     
-    public function getLastHashAll() {
+    public function getLastHashAll()
+    {
         return $this->lashHashAll;
     }
     
     /**
-     * Retrieve a hash of all 
-     * 
+     * Retrieve a hash of all
+     *
      * @return string hash
      */
     public function getStateHash()

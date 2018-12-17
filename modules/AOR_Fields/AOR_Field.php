@@ -17,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,8 +35,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 class AOR_Field extends Basic
 {
@@ -73,7 +73,7 @@ class AOR_Field extends Basic
     public $group_display;
     public $aor_report_id;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -81,35 +81,31 @@ class AOR_Field extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Field(){
+    public function AOR_Field()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function save_lines($post_data, $parent, $key = '')
+    public function save_lines($post_data, $parent, $key = '')
     {
-
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         $line_count = count($post_data[$key . 'field']);
         for ($i = 0; $i < $line_count; ++$i) {
-
-            
             if (!isset($post_data[$key . 'deleted'][$i])) {
                 LoggerManager::getLogger()->warn('AOR field save line error: Post data deleted key not found at index. Key and index were: [' . $key . '], [' . $i . ']');
                 $postDataKeyDeleted = null;
-            }
-            else {
+            } else {
                 $postDataKeyDeleted = $post_data[$key . 'deleted'][$i];
             }
-            
+
             if ($postDataKeyDeleted == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
@@ -132,7 +128,7 @@ class AOR_Field extends Basic
                         if ($field_name != 'group_display' && isset($postField[$i])) {
                             if (is_array($postField[$i])) {
                                 $postField[$i] = base64_encode(serialize($postField[$i]));
-                            } else if ($field_name == 'value') {
+                            } elseif ($field_name == 'value') {
                                 $postField[$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $postField[$i]);
                             }
                             if ($field_name == 'module_path') {
@@ -140,12 +136,11 @@ class AOR_Field extends Basic
                             }
                             $field->$field_name = $postField[$i];
                         }
-                    } else if (is_null($postField)) {
+                    } elseif (is_null($postField)) {
                         // do nothing
                     } else {
                         throw new Exception('illegal type in post data at key ' . $key . $field_name . ' ' . gettype($postField));
                     }
-
                 }
                 if (trim($field->field) != '') {
                     $field->aor_report_id = $parent->id;
@@ -154,5 +149,4 @@ class AOR_Field extends Basic
             }
         }
     }
-
 }
