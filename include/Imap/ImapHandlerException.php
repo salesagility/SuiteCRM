@@ -42,12 +42,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once __DIR__ . '/ImapTestSettingsEntryHandler.php';
-
-global $sugar_config;
-
-$handler = new ImapTestSettingsEntryHandler();
-$output = $handler->handleEntryPointRequest($sugar_config, $_REQUEST);
-
-echo $output;
-exit;
+/**
+ * ImapHandlerException
+ *
+ * @author gyula
+ */
+class ImapHandlerException extends Exception
+{
+    const ERR_TEST_SET_NOT_EXISTS = 1;
+    const ERR_KEY_NOT_FOUND = 2;
+    const ERR_KEY_SAVE_ERROR = 3;
+}

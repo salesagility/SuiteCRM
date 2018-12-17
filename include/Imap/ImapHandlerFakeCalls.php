@@ -44,6 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 // describes the face imap function return values for each function calls with a specific parameters in every test screnario.
 return $calls = [
     
+    // this case only for unit testing:
+    'testCaseExample' => [],
     
     'testSettingsOk' => [
         'isAvailable' => [
@@ -71,15 +73,15 @@ return $calls = [
                     return $ret;
                 }],
             ],
-        ],           
+        ],
         'getLastError' => [
             ['args' => null, 'return' => [false]],
-        ],           
+        ],
         'getAlerts' => [
             ['args' => null, 'return' => [false]],
         ],
-        'getConnection' => [],    
-    ],    
+        'getConnection' => [],
+    ],
                         
                         
     'testSettingsWrongUser' => [
