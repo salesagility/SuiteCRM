@@ -53,7 +53,12 @@ class RemindersController extends SugarController
             if ($this->isValidInvitee($invitee)) {
                 if (!isset($invitee['personName']) || !$invitee['personName']) {
                     $person = BeanFactory::getBean($invitee['personModule'], $invitee['personModuleId']);
-                    $invitee['personName'] = $person->name;
+                    if ($person) {
+                        $invitee['personName'] = $person->name;
+                    } else {
+                        LoggerManager::getLogger()->error('Error retriving person bean: ' . 
+                            $invitee['personModule'] . '::' . $invitee['personModuleId']);
+                    }
                 }
                 if (in_array($invitee['personModule'], $personModules) && isset($invitee['personName']) && $invitee['personName']) {
                     $ret[] = $invitee;
