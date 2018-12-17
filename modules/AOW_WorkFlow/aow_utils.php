@@ -42,6 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+/**
+ * Returns HTML of all availible fields in a module.
+ *
+ * @param string $module the module we are getting the fields from
+ * @param string $view
+ * @param string $value
+ * @param array $valid
+ * @param array $override
+ * @return string HTML for availible module fields
+ */
 function getModuleFields(
     $module,
     $view = 'EditView',
@@ -112,13 +122,13 @@ function getModuleFields(
                     unset($fields[$name]);
                 }
             }
-
         }
     }
-    if($view == 'JSON'){
+    asort($fields);
+    if ($view == 'JSON') {
         return json_encode($fields);
     }
-    if($view == 'EditView'){
+    if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
     } else {
         return $fields[$value];
