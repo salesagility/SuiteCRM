@@ -897,7 +897,7 @@ EOHTML;
         $addJSPath = true
         ){
         if ( isset($this->_imageCache[$imageName]) ) {
-            if ( $addJSPath )
+            if ($addJSPath)
                 return getJSPath($this->_imageCache[$imageName]);
             else
                 return $this->_imageCache[$imageName];

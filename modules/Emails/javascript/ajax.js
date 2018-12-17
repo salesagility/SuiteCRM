@@ -412,7 +412,7 @@ var AjaxObject = {
 					"style='cursor:pointer' align='absmiddle' onclick='SUGAR.email2.composeLayout.deleteUploadAttachment(\"" +
 					idx + index + "\",\"" + ret.guid + ret.name + "\");'/>" +
 				// file icon
-				"<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=attachment.gif' " +
+				"<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=attachment.svg' " +
 					"id='email_attachmentImage'" + idx + index + "align='absmiddle' />" +
 				// hidden id field
 				"<input type='hidden' value='" + ret.guid + ret.name + "' name='email_attachment" + index + "' id='email_attachment" + idx + index + "' />" +

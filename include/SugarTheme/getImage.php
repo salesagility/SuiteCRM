@@ -38,6 +38,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+if(stristr($_REQUEST['imageName'], 'attachment') !== FALSE) {
+    $break = true;
+}
 
 // Bug 57062 ///////////////////////////////
 if((!empty($_REQUEST['spriteNamespace']) && substr_count($_REQUEST['spriteNamespace'], '..') > 0) || 
@@ -110,6 +113,8 @@ header("Last-Modified: ".gmdate('D, d M Y H:i:s \G\M\T', $last_modified_time));
 // now send the content
 if ( substr($filename,-3) == 'gif' )
     header("Content-Type: image/gif");
+elseif ( substr($filename,-3) == 'svg' )
+    header("Content-Type: image/svg+xml");
 elseif ( substr($filename,-3) == 'png' )
     header("Content-Type: image/png");
 
