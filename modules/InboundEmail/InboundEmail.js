@@ -62,7 +62,7 @@ ie_id=(typeof document.getElementById(formName).ie_id!='undefined')?document.get
 +'&mailbox='+words[2]
 +'&ssl='+ssl
 +'&ie_id='+ie_id
-+'&personal='+isPersonal;var SI=SUGAR.inboundEmail;if(!SI.testDlg){SI.testDlg=new YAHOO.widget.SimpleDialog("testSettingsDiv",{width:width+"px",draggable:true,dragOnly:true,close:true,constraintoviewport:true,modal:true,loadingText:SUGAR.language.get("app_strings","LBL_EMAIL_LOADING")});SI.testDlg._updateContent=function(o){var w=this.cfg.config.width.value+"px";this.setBody(o.responseText);if(this.evalJS)
++'&personal='+isPersonal;var SI=SUGAR.inboundEmail;if(!SI.testDlg){SI.testDlg=new YAHOO.widget.SimpleDialog("testSettingsDiv",{fixedcenter:true,width:width+"px",draggable:true,dragOnly:true,close:true,constraintoviewport:true,modal:true,loadingText:SUGAR.language.get("app_strings","LBL_EMAIL_LOADING")});SI.testDlg._updateContent=function(o){var w=this.cfg.config.width.value+"px";this.setBody(o.responseText);if(this.evalJS)
 SUGAR.util.evalScript(o.responseText);if(!SUGAR.isIE)
 this.body.style.width=w}}
 var title=SUGAR.language.get('Emails','LBL_TEST_SETTINGS');if(typeof(title)=="undefined"||title=="undefined")

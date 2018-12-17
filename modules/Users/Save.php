@@ -202,7 +202,7 @@ if (!$focus->is_group && !$focus->portal_only) {
     if (isset($_POST['use_group_tabs'])) {
         $focus->setPreference('navigation_paradigm', $_POST['use_group_tabs'], 0, 'global');
     } else {
-        $focus->setPreference('navigation_paradigm', 'gm', 0, 'global');
+        $focus->setPreference('navigation_paradigm', $GLOBALS['sugar_config']['default_navigation_paradigm'] , 0, 'global');
     }
 
     if (isset($_POST['sort_modules_by_name'])) {

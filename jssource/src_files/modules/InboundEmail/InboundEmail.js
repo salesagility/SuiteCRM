@@ -148,6 +148,7 @@ function ie_test_open_popup_with_submit(module_name, action, pageTarget, width, 
 	var SI = SUGAR.inboundEmail;
 	if (!SI.testDlg) {
 		SI.testDlg = new YAHOO.widget.SimpleDialog("testSettingsDiv", {
+                fixedcenter: true,
 	        width: width + "px",
 	        draggable: true,
 	        dragOnly: true,

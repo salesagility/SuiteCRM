@@ -114,7 +114,6 @@ function pollMonitoredInboxes()
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
         $ieX = new InboundEmail();
         $ieX->retrieve($a['id']);
-        ;
         $mailboxes = $ieX->mailboxarray;
         foreach ($mailboxes as $mbox) {
             $ieX->mailbox = $mbox;
@@ -166,7 +165,7 @@ function pollMonitoredInboxes()
                         if ($ieX->isPop3Protocol()) {
                             $uid = $msgNoToUIDL[$msgNo];
                         } else {
-                            $uid = imap_uid($ieX->conn, $msgNo);
+                            $uid = $ieX->getImap()->getUid($msgNo);
                         } // else
                         if ($isGroupFolderExists) {
                             if ($ieX->returnImportedEmail($msgNo, $uid)) {
@@ -219,7 +218,7 @@ function pollMonitoredInboxes()
                                  which has caseid in message*/
                                 $ieX->getMessagesInEmailCache($msgNo, $uid);
                                 $email = new Email();
-                                $header = imap_headerinfo($ieX->conn, $msgNo);
+                                $header = $ieX->getImap()->getHeaderInfo($msgNo);
                                 $email->name = $ieX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $ieX->convertImapToSugarEmailAddress($header->from);
                                 isValidEmailAddress($email->from_addr);
@@ -258,8 +257,8 @@ function pollMonitoredInboxes()
                 // cn: bug 9171 - continue while
             } // else
         } // foreach
-        imap_expunge($ieX->conn);
-        imap_close($ieX->conn, CL_EXPUNGE);
+        $ieX->getImap()->expunge();
+        $ieX->getImap()->close(CL_EXPUNGE);
     } // while;
     return true;
 }
@@ -605,7 +604,7 @@ function pollMonitoredInboxesAOP()
                         if ($aopInboundEmailX->isPop3Protocol()) {
                             $uid = $msgNoToUIDL[$msgNo];
                         } else {
-                            $uid = imap_uid($aopInboundEmailX->conn, $msgNo);
+                            $uid = $aopInboundEmailX->getImap()->getUid($msgNo);
                         } // else
                         if ($isGroupFolderExists) {
                             $emailId = $aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists);
@@ -642,7 +641,7 @@ function pollMonitoredInboxesAOP()
 
                                 $aopInboundEmailX->getMessagesInEmailCache($msgNo, $uid);
                                 $email = new Email();
-                                $header = imap_headerinfo($aopInboundEmailX->conn, $msgNo);
+                                $header = $aopInboundEmailX->getImap()->getHeaderInfo($msgNo);
                                 $email->name = $aopInboundEmailX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $aopInboundEmailX->convertImapToSugarEmailAddress($header->from);
                                 isValidEmailAddress($email->from_addr);
@@ -678,8 +677,8 @@ function pollMonitoredInboxesAOP()
                 // cn: bug 9171 - continue while
             } // else
         } // foreach
-        imap_expunge($aopInboundEmailX->conn);
-        imap_close($aopInboundEmailX->conn, CL_EXPUNGE);
+        $aopInboundEmailX->getImap()->expunge();
+        $aopInboundEmailX->getImap()->close(CL_EXPUNGE);
     } // while
     return true;
 }

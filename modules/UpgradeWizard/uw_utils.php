@@ -1166,7 +1166,9 @@ function checkSystemCompliance()
     }
 
     // imap
-    if (function_exists('imap_open')) {
+    $imapFactory = new ImapHandlerFactory();
+    $imap = $imapFactory->getImapHandler();
+    if ($imap->isAvailable()) {
         $ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
     } else {
         $ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['ERR_CHECKSYS_IMAP']}</span></b>";
