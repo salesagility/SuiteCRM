@@ -114,7 +114,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
             if (file_exists($file)) {
                 require_once($file);
                 unset($GLOBALS['dictionary'][$bean]);
-                $focus = new $bean ();
+                $focus = new $bean();
                 if (($focus instanceof SugarBean) && !isset($repairedTables[$focus->table_name])) {
                     $sql .= $db->repairTable($focus, $execute);
                     $repairedTables[$focus->table_name] = true;

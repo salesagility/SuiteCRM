@@ -19,11 +19,14 @@
 
 function smarty_core_rmdir($params, &$smarty)
 {
-   if(!isset($params['level'])) { $params['level'] = 1; }
-   if(!isset($params['exp_time'])) { $params['exp_time'] = null; }
+    if (!isset($params['level'])) {
+        $params['level'] = 1;
+    }
+    if (!isset($params['exp_time'])) {
+        $params['exp_time'] = null;
+    }
 
-   if($_handle = @opendir($params['dirname'])) {
-
+    if ($_handle = @opendir($params['dirname'])) {
         while (false !== ($_entry = readdir($_handle))) {
             if ($_entry != '.' && $_entry != '..') {
                 if (@is_dir($params['dirname'] . DIRECTORY_SEPARATOR . $_entry)) {
@@ -33,22 +36,18 @@ function smarty_core_rmdir($params, &$smarty)
                         'exp_time' => $params['exp_time']
                     );
                     smarty_core_rmdir($_params, $smarty);
-                }
-                else {
+                } else {
                     $smarty->_unlink($params['dirname'] . DIRECTORY_SEPARATOR . $_entry, $params['exp_time']);
                 }
             }
         }
         closedir($_handle);
-   }
+    }
 
-   if ($params['level']) {
-       return @rmdir($params['dirname']);
-   }
-   return (bool)$_handle;
-
+    if ($params['level']) {
+        return @rmdir($params['dirname']);
+    }
+    return (bool)$_handle;
 }
 
 /* vim: set expandtab: */
-
-?>

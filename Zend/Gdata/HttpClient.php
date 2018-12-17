@@ -94,8 +94,11 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      *                             for the file
      * @return void
      */
-    public function setAuthSubPrivateKeyFile($file, $passphrase = null,
-                                             $useIncludePath = false) {
+    public function setAuthSubPrivateKeyFile(
+        $file,
+        $passphrase = null,
+                                             $useIncludePath = false
+    ) {
         $fp = @fopen($file, "r", $useIncludePath);
         if (!$fp) {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
@@ -122,15 +125,19 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      * @throws Zend_Gdata_App_InvalidArgumentException
      * @return Zend_Gdata_HttpClient Provides a fluent interface
      */
-    public function setAuthSubPrivateKey($key, $passphrase = null) {
+    public function setAuthSubPrivateKey($key, $passphrase = null)
+    {
         if ($key != null && !function_exists('openssl_pkey_get_private')) {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'You cannot enable secure AuthSub if the openssl module ' .
-                    'is not enabled in your PHP installation.');
+                    'is not enabled in your PHP installation.'
+            );
         }
         $this->_authSubPrivateKeyId = openssl_pkey_get_private(
-                $key, $passphrase);
+                $key,
+            $passphrase
+        );
         return $this;
     }
 
@@ -139,7 +146,8 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      *
      * @return string The private key
      */
-    public function getAuthSubPrivateKeyId() {
+    public function getAuthSubPrivateKeyId()
+    {
         return $this->_authSubPrivateKeyId;
     }
 
@@ -148,7 +156,8 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      *
      * @return string The token
      */
-    public function getAuthSubToken() {
+    public function getAuthSubToken()
+    {
         return $this->_authSubToken;
     }
 
@@ -158,7 +167,8 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      * @param string $token The token
      * @return Zend_Gdata_HttpClient Provides a fluent interface
      */
-    public function setAuthSubToken($token) {
+    public function setAuthSubToken($token)
+    {
         $this->_authSubToken = $token;
         return $this;
     }
@@ -168,7 +178,8 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      *
      * @return string The token
      */
-    public function getClientLoginToken() {
+    public function getClientLoginToken()
+    {
         return $this->_clientLoginToken;
     }
 
@@ -178,7 +189,8 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      * @param string $token The token
      * @return Zend_Gdata_HttpClient Provides a fluent interface
      */
-    public function setClientLoginToken($token) {
+    public function setClientLoginToken($token)
+    {
         $this->_clientLoginToken = $token;
         return $this;
     }
@@ -204,7 +216,8 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      * @return array The processed values in an associative array,
      *               using the same names as the params
      */
-    public function filterHttpRequest($method, $url, $headers = array(), $body = null, $contentType = null) {
+    public function filterHttpRequest($method, $url, $headers = array(), $body = null, $contentType = null)
+    {
         if ($this->getAuthSubToken() != null) {
             // AuthSub authentication
             if ($this->getAuthSubPrivateKeyId() != null) {
@@ -215,12 +228,17 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
 
                 // compute signature
                 $pKeyId = $this->getAuthSubPrivateKeyId();
-                $signSuccess = openssl_sign($dataToSign, $signature, $pKeyId,
-                                            OPENSSL_ALGO_SHA1);
+                $signSuccess = openssl_sign(
+                    $dataToSign,
+                    $signature,
+                    $pKeyId,
+                                            OPENSSL_ALGO_SHA1
+                );
                 if (!$signSuccess) {
                     require_once 'Zend/Gdata/App/Exception.php';
                     throw new Zend_Gdata_App_Exception(
-                            'openssl_signing failure - returned false');
+                            'openssl_signing failure - returned false'
+                    );
                 }
                 // encode signature
                 $encodedSignature = base64_encode($signature);
@@ -247,7 +265,8 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      * @param Zend_Http_Response $response The response object to filter
      * @return Zend_Http_Response The filterd response object
      */
-    public function filterHttpResponse($response) {
+    public function filterHttpResponse($response)
+    {
         return $response;
     }
 
@@ -261,18 +280,18 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
         return $this->adapter;
     }
 
-   /**
-     * Load the connection adapter
-     *
-     * @param Zend_Http_Client_Adapter_Interface $adapter
-     * @return void
-     */
+    /**
+      * Load the connection adapter
+      *
+      * @param Zend_Http_Client_Adapter_Interface $adapter
+      * @return void
+      */
     public function setAdapter($adapter)
     {
         if ($adapter == null) {
             $this->adapter = $adapter;
         } else {
-              parent::setAdapter($adapter);
+            parent::setAdapter($adapter);
         }
     }
 
@@ -310,12 +329,13 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      */
     protected function _prepareBody()
     {
-        if($this->_streamingRequest) {
-            $this->setHeaders(self::CONTENT_LENGTH,
-                $this->raw_post_data->getTotalSize());
+        if ($this->_streamingRequest) {
+            $this->setHeaders(
+                self::CONTENT_LENGTH,
+                $this->raw_post_data->getTotalSize()
+            );
             return $this->raw_post_data;
-        }
-        else {
+        } else {
             return parent::_prepareBody();
         }
     }
@@ -348,5 +368,4 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
         $this->_streamingRequest = true;
         return $this->setRawData($data, $enctype);
     }
-
 }

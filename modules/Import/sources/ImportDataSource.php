@@ -1,12 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +20,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +38,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('modules/Import/ImportCacheFiles.php');
@@ -89,7 +92,7 @@ abstract class ImportDataSource implements Iterator
     /**
      * Array of the values in the current array we are in
      */
-    protected $_currentRow = FALSE;
+    protected $_currentRow = false;
 
     /**
      * Holds any locale settings needed for import.  These can be provided by the user
@@ -104,7 +107,7 @@ abstract class ImportDataSource implements Iterator
 
     /**
      * Return a result set from the external source as an associative array with the key value equal to the
-     * external field name and the rvalue equal to the actual value.  
+     * external field name and the rvalue equal to the actual value.
      *
      * @abstract
      * @param  int $startIndex
@@ -182,15 +185,17 @@ abstract class ImportDataSource implements Iterator
         // cache $last_import instance
         static $last_import;
 
-        if ( !($last_import instanceof UsersLastImport) )
+        if (!($last_import instanceof UsersLastImport)) {
             $last_import = new UsersLastImport();
+        }
 
         $last_import->id = null;
         $last_import->deleted = null;
         $last_import->assigned_user_id = $GLOBALS['current_user']->id;
         $last_import->import_module = $import_module;
-        if ( $module == 'Case' )
+        if ($module == 'Case') {
             $module = 'aCase';
+        }
         
         $last_import->bean_type = $module;
         $last_import->bean_id = $id;
@@ -207,12 +212,11 @@ abstract class ImportDataSource implements Iterator
      */
     public function writeError($error, $fieldName, $fieldValue)
     {
-        $fp = sugar_fopen(ImportCacheFiles::getErrorFileName(),'a');
-        fputcsv($fp,array($error,$fieldName,$fieldValue,$this->_rowsCount));
+        $fp = sugar_fopen(ImportCacheFiles::getErrorFileName(), 'a');
+        fputcsv($fp, array($error,$fieldName,$fieldValue,$this->_rowsCount));
         fclose($fp);
 
-        if ( !$this->_rowCountedForErrors )
-        {
+        if (!$this->_rowCountedForErrors) {
             $this->_errorCount++;
             $this->_rowCountedForErrors = true;
             $this->writeErrorRecord($this->formatErrorMessage($error, $fieldName, $fieldValue));
@@ -237,7 +241,7 @@ abstract class ImportDataSource implements Iterator
      */
     public function writeStatus()
     {
-        $fp = sugar_fopen(ImportCacheFiles::getStatusFileName(),'a');
+        $fp = sugar_fopen(ImportCacheFiles::getStatusFileName(), 'a');
         $statusData = array($this->_rowsCount,$this->_errorCount,$this->_dupeCount,
                             $this->_createdCount,$this->_updatedCount,$this->_sourcename);
         fputcsv($fp, $statusData);
@@ -249,42 +253,37 @@ abstract class ImportDataSource implements Iterator
      */
     public function markRowAsDuplicate($field_names=array())
     {
-        $fp = sugar_fopen(ImportCacheFiles::getDuplicateFileName(),'a');
+        $fp = sugar_fopen(ImportCacheFiles::getDuplicateFileName(), 'a');
         fputcsv($fp, $this->_currentRow);
         fclose($fp);
 
         //if available, grab the column number based on passed in field_name
-        if(!empty($field_names))
-        {
+        if (!empty($field_names)) {
             $colkey = '';
             $colnums = array();
 
             //REQUEST should have the field names in order as they appear in the row to be written, get the key values
             //of passed in fields into an array
-            foreach($field_names as $fv)
-            {
+            foreach ($field_names as $fv) {
                 $fv = trim($fv);
-                if(empty($fv) || $fv == 'delete')
+                if (empty($fv) || $fv == 'delete') {
                     continue;
+                }
                 $new_keys = array_keys($_REQUEST, $fv);
-                $colnums = array_merge($colnums,$new_keys);
+                $colnums = array_merge($colnums, $new_keys);
             }
 
 
             //if values were found, process for number position
-            if(!empty($colnums))
-            {
+            if (!empty($colnums)) {
                 //foreach column, strip the 'colnum_' prefix to the get the column key value
-                foreach($colnums as $column_key)
-                {
-                    if(strpos($column_key,'colnum_') === 0)
-                    {
-                        $colkey = substr($column_key,7);
+                foreach ($colnums as $column_key) {
+                    if (strpos($column_key, 'colnum_') === 0) {
+                        $colkey = substr($column_key, 7);
                     }
 
                     //if we have the column key, then lets add a span tag with styling reference to the original value
-                    if(!empty($colkey))
-                    {
+                    if (!empty($colkey)) {
                         $hilited_val = $this->_currentRow[$colkey];
                         $this->_currentRow[$colkey]= '<span class=warn>'.$hilited_val.'</span>';
                     }
@@ -293,7 +292,7 @@ abstract class ImportDataSource implements Iterator
         }
 
         //add the row (with or without stylings) to the list view, this will get displayed to the user as a list of duplicates
-        $fdp = sugar_fopen(ImportCacheFiles::getDuplicateFileDisplayName(),'a');
+        $fdp = sugar_fopen(ImportCacheFiles::getDuplicateFileDisplayName(), 'a');
         fputcsv($fdp, $this->_currentRow);
         fclose($fdp);
 
@@ -308,10 +307,11 @@ abstract class ImportDataSource implements Iterator
      */
     public function markRowAsImported($createdRecord = true)
     {
-        if ( $createdRecord )
+        if ($createdRecord) {
             ++$this->_createdCount;
-        else
+        } else {
             ++$this->_updatedCount;
+        }
     }
 
     /**
@@ -320,8 +320,8 @@ abstract class ImportDataSource implements Iterator
     public function writeErrorRecord($errorMessage = '')
     {
         $rowData = !$this->_currentRow ? array() : $this->_currentRow;
-        $fp = sugar_fopen(ImportCacheFiles::getErrorRecordsFileName(),'a');
-        $fpNoErrors = sugar_fopen(ImportCacheFiles::getErrorRecordsWithoutErrorFileName(),'a');
+        $fp = sugar_fopen(ImportCacheFiles::getErrorRecordsFileName(), 'a');
+        $fpNoErrors = sugar_fopen(ImportCacheFiles::getErrorRecordsWithoutErrorFileName(), 'a');
 
         //Write records only for download without error message.
         fputcsv($fpNoErrors, $rowData);
@@ -346,4 +346,3 @@ abstract class ImportDataSource implements Iterator
         return null;
     }
 }
- 

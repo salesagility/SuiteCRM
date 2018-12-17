@@ -21,7 +21,7 @@ class SaleModuleCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -128,12 +128,13 @@ class SaleModuleCest
 
         // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
+        $editView->waitForEditViewVisible();
         $editView->fillField('#name', implode(' ', $this->fakeData->words()));
         $this->fakeData->seed($this->fakeDataSeed);
         $editView->selectOption(strtolower('#test_'.\Page\SaleModule::$NAME.'_type'), 'New Business');
         $this->fakeData->seed($this->fakeDataSeed);
         $editView->fillField('#amount', $this->fakeData->randomFloat(2));
-        $editView->click('.dateTime > img', '[field="date_closed"]');
+        $editView->click('#date_closed_trigger');
         $editView->waitForElementVisible('#container_date_closed_trigger_c');
         $editView->click('.today .selector', '#container_date_closed_trigger_c');
         $editView->clickSaveButton();

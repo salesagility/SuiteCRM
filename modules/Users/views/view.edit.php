@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,87 +37,91 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('modules/Users/UserViewHelper.php');
 
 
-class UsersViewEdit extends ViewEdit {
-var $useForSubpanel = true;
- 	function __construct(){
- 		parent::__construct();
- 	}
+class UsersViewEdit extends ViewEdit
+{
+    public $useForSubpanel = true;
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function UsersViewEdit(){
+    public function UsersViewEdit()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function preDisplay() {
+    public function preDisplay()
+    {
         $this->fieldHelper = new UserViewHelper($this->ss, $this->bean, 'EditView');
         $this->fieldHelper->setupAdditionalFields();
 
         parent::preDisplay();
     }
 
-    public function getMetaDataFile() {
+    public function getMetaDataFile()
+    {
         $userType = 'Regular';
-        if($this->fieldHelper->usertype == 'GROUP'){
+        if ($this->fieldHelper->usertype == 'GROUP') {
             $userType = 'Group';
         }
 
-        if ( $userType != 'Regular' ) {
+        if ($userType != 'Regular') {
             $oldType = $this->type;
             $this->type = $oldType.'group';
         }
         $metadataFile = parent::getMetaDataFile();
-        if ( $userType != 'Regular' ) {
+        if ($userType != 'Regular') {
             $this->type = $oldType;
         }
 
         return $metadataFile;
     }
 
-    function display() {
-        global $current_user, $app_list_strings;
+    public function display()
+    {
+        global $current_user, $app_list_strings, $mod_strings;
 
 
         //lets set the return values
-        if(isset($_REQUEST['return_module'])){
-            $this->ss->assign('RETURN_MODULE',$_REQUEST['return_module']);
+        if (isset($_REQUEST['return_module'])) {
+            $this->ss->assign('RETURN_MODULE', $_REQUEST['return_module']);
         }
 
         $this->ss->assign('IS_ADMIN', $current_user->is_admin ? true : false);
 
         //make sure we can populate user type dropdown.  This usually gets populated in predisplay unless this is a quickeditform
-        if(!isset($this->fieldHelper)){
+        if (!isset($this->fieldHelper)) {
             $this->fieldHelper = new UserViewHelper($this->ss, $this->bean, 'EditView');
             $this->fieldHelper->setupAdditionalFields();
         }
 
-        if(isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
+        if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true') {
             $this->ss->assign('RETURN_MODULE', $_REQUEST['return_module']);
             $this->ss->assign('RETURN_ACTION', $_REQUEST['return_action']);
             $this->ss->assign('RETURN_ID', $_REQUEST['record']);
             $this->bean->id = "";
             $this->bean->user_name = "";
-            $this->ss->assign('ID','');
+            $this->ss->assign('ID', '');
         } else {
-            if(isset($_REQUEST['return_module']))
-            {
+            if (isset($_REQUEST['return_module'])) {
                 $this->ss->assign('RETURN_MODULE', $_REQUEST['return_module']);
             } else {
                 $this->ss->assign('RETURN_MODULE', $this->bean->module_dir);
@@ -131,7 +138,7 @@ var $useForSubpanel = true;
 
         ///////////////////////////////////////////////////////////////////////////////
         ////	REDIRECTS FROM COMPOSE EMAIL SCREEN
-        if(isset($_REQUEST['type']) && (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Emails')) {
+        if (isset($_REQUEST['type']) && (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Emails')) {
             $this->ss->assign('REDIRECT_EMAILS_TYPE', $_REQUEST['type']);
         }
         ////	END REDIRECTS FROM COMPOSE EMAIL SCREEN
@@ -139,12 +146,12 @@ var $useForSubpanel = true;
 
         ///////////////////////////////////////////////////////////////////////////////
         ////	NEW USER CREATION ONLY
-        if(empty($this->bean->id)) {
-            $this->ss->assign('SHOW_ADMIN_CHECKBOX','height="30"');
-            $this->ss->assign('NEW_USER','1');
-        }else{
-            $this->ss->assign('NEW_USER','0');
-            $this->ss->assign('NEW_USER_TYPE','DISABLED');
+        if (empty($this->bean->id)) {
+            $this->ss->assign('SHOW_ADMIN_CHECKBOX', 'height="30"');
+            $this->ss->assign('NEW_USER', '1');
+        } else {
+            $this->ss->assign('NEW_USER', '0');
+            $this->ss->assign('NEW_USER_TYPE', 'DISABLED');
         }
 
         ////	END NEW USER CREATION ONLY
@@ -152,36 +159,47 @@ var $useForSubpanel = true;
 
 
         // FIXME: Translate error prefix
-        if(isset($_REQUEST['error_string'])) $this->ss->assign('ERROR_STRING', '<span class="error">Error: '.$_REQUEST['error_string'].'</span>');
-        if(isset($_REQUEST['error_password'])) $this->ss->assign('ERROR_PASSWORD', '<span id="error_pwd" class="error">Error: '.$_REQUEST['error_password'].'</span>');
+        if (isset($_REQUEST['error_string'])) {
+            LoggerManager::getLogger()->warn('Using error string in request is deprecated: ' . $_REQUEST[
+                'error_string']);
+            $this->ss->assign('ERROR_STRING', '<span class="error">Error: ' . $mod_strings['LBL_ERROR'] . '</span>');
+        }
+        if (isset($_REQUEST['error_password'])) {
+            LoggerManager::getLogger()->warn('Using password error in request is deprecated: ' . $_REQUEST[
+                'error_password']);
+            $this->ss->assign('ERROR_PASSWORD', '<span id="error_pwd" class="error">Error: ' . $mod_strings['LBL_ERROR'
+                ] . '</span>');
+        }
 
 
 
 
         // Build viewable versions of a few fields for non-admins
-        if(!empty($this->bean->id)) {
-            if( !empty($this->bean->status) ) {
-                $this->ss->assign('STATUS_READONLY',$app_list_strings['user_status_dom'][$this->bean->status]); }
-            if( !empty($this->bean->employee_status) ) {
+        if (!empty($this->bean->id)) {
+            if (!empty($this->bean->status)) {
+                $this->ss->assign('STATUS_READONLY', $app_list_strings['user_status_dom'][$this->bean->status]);
+            }
+            if (!empty($this->bean->employee_status)) {
                 $this->ss->assign('EMPLOYEE_STATUS_READONLY', $app_list_strings['employee_status_dom'][$this->bean->employee_status]);
             }
-            if( !empty($this->bean->reports_to_id) ) {
+            if (!empty($this->bean->reports_to_id)) {
                 $reportsToUser = get_assigned_user_name($this->bean->reports_to_id);
                 $reportsToUserField = "<input type='text' name='reports_to_name' id='reports_to_name' value='{$reportsToUser}' disabled>\n";
                 $reportsToUserField .= "<input type='hidden' name='reports_to_id' id='reports_to_id' value='{$this->bean->reports_to_id}'>";
                 $this->ss->assign('REPORTS_TO_READONLY', $reportsToUserField);
             }
-            if( !empty($this->bean->title) ) {
+            if (!empty($this->bean->title)) {
                 $this->ss->assign('TITLE_READONLY', $this->bean->title);
             }
-            if( !empty($this->bean->department) ) {
+            if (!empty($this->bean->department)) {
                 $this->ss->assign('DEPT_READONLY', $this->bean->department);
             }
         }
 
         $processSpecial = false;
         $processFormName = '';
-        if ( isset($this->fieldHelper->usertype) && ($this->fieldHelper->usertype == 'GROUP'
+        if (isset($this->fieldHelper->usertype) && (
+            $this->fieldHelper->usertype == 'GROUP'
             )) {
             $this->ev->formName = 'EditViewGroup';
 
@@ -234,15 +252,15 @@ EOD
 
         //if the request object has 'scrolltocal' set, then we are coming here from the tour window box and need to set flag to true
         // so that footer.tpl fires off script to scroll to calendar section
-        if(!empty($_REQUEST['scrollToCal'])){
+        if (!empty($_REQUEST['scrollToCal'])) {
             $this->ss->assign('scroll_to_cal', true);
         }
 
-        
-        
+
+
         $this->ss->assign('SUBTHEMES', $this->bean->getSubThemes());
         $this->ss->assign('SUBTHEME', $this->bean->getSubTheme());
-        
+
 
         require_once('modules/Emails/EmailUI.php');
         $efocus = new Email();
@@ -252,10 +270,9 @@ EOD
         echo $out;
         echo "<script>var composePackage = null;</script>";
 
-        $this->ev->process($processSpecial,$processFormName);
+        $this->ev->process($processSpecial, $processFormName);
 
-		echo $this->ev->display($this->showTitle);
-
+        echo $this->ev->display($this->showTitle);
     }
 
 
@@ -273,11 +290,11 @@ EOD
     {
         $theTitle = '';
 
-        if($GLOBALS['current_user']->isAdminForModule('Users')
+        if ($GLOBALS['current_user']->isAdminForModule('Users')
         ) {
-        $createImageURL = SugarThemeRegistry::current()->getImageURL('create-record.gif');
-        $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
-        $theTitle = <<<EOHTML
+            $createImageURL = SugarThemeRegistry::current()->getImageURL('create-record.gif');
+            $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
+            $theTitle = <<<EOHTML
 &nbsp;
 <img src='{$createImageURL}' alt='{$GLOBALS['app_strings']['LNK_CREATE']}'>
 <a href="{$url}" class="utilsLink">

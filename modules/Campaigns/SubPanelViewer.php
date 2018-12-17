@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -47,19 +50,16 @@ global $beanList;
 global $beanFiles;
 
 
-if(empty($_REQUEST['module']))
-{
-	die("'module' was not defined");
+if (empty($_REQUEST['module'])) {
+    die("'module' was not defined");
 }
 
-if(empty($_REQUEST['record']))
-{
-	die("'record' was not defined");
+if (empty($_REQUEST['record'])) {
+    die("'record' was not defined");
 }
 
-if(!isset($beanList[$_REQUEST['module']]))
-{
-	die("'".$_REQUEST['module']."' is not defined in \$beanList");
+if (!isset($beanList[$_REQUEST['module']])) {
+    die("'".$_REQUEST['module']."' is not defined in \$beanList");
 }
 
 $subpanel = $_REQUEST['subpanel'];
@@ -69,9 +69,8 @@ $module = $_REQUEST['module'];
 
 $image_path = 'themes/'.$theme.'/images/';
 
-if(empty($_REQUEST['inline']))
-{
-	insert_popup_header($theme);
+if (empty($_REQUEST['inline'])) {
+    insert_popup_header($theme);
 }
 
 //require_once('include/SubPanel/SubPanelDefinitions.php');
@@ -81,26 +80,25 @@ if(empty($_REQUEST['inline']))
 
 include('include/SubPanel/SubPanel.php');
 $layout_def_key = '';
-if(!empty($_REQUEST['layout_def_key'])){
-	$layout_def_key = $_REQUEST['layout_def_key'];
+if (!empty($_REQUEST['layout_def_key'])) {
+    $layout_def_key = $_REQUEST['layout_def_key'];
 }
 
-$subpanel_object = new SubPanel($module, $record, $subpanel,null, $layout_def_key);
+$subpanel_object = new SubPanel($module, $record, $subpanel, null, $layout_def_key);
 
 $subpanel_object->setTemplateFile('include/SubPanel/tpls/SubPanelDynamic.tpl');
 
-if(!empty($_REQUEST['mkt_id']) && $_REQUEST['mkt_id'] != 'all') {// bug 32910
+if (!empty($_REQUEST['mkt_id']) && $_REQUEST['mkt_id'] != 'all') {// bug 32910
     $mkt_id = $_REQUEST['mkt_id'];
 }
 
-if(!empty($mkt_id)) {
+if (!empty($mkt_id)) {
     $subpanel_object->subpanel_defs->_instance_properties['function_parameters']['EMAIL_MARKETING_ID_VALUE'] = $mkt_id;
 }
-echo (empty($_REQUEST['inline']))?$subpanel_object->get_buttons():'' ;  
+echo (empty($_REQUEST['inline']))?$subpanel_object->get_buttons():'' ;
 
 $subpanel_object->display();
 
-if(empty($_REQUEST['inline']))
-{
-	insert_popup_footer($theme);
+if (empty($_REQUEST['inline'])) {
+    insert_popup_footer($theme);
 }

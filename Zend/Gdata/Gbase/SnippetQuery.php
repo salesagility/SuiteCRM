@@ -70,5 +70,4 @@ class Zend_Gdata_Gbase_SnippetQuery extends Zend_Gdata_Gbase_Query
         $uri .= $this->getQueryString();
         return $uri;
     }
-
 }

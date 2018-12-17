@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,11 +43,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $dictionary['AOS_PDF_Templates'] = array(
-	'table'=>'aos_pdf_templates',
-	'audited'=>true,
-	'fields'=>array (
+    'table'=>'aos_pdf_templates',
+    'audited'=>true,
+    'fields'=>array(
   'active' =>
-  array (
+  array(
     'name' => 'active',
     'vname' => 'LBL_ACTIVE',
     'type' => 'bool',
@@ -63,7 +63,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'studio' => 'visible',
   ),
   'type' =>
-  array (
+  array(
     'required' => '1',
     'name' => 'type',
     'vname' => 'LBL_TYPE',
@@ -104,8 +104,8 @@ $dictionary['AOS_PDF_Templates'] = array(
                 'size' => '20',
                 'studio' => 'visible',
             ),
-  'sample' => 
-  array (
+  'sample' =>
+  array(
     'required' => '0',
     'name' => 'sample',
     'vname' => 'LBL_SAMPLE',
@@ -138,8 +138,8 @@ $dictionary['AOS_PDF_Templates'] = array(
       'help' => '',
       'reportable' => 0,
   ),
-  'pdfheader' => 
-  array (
+  'pdfheader' =>
+  array(
     'required' => false,
     'name' => 'pdfheader',
     'vname' => 'LBL_HEADER',
@@ -157,8 +157,8 @@ $dictionary['AOS_PDF_Templates'] = array(
     'rows' => '4',
     'cols' => '20',
   ),
-  'pdffooter' => 
-  array (
+  'pdffooter' =>
+  array(
     'required' => false,
     'name' => 'pdffooter',
     'vname' => 'LBL_FOOTER',
@@ -177,7 +177,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'cols' => '20',
   ),
   'margin_left' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_left',
     'vname' => 'LBL_MARGIN_LEFT',
@@ -197,7 +197,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
   'margin_right' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_right',
     'vname' => 'LBL_MARGIN_RIGHT',
@@ -217,7 +217,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
   'margin_top' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_top',
     'vname' => 'LBL_MARGIN_TOP',
@@ -237,7 +237,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
   'margin_bottom' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_bottom',
     'vname' => 'LBL_MARGIN_BOTTOM',
@@ -257,7 +257,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
   'margin_header' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_header',
     'vname' => 'LBL_MARGIN_HEADER',
@@ -277,7 +277,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
   'margin_footer' =>
-  array (
+  array(
     'required' => false,
     'name' => 'margin_footer',
     'vname' => 'LBL_MARGIN_FOOTER',
@@ -297,7 +297,7 @@ $dictionary['AOS_PDF_Templates'] = array(
     'disable_num_format' => '',
   ),
           'page_size' =>
-            array (
+            array(
                 'required' => '0',
                 'name' => 'page_size',
                 'vname' => 'LBL_PAGE_SIZE',
@@ -316,7 +316,7 @@ $dictionary['AOS_PDF_Templates'] = array(
                 'studio' => 'visible',
             ),
         'orientation' =>
-            array (
+            array(
                 'required' => '0',
                 'name' => 'orientation',
                 'vname' => 'LBL_ORIENTATION',
@@ -335,9 +335,9 @@ $dictionary['AOS_PDF_Templates'] = array(
                 'studio' => 'visible',
             ),
 ),
-	'relationships'=>array (
+    'relationships'=>array(
 ),
-	'optimistic_lock'=>true,
+    'optimistic_lock'=>true,
 );
 require_once('include/SugarObjects/VardefManager.php');
-VardefManager::createVardef('AOS_PDF_Templates','AOS_PDF_Templates', array('basic','assignable','security_groups'));
+VardefManager::createVardef('AOS_PDF_Templates', 'AOS_PDF_Templates', array('basic','assignable','security_groups'));

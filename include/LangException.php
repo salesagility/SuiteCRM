@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Description of LangException
+ * LangException
  *
  * @author gyula
  * @todo should it implement or an interface enough for it?

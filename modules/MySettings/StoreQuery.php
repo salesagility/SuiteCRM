@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,18 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class StoreQuery
 {
-    var $query = array();
+    public $query = array();
 
-    function addToQuery($name, $val)
+    public function addToQuery($name, $val)
     {
         $this->query[$name] = $val;
     }
@@ -57,7 +59,7 @@ class StoreQuery
      * @see SavedSearch
      * @param $name String name  to identify this query
      */
-    function SaveQuery($name)
+    public function SaveQuery($name)
     {
         global $current_user, $timedate;
         if (isset($this->query['module'])) {
@@ -73,7 +75,7 @@ class StoreQuery
                             if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && !preg_match('/^\[.*?\]$/', $value)) {
                                 $db_format = $timedate->to_db_date($value, false);
                                 $this->query[$key] = $db_format;
-                            } else if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
+                            } elseif ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
                                 if (preg_match('/[^\d]/', $value)) {
                                     require_once('modules/Currencies/Currency.php');
                                     $this->query[$key] = unformat_number($value);
@@ -103,13 +105,13 @@ class StoreQuery
         $current_user->setPreference($name . 'Q', $this->query);
     }
 
-    function clearQuery($name)
+    public function clearQuery($name)
     {
         $this->query = array();
         $this->saveQuery($name);
     }
 
-    function loadQuery($name)
+    public function loadQuery($name)
     {
         $saveType = $this->getSaveType($name);
         if ($saveType == 'all' || $saveType == 'myitems') {
@@ -124,7 +126,7 @@ class StoreQuery
         }
     }
 
-    function populateRequest()
+    public function populateRequest()
     {
         global $timedate;
 
@@ -144,7 +146,7 @@ class StoreQuery
 
                         if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) && !preg_match('/^\[.*?\]$/', $value)) {
                             $value = $timedate->to_display_date($value, false);
-                        } else if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/', $value)) {
+                        } elseif (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/', $value)) {
                             require_once('modules/Currencies/Currency.php');
                             $value = format_number($value);
                             if ($type == 'currency' && isset($this->query[$key . '_currency_symbol'])) {
@@ -157,12 +159,11 @@ class StoreQuery
                 // cn: bug 6546 storequery stomps correct value for 'module' in Activities
                 $_REQUEST[$key] = $value;
                 $_GET[$key] = $value;
-
             }
         }
     }
 
-    function getSaveType($name)
+    public function getSaveType($name)
     {
         global $sugar_config;
         $save_query = empty($sugar_config['save_query']) ?
@@ -188,11 +189,15 @@ class StoreQuery
     }
 
 
-    function saveFromRequest($name)
+    public function saveFromRequest($name)
     {
         if (isset($_REQUEST['query'])) {
             if (!empty($_REQUEST['clear_query']) && $_REQUEST['clear_query'] == 'true') {
+                $this->loadQuery($name);
+                $_REQUEST['displayColumns'] = $this->query['displayColumns'];
                 $this->clearQuery($name);
+                $this->query['displayColumns'] = $_REQUEST['displayColumns'];
+                $this->saveQuery($name);
 
                 return;
             }
@@ -204,8 +209,7 @@ class StoreQuery
                     $this->query['query'] = true;
                 }
                 $this->saveQuery($name);
-
-            } else if ($saveType == 'all') {
+            } elseif ($saveType == 'all') {
                 // Bug 39580 - Added 'EmailTreeLayout','EmailGridWidths' to the list as these are added merely as side-effects of the fact that we store the entire
                 // $_REQUEST object which includes all cookies.  These are potentially quite long strings as well.
                 $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount', 'current_query_by_page', 'EmailTreeLayout', 'EmailGridWidths');
@@ -222,7 +226,7 @@ class StoreQuery
         }
     }
 
-    function saveFromGet($name)
+    public function saveFromGet($name)
     {
         if (isset($_GET['query'])) {
             if (!empty($_GET['clear_query']) && $_GET['clear_query'] == 'true') {
@@ -238,8 +242,7 @@ class StoreQuery
                     $this->query['query'] = true;
                 }
                 $this->saveQuery($name);
-
-            } else if ($saveType == 'all') {
+            } elseif ($saveType == 'all') {
                 $this->query = $_GET;
                 $this->saveQuery($name);
             }

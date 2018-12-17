@@ -47,7 +47,6 @@ require_once 'Zend/Gdata/Spreadsheets/Extension/ColCount.php';
  */
 class Zend_Gdata_Spreadsheets_WorksheetEntry extends Zend_Gdata_Entry
 {
-
     protected $_entryClassName = 'Zend_Gdata_Spreadsheets_WorksheetEntry';
 
     protected $_rowCount = null;
@@ -96,12 +95,12 @@ class Zend_Gdata_Spreadsheets_WorksheetEntry extends Zend_Gdata_Entry
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gs') . ':' . 'rowCount';
+            case $this->lookupNamespace('gs') . ':' . 'rowCount':
                 $rowCount = new Zend_Gdata_Spreadsheets_Extension_RowCount();
                 $rowCount->transferFromDOM($child);
                 $this->_rowCount = $rowCount;
                 break;
-            case $this->lookupNamespace('gs') . ':' . 'colCount';
+            case $this->lookupNamespace('gs') . ':' . 'colCount':
                 $colCount = new Zend_Gdata_Spreadsheets_Extension_ColCount();
                 $colCount->transferFromDOM($child);
                 $this->_colCount = $colCount;
@@ -183,5 +182,4 @@ class Zend_Gdata_Spreadsheets_WorksheetEntry extends Zend_Gdata_Entry
         $service = new Zend_Gdata_Spreadsheets($this->getHttpClient());
         return $service->getSpreadsheetCellFeedContents($this, $range, $empty);
     }
-
 }

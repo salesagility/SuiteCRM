@@ -28,10 +28,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getInstanceURL()
     {
         $envInstanceURL = getenv('INSTANCE_URL');
-        if($envInstanceURL === false) {
+        if ($envInstanceURL === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config['url'])) {
+            if (empty($config['url'])) {
                 // return default
                 return 'http://localhost/';
             } else {
@@ -50,10 +50,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getDatabaseDriver()
     {
         $envDatabaseDriver = getenv('DATABASE_DRIVER');
-        if($envDatabaseDriver === false) {
+        if ($envDatabaseDriver === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config['database_driver'])) {
+            if (empty($config['database_driver'])) {
                 // return default
                 return DatabaseDriver::MYSQL;
             } else {
@@ -71,10 +71,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getDatabaseName()
     {
         $envDatabaseName = getenv('DATABASE_NAME');
-        if($envDatabaseName === false) {
+        if ($envDatabaseName === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config['database_name'])) {
+            if (empty($config['database_name'])) {
                 // return default
                 return 'automated_tests';
             } else {
@@ -93,10 +93,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getDatabaseHost()
     {
         $envDatabaseHost = getenv('DATABASE_HOST');
-        if($envDatabaseHost === false) {
+        if ($envDatabaseHost === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config['database_host'])) {
+            if (empty($config['database_host'])) {
                 // return default
                 return 'localhost';
             } else {
@@ -114,10 +114,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getDatabaseUser()
     {
         $envDatabaseUser = getenv('DATABASE_USER');
-        if($envDatabaseUser === false) {
+        if ($envDatabaseUser === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config['database_user'])) {
+            if (empty($config['database_user'])) {
                 // return default
                 return 'automated_tests';
             } else {
@@ -135,10 +135,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getDatabasePassword()
     {
         $envDatabasePassword = getenv('DATABASE_PASSWORD');
-        if($envDatabasePassword === false) {
+        if ($envDatabasePassword === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config['database_password'])) {
+            if (empty($config['database_password'])) {
                 // return default
                 return 'automated_tests';
             } else {
@@ -157,10 +157,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getAdminUser()
     {
         $envDatabasePassword = getenv('INSTANCE_ADMIN_USER');
-        if($envDatabasePassword === false) {
+        if ($envDatabasePassword === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config['INSTANCE_ADMIN_USER'])) {
+            if (empty($config['INSTANCE_ADMIN_USER'])) {
                 // return default
                 return 'admin';
             } else {
@@ -178,10 +178,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getAdminPassword()
     {
         $envDatabasePassword = getenv('INSTANCE_ADMIN_PASSWORD');
-        if($envDatabasePassword === false) {
+        if ($envDatabasePassword === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config['INSTANCE_ADMIN_PASSWORD'])) {
+            if (empty($config['INSTANCE_ADMIN_PASSWORD'])) {
                 // return default
                 return 'admin';
             } else {
@@ -200,10 +200,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getBrowserStackUsername()
     {
         $envBrowserStackUsername = getenv('BROWSERSTACK_USERNAME');
-        if($envBrowserStackUsername === false) {
+        if ($envBrowserStackUsername === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config["capabilities"]["browserstack.user"])) {
+            if (empty($config["capabilities"]["browserstack.user"])) {
                 // return default
                 return '';
             } else {
@@ -222,10 +222,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getBrowserStackAccessKey()
     {
         $envBrowserStackAccessKey = getenv('BROWSERSTACK_ACCESS_KEY');
-        if($envBrowserStackAccessKey === false) {
+        if ($envBrowserStackAccessKey === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config["capabilities"]["browserstack.key"])) {
+            if (empty($config["capabilities"]["browserstack.key"])) {
                 // return default
                 return '';
             } else {
@@ -244,10 +244,10 @@ class WebDriverHelper extends \Codeception\Module
     public function getBrowserStackLocalFolderURL()
     {
         $envBrowserStackAccessKey = getenv('BROWSERSTACK_LOCAL_FOLDER_URL');
-        if($envBrowserStackAccessKey === false) {
+        if ($envBrowserStackAccessKey === false) {
             $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
             $config = $webDriver->_getConfig();
-            if(empty($config["capabilities"]["browserstack.localfolderurl"])) {
+            if (empty($config["capabilities"]["browserstack.localfolderurl"])) {
                 // return default
                 return '';
             } else {
@@ -259,5 +259,4 @@ class WebDriverHelper extends \Codeception\Module
     }
 
     // Add other methods to get environmental variables here...
-
 }

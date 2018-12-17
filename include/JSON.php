@@ -1,12 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -61,20 +63,18 @@ class JSON
     /**
      * JSON encode a string
      *
-     * @param array $string
+     * @param array $array
      * @param bool $addSecurityEnvelope defaults to false
      * @param bool $encodeSpecial
      * @return string
      */
-    public static function encode($string, $addSecurityEnvelope = false, $encodeSpecial = false)
+    public static function encode($array, $addSecurityEnvelope = false, $encodeSpecial = false)
     {
-        $encodedString = json_encode($string);
+        $encodedString = json_encode($array);
 
-        if ($encodeSpecial)
-        {
+        if ($encodeSpecial) {
             $charMap = array('<' => '\u003C', '>' => '\u003E', "'" => '\u0027', '&' => '\u0026');
-            foreach($charMap as $c => $enc)
-            {
+            foreach ($charMap as $c => $enc) {
                 $encodedString = str_replace($c, $enc, $encodedString);
             }
         }
@@ -92,7 +92,7 @@ class JSON
      */
     public static function decode($string, $examineEnvelope=false, $assoc = true)
     {
-        return json_decode($string,$assoc);
+        return json_decode($string, $assoc);
     }
 
     /**

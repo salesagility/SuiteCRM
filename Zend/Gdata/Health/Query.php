@@ -159,9 +159,10 @@ class Zend_Gdata_Health_Query extends Zend_Gdata_Query
                 require_once 'Zend/Gdata/App/InvalidArgumentException.php';
                 throw new Zend_Gdata_App_InvalidArgumentException(
                     'The max-results-group parameter must be set to a value
-                    greater than 0 and can only be used if grouped=true');
+                    greater than 0 and can only be used if grouped=true'
+                );
             } else {
-              $this->_params['max-results-group'] = $value;
+                $this->_params['max-results-group'] = $value;
             }
         }
         return $this;
@@ -194,11 +195,12 @@ class Zend_Gdata_Health_Query extends Zend_Gdata_Query
     {
         if ($value !== null) {
             if ($value <= 0 || $this->getGrouped() !== 'true') {
-              throw new Zend_Gdata_App_InvalidArgumentException(
+                throw new Zend_Gdata_App_InvalidArgumentException(
                   'The max-results-in-group parameter must be set to a value
-                  greater than 0 and can only be used if grouped=true');
+                  greater than 0 and can only be used if grouped=true'
+              );
             } else {
-              $this->_params['max-results-in-group'] = $value;
+                $this->_params['max-results-in-group'] = $value;
             }
         }
         return $this;
@@ -231,9 +233,10 @@ class Zend_Gdata_Health_Query extends Zend_Gdata_Query
     {
         if ($value !== null && $this->getGrouped() !== 'true') {
             throw new Zend_Gdata_App_InvalidArgumentException(
-                'The start-index-group can only be used if grouped=true');
+                'The start-index-group can only be used if grouped=true'
+            );
         } else {
-          $this->_params['start-index-group'] = $value;
+            $this->_params['start-index-group'] = $value;
         }
         return $this;
     }
@@ -264,7 +267,7 @@ class Zend_Gdata_Health_Query extends Zend_Gdata_Query
         if ($value !== null && $this->getGrouped() !== 'true') {
             throw new Zend_Gdata_App_InvalidArgumentException('start-index-in-group');
         } else {
-          $this->_params['start-index-in-group'] = $value;
+            $this->_params['start-index-in-group'] = $value;
         }
         return $this;
     }

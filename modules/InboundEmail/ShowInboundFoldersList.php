@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,21 +37,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
  // hack to allow "&", "%" and "+" through a $_GET var
 // set by ie_test_open_popup() javascript call
-foreach($_REQUEST as $k => $v) {
-	$v = str_replace('::amp::', '&', $v);
-	$v = str_replace('::plus::', '+', $v);
-	$v = str_replace('::percent::', '%', $v);
-	$_REQUEST[$k] = $v;
+foreach ($_REQUEST as $k => $v) {
+    $v = str_replace('::amp::', '&', $v);
+    $v = str_replace('::plus::', '+', $v);
+    $v = str_replace('::percent::', '%', $v);
+    $_REQUEST[$k] = $v;
 }
 
 require_once('modules/InboundEmail/language/en_us.lang.php');
@@ -79,39 +82,38 @@ $deletedFoldersList = "";
 
 $popupBoolean = false;
 if (isset($_REQUEST['target']) && $_REQUEST['target'] == 'Popup') {
-	$popupBoolean = true;
+    $popupBoolean = true;
 }
 if (isset($_REQUEST['target1']) && $_REQUEST['target1'] == 'Popup') {
-	$popupBoolean = true;
+    $popupBoolean = true;
 }
 
-if($popupBoolean) {
-	$title = $mod_strings['LBL_SELECT_SUBSCRIBED_FOLDERS'];
-	$msg = $mod_strings['LBL_TEST_WAIT_MESSAGE'];
+if ($popupBoolean) {
+    $title = $mod_strings['LBL_SELECT_SUBSCRIBED_FOLDERS'];
+    $msg = $mod_strings['LBL_TEST_WAIT_MESSAGE'];
 }
 
 $subdcriptionFolderHelp = $app_strings['LBL_EMAIL_SUBSCRIPTION_FOLDER_HELP'];
 
-if(isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] == 1)) {
-	$useSsl = true;
+if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] == 1)) {
+    $useSsl = true;
 }
 
 $searchField = !empty($_REQUEST['searchField']) ? $_REQUEST['searchField'] : "";
 $multipleString = "multiple=\"true\"";
 if (!empty($searchField)) {
-	$subdcriptionFolderHelp = "";
-	$multipleString = "";
-	if ($searchField == 'trash') {
-		$title = $mod_strings['LBL_SELECT_TRASH_FOLDERS'];
-	} else {
-		$title = $mod_strings['LBL_SELECT_SENT_FOLDERS'];
-	} // else
-
+    $subdcriptionFolderHelp = "";
+    $multipleString = "";
+    if ($searchField == 'trash') {
+        $title = $mod_strings['LBL_SELECT_TRASH_FOLDERS'];
+    } else {
+        $title = $mod_strings['LBL_SELECT_SENT_FOLDERS'];
+    } // else
 } // else
 
 
 $ie                 = new InboundEmail();
-if(!empty($_REQUEST['ie_id'])) {
+if (!empty($_REQUEST['ie_id'])) {
     $ie->retrieve($_REQUEST['ie_id']);
 }
 $ie->email_user     = $_REQUEST['email_user'];
@@ -119,7 +121,7 @@ $ie->server_url     = $_REQUEST['server_url'];
 $ie->port           = $_REQUEST['port'];
 $ie->protocol       = $_REQUEST['protocol'];
 //Bug 23083.Special characters in email password results in IMAP authentication failure
-if(!empty($_REQUEST['email_password'])) {
+if (!empty($_REQUEST['email_password'])) {
     $ie->email_password = html_entity_decode($_REQUEST['email_password'], ENT_QUOTES);
     $ie->email_password = str_rot13($ie->email_password);
 }
@@ -127,7 +129,7 @@ if(!empty($_REQUEST['email_password'])) {
 
 $ie->mailbox        = 'INBOX';
 
-if($popupBoolean) {
+if ($popupBoolean) {
     $returnArray = $ie->getFoldersListForMailBox();
     $foldersList = $returnArray['foldersList'];
     if ($returnArray['status']) {
@@ -137,7 +139,7 @@ if($popupBoolean) {
         $deletedFoldersString = "";
         $count = 0;
         if (!empty($requestMailBox) && !empty($foldersListArray)) {
-            foreach($requestMailBox as $mailbox) {
+            foreach ($requestMailBox as $mailbox) {
                 if (!in_array($mailbox, $foldersListArray)) {
                     if ($count != 0) {
                         $deletedFoldersString = $deletedFoldersString . " ,";
@@ -172,7 +174,7 @@ echo '<table width="100%" cellpadding="0" cellspacing="0" border="0">
 				</td>
 			</tr>';
 if (!empty($subdcriptionFolderHelp)) {
-echo '<tr>
+    echo '<tr>
 				<td>&nbsp;
 				</td>
 				<td>&nbsp;
