@@ -545,11 +545,13 @@ class ListViewDataEmails extends ListViewData
                 }
                 break;
             case 'is_imported':
+                $db = DBManagerFactory::getInstance();
+
                 $uid = $emailHeader['uid'];
                 $importedEmailBeans = BeanFactory::getBean('Emails');
                 $is_imported = $importedEmailBeans->get_full_list(
                     '',
-                    'emails.uid LIKE "' . $uid . '" AND emails.mailbox_id = "' . $inboundEmail->id . '"'
+                    'emails.uid LIKE ' . $db->quoted($uid) . ' AND emails.mailbox_id = ' . $db->quoted($inboundEmail->id)
                 );
 
                 if (null === $is_imported) {
