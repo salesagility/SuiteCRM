@@ -115,7 +115,7 @@ class Meeting extends SugarBean
     public $new_schema = true;
     public $date_changed = false;
     
-    public static $remindersInSaving = false;
+    protected static $remindersInSaving = false;
 
     /**
      * sole constructor
