@@ -63,6 +63,7 @@ class CasesViewEdit extends ViewEdit {
     {
         parent::display();
 
+        $script = "";
         if (empty($this->bean->id)) {
             $script = "
                     $('#update_text').closest('.edit-view-row-item').hide();
@@ -71,9 +72,10 @@ class CasesViewEdit extends ViewEdit {
                     $('#internal_label').closest('.edit-view-row-item').hide();
                     $('#addFileButton').closest('.edit-view-row-item').hide();
                     $('#case_update_form_label').closest('.edit-view-row-item').hide();";
-            $script .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('description'));";
-
-            echo '<script>$(document).ready(function(){' . $script . '})</script>';
         }
+
+        //Required to show the tinyMCE editor in the description field
+        $script .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('description'));";
+        echo '<script>$(document).ready(function(){' . $script . '})</script>';
     }
 }
