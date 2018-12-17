@@ -103,3 +103,7 @@ custom/**/
 
 # Ignore testing environment
 build/tmp/
+
+# IMAP testing
+fakeImapResource
+include/Imap/ImapTestSettings.txt

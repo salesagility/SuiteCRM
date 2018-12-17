@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -113,4 +112,13 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         return $button;
     }
 
+    public function display($defines, $additionalFormFields = null, $nonbutton = false)
+    {
+        $inputID = $this->getWidgetId();
+
+        $button = $this->_get_form($defines, $additionalFormFields);
+        $button .= "<a id='$inputID'>$this->form_value</a>";
+
+        return $button;
+    }
 }

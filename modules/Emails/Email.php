@@ -782,6 +782,7 @@ class Email extends Basic
      * Sends Email for Email 2.0
      *
      * @param $request
+     * @param ImapHandlerInterface $imap
      * @global $mod_strings
      * @global $app_strings
      * @global $current_user
@@ -792,7 +793,7 @@ class Email extends Basic
      * @global $beanFiles
      * @return bool
      */
-    public function email2Send($request)
+    public function email2Send($request, ImapHandlerInterface $imap = null)
     {
         global $mod_strings;
         global $app_strings;
@@ -802,6 +803,12 @@ class Email extends Basic
         global $timedate;
         global $beanList;
         global $beanFiles;
+
+        if (null === $imap) {
+            $imapFactory = new ImapHandlerFactory();
+            $imap = $imapFactory->getImapHandler();
+        }
+
         $OBCharset = $locale->getPrecedentPreference('default_email_charset');
 
         /**********************************************************************
@@ -1305,31 +1312,31 @@ class Email extends Basic
             $this->save();
         }
 
-		if(!empty($request['fromAccount'])) {
-			if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
-				$sentFolder = $ie->get_stored_options("sentFolder");
-				if (!empty($sentFolder)) {
-					// Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
-					$emailbody = $mail->CreateBody();
-					$emailheader = $mail->CreateHeader();
-					$data = $emailheader . "\r\n" . $emailbody . "\r\n";
-					$ie->mailbox = $sentFolder;
-					if ($ie->connectMailserver() == 'true') {
-						$connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
-						$returnData = imap_append($ie->conn,$connectString, $data, "\\Seen");
-						if (!$returnData) {
-							$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
-						} // if
-					} else {
-						$GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
-					} // else
-				} else {
-					$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
-				} // else
-			} // if
-		} // if
-		return true;
-	} // end email2send
+        if (!empty($request['fromAccount'])) {
+            if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
+                $sentFolder = $ie->get_stored_options("sentFolder");
+                if (!empty($sentFolder)) {
+                    // Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
+                    $emailbody = $mail->CreateBody();
+                    $emailheader = $mail->CreateHeader();
+                    $data = $emailheader . "\r\n" . $emailbody . "\r\n";
+                    $ie->mailbox = $sentFolder;
+                    if ($ie->connectMailserver() == 'true') {
+                        $connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
+                        $returnData = $imap->append($ie->conn, $connectString, $data, "\\Seen");
+                        if (!$returnData) {
+                            $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
+                        } // if
+                    } else {
+                        $GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
+                    } // else
+                } else {
+                    $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
+                } // else
+            } // if
+        } // if
+        return true;
+    } // end email2send
 
     /**
      * Generates a config-specified separated name and addresses to be used in compose email screen for
@@ -1525,7 +1532,7 @@ class Email extends Basic
             if (!copy($fileLocation, $noteFile)) {
                 $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
             } else {
-                
+
                 if (!$tmpNote->save()) {
                     return false;
                 }
