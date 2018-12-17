@@ -575,24 +575,21 @@ class FP_eventsController extends SugarController
         }
         //Redirect if all emails fail to send
         if($error_count == $delegate_count){
-            $_SESSION['user_error_message'] = array();//clear the error message array
             SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_MSG_2'].$delegate_count);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
 
         }
         else if($error_count > 0 && $error_count <= 10) {//redirect with failed email count.
-            $_SESSION['user_error_message'] = array();
             SugarApplication::appendErrorMessage($error_count.$mod_strings['LBL_ERROR_MSG_4']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         }
-        // Redirect with error count if failed email attempts are greater than 10 
+        // Redirect with error count if failed email attempts are greater than 10
         else if($error_count > 10) {
-            $_SESSION['user_error_message'] = array();
             SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_MSG_3']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         }
         else {
-            SugarApplication::appendErrorMessage($mod_strings['LBL_SUCCESS_MSG']);
+            SugarApplication::appendSuccessMessage($mod_strings['LBL_SUCCESS_MSG']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         }
     }

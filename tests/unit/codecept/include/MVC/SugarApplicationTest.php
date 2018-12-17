@@ -495,7 +495,6 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
             'info',
             'alert',
             'okay',
-            'working'
         );
         foreach ($types as $type) {
             $user_error_message_count = count($_SESSION['suite_messages'][$type]);

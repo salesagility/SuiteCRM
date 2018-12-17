@@ -752,11 +752,27 @@ class SugarApplication {
     {
         $messages = array();
         if (isset($_SESSION['suite_messages'])) {
-            if (isset($type)) {
+            if (isset($type) && !self::isOldMessageType($type)) {
                 if (isset($_SESSION['suite_messages'][$type])) {
                     $messages[$type] = $_SESSION['suite_messages'][$type];
                     if ($clear_queue) {
                         unset($_SESSION['suite_messages'][$type]);
+                    }
+                }
+            } else if (isset($type) && self::isOldMessageType($type)) {
+                if ($type == 'user_error_message'
+                    && isset($_SESSION['suite_messages']['error'])
+                ) {
+                    $messages['error'] = $_SESSION['suite_messages']['error'];
+                    if ($clear_queue) {
+                        unset($_SESSION['suite_messages']['error']);
+                    }
+                } else if ($type == 'user_success_message'
+                    && isset($_SESSION['suite_messages']['okay'])
+                ) {
+                    $messages['okay'] = $_SESSION['suite_messages']['okay'];
+                    if ($clear_queue) {
+                        unset($_SESSION['suite_messages']['okay']);
                     }
                 }
             } else {
@@ -769,7 +785,11 @@ class SugarApplication {
         return($messages);
     }
 
-
+    static private function isOldMessageType($type)
+    {
+        $types = array('user_error_message', 'user_success_message');
+        return in_array($type, $types);
+    }
 
     /**
      * Wrapper for the PHP setcookie() function, to handle cases where headers have

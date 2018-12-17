@@ -505,14 +505,10 @@ class UploadMultipleFiles
             if (!$result['success']) {
                 sugar_rename($new_destination, str_replace($bean_id . '_' . $file_name, $bean_id, $new_destination));
                 $bean->doc_type = 'Sugar';
-                // FIXME: Translate
-                if (!is_array($_SESSION['user_error_message'])) {
-                    $_SESSION['user_error_message'] = array();
-                }
 
                 $error_message = isset($result['errorMessage']) ? $result['errorMessage'] :
                     $GLOBALS['app_strings']['ERR_EXTERNAL_API_SAVE_FAIL'];
-                $_SESSION['user_error_message'][] = $error_message;
+                SugarApplication::appendMessage($error_message, 'error');
 
             } else {
                 unlink($new_destination);
