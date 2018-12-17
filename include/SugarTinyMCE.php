@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,13 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
-
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * PHP wrapper class for Javascript driven TinyMCE WYSIWYG HTML editor
@@ -153,25 +146,32 @@ class SugarTinyMCE
 
 <script type="text/javascript" language="Javascript">
 <!--
-$( document ).ready(function() {
+$(document).ready(function(){
+	load_mce();
+});
+ if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded){
+    load_mce();
+}
+ function load_mce() {
     if (!SUGAR.util.isTouchScreen()) {
         if(tinyMCE.editors.length == 0 ){
             tinyMCE.init({$jsConfig});
-        }else{
-           {$instantiateCall}
-        }      
-    } else {
-eoq;
+         }else{
+            {$instantiateCall}
+         }      
+     } else {
+ eoq;
         $exTargets = explode(",", $targets);
         foreach ($exTargets as $instance) {
-            $ret .=<<<eoq
-    document.getElementById('$instance').style.width = '100%';
-    document.getElementById('$instance').style.height = '100px';
-eoq;
+            $ret .= <<<eoq
+     document.getElementById('$instance').style.width = '100%';
+     document.getElementById('$instance').style.height = '100px';
+ eoq;
         }
-        $ret .=<<<eoq
+        $ret .= <<<eoq
     }
 });
+}
 -->
 </script>
 
