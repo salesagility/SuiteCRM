@@ -251,7 +251,7 @@ class ProjectTask extends SugarBean
     {
         $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
-        $projectTasks[] = "project_task.name like '$the_query_string%'";
+        $where_clauses[] = "project_task.name like '$the_query_string%'";
         $the_where = "";
         foreach ($where_clauses as $clause) {
             if ($the_where != "") {
