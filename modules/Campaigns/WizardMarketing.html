@@ -758,21 +758,6 @@
 							</div>
 						</div>
 						{/if}
-
-						<div class="panel-toolbar">
-
-							<div class="template-container-full">
-								{if !$hide_width_set}
-								<label>{$MOD.LBL_CLICK_TO_ADD}</label>
-								<br>
-								{/if}
-								{$BODY_EDITOR}
-							</div>
-							<!--
-                            <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
-                            <pre id="email_template_view"></pre>
-                            -->
-						</div>
 					</div>
 				</div>
 			</div>
@@ -1392,6 +1377,16 @@
 </td>
 </tr>
 </table>
+
+<div class="template-panel-container panel">
+	<div class="template-container-full">
+		{if !$hide_width_set}
+		<label>{$MOD.LBL_CLICK_TO_ADD}</label>
+		<br>
+		{/if}
+		{$BODY_EDITOR}
+	</div>
+</div>
 
 {literal}
 <script language="javascript">
