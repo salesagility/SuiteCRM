@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,39 +34,58 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
+{* FYI: This template is also used in the detail view pagination *}
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
         <td nowrap class="paginationWrapper">
-            {if !empty($list_link)}
-            <button type="button" id="save_and_continue" class="button" title="{$app_strings.LBL_SAVE_AND_CONTINUE}" onClick="this.form.action.value='Save';if(check_form('EditView')){ldelim}sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');{rdelim}">
-                {$app_strings.LBL_SAVE_AND_CONTINUE}
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;
+            <script>
+                SUGAR.saveAndContinue = function (elem)
+                    {ldelim}
+                        elem.form.action.value='Save';
+                        if(check_form('EditView'))
+                        {ldelim}
+                            sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');
+                        {rdelim}
+                    {rdelim}
+            </script>
+            {if empty($list_link)}
+                {* remove the other save and continue button next to the view change log when you are on the last item on the list *}
+                {literal}
+                    <script>
+                        $(document).ready(function () {
+                          $('#save_and_continue').remove();
+                        })
+                    </script>
+                {/literal}
             {/if}
             <span class="pagination">
                 {if !empty($previous_link)}
-                <button type="button" class="button" title="{$app_strings.LNK_LIST_PREVIOUS}" onClick="document.location.href='{$previous_link}';">
-                    {sugar_getimage name="previous" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_PREVIOUS}
+                <button type="button" class="button btn-pagination" title="{$app_strings.LNK_LIST_PREVIOUS}" onClick="document.location.href='{$previous_link}';">
+                    {*{sugar_getimage name="previous" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_PREVIOUS}*}
+                    <span class="suitepicon suitepicon-action-left"> </span><span class="pagination-label">{$app_strings.LNK_LIST_PREVIOUS}</span>
                 </button>
                 {else}
-                <button type="button" class="button" title="{$app_strings.LNK_LIST_PREVIOUS}" disabled='true'>
-                    {sugar_getimage name="previous_off" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_PREVIOUS}
+                <button type="button" class="button btn-pagination" title="{$app_strings.LNK_LIST_PREVIOUS}" disabled='true'>
+                    {*{sugar_getimage name="previous_off" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_PREVIOUS}*}
+                    <span class="suitepicon suitepicon-action-left"> </span><span class="pagination-label">{$app_strings.LNK_LIST_PREVIOUS}</span>
                 </button>
                 {/if}
                 &nbsp;&nbsp;
-                ({$offset}{if !empty($total)} {$app_strings.LBL_LIST_OF} {$total}{$plus}{/if})
+                <span class="pagination-range-label">({$offset}{if !empty($total)} {$app_strings.LBL_LIST_OF} {$total}{$plus}{/if})</span>
                 &nbsp;&nbsp;
                 {if !empty($next_link)}
-                <button type="button" class="button" title="{$app_strings.LNK_LIST_NEXT}" onClick="document.location.href='{$next_link}';">
-                    {sugar_getimage name="next" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_NEXT}
+                <button type="button" class="button btn-pagination" title="{$app_strings.LNK_LIST_NEXT}" onClick="document.location.href='{$next_link}';">
+                    {*{sugar_getimage name="next" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_NEXT}*}
+                    <span class="pagination-label">{$app_strings.LNK_LIST_NEXT}</span><span class="suitepicon suitepicon-action-right"> </span>
                 </button>
                 {else}
-                <button type="button" class="button" title="{$app_strings.LNK_LIST_NEXT}" disabled="true">
-                    {sugar_getimage name="next_off" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_NEXT}
+                <button type="button" class="button btn-pagination" title="{$app_strings.LNK_LIST_NEXT}" disabled="true">
+                    {*{sugar_getimage name="next_off" attr="border=\"0\" align=\"absmiddle\"" ext=".gif" alt=$app_strings.LNK_LIST_NEXT}*}
+                    <span class="pagination-label">{$app_strings.LNK_LIST_NEXT}</span><span class="suitepicon suitepicon-action-right"> </span>
                 </button>
                 {/if}
             </span>

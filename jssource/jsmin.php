@@ -1,6 +1,7 @@
 <?php
 
-class SugarMin {
+class SugarMin
+{
 
     /**
      * jsParser will take javascript source code and minify it.
@@ -17,7 +18,8 @@ class SugarMin {
      * @param string $currentOptions
      * @return void
      */
-    private function __construct($text, $compression) {
+    private function __construct($text, $compression)
+    {
         $this->text = trim($text)."\n";
         $this->compression = $compression;
     }
@@ -29,7 +31,8 @@ class SugarMin {
      * @param string $compression Compression option. {light, deep}.
      * @return string $output Output javascript code as a string.
      */
-    static public function minify($js, $compression = 'light') {
+    public static function minify($js, $compression = 'light')
+    {
         try {
             $me = new SugarMin($js, $compression);
             $output = $me->jsParser();
@@ -41,8 +44,9 @@ class SugarMin {
         }
     }
 
-    protected function jsParser() {
+    protected function jsParser()
+    {
         require_once('jssource/Minifier.php');
         return Minifier::minify($this->text);
-	}
+    }
 }

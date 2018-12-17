@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 -->
 {$ROLLOVER}
 {$ERROR}
@@ -89,11 +86,11 @@
 
 <td class='edit view' width='100%'>
 <div id="wiz_message"></div>
-<div id=wizard>
+<div id=wizard class="wizard-unique-elem">
 
 	<div id='step1'><table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<th colspan="2" align="left" ><h4>{$MOD.LBL_NAVIGATION_MENU_SETUP}</h4></th>
+	<th colspan="2" align="left" ><h4 class="header-4">{$MOD.LBL_NAVIGATION_MENU_SETUP}</h4></th>
 	</tr>
 	<tr>
 	<td scope="row"><span sugar='slot1'>
@@ -124,7 +121,7 @@
 										<table width="100%" cellpadding="0" cellspacing="0">
 											<tr>
 												<td width="20%" scope="row">{$MOD.LBL_MAIL_SMTPSERVER} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
-												<td width="30%" ><input type="text"  title="{$MOD.LBL_MAIL_SMTPSERVER}"  name="wiz_step1_mail_smtpserver"  id='mail_smtpserver'  tabindex="1" size="25" maxlength="64" value="{$mail_smtpserver}"></td>
+												<td width="30%" ><input type="text"  title="{$MOD.LBL_MAIL_SMTPSERVER}"  name="wiz_step1_mail_smtpserver"  id='mail_smtpserver'  tabindex="1" size="25" maxlength="255" value="{$mail_smtpserver}"></td>
 												<td width="20%" scope="row">{$MOD.LBL_MAIL_SMTPPORT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
 												<td width="30%" ><input type="text" id='mail_smtpport' name="wiz_step1_mail_smtpport" title="{$MOD.LBL_MAIL_SMTPPORT}" tabindex="1" size="5" maxlength="5" value="{$mail_smtpport}"></td>
 											</tr>
@@ -147,9 +144,9 @@
 														<table width="100%" cellpadding="0" cellspacing="0">
 															<tr>
 																<td width="20%" scope="row">{$MOD.LBL_MAIL_SMTPUSER} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
-																<td width="30%" ><input type="text" name="wiz_step1_mail_smtpuser" id='mail_smtpuser' title='{$MOD.LBL_MAIL_SMTPUSER}' size="25" maxlength="64" value="{$mail_smtpuser}" tabindex='1' ></td>
+																<td width="30%" ><input type="text" name="wiz_step1_mail_smtpuser" id='mail_smtpuser' title='{$MOD.LBL_MAIL_SMTPUSER}' size="25" maxlength="255" value="{$mail_smtpuser}" tabindex='1' ></td>
 																<td width="20%" scope="row">{$MOD.LBL_MAIL_SMTPPASS} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
-																<td width="30%" ><input type="password" title="{$MOD.LBL_MAIL_SMTPPASS}" name="wiz_step1_mail_smtppass" id='mail_smtppass' size="25" maxlength="64" value="{$mail_smtppass}" tabindex='1'></td>
+																<td width="30%" ><input type="password" title="{$MOD.LBL_MAIL_SMTPPASS}" name="wiz_step1_mail_smtppass" id='mail_smtppass' size="25" maxlength="255" value="{$mail_smtppass}" tabindex='1'></td>
 															</tr>
 														</table>
 													</div>
@@ -166,7 +163,7 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr><td>&nbsp;</td></tr>
 				<tr><td>&nbsp;</td></tr>
-				<tr><td><h4>{$MOD.LBL_MASS_MAILING_TITLE}</h4></td></tr>
+				<tr><td><h4 class="header-4">{$MOD.LBL_MASS_MAILING_TITLE}</h4></td></tr>
 			<tr><td>
 			 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
@@ -213,7 +210,7 @@
 	</div>
 
 
-	<div id='step2'><table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<div id='step2' class="step2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 	<td  colspan="2"><h3>{$MOD.LBL_NAVIGATION_MENU_NEW_MAILBOX}</h3></td>
 	<td colspan="2">&nbsp;</td>
@@ -230,67 +227,67 @@
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td valign="top" scope="row" width="20%" NOWRAP>
-				<slot>{$MOD.LBL_MAILBOX_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{$MOD.LBL_MAILBOX_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot><input id='name' name='wiz_step2_name' title='{$MOD.LBL_MAILBOX_NAME}' tabindex='10' size='30' maxlength='255' type="text" value="" ></slot></td>
+				<span><input id='name' name='wiz_step2_name' title='{$MOD.LBL_MAILBOX_NAME}' tabindex='10' size='30' maxlength='255' type="text" value="" ></span></td>
 			<td valign="top" scope="row" width="20%" NOWRAP>
-				<slot>{$MOD.LBL_FROM_ADDR}:&nbsp;</slot></td>
+				<span>{$MOD.LBL_FROM_ADDR}:&nbsp;</span></td>
 			<td valign="top"  width="30%" NOWRAP>
-				<slot><input name="wiz_step2_from_addr" id="from_addr" title='{$MOD.LBL_FROM_ADDR}' size='30'>&nbsp;</slot></td>
+				<span><input name="wiz_step2_from_addr" id="from_addr" title='{$MOD.LBL_FROM_ADDR}' size='30'>&nbsp;</span></td>
 
 		</tr>
 		<tr>
 			<td valign="top" scope="row">
-					<slot>{$MOD.LBL_SERVER_URL}: <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+					<span>{$MOD.LBL_SERVER_URL}: <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot><input title='{$MOD.LBL_SERVER_URL}' name='wiz_step2_server_url' id='server_url' tabindex='20' size='30' maxlength='100' type="text" value="" ></slot></td>
+				<span><input title='{$MOD.LBL_SERVER_URL}' name='wiz_step2_server_url' id='server_url' tabindex='20' size='30' maxlength='100' type="text" value="" ></span></td>
 			<td valign="top" scope="row">
-				<slot>{$MOD.LBL_LOGIN}:
-				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{$MOD.LBL_LOGIN}:
+				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot><input title="{$MOD.LBL_LOGIN}" name='wiz_step2_email_user' id='email_user' tabindex='70' size='30' maxlength='100' type="text" value="" ></slot></td>
+				<span><input title="{$MOD.LBL_LOGIN}" name='wiz_step2_email_user' id='email_user' tabindex='70' size='30' maxlength='100' type="text" value="" ></span></td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="20%" NOWRAP>
-				<slot>{$MOD.LBL_SERVER_TYPE}:
-				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{$MOD.LBL_SERVER_TYPE}:
+				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot>
-				<select title='{$MOD.LBL_SERVER_TYPE}' name='wiz_step2_protocol' id='protocol' tabindex='30' onchange="toggle_monitored_folder(this); setPortDefault();" >{$PROTOCOL}</select></slot></td>
+				<span>
+				<select title='{$MOD.LBL_SERVER_TYPE}' name='wiz_step2_protocol' id='protocol' tabindex='30' onchange="toggle_monitored_folder(this); setPortDefault();" >{$PROTOCOL}</select></span></td>
 			<td valign="top" scope="row">
-				<slot>{$MOD.LBL_PASSWORD}:
-				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}&nbsp;</slot></td>
+				<span>{$MOD.LBL_PASSWORD}:
+				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot><input id='email_password' title="{$MOD.LBL_PASSWORD}" name='wiz_step_email_password' tabindex='80' size='30' maxlength='100' type="password" value="{$PASSWORD}" {$IE_DISABLED}></span></slot></td>
+				<span><input id='email_password' title="{$MOD.LBL_PASSWORD}" name='wiz_step_email_password' tabindex='80' size='30' maxlength='100' type="password" value="{$PASSWORD}" {$IE_DISABLED}></span></span></td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="20%" NOWRAP>
-				<slot>{$MOD.LBL_PORT}:
-				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{$MOD.LBL_PORT}:
+				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot>
+				<span>
 				<input title="{$MOD.LBL_PORT}"  type='text' name='wiz_step2_port' id='port' tabindex="40" value="{$PORT}" size='10'>
             <td valign="top" scope="row" width="20%" NOWRAP>
-                <slot><div id='label_inbox' style="{$DISPLAY}">{$MOD.LBL_MAILBOX}: <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</div></span>&nbsp;</slot></td>
+                <span><div id='label_inbox' style="{$DISPLAY}">{$MOD.LBL_MAILBOX}: <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</div></span>&nbsp;</span></td>
             <td valign="top"  width="30%">
-                <slot><div id='inbox' style="{$DISPLAY}"><input id="mailbox" name='mailbox' title="{$MOD.LBL_MAILBOX}" tabindex='90' size='30' maxlength='50' type="text" value="{$MOD.LBL_MAILBOX_DEFAULT}"></div>
-                </slot></td>
+                <span><div id='inbox' style="{$DISPLAY}"><input id="mailbox" name='mailbox' title="{$MOD.LBL_MAILBOX}" tabindex='90' size='30' maxlength='50' type="text" value="{$MOD.LBL_MAILBOX_DEFAULT}"></div>
+                </span></td>
 		</tr>
         <tr>
             <td valign="top" scope="row" width="1%" NOWRAP>
                 <div class="maybe">
-                    <slot>{$MOD.LBL_SSL}:&nbsp;</slot>
+                    <span>{$MOD.LBL_SSL}:&nbsp;</span>
                 </div>
             </td>
             <td valign="top"  width="33%">
-                <slot>
+                <span>
                     <div class="maybe">
                         <div id="rollover">
                             <a href="#" class="rollover"><span>{$MOD.LBL_SSL_DESC}</span><img border="0" src="{sugar_getimagepath file='helpInline.gif'}"></a>
                         </div>
                         <input name='ssl' id='ssl' tabindex='45' type='checkbox' class="checkbox" value="1" onClick="setPortDefault();" title="{$MOD.LBL_SSL}" {$IE_DISABLED}>
                     </div>
-                </slot>
+                </span>
             </td>
         </tr>
 	</table>
@@ -298,7 +295,7 @@
 	</div>
 
 
-	<div id='step3'>
+	<div id='step3' class="step3">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr><td>
 			<h3>{$MOD.LBL_NAVIGATION_MENU_SUMMARY}</h3>

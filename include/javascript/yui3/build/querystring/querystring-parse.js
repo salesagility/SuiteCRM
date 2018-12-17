@@ -1,14 +1,8 @@
 /*
- Copyright (c) 2010, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.com/yui/license.html
- version: 3.3.0
- build: 3167
- */
-YUI.add('querystring-parse',function(Y){var QueryString=Y.namespace("QueryString"),pieceParser=function(eq){return function parsePiece(key,val){var sliced,numVal,head,tail,ret;if(arguments.length!==2){key=key.split(eq);return parsePiece(QueryString.unescape(key.shift()),QueryString.unescape(key.join(eq)));}
-key=key.replace(/^\s+|\s+$/g,'');if(Y.Lang.isString(val)){val=val.replace(/^\s+|\s+$/g,'');if(!isNaN(val)){numVal=+val;if(val===numVal.toString(10)){val=numVal;}}}
-sliced=/(.*)\[([^\]]*)\]$/.exec(key);if(!sliced){ret={};if(key){ret[key]=val;}
-return ret;}
-tail=sliced[2];head=sliced[1];if(!tail){return parsePiece(head,[val]);}
-ret={};ret[tail]=val;return parsePiece(head,ret);};},mergeParams=function(params,addition){return((!params)?addition:(Y.Lang.isArray(params))?params.concat(addition):(!Y.Lang.isObject(params)||!Y.Lang.isObject(addition))?[params].concat(addition):mergeObjects(params,addition));},mergeObjects=function(params,addition){for(var i in addition){if(i&&addition.hasOwnProperty(i)){params[i]=mergeParams(params[i],addition[i]);}}
-return params;};QueryString.parse=function(qs,sep,eq){return Y.Array.reduce(Y.Array.map(qs.split(sep||"&"),pieceParser(eq||"=")),{},mergeParams);};QueryString.unescape=function(s){return decodeURIComponent(s.replace(/\+/g,' '));};},'3.3.0',{requires:['collection']});
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+YUI.add("querystring-parse",function(e){var b=e.namespace("QueryString"),d=function(f){return function g(l,n){var h,m,k,j,i;if(arguments.length!==2){l=l.split(f);return g(b.unescape(l.shift()),b.unescape(l.join(f)));}l=l.replace(/^\s+|\s+$/g,"");if(e.Lang.isString(n)){n=n.replace(/^\s+|\s+$/g,"");if(!isNaN(n)){m=+n;if(n===m.toString(10)){n=m;}}}h=/(.*)\[([^\]]*)\]$/.exec(l);if(!h){i={};if(l){i[l]=n;}return i;}j=h[2];k=h[1];if(!j){return g(k,[n]);}i={};i[j]=n;return g(k,i);};},c=function(g,f){return((!g)?f:(e.Lang.isArray(g))?g.concat(f):(!e.Lang.isObject(g)||!e.Lang.isObject(f))?[g].concat(f):a(g,f));},a=function(h,f){for(var g in f){if(g&&f.hasOwnProperty(g)){h[g]=c(h[g],f[g]);}}return h;};b.parse=function(g,h,f){return e.Array.reduce(e.Array.map(g.split(h||"&"),d(f||"=")),{},c);};b.unescape=function(f){return decodeURIComponent(f.replace(/\+/g," "));};},"3.3.0",{requires:["collection"]});

@@ -116,12 +116,22 @@ class Zend_Gdata_Media_Extension_MediaContent extends Zend_Gdata_Extension
     /**
      * Creates an individual MediaContent object.
      */
-    public function __construct($url = null, $fileSize = null, $type = null,
-            $medium = null, $isDefault = null, $expression = null,
-            $bitrate = null, $framerate = null, $samplingrate = null,
-            $channels = null, $duration = null, $height = null, $width = null,
-            $lang = null)
-    {
+    public function __construct(
+        $url = null,
+        $fileSize = null,
+        $type = null,
+            $medium = null,
+        $isDefault = null,
+        $expression = null,
+            $bitrate = null,
+        $framerate = null,
+        $samplingrate = null,
+            $channels = null,
+        $duration = null,
+        $height = null,
+        $width = null,
+            $lang = null
+    ) {
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
         $this->_url = $url;
@@ -518,5 +528,4 @@ class Zend_Gdata_Media_Extension_MediaContent extends Zend_Gdata_Extension
         $this->_lang = $value;
         return $this;
     }
-
 }

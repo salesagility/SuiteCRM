@@ -41,7 +41,8 @@ if (!defined ('PDF_TYPE_STREAM'))
     define ('PDF_TYPE_STREAM', 10);
 
 
-class pdf_parser {
+class pdf_parser
+{
 	
 	/**
      * Filename

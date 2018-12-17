@@ -37,7 +37,6 @@ require_once 'Zend/Gdata/App/Extension.php';
  */
 class Zend_Gdata_Media_Extension_MediaPlayer extends Zend_Gdata_Extension
 {
-
     protected $_rootElement = 'player';
     protected $_rootNamespace = 'media';
 
@@ -174,5 +173,4 @@ class Zend_Gdata_Media_Extension_MediaPlayer extends Zend_Gdata_Extension
         $this->_height = $value;
         return $this;
     }
-
 }

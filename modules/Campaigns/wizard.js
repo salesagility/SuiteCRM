@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 function hide(divname){var elem1=document.getElementById(divname);elem1.style.display='none';}
 function show(div){var elem1=document.getElementById(div);if(elem1){elem1.style.display='';}}
 function showdiv(div){hideall();show(div);}
@@ -75,7 +76,8 @@ return true;}
 var showEmailTemplateAttachments=function(attachments,lblLnkRemove){var html='';$(attachments).each(function(i,attachment){if(attachment.filename){var secureLink='index.php?entryPoint=download&id='+attachment.id+'&type=Notes';html+='<input type="checkbox" name="remove_attachment[]" value="'+attachment.id+'"> '+lblLnkRemove+'&nbsp;&nbsp;';html+='<a href="'+secureLink+'" target="_blank">'+attachment.filename+'</a><br>';}});$('#attachments_container').html(html);};var onEmailTemplateChange=function(elem,namePrefixCopyOf,templateIdDefault,callback){var lblLnkRemove='Remove';var autoCheckUpdateCheckbox=function(){if(!$('#template_id').val()){$('input[name="update_exists_template"]').prop('checked',false);$('input[name="update_exists_template"]').prop('disabled',true);}
 else{$('input[name="update_exists_template"]').prop('disabled',false);}}
 autoCheckUpdateCheckbox();if($('input[name="update_exists_template"]').prop('checked')){namePrefixCopyOf='';}
-var emailTemplateId=$(elem).val()?$(elem).val():(typeof templateIdDefault!='undefined'&&templateIdDefault?templateIdDefault:null);if(emailTemplateId){$('#email_template_view_html').html('');$('#email_template_view').html('');$.post('index.php?entryPoint=emailTemplateData',{'campaignId':$('input[name="campaign_id"]').val(),'emailTemplateId':emailTemplateId},function(resp){var results=JSON.parse(resp);if(!results.error){$('#email_template_view_html').html(results.data.body_html);$('#email_template_view').html(results.data.body);var htmlCode=$('<textarea />').html(results.data.body_html).text();$('#email_template_editor').html(htmlCode);$('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);$('#template_id').val(results.data.id);$('input[name="update_exists_template"]').prop('checked',true);autoCheckUpdateCheckbox();$('#template_name').val(($('#update_exists_template').prop('checked')?namePrefixCopyOf:'')+results.data.name);$('#template_subject').val(results.data.subject);showEmailTemplateAttachments(results.data.attachments,lblLnkRemove);if(typeof callback!='undefined'){callback();}}
-else{console.log(results.error);}});}};var onScheduleClick=function(e){$('input[name="action"]').val('WizardMarketingSave');$('input[name="module"]').val('Campaigns');$('#show_wizard_summary').val('1');$('#sendMarketingEmailSchedule').val('1');$('#sendMarketingEmailTest').val('0');$('#wizform').submit();};var onSendAsTestClick=function(e,campaignId,marketingId){$('input[name="action"]').val('WizardMarketingSave');$('input[name="module"]').val('Campaigns');$('#show_wizard_summary').val('1');$('#sendMarketingEmailSchedule').val('0');$('#sendMarketingEmailTest').val('1');$('#wizform').submit();};var addTargetListData=function(id){var result_data={"form_name":'wizform',"name_to_value_array":{popup_target_list_id:id,popup_target_list_name:targetListDataJSON[id].name,popup_target_list_type:targetListDataJSON[id].type,popup_target_list_count:targetListDataJSON[id].count,},"passthru_data":Object(),"popupConfirm":0};set_return_prospect_list(result_data);};$(function(){$('input').keydown(function(event){if(event.keyCode==13){event.preventDefault();return false;}
+var emailTemplateId=$(elem).val()?$(elem).val():(typeof templateIdDefault!='undefined'&&templateIdDefault?templateIdDefault:null);if(emailTemplateId){$('#email_template_view_html').html('');$('#email_template_view').html('');$.post('index.php?entryPoint=emailTemplateData',{'campaignId':$('input[name="campaign_id"]').val(),'emailTemplateId':emailTemplateId},function(resp){var results=JSON.parse(resp);if(!results.error){$('#email_template_view_html').html(results.data.body_html);$('#email_template_view').html(results.data.body);var htmlCode=$('<textarea />').html(results.data.body_html).text();SuiteEditor.apply(htmlCode);$('#template_id').val(results.data.id);$('input[name="update_exists_template"]').prop('checked',true);autoCheckUpdateCheckbox();$('#template_name').val(($('#update_exists_template').prop('checked')?namePrefixCopyOf:'')+results.data.name);$('#template_subject').val(results.data.subject);showEmailTemplateAttachments(results.data.attachments,lblLnkRemove);if(typeof callback!='undefined'){callback();}}
+else{console.log(results.error);}});}};var onScheduleClick=function(e){$('input[name="action"]').val('WizardMarketingSave');$('input[name="module"]').val('Campaigns');$('#show_wizard_summary').val('1');$('#sendMarketingEmailSchedule').val('1');$('#sendMarketingEmailTest').val('0');$('#wizform').submit();};var onSendAsTestClick=function(e,campaignId,marketingId){$('input[name="action"]').val('WizardMarketingSave');$('input[name="module"]').val('Campaigns');$('#show_wizard_summary').val('1');$('#sendMarketingEmailSchedule').val('0');$('#sendMarketingEmailTest').val('1');if($('#wizform input[name="marketing_id"]').length==0){$('#wizform').append('<input type="hidden" name="marketing_id">');}
+$('#wizform input[name="marketing_id"]').val(marketingId);$('#wizform').submit();};var addTargetListData=function(id){var result_data={"form_name":'wizform',"name_to_value_array":{popup_target_list_id:id,popup_target_list_name:targetListDataJSON[id].name,popup_target_list_type:targetListDataJSON[id].type,popup_target_list_count:targetListDataJSON[id].count,},"passthru_data":Object(),"popupConfirm":0};set_return_prospect_list(result_data);};$(function(){$('input').keydown(function(event){if(event.keyCode==13){event.preventDefault();return false;}
 return true;});});this.GUID=function(){var characters=['a','b','c','d','e','f','1','2','3','4','5','6','7','8','9'];var format='0000000-0000-0000-0000-00000000000';var z=Array.prototype.map.call(format,function($obj){var min=0;var max=characters.length-1;if($obj=='0'){var index=Math.round(Math.random()*(max-min)+min);$obj=characters[index];}
 return $obj;}).toString().replace(/(,)/g,'');return z}

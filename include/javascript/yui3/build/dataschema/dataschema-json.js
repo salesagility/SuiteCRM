@@ -1,31 +1,8 @@
 /*
- Copyright (c) 2010, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.com/yui/license.html
- version: 3.3.0
- build: 3167
- */
-YUI.add('dataschema-json',function(Y){var LANG=Y.Lang,SchemaJSON={getPath:function(locator){var path=null,keys=[],i=0;if(locator){locator=locator.replace(/\[(['"])(.*?)\1\]/g,function(x,$1,$2){keys[i]=$2;return'.@'+(i++);}).replace(/\[(\d+)\]/g,function(x,$1){keys[i]=parseInt($1,10)|0;return'.@'+(i++);}).replace(/^\./,'');if(!/[^\w\.\$@]/.test(locator)){path=locator.split('.');for(i=path.length-1;i>=0;--i){if(path[i].charAt(0)==='@'){path[i]=keys[parseInt(path[i].substr(1),10)];}}}
-else{}}
-return path;},getLocationValue:function(path,data){var i=0,len=path.length;for(;i<len;i++){if(LANG.isObject(data)&&(path[i]in data)){data=data[path[i]];}
-else{data=undefined;break;}}
-return data;},apply:function(schema,data){var data_in=data,data_out={results:[],meta:{}};if(!LANG.isObject(data)){try{data_in=Y.JSON.parse(data);}
-catch(e){data_out.error=e;return data_out;}}
-if(LANG.isObject(data_in)&&schema){if(!LANG.isUndefined(schema.resultListLocator)){data_out=SchemaJSON._parseResults.call(this,schema,data_in,data_out);}
-if(!LANG.isUndefined(schema.metaFields)){data_out=SchemaJSON._parseMeta(schema.metaFields,data_in,data_out);}}
-else{data_out.error=new Error("JSON schema parse failure");}
-return data_out;},_parseResults:function(schema,json_in,data_out){var results=[],path,error;if(schema.resultListLocator){path=SchemaJSON.getPath(schema.resultListLocator);if(path){results=SchemaJSON.getLocationValue(path,json_in);if(results===undefined){data_out.results=[];error=new Error("JSON results retrieval failure");}
-else{if(LANG.isArray(results)){if(LANG.isArray(schema.resultFields)){data_out=SchemaJSON._getFieldValues.call(this,schema.resultFields,results,data_out);}
-else{data_out.results=results;}}
-else{data_out.results=[];error=new Error("JSON Schema fields retrieval failure");}}}
-else{error=new Error("JSON Schema results locator failure");}
-if(error){data_out.error=error;}}
-return data_out;},_getFieldValues:function(fields,array_in,data_out){var results=[],len=fields.length,i,j,field,key,locator,path,parser,simplePaths=[],complexPaths=[],fieldParsers=[],result,record;for(i=0;i<len;i++){field=fields[i];key=field.key||field;locator=field.locator||key;path=SchemaJSON.getPath(locator);if(path){if(path.length===1){simplePaths[simplePaths.length]={key:key,path:path[0]};}else{complexPaths[complexPaths.length]={key:key,path:path};}}else{}
-parser=(LANG.isFunction(field.parser))?field.parser:Y.Parsers[field.parser+''];if(parser){fieldParsers[fieldParsers.length]={key:key,parser:parser};}}
-for(i=array_in.length-1;i>=0;--i){record={};result=array_in[i];if(result){for(j=simplePaths.length-1;j>=0;--j){record[simplePaths[j].key]=Y.DataSchema.Base.parse.call(this,(LANG.isUndefined(result[simplePaths[j].path])?result[j]:result[simplePaths[j].path]),simplePaths[j]);}
-for(j=complexPaths.length-1;j>=0;--j){record[complexPaths[j].key]=Y.DataSchema.Base.parse.call(this,(SchemaJSON.getLocationValue(complexPaths[j].path,result)),complexPaths[j]);}
-for(j=fieldParsers.length-1;j>=0;--j){key=fieldParsers[j].key;record[key]=fieldParsers[j].parser.call(this,record[key]);if(LANG.isUndefined(record[key])){record[key]=null;}}
-results[i]=record;}}
-data_out.results=results;return data_out;},_parseMeta:function(metaFields,json_in,data_out){if(LANG.isObject(metaFields)){var key,path;for(key in metaFields){if(metaFields.hasOwnProperty(key)){path=SchemaJSON.getPath(metaFields[key]);if(path&&json_in){data_out.meta[key]=SchemaJSON.getLocationValue(path,json_in);}}}}
-else{data_out.error=new Error("JSON meta data retrieval failure");}
-return data_out;}};Y.DataSchema.JSON=Y.mix(SchemaJSON,Y.DataSchema.Base);},'3.3.0',{requires:['dataschema-base','json']});
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+YUI.add("dataschema-json",function(C){var A=C.Lang,B={getPath:function(D){var G=null,F=[],E=0;if(D){D=D.replace(/\[(['"])(.*?)\1\]/g,function(I,H,J){F[E]=J;return".@"+(E++);}).replace(/\[(\d+)\]/g,function(I,H){F[E]=parseInt(H,10)|0;return".@"+(E++);}).replace(/^\./,"");if(!/[^\w\.\$@]/.test(D)){G=D.split(".");for(E=G.length-1;E>=0;--E){if(G[E].charAt(0)==="@"){G[E]=F[parseInt(G[E].substr(1),10)];}}}else{}}return G;},getLocationValue:function(G,F){var E=0,D=G.length;for(;E<D;E++){if(A.isObject(F)&&(G[E] in F)){F=F[G[E]];}else{F=undefined;break;}}return F;},apply:function(F,G){var D=G,E={results:[],meta:{}};if(!A.isObject(G)){try{D=C.JSON.parse(G);}catch(H){E.error=H;return E;}}if(A.isObject(D)&&F){if(!A.isUndefined(F.resultListLocator)){E=B._parseResults.call(this,F,D,E);}if(!A.isUndefined(F.metaFields)){E=B._parseMeta(F.metaFields,D,E);}}else{E.error=new Error("JSON schema parse failure");}return E;},_parseResults:function(H,D,G){var F=[],I,E;if(H.resultListLocator){I=B.getPath(H.resultListLocator);if(I){F=B.getLocationValue(I,D);if(F===undefined){G.results=[];E=new Error("JSON results retrieval failure");}else{if(A.isArray(F)){if(A.isArray(H.resultFields)){G=B._getFieldValues.call(this,H.resultFields,F,G);}else{G.results=F;}}else{G.results=[];E=new Error("JSON Schema fields retrieval failure");}}}else{E=new Error("JSON Schema results locator failure");}if(E){G.error=E;}}return G;},_getFieldValues:function(L,Q,E){var G=[],N=L.length,H,F,P,R,K,T,D,J=[],O=[],M=[],S,I;for(H=0;H<N;H++){P=L[H];R=P.key||P;K=P.locator||R;T=B.getPath(K);if(T){if(T.length===1){J[J.length]={key:R,path:T[0]};}else{O[O.length]={key:R,path:T};}}else{}D=(A.isFunction(P.parser))?P.parser:C.Parsers[P.parser+""];if(D){M[M.length]={key:R,parser:D};}}for(H=Q.length-1;H>=0;--H){I={};S=Q[H];if(S){for(F=J.length-1;F>=0;--F){I[J[F].key]=C.DataSchema.Base.parse.call(this,(A.isUndefined(S[J[F].path])?S[F]:S[J[F].path]),J[F]);}for(F=O.length-1;F>=0;--F){I[O[F].key]=C.DataSchema.Base.parse.call(this,(B.getLocationValue(O[F].path,S)),O[F]);}for(F=M.length-1;F>=0;--F){R=M[F].key;I[R]=M[F].parser.call(this,I[R]);if(A.isUndefined(I[R])){I[R]=null;}}G[H]=I;}}E.results=G;return E;},_parseMeta:function(G,D,F){if(A.isObject(G)){var E,H;for(E in G){if(G.hasOwnProperty(E)){H=B.getPath(G[E]);if(H&&D){F.meta[E]=B.getLocationValue(H,D);}}}}else{F.error=new Error("JSON meta data retrieval failure");}return F;}};C.DataSchema.JSON=C.mix(B,C.DataSchema.Base);},"3.3.0",{requires:["dataschema-base","json"]});

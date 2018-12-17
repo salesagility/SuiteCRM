@@ -214,6 +214,7 @@ if (typeof('console') == 'undefined') {
         //Setup Browser History
         var mbContent = YAHOO.util.History.getBookmarkedState('mbContent');
 
+
         if (ModuleBuilder.mode == 'mb') {
           mp.getUnitByPosition('left').header.firstChild.innerHTML = SUGAR.language.get('ModuleBuilder', 'LBL_SECTION_PACKAGES');
           mbContent = mbContent ? mbContent : 'module=ModuleBuilder&action=package&package=';
@@ -231,6 +232,7 @@ if (typeof('console') == 'undefined') {
           mp.getUnitByPosition('left').collapse(false);
           mbContent = mbContent ? mbContent : 'module=ModuleBuilder&action=home';
         }
+
 
         YAHOO.util.History.register('mbContent', mbContent, ModuleBuilder.navigate);
         YAHOO.util.History.initialize("yui-history-field", "yui-history-iframe");
@@ -674,18 +676,18 @@ if (typeof('console') == 'undefined') {
 
           // get bookmarked url state
           var YUI_HistoryBookmarkedState = YAHOO.util.History.getBookmarkedState('mbContent');
-          var urlVars = {};
+            var urlVars = {};
 
-          if (YUI_HistoryBookmarkedState === null) {
-            urlVars.module = '';
-            urlVars.action = '';
-            urlVars.vie_package = '';
+            if (YUI_HistoryBookmarkedState === null) {
+                urlVars.module = '';
+                urlVars.action = '';
+                urlVars.vie_package = '';
           } else {
-            var splits = YUI_HistoryBookmarkedState.split('&');
-            for (key in splits) {
-              var urlVar = splits[key].split('=');
-              urlVars[urlVar[0]] = urlVar[1];
-            }
+              var splits = YUI_HistoryBookmarkedState.split('&');
+              for (key in splits) {
+                var urlVar = splits[key].split('=');
+                urlVars[urlVar[0]] = urlVar[1];
+              }
           }
 
           // check where we are and do it if we are in field editor in module builder

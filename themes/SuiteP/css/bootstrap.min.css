@@ -190,6 +190,13 @@ a, a:visited {
 a[href]:after {
     content: " (" attr(href) ")"}
 
+/* Fix issue no.1338 */
+@media print {
+    a[href]:after {
+        content: none !important;
+    }
+}
+
 abbr[title]:after {
     content: " (" attr(title) ")"}
 
@@ -4012,7 +4019,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 .navbar {
     position: relative;
     min-height: 90px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     border: 1px solid transparent;
 }
 

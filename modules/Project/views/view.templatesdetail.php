@@ -1,11 +1,12 @@
 <?php
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,57 +35,55 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class ProjectViewTemplatesDetail extends ViewDetail 
+class ProjectViewTemplatesDetail extends ViewDetail
 {
- 	/**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
-	protected function _getModuleTitleParams($browserTitle = false)
-	{
-	    global $mod_strings;
-	    
-    	return array(
-    	   $this->_getModuleTitleListParam($browserTitle),
-    	   "<a href='index.php?module=Project&action=EditView&record={$this->bean->id}'>{$this->bean->name}</a>",
-    	   $mod_strings['LBL_PROJECT_TEMPLATE']
-    	   );
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+        
+        return array(
+           $this->_getModuleTitleListParam($browserTitle),
+           "<a href='index.php?module=Project&action=EditView&record={$this->bean->id}'>{$this->bean->name}</a>",
+           $mod_strings['LBL_PROJECT_TEMPLATE']
+           );
     }
     
-	function display() 
-	{
- 		global $beanFiles;
-		require_once($beanFiles['Project']);
+    public function display()
+    {
+        global $beanFiles;
+        require_once($beanFiles['Project']);
 
-		$focus = new Project();
-		$focus->retrieve($_REQUEST['record']);
+        $focus = new Project();
+        $focus->retrieve($_REQUEST['record']);
 
-		global $app_list_strings, $current_user, $mod_strings;
-		$this->ss->assign('APP_LIST_STRINGS', $app_list_strings);
+        global $app_list_strings, $current_user, $mod_strings;
+        $this->ss->assign('APP_LIST_STRINGS', $app_list_strings);
 
-		if($current_user->id == $focus->assigned_user_id || $current_user->is_admin){
-			$this->ss->assign('OWNER_ONLY', true);
-		}
-		else{
-			$this->ss->assign('OWNER_ONLY', false);
-		}
- 		parent::display();
- 	}
+        if ($current_user->id == $focus->assigned_user_id || $current_user->is_admin) {
+            $this->ss->assign('OWNER_ONLY', true);
+        } else {
+            $this->ss->assign('OWNER_ONLY', false);
+        }
+        parent::display();
+    }
 
- 	/**
+    /**
      * @see SugarView::_displaySubPanels()
      */
     protected function _displaySubPanels()
     {
-    	require_once ('include/SubPanel/SubPanelTiles.php');
-   	 	$subpanel = new SubPanelTiles( $this->bean, 'ProjectTemplates' );
-    	echo $subpanel->display( true, true );
+        require_once('include/SubPanel/SubPanelTiles.php');
+        $subpanel = new SubPanelTiles($this->bean, 'ProjectTemplates');
+        echo $subpanel->display(true, true);
     }
-
 }

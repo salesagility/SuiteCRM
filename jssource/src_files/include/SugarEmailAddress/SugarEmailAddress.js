@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 (function () {
   //Do not double define
@@ -80,7 +81,16 @@
     prefillEmailAddresses: function (tableId, o) {
       for (i = 0; i < o.length; i++) {
         o[i].email_address = o[i].email_address.replace('&#039;', "'");
-        this.addEmailAddress(tableId, o[i].email_address, o[i].primary_address, o[i].reply_to_address, o[i].opt_out, o[i].invalid_email, o[i].email_address_id);
+        this.addEmailAddress(
+          tableId,
+          o[i].email_address,
+          o[i].primary_address,
+          o[i].reply_to_address,
+          o[i].opt_out,
+          o[i].invalid_email,
+          o[i].email_address_id,
+          o[i].confirm_opt_in
+        );
       }
     },//prefillEmailAddresses
 
@@ -209,7 +219,7 @@
       return false;
     },//freezeEvent
 
-    addEmailAddress: function (tableId, address, primaryFlag, replyToFlag, optOutFlag, invalidFlag, emailId) {
+    addEmailAddress: function (tableId, address, primaryFlag, replyToFlag, optOutFlag, invalidFlag, emailId, optInFlag) {
       _eaw = this;
 
       if (_eaw.addInProgress) {
@@ -228,7 +238,8 @@
       lineContainer.removeClass('hidden');
       lineContainer.attr('id', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
       lineContainer.attr('name', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
-
+      // Add line item to lines container
+      $(lineContainer).appendTo('.email-address-lines-container');
 
       // Set up line item
       // use the value if the tabindex value for email has been passed in from metadata (defined in include/EditView/EditView.tpl
@@ -245,9 +256,7 @@
       emailField.attr('id', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
       emailField.attr('tabindex', tabIndexCount);
       emailField.attr('enabled', "true");
-      if (address != '') {
-        emailField.prop('value', address);
-      }
+      emailField.attr('value', address);
       emailField.eaw = _eaw;
       emailField.on('blur', function (e) {
         emailField.eaw.retrieveEmailAddress(e);
@@ -263,7 +272,6 @@
       removeButton.attr('tabindex', tabIndexCount);
       removeButton.attr('enabled', "true");
       removeButton.attr('data-row', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
-      removeButton.attr('id', _eaw.totalEmailAddresses);
       removeButton.attr('module-id', _eaw.id);
       removeButton.attr('module-email-id', _eaw.totalEmailAddresses);
       removeButton.attr('module', this.module);
@@ -299,7 +307,7 @@
       // Reply to checkbox
       var replyToCheckbox = lineContainer.find('input#email-address-reply-to-flag');
       if (replyToCheckbox.length == 1) {
-        replyToCheckbox.attr('name', this.module + _eaw.id + '"emailAddressReplyToFlag');
+        replyToCheckbox.attr('name', this.module + _eaw.id + 'emailAddressReplyToFlag');
         replyToCheckbox.attr('id', this.module + _eaw.id + 'emailAddressReplyToFlag' + _eaw.totalEmailAddresses);
         replyToCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
         replyToCheckbox.attr('tabindex', tabIndexCount);
@@ -307,35 +315,6 @@
         replyToCheckbox.eaw = _eaw;
         replyToCheckbox.prop("checked", (replyToFlag == '1'));
         _eaw.replyToFlagObject[replyToCheckbox.attr('id')] = (replyToFlag == '1');
-        //replyToCheckbox.click(function () {
-        //  var form = document.forms[_eaw.emailView];
-        //  if (!form) {
-        //    form = document.forms['editContactForm'];
-        //  }
-        //  var nav = new String(navigator.appVersion);
-        //
-        //  if (nav.match(/MSIE/gim)) {
-        //    for (i = 0; i < form.elements.length; i++) {
-        //      var id = new String(form.elements[i].id);
-        //      if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
-        //        form.elements[i].checked = false;
-        //      }
-        //    }
-        //  }
-        //  for (i = 0; i < form.elements.length; i++) {
-        //    var id = new String(form.elements[i].id);
-        //    if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
-        //      _eaw.replyToFlagObject[_eaw.id] = false;
-        //    }
-        //  } // for
-        //  if (_eaw.replyToFlagObject[this.id]) {
-        //    _eaw.replyToFlagObject[this.id] = false;
-        //    this.checked = false;
-        //  } else {
-        //    _eaw.replyToFlagObject[this.id] = true;
-        //    this.checked = true;
-        //  } // else
-        //});
       }
 
 
@@ -349,9 +328,6 @@
         optOutCheckbox.attr('enabled', "true");
         optOutCheckbox.eaw = _eaw;
         optOutCheckbox.prop("checked", (optOutFlag == '1'));
-        //optOutCheckbox.click(function () {
-        //  _eaw.toggleCheckbox(this);
-        //});
       }
 
 
@@ -365,31 +341,47 @@
         invalidCheckbox.attr('enabled', "true");
         invalidCheckbox.eaw = _eaw;
         invalidCheckbox.prop("checked", (invalidFlag == '1'));
-        //invalidCheckbox.click(function () {
-        //  _eaw.toggleCheckbox(this);
-        //});
       }
 
+      // OptIn checkbox
+      var optInCheckbox = lineContainer.find('input#email-address-opted-in-flag');
+      if (optInCheckbox.length == 1) {
+        optInCheckbox.attr('name', this.module + _eaw.id + 'emailAddressOptInFlag[]');
+        optInCheckbox.attr('id', this.module + _eaw.id + 'emailAddressOptInFlag' + _eaw.totalEmailAddresses);
+        optInCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+        optInCheckbox.attr('tabindex', tabIndexCount);
+        optInCheckbox.attr('enabled', "true");
+        optInCheckbox.eaw = _eaw;
+        optInCheckbox.prop("checked", (optInFlag == 'opt-in' || optInFlag == 'confirmed-opt-in'));
+      }
 
       // Verified flag
-      var verifiedField = lineContainer.find('input#verired-flag');
+      var verifiedField = lineContainer.find('input#verified-flag');
       verifiedField.attr('name', this.module + _eaw.id + 'emailAddressVerifiedFlag');
       verifiedField.attr('id', this.module + _eaw.id + 'emailAddressVerifiedFlag' + _eaw.totalEmailAddresses);
       verifiedField.attr('value', 'true');
 
 
       //  Verified email value
-      var verifiedEmailValueField = lineContainer.find('input#verired-email-value');
-      verifiedEmailValueField.attr('name', this.module + _eaw.id + 'emailAddressVerifiedFlag');
-      verifiedEmailValueField.attr('id', this.module + _eaw.id + 'emailAddressVerifiedFlag' + _eaw.totalEmailAddresses);
+      var verifiedEmailValueField = lineContainer.find('input#verified-email-value');
+      verifiedEmailValueField.attr('name', this.module + _eaw.id + 'emailAddressVerifiedEmailValue');
+      verifiedEmailValueField
+        .attr('id', this.module + _eaw.id + 'emailAddressVerifiedEmailValue' + _eaw.totalEmailAddresses);
       verifiedEmailValueField.attr('value', 'true');
 
-
-      // Add line item to lines container
-      $(lineContainer).appendTo('.email-address-lines-container');
+      // Change id of these elements to avoid duplicate ids
+      lineContainer.find('input#Users_email_widget_id')
+        .attr('id', 'Users_email_widget_id' + _eaw.totalEmailAddresses);
+      lineContainer.find('input#emailAddressWidget')
+        .attr('id', 'emailAddressWidget' + _eaw.totalEmailAddresses);
 
       // Add validation to field
-      _eaw.EmailAddressValidation(_eaw.emailView, this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses, _eaw.emailIsRequired, SUGAR.language.get('app_strings', 'LBL_EMAIL_ADDRESS_BOOK_EMAIL_ADDR'));
+      _eaw.EmailAddressValidation(
+        _eaw.emailView,
+        this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses,
+        _eaw.emailIsRequired,
+        SUGAR.language.get('app_strings', 'LBL_EMAIL_ADDRESS_BOOK_EMAIL_ADDR')
+      );
       _eaw.totalEmailAddresses += 1;
       _eaw.numberEmailAddresses = _eaw.totalEmailAddresses;
       _eaw.addInProgress = false;
@@ -463,6 +455,11 @@
           $(value).find('input.email-address-opt-out-flag').first().prop('id', module + id + "emailAddressOptOutFlag" + counter);
           $(value).find('input.email-address-opt-out-flag').first().prop('value', module + id + 'emailAddress' + counter);
 
+          // opt-in flag
+          $(value).find('input.email-address-opted-in-flag').first().prop('name', module + id + "emailAddressOptInFlag[]");
+          $(value).find('input.email-address-opted-in-flag').first().prop('id', module + id + "emailAddressOptInFlag" + counter);
+          $(value).find('input.email-address-opted-in-flag').first().prop('value', module + id + 'emailAddress' + counter);
+
           // remove button
           $(value).find('.email-address-remove-button').first().prop('name', counter);
           $(value).find('.email-address-remove-button').first().prop('data-row', module + id + "emailAddressRow" + counter);
@@ -526,3 +523,6 @@
   };
   emailAddressWidgetLoaded = true;
 })();
+$(document).ready(function(){
+  $('.email-address-primary-flag[checked="checked"]').click();
+});

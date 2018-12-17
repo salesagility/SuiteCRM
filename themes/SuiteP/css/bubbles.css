@@ -579,7 +579,7 @@ is to other properties or values in creating the effect */
     position:absolute;
     bottom:-50px;
     left:50px;
-    border-width:0 20px 50px 0px;
+    border-width:0 20px 50px 0;
     border-style:solid;
     border-color:transparent #5a8f00;
     /* reduce the damage in FF3.0 */

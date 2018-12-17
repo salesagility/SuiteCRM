@@ -36,7 +36,8 @@ define("GF_TWOBYTWO",(1 << 7));
 
 
 
-class TTFontFile {
+class TTFontFile
+{
 
 var $unAGlyphs;	// mPDF 5.4.05
 var $panose;
@@ -353,7 +354,7 @@ var $kerninfo;
 					break;
 				}
 			}
-			else if ($platformID == 0) { // Unicode -- assume all encodings are compatible
+			elseif ($platformID == 0) { // Unicode -- assume all encodings are compatible
 				$format = $this->get_ushort($cmap_offset + $offset);
 				if ($format == 4) {
 					$unicode_cmap_offset = $cmap_offset + $offset;
@@ -439,7 +440,7 @@ var $kerninfo;
 					$this->_pos = $opos;
 					$this->seek($opos);
 				}
-				else if ($platformId == 1 && $encodingId == 0 && $languageId == 0) { // Macintosh, Roman, English, PS Name
+				elseif ($platformId == 1 && $encodingId == 0 && $languageId == 0) { // Macintosh, Roman, English, PS Name
 					$opos = $this->_pos;
 					$N = $this->get_chunk($string_data_offset + $offset, $length);
 					$this->_pos = $opos;
@@ -453,9 +454,9 @@ var $kerninfo;
 			}
 			if ($names[6])
 				$psName = $names[6];
-			else if ($names[4])
+			elseif ($names[4])
 				$psName = preg_replace('/ /','-',$names[4]);
-			else if ($names[1])
+			elseif ($names[1])
 				$psName = preg_replace('/ /','-',$names[1]);
 			else
 				$psName = '';
@@ -653,7 +654,7 @@ var $kerninfo;
 				}
 			}
 			// Microsoft, Unicode Format 12 table HKCS
-			else if ((($platformID == 3 && $encodingID == 10) || $platformID == 0) && !$BMPonly) {
+			elseif ((($platformID == 3 && $encodingID == 10) || $platformID == 0) && !$BMPonly) {
 				$format = $this->get_ushort($cmap_offset + $offset);
 				if ($format == 12) {
 					$unicode_cmap_offset = $cmap_offset + $offset;
@@ -687,7 +688,7 @@ var $kerninfo;
 				if (($endCharCode > 0x20000 && $endCharCode < 0x2A6DF) || ($endCharCode > 0x2F800 && $endCharCode < 0x2FA1F)) {
 					$sipset = true; 
 				}
-				else if ($endCharCode > 0x10000 && $endCharCode < 0x1FFFF) {
+				elseif ($endCharCode > 0x10000 && $endCharCode < 0x1FFFF) {
 					$smpset = true; 
 				}
 				$offset = 0;
@@ -1074,13 +1075,13 @@ var $kerninfo;
 					if ($flags & GF_WORDS) { $pos_in_glyph += 4; }
 					else { $pos_in_glyph += 2; }
 					if ($flags & GF_SCALE) { $pos_in_glyph += 2; }
-					else if ($flags & GF_XYSCALE) { $pos_in_glyph += 4; }
-					else if ($flags & GF_TWOBYTWO) { $pos_in_glyph += 8; }
+					elseif ($flags & GF_XYSCALE) { $pos_in_glyph += 4; }
+					elseif ($flags & GF_TWOBYTWO) { $pos_in_glyph += 8; }
 				}
 				$maxComponentElements = max($maxComponentElements, $nComponentElements);
 			}
 			// Simple Glyph
-			else if (_RECALC_PROFILE && $glyphLen > 2 && $up[1] < (1 << 15) && $up[1] > 0) { 	// Number of contours > 0 simple glyph
+			elseif (_RECALC_PROFILE && $glyphLen > 2 && $up[1] < (1 << 15) && $up[1] > 0) { 	// Number of contours > 0 simple glyph
 				$nContours = $up[1];
 				$this->glyphdata[$originalGlyphIdx]['nContours'] = $nContours;
 				$maxContours = max($maxContours, $nContours);
@@ -1360,7 +1361,7 @@ var $kerninfo;
 		foreach($subset AS $code) {
 			if (isset($charToGlyph[$code]))
 				$originalGlyphIdx = $charToGlyph[$code];
-			else if ($code<128) {
+			elseif ($code<128) {
 				$originalGlyphIdx = $subs;
 			}
 			else { $originalGlyphIdx = 0; }
@@ -1398,9 +1399,9 @@ var $kerninfo;
 						$this->skip(2);
 					if ($flags & GF_SCALE)
 						$this->skip(2);
-					else if ($flags & GF_XYSCALE)
+					elseif ($flags & GF_XYSCALE)
 						$this->skip(4);
-					else if ($flags & GF_TWOBYTWO)
+					elseif ($flags & GF_TWOBYTWO)
 						$this->skip(8);
 				}
 			}
@@ -1639,8 +1640,8 @@ var $kerninfo;
 					if ($flags & GF_WORDS) { $pos_in_glyph += 4; }
 					else { $pos_in_glyph += 2; }
 					if ($flags & GF_SCALE) { $pos_in_glyph += 2; }
-					else if ($flags & GF_XYSCALE) { $pos_in_glyph += 4; }
-					else if ($flags & GF_TWOBYTWO) { $pos_in_glyph += 8; }
+					elseif ($flags & GF_XYSCALE) { $pos_in_glyph += 4; }
+					elseif ($flags & GF_TWOBYTWO) { $pos_in_glyph += 8; }
 				}
 			}
 			$glyf .= $data;
@@ -1694,7 +1695,7 @@ var $kerninfo;
 				$this->getGlyphData($glyphIdx, $maxdepth, $depth, $points, $contours);
 			}
 		}
-		else if (($this->glyphdata[$originalGlyphIdx]['nContours'] > 0) && $depth > 0) {	// simple
+		elseif (($this->glyphdata[$originalGlyphIdx]['nContours'] > 0) && $depth > 0) {	// simple
 			$contours += $this->glyphdata[$originalGlyphIdx]['nContours'];
 			$points += $this->glyphdata[$originalGlyphIdx]['nPoints'];
 		}
@@ -1731,9 +1732,9 @@ var $kerninfo;
 					$this->skip(2);
 				if ($flags & GF_SCALE)
 					$this->skip(2);
-				else if ($flags & GF_XYSCALE)
+				elseif ($flags & GF_XYSCALE)
 					$this->skip(4);
-				else if ($flags & GF_TWOBYTWO)
+				elseif ($flags & GF_TWOBYTWO)
 					$this->skip(8);
 			}
 		}
@@ -1833,7 +1834,7 @@ var $kerninfo;
 				$this->glyphPos[] = ($arr[$n+1] * 2);
 			}
 		}
-		else if ($indexToLocFormat == 1) {
+		elseif ($indexToLocFormat == 1) {
 			$data = $this->get_chunk($start,($numGlyphs*4)+4);
 			$arr = unpack("N*", $data);
 			for ($n=0; $n<=$numGlyphs; $n++) {
@@ -1918,7 +1919,7 @@ var $kerninfo;
 					// Assign new PUA Unicode between F500 - F7FF
 					$bit = $uni & 0xFF;
 					if ($form == 'I') { $bit += 0xF600; }
-					else if ($form == 'M') { $bit += 0xF700; }
+					elseif ($form == 'M') { $bit += 0xF700; }
 					else  { $bit += 0xF500; }
 					// ADD TO CMAP
 					$glyphToChar[$gid][] = $bit;
@@ -1926,17 +1927,17 @@ var $kerninfo;
 				  }
 				}
 				// LAM with ALEF ligatures (Mandatory ligatures)
-				else if (preg_match('/^uni064406(22|23|25|27)(\.fina|\.fin){0,1}$/i',$name,$m)) {
+				elseif (preg_match('/^uni064406(22|23|25|27)(\.fina|\.fin){0,1}$/i',$name,$m)) {
 				  if ($m[1]=='22') {
 					if ($m[2]) { $uni = hexdec('FEF6'); } else { $uni = hexdec('FEF5'); } 
 				  }
-				  else if ($m[1]=='23') {
+				  elseif ($m[1]=='23') {
 					if ($m[2]) { $uni = hexdec('FEF8'); } else { $uni = hexdec('FEF7'); } 
 				  }
-				  else if ($m[1]=='25') {
+				  elseif ($m[1]=='25') {
 					if ($m[2]) { $uni = hexdec('FEFA'); } else { $uni = hexdec('FEF9'); } 
 				  }
-				  else if ($m[1]=='27') {
+				  elseif ($m[1]=='27') {
 					if ($m[2]) { $uni = hexdec('FEFC'); } else { $uni = hexdec('FEFB'); } 
 				  }
 				  if (!isset($glyphToChar[$gid]) || (isset($glyphToChar[$gid]) && is_array($glyphToChar[$gid]) && count($glyphToChar[$gid])==1 && $glyphToChar[$gid][0]>57343 && $glyphToChar[$gid][0]<63489)) {	// if set in PUA private use area E000-F8FF, or NOT Unicode mapped

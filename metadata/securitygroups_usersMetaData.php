@@ -1,43 +1,43 @@
 <?php
 
-$dictionary["securitygroups_users"] = array (
+$dictionary["securitygroups_users"] = array(
   'table' => 'securitygroups_users',
-  'fields' => 
-  array (
-    array (
+  'fields' =>
+  array(
+    array(
       'name' => 'id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    array (
+    array(
       'name' => 'date_modified',
       'type' => 'datetime',
     ),
-    array (
+    array(
       'name' => 'deleted',
       'type' => 'bool',
       'len' => '1',
       'default' => '0',
       'required' => true,
     ),
-    array (
+    array(
       'name' => 'securitygroup_id',
       'type' => 'varchar',
       'len' => 36,
     ),
-    array (
+    array(
       'name' => 'user_id',
       'type' => 'varchar',
       'len' => 36,
-    ),  
-    array (
+    ),
+    array(
         'name' => 'primary_group',
         'vname' => 'LBL_PRIMARY_GROUP',
         'type' => 'bool',
         'reportable'=>false,
         'comment' => 'Drives which custom layout to show if a user is a member of more than 1 group'
     ),
-    array (
+    array(
         'name' => 'noninheritable',
         'vname' => 'LBL_NONINHERITABLE',
         'type' => 'bool',
@@ -46,49 +46,49 @@ $dictionary["securitygroups_users"] = array (
         'comment' => 'Indicator for whether a group can be inherited by a record'
     ),
   ),
-  'indices' => 
-  array (
-    array (
+  'indices' =>
+  array(
+    array(
       'name' => 'securitygroups_usersspk',
       'type' => 'primary',
-      'fields' => 
-      array (
+      'fields' =>
+      array(
         0 => 'id',
       ),
     ),
-    array (
+    array(
       'name' => 'securitygroups_users_idxa',
       'type' => 'index',
-      'fields' => 
-      array (
+      'fields' =>
+      array(
         0 => 'securitygroup_id',
       ),
-    ), 
-    array (
+    ),
+    array(
       'name' => 'securitygroups_users_idxb',
       'type' => 'index',
-      'fields' => 
-      array (
+      'fields' =>
+      array(
         0 => 'user_id',
       ),
     ),
-    array (
+    array(
       'name' => 'securitygroups_users_idxc',
       'type' => 'index',
-      'fields' => 
-      array ('user_id','deleted','securitygroup_id','id'),
+      'fields' =>
+      array('user_id','deleted','securitygroup_id','id'),
     ),
-    array (
+    array(
       'name' => 'securitygroups_users_idxd',
       'type' => 'index',
-      'fields' => 
-      array ('user_id','deleted','securitygroup_id'),
+      'fields' =>
+      array('user_id','deleted','securitygroup_id'),
     ),
   ),
-  'relationships' => 
-  array (
-    'securitygroups_users' => 
-    array (
+  'relationships' =>
+  array(
+    'securitygroups_users' =>
+    array(
       'lhs_module' => 'SecurityGroups',
       'lhs_table' => 'securitygroups',
       'lhs_key' => 'id',
@@ -102,4 +102,3 @@ $dictionary["securitygroups_users"] = array (
     ),
   ),
 );
-?>

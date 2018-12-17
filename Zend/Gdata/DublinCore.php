@@ -61,5 +61,4 @@ class Zend_Gdata_DublinCore extends Zend_Gdata
         $this->registerPackage('Zend_Gdata_DublinCore_Extension');
         parent::__construct($client, $applicationId);
     }
-
 }

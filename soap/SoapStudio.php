@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,289 +37,289 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 // this is a list of what values are expected for a given custom field type
 // will eventually be moved to the SugarFields classes
 $custom_field_meta = array(
-	'address' => array(
-		'default',
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'len',
-		'name',
-		'reportable'
-	),
-	'bool' => array(
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'name',
-		'reportable'
-	),
-	'currency' => array(
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'name',
-		'reportable'
-	),
-	'date' => array(
-		'audited',
-		'default_value',
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'massupdate',
-		'name',
-		'reportable',
-		'required'
-	),
-	'enum' => array(
-		'audited',
-		'default',
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'massupdate',
-		'name',
-		'options',
-		'reportable',
-		'required'
-	),
-	'float' => array(
-		'audited',
-		'default',
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'len',
-		'name',
-		'precision',
-		'reportable',
-		'required'
-	),
-	'html' => array(
-		'audited',
-		'duplicate_merge',
-		'ext4',
-		'help',
-		'label',
-		'label_value',
-		'name',
-		'reportable',
-		'required'
-	),
-	'int' => array(
-		'audited',
-		'default',
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'len',
-		'max',
-		'min',
-		'name',
-		'reportable',
-		'required'
-	),
-	'multienum' => array(
-		'audited',
-		'default',
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'massupdate',
-		'name',
-		'options',
-		'reportable',
-		'required'
-	),
-	'phone' => array(
-		'audited',
-		'default',
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'len',
-		'name',
-		'reportable',
-		'required'
-	),
-	'radioenum' => array(
-		'audited',
-		'default',
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'massupdate',
-		'name',
-		'options',
-		'reportable',
-		'required'
-	),
-	'relate' => array(
-		'audited',
-		'duplicate_merge',
-		'ext2',
-		'help',
-		'label',
-		'label_value',
-		'name',
-		'reportable',
-		'required'
-	),
-	'text' => array(
-		'audited',
-		'default',
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'name',
-		'reportable',
-		'required'
-	),
-	'varchar' => array(
-		'audited',
-		'default',
-		'duplicate_merge',
-		'help',
-		'label',
-		'label_value',
-		'len',
-		'name',
-		'reportable',
-		'required'
-	)
+    'address' => array(
+        'default',
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'len',
+        'name',
+        'reportable'
+    ),
+    'bool' => array(
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'name',
+        'reportable'
+    ),
+    'currency' => array(
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'name',
+        'reportable'
+    ),
+    'date' => array(
+        'audited',
+        'default_value',
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'massupdate',
+        'name',
+        'reportable',
+        'required'
+    ),
+    'enum' => array(
+        'audited',
+        'default',
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'massupdate',
+        'name',
+        'options',
+        'reportable',
+        'required'
+    ),
+    'float' => array(
+        'audited',
+        'default',
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'len',
+        'name',
+        'precision',
+        'reportable',
+        'required'
+    ),
+    'html' => array(
+        'audited',
+        'duplicate_merge',
+        'ext4',
+        'help',
+        'label',
+        'label_value',
+        'name',
+        'reportable',
+        'required'
+    ),
+    'int' => array(
+        'audited',
+        'default',
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'len',
+        'max',
+        'min',
+        'name',
+        'reportable',
+        'required'
+    ),
+    'multienum' => array(
+        'audited',
+        'default',
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'massupdate',
+        'name',
+        'options',
+        'reportable',
+        'required'
+    ),
+    'phone' => array(
+        'audited',
+        'default',
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'len',
+        'name',
+        'reportable',
+        'required'
+    ),
+    'radioenum' => array(
+        'audited',
+        'default',
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'massupdate',
+        'name',
+        'options',
+        'reportable',
+        'required'
+    ),
+    'relate' => array(
+        'audited',
+        'duplicate_merge',
+        'ext2',
+        'help',
+        'label',
+        'label_value',
+        'name',
+        'reportable',
+        'required'
+    ),
+    'text' => array(
+        'audited',
+        'default',
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'name',
+        'reportable',
+        'required'
+    ),
+    'varchar' => array(
+        'audited',
+        'default',
+        'duplicate_merge',
+        'help',
+        'label',
+        'label_value',
+        'len',
+        'name',
+        'reportable',
+        'required'
+    )
 );
 
 // create or update an existing custom field
 $server->register(
-	'set_custom_field',
-	array(
-		'session' => 'xsd:string',
-		'module_name' => 'xsd:string',
-		'type' => 'xsd:string',
-		'properties' => 'tns:name_value_list',
-		'add_to_layout' => 'xsd:int',
-	),
-	array(
-		'return' => 'tns:error_value'
-	),
-	$NAMESPACE
+    'set_custom_field',
+    array(
+        'session' => 'xsd:string',
+        'module_name' => 'xsd:string',
+        'type' => 'xsd:string',
+        'properties' => 'tns:name_value_list',
+        'add_to_layout' => 'xsd:int',
+    ),
+    array(
+        'return' => 'tns:error_value'
+    ),
+    $NAMESPACE
 );
 
-function set_custom_field($session, $module_name, $type, $properties, $add_to_layout) {
-	global $current_user;
-	global $beanList, $beanFiles;
-	global $custom_field_meta;
+function set_custom_field($session, $module_name, $type, $properties, $add_to_layout)
+{
+    global $current_user;
+    global $beanList, $beanFiles;
+    global $custom_field_meta;
 
-	$error = new SoapError();
+    $error = new SoapError();
 
-	$request_arr = array(
-		'action' => 'SaveField',
-		'is_update' => 'true',
-		'module' => 'ModuleBuilder',
-		'view_module' => $module_name,
-		'view_package' => 'studio'
-	);
+    $request_arr = array(
+        'action' => 'SaveField',
+        'is_update' => 'true',
+        'module' => 'ModuleBuilder',
+        'view_module' => $module_name,
+        'view_package' => 'studio'
+    );
 
-	// ERROR CHECKING
-	if(!validate_authenticated($session)) {
-		$error->set_error('invalid_login');
-		return $error->get_soap_array();
-	}
+    // ERROR CHECKING
+    if (!validate_authenticated($session)) {
+        $error->set_error('invalid_login');
+        return $error->get_soap_array();
+    }
 
-	if (!is_admin($current_user)) {
-		$error->set_error('no_admin');
-		return $error->get_soap_array();
-	}
+    if (!is_admin($current_user)) {
+        $error->set_error('no_admin');
+        return $error->get_soap_array();
+    }
 
-	if(empty($beanList[$module_name])){
-		$error->set_error('no_module');
-		return $error->get_soap_array();
-	}
+    if (empty($beanList[$module_name])) {
+        $error->set_error('no_module');
+        return $error->get_soap_array();
+    }
 
-	if (empty($custom_field_meta[$type])) {
-		$error->set_error('custom_field_type_not_supported');
-		return $error->get_soap_array();
-	}
+    if (empty($custom_field_meta[$type])) {
+        $error->set_error('custom_field_type_not_supported');
+        return $error->get_soap_array();
+    }
 
-	$new_properties = array();
-	foreach($properties as $value) {
-		$new_properties[$value['name']] = $value['value'];
-	}
+    $new_properties = array();
+    foreach ($properties as $value) {
+        $new_properties[$value['name']] = $value['value'];
+    }
 
-	foreach ($custom_field_meta[$type] as $property) {
-		if (!isset($new_properties[$property])) {
-			$error->set_error('custom_field_property_not_supplied');
-			return $error->get_soap_array();
-		}
+    foreach ($custom_field_meta[$type] as $property) {
+        if (!isset($new_properties[$property])) {
+            $error->set_error('custom_field_property_not_supplied');
+            return $error->get_soap_array();
+        }
 
-		$request_arr[$property] = $new_properties[$property];
-	}
+        $request_arr[$property] = $new_properties[$property];
+    }
 
-	// $request_arr should now contain all the necessary information to create a custom field
-	// merge $request_arr with $_POST/$_REQUEST, where the action_saveField() method expects them
-	$_REQUEST = array_merge($_REQUEST, $request_arr);
-	$_POST = array_merge($_POST, $request_arr);
+    // $request_arr should now contain all the necessary information to create a custom field
+    // merge $request_arr with $_POST/$_REQUEST, where the action_saveField() method expects them
+    $_REQUEST = array_merge($_REQUEST, $request_arr);
+    $_POST = array_merge($_POST, $request_arr);
 
-	require_once('include/MVC/Controller/SugarController.php');
-	require_once('modules/ModuleBuilder/controller.php');
-	require_once('modules/ModuleBuilder/parsers/ParserFactory.php');
+    require_once('include/MVC/Controller/SugarController.php');
+    require_once('modules/ModuleBuilder/controller.php');
+    require_once('modules/ModuleBuilder/parsers/ParserFactory.php');
 
-	$mbc = new ModuleBuilderController();
-	$mbc->setup();
-	$mbc->action_SaveField();
+    $mbc = new ModuleBuilderController();
+    $mbc->setup();
+    $mbc->action_SaveField();
 
-	// add the field to the given module's EditView and DetailView layouts
-	if ($add_to_layout == 1) {
-		$layout_properties = array(
-			'name' => $new_properties['name'],
-			'label' => $new_properties['label']
-		);
+    // add the field to the given module's EditView and DetailView layouts
+    if ($add_to_layout == 1) {
+        $layout_properties = array(
+            'name' => $new_properties['name'],
+            'label' => $new_properties['label']
+        );
 
-		if (isset($new_properties['customCode'])) {
-			$layout_properties['customCode'] = $new_properties['customCode'];
-		}
-		if (isset($new_properties['customLabel'])) {
-			$layout_properties['customLabel'] = $new_properties['customLabel'];
-		}
+        if (isset($new_properties['customCode'])) {
+            $layout_properties['customCode'] = $new_properties['customCode'];
+        }
+        if (isset($new_properties['customLabel'])) {
+            $layout_properties['customLabel'] = $new_properties['customLabel'];
+        }
 
-		// add the field to the DetailView
-		$parser = ParserFactory::getParser('layoutview', FALSE);
-		$parser->init($module_name, 'DetailView', FALSE);
+        // add the field to the DetailView
+        $parser = ParserFactory::getParser('layoutview', false);
+        $parser->init($module_name, 'DetailView', false);
 
-		$parser->_addField($layout_properties);
-		$parser->writeWorkingFile();
-		$parser->handleSave();
+        $parser->_addField($layout_properties);
+        $parser->writeWorkingFile();
+        $parser->handleSave();
 
-		unset($parser);
+        unset($parser);
 
-		// add the field to the EditView
-		$parser = ParserFactory::getParser('layoutview', FALSE);
-		$parser->init($module_name, 'EditView', FALSE);
+        // add the field to the EditView
+        $parser = ParserFactory::getParser('layoutview', false);
+        $parser->init($module_name, 'EditView', false);
 
-		$parser->_addField($layout_properties);
-		$parser->writeWorkingFile();
-		$parser->handleSave();
-	}
+        $parser->_addField($layout_properties);
+        $parser->writeWorkingFile();
+        $parser->handleSave();
+    }
 
-	return $error->get_soap_array();
+    return $error->get_soap_array();
 }
-?>

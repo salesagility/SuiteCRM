@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 *}
 <!-- BEGIN: main -->
@@ -71,69 +72,69 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="detail view">
 <tr>
 {$PAGINATION}
-	<td width="20%"><slot>{$MOD.LBL_NAME}</slot></td>
-	<td width="30%"><slot>{$NAME}</slot></td>
-	<td width="20%"><slot>{$MOD.LBL_ASSIGNED_TO}</slot></td>
-	<td width="30%"><slot>{$ASSIGNED_TO}</slot></td>
+	<td width="20%"><span>{$MOD.LBL_NAME}</span></td>
+	<td width="30%"><span>{$NAME}</span></td>
+	<td width="20%"><span>{$MOD.LBL_ASSIGNED_TO}</span></td>
+	<td width="30%"><span>{$ASSIGNED_TO}</span></td>
 	</tr><tr>
-	<td width="20%"><slot>{$MOD.LBL_CAMPAIGN_STATUS}</slot></td>
-	<td width="30%"><slot>{$STATUS}</slot></td>
-	<td width="20%"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
+	<td width="20%"><span>{$MOD.LBL_CAMPAIGN_STATUS}</span></td>
+	<td width="30%"><span>{$STATUS}</span></td>
+	<td width="20%"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
 	</tr><tr>
-	<td width="20%"><slot>{$MOD.LBL_CAMPAIGN_START_DATE}</slot></td>
-	<td width="30%"><slot>{$START_DATE}</slot></td>
-	<td ><slot>{$APP.LBL_DATE_MODIFIED}&nbsp;</slot></td>
-	<td ><slot>{$DATE_MODIFIED} {$APP.LBL_BY} {$MODIFIED_BY}</slot></td>
+	<td width="20%"><span>{$MOD.LBL_CAMPAIGN_START_DATE}</span></td>
+	<td width="30%"><span>{$START_DATE}</span></td>
+	<td ><span>{$APP.LBL_DATE_MODIFIED}&nbsp;</span></td>
+	<td ><span>{$DATE_MODIFIED} {$APP.LBL_BY} {$MODIFIED_BY}</span></td>
 	</tr><tr>
-	<td width="20%"><slot>{$MOD.LBL_CAMPAIGN_END_DATE}</slot></td>
-	<td width="30%"><slot>{$END_DATE}</slot></td>
-	<td ><slot>{$APP.LBL_DATE_ENTERED}&nbsp;</slot></td>
-	<td ><slot>{$DATE_ENTERED} {$APP.LBL_BY} {$CREATED_BY}</slot></td>
+	<td width="20%"><span>{$MOD.LBL_CAMPAIGN_END_DATE}</span></td>
+	<td width="30%"><span>{$END_DATE}</span></td>
+	<td ><span>{$APP.LBL_DATE_ENTERED}&nbsp;</span></td>
+	<td ><span>{$DATE_ENTERED} {$APP.LBL_BY} {$CREATED_BY}</span></td>
 	</tr><tr>
-	<td width="20%"><slot>{$MOD.LBL_CAMPAIGN_TYPE}</slot></td>
-	<td width="30%"><slot>{$TYPE}</slot></td>
-	<td width="20%"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
+	<td width="20%"><span>{$MOD.LBL_CAMPAIGN_TYPE}</span></td>
+	<td width="30%"><span>{$TYPE}</span></td>
+	<td width="20%"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
 	</tr><tr>
-	<td width="20%"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
-	<td width="20%"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
+	<td width="20%"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
+	<td width="20%"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
 	</tr><tr>
-	<td width="20%" nowrap><slot>{$MOD.LBL_CAMPAIGN_BUDGET} ({$CURRENCY})</slot></td>
-	<td width="30%"><slot>{$BUDGET}</slot></td>
-	<td width="20%" nowrap><slot>{$MOD.LBL_CAMPAIGN_IMPRESSIONS}</slot></td>
-	<td width="30%" nowrap><slot>{$IMPRESSIONS}</slot></td>
+	<td width="20%" nowrap><span>{$MOD.LBL_CAMPAIGN_BUDGET} ({$CURRENCY})</span></td>
+	<td width="30%"><span>{$BUDGET}</span></td>
+	<td width="20%" nowrap><span>{$MOD.LBL_CAMPAIGN_IMPRESSIONS}</span></td>
+	<td width="30%" nowrap><span>{$IMPRESSIONS}</span></td>
 	</tr><tr>
-	<td width="20%" nowrap><slot>{$MOD.LBL_CAMPAIGN_EXPECTED_COST} ({$CURRENCY})</slot></td>
-	<td width="30%"><slot>{$EXPECTED_COST}</slot></td>
-		<td width="20%" nowrap><slot>{$MOD.LBL_CAMPAIGN_OPPORTUNITIES_WON}</slot></td>
-	<td width="30%"><slot>{$OPPORTUNITIES_WON}</slot></td>
+	<td width="20%" nowrap><span>{$MOD.LBL_CAMPAIGN_EXPECTED_COST} ({$CURRENCY})</span></td>
+	<td width="30%"><span>{$EXPECTED_COST}</span></td>
+		<td width="20%" nowrap><span>{$MOD.LBL_CAMPAIGN_OPPORTUNITIES_WON}</span></td>
+	<td width="30%"><span>{$OPPORTUNITIES_WON}</span></td>
 	</tr><tr>
 	</tr><tr>
-	<td width="20%" nowrap><slot>{$MOD.LBL_CAMPAIGN_ACTUAL_COST} ({$CURRENCY})</slot></td>
-	<td width="30%"><slot>{$ACTUAL_COST}</slot></td>
-	<td width="20%" nowrap><slot>{$MOD.LBL_CAMPAIGN_COST_PER_IMPRESSION} ({$CURRENCY})</slot></td>
-	<td width="30%" nowrap><slot>{$COST_PER_IMPRESSION}</slot></td>
+	<td width="20%" nowrap><span>{$MOD.LBL_CAMPAIGN_ACTUAL_COST} ({$CURRENCY})</span></td>
+	<td width="30%"><span>{$ACTUAL_COST}</span></td>
+	<td width="20%" nowrap><span>{$MOD.LBL_CAMPAIGN_COST_PER_IMPRESSION} ({$CURRENCY})</span></td>
+	<td width="30%" nowrap><span>{$COST_PER_IMPRESSION}</span></td>
 	</tr><tr>
-	<td width="20%" nowrap><slot>{$MOD.LBL_CAMPAIGN_EXPECTED_REVENUE} ({$CURRENCY})</slot></td>
-	<td width="30%" nowrap><slot>{$EXPECTED_REVENUE}</slot></td>
-	<td width="20%" nowrap><slot>{$MOD.LBL_CAMPAIGN_COST_PER_CLICK_THROUGH} ({$CURRENCY})</slot></td>
-	<td width="30%"><slot>{$COST_PER_CLICK_THROUGH}</slot></td>
+	<td width="20%" nowrap><span>{$MOD.LBL_CAMPAIGN_EXPECTED_REVENUE} ({$CURRENCY})</span></td>
+	<td width="30%" nowrap><span>{$EXPECTED_REVENUE}</span></td>
+	<td width="20%" nowrap><span>{$MOD.LBL_CAMPAIGN_COST_PER_CLICK_THROUGH} ({$CURRENCY})</span></td>
+	<td width="30%"><span>{$COST_PER_CLICK_THROUGH}</span></td>
 	</tr><tr>
-	<td width="20%"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
-	<td width="20%"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
+	<td width="20%"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
+	<td width="20%"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
 	</tr>
 <!--
 	<tr>
-	<td width="20%" valign="top" valign="top"><slot>{$MOD.LBL_CAMPAIGN_OBJECTIVE}</slot></td>
-	<td colspan="3"><slot>{$OBJECTIVE}</slot></td>
+	<td width="20%" valign="top" valign="top"><span>{$MOD.LBL_CAMPAIGN_OBJECTIVE}</span></td>
+	<td colspan="3"><span>{$OBJECTIVE}</span></td>
 </tr><tr>
-	<td width="20%" valign="top" valign="top"><slot>{$MOD.LBL_CAMPAIGN_CONTENT}</slot></td>
-	<td colspan="3"><slot>{$CONTENT}</slot></td>
+	<td width="20%" valign="top" valign="top"><span>{$MOD.LBL_CAMPAIGN_CONTENT}</span></td>
+	<td colspan="3"><span>{$CONTENT}</span></td>
 </tr>
 -->
 </table>
