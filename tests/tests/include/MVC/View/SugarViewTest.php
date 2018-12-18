@@ -2,6 +2,74 @@
 
 class SugarViewTest extends PHPUnit_Framework_TestCase
 {
+    public function testDisplayJavascriptNotLoginHasDomJS() {
+        $view = new SugarView();
+        $this->action = 'foo';
+        $view->addDomJS('bar', 'bazz');
+        ob_start();
+        $view->renderJavascript();
+        $output = ob_get_clean();
+        $this->assertEquals('foooo123', $output);
+    }
+    
+    public function testDisplayJavascriptNotLoginHasntDomJS() {
+        $view = new SugarView();
+        $this->action = 'foo';
+        ob_start();
+        $view->renderJavascript();
+        $output = ob_get_clean();
+        $this->assertEquals('foooo123', $output);
+    }
+    
+    public function testDisplayJavascriptLoginHasDomJS() {
+        $view = new SugarView();
+        $this->action = 'login';
+        $view->addDomJS('bar', 'bazz');
+        ob_start();
+        $view->renderJavascript();
+        $output = ob_get_clean();
+        $this->assertEquals('foooo123', $output);
+    }
+    
+    public function testDisplayJavascriptLoginHasntDomJS() {
+        $view = new SugarView();
+        $this->action = 'login';
+        ob_start();
+        $view->renderJavascript();
+        $output = ob_get_clean();
+        $this->assertEquals('foooo123', $output);
+    }
+    
+    public function testGetDomJs() {
+        $view = new SugarView();
+        $this->assertFalse($view->hasDomJS());
+        $view->addDomJS('123', 'foo');
+        $this->assertTrue($view->hasDomJS());
+        $domJs = $view->getDomJS();
+        $this->assertEquals(['123' => 'foo'], $domJs);
+    }
+    
+    public function testAddDomJsNoScope() {
+        
+        $view = new SugarView();
+        
+        try {
+            $view->addDomJS(null, null);
+            $this->acceptTrue(false, 'it should throws an exceptions as the scope parameter is empty');
+        } catch (InvalidArgumentException $e) {
+            $code = $e->getCode();
+            $this->assertEquals(SugarView::ERR_EMPTY_SCOPE, $code);
+        }
+        
+        try {
+            $view->addDomJS(null, '');
+            $this->acceptTrue(false, 'it should throws an exceptions as the scope parameter is empty');
+        } catch (InvalidArgumentException $e) {
+            $code = $e->getCode();
+            $this->assertEquals(SugarView::ERR_EMPTY_SCOPE, $code);
+        }
+    }
+    
     public function testinit()
     {
         error_reporting(E_ERROR | E_WARNING | E_PARSE);
