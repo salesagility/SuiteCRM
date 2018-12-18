@@ -9,7 +9,7 @@ matrix:
   allow_failures:
     - php: 5.4
 before_script:
-  - mysql -e "CREATE DATABASE automated_tests;"
+  - mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
   - composer self-update

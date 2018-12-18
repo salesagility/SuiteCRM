@@ -104,7 +104,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         }
 
         $query = $seed->create_new_list_query($order_by, $where, array(), $params, $show_deleted, '', false, null,
-            $singleSelect);
+            $single_select);
 
         return $seed->process_list_query($query, $row_offset, $limit, $max, $where);
     }
@@ -211,6 +211,9 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 	            $entry['type'] = $var['type'];
 	            $entry['group'] = isset($var['group']) ? $var['group'] : '';
 	            $entry['id_name'] = isset($var['id_name']) ? $var['id_name'] : '';
+                if (isset($var['parentenum'])) {
+                    $entry['parentenum'] = $var['parentenum'];
+                }
 
 	            if ($var['type'] == 'link') {
 		            $entry['relationship'] = (isset($var['relationship']) ? $var['relationship'] : '');

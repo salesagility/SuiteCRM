@@ -101,13 +101,11 @@ class templateParser
         reset($repl_arr);
 
         foreach ($repl_arr as $name => $value) {
-            if (strpos($name, 'product_discount') > 0) {
+            if (strpos($name, 'product_discount') !== false) {
                 if ($value != '' && $value != '0.00') {
-                    if ($repl_arr['aos_products_quotes_discount'] == 'Percentage') {
+                    if (strtolower($repl_arr['aos_products_quotes_discount']) == 'percentage' || strtolower($repl_arr['aos_products_quotes_discount']) == 'pct' || strtolower($repl_arr['aos_products_quotes_discount']) == 'percent') {
                         $sep = get_number_seperators();
-                        $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);//.$app_strings['LBL_PERCENTAGE_SYMBOL'];
-                    } else {
-                        $value = currency_format_number($value, $params = array('currency_symbol' => false));
+                        $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
                 } else {
                     $value = '';
@@ -120,15 +118,24 @@ class templateParser
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);
             }
-            if ($name === 'aos_products_quotes_vat' || strpos($name, 'pct') > 0 || strpos($name, 'percent') > 0 || strpos($name, 'percentage') > 0) {
-                $sep = get_number_seperators();
-                $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
+
+            if ($name === 'aos_products_quotes_vat' ||
+                strpos($name, 'pct') !== false ||
+                strpos($name, 'percent') !== false ||
+                strpos($name, 'percentage') !== false) {
+                    $sep = get_number_seperators();
+                    $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
             if ($focus->field_defs[$name][dbType] == 'datetime' &&
                 (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0) ) {
                 if ($value != '') {
                     $dt = explode(' ', $value);
                     $value = $dt[0];
+                    if (isset($dt[1]) && $dt[1] != '') {
+                        if (strpos($dt[1], 'am') > 0 || strpos($dt[1], 'pm') > 0) {
+                            $value = $dt[0] . ' ' . $dt[1];
+                        }
+                    }
                 }
             }
             if ($value != '' && is_string($value)) {

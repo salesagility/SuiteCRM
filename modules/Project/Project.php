@@ -232,7 +232,7 @@ class Project extends SugarBean {
 	function build_generic_where_clause ($the_query_string)
 	{
 		$where_clauses = array();
-		$the_query_string = $GLOBALS['db']->quote($the_query_string);
+		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 		array_push($where_clauses, "project.name LIKE '%$the_query_string%'");
 
 		$the_where = '';

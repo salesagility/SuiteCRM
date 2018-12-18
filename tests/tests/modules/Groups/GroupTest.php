@@ -1,6 +1,6 @@
 <?php
 
-class GroupTest extends PHPUnit_Framework_TestCase
+class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testGroup()
     {
@@ -18,7 +18,12 @@ class GroupTest extends PHPUnit_Framework_TestCase
 
     public function testmark_deleted()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
 
         $group = new Group();
 
@@ -27,8 +32,12 @@ class GroupTest extends PHPUnit_Framework_TestCase
             $group->mark_deleted('');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testcreate_export_query()

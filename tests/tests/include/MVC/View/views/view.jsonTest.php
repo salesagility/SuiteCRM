@@ -1,6 +1,6 @@
 <?php
 
-class ViewJsonTest extends PHPUnit_Framework_TestCase
+class ViewJsonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewJson()
     {
@@ -15,6 +15,7 @@ class ViewJsonTest extends PHPUnit_Framework_TestCase
     //incomplete test. this method uses exit() so it cannot be tested.
     public function testdisplay()
     {
+        $this->markTestIncomplete('Can Not be implemented');
 
         /*
         setup required paramerers and execute the method. 
@@ -33,6 +34,5 @@ class ViewJsonTest extends PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0,strlen($renderedContent));
         $this->assertNotEquals(False,json_decode($renderedContent));
         */
-        $this->markTestIncomplete('Can Not be implemented');
     }
 }

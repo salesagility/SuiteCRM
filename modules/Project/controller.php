@@ -28,7 +28,7 @@ class ProjectController extends SugarController {
     }
 
     function action_generate_chart(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         include_once('modules/Project/gantt.php');
         include_once('modules/Project/project_table.php');
@@ -233,7 +233,8 @@ class ProjectController extends SugarController {
 
     //Returns new task start date including any lag via ajax call
     function action_get_end_date(){
-        global $db,  $timeDate;
+        global  $timeDate;
+        $db = DBManagerFactory::getInstance();
 
         $timeDate = new TimeDate();
         $id = $_POST['task_id'];
@@ -344,7 +345,7 @@ class ProjectController extends SugarController {
 
     //Updates the resource chart based on specified dates and users
     function action_update_chart(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
         include('modules/Project/chart.php');
 
         //Get  specified dates and users

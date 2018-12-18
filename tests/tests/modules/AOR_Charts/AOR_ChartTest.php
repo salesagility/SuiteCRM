@@ -1,7 +1,7 @@
 <?php
 
 //require_once 'modules/AOR_Charts/lib/pChart/pChart.php';
-class AOR_ChartTest extends PHPUnit_Framework_TestCase
+class AOR_ChartTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOR_Chart()
     {
@@ -23,7 +23,6 @@ class AOR_ChartTest extends PHPUnit_Framework_TestCase
     public function testsave_lines()
     {
         $this->markTestSkipped('Skipping AOR Charts Tests');
-        error_reporting(E_ERROR | E_PARSE);
 
         $aorChart = new AOR_Chart();
 
@@ -44,7 +43,7 @@ class AOR_ChartTest extends PHPUnit_Framework_TestCase
             $result = $aorChart->save_lines($post, $bean, $postKey);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 

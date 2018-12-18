@@ -69,7 +69,7 @@ return_module_language($curr_lang, 'UpgradeWizard', true);
 
 $standardErrorLevel = error_reporting();
 logThis('Setting error_reporting() to E_ERROR while running upgrade');
-error_reporting(E_ERROR);
+
 
 set_time_limit(0);
 /*
@@ -546,8 +546,7 @@ commitHandleReminders($skippedFiles);
 ////	HANDLE REMINDERS
 ///////////////////////////////////////////////////////////////////////////////
 
-logThis('Resetting error_reporting() to system level.');
-error_reporting($standardErrorLevel);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	OUTPUT

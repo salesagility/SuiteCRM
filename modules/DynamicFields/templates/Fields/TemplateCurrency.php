@@ -82,6 +82,6 @@ class TemplateCurrency extends TemplateRange
 	{
 		$precision = (!empty($this->precision)) ? $this->precision : 6;
 		$len = (!empty($this->len)) ? $this->len:26;
-		return " ".sprintf($GLOBALS['db']->getColumnType("decimal_tpl"), $len, $precision); 
+		return " ".sprintf(DBManagerFactory::getInstance()->getColumnType("decimal_tpl"), $len, $precision); 
 	}
 }

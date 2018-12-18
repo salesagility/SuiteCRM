@@ -62,6 +62,11 @@ class Alert extends Basic {
     var $assigned_user_link;
     var $is_read;
 
+    /**
+     * @var string
+     */
+    public $reminder_id;
+
     function __construct(){
         parent::__construct();
     }

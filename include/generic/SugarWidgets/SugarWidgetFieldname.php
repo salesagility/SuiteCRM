@@ -67,7 +67,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
     }
 
 
-	function displayList(&$layout_def)
+	function displayList($layout_def)
 	{
 		if(empty($layout_def['column_key']))
 		{

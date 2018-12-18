@@ -228,10 +228,10 @@ class TemplateField{
 
 	function get_db_type(){
 	    if(!empty($this->type)) {
-	        $type = $GLOBALS['db']->getColumnType($this->type);
+	        $type = DBManagerFactory::getInstance()->getColumnType($this->type);
 	    }
 	    if(!empty($type)) return " $type";
-	    $type = $GLOBALS['db']->getColumnType("varchar");
+	    $type = DBManagerFactory::getInstance()->getColumnType("varchar");
         return " $type({$this->len})";
 	}
 
@@ -310,12 +310,12 @@ class TemplateField{
 	 */
 	function get_db_add_alter_table($table)
 	{
-		return $GLOBALS['db']->getHelper()->addColumnSQL($table, $this->get_field_def(), true);
+		return DBManagerFactory::getInstance()->getHelper()->addColumnSQL($table, $this->get_field_def(), true);
 	}
 
 	function get_db_delete_alter_table($table)
 	{
-		return $GLOBALS['db']->getHelper()->dropColumnSQL(
+		return DBManagerFactory::getInstance()->getHelper()->dropColumnSQL(
 		$table,
 		$this->get_field_def()
 		);
@@ -325,7 +325,7 @@ class TemplateField{
 	 * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
 	 */
 	function get_db_modify_alter_table($table){
-		return $GLOBALS['db']->alterColumnSQL($table, $this->get_field_def());
+		return DBManagerFactory::getInstance()->alterColumnSQL($table, $this->get_field_def());
 	}
 
 

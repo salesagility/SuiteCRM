@@ -296,8 +296,8 @@ EOJAVASCRIPT;
 
         $prospect_id = array();
         if(!empty($query)){
-            $res=$GLOBALS['db']->query($query);
-            while($row = $GLOBALS['db']->fetchByAssoc($res))
+            $res=DBManagerFactory::getInstance()->query($query);
+            while($row = DBManagerFactory::getInstance()->fetchByAssoc($res))
             {
                 $prospect_id[]=$row['id'];
             }

@@ -1,6 +1,6 @@
 <?php
 
-class ProjectTaskTest extends PHPUnit_Framework_TestCase
+class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testProjectTask()
     {
@@ -22,7 +22,6 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
 
     public function testskipParentUpdate()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $projectTask = new ProjectTask();
 
@@ -36,7 +35,16 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
     }
 
     public function testsave()
-    {
+    {   
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('project_task');
+        $state->pushGlobals();
+        
+        // test
+
         $projectTask = new ProjectTask();
 
         $projectTask->name = 'test';
@@ -58,6 +66,12 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
         $projectTask->mark_deleted($projectTask->id);
         $result = $projectTask->retrieve($projectTask->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('project_task');
+        $state->popTable('aod_indexevent');
     }
 
     public function _get_depends_on_name($id)
@@ -80,7 +94,7 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
             $projectTask->updateParentProjectTaskPercentage();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -103,6 +117,13 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
 
     public function testupdateStatistic()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
         $projectTask = new ProjectTask();
 
         //execute the method and test if it works and does not throws an exception.
@@ -110,8 +131,12 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
             $projectTask->updateStatistic();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testfill_in_additional_detail_fields()
@@ -190,7 +215,7 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "project_task.name like '%'";
+        $expected = "project_task.name like 'test%'";
         $actual = $projectTask->build_generic_where_clause('test');
         $this->assertSame($expected, $actual);
     }
@@ -232,11 +257,22 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $projectTask = new ProjectTask();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'PARENT_TASK' => 'a');
         $actual = $projectTask->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testcreate_export_query()

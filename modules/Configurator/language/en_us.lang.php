@@ -355,7 +355,7 @@ More help : www.tcpdf.org',
     'LBL_FONT_LIST_FILESIZE' => 'Font Size (KB)',
     'LBL_ADD_FONT' => 'Add a font',
     'LBL_BACK' => 'Back',
-    'LBL_REMOVE' => 'rem',
+    'LBL_REMOVE' => 'Remove',
     'LBL_JS_CONFIRM_DELETE_FONT' => 'Are you sure that you want to delete this font?',
 
     'LBL_ADDFONT_TITLE' => 'Add a PDF Font',

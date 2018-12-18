@@ -167,9 +167,9 @@ else {
         }
         
         $query = $seed->create_new_list_query($order_by, $where_clauses);
-		$result = $GLOBALS['db']->query($query,true);
+		$result = DBManagerFactory::getInstance()->query($query,true);
 		$uids = array();
-		while($val = $GLOBALS['db']->fetchByAssoc($result,false))
+		while($val = DBManagerFactory::getInstance()->fetchByAssoc($result,false))
 		{
 			array_push($uids, $val['id']);
 		}
@@ -198,6 +198,9 @@ else {
  		}
 		$relName = $_REQUEST['subpanel_field_name'];
  		$focus->load_relationship($relName);
+                if ($focus->module_name == 'Users' && $relName == 'SecurityGroups' && !is_admin($GLOBALS['current_user'])) {
+                    sugar_die('Access denied');
+ 		}
  		$focus->$relName->add($_REQUEST['subpanel_id'],$add_values);
         $focus->save();
  	}

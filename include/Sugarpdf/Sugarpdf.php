@@ -300,7 +300,8 @@ class Sugarpdf extends TCPDF
      * The cell method is used by all the methods which print text (Write, MultiCell).
      * @see include/tcpdf/TCPDF#Cell()
      */
-    public function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0) {
+    
+    public function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=0, $link='', $stretch=0, $ignore_min_height=false) {
         parent::Cell($w, $h, prepare_string($txt), $border, $ln, $align, $fill, $link, $stretch);
     }
 

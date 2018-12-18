@@ -1148,7 +1148,7 @@ eoq;
 	 * @return array
 	 */
 	function getDraftAttachments($ret) {
-		global $db;
+		$db = DBManagerFactory::getInstance();
 
 		// $ret['uid'] is the draft Email object's GUID
 		$ret['attachments'] = array();
@@ -2086,7 +2086,7 @@ eoq;
 	 */
 	function _getPeopleUnionQuery($whereArr , $person) {
 		global $current_user , $app_strings;
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		if(!isset($person) || $person === 'LBL_DROPDOWN_LIST_ALL'){
 			$peopleTables = array("users",
 			                      "contacts",
@@ -2410,7 +2410,7 @@ eoq;
         $q = "SELECT * FROM folders f WHERE f.created_by = '{$user->id}' AND f.deleted = 0 AND coalesce(" . $user->db->convert("f.folder_type", "length") . ",0) > 0";
         $r = $user->db->query($q);
 
-        while ($row = $GLOBALS['db']->fetchByAssoc($r)) {
+        while ($row = DBManagerFactory::getInstance()->fetchByAssoc($r)) {
             if ($row['folder_type'] == 'inbound') {
                 $parent_id = $row['id'];
             }

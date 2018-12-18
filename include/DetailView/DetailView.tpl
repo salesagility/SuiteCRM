@@ -120,15 +120,17 @@ class="yui-navset detailview_tabs"
 		{{assign var='columnsInRow' value=$rowData|@count}}
 		{{assign var='columnsUsed' value=0}}
 		{{foreach name=colIteration from=$rowData key=col item=colData}}
+		{{assign var='totalColumnos' value=$smarty.foreach.colIteration.total}}
 	    {{if !empty($colData.field.hideIf)}}
 	    	{if !({{$colData.field.hideIf}}) }
 	    {{/if}}
 			{counter name="fieldsUsed"}
 			{{if empty($colData.field.hideLabel)}}
-			<td width='{{$def.templateMeta.widths[$smarty.foreach.colIteration.index].label}}%' scope="col">
-				{{if !empty($colData.field.name)}}
-				    {if !$fields.{{$colData.field.name}}.hidden}
-                {{/if}}
+            {{if $totalColumnos == 1}}
+			    <td width='3.75%' totalCol="{{$totalColumnos}}" scope="col">
+            {{else}}
+			    <td width='12.5%' totalCol="{{$totalColumnos}}" scope="col">
+            {{/if}}
 				{{if isset($colData.field.customLabel)}}
 			       {{$colData.field.customLabel}}
 				{{elseif isset($colData.field.label) && strpos($colData.field.label, '$')}}

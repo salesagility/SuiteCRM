@@ -98,14 +98,14 @@ if(isset($_REQUEST['query'])) {
 	if(isset($_REQUEST['name']))					$name = $_REQUEST['name'];
 	if(isset($_REQUEST['contact_name']))			$contact_name = $_REQUEST['contact_name'];
 	
-	if(isset($email_type) && $email_type != "")		$whereClauses['emails.type'] = "emails.type = '".$GLOBALS['db']->quote($email_type)."'";
-	if(isset($assigned_to) && $assigned_to != "")	$whereClauses['emails.assigned_user_id'] = "emails.assigned_user_id = '".$GLOBALS['db']->quote($assigned_to)."'";
-	if(isset($status) && $status != "")				$whereClauses['emails.status'] = "emails.status = '".$GLOBALS['db']->quote($status)."'";
-	if(isset($name) && $name != "")					$whereClauses['emails.name'] = "emails.name like '".$GLOBALS['db']->quote($name)."%'";
+	if(isset($email_type) && $email_type != "")		$whereClauses['emails.type'] = "emails.type = '".DBManagerFactory::getInstance()->quote($email_type)."'";
+	if(isset($assigned_to) && $assigned_to != "")	$whereClauses['emails.assigned_user_id'] = "emails.assigned_user_id = '".DBManagerFactory::getInstance()->quote($assigned_to)."'";
+	if(isset($status) && $status != "")				$whereClauses['emails.status'] = "emails.status = '".DBManagerFactory::getInstance()->quote($status)."'";
+	if(isset($name) && $name != "")					$whereClauses['emails.name'] = "emails.name like '".DBManagerFactory::getInstance()->quote($name)."%'";
 	if(isset($contact_name) && $contact_name != '') {
 		$contact_names = explode(" ", $contact_name);
 		foreach ($contact_names as $name) {
-			$whereClauses['contacts.name'] = "(contacts.first_name like '".$GLOBALS['db']->quote($name)."%' OR contacts.last_name like '".$GLOBALS['db']->quote($name)."%')";
+			$whereClauses['contacts.name'] = "(contacts.first_name like '".DBManagerFactory::getInstance()->quote($name)."%' OR contacts.last_name like '".DBManagerFactory::getInstance()->quote($name)."%')";
 		}
 	}
 

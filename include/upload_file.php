@@ -186,39 +186,49 @@ class UploadFile
 	}
 
 	/**
-	 * duplicates an already uploaded file in the filesystem.
-	 * @param string old_id ID of original note
-	 * @param string new_id ID of new (copied) note
-	 * @param string filename Filename of file (deprecated)
-	 */
-	public static function duplicate_file($old_id, $new_id, $file_name)
-	{
-		global $sugar_config;
+     * duplicates an already uploaded file in the filesystem.
+     * @param string old_id ID of original note
+     * @param string new_id ID of new (copied) note
+     * @param string filename Filename of file (deprecated)
+     */
+    public static function duplicate_file($old_id, $new_id, $file_name)
+    {
+        global $sugar_config;
 
-		// current file system (GUID)
-		$source = "upload://$old_id";
+        // current file system (GUID)
+        $source = "upload://$old_id";
 
-		if(!file_exists($source)) {
-			// old-style file system (GUID.filename.extension)
-			$oldStyleSource = $source.$file_name;
-			if(file_exists($oldStyleSource)) {
-				// change to new style
-				if(copy($oldStyleSource, $source)) {
-					// delete the old
-					if(!unlink($oldStyleSource)) {
-						$GLOBALS['log']->error("upload_file could not unlink [ {$oldStyleSource} ]");
-					}
-				} else {
-					$GLOBALS['log']->error("upload_file could not copy [ {$oldStyleSource} ] to [ {$source} ]");
-				}
-			}
-		}
+        if (!file_exists($source)) {
+            // old-style file system (GUID.filename.extension)
+            $oldStyleSource = $source . $file_name;
+            if (file_exists($oldStyleSource)) {
+                // change to new style
+                if (copy($oldStyleSource, $source)) {
+                    // delete the old
+                    if (!unlink($oldStyleSource)) {
+                        $GLOBALS['log']->error("upload_file could not unlink [ {$oldStyleSource} ]");
+                    }
+                } else {
+                    $GLOBALS['log']->error("upload_file could not copy [ {$oldStyleSource} ] to [ {$source} ]");
+                }
+            }
+        }
 
-		$destination = "upload://$new_id";
-		if(!copy($source, $destination)) {
-			$GLOBALS['log']->error("upload_file could not copy [ {$source} ] to [ {$destination} ]");
-		}
-	}
+        $destination = "upload://$new_id";
+
+        if (is_dir($source)) {
+            LoggerManager::getLogger()->warn('Upload File error: Argument cannot be a directory. Argument was: "' . $source . '"');
+        } else {
+
+            if (!copy($source, $destination)) {
+                $GLOBALS['log']->error("upload_file could not copy [ {$source} ] to [ {$destination} ]");
+            } else {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 	/**
 	 * Get upload error from system

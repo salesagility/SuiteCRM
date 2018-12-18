@@ -94,9 +94,9 @@ $app_list_strings = array(
             'Prospects' => 'Targets',
             'Queues' => 'Queues',
             'EmailMarketing' => 'Email Marketing',
-            'EmailTemplates' => 'Email Templates',
+            'EmailTemplates' => 'Email - Templates',
             'SNIP' => 'Email Archiving',
-            'ProspectLists' => 'Target Lists',
+            'ProspectLists' => 'Targets - Lists',
             'SavedSearch' => 'Saved Searches',
             'UpgradeWizard' => 'Upgrade Wizard',
             'Trackers' => 'Trackers',
@@ -150,7 +150,7 @@ $app_list_strings = array(
         '2' => 'No',
     ),
 
-    //e.g. en franï¿½ais 'Analyst'=>'Analyste',
+    //e.g. en français 'Analyst'=>'Analyste',
     'account_type_dom' => array(
             '' => '',
             'Analyst' => 'Analyst',
@@ -164,7 +164,7 @@ $app_list_strings = array(
             'Reseller' => 'Reseller',
             'Other' => 'Other',
         ),
-    //e.g. en espaï¿½ol 'Apparel'=>'Ropa',
+    //e.g. en español 'Apparel'=>'Ropa',
     'industry_dom' => array(
             '' => '',
             'Apparel' => 'Apparel',
@@ -3235,7 +3235,7 @@ $app_strings ['documentation'] = array(
 
 // knowledge base
 $app_list_strings['moduleList']['AOK_KnowledgeBase'] = 'Knowledge Base';
-$app_list_strings['moduleList']['AOK_Knowledge_Base_Categories'] = 'KB Categories';
+$app_list_strings['moduleList']['AOK_Knowledge_Base_Categories'] = 'KB - Categories';
 $app_list_strings['aok_status_list']['Draft'] = 'Draft';
 $app_list_strings['aok_status_list']['Expired'] = 'Expired';
 $app_list_strings['aok_status_list']['In_Review'] = 'In Review';
@@ -3401,8 +3401,8 @@ $app_strings['LBL_CRON_MONTHLY'] = 'Monthly';
 //aos
 $app_list_strings['moduleList']['AOS_Contracts'] = 'Contracts';
 $app_list_strings['moduleList']['AOS_Invoices'] = 'Invoices';
-$app_list_strings['moduleList']['AOS_PDF_Templates'] = 'PDF Templates';
-$app_list_strings['moduleList']['AOS_Product_Categories'] = 'Product Categories';
+$app_list_strings['moduleList']['AOS_PDF_Templates'] = 'PDF - Templates';
+$app_list_strings['moduleList']['AOS_Product_Categories'] = 'Products - Categories';
 $app_list_strings['moduleList']['AOS_Products'] = 'Products';
 $app_list_strings['moduleList']['AOS_Products_Quotes'] = 'Line Items';
 $app_list_strings['moduleList']['AOS_Line_Item_Groups'] = 'Line Item Groups';
@@ -3551,7 +3551,7 @@ $app_list_strings['aow_run_when_list']['On_Save'] = 'Only On Save';
 $app_list_strings['aow_run_when_list']['In_Scheduler'] = 'Only In The Scheduler';
 
 //gant
-$app_list_strings['moduleList']['AM_ProjectTemplates'] = 'Project Templates';
+$app_list_strings['moduleList']['AM_ProjectTemplates'] = 'Projects - Templates';
 $app_list_strings['moduleList']['AM_TaskTemplates'] = 'Project Task Templates';
 $app_list_strings['relationship_type_list']['FS'] = 'Finish to Start';
 $app_list_strings['relationship_type_list']['SS'] = 'Start to Start';
@@ -3577,9 +3577,9 @@ $app_strings['LBL_JJWG_MAPS_ADDRESS'] = 'Address';
 $app_strings['LBL_BUG_FIX'] = 'Bug Fix';
 
 $app_list_strings['moduleList']['jjwg_Maps'] = 'Maps';
-$app_list_strings['moduleList']['jjwg_Markers'] = 'Map Markers';
-$app_list_strings['moduleList']['jjwg_Areas'] = 'Map Areas';
-$app_list_strings['moduleList']['jjwg_Address_Cache'] = 'Map Address Cache';
+$app_list_strings['moduleList']['jjwg_Markers'] = 'Maps - Markers';
+$app_list_strings['moduleList']['jjwg_Areas'] = 'Maps - Areas';
+$app_list_strings['moduleList']['jjwg_Address_Cache'] = 'Maps - Address Cache';
 
 $app_list_strings['moduleList']['jjwp_Partners'] = 'JJWP Partners';
 
@@ -3653,23 +3653,6 @@ $app_list_strings['marker_image_list']['currency_exchange'] = 'Currency Exchange
 $app_list_strings['marker_image_list']['customs'] = 'Customs';
 $app_list_strings['marker_image_list']['cycling'] = 'Cycling';
 $app_list_strings['marker_image_list']['dam'] = 'Dam';
-$app_list_strings['marker_image_list']['days_dim'] = 'Days Dim';
-$app_list_strings['marker_image_list']['days_dom'] = 'Days Dom';
-$app_list_strings['marker_image_list']['days_jeu'] = 'Days Jeu';
-$app_list_strings['marker_image_list']['days_jue'] = 'Days Jue';
-$app_list_strings['marker_image_list']['days_lun'] = 'Days Lun';
-$app_list_strings['marker_image_list']['days_mar'] = 'Days Mar';
-$app_list_strings['marker_image_list']['days_mer'] = 'Days Mer';
-$app_list_strings['marker_image_list']['days_mie'] = 'Days Mie';
-$app_list_strings['marker_image_list']['days_qua'] = 'Days Qua';
-$app_list_strings['marker_image_list']['days_qui'] = 'Days Qui';
-$app_list_strings['marker_image_list']['days_sab'] = 'Days Sab';
-$app_list_strings['marker_image_list']['days_sam'] = 'Days Sam';
-$app_list_strings['marker_image_list']['days_seg'] = 'Days Seg';
-$app_list_strings['marker_image_list']['days_sex'] = 'Days Sex';
-$app_list_strings['marker_image_list']['days_ter'] = 'Days Ter';
-$app_list_strings['marker_image_list']['days_ven'] = 'Days Ven';
-$app_list_strings['marker_image_list']['days_vie'] = 'Days Vie';
 $app_list_strings['marker_image_list']['dentist'] = 'Dentist';
 $app_list_strings['marker_image_list']['deptartment_store'] = 'Deptartment Store';
 $app_list_strings['marker_image_list']['disability'] = 'Disability';
@@ -3872,7 +3855,7 @@ $app_strings['LBL_RESCHEDULE_HISTORY'] = 'Call attempt history';
 $app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
 
 //SecurityGroups
-$app_list_strings['moduleList']['SecurityGroups'] = 'Security Groups Management';
+$app_list_strings['moduleList']['SecurityGroups'] = 'Security Suite Management';
 $app_strings['LBL_LOGIN_AS'] = 'Login as ';
 $app_strings['LBL_LOGOUT_AS'] = 'Logout as ';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
@@ -3888,13 +3871,6 @@ $app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Social Feed Details';
 
 $app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Filter';
 
-$app_strings['LBL_QUICK_ACCOUNT'] = 'Create Account';
-$app_strings['LBL_QUICK_CONTACT'] = 'Create Contact';
-$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Create Opportunity';
-$app_strings['LBL_QUICK_LEAD'] = 'Create Lead';
-$app_strings['LBL_QUICK_DOCUMENT'] = 'Create Document';
-$app_strings['LBL_QUICK_CALL'] = 'Log Call';
-$app_strings['LBL_QUICK_TASK'] = 'Create Task';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
 
 $app_strings['LBL_ADD_TAB'] = 'Add Tab';

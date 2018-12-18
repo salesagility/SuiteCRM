@@ -153,7 +153,7 @@ function sugar_file_put_contents($filename, $data, $flags = null, $context = nul
     }
 
     if (!is_writable($filename)) {
-        $GLOBALS['log']->error("File $filename cannot be written to");
+        LoggerManager::getLogger()->error("File $filename cannot be written to");
 
         return false;
     }

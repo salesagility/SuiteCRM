@@ -1,9 +1,16 @@
 <?php
 
-class ViewClassicTest extends PHPUnit_Framework_TestCase
+class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function test__construct()
     {
+        // state save
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //execute the contructor and check for the Object type and type attribute
 
         //test with no paramerters
@@ -18,11 +25,21 @@ class ViewClassicTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('ViewClassic', $view);
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('', 'type', $view);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testdisplay()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        // state save
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         //test with a valid module but invalid action. it should return false.
         $view = new ViewClassic();
@@ -54,5 +71,9 @@ class ViewClassicTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertTrue($ret);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }

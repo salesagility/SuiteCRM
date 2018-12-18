@@ -1,10 +1,9 @@
 <?php
 
-class SugarViewTest extends PHPUnit_Framework_TestCase
+class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testinit()
     {
-        error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
         $SugarView = new SugarView();
 
@@ -12,7 +11,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
         try {
             $SugarView->init();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->assertTrue(true);
@@ -36,7 +35,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
 
             $this->assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -47,9 +46,9 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
         //execute the method and check if it works and doesn't throws an exception
         try {
             $errors = $SugarView->displayErrors();
-            $this->assertSame(null, $errors);
+            $this->assertSame('', $errors);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->assertTrue(true);
@@ -63,7 +62,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
         try {
             $SugarView->preDisplay();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->assertTrue(true);
@@ -77,7 +76,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
         try {
             $SugarView->display();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->assertTrue(true);
@@ -101,7 +100,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
 
             $this->assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -113,7 +112,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
         try {
             $SugarView->getModuleMenuHTML();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->assertTrue(true);
@@ -128,7 +127,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
         try {
             $SugarView->includeClassicFile('config.php');
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->assertTrue(true);
@@ -157,7 +156,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
 
             $this->assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -177,14 +176,13 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
 
             $this->assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
     public function testgetMenu()
     {
 
-        //error_reporting(E_ALL);
 
         $SugarView = new SugarView();
 
@@ -198,7 +196,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
     		 
     	} catch (Exception $e) {
     		$this->assertTrue(TRUE);
-    		//$this->fail();
+    		//$this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
     	} */
 
         //check with valid value and check if it returns an array.

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'modules/iCals/iCal.php';
-class iCalTest extends PHPUnit_Framework_TestCase
+class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function test__construct()
     {
@@ -14,7 +14,13 @@ class iCalTest extends PHPUnit_Framework_TestCase
 
     public function testgetVcalIcal()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
 
         $ical = new iCal();
         $user = new User(1);
@@ -28,5 +34,9 @@ class iCalTest extends PHPUnit_Framework_TestCase
         //match the leading and trailing string parts to verify it returns expected results
         $this->assertStringStartsWith($expectedStart, $actual);
         $this->assertStringEndsWith($expectedEnd, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }

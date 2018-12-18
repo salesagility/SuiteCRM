@@ -158,9 +158,9 @@
                 <td>
                     <div id="parameterOptions{$id}">
 
-                            <input type='hidden' name='parameter_id[]' value='{$condition.id}'>
-                            <input type='hidden' name='parameter_operator[]' value='{$condition.operator}'>
-                            <input type='hidden' name='parameter_type[]' value='{$condition.value_type}'>
+                            <input type='hidden' name='parameter_id[{$condition.key}]' value='{$condition.id}'>
+                            <input type='hidden' name='parameter_operator[{$condition.key}]' value='{$condition.operator}'>
+                            <input type='hidden' name='parameter_type[{$condition.key}]' value='{$condition.value_type}'>
 
                         {if $condition.value_type == "Period"}
                             {$condition.module_display} - <em>{$condition.field_display}</em> - {$condition.operator_display}
@@ -246,9 +246,9 @@
                     var html = '';
                     for(var x = 0; x < data.length; x++) {
                         var cond = data[x];
-                        html += "<input type='hidden' name='parameter_id[]' value='"+cond.id+"'>";
-                        html += "<input type='hidden' name='parameter_operator[]' value='"+cond.operator+"'>";
-                        html += "<input type='hidden' name='parameter_type[]' value='"+cond.value_type+"'>";
+                        html += "<input type='hidden' name='parameter_id["+cond.key+"]' value='"+cond.id+"'>";
+                        html += "<input type='hidden' name='parameter_operator["+cond.key+"]' value='"+cond.operator+"'>";
+                        html += "<input type='hidden' name='parameter_type["+cond.key+"]' value='"+cond.value_type+"'>";
                         html += cond.module_display+" "+cond.field_display+" "+cond.operator_display+" "+cond.field;
                     }
                     paramContainer.html(html);

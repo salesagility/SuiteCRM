@@ -149,7 +149,16 @@ class SugarTinyMCE {
 
 <script type="text/javascript" language="Javascript">
 <!--
-$( document ).ready(function() {
+
+$(document).ready(function(){
+	load_mce();
+});
+
+if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded){
+    load_mce();
+}
+
+function load_mce() {
     if (!SUGAR.util.isTouchScreen()) {
         if(tinyMCE.editors.length == 0 ){
             tinyMCE.init({$jsConfig});
@@ -167,7 +176,7 @@ eoq;
 }
 $ret .=<<<eoq
     }
-});
+}
 -->
 </script>
 

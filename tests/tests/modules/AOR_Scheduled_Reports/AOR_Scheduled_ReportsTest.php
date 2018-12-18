@@ -1,6 +1,6 @@
 <?php
 
-class AOR_Scheduled_ReportsTest extends PHPUnit_Framework_TestCase {
+class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 
 	public function testAOR_Scheduled_Reports(){
@@ -22,7 +22,6 @@ class AOR_Scheduled_ReportsTest extends PHPUnit_Framework_TestCase {
 
 	public function testbean_implements(){
 
-		error_reporting(E_ERROR | E_PARSE);
 
 		$aorScheduledReports = new AOR_Scheduled_Reports();
 		$this->assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value
@@ -33,6 +32,13 @@ class AOR_Scheduled_ReportsTest extends PHPUnit_Framework_TestCase {
 
 	public function testSaveAndGet_email_recipients(){
 
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aor_scheduled_reports');
+        $state->pushGlobals();
+        
+        // test
 		$aorScheduledReports = new AOR_Scheduled_Reports();
 		$aorScheduledReports->name = "test";
 		$aorScheduledReports->description = "test description";
@@ -57,6 +63,11 @@ class AOR_Scheduled_ReportsTest extends PHPUnit_Framework_TestCase {
 
 		$aorScheduledReports->mark_deleted($aorScheduledReports->id);
 		unset($aorScheduledReports);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aor_scheduled_reports');
 
     }
 

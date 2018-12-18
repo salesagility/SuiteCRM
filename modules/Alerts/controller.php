@@ -62,6 +62,7 @@ class AlertsController extends SugarController
         $is_read = 0;
         $url_redirect = null;
         $target_module = null;
+        $reminder_id = '';
         $type = 'info';
 
 
@@ -90,10 +91,18 @@ class AlertsController extends SugarController
         if(isset($_POST['type'])) {
             $type = $_POST['type'];
         }
+        if(isset($_POST['reminder_id'])) {
+            $reminder_id = $_POST['reminder_id'];
+        }
 
-        if(isset($_POST)) {
+        $shouldShowReminderPopup = false;
+
+        if(isset($_POST) && $reminder_id) {
             $bean = BeanFactory::getBean('Alerts');
-            $result = $bean->get_full_list("","alerts.assigned_user_id = '".$current_user->id."' AND url_redirect = '".$_POST['url_redirect']."' AND is_read != 1");
+            $result = $bean->get_full_list(
+                "",
+                "alerts.assigned_user_id = '" . $current_user->id . "' AND reminder_id = '" . $reminder_id . "'"
+            );
             if(empty($result)) {
                 $bean = BeanFactory::newBean('Alerts');
                 $bean->name = $name;
@@ -103,13 +112,18 @@ class AlertsController extends SugarController
                 $bean->is_read = $is_read;
                 $bean->assigned_user_id = $assigned_user_id;
                 $bean->type = $type;
+                $bean->reminder_id = $reminder_id;
                 $bean->save();
+
+                $shouldShowReminderPopup = true;
             }
         }
 
         $this->view_object_map['Flash'] = '';
         $this->view_object_map['Result'] = '';
-        $this->view = 'json';
+        $this->view = 'ajax';
+
+        echo json_encode(['result' => intval($shouldShowReminderPopup)], true);
     }
 
     public function action_markAsRead()
@@ -124,18 +138,18 @@ class AlertsController extends SugarController
     public function action_redirect()
     {
         $bean = BeanFactory::getBean('Alerts', $_GET['record']);
+        $redirect_url = $bean->url_redirect;
         $bean->is_read = 1;
         $bean->save();
 
-        if(empty($bean->url_redirect)) {
-            if (!empty($_SERVER['HTTP_REFERER'])){
-                SugarApplication::redirect($_SERVER['HTTP_REFERER']);
-            }
-            SugarApplication::redirect('index.php');
+        if ($redirect_url) {
+            SugarApplication::redirect($redirect_url);
         }
 
+        if (!empty($_SERVER['HTTP_REFERER'])) {
+            SugarApplication::redirect($_SERVER['HTTP_REFERER']);
+        }
 
-        SugarApplication::redirect($bean->url_redirect);
-
+        SugarApplication::redirect('index.php');
     }
 }

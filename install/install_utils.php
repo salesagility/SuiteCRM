@@ -43,9 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/utils/zip_utils.php');
-
 require_once('include/upload_file.php');
-
 
 ////////////////
 ////  GLOBAL utility
@@ -248,8 +246,8 @@ function commitPatch($unlink = false, $type = 'patch'){
     global $mod_strings;
     global $base_upgrade_dir;
     global $base_tmp_upgrade_dir;
-    global $db;
-    $GLOBALS['db'] = $db;
+    
+    $db = DBManagerFactory::getInstance();
     $errors = array();
     $files = array();
     global $current_user;
@@ -317,8 +315,7 @@ function commitModules($unlink = false, $type = 'module'){
     global $mod_strings;
     global $base_upgrade_dir;
     global $base_tmp_upgrade_dir;
-    global $db;
-    $GLOBALS['db'] = $db;
+    $db = DBManagerFactory::getInstance();
     $errors = array();
     $files = array();
     global $current_user;
@@ -915,21 +912,23 @@ function getFtsSettings()
 /**
  * (re)write the .htaccess file to prevent browser access to the log file
  */
-function handleHtaccess(){
+function handleHtaccess()
+{
     global $mod_strings;
     global $sugar_config;
-    $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0)?'(?i)':'';
-    $htaccess_file   = ".htaccess";
+    $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0) ? '(?i)' : '';
+    $htaccess_file = ".htaccess";
     $contents = '';
     $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
-    if(empty($basePath)) $basePath = '/';
+    if (empty($basePath)) {
+        $basePath = '/';
+    }
     $restrict_str = <<<EOQ
 
 # BEGIN SUGARCRM RESTRICTIONS
 
 EOQ;
-    if (ini_get('suhosin.perdir') !== false && strpos(ini_get('suhosin.perdir'), 'e') !== false)
-    {
+    if (ini_get('suhosin.perdir') !== false && strpos(ini_get('suhosin.perdir'), 'e') !== false) {
         $restrict_str .= "php_value suhosin.executor.include.whitelist upload\n";
     }
     $restrict_str .= <<<EOQ
@@ -947,7 +946,7 @@ EOQ;
     $cache_headers = <<<EOQ
 
 <IfModule mod_rewrite.c>
-    Options +FollowSymLinks
+    Options +SymLinksIfOwnerMatch
     RewriteEngine On
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
@@ -968,23 +967,36 @@ EOQ;
         ExpiresByType image/jpg "access plus 1 month"
         ExpiresByType image/png "access plus 1 month"
 </IfModule>
+<IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_URI} (.+)/$
+        RewriteRule ^ %1 [R=301,L]
+</IfModule>
 EOQ;
-    if(file_exists($htaccess_file)){
+    if (file_exists($htaccess_file)) {
         $fp = fopen($htaccess_file, 'r');
         $skip = false;
-        while($line = fgets($fp)){
+        while ($line = fgets($fp)) {
 
-            if(preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line))$skip = true;
-            if(!$skip)$contents .= $line;
-            if(preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line))$skip = false;
+            if (preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
+                $skip = true;
+            }
+            if (!$skip) {
+                $contents .= $line;
+            }
+            if (preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
+                $skip = false;
+            }
         }
     }
-    $status =  file_put_contents($htaccess_file, $contents . $restrict_str . $cache_headers);
-    if( !$status ) {
+    $status = file_put_contents($htaccess_file, $contents . $restrict_str . $cache_headers);
+    if (!$status) {
         echo "<p>{$mod_strings['ERR_PERFORM_HTACCESS_1']}<span class=stop>{$htaccess_file}</span> {$mod_strings['ERR_PERFORM_HTACCESS_2']}</p>\n";
         echo "<p>{$mod_strings['ERR_PERFORM_HTACCESS_3']}</p>\n";
         echo $restrict_str;
     }
+
     return $status;
 }
 
@@ -1088,7 +1100,7 @@ function handleWebConfig()
  * Drop old tables if table exists and told to drop it
  */
 function drop_table_install( &$focus ){
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $dictionary;
 
     $result = $db->tableExists($focus->table_name);
@@ -1124,7 +1136,7 @@ function create_table_if_not_exist( &$focus ){
 
 
 function create_default_users(){
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $setup_site_admin_password;
     global $setup_site_admin_user_name;
     global $create_default_user;
@@ -1143,8 +1155,6 @@ function create_default_users(){
     $user->is_admin = true;
     $user->employee_status = 'Active';
     $user->user_hash = User::getPasswordHash($setup_site_admin_password);
-    $user->email = '';
-    $user->picture = UserDemoData::_copy_user_image($user->id);
     $user->save();
     //Bug#53793: Keep default current user in the global variable in order to store 'created_by' info as default user
     //           while installation is proceed.
@@ -1165,7 +1175,7 @@ function create_default_users(){
 }
 
 function set_admin_password( $password ) {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     $user_hash = User::getPasswordHash($password);
 
@@ -1175,7 +1185,7 @@ function set_admin_password( $password ) {
 }
 
 function insert_default_settings(){
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $setup_sugar_version;
     global $sugar_db_version;
 
@@ -2061,7 +2071,7 @@ function create_db_user_creds($numChars=10){
 }
 
 function addDefaultRoles($defaultRoles = array()) {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
 
     foreach($defaultRoles as $roleName=>$role){

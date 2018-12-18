@@ -107,7 +107,7 @@
 
 	//Setting contract quote relationship
 	require_once('modules/Relationships/Relationship.php');
-	$key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Contracts', $GLOBALS['db']);
+	$key = Relationship::retrieve_by_modules('AOS_Quotes', 'AOS_Contracts', DBManagerFactory::getInstance());
 	if (!empty($key)) {
 		$quote->load_relationship($key);
 		$quote->$key->add($contract->id);

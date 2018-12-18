@@ -652,7 +652,7 @@ class SugarController{
 
             set_time_limit(0);//I'm wondering if we will set it never goes timeout here.
             // until we have more efficient way of handling MU, we have to disable the limit
-            $GLOBALS['db']->setQueryLimit(0);
+            DBManagerFactory::getInstance()->setQueryLimit(0);
             require_once("include/MassUpdate.php");
             require_once('modules/MySettings/StoreQuery.php');
             $seed = loadBean($_REQUEST['module']);

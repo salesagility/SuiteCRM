@@ -55,7 +55,7 @@ if (isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) && $GLOBALS['sugar
     sugar_die("Unauthorized access to diagnostic tool.");
 }
 
-global $db;
+$db = DBManagerFactory::getInstance();
 if(empty($db)) {
 	
 	$db = DBManagerFactory::getInstance();

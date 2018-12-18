@@ -1,7 +1,7 @@
 <?php
 
 
-class ViewXMLTest extends PHPUnit_Framework_TestCase
+class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewXML()
     {
@@ -29,7 +29,7 @@ class ViewXMLTest extends PHPUnit_Framework_TestCase
 
             $this->assertGreaterThan(0, strlen($renderedContent));
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 }

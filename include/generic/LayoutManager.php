@@ -59,7 +59,7 @@ class LayoutManager
 	{
 		// set a sane default for context
 		$this->defs['context'] = 'Detail';
-		$this->DBHelper = $GLOBALS['db'];
+		$this->DBHelper = DBManagerFactory::getInstance();
 	}
 
     /**

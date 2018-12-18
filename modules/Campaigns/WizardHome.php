@@ -162,7 +162,7 @@ global $currentModule;
     }
 
     function getFirstMarketingId($campaignId) {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $campaignId = $db->quote($campaignId);
         $emailMarketings = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '$campaignId'");
         $firstEmailMarketing = $emailMarketings[0];

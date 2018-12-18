@@ -1,6 +1,6 @@
 <?php
 
-class ViewMetadataTest extends PHPUnit_Framework_TestCase
+class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testdisplayCheckBoxes()
     {
@@ -25,6 +25,13 @@ class ViewMetadataTest extends PHPUnit_Framework_TestCase
 
     public function testdisplaySelect()
     {
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $view = new ViewMetadata();
 
         //check with empty values array. it should return html sting
@@ -42,6 +49,10 @@ class ViewMetadataTest extends PHPUnit_Framework_TestCase
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
+         
+        // cleanup
+        
+        $state->popGlobals();
     }
 
     public function testdisplayTextBoxes()
@@ -79,8 +90,13 @@ class ViewMetadataTest extends PHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
-        error_reporting(E_ERROR | E_PARSE);
-
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $view = new ViewMetadata();
 
         //test without setting REQUEST parameters
@@ -97,6 +113,10 @@ class ViewMetadataTest extends PHPUnit_Framework_TestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
+         
+        // cleanup
+        
+        $state->popGlobals();
     }
 
     public function testgetModules()

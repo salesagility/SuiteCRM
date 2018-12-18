@@ -175,7 +175,7 @@ function commitAjaxFinalTouches($persistence) {
  * @return array $persistence
  */
 function commitAjaxRunSql($persistence) {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	if(!isset($persistence['commit_sql_errors'])) {
 		$persistence['commit_sql_errors'] = array();
@@ -564,7 +564,7 @@ eoq;
  */
 function preflightCheckJsonPrepSchemaCheck($persistence, $preflight=true) {
 	global $mod_strings;
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	global $sugar_db_version;
 	global $manifest;
 
@@ -642,7 +642,7 @@ function preflightCheckJsonPrepSchemaCheck($persistence, $preflight=true) {
 
 function preflightCheckJsonSchemaCheck($persistence) {
 	global $mod_strings;
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	if(!isset($persistence['sql_check_done']) || $persistence['sql_check_done'] != true) {
 		// must keep sql in order
@@ -702,7 +702,7 @@ function preflightCheckJsonFillSchema() {
 	global $persistence;
 	global $sugar_db_version;
 	global $manifest;
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
     if (empty($sugar_db_version))
     {

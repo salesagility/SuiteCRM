@@ -469,7 +469,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
         $GLOBALS['log']->info('SugarWebServiceImpl->search_by_module - search string = ' . $search_string);
 
     	if(!empty($search_string) && isset($search_string)) {
-    		$search_string = trim($GLOBALS['db']->quote(securexss(from_html(clean_string($search_string, 'UNIFIED_SEARCH')))));
+    		$search_string = trim(DBManagerFactory::getInstance()->quote(securexss(from_html(clean_string($search_string, 'UNIFIED_SEARCH')))));
         	foreach($modules_to_search as $name => $beanName) {
         		$where_clauses_array = array();
     			$unifiedSearchFields = array () ;

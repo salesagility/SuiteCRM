@@ -65,7 +65,7 @@ SUGAR.email2 = {
         tHeight = Math.max(tHeight, 550);
         c.style.height = tHeight + "px";
         SUGAR.email2.complexLayout.set('height', tHeight);
-        SUGAR.email2.complexLayout.set('width', YAHOO.util.Dom.getViewportWidth() - 40);
+        SUGAR.email2.complexLayout.set('width', YAHOO.util.Dom.getViewportWidth() - 40 - getSideBarCurrentWidth());
         SUGAR.email2.complexLayout.render();
         SUGAR.email2.listViewLayout.resizePreview();        
     }
