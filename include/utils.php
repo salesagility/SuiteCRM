@@ -5456,8 +5456,6 @@ function getAppString($key) {
  */
 function getClassInstance($className, $includePath = false)
 {
-    global $log;
-
     if ($includePath) {
         require_once get_custom_file_if_exists($includePath);
     }
@@ -5472,5 +5470,5 @@ function getClassInstance($className, $includePath = false)
         return new $className;
     }
 
-    $log->fatal('Unable to find class: ' . $className);
+    LoggerManager::getLogger()->fatal('Unable to find class: ' . $className);
 }
