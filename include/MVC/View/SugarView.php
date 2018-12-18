@@ -95,7 +95,7 @@ class SugarView
 
     /**
      *
-     * @var array 
+     * @var array
      */
     private $settings = [];
 
@@ -575,14 +575,12 @@ class SugarView
 
                 $ss->assign('currentGroupTab', $currentGroupTab);
                 $usingGroupTabs = true;
-
             } else {
                 // Setup the default group tab.
                 $ss->assign('currentGroupTab', $app_strings['LBL_TABGROUP_ALL']);
 
                 $usingGroupTabs = false;
                 $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules'] = $fullModuleList;
-
             }
 
             $topTabList = array();
@@ -660,7 +658,6 @@ class SugarView
             // This is here for backwards compatibility, someday, somewhere, it will be able to be removed
             $ss->assign("moduleTopMenu", $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules']);
             $ss->assign("moduleExtraMenu", $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['extra']);
-
         }
 
         if (isset($extraTabs) && is_array($extraTabs)) {
@@ -717,12 +714,10 @@ class SugarView
                 }
             }
         }
-
     }
 
     public function getModuleMenuHTML()
     {
-
     }
 
     /**
@@ -799,7 +794,7 @@ class SugarView
 
         // Add in the number formatting styles here as well, we have been handling this with individual modules.
         require_once('modules/Currencies/Currency.php');
-        list ($num_grp_sep, $dec_sep) = get_number_seperators();
+        list($num_grp_sep, $dec_sep) = get_number_seperators();
 
         $the_script =
             "<script type=\"text/javascript\">\n" .
@@ -870,7 +865,7 @@ EOHTML;
                 echo "<script>\n" . implode("\n", $config_js) . "</script>\n";
             }
 
-            if ($this->hasDomJS()){
+            if ($this->hasDomJS()) {
                 echo "
                         <script type='text/javascript'>
                         SUGAR.append(SUGAR, { settings:".$this->getDomJS()." } );
@@ -1149,7 +1144,6 @@ EOHTML;
 
         $trackerManager = TrackerManager::getInstance();
         $trackerManager->save();
-
     }
 
     /**
@@ -1568,13 +1562,12 @@ EOHTML;
             $firstParam = $this->module;
         }
 
-    	$iconPath = $this->getModuleTitleIconPath($this->module);
-    	if($this->action == "ListView" || $this->action == "index") {
-    	    if (!empty($iconPath) && !$browserTitle) {
-    	    	if (SugarThemeRegistry::current()->directionality == "ltr") {
-    	    		return $app_strings['LBL_SEARCH_ALT']."&nbsp;"
-    	    			 . "$firstParam";
-
+        $iconPath = $this->getModuleTitleIconPath($this->module);
+        if ($this->action == "ListView" || $this->action == "index") {
+            if (!empty($iconPath) && !$browserTitle) {
+                if (SugarThemeRegistry::current()->directionality == "ltr") {
+                    return $app_strings['LBL_SEARCH_ALT']."&nbsp;"
+                         . "$firstParam";
                 } else {
                     return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
                 }
@@ -1851,14 +1844,15 @@ EOHTML;
     }
 
     /**
-     * 
+     *
      * @param array $data
      * @param string $scope
      */
-    public function addDomJS($data, $scope){
+    public function addDomJS($data, $scope)
+    {
         if (!$scope) {
             throw new Exception('Scope can not be empty');
-        } 
+        }
         if (isset($this->settings[$scope])) {
             LoggerManager::getLogger()->warn('Scope "' . $scope . '" already exists but it will be overwriten.');
         }
@@ -1866,10 +1860,11 @@ EOHTML;
     }
 
     /**
-     * 
+     *
      * @return string
      */
-    public function getDomJS(){
+    public function getDomJS()
+    {
         $ret = json_encode($this->settings);
         if ($ret === false) {
             $err = json_last_error();
@@ -1881,21 +1876,23 @@ EOHTML;
     }
 
     /**
-     * 
+     *
      * @return bool
      */
-    public function hasDomJS(){
+    public function hasDomJS()
+    {
         return !empty($this->settings);
     }
 
     /**
      * Merges multiple arrays, recursively, and returns the merged array.
      * https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_array_merge_deep_array/7
-     * 
+     *
      * @param array $arrays
      * @return array
      */
-    public function suite_array_merge_deep_array($arrays){
+    public function suite_array_merge_deep_array($arrays)
+    {
         $result = array();
 
         foreach ($arrays as $array) {
@@ -1919,31 +1916,31 @@ EOHTML;
     }
 
     /**
-     * 
+     *
      * @param string $module_dir
      * @return array
      */
-    public function getVardefsData($module_dir){
+    public function getVardefsData($module_dir)
+    {
         if (!$module_dir) {
             throw new Exception('Module DIR can not be empty');
         }
-         $data = array();
-         $bean = SugarModule::get($module_dir)->loadBean();
+        $data = array();
+        $bean = SugarModule::get($module_dir)->loadBean();
 
-         if($bean){
-             foreach($bean->field_defs as $field_name => $def){
-                 $data[$module_dir][$field_name] = $def;
-                 if (isset($def['required'])){
-                     $data[$module_dir][$field_name]['required'] = $def['required'];
-                 }
-                 else{
-                     $data[$module_dir][$field_name]['required'] = false;
-                 }
-             }
-         } else {
-             LoggerManager::getLogger()->warn('Could not retrive a bean from DIR: ' . $module_dir);
-         }
-         unset($bean);
-         return array($data);
-     }
+        if ($bean) {
+            foreach ($bean->field_defs as $field_name => $def) {
+                $data[$module_dir][$field_name] = $def;
+                if (isset($def['required'])) {
+                    $data[$module_dir][$field_name]['required'] = $def['required'];
+                } else {
+                    $data[$module_dir][$field_name]['required'] = false;
+                }
+            }
+        } else {
+            LoggerManager::getLogger()->warn('Could not retrive a bean from DIR: ' . $module_dir);
+        }
+        unset($bean);
+        return array($data);
+    }
 }

@@ -73,6 +73,8 @@ SuiteCRM.kdev4
 vendor/
 public/
 
+.php_cs.cache
+
 
 #Ignore Sass Generated files in SuiteP
 themes/SuiteP/studio.css
