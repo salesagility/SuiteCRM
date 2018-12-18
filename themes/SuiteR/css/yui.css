@@ -1163,7 +1163,6 @@ span.yui-carousel-first-button-disabled {
 
 .yui-dt-scrollable .yui-dt-bd {
     overflow: scroll;
-    max-height: 465px;
 }
 
 .yui-dt-scrollable .yui-dt-hd {
@@ -2945,7 +2944,9 @@ div.yui-layout-hd h2 {
 }
 
 .yui-layout-unit{
+
     height:50px;
+
 }
 
 .yui-layout div.yui-layout-bd {
@@ -2957,7 +2958,7 @@ div.yui-layout-hd h2 {
 }
 
 .yui-layout .yui-layout-noscroll div.yui-layout-bd {
-    overflow: visible;
+    overflow: hidden;
 }
 
 .yui-layout .yui-layout-scroll div.yui-layout-bd {
@@ -2979,10 +2980,10 @@ div.yui-layout-hd h2 {
 
 .yui-layout .yui-layout-unit div.yui-layout-hd .collapse {
     cursor: pointer;
-    height: 111px;
-    width: 111px;
+    height: 11px;
+    width: 11px;
     position: absolute;
-    top: 25px;
+    top: 5px;
     font-size: 0;
 }
 
@@ -3228,7 +3229,7 @@ div.yui-layout-hd h2 {
 .yui-layout-unit .yui-resize-handle-r .yui-layout-resize-knob, .yui-layout-unit .yui-resize-handle-l .yui-layout-resize-knob
 {
     position: absolute;
-    height: 0px;
+    height: 16px;
     width: 6px;
     top: 45%;
     left: 0px;
@@ -3652,8 +3653,6 @@ a.yuimenuitemlabel:hover {
     color:#666666;
     display: block;
     white-space: nowrap;
-    position: relative !important;
-    z-index: 99999 !important;
 }
 
 .yui-pg-first, .yui-pg-previous, .yui-pg-next, .yui-pg-last, .yui-pg-current, .yui-pg-page
@@ -3964,7 +3963,7 @@ a.yuimenuitemlabel:hover {
 
 .yui-resize .yui-resize-handle-b {
     width: 100%;
-    height: 15px;
+    height: 5px;
     bottom: 0;
     right: 0;
     cursor: s-resize;
@@ -6068,14 +6067,44 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
     background-color: transparent !important;
 }
 
+/*
+    //Custom SugarCRM theme
+
+.yui-layout-wrap .yui-navset .yui-content {
+    background:#FFF none repeat scroll 0 0;
+    height : 100%;
+}
+
+.yui-layout .yui-layout-unit .yui-layout-wrap div.yui-layout-bd {
+    background:#FFF none repeat scroll 0 0;
+}
+
+
+.yui-navset-top ul{
+
+    border-style:solid;
+    border-width:0 0 5px;
+}
+
+
+.yui-navset-top ul li.selected a, .yui-navset-top ul li.selected a:focus, .yui-navset-top ul li.selected a:hover {
+
+}
+
+.yui-navset  {
+    height : 100%;
+}*/
+
 .yui-layout-unit-right.yui-resize .yui-layout-wrap .yui-layout-hd {
 
     padding:10px 0 10px 0;
+
 }
 
 .yui-layout-unit-left.yui-resize .yui-layout-wrap .yui-layout-hd {
 
     padding:10px 0 10px 0;
+
 }
 
 .yui-layout .yui-layout-unit div.yui-layout-hd .collapse {
