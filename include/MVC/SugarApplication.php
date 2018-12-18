@@ -720,6 +720,7 @@ class SugarApplication {
     */
     public static function appendMessage($message, $type = 'info', $repeat = true)
     {
+
         if (!empty($message)) {
             $type = preg_replace('[^a-z]', '', strtolower($type));
 
@@ -751,28 +752,21 @@ class SugarApplication {
     public static function getMessages($type = null, $clear_queue = true)
     {
         $messages = array();
+
+        if (!empty($_SESSION['user_error_message'])) {
+            SugarApplication::appendMessage($_SESSION['user_error_message'], 'error');
+        }
+
+        if (!empty($_SESSION['user_success_message'])) {
+            SugarApplication::appendMessage($_SESSION['user_success_message'], 'okay');
+        }
+
         if (isset($_SESSION['suite_messages'])) {
-            if (isset($type) && !self::isOldMessageType($type)) {
+            if (isset($type)) {
                 if (isset($_SESSION['suite_messages'][$type])) {
                     $messages[$type] = $_SESSION['suite_messages'][$type];
                     if ($clear_queue) {
                         unset($_SESSION['suite_messages'][$type]);
-                    }
-                }
-            } else if (isset($type) && self::isOldMessageType($type)) {
-                if ($type == 'user_error_message'
-                    && isset($_SESSION['suite_messages']['error'])
-                ) {
-                    $messages['error'] = $_SESSION['suite_messages']['error'];
-                    if ($clear_queue) {
-                        unset($_SESSION['suite_messages']['error']);
-                    }
-                } else if ($type == 'user_success_message'
-                    && isset($_SESSION['suite_messages']['okay'])
-                ) {
-                    $messages['okay'] = $_SESSION['suite_messages']['okay'];
-                    if ($clear_queue) {
-                        unset($_SESSION['suite_messages']['okay']);
                     }
                 }
             } else {
@@ -783,12 +777,6 @@ class SugarApplication {
             }
         }
         return($messages);
-    }
-
-    static private function isOldMessageType($type)
-    {
-        $types = array('user_error_message', 'user_success_message');
-        return in_array($type, $types);
     }
 
     /**
