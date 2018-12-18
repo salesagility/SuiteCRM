@@ -136,6 +136,14 @@ class SugarView
      * @var array
      */
     private $settings = [];
+    
+    /**
+     * SugarView constructor.
+     * @deprecated since version 7.11
+     */
+    public function __construct() {
+        LoggerManager::getLogger()->deprecated();
+    }
 
     /**
      * @param SugarBean $bean
