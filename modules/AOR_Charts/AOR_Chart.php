@@ -245,6 +245,7 @@ class AOR_Chart extends Basic {
 
     private function generateChartColoursFromLabels($labels){
         if(is_array($labels) && count($labels)>1){
+	    $color=[];
             foreach($labels AS $onelabel){
                     $hash = md5($onelabel);
                     $color[]= substr($hash,0,6);
