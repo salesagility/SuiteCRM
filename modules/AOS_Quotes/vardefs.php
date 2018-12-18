@@ -256,7 +256,6 @@ $dictionary['AOS_Quotes'] = array(
             ),
         'number' =>
             array(
-                'required' => true,
                 'name' => 'number',
                 'vname' => 'LBL_QUOTE_NUMBER',
                 'type' => 'int',

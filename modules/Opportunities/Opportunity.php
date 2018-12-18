@@ -259,22 +259,21 @@ class Opportunity extends SugarBean
         $this->load_relationship('contacts');
         $query_array=$this->contacts->getQuery(true);
 
-                if (is_string($query_array)) {
-                    LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array) value id: $query_array");
-                } else {
-                    //update the select clause in the retruned query.
-                    $query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
+        if (is_string($query_array)) {
+            LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array) value id: $query_array");
+        } else {
+            //update the select clause in the retruned query.
+            $query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
+        }
 
-                }
-
-		$query='';
-		foreach ((array)$query_array as $qstring) {
-			$query.=' '.$qstring;
-		}
-	    $temp = Array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
-            $contact = new Contact();
-		return $this->build_related_list2($query, $contact, $temp);
-	}
+        $query='';
+        foreach ((array)$query_array as $qstring) {
+            $query.=' '.$qstring;
+        }
+        $temp = array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
+        $contact = new Contact();
+        return $this->build_related_list2($query, $contact, $temp);
+    }
 
     public function update_currency_id($fromid, $toid)
     {
@@ -331,15 +330,16 @@ class Opportunity extends SugarBean
     }
 
 
-	/**
-		builds a generic search based on the query string using or
-		do not include any $this-> because this is called on without having the class instantiated
-	*/
-	public function build_generic_where_clause ($the_query_string) {
-	$where_clauses = Array();
-	$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
-	array_push($where_clauses, "opportunities.name like '$the_query_string%'");
-	array_push($where_clauses, "accounts.name like '$the_query_string%'");
+    /**
+        builds a generic search based on the query string using or
+        do not include any $this-> because this is called on without having the class instantiated
+    */
+    public function build_generic_where_clause($the_query_string)
+    {
+        $where_clauses = array();
+        $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
+        array_push($where_clauses, "opportunities.name like '$the_query_string%'");
+        array_push($where_clauses, "accounts.name like '$the_query_string%'");
 
         $the_where = "";
         foreach ($where_clauses as $clause) {

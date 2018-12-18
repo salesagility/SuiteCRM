@@ -106,7 +106,7 @@ if (!$hasUserPreferences) {
             'module' => 'Home',
             'forceColumn' => 0,
             'fileLocation' => $dashletsFiles['iFrameDashlet']['file'],
-            'options' => array('titleLabel' => 'LBL_DASHLET_DISCOVER_SUGAR_PRO',
+            'options' => array('titleLabel' => 'LBL_DASHLET_DISCOVER_SUITE',
                 'url' => 'https://suitecrm.com/',
                 'height' => 315,
             ));
@@ -121,7 +121,7 @@ if (!$hasUserPreferences) {
             'module' => 'Home',
             'forceColumn' => 1,
             'fileLocation' => $dashletsFiles['iFrameDashlet']['file'],
-            'options' => array('titleLabel' => 'LBL_DASHLET_SUGAR_NEWS',
+            'options' => array('titleLabel' => 'LBL_DASHLET_SUITE_NEWS',
                 'url' => 'https://suitecrm.com/about/newsroom/news/',
                 'height' => 315,
             ));
@@ -208,7 +208,7 @@ $activePage = isset($_REQUEST['page_id']) && $_REQUEST['page_id'] ? $_REQUEST['p
 
 $divPages[] = $activePage;
 
-$numCols = $pages[$activePage]['numColumns'];
+$numCols = (int)$pages[$activePage]['numColumns'];
 
 
 $count = 0;
@@ -299,8 +299,7 @@ if (!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == 
     $sugar_smarty->assign('lock_homepage', true);
 }
 
-
-$sugar_smarty->assign('colNum', $numCols);
+$sugar_smarty->assign('colNum', (int)$numCols);
 $sugar_smarty->assign('sugarVersion', $sugar_version);
 $sugar_smarty->assign('currentLanguage', $GLOBALS['current_language']);
 $sugar_smarty->assign('serverUniqueKey', $GLOBALS['server_unique_key']);

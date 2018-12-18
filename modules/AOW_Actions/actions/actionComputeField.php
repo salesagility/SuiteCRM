@@ -41,6 +41,8 @@
  *
  */
 
+use SuiteCRM\Utility\SuiteValidator;
+
 require_once('modules/AOW_Actions/actions/actionBase.php');
 
 /**
@@ -221,6 +223,7 @@ class actionComputeField extends actionBase
         $relationParameterFields,
         $relationParameterTypes
     ) {
+        $isValidator = new SuiteValidator();
         $resolvedRelationParameters = array();
 
         $relateFields = $this->getAllRelatedFields($bean);
@@ -248,7 +251,7 @@ class actionComputeField extends actionBase
                             break;
                         }
                     }
-                } elseif (isValidId($relatedEntityId)) {
+                } elseif ($isValidator->isValidId($relatedEntityId)) {
                     // If this is a string, it's probably an id of an object - really a relate field
                     $entity = BeanFactory::getBean(
                         $relateFields[$relationParameters[$i]]['module'],

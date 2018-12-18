@@ -59,21 +59,23 @@ class OpportunityFormBase
             $query .= getLikeForEachWord('name', $_POST[$prefix.'name']);
         }
 
-	if(!empty($query)){
-		$rows = array();
-		$db = DBManagerFactory::getInstance();
-		$result = $db->query($query.')');
-		$i=-1;
-		while(($row=$db->fetchByAssoc($result)) != null) {
-			$i++;
-			$rows[$i] = $row;
-		}
-		if ($i==-1) return null;
-		
-		return $rows;		
-	}
-	return null;
-}
+        if (!empty($query)) {
+            $rows = array();
+            $db = DBManagerFactory::getInstance();
+            $result = $db->query($query.')');
+            $i=-1;
+            while (($row=$db->fetchByAssoc($result)) != null) {
+                $i++;
+                $rows[$i] = $row;
+            }
+            if ($i==-1) {
+                return null;
+            }
+        
+            return $rows;
+        }
+        return null;
+    }
 
 
     public function buildTableForm($rows, $mod='Opportunities')

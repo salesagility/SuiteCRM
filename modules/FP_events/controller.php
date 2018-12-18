@@ -361,8 +361,8 @@ class FP_eventsController extends SugarController
             if ($status == null || $status == '' || $status == 'Not Invited') {
                 $invite_count ++;
                 //set email links
-                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$contact->id."&type=c&response=accept'>Accept</a>";
-                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$contact->id."&type=c&response=decline'>Decline</a>";
+                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$contact->id."&type=c&response=accept'>{$mod_strings['LBL_ACCEPT_LINK']}</a>";
+                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$contact->id."&type=c&response=decline'>{$mod_strings['LBL_DECLINE_LINK']}</a>";
 
                 //Get the TO name and e-mail address for the message
                 $rcpt_name = $contact->first_name . ' ' . $contact->last_name;
@@ -425,8 +425,8 @@ class FP_eventsController extends SugarController
                 $invite_count ++;
 
                 //set email links
-                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$target->id."&type=t&response=accept'>Accept</a>";
-                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$target->id."&type=t&response=decline'>Decline</a>";
+                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$target->id."&type=t&response=accept'>{$mod_strings['LBL_ACCEPT_LINK']}</a>";
+                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$target->id."&type=t&response=decline'>{$mod_strings['LBL_DECLINE_LINK']}</a>";
 
                 //Get the TO name and e-mail address for the message
                 $rcpt_name = $target->first_name . ' ' . $target->last_name;
@@ -481,8 +481,8 @@ class FP_eventsController extends SugarController
             if ($status == null || $status == '' || $status == 'Not Invited') {
                 $invite_count ++;
                 //set email links
-                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$lead->id."&type=l&response=accept'>Accept</a>";
-                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$lead->id."&type=l&response=decline'>Decline</a>";
+                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$lead->id."&type=l&response=accept'>{$mod_strings['LBL_ACCEPT_LINK']}</a>";
+                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$lead->id."&type=l&response=decline'>{$mod_strings['LBL_DECLINE_LINK']}</a>";
 
                 //Get the TO name and e-mail address for the message
                 $rcpt_name = $lead->first_name . ' ' . $lead->last_name;

@@ -26,7 +26,6 @@ require_once 'modules/InboundEmail/InboundEmail.php';
 require_once 'include/clean.php';
 class AOPInboundEmail extends InboundEmail
 {
-
     public $job_name = 'function::pollMonitoredInboxesAOP';
 
     /**
@@ -57,7 +56,7 @@ class AOPInboundEmail extends InboundEmail
     }
 
 
-    public function handleCreateCase($email, $userId)
+    public function handleCreateCase(Email $email, $userId)
     {
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
@@ -224,12 +223,13 @@ class AOPInboundEmail extends InboundEmail
             } // if
         } else {
             echo "First if not matching\n";
-            if (!empty($email->reply_to_email)) {
+            if (!empty($email->reply_to_email) && isValidEmailAddress($email->reply_to_email)) {
                 $contactAddr = $email->reply_to_email;
-                isValidEmailAddress($contactAddr);
-            } else {
+            } elseif (!empty($email->from_addr) && isValidEmailAddress($email->from_addr)) {
                 $contactAddr = $email->from_addr;
-                isValidEmailAddress($contactAddr);
+            } else {
+                $contactAddr = null;
+                LoggerManager::getLogger()->error('Contact address is incorrect to Email: ' . $email->id);
             }
             $this->handleAutoresponse($email, $contactAddr);
         }

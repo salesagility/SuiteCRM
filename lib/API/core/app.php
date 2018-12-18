@@ -38,12 +38,24 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+include_once __DIR__ . '/../../../vendor/autoload.php';
+
 // Prevent errors from being echoed out to the client
 // We MUST use the exceptions instead to pass the errors object
 // back to the client
 ini_set('error_reporting', ~E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 
 chdir(__DIR__.'/../../../');
+
+
+
+include_once __DIR__ . '/../../../include/utils/array_utils.php';
+include_once __DIR__ . '/../../../include/SugarObjects/SugarConfig.php';
+include_once __DIR__ . '/../../../include/SugarLogger/SugarLogger.php';
+include_once __DIR__ . '/../../../include/SugarLogger/LoggerManager.php';
+
+SuiteCRM\ErrorMessage::log('Calling this area of API is depricated. Use http://[SuiteCRM_instance]/Api/V8... ', 'deprecated');
+
 require_once __DIR__.'/../../../include/entryPoint.php';
 global $sugar_config;
 global $version;

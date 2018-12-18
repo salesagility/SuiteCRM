@@ -63,14 +63,14 @@ class JSON
     /**
      * JSON encode a string
      *
-     * @param array $string
+     * @param array $array
      * @param bool $addSecurityEnvelope defaults to false
      * @param bool $encodeSpecial
      * @return string
      */
-    public static function encode($string, $addSecurityEnvelope = false, $encodeSpecial = false)
+    public static function encode($array, $addSecurityEnvelope = false, $encodeSpecial = false)
     {
-        $encodedString = json_encode($string);
+        $encodedString = json_encode($array);
 
         if ($encodeSpecial) {
             $charMap = array('<' => '\u003C', '>' => '\u003E', "'" => '\u0027', '&' => '\u0026');

@@ -286,7 +286,6 @@ class MergeRecord extends SugarBean
             $searchTypeString = $key.'SearchType';
 
             if (isset($search_params[$searchFieldString])) {
-                
                 $searchParamSearchTypeString = null;
                 if (isset($search_params[$searchTypeString])) {
                     $searchParamSearchTypeString = $search_params[$searchTypeString];

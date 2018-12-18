@@ -118,13 +118,13 @@ class MyCallsDashlet extends DashletGeneric
         }
 
 
-       if(!empty($keys)){
-            $query = "SELECT call_id, accept_status FROM calls_users WHERE deleted = 0 and user_id = '" . $current_user->id . "' AND call_id IN ('" . implode("','", $keys ). "')";
+        if (!empty($keys)) {
+            $query = "SELECT call_id, accept_status FROM calls_users WHERE deleted = 0 and user_id = '" . $current_user->id . "' AND call_id IN ('" . implode("','", $keys). "')";
             $result = DBManagerFactory::getInstance()->query($query);
 
-            while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
-                 $rowNums = $this->lvs->data['pageData']['idIndex'][$row['call_id']]; // figure out which rows have this guid
-                 foreach($rowNums as $rowNum) {
+            while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
+                $rowNums = $this->lvs->data['pageData']['idIndex'][$row['call_id']]; // figure out which rows have this guid
+                foreach ($rowNums as $rowNum) {
                     $this->lvs->data['data'][$rowNum]['ACCEPT_STATUS'] = $row['accept_status'];
                 }
             }

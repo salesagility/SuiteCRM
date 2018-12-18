@@ -3959,7 +3959,12 @@ function string_format($format, $args)
     /* End of fix */
 
     for ($i = 0; $i < count($args); ++$i) {
-        $result = str_replace('{' . $i . '}', $args[$i], $result);
+        if(strpos($args[$i], ',') !== false) {
+            $values = explode(',', $args[$i]);
+            $args[$i] = implode("','",$values);
+        }
+
+        $result = str_replace('{'.$i.'}',"'" . $args[$i] . "'", $result);
     }
 
     return $result;
@@ -5524,15 +5529,19 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
 }
 
 /**
- * @param string $id
- * @return bool
- * @todo add to a separated common validator class
+ * @deprecated deprecated since version 7.10 please use the SuiteValidator class
  */
 function isValidId($id)
 {
-    $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
-
-    return $valid;
+    $deprecatedMessage = 'isValidId method is deprecated please update your code';
+    if (isset($GLOBALS['log'])) {
+        $GLOBALS['log']->deprecated($deprecatedMessage);
+    } else {
+        trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+    }
+    $isValidator = new \SuiteCRM\Utility\SuiteValidator();
+    $result = $isValidator->isValidId($id);
+    return $result;
 }
 
 function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error')
@@ -5557,8 +5566,8 @@ function displayAdminError($errorString)
     SugarApplication::appendErrorMessage($output);
 }
 
-function getAppString($key) {
-
+function getAppString($key)
+{
     global $app_strings;
 
     if (!isset($app_strings[$key])) {

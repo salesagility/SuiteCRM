@@ -24,19 +24,23 @@
     "psr/log": "^1.0",
     "league/oauth2-server": "^5.1",
     "justinrainbow/json-schema": "^5.2",
-    "onelogin/php-saml": "3.0.0.x-dev as 3.0.0",
+    "onelogin/php-saml": "^3.0.0",
     "google/recaptcha": "^1.1",
-    "ezyang/htmlpurifier": "^4.10"
+    "symfony/options-resolver": "^3.4",
+    "symfony/validator": "^3.4",
+    "ezyang/htmlpurifier": "^4.10",
+    "leafo/scssphp": "^0.7.7"
   },
   "require-dev": {
-    "leafo/scssphp": "dev-master",
     "mikey179/vfsStream": "1.6.*",
     "codeception/codeception": "^2.0",
     "fzaninotto/Faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
     "browserstack/browserstack-local": "dev-master",
     "consolidation/robo": "^1.0.0",
-    "mockery/mockery": "^0.9.9"
+    "mockery/mockery": "^0.9.9",
+    "symfony/yaml": "^3.4",
+    "flow/jsonpath": "^0.4"
   },
   "scripts": {},
   "prefer-stable": true,
@@ -51,7 +55,10 @@
       "SuiteCRM\\Custom\\": [
         "custom/lib"
       ]
-    }
+    },
+    "classmap": [
+      "Api/"
+    ]
   },
   "extra": {}
 }

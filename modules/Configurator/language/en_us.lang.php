@@ -205,9 +205,9 @@ $mod_strings = array(
     'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files.<br>If the number of rows in an import file exceeds this number, the user will be alerted.<br>If no number is entered, an unlimited number of rows are allowed.',
     'vCAL_HELP' => 'Use this setting to determine the number of months in advance of the current date that Free/Busy information for calls and meetings is published.<BR>To turn Free/Busy publishing off, enter "0". The minimum is 1 month; the maximum is 12 months.',
     'LBL_PDFMODULE_NAME' => 'PDF Settings',
-    'SUGARPDF_BASIC_SETTINGS' => 'Document Properties',
-    'SUGARPDF_ADVANCED_SETTINGS' => 'Advanced Settings',
-    'SUGARPDF_LOGO_SETTINGS' => 'Images',
+    'SUITEPDF_BASIC_SETTINGS' => 'Document Properties',
+    'SUITEPDF_ADVANCED_SETTINGS' => 'Advanced Settings',
+    'SUITEPDF_LOGO_SETTINGS' => 'Images',
 
     'PDF_AUTHOR' => 'Author',
     'PDF_AUTHOR_INFO' => 'The Author appears in the document properties.',
