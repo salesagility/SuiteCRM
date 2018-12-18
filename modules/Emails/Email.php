@@ -4778,8 +4778,7 @@ eoq;
             $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
 
             $actionSendEmail = new actionSendEmail();
-            $date = new DateTime();
-            $now = $date->format($timedate::DB_DATETIME_FORMAT);
+            $now = TimeDate::getInstance()->nowDb();
             if (!$actionSendEmail->run_action($bean, $params)) {
                 $emailAddress->confirm_opt_in_fail_date = $now;
             } else {
