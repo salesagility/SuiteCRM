@@ -1762,7 +1762,7 @@ EOHTML;
      *
      * @return array
      */
-    protected function getFavicon()
+    public function getFavicon()
     {
         // get favicon
         if (isset($GLOBALS['sugar_config']['default_module_favicon'])) {
