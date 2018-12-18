@@ -93,30 +93,11 @@ class SugarView
     public $responseTime;
     public $fileResources;
 
-    private $settings = array();
-
     /**
-     * SugarView constructor.
+     *
+     * @var array 
      */
-    public function __construct()
-    {
-    }
-
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0,
-     *     please update your code, use __construct instead
-     */
-    public function SugarView()
-    {
-        $deprecatedMessage =
-            'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+    private $settings = [];
 
     /**
      * @param SugarBean $bean
@@ -1869,23 +1850,52 @@ EOHTML;
         return false;
     }
 
+    /**
+     * 
+     * @param array $data
+     * @param string $scope
+     */
     public function addDomJS($data, $scope){
+        if (!$scope) {
+            throw new Exception('Scope can not be empty');
+        } 
+        if (isset($this->settings[$scope])) {
+            LoggerManager::getLogger()->warn('Scope "' . $scope . '" already exists but it will be overwriten.');
+        }
         $this->settings[$scope] = $this->suite_array_merge_deep_array($data);
     }
 
+    /**
+     * 
+     * @return string
+     */
     public function getDomJS(){
-        return(json_encode($this->settings));
+        $ret = json_encode($this->settings);
+        if ($ret === false) {
+            $err = json_last_error();
+            if ($err) {
+                throw new Exception('JSON Error occured: #' . $err  . ' - ' . json_last_error_msg());
+            }
+        }
+        return $ret;
     }
 
+    /**
+     * 
+     * @return bool
+     */
     public function hasDomJS(){
-        return(!empty($this->settings));
+        return !empty($this->settings);
     }
 
     /**
      * Merges multiple arrays, recursively, and returns the merged array.
      * https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_array_merge_deep_array/7
+     * 
+     * @param array $arrays
+     * @return array
      */
-    function suite_array_merge_deep_array($arrays){
+    public function suite_array_merge_deep_array($arrays){
         $result = array();
 
         foreach ($arrays as $array) {
@@ -1895,13 +1905,11 @@ EOHTML;
                 // to integers.
                 if (is_integer($key)) {
                     $result [] = $value;
-                }
-                // Recurse when both values are arrays.
-                elseif (isset($result [$key]) && is_array($result [$key]) && is_array($value)) {
+                } elseif (isset($result [$key]) && is_array($result [$key]) && is_array($value)) {
+                    // Recurse when both values are arrays.
                     $result [$key] = $this->sugar_array_merge_deep_array(array($result [$key], $value));
-                }
-                // Otherwise, use the latter value, overriding any previous value.
-                else {
+                } else {
+                    // Otherwise, use the latter value, overriding any previous value.
                     $result [$key] = $value;
                 }
             }
@@ -1910,11 +1918,19 @@ EOHTML;
         return $result;
     }
 
-     function getVardefsData($module_dir){
+    /**
+     * 
+     * @param string $module_dir
+     * @return array
+     */
+    public function getVardefsData($module_dir){
+        if (!$module_dir) {
+            throw new Exception('Module DIR can not be empty');
+        }
          $data = array();
          $bean = SugarModule::get($module_dir)->loadBean();
 
-         if($bean !== false){
+         if($bean){
              foreach($bean->field_defs as $field_name => $def){
                  $data[$module_dir][$field_name] = $def;
                  if (isset($def['required'])){
@@ -1924,6 +1940,8 @@ EOHTML;
                      $data[$module_dir][$field_name]['required'] = false;
                  }
              }
+         } else {
+             LoggerManager::getLogger()->warn('Could not retrive a bean from DIR: ' . $module_dir);
          }
          unset($bean);
          return array($data);
