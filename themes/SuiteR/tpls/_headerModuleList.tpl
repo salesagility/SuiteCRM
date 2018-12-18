@@ -86,6 +86,9 @@
                         {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                             <li role="presentation">
                                 <a id="{$gcl_key}_link" href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                                <!-- include navigation highlighting -->
+                                <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/navhighlight.css">
+                                <script type="text/javascript" src="themes/SuiteR/js/navhighlight.js"></script>
                             </li>
                         {/foreach}
                         <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' class='utilsLink'>{$LOGOUT_LABEL}</a></li>
