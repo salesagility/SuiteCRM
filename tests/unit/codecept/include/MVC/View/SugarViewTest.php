@@ -74,11 +74,11 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
             $this->assertEquals(SugarView::ERR_NOT_ARRAY, $e->getCode());
         }
         
-        $ret = $view->addDomJS([['blahblah']], 'foo');
-        $this->assertEquals(SugarView::NO_ERROR, $ret);
+        $ret1 = $view->addDomJS([['blahblah']], 'foo');
+        $this->assertEquals(SugarView::NO_ERROR, $ret1);
         
-        $ret = $view->addDomJS([['123']], 'foo');
-        $this->assertEquals(SugarView::WARN_SCOPE_EXISTS, $ret);
+        $ret2 = $view->addDomJS([['123']], 'foo');
+        $this->assertEquals(SugarView::WARN_SCOPE_EXISTS, $ret2);
         
         $this->assertTrue($view->hasDomJS());
         $domJs = $view->getDomJS();
@@ -92,11 +92,18 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
             $this->assertEquals(SugarView::ERR_NOT_SUB_ARRAY, $e->getCode());
         }
         
-        $ret = $view->addDomJS([['deeply', 123, ['more' => 'deep', 'array' => new stdClass()]], ['second']], 'deeply');
-        $this->assertEquals(SugarView::NO_ERROR, $ret);
+        $ret3 = $view->addDomJS([['deeply', 123, ['more' => 'deep', 'array' => new stdClass()]], ['second']], 'deeply');
+        $this->assertEquals(SugarView::NO_ERROR, $ret3);
         
-        $domJs = $view->getDomJS();
-        $this->assertEquals('{"foo":["123"],"deeply":["deeply",123,{"more":"deep","array":{}},"second"]}', $domJs);
+        $domJs1 = $view->getDomJS();
+        $this->assertEquals('{"foo":["123"],"deeply":["deeply",123,{"more":"deep","array":{}},"second"]}', $domJs1);
+        
+        $_REQUEST['foo'] = 1;
+        $ret4 = $view->addDomJS([['a' => 'deeply', 'b' => 123, 'sec' => ['more' => 'deep', 'array' => new stdClass()]], ['sec' => ['foo' => 'second']]], 'deeply');
+        $this->assertEquals(SugarView::WARN_SCOPE_EXISTS, $ret4);
+        
+        $domJs2 = $view->getDomJS();
+        $this->assertEquals('{"foo":["123"],"deeply":{"a":"deeply","b":123,"sec":{"more":"deep","array":{},"foo":"second"}}}', $domJs2);
     }
     
     public function testAddDomJsNoScope()

@@ -1996,20 +1996,20 @@ EOHTML;
     {
         if (!is_array($array)) {
             throw new InvalidArgumentException('Sub-parameter should be an array to merging. ' . gettype($array) . ' given.', self::ERR_NOT_SUB_ARRAY);
-        }
+        }        
         foreach ($array as $key => $value) {
             // Renumber integer keys as array_merge_recursive() does. Note that PHP
-                // automatically converts array keys that are integer strings (e.g., '1')
-                // to integers.
-                if (is_integer($key)) {
-                    $result[] = $value;
-                } elseif (isset($result[$key]) && is_array($result[$key]) && is_array($value)) {
-                    // Recurse when both values are arrays.
-                    $result[$key] = $this->mergeDeepArray([$result[$key], $value]);
-                } else {
-                    // Otherwise, use the latter value, overriding any previous value.
-                    $result[$key] = $value;
-                }
+            // automatically converts array keys that are integer strings (e.g., '1')
+            // to integers.
+            if (is_integer($key)) {
+                $result[] = $value;
+            } elseif (isset($result[$key]) && is_array($result[$key]) && is_array($value)) {
+                // Recurse when both values are arrays.
+                $result[$key] = $this->mergeDeepArray([$result[$key], $value]);
+            } else {
+                // Otherwise, use the latter value, overriding any previous value.
+                $result[$key] = $value;
+            }
         }
         return $result;
     }
