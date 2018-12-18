@@ -3199,7 +3199,6 @@ div.yui-layout-hd h2 {
 
 .yui-layout-unit .yui-resize-handle {
     background-color: transparent;
-    top:-10% !important;
 }
 
 .yui-layout-unit .yui-resize-handle-r {
