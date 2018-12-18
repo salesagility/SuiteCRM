@@ -496,7 +496,9 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
             'alert',
             'okay',
         );
+
         foreach ($types as $type) {
+            $_SESSION['suite_messages'][$type] = array();
             $user_error_message_count = count($_SESSION['suite_messages'][$type]);
             SugarApplication::appendMessage('a new message', $type);
             $this->assertGreaterThan($user_error_message_count, count($_SESSION['suite_messages'][$type]));
