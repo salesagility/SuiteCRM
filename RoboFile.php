@@ -7,4 +7,15 @@
 class RoboFile extends \Robo\Tasks
 {
     // define public methods as commands
+
+    /**
+     * Clean 'cache/' directory
+
+     * @throws \RuntimeException
+     * @return nothing
+     */
+    public function cleanCache()
+    {
+        $this->taskCleanDir(['cache'])->run();
+    }
 }
