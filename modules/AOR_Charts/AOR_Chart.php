@@ -676,7 +676,7 @@ EOF;
         $_data = array();
         foreach($data as $label => $values) {
             foreach($values as $key => $value) {
-                $_data[$label][$tooltips[$label][$key]] = $value;
+                $_data[$label][$tooltips[$label][$key]] += $value;
             }
         }
         $data = $_data;
