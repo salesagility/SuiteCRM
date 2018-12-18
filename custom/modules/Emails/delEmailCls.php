@@ -9,4 +9,3 @@ class delEmailCls{
         $inbouneEmail->deleteMessageOnMailServer($uid);
 	}
 }
-?>
