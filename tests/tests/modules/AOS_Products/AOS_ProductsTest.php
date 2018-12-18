@@ -47,7 +47,6 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aosProducts->name = 'test';
         $aosProducts->category = 1;
         $aosProducts->product_image = 'test img';
-        $_POST['remove_file_product_image'] = '1';
 
         $aosProducts->save();
 
