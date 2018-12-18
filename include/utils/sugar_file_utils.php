@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once(__DIR__.'/../SugarCache/SugarCache.php');
+
 /**
  * sugar_mkdir
  * Call this function instead of mkdir to apply pre-configured permission
@@ -147,8 +149,6 @@ function sugar_fopen($filename, $mode, $use_include_path = false, $context = nul
  */
 function sugar_file_put_contents($filename, $data, $flags = null, $context = null)
 {
-    require_once('include/SugarCache/SugarCache.php');
-
     //check to see if the file exists, if not then use touch to create it.
     if (!file_exists($filename)) {
         sugar_touch($filename);
