@@ -76,4 +76,5 @@
     <!-- include navigation highlighting -->
     <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/navhighlight.css">
     <script type="text/javascript" src="themes/SuiteR/js/navhighlight.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml" title="{$APP.LBL_BROWSER_TITLE}" href="opensearch.php" />
 </head>
