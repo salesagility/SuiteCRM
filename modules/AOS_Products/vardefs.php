@@ -277,8 +277,14 @@ $dictionary['AOS_Products'] = array(
             array(
                 'name' => 'product_image',
                 'vname' => 'LBL_PRODUCT_IMAGE',
-                'type' => 'varchar',
+                'type' => 'image',
                 'len' => '255',
+                'size' => '20',
+                'studio' => 'visible',
+                'dbType' => 'varchar',
+                'border' => '',
+                'width' => '120',
+                'height' => '',
                 'reportable' => true,
                 'comment' => 'File name associated with the note (attachment)'
             ),
