@@ -9,6 +9,3 @@ $hook_array['after_save'][] = Array(10, 'Save email case updates', 'modules/AOP_
 
 $hook_array['before_delete'] = Array(); 
 $hook_array['before_delete'][] = Array(30, 'Delete the emails from crm to imap server', 'custom/modules/Emails/delEmailCls.php','delEmailCls', 'delEmailFunc'); 
-
-
-?>
