@@ -223,19 +223,22 @@ class One2MBeanRelationship extends One2MRelationship
         if ($link->getSide() == REL_RHS) {
             return false;
         } else {
-            $lhsKey = $this->def['lhs_key'];
-            $rhsTable = $this->def['rhs_table'];
-            $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
+            $db = DBManagerFactory::getInstance();
+            $lhsKey = $db->quote($this->def['lhs_key']);
+            $rhsTable = $db->quote($this->def['rhs_table']);
+            $rhsKey = $db->quote($this->def['rhs_key']);
+            $rhsTableKey = "{$rhsTable}.{$rhsKey}";
             $relatedSeed = BeanFactory::getBean($this->getRHSModule());
             $deleted = !empty($params['deleted']) ? 1 : 0;
-            $where = "WHERE $rhsTableKey = '{$link->getFocus()->$lhsKey}' AND {$rhsTable}.deleted=$deleted";
+            $where = "WHERE $rhsTableKey = " . $db->quoted($link->getFocus()->$lhsKey)
+                . " AND {$rhsTable}.deleted=$deleted";
             $order_by = '';
 
             //Check for role column
             if (!empty($this->def["relationship_role_column"]) && !empty($this->def["relationship_role_column_value"])) {
-                $roleField = $this->def["relationship_role_column"];
+                $roleField = $db->quote($this->def["relationship_role_column"]);
                 $roleValue = $this->def["relationship_role_column_value"];
-                $where .= " AND $rhsTable.$roleField = '$roleValue'";
+                $where .= " AND $rhsTable.$roleField = " . $db->quoted($roleValue);
             }
 
             //Add any optional where clause
