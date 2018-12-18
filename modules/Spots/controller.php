@@ -64,6 +64,19 @@ class SpotsController extends SugarController
     //This is the time in seconds, so an hour is 3600
     protected $spotsStaleTime = 3600;
 
+    public function __construct() {
+	$lang = isset($_SESSION['authenticated_user_language'])?($_SESSION['authenticated_user_language']):('en_us') ;
+        $this->accountsFileName = 'accounts.'.$lang.'.json';
+        $this->servicesFileName = 'service.'.$lang.'.json';
+        $this->salesFileName = 'sales.'.$lang.'.json';
+        $this->leadsFileName = 'leads.'.$lang.'.json';
+        $this->marketingsFileName = 'marketing.'.$lang.'.json';
+        $this->marketingActivitiesFileName = 'marketingActivity.'.$lang.'.json';
+        $this->activitiesFileName = 'activities.'.$lang.'.json';
+        $this->quotesFileName = 'quotes.'.$lang.'.json';
+	parent::__construct() ;
+    }
+
     /**
      * This returns a string of the type of db being used.
      *
@@ -166,8 +179,8 @@ EOF;
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
             $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_NAME']} = $row['accountName'];
-            $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_TYPE']} = $row['account_type'];
-            $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_INDUSTRY']} = $row['industry'];
+            $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_TYPE']} = (isset($app_list_strings['account_type_dom'][$row['account_type']])?($app_list_strings['account_type_dom'][$row['account_type']]):($row['account_type']));
+            $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_INDUSTRY']} = (isset($app_list_strings['industry_dom'][$row['industry']])?($app_list_strings['industry_dom'][$row['industry']]):($row['industry']));
             $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_BILLING_COUNTRY']} = $row['billing_address_country'];
             $returnArray[] = $x;
         }
@@ -265,14 +278,14 @@ EOF;
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
             $x->{$mod_strings['LBL_AN_LEADS_ASSIGNED_USER']} = $row['assignedUser'];
-            $x->{$mod_strings['LBL_AN_LEADS_STATUS']} = $row['status'];
-            $x->{$mod_strings['LBL_AN_LEADS_LEAD_SOURCE']} = $row['leadSource'];
+            $x->{$mod_strings['LBL_AN_LEADS_STATUS']} = (isset($app_list_strings['lead_status_dom'][$row['status']])?($app_list_strings['lead_status_dom'][$row['status']]):($row['status']));
+            $x->{$mod_strings['LBL_AN_LEADS_LEAD_SOURCE']} = (isset($app_list_strings['lead_source_dom'][$row['leadSource']])?($app_list_strings['lead_source_dom'][$row['leadSource']]):($row['leadSource']));
             $x->{$mod_strings['LBL_AN_LEADS_CAMPAIGN_NAME']} = $row['campaignName'];
             $x->{$mod_strings['LBL_AN_LEADS_YEAR']} = $row['year'];
             $x->{$mod_strings['LBL_AN_LEADS_QUARTER']} = $row['quarter'];
-            $x->{$mod_strings['LBL_AN_LEADS_MONTH']} = $row['month'];
+            $x->{$mod_strings['LBL_AN_LEADS_MONTH']} = (isset($app_list_strings['dom_cal_month_long'][$row['month']])?($app_list_strings['dom_cal_month_long'][$row['month']]):($row['month']));
             $x->{$mod_strings['LBL_AN_LEADS_WEEK']} = $row['week'];
-            $x->{$mod_strings['LBL_AN_LEADS_DAY']} = $row['day'];
+            $x->{$mod_strings['LBL_AN_LEADS_DAY']} = (isset($app_list_strings['dom_cal_day_long'][$row['day']])?($app_list_strings['dom_cal_day_long'][$row['day']]):($row['day']));
 
             $returnArray[] = $x;
         }
@@ -303,7 +316,7 @@ EOF;
      */
     public function action_createSalesSpotsData($filepath)
     {
-        global $mod_strings;
+        global $mod_strings, $app_list_strings;
         $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
@@ -387,22 +400,22 @@ EOF;
         $queryString = $query.$aclWhereOpps.$aclWhereAccounts.$aclWhereUsers.$aclWhereCampaigns;
         $result = $db->query($queryString);
 
-        while ($row = $db->fetchByAssoc($result)) {
+	while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
             $x->{$mod_strings['LBL_AN_SALES_ACCOUNT_NAME']} = $row['accountName'];
             $x->{$mod_strings['LBL_AN_SALES_OPPORTUNITY_NAME']} = $row['opportunityName'];
             $x->{$mod_strings['LBL_AN_SALES_ASSIGNED_USER']} = $row['assignedUser'];
-            $x->{$mod_strings['LBL_AN_SALES_OPPORTUNITY_TYPE']} = $row['opportunity_type'];
-            $x->{$mod_strings['LBL_AN_SALES_LEAD_SOURCE']} = $row['lead_source'];
+            $x->{$mod_strings['LBL_AN_SALES_OPPORTUNITY_TYPE']} = (isset($app_list_strings['opportunity_type_dom'][$row['opportunity_type']])?($app_list_strings['opportunity_type_dom'][$row['opportunity_type']]):($row['opportunity_type']));
+            $x->{$mod_strings['LBL_AN_SALES_LEAD_SOURCE']} = (isset($app_list_strings['lead_source_dom'][$row['lead_source']])?($app_list_strings['lead_source_dom'][$row['lead_source']]):($row['lead_source']));
             $x->{$mod_strings['LBL_AN_SALES_AMOUNT']} = $row['amount'];
-            $x->{$mod_strings['LBL_AN_SALES_STAGE']} = $row['sales_stage'];
-            $x->{$mod_strings['LBL_AN_SALES_PROBABILITY']} = $row['probability'];
+            $x->{$mod_strings['LBL_AN_SALES_STAGE']} = (isset($app_list_strings['sales_stage_dom'][$row['sales_stage']])?($app_list_strings['sales_stage_dom'][$row['sales_stage']]):($row['sales_stage']));
+            $x->{$mod_strings['LBL_AN_SALES_PROBABILITY']} = (isset($app_list_strings['sales_probability_dom'][$row['probability']])?($app_list_strings['sales_probability_dom'][$row['probability']]):($row['probability']));
             $x->{$mod_strings['LBL_AN_SALES_DATE']} = $row['expectedCloseDate'];
 
             $x->{$mod_strings['LBL_AN_SALES_QUARTER']} = $row['salesQuarter'];
-            $x->{$mod_strings['LBL_AN_SALES_MONTH']} = $row['salesMonth'];
+            $x->{$mod_strings['LBL_AN_SALES_MONTH']} = (isset($app_list_strings['dom_cal_month_long'][$row['salesMonth']])?($app_list_strings['dom_cal_month_long'][$row['salesMonth']]):($row['salesMonth']));
             $x->{$mod_strings['LBL_AN_SALES_WEEK']} = $row['salesWeek'];
-            $x->{$mod_strings['LBL_AN_SALES_DAY']} = $row['salesDay'];
+            $x->{$mod_strings['LBL_AN_SALES_DAY']} = (isset($app_list_strings['dom_cal_day_long'][$row['salesDay']])?($app_list_strings['dom_cal_day_long'][$row['salesDay']]):($row['salesDay']));
             $x->{$mod_strings['LBL_AN_SALES_YEAR']} = $row['salesYear'];
             $x->{$mod_strings['LBL_AN_SALES_CAMPAIGN']} = $row['campaign'];
 
@@ -508,12 +521,12 @@ EOF;
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
             $x->{$mod_strings['LBL_AN_SERVICE_ACCOUNT_NAME']} = $row['name'];
-            $x->{$mod_strings['LBL_AN_SERVICE_STATE']} = $row['state'];
-            $x->{$mod_strings['LBL_AN_SERVICE_STATUS']} = $row['status'];
-            $x->{$mod_strings['LBL_AN_SERVICE_PRIORITY']} = $row['priority'];
-            $x->{$mod_strings['LBL_AN_SERVICE_CREATED_DAY']} = $row['day'];
+            $x->{$mod_strings['LBL_AN_SERVICE_STATE']} = (isset($app_list_strings['case_state_dom'][$row['state']])?($app_list_strings['case_state_dom'][$row['state']]):($row['state']));
+            $x->{$mod_strings['LBL_AN_SERVICE_STATUS']} = (isset($app_list_strings['case_status_dom'][$row['status']])?($app_list_strings['case_status_dom'][$row['status']]):($row['status']));
+            $x->{$mod_strings['LBL_AN_SERVICE_PRIORITY']} = (isset($app_list_strings['case_priority_dom'][$row['priority']])?($app_list_strings['case_priority_dom'][$row['priority']]):($row['priority']));
+            $x->{$mod_strings['LBL_AN_SERVICE_CREATED_DAY']} = (isset($app_list_strings['dom_cal_day_long'][$row['day']])?($app_list_strings['dom_cal_day_long'][$row['day']]):($row['day']));
             $x->{$mod_strings['LBL_AN_SERVICE_CREATED_WEEK']} = $row['week'];
-            $x->{$mod_strings['LBL_AN_SERVICE_CREATED_MONTH']} = $row['month'];
+            $x->{$mod_strings['LBL_AN_SERVICE_CREATED_MONTH']} = (isset($app_list_strings['dom_cal_month_long'][$row['month']])?($app_list_strings['dom_cal_month_long'][$row['month']]):($row['month']));
             $x->{$mod_strings['LBL_AN_SERVICE_CREATED_QUARTER']} = $row['quarter'];
             $x->{$mod_strings['LBL_AN_SERVICE_CREATED_YEAR']} = $row['year'];
             $x->{$mod_strings['LBL_AN_SERVICE_CONTACT_NAME']} = $row['contactName'];
@@ -654,9 +667,9 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->{$mod_strings['LBL_AN_ACTIVITIES_TYPE']} = $row['type'];
+            $x->{$mod_strings['LBL_AN_ACTIVITIES_TYPE']} = (isset($mod_strings['LBL_ACTIVITIES_'.strtoupper($row['type'])])?($mod_strings['LBL_ACTIVITIES_'.strtoupper($row['type'])]):($row['type']));
             $x->{$mod_strings['LBL_AN_ACTIVITIES_NAME']} = $row['name'];
-            $x->{$mod_strings['LBL_AN_ACTIVITIES_STATUS']} = $row['status'];
+            $x->{$mod_strings['LBL_AN_ACTIVITIES_STATUS']} = (isset($app_list_strings[$row['type'].'_status_dom'][$row['status']])?($app_list_strings[$row['type'].'_status_dom'][$row['status']]):($row['status']));
             $x->{$mod_strings['LBL_AN_ACTIVITIES_ASSIGNED_TO']} = $row['assignedUser'];
 
             $returnArray[] = $x;
@@ -763,14 +776,14 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->{$mod_strings['LBL_AN_MARKETING_STATUS']} = $row['campaignStatus'];
-            $x->{$mod_strings['LBL_AN_MARKETING_TYPE']} = $row['campaignType'];
+            $x->{$mod_strings['LBL_AN_MARKETING_STATUS']} = (isset($app_list_strings['campaign_status_dom'][$row['campaignStatus']])?($app_list_strings['campaign_status_dom'][$row['campaignStatus']]):($row['campaignStatus']));
+            $x->{$mod_strings['LBL_AN_MARKETING_TYPE']} = (isset($app_list_strings['campaign_type_dom'][$row['campaignType']])?($app_list_strings['campaign_type_dom'][$row['campaignType']]):($row['campaignType']));
             $x->{$mod_strings['LBL_AN_MARKETING_BUDGET']} = $row['campaignBudget'];
             $x->{$mod_strings['LBL_AN_MARKETING_EXPECTED_COST']} = $row['campaignExpectedCost'];
             $x->{$mod_strings['LBL_AN_MARKETING_EXPECTED_REVENUE']} = $row['campaignExpectedRevenue'];
             $x->{$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_NAME']} = $row['opportunityName'];
             $x->{$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_AMOUNT']} = $row['opportunityAmount'];
-            $x->{$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE']} = $row['opportunitySalesStage'];
+            $x->{$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE']} = (isset($app_list_strings['sales_stage_dom'][$row['opportunitySalesStage']])?($app_list_strings['sales_stage_dom'][$row['opportunitySalesStage']]):($row['opportunitySalesStage']));
             $x->{$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_ASSIGNED_TO']} = $row['assignedUser'];
             $x->{$mod_strings['LBL_AN_MARKETING_ACCOUNT_NAME']} = $row['accountsName'];
 
@@ -832,7 +845,7 @@ EOF;
             $x = new stdClass();
             $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_CAMPAIGN_NAME']} = $row['name'];
             $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_DATE']} = $row['activity_date'];
-            $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE']} = $row['activity_type'];
+            $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE']} = (isset($app_list_strings['campainglog_activity_type_dom'][$row['activity_type']])?($app_list_strings['campainglog_activity_type_dom'][$row['activity_type']]):($row['activity_type']));
             $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_TYPE']} = $row['related_type'];
             $x->{$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_ID']} = $row['related_id'];
 
@@ -994,9 +1007,9 @@ EOF;
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
             $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_NAME']} = $row['opportunityName'];
-            $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_TYPE']} = $row['opportunityType'];
-            $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE']} = $row['opportunityLeadSource'];
-            $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE']} = $row['opportunitySalesStage'];
+            $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_TYPE']} = (isset($app_list_strings['opportunity_type_dom'][$row['opportunityType']])?($app_list_strings['opportunity_type_dom'][$row['opportunityType']]):($row['opportunityType']));
+            $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE']} = (isset($app_list_strings['lead_source_dom'][$row['opportunityLeadSource']])?($app_list_strings['lead_source_dom'][$row['opportunityLeadSource']]):($row['opportunityLeadSource']));
+            $x->{$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE']} = (isset($app_list_strings['sales_stage_dom'][$row['opportunitySalesStage']])?($app_list_strings['sales_stage_dom'][$row['opportunitySalesStage']]):($row['opportunitySalesStage']));
             $x->{$mod_strings['LBL_AN_QUOTES_ACCOUNT_NAME']} = $row['accountName'];
             $x->{$mod_strings['LBL_AN_QUOTES_CONTACT_NAME']} = $row['contactName'];
             $x->{$mod_strings['LBL_AN_QUOTES_ITEM_NAME']} = $row['productName'];
@@ -1012,9 +1025,9 @@ EOF;
             $x->{$mod_strings['LBL_AN_QUOTES_GRAND_TOTAL']} = $row['grandTotal'];
             $x->{$mod_strings['LBL_AN_QUOTES_ASSIGNED_TO']} = $row['assignedUser'];
             $x->{$mod_strings['LBL_AN_QUOTES_DATE_CREATED']} = $row['dateCreated'];
-            $x->{$mod_strings['LBL_AN_QUOTES_DAY_CREATED']} = $row['dateCreatedDay'];
+            $x->{$mod_strings['LBL_AN_QUOTES_DAY_CREATED']} = (isset($app_list_strings['dom_cal_day_long'][$row['dateCreatedDay']])?($app_list_strings['dom_cal_day_long'][$row['dateCreatedDay']]):($row['dateCreatedDay']));
             $x->{$mod_strings['LBL_AN_QUOTES_WEEK_CREATED']} = $row['dateCreatedWeek'];
-            $x->{$mod_strings['LBL_AN_QUOTES_MONTH_CREATED']} = $row['dateCreatedMonth'];
+            $x->{$mod_strings['LBL_AN_QUOTES_MONTH_CREATED']} = (isset($app_list_strings['dom_cal_month_long'][$row['dateCreatedMonth']])?($app_list_strings['dom_cal_month_long'][$row['dateCreatedMonth']]):($row['dateCreatedMonth']));
             $x->{$mod_strings['LBL_AN_QUOTES_QUARTER_CREATED']} = $row['dateCreatedQuarter'];
             $x->{$mod_strings['LBL_AN_QUOTES_YEAR_CREATED']} = $row['dateCreatedYear'];
 
