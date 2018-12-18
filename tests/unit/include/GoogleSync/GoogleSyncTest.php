@@ -56,9 +56,12 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $this->assertInstanceOf($expectedClass, $actualClass);
 
         // Test setting log level
-        $_SERVER['GSYNC_LOGLEVEL'] = 'debug';
-        $object = new GoogleSync();
-        $expectedLogLevel = 'debug';
+        if (empty($_SERVER['GSYNC_LOGLEVEL'])) {
+            $_SERVER['GSYNC_LOGLEVEL'] = 'debug';
+            $expectedLogLevel = 'debug';
+        } else {
+            $expectedLogLevel = $_SERVER['GSYNC_LOGLEVEL'];
+        }
         $actualLogLevel = LoggerManager::getLogLevel();
         $this->assertEquals($expectedLogLevel, $actualLogLevel);
     }
@@ -858,7 +861,8 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $user1 = new User();
         $user1->last_name = 'UNIT_TESTS1';
         $user1->user_name = 'UNIT_TESTS1';
-        $user1->save();
+        $user1->full_name = 'UNIT_TESTS1';
+        $user1->save(false);
         $user1->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
         $user1->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user1->savePreferencesToDB();
@@ -866,7 +870,8 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
         $user2 = new User();
         $user2->last_name = 'UNIT_TESTS2';
         $user2->user_name = 'UNIT_TESTS2';
-        $user2->save();
+        $user2->full_name = 'UNIT_TESTS2';
+        $user2->save(false);
         $user2->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
         $user2->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user2->savePreferencesToDB();
@@ -881,7 +886,10 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testSyncAllUsers()
     {
-        $this->markTestIncomplete('TODO: Implement Tests');
+        $object = new GoogleSync();
+        $ret = $object->syncAllUsers();
+
+        $this->assertEquals(true, $ret);
     }
 
     //GoogleSyncHelper.php
