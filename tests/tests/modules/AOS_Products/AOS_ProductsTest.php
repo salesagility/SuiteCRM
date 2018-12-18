@@ -8,6 +8,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_products');
+        $state->pushTable('cron_remove_documents');
         
         // test
         
@@ -27,6 +28,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // cleanup
         
+        $state->popTable('cron_remove_documents');
         $state->popTable('aos_products');
     }
 
@@ -37,6 +39,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_products');
         $state->pushTable('aod_index');
+        $state->pushTable('cron_remove_documents');
         $state->pushGlobals();
         
         // test
@@ -64,6 +67,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // cleanup
         
         $state->popGlobals();
+        $state->popTable('cron_remove_documents');
         $state->popTable('aod_index');
         $state->popTable('aos_products');
     }
@@ -74,6 +78,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_products');
+        $state->pushTable('cron_remove_documents');
         
         // test
         
@@ -106,6 +111,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // cleanup
         
+        $state->popTable('cron_remove_documents');
         $state->popTable('aos_products');
     }
 }
