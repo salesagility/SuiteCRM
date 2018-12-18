@@ -5434,18 +5434,41 @@ function isValidId($id) {
 }
 
 function getAppString($key) {
-    
+
     global $app_strings;
-    
+
     if (!isset($app_strings[$key])) {
         LoggerManager::getLogger()->warn('Language key not found: ' . $key);
         return $key;
     }
-    
+
     if (!$app_strings[$key]) {
         LoggerManager::getLogger()->warn('Language string is empty at key: ' . $key);
         return $key;
     }
-    
+
     return $app_strings[$key];
+}
+
+/**
+ * @param string $className
+ * @return mixed
+ */
+function getClassInstance($className, $includePath = false)
+{
+    if ($includePath) {
+        require_once get_custom_file_if_exists($includePath);
+    }
+
+    $customClassName = 'Custom' . $className;
+
+    if (class_exists($customClassName)) {
+        return new $customClassName;
+    }
+
+    if (class_exists($className)) {
+        return new $className;
+    }
+
+    LoggerManager::getLogger()->fatal('Unable to find class: ' . $className);
 }
