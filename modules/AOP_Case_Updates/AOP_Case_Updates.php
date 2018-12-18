@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 require_once 'util.php';
@@ -117,7 +118,7 @@ class AOP_Case_Updates extends Basic
     public function save($check_notify = false)
     {
         $this->name = SugarCleaner::cleanHtml($this->name);
-        $this->description = SugarCleaner::cleanHtml($this->description);
+        $this->parseDescription();
         parent::save($check_notify);
         if (file_exists('custom/modules/AOP_Case_Updates/CaseUpdatesHook.php')) {
             require_once 'custom/modules/AOP_Case_Updates/CaseUpdatesHook.php';
@@ -132,6 +133,35 @@ class AOP_Case_Updates extends Basic
         $hook->sendCaseUpdate($this);
 
         return $this->id;
+    }
+
+    /**
+     * Fixes unclosed HTML tags
+     */
+    private function parseDescription()
+    {
+        $description = SugarCleaner::cleanHtml($this->description);
+
+        if (preg_match('/<[^<]+>/', $description, $matches) !== 0) {
+            // remove external warning, if HTML is not valid
+            libxml_use_internal_errors(true);
+            $dom = new DOMDocument();
+            $dom->loadHTML(mb_convert_encoding($description, 'HTML-ENTITIES', 'UTF-8'));
+            foreach ($dom->getElementsByTagName('head') as $headElement) {
+                $headElement->parentNode->removeChild($headElement);
+            }
+            $dom->removeChild($dom->doctype);
+            $dom->replaceChild($dom->firstChild->firstChild->firstChild, $dom->firstChild);
+            $description = $dom->saveHTML();
+
+            foreach (libxml_get_errors() as $xmlError) {
+                $GLOBALS['log']->warn(sprintf('%s in %s', trim($xmlError->message), get_class($this)));
+            }
+
+            libxml_clear_errors();
+        }
+
+        $this->description = trim(preg_replace('/\s\s+/', ' ', $description));
     }
 
     /**
@@ -268,6 +298,7 @@ class AOP_Case_Updates extends Basic
         $mailer->isHTML(true);
         $mailer->AltBody = $text['body_alt'] . $signaturePlain;
         $mailer->From = $emailSettings['from_address'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $emailSettings['from_name'];
         foreach ($emails as $email) {
             $mailer->addAddress($email);

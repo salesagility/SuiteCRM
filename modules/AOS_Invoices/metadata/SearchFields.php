@@ -29,7 +29,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 $searchFields['AOS_Invoices'] = 
 	array (
@@ -69,4 +69,3 @@ $searchFields['AOS_Invoices'] =
         'end_range_due_date' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
 
     );
-?>

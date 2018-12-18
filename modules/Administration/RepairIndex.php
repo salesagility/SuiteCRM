@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -72,20 +75,20 @@ function compare($table_name, $db_indexes, $var_indexes) {
 
 		//no matching index in database.
 		if(empty($sel_db_index)) {
-			$add_index[]=$GLOBALS['db']->add_drop_constraint($table_name,$var_i_def);
+			$add_index[]=DBManagerFactory::getInstance()->add_drop_constraint($table_name,$var_i_def);
 			continue;
 		}
 		if(!$field_list_match) {
 			//drop the db index and create new index based on vardef
-			$drop_index[]=$GLOBALS['db']->add_drop_constraint($table_name,$sel_db_index,true);
-			$add_index[]=$GLOBALS['db']->add_drop_constraint($table_name,$var_i_def);
+			$drop_index[]=DBManagerFactory::getInstance()->add_drop_constraint($table_name,$sel_db_index,true);
+			$add_index[]=DBManagerFactory::getInstance()->add_drop_constraint($table_name,$var_i_def);
 			continue;
 		}
 		//check for name match.
 		//it should not occur for indexes of type primary or unique.
 		if( $var_i_def['type'] != 'primary' and $var_i_def['type'] != 'unique' and $var_i_def['name'] != $sel_db_index['name']) {
 			//rename index.
-			$rename=$GLOBALS['db']->renameIndexDefs($sel_db_index,$var_i_def,$table_name);
+			$rename=DBManagerFactory::getInstance()->renameIndexDefs($sel_db_index,$var_i_def,$table_name);
 			if(is_array($rename)) {
 				$change_index=array_merge($change_index,$rename);
 			} else {
@@ -127,12 +130,12 @@ foreach ($beanFiles as $beanname=>$beanpath) {
 	require_once($beanpath);
 	$focus= new $beanname();
 
-	//skips beans based on same tables. user, employee and group are an example.
-	if(empty($focus->table_name) || isset($processed_tables[$focus->table_name])) {
-		continue;
-	} else {
-		$processed_tables[$focus->table_name]=$focus->table_name;
-	}
+    //skips beans based on same tables. user, employee and group are an example.
+    if (empty($focus->table_name) || isset($processed_tables[$focus->table_name])) {
+        continue;
+    }
+    $processed_tables[$focus->table_name]=$focus->table_name;
+
 
 	if(!empty($dictionary[$focus->object_name]['indices'])) {
 		$indices=$dictionary[$focus->object_name]['indices'];

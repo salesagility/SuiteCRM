@@ -33,4 +33,3 @@ $listViewDefs [$module_name] =
             'default' => true,
         ),
     );
-?>

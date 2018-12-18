@@ -122,11 +122,34 @@
     font-size:12px;
     table-layout:fixed;
 }
-.main_table th, td {
+.main_table th, .main_table td {
     padding: 0px;
     overflow: hidden;
     width: 24px;
 }
+
+.table_inner th, .table_inner td {
+    padding: 0px;
+    overflow: hidden;
+    width: 24px;
+}
+
+.task_td {
+    padding: 0px;
+    overflow: hidden;
+    width: 24px;
+}
+
+
+/*
+.panelContainer > td {
+	width: auto !important;
+}*/
+
+.buttons {
+    overflow: visible;
+}
+
 .month_row {
     border-bottom: 1px solid #DDDDDD;
 }
@@ -224,7 +247,7 @@
     position: 'absolute';
 }
 .task_td {
-    width:100%;
+    width:100% !important;
     border-right: 1px solid #DDDDDD;
     border-bottom: 1px solid #DDDDDD;
 }
@@ -322,15 +345,15 @@
     width:100%;
 }
 /*Add task dialog box*/
-#dialog fieldset{
+#template_dialog fieldset{
     padding:0;
     border:0;
     margin-top:15px;
 }
-#dialog label, #dialog input {
+#template_dialog label, #template_dialog input {
     display:block;
 }
-#dialog  input.text {
+#template_dialog  input.text {
     margin-bottom:12px;
     width:80%;
     padding: .4em;
@@ -342,10 +365,6 @@
     display: inline!important;
     width: 58%!important;
  }
-#Duration_unit, #Lag_unit {
-    display: inline;
-    padding: .3em;
-}
 #Resources {
     width: 60%;
     padding: .3em;

@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -121,7 +124,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
         $subtitle = translate('LBL_OPP_SIZE', 'Charts') . " " . $currency_symbol . "1" . translate('LBL_OPP_THOUSANDS', 'Charts');
 
         $query = $this->constructQuery();
-        $data = $this->constructCEChartData($this->getChartData($query));
+        $data = $this->getChartData($query);
 
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
 
@@ -163,6 +166,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
         <input type='hidden' class='endDate' value='$endDate' />
              $autoRefresh
          <script>
+        window["chartHBarKeys$canvasId"] = $jsonKey;
            var hbar = new RGraph.HBar({
             id: '$canvasId',
             data:$jsonData,
@@ -362,21 +366,6 @@ EOD;
     }
 
     /**
-     * @param  $dataset array
-     * @return array
-     */
-    private function constructCEChartData(
-        $dataset
-    )
-    {
-        $newData = array();
-        foreach($dataset as $key=>$value){
-            $newData[$value['sales_stage']] = $value['total'];
-        }
-        return $newData;
-    }
-
-    /**
      * @see DashletGenericChart::constructQuery()
      */
     protected function constructQuery()
@@ -409,7 +398,7 @@ EOD;
         return $groupBy;
     }
 
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($dataset,$currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
         $chart['labels'] = array();
@@ -419,17 +408,17 @@ EOD;
         $chart['tooltips']= array();
         $chart['total'] = 0;
 
-        foreach($data as $key=>$value)
+        foreach($dataset as $data)
         {
-            $formattedFloat = (float)number_format((float)$value, 2, '.', '');
-            $chart['labels'][] = $key;
+            $formattedFloat = (float)number_format((float)$data['total'], 2, '.', '');
+            $chart['labels'][] = $data['sales_stage'];
+            $chart['key'][] = $data['key'];
             $chart['data'][] = $formattedFloat;
             $chart['total']+=$formattedFloat;
-            $chart['tooltips'][] = "'$key' amounts to $currency_symbol$formattedFloat$thousands_symbol (click bar to drill-through)";
+            $chart['tooltips'][] = "'" . $data['sales_stage']
+                . "' amounts to $currency_symbol$formattedFloat$thousands_symbol (click bar to drill-through)";
         }
         return $chart;
     }
 
 }
-
-?>

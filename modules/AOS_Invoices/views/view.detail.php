@@ -100,4 +100,3 @@ class AOS_InvoicesViewDetail extends ViewDetail {
 		}
 	}
 }
-?>

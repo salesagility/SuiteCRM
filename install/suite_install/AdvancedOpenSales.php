@@ -46,4 +46,3 @@ function upgrade_aos(){
 
     }
 }
-?>

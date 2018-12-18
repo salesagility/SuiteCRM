@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,13 +37,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/SugarFolders/SugarFolders.php');
 
-global $current_user;
+global $current_user, $mod_strings;
 
 $focus = new InboundEmail();
 if(!empty($_REQUEST['record'])) {
@@ -123,6 +126,7 @@ if(isset($_REQUEST['only_since']) && $_REQUEST['only_since'] == 1) {
 $stored_options = array();
 $stored_options['from_name'] = trim($_REQUEST['from_name']);
 $stored_options['from_addr'] = trim($_REQUEST['from_addr']);
+isValidEmailAddress($stored_options['from_addr']);
 $stored_options['reply_to_name'] = trim($_REQUEST['reply_to_name']);
 $stored_options['reply_to_addr'] = trim($_REQUEST['reply_to_addr']);
 $stored_options['only_since'] = $onlySince;
@@ -131,8 +135,9 @@ $stored_options['email_num_autoreplies_24_hours'] = $_REQUEST['email_num_autorep
 $stored_options['allow_outbound_group_usage'] = isset($_REQUEST['allow_outbound_group_usage']) ? true : false;
 
 if (!$focus->isPop3Protocol()) {
-	$stored_options['trashFolder'] = (isset($_REQUEST['trashFolder']) ? trim($_REQUEST['trashFolder']) : "");
-	$stored_options['sentFolder'] = (isset($_REQUEST['sentFolder']) ? trim($_REQUEST['sentFolder']) : "");
+    $stored_options['mailbox'] = (isset($_REQUEST['mailbox']) ? trim($_REQUEST['mailbox']) : "");
+    $stored_options['trashFolder'] = (isset($_REQUEST['trashFolder']) ? trim($_REQUEST['trashFolder']) : "");
+    $stored_options['sentFolder'] = (isset($_REQUEST['sentFolder']) ? trim($_REQUEST['sentFolder']) : "");
 } // if
 if ( $focus->isMailBoxTypeCreateCase() || ($focus->mailbox_type == 'createcase' && empty($_REQUEST['id']) ) )
 {
@@ -216,6 +221,123 @@ $GLOBALS['sugar_config']['disable_team_access_check'] = TRUE;
 
 $focus->save();
 
+
+
+
+// Folders
+$foldersFound = $focus->db->query('SELECT id FROM folders WHERE folders.id LIKE "'.$focus->id.'"');
+$foldersFoundRow = $focus->db->fetchRow($foldersFound);
+$sf = new SugarFolder();
+if(empty($foldersFoundRow)) {
+    // Create Folders
+    $focusUser = $current_user;
+    $params = array(
+        // Inbox
+        "inbound" => array(
+            'name' => $focus->mailbox . ' ('.$focus->name.')',
+            'folder_type' => "inbound",
+            'has_child' => 1,
+            'dynamic_query' => '',
+            'is_dynamic' => 1,
+            'created_by' => $focusUser->id,
+            'modified_by' => $focusUser->id,
+        ),
+        // My Drafts
+        "draft" => array(
+            'name' => $mod_strings['LNK_MY_DRAFTS'] . ' ('.$stored_options['sentFolder'].')',
+            'folder_type' => "draft",
+            'has_child' => 0,
+            'dynamic_query' => '',
+            'is_dynamic' => 1,
+            'created_by' => $focusUser->id,
+            'modified_by' => $focusUser->id,
+        ),
+        // Sent Emails
+        "sent" => array(
+            'name' => $mod_strings['LNK_SENT_EMAIL_LIST'] . ' ('.$stored_options['sentFolder'].')',
+            'folder_type' => "sent",
+            'has_child' => 0,
+            'dynamic_query' => '',
+            'is_dynamic' => 1,
+            'created_by' => $focusUser->id,
+            'modified_by' => $focusUser->id,
+        ),
+        // Archived Emails
+        "archived" => array(
+            'name' => $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'],
+            'folder_type' => "archived",
+            'has_child' => 0,
+            'dynamic_query' => '',
+            'is_dynamic' => 1,
+            'created_by' => $focusUser->id,
+            'modified_by' => $focusUser->id,
+        ),
+    );
+
+
+    require_once("include/SugarFolders/SugarFolders.php");
+
+    $parent_id = '';
+
+
+    foreach ($params as $type => $type_params) {
+        if ($type == "inbound") {
+
+            $folder = new SugarFolder();
+            foreach ($params[$type] as $key => $val) {
+                $folder->$key = $val;
+            }
+
+            $folder->new_with_id = false;
+            $folder->id = $focus->id;
+            $folder->save();
+
+            $parent_id = $folder->id;
+        } else {
+            $params[$type]['parent_folder'] = $parent_id;
+
+            $folder = new SugarFolder();
+            foreach ($params[$type] as $key => $val) {
+                $folder->$key = $val;
+            }
+
+            $folder->save();
+        }
+    }
+} else {
+    // Update folders
+    require_once("include/SugarFolders/SugarFolders.php");
+    $foldersFound = $focus->db->query('SELECT * FROM folders WHERE folders.id LIKE "'.$focus->id.'" OR '.
+        'folders.parent_folder LIKE "'.$focus->id.'"');
+    while($row = $focus->db->fetchRow($foldersFound)) {
+        $name = '';
+        switch ($row['folder_type'])
+        {
+            case 'inbound':
+                $name = $focus->mailbox . ' ('.$focus->name.')';
+                break;
+            case 'draft':
+                $name = $mod_strings['LNK_MY_DRAFTS'] . ' ('.$stored_options['sentFolder'].')';
+                break;
+            case 'sent':
+                $name = $mod_strings['LNK_SENT_EMAIL_LIST'] . ' ('.$stored_options['sentFolder'].')';
+                break;
+            case 'archived':
+                $name = $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'];
+                break;
+        }
+
+        $folder = new SugarFolder();
+        $folder->retrieve($row['id']);
+        $folder->name = $name;
+        $folder->save();
+    }
+}
+
+
+
+
+
 //Reset the value so no other saves are affected.
 $GLOBALS['sugar_config']['disable_team_access_check'] = $previousTeamAccessCheck;
 
@@ -270,8 +392,13 @@ if($_REQUEST['module'] == 'Campaigns'){
 
     $GLOBALS['log']->debug("Saved record with id of ".$return_id);
 
+    $redirectUrl = "Location: index.php?module=$return_module&action=$return_action&record=$return_id$edit";
 
-    header("Location: index.php?module=$return_module&action=$return_action&record=$return_id$edit$error");
+    if(isset($error) && $error) {
+        $redirectUrl .= $error;
+    }
+
+    header($redirectUrl);
 }
 
 /**

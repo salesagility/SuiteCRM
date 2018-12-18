@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  * 
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -77,17 +80,23 @@ function add_blank_option($options){
 	return $options;
 }
 
-/*
- * Given an array and key names, return a string in the form of $array_name[$key_name[0]][$key_name[1]]... = $value recursively.
- * @params : $key_names - array of keys
- * 			 $array_name- name of the array
- * 			 $value -value of the array
- * 			 $eval - evals the generated string if true, note that the array name must be in the global space!
- * @return : example - string $array_name['a']['b']['c'][.] = 'hello'
+/**
+ * Exports array to string
+ *
+ * @param array $key_names array of keys
+ * @param string $array_name  name of the array
+ * @param mixed $value value of the array
+ * @param bool $eval evaluates the generated string if true, note that the array name must be in the global space!
+ * @return mixed|string string $array_name['a']['b']['c'][.] = 'hello'
  */
-function override_value_to_string_recursive($key_names, $array_name, $value, $eval=false){
-	if ($eval) return eval( "\${$array_name}". override_recursive_helper($key_names, $array_name, $value));
-	else return "\${$array_name}". override_recursive_helper($key_names, $array_name, $value);
+function override_value_to_string_recursive($key_names, $array_name, $value, $eval = false)
+{
+    global $log;
+	if ($eval) {
+	    $log->deprecated('$eval parameter is deprecated');
+	}
+
+	return "\${$array_name}". override_recursive_helper($key_names, $array_name, $value);
 }
 
 function override_recursive_helper($key_names, $array_name, $value){

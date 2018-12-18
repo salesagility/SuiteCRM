@@ -21,7 +21,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 /*
@@ -39,4 +39,3 @@ $module_name = 'AOS_Invoices';
  	'popupdefs'	      =>    'modules/'. $module_name. '/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/'. $module_name. '/metadata/SearchFields.php',
  );
-?>

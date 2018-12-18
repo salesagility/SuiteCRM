@@ -29,6 +29,10 @@ install_aod();
 require_once('install/suite_install/AdvancedOpenEvents.php');
 install_aoe();
 
+require_once('install/suite_install/Search.php');
+install_search();
+install_es();
+
 require_once('install/suite_install/Projects.php');
 install_projects();
 
@@ -43,6 +47,10 @@ install_gmaps();
 
 require_once('install/suite_install/Social.php');
 install_social();
+
+require_once('install/suite_install/SystemEmailTemplates.php');
+installSystemEmailTemplates();
+setSystemEmailTemplatesDefaultConfig();
 
 require_once('modules/Administration/QuickRepairAndRebuild.php');
 $actions = array('clearAll');

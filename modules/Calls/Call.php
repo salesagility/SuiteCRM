@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -120,72 +123,81 @@ class Call extends SugarBean {
 										'assigned_user_id'	=> 'users',
 										'note_id'			=> 'notes',
                                         'lead_id'			=> 'leads',
-								);
+                                );
 
-	public function __construct() {
-		parent::__construct();
-		global $app_list_strings;
+    public function __construct()
+    {
+        parent::__construct();
+        global $app_list_strings;
 
-       	$this->setupCustomFields('Calls');
+        $this->setupCustomFields('Calls');
 
-		foreach ($this->field_defs as $field) {
-			$this->field_name_map[$field['name']] = $field;
-		}
-
-
+        foreach ($this->field_defs as $field) {
+            $this->field_name_map[$field['name']] = $field;
+        }
 
 
-         if(!empty($GLOBALS['app_list_strings']['duration_intervals']))
-        	$this->minutes_values = $GLOBALS['app_list_strings']['duration_intervals'];
-	}
 
-	/**
-	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-	 */
-	public function Call(){
-		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-		if(isset($GLOBALS['log'])) {
-			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
-			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-		}
-		self::__construct();
-	}
 
-	/**
-	 * Disable edit if call is recurring and source is not Sugar. It should be edited only from Outlook.
-	 * @param $view string
-	 * @param $is_owner bool
-	 */
-	function ACLAccess($view,$is_owner='not_set',$in_group='not_set'){
-		// don't check if call is being synced from Outlook
-		if($this->syncing == false){
-			$view = strtolower($view);
-			switch($view){
-				case 'edit':
-				case 'save':
-				case 'editview':
-				case 'delete':
-					if(!empty($this->recurring_source) && $this->recurring_source != "Sugar"){
-						return false;
-					}
-			}
-		}
-		return parent::ACLAccess($view,$is_owner,$in_group);
-	}
+        if (!empty($GLOBALS['app_list_strings']['duration_intervals'])) {
+            $this->minutes_values = $GLOBALS['app_list_strings']['duration_intervals'];
+        }
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Call()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+    /**
+     * Disable edit if call is recurring and source is not Sugar. It should be edited only from Outlook.
+     * @param $view string
+     * @param $is_owner bool
+     */
+    public function ACLAccess($view, $is_owner='not_set', $in_group='not_set')
+    {
+        // don't check if call is being synced from Outlook
+        if ($this->syncing == false) {
+            $view = strtolower($view);
+            switch ($view) {
+                case 'edit':
+                case 'save':
+                case 'editview':
+                case 'delete':
+                    if (!empty($this->recurring_source) && $this->recurring_source != "Sugar") {
+                        return false;
+                    }
+            }
+        }
+        return parent::ACLAccess($view, $is_owner, $in_group);
+    }
+
     // save date_end by calculating user input
     // this is for calendar
-	function save($check_notify = FALSE) {
-		global $timedate,$current_user;
+    function save($check_notify = false)
+    {
+        global $timedate;
 
-	    if(isset($this->date_start) && isset($this->duration_hours) && isset($this->duration_minutes))
-        {
-    	    $td = $timedate->fromDb($this->date_start);
-    	    if($td)
-    	    {
-	        	$this->date_end = $td->modify("+{$this->duration_hours} hours {$this->duration_minutes} mins")->asDb();
-    	    }
+        if (!empty($this->date_start)) {
+            if (!empty($this->duration_hours) && !empty($this->duration_minutes)) {
+                $td = $timedate->fromDb($this->date_start);
+                if ($td) {
+                    $this->date_end = $td->modify(
+                        "+{$this->duration_hours} hours {$this->duration_minutes} mins"
+                    )->asDb();
+                }
+            } else {
+                $this->date_end = $this->date_start;
+            }
         }
 
 		if(!empty($_REQUEST['send_invites']) && $_REQUEST['send_invites'] == '1') {
@@ -292,7 +304,8 @@ class Call extends SugarBean {
 		// First, get the list of IDs.
 		$query = "SELECT contact_id as id from calls_contacts where call_id='$this->id' AND deleted=0";
 
-		return $this->build_related_list($query, new Contact());
+                $contact = new Contact();
+		return $this->build_related_list($query, $contact);
 	}
 
 
@@ -474,8 +487,8 @@ class Call extends SugarBean {
 		}
 		$this->email_reminder_checked = $this->email_reminder_time == -1 ? false : true;
 
-		if (isset ($_REQUEST['parent_type']) && (!isset($_REQUEST['action']) || $_REQUEST['action'] != 'SubpanelEdits')) {
-			$this->parent_type = $_REQUEST['parent_type'];
+        if (isset ($_REQUEST['parent_type']) && empty($this->parent_type)) {
+                $this->parent_type = $_REQUEST['parent_type'];
 		} elseif (is_null($this->parent_type)) {
 			$this->parent_type = $app_list_strings['record_type_default_key'];
 		}
@@ -496,9 +509,9 @@ class Call extends SugarBean {
 			if(empty($action))
 			    $action = "index";
 
-            $setCompleteUrl = "<a id='{$this->id}' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Held\",\"listview\",\"1\");'>";
+            $setCompleteUrl = "<b><a id='{$this->id}' class='list-view-data-icon' title='".translate('LBL_CLOSEINLINE')."' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Held\",\"listview\",\"1\");'>";
 			if ($this->ACLAccess('edit')) {
-                $call_fields['SET_COMPLETE'] = $setCompleteUrl . SugarThemeRegistry::current()->getImage("close_inline"," border='0'",null,null,'.gif',translate('LBL_CLOSEINLINE'))."</a>";
+                $call_fields['SET_COMPLETE'] = $setCompleteUrl ."<span class='suitepicon suitepicon-action-clear'></span></a></b>";
             } else {
                 $call_fields['SET_COMPLETE'] = '';
             }
@@ -506,7 +519,10 @@ class Call extends SugarBean {
 		global $timedate;
 		$today = $timedate->nowDb();
 		$nextday = $timedate->asDbDate($timedate->getNow()->modify("+1 day"));
-		$mergeTime = $call_fields['DATE_START']; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
+                if(!isset($call_fields['DATE_START'])) {
+                    LoggerManager::getLogger()->warn('Call has not DATE_START field for list view data.');
+                }
+		$mergeTime = isset($call_fields['DATE_START']) ? $call_fields['DATE_START'] : null; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if( $date_db	< $today){
 			if($call_fields['STATUS']=='Held' || $call_fields['STATUS']=='Not Held')   
@@ -515,7 +531,13 @@ class Call extends SugarBean {
 			}   
 			else   
 			{    
-				$call_fields['DATE_START']= "<font class='overdueTask'>".$call_fields['DATE_START']."</font>";   
+                            if(!isset($call_fields['DATE_START'])) {
+                                LoggerManager::getLogger()->warn('Call field has not START_DATE when trying to get list view data.');
+                                $dateStart = null;
+                            } else {
+                                $dateStart = $call_fields['DATE_START'];
+                            }
+				$call_fields['DATE_START']= "<font class='overdueTask'>".$dateStart."</font>";   
 			}
 		}else if($date_db < $nextday){
 			$call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";
@@ -832,6 +854,7 @@ class Call extends SugarBean {
                 return $keys[0];
             }
         }
+
         return '';
     }
 

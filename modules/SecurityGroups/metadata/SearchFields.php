@@ -8,4 +8,3 @@ $searchFields[$module_name] =
 		'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true),
 		'assigned_user_id'=> array('query_type'=>'default'),
 	);
-?>

@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -57,7 +60,7 @@ class SugarLogger implements LoggerTemplate
     /**
      * properties for the SugarLogger
      */
-	protected $logfile = 'sugarcrm';
+	protected $logfile = 'suitecrm';
 	protected $ext = '.log';
 	protected $dateFormat = '%c';
 	protected $logSize = '10MB';
@@ -168,6 +171,29 @@ class SugarLogger implements LoggerTemplate
     }
 
     /**
+     * for log() function, it shows a backtrace information in log when
+     * the 'show_log_trace' config variable is set and true
+     * @return string a readable trace string
+     */
+    private function getTraceString() {
+        $ret = '';
+        $trace = debug_backtrace();
+        foreach ($trace as $call) {
+            $file = isset($call['file']) ? $call['file'] : '???';
+            $line = isset($call['line']) ? $call['line'] : '???';
+            $class = isset($call['class']) ? $call['class'] : '';
+            $type = isset($call['type']) ? $call['type'] : '';
+            $function = isset($call['function']) ? $call['function'] : '???';
+            $ret .= "\nCall in {$file} at #{$line} from {$class}{$type}{$function}(...)";
+        }
+        $ret .= "\n";
+        return $ret;
+    }
+
+    /**
+     * Show log
+     * and show a backtrace information in log when
+     * the 'show_log_trace' config variable is set and true
      * see LoggerTemplate::log()
      */
 	public function log(
@@ -175,6 +201,8 @@ class SugarLogger implements LoggerTemplate
 	    $message
 	    )
 	{
+        global $sugar_config;
+
         if (!$this->initialized) {
             return;
         }
@@ -191,6 +219,12 @@ class SugarLogger implements LoggerTemplate
 	    // change to a human-readable array output if it's any other array
 	    if ( is_array($message) )
 		    $message = print_r($message,true);
+
+
+        if(isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace']) {
+            $trace = $this->getTraceString();
+            $message .= ("\n" . $trace);
+        }
 
 		//write out to the file including the time in the dateFormat the process id , the user id , and the log level as well as the message
 		fwrite($this->fp,

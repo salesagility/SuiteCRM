@@ -45,4 +45,3 @@ $viewdefs['AOW_WorkFlow']['QuickCreate'] = array(
 ),
                         
 );
-?>

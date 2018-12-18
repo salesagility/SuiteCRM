@@ -1,11 +1,14 @@
 <?php
- if(!defined('sugarEntry'))define('sugarEntry', true);
-/*********************************************************************************
+ if (!defined('sugarEntry')) {
+     define('sugarEntry', true);
+ }
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 //change directories to where this file is located.
 //this is to make sure it can find dce_config.php
@@ -47,6 +50,28 @@ require_once('include/entryPoint.php');
 $sapi_type = php_sapi_name();
 if (substr($sapi_type, 0, 3) != 'cli') {
     sugar_die("cron.php is CLI only.");
+}
+
+if (!is_windows()) {
+    require_once 'include/utils.php';
+    $cronUser = getRunningUser();
+
+    if (array_key_exists('cron', $sugar_config) && array_key_exists('allowed_cron_users', $sugar_config['cron'])) {
+        if (!in_array($cronUser, $sugar_config['cron']['allowed_cron_users'])) {
+            $GLOBALS['log']->fatal("cron.php: running as $cronUser is not allowed in allowed_cron_users ".
+                                   "in config.php. Exiting.");
+            if ($cronUser == 'root') {
+                // Additional advice so that people running as root aren't led to adding root as an allowed user:
+                $GLOBALS['log']->fatal('cron.php: root\'s crontab should not be used for cron.php. ' .
+                                       'Use your web server user\'s crontab instead.');
+            }
+            sugar_die('cron.php running with user that is not in allowed_cron_users in config.php');
+        }
+    }
+    else {
+        $GLOBALS['log']->warning('cron.php: missing expected allowed_cron_users entry in config.php. ' .
+                                 'No cron user checks will occur.');
+    }
 }
 
 if(empty($current_language)) {

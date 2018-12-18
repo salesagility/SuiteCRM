@@ -1,17 +1,8 @@
 /*
- Copyright (c) 2010, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.com/yui/license.html
- version: 3.3.0
- build: 3167
- */
-YUI.add('align-plugin',function(Y){var OFFSET_WIDTH='offsetWidth',OFFSET_HEIGHT='offsetHeight',undefined=undefined;function Align(config){if(config.host){this._host=config.host;}}
-Align.prototype={to:function(region,regionPoint,point,syncOnResize){this._syncArgs=Y.Array(arguments);if(region.top===undefined){region=Y.one(region).get('region');}
-if(region){var xy=[region.left,region.top],offxy=[region.width,region.height],points=Align.points,node=this._host,NULL=null,size=node.getAttrs([OFFSET_HEIGHT,OFFSET_WIDTH]),nodeoff=[0-size[OFFSET_WIDTH],0-size[OFFSET_HEIGHT]],regionFn0=regionPoint?points[regionPoint.charAt(0)]:NULL,regionFn1=(regionPoint&&regionPoint!=='cc')?points[regionPoint.charAt(1)]:NULL,nodeFn0=point?points[point.charAt(0)]:NULL,nodeFn1=(point&&point!=='cc')?points[point.charAt(1)]:NULL;if(regionFn0){xy=regionFn0(xy,offxy,regionPoint);}
-if(regionFn1){xy=regionFn1(xy,offxy,regionPoint);}
-if(nodeFn0){xy=nodeFn0(xy,nodeoff,point);}
-if(nodeFn1){xy=nodeFn1(xy,nodeoff,point);}
-if(xy&&node){node.setXY(xy);}
-this._resize(syncOnResize);}
-return this;},sync:function(){this.to.apply(this,this._syncArgs);return this;},_resize:function(add){var handle=this._handle;if(add&&!handle){this._handle=Y.on('resize',this._onresize,window,this);}else if(!add&&handle){handle.detach();}},_onresize:function(){var self=this;setTimeout(function(){self.sync();});},center:function(region,resize){this.to(region,'cc','cc',resize);return this;},destroy:function(){var handle=this._handle;if(handle){handle.detach();}}};Align.points={'t':function(xy,off){return xy;},'r':function(xy,off){return[xy[0]+off[0],xy[1]];},'b':function(xy,off){return[xy[0],xy[1]+off[1]];},'l':function(xy,off){return xy;},'c':function(xy,off,point){var axis=(point[0]==='t'||point[0]==='b')?0:1,ret,val;if(point==='cc'){ret=[xy[0]+off[0]/ 2,xy[1]+off[1]/ 2];}else{val=xy[axis]+off[axis]/ 2;ret=(axis)?[xy[0],val]:[val,xy[1]];}
-return ret;}};Align.NAME='Align';Align.NS='align';Align.prototype.constructor=Align;Y.namespace('Plugin');Y.Plugin.Align=Align;},'3.3.0',{requires:['node-screen']});
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+YUI.add("align-plugin",function(c){var e="offsetWidth",d="offsetHeight",b=b;function a(f){if(f.host){this._host=f.host;}}a.prototype={to:function(j,t,l,o){this._syncArgs=c.Array(arguments);if(j.top===b){j=c.one(j).get("region");}if(j){var s=[j.left,j.top],q=[j.width,j.height],n=a.points,f=this._host,h=null,r=f.getAttrs([d,e]),k=[0-r[e],0-r[d]],p=t?n[t.charAt(0)]:h,m=(t&&t!=="cc")?n[t.charAt(1)]:h,i=l?n[l.charAt(0)]:h,g=(l&&l!=="cc")?n[l.charAt(1)]:h;if(p){s=p(s,q,t);}if(m){s=m(s,q,t);}if(i){s=i(s,k,l);}if(g){s=g(s,k,l);}if(s&&f){f.setXY(s);}this._resize(o);}return this;},sync:function(){this.to.apply(this,this._syncArgs);return this;},_resize:function(g){var f=this._handle;if(g&&!f){this._handle=c.on("resize",this._onresize,window,this);}else{if(!g&&f){f.detach();}}},_onresize:function(){var f=this;setTimeout(function(){f.sync();});},center:function(g,f){this.to(g,"cc","cc",f);return this;},destroy:function(){var f=this._handle;if(f){f.detach();}}};a.points={"t":function(f,g){return f;},"r":function(f,g){return[f[0]+g[0],f[1]];},"b":function(f,g){return[f[0],f[1]+g[1]];},"l":function(f,g){return f;},"c":function(i,k,f){var h=(f[0]==="t"||f[0]==="b")?0:1,g,j;if(f==="cc"){g=[i[0]+k[0]/2,i[1]+k[1]/2];}else{j=i[h]+k[h]/2;g=(h)?[i[0],j]:[j,i[1]];}return g;}};a.NAME="Align";a.NS="align";a.prototype.constructor=a;c.namespace("Plugin");c.Plugin.Align=a;},"3.3.0",{requires:["node-screen"]});

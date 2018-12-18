@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,14 +34,14 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
 -->
 
 <!-- BEGIN: main -->
@@ -73,46 +74,46 @@
 		</th>
 	</tr>
 		<tr>
-			<td width="15%" scope="row"><slot>{MOD.LBL_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-			<td width="35%"><slot><input name='name' tabindex='1' size='35' maxlength='50' type="text" value="{NAME}"></slot></td>
-			<td width="15%" scope="row"><slot>{MOD.LBL_STATUS} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-			<td width="35%"><slot><select name='status' tabindex='8'>{STATUS_OPTIONS}</select></slot></td>
+			<td width="15%" scope="row"><span>{MOD.LBL_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+			<td width="35%"><span><input name='name' tabindex='1' size='35' maxlength='50' type="text" value="{NAME}"></span></td>
+			<td width="15%" scope="row"><span>{MOD.LBL_STATUS} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+			<td width="35%"><span><select name='status' tabindex='8'>{STATUS_OPTIONS}</select></span></td>
 		</tr><tr>
 			<td scope="row">&nbsp;</td>
 			<td>&nbsp;</td>
 			<td scope="row">&nbsp;</td>
 			<td>&nbsp;</td>
 		</tr><tr>
-			<td scope="row"><slot>{MOD.LBL_JOB} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-			<td><slot><select name='job_function' tabindex='2' size='1'>{JOB_FUNCTION}</select></slot></td>
-			<td colspan="2"><slot> OR <input name='job_url' tabindex='2' size='30' maxlength='255' type="text" value="{JOB_URL}"></td>
+			<td scope="row"><span>{MOD.LBL_JOB} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+			<td><span><select name='job_function' tabindex='2' size='1'>{JOB_FUNCTION}</select></span></td>
+			<td colspan="2"><span> OR <input name='job_url' tabindex='2' size='30' maxlength='255' type="text" value="{JOB_URL}"></td>
 
 		</tr><tr>
-			<td scope="row"><slot>{MOD.LBL_INTERVAL} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-			<td colspan="3"><slot>
+			<td scope="row"><span>{MOD.LBL_INTERVAL} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+			<td colspan="3"><span>
 				<div id="crontab" style="display:none;">
 				<table cellpadding="0" cellspacing="0">
 					<tr>
-						<td colspan="5"><slot>
+						<td colspan="5"><span>
 							<a href="javascript:void(0);" onClick="toggleAdv('false');">{MOD.LBL_TOGGLE_BASIC}</a>
-						</slot></td>
+						</span></td>
 					</tr>
 					<tr>
-						<td><slot>{MOD.LBL_MINS}</slot></td>
-						<td><slot>{MOD.LBL_HOURS}</slot></td>
-						<td><slot>{MOD.LBL_DAY_OF_MONTH}</slot></td>
-						<td><slot>{MOD.LBL_MONTHS}</slot></td>
-						<td><slot>{MOD.LBL_DAY_OF_WEEK}</slot></td>
+						<td><span>{MOD.LBL_MINS}</span></td>
+						<td><span>{MOD.LBL_HOURS}</span></td>
+						<td><span>{MOD.LBL_DAY_OF_MONTH}</span></td>
+						<td><span>{MOD.LBL_MONTHS}</span></td>
+						<td><span>{MOD.LBL_DAY_OF_WEEK}</span></td>
 					</tr><tr>
-						<td><slot><input name="mins" tabindex="3" maxlength="25" type="text" size="3" value="{MINS}"></slot></td>
-						<td><slot><input name="hours" tabindex="4" maxlength="25" type="text" size="3" value="{HOURS}"></slot></td>
-						<td><slot><input name="day_of_month" tabindex="5" maxlength="25" type="text" size="3" value="{DAY_OF_MONTH}"></slot></td>
-						<td><slot><input name="months" tabindex="6" maxlength="25" type="text" size="3" value="{MONTHS}"></slot></td>
-						<td><slot><input name="day_of_week" tabindex="7" maxlength="25" type="text" size="3" value="{DAY_OF_WEEK}"></slot></td>
+						<td><span><input name="mins" tabindex="3" maxlength="25" type="text" size="3" value="{MINS}"></span></td>
+						<td><span><input name="hours" tabindex="4" maxlength="25" type="text" size="3" value="{HOURS}"></span></td>
+						<td><span><input name="day_of_month" tabindex="5" maxlength="25" type="text" size="3" value="{DAY_OF_MONTH}"></span></td>
+						<td><span><input name="months" tabindex="6" maxlength="25" type="text" size="3" value="{MONTHS}"></span></td>
+						<td><span><input name="day_of_week" tabindex="7" maxlength="25" type="text" size="3" value="{DAY_OF_WEEK}"></span></td>
 					</tr><tr>
-                        <td colspan="5"><slot>
+                        <td colspan="5"><span>
                             <i>{MOD.LBL_CRONTAB_EXAMPLES}</i>
-                        </slot></td>
+                        </span></td>
 					</tr>
 				</table>
 				</div>
@@ -120,9 +121,9 @@
 				<div id="simple">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tr>
-						<td colspan=5><slot>
+						<td colspan=5><span>
 							<a href="javascript:void(0);" onClick="toggleAdv('false');">{MOD.LBL_TOGGLE_ADV}</a>
-						</slot></td>
+						</span></td>
 					</tr>
 
 					<tr>
@@ -136,16 +137,16 @@
 						<td valign="top" width="25%">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td><slot><input type="checkbox" name="all" value="true" id="all" {ONLY_ADV} {ALL} onClick="allDays();">&nbsp;<i>{MOD.LBL_ALL}</i></slot></td>
+								<td><span><input type="checkbox" name="all" value="true" id="all" {ONLY_ADV} {ALL} onClick="allDays();">&nbsp;<i>{MOD.LBL_ALL}</i></span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="mon" value="true" id="mon" {ONLY_ADV} {MON}>&nbsp;{MOD.LBL_MON}</slot></td>
+								<td><span><input type="checkbox" name="mon" value="true" id="mon" {ONLY_ADV} {MON}>&nbsp;{MOD.LBL_MON}</span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="tue" value="true" id="tue" {ONLY_ADV} {TUE}>&nbsp;{MOD.LBL_TUE}</slot></td>
+								<td><span><input type="checkbox" name="tue" value="true" id="tue" {ONLY_ADV} {TUE}>&nbsp;{MOD.LBL_TUE}</span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="wed" value="true" id="wed" {ONLY_ADV} {WED}>&nbsp;{MOD.LBL_WED}</slot></td>
+								<td><span><input type="checkbox" name="wed" value="true" id="wed" {ONLY_ADV} {WED}>&nbsp;{MOD.LBL_WED}</span></td>
 							</tr>
 						</table>
 						</td>
@@ -153,16 +154,16 @@
 						<td valign="top" width="25%">
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr>
-								<td><slot><input type="checkbox" name="thu" value="true" id="thu" {ONLY_ADV} {THU}>&nbsp;{MOD.LBL_THU}</slot></td>
+								<td><span><input type="checkbox" name="thu" value="true" id="thu" {ONLY_ADV} {THU}>&nbsp;{MOD.LBL_THU}</span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="fri" value="true" id="fri" {ONLY_ADV} {FRI}>&nbsp;{MOD.LBL_FRI}</slot></td>
+								<td><span><input type="checkbox" name="fri" value="true" id="fri" {ONLY_ADV} {FRI}>&nbsp;{MOD.LBL_FRI}</span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="sat" value="true" id="sat" {ONLY_ADV} {SAT}>&nbsp;{MOD.LBL_SAT}</slot></td>
+								<td><span><input type="checkbox" name="sat" value="true" id="sat" {ONLY_ADV} {SAT}>&nbsp;{MOD.LBL_SAT}</span></td>
 							</tr>
 							<tr>
-								<td><slot><input type="checkbox" name="sun" value="true" id="sun" {ONLY_ADV} {SUN}>&nbsp;{MOD.LBL_SUN}</slot></td>
+								<td><span><input type="checkbox" name="sun" value="true" id="sun" {ONLY_ADV} {SUN}>&nbsp;{MOD.LBL_SUN}</span></td>
 							</tr>
 						</table>
 						</td>
@@ -172,7 +173,7 @@
 				</table>
 				</div>
 
-			</slot></td>
+			</span></td>
 		</tr>
 	</td>
 </tr>
@@ -187,32 +188,32 @@
 		</th>
 	</tr>
 	<tr>
-		<td scope="row" width="15%"><slot>{MOD.LBL_CATCH_UP}</slot></td>
-		<td width="35%"><slot>
+		<td scope="row" width="15%"><span>{MOD.LBL_CATCH_UP}</span></td>
+		<td width="35%"><span>
 			<div id="rollover"><a href="#" class="rollover"><span>{MOD.LBL_CATCH_UP_WARNING}</span><img border="0" src="index.php?entryPoint=getImage&themeName={THEME}&imageName=helpInline.gif"></a></div>
 			<input name='catch_up' tabindex='16' type='checkbox' value='1' {CATCH_UP_CHECKED}>
 
-		</slot></td>
+		</span></td>
 		<td scope="row" width="15%">&nbsp;</td>
 		<td width="35%">&nbsp;</td>
 	</tr>
 
 	<tr>
-		<td scope="row"><slot>{MOD.LBL_DATE_TIME_START} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-		<td><slot>
+		<td scope="row"><span>{MOD.LBL_DATE_TIME_START} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+		<td><span>
 		<table  cellpadding="0" cellspacing="0">
 			<tr>
-				<td nowrap><input name='date_start' id='jscal_start_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='8' size='11' maxlength='10' type="text" value="{DATE_START}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{CALENDAR_DATEFORMAT}"  id="start_date_jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td nowrap><input name='date_start' id='jscal_start_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='8' size='11' maxlength='10' type="text" value="{DATE_START}"> <span id="start_date_jscal_trigger" class="suitepicon suitepicon-module-calendar" title="{CALENDAR_DATEFORMAT}"></span>&nbsp;</td>
 				<td nowrap><select name='time_hour_start' tabindex="9">{TIME_START_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_start' tabindex="10">{TIME_START_MINUTE_OPTIONS}</select>{TIME_MERIDIEM_START}</td>
 			</tr><tr>
 				<td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td>
 				<td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td>
 			</tr>
 		</table>
-		</slot></td>
+		</span></td>
 
-		<td scope="row"><slot>{MOD.LBL_TIME_FROM}</slot></td>
-		<td><slot>
+		<td scope="row"><span>{MOD.LBL_TIME_FROM}</span></td>
+		<td><span>
 		<table  cellpadding="0" cellspacing="0">
 			<tr>
 				<td nowrap><select name='time_hour_from' tabindex="15">{TIME_FROM_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_from' tabindex="16">{TIME_FROM_MIN_OPTIONS}</select>{TIME_MERIDIEM_FROM}</td>
@@ -220,25 +221,25 @@
 				<td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td>
 			</tr>
 		</table>
-		</slot></td>
+		</span></td>
 
 	</tr>
 	<tr>
-		<td scope="row"><slot>{MOD.LBL_DATE_TIME_END}</slot></td>
-		<td><slot>
+		<td scope="row"><span>{MOD.LBL_DATE_TIME_END}</span></td>
+		<td><span>
 		<table  cellpadding="0" cellspacing="0">
 			<tr>
-				<td nowrap><input name='date_end' id='jscal_end_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='12' size='11' maxlength='10' type="text" value="{DATE_END}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{CALENDAR_DATEFORMAT}"  id="end_date_jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td nowrap><input name='date_end' id='jscal_end_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='12' size='11' maxlength='10' type="text" value="{DATE_END}"> <span id="end_date_jscal_trigger" class="suitepicon suitepicon-module-calendar" title="{CALENDAR_DATEFORMAT}"></span>&nbsp;</td>
 				<td nowrap><select name='time_hour_end' tabindex="13">{TIME_END_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_end' tabindex="14">{TIME_END_MINUTE_OPTIONS}</select>{TIME_MERIDIEM_END}</td>
 			</tr><tr>
 				<td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td>
 				<td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td>
 			</tr>
 		</table>
-		</slot></td>
+		</span></td>
 
-		<td scope="row"><slot>{MOD.LBL_TIME_TO}</slot></td>
-		<td><slot>
+		<td scope="row"><span>{MOD.LBL_TIME_TO}</span></td>
+		<td><span>
 			<table  cellpadding="0" cellspacing="0">
 				<tr>
 					<td nowrap><select name='time_hour_to' tabindex="17">{TIME_TO_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_to' tabindex="18">{TIME_TO_MIN_OPTIONS}</select>{TIME_MERIDIEM_TO}</td>
@@ -246,7 +247,7 @@
 					<td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td>
 				</tr>
 			</table>
-		</slot></td>
+		</span></td>
 
 	</tr>
 </table>

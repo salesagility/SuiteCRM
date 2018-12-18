@@ -41,5 +41,3 @@ class ACLRolesViewClassic extends ViewDetail {
 		$this->options['show_subpanels'] = false; //eggsurplus: will display subpanels twice otherwise
  	}
 }
-
-?>

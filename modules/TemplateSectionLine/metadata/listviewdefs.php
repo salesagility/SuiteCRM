@@ -10,4 +10,3 @@ array (
     'link' => true,
   ),
 );
-?>

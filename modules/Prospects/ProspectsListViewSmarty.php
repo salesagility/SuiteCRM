@@ -41,6 +41,21 @@ class ProspectsListViewSmarty extends ListViewSmarty {
         return $script;
     }
 
-}
+    /**
+     *
+     * @param File $file Template file to use
+     * @param array $data from ListViewData
+     * @param string $htmlpublic the corresponding html public in xtpl per row
+     * @return bool|void
+     */
+    public function process($file, $data, $htmlpublic)
+    {
+        $configurator = new Configurator();
+        if ($configurator->isConfirmOptInEnabled()) {
+            $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
+        }
 
-?>
+        return parent::process($file, $data, $htmlpublic);
+    }
+
+}

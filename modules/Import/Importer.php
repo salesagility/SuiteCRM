@@ -1,12 +1,13 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +18,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +36,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('modules/Import/ImportCacheFiles.php');
@@ -136,7 +137,7 @@ class Importer
     {
         global $sugar_config, $mod_strings, $current_user;
 
-        $focus = clone $this->bean;
+        $focus = BeanFactory::getBean($this->bean->module_name);
         $focus->unPopulateDefaultValues();
         $focus->save_from_post = false;
         $focus->team_id = null;
@@ -436,32 +437,30 @@ class Importer
 
     protected function sanitizeFieldValueByType($rowValue, $fieldDef, $defaultRowValue, $focus, $fieldTranslated)
     {
+        $fieldtype = $fieldDef['type'];
         global $mod_strings, $app_list_strings;
-        switch ($fieldDef['type'])
+        switch ($fieldtype)
         {
             case 'enum':
+            case 'dynamicenum':
             case 'multienum':
-                if ( isset($fieldDef['type']) && $fieldDef['type'] == "multienum" )
-                    $returnValue = $this->ifs->multienum($rowValue,$fieldDef);
-                else
-                    $returnValue = $this->ifs->enum($rowValue,$fieldDef);
-                // try the default value on fail
-                if ( !$returnValue && !empty($defaultRowValue) )
-                {
-                    if ( isset($fieldDef['type']) && $fieldDef['type'] == "multienum" )
-                        $returnValue = $this->ifs->multienum($defaultRowValue,$fieldDef);
-                    else
-                        $returnValue = $this->ifs->enum($defaultRowValue,$fieldDef);
-                }
-                if ( $returnValue === FALSE )
-                {
-                    $this->importSource->writeError($mod_strings['LBL_ERROR_NOT_IN_ENUM'] . implode(",",$app_list_strings[$fieldDef['options']]), $fieldTranslated,$rowValue);
-                    return FALSE;
-                }
-                else
-                    return $returnValue;
+                $returnValue = $this->ifs->$fieldtype($rowValue, $fieldDef);
 
-                break;
+                // try the default value on fail
+                if (!$returnValue && !empty($defaultRowValue)) {
+                    $returnValue = $this->ifs->$fieldtype($defaultRowValue, $fieldDef);
+                }
+
+                if ($returnValue === false) {
+                    $this->importSource->writeError(
+                        $mod_strings['LBL_ERROR_NOT_IN_ENUM'] . implode(",", $app_list_strings[$fieldDef['options']]),
+                        $fieldTranslated,
+                        $rowValue
+                    );
+                    return false;
+                }
+                return $returnValue;
+
             case 'relate':
             case 'parent':
                 $returnValue = $this->ifs->relate($rowValue, $fieldDef, $focus, empty($defaultRowValue));
@@ -482,14 +481,13 @@ class Importer
                 return $rowValue;
                 break;
             default:
-                $fieldtype = $fieldDef['type'];
                 $returnValue = $this->ifs->$fieldtype($rowValue, $fieldDef, $focus);
                 // try the default value on fail
                 if ( !$returnValue && !empty($defaultRowValue) )
                     $returnValue = $this->ifs->$fieldtype($defaultRowValue,$fieldDef, $focus);
                 if ( !$returnValue )
                 {
-                    $this->importSource->writeError($mod_strings['LBL_ERROR_INVALID_'.strtoupper($fieldDef['type'])],$fieldTranslated,$rowValue,$focus);
+                    $this->importSource->writeError($mod_strings['LBL_ERROR_INVALID_'.strtoupper($fieldtype)],$fieldTranslated,$rowValue,$focus);
                     return FALSE;
                 }
                 return $returnValue;
@@ -809,14 +807,13 @@ class Importer
      */
     protected function _convertId($string)
     {
+        $function = function ($matches) {
+            return ord($matches[0]);
+        };
+
         return preg_replace_callback(
             '|[^A-Za-z0-9\-\_]|',
-            create_function(
-            // single quotes are essential here,
-            // or alternative escape all $ as \$
-            '$matches',
-            'return ord($matches[0]);'
-                 ) ,
+            $function,
             $string);
     }
 
@@ -923,7 +920,7 @@ class Importer
 
         if ($isFatal)
         {
-            exit(1);
+            throw new Exception('Handle import error' . ($message ? ": $message" : ''));
         }
     }
 

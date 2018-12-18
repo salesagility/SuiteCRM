@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -332,7 +335,7 @@ $xtpl->assign('FORMHEADER',get_form_header($mod_strings['LNK_NEW_ACCOUNT'], '', 
 require_once('modules/Accounts/AccountFormBase.php');
 $accountForm = new AccountFormBase();
 $xtpl->assign('CLASS', 'evenListRow');
-$xtpl->assign('FORMBODY',$selectAccountButton."<slot class='dataLabel'><input class='checkbox' type='checkbox' name='newaccount' onclick='document.forms[\"BusinessCard\"].selectedAccount.value=\"\";document.forms[\"BusinessCard\"].display_account_name.value=\"\";toggleDisplay(\"newaccountdiv\");'>&nbsp;".$mod_strings['LNK_NEW_ACCOUNT']."</slot>&nbsp;<div id='newaccountdiv' style='display:none'>".$accountForm->getWideFormBody('Accounts', 'Accounts','BusinessCard', '' ));
+$xtpl->assign('FORMBODY',$selectAccountButton."<slot class='dataLabel'><input class='checkbox' type='checkbox' name='newaccount' onclick='document.forms[\"BusinessCard\"].selectedAccount.value=\"\";document.forms[\"BusinessCard\"].display_account_name.value=\"\";toggleDisplay(\"newaccountdiv\");'>&nbsp;".$mod_strings['LNK_NEW_ACCOUNT']."</span>&nbsp;<div id='newaccountdiv' style='display:none'>".$accountForm->getWideFormBody('Accounts', 'Accounts','BusinessCard', '' ));
 require_once('modules/Notes/NoteFormBase.php');
 $noteForm = new NoteFormBase();
 $postform = "<div id='accountnotelink'><p><a href='javascript:toggleDisplay(\"accountnote\");'>${mod_strings['LNK_NEW_NOTE']}</a></p></div>";
@@ -345,7 +348,7 @@ $xtpl->assign('FORMHEADER',get_form_header($mod_strings['LNK_NEW_OPPORTUNITY'], 
 require_once('modules/Opportunities/OpportunityFormBase.php');
 $oppForm = new OpportunityFormBase();
 $xtpl->assign('CLASS', 'evenListRow');
-$xtpl->assign('FORMBODY',"<slot class='dataLabel'><input class='checkbox' type='checkbox' name='newopportunity' onclick='toggleDisplay(\"newoppdiv\");'>&nbsp;".$mod_strings['LNK_NEW_OPPORTUNITY']."</slot><div id='newoppdiv' style='display:none'>".$oppForm->getWideFormBody('Opportunities', 'Opportunities','BusinessCard', '' , false));
+$xtpl->assign('FORMBODY',"<slot class='dataLabel'><input class='checkbox' type='checkbox' name='newopportunity' onclick='toggleDisplay(\"newoppdiv\");'>&nbsp;".$mod_strings['LNK_NEW_OPPORTUNITY']."</span><div id='newoppdiv' style='display:none'>".$oppForm->getWideFormBody('Opportunities', 'Opportunities','BusinessCard', '' , false));
 require_once('modules/Notes/NoteFormBase.php');
 $noteForm = new NoteFormBase();
 $postform = "<div id='oppnotelink'><a href='javascript:toggleDisplay(\"oppnote\");'>${mod_strings['LNK_NEW_NOTE']}</a></div>";
@@ -367,4 +370,3 @@ $xtpl->parse("main");
 $xtpl->out("main");
 
 }
-?>

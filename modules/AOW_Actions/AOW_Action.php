@@ -6,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,8 +35,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 class AOW_Action extends Basic
 {
@@ -88,11 +88,19 @@ class AOW_Action extends Basic
     function save_lines($post_data, $parent, $key = '')
     {
 
-        $line_count = count($post_data[$key . 'action']);
+
+        if (!isset($post_data[$key . 'action'])) {
+            LoggerManager::getLogger()->warn('Post data not found at key action. Key was: ' . $key);
+            $postDataAtKeyAction = null;
+        } else {
+            $postDataAtKeyAction = $post_data[$key . 'action'];
+        }
+
+        $line_count = count((array)$postDataAtKeyAction);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
 
-            if ($post_data[$key . 'deleted'][$i] == 1) {
+            if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
                 $action = new AOW_Action();
@@ -106,7 +114,13 @@ class AOW_Action extends Basic
                 foreach ($post_data[$key . 'param'][$i] as $param_name => $param_value) {
                     if ($param_name == 'value') {
                         foreach ($param_value as $p_id => $p_value) {
-                            if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) $param_value[$p_id] = encodeMultienumValue($p_value);
+                            if (!isset($post_data[$key . 'param'][$i]['value_type'])) {
+                                LoggerManager::getLogger()->warn('AOW action error when trying to save lines, value type is undefined in post data, key and index was: ' . $key . ', ' . $i);
+                            } elseif (!isset($post_data[$key . 'param'][$i]['value_type'][$p_id])) {
+                                LoggerManager::getLogger()->warn('AOW action error when trying to save lines, parameter id not found in post data, parameter id was: ' . $p_id);
+                            } else {
+                                if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) $param_value[$p_id] = encodeMultienumValue($p_value);
+                            }
                         }
                     }
                     $params[$param_name] = $param_value;

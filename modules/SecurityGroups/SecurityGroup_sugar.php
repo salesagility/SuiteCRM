@@ -53,4 +53,3 @@ class SecurityGroup_sugar extends Basic {
 }
 
 }
-?>

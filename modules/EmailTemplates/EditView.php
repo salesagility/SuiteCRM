@@ -1,6 +1,48 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+global $current_user;
 require_once('modules/Campaigns/utils.php');
 
 //if campaign_id is passed then we assume this is being invoked from the campaign module and in a popup.
@@ -69,6 +111,9 @@ echo getClassicModuleTitle($focus->module_dir, $params, true);
 if (!$focus->ACLAccess('EditView')) {
     ACLController::displayNoAccess(true);
     sugar_cleanup(true);
+} elseif (!is_admin($current_user) && $focus->type === 'system') {
+    ACLController::displayNoAccess(true);
+    sugar_cleanup(true);
 }
 
 $GLOBALS['log']->info("EmailTemplate detail view");
@@ -122,8 +167,8 @@ $xtpl->assign('encoded_assigned_users_popup_request_data', $json->encode($popup_
 if (!empty($focus->assigned_user_name))
     $xtpl->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
 
-$xtpl->assign("assign_user_select", SugarThemeRegistry::current()->getImage('id-ff-select', '', null, null, '.png', $mod_strings['LBL_SELECT']));
-$xtpl->assign("assign_user_clear", SugarThemeRegistry::current()->getImage('id-ff-clear', '', null, null, '.gif', $mod_strings['LBL_ID_FF_CLEAR']));
+$xtpl->assign("assign_user_select", '<span class="suitepicon suitepicon-action-select"></span>');
+$xtpl->assign("assign_user_clear", '<span class="suitepicon suitepicon-action-clear"></span>');
 //Assign qsd script
 require_once('include/QuickSearchDefaults.php');
 $qsd = QuickSearchDefaults::getQuickSearchDefaults();
@@ -151,7 +196,6 @@ if (isset($focus->name)) $xtpl->assign("NAME", $focus->name); else $xtpl->assign
  */
 if (isset($focus->assigned_user_id)) $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id);
 else if (empty($focus->id) && empty($focus->assigned_user_id)) {
-    global $current_user;
     $xtpl->assign("ASSIGNED_USER_ID", $current_user->id);
     $xtpl->assign("ASSIGNED_USER_NAME", get_assigned_user_name($current_user->id));
 } else $xtpl->assign("ASSIGNED_USER_ID", "");
@@ -176,7 +220,6 @@ require_once("modules/EmailTemplates/templateFields.php");
 $xtpl->assign("FIELD_DEFS_JS", generateFieldDefsJS2());
 $xtpl->assign("LBL_CONTACT", $app_list_strings['moduleList']['Contacts']);
 
-global $current_user;
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
     $record = '';
     if (!empty($_REQUEST['record'])) {
@@ -204,9 +247,21 @@ $xtpl->assign("TYPE_OPTIONS", get_select_options_with_id($app_list_strings['reco
 if (isset($focus->body)) $xtpl->assign("BODY", $focus->body); else $xtpl->assign("BODY", "");
 if (isset($focus->body_html)) $xtpl->assign("BODY_HTML", $focus->body_html); else $xtpl->assign("BODY_HTML", "");
 
-require_once('include/SuiteMozaik.php');
-$mozaik = new SuiteMozaik();
-$xtpl->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_text'));
+
+// ---------------------------------
+// ------------ EDITOR -------------
+// ---------------------------------
+
+
+require_once 'include/SuiteEditor/SuiteEditorConnector.php';
+$templateWidth = 600;
+$xtpl->assign('template_width', $templateWidth);
+$xtpl->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(SuiteEditorConnector::getSuiteSettings(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', $templateWidth)));
+$xtpl->assign('width_style', 'style="display:'.($current_user->getEditorType() != 'mozaik' ? 'none' : 'table-row').';"');
+
+// ---------------------------------
+// ---------------------------------
+// ---------------------------------
 
 
 if (true) {
@@ -221,7 +276,7 @@ if (true) {
     }
     ///////////////////////////////////////
     ////	MACRO VARS
-    $xtpl->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.EditView.variable_text.value)");
+    $xtpl->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.EditView.variable_text.value, \"email_template_editor\")");
 
     // bug 37255, included without condition
     $xtpl->parse("main.NoInbound.variable_button");
@@ -343,4 +398,4 @@ $javascript->setFormName('EditView');
 $javascript->setSugarBean($focus);
 $javascript->addAllFields('');
 echo $javascript->getScript();
-?>
+

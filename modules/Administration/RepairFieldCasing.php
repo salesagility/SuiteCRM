@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 //Check if current user has admin access
 if(is_admin($current_user)) {
@@ -50,8 +53,8 @@ if(is_admin($current_user)) {
     $module_entries = array();
 
     $query = "SELECT * FROM fields_meta_data";
-    $result = $GLOBALS['db']->query($query);
-    while($row = $GLOBALS['db']->fetchByAssoc($result)) {
+    $result = DBManagerFactory::getInstance()->query($query);
+    while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
     	  $name = $row['name'];
     	  $id = $row['id'];
     	  $module_entries[$row['custom_module']] = true;
@@ -71,11 +74,11 @@ if(is_admin($current_user)) {
            foreach($entries as $original_col_name=>$entry) {
                echo '<br>'. string_format($mod_strings['LBL_REPAIR_FIELD_CASING_SQL_FIELD_META_DATA'], array($entry['name']));
            	   $update_sql = "UPDATE fields_meta_data SET id = '" . $entry['custom_module'] . strtolower($entry['name']) . "', name = '" . strtolower($entry['name']) . "' WHERE id = '" . $entry['id'] . "'";
-           	   $GLOBALS['db']->query($update_sql);
+           	   DBManagerFactory::getInstance()->query($update_sql);
 
            	   echo '<br>'. string_format($mod_strings['LBL_REPAIR_FIELD_CASING_SQL_CUSTOM_TABLE'], array($entry['name'], $table_name));
 
-      		   $GLOBALS['db']->query($GLOBALS['db']->renameColumnSQL($table_name, $entry['name'], strtolower($entry['name'])));
+      		   DBManagerFactory::getInstance()->query(DBManagerFactory::getInstance()->renameColumnSQL($table_name, $entry['name'], strtolower($entry['name'])));
            }
        }
     }
@@ -143,4 +146,3 @@ if(is_admin($current_user)) {
     echo '<br>'.$mod_strings['LBL_DIAGNOSTIC_DONE'];
 
 }
-?>

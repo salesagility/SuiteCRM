@@ -20,7 +20,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 require_once 'include/MVC/View/views/view.detail.php';
 require_once 'modules/AOW_WorkFlow/aow_utils.php';
@@ -64,11 +64,15 @@ class AOR_ReportsViewDetail extends ViewDetail {
     public function preDisplay() {
         global $app_list_strings;
         parent::preDisplay();
+
+        $canExport = $this->bean->ACLAccess('Export');
+        $this->ss->assign('can_export', $canExport);
+
         $this->ss->assign('report_module',$this->bean->report_module);
 
 
 
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
 
         //$reportHTML = $this->bean->build_group_report(0,true);
         $reportHTML = $this->bean->buildMultiGroupReport(0,true);

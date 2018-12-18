@@ -13,4 +13,3 @@ $popupMeta = array (
     'listviewdefs' => array (
     ),
 );
-?>

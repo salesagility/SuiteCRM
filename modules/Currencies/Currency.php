@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -174,17 +177,18 @@ class Currency extends SugarBean
 		return $list_form;
 	}
 
-	function retrieve_id_by_name($name) {
-	 	$query = "select id from currencies where name='$name' and deleted=0;";
-	 	$result = $this->db->query($query);
-	 	if($result){
-	 	$row = $this->db->fetchByAssoc($result);
-	 	if($row){
-	 		return $row['id'];
-	 	}
-	 	}
-	 	return '';
-	}
+    function retrieve_id_by_name($name) {
+        $nameQuoted = $this->db->quote($name);
+        $query = "select id from currencies where name='$nameQuoted' and deleted=0;";
+        $result = $this->db->query($query);
+        if ($result) {
+            $row = $this->db->fetchByAssoc($result);
+            if ($row) {
+                return $row['id'];
+            }
+        }
+        return '';
+    }
 
     function retrieve($id = -99, $encode = true, $deleted = true){
      	if($id == '-99'){
@@ -516,18 +520,22 @@ function get_number_seperators($reset_sep = false)
  * toString
  *
  * Utility function to print out some information about Currency instance.
+ * @deprecated since version 7.10.2
  */
 function toString($echo = true) {
-	$s = "\$m_currency_round=$m_currency_round \n" .
-         "\$m_currency_decimal=$m_currency_decimal \n" .
-         "\$m_currency_symbol=$m_currency_symbol \n" .
-         "\$m_currency_iso=$m_currency_iso \n" .
-         "\$m_currency_name=$m_currency_name \n";
+    
+    LoggerManager::getLogger()->fatal('Wrong or incomplete implementation for currency to string convertation.');
+
+
+    $s = "\$m_currency_round=" . (isset($m_currency_round) ? $m_currency_round : null) . " \n" .
+     "\$m_currency_decimal=" . (isset($m_currency_decimal) ? $m_currency_decimal : null) . " \n" .
+     "\$m_currency_symbol=" . (isset($m_currency_symbol) ? $m_currency_symbol : null) . " \n" .
+     "\$m_currency_iso=" . (isset($m_currency_iso) ? $m_currency_iso : null) . " \n" .
+     "\$m_currency_name=" . (isset($m_currency_name) ? $m_currency_name : null) . " \n";
 
     if($echo) {
        echo $s;
     }
-
     return $s;
 }
 
@@ -543,17 +551,30 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
                 $value = -99;
             }
         }
-		require_once('modules/Currencies/ListCurrency.php');
-		$currency_fields = array();
-		//Bug 18276 - Fix for php 5.1.6
-		$defs=$focus->field_defs;
-		//
-		foreach($defs as $name=>$key){
-			if($key['type'] == 'currency'){
-				$currency_fields[]= $name;
-			}
-		}
-		$currency = new ListCurrency();
+        require_once('modules/Currencies/ListCurrency.php');
+        $currency_fields = array();
+        //Bug 18276 - Fix for php 5.1.6
+
+        if (!isset($focus)) {
+            LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus not defined.');
+            $defs = null;
+        } elseif (!isset($focus->field_defs)) {
+            LoggerManager::getLogger()->warn('Currency Dorp-down error: Undefined field definition for focus. Focus was: ' . get_class($focus));
+            $defs = null;
+        } elseif (!is_object($focus)) {
+            LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus is not an object. Given type of focus was: ' . gettype($focus));
+            $defs = null;
+        } else {
+            $defs = isset($focus->field_defs) ? $focus->field_defs : null;
+        }
+
+        //
+        foreach ((array)$defs as $name=>$key) {
+            if ($key['type'] == 'currency') {
+                $currency_fields[]= $name;
+            }
+        }
+        $currency = new ListCurrency();
         $selectCurrency = $currency->getSelectOptions($value);
 
 		$currency->setCurrencyFields($currency_fields);
@@ -580,18 +601,31 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
 
 function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $view='DetailView')
 {
-    if($view == 'EditView' || $view == 'MassUpdate' || $view == 'QuickCreate'){
-		require_once('modules/Currencies/ListCurrency.php');
-		$currency_fields = array();
-		//Bug 18276 - Fix for php 5.1.6
-		$defs=$focus->field_defs;
-		//
-		foreach($defs as $name=>$key){
-			if($key['type'] == 'currency'){
-				$currency_fields[]= $name;
-			}
-		}
-		$currency = new ListCurrency();
+    if ($view == 'EditView' || $view == 'MassUpdate' || $view == 'QuickCreate') {
+        require_once('modules/Currencies/ListCurrency.php');
+        $currency_fields = array();
+        //Bug 18276 - Fix for php 5.1.6
+
+        if (!isset($focus)) {
+            LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus not defined.');
+            $defs = null;
+        } elseif (!isset($focus->field_defs)) {
+            LoggerManager::getLogger()->warn('Currency Dorp-down error: Undefined field definition for focus. Focus was: ' . get_class($focus));
+            $defs = null;
+        } elseif (!is_object($focus)) {
+            LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus is not an object. Given type of focus was: ' . gettype($focus));
+            $defs = null;
+        } else {
+            $defs = isset($focus->field_defs) ? $focus->field_defs : null;
+        }
+
+        //
+        foreach ((array)$defs as $name=>$key) {
+            if ($key['type'] == 'currency') {
+                $currency_fields[]= $name;
+            }
+        }
+        $currency = new ListCurrency();
         $currency->lookupCurrencies();
         $listitems = array();
         foreach ( $currency->list as $item )
@@ -613,18 +647,31 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
 
 function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $view='DetailView')
 {
-    if($view == 'EditView' || $view == 'MassUpdate' || $view == 'QuickCreate'){
-		require_once('modules/Currencies/ListCurrency.php');
-		$currency_fields = array();
-		//Bug 18276 - Fix for php 5.1.6
-		$defs=$focus->field_defs;
-		//
-		foreach($defs as $name=>$key){
-			if($key['type'] == 'currency'){
-				$currency_fields[]= $name;
-			}
-		}
-		$currency = new ListCurrency();
+    if ($view == 'EditView' || $view == 'MassUpdate' || $view == 'QuickCreate') {
+        require_once('modules/Currencies/ListCurrency.php');
+        $currency_fields = array();
+        //Bug 18276 - Fix for php 5.1.6
+
+        if (!isset($focus)) {
+            LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus not defined.');
+            $defs = null;
+        } elseif (!isset($focus->field_defs)) {
+            LoggerManager::getLogger()->warn('Currency Dorp-down error: Undefined field definition for focus. Focus was: ' . get_class($focus));
+            $defs = null;
+        } elseif (!is_object($focus)) {
+            LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus is not an object. Given type of focus was: ' . gettype($focus));
+            $defs = null;
+        } else {
+            $defs = isset($focus->field_defs) ? $focus->field_defs : null;
+        }
+
+        //
+        foreach ((array)$defs as $name=>$key) {
+            if ($key['type'] == 'currency') {
+                $currency_fields[]= $name;
+            }
+        }
+        $currency = new ListCurrency();
         $currency->lookupCurrencies();
         $listitems = array();
         foreach ( $currency->list as $item )
@@ -644,4 +691,3 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
 	}
 }
 
-?>

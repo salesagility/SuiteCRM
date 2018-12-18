@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -45,7 +46,7 @@
  */
 function db_convert($string, $type, $additional_parameters=array(),$additional_parameters_oracle_only=array())
 	{
-    return $GLOBALS['db']->convert($string, $type, $additional_parameters, $additional_parameters_oracle_only);
+    return DBManagerFactory::getInstance()->convert($string, $type, $additional_parameters, $additional_parameters_oracle_only);
             }
 
 /**
@@ -53,7 +54,8 @@ function db_convert($string, $type, $additional_parameters=array(),$additional_p
  */
 function db_concat($table, $fields)
 	{
-    return $GLOBALS['db']->concat($table, $fields);
+    $db = DBManagerFactory::getInstance();
+    return $db->concat($table, $fields);
 }
 
 /**
@@ -61,7 +63,7 @@ function db_concat($table, $fields)
  */
 function from_db_convert($string, $type)
 	{
-    return $GLOBALS['db']->fromConvert($string, $type);
+    return DBManagerFactory::getInstance()->fromConvert($string, $type);
 	}
 
 $toHTML = array(
@@ -93,16 +95,12 @@ function to_html($string, $encode=true){
 	global $toHTML;
 
 	if($encode && is_string($string)){
-		/*
-		 * cn: bug 13376 - handle ampersands separately
-		 * credit: ashimamura via bug portal
-		 */
-		//$string = str_replace("&", "&amp;", $string);
-
-        if(is_array($toHTML))
-        { // cn: causing errors in i18n test suite ($toHTML is non-array)
+		if(is_array($toHTML))
+        {
             $string = str_ireplace($GLOBALS['toHTML_keys'],$GLOBALS['toHTML_values'],$string);
-		}
+		} else {
+		    $string = htmlentities($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
+        }
 	}
 
     return $string;
@@ -130,7 +128,7 @@ function from_html($string, $encode=true) {
     }
 
     // Bug 36261 - Decode &amp; so we can handle double encoded entities
-	$string = str_ireplace("&amp;", "&", $string);
+	$string = html_entity_decode($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
 
     if (!isset($cache[$string])) {
         $cache[$string] = str_ireplace($toHTML_values, $toHTML_keys, $string);

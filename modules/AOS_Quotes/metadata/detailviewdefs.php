@@ -25,7 +25,7 @@ array (
           ),
           6 => 
           array (
-            'customCode' => '<input type="button" class="button" onClick="showPopup(\'email\');" value="{$MOD.LBL_EMAIL_QUOTE}">',
+            'customCode' => '<input type="button" class="button" onClick="showPopup(\'email\');return false;" value="{$MOD.LBL_EMAIL_QUOTE}">',
           ),
           7 => 
           array (
@@ -325,4 +325,3 @@ array (
     ),
   ),
 );
-?>

@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,14 +34,14 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
  * Description:
- ********************************************************************************/
+ */
 -->
 
 <!-- BEGIN: main -->
@@ -49,18 +50,18 @@
 {PAGINATION}
 <!-- END: list_nav_row -->
 	<tr height="20">
-		<td scope="col" width="72%" ><slot><a href="{ORDER_BY}name" class="listViewThLinkS1">{MOD.LBL_LIST_NAME}{arrow_start}{name_arrow}{arrow_end}</a></slot></td>
-		<td  scope="col" width="10%" ><slot><a href="{ORDER_BY}status" class="listViewThLinkS1">{MOD.LBL_LIST_STATUS}{arrow_start}{status_arrow}{arrow_end}</a></slot></td>
-		<td scope="col" width="10%"  nowrap><slot><a href="{ORDER_BY}list_order" class="listViewThLinkS1">{MOD.LBL_LIST_LIST_ORDER}{arrow_start}{list_order_arrow}{arrow_end}</a></slot></td>
-		<td scope="col" width="8%"  ><slot>&nbsp;</slot></td>
+		<td scope="col" width="72%" ><span><a href="{ORDER_BY}name" class="listViewThLinkS1">{MOD.LBL_LIST_NAME}{arrow_start}{name_arrow}{arrow_end}</a></span></td>
+		<td  scope="col" width="10%" ><span><a href="{ORDER_BY}status" class="listViewThLinkS1">{MOD.LBL_LIST_STATUS}{arrow_start}{status_arrow}{arrow_end}</a></span></td>
+		<td scope="col" width="10%"  nowrap><span><a href="{ORDER_BY}list_order" class="listViewThLinkS1">{MOD.LBL_LIST_LIST_ORDER}{arrow_start}{list_order_arrow}{arrow_end}</a></span></td>
+		<td scope="col" width="8%"  ><span>&nbsp;</span></td>
 	  </tr>
 
 <!-- BEGIN: row -->
 <tr height="20"  class="{ROW_COLOR}S1">
-    			<td scope="row" valign=TOP><slot><a href="{URL_PREFIX}index.php?action=index&module=Releases&record={RELEASE.ID}" >{RELEASE.NAME}</a></slot></td>
-    			<td valign=TOP><slot>{RELEASE.STATUS}</slot></td>
-    			<td valign=TOP><slot>{RELEASE.LIST_ORDER}</slot></td>
-    			<td nowrap align="center" valign=TOP><slot><a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_CONFIRMATION}')" href="{URL_PREFIX}index.php?action=Delete&module=Releases&record={RELEASE.ID}&return_module=Releases&return_action=index&return_id=">{DELETE_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_CONFIRMATION}')" href="{URL_PREFIX}index.php?action=Delete&module=Releases&record={RELEASE.ID}&return_module=Releases&return_action=index&return_id=">{APP.LNK_DELETE}</a></slot></td>
+    			<td scope="row" valign=TOP><span><a href="{URL_PREFIX}index.php?action=index&module=Releases&record={RELEASE.ID}" >{RELEASE.NAME}</a></span></td>
+    			<td valign=TOP><span>{RELEASE.STATUS}</span></td>
+    			<td valign=TOP><span>{RELEASE.LIST_ORDER}</span></td>
+    			<td nowrap align="center" valign=TOP><span><a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_CONFIRMATION}')" href="{URL_PREFIX}index.php?action=Delete&module=Releases&record={RELEASE.ID}&return_module=Releases&return_action=index&return_id=">{DELETE_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_CONFIRMATION}')" href="{URL_PREFIX}index.php?action=Delete&module=Releases&record={RELEASE.ID}&return_module=Releases&return_action=index&return_id=">{APP.LNK_DELETE}</a></span></td>
 
 </tr>
 

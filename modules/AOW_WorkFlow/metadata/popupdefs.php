@@ -33,6 +33,3 @@ $popupMeta = array('moduleMain' => 'AOW_WorkFlow',
 						    'searchInputs'=> array('aow_workflow_number', 'name', 'priority','status'),
 							
 						);
-?>
- 
- 

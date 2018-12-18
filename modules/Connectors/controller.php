@@ -1,12 +1,13 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +18,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  * 
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +36,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/connectors/sources/SourceFactory.php');
 require_once('include/connectors/ConnectorFactory.php');
@@ -228,21 +229,63 @@ class ConnectorsController extends SugarController {
         }
     }
 
+    private function remoteFileExists($url) {
+        $curl = curl_init($url);
+
+        //don't fetch the actual page, you only want to check the connection is ok
+        curl_setopt($curl, CURLOPT_NOBODY, true);
+
+        //do request
+        $result = curl_exec($curl);
+
+
+        $ret = false;
+
+        //if request did not fail
+        if ($result !== false) {
+            //if request was ok, check response code
+            $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+            if ($statusCode == 200) {
+                $ret = true;
+            }
+        }
+
+        curl_close($curl);
+
+        return $ret;
+    }
+
 	function action_CallRest() {
 		$this->view = 'ajax';
 
-		if(false === ($result=@file_get_contents($_REQUEST['url']))) {
-           echo '';
-		} else if(!empty($_REQUEST['xml'])){
-		   $values = array();
-		   $p = xml_parser_create();
-		   xml_parse_into_struct($p, $result, $values);
-		   xml_parser_free($p);
-		   $json = getJSONobj();
-		   echo $json->encode($values);
-		} else {
-		   echo $result;
-		}
+		$url = $_REQUEST['url'];
+
+        if(!preg_match('/^http[s]{0,1}\:\/\//', $url)) {
+            throw new RuntimeException('Illegal request');
+        }
+
+        if(!$this->remoteFileExists($url)) {
+            throw new RuntimeException('Requested URL is not exists.');
+        }
+
+
+        if (false === ($result = @file_get_contents($_REQUEST['url']))) {
+            echo '';
+        } else {
+            if (!empty($_REQUEST['xml'])) {
+                $values = array();
+                $p = xml_parser_create();
+                xml_parse_into_struct($p, $result, $values);
+                xml_parser_free($p);
+                $json = getJSONobj();
+                echo $json->encode($values);
+            } else {
+                echo $result;
+            }
+        }
+
+
 	}
 
 	function action_CallSoap() {
@@ -777,4 +820,3 @@ class ConnectorsController extends SugarController {
 	}
 
 }
-?>

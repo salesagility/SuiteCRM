@@ -1,11 +1,14 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $dictionary['ProspectList'] = array(
     'table' => 'prospect_lists',
@@ -148,6 +151,7 @@ $dictionary['ProspectList'] = array(
         'prospects' =>
             array(
                 'name' => 'prospects',
+                'vname' => 'LBL_PROSPECTS',
                 'type' => 'link',
                 'relationship' => 'prospect_list_prospects',
                 'source' => 'non-db',
@@ -155,6 +159,7 @@ $dictionary['ProspectList'] = array(
         'contacts' =>
             array(
                 'name' => 'contacts',
+                'vname' => 'LBL_CONTACTS',
                 'type' => 'link',
                 'relationship' => 'prospect_list_contacts',
                 'source' => 'non-db',
@@ -162,6 +167,7 @@ $dictionary['ProspectList'] = array(
         'leads' =>
             array(
                 'name' => 'leads',
+                'vname' => 'LBL_LEADS',
                 'type' => 'link',
                 'relationship' => 'prospect_list_leads',
                 'source' => 'non-db',
@@ -169,12 +175,14 @@ $dictionary['ProspectList'] = array(
         'accounts' =>
             array(
                 'name' => 'accounts',
+                'vname' => 'LBL_ACCOUNTS',
                 'type' => 'link',
                 'relationship' => 'prospect_list_accounts',
                 'source' => 'non-db',
             ),
         'campaigns' => array(
             'name' => 'campaigns',
+            'vname' => 'LBL_CAMPAIGNS',
             'type' => 'link',
             'relationship' => 'prospect_list_campaigns',
             'source' => 'non-db',
@@ -182,12 +190,14 @@ $dictionary['ProspectList'] = array(
         'users' =>
             array(
                 'name' => 'users',
+                'vname' => 'LBL_USERS',
                 'type' => 'link',
                 'relationship' => 'prospect_list_users',
                 'source' => 'non-db',
             ),
         'email_marketing' => array(
             'name' => 'email_marketing',
+            'vname' => 'LBL_EMAIL_MARKETING',
             'type' => 'link',
             'relationship' => 'email_marketing_prospect_lists',
             'source' => 'non-db',
@@ -231,4 +241,4 @@ $dictionary['ProspectList'] = array(
 VardefManager::createVardef('ProspectLists', 'ProspectList', array(
     'assignable', 'security_groups',
 ));
-?>
+

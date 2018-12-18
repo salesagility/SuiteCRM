@@ -15,5 +15,3 @@ $dictionary['securitygroups_default'] = array (
     
   	)
 );
-
-?>

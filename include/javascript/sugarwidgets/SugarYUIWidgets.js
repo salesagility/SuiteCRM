@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -11,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -28,10 +32,10 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 YAHOO.namespace("SUGAR");(function(){var sw=YAHOO.SUGAR,Event=YAHOO.util.Event,Connect=YAHOO.util.Connect,Dom=YAHOO.util.Dom;sw.MessageBox={progressTemplate:"{body}<br><div class='sugar-progress-wrap'><div class='sugar-progress-bar'/></div>",promptTemplate:"{body}:<input id='sugar-message-prompt' class='sugar-message-prompt' name='sugar-message-prompt'></input>",show:function(config){var myConf=sw.MessageBox.config={type:'message',modal:true,width:240,id:'sugarMsgWindow',close:true,title:"Alert",msg:" ",buttons:[]};if(config['type']&&config['type']=="prompt"){myConf['buttons']=[{text:SUGAR.language.get("app_strings","LBL_EMAIL_CANCEL"),handler:YAHOO.SUGAR.MessageBox.hide},{text:SUGAR.language.get("app_strings","LBL_EMAIL_OK"),handler:config['fn']?function(){var returnValue=config['fn'](YAHOO.util.Dom.get("sugar-message-prompt").value);if(typeof(returnValue)=="undefined"||returnValue){YAHOO.SUGAR.MessageBox.hide();}}:YAHOO.SUGAR.MessageBox.hide,isDefault:true}];}else if((config['type']&&config['type']=="alert")){myConf['buttons']=[{text:SUGAR.language.get("app_strings","LBL_EMAIL_OK"),handler:config['fn']?function(){YAHOO.SUGAR.MessageBox.hide();config['fn']();}:YAHOO.SUGAR.MessageBox.hide,isDefault:true}]}else if((config['type']&&config['type']=="confirm")){myConf['buttons']=[{text:SUGAR.language.get("app_strings","LBL_EMAIL_YES"),handler:config['fn']?function(){config['fn']('yes');YAHOO.SUGAR.MessageBox.hide();}:YAHOO.SUGAR.MessageBox.hide,isDefault:true},{text:SUGAR.language.get("app_strings","LBL_EMAIL_NO"),handler:config['fn']?function(){config['fn']('no');YAHOO.SUGAR.MessageBox.hide();}:YAHOO.SUGAR.MessageBox.hide}];}
 else if((config['type']&&config['type']=="plain")){myConf['buttons']=[];}
 for(var i in config){myConf[i]=config[i];}
@@ -45,7 +49,9 @@ percent=100;else if(percent<0)
 percent=0;barEl.style.width=percent+"%";},hide:function(){if(sw.MessageBox.panel)
 sw.MessageBox.panel.hide();}};sw.Template=function(content){this._setContent(content);};sw.Template.prototype={regex:/\{([\w\.]*)\}/gim,append:function(target,args){var tEl=Dom.get(target);if(tEl)tEl.innerHTML+=this.exec(args);else if(typeof(console)!="undefined"&&typeof(console.log)=="function")
 console.log("Warning, unable to find target:"+target);},exec:function(args){var out=this.content;for(var i in this.vars){var val=this._getValue(i,args);var reg=new RegExp("\\{"+i+"\\}","g");out=out.replace(reg,val);}
-return out;},_setContent:function(content){this.content=content;var lastIndex=-1;var result=this.regex.exec(content);this.vars={};while(result&&result.index>lastIndex){lastIndex=result.index;this.vars[result[1]]=true;result=this.regex.exec(content);}},_getValue:function(v,scope){return function(e){return eval("this."+e);}.call(scope,v);}};sw.SelectionGrid=function(containerEl,columns,dataSource,config){sw.SelectionGrid.superclass.constructor.call(this,containerEl,columns,dataSource,config);this.subscribe("rowMouseoverEvent",this.onEventHighlightRow);this.subscribe("rowMouseoutEvent",this.onEventUnhighlightRow);if(config.forceMulti){this.subscribe("rowClickEvent",function(o){o.event.preventDefault();this.clearTextSelection();o.event=SUGAR.util.clone(o.event);o.event.ctrlKey=o.event.metaKey=true;this.onEventSelectRow(o);});}else{this.subscribe("rowClickEvent",this.onEventSelectRow);}
+return out;},_setContent:function(content){this.content=content;var lastIndex=-1;var result=this.regex.exec(content);this.vars={};while(result&&result.index>lastIndex){lastIndex=result.index;this.vars[result[1]]=true;result=this.regex.exec(content);}},_getValue:function(v,scope){return function(e){if(e.indexOf('.')==-1){return this[e];}
+var splits=e.split('.');var top=this;for(var i=0;i<splits.length;i++){top=top[splits[i]];}
+return top;}.call(scope,v);}};sw.SelectionGrid=function(containerEl,columns,dataSource,config){sw.SelectionGrid.superclass.constructor.call(this,containerEl,columns,dataSource,config);this.subscribe("rowMouseoverEvent",this.onEventHighlightRow);this.subscribe("rowMouseoutEvent",this.onEventUnhighlightRow);if(config.forceMulti){this.subscribe("rowClickEvent",function(o){o.event.preventDefault();this.clearTextSelection();o.event=SUGAR.util.clone(o.event);o.event.ctrlKey=o.event.metaKey=true;this.onEventSelectRow(o);});}else{this.subscribe("rowClickEvent",this.onEventSelectRow);}
 this.selectRow(this.getTrEl(0));this.focus();}
 YAHOO.extend(sw.SelectionGrid,YAHOO.widget.ScrollingDataTable,{getColumn:function(column){var oColumn=this._oColumnSet.getColumn(column);if(!oColumn){var elCell=this.getTdEl(column);if(elCell&&(!column.tagName||column.tagName.toUpperCase()!="TH")){oColumn=this._oColumnSet.getColumn(elCell.cellIndex);}
 else{elCell=this.getThEl(column);if(elCell){var allColumns=this._oColumnSet.flat;for(var i=0,len=allColumns.length;i<len;i++){if(allColumns[i].getThEl().id===elCell.id){oColumn=allColumns[i];}}}}}

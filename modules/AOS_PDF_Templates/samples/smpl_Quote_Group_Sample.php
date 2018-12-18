@@ -1,16 +1,19 @@
 <?php
+
+require_once __DIR__ . '/../TemplateSampleService.php';
+
 class smpl_Quote_Group_Sample{
 		function getType() {
 			return 'AOS_Quotes';
 		}
 		
 		function getBody() {
-		$d_image = explode('?',SugarThemeRegistry::current()->getImageURL('company_logo.png'));
+        global $locale;
 			return '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
 <tbody style="text-align: left;">
 <tr style="text-align: left;">
 <td style="text-align: left;">
-<p><img src="'.$d_image[0].'" style="float: left;"/>&nbsp;</p>
+<p><img src="'. TemplateSampleService::getAbsoluteLogoUrl() .'" style="float: left;"/>&nbsp;</p>
 </td>
 </tr>
 <tr>
@@ -120,11 +123,11 @@ class smpl_Quote_Group_Sample{
 </table>
 <p>&nbsp;</p>';
 		}
-		
+
 		function getHeader() {
 			return '';
 		}
-		
+
 		function getFooter() {
 		global $locale;
 			return '<table style="width: 100%; border: 0pt none; border-spacing: 0pt;">
@@ -137,4 +140,3 @@ class smpl_Quote_Group_Sample{
 </table>';
 		}
 }
-?>

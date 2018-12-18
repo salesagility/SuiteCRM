@@ -30,4 +30,3 @@
  	'popupdefs'	      =>    'modules/AOR_Reports/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/AOR_Reports/metadata/SearchFields.php',
  );
-?>

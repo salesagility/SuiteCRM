@@ -38,4 +38,3 @@ $layout_defs['AOW_WorkFlow'] = array(
 		),
     ),
 );
-?>

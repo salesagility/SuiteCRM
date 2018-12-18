@@ -32,6 +32,3 @@ $popupMeta = array('moduleMain' => 'AOR_Reports',
 						    'searchInputs'=> array('aor_reports_number', 'name', 'priority','status'),
 							
 						);
-?>
- 
- 

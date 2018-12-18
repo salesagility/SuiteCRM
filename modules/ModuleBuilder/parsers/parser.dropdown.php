@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
@@ -60,7 +63,9 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 
 		$list_value = str_replace('&quot;&quot;:&quot;&quot;', '&quot;__empty__&quot;:&quot;&quot;', $params['list_value']);
 		//Bug 21362 ENT_QUOTES- convert single quotes to escaped single quotes.
-		$temp = $json->decode(html_entity_decode(rawurldecode($list_value), ENT_QUOTES) );
+		$rawurldecode = rawurldecode($list_value);
+		$htmldecode = html_entity_decode($rawurldecode, ENT_QUOTES);
+		$temp = $json->decode($htmldecode);
 		$dropdown = array () ;
 		// dropdown is received as an array of (name,value) pairs - now extract to name=>value format preserving order
 		// we rely here on PHP to preserve the order of the received name=>value pairs - associative arrays in PHP are ordered
@@ -68,7 +73,9 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
         {
             foreach ( $temp as $item )
             {
-                $dropdown[ SugarCleaner::stripTags(from_html($item [ 0 ]), false) ] = SugarCleaner::stripTags(from_html($item [ 1 ]), false) ;
+                $keytemp = SugarCleaner::stripTags(from_html($item [ 0 ]), false);
+                $valuetemp = SugarCleaner::stripTags(from_html($item [ 1 ]), false);
+            	$dropdown[ $keytemp ] =  $valuetemp;
             }
         }
 		if(array_key_exists($emptyMarker, $dropdown)){
@@ -213,4 +220,3 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 	    return $contents;
     }
 }
-?>

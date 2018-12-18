@@ -1,7 +1,7 @@
 <?php
 
 /*
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  * Date: 15/01/14
  * Time: 09:14
  *
@@ -10,7 +10,7 @@
  */
 
 require_once('include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
-require_once('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
+require_once('modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 require_once('include/social/twitter/twitter_helper.php');
 
 global $sugar_config, $db;

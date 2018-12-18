@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,26 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- * Description:
- ********************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 // Opportunity is used to store customer information.
 class Opportunity extends SugarBean {
@@ -247,65 +233,73 @@ $query .= 			"LEFT JOIN users
     		$camp->retrieve($this->campaign_id);
             $this->campaign_name = $camp->name;
         }
-		$this->account_name = '';
-		$this->account_id = '';
-		if(!empty($this->id)) {
-    		$ret_values=Opportunity::get_account_detail($this->id);
-    		if (!empty($ret_values)) {
-    			$this->account_name=$ret_values['name'];
-    			$this->account_id=$ret_values['id'];
-    			$this->account_id_owner =$ret_values['assigned_user_id'];
-    		}
-		}
-	}
+        $this->account_name = '';
+        $this->account_id = '';
+        if (!empty($this->id)) {
+            $ret_values=Opportunity::get_account_detail($this->id);
+            if (!empty($ret_values)) {
+                $this->account_name=$ret_values['name'];
+                $this->account_id=$ret_values['id'];
+                $this->account_id_owner =$ret_values['assigned_user_id'];
+            }
+        }
+    }
 
-	/** Returns a list of the associated contacts
-	 * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
-	 * All Rights Reserved..
-	 * Contributor(s): ______________________________________..
-	*/
-	function get_contacts()
-	{
-		$this->load_relationship('contacts');
-		$query_array=$this->contacts->getQuery(true);
+    /** Returns a list of the associated contacts
+     * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
+     * All Rights Reserved..
+     * Contributor(s): ______________________________________..
+    */
+    public function get_contacts()
+    {
+        $this->load_relationship('contacts');
+        $query_array=$this->contacts->getQuery(true);
 
-		//update the select clause in the retruned query.
-		$query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
+        if (is_string($query_array)) {
+            LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array) value id: $query_array");
+        } else {
+            //update the select clause in the retruned query.
+            $query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
+        }
 
-		$query='';
-		foreach ($query_array as $qstring) {
-			$query.=' '.$qstring;
-		}
-	    $temp = Array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
-		return $this->build_related_list2($query, new Contact(), $temp);
-	}
+        $query='';
+        foreach ((array)$query_array as $qstring) {
+            $query.=' '.$qstring;
+        }
+        $temp = array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
+        $contact = new Contact();
+        return $this->build_related_list2($query, $contact, $temp);
+    }
 
-	function update_currency_id($fromid, $toid){
-		$idequals = '';
+		
 
-		$currency = new Currency();
-		$currency->retrieve($toid);
-		foreach($fromid as $f){
-			if(!empty($idequals)){
-				$idequals .=' or ';
-			}
-			$idequals .= "currency_id='$f'";
-		}
+    function update_currency_id($fromid, $toid) {
+        $idequals = '';
 
-		if(!empty($idequals)){
-			$query = "select amount, id from opportunities where (". $idequals. ") and deleted=0 and opportunities.sales_stage <> 'Closed Won' AND opportunities.sales_stage <> 'Closed Lost';";
-			$result = $this->db->query($query);
-			while($row = $this->db->fetchByAssoc($result)){
+        $currency = new Currency();
+        $currency->retrieve($toid);
+        foreach ($fromid as $f) {
+            if (!empty($idequals)) {
+                $idequals .= ' or ';
+            }
+            $fQuoted = $this->db->quote($f);
+            $idequals .= "currency_id='$fQuoted'";
+        }
 
-				$query = "update opportunities set currency_id='".$currency->id."', amount_usdollar='".$currency->convertToDollar($row['amount'])."' where id='".$row['id']."';";
-				$this->db->query($query);
+        if (!empty($idequals)) {
+            $query = "select amount, id from opportunities where (" . $idequals . ") and deleted=0 and opportunities.sales_stage <> 'Closed Won' AND opportunities.sales_stage <> 'Closed Lost';";
+            $result = $this->db->query($query);
+            while ($row = $this->db->fetchByAssoc($result)) {
+                $currencyIdQuoted = $this->db->quote($currency->id);
+                $currencyConvertToDollarRowAmountQuoted = $this->db->quote($currency->convertToDollar($row['amount']));
+                $rowIdQuoted = $this->db->quote($row['id']);
+                $query = "update opportunities set currency_id='" . $currencyIdQuoted . "', amount_usdollar='" . $currencyConvertToDollarRowAmountQuoted . "' where id='" . $rowIdQuoted . "';";
+                $this->db->query($query);
+            }
+        }
+    }
 
-			}
-
-	}
-	}
-
-	function get_list_view_data(){
+    function get_list_view_data(){
 		global $locale, $current_language, $current_user, $mod_strings, $app_list_strings, $sugar_config;
 		$app_strings = return_application_language($current_language);
         $params = array();
@@ -337,7 +331,7 @@ $query .= 			"LEFT JOIN users
 	*/
 	function build_generic_where_clause ($the_query_string) {
 	$where_clauses = Array();
-	$the_query_string = $GLOBALS['db']->quote($the_query_string);
+	$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 	array_push($where_clauses, "opportunities.name like '$the_query_string%'");
 	array_push($where_clauses, "accounts.name like '$the_query_string%'");
 
@@ -483,5 +477,3 @@ $query .= 			"LEFT JOIN users
 function getCurrencyType(){
 
 }
-
-?>

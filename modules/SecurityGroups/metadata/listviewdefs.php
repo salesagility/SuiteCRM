@@ -26,4 +26,3 @@ $listViewDefs[$module_name] = array(
         'default' => true),
 	
 );
-?>

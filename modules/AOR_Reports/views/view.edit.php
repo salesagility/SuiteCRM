@@ -1,5 +1,5 @@
 <?php
- /**
+/**
  *
  *
  * @package
@@ -20,7 +20,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 require_once('include/MVC/View/views/view.edit.php');
@@ -116,9 +116,9 @@ class AOR_ReportsViewEdit extends ViewEdit {
             $field_name->module_path = implode(":",unserialize(base64_decode($field_name->module_path)));
             $arr = $field_name->toArray();
 
-            $arr['field_type'] = $this->getDisplayForField($field_name->module_path, $field_name->field  , $this->bean->report_module);
 
             $display = getDisplayForField($field_name->module_path, $field_name->field, $this->bean->report_module);
+            $arr['field_type'] = $display['type'];
 
             $arr['module_path_display'] = $display['module'];
             $arr['field_label'] = $display['field'];
@@ -136,38 +136,6 @@ class AOR_ReportsViewEdit extends ViewEdit {
             $charts[] = $chart->toArray();
         }
         return $charts;
-    }
-
-    public function getDisplayForField($modulePath, $field, $reportModule){
-        $modulePathDisplay = array();
-        $currentBean = BeanFactory::getBean($reportModule);
-        $modulePathDisplay[] = $currentBean->module_name;
-        if(is_array($modulePath)) {
-            $split = $modulePath;
-        }else{
-            $split = explode(':', $modulePath);
-        }
-        if ($split && $split[0] == $currentBean->module_dir) {
-            array_shift($split);
-        }
-        foreach($split as $relName){
-            if(empty($relName)){
-                continue;
-            }
-            if(!empty($currentBean->field_name_map[$relName]['vname'])){
-                $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'],$currentBean->module_dir),':');
-            }
-            $thisModule = getRelatedModule($currentBean->module_dir, $relName);
-            $currentBean = BeanFactory::getBean($thisModule);
-
-            if(!empty($moduleLabel)){
-                $modulePathDisplay[] = $moduleLabel;
-            }else {
-                $modulePathDisplay[] = $currentBean->module_name;
-            }
-        }
-        $fieldDisplay = $currentBean->field_name_map[$field]['type'];
-        return $fieldDisplay;
     }
 
 }
