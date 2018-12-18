@@ -48,6 +48,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarView
 {
+    const NO_ERROR = 0;
+    const ERR_EMPTY_SCOPE = 1;
+    const ERR_EMPTY_MODULE_DIR = 2;
+    const ERR_NOT_ARRAY = 3;
+    const ERR_NOT_SUB_ARRAY = 4;
+    const WARN_SCOPE_EXISTS = 5;
+    
     /**
      * @var array $view_object_map
      * This array is meant to hold an objects/data that we would like to pass between
@@ -124,18 +131,24 @@ class SugarView
      */
     public $fileResources;
 
-    private $settings = array();
-
+    /**
+     *
+     * @var array
+     */
+    private $settings = [];
+    
     /**
      * SugarView constructor.
+     * @deprecated since version 7.11
      */
     public function __construct()
     {
+        LoggerManager::getLogger()->deprecated();
     }
-
+    
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0,
-     *     please update your code, use __construct instead
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0
+     * please update your code, use __construct instead
      */
     public function SugarView()
     {
@@ -942,7 +955,7 @@ EOHTML;
                 echo "<script>\n" . implode("\n", $config_js) . "</script>\n";
             }
 
-            if ($this->hasDomJS()){
+            if ($this->hasDomJS()) {
                 echo "
                         <script type='text/javascript'>
                         SUGAR.append(SUGAR, { settings:".$this->getDomJS()." } );
@@ -1906,64 +1919,127 @@ EOHTML;
         return false;
     }
 
-
-    public function addDomJS($data, $scope){
-        $this->settings[$scope] = $this->suite_array_merge_deep_array($data);
+    /**
+     *
+     * @param array $data
+     * @param string $scope
+     * @return bool
+     */
+    public function addDomJS($data, $scope)
+    {
+        $ret = self::NO_ERROR;
+        if (!$scope) {
+            throw new InvalidArgumentException('Scope can not be empty', self::ERR_EMPTY_SCOPE);
+        }
+        if (isset($this->settings[$scope])) {
+            LoggerManager::getLogger()->warn('Scope "' . $scope . '" already exists but it will be overwriten.');
+            $ret = self::WARN_SCOPE_EXISTS;
+        }
+        $this->settings[$scope] = $this->mergeDeepArray($data);
+        return $ret;
     }
 
-    public function getDomJS(){
-        return(json_encode($this->settings));
+    /**
+     *
+     * @return string
+     */
+    public function getDomJS()
+    {
+        $ret = json_encode($this->settings);
+        if ($ret === false) {
+            $err = json_last_error();
+            if ($err) {
+                throw new Exception('JSON Error occured: #' . $err  . ' - ' . json_last_error_msg());
+            }
+        }
+        return $ret;
     }
 
-    public function hasDomJS(){
-        return(!empty($this->settings));
+    /**
+     *
+     * @return bool
+     */
+    public function hasDomJS()
+    {
+        return !empty($this->settings);
     }
 
     /**
      * Merges multiple arrays, recursively, and returns the merged array.
      * https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_array_merge_deep_array/7
+     *
+     * @param array $arrays
+     * @return array
      */
-    function suite_array_merge_deep_array($arrays){
+    public function mergeDeepArray($arrays)
+    {
         $result = array();
+        
+        if (!is_array($arrays)) {
+            throw new InvalidArgumentException('Parameter should be an array to merging. ' . gettype($arrays) . ' given.', self::ERR_NOT_ARRAY);
+        }
 
         foreach ($arrays as $array) {
-            foreach ($array as $key => $value) {
-                // Renumber integer keys as array_merge_recursive() does. Note that PHP
-                // automatically converts array keys that are integer strings (e.g., '1')
-                // to integers.
-                if (is_integer($key)) {
-                    $result [] = $value;
-                }
-                // Recurse when both values are arrays.
-                elseif (isset($result [$key]) && is_array($result [$key]) && is_array($value)) {
-                    $result [$key] = $this->sugar_array_merge_deep_array(array($result [$key], $value));
-                }
-                // Otherwise, use the latter value, overriding any previous value.
-                else {
-                    $result [$key] = $value;
-                }
-            }
+            $result = $this->getNextResultsForDeepMerge($array, $result);
         }
 
         return $result;
     }
+    
+    /**
+     *
+     * @param array $array
+     * @param array $result
+     * @return array
+     */
+    protected function getNextResultsForDeepMerge($array, $result)
+    {
+        if (!is_array($array)) {
+            throw new InvalidArgumentException('Sub-parameter should be an array to merging. ' . gettype($array) . ' given.', self::ERR_NOT_SUB_ARRAY);
+        }        
+        foreach ($array as $key => $value) {
+            // Renumber integer keys as array_merge_recursive() does. Note that PHP
+            // automatically converts array keys that are integer strings (e.g., '1')
+            // to integers.
+            if (is_integer($key)) {
+                $result[] = $value;
+            } elseif (isset($result[$key]) && is_array($result[$key]) && is_array($value)) {
+                // Recurse when both values are arrays.
+                $result[$key] = $this->mergeDeepArray([$result[$key], $value]);
+            } else {
+                // Otherwise, use the latter value, overriding any previous value.
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
 
-     function getVardefsData($module_dir){
-         $data = array();
-         $bean = SugarModule::get($module_dir)->loadBean();
+    /**
+     *
+     * @param string $module_dir
+     * @return array
+     */
+    public function getVardefsData($module_dir)
+    {
+        if (!$module_dir) {
+            throw new InvalidArgumentException('Module DIR can not be empty', self::ERR_EMPTY_MODULE_DIR);
+        }
+        $data = array();
+        $bean = SugarModule::get($module_dir)->loadBean();
 
-         if($bean !== false){
-             foreach($bean->field_defs as $field_name => $def){
-                 $data[$module_dir][$field_name] = $def;
-                 if (isset($def['required'])){
-                     $data[$module_dir][$field_name]['required'] = $def['required'];
-                 }
-                 else{
-                     $data[$module_dir][$field_name]['required'] = false;
-                 }
-             }
-         }
-         unset($bean);
-         return array($data);
-     }
+        if ($bean) {
+            foreach ($bean->field_defs as $field_name => $def) {
+                $data[$module_dir][$field_name] = $def;
+                if (isset($def['required'])) {
+                    $data[$module_dir][$field_name]['required'] = $def['required'];
+                } else {
+                    $data[$module_dir][$field_name]['required'] = false;
+                }
+            }
+        } else {
+            LoggerManager::getLogger()->warn('Could not retrive a bean from DIR: ' . $module_dir);
+        }
+        unset($bean);
+        return array($data);
+    }
 }
