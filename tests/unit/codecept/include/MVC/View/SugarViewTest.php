@@ -78,7 +78,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(SugarView::NO_ERROR, $ret);
         
         $ret = $view->addDomJS([['123']], 'foo');
-        $this->assertEquals(SugarView::ERR_SCOPE_EXISTS, $ret);
+        $this->assertEquals(SugarView::WARN_SCOPE_EXISTS, $ret);
         
         $this->assertTrue($view->hasDomJS());
         $domJs = $view->getDomJS();

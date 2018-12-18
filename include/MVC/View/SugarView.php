@@ -53,7 +53,7 @@ class SugarView
     const ERR_EMPTY_MODULE_DIR = 2;
     const ERR_NOT_ARRAY = 3;
     const ERR_NOT_SUB_ARRAY = 4;
-    const ERR_SCOPE_EXISTS = 5;
+    const WARN_SCOPE_EXISTS = 5;
     
     /**
      * @var array $view_object_map
@@ -1908,9 +1908,9 @@ EOHTML;
         }
         if (isset($this->settings[$scope])) {
             LoggerManager::getLogger()->warn('Scope "' . $scope . '" already exists but it will be overwriten.');
-            $ret = self::ERR_SCOPE_EXISTS;
+            $ret = self::WARN_SCOPE_EXISTS;
         }
-        $this->settings[$scope] = $this->suite_array_merge_deep_array($data);
+        $this->settings[$scope] = $this->mergeDeepArray($data);
         return $ret;
     }
 
@@ -1946,7 +1946,7 @@ EOHTML;
      * @param array $arrays
      * @return array
      */
-    public function suite_array_merge_deep_array($arrays)
+    public function mergeDeepArray($arrays)
     {
         $result = array();
         
