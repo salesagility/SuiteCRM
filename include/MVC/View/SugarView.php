@@ -48,9 +48,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarView
 {
-    
+    const NO_ERROR = 0;
     const ERR_EMPTY_SCOPE = 1;
-    const EMPTY_MODULE_DIR = 2;
+    const ERR_EMPTY_MODULE_DIR = 2;
+    const ERR_NOT_ARRAY = 3;
+    const ERR_NOT_SUB_ARRAY = 4;
+    const ERR_SCOPE_EXISTS = 5;
     
     /**
      * @var array $view_object_map
@@ -1895,16 +1898,20 @@ EOHTML;
      *
      * @param array $data
      * @param string $scope
+     * @return bool
      */
     public function addDomJS($data, $scope)
     {
+        $ret = self::NO_ERROR;
         if (!$scope) {
             throw new InvalidArgumentException('Scope can not be empty', self::ERR_EMPTY_SCOPE);
         }
         if (isset($this->settings[$scope])) {
             LoggerManager::getLogger()->warn('Scope "' . $scope . '" already exists but it will be overwriten.');
+            $ret = self::ERR_SCOPE_EXISTS;
         }
         $this->settings[$scope] = $this->suite_array_merge_deep_array($data);
+        return $ret;
     }
 
     /**
@@ -1942,8 +1949,16 @@ EOHTML;
     public function suite_array_merge_deep_array($arrays)
     {
         $result = array();
+        
+        if (!is_array($arrays)) {
+            throw new InvalidArgumentException('Parameter should be an array to merging. ' . gettype($arrays) . ' given.', self::ERR_NOT_ARRAY);
+        }
 
         foreach ($arrays as $array) {
+            if (!is_array($array)) {
+                throw new InvalidArgumentException('Sub-parameter should be an array to merging. ' . gettype($array) . ' given.', self::ERR_NOT_SUB_ARRAY);
+            }
+            
             foreach ($array as $key => $value) {
                 // Renumber integer keys as array_merge_recursive() does. Note that PHP
                 // automatically converts array keys that are integer strings (e.g., '1')
@@ -1971,7 +1986,7 @@ EOHTML;
     public function getVardefsData($module_dir)
     {
         if (!$module_dir) {
-            throw new InvalidArgumentException('Module DIR can not be empty', self::EMPTY_MODULE_DIR);
+            throw new InvalidArgumentException('Module DIR can not be empty', self::ERR_EMPTY_MODULE_DIR);
         }
         $data = array();
         $bean = SugarModule::get($module_dir)->loadBean();

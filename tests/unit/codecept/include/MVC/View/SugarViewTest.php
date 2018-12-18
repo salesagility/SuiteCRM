@@ -2,55 +2,105 @@
 
 class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
 {
-    public function testDisplayJavascriptNotLoginHasDomJS() {
+    public function testDisplayJavascriptNotLoginHasDomJS()
+    {
         $view = new SugarView();
         $this->action = 'foo';
-        $view->addDomJS('bar', 'bazz');
+        
+        try {
+            $view->addDomJS('bar', 'bazz');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $e) {
+            $this->assertEquals(SugarView::ERR_NOT_ARRAY, $e->getCode());
+        }
+        
+        try {
+            $view->addDomJS(['bar'], 'bazz');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $e) {
+            $this->assertEquals(SugarView::ERR_NOT_SUB_ARRAY, $e->getCode());
+        }
+        
+        $ret = $view->addDomJS([['bar']], 'bazz');
+        $this->assertEquals(SugarView::NO_ERROR, $ret);
+        
         ob_start();
         $view->renderJavascript();
         $output = ob_get_clean();
-        $this->assertEquals('foooo123', $output);
+        $this->assertContains('SUGAR.append(SUGAR, { settings:{"bazz":["bar"]} } );', $output);
     }
     
-    public function testDisplayJavascriptNotLoginHasntDomJS() {
+    public function testDisplayJavascriptNotLoginHasntDomJS()
+    {
         $view = new SugarView();
         $this->action = 'foo';
         ob_start();
         $view->renderJavascript();
         $output = ob_get_clean();
-        $this->assertEquals('foooo123', $output);
+        $this->assertNotContains('SUGAR.append(SUGAR, { settings:', $output);
     }
     
-    public function testDisplayJavascriptLoginHasDomJS() {
+    public function testDisplayJavascriptLoginHasDomJS()
+    {
         $view = new SugarView();
         $this->action = 'login';
-        $view->addDomJS('bar', 'bazz');
+        $ret = $view->addDomJS([['bar']], 'bazz');
+        $this->assertEquals(SugarView::NO_ERROR, $ret);
         ob_start();
         $view->renderJavascript();
         $output = ob_get_clean();
-        $this->assertEquals('foooo123', $output);
+        $this->assertContains('SUGAR.append(SUGAR, { settings:{"bazz":["bar"]} } );', $output);
     }
     
-    public function testDisplayJavascriptLoginHasntDomJS() {
+    public function testDisplayJavascriptLoginHasntDomJS()
+    {
         $view = new SugarView();
         $this->action = 'login';
         ob_start();
         $view->renderJavascript();
         $output = ob_get_clean();
-        $this->assertEquals('foooo123', $output);
+        $this->assertNotContains('SUGAR.append(SUGAR, { settings:', $output);
     }
     
-    public function testGetDomJs() {
+    public function testGetDomJs()
+    {
         $view = new SugarView();
         $this->assertFalse($view->hasDomJS());
-        $view->addDomJS('123', 'foo');
+        
+        try {
+            $view->addDomJS('123', 'foo');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $e) {
+            $this->assertEquals(SugarView::ERR_NOT_ARRAY, $e->getCode());
+        }
+        
+        $ret = $view->addDomJS([['blahblah']], 'foo');
+        $this->assertEquals(SugarView::NO_ERROR, $ret);
+        
+        $ret = $view->addDomJS([['123']], 'foo');
+        $this->assertEquals(SugarView::ERR_SCOPE_EXISTS, $ret);
+        
         $this->assertTrue($view->hasDomJS());
         $domJs = $view->getDomJS();
-        $this->assertEquals(['123' => 'foo'], $domJs);
+        $this->assertEquals('{"foo":["123"]}', $domJs);
+        
+        // testing for a deep array
+        try {
+            $view->addDomJS([['deeply', 123, ['more' => 'deep', 'array' => new stdClass()]], 'second'], 'deeply');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $e) {
+            $this->assertEquals(SugarView::ERR_NOT_SUB_ARRAY, $e->getCode());
+        }
+        
+        $ret = $view->addDomJS([['deeply', 123, ['more' => 'deep', 'array' => new stdClass()]], ['second']], 'deeply');
+        $this->assertEquals(SugarView::NO_ERROR, $ret);
+        
+        $domJs = $view->getDomJS();
+        $this->assertEquals('{"foo":["123"],"deeply":["deeply",123,{"more":"deep","array":{}},"second"]}', $domJs);
     }
     
-    public function testAddDomJsNoScope() {
-        
+    public function testAddDomJsNoScope()
+    {
         $view = new SugarView();
         
         try {
@@ -100,13 +150,11 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         
         
         // clean up
-        
-        
     }
 
     public function testprocess()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
@@ -162,8 +210,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testpreDisplay()
@@ -186,8 +232,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testdisplay()
@@ -210,8 +254,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testdisplayHeader()
@@ -242,8 +284,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetModuleMenuHTML()
@@ -266,8 +306,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testincludeClassicFile()
@@ -291,13 +329,11 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testgetJavascriptValidation()
     {
-        //check if it returns any text i-e JS code    	
+        //check if it returns any text i-e JS code
         $js = SugarView::getJavascriptValidation();
         $this->assertGreaterThan(0, strlen($js));
     }
@@ -327,8 +363,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testrenderJavascript()
@@ -357,8 +391,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetMenu()
