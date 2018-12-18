@@ -95,6 +95,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
 
 function requestToUserParameters($reportBean = null)
 {
+    global $app_list_strings;
     $params = array();
     if (!empty($_REQUEST['parameter_id'])) {
         $dateCount = 0;
@@ -108,7 +109,9 @@ function requestToUserParameters($reportBean = null)
 
             $condition = BeanFactory::getBean('AOR_Conditions', $_REQUEST['parameter_id'][$key]);
             $value = $_REQUEST['parameter_value'][$key];
-            if ($reportBean && $condition) {
+
+            // Fix for issue #9846 fixUpFormatting doesn't expect a period value
+            if ($reportBean && $condition && !array_key_exists($value,$app_list_strings['date_time_period_list'])){
                 $value = fixUpFormatting($reportBean->report_module, $condition->field, $value);
             }
 
