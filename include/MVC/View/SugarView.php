@@ -44,6 +44,10 @@
  */
 class SugarView
 {
+    
+    const ERR_EMPTY_SCOPE = 1;
+    const EMPTY_MODULE_DIR = 2;
+    
     /**
      * This array is meant to hold an objects/data that we would like to pass between
      * the controller and the view.  The bean will automatically be set for us, but this
@@ -1851,7 +1855,7 @@ EOHTML;
     public function addDomJS($data, $scope)
     {
         if (!$scope) {
-            throw new Exception('Scope can not be empty');
+            throw new InvalidArgumentException('Scope can not be empty', self::ERR_EMPTY_SCOPE);
         }
         if (isset($this->settings[$scope])) {
             LoggerManager::getLogger()->warn('Scope "' . $scope . '" already exists but it will be overwriten.');
@@ -1923,7 +1927,7 @@ EOHTML;
     public function getVardefsData($module_dir)
     {
         if (!$module_dir) {
-            throw new Exception('Module DIR can not be empty');
+            throw new InvalidArgumentException('Module DIR can not be empty', self::EMPTY_MODULE_DIR);
         }
         $data = array();
         $bean = SugarModule::get($module_dir)->loadBean();
