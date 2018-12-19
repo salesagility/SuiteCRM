@@ -3962,17 +3962,17 @@ function string_format($format, $args, $escape = true)
         $db = DBManagerFactory::getInstance();
     }
     for ($i = 0; $i < count($args); ++$i) {
-        if(strpos($args[$i], ',') !== false) {
+        if (strpos($args[$i], ',') !== false) {
             $values = explode(',', $args[$i]);
             if ($escape) {
                 foreach ($values as &$value) {
                     $value = $db->quote($value);
                 }
             }
-            $args[$i] = implode("','",$values);
+            $args[$i] = implode("','", $values);
         }
 
-        $result = str_replace('{'.$i.'}',"'" . $args[$i] . "'", $result);
+        $result = str_replace('{'.$i.'}', "'" . $args[$i] . "'", $result);
     }
 
     return $result;
