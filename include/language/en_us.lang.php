@@ -1384,6 +1384,7 @@ $app_strings = array(
     'ERR_INVALID_REQUIRED_FIELDS' => 'Invalid required field:',
     'ERR_INVALID_VALUE' => 'Invalid Value:',
     'ERR_NO_SUCH_FILE' => 'File does not exist on system',
+    'ERR_FILE_EMPTY' => 'File is empty',
     'ERR_NO_SINGLE_QUOTE' => 'Cannot use the single quotation mark for ',
     'ERR_NOTHING_SELECTED' => 'Please make a selection before proceeding.',
     'ERR_SELF_REPORTING' => 'User cannot report to him or herself.',

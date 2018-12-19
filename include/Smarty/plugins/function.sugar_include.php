@@ -55,6 +55,7 @@ r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee -
 function smarty_function_sugar_include($params, &$smarty)
 {
     global $app_strings;
+    $jsFiles = array();
 
     if(isset($params['type']) && $params['type'] == 'php') {
 		if(!isset($params['file'])) {
@@ -79,13 +80,19 @@ function smarty_function_sugar_include($params, &$smarty)
 	   	  	      if(isset($include['file'])) {
 	   	  	         $file = $include['file'];
 	   	  	         if(preg_match('/[\.]js$/si',$file)) {
-	   	  	            $code .= "<script src=\"". getJSPath($include['file']) ."\"></script>";
+                         $jsFiles[] = $file;
 	   	  	         } else if(preg_match('/[\.]php$/si', $file)) {
 	   	  	            require_once($file);	
 	   	  	         }
 	   	  	      } 
 	   	  } //foreach
+
+        if (!empty($jsFiles)) {
+            $code .= "<script src=\"".
+                  SugarMin::joinAndMinifyJSFiles($jsFiles) .
+                  "\"></script>";
+        }
 	      return $code;
    	} //if
 }
-?>
+

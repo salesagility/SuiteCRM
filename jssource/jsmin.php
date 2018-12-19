@@ -45,4 +45,50 @@ class SugarMin {
         require_once('jssource/Minifier.php');
         return Minifier::minify($this->text);
 	}
+
+    /**
+     * Join and minify JS files pass
+     *
+     * @param array $jsFiles an 'array' of js files
+     *
+     * @author Jose C. Massón <jose@gcoop.coop>
+     *
+     * @return Minified JS file path
+     */
+    function joinAndMinifyJSFiles($jsFiles)
+    {
+        $target = SugarThemeRegistry::current()->getJSPath()
+                . '/' .
+                sha1(implode('|', $jsFiles)) . '.js';
+
+        if (!sugar_is_file(sugar_cached($target))) {
+            $customJSContents = '';
+
+            foreach ($jsFiles as $jsFileName) {
+                $jsFileContents = '';
+
+                if (is_file($jsFileName)) {
+                    $jsFileContents .= sugar_file_get_contents($jsFileName);
+                }
+
+                if (empty($jsFileContents)) {
+                    LoggerManager::getLogger()->warn(
+                        translate('ERR_FILE_EMPTY') .': '. "{$jsFileName}"
+                    );
+                }
+                $customJSContents .= $jsFileContents;
+            }
+
+            $customJSPath = create_cache_directory($target);
+
+            if ((!inDeveloperMode()) && (!is_file($customJSPath))) {
+                $customJSContents = SugarMin::minify($customJSContents);
+            }
+
+            sugar_file_put_contents($customJSPath, $customJSContents);
+        }
+
+        $customJSURL = sugar_cached($target);
+        return getJSPath($customJSURL);
+    }
 }
