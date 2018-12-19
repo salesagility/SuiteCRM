@@ -710,14 +710,16 @@ class SugarApplication {
     /**
      * Set a message which reflects the status of the performed operation.
      *
-     * @param string $message the message to be displayed to the user.
-     * For consistency with other messages, it should begin with a capital letter and end with a period.
+     * @param string  $type    the type of the message. Values allowed:
+     *                         error, info, alert, okay, warning.
+     * @param string  $message the message to be displayed to the user.
+     *                         For consistency with other messages, it should begin
+     *                         with a capital letter and end with a period.
+     * @param boolean $repeat  if this is FALSE and the message is already set, then
+     *                         the message won't be repeated.
      *
-     * @param string $type the type of the message. Values allowed: error, info, alert, okay, warning.
-     *
-     * @param boolean $repeat if this is FALSE and the message is already set, then the message won't be repeated.
-     *
-    */
+     * @return none
+     */
     public static function appendMessage($type = 'info', $message, $repeat = true)
     {
 
