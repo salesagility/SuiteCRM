@@ -508,7 +508,7 @@ class UploadMultipleFiles
 
                 $error_message = isset($result['errorMessage']) ? $result['errorMessage'] :
                     $GLOBALS['app_strings']['ERR_EXTERNAL_API_SAVE_FAIL'];
-                SugarApplication::appendMessage($error_message, 'error');
+                SugarApplication::appendMessage('error', $error_message);
 
             } else {
                 unlink($new_destination);

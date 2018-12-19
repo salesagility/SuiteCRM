@@ -674,7 +674,7 @@ class SugarApplication {
      */
     public static function appendErrorMessage($error_message)
     {
-        SugarApplication::appendMessage($error_message, 'error');
+        SugarApplication::appendMessage('error', $error_message);
     }
 
     /**
@@ -694,7 +694,7 @@ class SugarApplication {
      */
     public static function appendSuccessMessage($message)
     {
-        SugarApplication::appendMessage($message, 'okay');
+        SugarApplication::appendMessage('okay', $message);
     }
 
     /**
@@ -718,7 +718,7 @@ class SugarApplication {
      * @param boolean $repeat if this is FALSE and the message is already set, then the message won't be repeated.
      *
     */
-    public static function appendMessage($message, $type = 'info', $repeat = true)
+    public static function appendMessage($type = 'info', $message, $repeat = true)
     {
 
         if (!empty($message)) {
@@ -754,11 +754,11 @@ class SugarApplication {
         $messages = array();
 
         if (!empty($_SESSION['user_error_message'])) {
-            SugarApplication::appendMessage($_SESSION['user_error_message'], 'error');
+            SugarApplication::appendMessage('error', $_SESSION['user_error_message']);
         }
 
         if (!empty($_SESSION['user_success_message'])) {
-            SugarApplication::appendMessage($_SESSION['user_success_message'], 'okay');
+            SugarApplication::appendMessage('okay', $_SESSION['user_success_message']);
         }
 
         if (isset($_SESSION['suite_messages'])) {
