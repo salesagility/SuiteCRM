@@ -508,13 +508,15 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testgetMessages()
     {
         //execute the method and check if it returns a array.
+        $_SESSION['suite_messages'] = array();
         $messages = SugarApplication::getMessages();
         $this->assertTrue(is_array($messages));
     }
 
     public function testgetErrorMessages()
     {
-        //execute the method and check if it returns a array. 
+        //execute the method and check if it returns a array.
+        $_SESSION['suite_messages'] = array();
         $errorMessages = SugarApplication::getErrorMessages();
         $this->assertTrue(is_array($errorMessages));
     }
