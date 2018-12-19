@@ -724,7 +724,7 @@ class SugarApplication {
     {
 
         if (!empty($message)) {
-            $type = preg_replace('[^a-z]', '', strtolower($type));
+            self::validateMessageType($type);
 
             if (!isset($_SESSION['suite_messages'][$type])
                 || !is_array($_SESSION['suite_messages'][$type])
@@ -758,6 +758,7 @@ class SugarApplication {
     public static function getMessages($type = null, $clear_queue = true)
     {
         $messages = array();
+        self::validateMessageType($type);
         self::_appendOldMessageTypes();
 
         if (isset($_SESSION['suite_messages']) && isset($type)) {
@@ -772,6 +773,32 @@ class SugarApplication {
         return($messages);
     }
 
+    /**
+     * Validates message type
+     *
+     * @param string $type possible message types:
+     *                     'alert', 'error', 'info', 'okay', 'user_error_message',
+     *                     'user_success_message',
+     *
+     * @throws Exception message type should be valid
+     *
+     * @return none
+     */
+    protected static function validateMessageType($type)
+    {
+        $types = array(
+            'alert',
+            'error',
+            'info',
+            'okay',
+            'user_error_message',
+            'user_success_message',
+        );
+
+        if (!in_array($type, $types) && $type !== null) {
+            throw new Exception('Incorrect application message type: ' . $type);
+        }
+    }
 
     /**
      * Clear messages Queue
