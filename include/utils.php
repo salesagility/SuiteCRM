@@ -419,8 +419,7 @@ function getRunningUser()
     if ($runningUser == null) {  // matches null, false and ""
         if (is_windows()) {
             $runningUser = getenv('USERDOMAIN').'\\'.getenv('USERNAME');
-        }
-        else {
+        } else {
             $usr = posix_getpwuid(posix_geteuid());
             $runningUser = $usr['name'];
         }
@@ -462,7 +461,6 @@ function addCronAllowedUser($addUser)
         } else {
             $sugar_config['cron']['allowed_cron_users'][] = $addUser;
             $GLOBALS['log']->info("Web server user $addUser added to allowed_cron_users in config.php.");
-
         }
     }
 
@@ -2389,9 +2387,9 @@ function getWebPath($relative_path)
 {
     $current_theme = SugarThemeRegistry::current();
     $theme_directory = $current_theme->dirName;
-    if(strpos($relative_path, "themes".DIRECTORY_SEPARATOR.$theme_directory) === false) {
+    if (strpos($relative_path, "themes".DIRECTORY_SEPARATOR.$theme_directory) === false) {
         $test_path = SUGAR_PATH.DIRECTORY_SEPARATOR."themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
-        if(file_exists($test_path)) {
+        if (file_exists($test_path)) {
             $resource_name = "themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
         }
     }
@@ -3066,7 +3064,8 @@ function decodeJavascriptUTF8($str)
  *                   0 if version is between minimun and recomended PHP versions,
  *                   -1 otherwise (less than minimum or buggy version)
  */
-function check_php_version($sys_php_version = '') {
+function check_php_version($sys_php_version = '')
+{
     if ($sys_php_version === '') {
         $sys_php_version = constant('PHP_VERSION');
     }
@@ -3395,7 +3394,7 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
     $error_msg = " $errstr occurred in <b>$errfile</b> on line $errline [".date('Y-m-d H:i:s').']';
     $halt_script = true;
     switch ($errno) {
-        case 2048 :
+        case 2048:
             return; //depricated we have lots of these ignore them
         case E_USER_NOTICE:
         case E_NOTICE:
@@ -3826,7 +3825,7 @@ function getPhpInfo($level = -1)
  *
  * @return $result a formatted string
  */
-function string_format($format, $args)
+function string_format($format, $args, $escape = true)
 {
     $result = $format;
 
@@ -3843,8 +3842,21 @@ function string_format($format, $args)
     }
     /* End of fix */
 
+    if ($escape) {
+        $db = DBManagerFactory::getInstance();
+    }
     for ($i = 0; $i < count($args); ++$i) {
-        $result = str_replace('{'.$i.'}', $args[$i], $result);
+        if (strpos($args[$i], ',') !== false) {
+            $values = explode(',', $args[$i]);
+            if ($escape) {
+                foreach ($values as &$value) {
+                    $value = $db->quote($value);
+                }
+            }
+            $args[$i] = implode("','", $values);
+        }
+
+        $result = str_replace('{'.$i.'}', "'" . $args[$i] . "'", $result);
     }
 
     return $result;
@@ -4194,7 +4206,7 @@ function generate_search_where(
                         $where .= ' OR ';
                     }
                     switch (strtolower($operator)) {
-                        case 'like' :
+                        case 'like':
                             $where .= $db_field." like '".$field_value.$like_char."'";
                             break;
                         case 'in':
@@ -4353,11 +4365,10 @@ function createGroupUser($name)
 
 function _getIcon($iconFileName)
 {
-    if(file_exists(SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.'icon_'.$iconFileName.'.svg')) {
+    if (file_exists(SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.'icon_'.$iconFileName.'.svg')) {
         $iconName = "icon_{$iconFileName}.svg";
         $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
-    }
-    else {
+    } else {
         $iconName = "icon_{$iconFileName}.gif";
         $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
     }
@@ -4444,11 +4455,11 @@ function html_entity_decode_utf8($string)
     //php will have issues with numbers with leading zeros, so do not include them in what we send to code2utf.
 
     $string = preg_replace_callback('~&#x0*([0-9a-f]+);~i',
-        function($matches) {
+        function ($matches) {
             return code2utf(hexdec($matches[1]));
         }, $string);
     $string = preg_replace_callback('~&#0*([0-9]+);~',
-        function($matches) {
+        function ($matches) {
             return code2utf($matches[1]);
         }, $string);
 
@@ -5428,13 +5439,14 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
  * @return bool
  * @todo add to a separated common validator class
  */
-function isValidId($id) {
+function isValidId($id)
+{
     $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
     return $valid;
 }
 
-function getAppString($key) {
-
+function getAppString($key)
+{
     global $app_strings;
 
     if (!isset($app_strings[$key])) {
