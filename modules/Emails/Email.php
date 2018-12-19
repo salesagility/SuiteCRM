@@ -44,11 +44,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once('modules/Emails/EmailException.php');
-require_once('include/SugarPHPMailer.php');
-require_once 'include/UploadFile.php';
-require_once 'include/UploadMultipleFiles.php';
-
+require_once __DIR__ . '/EmailValidator.php';
+include_once __DIR__ . '/EmailException.php';
+require_once __DIR__ . '/../../include/SugarPHPMailer.php';
+require_once __DIR__ . '/../../include/UploadFile.php';
+require_once __DIR__ . '/../../include/UploadMultipleFiles.php';
 require_once __DIR__ . '/NonGmailSentFolderHandler.php';
 
 
@@ -3076,18 +3076,24 @@ class Email extends Basic
         $mail->prepForOutbound();
         ////	END I18N TRANSLATION
         ///////////////////////////////////////////////////////////////////////
-
+        
         $validator = new EmailValidator();
-        if (!$validator->isValid($mail)) {
+        if (!$validator->isValid($this)) { 
+            // if an email is invalid before sending, 
+            // maybe at this point sould "return false;" because the email having 
+            // invalid from address and/or name but we will trying to send it..
             
-            // if an email is invalid before sending, we should show up the exact problem with it.
+            // now the fact is logged:  
+            
+            LoggerManager::getLogger()->warn('Invalid email from address or name detected before sending.');
+            
+            // and we should show up the problem:
+            
+            // TODO: !@# it seems works so far, next should trying to prepair the email from, and add validation everywhere when email from name or address is set.
             
             $errors = $validator->getErrorsAsText();
             LoggerManager::getLogger()->error("Email validation error(s) occured:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}");
-            SugarApplication::appendErrorMessage(LangText::get('LBL_EMAIL_ERROR_PREPEND') . "{$errors['messages']}\n{$mail->ErrorInfo}");
-            
-            // maybe at this point sould "return false;" because the email having 
-            // invalid from address and/or name but we will trying to send it..
+            SugarApplication::appendErrorMessage(LangText::get('LBL_EMAIL_ERROR_PREPEND') . "{$errors['messages']}\n{$mail->ErrorInfo}");   
         }
         if ($mail->send()) {
             ///////////////////////////////////////////////////////////////////
