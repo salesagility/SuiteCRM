@@ -70,12 +70,6 @@ class SugarPHPMailer extends PHPMailer
     public $Body_html;
     
     private static $FromNameOrigin = null;
-    
-    /**
-     *
-     * @var EmailValidator
-     */
-    protected $emailValidator;
 
     /**
      * Constructor.
@@ -445,14 +439,6 @@ eoq;
         $this->Body = preg_replace('/\$' . $key . '\b/', $value, $this->Body);
         $this->Body_html = preg_replace('/\$' . $key . '\b/', $value, $this->Body_html);
         $this->AltBody = preg_replace('/\$' . $key . '\b/', $value, $this->AltBody);
-    }
-    
-    public function setEmailValidator(EmailValidator $emailValidator) {
-        $this->emailValidator = $emailValidator;
-    }
-    
-    public function getEmailValidator() {
-        return $this->emailValidator;
     }
 
     /**
