@@ -674,7 +674,7 @@ class SugarApplication {
      */
     public static function appendErrorMessage($error_message)
     {
-        SugarApplication::appendMessage('error', $error_message);
+        self::appendMessage('error', $error_message);
     }
 
     /**
@@ -683,7 +683,7 @@ class SugarApplication {
      */
     public static function getErrorMessages()
     {
-        return SugarApplication::getMessages('error');
+        return self::getMessages('error');
     }
 
     /**
@@ -694,7 +694,7 @@ class SugarApplication {
      */
     public static function appendSuccessMessage($message)
     {
-        SugarApplication::appendMessage('okay', $message);
+        self::appendMessage('okay', $message);
     }
 
     /**
@@ -758,11 +758,11 @@ class SugarApplication {
         $messages = array();
 
         if (!empty($_SESSION['user_error_message'])) {
-            SugarApplication::appendMessage('error', $_SESSION['user_error_message']);
+            self::appendMessage('error', $_SESSION['user_error_message']);
         }
 
         if (!empty($_SESSION['user_success_message'])) {
-            SugarApplication::appendMessage('okay', $_SESSION['user_success_message']);
+            self::appendMessage('okay', $_SESSION['user_success_message']);
         }
 
         if (isset($_SESSION['suite_messages'])) {
