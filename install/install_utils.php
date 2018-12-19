@@ -45,7 +45,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/utils/zip_utils.php');
 require_once('include/upload_file.php');
 
-
 ////////////////
 ////  GLOBAL utility
 /**
@@ -966,7 +965,7 @@ function handleHtaccess()
     global $mod_strings;
     global $sugar_config;
     $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0) ? '(?i)' : '';
-    $htaccess_file   = ".htaccess";
+    $htaccess_file = ".htaccess";
     $contents = '';
     $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
     if (empty($basePath)) {
@@ -1036,6 +1035,7 @@ EOQ;
         $fp = fopen($htaccess_file, 'r');
         $skip = false;
         while ($line = fgets($fp)) {
+
             if (preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
             if(!$skip)$contents .= $line;
                 $skip = true;
@@ -1049,12 +1049,13 @@ EOQ;
             }
         }
     }
-    $status =  file_put_contents($htaccess_file, $contents . $restrict_str . $cache_headers);
+    $status = file_put_contents($htaccess_file, $contents . $restrict_str . $cache_headers);
     if (!$status) {
         echo "<p>{$mod_strings['ERR_PERFORM_HTACCESS_1']}<span class=stop>{$htaccess_file}</span> {$mod_strings['ERR_PERFORM_HTACCESS_2']}</p>\n";
         echo "<p>{$mod_strings['ERR_PERFORM_HTACCESS_3']}</p>\n";
         echo $restrict_str;
     }
+
     return $status;
 }
 
