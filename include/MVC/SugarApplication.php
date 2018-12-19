@@ -758,7 +758,44 @@ class SugarApplication {
     public static function getMessages($type = null, $clear_queue = true)
     {
         $messages = array();
+        self::_appendOldMessageTypes();
 
+        if (isset($_SESSION['suite_messages']) && isset($type)) {
+            if (isset($_SESSION['suite_messages'][$type])) {
+                $messages[$type] = $_SESSION['suite_messages'][$type];
+                self::_clearQueue($clear_queue);
+            }
+        } else {
+            $messages = $_SESSION['suite_messages'];
+            self::_clearQueue($clear_queue);
+        }
+        return($messages);
+    }
+
+
+    /**
+     * Clear messages Queue
+     *
+     * @param boolean $clear_queue optional, set to FALSE if you do not want to clear
+     *                             the messages queue
+     *
+     * @return none
+     */
+    private static function _clearQueue($clear_queue = true)
+    {
+        if ($clear_queue) {
+            unset($_SESSION['suite_messages']);
+        }
+    }
+
+
+    /**
+     * Append old messages types set throught $_SESSION
+     *
+     * @return none
+     */
+    private static function _appendOldMessageTypes()
+    {
         if (!empty($_SESSION['user_error_message'])) {
             self::appendMessage('error', $_SESSION['user_error_message']);
         }
@@ -766,23 +803,6 @@ class SugarApplication {
         if (!empty($_SESSION['user_success_message'])) {
             self::appendMessage('okay', $_SESSION['user_success_message']);
         }
-
-        if (isset($_SESSION['suite_messages'])) {
-            if (isset($type)) {
-                if (isset($_SESSION['suite_messages'][$type])) {
-                    $messages[$type] = $_SESSION['suite_messages'][$type];
-                    if ($clear_queue) {
-                        unset($_SESSION['suite_messages'][$type]);
-                    }
-                }
-            } else {
-                $messages = $_SESSION['suite_messages'];
-                if ($clear_queue) {
-                    unset($_SESSION['suite_messages']);
-                }
-            }
-        }
-        return($messages);
     }
 
     /**
