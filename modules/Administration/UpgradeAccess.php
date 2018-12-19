@@ -80,6 +80,12 @@ RedirectMatch 403 {$ignoreCase}/+files\.md5\$
     RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
     RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
+<IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_URI} (.+)/$
+        RewriteRule ^ %1 [R=301,L]
+</IfModule>
 # END SUGARCRM RESTRICTIONS
 EOQ;
 
