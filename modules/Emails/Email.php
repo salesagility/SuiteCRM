@@ -38,6 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\LangText;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -3075,11 +3077,23 @@ class Email extends Basic
         ////	END I18N TRANSLATION
         ///////////////////////////////////////////////////////////////////////
 
+        $validator = new EmailValidator();
+        if (!$validator->isValid($mail)) {
+            
+            // if an email is invalid before sending, we should show up the exact problem with it.
+            
+            $errors = $validator->getErrorsAsText();
+            LoggerManager::getLogger()->error("Email validation error(s) occured:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}");
+            SugarApplication::appendErrorMessage(LangText::get('LBL_EMAIL_ERROR_PREPEND') . "{$errors['messages']}\n{$mail->ErrorInfo}");
+            
+            // maybe at this point sould "return false;" because the email having 
+            // invalid from address and/or name but we will trying to send it..
+        }
         if ($mail->send()) {
             ///////////////////////////////////////////////////////////////////
             ////	INBOUND EMAIL HANDLING
             // mark replied
-            
+
             if (!empty($_REQUEST['inbound_email_id'])) {
                 $ieId = $_REQUEST['inbound_email_id'];
                 $this->createTempEmailAtSend($tempEmail);
@@ -4688,7 +4702,7 @@ eoq;
             isset($sugar_config['email_enable_auto_send_opt_in'])
             && $sugar_config['email_enable_auto_send_opt_in']
         ) {
-            /** @var \EmailAddress $emailAddress */
+            /** @var EmailAddress $emailAddress */
             $emailAddresses = BeanFactory::getBean('EmailAddresses');
             $emailAddress = $emailAddresses->retrieve($id);
 

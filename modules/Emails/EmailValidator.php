@@ -38,6 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\LangText;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -52,7 +54,7 @@ require_once __DIR__ . '/EmailValidatorException.php';
  *
  * @author gyula
  */
-class EmailValidator
+class EmailValidator // TODO: it should be called as EmailFromAddressValidator OR Should be finished the rest fields like to, to address, cc, bcc etc..
 {
     const ERR_FIELD_FROM_IS_NOT_SET = 1;
     const ERR_FIELD_FROM_IS_EMPTY = 2;
@@ -61,8 +63,8 @@ class EmailValidator
     const ERR_FIELD_FROM_ADDR_IS_EMPTY = 5;
     const ERR_FIELD_FROM_ADDR_IS_INVALID = 6;
     const ERR_FIELD_FROMNAME_IS_NOT_SET = 7;
-    const ERR_FIELD_FROMNAME_ADDR_IS_EMPTY = 8;
-    const ERR_FIELD_FROMNAME_ADDR_IS_INVALID = 9;
+    const ERR_FIELD_FROMNAME_IS_EMPTY = 8;
+    const ERR_FIELD_FROMNAME_IS_INVALID = 9;
     const ERR_FIELD_FROM_NAME_IS_NOT_SET = 10;
     const ERR_FIELD_FROM_NAME_IS_EMPTY = 11;
     const ERR_FIELD_FROM_NAME_IS_INVALID = 12;
@@ -76,6 +78,9 @@ class EmailValidator
     const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR = 20;
     const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROMNAME = 21;
     const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_NAME = 22;
+    
+    const EX_ERROR_CODE_TYRE_IS_INCORRECT = 100;
+    const EX_ERROR_CODE_IS_NOT_IMPLEMENTED = 101;
     
     /**
      *
@@ -151,6 +156,9 @@ class EmailValidator
      */
     protected function addError($error)
     {
+        if ($error !== (int)$error) {
+            throw new InvalidArgumentException('Error code should be an integer, ' . gettype($error) . ' given', self::EX_ERROR_CODE_TYRE_IS_INCORRECT);
+        }
         if (!in_array($error, $this->errors)) {
             $this->errors[] = $error;
         }
@@ -177,7 +185,70 @@ class EmailValidator
         return $errors;
     }
     
-    protected function hasErrors() {
+    public function getErrorsAsText()
+    {
+        $txts = [];
+        $errors = $this->getErrors();
+        foreach ($errors as $error) {
+            $txts[] = $this->getErrorAsText($error);
+        }
+        return [
+            'messages' => implode("\n", $txts), 
+            'codes' => implode(', ', $errors)
+        ];
+    }
+    
+    protected function getErrorAsText($error)
+    {
+        if ($error !== (int)$error) {
+            throw new InvalidArgumentException('Error code should be an integer, ' . gettype($error) . ' given', self::EX_ERROR_CODE_TYRE_IS_INCORRECT);
+        }
+        $lbl = $this->getErrorTextLabel($error);
+        $text = LangText::get($lbl);
+        return $text;
+    }
+    
+    /**
+     *
+     * @param int $error
+     * @return string
+     * @throws InvalidArgumentException
+     */
+    protected function getErrorTextLabel($error)
+    {
+        if ($error !== (int)$error) {
+            throw new InvalidArgumentException('Error code should be an integer, ' . gettype($error) . ' given', self::EX_ERROR_CODE_TYRE_IS_INCORRECT);
+        }
+        switch ($error) {
+            case self::ERR_FIELD_FROM_IS_NOT_SET: $lbl = 'ERR_FIELD_FROM_IS_NOT_SET'; break;
+            case self::ERR_FIELD_FROM_IS_EMPTY: $lbl = 'ERR_FIELD_FROM_IS_EMPTY'; break;
+            case self::ERR_FIELD_FROM_IS_INVALID: $lbl = 'ERR_FIELD_FROM_IS_INVALID'; break;
+            case self::ERR_FIELD_FROM_ADDR_IS_NOT_SET: $lbl = 'ERR_FIELD_FROM_ADDR_IS_NOT_SET'; break;
+            case self::ERR_FIELD_FROM_ADDR_IS_EMPTY: $lbl = 'ERR_FIELD_FROM_ADDR_IS_EMPTY'; break;
+            case self::ERR_FIELD_FROM_ADDR_IS_INVALID: $lbl = 'ERR_FIELD_FROM_ADDR_IS_INVALID'; break;
+            case self::ERR_FIELD_FROMNAME_IS_NOT_SET: $lbl = 'ERR_FIELD_FROMNAME_IS_NOT_SET'; break;
+            case self::ERR_FIELD_FROMNAME_IS_EMPTY: $lbl = 'ERR_FIELD_FROMNAME_IS_EMPTY'; break;
+            case self::ERR_FIELD_FROMNAME_IS_INVALID: $lbl = 'ERR_FIELD_FROMNAME_IS_INVALID'; break;
+            case self::ERR_FIELD_FROM_NAME_IS_NOT_SET: $lbl = 'ERR_FIELD_FROM_NAME_IS_NOT_SET'; break;
+            case self::ERR_FIELD_FROM_NAME_IS_EMPTY: $lbl = 'ERR_FIELD_FROM_NAME_IS_EMPTY'; break;
+            case self::ERR_FIELD_FROM_NAME_IS_INVALID: $lbl = 'ERR_FIELD_FROM_NAME_IS_INVALID'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_INVALID'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROMNAME: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROMNAME'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_NAME: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_NAME'; break;
+            default: throw new InvalidArgumentException('Error code is not implemented: ' . $error, self::EX_ERROR_CODE_IS_NOT_IMPLEMENTED);
+        }
+        return $lbl;
+    }
+    
+    protected function hasErrors()
+    {
         return !empty($this->errors);
     }
     
