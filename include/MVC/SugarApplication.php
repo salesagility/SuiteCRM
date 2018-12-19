@@ -738,16 +738,20 @@ class SugarApplication {
     }
 
 
-   /**
+    /**
      * Return all messages that have been set.
      *
-     * @param string $type optional, values allowed: error, info, alert, okay, warning.
+     * @param string  $type        optional, values allowed: error, info, alert, okay
+     *                             and warning.
+     * @param boolean $clear_queue optional, set to FALSE if you do not want to clear
+     *                             the messages queue
      *
-     * @param boolean $clear_qeue optional, set to FALSE if you do not want to clear the messages queue
-     *
-     * @return associative array, the key is the message type, the value an array of messages.
-     * If the $type parameter is passed, you get only that type, or an empty array if there are no such messages.
-     * If $type is not passed, all message types are returned, or an empty array if none exist.
+     * @return associative array, the key is the message type, the value an array of
+     * messages.
+     * If the $type parameter is passed, you get only that type, or an empty array if
+     * there are no such messages.
+     * If $type is not passed, all message types are returned, or an empty array if
+     * none exist.
      */
     public static function getMessages($type = null, $clear_queue = true)
     {
