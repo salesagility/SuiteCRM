@@ -155,7 +155,7 @@ class SpotsController extends SugarController
      */
     public function action_createAccountsSpotsData($filepath)
     {
-        global $mod_strings;
+        global $mod_strings, $app_list_strings;
         $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
@@ -211,7 +211,7 @@ EOF;
      */
     public function action_createLeadsSpotsData($filepath)
     {
-        global $mod_strings;
+        global $mod_strings, $app_list_strings;
         $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
@@ -448,7 +448,7 @@ EOF;
      */
     public function action_createServiceSpotsData($filepath)
     {
-        global $mod_strings;
+        global $mod_strings, $app_list_strings;
         $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
@@ -561,7 +561,7 @@ EOF;
      */
     public function action_createActivitiesSpotsData($filepath)
     {
-        global $mod_strings;
+        global $mod_strings, $app_list_strings;
         $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
@@ -701,7 +701,7 @@ EOF;
      */
     public function action_createMarketingSpotsData($filepath)
     {
-        global $mod_strings;
+        global $mod_strings, $app_list_strings;
         $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
@@ -816,7 +816,7 @@ EOF;
      */
     public function action_createMarketingActivitySpotsData($filepath)
     {
-        global $mod_strings;
+        global $mod_strings, $app_list_strings;
         $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
@@ -878,7 +878,7 @@ EOF;
      */
     public function action_createQuotesSpotsData($filepath)
     {
-        global $mod_strings;
+        global $mod_strings, $app_list_strings;
         $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
