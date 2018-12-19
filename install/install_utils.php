@@ -965,7 +965,7 @@ function handleHtaccess()
 {
     global $mod_strings;
     global $sugar_config;
-    $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0)?'(?i)':'';
+    $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0) ? '(?i)' : '';
     $htaccess_file   = ".htaccess";
     $contents = '';
     $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
@@ -1000,12 +1000,12 @@ EOQ;
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
-    
+
     # --------- DEPRECATED --------
     RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
     # -----------------------------
-    
+
     RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
     RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
     RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -1025,13 +1025,21 @@ EOQ;
         ExpiresByType image/jpg "access plus 1 month"
         ExpiresByType image/png "access plus 1 month"
 </IfModule>
+<IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_URI} (.+)/$
+        RewriteRule ^ %1 [R=301,L]
+</IfModule>
 EOQ;
     if (file_exists($htaccess_file)) {
         $fp = fopen($htaccess_file, 'r');
         $skip = false;
         while ($line = fgets($fp)) {
             if (preg_match("/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i", $line)) {
+            if(!$skip)$contents .= $line;
                 $skip = true;
+            if(preg_match("/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i", $line))$skip = false;
             }
             if (!$skip) {
                 $contents .= $line;
