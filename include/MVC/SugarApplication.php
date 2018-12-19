@@ -767,6 +767,9 @@ class SugarApplication {
                 self::_clearQueue($clear_queue);
             }
         } else {
+            if (!isset($_SESSION['suite_messages'])) {
+                $_SESSION['suite_messages'] = array();
+            }
             $messages = $_SESSION['suite_messages'];
             self::_clearQueue($clear_queue);
         }
