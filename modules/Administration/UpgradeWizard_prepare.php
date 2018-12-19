@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,12 +38,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/Administration/UpgradeWizardCommon.php');
-
 
 unset($_SESSION['rebuild_relationships']);
 unset($_SESSION['rebuild_extensions']);
@@ -413,6 +409,12 @@ if ($show_files == true) {
 
         if ($mode == "Install") {
             $checked = "checked";
+
+            if ($install_type === 'langpack' && $the_file == "./manifest.php") {
+                $checked = '';
+                $disabled = "disabled=\"true\"";
+            }
+
             foreach ($zip_force_copy as $pattern) {
                 if (preg_match("#" . $pattern . "#", $unzip_file)) {
                     $disabled = "disabled=\"true\"";
@@ -431,20 +433,22 @@ if ($show_files == true) {
                 print(" (no changes)");
             }
             print("<br>\n");
-        } elseif ($mode == "Uninstall" && file_exists($new_file)) {
-            if (md5_file($unzip_file) == md5_file($new_file)) {
-                $checked = "checked=\"true\"";
-            } else {
-                $highlight_start    = "<font color=red>";
-                $highlight_end      = "</font>";
+        } else {
+            if ($mode == "Uninstall" && file_exists($new_file)) {
+                if (md5_file($unzip_file) == md5_file($new_file)) {
+                    $checked = "checked=\"true\"";
+                } else {
+                    $highlight_start = "<font color=red>";
+                    $highlight_end = "</font>";
+                }
+                print("<li><input name=\"copy_$count\" type=\"checkbox\" value=\"" . $the_file . "\" $checked $disabled > " . $highlight_start . $new_file . $highlight_end . "<br>\n");
             }
-            print("<li><input name=\"copy_$count\" type=\"checkbox\" value=\"" . $the_file . "\" $checked $disabled > " . $highlight_start . $new_file . $highlight_end . "<br>\n");
         }
         $count++;
     }
     print("</ul>\n");
 }
-//    echo '</div>';
+
 if ($mode == "Disable" || $mode == "Enable") {
     //check to see if any files have been modified
     $modified_files = getDiffFiles($unzip_dir, $install_file, ($mode == 'Enable'), $previous_version);
