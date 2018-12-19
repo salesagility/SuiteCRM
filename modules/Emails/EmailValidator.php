@@ -113,7 +113,8 @@ class EmailValidator // TODO: it should be called as EmailFromAddressValidator O
         $this->addErrors($this->validateTo());
         $this->addErrors($this->validateCCs());
         $this->addErrors($this->validateBCCs());
-        return !$this->hasErrors();
+        $valid = !$this->hasErrors();
+        return $valid;
     }
     
     /**
