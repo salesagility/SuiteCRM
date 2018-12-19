@@ -65,7 +65,7 @@ class SpotsController extends SugarController
     protected $spotsStaleTime = 3600;
 
     public function __construct() {
-	$lang = isset($_SESSION['authenticated_user_language'])?($_SESSION['authenticated_user_language']):('en_us') ;
+        $lang = isset($_SESSION['authenticated_user_language'])?($_SESSION['authenticated_user_language']):('en_us') ;
         $this->accountsFileName = 'accounts.'.$lang.'.json';
         $this->servicesFileName = 'service.'.$lang.'.json';
         $this->salesFileName = 'sales.'.$lang.'.json';
@@ -74,7 +74,7 @@ class SpotsController extends SugarController
         $this->marketingActivitiesFileName = 'marketingActivity.'.$lang.'.json';
         $this->activitiesFileName = 'activities.'.$lang.'.json';
         $this->quotesFileName = 'quotes.'.$lang.'.json';
-	parent::__construct() ;
+        parent::__construct() ;
     }
 
     /**
@@ -220,12 +220,12 @@ EOF;
             RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser,
             leads.status,
             COALESCE(lead_source, '$this->nullSqlPlaceholder') as leadSource,
-			COALESCE(campaigns.name, '$this->nullSqlPlaceholder') as campaignName,
-			CAST(YEAR(leads.date_entered) as CHAR(10)) as year,
+            COALESCE(campaigns.name, '$this->nullSqlPlaceholder') as campaignName,
+            CAST(YEAR(leads.date_entered) as CHAR(10)) as year,
             COALESCE(QUARTER(leads.date_entered),'$this->nullSqlPlaceholder') as quarter,
-			concat('(',MONTH(leads.date_entered),') ',MONTHNAME(leads.date_entered)) as month,
-			CAST(WEEK(leads.date_entered) as CHAR(5)) as week,
-			DAYNAME(leads.date_entered) as day
+            concat('(',MONTH(leads.date_entered),') ',MONTHNAME(leads.date_entered)) as month,
+            CAST(WEEK(leads.date_entered) as CHAR(5)) as week,
+            DAYNAME(leads.date_entered) as day
 EOF;
 
         $mssqlSelect = <<<EOF
@@ -233,21 +233,21 @@ EOF;
             RTRIM(LTRIM(COALESCE(users.first_name,'')+' '+COALESCE(users.last_name,''))) as assignedUser,
             leads.status,
             COALESCE(lead_source, '$this->nullSqlPlaceholder') as leadSource,
-			COALESCE(campaigns.name, '$this->nullSqlPlaceholder') as campaignName,
-			CAST(YEAR(leads.date_entered) as CHAR(10)) as year,
+            COALESCE(campaigns.name, '$this->nullSqlPlaceholder') as campaignName,
+            CAST(YEAR(leads.date_entered) as CHAR(10)) as year,
             COALESCE(DATEPART(qq,leads.date_entered),'$this->nullSqlPlaceholder') as quarter,
-			'(' + CAST(DATEPART(mm,leads.date_entered)as CHAR(12)) + ') ' + DATENAME(month,DATEPART(mm,leads.date_entered)) as month,
-			CAST(DATEPART(wk,leads.date_entered) as CHAR(5)) as week,
-			DATENAME(weekday,leads.date_entered) as day
+            '(' + CAST(DATEPART(mm,leads.date_entered)as CHAR(12)) + ') ' + DATENAME(month,DATEPART(mm,leads.date_entered)) as month,
+            CAST(DATEPART(wk,leads.date_entered) as CHAR(5)) as week,
+            DATENAME(weekday,leads.date_entered) as day
 EOF;
 
         $fromClause = <<<EOF
         FROM leads
         INNER JOIN users
             ON leads.assigned_user_id = users.id
-		LEFT JOIN campaigns
-			ON leads.campaign_id = campaigns.id
-			AND campaigns.deleted = 0
+        LEFT JOIN campaigns
+            ON leads.campaign_id = campaigns.id
+            AND campaigns.deleted = 0
 EOF;
         $whereClause = <<<EOF
         WHERE leads.deleted = 0
@@ -322,7 +322,7 @@ EOF;
 
         $mysqlSelect = <<<EOF
         SELECT
-			accounts.name as accountName,
+            accounts.name as accountName,
             opportunities.name as opportunityName,
             RTRIM(LTRIM(CONCAT(COALESCE(first_name,''),' ',COALESCE(last_name,'')))) as assignedUser,
             COALESCE(opportunity_type,'$this->nullSqlPlaceholder') as opportunity_type,
@@ -331,17 +331,17 @@ EOF;
             sales_stage,
             probability,
             date_closed as expectedCloseDate,
-			COALESCE(QUARTER(date_closed),'$this->nullSqlPlaceholder') as salesQuarter,
-			concat('(',MONTH(date_closed),') ',MONTHNAME(date_closed)) as salesMonth,
-			CAST(WEEK(date_closed) as CHAR(5)) as salesWeek,
-			DAYNAME(date_closed) as salesDay,
-			CAST(YEAR(date_closed) as CHAR(10)) as salesYear,
+            COALESCE(QUARTER(date_closed),'$this->nullSqlPlaceholder') as salesQuarter,
+            concat('(',MONTH(date_closed),') ',MONTHNAME(date_closed)) as salesMonth,
+            CAST(WEEK(date_closed) as CHAR(5)) as salesWeek,
+            DAYNAME(date_closed) as salesDay,
+            CAST(YEAR(date_closed) as CHAR(10)) as salesYear,
             COALESCE(campaigns.name,'$this->nullSqlPlaceholder') as campaign
 EOF;
 
         $mssqlSelect = <<<EOF
         SELECT
-			accounts.name as accountName,
+            accounts.name as accountName,
             opportunities.name as opportunityName,
             RTRIM(LTRIM(COALESCE(first_name,'')+' '+COALESCE(last_name,''))) as assignedUser,
             COALESCE(opportunity_type,'$this->nullSqlPlaceholder') as opportunity_type,
@@ -351,19 +351,19 @@ EOF;
             probability,
             date_closed as expectedCloseDate,
             COALESCE(DATEPART(qq,date_closed),'$this->nullSqlPlaceholder') as salesQuarter,
-			'(' + CAST(DATEPART(mm,date_closed)as CHAR(12)) + ') ' + DATENAME(month,DATEPART(mm,date_closed)) as salesMonth,
-			CAST(DATEPART(wk,date_closed) as CHAR(5)) as salesWeek,
-			DATENAME(weekday,date_closed) as salesDay,
-			CAST(YEAR(date_closed) as CHAR(10)) as salesYear,
+            '(' + CAST(DATEPART(mm,date_closed)as CHAR(12)) + ') ' + DATENAME(month,DATEPART(mm,date_closed)) as salesMonth,
+            CAST(DATEPART(wk,date_closed) as CHAR(5)) as salesWeek,
+            DATENAME(weekday,date_closed) as salesDay,
+            CAST(YEAR(date_closed) as CHAR(10)) as salesYear,
             COALESCE(campaigns.name,'$this->nullSqlPlaceholder') as campaign
 EOF;
 
         $fromClause = <<<EOF
         FROM opportunities
-		INNER JOIN accounts_opportunities
-			ON accounts_opportunities.opportunity_id = opportunities.id
-		INNER JOIN accounts
-			ON accounts_opportunities.account_id = accounts.id
+        INNER JOIN accounts_opportunities
+            ON accounts_opportunities.opportunity_id = opportunities.id
+        INNER JOIN accounts
+            ON accounts_opportunities.account_id = accounts.id
         INNER JOIN users
             ON opportunities.assigned_user_id = users.id
         LEFT JOIN campaigns
@@ -400,7 +400,7 @@ EOF;
         $queryString = $query.$aclWhereOpps.$aclWhereAccounts.$aclWhereUsers.$aclWhereCampaigns;
         $result = $db->query($queryString);
 
-	while ($row = $db->fetchByAssoc($result)) {
+        while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
             $x->{$mod_strings['LBL_AN_SALES_ACCOUNT_NAME']} = $row['accountName'];
             $x->{$mod_strings['LBL_AN_SALES_OPPORTUNITY_NAME']} = $row['opportunityName'];
