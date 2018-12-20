@@ -42,10 +42,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once(__DIR__ . '/../ytree/Tree.php');
-require_once(__DIR__ . '/../ytree/ExtNode.php');
-require_once(__DIR__ . '/SugarFolderEmptyException.php');
-require_once(__DIR__ . '/../TimeDate.php');
+require_once __DIR__ . '/../ytree/Tree.php';
+require_once __DIR__ . '/../ytree/ExtNode.php';
+require_once __DIR__ . '/SugarFolderEmptyException.php';
+require_once __DIR__ . '/../TimeDate.php';
 
 /**
  * Polymorphic buckets - place any item in a folder
