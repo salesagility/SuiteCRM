@@ -148,7 +148,7 @@ class PackageManager
                 //array_push($nodes[$mypack['category_id']]['packages'], $package_arr);
             }
         }
-        $GLOBALS['log']->debug("NODES". var_export($nodes, true));
+        LoggerManager::getLogger()->debug("NODES". var_export($nodes, true));
         return $nodes;
     }
 
@@ -213,11 +213,11 @@ class PackageManager
      */
     public function download($category_id, $package_id, $release_id)
     {
-        $GLOBALS['log']->debug('RELEASE _ID: '.$release_id);
+        LoggerManager::getLogger()->debug('RELEASE _ID: '.$release_id);
         if (!empty($release_id)) {
             $filename = PackageManagerComm::addDownload($category_id, $package_id, $release_id);
             if ($filename) {
-                $GLOBALS['log']->debug('RESULT: '.$filename);
+                LoggerManager::getLogger()->debug('RESULT: '.$filename);
                 PackageManagerComm::errorCheck();
                 $filepath = PackageManagerComm::performDownload($filename);
                 return $filepath;
@@ -432,14 +432,14 @@ class PackageManager
             die($mod_strings['ERROR_MANIFEST_TYPE']);
         }
         $type = $manifest['type'];
-        $GLOBALS['log']->debug("Getting InstallType");
+        LoggerManager::getLogger->debug("Getting InstallType");
         if ($this->getInstallType("/$type/") == "") {
-            $GLOBALS['log']->debug("Error with InstallType".$type);
+            LoggerManager::getLogger->debug("Error with InstallType".$type);
             die($mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.");
         }
-        $GLOBALS['log']->debug("Passed with InstallType");
+        LoggerManager::getLogger()->debug("Passed with InstallType");
         if (isset($manifest['acceptable_sugar_versions'])) {
-            $GLOBALS['log']->debug("Getting AcceptableSugarVersions");
+            LoggerManager::getLogger->debug("Getting AcceptableSugarVersions");
             $version_sugar_ok = false;
             $matches_empty = true;
             if (isset($manifest['acceptable_sugar_versions']['exact_matches'])) {
@@ -447,7 +447,7 @@ class PackageManager
                 foreach ($manifest['acceptable_sugar_versions']['exact_matches'] as $match) {
                     if ($match == $sugar_version) {
                         $version_sugar_ok = true;
-                        $GLOBALS['log']->debug("Passed AcceptableSugarVersions");
+                        LoggerManager::getLogger->debug("Passed AcceptableSugarVersions");
                         break;
                     }
                 }
@@ -457,19 +457,19 @@ class PackageManager
                 foreach ($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
                     if (preg_match("/$match/", $sugar_version)) {
                         $version_sugar_ok = true;
-                        $GLOBALS['log']->debug("Passed AcceptableSugarVersions");
+                        LoggerManager::getLogger->debug("Passed AcceptableSugarVersions");
                         break;
                     }
                 }
             }
 
             if (!$matches_empty && !$version_sugar_ok) {
-                $GLOBALS['log']->debug("Error with AcceptableSugarVersions");
+                LoggerManager::getLogger->debug("Error with AcceptableSugarVersions");
                 die($mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version);
             }
         }
         if (isset($manifest['acceptable_suitecrm_versions'])) {
-            $GLOBALS['log']->debug("Getting AcceptableSuiteCRMVersions");
+            LoggerManager::getLogger->debug("Getting AcceptableSuiteCRMVersions");
             $version_suitecrm_ok = false;
             $matches_empty = true;
             if (isset($manifest['acceptable_suitecrm_versions']['exact_matches'])) {
@@ -477,7 +477,7 @@ class PackageManager
                 foreach ($manifest['acceptable_suitecrm_versions']['exact_matches'] as $match) {
                     if ($match == $suitecrm_version) {
                         $version_suitecrm_ok = true;
-                        $GLOBALS['log']->debug("Passed AcceptableSuitecrmVersions");
+                        LoggerManager::getLogger->debug("Passed AcceptableSuitecrmVersions");
                         break;
                     }
                 }
@@ -487,14 +487,14 @@ class PackageManager
                 foreach ($manifest['acceptable_suitecrm_versions']['regex_matches'] as $match) {
                     if (preg_match("/$match/", $suitecrm_version)) {
                         $version_suitecrm_ok = true;
-                        $GLOBALS['log']->debug("Passed AcceptableSuitecrmVersions");
+                        LoggerManager::getLogger->debug("Passed AcceptableSuitecrmVersions");
                         break;
                     }
                 }
             }
 
             if (!$matches_empty && !$version_suitecrm_ok) {
-                $GLOBALS['log']->debug("Error with AcceptableSuiteCRMVersions");
+                LoggerManager::getLogger->debug("Error with AcceptableSuiteCRMVersions");
                 die($mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . $suitecrm_version);
             }
         }
@@ -520,20 +520,20 @@ class PackageManager
     {
         global $sugar_config,$mod_strings;
         $base_filename = urldecode($tempFile);
-        $GLOBALS['log']->debug("BaseFileName: ".$base_filename);
+        LoggerManager::getLogger()->debug("BaseFileName: ".$base_filename);
         $base_upgrade_dir       = $this->upload_dir.'/upgrades';
         $base_tmp_upgrade_dir   = "$base_upgrade_dir/temp";
         $manifest_file = $this->extractManifest($base_filename, $base_tmp_upgrade_dir);
-        $GLOBALS['log']->debug("Manifest: ".$manifest_file);
+        LoggerManager::getLogger()->debug("Manifest: ".$manifest_file);
         if ($view == 'module') {
             $license_file = $this->extractFile($base_filename, 'LICENSE.txt', $base_tmp_upgrade_dir);
         }
         if (is_file($manifest_file)) {
-            $GLOBALS['log']->debug("VALIDATING MANIFEST". $manifest_file);
+            LoggerManager::getLogger()->debug("VALIDATING MANIFEST". $manifest_file);
             require_once($manifest_file);
             $this->validate_manifest($manifest);
             $upgrade_zip_type = $manifest['type'];
-            $GLOBALS['log']->debug("VALIDATED MANIFEST");
+            LoggerManager::getLogger()->debug("VALIDATED MANIFEST");
             // exclude the bad permutations
             if ($view == "module") {
                 if ($upgrade_zip_type != "module" && $upgrade_zip_type != "theme" && $upgrade_zip_type != "langpack") {
@@ -603,21 +603,21 @@ class PackageManager
             mkdir_recursive($base_tmp_upgrade_dir, true);
         }
 
-        $GLOBALS['log']->debug("INSTALLING: ".$file);
+        LoggerManager::getLogger()->debug("INSTALLING: ".$file);
         $mi = new ModuleInstaller();
         $mi->silent = $silent;
         $mod_strings = return_module_language($current_language, "Administration");
-        $GLOBALS['log']->debug("ABOUT TO INSTALL: ".$file);
+        LoggerManager::getLogger()->debug("ABOUT TO INSTALL: ".$file);
         if (preg_match("#.*\.zip\$#", $file)) {
-            $GLOBALS['log']->debug("1: ".$file);
+            LoggerManager::getLogger()->debug("1: ".$file);
             // handle manifest.php
             $target_manifest = remove_file_extension($file) . '-manifest.php';
             include($target_manifest);
-            $GLOBALS['log']->debug("2: ".$file);
+            LoggerManager::getLogger()->debug("2: ".$file);
             $unzip_dir = mk_temp_dir($base_tmp_upgrade_dir);
             $this->addToCleanup($unzip_dir);
             unzip($file, $unzip_dir);
-            $GLOBALS['log']->debug("3: ".$unzip_dir);
+            LoggerManager::getLogger()->debug("3: ".$unzip_dir);
             $id_name = $installdefs['id'];
             $version = $manifest['version'];
             $uh = new UpgradeHistory();
@@ -633,7 +633,7 @@ class PackageManager
             } else {
                 $mi->install($unzip_dir);
             }
-            $GLOBALS['log']->debug("INSTALLED: ".$file);
+            LoggerManager::getLogger()->debug("INSTALLED: ".$file);
             $new_upgrade = new UpgradeHistory();
             $new_upgrade->filename      = $file;
             $new_upgrade->md5sum        = md5_file($file);
@@ -887,7 +887,7 @@ class PackageManager
                     if ($populate) {
                         $manifest_file = $this->extractManifest($filename, $base_tmp_upgrade_dir);
                         require_once($manifest_file);
-                        $GLOBALS['log']->info("Filling in upgrade_history table");
+                        LoggerManager::getLogger()->info("Filling in upgrade_history table");
                         $populate = false;
                         if (isset($manifest['name'])) {
                             $name = $manifest['name'];
