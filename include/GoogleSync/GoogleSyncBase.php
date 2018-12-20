@@ -845,13 +845,17 @@ class GoogleSyncBase
         $event_remote->setDescription($event_local->description);
         $event_remote->setLocation($event_local->location);
 
+        $timedate = new TimeDate;
+        $localStart = $timedate->to_db($event_local->date_start, false);
+        $localEnd = $timedate->to_db($event_local->date_end, false);
+
         $startDateTime = new Google_Service_Calendar_EventDateTime;
-        $startDateTime->setDateTime(date(DATE_ATOM, strtotime($event_local->fetched_row['date_start'])));
+        $startDateTime->setDateTime(date(DATE_ATOM, strtotime($localStart . ' UTC')));
         $startDateTime->setTimeZone($this->timezone);
         $event_remote->setStart($startDateTime);
 
         $endDateTime = new Google_Service_Calendar_EventDateTime;
-        $endDateTime->setDateTime(date(DATE_ATOM, strtotime($event_local->fetched_row['date_end'])));
+        $endDateTime->setDateTime(date(DATE_ATOM, strtotime($localEnd . ' UTC')));
         $endDateTime->setTimeZone($this->timezone);
         $event_remote->setEnd($endDateTime);
 
