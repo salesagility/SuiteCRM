@@ -432,14 +432,14 @@ class PackageManager
             die($mod_strings['ERROR_MANIFEST_TYPE']);
         }
         $type = $manifest['type'];
-        LoggerManager::getLogger->debug("Getting InstallType");
+        LoggerManager::getLogger()->debug("Getting InstallType");
         if ($this->getInstallType("/$type/") == "") {
             LoggerManager::getLogger->debug("Error with InstallType".$type);
             die($mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.");
         }
         LoggerManager::getLogger()->debug("Passed with InstallType");
         if (isset($manifest['acceptable_sugar_versions'])) {
-            LoggerManager::getLogger->debug("Getting AcceptableSugarVersions");
+            LoggerManager::getLogger()->debug("Getting AcceptableSugarVersions");
             $version_sugar_ok = false;
             $matches_empty = true;
             if (isset($manifest['acceptable_sugar_versions']['exact_matches'])) {
@@ -447,7 +447,7 @@ class PackageManager
                 foreach ($manifest['acceptable_sugar_versions']['exact_matches'] as $match) {
                     if ($match == $sugar_version) {
                         $version_sugar_ok = true;
-                        LoggerManager::getLogger->debug("Passed AcceptableSugarVersions");
+                        LoggerManager::getLogger()->debug("Passed AcceptableSugarVersions");
                         break;
                     }
                 }
@@ -457,19 +457,19 @@ class PackageManager
                 foreach ($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
                     if (preg_match("/$match/", $sugar_version)) {
                         $version_sugar_ok = true;
-                        LoggerManager::getLogger->debug("Passed AcceptableSugarVersions");
+                        LoggerManager::getLogger()->debug("Passed AcceptableSugarVersions");
                         break;
                     }
                 }
             }
 
             if (!$matches_empty && !$version_sugar_ok) {
-                LoggerManager::getLogger->debug("Error with AcceptableSugarVersions");
+                LoggerManager::getLogger()->debug("Error with AcceptableSugarVersions");
                 die($mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version);
             }
         }
         if (isset($manifest['acceptable_suitecrm_versions'])) {
-            LoggerManager::getLogger->debug("Getting AcceptableSuiteCRMVersions");
+            LoggerManager::getLogger()->debug("Getting AcceptableSuiteCRMVersions");
             $version_suitecrm_ok = false;
             $matches_empty = true;
             if (isset($manifest['acceptable_suitecrm_versions']['exact_matches'])) {
@@ -477,7 +477,7 @@ class PackageManager
                 foreach ($manifest['acceptable_suitecrm_versions']['exact_matches'] as $match) {
                     if ($match == $suitecrm_version) {
                         $version_suitecrm_ok = true;
-                        LoggerManager::getLogger->debug("Passed AcceptableSuitecrmVersions");
+                        LoggerManager::getLogger()->debug("Passed AcceptableSuitecrmVersions");
                         break;
                     }
                 }
@@ -487,14 +487,14 @@ class PackageManager
                 foreach ($manifest['acceptable_suitecrm_versions']['regex_matches'] as $match) {
                     if (preg_match("/$match/", $suitecrm_version)) {
                         $version_suitecrm_ok = true;
-                        LoggerManager::getLogger->debug("Passed AcceptableSuitecrmVersions");
+                        LoggerManager::getLogger()->debug("Passed AcceptableSuitecrmVersions");
                         break;
                     }
                 }
             }
 
             if (!$matches_empty && !$version_suitecrm_ok) {
-                LoggerManager::getLogger->debug("Error with AcceptableSuiteCRMVersions");
+                LoggerManager::getLogger()->debug("Error with AcceptableSuiteCRMVersions");
                 die($mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . $suitecrm_version);
             }
         }
