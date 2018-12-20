@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,12 +38,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/Administration/UpgradeWizardCommon.php');
-
 
 unset($_SESSION['rebuild_relationships']);
 unset($_SESSION['rebuild_extensions']);
@@ -401,18 +397,24 @@ if ($show_files == true) {
               <div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'document.getElementById("all_text").style.display=""; toggleDisplay("more");\'>'
          .SugarThemeRegistry::current()->getImage('basic_search', '', null, null, ".gif", $mod_strings['LBL_BASIC_SEARCH']).$mod_strings['LBL_UW_HIDE_DETAILS'].'</div><br>';
     echo '<input type="checkbox" checked onclick="toggle_these(' . count($new_studio_mod_files) . ',' . count($new_files) . ', this)"> '.$mod_strings['LBL_UW_CHECK_ALL'];
-    echo '<ul>';
+	echo '<ul>';
     foreach ($new_sugar_mod_files as $the_file) {
-        $highlight_start    = "";
-        $highlight_end      = "";
-        $checked            = "";
-        $disabled           = "";
+        $highlight_start = "";
+        $highlight_end = "";
+        $checked = "";
+        $disabled = "";
         $unzip_file = "$unzip_dir/$zip_from_dir/$the_file";
-        $new_file   = clean_path("$zip_to_dir/$the_file");
-        $forced_copy    = false;
+        $new_file = clean_path("$zip_to_dir/$the_file");
+        $forced_copy = false;
 
         if ($mode == "Install") {
             $checked = "checked";
+
+            if ($install_type === 'langpack' && $the_file == "./manifest.php") {
+                $checked = '';
+                $disabled = "disabled=\"true\"";
+            }
+
             foreach ($zip_force_copy as $pattern) {
                 if (preg_match("#" . $pattern . "#", $unzip_file)) {
                     $disabled = "disabled=\"true\"";
@@ -421,7 +423,6 @@ if ($show_files == true) {
             }
             if (!$forced_copy && is_file($new_file) && (md5_file($unzip_file) == md5_file($new_file))) {
                 $disabled = "disabled=\"true\"";
-                //$checked = "";
             }
             if ($checked != "" && $disabled != "") {    // need to put a hidden field
                 print("<input name=\"copy_$count\" type=\"hidden\" value=\"" . $the_file . "\">\n");
@@ -431,20 +432,22 @@ if ($show_files == true) {
                 print(" (no changes)");
             }
             print("<br>\n");
-        } elseif ($mode == "Uninstall" && file_exists($new_file)) {
-            if (md5_file($unzip_file) == md5_file($new_file)) {
-                $checked = "checked=\"true\"";
-            } else {
-                $highlight_start    = "<font color=red>";
-                $highlight_end      = "</font>";
+        } else {
+            if ($mode == "Uninstall" && file_exists($new_file)) {
+                if (md5_file($unzip_file) == md5_file($new_file)) {
+                    $checked = "checked=\"true\"";
+                } else {
+                    $highlight_start = "<font color=red>";
+                    $highlight_end = "</font>";
+                }
+                print("<li><input name=\"copy_$count\" type=\"checkbox\" value=\"" . $the_file . "\" $checked $disabled > " . $highlight_start . $new_file . $highlight_end . "<br>\n");
             }
-            print("<li><input name=\"copy_$count\" type=\"checkbox\" value=\"" . $the_file . "\" $checked $disabled > " . $highlight_start . $new_file . $highlight_end . "<br>\n");
         }
         $count++;
     }
     print("</ul>\n");
 }
-//    echo '</div>';
+
 if ($mode == "Disable" || $mode == "Enable") {
     //check to see if any files have been modified
     $modified_files = getDiffFiles($unzip_dir, $install_file, ($mode == 'Enable'), $previous_version);
