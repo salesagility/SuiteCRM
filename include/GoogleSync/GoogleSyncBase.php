@@ -772,8 +772,8 @@ class GoogleSyncBase
         $mins = $tmins % 60;
 
         // Set Start/End/Duration in SuiteCRM Meeting and Assigned User
-        $event_local->date_start = date("m/d/Y h:i:sa", $starttime);
-        $event_local->date_end = date("m/d/Y h:i:sa", $endtime);
+        $event_local->date_start = gmdate("Y-m-d H:i:s", $starttime);
+        $event_local->date_end = gmdate("Y-m-d H:i:s", $endtime);
         $event_local->duration_hours = $hours;
         $event_local->duration_minutes = $mins;
         $event_local->assigned_user_id = $this->workingUser->id;
@@ -846,12 +846,12 @@ class GoogleSyncBase
         $event_remote->setLocation($event_local->location);
 
         $startDateTime = new Google_Service_Calendar_EventDateTime;
-        $startDateTime->setDateTime(date(DATE_ATOM, strtotime($event_local->date_start)));
+        $startDateTime->setDateTime(date(DATE_ATOM, strtotime($event_local->fetched_row['date_start'])));
         $startDateTime->setTimeZone($this->timezone);
         $event_remote->setStart($startDateTime);
 
         $endDateTime = new Google_Service_Calendar_EventDateTime;
-        $endDateTime->setDateTime(date(DATE_ATOM, strtotime($event_local->date_end)));
+        $endDateTime->setDateTime(date(DATE_ATOM, strtotime($event_local->fetched_row['date_end'])));
         $endDateTime->setTimeZone($this->timezone);
         $event_remote->setEnd($endDateTime);
 
