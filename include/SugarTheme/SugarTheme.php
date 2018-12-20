@@ -388,8 +388,8 @@ class SugarTheme
 			if (is_file("$cachedir/spriteCache.php"))
 				unlink("$cachedir/spriteCache.php");
 
-            if(strlen($cachedir)>1) {
-                rmdir_recursive($cachedir.'/modules');
+            if (($cachedir) && is_dir($cachedir . '/modules') && (!rmdir_recursive($cachedir . '/modules'))) {
+                throw new Exception("Unable to clear cache: $cachedir . '/modules'");
             }
 
         }

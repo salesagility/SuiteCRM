@@ -36,19 +36,23 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
       echo '<br /><br />';
     }
 
-    echo '<table cellspacing="0" cellpadding="0" border="0" class="list view" style="width: 50% !important;"><tbody>';
-    echo '<tr><th>'.$GLOBALS['mod_strings']['LBL_MODULE_HEADING'].'</th>';
-    foreach ($this->bean->geocoded_headings as $heading) {
-      echo '<th>'.$heading.'</th>';
-    }
-    echo '<th>'.$GLOBALS['mod_strings']['LBL_MODULE_TOTAL_HEADING'].'</th>';
-    echo '<th>'.$GLOBALS['mod_strings']['LBL_MODULE_RESET_HEADING'].'</th>';
-    echo '</tr>'."\n";
+        echo '<div class="list-view-rounded-corners">';
 
-    foreach ($GLOBALS['jjwg_config']['valid_geocode_modules'] as $module) {
+        echo '<table cellspacing="0" cellpadding="0" border="0" class="list view" style="width: 50% !important;">';
+        echo '<thead>';
+        echo '<tr><th>'.$GLOBALS['mod_strings']['LBL_MODULE_HEADING'].'</th>';
+        foreach ($this->bean->geocoded_headings as $heading) {
+            echo '<th>'.$GLOBALS['mod_strings']['LBL_'.$heading].'</th>';
+        }
+        echo '<th>'.$GLOBALS['mod_strings']['LBL_MODULE_TOTAL_HEADING'].'</th>';
+        echo '<th>'.$GLOBALS['mod_strings']['LBL_MODULE_RESET_HEADING'].'</th>';
+        echo '</tr>'."\n";
+        echo '</thead>';
 
-      $geocode_url = './index.php?module=jjwg_Maps&action=geocode_addresses&display_module='.$module;
-      $reset_url = './index.php?module=jjwg_Maps&action=reset_geocoding&display_module='.$module;
+        echo '<tbody>';
+        foreach ($GLOBALS['jjwg_config']['valid_geocode_modules'] as $module) {
+            $geocode_url = './index.php?module=jjwg_Maps&action=geocode_addresses&display_module='.$module;
+            $reset_url = './index.php?module=jjwg_Maps&action=reset_geocoding&display_module='.$module;
 
       echo '<tr>';
       echo '<td><strong><a href="'.htmlspecialchars($geocode_url).'">'.$GLOBALS['app_list_strings']['moduleList'][$module].'</a></strong></td>';
@@ -60,8 +64,11 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
       echo '</tr>'."\n";
     }
 
-    echo '</tbody></table>';
-    echo '<br /><br />';
+        echo '</tbody></table>';
+
+        echo '</div>';
+
+        echo '<br /><br />';
 
     // Custom Entry Point Registry:
     // $entry_point_registry['jjwg_Maps'] = array('file' => 'modules/jjwg_Maps/jjwg_Maps_Router.php', 'auth' => false);

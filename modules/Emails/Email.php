@@ -47,6 +47,8 @@ require_once('include/SugarPHPMailer.php');
 require_once 'include/UploadFile.php';
 require_once 'include/UploadMultipleFiles.php';
 
+require_once __DIR__ . '/NonGmailSentFolderHandler.php';
+
 
 class Email extends Basic
 {
@@ -440,6 +442,110 @@ class Email extends Basic
         'cc',
         'bcc'
     );
+    
+    /**
+     *
+     * @var string
+     */
+    public $assigned_user_name;
+    const NO_ERROR = 0;
+    const ERR_NOT_STORED_AS_SENT = 1;
+    const ERR_NO_IE = 2;
+    const ERR_NO_IE_MAIL_ID = 3;
+    const ERR_CODE_SHOULD_BE_INT = 4;
+    const ERR_IE_RETRIEVE = 5;
+    const UNHANDLED_LAST_ERROR = 6;
+    
+    /**
+     *
+     * @var int
+     */
+    protected $lastSaveAndStoreInSentError = null;
+    
+    /**
+     *
+     * @var NonGmailSentFolderHandler
+     */
+    protected $nonGmailSentFolderHandler = null;
+    
+    /**
+     *
+     * @var Email
+     */
+    protected $tempEmailAtSend = null;
+    
+    /**
+     *
+     * @param int $err
+     */
+    protected function setLastSaveAndStoreInSentError($err)
+    {
+        if (!is_int($err)) {
+            throw new InvalidArgumentException('Error code should be an integer.', self::ERR_CODE_SHOULD_BE_INT);
+        }
+        
+        if (null !== $this->lastSaveAndStoreInSentError) {
+            throw new EmailException(
+                'Last Error for method SaveAndStoreInSentFolder() already set but never checked: ' .
+                $this->lastSaveAndStoreInSentError, self::UNHANDLED_LAST_ERROR);
+        }
+        $this->lastSaveAndStoreInSentError = $err;
+    }
+    
+    /**
+     *
+     * @return int
+     */
+    public function getLastSaveAndStoreInSentError()
+    {
+        $ret = $this->lastSaveAndStoreInSentError;
+        $this->lastSaveAndStoreInSentError = null;
+        return $ret;
+    }
+    
+    /**
+     *
+     * @param NonGmailSentFolderHandler $nonGmailSentFolderHandler
+     */
+    protected function setNonGmailSentFolderHandler(NonGmailSentFolderHandler $nonGmailSentFolderHandler)
+    {
+        $this->nonGmailSentFolderHandler = $nonGmailSentFolderHandler;
+    }
+    
+    /**
+     *
+     * @return NonGmailSentFolderHandler
+     */
+    public function getNonGmailSentFolderHandler()
+    {
+        return $this->nonGmailSentFolderHandler;
+    }
+    
+    /**
+     *
+     */
+    protected function clearTempEmailAtSend()
+    {
+        $this->tempEmailAtSend = null;
+    }
+    
+    /**
+     *
+     * @param Email $email
+     */
+    protected function createTempEmailAtSend(Email $email = null)
+    {
+        $this->tempEmailAtSend = $email ? $email : new Email();
+    }
+    
+    /**
+     *
+     * @return Email
+     */
+    public function getTempEmailAtSend()
+    {
+        return $this->tempEmailAtSend;
+    }
 
     /**
      * sole constructor
@@ -455,6 +561,18 @@ class Email extends Basic
 
         $this->imagePrefix = rtrim($GLOBALS['sugar_config']['site_url'], "/") . "/cache/images/";
     }
+    
+    /**
+     *
+     */
+    public function __destruct()
+    {
+        $err = $this->getLastSaveAndStoreInSentError();
+        if (null !== $err) {
+            LoggerManager::getLogger()->error('Unhandled email save and store as sent error: ' . $err, self::UNHANDLED_LAST_ERROR);
+        }
+    }
+    
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
@@ -802,6 +920,7 @@ class Email extends Basic
         global $timedate;
         global $beanList;
         global $beanFiles;
+        
         $OBCharset = $locale->getPrecedentPreference('default_email_charset');
 
         /**********************************************************************
@@ -1305,31 +1424,31 @@ class Email extends Basic
             $this->save();
         }
 
-		if(!empty($request['fromAccount'])) {
-			if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
-				$sentFolder = $ie->get_stored_options("sentFolder");
-				if (!empty($sentFolder)) {
-					// Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
-					$emailbody = $mail->CreateBody();
-					$emailheader = $mail->CreateHeader();
-					$data = $emailheader . "\r\n" . $emailbody . "\r\n";
-					$ie->mailbox = $sentFolder;
-					if ($ie->connectMailserver() == 'true') {
-						$connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
-						$returnData = imap_append($ie->conn,$connectString, $data, "\\Seen");
-						if (!$returnData) {
-							$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
-						} // if
-					} else {
-						$GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
-					} // else
-				} else {
-					$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
-				} // else
-			} // if
-		} // if
-		return true;
-	} // end email2send
+        if (!empty($request['fromAccount'])) {
+            if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
+                $sentFolder = $ie->get_stored_options("sentFolder");
+                if (!empty($sentFolder)) {
+                    // Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
+                    $emailbody = $mail->CreateBody();
+                    $emailheader = $mail->CreateHeader();
+                    $data = $emailheader . "\r\n" . $emailbody . "\r\n";
+                    $ie->mailbox = $sentFolder;
+                    if ($ie->connectMailserver() == 'true') {
+                        $connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
+                        $returnData = $ie->getImap()->append($connectString, $data, "\\Seen");
+                        if (!$returnData) {
+                            $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
+                        } // if
+                    } else {
+                        $GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
+                    } // else
+                } else {
+                    $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
+                } // else
+            } // if
+        } // if
+        return true;
+    } // end email2send
 
     /**
      * Generates a config-specified separated name and addresses to be used in compose email screen for
@@ -1494,7 +1613,7 @@ class Email extends Basic
             }
         }
         $GLOBALS['log']->debug('-------------------------------> Email save() done');
-
+        
         return $id;
     }
 
@@ -1525,7 +1644,7 @@ class Email extends Basic
             if (!copy($fileLocation, $noteFile)) {
                 $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
             } else {
-                
+
                 if (!$tmpNote->save()) {
                     return false;
                 }
@@ -2745,30 +2864,54 @@ class Email extends Basic
 
     /**
      * Sends Email
-     * @global $mod_strings
-     * @global $current_user
-     * @global $sugar_config
-     * @global $locale
-     * @return bool True on success
+     * @global array $mod_strings
+     * @global array $app_strings
+     * @global User $current_user
+     * @global array $sugar_config
+     * @global Localization $locale
+     * @param SugarPHPMailer $mail
+     * @param NonGmailSentFolderHandler $nonGmailSentFolder
+     * @return boolean True on success
      */
-    public function send()
+    public function send(
+        SugarPHPMailer $mail = null,
+        NonGmailSentFolderHandler $nonGmailSentFolder = null,
+        InboundEmail $ie = null,
+        Email $tempEmail = null,
+        $check_notify = false,
+        $options = "\\Seen")
     {
         global $mod_strings, $app_strings;
         global $current_user;
         global $sugar_config;
         global $locale;
+        
+        $this->clearTempEmailAtSend();
+        
         $OBCharset = $locale->getPrecedentPreference('default_email_charset');
-        $mail = new SugarPHPMailer();
+        $mail = $mail ? $mail : new SugarPHPMailer();
 
-        foreach ($this->to_addrs_arr as $addr_arr) {
+        if (!$this->to_addrs_arr) {
+            LoggerManager::getLogger()->error('"To" address(es) is not set or empty to sending email.');
+            return false; // return false as error, to-address is required to sending an email
+        }
+        foreach ((array)$this->to_addrs_arr as $addr_arr) {
             if (empty($addr_arr['display'])) {
-                $mail->AddAddress($addr_arr['email'], "");
+                if (!isset($addr_arr['email']) || !$addr_arr['email']) {
+                    LoggerManager::getLogger()->error('"To" email address is missing!');
+                } else {
+                    $mail->AddAddress($addr_arr['email'], "");
+                }
             } else {
                 $mail->AddAddress($addr_arr['email'],
                     $locale->translateCharsetMIME(trim($addr_arr['display']), 'UTF-8', $OBCharset));
             }
         }
-        foreach ($this->cc_addrs_arr as $addr_arr) {
+        
+        if (!$this->cc_addrs_arr) {
+            LoggerManager::getLogger()->warn('"CC" address(es) is not set or empty to sending email.');
+        }
+        foreach ((array)$this->cc_addrs_arr as $addr_arr) {
             if (empty($addr_arr['display'])) {
                 $mail->AddCC($addr_arr['email'], "");
             } else {
@@ -2777,7 +2920,10 @@ class Email extends Basic
             }
         }
 
-        foreach ($this->bcc_addrs_arr as $addr_arr) {
+        if (!$this->bcc_addrs_arr) {
+            LoggerManager::getLogger()->warn('"BCC" address(es) is not set or empty to sending email.');
+        }
+        foreach ((array)$this->bcc_addrs_arr as $addr_arr) {
             if (empty($addr_arr['display'])) {
                 $mail->AddBCC($addr_arr['email'], "");
             } else {
@@ -2906,15 +3052,19 @@ class Email extends Basic
         ////	END I18N TRANSLATION
         ///////////////////////////////////////////////////////////////////////
 
-        if ($mail->Send()) {
+        if ($mail->send()) {
             ///////////////////////////////////////////////////////////////////
             ////	INBOUND EMAIL HANDLING
             // mark replied
+            
             if (!empty($_REQUEST['inbound_email_id'])) {
-                $ieMail = new Email();
-                $ieMail->retrieve($_REQUEST['inbound_email_id']);
-                $ieMail->status = 'replied';
-                $ieMail->save();
+                $ieId = $_REQUEST['inbound_email_id'];
+                $this->createTempEmailAtSend($tempEmail);
+                $this->getTempEmailAtSend()->status = 'replied';
+                $ie = $ie ? $ie : new InboundEmail();
+                $nonGmailSentFolder = $nonGmailSentFolder ? $nonGmailSentFolder : new NonGmailSentFolderHandler();
+                $ieMailId = $this->getTempEmailAtSend()->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder, $check_notify, $options);
+                LoggerManager::getLogger()->debug('IE Mail ID is ' . ($ieMailId === null ? 'null' : $ieMailId) . ' after save and store in non-gmail sent folder.');
             }
             $GLOBALS['log']->debug(' --------------------- buh bye -- sent successful');
             ////	END INBOUND EMAIL HANDLING
@@ -2925,8 +3075,81 @@ class Email extends Basic
 
         return false;
     }
+    
+    /**
+     *
+     * @param InboundEmail $ie
+     * @param string $ieId
+     * @param SugarPHPMailer $mail
+     * @param NonGmailSentFolderHandler $nonGmailSentFolder
+     * @return int|null null if error
+     */
+    public function saveAndStoreInSentFolderIfNoGmail(
+        InboundEmail $ie,
+        $ieId,
+        SugarPHPMailer $mail,
+        NonGmailSentFolderHandler $nonGmailSentFolder,
+        $check_notify = false,
+        $options = "\\Seen")
+    {
+        $ieMailId = null;
+        if (!$ie) {
+            $ie = new InboundEmail();
+        }
+        if (!$ie->id) {
+            if (!$ie->retrieve($ieId)) {
+                LoggerManager::getLogger()->warn('Error retrieve InboundEmail, requested ID was: ' . $ieId);
+                $this->setLastSaveAndStoreInSentError(self::ERR_IE_RETRIEVE);
+            }
+        }
+        if ($ie && $ie->id) {
+            $ieMailId = $this->saveAndStoreInSent($mail, $ie, $nonGmailSentFolder, $check_notify, $options);
+            if (!$ieMailId) {
+                LoggerManager::getLogger()->warn('Email save and store in sent folder error. Inbound email ID was: ' . $ieId);
+            }
+        }
+        return $ieMailId;
+    }
+    
+    /**
+     *
+     * @param SugarPHPMailer $mail
+     * @param InboundEmail $ie
+     * @param NonGmailSentFolderHandler $nonGmailSentFolder
+     * @param bool $check_notify
+     * @return string
+     */
+    protected function saveAndStoreInSent(
+        SugarPHPMailer $mail,
+        InboundEmail $ie,
+        NonGmailSentFolderHandler $nonGmailSentFolder = null,
+        $check_notify = false,
+        $options = "\\Seen")
+    {
+        $ieMailId = $this->save($check_notify);
+        if ($ieMailId) {
+            // mark SEEN (STORE MAIL IN SENT BOX)
+            $this->setNonGmailSentFolderHandler($nonGmailSentFolder ? $nonGmailSentFolder : new NonGmailSentFolderHandler());
+            if (!($ie && $ie->id)) {
+                LoggerManager::getLogger()->warn('Exists and retrieved InboundEmail needed for storing email as sent.');
+                $this->setLastSaveAndStoreInSentError(self::ERR_NO_IE);
+            } else {
+                $stored = $this->getNonGmailSentFolderHandler()->storeInSentFolder($ie, $mail, $options);
+                if (!$stored) {
+                    LoggerManager::getLogger()->warn('Email storing in non gmail sent folder was not necessary. Inbound email ID was: ' . $ie->id);
+                    $this->setLastSaveAndStoreInSentError(self::ERR_NOT_STORED_AS_SENT);
+                } else {
+                    LoggerManager::getLogger()->debug('Email storing in non gmail sent folder success. Inbound email ID was: ' . $ie->id);
+                    $this->setLastSaveAndStoreInSentError(self::NO_ERROR);
+                }
+            }
+        } else {
+            $this->setLastSaveAndStoreInSentError(self::ERR_NO_IE_MAIL_ID);
+        }
 
-
+        return $ieMailId;
+    }
+    
     /**
      * @return string[]
      */
@@ -4471,9 +4694,8 @@ eoq;
             $bean = BeanFactory::getBean($row['bean_module'], $row['bean_id']);
 
             $actionSendEmail = new actionSendEmail();
-            $date = new DateTime();
-            $now = $date->format($timedate::DB_DATETIME_FORMAT);
-            if(!$actionSendEmail->run_action($bean, $params)) {
+            $now = TimeDate::getInstance()->nowDb();
+            if (!$actionSendEmail->run_action($bean, $params)) {
                 $emailAddress->confirm_opt_in_fail_date = $now;
             } else {
                 $emailAddress->confirm_opt_in_sent_date = $now;
