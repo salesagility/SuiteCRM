@@ -395,42 +395,50 @@ class Document extends File {
 	function mark_relationships_deleted($id)
     {
         $this->load_relationships('revisions');
-       	$revisions= $this->get_linked_beans('revisions','DocumentRevision');
+        $revisions = $this->get_linked_beans('revisions', 'DocumentRevision');
 
-       	if (!empty($revisions) && is_array($revisions)) {
-       		foreach($revisions as $key=>$version) {
-       			UploadFile::unlink_file($version->id,$version->filename);
-       			//mark the version deleted.
-       			$version->mark_deleted($version->id);
-       		}
-       	}
+        if (!empty($revisions) && is_array($revisions)) {
+            foreach ($revisions as $key => $version) {
+                UploadFile::unlink_file($version->id, $version->filename);
+                //mark the version deleted.
+                $version->mark_deleted($version->id);
+            }
+        }
+        parent::mark_relationships_deleted($id);
+    }
 
-	}
 
+    public function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':
+                return true;
+            case 'FILE':
+                return true;
+        }
 
-	function bean_implements($interface) {
-		switch ($interface) {
-			case 'ACL' :
-				return true;
-		}
-		return false;
-	}
+        return false;
+    }
 
-	//static function.
-	function get_document_name($doc_id){
-		if (empty($doc_id)) return null;
+    //static function.
+    public function get_document_name($doc_id)
+    {
+        if (empty($doc_id)) {
+            return null;
+        }
 
-		$db = DBManagerFactory::getInstance();
-		$query="select document_name from documents where id='$doc_id'  and deleted=0";
-		$result=$db->query($query);
-		if (!empty($result)) {
-			$row=$db->fetchByAssoc($result);
-			if (!empty($row)) {
-				return $row['document_name'];
-			}
-		}
-		return null;
-	}
+        $db = DBManagerFactory::getInstance();
+        $query = "select document_name from documents where id='$doc_id'  and deleted=0";
+        $result = $db->query($query);
+        if (!empty($result)) {
+            $row = $db->fetchByAssoc($result);
+            if (!empty($row)) {
+                return $row['document_name'];
+            }
+        }
+
+        return null;
+    }
 }
 
 require_once('modules/Documents/DocumentExternalApiDropDown.php');
