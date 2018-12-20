@@ -40,17 +40,22 @@
 
 namespace SuiteCRM\Test;
 
-require_once __DIR__."/AbstractDocumentifierMock.php";
+use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
+use SuiteCRM\Search\SearchTestAbstract;
+use SuiteCRM\StateSaver;
+
+require_once __DIR__ . "/AbstractDocumentifierMock.php";
+require_once __DIR__ . "/SearchTestAbstract.php";
 
 
-class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
+class AbstractDocumentifierTest extends SearchTestAbstract
 {
     /** @var AbstractDocumentifier */
     private $documentifier;
 
     public function testSanitizePhone()
     {
-        $state = new \SuiteCRM\StateSaver();
+        $state = new StateSaver();
         $state->pushTable('reminders');
         $state->pushTable('reminders_invitees');
 
@@ -74,7 +79,7 @@ class AbstractDocumentifierTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testFixPhone()
     {
-        $state = new \SuiteCRM\StateSaver();
+        $state = new StateSaver();
         $state->pushTable('reminders');
         $state->pushTable('reminders_invitees');
 
