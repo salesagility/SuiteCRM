@@ -1,7 +1,4 @@
 <?php
-
-use SuiteCRM\Utility\ArrayMapper;
-
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,7 +36,11 @@ use SuiteCRM\Utility\ArrayMapper;
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-class ArrayMapperTest extends \Codeception\Test\Unit
+
+use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\Utility\ArrayMapper;
+
+class ArrayMapperTest extends StateCheckerPHPUnitTestCaseAbstract
 {
     public function test()
     {

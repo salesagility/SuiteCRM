@@ -39,16 +39,18 @@
 
 /** @noinspection PhpUnhandledExceptionInspection */
 
+use Monolog\Logger;
 use SuiteCRM\Log\CliLoggerHandler;
+use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 
 /**
  * Class CliLoggerHandlerTest test for CliLoggerHandler.
  *
  * @see CliLoggerHandler
  */
-class CliLoggerHandlerTest extends \Codeception\Test\Unit
+class CliLoggerHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
 {
-    /** @var Monolog\Logger */
+    /** @var Logger */
     private $logger;
 
     public function testLogging()
@@ -67,7 +69,7 @@ class CliLoggerHandlerTest extends \Codeception\Test\Unit
 
     protected function setUp()
     {
-        $this->logger = new Monolog\Logger("Test");
+        $this->logger = new Logger("Test");
         $this->logger->pushHandler(new CliLoggerHandler());
         return parent::setUp();
     }
