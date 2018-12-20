@@ -47,8 +47,6 @@ require_once(__DIR__ . '/../ytree/ExtNode.php');
 require_once(__DIR__ . '/SugarFolderEmptyException.php');
 require_once(__DIR__ . '/../TimeDate.php');
 
-class SugarFolderEmptyException extends Exception { }
-
 /**
  * Polymorphic buckets - place any item in a folder
  */
