@@ -3911,8 +3911,7 @@ class InboundEmail extends SugarBean
         $charset = $this->getCharsetFromBreadCrumb($section, $structure->parts);
         $msgPartTmp = $this->handleTranserEncoding($msgPartTmp, $enc);
 
-            return $this->handleCharsetTranslation($msgPartTmp, $charset);
-        }
+        return $this->handleCharsetTranslation($msgPartTmp, $charset);
     }
 
     public function getMessageTextFromSingleMimePartWithUid($uid, $section, $structure)
