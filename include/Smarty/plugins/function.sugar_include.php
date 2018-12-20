@@ -79,9 +79,11 @@ function smarty_function_sugar_include($params, &$smarty)
 	   	  foreach($params['include'] as $include) {
 	   	  	      if(isset($include['file'])) {
 	   	  	         $file = $include['file'];
-	   	  	         if(preg_match('/[\.]js$/si',$file)) {
+                     if (preg_match('/tiny_mce.*[\.]js$/si', $file)) {
+                         $code .= "<script src=\"".$file ."\"></script>";
+	   	  	         } else if(preg_match('/[\.]js$/si',$file)) {
                          $jsFiles[] = $file;
-	   	  	         } else if(preg_match('/[\.]php$/si', $file)) {
+                     } else if(preg_match('/[\.]php$/si', $file)) {
 	   	  	            require_once($file);	
 	   	  	         }
 	   	  	      } 
