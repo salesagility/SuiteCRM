@@ -55,7 +55,7 @@ class SugarMin {
      *
      * @return Minified JS file path
      */
-    function joinAndMinifyJSFiles($jsFiles)
+    static public function joinAndMinifyJSFiles($jsFiles)
     {
         $target = SugarThemeRegistry::current()->getJSPath()
                 . '/' .
