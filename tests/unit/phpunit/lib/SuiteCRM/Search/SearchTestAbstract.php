@@ -2,7 +2,12 @@
 
 namespace SuiteCRM\Search;
 
-abstract class SearchTestAbstract extends \SuiteCRM\StateCheckerUnitAbstract
+use Mockery;
+use ReflectionClass;
+use ReflectionException;
+use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+
+abstract class SearchTestAbstract extends StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * Call protected/private method of a class.
@@ -12,11 +17,11 @@ abstract class SearchTestAbstract extends \SuiteCRM\StateCheckerUnitAbstract
      * @param array $parameters Array of parameters to pass into method.
      *
      * @return mixed Method return.
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function invokeMethod(&$object, $methodName, array $parameters = array())
     {
-        $reflection = new \ReflectionClass(get_class($object));
+        $reflection = new ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
@@ -29,11 +34,11 @@ abstract class SearchTestAbstract extends \SuiteCRM\StateCheckerUnitAbstract
      * @param object $object Instantiated object to set the value of.
      * @param string $property name of the property.
      * @param mixed $value value of the property.
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function setValue(&$object, $property, $value)
     {
-        $reflection = new \ReflectionClass(get_class($object));
+        $reflection = new ReflectionClass(get_class($object));
         $property = $reflection->getProperty($property);
         $property->setAccessible(true);
         $property->setValue($object, $value);
@@ -43,6 +48,6 @@ abstract class SearchTestAbstract extends \SuiteCRM\StateCheckerUnitAbstract
     public function tearDown()
     {
         parent::tearDown();
-        \Mockery::close();
+        Mockery::close();
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
 *
 * SugarCRM Community Edition is a customer relationship management program developed by
@@ -39,11 +38,13 @@
 * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
 */
 
+use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+
 if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-class BaseHandlerTest extends SuiteCRM\StateCheckerUnitAbstract
+class BaseHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp() {
         parent::setUp();

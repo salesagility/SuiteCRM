@@ -1,5 +1,4 @@
 <?php
-
 /**
 *
 * SugarCRM Community Edition is a customer relationship management program developed by
@@ -39,20 +38,19 @@
 * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
 */
 
+use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+
 if (!defined('sugarEntry') || !sugarEntry) {
    die('Not A Valid Entry Point');
 }
 
-class GoogleCalendarSettingsHandlerTest extends SuiteCRM\StateCheckerUnitAbstract
+include_once __DIR__ . '/../../../../../include/utils/BaseHandler.php';
+include_once __DIR__ . '/../../../../../modules/Administration/GoogleCalendarSettingsHandler.php';
+include_once __DIR__ . '/GoogleCalendarSettingsHandlerMock.php';
+include_once __DIR__ . '/../../../../../include/utils/layout_utils.php';
+        
+class GoogleCalendarSettingsHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
 {
-    public function setUp() {
-        parent::setUp();
-
-        include_once __DIR__ . '/../../../../../include/utils/BaseHandler.php';
-        include_once __DIR__ . '/../../../../../modules/Administration/GoogleCalendarSettingsHandler.php';
-        include_once __DIR__ . '/GoogleCalendarSettingsHandlerMock.php';
-        include_once __DIR__ . '/../../../../../include/utils/layout_utils.php';
-    }
 
     public function testFirst() {
         $this->assertEquals(true, true);

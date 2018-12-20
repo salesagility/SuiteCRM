@@ -1,8 +1,11 @@
 <?php
 
-require_once dirname(dirname(dirname(dirname(__DIR__)))). '/include/GoogleSync/GoogleSync.php';
+use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\StateSaver;
 
-class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
+require_once __DIR__ . '/../../../../../include/GoogleSync/GoogleSync.php';
+
+class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 {
     /** @var UnitTester */
     protected $tester;
@@ -13,9 +16,9 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
     /** @var ReflectionProperty */
     protected static $dbProperty;
 
-    public function _before()
+    public function setUp()
     {
-        parent::_before();
+        parent::setUp();
 
         // Use reflection to access private properties and methods
         if (self::$relection === null) {
@@ -123,7 +126,7 @@ class GoogleSyncTest extends \SuiteCRM\StateCheckerUnitAbstract
     public function testCreateSuitecrmMeetingEvent()
     {
 
-        $state = new \SuiteCRM\StateSaver();
+        $state = new StateSaver();
         $state->pushTable('reminders');
         $state->pushTable('reminders_invitees');
 
