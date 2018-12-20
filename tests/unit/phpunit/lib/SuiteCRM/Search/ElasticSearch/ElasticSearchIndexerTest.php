@@ -44,9 +44,13 @@ use Mockery as m;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer as i;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
+use SuiteCRM\Search\SearchTestAbstract;
 use SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
 
-class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
+include_once __DIR__ . '/../../Utility/BeanJsonSerializerTestData/BeanMock.php';
+include_once __DIR__ . '/../SearchTestAbstract.php';
+
+class ElasticSearchIndexerTest extends SearchTestAbstract
 {
     public function testGetModulesToIndex()
     {
