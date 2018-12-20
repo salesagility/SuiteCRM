@@ -62,9 +62,7 @@ before_script:
   - composer install
   - ./vendor/bin/codecept build
 
-script:   
-  # fail fast - (quit from bash when non-zero response code given)
-  - set -e
+script:
   # Run the wizard installer
   - echo "using install wizard"
   - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d
