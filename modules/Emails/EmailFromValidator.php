@@ -49,12 +49,12 @@ require_once __DIR__ . '/EmailFixer.php';
 require_once __DIR__ . '/EmailValidatorException.php';
 
 /**
- * EmailValidator
+ * EmailFromValidator
  * Specially for validate and handling any confusion From Address / From Name issue.
  *
  * @author gyula
  */
-class EmailValidator // TODO: it should be called as EmailFromAddressValidator OR Should be finished the rest fields like to, to address, cc, bcc etc..
+class EmailFromValidator // TODO: it should be called as EmailFromAddressValidator OR Should be finished the rest fields like to, to address, cc, bcc etc..
 {
     const ERR_FIELD_FROM_IS_NOT_SET = 1;
     const ERR_FIELD_FROM_IS_EMPTY = 2;
@@ -99,9 +99,10 @@ class EmailValidator // TODO: it should be called as EmailFromAddressValidator O
      * Specially use before email sending.
      *
      * @param Email $email
+     * @param bool $tryToFix
      * @return array
      */
-    public function isValid(Email $email)
+    public function isValid(Email $email, $tryToFix = true)
     {
         $this->setEmail($email);
         $this->clearErrors();
@@ -110,10 +111,15 @@ class EmailValidator // TODO: it should be called as EmailFromAddressValidator O
         $this->addErrors($this->validateFromName());
         $this->addErrors($this->validateFrom_Name());
         $this->addErrors($this->validateFromAddrName());
-        $this->addErrors($this->validateTo());
-        $this->addErrors($this->validateCCs());
-        $this->addErrors($this->validateBCCs());
+//        $this->addErrors($this->validateTo());
+//        $this->addErrors($this->validateCCs());
+//        $this->addErrors($this->validateBCCs());
         $valid = !$this->hasErrors();
+        if (!$valid && $tryToFix) {
+            $fixer = new EmailFromFixer();
+            $fixer->fix($email);
+            $valid = !$this->hasErrors();
+        }
         return $valid;
     }
     
@@ -462,24 +468,4 @@ class EmailValidator // TODO: it should be called as EmailFromAddressValidator O
         return $this->getErrors();
     }
     
-    protected function validateTo()
-    {
-
-        // todo
-        return $this->getErrors();
-    }
-    
-    protected function validateCCs()
-    {
-
-        // todo
-        return $this->getErrors();
-    }
-    
-    protected function validateBCCs()
-    {
-
-        // todo
-        return $this->getErrors();
-    }
 }
