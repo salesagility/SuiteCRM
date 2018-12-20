@@ -150,7 +150,7 @@ class GoogleSync extends GoogleSyncBase
             throw $e;
         }
 
-        $meetings = $this->getUserMeetings();
+        $meetings = $this->getUserMeetings($id);
         if (empty($meetings)) {
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to get Users Meetings');
             return false;

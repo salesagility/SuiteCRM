@@ -298,10 +298,9 @@ class GoogleSyncBase
      * @throws E_ValidationFailure if $this->workingUser->id is invalid
      * @throws E_RecordRetrievalFail if unable to get Meetings bean
      */
-    protected function getUserMeetings()
+    protected function getUserMeetings($userId)
     {
         // Validate the workingUser id
-        $userId = $this->db->quote($this->workingUser->id);
         $isValidator = new SuiteValidator();
         if (!$isValidator->isValidId($userId)) {
             throw new E_ValidationFailure('Invalid ID requested in getUserMeetings');
