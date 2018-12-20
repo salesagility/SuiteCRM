@@ -49,9 +49,13 @@ require_once('modules/Audit/Audit.php');
 global $beanList, $beanFiles, $currentModule, $focus, $action, $app_strings, $app_list_strings, $current_language, $timedate, $mod_strings;
 //we don't want the parent module's string file, but rather the string file specific to this subpanel
 
-$bean = $beanList[$_REQUEST['module_name']];
-require_once($beanFiles[$bean]);
-$focus = new $bean;
+if (!isset($_REQUEST['module_name'])) {
+    LoggerManager::getLogger()->warn("Popup picker needs requested module name but \$_REQUEST[module_name] is not set.");
+} else {
+    $bean = $beanList[$_REQUEST['module_name']];
+    require_once($beanFiles[$bean]);
+    $focus = new $bean;
+}
 
 class Popup_Picker
 {
