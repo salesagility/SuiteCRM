@@ -419,6 +419,72 @@ class PackageManager
         return $this->extractFile($zip_file, "manifest.php", $base_tmp_upgrade_dir);
     }
 
+    private function validate_manifest_type($type)
+    {
+        global $mod_strings;
+
+        if (!isset($type)) {
+            echo($mod_strings['ERROR_MANIFEST_TYPE']);
+            return false;
+        }
+        LoggerManager::getLogger()->debug("Getting InstallType");
+        if ($this->getInstallType("/$type/") == "") {
+            LoggerManager::getLogger()->debug("Error with InstallType".$type);
+            echo($mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.");
+            return false;
+        }
+        LoggerManager::getLogger()->debug("Passed with InstallType");
+        return true;
+    }
+
+    private function validate_manifest_crm_version($acceptable_versions, $key)
+    {
+        global $mod_strings;
+        global $sugar_version;
+        global $suitecrm_version;
+
+        if ($key == "acceptable_sugar_versions")
+            $checkedVersion = $sugar_version;
+        else
+            $checkedVersion = $suitecrm_version;
+
+        if (isset($acceptable_versions)) {
+            LoggerManager::getLogger()->debug("Getting $key");
+            $version_crm_ok = false;
+            $matches_empty = true;
+            if (isset($acceptable_versions['exact_matches'])) {
+                $matches_empty = false;
+                foreach ($acceptable_versions['exact_matches'] as $match) {
+                    if ($match == $checkedVersion) {
+                        $version_crm_ok = true;
+                        LoggerManager::getLogger()->debug("Passed $key");
+                        break;
+                    }
+                }
+            }
+            if (!$version_crm_ok && isset($$acceptable_versions['regex_matches'])) {
+                $matches_empty = false;
+                foreach ($acceptable_versions['regex_matches'] as $match) {
+                    if (preg_match("/$match/", $checkedVersion)) {
+                        $version_crm_ok = true;
+                        LoggerManager::getLogger()->debug("Passed $key");
+                        break;
+                    }
+                }
+            }
+
+            if (!$matches_empty && !$version_crm_ok) {
+                LoggerManager::getLogger()->debug("Error with $key");
+                echo($mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . $checkedVersion);
+                return false;
+            }
+            else
+                return true;
+        }
+        else
+            return true;
+    }
+
     public function validate_manifest($manifest)
     {
         // takes a manifest.php manifest array and validates contents
@@ -428,76 +494,15 @@ class PackageManager
         global $sugar_flavor;
         global $mod_strings;
 
-        if (!isset($manifest['type'])) {
-            die($mod_strings['ERROR_MANIFEST_TYPE']);
-        }
-        $type = $manifest['type'];
-        LoggerManager::getLogger()->debug("Getting InstallType");
-        if ($this->getInstallType("/$type/") == "") {
-            LoggerManager::getLogger->debug("Error with InstallType".$type);
-            die($mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.");
-        }
-        LoggerManager::getLogger()->debug("Passed with InstallType");
-        if (isset($manifest['acceptable_sugar_versions'])) {
-            LoggerManager::getLogger()->debug("Getting AcceptableSugarVersions");
-            $version_sugar_ok = false;
-            $matches_empty = true;
-            if (isset($manifest['acceptable_sugar_versions']['exact_matches'])) {
-                $matches_empty = false;
-                foreach ($manifest['acceptable_sugar_versions']['exact_matches'] as $match) {
-                    if ($match == $sugar_version) {
-                        $version_sugar_ok = true;
-                        LoggerManager::getLogger()->debug("Passed AcceptableSugarVersions");
-                        break;
-                    }
-                }
-            }
-            if (!$version_sugar_ok && isset($manifest['acceptable_sugar_versions']['regex_matches'])) {
-                $matches_empty = false;
-                foreach ($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
-                    if (preg_match("/$match/", $sugar_version)) {
-                        $version_sugar_ok = true;
-                        LoggerManager::getLogger()->debug("Passed AcceptableSugarVersions");
-                        break;
-                    }
-                }
-            }
+        if (!validate_manifest_type($manifest['type']))
+            exit();
 
-            if (!$matches_empty && !$version_sugar_ok) {
-                LoggerManager::getLogger()->debug("Error with AcceptableSugarVersions");
-                die($mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version);
-            }
-        }
-        if (isset($manifest['acceptable_suitecrm_versions'])) {
-            LoggerManager::getLogger()->debug("Getting AcceptableSuiteCRMVersions");
-            $version_suitecrm_ok = false;
-            $matches_empty = true;
-            if (isset($manifest['acceptable_suitecrm_versions']['exact_matches'])) {
-                $matches_empty = false;
-                foreach ($manifest['acceptable_suitecrm_versions']['exact_matches'] as $match) {
-                    if ($match == $suitecrm_version) {
-                        $version_suitecrm_ok = true;
-                        LoggerManager::getLogger()->debug("Passed AcceptableSuitecrmVersions");
-                        break;
-                    }
-                }
-            }
-            if (!$version_suitecrm_ok && isset($manifest['acceptable_suitecrm_versions']['regex_matches'])) {
-                $matches_empty = false;
-                foreach ($manifest['acceptable_suitecrm_versions']['regex_matches'] as $match) {
-                    if (preg_match("/$match/", $suitecrm_version)) {
-                        $version_suitecrm_ok = true;
-                        LoggerManager::getLogger()->debug("Passed AcceptableSuitecrmVersions");
-                        break;
-                    }
-                }
-            }
 
-            if (!$matches_empty && !$version_suitecrm_ok) {
-                LoggerManager::getLogger()->debug("Error with AcceptableSuiteCRMVersions");
-                die($mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . $suitecrm_version);
-            }
-        }
+        $versionSugarOk = validate_manifest_crm_version($manifest['acceptable_sugar_versions'], 'acceptable_sugar_versions');
+        $versionSuiteOk = validate_manifest_crm_version($manifest['acceptable_suitecrm_versions'], 'acceptable_suitecrm_versions');
+
+        if (!$versionSugarOk || !$versionSuiteOk)
+            exit();
     }
 
     public function getInstallType($type_string)
