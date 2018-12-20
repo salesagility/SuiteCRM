@@ -444,10 +444,14 @@ class PackageManager
         global $suitecrm_version;
 
         if ($key == "acceptable_sugar_versions")
+        {
             $checkedVersion = $sugar_version;
-        else
+            $errorStringKey = "ERROR_SUGARCRM_VERSION_INCOMPATIBLE";
+        }else{
             $checkedVersion = $suitecrm_version;
-
+            $errorStringKey = "ERROR_SUITECRM_VERSION_INCOMPATIBLE";
+        }
+        
         if (isset($acceptable_versions)) {
             LoggerManager::getLogger()->debug("Getting $key");
             $version_crm_ok = false;
@@ -475,7 +479,7 @@ class PackageManager
 
             if (!$matches_empty && !$version_crm_ok) {
                 LoggerManager::getLogger()->debug("Error with $key");
-                echo($mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . $checkedVersion);
+                echo($mod_strings[$errorStringKey] . $checkedVersion);
                 return false;
             }
             else
