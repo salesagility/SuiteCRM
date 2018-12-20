@@ -94,7 +94,7 @@ class SearchWrapperTest extends SearchTestAbstract
 
     public function testSearchAndDisplayBuiltIn()
     {
-        SearchWrapper::addEngine('SearchEngineMock', 'tests/unit/lib/SuiteCRM/Search/SearchEngineMock.php');
+        SearchWrapper::addEngine('SearchEngineMock', __DIR__ . '/SearchEngineMock.php');
 
         $query = SearchQuery::fromString('foo', null, null, 'SearchEngineMock');
 
@@ -107,7 +107,7 @@ class SearchWrapperTest extends SearchTestAbstract
 
     public function testFakeSearch()
     {
-        SearchWrapper::addEngine('SearchEngineMock', 'tests/unit/lib/SuiteCRM/Search/SearchEngineMock.php');
+        SearchWrapper::addEngine('SearchEngineMock', __DIR__ . '/SearchEngineMock.php');
 
         $result = SearchWrapper::search('SearchEngineMock', SearchQuery::fromString('foo'));
 
