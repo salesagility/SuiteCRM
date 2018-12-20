@@ -424,7 +424,7 @@ class Document extends File
                 $version->mark_deleted($version->id);
             }
         }
-
+        parent::mark_relationships_deleted($id);
     }
 
 

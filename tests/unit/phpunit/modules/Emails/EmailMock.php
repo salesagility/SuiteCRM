@@ -42,12 +42,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once __DIR__ . '/ImapTestSettingsEntryHandler.php';
-
-global $sugar_config;
-
-$handler = new ImapTestSettingsEntryHandler();
-$output = $handler->handleEntryPointRequest($sugar_config, $_REQUEST);
-
-echo $output;
-exit;
+/**
+ * EmailMock
+ *
+ * @author gyula
+ */
+class EmailMock extends Email
+{
+    
+    /**
+     *
+     * @param int $err
+     */    
+    public function setLastSaveAndStoreInSentErrorPublic($err)
+    {
+        return parent::setLastSaveAndStoreInSentError($err);
+    }
+    
+    /**
+     * preps SMTP info for email transmission
+     * @param object $mail SugarPHPMailer object
+     * @param string $mailer_id
+     * @param string $ieId
+     * @global $current_user
+     * @return object mail SugarPHPMailer object
+     */
+    public function setMailer($mail, $mailer_id = '', $ieId = '') {
+        return $mail; // skipp oe settings
+    }
+}

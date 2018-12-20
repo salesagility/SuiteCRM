@@ -306,6 +306,7 @@ class CalendarUtils
 
         if (!empty($params['until'])) {
             $end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(), $until);
+            $end->setTime(0, 0, 0);
             $end->modify("+1 Day");
         } else {
             $end = $start;

@@ -2,7 +2,7 @@
 
 namespace Step\Acceptance;
 
-class Emails extends \AcceptanceTester
+class EmailsTester extends \AcceptanceTester
 {
     /**
      * Navigate to emails module

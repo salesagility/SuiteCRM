@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,16 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+*}
+{if $fields.recurring_source.value != '' && $fields.recurring_source.value != 'Sugar'}
+<div class="clear"></div>
+<div class="error">{$MOD.LBL_SYNCED_RECURRING_MSG}</div>
+{/if}
+{{sugar_include type="smarty" file='include/DetailView/header.tpl'}}
 
-include_once __DIR__ . '/ImapTestSettingsEntryHandler.php';
-
-global $sugar_config;
-
-$handler = new ImapTestSettingsEntryHandler();
-$output = $handler->handleEntryPointRequest($sugar_config, $_REQUEST);
-
-echo $output;
-exit;

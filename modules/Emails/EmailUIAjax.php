@@ -196,9 +196,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $email->uid = $_REQUEST['uid'];
             }
 
-            $imapFactory = new ImapHandlerFactory();
-            $imap = $imapFactory->getImapHandler();
-            if ($email->email2Send($_REQUEST, $imap)) {
+            if ($email->email2Send($_REQUEST)) {
                 $ret = array(
                     'composeLayoutId' => $_REQUEST['composeLayoutId'],
                 );

@@ -12,7 +12,7 @@ jobs:
       - stage: codecoverage
         if: type IN (pull_request) OR branch in (master, develop)
         php: 7.0
-        script: ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
+        script: ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 0;" >> config_override.php  ; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
 sudo: required
 dist: trusty
 services:
@@ -71,14 +71,14 @@ script:
   # Run the unit tests
   # - ./vendor/bin/codecept run unit --steps -f -vvv -d
   - cd tests
-  - ../vendor/bin/phpunit --stop-on-failure --stop-on-error "--colors" ./tests/unit/phpunit
+  - ../vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration $(pwd)/phpunit.xml.dist ./tests/unit/phpunit
   - cd ..
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
   # Install demo user data
   - mysql -u root -D automated_tests -v -e "source tests/_data/demo_users.sql"
   # set the log level to error
-  - echo "\$sugar_config['logger']['level'] = 'debug';" >> config_override.php
+  - echo "\$sugar_config['logger']['level'] = 'error';" >> config_override.php
   # add keys
   - sudo chmod -R 777 .
   - openssl genrsa -out Api/V8/OAuth2/private.key 2048
@@ -93,6 +93,8 @@ script:
 
 after_script:
   - ./build/push_output.sh
+  - curl -i -F file=@suitecrm.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
+  - curl -i -F file=@var/log/apache2/error.log https://www.simpleupload.co.uk/Api/FileUpload.php?d=upload
   # - cat suitecrm.log TODO: Upload the suitecrm.log to an external file host.
   # ElasticSearch Indexing logs
   - cat search_index.log

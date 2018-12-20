@@ -92,4 +92,65 @@ class InvoicesCest
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \\Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\Invoices $invoice
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create an invoice and check the number rounding
+     */
+    public function testScenarioInvoiceRounding(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\Invoices $invoice,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create an Invoice');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to invoices list-view
+        $I->loginAsAdmin();
+        $invoice->gotoInvoices();
+        $listView->waitForListViewVisible();
+
+        // Create invoice
+        $this->fakeData->seed($this->fakeDataSeed);
+        $invoice->createInvoice('Test_'. $this->fakeData->company());
+
+        // Set total
+        $detailView->clickActionMenuItem('Edit');
+        $editView->waitForEditViewVisible();
+        $I->fillField('#total_amt', 0);
+        $I->fillField('#discount_amount', 0);
+        $I->fillField('#subtotal_amount', 0);
+        $I->fillField('#shipping_amount', 475.99999999999994);
+        $I->fillField('#shipping_tax_amt', 0);
+        $I->fillField('#tax_amount', 0);
+        $I->selectOption('#status', 'Unpaid');
+        $I->selectOption('#currency_id_select', 'US Dollars : $');
+        $I->selectOption('#shipping_tax', '0%');
+
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+        $detailView->clickActionMenuItem('Edit');
+        $editView->waitForEditViewVisible();
+        $I->scrollTo('#shipping_amount');
+        $I->seeInSource('476.00');
+        $editView->clickSaveButton();
+
+        // Delete invoice
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }

@@ -42,12 +42,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once __DIR__ . '/ImapTestSettingsEntryHandler.php';
+require_once __DIR__ . '/../../../../../modules/InboundEmail/InboundEmail.php';
 
-global $sugar_config;
-
-$handler = new ImapTestSettingsEntryHandler();
-$output = $handler->handleEntryPointRequest($sugar_config, $_REQUEST);
-
-echo $output;
-exit;
+/**
+ * InboundEmailMock
+ *
+ * @author gyula
+ */
+class InboundEmailMock extends InboundEmail
+{
+    
+    /**
+     *
+     * @param bool test Flag to test connection
+     * @param bool force Force reconnect
+     * @return string "true" on success, "false" or $errorMessage on failure
+     */
+    public function connectMailserver($test = false, $force = false)
+    {
+        return true; // emulate a success connection
+    }
+}

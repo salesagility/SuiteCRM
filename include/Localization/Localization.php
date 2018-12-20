@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Localization manager
@@ -113,52 +114,54 @@ class Localization {
     }
 
 
-	/**
-	 * returns an array of Sugar Config defaults that are determined by locale settings
-	 * @return array
-	 */
-	function getLocaleConfigDefaults() {
-		$coreDefaults = array(
-			'currency'								=> '',
-			'datef'									=> 'm/d/Y',
-			'timef'									=> 'H:i',
-			'default_currency_significant_digits'	=> 2,
-			'default_currency_symbol'				=> '$',
-			'default_export_charset'				=> $this->default_export_charset,
-			'default_locale_name_format'			=> 's f l',
+    /**
+     * returns an array of Sugar Config defaults that are determined by locale settings
+     * @return array
+     */
+    public function getLocaleConfigDefaults()
+    {
+        $coreDefaults = array(
+            'currency'                                => '',
+            'datef'                                    => 'm/d/Y',
+            'timef'                                    => 'H:i',
+            'default_currency_significant_digits'    => 2,
+            'default_currency_symbol'                => '$',
+            'default_export_charset'                => $this->default_export_charset,
+            'default_locale_name_format'            => 's f l',
             'name_formats'                          => array('s f l' => 's f l', 'f l' => 'f l', 's l' => 's l', 'l, s f' => 'l, s f',
                                                             'l, f' => 'l, f', 's l, f' => 's l, f', 'l s f' => 'l s f', 'l f s' => 'l f s'),
-			'default_number_grouping_seperator'		=> ',',
-			'default_decimal_seperator'				=> '.',
-			'export_delimiter'						=> ',',
-			'default_email_charset'					=> $this->default_email_charset,
-		);
+            'default_number_grouping_seperator'        => ',',
+            'default_decimal_seperator'                => '.',
+            'export_delimiter'                        => ',',
+            'default_email_charset'                    => $this->default_email_charset,
+        );
 
-		return $coreDefaults;
-	}
+        return $coreDefaults;
+    }
 
-	/**
-	 * abstraction of precedence
-	 * @param string prefName Name of preference to retrieve based on overrides
-	 * @param object user User in focus, default null (current_user)
-	 * @return string pref Most significant preference
-	 */
-	function getPrecedentPreference($prefName, $user=null, $sugarConfigPrefName = '') {
-		global $current_user;
-		global $sugar_config;
+    /**
+     * abstraction of precedence
+     * @param string prefName Name of preference to retrieve based on overrides
+     * @param object user User in focus, default null (current_user)
+     * @return string pref Most significant preference
+     */
+    public function getPrecedentPreference($prefName, $user=null, $sugarConfigPrefName = '')
+    {
+        global $current_user;
+        global $sugar_config;
 
-		$userPref = '';
-		$coreDefaults = $this->getLocaleConfigDefaults();
-		$pref = isset($coreDefaults[$prefName]) ? $coreDefaults[$prefName] : ''; // defaults, even before config.php
+        $userPref = '';
+        $coreDefaults = $this->getLocaleConfigDefaults();
+        $pref = isset($coreDefaults[$prefName]) ? $coreDefaults[$prefName] : ''; // defaults, even before config.php
 
-		if($user != null) {
-			$userPref = $user->getPreference($prefName);
-		} elseif(!empty($current_user)) {
-			$userPref = $current_user->getPreference($prefName);
-		}
-		// Bug 39171 - If we are asking for default_email_charset, check in emailSettings['defaultOutboundCharset'] as well
-		if ( $prefName == 'default_email_charset' ) {
-		    if($user != null) {
+        if ($user != null) {
+            $userPref = $user->getPreference($prefName);
+        } elseif (!empty($current_user)) {
+            $userPref = $current_user->getPreference($prefName);
+        }
+        // Bug 39171 - If we are asking for default_email_charset, check in emailSettings['defaultOutboundCharset'] as well
+        if ($prefName == 'default_email_charset') {
+            if ($user != null) {
                 $emailSettings = $user->getPreference('emailSettings', 'Emails');
             } elseif(!empty($current_user)) {
                 $emailSettings = $current_user->getPreference('emailSettings', 'Emails');
@@ -197,13 +200,13 @@ class Localization {
 		}
 
         $load = sugar_cache_retrieve('currency_list');
-        if ( !is_array($load) ) {
-			// load default from config.php
-			$this->currencies['-99'] = array(
-				'name'		=> $sugar_config['default_currency_name'],
-				'symbol'	=> $sugar_config['default_currency_symbol'],
-				'conversion_rate' => 1
-				);
+        if (!is_array($load)) {
+            // load default from config.php
+            $this->currencies['-99'] = array(
+                'name'        => $sugar_config['default_currency_name'],
+                'symbol'    => $sugar_config['default_currency_symbol'],
+                'conversion_rate' => 1
+                );
 
             $q = "SELECT id, name, symbol, conversion_rate FROM currencies WHERE status = 'Active' and deleted = 0";
             $r = $db->query($q);
@@ -220,6 +223,76 @@ class Localization {
         } else {
             $this->currencies = $load;
         }
+    }
+
+    /**
+     * getter for currencies array
+     * @return array $this->currencies returns array( id => array(name => X, etc
+     */
+    public function getCurrencies()
+    {
+        return $this->currencies;
+    }
+
+    /**
+     * retrieves default OOTB currencies for sugar_config and installer.
+     * @return array ret Array of default currencies keyed by ISO4217 code
+     */
+    public function getDefaultCurrencies()
+    {
+        $ret = array(
+            'AUD' => array(    'name'        => 'Australian Dollars',
+                            'iso4217'    => 'AUD',
+                            'symbol'    => '$'),
+            'BRL' => array(    'name'        => 'Brazilian Reais',
+                            'iso4217'    => 'BRL',
+                            'symbol'    => 'R$'),
+            'GBP' => array(    'name'        => 'British Pounds',
+                            'iso4217'    => 'GBP',
+                            'symbol'    => '£'),
+            'CAD' => array(    'name'        => 'Canadian Dollars',
+                            'iso4217'    => 'CAD',
+                            'symbol'    => '$'),
+            'CNY' => array(    'name'        => 'Chinese Yuan',
+                            'iso4217'    => 'CNY',
+                            'symbol'    => '￥'),
+            'EUR' => array(    'name'        => 'Euro',
+                            'iso4217'    => 'EUR',
+                            'symbol'    => '€'),
+            'HKD' => array(    'name'        => 'Hong Kong Dollars',
+                            'iso4217'    => 'HKD',
+                            'symbol'    => '$'),
+            'INR' => array(    'name'        => 'Indian Rupees',
+                            'iso4217'    => 'INR',
+                            'symbol'    => '₨'),
+            'KRW' => array(    'name'        => 'Korean Won',
+                            'iso4217'    => 'KRW',
+                            'symbol'    => '₩'),
+            'YEN' => array(    'name'        => 'Japanese Yen',
+                            'iso4217'    => 'JPY',
+                            'symbol'    => '¥'),
+            'MXN' => array(    'name'        => 'Mexican Pesos',
+                            'iso4217'    => 'MXN',
+                            'symbol'    => '$'),
+            'SGD' => array(    'name'        => 'Singaporean Dollars',
+                            'iso4217'    => 'SGD',
+                            'symbol'    => '$'),
+            'CHF' => array(    'name'        => 'Swiss Franc',
+                            'iso4217'    => 'CHF',
+                            'symbol'    => 'SFr.'),
+            'THB' => array(    'name'        => 'Thai Baht',
+                            'iso4217'    => 'THB',
+                            'symbol'    => '฿'),
+            'USD' => array(    'name'        => 'US Dollars',
+                            'iso4217'    => 'USD',
+                            'symbol'    => '$'),
+        );
+
+        return $ret;
+    }
+    ////	END CURRENCY HANDLING
+    ///////////////////////////////////////////////////////////////////////////
+
 
 
 	}
@@ -658,24 +731,24 @@ eoq;
 
         //check to see if passed in variables are set, if so, then populate array with value,
         //if not, then populate array with blank ''
-		$names = array();
-		$names['f'] = (empty($firstName)	&& $firstName	!= 0) ? '' : $firstName;
-		$names['l'] = (empty($lastName)	&& $lastName	!= 0) ? '' : $lastName;
-		$names['s'] = (empty($salutation)	&& $salutation	!= 0) ? '' : $salutation;
-		$names['t'] = (empty($title)		&& $title		!= 0) ? '' : $title;
+        $names = array();
+        $names['f'] = (empty($firstName)    && $firstName    != 0) ? '' : $firstName;
+        $names['l'] = (empty($lastName)    && $lastName    != 0) ? '' : $lastName;
+        $names['s'] = (empty($salutation)    && $salutation    != 0) ? '' : $salutation;
+        $names['t'] = (empty($title)        && $title        != 0) ? '' : $title;
 
-		//Bug: 39936 - if all of the inputs are empty, then don't try to format the name.
-		$allEmpty = true;
-		foreach($names as $key => $val){
-			if(!empty($val)){
-				$allEmpty = false;
-				break;
-			}
-		}
-		if($allEmpty){
-			return $returnEmptyStringIfEmpty ? '' : ' ';
-		}
-		//end Bug: 39936
+        //Bug: 39936 - if all of the inputs are empty, then don't try to format the name.
+        $allEmpty = true;
+        foreach ($names as $key => $val) {
+            if (!empty($val)) {
+                $allEmpty = false;
+                break;
+            }
+        }
+        if ($allEmpty) {
+            return $returnEmptyStringIfEmpty ? '' : ' ';
+        }
+        //end Bug: 39936
 
 		if(empty($format)) {
 			$this->localeNameFormat = $this->getLocaleFormatMacro($user);
@@ -694,28 +767,29 @@ eoq;
             return $returnEmptyStringIfEmpty ? '' : ' ';
         }
 
-		if(strpos($formattedName,',',strlen($formattedName)-1)) { // remove trailing commas
-			$formattedName = substr($formattedName, 0, strlen($formattedName)-1);
-		}
-		return trim($formattedName);
-	}
+        if (strpos($formattedName, ',', strlen($formattedName)-1)) { // remove trailing commas
+            $formattedName = substr($formattedName, 0, strlen($formattedName)-1);
+        }
+        return trim($formattedName);
+    }
 
-	/**
-	 * outputs some simple Javascript to show a preview of Name format in "My Account" and "Admin->Localization"
-	 * @param string first First Name, use app_strings default if not specified
-	 * @param string last Last Name, use app_strings default if not specified
-	 * @param string salutation Saluation, use app_strings default if not specified
-	 * @return string some Javascript
-	 */
-	function getNameJs($first='', $last='', $salutation='', $title='') {
-		global $app_strings;
+    /**
+     * outputs some simple Javascript to show a preview of Name format in "My Account" and "Admin->Localization"
+     * @param string first First Name, use app_strings default if not specified
+     * @param string last Last Name, use app_strings default if not specified
+     * @param string salutation Saluation, use app_strings default if not specified
+     * @return string some Javascript
+     */
+    public function getNameJs($first='', $last='', $salutation='', $title='')
+    {
+        global $app_strings;
 
-		$salutation	= !empty($salutation) ? $salutation : $app_strings['LBL_LOCALE_NAME_EXAMPLE_SALUTATION'];
-		$first		= !empty($first) ? $first : $app_strings['LBL_LOCALE_NAME_EXAMPLE_FIRST'];
-		$last		= !empty($last) ? $last : $app_strings['LBL_LOCALE_NAME_EXAMPLE_LAST'];
-		$title		= !empty($title) ? $title : $app_strings['LBL_LOCALE_NAME_EXAMPLE_TITLE'];
+        $salutation    = !empty($salutation) ? $salutation : $app_strings['LBL_LOCALE_NAME_EXAMPLE_SALUTATION'];
+        $first        = !empty($first) ? $first : $app_strings['LBL_LOCALE_NAME_EXAMPLE_FIRST'];
+        $last        = !empty($last) ? $last : $app_strings['LBL_LOCALE_NAME_EXAMPLE_LAST'];
+        $title        = !empty($title) ? $title : $app_strings['LBL_LOCALE_NAME_EXAMPLE_TITLE'];
 
-		$ret = "
+        $ret = "
 		function setPreview() {
 			format = document.getElementById('default_locale_name_format').value;
 			field = document.getElementById('nameTarget');

@@ -101,6 +101,12 @@ class StateChecker
     
     /**
      *
+     * @var array
+     */
+    protected $excludedTables = ['job_queue', 'schedulers'];
+    
+    /**
+     *
      * @throws StateCheckerException
      */
     public function __construct()
@@ -279,8 +285,10 @@ class StateChecker
         $tables = $this->getDatabaseTables();
         $hashes = [];
         foreach ($tables as $table) {
-            $rows = $this->getMysqliResults($this->db->query('SELECT * FROM ' . $table));
-            $hashes[] = $this->getHash($rows, 'database::' . $table);
+            if (!in_array($table, $this->excludedTables)) {
+                $rows = $this->getMysqliResults($this->db->query('SELECT * FROM ' . $table));
+                $hashes[] = $this->getHash($rows, 'database::' . $table);
+            }
         }
         $hash = $this->getHash($hashes, 'database');
         return $hash;
