@@ -56,7 +56,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMarkDeleted()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -66,7 +66,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('vcals');
         $state->pushGlobals();
 
-	// test
+        // test
         
         $call = new Call();
 
@@ -150,12 +150,12 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $call = new Call();
 
@@ -179,7 +179,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency (php5/php7)');
         
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
@@ -276,7 +276,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testset_accept_status()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('calls_users');
@@ -284,7 +284,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('vcals');
         $state->pushGlobals();
 
-	// test
+        // test
         
         $call = new Call();
         $call->id = 1;
@@ -306,7 +306,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('vcals');
         $state->popTable('tracker');
         $state->popTable('calls_users');
-
     }
 
     public function testget_notification_recipients()
@@ -336,12 +335,12 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $call = new Call();
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
@@ -372,8 +371,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetDefaultStatus()

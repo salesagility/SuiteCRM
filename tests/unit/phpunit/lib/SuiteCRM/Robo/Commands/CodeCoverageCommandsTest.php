@@ -70,7 +70,7 @@ class CodeCoverageCommandsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         $this->assertTrue($actual);
 
         // restore config override
-        if(!empty($configOverrideData)) {
+        if (!empty($configOverrideData)) {
             \file_put_contents($configOverridePath, $configOverrideData);
         }
     }

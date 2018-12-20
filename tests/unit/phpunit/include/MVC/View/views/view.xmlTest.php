@@ -22,7 +22,7 @@ class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
 
-        //execute the method and check for rexcetions. it should return some html. 
+        //execute the method and check for rexcetions. it should return some html.
         $view = new ViewXML();
 
         try {
@@ -39,7 +39,5 @@ class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 }

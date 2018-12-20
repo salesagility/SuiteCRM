@@ -140,8 +140,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-
-
     }
 
     public function testfill_in_additional_parent_fields()
@@ -159,8 +157,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-
-
     }
 
     public function testget_list_view_data()

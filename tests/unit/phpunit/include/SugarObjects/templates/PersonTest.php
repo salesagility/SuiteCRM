@@ -47,7 +47,6 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSetLawfulBasis()
     {
-
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('aod_indexevent');
@@ -60,21 +59,21 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $person->last_name = 'Smith';
 
         // Test when  basis is not a string
-        $this->tester->expectException(
-             new InvalidArgumentException('basis must be a string'),
-             function() use ($person) {
-                 $person->setLawfulBasis(1, '');
-             }
-        );
+        try {
+            $person->setLawfulBasis(1, '');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('basis must be a string', $ex->getMessage());
+        }
 
         // test when basis does not exist
-        $this->tester->expectException(
-            new InvalidArgumentException('invalid lawful basis'),
-            function() use ($person) {
-                $person->setLawfulBasis('Test Invalid Basis', '');
-            }
-        );
-
+        try {
+            $person->setLawfulBasis('Test Invalid Basis', '');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('invalid lawful basis', $ex->getMessage());
+        }
+        
         // test valid basis
         $this->assertEquals(1, $person->setLawfulBasis('', ''));
         $this->assertEquals(1, $person->setLawfulBasis('consent', ''));
@@ -88,22 +87,22 @@ class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test lawful basis has been set
         $person->setLawfulBasis('consent', '');
         $this->assertEquals($person->lawful_basis, '^consent^');
-
+        
         // Test when source is not a string
-        $this->tester->expectException(
-            new InvalidArgumentException('source for lawful basis must be a string'),
-            function() use ($person) {
-                $person->setLawfulBasis('', 1);
-            }
-        );
-
+        try {
+            $person->setLawfulBasis('', 1);
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('source for lawful basis must be a string', $ex->getMessage());
+        }
+        
         // test when source does not exist
-        $this->tester->expectException(
-            new InvalidArgumentException('invalid lawful basis source'),
-            function() use ($person) {
-                $person->setLawfulBasis('','Test Invalid Sources');
-            }
-        );
+        try {
+            $person->setLawfulBasis('','Test Invalid Sources');
+            $this->assertTrue(false);
+        } catch (InvalidArgumentException $ex) {
+            $this->assertEquals('invalid lawful basis source', $ex->getMessage());
+        }
 
         // test lawful sources
         $this->assertEquals(true, $person->setLawfulBasis('', ''));

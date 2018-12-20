@@ -5,13 +5,11 @@ class ViewQuickeditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function setUp()
     {
         parent::setUp();
-
     }
 
     public function testpreDisplay()
     {
-        
-        if(isset($_REQUEST)) {
+        if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
         
@@ -36,7 +34,7 @@ class ViewQuickeditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // clean up
 
-        if(isset($_request)) {
+        if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
             unset($_REQUEST);

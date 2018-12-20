@@ -114,12 +114,13 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertNotEmpty($matches);
     }
 
-    private function getLastLogMessage() {
+    private function getLastLogMessage()
+    {
         $paths = new \SuiteCRM\Utility\Paths();
         $loggerPath = $paths->getProjectPath().'/suitecrm.log';
         $data = file($loggerPath);
 
-        if(empty($data)) {
+        if (empty($data)) {
             $line = '';
         } else {
             $line = $data[count($data)-1];

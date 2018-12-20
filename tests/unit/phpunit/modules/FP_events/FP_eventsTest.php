@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -37,6 +37,5 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-        
     }
 }

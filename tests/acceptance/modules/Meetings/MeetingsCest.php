@@ -136,7 +136,6 @@ class MeetingsCest
         // Delete meeting
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
-        $detailView->acceptPopup();
         $listView->waitForListViewVisible();
     }
 }

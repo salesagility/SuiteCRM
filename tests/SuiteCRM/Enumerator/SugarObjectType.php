@@ -2,7 +2,6 @@
 
 namespace SuiteCRM\Enumerator;
 
-
 abstract class SugarObjectType
 {
     const basic = 'basic';

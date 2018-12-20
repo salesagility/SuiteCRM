@@ -60,5 +60,4 @@ class UserWizardCest
         $I2->createEmailSettings();
         $I2->dontSee('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');
     }
-
 }

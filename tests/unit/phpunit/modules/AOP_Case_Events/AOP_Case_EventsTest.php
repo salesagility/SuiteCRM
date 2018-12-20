@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class AOP_Case_EventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {

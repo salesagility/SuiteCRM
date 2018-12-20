@@ -72,7 +72,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
         $state->popTable('aod_index');
-        
     }
 
     public function testget_summary_text()
@@ -155,8 +154,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
         $state->popTable('aod_index');
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -172,7 +169,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $documentRevision = new DocumentRevision();
 
-            //execute the method and test if it works and does not throws an exception.
+        //execute the method and test if it works and does not throws an exception.
         try {
             $documentRevision->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -185,7 +182,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
-        
     }
 
     public function testgetDocumentRevisionNameForDisplay()
@@ -240,7 +236,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
-        
     }
 
     public function testlist_view_parse_additional_sections()
@@ -272,7 +267,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
-        
     }
 
     public function testget_list_view_data()

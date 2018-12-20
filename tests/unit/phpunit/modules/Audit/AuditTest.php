@@ -27,8 +27,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('Audit', 'object_name', $audit);
         
         // clean up
-        
-        
     }
 
     public function testget_summary_text()
@@ -64,8 +62,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_list_fields()
@@ -88,8 +84,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -112,8 +106,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_parent_fields()
@@ -136,8 +128,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testget_list_view_data()
@@ -160,8 +150,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testget_audit_link()
@@ -184,8 +172,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('method has no implementation');
         
         // clean up
-        
-        
     }
 
     public function testget_audit_list()
