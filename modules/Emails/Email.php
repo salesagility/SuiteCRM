@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/EmailValidator.php';
+require_once __DIR__ . '/EmailFromValidator.php';
 include_once __DIR__ . '/EmailException.php';
 require_once __DIR__ . '/../../include/SugarPHPMailer.php';
 require_once __DIR__ . '/../../include/UploadFile.php';
@@ -3077,23 +3077,18 @@ class Email extends Basic
         ////	END I18N TRANSLATION
         ///////////////////////////////////////////////////////////////////////
         
-        $validator = new EmailValidator();
+        $validator = new EmailFromValidator();
         if (!$validator->isValid($this)) { 
+            
             // if an email is invalid before sending, 
             // maybe at this point sould "return false;" because the email having 
             // invalid from address and/or name but we will trying to send it..
+            // and we should log the problem at least:
             
-            // now the fact is logged:  
-            
-            LoggerManager::getLogger()->warn('Invalid email from address or name detected before sending.');
-            
-            // and we should show up the problem:
-            
-            // TODO: !@# it seems works so far, next should trying to prepair the email from, and add validation everywhere when email from name or address is set.
+            // TODO !@# needs EmailFromValidation and EmailFromFixer.. everywhere where from name and/or from email address get a value
             
             $errors = $validator->getErrorsAsText();
-            LoggerManager::getLogger()->error("Email validation error(s) occured:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}");
-            SugarApplication::appendErrorMessage(LangText::get('LBL_EMAIL_ERROR_PREPEND') . "{$errors['messages']}\n{$mail->ErrorInfo}");   
+            LoggerManager::getLogger()->error("Invalid email from address or name detected before sending. Details:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}");
         }
         if ($mail->send()) {
             ///////////////////////////////////////////////////////////////////
