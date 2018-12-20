@@ -47,7 +47,7 @@ class SugarMin {
 	}
 
     /**
-     * Join and minify JS files pass
+     * Join and minify JS files
      *
      * @param array $jsFiles an 'array' of js files
      *
@@ -61,7 +61,7 @@ class SugarMin {
                 . '/' .
                 sha1(implode('|', $jsFiles)) . '.js';
 
-        if (!sugar_is_file(sugar_cached($target))) {
+        if (!is_file(sugar_cached($target))) {
             $customJSContents = '';
 
             foreach ($jsFiles as $jsFileName) {
