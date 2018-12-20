@@ -96,4 +96,5 @@ $entry_point_registry = array(
 	'surveyThanks' => array('file' => 'modules/Surveys/Entry/Thanks.php', 'auth' => false),
     'sendConfirmOptInEmail' => array('file' => 'include/entryPointConfirmOptInConnector.php', 'auth' => true),
     'saveGoogleApiKey' => array('file' => 'modules/Users/entryPointSaveGoogleApiKey.php', 'auth' => true),
+    'setImapTestSettings' => ['file' => 'include/Imap/ImapTestSettingsEntry.php', 'auth' => true],
 );

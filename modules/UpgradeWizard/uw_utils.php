@@ -1166,13 +1166,15 @@ function checkSystemCompliance() {
 		$ret['error_found'] = true;
 	}
 
-	// imap
-	if(function_exists('imap_open')) {
-		$ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
-	} else {
-		$ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['ERR_CHECKSYS_IMAP']}</span></b>";
-		$ret['error_found'] = false;
-	}
+    // imap
+    $imapFactory = new ImapHandlerFactory();
+    $imap = $imapFactory->getImapHandler();
+    if ($imap->isAvailable()) {
+        $ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
+    } else {
+        $ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['ERR_CHECKSYS_IMAP']}</span></b>";
+        $ret['error_found'] = false;
+    }
 
 
 	// safe mode

@@ -92,5 +92,4 @@ class ProjectsCest
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
     }
-
 }

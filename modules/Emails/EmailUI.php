@@ -1978,7 +1978,7 @@ eoq;
 
     public function doAssignment($distributeMethod, $ieid, $folder, $uids, $users)
     {
-        global $app_strings;
+        global $app_strings;        
         $users = explode(",", $users);
         $emailIds = explode($app_strings['LBL_EMAIL_DELIMITER'], $uids);
         $out = "";
@@ -1994,7 +1994,7 @@ eoq;
                 $ie->connectMailserver();
                 $msgNo = $uid;
                 if (!$ie->isPop3Protocol()) {
-                    $msgNo = imap_msgno($ie->conn, $uid);
+                    $msgNo = $ie->getImap()->getMessageNo($uid);
                 } else {
                     $msgNo = $ie->getCorrectMessageNoForPop3($uid);
                 }
