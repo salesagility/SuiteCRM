@@ -2,7 +2,7 @@
 
 class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    -    public function testDisplayJavascriptNotLoginHasDomJS()
+    public function testDisplayJavascriptNotLoginHasDomJS()
     {
         $view = new SugarView();
         $this->action = 'foo';
