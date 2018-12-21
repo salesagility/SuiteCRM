@@ -879,6 +879,11 @@ class User extends Person implements EmailInterface
             if (isset($_POST['subtheme'])) {
                 $this->setPreference('subtheme', $_POST['subtheme'], 0, 'global');
             }
+            if (isset($_POST['gsync_cal'])) {
+                $this->setPreference('syncGCal', 1, 0, 'GoogleSync');
+            } else {
+                $this->setPreference('syncGCal', 0, 0, 'GoogleSync');
+            }
         }
     }
 

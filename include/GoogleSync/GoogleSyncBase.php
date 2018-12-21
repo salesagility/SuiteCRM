@@ -256,6 +256,7 @@ class GoogleSyncBase
      * 
      * @return bool Success/Failure
      * @throws E_ValidationFailureif $id is invalid
+     * @throws E_RecordRetrievalFail if unable to retrive the user
      * @throws E_GoogleClientFailure if Google Client fails to set up
      * @throws E_TimezoneSetFailure if timezone set fails
      * @throws E_GoogleServiceFailure if unable to setup Google Service
@@ -266,6 +267,13 @@ class GoogleSyncBase
         $isValidator = new SuiteValidator();
         if (!$isValidator->isValidId($this->db->quote($id))) {
             throw new E_ValidationFailure('Invalid ID requested in initUserService');
+        }
+
+        // Retrieve user bean
+        $this->workingUser = null;
+        $this->workingUser = BeanFactory::getBean('Users', $id);
+        if (!$this->workingUser) {
+            throw new E_RecordRetrievalFail('Unable to retrieve a User bean');
         }
 
         if (!$this->setClient($id)) {
@@ -300,6 +308,7 @@ class GoogleSyncBase
      */
     protected function getUserMeetings($userId)
     {
+        $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Id ' . $userId);
         // Validate the workingUser id
         $isValidator = new SuiteValidator();
         if (!$isValidator->isValidId($userId)) {
@@ -558,6 +567,15 @@ class GoogleSyncBase
             $return = $this->gService->events->update($this->calendarId, $event->getId(), $event);
         }
 
+        /* We don't get a status code back showing success. Instead, the return of the
+         * create or update is the Google_Service_Calendar_Event object after saving.
+         * So we check to make sure it has an ID to determine Success/Failure.
+         */
+        if (!isset($return->id)) {
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'GCalendar insert/update failed.');
+            return false;
+        }
+
         // Set the SuiteCRM Meeting's last sync timestamp, and google id
         $ret = $this->setLastSync($event_local, $return->getId());
         if (empty($ret)) {
@@ -565,14 +583,7 @@ class GoogleSyncBase
             return false;
         }
 
-        /* We don't get a status code back showing success. Instead, the return of the
-         * create or update is the Google_Service_Calendar_Event object after saving.
-         * So we check to make sure it has an ID to determine Success/Failure.
-         */
-        if (isset($return->id)) {
-            return $event->id;
-        }
-        return false;
+        return $ret;
     }
 
     /**
