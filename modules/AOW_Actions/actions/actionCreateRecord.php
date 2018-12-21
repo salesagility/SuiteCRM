@@ -441,7 +441,7 @@ class actionCreateRecord extends actionBase
                     $current_email_address['email_address_id']
                 );
             }
-            $tmp_sea2->save($toBean->id, $toBean->module_name);
+            $tmp_sea2->saveEmail($toBean->id, $toBean->module_name);
         }
     }
 }
