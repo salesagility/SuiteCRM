@@ -153,7 +153,13 @@ class actionCreateRecord extends actionBase
                 $record = new $beanList[$params['record_type']]();
                 $this->set_record($record, $bean, $params);
                 $this->set_relationships($record, $bean, $params);
-                $this->copyEmailAddresses($record, $bean, $params);
+                $invalidEmails = $this->copyEmailAddresses($record, $bean, $params);
+                if ($invalidEmails > 0) {
+                    LoggerManager::getLogger()->warn("Given bean contains $invalidEmails invalid Email address.");
+                }
+                if ($invalidEmails < 0) {
+                    LoggerManager::getLogger()->error("Email address copy error: bean: $bean->module_name");
+                }
 
                 if (isset($params['relate_to_workflow']) && $params['relate_to_workflow']) {
                     require_once 'modules/Relationships/Relationship.php';
@@ -419,29 +425,81 @@ class actionCreateRecord extends actionBase
     }
 
     /**
-     * 
+     *
      * @param SugarBean $toBean
      * @param SugarBean $fromBean
-     * @param type $params
+     * @param array $params
+     * @return int Number of invalid email addresses found in $fromBean's email addresses argument. Negative numbers are error code
      */
     protected function copyEmailAddresses(SugarBean $toBean, SugarBean $fromBean, $params = array())
     {
+        $ret = 0;
         if (isset($params['copy_email_addresses']) && $params['copy_email_addresses']) {
             $toBean->addresses = $fromBean->addresses;
             $toBean->email1 = $fromBean->email1;
             $toBean->email2 = $fromBean->email2;
-            $tmp_sea2 = new SugarEmailAddress();
-            foreach ($fromBean->emailAddress->addresses as $email_address_index => $current_email_address) {
-                $tmp_sea2->addAddress(
-                    $current_email_address['email_address'],
-                    $current_email_address['primary_address'],
-                    $current_email_address['reply_to_address'],
-                    $current_email_address['invalid_email'],
-                    $current_email_address['opt_out'],
-                    $current_email_address['email_address_id']
-                );
+            if (isset($fromBean->emailAddress) && $fromBean->emailAddress instanceof SugarEmailAddress) {
+                $tmp_sea2 = new SugarEmailAddress();
+                foreach ($fromBean->emailAddress->addresses as $currentEmailAddress) {
+                    if ($this->validateCurrentEmailAddress($currentEmailAddress)) {
+                        $ret++;
+                    }
+                    $tmp_sea2->addAddress(
+                        $currentEmailAddress['email_address'],
+                        $currentEmailAddress['primary_address'],
+                        $currentEmailAddress['reply_to_address'],
+                        $currentEmailAddress['invalid_email'],
+                        $currentEmailAddress['opt_out'],
+                        $currentEmailAddress['email_address_id']
+                    );
+                }
+                $tmp_sea2->saveEmail($toBean->id, $toBean->module_name);
+            } else {
+                // exception
+                LoggerManager::getLogger()->error('From-bean should implement emailAddress. Given bean is ' . $fromBean->module_name);
+                return -1;
             }
-            $tmp_sea2->saveEmail($toBean->id, $toBean->module_name);
+        } else {
+            // exception
+            LoggerManager::getLogger()->error('Given parameter should contains index "copy_email_addresses"');
+            return -2;
         }
+        
+        return $ret;
+    }
+    
+    /**
+     *
+     * @param arra $currentEmailAddress
+     * @return bool Returns TRUE if it's a valid email address parameter, FALSE otherwise.
+     */
+    protected function validateCurrentEmailAddress($currentEmailAddress)
+    {
+        $ret = true;
+        if (!isset($currentEmailAddress['email_address'])) {
+            LoggerManager::getLogger()->warn('Index "email_address" is not set.');
+            $ret = false;
+        }
+        if (!isset($currentEmailAddress['primary_address'])) {
+            LoggerManager::getLogger()->warn('Index "primary_address" is not set.');
+            $ret = false;
+        }
+        if (!isset($currentEmailAddress['reply_to_address'])) {
+            LoggerManager::getLogger()->warn('Index "reply_to_address" is not set.');
+            $ret = false;
+        }
+        if (!isset($currentEmailAddress['invalid_email'])) {
+            LoggerManager::getLogger()->warn('Index "invalid_email" is not set.');
+            $ret = false;
+        }
+        if (!isset($currentEmailAddress['opt_out'])) {
+            LoggerManager::getLogger()->warn('Index "opt_out" is not set.');
+            $ret = false;
+        }
+        if (!isset($currentEmailAddress['email_address_id'])) {
+            LoggerManager::getLogger()->warn('Index "email_address_id" is not set.');
+            $ret = false;
+        }
+        return $ret;
     }
 }
