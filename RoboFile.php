@@ -6,7 +6,6 @@
  */
 class RoboFile extends \Robo\Tasks
 {
-    // define public methods as commands
 
     /**
      * Clean 'cache/' directory
@@ -16,6 +15,20 @@ class RoboFile extends \Robo\Tasks
      */
     public function cleanCache()
     {
-        $this->taskCleanDir(['cache'])->run();
+        $toDelete = array('cache/xml',
+                          'cache/import',
+                          'cache/dashlets',
+                          'cache/modules',
+                          'cache/smarty',
+                          'cache/jsLanguage',
+                          'cache/themes',
+                          'cache/Relationships',
+                          'cache/include/javascript',);
+
+        foreach ($toDelete as  $dir) {
+            if ((file_exists($dir) && is_dir($dir))) {
+                $this->_cleanDir([$dir]);
+            }
+        }
     }
 }
