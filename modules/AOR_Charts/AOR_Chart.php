@@ -251,6 +251,10 @@ class AOR_Chart extends Basic
         return '';
     }
 
+    /**
+     * @param array $labels
+     *
+     */
     private function generateChartColoursFromLabels($labels){
         if(is_array($labels) && count($labels)>1){
 	    $colours=[];
@@ -293,42 +297,42 @@ class AOR_Chart extends Basic
             */
             case 'radar':
                 $chartFunction = 'Radar';
-                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
 		        $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getRadarChartConfig();
                 $chart = $this->getRGraphRadarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
                 break;
             case 'pie':
                 $chartFunction = 'Pie';
-                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
 		        $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getPieChartConfig();
                 $chart = $this->getRGraphPieChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
                 break;
             case 'line':
                 $chartFunction = 'Line';
-                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
 		        $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getLineChartConfig();
                 $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
                 break;
             case 'rose':
                 $chartFunction = 'Rose';
-                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
 		        $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getRoseChartConfig();
                 $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
                 break;
             case 'grouped_bar':
                 $chartFunction = 'Grouped bar';
-                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName, $mainGroupField);
+                $data = $this->getRGraphGroupedBarChartData($reportData, $xName, $yName, $mainGroupField);
 		        $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getGroupedBarChartConfig();
                 $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth, true);
                 break;
             case 'stacked_bar':
                 $chartFunction = 'Stacked bar';
-                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName, $mainGroupField);
+                $data = $this->getRGraphGroupedBarChartData($reportData, $xName, $yName, $mainGroupField);
 		        $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getStackedBarChartConfig();
                 $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth, false);
@@ -336,7 +340,7 @@ class AOR_Chart extends Basic
             case 'bar':
             default:
                 $chartFunction = 'Bar';
-                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName, $yName);
 		        $this->generateChartColoursFromLabels($data['labels']);
                 $config = $this->getBarChartConfig();
                 $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight, $defaultWidth);
