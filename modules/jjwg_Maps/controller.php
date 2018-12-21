@@ -128,8 +128,8 @@ class jjwg_MapsController extends SugarController {
         }
         $responses['Approximate'] = 'APPROXIMATE';
         $responses['Empty'] = 'Empty';
-        $this->bean->geocoded_headings[] = 'Approximate';
-        $this->bean->geocoded_headings[] = 'Empty';
+        $this->bean->geocoded_headings[] = 'APPROXIMATE';
+        $this->bean->geocoded_headings[] = 'EMPTY';
 
         // foreach module
         foreach ($this->settings['valid_geocode_modules'] as $module_type) {
@@ -397,8 +397,10 @@ class jjwg_MapsController extends SugarController {
         }
 
         // JSON Encoded $result
+        $out['message'] = $result['message'];
+        $out['list']['name'] = $result['object_name'];
         header('Content-Type: application/json');
-        echo @json_encode($result);
+        echo @json_encode($out);
     }
 
     /**

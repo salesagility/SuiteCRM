@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,11 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'Zend/Oauth/Provider.php';
 require_once 'modules/OAuthKeys/OAuthKey.php';
@@ -113,13 +115,14 @@ class OAuthToken extends SugarBean
     }
 
     /**
-	 * Generate random token
-	 * @return string
-	 */
-	protected static function randomValue()
-	{
-	    return bin2hex(Zend_Oauth_Provider::generateToken(6));
-	}
+     * Generate random token
+     * @return string
+     */
+    protected static function randomValue()
+    {
+        $zop = new Zend_Oauth_Provider();
+        return bin2hex($zop->generateToken(6));
+    }
 
 	/**
 	 * Generate random token/secret pair and create token
@@ -139,7 +142,7 @@ class OAuthToken extends SugarBean
             $this->new_with_id = true;
             $this->id = $this->token;
         }
-        parent::save();
+        return parent::save();
     }
 
     /**
@@ -233,7 +236,7 @@ class OAuthToken extends SugarBean
 	 */
     static public function cleanup()
 	{
-	    global $db;
+	    $db = DBManagerFactory::getInstance();
 	    // delete invalidated tokens older than 1 day
 	    $db->query("DELETE FROM oauth_tokens WHERE tstate = ".self::INVALID." AND token_ts < ".(time()-60*60*24));
 	    // delete request tokens older than 1 day
@@ -248,7 +251,7 @@ class OAuthToken extends SugarBean
 	 */
 	public static function checkNonce($key, $nonce, $ts)
 	{
-	    global $db;
+	    $db = DBManagerFactory::getInstance();
 
 	    $res = $db->query(sprintf("SELECT * FROM oauth_nonce WHERE conskey='%s' AND nonce_ts > %d", $db->quote($key), $ts));
 	    if($res && $db->fetchByAssoc($res)) {
@@ -282,7 +285,7 @@ class OAuthToken extends SugarBean
 	 */
 	public static function deleteByConsumer($consumer_id)
 	{
-	   global $db;
+	   $db = DBManagerFactory::getInstance();
 	   $db->query("DELETE FROM oauth_tokens WHERE consumer='".$db->quote($consumer_id) ."'");
 	}
 
@@ -292,7 +295,7 @@ class OAuthToken extends SugarBean
 	 */
 	public static function deleteByUser($user_id)
 	{
-	   global $db;
+	   $db = DBManagerFactory::getInstance();
 	   $db->query("DELETE FROM oauth_tokens WHERE assigned_user_id='".$db->quote($user_id) ."'");
 	}
 

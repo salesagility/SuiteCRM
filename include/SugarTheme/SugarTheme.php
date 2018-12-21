@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +37,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
-/*********************************************************************************
+/**
 
  * Description:  Contains a variety of utility functions used to display UI
  * components such as form headers and footers.  Intended to be modified on a per
  * theme basis.
- ********************************************************************************/
+ */
 
 include_once __DIR__ . '/SugarThemeRegistry.php';
 
@@ -385,8 +388,8 @@ class SugarTheme
 			if (is_file("$cachedir/spriteCache.php"))
 				unlink("$cachedir/spriteCache.php");
 
-            if(strlen($cachedir)>1) {
-                rmdir_recursive($cachedir.'/modules');
+            if (($cachedir) && is_dir($cachedir . '/modules') && (!rmdir_recursive($cachedir . '/modules'))) {
+                throw new Exception("Unable to clear cache: $cachedir . '/modules'");
             }
 
         }
@@ -603,6 +606,7 @@ class SugarTheme
         $html = '
             <!-- qtip & suggestion box -->
             <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
+        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
         $html .= '<link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" />';
 
 		// sprites
@@ -894,7 +898,7 @@ EOHTML;
      * to looking in the base theme.
      * @param  string $imageName image file name
      * @param  bool   $addJSPath call getJSPath() with the results to add some unique image tracking support
-     * @return string path to image
+     * @return string|bool path to image or false if image not found
      */
     public function getImageURL(
         $imageName,
@@ -922,14 +926,16 @@ EOHTML;
 		elseif (($filename = $this->_getImageFileName('include/images/'.$imageName)) != '')
 			$imagePath = $filename;
         else {
-            $GLOBALS['log']->warn("Image $imageName not found");
-            return false;
+            $imagePath = false;
         }
 
-        $this->_imageCache[$imageName] = $imagePath;
 
-        if ( $addJSPath )
-            return getJSPath($imagePath);
+        if ($imagePath) {
+            $this->_imageCache[$imageName] = $imagePath;
+
+            if ( $addJSPath )
+                return getJSPath($imagePath);
+        }
 
         return $imagePath;
     }
@@ -1168,14 +1174,16 @@ EOHTML;
 
         return $config;
     }
-    
-    
-    public function getSubThemes() {
+
+
+    public function getSubThemes()
+    {
         $subThemes = SugarThemeRegistry::getSubThemes();
         return $subThemes;
     }
-    
-    public function getSubThemeDefault() {
+
+    public function getSubThemeDefault()
+    {
         $subThemeDefault = SugarThemeRegistry::getSubThemeDefault();
         return $subThemeDefault;
     }

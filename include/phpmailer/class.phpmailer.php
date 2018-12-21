@@ -1029,6 +1029,7 @@ class PHPMailer
         if ($auto) {
             if (empty($this->Sender)) {
                 $this->Sender = $address;
+                isValidEmailAddress($this->Sender);
             }
         }
         return true;

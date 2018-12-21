@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -113,6 +116,13 @@ class ConfiguratorViewEdit extends ViewEdit
             $configurator->restoreConfig();
         }
 
+        
+        $mailSendType = null;
+        if (isset($focus->settings['mail_sendtype'])) {
+            $mailSendType = $focus->settings['mail_sendtype'];
+        } else {
+            LoggerManager::getLogger()->error('ConfiguratorViewEdit view display error: mail send type is not set for focus');
+        }
 
         $this->ss->assign('MOD', $mod_strings);
         $this->ss->assign('APP', $app_strings);
@@ -124,7 +134,7 @@ class ConfiguratorViewEdit extends ViewEdit
         $this->ss->assign("JAVASCRIPT",get_set_focus_js(). get_configsettings_js());
         $this->ss->assign('company_logo', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $this->ss->assign("settings", $focus->settings);
-        $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $focus->settings['mail_sendtype']));
+        $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $mailSendType));
         if(!empty($focus->settings['proxy_on'])){
             $this->ss->assign("PROXY_CONFIG_DISPLAY", 'inline');
         }else{
@@ -155,6 +165,15 @@ class ConfiguratorViewEdit extends ViewEdit
         }
         else {
             $this->ss->assign('logger_visible', true);
+        }
+        // Check for Google Sync JSON
+        $json = base64_decode($configurator->config['google_auth_json']);
+        if ($config = json_decode($json, true)) {
+            $this->ss->assign("GOOGLE_JSON_CONF", 'CONFIGURED');
+            $this->ss->assign("GOOGLE_JSON_CONF_COLOR", 'green');
+        } else {
+            $this->ss->assign("GOOGLE_JSON_CONF", 'UNCONFIGURED');
+            $this->ss->assign("GOOGLE_JSON_CONF_COLOR", 'black');
         }
 
         echo $this->getModuleTitle(false);

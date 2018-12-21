@@ -133,7 +133,6 @@ $mod_strings = array(
     'LBL_UPLOAD_MAX_FILESIZE_TITLE' => 'Upload File Size',
     'ERR_URL_BLANK' => 'Provide the base URL for the SuiteCRM instance.',
     'ERR_UW_NO_UPDATE_RECORD' => 'Could not locate installation record of',
-    'ERROR_FLAVOR_INCOMPATIBLE' => 'The uploaded file is not compatible with this flavor of SuiteCRM: ',
     'ERROR_MANIFEST_TYPE' => 'Manifest file must specify the package type.',
     'ERROR_PACKAGE_TYPE' => 'Manifest file specifies an unrecognized package type',
     'ERROR_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
@@ -183,7 +182,7 @@ $mod_strings = array(
     'LBL_DBCONF_DB_PASSWORD' => 'SuiteCRM Database User Password',
     'LBL_DBCONF_DB_PASSWORD2' => 'Re-enter SuiteCRM Database User Password',
     'LBL_DBCONF_DB_USER' => 'SuiteCRM Database User',
-    'LBL_DBCONF_SUGAR_DB_USER' => 'SuiteCRM Database User',
+    'LBL_DBCONF_SUITE_DB_USER' => 'SuiteCRM Database User',
     'LBL_DBCONF_DB_ADMIN_USER' => 'Database Administrator Username',
     'LBL_DBCONF_DB_ADMIN_PASSWORD' => 'Database Admin Password',
     'LBL_DBCONF_DEMO_DATA' => 'Populate Database with Demo Data?',
@@ -296,9 +295,8 @@ $mod_strings = array(
     'LBL_SITECFG_LOG_DIR' => 'Log Directory',
     'LBL_SITECFG_SESSION_PATH' => 'Path to Session Directory<br>(must be writable)',
     'LBL_SITECFG_SITE_SECURITY' => 'Select Security Options',
-    'LBL_SITECFG_SUGAR_UP_DIRECTIONS' => 'If selected, the system will periodically check for updated versions of the application.',
-    'LBL_SITECFG_SUGAR_UP' => 'Automatically Check For Updates?',
-    'LBL_SITECFG_SUGAR_UPDATES' => 'SuiteCRM Updates Config',
+    'LBL_SITECFG_SUITE_UP_DIRECTIONS' => 'If selected, the system will periodically check for updated versions of the application.',
+    'LBL_SITECFG_SUITE_UP' => 'Automatically Check For Updates?',
     'LBL_SITECFG_TITLE' => 'Site Configuration',
     'LBL_SITECFG_TITLE2' => 'Identify Administration User',
     'LBL_SITECFG_SECURITY_TITLE' => 'Site Security',
@@ -452,8 +450,8 @@ Click on the link below to reset your password:
 $contact_user_link_guid',
         'name' => 'Forgot Password email',
     ),
-    
-    
+
+
     'two_factor_auth_email' => array(
         'subject' => 'Two Factor Authentication Code',
         'type' => 'system',
@@ -569,7 +567,7 @@ $contact_user_link_guid',
     'LBL_DBCONFIG_MSG3' => 'Name of the database that will contain the data for the SuiteCRM instance you are about to install.',
     'LBL_DBCONFIG_MSG2_LABEL' => 'Host Name',
     'LBL_DBCONFIG_MSG2' => 'Name of web server or machine (host) on which the database is located (such as www.mydomain.com). If installing locally, it\'s better to use \'localhost\' than \'127.0.0.1\', for performance reasons.',
-    'LBL_DBCONFIG_B_MSG1_LABEL' => '',
+    'LBL_DBCONFIG_B_MSG1_LABEL' => '', // this label dynamically needed in install/installConfig.php:293
     'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.'
 );
 

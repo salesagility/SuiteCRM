@@ -96,7 +96,7 @@ $mod_strings = array(
     'LBL_REMINDER_EMAIL_ALL_INVITEES' => 'Email all invitees',
     'LBL_EMAIL_REMINDER' => 'Email Reminder',
     'LBL_EMAIL_REMINDER_TIME' => 'Email Reminder Time',
-    'LBL_REMOVE' => 'rem',
+    'LBL_REMOVE' => 'Remove',
     'LBL_SCHEDULING_FORM_TITLE' => 'Scheduling',
     'LBL_SEARCH_BUTTON' => 'Search',
     'LBL_SEARCH_FORM_TITLE' => 'Meeting Search',
@@ -163,4 +163,8 @@ $mod_strings = array(
     'LBL_REMINDERS_REMOVE_REMINDER' => 'Remove reminder',
     'LBL_REMINDERS_ADD_ALL_INVITEES' => 'Add All Invitees',
     'LBL_REMINDERS_ADD_REMINDER' => 'Add reminder',
+
+    // for google sync
+    'LBL_GSYNC_ID' => 'Google Event ID',
+    'LBL_GSYNC_LASTSYNC' => 'Last Google Sync Timestamp',
 );

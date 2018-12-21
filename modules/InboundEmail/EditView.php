@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 require_once 'modules/AOP_Case_Updates/util.php';
 
 $_REQUEST['edit']='true';
@@ -145,6 +148,7 @@ if(!empty($focus->stored_options)) {
 	$storedOptions = unserialize(base64_decode($focus->stored_options));
 	$from_name = $storedOptions['from_name'];
 	$from_addr = $storedOptions['from_addr'];
+        isValidEmailAddress($from_addr);
 
 	$reply_to_name = (isset($storedOptions['reply_to_name'])) ? $storedOptions['reply_to_name'] : "";
 	$reply_to_addr = (isset($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : "";
@@ -178,6 +182,7 @@ if(!empty($focus->stored_options)) {
 } else { // initialize empty vars for template
 	$from_name = $current_user->name;
 	$from_addr = $current_user->email1;
+        isValidEmailAddress($from_addr);
 	$reply_to_name = '';
 	$reply_to_addr = '';
 	$only_since = '';
@@ -237,8 +242,10 @@ if ($focus->mailbox_type == 'template') {
 	$xtpl = new XTemplate('modules/InboundEmail/EditView.html');
 }
 // if no IMAP libraries available, disable Save/Test Settings
-if(!function_exists('imap_open')) {
-	$xtpl->assign('IE_DISABLED', 'DISABLED');
+$imapFactory = new ImapHandlerFactory();
+$imap = $imapFactory->getImapHandler();
+if (!$imap->isAvailable()) {
+    $xtpl->assign('IE_DISABLED', 'DISABLED');
 }
 // standard assigns
 $xtpl->assign('MOD', $mod_strings);
@@ -299,6 +306,7 @@ $xtpl->assign('GROUP_ID', $groupId);
 // auto-reply stuff
 $xtpl->assign('FROM_NAME', $from_name);
 $xtpl->assign('FROM_ADDR', $from_addr);
+isValidEmailAddress($from_addr);
 $xtpl->assign('DEFAULT_FROM_NAME', $default_from_name);
 $xtpl->assign('DEFAULT_FROM_ADDR', $default_from_addr);
 $xtpl->assign('REPLY_TO_NAME', $reply_to_name);

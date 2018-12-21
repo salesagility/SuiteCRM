@@ -368,12 +368,15 @@ class SugarApplication {
      */
     function checkDatabaseVersion($dieOnFailure = true) {
         $row_count = sugar_cache_retrieve('checkDatabaseVersion_row_count');
+        $sugarDbVersion = $GLOBALS['sugar_db_version'];
+        $db = DBManagerFactory::getInstance();
         if (empty($row_count)) {
             $version_query = "SELECT count(*) as the_count FROM config WHERE category='info' AND name='sugar_version' AND " .
-                    $GLOBALS['db']->convert('value', 'text2char') . " = " . $GLOBALS['db']->quoted($GLOBALS['sugar_db_version']);
+                    $db->convert('value', 'text2char') . " = " . 
+                    $db->quoted($sugarDbVersion);
 
-            $result = $GLOBALS['db']->query($version_query);
-            $row = $GLOBALS['db']->fetchByAssoc($result);
+            $result = $db->query($version_query);
+            $row = $db->fetchByAssoc($result);
             $row_count = $row['the_count'];
             sugar_cache_put('checkDatabaseVersion_row_count', $row_count);
         }
@@ -681,7 +684,7 @@ class SugarApplication {
         $messages = self::getMessages('user_error_message');
         return $messages;
     }
-    
+
     /**
      * Storing messages into session
      *
@@ -700,7 +703,7 @@ class SugarApplication {
         $messages = self::getMessages('user_success_message');
         return $messages;
     }
-    
+
     /**
      * Storing messages into session
      * @param string $message
@@ -708,7 +711,7 @@ class SugarApplication {
     protected static function appendMessage($type, $message) {
         
         self::validateMessageType($type);
-        
+
         if (empty($_SESSION[$type]) || !is_array($_SESSION[$type])) {
             $_SESSION[$type] = array();
         }
@@ -716,7 +719,7 @@ class SugarApplication {
             $_SESSION[$type][] = $message;
         }
     }
-    
+
     /**
      * picking up the messages from the session and clearing session storage array
      * @return array messages
@@ -724,7 +727,7 @@ class SugarApplication {
     protected static function getMessages($type) {
         
         self::validateMessageType($type);
-        
+
         if (isset($_SESSION[$type]) && is_array($_SESSION[$type])) {
             $msgs = $_SESSION[$type];
             unset($_SESSION[$type]);
@@ -733,7 +736,7 @@ class SugarApplication {
             return array();
         }
     }
-    
+
     /**
      * 
      * @param string $type possible message types: ['user_error_message', 'user_success_message']

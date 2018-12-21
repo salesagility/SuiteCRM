@@ -14,7 +14,7 @@ class SurveysViewReports extends SugarView
 
     private function getSurveyStats()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $quotedId = $db->quote($this->bean->id);
         $sentQuery = <<<EOF
 SELECT COUNT(campaign_log.target_id) AS sent, COUNT(DISTINCT campaign_log.target_id) AS distinct_sent 

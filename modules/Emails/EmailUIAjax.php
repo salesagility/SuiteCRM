@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Utility\SuiteValidator;
 
 /**
  * handle requested subscriptions
@@ -56,13 +57,13 @@ function handleSubs($subs, $email, $json, $user = null)
 {
 
     // flows into next case statement
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $current_user;
-    
-    if(!$user) {
+
+    if (!$user) {
         $user = $current_user;
     }
-    
+
     $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
     $viewFolders = $subs;
     $user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
@@ -132,6 +133,7 @@ if (isset($_REQUEST['emailUIAction'])) {
             if (isset($_REQUEST['sugarEmail']) && $_REQUEST['sugarEmail'] == 'true' && isset($_REQUEST['uid']) && !empty($_REQUEST['uid'])) {
                 $ie->email->retrieve($_REQUEST['uid']);
                 $ie->email->from_addr = $ie->email->from_addr_name;
+                isValidEmailAddress($ie->email->from_addr);
                 $ie->email->to_addrs = to_html($ie->email->to_addrs_names);
                 $ie->email->cc_addrs = to_html($ie->email->cc_addrs_names);
                 $ie->email->bcc_addrs = $ie->email->bcc_addrs_names;
@@ -300,7 +302,7 @@ if (isset($_REQUEST['emailUIAction'])) {
     	break;
     case 'getTemplateAttachments':
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
-        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {global $db;
+        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {$db = DBManagerFactory::getInstance();
 
 
             $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
@@ -419,7 +421,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $ie->connectMailserver();
                 $uid = $_REQUEST['uid'];
                 if ($ie->protocol == 'imap') {
-                    $_REQUEST['uid'] = imap_msgno($ie->conn, $_REQUEST['uid']);
+                    $_REQUEST['uid'] = $ie->getImap()->getMessageNo($_REQUEST['uid']);
                 } else {
                     $_REQUEST['uid'] = $ie->getCorrectMessageNoForPop3($_REQUEST['uid']);
                 }
@@ -550,8 +552,8 @@ if (isset($_REQUEST['emailUIAction'])) {
                 isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])
             ) {
                 $email->et->markEmails("deleted", $_REQUEST['ieId'], $_REQUEST['folder'], $_REQUEST['uids']);
-            } else {
             }
+
             break;
         case "markEmail":
             global $app_strings;
@@ -591,6 +593,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 echo $out;
             } else {
             }
+
             break;
 
         case "checkEmail2":
@@ -719,7 +722,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 foreach ($exUids as $msgNo) {
                     $uid = $msgNo;
                     if ($ie->protocol == 'imap') {
-                        $msgNo = imap_msgno($ie->conn, $msgNo);
+                        $msgNo = $ie->getImap()->getMessageNo($msgNo);
                         $status = $ie->returnImportedEmail($msgNo, $uid);
                     } else {
                         $status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $uid);
@@ -734,7 +737,7 @@ if (isset($_REQUEST['emailUIAction'])) {
             } else {
                 $msgNo = $_REQUEST['uid'];
                 if ($ie->protocol == 'imap') {
-                    $msgNo = imap_msgno($ie->conn, $_REQUEST['uid']);
+                    $msgNo = $ie->getImap()->getMessageNo($_REQUEST['uid']);
                     $status = $ie->returnImportedEmail($msgNo, $_REQUEST['uid']);
                 } else {
                     $status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $_REQUEST['uid']);
@@ -1078,14 +1081,14 @@ eoq;
             break;
 
         case "setFolderViewSelection":
-            
-            $user = 
-                isset($_REQUEST['user']) && $_REQUEST['user'] && isValidId($_REQUEST['user']) ?
-                    BeanFactory::getBean('Users', $_REQUEST['user']) : 
-                    $current_user;  
-            
+            $isValidator = new SuiteValidator();
+            $user =
+                isset($_REQUEST['user']) && $_REQUEST['user'] && $isValidator->isValidId($_REQUEST['user']) ?
+                    BeanFactory::getBean('Users', $_REQUEST['user']) :
+                    $current_user;
+
             $out = handleSubs($_REQUEST['ieIdShow'], $email, $json, $user);
-            
+
             echo $out;
             break;
 
@@ -1276,11 +1279,14 @@ eoq;
             $oe->type = $type;
             $oe->user_id = $current_user->id;
             $oe->mail_sendtype = "SMTP";
-            $oe->mail_smtptype = $_REQUEST['mail_smtptype'];
+
+            $oe->smtp_from_name = $_REQUEST['smtp_from_name'];
+            $oe->smtp_from_addr = $_REQUEST['smtp_from_addr'];
             $oe->mail_smtpserver = $_REQUEST['mail_smtpserver'];
             $oe->mail_smtpport = $_REQUEST['mail_smtpport'];
             $oe->mail_smtpssl = $_REQUEST['mail_smtpssl'];
             $oe->mail_smtpauth_req = isset($_REQUEST['mail_smtpauth_req']) ? 1 : 0;
+            $oe->mail_smtpuser = $_REQUEST['mail_smtpuser'];
             $oe->mail_smtpuser = $_REQUEST['mail_smtpuser'];
             if (!empty($_REQUEST['mail_smtppass'])) {
                 $oe->mail_smtppass = $_REQUEST['mail_smtppass'];
@@ -1517,6 +1523,7 @@ eoq;
             } else {
                 echo "NOOP: no search criteria found";
             }
+
             break;
 
         case "searchAdvanced":
@@ -1711,7 +1718,7 @@ eoq;
                 $time = microtime(true);
                 $r = $ie->db->query($countq);
                 $GLOBALS['log']->debug("***QUERY counted in " . (microtime(true) - $time) . " milisec\n");
-                if ($row = $GLOBALS['db']->fetchByAssoc($r)) {
+                if ($row = DBManagerFactory::getInstance()->fetchByAssoc($r)) {
                     $count = $row['c'];
                 }
                 $time = microtime(true);

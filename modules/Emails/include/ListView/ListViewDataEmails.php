@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +41,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+use SuiteCRM\Utility\SuiteValidator;
 
 require_once('include/ListView/ListViewData.php');
 
@@ -147,7 +148,8 @@ class ListViewDataEmails extends ListViewData
             $inboundEmailID = $folder->getId();
         }
 
-        if ($inboundEmailID && !isValidId($inboundEmailID)) {
+        $isValidator = new SuiteValidator();
+        if ($inboundEmailID && !$isValidator->isValidId($inboundEmailID)) {
             throw new SuiteException("Invalid Inbound Email ID" . ($inboundEmailID ? " ($inboundEmailID)" : ''));
         }
 
@@ -171,7 +173,7 @@ class ListViewDataEmails extends ListViewData
 
                 WHERE
                   inbound_email.status = 'Active' AND
-                  inbound_email.mailbox_type = 'pick' AND
+                  inbound_email.mailbox_type not like 'bounce' AND
                   inbound_email.is_personal = 0 AND
                   inbound_email.deleted = 0";
 
@@ -235,12 +237,16 @@ class ListViewDataEmails extends ListViewData
     private function setInboundEmailMailbox(Folder $folder, InboundEmail $inboundEmail)
     {
         switch ($folder->getType()) {
-            case "sent":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
+            case "inbound":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('mailbox');
                 break;
 
             case "draft":
                 $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
+                break;
+
+            case "sent":
+                $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
                 break;
 
             case "trash":
@@ -516,33 +522,50 @@ class ListViewDataEmails extends ListViewData
                 $ret = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
                 break;
             case 'date_entered':
-                $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
-
-                $dateTime = DateTime::createFromFormat(
-                    'D, d M Y H:i:s O',
-                    $date
-                );
-                if ($dateTime == false) {
-                    // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMap
-                    $dateTime = DateTime::createFromFormat(
-                        'd M Y H:i:s O',
-                        $date
-                    );
-                }
-
-                if ($dateTime == false) {
+                if (!isset($emailHeader['date'])) {
+                    LoggerManager::getLogger()->warn('Given email header does not contains date field.');
                     $ret = '';
                 } else {
-                    $timeDate = new TimeDate();
-                    $ret = $timeDate->asUser($dateTime, $currentUser);
+                    $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
+
+                    $dateTime = DateTime::createFromFormat(
+                        'D, d M Y H:i:s O',
+                        $date
+                    );
+                    if ($dateTime == false) {
+                        // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMap
+                        $dateTime = DateTime::createFromFormat(
+                            'd M Y H:i:s O',
+                            $date
+                        );
+                    }
+
+                    if ($dateTime == false) {
+                        $ret = '';
+                    } else {
+                        $timeDate = new TimeDate();
+                        $ret = $timeDate->asUser($dateTime, $currentUser);
+                    }
                 }
                 break;
             case 'is_imported':
                 $uid = $emailHeader['uid'];
                 $importedEmailBeans = BeanFactory::getBean('Emails');
                 $is_imported = $importedEmailBeans->get_full_list('',
-                    'emails.uid LIKE "' . $uid . '"');
-                if (count($is_imported) > 0) {
+                    'emails.uid LIKE "' . $uid . '"'); 
+                
+                if (null === $is_imported) {
+                    $is_imported = [];
+                }
+                
+                if ($is_imported instanceof Countable) {
+                    $count = count($is_imported);
+                } else {
+                    LoggerManager::getLogger()->warn('ListViewDataEmails::getEmailRecordFieldValue: email list should be a Countable');
+                    $count = count((array)$is_imported);
+                }
+                
+                if ($count > 0) {
                     $ret = true;
                 } else {
                     $ret = false;
@@ -564,7 +587,7 @@ class ListViewDataEmails extends ListViewData
                 $ret = $emailHeader['msgno'];
                 break;
             case 'has_attachment':
-                $ret = $emailHeader['has_attachment'];
+                $ret = isset($emailHeader['has_attachment']) ? $emailHeader['has_attachment'] : false;
                 break;
             case 'status':
                 $ret = $this->getEmailHeaderStatus($emailHeader);
@@ -611,8 +634,8 @@ class ListViewDataEmails extends ListViewData
         return
             (isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
             (
-                isset($request["type_basic"]) && count($request["type_basic"]) > 1 ||
-                $request["type_basic"][0] != ""
+                isset($request["type_basic"]) && (count($request["type_basic"]) > 1 ||
+                $request["type_basic"][0] != "")
             ) ||
             (isset($request["module"]) && $request["module"] == "MergeRecords");
     }
@@ -633,7 +656,8 @@ class ListViewDataEmails extends ListViewData
      */
     public function getEmailUIds($data) {
         $emailUIds = array();
-        foreach ($data as $row) {
+        
+        foreach ((array)$data as $row) {
             $emailUIds[] = $row['UID'];
         }
 
@@ -706,8 +730,18 @@ class ListViewDataEmails extends ListViewData
 
                     $search = new ListViewDataEmailsSearchOnCrm($this);
                     $ret = $search->search(
-                        $filter_fields, $request, $where, $inboundEmail, $params, $seed,
-                        $singleSelect, $id, $limit, $current_user, $id_field, $offset
+                        $filter_fields,
+                        $request,
+                        $where,
+                        $inboundEmail,
+                        $params,
+                        $seed,
+                        $singleSelect,
+                        $id,
+                        $limit,
+                        $current_user,
+                        $id_field,
+                        $offset
                     );
 
                     break;
@@ -717,7 +751,22 @@ class ListViewDataEmails extends ListViewData
                     $limitPerPage = isset($sugar_config['list_max_entries_per_page']) && (int)$sugar_config['list_max_entries_per_page'] ? $sugar_config['list_max_entries_per_page'] : 10;
 
                     $search = new ListViewDataEmailsSearchOnIMap($this);
-                    $ret = $search->search($seed, $request, $where, $id, $inboundEmail, $filter, $folderObj, $current_user, $folder, $limit, $limitPerPage);
+                    $ret = $search->search(
+                        $seed,
+                        $request,
+                        $where,
+                        $id,
+                        $inboundEmail,
+                        $filter,
+                        $folderObj,
+                        $current_user,
+                        $folder,
+                        $limit,
+                        $limitPerPage,
+                        $params,
+                        $pageData,
+                        $filter_fields
+                    );
                     break;
 
                 default:
@@ -740,7 +789,7 @@ class ListViewDataEmails extends ListViewData
                 ")\ntrace info:\n" . $e->getTraceAsString()
             );
         }
-
+        
         // TODO: don't override the superglobals!!!!
         $_REQUEST = $request;
 

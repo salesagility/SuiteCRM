@@ -222,6 +222,7 @@ tr#pagination {
 
 .selectedRecords.label {
   color: $list-view-button-color;
+  padding-top: 5px;
 }
 
 .selectedRecords.value {
@@ -748,10 +749,6 @@ a.listViewTdToolsS1 {
   margin-right: 5px;
   min-width: 32px;
   margin-left: 0;
-}
-
-#selectLinkTop .glyphicon, #selectLinkBottom .glyphicon {
-  vertical-align: middle;
 }
 
 #actionLinkBottom {

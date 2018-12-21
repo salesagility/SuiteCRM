@@ -1,9 +1,12 @@
 <?php
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
@@ -13,7 +16,7 @@
  * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  * 
  * You should have received a copy of the GNU Affero General Public License along with
@@ -30,15 +33,15 @@
  * 
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //// This is a stand alone file that can be run from the command prompt for upgrading a
-//// Sugar Instance. Three parameters are required to be defined in order to execute this file.
+//// SuiteCRM Instance. Three parameters are required to be defined in order to execute this file.
 //// php.exe -f silentUpgrade.php [Path to Upgrade Package zip] [Path to Log file] [Path to Instance]
 //// See below the Usage for more details.
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -284,8 +287,8 @@ $errors = array();
 	   //if being used for internal upgrades avoid admin user verification
 	   $user_name = $argv[4];
 	   $q = "select id from users where user_name = '" . $user_name . "' and is_admin=1";
-	   $result = $GLOBALS['db']->query($q, false);
-	   $logged_user = $GLOBALS['db']->fetchByAssoc($result);
+	   $result = DBManagerFactory::getInstance()->query($q, false);
+	   $logged_user = DBManagerFactory::getInstance()->fetchByAssoc($result);
 	   if(isset($logged_user['id']) && $logged_user['id'] != null){
 		//do nothing
 	    $current_user->retrieve($logged_user['id']);
@@ -429,7 +432,7 @@ foreach ($beanFiles as $bean => $file) {
 		if (($focus instanceOf SugarBean)) {
 			if(!isset($repairedTables[$focus->table_name]))
 			{
-				$sql = $GLOBALS['db']->repairTable($focus, true);
+				$sql = DBManagerFactory::getInstance()->repairTable($focus, true);
                 if(trim($sql) != '')
                 {
 				    logThis('Running sql:' . $sql, $path);
@@ -457,7 +460,7 @@ foreach ($dictionary as $meta) {
 
 	$fielddefs = $meta['fields'];
 	$indices = $meta['indices'];
-	$sql = $GLOBALS['db']->repairTableParams($tablename, $fielddefs, $indices, true);
+	$sql = DBManagerFactory::getInstance()->repairTableParams($tablename, $fielddefs, $indices, true);
 	if(!empty($sql)) {
 	    logThis($sql, $path);
 	    $repairedTables[$tablename] = true;
@@ -507,7 +510,7 @@ if($ce_to_pro_ent) {
         logThis(" Finish modules/Administration/upgradeTeams.php", $path);
 
     if(check_FTS()){
-    	$GLOBALS['db']->full_text_indexing_setup();
+    	DBManagerFactory::getInstance()->full_text_indexing_setup();
     }
 }
 

@@ -17,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,8 +35,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 class AOR_Field extends Basic
 {
@@ -98,10 +98,24 @@ class AOR_Field extends Basic
 
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
-        $line_count = count($post_data[$key . 'field']);
+        if (!isset($post_data[$key . 'field'])) {
+            $line_count = 0;
+            LoggerManager::getLogger()->warn('AOR Field trying to save lines but post data key not found: ' . $key . 'field');
+        } else {
+            $line_count = count($post_data[$key . 'field']);
+        }
         for ($i = 0; $i < $line_count; ++$i) {
 
-            if ($post_data[$key . 'deleted'][$i] == 1) {
+            
+            if (!isset($post_data[$key . 'deleted'][$i])) {
+                LoggerManager::getLogger()->warn('AOR field save line error: Post data deleted key not found at index. Key and index were: [' . $key . '], [' . $i . ']');
+                $postDataKeyDeleted = null;
+            }
+            else {
+                $postDataKeyDeleted = $post_data[$key . 'deleted'][$i];
+            }
+
+            if ($postDataKeyDeleted == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
                 $field = new AOR_Field();

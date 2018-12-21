@@ -77,6 +77,7 @@ current_subpanel_url=url;var loadingImg='<img src="themes/'+SUGAR.themes.theme_n
 request_id++;}});}else{var subpanel=document.getElementById('subpanel_'+child_field);subpanel.style.display='';set_div_cookie(subpanel.cookie_name,'');if(current_child_field!=''&&child_field!=current_child_field){hideSubPanel(current_child_field);}
 current_child_field=child_field;}
 if(typeof(url)!='undefined'&&url!=null&&url.indexOf('refresh_page=1')>0){document.location.reload();}}
+function toggleSubpanelCookie(tab){set_div_cookie(get_module_name()+'_'+tab+'_v',!$('#subpanel_'+tab).is(":visible"));}
 function markSubPanelLoaded(child_field){child_field_loaded[child_field]=2;}
 function hideSubPanel(child_field){var subpanel=document.getElementById('subpanel_'+child_field);subpanel.style.display='none';set_div_cookie(subpanel.cookie_name,'none');}
 var sub_cookie_name=get_module_name()+'_divs';var temp=Get_Cookie(sub_cookie_name);var div_cookies=new Array();if(temp&&typeof(temp)!='undefined'){div_cookies=get_sub_cookies(temp);}
@@ -120,4 +121,4 @@ SUGAR.subpanelUtils.menu.spPopupMenu(id,menu,top,left,leftOffset);},spPopupMenu:
 left+=parseInt(leftOffset);}
 if(top==""){var top=0;p=menuHandle;top+=p.offsetHeight;while(p&&p.tagName.toUpperCase()!='BODY'){top+=p.offsetTop;p=p.offsetParent;}}
 if(left+menuWidth>bw){left=left-menuWidth+imgWidth;}
-setMenuVisible(menu,left,top,false);}}};}();
+setMenuVisible(menu,left,top,false);}}};}();$(function(){$('.subPanelCountHint.incomplete').each(function(i,e){var module=$(e).attr('data-module');var subpanel=$(e).attr('data-subpanel');var record=$(e).attr('data-record');$.get('index.php?sugar_body_only=1&module='+module+'&subpanel='+subpanel+'&action=SubPanelViewer&inline=1&record='+record+'&layout_def_key=&inline=1&ajaxSubpanel=true&countOnly=1',function(resp,success){if(!success){console.error('Subpanel Row Count loading error');}else{$(e).html(resp);if(resp&&resp!='0'){$(e).closest('.collapsed').addClass('collapsed-override');}}});});});

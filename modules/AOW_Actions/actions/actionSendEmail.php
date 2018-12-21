@@ -218,7 +218,7 @@ class actionSendEmail extends actionBase {
                                 break;
                             Case 'all':
                             default:
-                                global $db;
+                                $db = DBManagerFactory::getInstance();
                                 $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";
                                 $result = $db->query($sql);
                                 while ($row = $db->fetchByAssoc($result)) {
@@ -259,10 +259,12 @@ class actionSendEmail extends actionBase {
                         }
                         if($linkedBeans){
                             foreach($linkedBeans as $linkedBean) {
-                                $rel_email = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
-                                if (trim($rel_email) != '') {
-                                    $emails[$params['email_to_type'][$key]][] = $rel_email;
-                                    $emails['template_override'][$rel_email] = array($linkedBean->module_dir => $linkedBean->id);
+                                if(!empty($linkedBean)){
+                                    $rel_email = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
+                                    if (trim($rel_email) != '') {
+                                        $emails[$params['email_to_type'][$key]][] = $rel_email;
+                                        $emails['template_override'][$rel_email] = array($linkedBean->module_dir => $linkedBean->id);
+                                    }
                                 }
                             }
                         }
@@ -449,6 +451,7 @@ class actionSendEmail extends actionBase {
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
         $mail->From = $defaults['email'];
+        isValidEmailAddress($mail->From);
         $mail->FromName = $defaults['name'];
         $mail->ClearAllRecipients();
         $mail->ClearReplyTos();
@@ -484,6 +487,7 @@ class actionSendEmail extends actionBase {
             $emailObj->description = $mail->AltBody;
             $emailObj->description_html = $mail->Body;
             $emailObj->from_addr = $mail->From;
+            isValidEmailAddress($emailObj->from_addr);
             if ( $relatedBean instanceOf SugarBean && !empty($relatedBean->id) ) {
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;

@@ -22,7 +22,7 @@ processSurvey($survey, $trackerId, $contactId, $_REQUEST);
 
 function getCampaignIdFromTracker($trackerId)
 {
-    global $db;
+    $db = DBManagerFactory::getInstance();
     $trackerId = $db->quote($trackerId);
     $sql = <<<EOF
             SELECT campaign_id 

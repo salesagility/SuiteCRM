@@ -140,6 +140,11 @@ class EmailMan extends SugarBean
     private $optInWarn;
 
     /**
+     * @var string
+     */
+    private $targetId;
+
+    /**
      * @return string
      */
     public function toString()
@@ -303,7 +308,7 @@ class EmailMan extends SugarBean
             . $this->db->concat('contacts', array('first_name', 'last_name'), '&nbsp;') . " WHEN 'Leads' THEN "
             . $this->db->concat('leads', array('first_name', 'last_name'), '&nbsp;') . " WHEN 'Accounts' THEN accounts.name WHEN 'Users' THEN "
             . $this->db->concat('users', array('first_name', 'last_name'), '&nbsp;') . " WHEN 'Prospects' THEN "
-            . $this->db->concat('prospects', array('first_name', 'last_name'),'&nbsp;') . ' '
+            . $this->db->concat('prospects', array('first_name', 'last_name'), '&nbsp;') . ' '
             . "END) recipient_name";
 
         $query .=
@@ -353,13 +358,13 @@ class EmailMan extends SugarBean
     {
         $query =
             "SELECT $this->table_name.* ,campaigns.name as campaign_name,email_marketing.name as message_name,(CASE related_type WHEN 'Contacts' THEN "
-            . $this->db->concat('contacts', array('first_name', 'last_name'),'&nbsp;')
+            . $this->db->concat('contacts', array('first_name', 'last_name'), '&nbsp;')
             . "WHEN 'Leads' THEN "
             . $this->db->concat('leads', array('first_name', 'last_name'), '&nbsp;')
             . "WHEN 'Accounts' THEN accounts.name WHEN 'Users' THEN "
             . $this->db->concat('users', array('first_name', 'last_name'), '&nbsp;')
             . "WHEN 'Prospects' THEN "
-            . $this->db->concat('prospects', array('first_name', 'last_name'),'&nbsp;')
+            . $this->db->concat('prospects', array('first_name', 'last_name'), '&nbsp;')
             . "END) recipient_name";
         $query .= '    FROM '.$this->table_name.' '
             . 'LEFT JOIN users ON users.id = '.$this->table_name.'.related_id and '.$this->table_name.'.related_type =\'Users\' '
@@ -399,8 +404,16 @@ class EmailMan extends SugarBean
         global $locale, $current_user;
         $temp_array = parent::get_list_view_array();
 
-        $related_type = $temp_array['RELATED_TYPE'];
-        $related_id = $temp_array['RELATED_ID'];
+        $related_type = isset($temp_array['RELATED_TYPE']) ? $temp_array['RELATED_TYPE'] : null;
+
+        if (!isset($temp_array['RELATED_ID'])) {
+            LoggerManager::getLogger()->warn('EmailMan List view array has not related id for list view data');
+            $tempArrayRelatedId = null;
+        } else {
+            $tempArrayRelatedId = $temp_array['RELATED_ID'];
+        }
+
+        $related_id = $tempArrayRelatedId;
         $is_person = SugarModule::get($related_type)->moduleImplements('Person');
 
         if ($is_person) {
@@ -426,7 +439,14 @@ class EmailMan extends SugarBean
             $temp_array['RECIPIENT_EMAIL'] = $row['email_address'];
         }
 
-        $this->email1 = $temp_array['RECIPIENT_EMAIL'];
+        if (!isset($temp_array['RECIPIENT_EMAIL'])) {
+            LoggerManager::getLogger()->warn('EmailMan List view array has not recipient email for list view data');
+            $temArrayRecipientEmail = null;
+        } else {
+            $temArrayRecipientEmail = $temp_array['RECIPIENT_EMAIL'];
+        }
+
+        $this->email1 = $temArrayRecipientEmail;
         $temp_array['EMAIL1_LINK'] = $current_user->getEmailLink('email1', $this, '', '', 'ListView');
 
         return $temp_array;
@@ -448,7 +468,6 @@ class EmailMan extends SugarBean
         $activity_type = null,
         $resend_type = null
     ) {
-
         global $timedate;
 
         $this->send_attempts++;
@@ -458,7 +477,7 @@ class EmailMan extends SugarBean
             //create new campaign log record.
             $campaign_log = new CampaignLog();
             $campaign_log->campaign_id = $this->campaign_id;
-            $campaign_log->target_tracker_key = $this->target_tracker_key;
+            $campaign_log->target_tracker_key = $this->getTargetId();
             $campaign_log->target_id = $this->related_id;
             $campaign_log->target_type = $this->related_type;
             $campaign_log->marketing_id = $this->marketing_id;
@@ -548,6 +567,7 @@ class EmailMan extends SugarBean
                 $this->ref_email->description_html = $body_html;
                 $this->ref_email->description = $body_text;
                 $this->ref_email->from_addr = $from_address;
+                isValidEmailAddress($this->ref_email->from_addr);
                 $this->ref_email->from_addr_name = $from_address_name;
                 $this->ref_email->assigned_user_id = $sender_id;
                 if ($this->test) {
@@ -563,32 +583,67 @@ class EmailMan extends SugarBean
                 $this->ref_email->status = 'sent';
                 $retId = $this->ref_email->save();
 
-                foreach ($notes as $note) {
-                    if ($note->object_name == 'Note') {
-                        if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) {
-                            $file_location = $note->file->temp_file_location;
-                            $filename = $note->file->original_file_name;
-                            $mime_type = $note->file->mime_type;
-                        } else {
-                            $file_location = "upload://{$note->id}";
+                foreach ((array)$notes as $note) {
+                    
+                    if (!is_object($note)) {
+                        LoggerManager::getLogger()->warn('EmailMan create a reference email but given note is not an object. Type of note was: "' . gettype($note) . '"');
+                    } else {
+                    
+                        if ($note->object_name == 'Note') {
+                            if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) {
+                                $file_location = $note->file->temp_file_location;
+                                $filename = $note->file->original_file_name;
+                                $mime_type = $note->file->mime_type;
+                            } else {
+                                $file_location = "upload://{$note->id}";
+                                $filename = $note->id . $note->filename;
+                                $mime_type = $note->file_mime_type;
+                            }
+                        } elseif ($note->object_name == 'DocumentRevision') { // from Documents
                             $filename = $note->id . $note->filename;
+                            $file_location = "upload://$filename";
                             $mime_type = $note->file_mime_type;
                         }
-                    } elseif ($note->object_name == 'DocumentRevision') { // from Documents
-                        $filename = $note->id . $note->filename;
-                        $file_location = "upload://$filename";
-                        $mime_type = $note->file_mime_type;
+                    
                     }
 
                     $noteAudit = new Note();
                     $noteAudit->parent_id = $retId;
                     $noteAudit->parent_type = $this->ref_email->module_dir;
-                    $noteAudit->description = "[" . $note->filename . "] " . $mod_strings['LBL_ATTACHMENT_AUDIT'];
+
+                    if (!isset($note->filename)) {
+                        LoggerManager::getLogger()->warn('EmailMan create ref email error: Note filename is undefined.');
+                        $noteFilename = null;
+                    } else {
+                        $noteFilename = $note->filename ;
+                    }
+
+                    $noteAudit->description = "[" . $noteFilename . "] " . $mod_strings['LBL_ATTACHMENT_AUDIT'];
+
+
+                    if (!isset($filename)) {
+                        LoggerManager::getLogger()->warn('EmailMan create ref email error: Filename is undefined.');
+                        $filename = null;
+                    }
+
                     $noteAudit->filename = $filename;
+
+                    if (!isset($mime_type)) {
+                        LoggerManager::getLogger()->warn('EmailMan create ref email error: Mime Type is undefined.');
+                        $mime_type = null;
+                    }
+
                     $noteAudit->file_mime_type = $mime_type;
                     $noteAudit_id = $noteAudit->save();
 
-                    UploadFile::duplicate_file($note->id, $noteAudit_id, $filename);
+                    if (!isset($note->id)) {
+                        LoggerManager::getLogger()->warn('EmailMan create ref email but Note ID is undefined.');
+                        $noteId = null;
+                    } else {
+                        $noteId = $note->id;
+                    }
+
+                    UploadFile::duplicate_file($noteId, $noteAudit_id, $filename);
                 }
             }
 
@@ -652,7 +707,21 @@ class EmailMan extends SugarBean
         $email->to_addrs_emails = $module->email1 . ';';
         $email->type = 'archived';
         $email->deleted = '0';
-        $email->name = $this->current_campaign->name . ': ' . $mail->Subject;
+
+        if (!isset($this->current_campaign)) {
+            LoggerManager::getLogger()->warn('EmailMan has not current campaign for create individual email.');
+            $currentCampaignNameMailSubject = null;
+        } else {
+            $currentCampaignNameMailSubject = $this->current_campaign->name . ': ' . $mail->Subject;
+        }
+
+        $email->name = $currentCampaignNameMailSubject;
+
+        if (!isset($mail->ContentType)) {
+            LoggerManager::getLogger()->warn('EmailMan given an mail for creating individual email but there is not content type.');
+            $mail->ContentType = null;
+        }
+
         if ($mail->ContentType == "text/plain") {
             $email->description = $mail->Body;
             $email->description_html = null;
@@ -661,6 +730,7 @@ class EmailMan extends SugarBean
             $email->description = $mail->AltBody;
         }
         $email->from_addr = $mail->From;
+        isValidEmailAddress($email->from_addr);
         $email->assigned_user_id = $this->user_id;
         $email->parent_type = $this->related_type;
         $email->parent_id = $this->related_id;
@@ -805,9 +875,7 @@ class EmailMan extends SugarBean
             require_once($beanFiles[$class]);
         }
 
-
-        //prepare variables for 'set_as_sent' function
-        $this->target_tracker_key = create_guid();
+        $this->setTargetId(create_guid());
 
         $module = new $class();
         $module->retrieve($this->related_id);
@@ -852,11 +920,6 @@ class EmailMan extends SugarBean
             )) {
             // If email address is not opted out or the email is valid
             $lower_email_address = strtolower($module->email1);
-            //test against individual address.
-            if (isset($this->restricted_addresses) and isset($this->restricted_addresses[$lower_email_address])) {
-                $this->set_as_sent($lower_email_address, true, null, null, 'blocked');
-                return true;
-            }
             //test against restricted domains
             $at_pos = strrpos($lower_email_address, '@');
             if ($at_pos !== false) {
@@ -883,7 +946,6 @@ class EmailMan extends SugarBean
 
             //fetch email marketing.
             if (empty($this->current_emailmarketing) or ! isset($this->current_emailmarketing)) {
-
                 $this->current_emailmarketing = new EmailMarketing();
             }
             if (empty($this->current_emailmarketing->id) or $this->current_emailmarketing->id !== $this->marketing_id) {
@@ -895,9 +957,9 @@ class EmailMan extends SugarBean
             if (empty($this->current_emailtemplate) or $this->current_emailtemplate->id !== $this->current_emailmarketing->template_id) {
                 $this->current_emailtemplate = new EmailTemplate();
 
-                if ($this->resend_type == 'Reminder'){
+                if (isset($this->resend_type) && $this->resend_type == 'Reminder') {
                     $this->current_emailtemplate->retrieve($sugar_config['survey_reminder_template']);
-                } else{
+                } else {
                     $this->current_emailtemplate->retrieve($this->current_emailmarketing->template_id);
                 }
 
@@ -929,6 +991,7 @@ class EmailMan extends SugarBean
                 $this->current_mailbox->retrieve($this->current_emailmarketing->inbound_email_id);
                 //extract the email address.
                 $this->mailbox_from_addr = $this->current_mailbox->get_stored_options('from_addr', 'nobody@example.com', null);
+                isValidEmailAddress($this->mailbox_from_addr);
             }
 
             // fetch campaign details..
@@ -957,11 +1020,14 @@ class EmailMan extends SugarBean
 
             $mail->ClearAllRecipients();
             $mail->ClearReplyTos();
-            $mail->Sender = $this->mailbox_from_addr;
-            $mail->From = $this->mailbox_from_addr;
+            $mail->Sender = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
+            isValidEmailAddress($mail->Sender);
+            $mail->From = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
+            isValidEmailAddress($mail->From);
             $mail->FromName = $locale->translateCharsetMIME(trim($this->current_emailmarketing->from_name), 'UTF-8', $OBCharset);
+
             $mail->ClearCustomHeaders();
-            $mail->AddCustomHeader('X-CampTrackID:' . $this->target_tracker_key);
+            $mail->AddCustomHeader('X-CampTrackID:' . $this->getTargetId());
             //CL - Bug 25256 Check if we have a reply_to_name/reply_to_addr value from the email marketing table.  If so use email marketing entry; otherwise current mailbox (inbound email) entry
             $replyToName = empty($this->current_emailmarketing->reply_to_name) ? $this->current_mailbox->get_stored_options('reply_to_name', $mail->FromName, null) : $this->current_emailmarketing->reply_to_name;
             $replyToAddr = empty($this->current_emailmarketing->reply_to_addr) ? $this->current_mailbox->get_stored_options('reply_to_addr', $mail->From, null) : $this->current_emailmarketing->reply_to_addr;
@@ -972,18 +1038,16 @@ class EmailMan extends SugarBean
 
             //parse and replace bean variables.
             $macro_nv = array();
-            $focus_name = 'Contacts';
-            if ($module->module_dir == 'Accounts') {
-                $focus_name = 'Accounts';
-            }
 
+            require_once __DIR__ . '/../EmailTemplates/EmailTemplateParser.php';
 
-            $template_data = $this->current_emailtemplate->parse_email_template(array('subject' => $this->current_emailtemplate->subject,
-                'body_html' => $this->current_emailtemplate->body_html,
-                'body' => $this->current_emailtemplate->body,
-                    ), $focus_name, $module, $macro_nv);
-
-            $template_data = $this->parseSurveyEmailTemplate($template_data, $module);
+            $template_data = (new EmailTemplateParser(
+                $this->current_emailtemplate,
+                $this->current_campaign,
+                $module,
+                $sugar_config['site_url'],
+                $this->getTargetId()
+            ))->parseVariables();
 
             //add email address to this list.
             $macro_nv['sugar_to_email_address'] = $module->email1;
@@ -991,8 +1055,8 @@ class EmailMan extends SugarBean
 
             //parse and replace urls.
             //this is new style of adding tracked urls to a campaign.
-            $tracker_url_template = $this->tracking_url . 'index.php?entryPoint=campaign_trackerv2&track=%s' . '&identifier=' . $this->target_tracker_key;
-            $removeme_url_template = $this->tracking_url . 'index.php?entryPoint=removeme&identifier=' . $this->target_tracker_key;
+            $tracker_url_template = $this->tracking_url . 'index.php?entryPoint=campaign_trackerv2&track=%s' . '&identifier=' . $this->getTargetId();
+            $removeme_url_template = $this->tracking_url . 'index.php?entryPoint=removeme&identifier=' . $this->getTargetId();
             $template_data = $this->current_emailtemplate->parse_tracker_urls($template_data, $tracker_url_template, $this->tracker_urls, $removeme_url_template);
             $mail->AddAddress($module->email1, $locale->translateCharsetMIME(trim($module->name), 'UTF-8', $OBCharset));
 
@@ -1036,17 +1100,17 @@ class EmailMan extends SugarBean
                 //END
                 //do not add the default remove me link if the campaign has a trackerurl of the opotout link
                 if ($this->has_optout_links == false) {
-                    $mail->Body .= "<br /><span style='font-size:0.8em'>{$mod_strings['TXT_REMOVE_ME']} <a href='" . $this->tracking_url . "index.php?entryPoint=removeme&identifier={$this->target_tracker_key}'>{$mod_strings['TXT_REMOVE_ME_CLICK']}</a></span>";
+                    $mail->Body .= "<br /><span style='font-size:0.8em'>{$mod_strings['TXT_REMOVE_ME']} <a href='" . $this->tracking_url . "index.php?entryPoint=removeme&identifier={$this->getTargetId()}'>{$mod_strings['TXT_REMOVE_ME_CLICK']}</a></span>";
                 }
                 // cn: bug 11979 - adding single quote to comform with HTML email RFC
-                $mail->Body .= "<br /><img alt='' height='1' width='1' src='{$this->tracking_url}index.php?entryPoint=image&identifier={$this->target_tracker_key}' />";
+                $mail->Body .= "<br /><img alt='' height='1' width='1' src='{$this->tracking_url}index.php?entryPoint=image&identifier={$this->getTargetId()}' />";
 
                 $mail->AltBody = $template_data['body'];
                 if ($btracker) {
                     $mail->AltBody .= "\n" . $tracker_url;
                 }
                 if ($this->has_optout_links == false) {
-                    $mail->AltBody .= "\n\n\n{$mod_strings['TXT_REMOVE_ME_ALT']} " . $this->tracking_url . "index.php?entryPoint=removeme&identifier=$this->target_tracker_key";
+                    $mail->AltBody .= "\n\n\n{$mod_strings['TXT_REMOVE_ME_ALT']} " . $this->tracking_url . "index.php?entryPoint=removeme&identifier={$this->getTargetId()}";
                 }
             }
 
@@ -1101,7 +1165,6 @@ class EmailMan extends SugarBean
             }
         } else {
             $success = false;
-            $this->target_tracker_key = create_guid();
 
             if (isset($module->email_opt_out) && ($module->email_opt_out === 'on' || $module->email_opt_out == '1' || $module->email_opt_out == 1)) {
                 $this->set_as_sent($module->email1, true, null, null, 'blocked');
@@ -1148,7 +1211,6 @@ class EmailMan extends SugarBean
      */
     public function is_primary_email_address(SugarBean $bean)
     {
-
         if (!isset($bean->email1)) {
             return false;
         }
@@ -1260,7 +1322,6 @@ class EmailMan extends SugarBean
                 || $optInStatus === SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_SENT
                 || $optInStatus === SugarEmailAddress::COI_FLAG_OPT_IN_PENDING_EMAIL_FAILED
             ) {
-
                 $this->related_type = $relatedBean->module_dir;
                 $this->related_id = $relatedBean->id;
                 $this->related_confirm_opt_in = true;
@@ -1327,7 +1388,6 @@ class EmailMan extends SugarBean
      */
     private function sendOptInEmailViaMailer(SugarBean $focus, EmailAddress $emailAddress)
     {
-
         global $log;
         global $app_strings;
 
@@ -1365,6 +1425,7 @@ class EmailMan extends SugarBean
         $defaults = $emailObj->getSystemDefaultEmail();
 
         $mailer->From = $defaults['email'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $defaults['name'];
 
         $mailer->Subject = from_html($emailTemplate->subject);
@@ -1389,7 +1450,13 @@ class EmailMan extends SugarBean
             isset($focus->first_name) ? $focus->first_name : '');
         $mailer->replace('contact_last_name',
             isset($focus->last_name) ? $focus->last_name : '');
-        $mailer->replace('emailaddress_email_address', $emailAddressString);
+        $emailAddressConfirmOptInToken = $emailAddress->getConfirmOptInTokenGenerateIfNotExists();
+        $mailer->replace('emailaddress_confirm_opt_in_token', $emailAddressConfirmOptInToken);
+
+        /**
+         * @deprecated since version 7.10.2
+         */
+        $mailer->replace('emailaddress_email_address', $emailAddressConfirmOptInToken);
 
         $mailer->replace('sugarurl', $sugar_config['site_url']);
 
@@ -1474,28 +1541,18 @@ class EmailMan extends SugarBean
     }
 
     /**
-     * @param array $templateData
-     * @param SugarBean $module
-     * @return array
+     * @return string
      */
-    private function parseSurveyEmailTemplate(array $templateData, SugarBean $module)
+    public function getTargetId()
     {
-        if ($this->current_campaign->campaign_type !== 'Survey') {
-            return $templateData;
-        }
+        return $this->targetId;
+    }
 
-        /** @var Surveys $survey */
-        $survey = BeanFactory::getBean('Surveys', $this->current_campaign->survey_id);
-        $url = '';
-        if ($module->module_dir == 'Contacts') {
-            $url = $survey->getCampaignSurveyLink($module, $this->target_tracker_key);
-        }
-
-        foreach ($templateData as $key => $str) {
-            $str = str_replace('$surveys_survey_url_display', $url, $str);
-            $templateData[$key] = $this->current_emailtemplate->parse_template_bean($str, 'Surveys', $survey);
-        }
-
-        return $templateData;
+    /**
+     * @param string $targetId
+     */
+    public function setTargetId($targetId)
+    {
+        $this->targetId = $targetId;
     }
 }

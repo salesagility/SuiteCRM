@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 require_once ('modules/ModuleBuilder/MB/AjaxCompose.php') ;
@@ -260,7 +260,11 @@ class ModuleBuilderViewWizard extends SugarView
 		//$GLOBALS['log']->debug(print_r($nodes,true));
 		foreach ( $nodes as $module )
 		{
-			$this->buttons [ $module [ 'name' ] ] = array ( 'action' => $module [ 'action' ] , 'imageTitle' => ucfirst ( $module [ 'module' ] . "_32" ) , 'size' => '32', 'linkId' => 'studiolink_'.$module [ 'module' ] ) ;
+            $this->buttons[$module['name']] = [
+                'action' => $module['action'],
+                'linkId' => 'studiolink_' . $module['module'],
+                'icon' => $module['icon']
+            ];
 		}
 	}
 

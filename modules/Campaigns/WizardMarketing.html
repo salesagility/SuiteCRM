@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- ********************************************************************************/
+ */
 -->
 {if $hideScreen}<div style="display:none;">{/if}
 {literal}
@@ -757,21 +758,6 @@
 							</div>
 						</div>
 						{/if}
-
-						<div class="panel-toolbar">
-
-							<div class="template-container-full">
-								{if !$hide_width_set}
-								<label>{$MOD.LBL_CLICK_TO_ADD}</label>
-								<br>
-								{/if}
-								{$BODY_EDITOR}
-							</div>
-							<!--
-                            <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
-                            <pre id="email_template_view"></pre>
-                            -->
-						</div>
 					</div>
 				</div>
 			</div>
@@ -1154,38 +1140,51 @@
 				if(oe_stored_options[mailbox.value]) {
 					var focusOe = oe_stored_options[mailbox.value];
 					// from name
-                                        var fromName = focusOe.smtp_from_name ? focusOe.smtp_from_name : (
+                                        
+                                        if(!fn.value) {
+                                            var fromName = focusOe.smtp_from_name ? focusOe.smtp_from_name : (
                                                 focusOe.from_name ? focusOe.from_name : (
                                                     focusOe.name ? focusOe.name : ''
                                                 ));
-					if(fromName && fromName != "")
-						fn.value = fromName;
-					else
-						fn.value = '';
+                                            if (fromName && fromName != "") {
+                                                fn.value = fromName;
+                                            } else {
+                                                fn.value = '';
+                                            }
+                                        }
 
 					// from addr
-                                        var fromAddr = focusOe.smtp_from_addr ? focusOe.smtp_from_addr : (
+                                        if(!fa.value) {
+                                            var fromAddr = focusOe.smtp_from_addr ? focusOe.smtp_from_addr : (
                                                 focusOe.from_addr ? focusOe.from_addr : (
                                                     focusOe.mail_smtpuser ? focusOe.mail_smtpuser : ''
                                                 ));
-					if(fromAddr && fromAddr != "")
-						fa.value = fromAddr;
-					else
-						fa.value = '';
+                                            if (fromAddr && fromAddr != "") {
+                                                fa.value = fromAddr;
+                                            } else {
+                                                fa.value = '';
+                                            }
+                                        }
                                 }
 				if(ie_stored_options[mailbox.value]) {
 					var focusIe = ie_stored_options[mailbox.value];
 					// reply name
-					if(focusIe.from_name && focusIe.from_name != "")
-						rn.value = focusIe.from_name;
-					else
-						rn.value = '';
+                                        if (!rn.value) {
+                                            if (focusIe.from_name && focusIe.from_name != "") {
+                                                rn.value = focusIe.from_name;
+                                            } else {
+                                                rn.value = '';
+                                            }
+                                        }
 
-					// reply add
-					if(focusIe.from_addr && focusIe.from_addr != "")
-						ra.value = focusIe.from_addr;
-					else
-						ra.value = '';
+                                        // reply add
+                                        if (!ra.value) {
+                                            if(focusIe.from_addr && focusIe.from_addr != "") {
+                                                ra.value = focusIe.from_addr;
+                                            } else {
+                                                ra.value = '';
+                                            }
+                                        }
 				}
 			} else {
 				fn.value = '';
@@ -1379,6 +1378,16 @@
 </tr>
 </table>
 
+<div class="template-panel-container panel">
+	<div class="template-container-full">
+		{if !$hide_width_set}
+		<label>{$MOD.LBL_CLICK_TO_ADD}</label>
+		<br>
+		{/if}
+		{$BODY_EDITOR}
+	</div>
+</div>
+
 {literal}
 <script language="javascript">
 function determine_back(){
@@ -1437,7 +1446,7 @@ function determine_back(){
 				<input type="hidden" id="documentId" name="seldoc" tabindex="0" />
 				<input type="hidden" id="docRevId" name="seldoc" tabindex="0" />
 				<input type="hidden" id="documentType" name="seldoc" tabindex="0" />
-				<input type="button" name="add_doc" id="add_doc" onclick="selectDoc();" value='{$MOD.LBL_SUGAR_DOCUMENT}' class="button" />
+				<input type="button" name="add_doc" id="add_doc" onclick="selectDoc();" value='{$MOD.LBL_SUITE_DOCUMENT}' class="button" />
 
 				<input type="hidden" name="attach_to_template_id" id="attach_to_template_id" value="{$TEMPLATE_ID}">
 				<input type="hidden" name="campaign_id" value="{$CAMPAIGN_ID}">

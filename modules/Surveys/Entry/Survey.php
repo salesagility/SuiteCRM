@@ -34,7 +34,7 @@ if ($trackerId) {
 
 function getSurveyLinkTracker($trackerId)
 {
-    global $db;
+    $db = DBManagerFactory::getInstance();
     $trackerId = $db->quote($trackerId);
     $sql = <<<EOF
 SELECT id 

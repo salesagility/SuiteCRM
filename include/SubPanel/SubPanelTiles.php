@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 require_once('include/SubPanel/SubPanel.php');
 require_once('include/SubPanel/SubPanelTilesTabs.php');
@@ -49,33 +51,39 @@ require_once('include/SubPanel/SubPanelDefinitions.php');
  */
 class SubPanelTiles
 {
-	var $id;
-	var $module;
-	var $focus;
-	var $start_on_field;
-	var $layout_manager;
-	var $layout_def_key;
-	var $show_tabs = false;
+    public $id;
+    public $module;
+    public $focus;
+    public $start_on_field;
+    public $layout_manager;
+    public $layout_def_key;
+    public $show_tabs = false;
 
-	var $subpanel_definitions;
+    /**
+     * @var \SuiteCRM\SubPanel\SubPanelRowCounter
+     */
+    protected $rowCounter;
 
-	var $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
-							//should be the array.
+    public $subpanel_definitions;
 
-	function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
-	{
-		$this->focus = $focus;
-		$this->id = $focus->id;
-		$this->module = $focus->module_dir;
-		$this->layout_def_key = $layout_def_key;
-		$this->subpanel_definitions=new SubPanelDefinitions($focus, $layout_def_key, $layout_def_override);
-	}
+    public $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
+    //should be the array.
 
-	/*
-	 * Return the current selected or requested subpanel tab
-	 * @return	string	The identifier for the selected subpanel tab (e.g., 'Other')
-	 */
-    function getSelectedGroup()
+    public function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
+    {
+        $this->focus = $focus;
+        $this->id = $focus->id;
+        $this->module = $focus->module_dir;
+        $this->layout_def_key = $layout_def_key;
+        $this->subpanel_definitions=new SubPanelDefinitions($focus, $layout_def_key, $layout_def_override);
+        $this->rowCounter = new \SuiteCRM\SubPanel\SubPanelRowCounter($focus);
+    }
+
+    /*
+     * Return the current selected or requested subpanel tab
+     * @return	string	The identifier for the selected subpanel tab (e.g., 'Other')
+     */
+    public function getSelectedGroup()
     {
         global $current_user;
 
@@ -298,33 +306,27 @@ class SubPanelTiles
                 }
             }
 
-            $display = 'none';
             $div_display = $default_div_display;
-            $cookie_name =   $tab . '_v';
 
-            if (isset($thisPanel->_instance_properties['collapsed']) && $thisPanel->_instance_properties['collapsed'])
-            {
+            if (isset($thisPanel->_instance_properties['collapsed'])
+                && $thisPanel->_instance_properties['collapsed']) {
                 $div_display = 'none';
             }
 
-            if(isset($div_cookies[$cookie_name])){
-                // If defaultSubPanelExpandCollapse is set, ignore the cookie that remembers whether the panel is expanded or collapsed.
-                // To be used with the above 'collapsed' metadata setting so they will always be set the same when the page is loaded.
-                if(!isset($sugar_config['defaultSubPanelExpandCollapse']) || $sugar_config['defaultSubPanelExpandCollapse'] == false)
-                {
-                    $div_display = 	$div_cookies[$cookie_name];
-                }
-            }
-
-            if(!empty($sugar_config['hide_subpanels']) or $thisPanel->isDefaultHidden()) {
+            if (!empty($sugar_config['hide_subpanels']) || $thisPanel->isDefaultHidden()) {
                 $div_display = 'none';
             }
 
-            if($div_display == 'none'){
-                $opp_display  = 'inline';
+            $cookie_name = $this->module . '_' . $tab . '_v';
+            if (isset($div_cookies[$cookie_name])) {
+                $div_display = $div_cookies[$cookie_name] === 'false' ? 'none' : '';
+            }
+
+            if ($div_display == 'none') {
+                $opp_display = 'inline';
                 $tabs_properties[$t]['expanded_subpanels'] = false;
-            } else{
-                $opp_display  = 'none';
+            } else {
+                $opp_display = 'none';
                 $tabs_properties[$t]['expanded_subpanels'] = true;
             }
 
@@ -372,8 +374,25 @@ class SubPanelTiles
                     'include/SubPanel/tpls/SubPanelDynamic.tpl', $arr);
 
                 // Get subpanel buttons
-                $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
+                $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel, $subpanel_object->subpanel_query);
+            } elseif ($current_user->getPreference('count_collapsed_subpanels')) {
+                $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
+                $count = (int)$this->rowCounter->getSubPanelRowCount($subPanelDef);
+
+                $extraClass = '';
+                if ($count === 0) {
+                    $countStr = $count.'';
+                } elseif ($count > 0) {
+                    $countStr = $count.'';
+                    $tabs_properties[$t]['collapsed_override'] = 1;
+                } else {
+                    $countStr = '...';
+                    $extraClass = ' incomplete';
+                }
+                
+                $tabs_properties[$t]['title'] .= ' (<span class="subPanelCountHint' . $extraClass . '" data-subpanel="' . $tab . '" data-module="' . $layout_def_key . '" data-record="' . $_REQUEST['record'] . '">' . $countStr . '</span>)';
             }
+
 
             array_push($tab_names, $tab);
         }
@@ -402,15 +421,14 @@ class SubPanelTiles
         return $template_header . $template_body . $template_footer;
 	}
 
-
-	function getLayoutManager()
-	{
-		require_once('include/generic/LayoutManager.php');
-	  	if ( $this->layout_manager == null) {
-	    	$this->layout_manager = new LayoutManager();
-	  	}
-	  	return $this->layout_manager;
-	}
+    public function getLayoutManager()
+    {
+        require_once('include/generic/LayoutManager.php');
+        if ($this->layout_manager == null) {
+            $this->layout_manager = new LayoutManager();
+        }
+        return $this->layout_manager;
+    }
 
 	function get_buttons($thisPanel,$panel_query=null)
 	{
@@ -444,10 +462,14 @@ class SubPanelTiles
 
         }
         require_once('include/Smarty/plugins/function.sugar_action_menu.php');
-        $widget_contents = smarty_function_sugar_action_menu(array(
-            'buttons' => $buttons,
-            'class' => 'clickMenu fancymenu',
-        ), $this->xTemplate);
+        $widget_contents = smarty_function_sugar_action_menu(
+            [
+                'buttons' => $buttons,
+                'flat' => !empty($thisPanel->_instance_properties['flat']),
+                'class' => 'clickMenu fancymenu',
+            ],
+            $this->xTemplate
+        );
         return $widget_contents;
 	}
 }

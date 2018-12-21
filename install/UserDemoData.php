@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -139,9 +139,6 @@ class UserDemoData {
 		$u->setPreference('max_tabs','7');
 		$u->savePreferencesToDB();
 
-
-		$u->picture = self::_copy_user_image($id);
-
 		$u->save();
 	}
 
@@ -187,18 +184,4 @@ class UserDemoData {
 				$sugar_demodata['users'][0]['title'], $sugar_demodata['users'][0]['is_admin'], "seed_jim_id", $sugar_demodata['users'][0]['last_name'].", ".$sugar_demodata['users'][0]['first_name'], $sugar_demodata['users'][0]['email']);
 		}
 	}
-
-	static function _copy_user_image($id) {
-		global $sugar_config;
-		$picture_file = create_guid();
-		$file = "include/images/".$id.".gif";
-		$newfile = "upload://$picture_file";
-		if (!copy($file, $newfile)) {
-   			global $app_strings;
-        	$GLOBALS['log']->fatal(string_format($app_strings['ERR_FILE_NOT_FOUND'], array($file)));
-
-		}
-		return $picture_file;
-	}
-
 }

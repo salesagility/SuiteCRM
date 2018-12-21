@@ -623,6 +623,7 @@ function commitHandleReminders($skippedFiles, $path='') {
 			$email->description_html = nl2br($desc);
 			$email->from_name = $current_user->full_name;
 			$email->from_addr = $current_user->email1;
+                        isValidEmailAddress($email->from_addr);
 			$email->to_addrs_arr = $email->parse_addrs($current_user->email1, '', '', '');
 			$email->cc_addrs_arr = array();
 			$email->bcc_addrs_arr = array();
@@ -702,97 +703,99 @@ function deleteChance(){
  *
  * @param $file String path to uploaded zip file
  */
-function upgradeUWFiles($file) {
-	$cacheUploadUpgradesTemp = mk_temp_dir(sugar_cached("upgrades/temp"));
+function upgradeUWFiles($file)
+{
+    $cacheUploadUpgradesTemp = mk_temp_dir(sugar_cached("upgrades/temp"));
 
-	unzip($file, $cacheUploadUpgradesTemp);
+    unzip($file, $cacheUploadUpgradesTemp);
 
-	if(!file_exists("$cacheUploadUpgradesTemp/manifest.php")) {
-		logThis("*** ERROR: no manifest file detected while bootstraping upgrade wizard files!");
-		return;
-	} else {
-		include("$cacheUploadUpgradesTemp/manifest.php");
-	}
+    if (!file_exists("$cacheUploadUpgradesTemp/manifest.php")) {
+        logThis("*** ERROR: no manifest file detected while bootstraping upgrade wizard files!");
+        return;
+    }
+    include("$cacheUploadUpgradesTemp/manifest.php");
 
-	$allFiles = array();
-	$from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
 
-	// Localization
-	if(file_exists("$from_dir/include/Localization/Localization.php")) {
-		$allFiles[] = "$from_dir/include/Localization/Localization.php";
-	}
-	// upgradeWizard
-	if(file_exists("$from_dir/modules/UpgradeWizard")) {
-		$allFiles[] = findAllFiles("$from_dir/modules/UpgradeWizard", $allFiles);
-	}
-	// moduleInstaller
-	if(file_exists("$from_dir/ModuleInstall")) {
-		$allFiles[] = findAllFiles("$from_dir/ModuleInstall", $allFiles);
-	}
-	if(file_exists("$from_dir/include/javascript/yui")) {
-		$allFiles[] = findAllFiles("$from_dir/include/javascript/yui", $allFiles);
-	}
-	if(file_exists("$from_dir/HandleAjaxCall.php")) {
-		$allFiles[] = "$from_dir/HandleAjaxCall.php";
-	}
-	if(file_exists("$from_dir/include/SugarTheme")) {
-		$allFiles[] = findAllFiles("$from_dir/include/SugarTheme", $allFiles);
-	}
-	if(file_exists("$from_dir/include/SugarCache")) {
-		$allFiles[] = findAllFiles("$from_dir/include/SugarCache", $allFiles);
-	}
-	if(file_exists("$from_dir/include/utils/external_cache.php")) {
-		$allFiles[] = "$from_dir/include/utils/external_cache.php";
-	}
-	if(file_exists("$from_dir/include/upload_file.php")) {
-		$allFiles[] = "$from_dir/include/upload_file.php";
-	}
-	if(file_exists("$from_dir/include/file_utils.php")) {
-		$allFiles[] = "$from_dir/include/file_utils.php";
-	}
-	if(file_exists("$from_dir/include/upload_file.php")) {
-		$allFiles[] = "$from_dir/include/upload_file.php";
-	}
-	if(file_exists("$from_dir/include/utils/sugar_file_utils.php")) {
-		$allFiles[] = "$from_dir/include/utils/sugar_file_utils.php";
-	}
-	if(file_exists("$from_dir/include/utils/autoloader.php")) {
-		$allFiles[] = "$from_dir/include/utils/autoloader.php";
-	}
+    $allFiles = array();
+    $from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
 
-    if(file_exists("$from_dir/include/UploadFile.php")) {
-		$allFiles[] = "$from_dir/include/UploadFile.php";
-	}
-	if(file_exists("$from_dir/include/SugarTheme/SugarTheme.php")) {
-		$allFiles[] = "$from_dir/include/SugarTheme/SugarTheme.php";
-	}
+    // Localization
+    if (file_exists("$from_dir/include/Localization/Localization.php")) {
+        $allFiles[] = "$from_dir/include/Localization/Localization.php";
+    }
+    // upgradeWizard
+    if (file_exists("$from_dir/modules/UpgradeWizard")) {
+        $allFiles[] = findAllFiles("$from_dir/modules/UpgradeWizard", $allFiles);
+    }
+    // moduleInstaller
+    if (file_exists("$from_dir/ModuleInstall")) {
+        $allFiles[] = findAllFiles("$from_dir/ModuleInstall", $allFiles);
+    }
+    if (file_exists("$from_dir/include/javascript/yui")) {
+        $allFiles[] = findAllFiles("$from_dir/include/javascript/yui", $allFiles);
+    }
+    if (file_exists("$from_dir/HandleAjaxCall.php")) {
+        $allFiles[] = "$from_dir/HandleAjaxCall.php";
+    }
+    if (file_exists("$from_dir/include/SugarTheme")) {
+        $allFiles[] = findAllFiles("$from_dir/include/SugarTheme", $allFiles);
+    }
+    if (file_exists("$from_dir/include/SugarCache")) {
+        $allFiles[] = findAllFiles("$from_dir/include/SugarCache", $allFiles);
+    }
+    if (file_exists("$from_dir/include/utils/external_cache.php")) {
+        $allFiles[] = "$from_dir/include/utils/external_cache.php";
+    }
+    if (file_exists("$from_dir/include/upload_file.php")) {
+        $allFiles[] = "$from_dir/include/upload_file.php";
+    }
+    if (file_exists("$from_dir/include/file_utils.php")) {
+        $allFiles[] = "$from_dir/include/file_utils.php";
+    }
+    if (file_exists("$from_dir/include/upload_file.php")) {
+        $allFiles[] = "$from_dir/include/upload_file.php";
+    }
+    if (file_exists("$from_dir/include/utils/sugar_file_utils.php")) {
+        $allFiles[] = "$from_dir/include/utils/sugar_file_utils.php";
+    }
+    if (file_exists("$from_dir/include/utils/autoloader.php")) {
+        $allFiles[] = "$from_dir/include/utils/autoloader.php";
+    }
 
-	// add extra files to post upgrade process
-	if(file_exists(realpath("$from_dir/../scripts/files_to_add_post.php"))) {
-		include(realpath("$from_dir/../scripts/files_to_add_post.php"));
-		if(isset($filesToAddPost) && is_array($filesToAddPost) && $filesToAddPost) {
-			foreach($filesToAddPost as $file) {
-				if(file_exists("$from_dir/$file")) {
-					$allFiles[] = "$from_dir/$file";
-					$GLOBALS['log']->info("File added to post upgrade: $from_dir/$file");
-				} else {
-					$GLOBALS['log']->error("File not found for post upgrade: $from_dir/$file");
-				}
-			}
-		}
-	}
+    if (file_exists("$from_dir/include/UploadFile.php")) {
+        $allFiles[] = "$from_dir/include/UploadFile.php";
+    }
+    if (file_exists("$from_dir/include/SugarTheme/SugarTheme.php")) {
+        $allFiles[] = "$from_dir/include/SugarTheme/SugarTheme.php";
+    }
 
-	// check custom changes and alert the user before upgrade
+    // add extra files to post upgrade process
+    if (file_exists(realpath("$from_dir/../scripts/files_to_add_post.php"))) {
+        include(realpath("$from_dir/../scripts/files_to_add_post.php"));
+        if (isset($filesToAddPost) && is_array($filesToAddPost) && $filesToAddPost) {
+            foreach ($filesToAddPost as $file) {
+                if (file_exists("$from_dir/$file")) {
+                    $allFiles[] = "$from_dir/$file";
+                    $GLOBALS['log']->info("File added to post upgrade: $from_dir/$file");
+                } else {
+                    $GLOBALS['log']->error("File not found for post upgrade: $from_dir/$file");
+                }
+            }
+        }
+    }
 
-	if($filesInCustom = checkCustomOverrides($from_dir)) {
-		global $mod_strings;
-		$alertMessage = $mod_strings["LBL_UPGRD_CSTM_CHK"];
-		echo "<div class=\"error\">$alertMessage<br><ul>";
-		foreach($filesInCustom as $fileInCustom) {
-			echo "<li>$fileInCustom => custom/$fileInCustom</li>";
-		}
-		echo "</ul></div>";
-	}upgradeUWFilesCopy($allFiles, $from_dir);
+    // check custom changes and alert the user before upgrade
+
+    if ($filesInCustom = checkCustomOverrides($from_dir)) {
+        global $mod_strings;
+        $alertMessage = $mod_strings["LBL_UPGRD_CSTM_CHK"];
+        echo "<div class=\"error\">$alertMessage<br><ul>";
+        foreach ($filesInCustom as $fileInCustom) {
+            echo "<li>$fileInCustom => custom/$fileInCustom</li>";
+        }
+        echo "</ul></div>";
+    }
+    upgradeUWFilesCopy($allFiles, $from_dir);
 }
 
 /**
@@ -1030,7 +1033,7 @@ eoq;
  * @return bool true on success
  */
 function updateVersions($version) {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	global $sugar_config;
 	global $path;
 
@@ -1096,7 +1099,7 @@ function getModuleLanguagePack($lang, $module) {
 function checkSystemCompliance() {
 	global $sugar_config;
 	global $current_language;
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	global $mod_strings;
 	global $app_strings;
 
@@ -1163,13 +1166,15 @@ function checkSystemCompliance() {
 		$ret['error_found'] = true;
 	}
 
-	// imap
-	if(function_exists('imap_open')) {
-		$ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
-	} else {
-		$ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['ERR_CHECKSYS_IMAP']}</span></b>";
-		$ret['error_found'] = false;
-	}
+    // imap
+    $imapFactory = new ImapHandlerFactory();
+    $imap = $imapFactory->getImapHandler();
+    if ($imap->isAvailable()) {
+        $ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
+    } else {
+        $ret['imapStatus'] = "<b><span class=go>{$installer_mod_strings['ERR_CHECKSYS_IMAP']}</span></b>";
+        $ret['error_found'] = false;
+    }
 
 
 	// safe mode
@@ -1178,15 +1183,6 @@ function checkSystemCompliance() {
 		$ret['error_found'] = true;
 	} else {
 		$ret['safeModeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
-	}
-
-
-	// call time pass by ref
-	if('1' == ini_get('allow_call_time_pass_reference')) {
-		$ret['callTimeStatus'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_CALL_TIME']}</span></b>";
-		//continue upgrading
-	} else {
-		$ret['callTimeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
 	}
 
 	// memory limit
@@ -2381,7 +2377,7 @@ function UWrebuild() {
 }
 
 function getCustomTables() {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	return $db->tablesLike('%_cstm');
 }
@@ -2392,7 +2388,7 @@ function alterCustomTables($customTables)
 }
 
 function getAllTables() {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	return $db->getTablesArray();
 }
 
@@ -2408,7 +2404,7 @@ function printAlterTableSql($tables)
 
 function executeConvertTablesSql($tables)
 {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	foreach($tables as $table){
 		$query = "ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
@@ -3337,7 +3333,7 @@ function upgradeModulesForTeamsets($filter=array()) {
 			continue;
 		}
 
-		$FieldArray = $GLOBALS['db']->helper->get_columns($bean->table_name);
+		$FieldArray = DBManagerFactory::getInstance()->helper->get_columns($bean->table_name);
 		if(!isset($FieldArray['team_id'])) {
 			continue;
 		}
@@ -3349,8 +3345,8 @@ function upgradeModulesForTeamsets($filter=array()) {
 	//Upgrade users table
 	$bean = loadBean('Users');
 	upgradeTeamColumn($bean, 'default_team');
-	$result = $GLOBALS['db']->query("SELECT id FROM teams where deleted=0");
-	while($row = $GLOBALS['db']->fetchByAssoc($result)) {
+	$result = DBManagerFactory::getInstance()->query("SELECT id FROM teams where deleted=0");
+	while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
 		$teamset = new TeamSet();
 		$teamset->addTeams($row['id']);
 	}
@@ -3426,11 +3422,11 @@ function upgradeTeamColumn($bean, $column_name) {
 
 	if(isset($bean->field_defs['team_set_id'])) {
 		//Create the team_set_id column
-		$FieldArray = $GLOBALS['db']->helper->get_columns($bean->table_name);
+		$FieldArray = DBManagerFactory::getInstance()->helper->get_columns($bean->table_name);
 		if(!isset($FieldArray['team_set_id'])) {
-			$GLOBALS['db']->addColumn($bean->table_name, $bean->field_defs['team_set_id']);
+			DBManagerFactory::getInstance()->addColumn($bean->table_name, $bean->field_defs['team_set_id']);
 		}
-		$indexArray =  $GLOBALS['db']->helper->get_indices($bean->table_name);
+		$indexArray =  DBManagerFactory::getInstance()->helper->get_indices($bean->table_name);
 
 		$indexName = getValidDBName('idx_'.strtolower($bean->table_name).'_tmst_id', true, 34);
 		$indexDef = array(
@@ -3441,11 +3437,11 @@ function upgradeTeamColumn($bean, $column_name) {
 			)
 		);
 		if(!isset($indexArray[$indexName])) {
-			$GLOBALS['db']->addIndexes($bean->table_name, $indexDef);
+			DBManagerFactory::getInstance()->addIndexes($bean->table_name, $indexDef);
 		}
 
 		//Update the table's team_set_id column to have the same values as team_id
-		$GLOBALS['db']->query("UPDATE {$bean->table_name} SET team_set_id = {$column_name}");
+		DBManagerFactory::getInstance()->query("UPDATE {$bean->table_name} SET team_set_id = {$column_name}");
 	}
 }
 
@@ -3458,7 +3454,7 @@ function upgradeFolderSubscriptionsTeamSetId()
 {
 	logThis("In upgradeFolderSubscriptionsTeamSetId()");
 	$query = "UPDATE folders SET team_set_id = team_id";
-	$result = $GLOBALS['db']->query($query);
+	$result = DBManagerFactory::getInstance()->query($query);
 	logThis("Finished upgradeFolderSubscriptionsTeamSetId()");
 }
 
@@ -3471,12 +3467,12 @@ function upgradeFolderSubscriptionsTeamSetId()
  */
 function upgradeModulesForTeam() {
 	logThis("In upgradeModulesForTeam()");
-	$result = $GLOBALS['db']->query("SELECT id, user_name, first_name, last_name FROM users where deleted=0");
+	$result = DBManagerFactory::getInstance()->query("SELECT id, user_name, first_name, last_name FROM users where deleted=0");
 
-	while($row = $GLOBALS['db']->fetchByAssoc($result)) {
-		$results2 = $GLOBALS['db']->query("SELECT id FROM teams WHERE name = '({$row['user_name']})'");
+	while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
+		$results2 = DBManagerFactory::getInstance()->query("SELECT id FROM teams WHERE name = '({$row['user_name']})'");
 		$assoc = '';
-		if(!$assoc = $GLOBALS['db']->fetchByAssoc($results2)) {
+		if(!$assoc = DBManagerFactory::getInstance()->fetchByAssoc($results2)) {
 			//if team does not exist, then lets create the team for this user
 			$team = new Team();
 			$user = new User();
@@ -3500,7 +3496,7 @@ function upgradeModulesForTeam() {
 		}
 
 		$query = "UPDATE teams SET name = '{$name}', name_2 = '{$name_2}', associated_user_id = '{$associated_user_id}' WHERE id = '{$team_id}'";
-		$GLOBALS['db']->query($query);
+		DBManagerFactory::getInstance()->query($query);
 	} //while
 
 	//Update the team_set_id and default_team columns
@@ -3508,8 +3504,8 @@ function upgradeModulesForTeam() {
 
 	//Update team_set_id
 	if($ce_to_pro_or_ent) {
-		$GLOBALS['db']->query("update users set team_set_id = (select teams.id from teams where teams.associated_user_id = users.id)");
-		$GLOBALS['db']->query("update users set default_team = (select teams.id from teams where teams.associated_user_id = users.id)");
+		DBManagerFactory::getInstance()->query("update users set team_set_id = (select teams.id from teams where teams.associated_user_id = users.id)");
+		DBManagerFactory::getInstance()->query("update users set default_team = (select teams.id from teams where teams.associated_user_id = users.id)");
 	}
 
 }
@@ -3655,9 +3651,9 @@ function fix_dropdown_list() {
 			if(isset($GLOBALS['app_list_strings']) && is_array($GLOBALS['app_list_strings'])) {
 				foreach($GLOBALS['app_list_strings'] as $key=>$entry) {
 					if(preg_match('/([^A-Za-z_])/', $key, $matches) && is_array($entry)) {
-						$result = $GLOBALS['db']->query("SELECT custom_module FROM fields_meta_data WHERE ext1 = '{$key}'");
+						$result = DBManagerFactory::getInstance()->query("SELECT custom_module FROM fields_meta_data WHERE ext1 = '{$key}'");
 						if(!empty($result)) {
-							while($row = $GLOBALS['db']->fetchByAssoc($result)) {
+							while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
 								$custom_module = $row['custom_module'];
 								if(!empty($GLOBALS['beanList'][$custom_module])) {
 									$affected_modules[$custom_module] = $GLOBALS['beanList'][$custom_module];
@@ -3769,7 +3765,7 @@ function fix_dropdown_list() {
 		//Update db entries (the order matters here... need to process database changes first)
 		if(!empty($affected_keys)) {
 			foreach($affected_keys as $old_key=>$new_key) {
-				$GLOBALS['db']->query("UPDATE fields_meta_data SET ext1 = '{$new_key}' WHERE ext1 = '{$old_key}'");
+				DBManagerFactory::getInstance()->query("UPDATE fields_meta_data SET ext1 = '{$new_key}' WHERE ext1 = '{$old_key}'");
 			}
 		}
 
@@ -3818,28 +3814,28 @@ function update_iframe_dashlets(){
  */
 function convertImageToText($table_name,$column_name){
 	$set_lang = "SET LANGUAGE us_english";
-	$GLOBALS['db']->query($set_lang);
-	if($GLOBALS['db']->lastError()){
+	DBManagerFactory::getInstance()->query($set_lang);
+	if(DBManagerFactory::getInstance()->lastError()){
 		logThis('An error occurred when performing this query-->'.$set_lang);
 	}
 	$q="SELECT data_type
         FROM INFORMATION_SCHEMA.Tables T JOIN INFORMATION_SCHEMA.Columns C
         ON T.TABLE_NAME = C.TABLE_NAME where T.TABLE_NAME = '$table_name' and C.COLUMN_NAME = '$column_name'";
-	$res= $GLOBALS['db']->query($q);
-	if($GLOBALS['db']->lastError()){
+	$res= DBManagerFactory::getInstance()->query($q);
+	if(DBManagerFactory::getInstance()->lastError()){
 		logThis('An error occurred when performing this query-->'.$q);
 	}
-	$row= $GLOBALS['db']->fetchByAssoc($res);
+	$row= DBManagerFactory::getInstance()->fetchByAssoc($res);
 
 	if(trim(strtolower($row['data_type'])) == 'image'){
 		$addContent_temp = "alter table {$table_name} add {$column_name}_temp text null";
-		$GLOBALS['db']->query($addContent_temp);
-		if($GLOBALS['db']->lastError()){
+		DBManagerFactory::getInstance()->query($addContent_temp);
+		if(DBManagerFactory::getInstance()->lastError()){
 			logThis('An error occurred when performing this query-->'.$addContent_temp);
 		}
 		$qN = "select count=datalength({$column_name}), id, {$column_name} from {$table_name}";
-		$result = $GLOBALS['db']->query($qN);
-		while($row = $GLOBALS['db']->fetchByAssoc($result)){
+		$result = DBManagerFactory::getInstance()->query($qN);
+		while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)){
 			if($row['count'] >8000){
 				$contentLength = $row['count'];
 				$start = 1;
@@ -3847,11 +3843,11 @@ function convertImageToText($table_name,$column_name){
 				$convertedContent = '';
 				while($contentLength >0){
 					$stepsQuery = "select cont=convert(varchar(max), convert(varbinary(8000), substring({$column_name},{$start},{$next}))) from {$table_name} where id= '{$row['id']}'";
-					$steContQ = $GLOBALS['db']->query($stepsQuery);
-					if($GLOBALS['db']->lastError()){
+					$steContQ = DBManagerFactory::getInstance()->query($stepsQuery);
+					if(DBManagerFactory::getInstance()->lastError()){
 						logThis('An error occurred when performing this query-->'.$stepsQuery);
 					}
-					$stepCont = $GLOBALS['db']->fetchByAssoc($steContQ);
+					$stepCont = DBManagerFactory::getInstance()->fetchByAssoc($steContQ);
 					if(isset($stepCont['cont'])){
 						$convertedContent = $convertedContent.$stepCont['cont'];
 					}
@@ -3859,29 +3855,29 @@ function convertImageToText($table_name,$column_name){
 					$contentLength = $contentLength - $next;
 				}
 				$addContentDataText="update {$table_name} set {$column_name}_temp = '{$convertedContent}' where id= '{$row['id']}'";
-				$GLOBALS['db']->query($addContentDataText);
-				if($GLOBALS['db']->lastError()){
+				DBManagerFactory::getInstance()->query($addContentDataText);
+				if(DBManagerFactory::getInstance()->lastError()){
 					logThis('An error occurred when performing this query-->'.$addContentDataText);
 				}
 			}
 			else{
 				$addContentDataText="update {$table_name} set {$column_name}_temp =
                 convert(varchar(max), convert(varbinary(8000), {$column_name})) where id= '{$row['id']}'";
-				$GLOBALS['db']->query($addContentDataText);
-				if($GLOBALS['db']->lastError()){
+				DBManagerFactory::getInstance()->query($addContentDataText);
+				if(DBManagerFactory::getInstance()->lastError()){
 					logThis('An error occurred when performing this query-->'.$addContentDataText);
 				}
 			}
 		}
 		//drop the contents now and change contents_temp to contents
 		$dropColumn = "alter table {$table_name} drop column {$column_name}";
-		$GLOBALS['db']->query($dropColumn);
-		if($GLOBALS['db']->lastError()){
+		DBManagerFactory::getInstance()->query($dropColumn);
+		if(DBManagerFactory::getInstance()->lastError()){
 			logThis('An error occurred when performing this query-->'.$dropColumn);
 		}
 		$changeColumnName = "EXEC sp_rename '{$table_name}.[{$column_name}_temp]','{$column_name}','COLUMN'";
-		$GLOBALS['db']->query($changeColumnName);
-		if($GLOBALS['db']->lastError()){
+		DBManagerFactory::getInstance()->query($changeColumnName);
+		if(DBManagerFactory::getInstance()->lastError()){
 			logThis('An error occurred when performing this query-->'.$changeColumnName);
 		}
 	}
@@ -3918,7 +3914,7 @@ function clearHelpFiles(){
 function upgradeDateTimeFields($path)
 {
 	//bug: 39757
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	$meetingsSql = "UPDATE meetings SET date_end = ".$db->convert("date_start", 'add_time', array('duration_hours', 'duration_minutes'));
 	$callsSql = "UPDATE calls SET date_end = ".$db->convert("date_start", 'add_time', array('duration_hours', 'duration_minutes'));
 	logThis('upgradeDateTimeFields Meetings SQL:' . $meetingsSql, $path);
@@ -3934,7 +3930,7 @@ function upgradeDateTimeFields($path)
  */
 function upgradeDocumentTypeFields($path){
 	//bug: 39757
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	$documentsSql = "UPDATE documents SET doc_type = 'Sugar' WHERE doc_type IS NULL";
 	$meetingsSql = "UPDATE meetings SET type = 'Sugar' WHERE type IS NULL";
@@ -3961,131 +3957,107 @@ function upgradeDocumentTypeFields($path){
  */
 function merge_config_si_settings($write_to_upgrade_log=false, $config_location='', $config_si_location='', $path='')
 {
-	if(!empty($config_location) && !file_exists($config_location))
-	{
-		if($write_to_upgrade_log)
-		{
-			logThis('config.php file specified in ' . $config_si_location . ' could not be found.  Skip merging', $path);
-		}
-		return false;
-	} else if(empty($config_location)) {
-		global $argv;
-		//We are assuming this is from the silentUpgrade scripts so argv[3] will point to SugarCRM install location
-		if(isset($argv[3]) && is_dir($argv[3]))
-		{
-			$config_location = $argv[3] . DIRECTORY_SEPARATOR . 'config.php';
-		}
-	}
+    if (!empty($config_location) && !file_exists($config_location)) {
+        if ($write_to_upgrade_log) {
+            logThis('config.php file specified in ' . $config_si_location . ' could not be found.  Skip merging', $path);
+        }
+        return false;
+    } elseif (empty($config_location)) {
+        global $argv;
+        //We are assuming this is from the silentUpgrade scripts so argv[3] will point to SugarCRM install location
+        if (isset($argv[3]) && is_dir($argv[3])) {
+            $config_location = $argv[3] . DIRECTORY_SEPARATOR . 'config.php';
+        }
+    }
 
-	//If config_location is still empty or if the file cannot be found, skip merging
-	if(empty($config_location) || !file_exists($config_location))
-	{
-		if($write_to_upgrade_log)
-		{
-			logThis('config.php file at (' . $config_location . ') could not be found.  Skip merging.', $path);
-		}
-		return false;
-	} else {
-		if($write_to_upgrade_log)
-		{
-			logThis('Loading config.php file at (' . $config_location . ') for merging.', $path);
-		}
+    //If config_location is still empty or if the file cannot be found, skip merging
+    if (empty($config_location) || !file_exists($config_location)) {
+        if ($write_to_upgrade_log) {
+            logThis('config.php file at (' . $config_location . ') could not be found.  Skip merging.', $path);
+        }
+        return false;
+    }
+    if ($write_to_upgrade_log) {
+        logThis('Loading config.php file at (' . $config_location . ') for merging.', $path);
+    }
 
-		include($config_location);
-		if(empty($sugar_config))
-		{
-			if($write_to_upgrade_log)
-			{
-				logThis('config.php contents are empty.  Skip merging.', $path);
-			}
-			return false;
-		}
-	}
+    include($config_location);
+    if (empty($sugar_config)) {
+        if ($write_to_upgrade_log) {
+            logThis('config.php contents are empty.  Skip merging.', $path);
+        }
+        return false;
+    }
 
-	if(!empty($config_si_location) && !file_exists($config_si_location))
-	{
-		if($write_to_upgrade_log)
-		{
-			logThis('config_si.php file specified in ' . $config_si_location . ' could not be found.  Skip merging', $path);
-		}
-		return false;
-	} else if(empty($config_si_location)) {
-		if(isset($argv[0]) && is_file($argv[0]))
-		{
-			$php_file = $argv[0];
-			$p_info = pathinfo($php_file);
-			$php_dir = (isset($p_info['dirname']) && $p_info['dirname'] != '.') ?  $p_info['dirname'] . DIRECTORY_SEPARATOR : '';
-			$config_si_location = $php_dir . 'config_si.php';
-		}
-	}
 
-	//If config_si_location is still empty or if the file cannot be found, skip merging
-	if(empty($config_si_location) || !file_exists($config_si_location))
-	{
-		if($write_to_upgrade_log)
-		{
-			logThis('config_si.php file at (' . $config_si_location . ') could not be found.  Skip merging.', $path);
-		}
-		return false;
-	} else {
-		if($write_to_upgrade_log)
-		{
-			logThis('Loading config_si.php file at (' . $config_si_location . ') for merging.', $path);
-		}
+    if (!empty($config_si_location) && !file_exists($config_si_location)) {
+        if ($write_to_upgrade_log) {
+            logThis('config_si.php file specified in ' . $config_si_location . ' could not be found.  Skip merging', $path);
+        }
+        return false;
+    } elseif (empty($config_si_location)) {
+        if (isset($argv[0]) && is_file($argv[0])) {
+            $php_file = $argv[0];
+            $p_info = pathinfo($php_file);
+            $php_dir = (isset($p_info['dirname']) && $p_info['dirname'] != '.') ?  $p_info['dirname'] . DIRECTORY_SEPARATOR : '';
+            $config_si_location = $php_dir . 'config_si.php';
+        }
+    }
 
-		include($config_si_location);
-		if(empty($sugar_config_si))
-		{
-			if($write_to_upgrade_log)
-			{
-				logThis('config_si.php contents are empty.  Skip merging.', $path);
-			}
-			return false;
-		}
-	}
+    //If config_si_location is still empty or if the file cannot be found, skip merging
+    if (empty($config_si_location) || !file_exists($config_si_location)) {
+        if ($write_to_upgrade_log) {
+            logThis('config_si.php file at (' . $config_si_location . ') could not be found.  Skip merging.', $path);
+        }
+        return false;
+    }
+    if ($write_to_upgrade_log) {
+        logThis('Loading config_si.php file at (' . $config_si_location . ') for merging.', $path);
+    }
 
-	//Now perform the merge operation
-	$modified = false;
-	foreach($sugar_config_si as $key=>$value)
-	{
-		if(!preg_match('/^setup_/', $key) && !isset($sugar_config[$key]))
-		{
-			if($write_to_upgrade_log)
-			{
-				logThis('Merge key (' . $key . ') with value (' . $value . ')', $path);
-			}
-			$sugar_config[$key] = $value;
-			$modified = true;
-		}
-	}
+    include($config_si_location);
+    if (empty($sugar_config_si)) {
+        if ($write_to_upgrade_log) {
+            logThis('config_si.php contents are empty.  Skip merging.', $path);
+        }
+        return false;
+    }
 
-	if($modified)
-	{
-		if($write_to_upgrade_log)
-		{
-			logThis('Update config.php file with new values', $path);
-		}
 
-		if(!write_array_to_file("sugar_config", $sugar_config, $config_location)) {
-			if($write_to_upgrade_log)
-			{
-				logThis('*** ERROR: could not write to config.php', $path);
-			}
-			return false;
-		}
-	} else {
-		if($write_to_upgrade_log)
-		{
-			logThis('config.php values are in sync with config_si.php values.  Skipped merging.', $path);
-		}
-		return false;
-	}
+    //Now perform the merge operation
+    $modified = false;
+    foreach ($sugar_config_si as $key=>$value) {
+        if (!preg_match('/^setup_/', $key) && !isset($sugar_config[$key])) {
+            if ($write_to_upgrade_log) {
+                logThis('Merge key (' . $key . ') with value (' . $value . ')', $path);
+            }
+            $sugar_config[$key] = $value;
+            $modified = true;
+        }
+    }
 
-	if($write_to_upgrade_log)
-	{
-		logThis('End merge_config_si_settings', $path);
-	}
-	return true;
+    if ($modified) {
+        if ($write_to_upgrade_log) {
+            logThis('Update config.php file with new values', $path);
+        }
+
+        if (!write_array_to_file("sugar_config", $sugar_config, $config_location)) {
+            if ($write_to_upgrade_log) {
+                logThis('*** ERROR: could not write to config.php', $path);
+            }
+            return false;
+        }
+    } else {
+        if ($write_to_upgrade_log) {
+            logThis('config.php values are in sync with config_si.php values.  Skipped merging.', $path);
+        }
+        return false;
+    }
+
+    if ($write_to_upgrade_log) {
+        logThis('End merge_config_si_settings', $path);
+    }
+    return true;
 }
 
 
@@ -4355,51 +4327,51 @@ function add_unified_search_to_custom_modules_vardefs()
  */
 function upgradeSugarCache($file)
 {
-	global $sugar_config;
-	$cacheUploadUpgradesTemp = mk_temp_dir(sugar_cached('upgrades/temp'));
+    global $sugar_config;
+    $cacheUploadUpgradesTemp = mk_temp_dir(sugar_cached('upgrades/temp'));
 
-	unzip($file, $cacheUploadUpgradesTemp);
+    unzip($file, $cacheUploadUpgradesTemp);
 
-	if(!file_exists(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"))) {
-		logThis("*** ERROR: no manifest file detected while bootstraping upgrade wizard files!");
-		return;
-	} else {
-		include(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"));
-	}
+    if (!file_exists(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"))) {
+        logThis("*** ERROR: no manifest file detected while bootstraping upgrade wizard files!");
+        return;
+    }
+    include(clean_path("{$cacheUploadUpgradesTemp}/manifest.php"));
 
-	$from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
-	$allFiles = array();
-	if(file_exists("$from_dir/include/SugarCache")) {
-		$allFiles = findAllFiles("$from_dir/include/SugarCache", $allFiles);
-	}
-	if(file_exists("$from_dir/include/database")) {
-		$allFiles = findAllFiles("$from_dir/include/database", $allFiles);
-	}
-	if(file_exists("$from_dir/include/utils/external_cache.php")) {
-		$allFiles[] = "$from_dir/include/utils/external_cache.php";
-	}
-	if(file_exists("$from_dir/include/utils/sugar_file_utils.php")) {
-		$allFiles[] = "$from_dir/include/utils/sugar_file_utils.php";
-	}
-	if(file_exists("$from_dir/include/utils/sugar_file_utils.php")) {
-		$allFiles[] = "$from_dir/include/utils/sugar_file_utils.php";
-	}
-	if(file_exists("$from_dir/include/utils/autoloader.php")) {
-		$allFiles[] = "$from_dir/include/utils/autoloader.php";
-	}
 
-	foreach($allFiles as $k => $file) {
-		$destFile = str_replace($from_dir."/", "", $file);
-		if(!is_dir(dirname($destFile))) {
-			mkdir_recursive(dirname($destFile)); // make sure the directory exists
-		}
-		if ( stristr($file,'uw_main.tpl') )
-			logThis('Skipping "'.$file.'" - file copy will during commit step.');
-		else {
-			logThis('updating UpgradeWizard code: '.$destFile);
-			copy_recursive($file, $destFile);
-		}
-	}
+    $from_dir = "{$cacheUploadUpgradesTemp}/{$manifest['copy_files']['from_dir']}";
+    $allFiles = array();
+    if (file_exists("$from_dir/include/SugarCache")) {
+        $allFiles = findAllFiles("$from_dir/include/SugarCache", $allFiles);
+    }
+    if (file_exists("$from_dir/include/database")) {
+        $allFiles = findAllFiles("$from_dir/include/database", $allFiles);
+    }
+    if (file_exists("$from_dir/include/utils/external_cache.php")) {
+        $allFiles[] = "$from_dir/include/utils/external_cache.php";
+    }
+    if (file_exists("$from_dir/include/utils/sugar_file_utils.php")) {
+        $allFiles[] = "$from_dir/include/utils/sugar_file_utils.php";
+    }
+    if (file_exists("$from_dir/include/utils/sugar_file_utils.php")) {
+        $allFiles[] = "$from_dir/include/utils/sugar_file_utils.php";
+    }
+    if (file_exists("$from_dir/include/utils/autoloader.php")) {
+        $allFiles[] = "$from_dir/include/utils/autoloader.php";
+    }
+
+    foreach ($allFiles as $k => $file) {
+        $destFile = str_replace($from_dir."/", "", $file);
+        if (!is_dir(dirname($destFile))) {
+            mkdir_recursive(dirname($destFile)); // make sure the directory exists
+        }
+        if (stristr($file, 'uw_main.tpl')) {
+            logThis('Skipping "'.$file.'" - file copy will during commit step.');
+        } else {
+            logThis('updating UpgradeWizard code: '.$destFile);
+            copy_recursive($file, $destFile);
+        }
+    }
 }
 
 /**
@@ -4675,13 +4647,13 @@ function repairUpgradeHistoryTable()
 	global $sugar_config;
 
 	//Now upgrade the upgrade_history table entries
-	$results = $GLOBALS['db']->query('SELECT id, filename FROM upgrade_history');
+	$results = DBManagerFactory::getInstance()->query('SELECT id, filename FROM upgrade_history');
 	$upload_dir = $sugar_config['cache_dir'].'upload/';
 
 	//Create regular expression string to
 	$match = '/^' . str_replace('/', '\/', $upload_dir) . '(.*?)$/';
 
-	while(($row = $GLOBALS['db']->fetchByAssoc($results)))
+	while(($row = DBManagerFactory::getInstance()->fetchByAssoc($results)))
 	{
 		$file = str_replace('//', '/', $row['filename']); //Strip out double-paths that may exist
 
@@ -4689,7 +4661,7 @@ function repairUpgradeHistoryTable()
 		{
 			//Update new file location to use the new $sugar_config['upload_dir'] value
 			$new_file_location = $sugar_config['upload_dir'] . $matches[1];
-			$GLOBALS['db']->query("UPDATE upgrade_history SET filename = '{$new_file_location}' WHERE id = '{$row['id']}'");
+			DBManagerFactory::getInstance()->query("UPDATE upgrade_history SET filename = '{$new_file_location}' WHERE id = '{$row['id']}'");
 		}
 	}
 

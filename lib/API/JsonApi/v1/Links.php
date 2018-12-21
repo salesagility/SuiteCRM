@@ -104,14 +104,6 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
     private $logger;
 
     /**
-     * Links constructor.
-     */
-    public function __construct()
-    {
-
-    }
-
-    /**
      * @return Links
      */
     public static function get()
@@ -128,7 +120,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         if ($this->validateUrl($url)) {
             $this->self = $url;
         } else {
-            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
+            $this->getLogger()->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
        return clone $this;
@@ -156,7 +148,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         if ($this->validateUrl($url)) {
             $this->first = $url;
         } else {
-            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
+            $this->getLogger()->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
        return clone $this;
@@ -172,7 +164,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         if ($this->validateUrl($url)) {
             $this->prev = $url;
         } else {
-            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
+            $this->getLogger()->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
        return clone $this;
@@ -188,7 +180,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         if ($this->validateUrl($url)) {
             $this->next = $url;
         } else {
-            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
+            $this->getLogger()->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
        return clone $this;
@@ -204,7 +196,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
         if ($this->validateUrl($url)) {
             $this->last = $url;
         } else {
-            $this->logger->error(LinksMessage::INVALID_URL_PARAMETER);
+            $this->getLogger()->error(LinksMessage::INVALID_URL_PARAMETER);
         }
 
        return clone $this;
@@ -355,5 +347,16 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
+    }
+    
+    
+    /**
+     * @return LoggerInterface
+     */
+    public function getLogger() {
+        if (!$this->logger) {
+            $this->setLogger(new Logger());
+        }
+        return $this->logger;
     }
 }

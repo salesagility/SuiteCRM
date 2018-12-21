@@ -72,20 +72,22 @@ class OutboundEmail
     /**
      * Columns
      */
-    var $id;
-    var $name;
-    var $type; // user or system
-    var $user_id; // owner
-    var $mail_sendtype; // smtp
-    var $mail_smtptype;
-    var $mail_smtpserver;
-    var $mail_smtpport = 25;
-    var $mail_smtpuser;
-    var $mail_smtppass;
-    var $mail_smtpauth_req; // bool
-    var $mail_smtpssl; // bool
-    var $mail_smtpdisplay; // calculated value, not in DB
-    var $new_with_id = false;
+    public $id;
+    public $name;
+    public $type; // user or system
+    public $user_id; // owner
+    public $mail_sendtype; // smtp
+    public $mail_smtptype;
+    public $mail_smtpserver;
+    public $mail_smtpport = 25;
+    public $mail_smtpuser;
+    public $mail_smtppass;
+    public $smtp_from_name;
+    public $smtp_from_addr;
+    public $mail_smtpauth_req; // bool
+    public $mail_smtpssl; // bool
+    public $mail_smtpdisplay; // calculated value, not in DB
+    public $new_with_id = false;
 
     /**
      * Sole constructor

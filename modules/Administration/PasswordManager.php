@@ -39,18 +39,8 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
-
-/* * *******************************************************************************
-
- * Description: TODO:  To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- * ****************************************************************************** */
-
-
 if (!is_admin($current_user)) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
@@ -154,7 +144,9 @@ require_once('include/SugarLogger/SugarLogger.php');
 $sugar_smarty = new Sugar_Smarty();
 
 // if no IMAP libraries available, disable Save/Test Settings
-if (!function_exists('imap_open')) {
+$imapFactory = new ImapHandlerFactory();
+$imap = $imapFactory->getImapHandler();
+if (!$imap->isAvailable()) {
     $sugar_smarty->assign('IE_DISABLED', 'DISABLED');
 }
 
@@ -170,9 +162,9 @@ $sugar_smarty->assign("settings", $focus->settings);
 
 $sugar_smarty->assign('saml_enabled_checked', false);
 
-if(!function_exists('mcrypt_cbc')){
+if(!function_exists('openssl_encrypt')){
 	$sugar_smarty->assign("LDAP_ENC_KEY_READONLY", 'readonly');
-	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_DESC']);
+	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_OPENSSL_DESC']);
 }else{
 	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LBL_LDAP_ENC_KEY_DESC']);
 }

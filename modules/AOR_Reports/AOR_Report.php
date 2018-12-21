@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -17,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +34,14 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 class AOR_Report extends Basic
 {
     var $new_schema = true;
@@ -108,7 +112,7 @@ class AOR_Report extends Basic
             unset($_POST['aor_fields_id']);
         }
 
-        parent::save($check_notify);
+        $return_id = parent::save($check_notify);
 
         require_once('modules/AOR_Fields/AOR_Field.php');
         $field = new AOR_Field();
@@ -121,6 +125,8 @@ class AOR_Report extends Basic
         require_once('modules/AOR_Charts/AOR_Chart.php');
         $chart = new AOR_Chart();
         $chart->save_lines($_POST, $this, 'aor_chart_');
+
+        return $return_id;
     }
 
     /**
@@ -183,6 +189,7 @@ class AOR_Report extends Basic
         $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
         if (!$linkedCharts) {
             //No charts to display
+            LoggerManager::getLogger()->warn('No charts to display to build report chart for AOR Report.');
             return '';
         }
 
@@ -553,19 +560,33 @@ class AOR_Report extends Basic
                     $groupDisplay = $app_strings['LBL_NONE'];
                 }
 
+                 // Fix #5427 If download pdf then not use tab-content and add css inline to work with mpdf
+                $pdf_style = "";
+                $action = $_REQUEST['action'];
+                if ($action == 'DownloadPDF') {
+                    $pdf_style = "background: #333 !important; color: #fff !important; margin-bottom: 0px;";
+                }
+
                 $html .= '<div class="panel panel-default">
-                            <div class="panel-heading ">
+                            <div class="panel-heading" style="' . $pdf_style . '">
                                 <a class="" role="button" data-toggle="collapse" href="#detailpanel_report_group_' . $groupValue . '" aria-expanded="false">
                                     <div class="col-xs-10 col-sm-11 col-md-11">
                                         ' . $groupDisplay . '
                                     </div>
                                 </a>
-                            </div>
-                            <div class="panel-body panel-collapse collapse in" id="detailpanel_report_group_' . $groupValue . '">
+                            </div>';
+                if ($action != 'DownloadPDF') {
+                    $html .= '<div class="panel-body panel-collapse collapse in" id="detailpanel_report_group_' . $groupValue . '">
                                 <div class="tab-content">';
+                }
+                else {
+                    $html .= '</div>';
+                }
+
 
                 $html .= $this->build_report_html($offset, $links, $groupValue, create_guid(), $extra);
-                $html .= '</div></div></div>';
+                $html .= ($action == 'downloadPDF') ? '' : '</div></div></div>';
+                // End
 
             }
         }
@@ -614,7 +635,16 @@ class AOR_Report extends Basic
             }
         }
 
-        $html='<div class="list-view-rounded-corners">';
+          // Fix #5427
+        $report_style = '';
+        $thead_style = '';
+        if ((isset($_REQUEST['action']) ? $_REQUEST['action'] : null) == 'DownloadPDF') {
+            $report_style = 'margin-top: 0px;';
+            $thead_style = 'background: #919798; color: #fff';
+        }
+        $html = '<div class="list-view-rounded-corners" style="' . $report_style . '">';
+        //End
+
         $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive aor_reports">';
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
@@ -659,7 +689,9 @@ class AOR_Report extends Basic
 
 
             if ($fields[$label]['display']) {
-                $html .= "<th scope='col'>";
+                 // Fix #5427
+                $html .= "<th scope='col' style='{$thead_style}'>";
+                // End
                 $html .= "<div>";
                 $html .= $field->label;
                 $html .= "</div></th>";
@@ -794,11 +826,11 @@ class AOR_Report extends Basic
 
             $row_class = $row_class == 'oddListRowS1' ? 'evenListRowS1' : 'oddListRowS1';
         }
-        $html .= "</tbody>";
+        $html .= "</tbody></table>";
 
         $html .= $this->getTotalHTML($fields, $totals);
 
-        $html .= '</table></div>';
+        $html .= '</div>';
 
         $html .= "    <script type=\"text/javascript\">
                             groupedReportToggler = {
@@ -835,8 +867,18 @@ class AOR_Report extends Basic
             $field->retrieve($row['id']);
 
             if ($field->field_function != 'COUNT' || $field->format != '') {
-                $moduleFieldByGroupValues[] = $group_value;
+                // Fix grouping on assignment displays ID and not name #5427
+                $report_bean = BeanFactory::getBean($this->report_module);
+                $field_def = $report_bean->field_defs[$field->field];
+                if ($field_def['type'] == 'relate' && isset($field_def['id_name'])) {
+                    $related_bean = BeanFactory::getBean($field_def['module']);
+                    $related_bean->retrieve($group_value);
+                    $moduleFieldByGroupValues[] = ($related_bean instanceof Person) ? $related_bean->full_name : $related_bean->name;
+                } else {
+                    $moduleFieldByGroupValues[] = $group_value;
+                }
                 continue;
+                // End
             }
 
             $path = unserialize(base64_decode($field->module_path));
@@ -874,17 +916,33 @@ class AOR_Report extends Basic
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
         $showTotal = false;
-        $html = '';
+        $html = '<table>';
         $html .= "<thead class='fc-head'>";
         $html .= "<tr>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
             }
-            if ($field['total']) {
+
+            $fieldTotal = null;
+            if (!isset($field['total'])) {
+                LoggerManager::getLogger()->warn('AOR_Report problem: field[total] is not set for getTotalHTML()');
+            } else {
+                $fieldTotal = $field['total'];
+            }
+
+            $appListStringsAorTotalOptionsFieldTotal = null;
+            if (!isset($app_list_strings['aor_total_options'][$fieldTotal])) {
+                LoggerManager::getLogger()->warn('AOR_Report problem: app_list_strings[aor_total_options][fieldTotal] is not set for getTotalHTML()');
+            } else {
+                $appListStringsAorTotalOptionsFieldTotal = $app_list_strings['aor_total_options'][$fieldTotal];
+            }
+
+
+            if ($fieldTotal) {
                 $showTotal = true;
-                $totalLabel = $field['label'] . ' ' . $app_list_strings['aor_total_options'][$field['total']];
-                $html .= "<th>{$totalLabel}</td>";
+                $totalLabel = $field['label'] . ' ' . $appListStringsAorTotalOptionsFieldTotal;
+                $html .= "<th>{$totalLabel}</th>";
             } else {
                 $html .= '<th></th>';
             }
@@ -895,7 +953,7 @@ class AOR_Report extends Basic
             return '';
         }
 
-        $html .= "</body><tr class='oddListRowS1'>";
+        $html .= "<tbody><tr class='oddListRowS1'>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
@@ -904,8 +962,17 @@ class AOR_Report extends Basic
                 $type = $field['total'];
                 $total = $this->calculateTotal($type, $totals[$label]);
                 // Customise display based on the field type
-                $moduleBean = BeanFactory::newBean($field['module']);
-                $fieldDefinition = $moduleBean->field_defs[$field['field']];
+                $moduleBean = BeanFactory::newBean(isset($field['module']) ? $field['module'] : null);
+                if (!is_object($moduleBean)) {
+                    LoggerManager::getLogger()->warn('Unable to create new module bean when trying to build report html. Module bean was: ' . (isset($field['module']) ? $field['module'] : 'NULL'));
+                    $moduleBeanFieldDefs = null;
+                } elseif (!isset($moduleBean->field_defs)) {
+                    LoggerManager::getLogger()->warn('File definition not found for module when trying to build report html. Module bean was: ' . get_class($moduleBean));
+                    $moduleBeanFieldDefs = null;
+                } else {
+                    $moduleBeanFieldDefs = $moduleBean->field_defs;
+                }
+                $fieldDefinition = $moduleBeanFieldDefs[isset($field['field']) ? $field['field'] : null];
                 $fieldDefinitionType = $fieldDefinition['type'];
                 switch ($fieldDefinitionType) {
                     case "currency":
@@ -934,7 +1001,7 @@ class AOR_Report extends Basic
             }
         }
         $html .= '</tr>';
-        $html .= '</body>';
+        $html .= '</tbody></table>';
 
         return $html;
     }
@@ -1009,10 +1076,15 @@ class AOR_Report extends Basic
             ++$i;
         }
 
+        // Remove last delimiter of the line
+        if ($field->display) {
+            $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
+        }
+
         $sql = $this->build_report_query();
         $result = $this->db->query($sql);
 
-        while ($row = $this->db->fetchByAssoc($result)) {
+        while ($row = $this->db->fetchByAssoc($result,false)) {
             $csv .= "\r\n";
             foreach ($fields as $name => $att) {
                 $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';
@@ -1026,6 +1098,8 @@ class AOR_Report extends Basic
                     $csv .= $delimiter;
                 }
             }
+            // Remove last delimiter of the line
+            $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
         }
 
         $csv = $GLOBALS['locale']->translateCharset($csv, 'UTF-8', $GLOBALS['locale']->getExportCharset());
@@ -1068,8 +1142,12 @@ class AOR_Report extends Basic
         }
         $query_array = $this->build_report_query_where($query_array);
 
-        foreach ($query_array['select'] as $select) {
-            $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+        if(!isset($query_array['select'])) {
+            LoggerManager::getLogger()->warn('Trying to build report query without database select definition.');
+        } else {
+            foreach ($query_array['select'] as $select) {
+                $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+            }
         }
 
         if (empty($query_array['group_by'])) {
@@ -1377,7 +1455,7 @@ class AOR_Report extends Basic
      */
     function build_report_query_where($query = array())
     {
-        global $beanList, $app_list_strings, $sugar_config;
+        global $beanList, $app_list_strings, $sugar_config, $current_user;
 
         $aor_sql_operator_list['Equal_To'] = '=';
         $aor_sql_operator_list['Not_Equal_To'] = '!=';
@@ -1468,6 +1546,8 @@ class AOR_Report extends Basic
                     }
 
                     if (!empty($this->user_parameters[$condition->id]) && $condition->parameter) {
+
+
                         $condParam = $this->user_parameters[$condition->id];
                         $condition->value = $condParam['value'];
                         $condition->operator = $condParam['operator'];
@@ -1589,6 +1669,117 @@ class AOR_Report extends Basic
                             $value = '"' . $current_user->id . '"';
                             break;
                         case 'Value':
+                            $utc = new DateTimeZone("UTC");
+                            $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $condition->value, $utc);
+
+                            if ($condition->operator === 'Equal_To') {
+                                if ($dateTime !== false) {
+                                    $day_ahead = $dateTime->modify('+1 day');
+                                    $equal_query = "( $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_query;
+                                } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                        $dateTime = convertToDateTime($condition->value);
+
+                                        $query_date = $dateTime->format('Y-m-d H:i:s');
+                                        $equal_query = "( $field  BETWEEN '" . $this->db->quote($query_date);
+                                        $day_ahead = $dateTime->modify('+1 day');
+                                        $equal_query .= "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_query;
+                                    } else {
+                                        $value = "'" . $this->db->quote($condition->value) . "'";
+                                        break;
+                                    }
+                                $where_set = true;
+                            } elseif ($condition->operator === 'Not_Equal_To') {
+                                    if ($dateTime !== false) {
+                                        $day_ahead = $dateTime->modify('+1 day');
+                                        $not_equal_query = "( $field NOT BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $not_equal_query;
+                                    } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                            $dateTime = convertToDateTime($condition->value);
+
+                                            $query_date = $dateTime->format('Y-m-d H:i:s');
+                                            $not_equal_query = "( $field NOT BETWEEN '" . $this->db->quote($query_date);
+                                            $day_ahead = $dateTime->modify('+1 day');
+                                            $not_equal_query .= "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $not_equal_query;
+                                        } else {
+                                            $value = "'" . $this->db->quote($condition->value) . "'";
+                                            break;
+                                        }
+                                    $where_set = true;
+                                } elseif ($condition->operator === 'Greater_Than') {
+                                        if ($dateTime !== false) {
+                                            $greater_than_query = "( $field > '" . $this->db->quote($condition->value) . "' ) ";
+                                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $greater_than_query;
+                                        } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                                $dateTime = convertToDateTime($condition->value);
+
+                                                $query_date = $dateTime->format('Y-m-d H:i:s');
+                                                $greater_than_query = "( $field > '" . $this->db->quote($query_date) . "' ) ";
+                                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $greater_than_query;
+                                            } else {
+                                                $value = "'" . $this->db->quote($condition->value) . "'";
+                                                break;
+                                            }
+                                        $where_set = true;
+                                    } elseif ($condition->operator === 'Less_Than') {
+                                            if ($dateTime !== false) {
+                                                $less_than_query = "( $field < '" . $this->db->quote($condition->value) . "' ) ";
+                                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $less_than_query;
+                                            } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                                    $dateTime = convertToDateTime($condition->value);
+
+                                                    $query_date = $dateTime->format('Y-m-d H:i:s');
+                                                    $less_than_query = "( $field < '" . $this->db->quote($query_date) . "' ) ";
+                                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $less_than_query;
+                                                } else {
+                                                    $value = "'" . $this->db->quote($condition->value) . "'";
+                                                    break;
+                                                }
+                                            $where_set = true;
+                                        } elseif ($condition->operator === 'Greater_Than_or_Equal_To') {
+                                                if ($dateTime !== false) {
+                                                    $equal_greater_than_query = "( $field > '" . $this->db->quote($condition->value) . "'";
+                                                    $day_ahead = $dateTime->modify('+1 day');
+                                                    $equal_greater_than_query .= " OR $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_greater_than_query;
+                                                } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                                        $dateTime = convertToDateTime($condition->value);
+
+                                                        $query_date = $dateTime->format('Y-m-d H:i:s');
+                                                        $equal_greater_than_query = "( $field > '" . $this->db->quote($query_date) . "'";
+                                                        $day_ahead = $dateTime->modify('+1 day');
+                                                        $equal_greater_than_query .= " OR $field  BETWEEN '" . $this->db->quote($query_date) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_greater_than_query;
+                                                    } else {
+                                                        $value = "'" . $this->db->quote($condition->value) . "'";
+                                                        break;
+                                                    }
+                                                $where_set = true;
+                                            } elseif ($condition->operator === 'Less_Than_or_Equal_To') {
+                                                    if ($dateTime !== false) {
+                                                        $equal_less_than_query = "( $field < '" . $this->db->quote($condition->value) . "'";
+                                                        $day_ahead = $dateTime->modify('+1 day');
+                                                        $equal_less_than_query .= " OR $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_less_than_query;
+                                                    } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                                            $dateTime = convertToDateTime($condition->value);
+
+                                                            $query_date = $dateTime->format('Y-m-d H:i:s');
+                                                            $equal_less_than_query = "( $field < '" . $this->db->quote($query_date) . "'";
+                                                            $day_ahead = $dateTime->modify('+1 day');
+                                                            $equal_less_than_query .= " OR $field  BETWEEN '" . $this->db->quote($query_date) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_less_than_query;
+                                                        } else {
+                                                            $value = "'" . $this->db->quote($condition->value) . "'";
+                                                            break;
+                                                        }
+                                                    $where_set = true;
+                                                } else {
+                                                    $value = "'" . $this->db->quote($condition->value) . "'";
+                                                }
+                            break;
                         default:
                             $value = "'" . $this->db->quote($condition->value) . "'";
                             break;
@@ -1608,6 +1799,14 @@ class AOR_Report extends Basic
                     }
 
                     if ($condition->value_type == 'Value' && !$condition->value && $condition->operator == 'Equal_To') {
+                        if(!isset($value)) {
+                            $GLOBALS['log']->warn(
+                                $condition->field
+                                . ' value is not set, assuming empty string value'
+                            );
+                            $value = '';
+                        }
+
                         $value = "{$value} OR {$field} IS NULL)";
                         $field = "(" . $field;
                     }

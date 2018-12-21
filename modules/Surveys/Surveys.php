@@ -202,22 +202,6 @@ class Surveys extends Basic
     }
 
     /**
-     * @param Contact $contact
-     * @param bool $targetTracker
-     * @return string
-     */
-    public function getCampaignSurveyLink(Contact $contact, $targetTracker = false)
-    {
-        global $sugar_config;
-        $url = $sugar_config['site_url'] . '/index.php?entryPoint=survey&id=' . $this->id . '&contact=' . $contact->id;
-        if (!empty($targetTracker)) {
-            $url .= '&tracker=' . $targetTracker;
-        }
-
-        return $url;
-    }
-
-    /**
      * @return array
      */
     public function getMatrixOptions()

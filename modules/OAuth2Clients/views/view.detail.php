@@ -50,6 +50,11 @@ class OAuth2ClientsViewDetail extends ViewDetail
     public $bean;
 
     /**
+     * @var string $formName
+     */
+    public $formName;
+
+    /**
      * @see SugarView::preDisplay()
      */
     public function getMetaDataFile()
@@ -61,14 +66,23 @@ class OAuth2ClientsViewDetail extends ViewDetail
     private function setViewType()
     {
         switch ($this->bean->allowed_grant_type) {
-            case 'password': $this->type = 'detailpassword'; break;
-            case 'client_credentials': $this->type = 'detailcredentials'; break;
+            case 'password':
+                $this->type = 'detailpassword';
+                $this->formName = 'DetailPassword';
+                break;
+            case 'client_credentials':
+                $this->type = 'detailcredentials';
+                $this->formName = 'DetailCredentials';
+                break;
         }
-        if (!empty($_REQUEST['action'])) {
-            switch ($_REQUEST['action']) {
-                case 'EditViewPassword': $this->type = 'detailpassword'; break;
-                case 'EditViewCredentials': $this->type = 'detailcredentials'; break;
-            }
-        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function display()
+    {
+        $this->dv->formName = $this->formName;
+        parent::display();
     }
 }

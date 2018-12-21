@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /*********************************************************************************
 
@@ -399,17 +402,16 @@ function get_subscription_lists_query($focus, $additional_fields = null) {
     $all_news_type_pl_query .= "and c.campaign_type = 'NewsLetter'  and pl.deleted = 0 and c.deleted=0 and plc.deleted=0 ";
     $all_news_type_pl_query .= "and (pl.list_type like 'exempt%' or pl.list_type ='default') ";
 
-	/* BEGIN - SECURITY GROUPS */
-	if($focus->bean_implements('ACL') && ACLController::requireSecurityGroup('Campaigns', 'list') )
-	{
-		require_once('modules/SecurityGroups/SecurityGroup.php');
-		global $current_user;
-		$owner_where = $focus->getOwnerWhere($current_user->id);
-		$group_where = SecurityGroup::getGroupWhere('c','Campaigns',$current_user->id);
-		$all_news_type_pl_query .= " AND ( c.assigned_user_id ='".$current_user->id."' or ".$group_where.") ";
-	}
-	/* END - SECURITY GROUPS */
-		
+    /* BEGIN - SECURITY GROUPS */
+    if ($focus->bean_implements('ACL') && ACLController::requireSecurityGroup('Campaigns', 'list')) {
+        require_once('modules/SecurityGroups/SecurityGroup.php');
+        global $current_user;
+        $owner_where = $focus->getOwnerWhere($current_user->id);
+        $group_where = SecurityGroup::getGroupWhere('c', 'Campaigns', $current_user->id);
+        $all_news_type_pl_query .= " AND ( c.assigned_user_id ='".$current_user->id."' or ".$group_where.") ";
+    }
+    /* END - SECURITY GROUPS */
+
     $all_news_type_list =$focus->db->query($all_news_type_pl_query);
 
     //build array of all newsletter campaigns
@@ -471,8 +473,7 @@ function get_subscription_lists($focus, $descriptions = false) {
                 }else{
                     //this list is not exempt, and user is subscribed, so add to subscribed array, and unset from the unsubs_arr
                     //as long as this list is not in exempt array
-                	$temp = "prospect_list@".$news_list['prospect_list_id']."@campaign@".$news_list['campaign_id'];
-                	if(!array_search($temp,$unsubs_arr)){
+                    if (!array_key_exists($news_list['name'], $unsubs_arr)) {
                         $subs_arr[$news_list['name']] = "prospect_list@".$news_list['prospect_list_id']."@campaign@".$news_list['campaign_id'];
                         $match = 'true';
                         unset($unsubs_arr[$news_list['name']]);
@@ -824,6 +825,8 @@ function process_subscriptions($subscription_string_to_parse) {
         }else{
             //do nothing, address has been changed
         }
+        //do nothing, address has been changed
+
         //if health counter is above 1, then show admin link
         if($email_health>0){
             if (is_admin($current_user)){
@@ -921,9 +924,9 @@ function process_subscriptions($subscription_string_to_parse) {
         $GLOBALS['log']->debug('set_campaign_merge: Invalid campaign id'. $campaign_id);
     } else {
         foreach ($targets as $target_list_id) {
-            $pl_query = "select * from prospect_lists_prospects where id='".$GLOBALS['db']->quote($target_list_id)."'";
-            $result=$GLOBALS['db']->query($pl_query);
-            $row=$GLOBALS['db']->fetchByAssoc($result);
+            $pl_query = "select * from prospect_lists_prospects where id='".DBManagerFactory::getInstance()->quote($target_list_id)."'";
+            $result=DBManagerFactory::getInstance()->query($pl_query);
+            $row=DBManagerFactory::getInstance()->fetchByAssoc($result);
             if (!empty($row)) {
                 write_mail_merge_log_entry($campaign_id,$row);
             }
@@ -940,32 +943,32 @@ function process_subscriptions($subscription_string_to_parse) {
 function write_mail_merge_log_entry($campaign_id,$pl_row) {
 
     //Update the log entry if it exists.
-    $update="update campaign_log set hits=hits+1 where campaign_id='".$GLOBALS['db']->quote($campaign_id)."' and target_tracker_key='" . $GLOBALS['db']->quote($pl_row['id']) . "'";
-    $result=$GLOBALS['db']->query($update);
+    $update="update campaign_log set hits=hits+1 where campaign_id='".DBManagerFactory::getInstance()->quote($campaign_id)."' and target_tracker_key='" . DBManagerFactory::getInstance()->quote($pl_row['id']) . "'";
+    $result=DBManagerFactory::getInstance()->query($update);
 
     //get affected row count...
-    $count=$GLOBALS['db']->getAffectedRowCount();
+    $count=DBManagerFactory::getInstance()->getAffectedRowCount();
     if ($count==0) {
         $data=array();
 
         $data['id']="'" . create_guid() . "'";
-        $data['campaign_id']="'" . $GLOBALS['db']->quote($campaign_id) . "'";
-        $data['target_tracker_key']="'" . $GLOBALS['db']->quote($pl_row['id']) . "'";
-        $data['target_id']="'" .  $GLOBALS['db']->quote($pl_row['related_id']) . "'";
-        $data['target_type']="'" .  $GLOBALS['db']->quote($pl_row['related_type']) . "'";
+        $data['campaign_id']="'" . DBManagerFactory::getInstance()->quote($campaign_id) . "'";
+        $data['target_tracker_key']="'" . DBManagerFactory::getInstance()->quote($pl_row['id']) . "'";
+        $data['target_id']="'" .  DBManagerFactory::getInstance()->quote($pl_row['related_id']) . "'";
+        $data['target_type']="'" .  DBManagerFactory::getInstance()->quote($pl_row['related_type']) . "'";
         $data['activity_type']="'targeted'";
         $data['activity_date']="'" . TimeDate::getInstance()->nowDb() . "'";
-        $data['list_id']="'" .  $GLOBALS['db']->quote($pl_row['prospect_list_id']) . "'";
+        $data['list_id']="'" .  DBManagerFactory::getInstance()->quote($pl_row['prospect_list_id']) . "'";
         $data['hits']=1;
         $data['deleted']=0;
         $insert_query="INSERT into campaign_log (" . implode(",",array_keys($data)) . ")";
         $insert_query.=" VALUES  (" . implode(",",array_values($data)) . ")";
-        $GLOBALS['db']->query($insert_query);
+        DBManagerFactory::getInstance()->query($insert_query);
     }
 }
 
     function track_campaign_prospects($focus){
-        $campaign_id = $GLOBALS['db']->quote($focus->id);
+        $campaign_id = DBManagerFactory::getInstance()->quote($focus->id);
         $delete_query="delete from campaign_log where campaign_id='".$campaign_id."' and activity_type='targeted'";
         $focus->db->query($delete_query);
 
@@ -977,7 +980,7 @@ function write_mail_merge_log_entry($campaign_id,$pl_row) {
         $insert_query.="SELECT {$guidSQL}, $current_date, plc.campaign_id,{$guidSQL},plp.prospect_list_id, plp.related_id, plp.related_type,'targeted',0 ";
         $insert_query.="FROM prospect_lists INNER JOIN prospect_lists_prospects plp ON plp.prospect_list_id = prospect_lists.id";
         $insert_query.=" INNER JOIN prospect_list_campaigns plc ON plc.prospect_list_id = prospect_lists.id";
-        $insert_query.=" WHERE plc.campaign_id='".$GLOBALS['db']->quote($focus->id)."'";
+        $insert_query.=" WHERE plc.campaign_id='".DBManagerFactory::getInstance()->quote($focus->id)."'";
         $insert_query.=" AND prospect_lists.deleted=0";
         $insert_query.=" AND plc.deleted=0";
         $insert_query.=" AND plp.deleted=0";

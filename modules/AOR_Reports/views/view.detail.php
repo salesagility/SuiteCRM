@@ -20,7 +20,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 require_once 'include/MVC/View/views/view.detail.php';
 require_once 'modules/AOW_WorkFlow/aow_utils.php';
@@ -72,7 +72,7 @@ class AOR_ReportsViewDetail extends ViewDetail {
 
 
 
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
 
         //$reportHTML = $this->bean->build_group_report(0,true);
         $reportHTML = $this->bean->buildMultiGroupReport(0,true);

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -242,7 +242,7 @@ class TemplateHandler
             } //foreach
 
             //Create a base class with field_name_map property
-            $sugarBean = new SugarBean();
+            $sugarBean = BeanFactory::getBean($module); // $sugarBean = new SugarBean();
             $sugarBean->field_name_map = $defs;
             $sugarBean->module_dir = $module;
 
@@ -297,16 +297,21 @@ class TemplateHandler
         } else {
             if (preg_match('/^SearchForm_.+/', $view)) {
                 global $dictionary, $beanList;
-                $mod = $beanList[$module];
+                if (!isset($beanList[$module])) {
+                    LoggerManager::getLogger()->warn('Template handler trying to build a template but module not found in module list. Module was: ' . $module);
+                    $mod = null;
+                } else {
+                    $mod = $beanList[$module];
 
-                if ($mod === 'aCase') {
-                    $mod = 'Case';
+                    if ($mod === 'aCase') {
+                        $mod = 'Case';
+                    }
+
+                    $defs = $dictionary[$mod]['fields'];
+                    $contents .= '{literal}';
+                    $contents .= $this->createQuickSearchCode($defs, array(), $view);
+                    $contents .= '{/literal}';
                 }
-
-                $defs = $dictionary[$mod]['fields'];
-                $contents .= '{literal}';
-                $contents .= $this->createQuickSearchCode($defs, array(), $view);
-                $contents .= '{/literal}';
             }
         }//if
 

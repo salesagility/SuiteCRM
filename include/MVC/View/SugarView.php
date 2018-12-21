@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Base Sugar view
@@ -44,6 +48,13 @@
  */
 class SugarView
 {
+    const NO_ERROR = 0;
+    const ERR_EMPTY_SCOPE = 1;
+    const ERR_EMPTY_MODULE_DIR = 2;
+    const ERR_NOT_ARRAY = 3;
+    const ERR_NOT_SUB_ARRAY = 4;
+    const WARN_SCOPE_EXISTS = 5;
+    
     /**
      * @var array $view_object_map
      * This array is meant to hold an objects/data that we would like to pass between
@@ -121,15 +132,23 @@ class SugarView
     public $fileResources;
 
     /**
+     *
+     * @var array
+     */
+    private $settings = [];
+    
+    /**
      * SugarView constructor.
+     * @deprecated since version 7.11
      */
     public function __construct()
     {
+        LoggerManager::getLogger()->deprecated();
     }
-
+    
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0,
-     *     please update your code, use __construct instead
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 8.0
+     * please update your code, use __construct instead
      */
     public function SugarView()
     {
@@ -153,8 +172,8 @@ class SugarView
     ) {
         $this->bean = $bean;
         $this->view_object_map = $view_object_map;
-        $this->action = $GLOBALS['action'];
-        $this->module = $GLOBALS['module'];
+        $this->action = isset($GLOBALS['action']) ? $GLOBALS['action'] : null;
+        $this->module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
         $this->_initSmarty();
     }
 
@@ -229,7 +248,6 @@ class SugarView
                 $_SESSION['alerts_output_timestamp'] = date('U');
                 echo $jsAlertsOutput;
             }
-
         }
 
         if ($this->_getOption('show_subpanels') && !empty($_REQUEST['record'])) {
@@ -429,14 +447,6 @@ class SugarView
                 "URL" => ajaxLink($menu_item[0]),
                 "LABEL" => $menu_item[1],
                 "MODULE_NAME" => $menu_item[2],
-                "IMAGE" => $themeObject->getImage(
-                    $menu_item[2],
-                    "border='0' align='absmiddle'",
-                    null,
-                    null,
-                    '.gif',
-                    $menu_item[1]
-                ),
             );
         }
         $ss->assign("SHORTCUT_MENU", $shortcut_menu);
@@ -557,16 +567,15 @@ class SugarView
             );
             $ss->assign("CURRENT_USER_ID", $current_user->id);
 
-            // get the last viewed records
-            require_once("modules/Favorites/Favorites.php");
-            $favorites = new Favorites();
-            $favorite_records = $favorites->getCurrentUserSidebarFavorites();
-            $ss->assign("favoriteRecords", $favorite_records);
-
-            $tracker = new Tracker();
-            $history = $tracker->get_recently_viewed($current_user->id);
-            $ss->assign("recentRecords", $this->processRecentRecords($history));
-        }
+	    // get the last viewed records
+	    $favorites = BeanFactory::getBean('Favorites');
+	    $favorite_records = $favorites->getCurrentUserSidebarFavorites();
+	    $ss->assign("favoriteRecords", $favorite_records);
+ 	    
+	    $tracker = BeanFactory::getBean('Trackers');
+	    $history = $tracker->get_recently_viewed($current_user->id);
+	    $ss->assign("recentRecords", $this->processRecentRecords($history));
+	}
 
         $bakModStrings = $mod_strings;
         if (isset($_SESSION["authenticated_user_id"])) {
@@ -644,14 +653,12 @@ class SugarView
 
                 $ss->assign('currentGroupTab', $currentGroupTab);
                 $usingGroupTabs = true;
-
             } else {
                 // Setup the default group tab.
                 $ss->assign('currentGroupTab', $app_strings['LBL_TABGROUP_ALL']);
 
                 $usingGroupTabs = false;
                 $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules'] = $fullModuleList;
-
             }
 
             $topTabList = array();
@@ -659,6 +666,21 @@ class SugarView
             // Now time to go through each of the tab sets and fix them up.
             foreach ($groupTabs as $tabIdx => $tabData) {
                 $topTabs = $tabData['modules'];
+
+                // Sort the list of modules alphabetically
+                if ($current_user->getPreference('sort_modules_by_name')) {
+                    asort($topTabs);
+                }
+
+                // put the current module at the top of the list
+                if (!empty($moduleTab) && isset($tabData['modules'][$moduleTab])) {
+                    unset($topTabs[$moduleTab]);
+                    $topTabs = array_merge(
+                        array($moduleTab => $tabData['modules'][$moduleTab]),
+                        $topTabs
+                    );
+                }
+
                 if (!is_array($topTabs)) {
                     $topTabs = array();
                 }
@@ -698,10 +720,10 @@ class SugarView
                 $groupTabs[$tabIdx]['extra'] = $extraTabs;
             }
 
-            // Ensure the current active module link is displayed at the bottom of any tab group list
-            // even when the module list is greater than the max tabs limit.
-            foreach($groupTabs as $key => $tabGroup) {
-                if (count($topTabs) >= $max_tabs - 1 && $key !== 'All' && in_array($tabGroup['modules'][$moduleTab], $tabGroup['extra'])) {
+            foreach ($groupTabs as $key => $tabGroup) {
+                if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array($tabGroup['modules'][$moduleTab],
+                        $tabGroup['extra'])
+                ) {
                     unset($groupTabs[$key]['modules'][$moduleTab]);
                 }
             }
@@ -718,14 +740,6 @@ class SugarView
                         "URL" => ajaxLink($menu_item[0]),
                         "LABEL" => $menu_item[1],
                         "MODULE_NAME" => $menu_item[2],
-                        "IMAGE" => $themeObject->getImage(
-                            $menu_item[2],
-                            "border='0' align='absmiddle'",
-                            null,
-                            null,
-                            '.gif',
-                            $menu_item[1]
-                        ),
                         "ID" => $menu_item[2] . "_link",
                     );
                 }
@@ -740,7 +754,6 @@ class SugarView
             // This is here for backwards compatibility, someday, somewhere, it will be able to be removed
             $ss->assign("moduleTopMenu", $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules']);
             $ss->assign("moduleExtraMenu", $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['extra']);
-
         }
 
         if (isset($extraTabs) && is_array($extraTabs)) {
@@ -754,14 +767,6 @@ class SugarView
                         "URL" => ajaxLink($menu_item[0]),
                         "LABEL" => $menu_item[1],
                         "MODULE_NAME" => $menu_item[2],
-                        "IMAGE" => $themeObject->getImage(
-                            $menu_item[2],
-                            "border='0' align='absmiddle'",
-                            null,
-                            null,
-                            '.gif',
-                            $menu_item[1]
-                        ),
                         "ID" => $menu_item[2] . "_link",
                     );
                 }
@@ -773,9 +778,6 @@ class SugarView
             $ss->assign("max_tabs", $current_user->getPreference("max_tabs"));
         }
 
-        $imageURL = SugarThemeRegistry::current()->getImageURL("dashboard.png");
-        $homeImage = "<img src='$imageURL'>";
-        $ss->assign("homeImage", $homeImage);
         global $mod_strings;
         $mod_strings = $bakModStrings;
         $headerTpl = $themeObject->getTemplate('header.tpl');
@@ -796,7 +798,7 @@ class SugarView
                     echo '<p class="error">' . $message . '</p>';
                 }
             }
-            
+
             $messages = SugarApplication::getSuccessMessages();
             if (!empty($messages)) {
                 foreach ($messages as $message) {
@@ -804,12 +806,10 @@ class SugarView
                 }
             }
         }
-
     }
 
     public function getModuleMenuHTML()
     {
-
     }
 
     /**
@@ -857,9 +857,6 @@ class SugarView
         $template->assign('SUGAR_GRP1', getVersionedPath('cache/include/javascript/sugar_grp1.js'));
         $template->assign('CALENDAR', getVersionedPath('include/javascript/calendar.js'));
 
-        if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
-            $template->assign('HEADERSYNC', getVersionedPath('modules/Sync/headersync.js'));
-        }
         echo $template->fetch('include/MVC/View/tpls/displayLoginJS.tpl');
     }
 
@@ -886,7 +883,7 @@ class SugarView
 
         // Add in the number formatting styles here as well, we have been handling this with individual modules.
         require_once('modules/Currencies/Currency.php');
-        list ($num_grp_sep, $dec_sep) = get_number_seperators();
+        list($num_grp_sep, $dec_sep) = get_number_seperators();
 
         $the_script =
             "<script type=\"text/javascript\">\n" .
@@ -957,6 +954,14 @@ EOHTML;
                 echo "<script>\n" . implode("\n", $config_js) . "</script>\n";
             }
 
+            if ($this->hasDomJS()) {
+                echo "
+                        <script type='text/javascript'>
+                        SUGAR.append(SUGAR, { settings:".$this->getDomJS()." } );
+                        </script>
+                        ";
+            }
+
             if (isset($sugar_config['email_sugarclient_listviewmaxselect'])) {
                 echo "<script>SUGAR.config.email_sugarclient_listviewmaxselect = {$GLOBALS['sugar_config']['email_sugarclient_listviewmaxselect']};</script>";
             }
@@ -977,10 +982,6 @@ EOHTML;
             );
 
             echo $this->_getModLanguageJS();
-
-            if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
-                echo getVersionedScript('modules/Sync/headersync.js');
-            }
 
             //echo out the $js_vars variables as javascript variables
             echo "<script type='text/javascript'>\n";
@@ -1127,6 +1128,9 @@ EOHTML;
         // here we allocate the help link data
         $help_actions_blacklist = array('Login'); // we don't want to show a context help link here
         if (!in_array($this->action, $help_actions_blacklist)) {
+            if (!isset($GLOBALS['server_unique_key'])) {
+                LoggerManager::getLogger()->warn('Undefined index: server_unique_key');
+            }
             $url =
                 'javascript:void(window.open(\'index.php?module=Administration&action=SupportPortal&view=documentation' .
                 '&version=' .
@@ -1140,7 +1144,7 @@ EOHTML;
                 '&help_action=' .
                 $this->action .
                 '&key=' .
-                $GLOBALS['server_unique_key'] .
+                (isset($GLOBALS['server_unique_key']) ? $GLOBALS['server_unique_key'] : null) .
                 '\'))';
             $label =
                 (isset($GLOBALS['app_list_strings']['moduleList'][$this->module]) ?
@@ -1228,7 +1232,6 @@ EOHTML;
 
         $trackerManager = TrackerManager::getInstance();
         $trackerManager->save();
-
     }
 
     /**
@@ -1256,7 +1259,7 @@ EOHTML;
     private function _calculateFooterMetrics()
     {
         $endTime = microtime(true);
-        $deltaTime = $endTime - $GLOBALS['startTime'];
+        $deltaTime = $endTime - (isset($GLOBALS['startTime']) ? $GLOBALS['startTime'] : null);
         $this->responseTime = number_format(round($deltaTime, 2), 2);
         // Print out the resources used in constructing the page.
         $this->fileResources = count(get_included_files());
@@ -1268,7 +1271,7 @@ EOHTML;
     private function _getStatistics()
     {
         $endTime = microtime(true);
-        $deltaTime = $endTime - $GLOBALS['startTime'];
+        $deltaTime = $endTime - (isset($GLOBALS['startTime']) ? $GLOBALS['startTime'] : null);
         $response_time_string =
             $GLOBALS['app_strings']['LBL_SERVER_RESPONSE_TIME'] .
             ' ' .
@@ -1638,7 +1641,6 @@ EOHTML;
                 if (SugarThemeRegistry::current()->directionality == "ltr") {
                     return $app_strings['LBL_SEARCH_ALT'] . "&nbsp;"
                         . "$firstParam";
-
                 } else {
                     return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];
                 }
@@ -1661,13 +1663,15 @@ EOHTML;
      */
     protected function getModuleTitleIconPath($module)
     {
-        $iconPath = "";
+        $iconPath = '';
         if (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.png', false))) {
             $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.png');
-        } else {
-            if (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png', false))) {
-                $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png');
-            }
+        } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.png');
+        } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.svg', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . $module . '_32.svg');
+        } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.svg', false))) {
+            $iconPath = SugarThemeRegistry::current()->getImageURL('icon_' . ucfirst($module) . '_32.svg');
         }
 
         return $iconPath;
@@ -1914,4 +1918,127 @@ EOHTML;
         return false;
     }
 
+    /**
+     *
+     * @param array $data
+     * @param string $scope
+     * @return bool
+     */
+    public function addDomJS($data, $scope)
+    {
+        $ret = self::NO_ERROR;
+        if (!$scope) {
+            throw new InvalidArgumentException('Scope can not be empty', self::ERR_EMPTY_SCOPE);
+        }
+        if (isset($this->settings[$scope])) {
+            LoggerManager::getLogger()->warn('Scope "' . $scope . '" already exists but it will be overwriten.');
+            $ret = self::WARN_SCOPE_EXISTS;
+        }
+        $this->settings[$scope] = $this->mergeDeepArray($data);
+        return $ret;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getDomJS()
+    {
+        $ret = json_encode($this->settings);
+        if ($ret === false) {
+            $err = json_last_error();
+            if ($err) {
+                throw new Exception('JSON Error occured: #' . $err  . ' - ' . json_last_error_msg());
+            }
+        }
+        return $ret;
+    }
+
+    /**
+     *
+     * @return bool
+     */
+    public function hasDomJS()
+    {
+        return !empty($this->settings);
+    }
+
+    /**
+     * Merges multiple arrays, recursively, and returns the merged array.
+     * https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_array_merge_deep_array/7
+     *
+     * @param array $arrays
+     * @return array
+     */
+    public function mergeDeepArray($arrays)
+    {
+        $result = array();
+        
+        if (!is_array($arrays)) {
+            throw new InvalidArgumentException('Parameter should be an array to merging. ' . gettype($arrays) . ' given.', self::ERR_NOT_ARRAY);
+        }
+
+        foreach ($arrays as $array) {
+            $result = $this->getNextResultsForDeepMerge($array, $result);
+        }
+
+        return $result;
+    }
+    
+    /**
+     *
+     * @param array $array
+     * @param array $result
+     * @return array
+     */
+    protected function getNextResultsForDeepMerge($array, $result)
+    {
+        if (!is_array($array)) {
+            throw new InvalidArgumentException('Sub-parameter should be an array to merging. ' . gettype($array) . ' given.', self::ERR_NOT_SUB_ARRAY);
+        }        
+        foreach ($array as $key => $value) {
+            // Renumber integer keys as array_merge_recursive() does. Note that PHP
+            // automatically converts array keys that are integer strings (e.g., '1')
+            // to integers.
+            if (is_integer($key)) {
+                $result[] = $value;
+            } elseif (isset($result[$key]) && is_array($result[$key]) && is_array($value)) {
+                // Recurse when both values are arrays.
+                $result[$key] = $this->mergeDeepArray([$result[$key], $value]);
+            } else {
+                // Otherwise, use the latter value, overriding any previous value.
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     *
+     * @param string $module_dir
+     * @return array
+     */
+    public function getVardefsData($module_dir)
+    {
+        if (!$module_dir) {
+            throw new InvalidArgumentException('Module DIR can not be empty', self::ERR_EMPTY_MODULE_DIR);
+        }
+        $data = array();
+        $bean = SugarModule::get($module_dir)->loadBean();
+
+        if ($bean) {
+            foreach ($bean->field_defs as $field_name => $def) {
+                $data[$module_dir][$field_name] = $def;
+                if (isset($def['required'])) {
+                    $data[$module_dir][$field_name]['required'] = $def['required'];
+                } else {
+                    $data[$module_dir][$field_name]['required'] = false;
+                }
+            }
+        } else {
+            LoggerManager::getLogger()->warn('Could not retrive a bean from DIR: ' . $module_dir);
+        }
+        unset($bean);
+        return array($data);
+    }
 }
