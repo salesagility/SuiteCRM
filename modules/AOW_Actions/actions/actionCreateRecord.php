@@ -155,10 +155,10 @@ class actionCreateRecord extends actionBase
                 $this->set_relationships($record, $bean, $params);
                 $invalidEmails = $this->copyEmailAddresses($record, $bean, $params);
                 if ($invalidEmails > 0) {
-                    LoggerManager::getLogger()->warn("Given bean contains $invalidEmails invalid Email address.");
+                    LoggerManager::getLogger()->warn("Given bean contains $invalidEmails invalid Email address(es).");
                 }
                 if ($invalidEmails < 0) {
-                    LoggerManager::getLogger()->error("Email address copy error: bean: $bean->module_name");
+                    LoggerManager::getLogger()->error("Email address copy error ocuured, bean was: $bean->module_name");
                 }
 
                 if (isset($params['relate_to_workflow']) && $params['relate_to_workflow']) {
