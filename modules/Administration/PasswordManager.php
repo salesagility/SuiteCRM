@@ -45,7 +45,7 @@ if (!is_admin($current_user)) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
 
-include_once __DIR__ . '/../include/Imap/ImapHandlerFactory.php';
+include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
 
 function clearPasswordSettings()
 {
