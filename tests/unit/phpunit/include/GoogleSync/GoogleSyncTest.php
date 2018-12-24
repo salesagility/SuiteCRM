@@ -149,7 +149,9 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('users');
         $state->pushTable('user_preferences');
         $state->pushTable('aod_indexevent');
+        $state->pushTable('aod_index');
         $state->pushTable('vcals');
+        $state->pushTable('tracker');
 
         // Create a User
         $user = new User();
@@ -214,7 +216,9 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('users');
         $state->popTable('user_preferences');
         $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
         $state->popTable('vcals');
+        $state->popTable('tracker');
 
         $this->assertEquals(3, count($return_count));
         $this->assertTrue($caught);
@@ -283,6 +287,8 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_cstm');
         $state->pushTable('vcals');
         $state->pushTable('aod_indexevent');
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
 
         $db = DBManagerFactory::getInstance();
 
@@ -349,6 +355,8 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('meetings_cstm');
         $state->popTable('vcals');
         $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
+        $state->popTable('tracker');
 
         $this->assertEquals(true, $res1);
         $this->assertEquals(true, $res2);
@@ -503,6 +511,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('reminders');
         $state->pushTable('reminders_invitees');
+        $state->pushTable('tracker');
 
         $method = self::$reflection->getMethod('createSuitecrmMeetingEvent');
         $method->setAccessible(true);
@@ -562,6 +571,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
         $state->popTable('reminders');
         $state->popTable('reminders_invitees');
+        $state->popTable('tracker');
 
         $this->assertEquals('Meeting', get_class($return));
         $this->assertNotNull($return->id);
