@@ -800,7 +800,8 @@ class GoogleSyncBase
         $overrides = $gReminders->getOverrides();
 
         // Create a new popup reminder for each google reminder
-        $nestedArray = GoogleSyncHelper::createSuitecrmReminders($overrides, $event_local);
+        $helper = new GoogleSyncHelper;
+        $nestedArray = $helper->createSuitecrmReminders($overrides, $event_local);
         $reminders = $nestedArray[0];
         $invitees = $nestedArray[1];
 

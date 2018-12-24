@@ -230,22 +230,24 @@ class GoogleSync extends GoogleSyncBase
             return false;
         }
 
+        $helper =  new GoogleSyncHelper;
+
         // Did we only get one event?
         if (empty($meeting) || empty($event)) {
             // If we only got one event, figure out which kind it is, and pass the return from the helper method
-            return GoogleSyncHelper::singleEventAction($meeting, $event);
+            return $helper->singleEventAction($meeting, $event);
         }
 
         // Get array of timestamps for this event
-        $timeArray = GoogleSyncHelper::getTimeStrings($meeting, $event);
+        $timeArray = $helper->getTimeStrings($meeting, $event);
 
         // Can we skip this event?
-        if (GoogleSyncHelper::isSkippable($meeting, $event, $timeArray, $this->syncedList)) {
+        if ($helper->isSkippable($meeting, $event, $timeArray, $this->syncedList)) {
             return "skip";
         }
 
         // Event was modified since last sync
-        return GoogleSyncHelper::getNewestMeetingResponse($meeting, $event, $timeArray);
+        return $helper->getNewestMeetingResponse($meeting, $event, $timeArray);
     }
 
     /**
