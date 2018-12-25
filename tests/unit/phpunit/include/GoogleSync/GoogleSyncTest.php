@@ -390,9 +390,17 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method = self::$reflection->getMethod('pushEvent');
         $method->setAccessible(true);
         $object = new GoogleSync();
+
+        function exception_error_handler($errno, $errstr, $errfile, $errline ) {
+            throw new Exception($errstr);
+        }
+        set_error_handler('exception_error_handler');
+
         try {
             $method->invoke($object, null, null);
-        } catch (Error $e) {}
+        }
+        catch (Error $e) {}
+        catch (Exception $e) {}
         $this->assertContains('GoogleSyncBase::pushEvent()', $e->getMessage());
     }
 
