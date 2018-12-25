@@ -476,9 +476,15 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method = self::$reflection->getMethod('pullEvent');
         $method->setAccessible(true);
         $object = new GoogleSync();
+
+        set_error_handler(array($this, 'exception_error_handler'));
+
         try {
             $method->invoke($object, null, null);
-        } catch (Error $e) {}
+        }
+        catch (Error $e) {}
+        catch (Exception $e) {}
+        set_error_handler(null);
         $this->assertContains('GoogleSyncBase::pullEvent()', $e->getMessage());
     }
 
@@ -487,9 +493,15 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method = self::$reflection->getMethod('delMeeting');
         $method->setAccessible(true);
         $object = new GoogleSync();
+
+        set_error_handler(array($this, 'exception_error_handler'));
+
         try {
             $method->invoke($object, null);
-        } catch (Error $e) {}
+        }
+        catch (Error $e) {}
+        catch (Exception $e) {}
+        set_error_handler(null);
         $this->assertContains('GoogleSyncBase::delMeeting()', $e->getMessage());
     }
 
@@ -498,9 +510,15 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method = self::$reflection->getMethod('delEvent');
         $method->setAccessible(true);
         $object = new GoogleSync();
+
+        set_error_handler(array($this, 'exception_error_handler'));
+
         try {
             $method->invoke($object, null, null);
-        } catch (Error $e) {}
+        }
+        catch (Error $e) {}
+        catch (Exception $e) {}
+        set_error_handler(null);
         $this->assertContains('GoogleSyncBase::delEvent()', $e->getMessage());
 
         $Google_Event = new Google_Service_Calendar_Event();
@@ -678,9 +696,15 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method = self::$reflection->getMethod('setLastSync');
         $method->setAccessible(true);
         $object = new GoogleSync();
+
+        set_error_handler(array($this, 'exception_error_handler'));
+
         try {
             $method->invoke($object, null, null);
-        } catch (Error $e) {}
+        }
+        catch (Error $e) {}
+        catch (Exception $e) {}
+        set_error_handler(null);
         $this->assertContains('GoogleSyncBase::setLastSync()', $e->getMessage());
     }
 
