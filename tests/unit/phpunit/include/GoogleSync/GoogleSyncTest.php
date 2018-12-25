@@ -28,6 +28,10 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         }
     }
 
+    public function exception_error_handler($errno, $errstr, $errfile, $errline )
+    {
+        throw new Exception($errstr);
+    }
 
     // GoogleSyncBase.php
 
@@ -238,16 +242,14 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method->setAccessible(true);
         $object = new GoogleSync();
 
-        function exception_error_handler($errno, $errstr, $errfile, $errline ) {
-            throw new Exception($errstr);
-        }
-        set_error_handler('exception_error_handler');
+        set_error_handler(array($this, 'exception_error_handler'));
 
         try {
             $method->invoke($object, null);
         }
         catch (Error $e) {}
         catch (Exception $e) {}
+        set_error_handler(null);
         $this->assertContains('GoogleSyncBase::getSuiteCRMCalendar()', $e->getMessage());
     }
 
@@ -391,16 +393,14 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method->setAccessible(true);
         $object = new GoogleSync();
 
-        function exception_error_handler($errno, $errstr, $errfile, $errline ) {
-            throw new Exception($errstr);
-        }
-        set_error_handler('exception_error_handler');
+        set_error_handler(array($this, 'exception_error_handler'));
 
         try {
             $method->invoke($object, null, null);
         }
         catch (Error $e) {}
         catch (Exception $e) {}
+        set_error_handler(null);
         $this->assertContains('GoogleSyncBase::pushEvent()', $e->getMessage());
     }
 
