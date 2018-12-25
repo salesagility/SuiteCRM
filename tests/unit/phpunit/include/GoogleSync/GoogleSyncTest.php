@@ -744,6 +744,8 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
         $object = new GoogleSync();
 
+        set_error_handler(array($this, 'exception_error_handler'));
+
         try {
             $method->invoke($object, 'INVALID');
         } catch (Exception $e) {}
@@ -752,13 +754,17 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $e = null;
         try {
             $method->invoke($object, 'push');
-        } catch (Error $e) {}
+        }
+        catch (Error $e) {}
+        catch (Exception $e) {}
         $this->assertContains('GoogleSyncBase::pushEvent()', $e->getMessage());
 
         $e = null;
         try {
             $method->invoke($object, 'pull');
-        } catch (Error $e) {}
+        }
+        catch (Error $e) {}
+        catch (Exception $e) {}
         $this->assertContains('GoogleSyncBase::pullEvent()', $e->getMessage());
 
         $CRM_Meeting = new Meeting();
@@ -769,14 +775,20 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $e = null;
         try {
             $method->invoke($object, 'push_delete', $CRM_Meeting, null);
-        } catch (Error $e) {}
+        }
+        catch (Error $e) {}
+        catch (Exception $e) {}
         $this->assertContains('GoogleSyncBase::delEvent()', $e->getMessage());
 
         $e = null;
         try {
             $method->invoke($object, 'pull_delete');
-        } catch (Error $e) {}
+        }
+        catch (Error $e) {}
+        catch (Exception $e) {}
         $this->assertContains('GoogleSyncBase::delMeeting()', $e->getMessage());
+
+        set_error_handler(null);
 
         $return = $method->invoke($object, 'skip');
         $this->assertEquals(true, $return);
