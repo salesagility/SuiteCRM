@@ -54,7 +54,7 @@ require_once __DIR__ . '/EmailValidatorException.php';
  *
  * @author gyula
  */
-class EmailFromValidator // TODO: it should be called as EmailFromAddressValidator OR Should be finished the rest fields like to, to address, cc, bcc etc..
+class EmailFromValidator
 {
     const ERR_FIELD_FROM_IS_NOT_SET = 1;
     const ERR_FIELD_FROM_IS_EMPTY = 2;
@@ -111,6 +111,7 @@ class EmailFromValidator // TODO: it should be called as EmailFromAddressValidat
         $this->addErrors($this->validateFromName());
         $this->addErrors($this->validateFrom_Name());
         $this->addErrors($this->validateFromAddrName());
+        // Should be finished the rest fields like to, to address, cc, bcc etc.. (reply-to??)
 //        $this->addErrors($this->validateTo());
 //        $this->addErrors($this->validateCCs());
 //        $this->addErrors($this->validateBCCs());
