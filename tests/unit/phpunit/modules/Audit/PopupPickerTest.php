@@ -2,7 +2,7 @@
 
 require_once 'modules/Audit/Popup_picker.php';
 
-class PopupPickerTest extends SuiteCRM\StateCheckerUnitAbstract
+class PopupPickerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testProcessPage()
     {

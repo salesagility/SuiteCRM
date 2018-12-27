@@ -77,7 +77,7 @@ class ImapHandlerFakeData
     }
     
     /**
-     * 
+     *
      * @param string $name
      * @param string $argsEncoded
      * @return mixed
@@ -147,7 +147,6 @@ class ImapHandlerFakeData
         if (isset($this->calls[$name][$argsEncoded])) {
             LoggerManager::getLogger()->warn('Fake call already exists with given arguments: ' . $name . ', hint: remove first, use ' . __CLASS__ . '::remove(...)');
             $this->remove($name, $args);
-            
         }
         $this->calls[$name][$argsEncoded] = $ret;
     }

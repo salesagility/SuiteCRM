@@ -40,7 +40,7 @@ class UsersCest
         $I->amOnUrl($instanceUrl);
         $I->loginAsAdmin();
         $Users->gotoProfile();
-        $I->see('User Profile');
+        $I->see('User Profile', '.panel-heading');
         $I->click('Settings');
         $I->see('Mail Accounts');
         $I->click('Mail Accounts');
@@ -50,6 +50,8 @@ class UsersCest
         $I->fillField('email_user', 'testuser_name');
         $I->fillField('email_password', 'testuser_pass');
         $I->click('Test Settings');
+        $I->wait(10);
+        $I->see('Connection completed successfully.');
     }
 
     public function testShowCollapsedSubpanelHint(
