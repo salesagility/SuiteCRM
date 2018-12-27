@@ -450,8 +450,8 @@ Click on the link below to reset your password:
 $contact_user_link_guid',
         'name' => 'Forgot Password email',
     ),
-    
-    
+
+
     'two_factor_auth_email' => array(
         'subject' => 'Two Factor Authentication Code',
         'type' => 'system',
@@ -567,6 +567,6 @@ $contact_user_link_guid',
     'LBL_DBCONFIG_MSG3' => 'Name of the database that will contain the data for the SuiteCRM instance you are about to install.',
     'LBL_DBCONFIG_MSG2_LABEL' => 'Host Name',
     'LBL_DBCONFIG_MSG2' => 'Name of web server or machine (host) on which the database is located (such as www.mydomain.com). If installing locally, it\'s better to use \'localhost\' than \'127.0.0.1\', for performance reasons.',
-    'LBL_DBCONFIG_B_MSG1_LABEL' => '',
+    'LBL_DBCONFIG_B_MSG1_LABEL' => '', // this label dynamically needed in install/installConfig.php:293
     'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.'
 );

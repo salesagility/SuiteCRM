@@ -109,8 +109,10 @@ class templateParser
                 if ($value != '' && $value != '0.00') {
                     if ($isValidator->isPercentageField($repl_arr['aos_products_quotes_discount'])) {
                         $sep = get_number_seperators();
-                        $value = rtrim(rtrim(format_number($value), '0'),
-                                $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
+                        $value = rtrim(
+                            rtrim(format_number($value), '0'),
+                                $sep[1]
+                        ) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
                 } else {
                     $value = '';
@@ -133,6 +135,11 @@ class templateParser
                 if ($value != '') {
                     $dt = explode(' ', $value);
                     $value = $dt[0];
+                    if(isset($dt[1]) && $dt[1]!=''){
+                        if (strpos($dt[1], 'am') > 0 || strpos($dt[1], 'pm') > 0) {
+                            $value = $dt[0].' '.$dt[1];
+                        }
+                    }
                 }
             }
             if ($value != '' && is_string($value)) {

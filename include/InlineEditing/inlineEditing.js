@@ -109,6 +109,7 @@ function buildEditField(){
 
 
     var onInlineEditDblClick = function(elem, e) {
+
         var _this = elem;
         e.preventDefault();
         // depending on what view you are using will find the id,module,type of field, and field name from the view
@@ -132,6 +133,10 @@ function buildEditField(){
             var type = $(_this).attr( "type" );
             var module = $("#displayMassUpdate input[name=module]").val();
             var id = $(_this).closest('tr').find('[type=checkbox]').attr( "value" );
+        }
+
+        if ($('[field="'+field+'"]').attr('class').indexOf('fix-inlineEdit-textarea') > 0) {
+            $('[field="'+field+'"]').removeClass('fix-inlineEdit-textarea');
         }
 
         //If we find all the required variables to do inline editing.
@@ -218,12 +223,15 @@ function buildEditField(){
  * @param type - the type of the field we are editing.
  */
 function validateFormAndSave(field,id,module,type){
+
     $("#inlineEditSaveButton").on('click', function () {
         var valid_form = check_form("EditView");
         if(valid_form){
             handleSave(field, id, module, type)
             clickListenerActive = false;
+            $('[field="'+field+'"]').addClass('fix-inlineEdit-textarea');
         }else{
+            $('[field="'+field+'"]').removeClass('fix-inlineEdit-textarea');
             return false
         };
     });

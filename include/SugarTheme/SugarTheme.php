@@ -393,8 +393,8 @@ class SugarTheme
                 unlink("$cachedir/spriteCache.php");
             }
 
-            if (strlen($cachedir)>1) {
-                rmdir_recursive($cachedir.'/modules');
+            if (($cachedir) && is_dir($cachedir . '/modules') && (!rmdir_recursive($cachedir . '/modules'))) {
+                throw new Exception("Unable to clear cache: $cachedir . '/modules'");
             }
         } elseif (!inDeveloperMode()) {
             // only update the caches if they have been changed in this request
@@ -607,7 +607,7 @@ class SugarTheme
         $html = '
             <!-- qtip & suggestion box -->
             <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
-	$html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
+        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
         $html .= '<link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" />';
 
         // sprites

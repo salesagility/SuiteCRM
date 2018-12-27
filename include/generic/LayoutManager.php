@@ -58,12 +58,12 @@ class LayoutManager
     public $default_widget_name = 'Field';
     public $DBHelper;
 
-	function __construct()
-	{
-		// set a sane default for context
-		$this->defs['context'] = 'Detail';
-		$this->DBHelper = DBManagerFactory::getInstance();
-	}
+    public function __construct()
+    {
+        // set a sane default for context
+        $this->defs['context'] = 'Detail';
+        $this->DBHelper = DBManagerFactory::getInstance();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

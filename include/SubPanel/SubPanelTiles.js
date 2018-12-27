@@ -121,4 +121,4 @@ SUGAR.subpanelUtils.menu.spPopupMenu(id,menu,top,left,leftOffset);},spPopupMenu:
 left+=parseInt(leftOffset);}
 if(top==""){var top=0;p=menuHandle;top+=p.offsetHeight;while(p&&p.tagName.toUpperCase()!='BODY'){top+=p.offsetTop;p=p.offsetParent;}}
 if(left+menuWidth>bw){left=left-menuWidth+imgWidth;}
-setMenuVisible(menu,left,top,false);}}};}();
+setMenuVisible(menu,left,top,false);}}};}();$(function(){$('.subPanelCountHint.incomplete').each(function(i,e){var module=$(e).attr('data-module');var subpanel=$(e).attr('data-subpanel');var record=$(e).attr('data-record');$.get('index.php?sugar_body_only=1&module='+module+'&subpanel='+subpanel+'&action=SubPanelViewer&inline=1&record='+record+'&layout_def_key=&inline=1&ajaxSubpanel=true&countOnly=1',function(resp,success){if(!success){console.error('Subpanel Row Count loading error');}else{$(e).html(resp);if(resp&&resp!='0'){$(e).closest('.collapsed').addClass('collapsed-override');}}});});});

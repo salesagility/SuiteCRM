@@ -593,8 +593,10 @@ class Scheduler extends SugarBean
                     $value = str_replace('*/', '', $value);
 
                     return $value . $mod_strings['LBL_HOUR'];
-                } elseif (preg_match('/[^0-9]/',
-                    $mins)) { // got a range, or multiple of mins, so we return an 'Hours' label
+                } elseif (preg_match(
+                    '/[^0-9]/',
+                    $mins
+                )) { // got a range, or multiple of mins, so we return an 'Hours' label
                     return $value;
                 }    // got a "minutes" setting, so it will be at some o'clock.
                 $datef = $current_user->getUserDateTimePreferences();
@@ -1069,7 +1071,7 @@ class Scheduler extends SugarBean
 
 			// job functions
 			self::$job_strings = array('url::' => 'URL');
-			foreach(self::$job_strings as $k=>$v){
+			foreach($job_strings as $k=>$v){
 				self::$job_strings['function::' . $v] = $mod_strings['LBL_'.strtoupper($v)];
 			}
 		}

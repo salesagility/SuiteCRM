@@ -313,7 +313,8 @@ class SavedSearch extends SugarBean
                 '&sortOrder=' . $thisContentsSortOrder .
                 '&query=' . $query .
                 '&searchFormTab=' . $search_form_tab .
-                '&showSSDIV=' . $showDiv);
+                '&showSSDIV=' . $showDiv
+        );
     }
 
     public function returnSavedSearchContents($id)
@@ -378,7 +379,9 @@ class SavedSearch extends SugarBean
             LoggerManager::getLogger()->warn('SavedSearch::handleSave() - saved_search_name is not set');
         }
 
-        if (isset($contents['saved_search_name']) && $contents['saved_search_name']) $focus->name = $contents['saved_search_name'];
+        if (isset($contents['saved_search_name']) && $contents['saved_search_name']) {
+            $focus->name = $contents['saved_search_name'];
+        }
         $focus->search_module = $contents['search_module'];
 
         foreach ($contents as $input => $value) {

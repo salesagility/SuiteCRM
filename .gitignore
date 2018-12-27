@@ -79,8 +79,6 @@ SuiteCRM.kdev4
 vendor/
 public/
 
-#Ingore composer files
-composer.lock
 
 #Ignore bower_components
 bower_components/
@@ -105,3 +103,7 @@ custom/**/
 
 # Ignore testing environment
 build/tmp/
+
+# IMAP testing
+fakeImapResource
+include/Imap/ImapTestSettings.txt

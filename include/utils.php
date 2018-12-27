@@ -3941,7 +3941,7 @@ function getPhpInfo($level = -1)
  *
  * @return $result a formatted string
  */
-function string_format($format, $args)
+function string_format($format, $args, $escape = true)
 {
     $result = $format;
 
@@ -3958,8 +3958,21 @@ function string_format($format, $args)
     }
     /* End of fix */
 
+    if ($escape) {
+        $db = DBManagerFactory::getInstance();
+    }
     for ($i = 0; $i < count($args); ++$i) {
-        $result = str_replace('{' . $i . '}', $args[$i], $result);
+        if (strpos($args[$i], ',') !== false) {
+            $values = explode(',', $args[$i]);
+            if ($escape) {
+                foreach ($values as &$value) {
+                    $value = $db->quote($value);
+                }
+            }
+            $args[$i] = implode("','", $values);
+        }
+
+        $result = str_replace('{'.$i.'}', "'" . $args[$i] . "'", $result);
     }
 
     return $result;
@@ -5561,8 +5574,8 @@ function displayAdminError($errorString)
     SugarApplication::appendErrorMessage($output);
 }
 
-function getAppString($key) {
-
+function getAppString($key)
+{
     global $app_strings;
 
     if (!isset($app_strings[$key])) {

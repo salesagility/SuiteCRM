@@ -361,15 +361,20 @@ class SubPanelTiles
                 $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel, $subpanel_object->subpanel_query);
             } elseif ($current_user->getPreference('count_collapsed_subpanels')) {
                 $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
-                $count = $this->rowCounter->getSubPanelRowCount($subPanelDef);
+                $count = (int)$this->rowCounter->getSubPanelRowCount($subPanelDef);
 
+                $extraClass = '';
                 if ($count === 0) {
-                    $tabs_properties[$t]['title'] .= ' (0)';
-                }
-                elseif ($count > 0) {
-                    $tabs_properties[$t]['title'] .= ' +';
+                    $countStr = $count.'';
+                } elseif ($count > 0) {
+                    $countStr = $count.'';
                     $tabs_properties[$t]['collapsed_override'] = 1;
+                } else {
+                    $countStr = '...';
+                    $extraClass = ' incomplete';
                 }
+                
+                $tabs_properties[$t]['title'] .= ' (<span class="subPanelCountHint' . $extraClass . '" data-subpanel="' . $tab . '" data-module="' . $layout_def_key . '" data-record="' . $_REQUEST['record'] . '">' . $countStr . '</span>)';
             }
 
 
@@ -435,10 +440,14 @@ class SubPanelTiles
             }
         }
         require_once('include/Smarty/plugins/function.sugar_action_menu.php');
-        $widget_contents = smarty_function_sugar_action_menu(array(
-            'buttons' => $buttons,
-            'class' => 'clickMenu fancymenu',
-        ), $this->xTemplate);
+        $widget_contents = smarty_function_sugar_action_menu(
+            [
+                'buttons' => $buttons,
+                'flat' => !empty($thisPanel->_instance_properties['flat']),
+                'class' => 'clickMenu fancymenu',
+            ],
+            $this->xTemplate
+        );
         return $widget_contents;
     }
 }

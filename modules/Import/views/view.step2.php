@@ -176,12 +176,12 @@ document.getElementById('gonext').onclick = function(){
 
 }
 
-function publishMapping(elem, publish, mappingId)
+function publishMapping(elem, publish, mappingId, importModule)
 {
     if( typeof(elem.publish) != 'undefined' )
         publish = elem.publish;
 
-    var url = 'index.php?action=mapping&module=Import&publish=' + publish + '&import_map_id=' + mappingId;
+    var url = 'index.php?action=mapping&module=Import&publish=' + publish + '&import_map_id=' + mappingId + '&import_module=' + importModule;
     var callback = {
                         success: function(o)
                         {

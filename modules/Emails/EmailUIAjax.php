@@ -426,7 +426,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $ie->connectMailserver();
                 $uid = $_REQUEST['uid'];
                 if ($ie->protocol == 'imap') {
-                    $_REQUEST['uid'] = imap_msgno($ie->conn, $_REQUEST['uid']);
+                    $_REQUEST['uid'] = $ie->getImap()->getMessageNo($_REQUEST['uid']);
                 } else {
                     $_REQUEST['uid'] = $ie->getCorrectMessageNoForPop3($_REQUEST['uid']);
                 }
@@ -736,7 +736,7 @@ if (isset($_REQUEST['emailUIAction'])) {
                 foreach ($exUids as $msgNo) {
                     $uid = $msgNo;
                     if ($ie->protocol == 'imap') {
-                        $msgNo = imap_msgno($ie->conn, $msgNo);
+                        $msgNo = $ie->getImap()->getMessageNo($msgNo);
                         $status = $ie->returnImportedEmail($msgNo, $uid);
                     } else {
                         $status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $uid);
@@ -751,7 +751,7 @@ if (isset($_REQUEST['emailUIAction'])) {
             } else {
                 $msgNo = $_REQUEST['uid'];
                 if ($ie->protocol == 'imap') {
-                    $msgNo = imap_msgno($ie->conn, $_REQUEST['uid']);
+                    $msgNo = $ie->getImap()->getMessageNo($_REQUEST['uid']);
                     $status = $ie->returnImportedEmail($msgNo, $_REQUEST['uid']);
                 } else {
                     $status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $_REQUEST['uid']);

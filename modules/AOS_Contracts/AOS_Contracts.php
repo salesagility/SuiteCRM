@@ -98,7 +98,6 @@ class AOS_Contracts extends AOS_Contracts_sugar
             $this->createLink();
         }
         return $return_id;
-
     }
 
     public function mark_deleted($id)

@@ -45,6 +45,8 @@ if (!is_admin($current_user)) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
 
+include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
+
 function clearPasswordSettings()
 {
     $_POST['passwordsetting_SystemGeneratedPasswordON'] = '';
@@ -146,7 +148,9 @@ require_once('include/SugarLogger/SugarLogger.php');
 $sugar_smarty = new Sugar_Smarty();
 
 // if no IMAP libraries available, disable Save/Test Settings
-if (!function_exists('imap_open')) {
+$imapFactory = new ImapHandlerFactory();
+$imap = $imapFactory->getImapHandler();
+if (!$imap->isAvailable()) {
     $sugar_smarty->assign('IE_DISABLED', 'DISABLED');
 }
 

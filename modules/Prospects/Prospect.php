@@ -145,14 +145,14 @@ class Prospect extends Person implements EmailInterface
         $this->_create_proper_name_field();
     }
 
-	/**
-		builds a generic search based on the query string using or
-		do not include any $this-> because this is called on without having the class instantiated
-	*/
-	function build_generic_where_clause ($the_query_string)
-	{
-		$where_clauses = Array();
-		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
+    /**
+        builds a generic search based on the query string using or
+        do not include any $this-> because this is called on without having the class instantiated
+    */
+    public function build_generic_where_clause($the_query_string)
+    {
+        $where_clauses = array();
+        $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 
         array_push($where_clauses, "prospects.last_name like '$the_query_string%'");
         array_push($where_clauses, "prospects.first_name like '$the_query_string%'");

@@ -53,9 +53,9 @@ class SugarWidgetSubPanelRelFieldEditButton extends SugarWidgetField
         return '&nbsp;';
     }
 
-	public function displayList($layout_def)
-	{
-		die("<pre>" . print_r($layout_def, true) . "</pre>");
+    public function displayList($layout_def)
+    {
+        die("<pre>" . print_r($layout_def, true) . "</pre>");
 
         $rel = $layout_def['linked_field'];
         $module = $layout_def['module'];

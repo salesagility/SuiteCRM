@@ -294,7 +294,6 @@ class SearchForm
         $this->th->ss->assign('searchFormInPopup', $searchFormInPopup);
 
         if (isset($this->th)) {
-
             $moduleDir = null;
             if (isset($this->seed->module_dir)) {
                 $moduleDir = $this->seed->module_dir;
@@ -451,7 +450,7 @@ class SearchForm
                 }
             }
         }
-        throw new Exception('Not found');
+        throw new Exception('Find Field Option Value: Not found');
     }
 
     /**

@@ -41,8 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once ('modules/DynamicFields/DynamicField.php');
-require_once ('modules/DynamicFields/FieldCases.php');
+require_once('modules/DynamicFields/DynamicField.php');
+require_once('modules/DynamicFields/FieldCases.php');
 $db = DBManagerFactory::getInstance();
 
 if (!isset($db)) {

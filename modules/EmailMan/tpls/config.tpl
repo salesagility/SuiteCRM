@@ -196,16 +196,23 @@ function change_state(radiobutton) {
 												<input type='hidden' id="notify_allow_default_outbound_hidden_input" name='notify_allow_default_outbound' value='0'>
 												<input id="notify_allow_default_outbound" name='notify_allow_default_outbound' value="2" tabindex='1' class="checkbox" type="checkbox" {$notify_allow_default_outbound_on}>
 											</td>
-											<td width="20%">
-                                                                                                {$MOD.LBL_ALLOW_SEND_AS_USER}&nbsp;
-                                                                                                <img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_ALLOW_SEND_AS_USER_DESC}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
-											</td>
-											<td width="30%">
-                                                                                                <input type='hidden' id="mail_allowusersend_hidden_input" name='mail_allowusersend' value='0'>
-                                                                                                <input id='mail_allowusersend' name='mail_allowusersend' type="checkbox" class="checkbox" value="1" tabindex='1' {$mail_allow_user_send}>
-											</td>
 										</tr>
 									</table>
+                                                                                        
+                                                                        <table width="100%" cellpadding="0" cellspacing="0">
+                                                                            <tr>
+                                                                                <td width="20%" scope="row">
+                                                                                    {$MOD.LBL_ALLOW_SEND_AS_USER}&nbsp;
+                                                                                    <img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_ALLOW_SEND_AS_USER_DESC}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
+                                                                                </td>
+                                                                                <td width="30%">
+                                                                                    <input type='hidden' id="mail_allowusersend_hidden_input" name='mail_allowusersend' value='0'>
+                                                                                    <input id='mail_allowusersend' name='mail_allowusersend' type="checkbox" class="checkbox" value="1" tabindex='1' {$mail_allow_user_send}>
+                                                                                </td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        </table>
 								</div>
 							</td>
 						</tr>

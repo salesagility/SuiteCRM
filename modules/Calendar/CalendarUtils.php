@@ -306,6 +306,7 @@ class CalendarUtils
 
         if (!empty($params['until'])) {
             $end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(), $until);
+            $end->setTime(0, 0, 0);
             $end->modify("+1 Day");
         } else {
             $end = $start;
@@ -383,10 +384,10 @@ class CalendarUtils
         // rather than using relationships framework due to performance issues.
         // Relationship framework runs very slowly
 
-		$db = DBManagerFactory::getInstance();
-		$id = $bean->id;
-		$date_modified = $GLOBALS['timedate']->nowDb();
-		$lower_name = strtolower($bean->object_name);
+        $db = DBManagerFactory::getInstance();
+        $id = $bean->id;
+        $date_modified = $GLOBALS['timedate']->nowDb();
+        $lower_name = strtolower($bean->object_name);
 
         $qu = "SELECT * FROM {$bean->rel_users_table} WHERE deleted = 0 AND {$lower_name}_id = '{$id}'";
         $re = $db->query($qu);
