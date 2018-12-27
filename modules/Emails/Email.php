@@ -1608,7 +1608,7 @@ class Email extends Basic
             $validator = new EmailFromValidator();
             if (!$validator->isValid($this)) {
                 $errors = $validator->getErrorsAsText();
-                $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}";
+                $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}";
                 LoggerManager::getLogger()->error("Saving Email with invalid From name and/or Address. $details");
             }
             
@@ -3092,7 +3092,7 @@ class Email extends Basic
             // invalid from address and/or name but we will trying to send it..
             // and we should log the problem at least:
             
-            // TODO !@# needs EmailFromValidation and EmailFromFixer.. everywhere where from name and/or from email address get a value
+            // (needs EmailFromValidation and EmailFromFixer.. everywhere where from name and/or from email address get a value)
             
             $errors = $validator->getErrorsAsText();
             $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}";

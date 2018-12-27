@@ -116,8 +116,6 @@ class EmailFromValidator // TODO: it should be called as EmailFromAddressValidat
 //        $this->addErrors($this->validateBCCs());
         $valid = !$this->hasErrors();
         if (!$valid && $tryToFix) {
-            $fixer = new EmailFromFixer();
-            $fixer->fix($email);
             $valid = !$this->hasErrors();
         }
         return $valid;
