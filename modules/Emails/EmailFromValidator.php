@@ -209,7 +209,7 @@ class EmailFromValidator // TODO: it should be called as EmailFromAddressValidat
             throw new InvalidArgumentException('Error code should be an integer, ' . gettype($error) . ' given', self::EX_ERROR_CODE_TYRE_IS_INCORRECT);
         }
         $lbl = $this->getErrorTextLabel($error);
-        $text = LangText::get($lbl);
+        $text = LangText::get($lbl, null, LangText::USING_ALL_STRINGS, true, false, 'Emails');
         return $text;
     }
     

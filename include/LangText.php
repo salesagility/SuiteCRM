@@ -122,6 +122,8 @@ class LangText
      * @param integer $use
      * @param boolean $log
      * @param boolean $throw
+     * @param string $module
+     * @param string $lang
      */
     public function __construct($key = null, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true, $module = null, $lang = null)
     {
@@ -138,9 +140,11 @@ class LangText
      *
      * @global array $app_strings
      * @global array $mod_strings
-     * @param string|null $key
-     * @param array|null $args
-     * @param integer|null $use
+     * @param string $key
+     * @param array $args
+     * @param integer $use
+     * @param string $module
+     * @param string $lang
      * @return string
      * @throws ErrorMessageException
      */
@@ -217,12 +221,14 @@ class LangText
      * @param boolean|null $log
      * @param integer $use
      * @param boolean $throw
+     * @param string $module
+     * @param string $lang
      * @return string
      * @throws ErrorMessageException
      */
-    public static function get($key, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true)
+    public static function get($key, $args = null, $use = self::USING_ALL_STRINGS, $log = true, $throw = true, $module = null, $lang = null)
     {
-        $text = new LangText($key, $args, $use, $log, $throw);
+        $text = new LangText($key, $args, $use, $log, $throw, $module, $lang);
         $translated = $text->getText();
         return $translated;
     }
