@@ -74,10 +74,10 @@ class EmailFromValidator // TODO: it should be called as EmailFromAddressValidat
     const ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX = 16;
     const ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART = 17;
     const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART = 18;
-    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM = 19;
-    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR = 20;
-    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROMNAME = 21;
-    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_NAME = 22;
+    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM = 19;
+    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR = 20;
+    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME = 21;
+    const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME = 22;
     
     const EX_ERROR_CODE_TYRE_IS_INCORRECT = 100;
     const EX_ERROR_CODE_IS_NOT_IMPLEMENTED = 101;
@@ -245,10 +245,10 @@ class EmailFromValidator // TODO: it should be called as EmailFromAddressValidat
             case self::ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX'; break;
             case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART'; break;
             case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROMNAME: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROMNAME'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_NAME: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_NAME'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME'; break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME'; break;
             default: throw new InvalidArgumentException('Error code is not implemented: ' . $error, self::EX_ERROR_CODE_IS_NOT_IMPLEMENTED);
         }
         return $lbl;
@@ -330,22 +330,22 @@ class EmailFromValidator // TODO: it should be called as EmailFromAddressValidat
             $emailObj = $this->getEmail();
             
             if (isset($emailObj->From) && $email !== $emailObj->From) {
-                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM);
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM);
                 $ok = false;
             }
             
             if (isset($emailObj->from_addr) && $email !== $emailObj->from_addr) {
-                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR);
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR);
                 $ok = false;
             }
             
             if (isset($emailObj->FromName) && $name !== $emailObj->FromName) {
-                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROMNAME);
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME);
                 $ok = false;
             }
             
             if (isset($emailObj->from_name) && $name !== $emailObj->from_name) {
-                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_NAME);
+                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME);
                 $ok = false;
             }
             

@@ -79,7 +79,7 @@ class EmailFromValidatorTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertFalse($valid);
         $this->assertEquals([
             EmailFromValidator::ERR_FIELD_FROM_ADDR_IS_EMPTY,
-            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR,
+            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
         
@@ -91,7 +91,7 @@ class EmailFromValidatorTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertFalse($valid);
         $this->assertEquals([
             EmailFromValidator::ERR_FIELD_FROM_ADDR_IS_INVALID,
-            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR,
+            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
         
@@ -101,7 +101,7 @@ class EmailFromValidatorTest extends StateCheckerPHPUnitTestCaseAbstract
         $errors = $validator->getErrors();
         $this->assertFalse($valid);
         $this->assertEquals([
-            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR,
+            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
     }
@@ -132,7 +132,7 @@ class EmailFromValidatorTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertFalse($valid);
         $this->assertEquals([
             EmailFromValidator::ERR_FIELD_FROM_IS_EMPTY,
-            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM,
+            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
         
@@ -144,7 +144,7 @@ class EmailFromValidatorTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertFalse($valid);
         $this->assertEquals([
             EmailFromValidator::ERR_FIELD_FROM_IS_INVALID,
-            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM,
+            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
         
@@ -154,7 +154,7 @@ class EmailFromValidatorTest extends StateCheckerPHPUnitTestCaseAbstract
         $errors = $validator->getErrors();
         $this->assertFalse($valid);
         $this->assertEquals([
-            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM,
+            EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM,
             EmailFromValidator::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID,
         ], $errors);
         
