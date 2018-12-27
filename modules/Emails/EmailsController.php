@@ -46,6 +46,17 @@ include_once 'include/Exceptions/SugarControllerException.php';
 
 class EmailsController extends SugarController
 {
+    
+    const ERR_INVALID_INBOUND_EMAIL_TYPE = 100;
+    const ERR_STORED_OUTBOUND_EMAIL_NOT_SET = 101;
+    const ERR_STORED_OUTBOUND_EMAIL_ID_IS_INVALID = 102;
+    const ERR_STORED_OUTBOUND_EMAIL_NOT_FOUND = 103;
+    const ERR_REPLY_TO_ADDR_NOT_FOUND = 110;
+    const ERR_REPLY_TO_FROMAT_INVALID_SPLITS = 111;
+    const ERR_REPLY_TO_FROMAT_INVALID_NO_NAME = 112;
+    const ERR_REPLY_TO_FROMAT_INVALID_NO_ADDR = 113;
+    const ERR_REPLY_TO_FROMAT_INVALID_AS_FROM = 114;
+    
     /**
      * @var Email $bean ;
      */
@@ -412,7 +423,7 @@ class EmailsController extends SugarController
      * Gets the values of the "from" field
      * includes the signatures for each account
      */
-    public function action_GetFromFields()
+    public function action_getFromFields()
     {
         global $current_user;
         global $sugar_config;
@@ -444,28 +455,173 @@ class EmailsController extends SugarController
 
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
+            
+            if (!$inboundEmail instanceof InboundEmail) {
+                throw new InvalidArgumentException('Inbound Email Account should be a valid Inbound Email. ' . gettype($inboundEmail) . ' given.', self::ERR_INVALID_INBOUND_EMAIL_TYPE);
+            }
+            
             if (in_array($inboundEmail->id, $showFolders)) {
                 $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
                 $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
                 $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
-
-                $oe = new OutboundEmail();
-                $oe->retrieve($storedOptions['outbound_email']);
+                
+                $err = null;
+                if (!isset($storedOptions['outbound_email'])) {
+                    // exception
+                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() expects an outbound email id as stored option of inbound email (' . $inboundEmail->id . ') but it isn\'t set.');
+                    $err = self::ERR_STORED_OUTBOUND_EMAIL_NOT_SET;
+                } else {
+                    $validator = new SuiteCRM\Utility\SuiteValidator();
+                    if ($validator->isValidId($storedOptions['outbound_email'])) {
+                        // exception
+                        LoggerManager::getLogger()->error('EmailController::action_getFromFields() expects an outbound email id as stored option of inbound email (' . $inboundEmail->id . ') but it isn\'t valid.');                        
+                        $err = self::ERR_STORED_OUTBOUND_EMAIL_ID_IS_INVALID;
+                    } else {
+                        $oe = new OutboundEmail();
+                        if (!$oe->retrieve($storedOptions['outbound_email'])) {
+                            // exception
+                            LoggerManager::getLogger()->error('Trying to retrieve an OutboundEmail by ID: ' . $storedOptions['outbound_email'] . ' but it is not found.');
+                            $err = self::ERR_STORED_OUTBOUND_EMAIL_NOT_FOUND;
+                        }
+                    }
+                }
+                
+                if ($err) {
+                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() panic: An error occured! (' . $err . ')');
+                    
+                    
+                    if (!isset($storedOptions['reply_to_addr'])) {
+                        LoggerManager::getLogger()->warn('Stored reply to address is not set.');
+                    } else {
+                        if (!$storedOptions['reply_to_addr']) {
+                            LoggerManager::getLogger()->warn('Stored reply to address is not filled.');
+                        }
+                    }
+                    $replyTo = isset($storedOptions['reply_to_addr']) ? $storedOptions['reply_to_addr'] : null;
+                    
+                    
+                    if (!isset($storedOptions['from_name'])) {
+                        LoggerManager::getLogger()->warn('Stored from name is not set.');
+                    } else {
+                        if (!$storedOptions['from_name']) {
+                            LoggerManager::getLogger()->warn('Stored from name is not filled.');
+                        }
+                    }
+                    $fromName = isset($storedOptions['from_name']) ? $storedOptions['from_name'] : null;
+                    
+                    
+                    if (!isset($storedOptions['from_addr'])) {
+                        LoggerManager::getLogger()->warn('Stored from address is not set.');
+                    } else {
+                        if (!$storedOptions['from_addr']) {
+                            LoggerManager::getLogger()->warn('Stored from address is not filled.');
+                        }
+                    }
+                    $fromAddr = isset($storedOptions['from_addr']) ? $storedOptions['from_addr'] : null;
+                    
+                    
+                    if (!isset($oe->id)) {
+                        LoggerManager::getLogger()->warn('Stored outbound email ID is not set.');
+                    } else {
+                        if ($oe->id) {
+                            LoggerManager::getLogger()->warn('Stored outbound email ID is not filled.');
+                        } else {
+                            $validator = new SuiteCRM\Utility\SuiteValidator();
+                            if (!$validator->isValidId($ie->id)) {
+                                LoggerManager::getLogger()->warn('Stored outbound email ID is not valid.');
+                            }
+                        }
+                    }
+                    $oeId = isset($oe->id) ? $oe->id : null;
+                    
+                    
+                    if (!isset($oe->name)) {
+                        LoggerManager::getLogger()->warn('Stored outbound email name is not set.');
+                    } else {
+                        if (!$oe->name) {
+                            LoggerManager::getLogger()->warn('Stored outbound email name is not filled.');
+                        }
+                    }
+                    $oeName = isset($oe->name) ? $oe->name : null;
+                    
+                } else {
+                    $replyTo = $storedOptions['reply_to_addr'];
+                    $fromName = $storedOptions['from_name'];
+                    $fromAddr = $storedOptions['from_addr'];
+                    $oeId = $oe->id;
+                    $oeName = $oe->name;
+                }
+                
+                
+                
+                $emailFromValidator = new EmailFromValidator();
+                
+                if (!$replyTo) {
+                    // exception
+                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() panic: An Outbound Email Reply-to Address is not found.');
+                    $replyToErr = self::ERR_REPLY_TO_ADDR_NOT_FOUND;
+                } else {
+                    
+                    $splits = explode(' ', $replyTo);
+                    if (count($splits) != 2) {
+                        LoggerManager::getLogger()->error('Incorrect "replay to" format found: ' . $replyTo);
+                        $replyToErr = self::ERR_REPLY_TO_FROMAT_INVALID_SPLITS;
+                    } else {
+                        if (!isset($splits[0])) {
+                            LoggerManager::getLogger()->error('Reply-to name part not found: ' . $replyTo);
+                            $replyToErr = self::ERR_REPLY_TO_FROMAT_INVALID_NO_NAME;
+                        }
+                        $tmpName = isset($splits[0]) ? $splits[0] : null;
+                        if (!isset($splits[1])) {
+                            LoggerManager::getLogger()->error('Reply-to email address part not found: ' . $replyTo);
+                            $replyToErr = self::ERR_REPLY_TO_FROMAT_INVALID_NO_ADDR;
+                        }
+                        $tmpAddr = isset($splits[1]) ? $splits[1] : null;
+                        
+                        $tmpEmail = new Email();
+                        $tmpEmail->FromName = $tmpEmail->from_name = $tmpName;
+                        $tmpEmail->From = $tmpEmail->from_addr = $tmpAddr;
+                        $tmpEmail->from_addr_name = $replyTo;
+                        
+                        if (!$emailFromValidator->isValid($tmpEmail)) {
+                            // exception
+                            LoggerManager::getLogger()->error('EmailController::action_getFromFields() panic: An Outbound Email Reply-to Address is invalid.');
+                            $replyToErr = self::ERR_REPLY_TO_FROMAT_INVALID_AS_FROM;
+                        }
+                    }
+                }
+                
+                
+                
+                $tmpEmail = new Email();
+                $tmpEmail->FromName = $tmpEmail->from_name = $fromName;
+                $tmpEmail->From = $tmpEmail->from_addr = $fromAddr;
+                $tmpEmail->from_addr_name = "$fromName <$fromAddr>";
+                if (!$emailFromValidator->isValid($tmpEmail)) {
+                    // exception
+                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() panic: An Outbound Email From Name and/or Address is invalid.');
+                }
+                
+                // try to fix addresses...
+                if ($replyToErr) {
+                    // using from address instead reply-to if any error occured about "reply to"
+                    $replyTo = $fromName . ' &lt;' . $fromAddr  . '&gt;';
+                }
                 
                 $dataAddress = array(
                     'type' => $inboundEmail->module_name,
                     'id' => $inboundEmail->id,
                     'attributes' => array(
-                        'reply_to' => $storedOptions['reply_to_addr'],
-                        'name' => $storedOptions['from_name'],
-                        'from' => $storedOptions['from_addr'],
+                        'reply_to' => $replyTo,
+                        'name' => $fromName,
+                        'from' => "$fromName &lt;$fromAddr&gt;",
                     ),
                     'prepend' => $prependSignature,
                     'isPersonalEmailAccount' => $isPersonalEmailAccount,
                     'isGroupEmailAccount' => $isGroupEmailAccount,
                     'outboundEmail' => array(
-                        'id' => $oe->id,
-                        'name' => $oe->name,
+                        'id' => $oeId,
+                        'name' => $oeName,
                     ),
                 );
 
@@ -502,12 +658,30 @@ class EmailsController extends SugarController
             $sugarEmailAddress = new SugarEmailAddress();
             $userAddressesArr = $sugarEmailAddress->getAddressesByGUID($current_user->id, 'Users');
             foreach ($userAddressesArr as $userAddress) {
-                if ($userAddress['reply_to_addr'] === '1') {
+                if (!isset($userAddress['reply_to_addr']) || !$userAddress['reply_to_addr']) {
+                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() is panicing: Reply-To address is not filled.');
+                }
+                if (isset($userAddress['reply_to_addr']) && $userAddress['reply_to_addr'] === '1') {
                     $fromString =  $current_user->full_name . ' &lt;' . $userAddress['email_address'] . '&gt;';
                 } else {
                     $fromString =  $current_user->full_name . ' &lt;' . $current_user->email1 . '&gt;';
                 }
                 // ($userAddress['reply_to_addr'] === '1') ? $current_user->email1 : $userAddress['email_address']
+                
+                if (!isset($defaultEmailSignature['signature_html'])) {
+                    LoggerManager::getLogger()->warn('EmailController::action_getFromFields() is panicing: Default email signature array does not have index as signature_html');
+                    $signatureHtml = null;
+                } else {
+                    $signatureHtml = $defaultEmailSignature['signature_html'];
+                }
+                
+                if (!isset($defaultEmailSignature['signature'])) {
+                    LoggerManager::getLogger()->warn('EmailController::action_getFromFields() is panicing: Default email signature array does not have index as signature');
+                    $signatureTxt = null;
+                } else {
+                    $signatureTxt = $defaultEmailSignature['signature'];
+                }
+                
                 $data[] = array(
                     'type' => 'personal',
                     'id' => $userAddress['email_address_id'],
@@ -520,8 +694,8 @@ class EmailsController extends SugarController
                     'isPersonalEmailAccount' => true,
                     'isGroupEmailAccount' => false,
                     'emailSignatures' => array(
-                        'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
-                        'plain' => $defaultEmailSignature['signature'],
+                        'html' => utf8_encode(html_entity_decode($signatureHtml)),
+                        'plain' => $signatureTxt,
                     ),
                 );
             }
@@ -535,8 +709,8 @@ class EmailsController extends SugarController
                 'type' => 'system',
                 'id' => $system->id,
                 'attributes' => array(
-                    'reply_to' => $system->smtp_from_addr,
-                    'from' => $system->smtp_from_addr,
+                    'reply_to' => "$system->smtp_from_name &lt;$system->smtp_from_addr&gt;",
+                    'from' => "$system->smtp_from_name &lt;$system->smtp_from_addr&gt;",
                     'name' => $system->smtp_from_name,
                     'oe' => $system->mail_smtpuser,
                 ),
