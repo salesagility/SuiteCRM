@@ -405,8 +405,8 @@ $mod_strings = array(
     'ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX' => 'From address and name pair format is incorrect, use "from@emailaddress.org <Name of Person>" format.',
     'ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART' => 'Invalid name part of From address and name pair.',
     'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART' => 'Invalid email address part of From address and name pair.',
-    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM' => 'From address and name pair does not match to from name or email address.',
-    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_ADDR' => 'From address and name pair does not match to from address.',
-    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROMNAME' => 'From address and name pair does not match to from-name.',
-    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FILED_FROM_NAME' => 'From address and name pair does not match to from name.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM' => 'From address and name pair does not match to from name or email address.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR' => 'From address and name pair does not match to from address.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME' => 'From address and name pair does not match to from-name.',
+    'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME' => 'From address and name pair does not match to from name.',
 );
