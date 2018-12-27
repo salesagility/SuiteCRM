@@ -456,9 +456,9 @@ class EmailsController extends SugarController
                     'type' => $inboundEmail->module_name,
                     'id' => $inboundEmail->id,
                     'attributes' => array(
-                        'reply_to' => $storedOptions['reply_to_addr'],
-                        'name' => $storedOptions['from_name'],
-                        'from' => $storedOptions['from_addr'],
+                        'reply_to' => utf8_encode($storedOptions['reply_to_addr']),
+                        'name' => utf8_encode($storedOptions['from_name']),
+                        'from' => utf8_encode($storedOptions['from_addr']),
                     ),
                     'prepend' => $prependSignature,
                     'isPersonalEmailAccount' => $isPersonalEmailAccount,
@@ -512,9 +512,9 @@ class EmailsController extends SugarController
                     'type' => 'personal',
                     'id' => $userAddress['email_address_id'],
                     'attributes' => array(
-                        'from' => $fromString,
-                        'reply_to' =>  $current_user->full_name . ' &lt;' . $userAddress['email_address']  . '&gt;',
-                        'name' => $current_user->full_name,
+                        'from' => utf8_encode($fromString),
+                        'reply_to' =>  utf8_encode($current_user->full_name . ' &lt;' . $userAddress['email_address']  . '&gt;'),
+                        'name' => utf8_encode($current_user->full_name),
                     ),
                     'prepend' => $prependSignature,
                     'isPersonalEmailAccount' => true,
@@ -535,10 +535,10 @@ class EmailsController extends SugarController
                 'type' => 'system',
                 'id' => $system->id,
                 'attributes' => array(
-                    'reply_to' => $system->smtp_from_addr,
-                    'from' => $system->smtp_from_addr,
-                    'name' => $system->smtp_from_name,
-                    'oe' => $system->mail_smtpuser,
+                    'reply_to' => utf8_encode($system->smtp_from_addr),
+                    'from' => utf8_encode($system->smtp_from_addr),
+                    'name' => utf8_encode($system->smtp_from_name),
+                    'oe' => utf8_encode($system->mail_smtpuser),
                 ),
                 'prepend' => false,
                 'isPersonalEmailAccount' => false,
@@ -552,7 +552,7 @@ class EmailsController extends SugarController
         }
 
         $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
-        echo $dataEncoded;
+        echo utf8_decode($dataEncoded);
         $this->view = 'ajax';
     }
 
