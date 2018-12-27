@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/../../../../../modules/Emails/EmailValidator.php';
+require_once __DIR__ . '/../../../../../modules/Emails/EmailFromValidator.php';
 
 /**
  * EmailFromValidatorTest
