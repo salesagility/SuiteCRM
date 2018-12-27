@@ -1608,6 +1608,13 @@ class Email extends Basic
                 }
             }
 
+            $validator = new EmailFromValidator();
+            if (!$validator->isValid($this)) {
+                $errors = $validator->getErrorsAsText();
+                $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}";
+                LoggerManager::getLogger()->error("Saving Email with invalid From name and/or Address. $details");
+            }
+            
             $id = parent::save($check_notify);
 
             if (!empty($this->parent_type) && !empty($this->parent_id)) {
@@ -3091,7 +3098,8 @@ class Email extends Basic
             // TODO !@# needs EmailFromValidation and EmailFromFixer.. everywhere where from name and/or from email address get a value
             
             $errors = $validator->getErrorsAsText();
-            LoggerManager::getLogger()->error("Invalid email from address or name detected before sending. Details:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}");
+            $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}";
+            LoggerManager::getLogger()->error("Invalid email from address or name detected before sending. $details");
         }
         if ($mail->send()) {
             ///////////////////////////////////////////////////////////////////
@@ -4713,8 +4721,12 @@ eoq;
             if (
                 $emailAddress !== null
                 && $emailAddress->getConfirmedOptInState() != EmailAddress::COI_STAT_CONFIRMED_OPT_IN
-                && empty($emailAddress->confirm_opt_in_sent_date)) {
-                $this->sendOptInEmail($emailAddress);
+                && empty($emailAddress->confirm_opt_in_sent_date)
+            ) {
+                $ret = $this->sendOptInEmail($emailAddress);
+                if (!$ret) {
+                    LoggerManager::getLogger()->error('Error sending opt-in email to: ' . $emailAddress);
+                }
             }
         }
 
@@ -4732,6 +4744,8 @@ eoq;
     private function sendOptInEmail(EmailAddress $emailAddress)
     {
         global $app_strings;
+        
+        LoggerManager::getLogger()->deprecated(__FUNCION__ . ' is deprecated.');
 
         $ret = false;
 
@@ -4807,9 +4821,7 @@ eoq;
             } else {
                 $emailAddress->confirm_opt_in_sent_date = $now;
             }
-            $emailAddress->save();
-
-            $ret = true;
+            $ret = $emailAddress->save();
         }
 
         return $ret;
