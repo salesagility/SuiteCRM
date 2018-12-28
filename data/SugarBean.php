@@ -2422,9 +2422,12 @@ class SugarBean
         $this->_sendNotifications($check_notify);
 
         if ($isUpdate) {
-            $this->db->update($this);
+            $ret = $this->db->update($this);
         } else {
-            $this->db->insert($this);
+            $ret = $this->db->insert($this);
+        }
+        if (!$ret) {
+            LoggerManager::getLogger()->fatal('SugarBean Save Error at ' . ($isUpdate ? 'update' : 'insert') . ' bean. Class/Module name was: ' . get_class($this) . ' / ' . $this->module_name);
         }
 
         if (empty($GLOBALS['resavingRelatedBeans'])) {

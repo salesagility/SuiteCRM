@@ -1006,6 +1006,17 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
         // base64 encoded of {"web":"test"}
         $json = 'eyJ3ZWIiOiJ0ZXN0In0=';
+        
+        
+        
+        $query = "SELECT COUNT(*) AS cnt FROM users";
+        $db = DBManagerFactory::getInstance();
+        $results = $db->query($query);
+        while($row = $db->fetchByAssoc($results)) {
+            $cnt = $row['cnt'];
+            break;
+        }
+        $this->assertEquals(1, $cnt);
 
         $user1 = BeanFactory::getBean('Users');
         $user1->last_name = 'UNIT_TESTS1';
@@ -1017,6 +1028,16 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $user1->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
         $user1->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user1->savePreferencesToDB();
+        
+        
+        $query = "SELECT COUNT(*) AS cnt FROM users";
+        $db = DBManagerFactory::getInstance();
+        $results = $db->query($query);
+        while($row = $db->fetchByAssoc($results)) {
+            $cnt = $row['cnt'];
+            break;
+        }
+        $this->assertEquals(2, $cnt);
 
         $user2 = BeanFactory::getBean('Users');
         $user2->last_name = 'UNIT_TESTS2';
