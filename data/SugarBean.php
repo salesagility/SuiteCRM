@@ -2428,7 +2428,7 @@ class SugarBean
         }
         
         
-        if (!$ret) {
+        if ($ret === false) {
             
             
             $msg = 'SugarBean Save Error at ' . ($isUpdate ? 'update' : 'insert') . ' bean. Class/Module name was: ' . get_class($this) . ' / ' . $this->module_name;
