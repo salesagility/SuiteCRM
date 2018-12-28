@@ -26,6 +26,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         parent::setUp();
         $this->state = new StateSaver();
         $this->state->pushTable('aod_indexevent');
+        $this->state->pushTable('meetings');
 
         // Use reflection to access private properties and methods
         if (self::$reflection === null) {
@@ -36,6 +37,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
     
     public function tearDown() {
+        $this->state->popTable('meetings');
         $this->state->popTable('aod_indexevent');
         parent::tearDown();
     }
