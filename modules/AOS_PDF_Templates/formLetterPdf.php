@@ -54,8 +54,7 @@ $recordIds = array();
 
 if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
     $order_by = '';
-    require_once('include/MassUpdate.php');
-    $mass = new MassUpdate();
+    $mass = getClassInstance('MassUpdate', 'include/MassUpdate.php');
     $mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_post']);
     $ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
     $query = $bean->create_export_query($order_by, $ret_array['where'], $ret_array['join']);

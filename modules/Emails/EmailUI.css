@@ -279,9 +279,9 @@ li.yuimenuitem-disabled {
     display:none;	
 }
 
-/* .yui-dt table tr th {
+.yui-dt table tr th {
 	padding: 2px 5px !important;
-}*/
+}
 
 div #rollover {
     white-space: normal;
@@ -305,15 +305,16 @@ div #rollover {
 #_blank, #listBottom, #displayEmailFramePreview {
     width:100%;
     height:100%;
+    allign: bottom;
 }
 #_blank { 
     padding-top: 7px;
 }
 #_blank, #listBottom {
-    overflow: hidden; 
+    overflow: hidden;
 }
 #importDiv {
-    padding:10px 0 !important; 
+    padding:10px 0 !important;
 }
 
 #listRight {
@@ -359,14 +360,15 @@ td.yui-dt-col-bean_id {
 }
 
 #listViewDiv .pagination {
-    margin-bottom: 10px;	
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 
 .paginator-start {
-    width: 27px;
-    height: 20px;
-    background: transparent url('../../index.php?entryPoint=getImage&imageName=start_off.gif') no-repeat;	
+    width: 10px;
+    height: 10px;
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=start_off.gif') no-repeat;
 }
 
 .pagination a .paginator-start {
@@ -374,8 +376,8 @@ td.yui-dt-col-bean_id {
 }
 
 .paginator-previous {
-    width: 24px;
-    height: 24px;
+    width: 10px;
+    height: 10px;
     background: transparent url('../../index.php?entryPoint=getImage&imageName=previous_off.gif') no-repeat;   
 }
 
@@ -384,8 +386,8 @@ td.yui-dt-col-bean_id {
 }
 
 .paginator-next {
-    width: 24px;
-    height: 24px;
+    width: 10px;
+    height: 10px;
     background: transparent url('../../index.php?entryPoint=getImage&imageName=next_off.gif') no-repeat;   
 }
 
@@ -394,8 +396,8 @@ td.yui-dt-col-bean_id {
 }
 
 .paginator-end {
-    width: 27px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     background: transparent url('../../index.php?entryPoint=getImage&imageName=end_off.gif') no-repeat;   
 }
 
@@ -403,8 +405,14 @@ td.yui-dt-col-bean_id {
     background: transparent url('../../index.php?entryPoint=getImage&imageName=end.gif') no-repeat;  
 }
 
+.yui-pg-page {
+    width: 10px;
+    height: 10px;
+}
+
 .pagination .yui-pg-first, .pagination .yui-pg-previous, .pagination  .yui-pg-next, .yui-pg-last, .pagination .yui-pg-current, .pagination  .yui-pg-pages, .pagination .yui-pg-page {
-	padding: 0px;
+    width: 10px;
+    height: 10px;
 }
 
 #settingsDialog .yui-content {
