@@ -2424,6 +2424,7 @@ class SugarBean
         if ($isUpdate) {
             $ret = $this->db->update($this);
         } else {
+            LoggerManager::getLogger()->fatal('******** DEBUG ******** : INSERT START: ' . get_class($this) . ' / ' . $this->module_name);
             $ret = $this->db->insert($this);
         }
         
