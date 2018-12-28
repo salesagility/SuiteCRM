@@ -1013,7 +1013,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $user1->full_name = 'UNIT_TESTS1';
         $user1->save(false);
         $validator = new SuiteValidator();
-        $this->assertTrue($validator->isValidId($user1->id));
+        $this->assertTrue($validator->isValidId($id1 = $user1->id));
         $user1->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
         $user1->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user1->savePreferencesToDB();
@@ -1023,10 +1023,21 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $user2->user_name = 'UNIT_TESTS2';
         $user2->full_name = 'UNIT_TESTS2';
         $user2->save(false);
-        $this->assertTrue($validator->isValidId($user2->id));
+        $this->assertTrue($validator->isValidId($id2 = $user2->id));
         $user2->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
         $user2->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user2->savePreferencesToDB();
+        
+        $this->assertNotSame($id1, $id2);
+        
+        $query = "SELECT COUNT(*) AS cnt FROM users";
+        $db = DBManagerFactory::getInstance();
+        $results = $db->query($query);
+        while($row = $db->fetchByAssoc($results)) {
+            $cnt = $row['cnt'];
+            break;
+        }
+        $this->assertEquals(3, $cnt);
 
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         $tempData = [];
@@ -1066,7 +1077,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         $ret = $object->syncAllUsers();
         // TODO: it needs more test
-        $this->assertEquals(false, $ret);
+        $this->assertEquals(true, $ret);
     }
 
     //GoogleSyncHelper.php
