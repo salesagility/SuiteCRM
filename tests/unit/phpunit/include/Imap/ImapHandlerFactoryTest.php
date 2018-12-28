@@ -39,6 +39,7 @@
  */
 
 use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\StateSaver;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -53,6 +54,24 @@ require_once __DIR__ . '/../../../../../include/Imap/ImapHandlerFactory.php';
  */
 class ImapHandlerFactoryTest extends StateCheckerPHPUnitTestCaseAbstract
 {
+    
+    /**
+     *
+     * @var StateSaver 
+     */
+    protected $state;
+    
+    public function setUp() {
+        parent::setUp();
+        $this->state = new StateSaver();
+        $this->state->pushTable('aod_indexevent');
+    }
+    
+    public function tearDown() {
+        $this->state->popTable('aod_indexevent');
+        parent::tearDown();
+    }
+    
     /**
      * FAIL: invalid key argument for save test settings key
      */
