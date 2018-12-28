@@ -2,6 +2,7 @@
 
 use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 use SuiteCRM\StateSaver;
+use SuiteCRM\Utility\SuiteValidator;
 
 require_once __DIR__ . '/../../../../../include/GoogleSync/GoogleSync.php';
 
@@ -22,7 +23,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     protected $state;
     
-    public function setUp() {
+    protected function setUp() {
         parent::setUp();
         $this->state = new StateSaver();
         $this->state->pushTable('aod_indexevent');
@@ -38,7 +39,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         }
     }
     
-    public function tearDown() {
+    protected function tearDown() {
         $this->state->popTable('vcals');
         $this->state->popTable('meetings_cstm');
         $this->state->popTable('meetings');
@@ -219,7 +220,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetUserMeetings()
     {
-        $state = new \SuiteCRM\StateSaver();
+        $state = new StateSaver();
         $state->pushTable('meetings');
         $state->pushTable('meetings_cstm');
         $state->pushTable('users');
@@ -396,7 +397,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetMeetingByEventId()
     {
-        $state = new \SuiteCRM\StateSaver();
+        $state = new StateSaver();
         $state->pushTable('meetings');
         $state->pushTable('meetings_cstm');
         $state->pushTable('vcals');
@@ -690,7 +691,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testCreateSuitecrmMeetingEvent()
     {
-        $state = new \SuiteCRM\StateSaver();
+        $state = new StateSaver();
         $state->pushTable('reminders');
         $state->pushTable('reminders_invitees');
         $state->pushTable('tracker');
@@ -1112,7 +1113,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSetSyncUsers()
     {
-        $state = new \SuiteCRM\StateSaver();
+        $state = new StateSaver();
         $state->pushTable('users');
         $state->pushTable('user_preferences');
 
@@ -1129,6 +1130,8 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $user1->user_name = 'UNIT_TESTS1';
         $user1->full_name = 'UNIT_TESTS1';
         $user1->save(false);
+        $validator = new SuiteValidator();
+        $this->assertTrue($validator->isValidId($user1->id));
         $user1->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
         $user1->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user1->savePreferencesToDB();
@@ -1138,13 +1141,14 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $user2->user_name = 'UNIT_TESTS2';
         $user2->full_name = 'UNIT_TESTS2';
         $user2->save(false);
+        $this->assertTrue($validator->isValidId($user2->id));
         $user2->setPreference('GoogleApiToken', $json, false, 'GoogleSync');
         $user2->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user2->savePreferencesToDB();
 
         $countOfSyncUsers = $method->invoke($object);
 
-        $this->assertGreaterThanOrEqual(0, $countOfSyncUsers); // TODO: check how many user should be counted!?
+        $this->assertGreaterThanOrEqual(2, $countOfSyncUsers); // TODO: check how many user should be counted!?
 
         // clean up after tests
         $state->popTable('users');
