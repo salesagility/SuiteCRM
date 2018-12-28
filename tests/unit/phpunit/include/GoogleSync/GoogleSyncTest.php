@@ -21,6 +21,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     protected function setUp() {
         parent::setUp();
         $this->state = new StateSaver();
+        $this->state->pushGlobals();
         $this->state->pushTable('aod_indexevent');
         $this->state->pushTable('meetings');
         $this->state->pushTable('meetings_cstm');
@@ -32,6 +33,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->state->popTable('meetings_cstm');
         $this->state->popTable('meetings');
         $this->state->popTable('aod_indexevent');
+        $this->state->popGlobals();
         parent::tearDown();
     }
     
