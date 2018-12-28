@@ -2435,13 +2435,6 @@ class SugarBean
             LoggerManager::getLogger()->fatal($msg);
             
             
-        
-        
-            echo $query = "SHOW COLUMNS FROM " . $this->getTableName();
-            $result = $this->db->query($query);
-            while($row = $db->fetchByAssoc($result)) {
-                print_r($row);
-            }
             
             // TODO: do not exit!
             try {
