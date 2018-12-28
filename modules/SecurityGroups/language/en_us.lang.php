@@ -122,5 +122,6 @@ $mod_strings = array(
     'LBL_INBOUND_EMAIL' => 'Inbound email account',
     'LBL_INBOUND_EMAIL_DESC' => 'Only allow access to an email account if user belongs to a group that is assigned to the mail account.',
     'LBL_PRIMARY_GROUP' => 'Primary Group',
+    'LBL_CHECKMARK' => 'Checkmark',
 
 );
