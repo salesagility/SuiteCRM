@@ -1029,7 +1029,26 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $user2->savePreferencesToDB();
 
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
-        $countOfSyncUsers = $object->callMethod('setSyncUsers');
+        $tempData = [];
+        $countOfSyncUsers = $object->callMethod('setSyncUsers', [&$tempData]);
+        $this->assertSame([
+            'founds' => 3,
+            'results' => [
+                ['notEmpty' => false], 
+                [
+                    'syncPref' => 1,
+                    'decoded' => true,
+                    'notEmpty' => true,
+                    'added' => true,
+                ], 
+                [
+                    'syncPref' => 1,
+                    'decoded' => true,
+                    'notEmpty' => true,
+                    'added' => true,
+                ],
+            ],
+        ], $tempData);
 
         $this->assertGreaterThanOrEqual(2, $countOfSyncUsers); // TODO: check how many user should be counted!?
 

@@ -272,28 +272,38 @@ class GoogleSync extends GoogleSyncBase
      *
      * Fills the $users array with users that are configured to sync
      *
+     * @param array $tempData Debug info
      * @return int added users
      * @throws GoogleSyncException if unable to get user bean
      */
-    protected function setSyncUsers()
+    protected function setSyncUsers(&$tempData = [])
     {
         $query = "SELECT id FROM users WHERE deleted = '0'";
         $result = $this->db->query($query);
+        if (!$result) {
+            throw new GoogleSyncException('Unable to get any User bean to sync Google.', GoogleSyncException::UNABLE_TO_RETRIEVE_USER_ALL);
+        }
 
         $counter = 0;
+        $tempData['founds'] = 0;
         while ($row = $this->db->fetchByAssoc($result)) {
+            $tempData['founds']++;
+            $tmp = [];
+            
             $user = BeanFactory::getBean('Users', $row['id']);
             if (!$user) {
-                throw new GoogleSyncException('Unable to get User bean.', GoogleSyncException::UNABLE_TO_RETRIEVE_USER);
+                throw new GoogleSyncException('Unable to get User bean. ID was: ' . $row['id'], GoogleSyncException::UNABLE_TO_RETRIEVE_USER);
             }
-
-            if (!empty($user->getPreference('GoogleApiToken', 'GoogleSync')) &&
-                    json_decode(base64_decode($user->getPreference('GoogleApiToken', 'GoogleSync'))) &&
-                    $user->getPreference('syncGCal', 'GoogleSync') == '1') {
-                if ($this->addUser($user->id, $user->full_name)) {
+                    
+            if ($tmp['notEmpty'] = $notEmpty = !empty($user->getPreference('GoogleApiToken', 'GoogleSync')) && 
+                $tmp['decoded'] = json_decode(base64_decode($user->getPreference('GoogleApiToken', 'GoogleSync'))) && 
+                $tmp['syncPref'] = $user->getPreference('syncGCal', 'GoogleSync')
+            ) {
+                if ($tmp['added'] = $this->addUser($user->id, $user->full_name)) {
                     $counter++;
                 }
             }
+            $tempData['results'][] = $tmp;
         }
 
         return $counter;
