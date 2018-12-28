@@ -27,9 +27,17 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->state->pushTable('meetings_cstm');
         $this->state->pushTable('vcals');
         $this->state->pushTable('aod_index');
+        $this->state->pushTable('users');
+        $this->state->pushTable('user_preferences');
+        $this->state->pushTable('reminders');
+        $this->state->pushTable('reminders_invitees');
     }
     
     protected function tearDown() {
+        $this->state->popTable('reminders_invitees');
+        $this->state->popTable('reminders');
+        $this->state->popTable('user_preferences');
+        $this->state->popTable('users');
         $this->state->popTable('aod_index');
         $this->state->popTable('vcals');
         $this->state->popTable('meetings_cstm');
