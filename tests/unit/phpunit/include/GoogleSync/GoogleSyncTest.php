@@ -17,6 +17,30 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     protected static $dbProperty;
     
     /**
+     *
+     * @var StateSaver 
+     */
+    protected $state;
+    
+    public function setUp() {
+        parent::setUp();
+        $this->state = new StateSaver();
+        $this->state->pushTable('aod_indexevent');
+
+        // Use reflection to access private properties and methods
+        if (self::$reflection === null) {
+            self::$reflection = new ReflectionClass(GoogleSync::class);
+            self::$dbProperty = self::$reflection->getProperty('db');
+            self::$dbProperty->setAccessible(true);
+        }
+    }
+    
+    public function tearDown() {
+        $this->state->popTable('aod_indexevent');
+        parent::tearDown();
+    }
+    
+    /**
      * 
      * @param string $googleAuthJson
      * @return string
@@ -34,18 +58,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     protected function getFakeGoogleAuthJson($googleAuthJson) {
         return base64_encode($googleAuthJson);
-    }
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        // Use reflection to access private properties and methods
-        if (self::$reflection === null) {
-            self::$reflection = new ReflectionClass(GoogleSync::class);
-            self::$dbProperty = self::$reflection->getProperty('db');
-            self::$dbProperty->setAccessible(true);
-        }
     }
     
     // GoogleSyncBase.php
@@ -214,7 +226,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         
 
         // Create a User
-        $user = new User();
+        $user = BeanFactory::getBean('Users');
         $user->last_name = 'UNIT_TESTS';
         $user->user_name = 'UNIT_TESTS';
         $user->save();
@@ -729,7 +741,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         // Set id of fake user
         $property = self::$reflection->getProperty('workingUser');
         $property->setAccessible(true);
-        $user = new User;
+        $user = BeanFactory::getBean('Users');
         $user->id = 'FAKEUSER';
         $property->setValue($object, $user);
 
@@ -1106,7 +1118,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         // base64 encoded of {"web":"test"}
         $json = 'eyJ3ZWIiOiJ0ZXN0In0=';
 
-        $user1 = new User();
+        $user1 = BeanFactory::getBean('Users');
         $user1->last_name = 'UNIT_TESTS1';
         $user1->user_name = 'UNIT_TESTS1';
         $user1->full_name = 'UNIT_TESTS1';
@@ -1115,7 +1127,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $user1->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user1->savePreferencesToDB();
 
-        $user2 = new User();
+        $user2 = BeanFactory::getBean('Users');
         $user2->last_name = 'UNIT_TESTS2';
         $user2->user_name = 'UNIT_TESTS2';
         $user2->full_name = 'UNIT_TESTS2';
