@@ -1112,6 +1112,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSetSyncUsers()
     {
+        $this->markTestIncomplete('FIXME: https://github.com/salesagility/SuiteCRM/issues/6694');
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('user_preferences');
@@ -1144,7 +1145,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
         $countOfSyncUsers = $method->invoke($object);
 
-        $this->assertGreaterThanOrEqual(0, $countOfSyncUsers); // TODO: check how many user should be counted!?
+        $this->assertGreaterThanOrEqual(2, $countOfSyncUsers); // FIXME: https://github.com/salesagility/SuiteCRM/issues/6694
 
         // clean up after tests
         $state->popTable('users');
