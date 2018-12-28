@@ -2435,7 +2435,7 @@ class SugarBean
                 throw new Exception($msg);
             } catch(Exception $e) {
                 echo "$msg\n", $e->getTraceAsString();                
-                exit;
+                //exit;
             }
             
         }
