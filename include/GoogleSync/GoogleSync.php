@@ -55,6 +55,7 @@ require_once __DIR__ . '/GoogleSyncHelper.php';
 
 class GoogleSync extends GoogleSyncBase
 {
+    
     /** @var array An array of user id's we are going to sync for */
     protected $users = array();
 
@@ -272,7 +273,7 @@ class GoogleSync extends GoogleSyncBase
      * Fills the $users array with users that are configured to sync
      *
      * @return int added users
-     * @throws E_RecordRetrievalFail if unable to get user bean
+     * @throws GoogleSyncException if unable to get user bean
      */
     protected function setSyncUsers()
     {
@@ -283,7 +284,7 @@ class GoogleSync extends GoogleSyncBase
         while ($row = $this->db->fetchByAssoc($result)) {
             $user = BeanFactory::getBean('Users', $row['id']);
             if (!$user) {
-                throw new E_RecordRetrievalFail('Unable to get User bean.');
+                throw new GoogleSyncException('Unable to get User bean.', GoogleSyncException::UNABLE_TO_RETRIEVE_USER);
             }
 
             if (!empty($user->getPreference('GoogleApiToken', 'GoogleSync')) &&
