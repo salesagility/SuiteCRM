@@ -71,7 +71,9 @@ script:
   # Run the unit tests
   # - ./vendor/bin/codecept run unit --steps -f -vvv -d
   - sudo chmod -R 777 .
-  - echo "\$sugar_config['state_checker']['test_state_check_mode'] = 2;\$sugar_config['show_log_trace'] = true;\$sugar_config['logger']['level'] = 'debug';" >> config_override.php
+  - echo "\$sugar_config['state_checker']['test_state_check_mode'] = 2;" >> config_override.php
+  - echo "\$sugar_config['show_log_trace'] = true;" >> config_override.php
+  - echo "\$sugar_config['logger']['level'] = 'fatal';" >> config_override.php
   - cd tests
   - ../vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration $(pwd)/phpunit.xml.dist "tests/unit/phpunit/include/GoogleSync/GoogleSyncTest.php"
   - cd ..
