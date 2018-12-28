@@ -2437,7 +2437,7 @@ class SugarBean
             
         
         
-            echo $query = "SHOW TABLE " . $this->getTableName();
+            echo $query = "SHOW COLUMNS FROM " . $this->getTableName();
             $result = $this->db->query($query);
             while($row = $db->fetchByAssoc($results)) {
                 print_r($row);
