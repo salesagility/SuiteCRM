@@ -2427,7 +2427,17 @@ class SugarBean
             $ret = $this->db->insert($this);
         }
         if (!$ret) {
-            LoggerManager::getLogger()->fatal('SugarBean Save Error at ' . ($isUpdate ? 'update' : 'insert') . ' bean. Class/Module name was: ' . get_class($this) . ' / ' . $this->module_name);
+            $msg = 'SugarBean Save Error at ' . ($isUpdate ? 'update' : 'insert') . ' bean. Class/Module name was: ' . get_class($this) . ' / ' . $this->module_name;
+            LoggerManager::getLogger()->fatal($msg);
+            
+            // TODO: do not exit!
+            try {
+                throw new Exception($msg);
+            } catch(Exception $e) {
+                echo "$msg\n", $e->getTraceAsString();                
+                exit;
+            }
+            
         }
 
         if (empty($GLOBALS['resavingRelatedBeans'])) {
