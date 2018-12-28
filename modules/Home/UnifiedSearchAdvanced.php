@@ -220,8 +220,9 @@ class UnifiedSearchAdvanced
 
         echo $this->getDropDownDiv($templateFile);
 
-        $module_results = array();
-        $module_counts = array();
+        $module_no_results = array();
+        $module_found_result = array();
+        $module_name = array();
         $has_results = false;
 
         if (!empty($this->query_string)) {
@@ -337,23 +338,24 @@ class UnifiedSearchAdvanced
                 $lv->ss->assign('showFilterIcon', 0);
                 $lv->ss->assign('hideColumnFilter', 1);
 
-                $module_results[$moduleName] = '<br /><br />' . get_form_header($GLOBALS['app_list_strings']['moduleList'][$seed->module_dir] . ' (' . $lv->data['pageData']['offsets']['total'] . ')', '', false);
-                $module_counts[$moduleName] = $lv->data['pageData']['offsets']['total'];
+                $module_name[$moduleName] = '<br /><br />' . get_form_header($GLOBALS['app_list_strings']['moduleList'][$seed->module_dir] . ' (' . $lv->data['pageData']['offsets']['total'] . ')',
+                        '', false);
 
-                if ($lv->data['pageData']['offsets']['total'] == 0) {
-                    //$module_results[$moduleName] .= "<li class='noBullet' id='whole_subpanel_{$moduleName}'><div id='div_{$moduleName}'><h2>" . $home_mod_strings['LBL_NO_RESULTS_IN_MODULE'] . '</h2></div></li>';
-                    $module_results[$moduleName] .= '<h2>' . $home_mod_strings['LBL_NO_RESULTS_IN_MODULE'] . '</h2>';
+                if ($lv->data['pageData']['offsets']['total'] === 0) {
+                    $module_no_results[$moduleName] .= '<h2>' . $home_mod_strings['LBL_NO_RESULTS_IN_MODULE'] . '</h2>';
                 } else {
                     $has_results = true;
-                    //$module_results[$moduleName] .= "<li class='noBullet' id='whole_subpanel_{$moduleName}'><div id='div_{$moduleName}'>" . $lv->display(false, false) . '</div></li>';
-                    $module_results[$moduleName] .= $lv->display(false, false);
+                    $module_found_result[$moduleName] .= $lv->display(false);
                 }
             }
         }
 
         if ($has_results) {
-            foreach ($module_counts as $name=>$value) {
-                echo $module_results[$name];
+            foreach ($module_found_result as $name => $value) {
+                echo $module_name[$name], $module_found_result[$name];
+            }
+            foreach ($module_no_results as $name => $value) {
+                echo $module_name[$name], $module_no_results[$name];
             }
         } elseif (empty($_REQUEST['form_only'])) {
             echo $home_mod_strings['LBL_NO_RESULTS'];
