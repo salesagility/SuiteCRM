@@ -180,6 +180,8 @@ class Person extends Basic
      */
     public function save($check_notify = false)
     {
+        LoggerManager::getLogger()->fatal('******** DEBUG ******** : PERSON SAVE CALLED: ' . get_class($this) . ' / ' . $this->module_name);
+        
         //If we are saving due to relationship changes, don't bother trying to update the emails
         if (!empty($GLOBALS['resavingRelatedBeans'])) {
             parent::save($check_notify);

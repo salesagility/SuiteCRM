@@ -2321,7 +2321,9 @@ class SugarBean
      * @todo Add support for field type validation and encoding of parameters.
      */
     public function save($check_notify = false)
-    {
+    {        
+        LoggerManager::getLogger()->fatal('******** DEBUG ******** : SUGARBEAN SAVE CALLED: ' . get_class($this) . ' / ' . $this->module_name);
+        
         $this->in_save = true;
         // cn: SECURITY - strip XSS potential vectors
         $this->cleanBean();

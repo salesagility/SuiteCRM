@@ -571,6 +571,7 @@ class User extends Person implements EmailInterface
 
     public function save($check_notify = false)
     {
+        LoggerManager::getLogger()->fatal('******** DEBUG ******** : USER SAVE CALLED: ' . get_class($this) . ' / ' . $this->module_name);
         global $current_user, $sugar_config, $mod_strings;
 
         $msg = '';
