@@ -2426,9 +2426,22 @@ class SugarBean
         } else {
             $ret = $this->db->insert($this);
         }
+        
+        
         if (!$ret) {
+            
+            
             $msg = 'SugarBean Save Error at ' . ($isUpdate ? 'update' : 'insert') . ' bean. Class/Module name was: ' . get_class($this) . ' / ' . $this->module_name;
             LoggerManager::getLogger()->fatal($msg);
+            
+            
+        
+        
+            echo $query = "SHOW TABLE " . $this->getTableName();
+            $result = $this->db->query($query);
+            while($row = $db->fetchByAssoc($results)) {
+                print_r($row);
+            }
             
             // TODO: do not exit!
             try {
