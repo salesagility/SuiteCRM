@@ -515,12 +515,8 @@ abstract class DBManager
         $sql = $this->insertSQL($bean);
         $tablename = $bean->getTableName();
         $msg = "Error inserting into table: $tablename:";
-        echo "\nINSERT QUERY: $sql\n";
-        $ret = $this->query($sql, true, $msg);
-        if ($ret === false) {
-            LoggerManager::getLogger()->fatal('SQL ISERT ERROR: ' . $sql);
-        }
-        return $ret;
+        
+        return $this->query($sql, true, $msg);
     }
 
     /**
