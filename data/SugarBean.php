@@ -2434,9 +2434,10 @@ class SugarBean
             $msg = 'SugarBean Save Error at ' . ($isUpdate ? 'update' : 'insert') . ' bean. Class/Module name was: ' . get_class($this) . ' / ' . $this->module_name;
             LoggerManager::getLogger()->fatal($msg);
             
-            echo "\n\nLAST ERROR:", mysql_error($this->db->database);
+            
         
-            echo $query = "\n\nSHOW TABLE " . $this->getTableName();
+        
+            echo $query = "SHOW TABLE " . $this->getTableName();
             $result = $this->db->query($query);
             while($row = $db->fetchByAssoc($results)) {
                 print_r($row);
