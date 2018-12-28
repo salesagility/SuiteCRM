@@ -15,10 +15,20 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
     /** @var ReflectionProperty */
     protected static $dbProperty;
-
-    public function setUp()
-    {
+    
+    /**
+     *
+     * @var StateSaver 
+     */
+    protected $state;
+    
+    public function setUp() {
         parent::setUp();
+        $this->state = new StateSaver();
+        $this->state->pushTable('aod_indexevent');
+        $this->state->pushTable('meetings');
+        $this->state->pushTable('meetings_cstm');
+        $this->state->pushTable('vcals');
 
         // Use reflection to access private properties and methods
         if (self::$reflection === null) {
@@ -27,21 +37,46 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
             self::$dbProperty->setAccessible(true);
         }
     }
-
-    public function exception_error_handler($errno, $errstr, $errfile, $errline )
-    {
-        throw new Exception($errstr);
+    
+    public function tearDown() {
+        $this->state->popTable('vcals');
+        $this->state->popTable('meetings_cstm');
+        $this->state->popTable('meetings');
+        $this->state->popTable('aod_indexevent');
+        parent::tearDown();
     }
-
+    
+    /**
+     * 
+     * @param string $googleAuthJson
+     * @return string
+     */
+    protected function getFakeSugarConfig($googleAuthJson) {
+        return [
+            'google_auth_json' => $this->getFakeGoogleAuthJson($googleAuthJson),
+        ];
+    }
+    
+    /**
+     * 
+     * @param string $googleAuthJson
+     * @return string
+     */
+    protected function getFakeGoogleAuthJson($googleAuthJson) {
+        return base64_encode($googleAuthJson);
+    }
+    
     // GoogleSyncBase.php
 
     /**
+     * 
+     * 
      */
     public function test__construct()
     {
 
         // Set up object for testing
-        global $sugar_config;
+        
         // base64 encoded of {"web":"test"}
         $sugar_config['google_auth_json'] = 'eyJ3ZWIiOiJ0ZXN0In0=';
 
@@ -53,7 +88,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
             $expectedLogLevel = 'debug';
         }
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         // Test GoogleSync::timezone
         $timezone = self::$reflection->getProperty('timezone');
@@ -78,6 +113,8 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testGetAuthJson()
     {
@@ -88,74 +125,97 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method->setAccessible(true);
     
         // Set up object for testing
-        global $sugar_config;
+        
 
         // base64 encoded of {"web":"test"}
         $sugar_config['google_auth_json'] = 'eyJ3ZWIiOiJ0ZXN0In0=';
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         $expectedAuthJson = json_decode(base64_decode('eyJ3ZWIiOiJ0ZXN0In0'), true);
-        $actualAuthJson = $method->invoke($object);
-
-        $state->popGlobals();
+        $actualAuthJson = $method->invoke($object, $this->getFakeSugarConfig('{"web":"test"}'));
 
         $this->assertEquals($expectedAuthJson, $actualAuthJson);
         $this->assertArrayHasKey('web', $actualAuthJson);
 
+        // cleanup after test
+        $state->popGlobals();
+
     }
 
     /**
+     * 
+     * 
      */
     public function testSetClient()
     {
+        
         $method = self::$reflection->getMethod('setClient');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         try {
             $method->invoke($object, null);
-        } catch (Exception $e) {}
-        $this->assertEquals(3, $e->getCode());
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::INVALID_CLIENT_ID, $e->getCode());
+        }
+        
     }
 
     public function testGetClient()
     {
+        
         $method = self::$reflection->getMethod('getClient');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         try {
             $method->invoke($object, null);
-        } catch (Exception $e) {}
-        $this->assertEquals(3, $e->getCode());
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::INVALID_CLIENT_ID, $e->getCode());
+        }
     }
 
     /**
+     * 
+     * 
      */
     public function testGetGoogleClient()
     {
+        
         $method = self::$reflection->getMethod('getGoogleClient');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test","client_id":"testID"'));
         try {
             $method->invoke($object, null);
-        } catch (Exception $e) {}
-        $this->assertEquals('invalid json token', $e->getMessage());
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (InvalidArgumentException $e) {
+            $this->assertEquals(0, $e->getCode(), 'It should throws an exception with code 0.');
+            $this->assertEquals('invalid json token', $e->getMessage(), 'It should throws an exception with a proper message.');
+        }
     }
 
     /**
+     * 
+     * 
      */
     public function testInitUserService()
     {
+        
         $method = self::$reflection->getMethod('initUserService');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         try {
             $method->invoke($object, null);
-        } catch (Exception $e) {}
-        $this->assertEquals(3, $e->getCode());
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::INVALID_CLIENT_ID, $e->getCode());
+        }        
     }
 
     /**
+     * 
+     * 
      */
     public function testGetUserMeetings()
     {
@@ -168,15 +228,17 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushTable('vcals');
         $state->pushTable('tracker');
+        
+        
 
         // Create a User
-        $user = new User();
+        $user = BeanFactory::getBean('Users');
         $user->last_name = 'UNIT_TESTS';
         $user->user_name = 'UNIT_TESTS';
         $user->save();
 
         // Create three meetings and save them to the DB for testing.
-        $meeting1 = new Meeting();
+        $meeting1 = BeanFactory::getBean('Meetings');
         $meeting1->name = 'UNIT_TEST_1';
         $meeting1->assigned_user_id = $user->id;
         $meeting1->status = 'Not Held';
@@ -188,7 +250,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $meeting1->date_end = '2016-02-11 17:30:00';
         $meeting1->save();
 
-        $meeting2 = new Meeting();
+        $meeting2 = BeanFactory::getBean('Meetings');
         $meeting2->name = 'UNIT_TEST_2';
         $meeting2->assigned_user_id = $user->id;
         $meeting2->status = 'Not Held';
@@ -200,7 +262,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $meeting2->date_end = '2016-02-11 17:30:00';
         $meeting2->save();
 
-        $meeting3 = new Meeting();
+        $meeting3 = BeanFactory::getBean('Meetings');
         $meeting3->name = 'UNIT_TEST_3';
         $meeting3->assigned_user_id = $user->id;
         $meeting3->status = 'Not Held';
@@ -215,18 +277,21 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method = self::$reflection->getMethod('getUserMeetings');
         $method->setAccessible(true);
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         $return_count = $method->invoke($object, $user->id);
 
         // Test for invalid user id exception handling
         try {
-            $caught = false;
             $return = $method->invoke($object, 'INVALID');
-        } catch (Exception $e) {
-            $caught = true;
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::INVALID_USER_ID, $e->getCode());
         }
+        
+        $this->assertEquals(3, count($return_count));
 
+        // clean up after tests
         $state->popTable('meetings');
         $state->popTable('meetings_cstm');
         $state->popTable('users');
@@ -236,85 +301,98 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('vcals');
         $state->popTable('tracker');
 
-        $this->assertEquals(3, count($return_count));
-        $this->assertTrue($caught);
     }
 
     /**
+     * 
+     * 
      */
     public function testSetUsersGoogleCalendar()
     {
+        
         $method = self::$reflection->getMethod('setUsersGoogleCalendar');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         $this->assertEquals(false, $method->invoke($object));
     }
 
     /**
+     * 
+     * 
      */
     public function testGetSuiteCRMCalendar()
     {
+        
         $method = self::$reflection->getMethod('getSuiteCRMCalendar');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
-        set_error_handler(array($this, 'exception_error_handler'));
-
-        try {
-            $method->invoke($object, null);
-        }
-        catch (Error $e) {}
-        catch (Exception $e) {}
-        set_error_handler(null);
-        $this->assertContains('GoogleSyncBase::getSuiteCRMCalendar()', $e->getMessage());
+        $result = $method->invoke($object, new Google_Service_Calendar_CalendarList());
+        $this->assertEquals(null, $result);
     }
 
     /**
+     * 
+     * 
      */
     public function testGetUserGoogleEvents()
     {
+        
         $method = self::$reflection->getMethod('getUserGoogleEvents');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         $this->assertEquals(false, $method->invoke($object));
     }
 
     /**
+     * 
+     * 
      */
     public function testIsServiceExists()
     {
+        
         $method = self::$reflection->getMethod('isServiceExists');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         $this->assertEquals(false, $method->invoke($object));
     }
 
     /**
+     * 
+     * 
      */
     public function testIsCalendarExists()
     {
+        
         $method = self::$reflection->getMethod('isCalendarExists');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         $this->assertEquals(false, $method->invoke($object));
     }
 
     /**
+     * 
+     * 
      */
     public function testGetGoogleEventById()
     {
+        
         $method = self::$reflection->getMethod('getGoogleEventById');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         try {
             $method->invoke($object, null);
-        } catch (Exception $e) {}
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::EVENT_ID_IS_EMPTY, $e->getCode());
+            $this->assertEquals('event ID is empty', $e->getMessage());
+        }
         
-        $this->assertEquals(1, $e->getCode());
-        $this->assertEquals('event ID is empty', $e->getMessage());
     }
 
     /**
+     * 
+     * 
      */
     public function testGetMeetingByEventId()
     {
@@ -325,16 +403,18 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_indexevent');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
+        
+        
 
         $db = DBManagerFactory::getInstance();
 
         $method = self::$reflection->getMethod('getMeetingByEventId');
         $method->setAccessible(true);
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         // Create three meetings and save them to the DB for testing.
-        $meeting1 = new Meeting();
+        $meeting1 = BeanFactory::getBean('Meetings');
         $meeting1->name = 'test1';
         $meeting1->assigned_user_id = '666';
         $meeting1->status = 'Not Held';
@@ -346,7 +426,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $meeting1->date_end = '2016-02-11 17:30:00';
         $meeting1_id = $meeting1->save();
 
-        $meeting2 = new Meeting();
+        $meeting2 = BeanFactory::getBean('Meetings');
         $meeting2->name = 'test2';
         $meeting2->assigned_user_id = '666';
         $meeting2->status = 'Not Held';
@@ -358,7 +438,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $meeting2->date_end = '2016-02-11 17:30:00';
         $meeting2_id = $meeting2->save();
 
-        $meeting3 = new Meeting();
+        $meeting3 = BeanFactory::getBean('Meetings');
         $meeting3->name = 'test3';
         $meeting3->assigned_user_id = '666';
         $meeting3->status = 'Not Held';
@@ -369,79 +449,96 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $meeting3->date_start = '2016-02-11 17:30:00';
         $meeting3->date_end = '2016-02-11 17:30:00';
         $meeting3_id = $meeting3->save();
+        
+        $meetingWithValidGsyncId = BeanFactory::getBean('Meetings');
+        $meetingWithValidGsyncId->gsync_id = 'valid_gsync_id';
+        $meetingWithValidGsyncId->save();
 
+        // --- separated test
         // Give meeting 1 a gsync_id
-        $sql = "UPDATE meetings SET gsync_id = 'valid_gsync_id' WHERE id = '{$meeting1_id}'";
-        $res1 = $db->query($sql);
+        $sql1 = "UPDATE meetings SET gsync_id = 'valid_gsync_id' WHERE id = '{$meeting1_id}'";
+        $res1 = $db->query($sql1);
+        $this->assertEquals(true, $res1);
         
+        // --- separated test
         // Give meetings 2 and 3 a duplicate gsync_id
-        $sql = "UPDATE meetings SET gsync_id = 'duplicate_gsync_id' WHERE id = '{$meeting2_id}' OR id = '{$meeting3_id}'";
-        $res2 = $db->query($sql);
+        $sql2 = "UPDATE meetings SET gsync_id = 'duplicate_gsync_id' WHERE id = '{$meeting2_id}' OR id = '{$meeting3_id}'";
+        $res2 = $db->query($sql2);
+        $this->assertEquals(true, $res2);
         
-        $ret3 = $method->invoke($object, 'valid_gsync_id');
+        // --- separated test
+        try {
+            $method->invoke($object, 'valid_gsync_id');
+            $this->assertTrue(false);
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::AMBIGUOUS_MEETING_ID, $e->getCode());
+        }
 
-        $return = null;
+        // --- separated test
         try {
             $method->invoke($object, 'duplicate_gsync_id');
-        } catch (Exception $e11) {}
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (GoogleSyncException $e11) {
+            $this->assertEquals(GoogleSyncException::AMBIGUOUS_MEETING_ID, $e->getCode());
+            $this->assertEquals('More than one meeting matches Google Id!', $e11->getMessage());
+        }
 
+        // --- separated test
         $ret4 = $method->invoke($object, 'NOTHING_MATCHES');
+        $this->assertNull($ret4);
         
+        // cleanup after tests
         $state->popTable('meetings');
         $state->popTable('meetings_cstm');
         $state->popTable('vcals');
         $state->popTable('aod_indexevent');
         $state->popTable('aod_index');
         $state->popTable('tracker');
-
-        $this->assertEquals(true, $res1);
-        $this->assertEquals(true, $res2);
-        $this->assertInstanceOf('Meeting', $ret3);
-        $this->assertInstanceOf('SugarBean', $ret3);
-        $this->assertEquals($meeting1_id, $ret3->id);
-        $this->assertEquals('E_DbDataError', get_class($e11));
-        $this->assertEquals('More than one meeting matches Google Id!', $e11->getMessage());
-        $this->assertEquals(11, $e11->getCode());
-        $this->assertEquals(null, $ret4);
     }
 
     /**
+     * 
+     * 
      */
     public function testSetGService()
     {
+        
         $method = self::$reflection->getMethod('setGService');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         $this->assertEquals(false, $method->invoke($object));
     }
 
     /**
+     * 
+     * 
      */
     public function testPushEvent()
     {
+        
         $method = self::$reflection->getMethod('pushEvent');
         $method->setAccessible(true);
-        $object = new GoogleSync();
-
-        set_error_handler(array($this, 'exception_error_handler'));
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         try {
-            $method->invoke($object, null, null);
+            $method->invoke($object, BeanFactory::getBean('Meetings'), null);
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::NO_GSERVICE_SET, $e->getCode());
         }
-        catch (Error $e) {}
-        catch (Exception $e) {}
-        set_error_handler(null);
-        $this->assertContains('GoogleSyncBase::pushEvent()', $e->getMessage());
     }
 
     /**
+     * 
+     * 
      */
     public function testReturnExtendedProperties()
     {
+        
         $method = self::$reflection->getMethod('returnExtendedProperties');
         $method->setAccessible(true);
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         // BEGIN: Create Google Event Object
         $Google_Event = new Google_Service_Calendar_Event();
@@ -485,7 +582,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         // END: Create Google Event Object
 
         // Create SuiteCRM Meeting Object
-        $CRM_Meeting = new Meeting();
+        $CRM_Meeting = BeanFactory::getBean('Meetings');
 
         $CRM_Meeting->id = 'FAKE_MEETING_ID';
         $CRM_Meeting->name = 'Unit Test Event';
@@ -504,61 +601,61 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testPullEvent()
     {
+        
         $method = self::$reflection->getMethod('pullEvent');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
-        set_error_handler(array($this, 'exception_error_handler'));
-
+        
         try {
-            $method->invoke($object, null, null);
+            $method->invoke($object, new Google_Service_Calendar_Event(), null);
+            $this->assertTrue(false, 'It should throws an exception.');
         }
-        catch (Error $e) {}
-        catch (Exception $e) {}
-        set_error_handler(null);
-        $this->assertContains('GoogleSyncBase::pullEvent()', $e->getMessage());
+        catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::NO_REMOVE_EVENT_START_IS_NOT_SET, $e->getCode());
+        }
     }
 
     /**
+     * 
+     * 
      */
     public function testDelMeeting()
     {
+        
         $method = self::$reflection->getMethod('delMeeting');
         $method->setAccessible(true);
-        $object = new GoogleSync();
-
-        set_error_handler(array($this, 'exception_error_handler'));
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         try {
-            $method->invoke($object, null);
+            $method->invoke($object, BeanFactory::getBean('Meetings'));
+            $this->assertTrue(false, 'It should throws an exception.');
         }
-        catch (Error $e) {}
-        catch (Exception $e) {}
-        set_error_handler(null);
-        $this->assertContains('GoogleSyncBase::delMeeting()', $e->getMessage());
+        catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::INCORRECT_WORKING_USER_TYPE, $e->getCode());
+        }
     }
 
     /**
+     * 
+     * 
      */
     public function testDelEvent()
     {
+        
         $method = self::$reflection->getMethod('delEvent');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
-        set_error_handler(array($this, 'exception_error_handler'));
+        $ret = $method->invoke($object, new Google_Service_Calendar_Event(), null);
+        $this->assertFalse($ret);
 
-        try {
-            $method->invoke($object, null, null);
-        }
-        catch (Error $e) {}
-        catch (Exception $e) {}
-        set_error_handler(null);
-        $this->assertContains('GoogleSyncBase::delEvent()', $e->getMessage());
-
+        // --- separated test
         $Google_Event = new Google_Service_Calendar_Event();
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
@@ -566,16 +663,21 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testClearPopups()
     {
+        
         $method = self::$reflection->getMethod('clearPopups');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         $this->assertEquals(false, $method->invoke($object, null));
     }
 
     /**
+     * 
+     * 
      */
     public function testUpdateSuitecrmMeetingEvent()
     {
@@ -583,6 +685,8 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testCreateSuitecrmMeetingEvent()
     {
@@ -590,11 +694,13 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('reminders');
         $state->pushTable('reminders_invitees');
         $state->pushTable('tracker');
+        
+        
 
         $method = self::$reflection->getMethod('createSuitecrmMeetingEvent');
         $method->setAccessible(true);
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         date_default_timezone_set('Etc/UTC');
 
@@ -641,15 +747,11 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         // Set id of fake user
         $property = self::$reflection->getProperty('workingUser');
         $property->setAccessible(true);
-        $user = new User;
+        $user = BeanFactory::getBean('Users');
         $user->id = 'FAKEUSER';
         $property->setValue($object, $user);
 
         $return = $method->invoke($object, $Google_Event);
-
-        $state->popTable('reminders');
-        $state->popTable('reminders_invitees');
-        $state->popTable('tracker');
 
         $this->assertEquals('Meeting', get_class($return));
         $this->assertNotNull($return->id);
@@ -662,6 +764,11 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('1', $return->duration_hours);
         $this->assertEquals('0', $return->duration_minutes);
         $this->assertEquals('FAKEUSER', $return->assigned_user_id);
+
+        // clean up after test
+        $state->popTable('reminders');
+        $state->popTable('reminders_invitees');
+        $state->popTable('tracker');
     }
 
     public function testUpdateGoogleCalendarEvent()
@@ -670,16 +777,20 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testCreateGoogleCalendarEvent()
     {
+        
+        
         $method = self::$reflection->getMethod('createGoogleCalendarEvent');
         $method->setAccessible(true);
 
         $setTimeZone = self::$reflection->getMethod('setTimeZone');
         $setTimeZone->setAccessible(true);
         
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         $setTimeZone->invoke($object, 'Etc/UTC');
         $testid = create_guid();
@@ -689,7 +800,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $endTime = $timedate->to_display_date_time('2018-01-01 13:00:00');
 
         // Create SuiteCRM Meeting Object
-        $CRM_Meeting = new Meeting();
+        $CRM_Meeting = BeanFactory::getBean('Meetings');
 
         $CRM_Meeting->id = $testid;
         $CRM_Meeting->name = 'Unit Test Event';
@@ -720,15 +831,19 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testSetTimezone()
     {
+        
+        
         $method = self::$reflection->getMethod('setTimezone');
         $method->setAccessible(true);
         $property = self::$reflection->getProperty('timezone');
         $property->setAccessible(true);
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         $expectedTimezone = 'Etc/GMT';
 
@@ -740,37 +855,44 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testSetLastSync()
     {
+        
+        
         $method = self::$reflection->getMethod('setLastSync');
         $method->setAccessible(true);
-        $object = new GoogleSync();
-
-        set_error_handler(array($this, 'exception_error_handler'));
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         try {
-            $method->invoke($object, null, null);
+            $method->invoke($object, BeanFactory::getBean('Meetings'), null);
+            $this->assertTrue(false, 'It should throws an exception.');
         }
-        catch (Error $e) {}
-        catch (Exception $e) {}
-        set_error_handler(null);
-        $this->assertContains('GoogleSyncBase::setLastSync()', $e->getMessage());
+        catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::INCORRECT_WORKING_USER_TYPE, $e->getCode());
+        }
+        
     }
 
     // GoogleSync.php
 
     /**
+     * 
+     * 
      */
     public function testGetTitle()
     {
+        
+        
         $method = self::$reflection->getMethod('getTitle');
         $method->setAccessible(true);
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         // Create SuiteCRM Meeting Object
-        $CRM_Meeting = new Meeting();
+        $CRM_Meeting = BeanFactory::getBean('Meetings');
 
         $CRM_Meeting->id = create_guid();
         $CRM_Meeting->name = 'Unit Test Event';
@@ -790,59 +912,61 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testDoAction()
     {
+        
+        
         $method = self::$reflection->getMethod('doAction');
         $method->setAccessible(true);
 
-        $object = new GoogleSync();
-
-        set_error_handler(array($this, 'exception_error_handler'));
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         try {
             $method->invoke($object, 'INVALID');
-        } catch (Exception $e) {}
-        $this->assertEquals(2, $e->getCode());
-
-        $e = null;
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::INVALID_ACTION, $e->getCode());
+        }
+        
+        
         try {
             $method->invoke($object, 'push');
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (InvalidArgumentException $e) {
+            $this->assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::pushEvent() should be an instance of meeting but this test implacate that it is null.');
         }
-        catch (Error $e) {}
-        catch (Exception $e) {}
-        $this->assertContains('GoogleSyncBase::pushEvent()', $e->getMessage());
 
-        $e = null;
+        
         try {
             $method->invoke($object, 'pull');
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (InvalidArgumentException $e) {
+            $this->assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::pullEvent() should be an instance of Google_Service_Calendar_Event but this test implacate that it is null.');
         }
-        catch (Error $e) {}
-        catch (Exception $e) {}
-        $this->assertContains('GoogleSyncBase::pullEvent()', $e->getMessage());
 
-        $CRM_Meeting = new Meeting();
+        $CRM_Meeting = BeanFactory::getBean('Meetings');
         $CRM_Meeting->id = 'NOTHINGHERE';
         $CRM_Meeting->name = 'Unit Test Event';
         $CRM_Meeting->description = 'Unit Test Event';
 
-        $e = null;
+        
         try {
             $method->invoke($object, 'push_delete', $CRM_Meeting, null);
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (InvalidArgumentException $e) {
+            $this->assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::delEvent() should be an instance of Google_Service_Calendar_Event but this test implacate that it is null.');
         }
-        catch (Error $e) {}
-        catch (Exception $e) {}
-        $this->assertContains('GoogleSyncBase::delEvent()', $e->getMessage());
 
-        $e = null;
+        
         try {
             $method->invoke($object, 'pull_delete');
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (InvalidArgumentException $e) {
+            $this->assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::delMeeting() should be an instance of Meeting but this test implacate that it is null.');
         }
-        catch (Error $e) {}
-        catch (Exception $e) {}
-        $this->assertContains('GoogleSyncBase::delMeeting()', $e->getMessage());
-
-        set_error_handler(null);
 
         $return = $method->invoke($object, 'skip');
         $this->assertEquals(true, $return);
@@ -850,29 +974,40 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testDoSync()
     {
+        
+        
         $method = self::$reflection->getMethod('doSync');
         $method->setAccessible(true);
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         try {
             $method->invoke($object, null);
-        } catch (Exception $e) {}
-        $this->assertEquals(3, $e->getCode());
+            $this->assertTrue(false, 'It should throws an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::INVALID_CLIENT_ID, $e->getCode());
+        }
+        
     }
 
     /**
+     * 
+     * 
      */
     public function testAddUser()
     {
+        
+        
         $method = self::$reflection->getMethod('addUser');
         $method->setAccessible(true);
 
         $property = self::$reflection->getProperty('users');
         $property->setAccessible(true);
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         $return = $method->invoke($object, 'ABC123', 'End User');
 
         $this->assertTrue($return);
@@ -881,16 +1016,18 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testPushPullSkip()
     {
         $method = self::$reflection->getMethod('pushPullSkip');
         $method->setAccessible(true);
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         // Create SuiteCRM Meeting Object
-        $CRM_Meeting = new Meeting();
+        $CRM_Meeting = BeanFactory::getBean('Meetings');
 
         $CRM_Meeting->id = create_guid();
         $CRM_Meeting->name = 'Unit Test Event';
@@ -970,6 +1107,8 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testSetSyncUsers()
     {
@@ -980,12 +1119,12 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method = self::$reflection->getMethod('setSyncUsers');
         $method->setAccessible(true);
 
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         // base64 encoded of {"web":"test"}
         $json = 'eyJ3ZWIiOiJ0ZXN0In0=';
 
-        $user1 = new User();
+        $user1 = BeanFactory::getBean('Users');
         $user1->last_name = 'UNIT_TESTS1';
         $user1->user_name = 'UNIT_TESTS1';
         $user1->full_name = 'UNIT_TESTS1';
@@ -994,7 +1133,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $user1->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user1->savePreferencesToDB();
 
-        $user2 = new User();
+        $user2 = BeanFactory::getBean('Users');
         $user2->last_name = 'UNIT_TESTS2';
         $user2->user_name = 'UNIT_TESTS2';
         $user2->full_name = 'UNIT_TESTS2';
@@ -1005,17 +1144,20 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
         $countOfSyncUsers = $method->invoke($object);
 
+        $this->assertGreaterThanOrEqual(0, $countOfSyncUsers); // TODO: check how many user should be counted!?
+
+        // clean up after tests
         $state->popTable('users');
         $state->popTable('user_preferences');
-
-        $this->assertGreaterThanOrEqual(2, $countOfSyncUsers);
     }
 
     /**
+     * 
+     * 
      */
     public function testSyncAllUsers()
     {
-        $object = new GoogleSync();
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
         $ret = $object->syncAllUsers();
 
         $this->assertEquals(true, $ret);
@@ -1024,6 +1166,8 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     //GoogleSyncHelper.php
 
     /**
+     * 
+     * 
      */
     public function testSingleEventAction()
     {
@@ -1035,13 +1179,15 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testGetTimeStrings()
     {
         $helper = new GoogleSyncHelper;
 
         // Create SuiteCRM Meeting Object
-        $CRM_Meeting = new Meeting();
+        $CRM_Meeting = BeanFactory::getBean('Meetings');
 
         $CRM_Meeting->id = create_guid();
         $CRM_Meeting->name = 'Unit Test Event';
@@ -1070,6 +1216,8 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testGetNewestMeetingResponse()
     {
@@ -1077,106 +1225,12 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /**
+     * 
+     * 
      */
     public function testCreateSuitecrmReminders()
     {
         $this->markTestIncomplete('TODO: Implement Tests');
     }
 
-    // GoogleSyncExceptions.php
-
-    /**
-     */
-    public function testCustomExceptions()
-    {
-        $object = new GoogleSync();
-
-        $e = null;
-        try {
-            throw new E_MissingParameters;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(1, $e->getCode());
-        $this->assertEquals('Missing Parameters When Calling A Method', $e->getMessage());
-
-        $e = null;
-        try {
-            throw new E_InvalidParameters;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(2, $e->getCode());
-        $this->assertEquals('Invalid Parameters When Calling A Method', $e->getMessage());
-
-        $e = null;
-        try {
-            throw new E_ValidationFailure;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(3, $e->getCode());
-        $this->assertEquals('Value Failed Validation', $e->getMessage());
-
-        $e = null;
-        try {
-            throw new E_RecordRetrievalFail;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(4, $e->getCode());
-        $this->assertEquals('Failed To Retrive A SuiteCRM Record', $e->getMessage());
-
-        $e = null;
-        try {
-            throw new E_TimezoneSetFailure;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(5, $e->getCode());
-        $this->assertEquals('Failed To Set The Timezone', $e->getMessage());
-
-        $e = null;
-        try {
-            throw new E_NoRefreshToken;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(6, $e->getCode());
-        $this->assertEquals('Refresh Token Missing From Google Client', $e->getMessage());
-
-        $e = null;
-        try {
-            throw new E_GoogleClientFailure;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(7, $e->getCode());
-        $this->assertEquals('Google Client Failed To Initialize', $e->getMessage());
-
-        $e = null;
-        try {
-            throw new E_GoogleServiceFailure;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(8, $e->getCode());
-        $this->assertEquals('Google Client Failed To Initialize', $e->getMessage());
-
-        $e = null;
-        try {
-            throw new E_GoogleCalendarFailure;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(9, $e->getCode());
-        $this->assertEquals('Google Calendar Service Failure', $e->getMessage());
-
-        $e = null;
-        try {
-            throw new E_GoogleRecordParseFailure;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(10, $e->getCode());
-        $this->assertEquals('Failed To Parse Google Record', $e->getMessage());
-
-        $e = null;
-        try {
-            throw new E_DbDataError;
-        } catch (Exception $e) {
-        }
-        $this->assertEquals(11, $e->getCode());
-        $this->assertEquals('SuiteCRM DB Data Unexpected Or Corrupt', $e->getMessage());
-    }
 }

@@ -42,161 +42,30 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * These classes define unique exceptions for GoogleSync
+ * This class define unique exceptions for GoogleSync
  * When we don't need to support PHP < 7 we can set these to extend the new Exception classes
  * Exception Codes & Messages are set to unique values, but can still be overridden if needed.
+ * Standard: Classes should be in separated files..
  */
-
-/**
- * Custom Exception - Missing Parameters When Calling A Method
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_MissingParameters extends Exception {
-    /** @var int The default Exception Code: (1)*/
-    protected $code = 1;
-    /** @var string The default Exception Message: 'Missing Parameters When Calling A Method' */
-    protected $message = 'Missing Parameters When Calling A Method';
-    }
-
-/**
- * Custom Exception - Invalid Parameters When Calling A Method
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_InvalidParameters extends Exception {
-    /** @var int The default Exception Code: (2) */
-    protected $code = 2;
-    /** @var string The default Exception Message: 'Invalid Parameters When Calling A Method' */
-    protected $message = 'Invalid Parameters When Calling A Method';
-}
-
-/**
- * Custom Exception - Value Failed Validation
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_ValidationFailure extends Exception {
-    /** @var int The default Exception Code: (3) */
-    protected $code = 3;
-    /** @var string The default Exception Message: 'Value Failed Validation' */
-    protected $message = 'Value Failed Validation';
-}
-
-/**
- * Custom Exception - Failed To Retrive A SuiteCRM Record
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_RecordRetrievalFail extends Exception {
-    /** @var int The default Exception Code: (4) */
-    protected $code = 4;
-    /** @var string The default Exception Message: 'Failed To Retrive A SuiteCRM Record' */
-    protected $message = 'Failed To Retrive A SuiteCRM Record';
-}
-
-/**
- * Custom Exception - Failed To Set The Timezone
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_TimezoneSetFailure extends Exception {
-    /** @var int The default Exception Code: (5) */
-    protected $code = 5;
-    /** @var string The default Exception Message: 'Failed To Set The Timezone' */
-    protected $message = 'Failed To Set The Timezone';
-}
-
-/**
- * Custom Exception - Refresh Token Missing From Google Client
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_NoRefreshToken extends Exception {
-    /** @var int The default Exception Code: (6) */
-    protected $code = 6;
-    /** @var string The default Exception Message: 'Refresh Token Missing From Google Client' */
-    protected $message = 'Refresh Token Missing From Google Client';
-}
-
-/**
- * Custom Exception - Google Client Failed To Initialize
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_GoogleClientFailure extends Exception {
-    /** @var int The default Exception Code: (7) */
-    protected $code = 7;
-    /** @var string The default Exception Message: 'Google Client Failed To Initialize' */
-    protected $message = 'Google Client Failed To Initialize';
-}
-
-/**
- * Custom Exception - Google Service Failed To Initialize
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_GoogleServiceFailure extends Exception {
-    /** @var int The default Exception Code: (8) */
-    protected $code = 8;
-    /** @var string The default Exception Message: 'Google Client Failed To Initialize' */
-    protected $message = 'Google Client Failed To Initialize';
-}
-
-/**
- * Custom Exception - Google Calendar Service Failure
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_GoogleCalendarFailure extends Exception {
-    /** @var int The default Exception Code: (9) */
-    protected $code = 9;
-    /** @var string The default Exception Message: 'Google Calendar Service Failure' */
-    protected $message = 'Google Calendar Service Failure';
-}
-
-/**
- * Custom Exception - Failed To Parse Google Record
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_GoogleRecordParseFailure extends Exception {
-    /** @var int The default Exception Code: (10) */
-    protected $code = 10;
-    /** @var string The default Exception Message: 'Failed To Parse Google Record' */
-    protected $message = 'Failed To Parse Google Record';
-}
-
-/**
- * Custom Exception - SuiteCRM DB Data Unexpected Or Corrupt
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-class E_DbDataError extends Exception {
-    /** @var int The default Exception Code: (11) */
-    protected $code = 11;
-    /** @var string The default Exception Message: 'SuiteCRM DB Data Unexpected Or Corrupt' */
-    protected $message = 'SuiteCRM DB Data Unexpected Or Corrupt';
+class GoogleSyncException extends Exception {
+    const UNKNOWN_EXCEPTION = 100;
+    const MEETING_NOT_FOUND = 101;
+    const EVENT_ID_IS_EMPTY = 102;
+    const INVALID_ACTION = 103;
+    const INVALID_CLIENT_ID = 104;
+    const UNABLE_TO_RETRIEVE_USER = 105;
+    const UNABLE_TO_SETUP_GCLIENT = 106;
+    const TIMEZONE_SET_FAILURE = 107;
+    const GSERVICE_FAILURE = 108;
+    const GCALENDAR_FAILURE = 109;
+    const NO_REFRESH_TOKEN = 110;
+    const UNABLE_TO_RETRIEVE_MEETING = 111;
+    const AMBIGUOUS_MEETING_ID = 112;
+    const GOOGLE_RECORD_PARSE_FAILURE = 113;
+    const INVALID_USER_ID = 114;
+    const NO_GRESOURCE_SET = 115;
+    const NO_GSERVICE_SET = 116;
+    const NO_REMOVE_EVENT_START_IS_NOT_SET = 117;
+    const NO_REMOVE_EVENT_START_IS_INCORRECT = 118;
+    const INCORRECT_WORKING_USER_TYPE = 119;
 }
