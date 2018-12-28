@@ -2321,9 +2321,7 @@ class SugarBean
      * @todo Add support for field type validation and encoding of parameters.
      */
     public function save($check_notify = false)
-    {        
-        LoggerManager::getLogger()->fatal('******** DEBUG ******** : SUGARBEAN SAVE CALLED: ' . get_class($this) . ' / ' . $this->module_name);
-        
+    {   
         $this->in_save = true;
         // cn: SECURITY - strip XSS potential vectors
         $this->cleanBean();
@@ -2426,27 +2424,7 @@ class SugarBean
         if ($isUpdate) {
             $ret = $this->db->update($this);
         } else {
-            LoggerManager::getLogger()->fatal('******** DEBUG ******** : INSERT START: ' . get_class($this) . ' / ' . $this->module_name);
             $ret = $this->db->insert($this);
-        }
-        
-        
-        if ($ret === false) {
-            
-            
-            $msg = 'SugarBean Save Error at ' . ($isUpdate ? 'update' : 'insert') . ' bean. Class/Module name was: ' . get_class($this) . ' / ' . $this->module_name;
-            LoggerManager::getLogger()->fatal($msg);
-            
-            
-            
-            // TODO: do not exit!
-            try {
-                throw new Exception($msg);
-            } catch(Exception $e) {
-                echo "$msg\n", $e->getTraceAsString();                
-                //exit;
-            }
-            
         }
 
         if (empty($GLOBALS['resavingRelatedBeans'])) {
