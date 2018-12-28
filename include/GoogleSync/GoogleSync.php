@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once "GoogleSyncBase.php";
-require_once "GoogleSyncHelper.php";
+require_once __DIR__ . '/GoogleSyncBase.php';
+require_once __DIR__ . '/GoogleSyncHelper.php';
 
 /**
  * Implements Google Calendar Syncing
@@ -66,8 +66,17 @@ class GoogleSync extends GoogleSyncBase
      * 
      * @return string The combined title
      */
-    protected function getTitle($meeting = null, $event = null)
+    protected function getTitle(Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
     {
+        if (!$meeting) {
+            // TODO: should it be a user message?
+            LoggerManager::getLogger()->warn('GoogleSync is trying to generate title but given meeting is undefined.');
+        }
+        if (!$event) {
+            // TODO: should it be a user message?
+            LoggerManager::getLogger()->warn('GoogleSync is trying to generate title but given event is undefined.');
+        }
+        
         $meetingTitle = isset($meeting) ? $meeting->name : null;
         $eventTitle = isset($event) ? $event->getSummary() : null;
 
@@ -91,8 +100,8 @@ class GoogleSync extends GoogleSyncBase
      * @param \Google_Service_Calendar_Event $event The Google Event
      * 
      * @return bool Success/Failure
-     * @throws E_InvalidParameters if $action is invalid.
-     * @throws Exception if something else fails.
+     * @throws GoogleSyncException if $action is invalid.
+     * @throws GoogleSyncException if something else fails.
      */
     protected function doAction($action, Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
     {
@@ -121,8 +130,9 @@ class GoogleSync extends GoogleSyncBase
                 $ret = $this->delMeeting($meeting);
                 break;
             default:
+                // TODO: fatal does not necessary since it throws an exception
                 $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unknown Action: ' . $action . ' for record: ' . $title);
-                throw new E_InvalidParameters('Invalid Action');
+                throw new GoogleSyncException('Unknown Action: ' . $action . ' for record: ' . $title, GoogleSyncException::INVALID_ACTION);
         }
 
         if ($ret) {
@@ -130,7 +140,7 @@ class GoogleSync extends GoogleSyncBase
             return true;
         }
         //else
-        throw new Exception('Something went wrong with the requested action');
+        throw new GoogleSyncException('Something went wrong with the requested action');
     }
 
     /**
@@ -146,12 +156,14 @@ class GoogleSync extends GoogleSyncBase
         try {
             $this->initUserService($id);
         } catch (Exception $e) {
+            // TODO: handle the exception instead just loggin it, it will be logged if unhandled by suitecrm core.
             $this->logger->fatal('Caught exception: ',  $e->getMessage());
             throw $e;
         }
 
         $meetings = $this->getUserMeetings($id);
         if (empty($meetings)) {
+            // TODO: It should be an exception
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to get Users Meetings');
             return false;
         }
@@ -167,13 +179,15 @@ class GoogleSync extends GoogleSyncBase
             $actionResult = $this->doAction($action, $meeting, $gevent);
 
             if (!$actionResult) {
+                // TODO: confusing info log: $actionResult evaluated as string but it also false if converted to boolean. There is an empty string in log as result. - TODO: Inform the caller about this problem (exception?)
                 $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - doAction Returned: ' . $actionResult); 
             }
         }
 
         // Now, we look at the Google Calendar
         $googleEvents = $this->getUserGoogleEvents();
-        if (!isset($googleEvents)) {
+        if (!isset($googleEvents)) { // TODO: if condition never be true, as $googleEvents is definitely set just one line before.
+            // TODO: It should be an exception
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to get Google Events');
             return false;
         }
@@ -184,6 +198,7 @@ class GoogleSync extends GoogleSyncBase
             $actionResult = $this->doAction($action, $meeting, $gevent);
 
             if (!$actionResult) {
+                // TODO: Inform the caller about this problem (exception?)
                 $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - doAction Returned: ' . $actionResult); 
             }
         }
@@ -226,6 +241,7 @@ class GoogleSync extends GoogleSyncBase
     protected function pushPullSkip(Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
     {
         if (empty($meeting) && empty($event)) {
+            // TODO: It should be an exception
             $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass at least one event');
             return false;
         }
@@ -298,10 +314,12 @@ class GoogleSync extends GoogleSyncBase
         try {
             $ret = $this->setSyncUsers();
         } catch (Exception $e) {
+            // TODO: handle the exception instead just loggin it, it will be logged if unhandled by suitecrm core.
             $this->logger->error(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . '- setSyncUsers() Exception: ' . $e->getMessage());
         }
 
         if (!$ret) {
+            // TODO: Inform the caller about this problem (exception?)
             $this->logger->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - There is no user to sync..');
         }
 
@@ -315,9 +333,11 @@ class GoogleSync extends GoogleSyncBase
                 try {
                     $return = $this->doSync($key);
                 } catch (Exception $e) {
+                    // TODO: handle the exception instead just loggin it, it will be logged if unhandled by suitecrm core.
                     $this->logger->error(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - doSync() Exception: ' . $e->getMessage());
                 }
                 if (!$return) {
+                    // TODO: Inform the caller about this problem (return value could be an integer?)
                     $this->logger->error(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - Something went wrong syncing for user id: ' . $key);
                     $failures++;
                 }
