@@ -12,43 +12,46 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
 
     /**
-     * @var array
+     * @var StateSaver
      */
-    protected $fieldDefsStore;
+    protected $state;
     
 
     protected function setUp()
     {
         parent::setUp();
-        $this->fieldDefsStore();
+//        $this->fieldDefsStore();
+        $this->state = new StateSaver();
+        $this->state->pushGlobals();
     }
 
 
     protected function tearDown()
     {
-        $this->fieldDefsRestore();
+        $this->state->popGlobals();
+//        $this->fieldDefsRestore();
         parent::tearDown();
     }
 
-    /**
-     * Store static field_defs per modules
-     * @param string $key
-     */
-    protected function fieldDefsStore($key = 'base')
-    {
-        $object = BeanFactory::getBean('Contacts');
-        $this->fieldDefsStore[$key]['Contact'] = $object->field_defs;
-    }
-
-    /**
-     * Restore static field_defs per modules
-     * @param string $key
-     */
-    protected function fieldDefsRestore($key = 'base')
-    {
-        $object = BeanFactory::getBean('Contacts');
-        $object->field_defs = $this->fieldDefsStore[$key]['Contact'];
-    }
+//    /**
+//     * Store static field_defs per modules
+//     * @param string $key
+//     */
+//    protected function fieldDefsStore($key = 'base')
+//    {
+//        $object = BeanFactory::getBean('Contacts');
+//        $this->fieldDefsStore[$key]['Contact'] = $object->field_defs;
+//    }
+//
+//    /**
+//     * Restore static field_defs per modules
+//     * @param string $key
+//     */
+//    protected function fieldDefsRestore($key = 'base')
+//    {
+//        $object = BeanFactory::getBean('Contacts');
+//        $object->field_defs = $this->fieldDefsStore[$key]['Contact'];
+//    }
 
     /**
      * @see SugarBean::__construct()
@@ -742,7 +745,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      * @todo need more test coverage and less function complexity
      */
     public function testGetUnionRelatedList()
-    {
+    {        
         $request = $_REQUEST;
         self::assertFalse(isset($_SESSION));
         
