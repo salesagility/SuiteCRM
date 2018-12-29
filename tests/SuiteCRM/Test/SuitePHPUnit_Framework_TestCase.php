@@ -1,12 +1,12 @@
 <?php
-namespace SuiteCRM\Test;
-
-use User;
-use DBManagerFactory;
-
-/** @noinspection PhpUndefinedClassInspection */
-abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
-{
+//namespace SuiteCRM\Test;
+//
+//use User;
+//use DBManagerFactory;
+//
+///** @noinspection PhpUndefinedClassInspection */
+//abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+//{
 //
 //    /**
 //     * @var array
@@ -97,4 +97,5 @@ abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHP
 //        
 //        parent::tearDown();
 //    }
-}
+//}
+//
