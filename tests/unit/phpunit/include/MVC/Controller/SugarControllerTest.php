@@ -4,7 +4,7 @@ use SuiteCRM\Test\TestLogger;
 
 class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

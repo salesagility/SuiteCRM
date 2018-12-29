@@ -45,7 +45,7 @@ class SugarFolderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     protected $folderId = null;
     protected $state    = null;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         include_once __DIR__ . '/../../../../../modules/Users/User.php';

@@ -18,7 +18,7 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     private static $logger;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         if (self::$logger === null) {
@@ -33,7 +33,7 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $loggerManager::setLogLevel('debug');
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         $loggerManager = LoggerManager::getLogger();
         $loggerManager::setLogLevel(self::$oldLogLevel);

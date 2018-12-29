@@ -55,7 +55,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class ErrorMessageTest extends StateCheckerPHPUnitTestCaseAbstract
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         if (!defined('sugarEntry')) {
@@ -79,7 +79,7 @@ class ErrorMessageTest extends StateCheckerPHPUnitTestCaseAbstract
         include_once __DIR__ . '/../../../../include/LangException.php';
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
     }

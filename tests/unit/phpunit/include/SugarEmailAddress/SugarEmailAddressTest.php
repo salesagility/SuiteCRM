@@ -18,7 +18,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         
@@ -38,7 +38,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      */
-    public function tearDown()
+    protected function tearDown()
     {
         $db = DBManagerFactory::getInstance();
         $query = /** @lang sql */

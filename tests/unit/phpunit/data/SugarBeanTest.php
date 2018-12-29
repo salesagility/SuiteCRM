@@ -17,14 +17,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     protected $fieldDefsStore;
     
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->fieldDefsStore();
     }
 
 
-    public function tearDown()
+    protected function tearDown()
     {
         $this->fieldDefsRestore();
         parent::tearDown();

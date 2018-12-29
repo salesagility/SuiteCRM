@@ -45,7 +45,7 @@ abstract class SearchTestAbstract extends StateCheckerPHPUnitTestCaseAbstract
     }
 
     /** @inheritdoc */
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
         Mockery::close();
