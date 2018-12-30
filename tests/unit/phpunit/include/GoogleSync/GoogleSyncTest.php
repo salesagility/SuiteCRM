@@ -51,9 +51,10 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      * @param string $googleAuthJson
      * @return string
      */
-    protected function getFakeSugarConfig($googleAuthJson) {
+    protected function getFakeSugarConfig($googleAuthJson = null, $loglevel = 'fatal') {
         return [
             'google_auth_json' => $this->getFakeGoogleAuthJson($googleAuthJson),
+            'gsync_loglevel' => $loglevel,
         ];
     }
     
@@ -81,14 +82,9 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $sugar_config['google_auth_json'] = 'eyJ3ZWIiOiJ0ZXN0In0=';
 
         // Set Log Level
-        if (!empty($_SERVER['GSYNC_LOGLEVEL'])) {
-            $expectedLogLevel = $_SERVER['GSYNC_LOGLEVEL'];
-        } else {
-            $_SERVER['GSYNC_LOGLEVEL'] = 'debug';
-            $expectedLogLevel = 'debug';
-        }
+        $expectedLogLevel = 'info';
 
-        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}', $expectedLogLevel));
 
         // Test GoogleSync::timezone
         $timezone = self::$reflection->getProperty('timezone');
@@ -124,9 +120,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method = self::$reflection->getMethod('getAuthJson');
         $method->setAccessible(true);
     
-        // Set up object for testing
-        
-
         // base64 encoded of {"web":"test"}
         $sugar_config['google_auth_json'] = 'eyJ3ZWIiOiJ0ZXN0In0=';
 
@@ -138,9 +131,23 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals($expectedAuthJson, $actualAuthJson);
         $this->assertArrayHasKey('web', $actualAuthJson);
 
+        try {
+            $actualAuthJson = $method->invoke($object, $this->getFakeSugarConfig('INVALID'));
+        } catch (Exception $e) {}
+        $this->assertEquals(120, $e->getCode());
+
+        try {
+            $actualAuthJson = $method->invoke($object, $this->getFakeSugarConfig('{"foo":"bar"}'));
+        } catch (Exception $e) {}
+        $this->assertEquals(121, $e->getCode());
+
+        try {
+            $actualAuthJson = $method->invoke($object, Array());
+        } catch (Exception $e) {}
+        $this->assertEquals(false, $actualAuthJson);
+
         // cleanup after test
         $state->popGlobals();
-
     }
 
     /**
@@ -185,13 +192,14 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         
         $method = self::$reflection->getMethod('getGoogleClient');
         $method->setAccessible(true);
-        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test","client_id":"testID"'));
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test","client_id":"testID"}'));
+
         try {
-            $method->invoke($object, null);
-            $this->assertTrue(false, 'It should throws an exception.');
-        } catch (InvalidArgumentException $e) {
+            $method->invoke($object, '');
+            $this->assertTrue(false, 'It should throw an exception.');
+        } catch (Exception $e) {
             $this->assertEquals(0, $e->getCode(), 'It should throws an exception with code 0.');
-            $this->assertEquals('invalid json token', $e->getMessage(), 'It should throws an exception with a proper message.');
+            $this->assertEquals('Access Token Parameter Missing', $e->getMessage(), 'It should throws an exception with a proper message.');
         }
     }
 

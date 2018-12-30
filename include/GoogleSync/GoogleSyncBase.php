@@ -95,13 +95,12 @@ class GoogleSyncBase
      */
     public function __construct($sugarConfig)
     {
-        // This sets the log level to a variable that can be set on the command line while running cron.php on the server. It's for debugging only.
-        // EXAMPLE: $ GSYNC_LOGLEVEL=debug php cron.php
+        // This sets the log level to a variable that can be set in config_override.php. It's for debugging only.
         $this->logger = LoggerManager::getLogger();
-        if (isset($_SERVER['GSYNC_LOGLEVEL'])) { // TODO: is it possible to using $sugar_config instead superglobals? (a global usage is one step closer to clean code than using a superglobal)
+        if (isset($sugarConfig['gsync_loglevel'])) {
             $this->oldLogLevel = $this->logger->getLogLevel();
-            $this->logger->setLevel($_SERVER['GSYNC_LOGLEVEL']); // TODO: it changes the log level but as it is a global, it will affect the other parts of core until this class __destructor is called! (and it's bad)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Log Level Set To: ' . $_SERVER['GSYNC_LOGLEVEL']);
+            $this->logger->setLevel($sugarConfig['gsync_loglevel']); // TODO: it changes the log level but as it is a global, it will affect the other parts of core until this class __destructor is called! (and it's bad)
+            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Log Level Set To: ' . $sugarConfig['gsync_loglevel']);
         }
         $this->timezone = date_default_timezone_get(); // This defaults to the server timezone. Overridden later.
         $this->authJson = $this->getAuthJson($sugarConfig);
@@ -130,17 +129,17 @@ class GoogleSyncBase
      */
     protected function getAuthJson($sugarConfig)
     {
+        if (empty($sugarConfig['google_auth_json'])) {
+            return false;
+        }
+
         $authJson_local = json_decode(base64_decode($sugarConfig['google_auth_json']), true);
         if (!$authJson_local) {
             // The authconfig json string is invalid json
-            // TODO: It should be an exception (do not leave same 'false' return value for differenc failure reason, Inform the caller about this problem)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'AuthConfig is not proper JSON string');
-            return false;
+            throw new GoogleSyncException('google_auth_json not vaild json', GoogleSyncException::JSON_CORRUPT);
         } elseif (!array_key_exists('web', $authJson_local)) {
             // The authconfig is valid json, but the 'web' key is missing. This is not a valid authconfig.
-            // TODO: It should be an exception (do not leave same 'false' return value for differenc failure reason, Inform the caller about this problem)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'AuthConfig is missing required [web] key');
-            return false;
+            throw new GoogleSyncException('google_auth_json missing web key', GoogleSyncException::JSON_KEY_MISSING);
         }
         return $authJson_local;
     }
@@ -173,7 +172,7 @@ class GoogleSyncBase
      * @param string $id : the SuiteCRM user id
      *
      * @return \Google_Client|false Google_Client on success. False on failure.
-     * @throws GoogleSyncException if unable to retrive the user
+     * @throws GoogleSyncException if user invalid, unable to retrive the user, or json error
      */
     protected function getClient($id)
     {
@@ -194,22 +193,16 @@ class GoogleSyncBase
         $accessToken = json_decode(base64_decode($this->workingUser->getPreference('GoogleApiToken', 'GoogleSync')), true);
         if (!array_key_exists('access_token', $accessToken)) {
             // The Token is invalid JSON or missing
-            // TODO: It should be an exception (do not leave same 'false' return value for differenc failure reason, Inform the caller about this problem)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid or Missing AuthToken');
-            return false;
+            throw new GoogleSyncException('GoogleApiToken missing access_token key', GoogleSyncException::JSON_KEY_MISSING);
         }
+
         // The refresh token is only provided once, on first authentication. It must be added afterwards.
         if (!array_key_exists('refresh_token', $accessToken)) {
             $accessToken['refresh_token'] = base64_decode($this->workingUser->getPreference('GoogleApiRefreshToken', 'GoogleSync'));
         }
 
         // New Google Client and refresh the token if needed
-        try {
-            $client = $this->getGoogleClient($accessToken);
-        } catch (Exception $e) {
-            // TODO: handle the exception instead just loggin it, it will be logged if unhandled by suitecrm core.
-            $this->logger->fatal('Caught exception: ',  $e->getMessage());
-        }
+        $client = $this->getGoogleClient($accessToken);
 
         if (!$client) {
             return false;
@@ -227,6 +220,10 @@ class GoogleSyncBase
      */
     protected function getGoogleClient($accessToken)
     {
+        if (empty($accessToken)) {
+            throw new GoogleSyncException('Access Token Parameter Missing');
+        }
+        
         // New Google Client
         $client = new Google_Client();
         $client->setApplicationName('SuiteCRM');
@@ -240,13 +237,7 @@ class GoogleSyncBase
             $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Refreshing Access Token');
             $refreshToken = $client->getRefreshToken();
             if (!empty($refreshToken)) {
-                try {
-                    $client->fetchAccessTokenWithRefreshToken($refreshToken);
-                } catch (Exception $e) {
-                    // TODO: handle the exception instead just loggin it, it will be logged if unhandled by suitecrm core.
-                    $this->logger->fatal('Caught exception: ' . $e->getMessage());
-                    throw $e;
-                }
+                $client->fetchAccessTokenWithRefreshToken($refreshToken);
                 // Save new token to user preference
                 $this->workingUser->setPreference('GoogleApiToken', base64_encode(json_encode($client->getAccessToken())), 'GoogleSync');
                 $this->workingUser->savePreferencesToDB();    

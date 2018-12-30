@@ -68,4 +68,6 @@ class GoogleSyncException extends Exception {
     const NO_REMOVE_EVENT_START_IS_NOT_SET = 117;
     const NO_REMOVE_EVENT_START_IS_INCORRECT = 118;
     const INCORRECT_WORKING_USER_TYPE = 119;
+    const JSON_CORRUPT = 120;
+    const JSON_KEY_MISSING = 121;
 }
