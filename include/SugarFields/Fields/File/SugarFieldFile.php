@@ -203,7 +203,7 @@ class SugarFieldFile extends SugarFieldBase {
     public function getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col)
     {
         global $currentModule;
-        if(!isset($displayParams['module'])){
+        if (!isset($displayParams['module'])) {
             $displayParams['module'] = $currentModule;
         }
         return parent::getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col);
