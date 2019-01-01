@@ -698,7 +698,13 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method = self::$reflection->getMethod('clearPopups');
         $method->setAccessible(true);
         $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
-        $this->assertEquals(false, $method->invoke($object, null));
+        try {
+            $method->invoke($object, null);
+            $this->assertTrue(false, 'It should throw an exception.');
+        } catch (InvalidArgumentException $e) {
+            $this->assertTrue(true);
+        }
+        $this->assertTrue($method->invoke($object, '123456'));
     }
 
     /**

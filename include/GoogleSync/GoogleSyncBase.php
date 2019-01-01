@@ -740,9 +740,7 @@ class GoogleSyncBase
     protected function clearPopups($event_id)
     {
         if (!isset($event_id) || empty($event_id)) {
-            // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see belove)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Event_id is missing');
-            return false;
+            throw new InvalidArgumentException('Argument 1 not passed to GoogleSyncBase::clearPopups()');
         }
 
         // Disable all popup reminders for the SuiteCRM meeting, and mark reminders where email is disabled as deleted.
@@ -750,9 +748,7 @@ class GoogleSyncBase
         $sql = sprintf("UPDATE reminders SET popup = '0', deleted = CASE WHEN email = '0' THEN '1' ELSE deleted	END WHERE related_event_module_id = %s AND deleted = '0'", $eventIdQuoted);
         $res = $this->db->query($sql);
         if (!$res) {
-            // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see above)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'SQL Failure!');
-            return false;
+            throw new GoogleSyncException('SQL Failure', GoogleSyncException::SQL_FAILURE);
         }
         return true;
     }
@@ -778,8 +774,8 @@ class GoogleSyncBase
         $event_local->description = (string) $event_remote->getDescription();
         $event_local->location = (string) $event_remote->getLocation();
 
-        // TODO: dont leave todo comment in code:
-        // Get Start/End/Duration from Google Event TODO: This is where all day event conversion will need to happen.
+        // Get Start/End/Duration from Google Event
+        // FUTURE: This is where all day event conversion will need to happen.
         $start = $event_remote->getStart();
         if (!$start) {
             throw new GoogleSyncException(
@@ -811,11 +807,7 @@ class GoogleSyncBase
 
         // Disable all popup reminders for the SuiteCRM meeting. We add them back from Google event below.
         $event_id = $event_local->id;
-        $res = $this->clearPopups($event_id);
-        if (empty($res)) {
-            // TODO: Inform the caller about this problem (exception or return value?)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'clearPopups() returned error');
-        }
+        $this->clearPopups($event_id);
 
         // Get Google Event Popup Reminders
         $gReminders = $event_remote->getReminders();
@@ -869,12 +861,6 @@ class GoogleSyncBase
      */
     protected function updateGoogleCalendarEvent(Meeting $event_local, Google_Service_Calendar_Event $event_remote)
     {
-        if ((!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote))) {
-            // TODO: It should be an exception
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'ERROR:Missing Variables');
-            return false;
-        }
-
         $event_remote->setSummary($event_local->name);
         $event_remote->setDescription($event_local->description);
         $event_remote->setLocation($event_local->location);

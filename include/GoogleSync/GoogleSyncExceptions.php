@@ -76,4 +76,5 @@ class GoogleSyncException extends Exception {
     const MEETING_CREATE_OR_UPDATE_FAILURE = 125;
     const MEETING_ID_IS_EMPTY = 126;
     const RECORD_VALIDATION_FAILURE = 127;
+    const SQL_FAILURE = 128;
 }
