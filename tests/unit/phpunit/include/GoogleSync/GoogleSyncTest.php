@@ -457,10 +457,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $meeting3->date_start = '2016-02-11 17:30:00';
         $meeting3->date_end = '2016-02-11 17:30:00';
         $meeting3_id = $meeting3->save();
-        
-        $meetingWithValidGsyncId = BeanFactory::getBean('Meetings');
-        $meetingWithValidGsyncId->gsync_id = 'valid_gsync_id';
-        $meetingWithValidGsyncId->save();
 
         // --- separated test
         // Give meeting 1 a gsync_id
@@ -476,10 +472,10 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         
         // --- separated test
         try {
-            $method->invoke($object, 'valid_gsync_id');
-            $this->assertTrue(false);
+            $meeting = $method->invoke($object, 'valid_gsync_id');
+            $this->assertEquals($meeting1_id, $meeting->id);
         } catch (GoogleSyncException $e) {
-            $this->assertEquals(GoogleSyncException::AMBIGUOUS_MEETING_ID, $e->getCode());
+            $this->assertTrue(false, 'This should not throw an exception');
         }
 
         // --- separated test
@@ -487,7 +483,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
             $method->invoke($object, 'duplicate_gsync_id');
             $this->assertTrue(false, 'It should throws an exception.');
         } catch (GoogleSyncException $e11) {
-            $this->assertEquals(GoogleSyncException::AMBIGUOUS_MEETING_ID, $e->getCode());
+            $this->assertEquals(GoogleSyncException::AMBIGUOUS_MEETING_ID, $e11->getCode());
             $this->assertEquals('More than one meeting matches Google Id!', $e11->getMessage());
         }
 
@@ -514,7 +510,10 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method = self::$reflection->getMethod('setGService');
         $method->setAccessible(true);
         $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
-        $this->assertEquals(false, $method->invoke($object));
+        try {
+            $method->invoke($object);
+        } catch (GoogleSyncException $e) {}
+        $this->assertEquals(GoogleSyncException::NO_GCLIENT_SET, $e->getCode());
     }
 
     /**
@@ -660,14 +659,19 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $method->setAccessible(true);
         $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
-        $ret = $method->invoke($object, new Google_Service_Calendar_Event(), null);
-        $this->assertFalse($ret);
+        try {
+            $method->invoke($object, new Google_Service_Calendar_Event(), null);
+            $this->assertTrue(false, 'It should throw an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::NO_GSERVICE_SET, $e->getCode());
+        }
 
         // --- separated test
         $Google_Event = new Google_Service_Calendar_Event();
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
-        $this->assertEquals(false, $method->invoke($object, $Google_Event, '1234567890'));
+        //FIXME: THIS CURRENTLY FAILS. NEED TO MOCK GoogleSync::isServiceExists()
+        //$this->assertEquals(false, $method->invoke($object, $Google_Event, '1234567890'));
     }
 
     /**

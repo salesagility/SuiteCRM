@@ -223,7 +223,7 @@ class GoogleSyncBase
         if (empty($accessToken)) {
             throw new GoogleSyncException('Access Token Parameter Missing');
         }
-        
+
         // New Google Client
         $client = new Google_Client();
         $client->setApplicationName('SuiteCRM');
@@ -276,26 +276,16 @@ class GoogleSyncBase
         }
 
         if (!$this->setClient($id)) {
-            // TODO: It shouldn't be in the log as it is an exception, it will be logged if unhandled by suitecrm core.
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Client');
             throw new GoogleSyncException('Unable to setup Google Client', GoogleSyncException::UNABLE_TO_SETUP_GCLIENT);
         }
 
-        if (!$this->setTimezone($this->workingUser->getPreference('timezone', 'global'))) {
-            // TODO: It shouldn't be in the log as it is an exception, it will be logged if unhandled by suitecrm core.
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set the working user and timezone');
-            throw new GoogleSyncException('Failed to set the working user\'s timezone', GoogleSyncException::TIMEZONE_SET_FAILURE);
-        }
+        $this->setTimezone($this->workingUser->getPreference('timezone', 'global'));
 
         if (!$this->setGService()) {
-            // TODO: It shouldn't be in the log as it is an exception, it will be logged if unhandled by suitecrm core.
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Service');
             throw new GoogleSyncException('Unable to setup Google Service', GoogleSyncException::GSERVICE_FAILURE);
         }
 
         if (!$this->setUsersGoogleCalendar()) {
-            // TODO: It shouldn't be in the log as it is an exception, it will be logged if unhandled by suitecrm core.
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Calendar Id');
             throw new GoogleSyncException('Unable to setup Google Calendar Id', GoogleSyncException::GCALENDAR_FAILURE);
         }
         return true;
@@ -356,7 +346,6 @@ class GoogleSyncBase
 
         // if the SuiteCRM calendar doesn't exist... Create it!
         if (!$this->isCalendarExists()) {
-            // TODO: It should be an exception?
             $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find the SuiteCRM Google Calendar, Creating it!');
             $calendar = new Google_Service_Calendar_Calendar();
             $calendar->setSummary('SuiteCRM');
@@ -368,7 +357,7 @@ class GoogleSyncBase
 
         // Final check to make sure we have an ID
         if (!$this->isCalendarExists()) {
-            return false;
+            throw new GoogleSyncException('Unable to set Google Calendar', GoogleSyncException::GCALENDAR_FAILURE);
         }
         return $this->calendarId;
     }
@@ -384,14 +373,11 @@ class GoogleSyncBase
     {
         foreach ($calendarList->getItems() as $calendarListEntry) {
             if ($calendarListEntry->getSummary() == 'SuiteCRM') {
-                $return = $calendarListEntry->getId();
+                return $calendarListEntry->getId();
                 break;
             }
         }
-        if (empty($return)) { // TODO: this empty-check is not neccessary, return the getId() results as it is.
-            return null;
-        }
-        return $return;
+        return null;
     }
 
     /**
@@ -421,7 +407,7 @@ class GoogleSyncBase
         $results_g = $this->gService->events->listEvents($this->calendarId, $optParams);
 
         // We only want the events, not the leading cruft
-        $results = $results_g->getItems(); // TODO: getItems() returns a Google_Service_Calendar_Event, but this code expect an array in the next line? Something missing here?
+        $results = $results_g->getItems();
 
         if (empty($results)) {
             $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'No events found.');
@@ -442,8 +428,6 @@ class GoogleSyncBase
     {
         // Make sure we have a Google Calendar Service instance
         if (!isset($this->gService)) {
-            // TODO: I think a warning enough into log instead fatal (but it should be handled by caller function)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
         return true;
@@ -457,9 +441,7 @@ class GoogleSyncBase
     protected function isCalendarExists()
     {
         // Make sure we have a calendar id
-        if (!isset($this->calendarId)) {
-            // TODO: I think a warning enough into log instead fatal (but it should be handled by caller function)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The calendar ID is not set. See setUsersGoogleCalendar Method');
+        if (empty($this->calendarId)) {
             return false;
         }
         return true;
@@ -518,36 +500,31 @@ class GoogleSyncBase
 
         // This checks to make sure we only get one result. If we get more than one, something is inconsistant in the DB
         if ($result->num_rows > 1) {
-            // TODO: It shouldn't be in the log as it is an exception, it will be logged if unhandled by suitecrm core.
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'More than one meeting matches Google Id: ' . $eventIdQuoted);
             throw new GoogleSyncException('More than one meeting matches Google Id!', GoogleSyncException::AMBIGUOUS_MEETING_ID);
         } elseif ($result->num_rows == 0) {
-            // TODO: Confusing return value: Do not use similar return value by different reason of failure. see belove the $meeting->retrive
             return null; // No matches Found
         }
 
-        $meeting = BeanFactory::getBean('Meetings');
+        $row = $this->db->fetchByAssoc($result);
+        $meeting = BeanFactory::getBean('Meetings', $row['id']);
         if (!$meeting) {
             throw new GoogleSyncException('Unable to get Meetings bean.', GoogleSyncException::UNABLE_TO_RETRIEVE_MEETING);
         }
-        $row = $this->db->fetchByAssoc($result);
-        $meeting->retrieve($row['id'], true, false); // retrieve() method could failing, but it's not handled.
-
         return $meeting;
     }
 
     /**
      * Creates and Sets $this->gService to a valid Google Calendar Service
      *
-     * @return bool Success/Failure
+     * @return bool true on Success
+     * @throws GoogleSyncException If gClient not set
+     * @throws GoogleSyncException If gService Setup Fails
      */
     protected function setGService()
     {
         // make sure we have a client set
         if (!isset($this->gClient)) {
-            // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see belove)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Client is not set up. See setClient Method');
-            return false;
+            throw new GoogleSyncException('The Google Client is not set up. See setClient Method', GoogleSyncException::NO_GCLIENT_SET);
         }
 
         // create new calendar service
@@ -555,9 +532,7 @@ class GoogleSyncBase
         if ($this->isServiceExists()) {
             return true;
         }
-        // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see above)
-        $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Setting $this->gService Failed');
-        return false;
+        throw new GoogleSyncException('Setting $this->gService Failed', GoogleSyncException::NO_GSERVICE_SET);
     }
 
     /**
@@ -597,20 +572,11 @@ class GoogleSyncBase
          * So we check to make sure it has an ID to determine Success/Failure.
          */
         if (!isset($return->id)) {
-            // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see belove)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'GCalendar insert/update failed.');
-            return false;
+            throw new GoogleSyncException('GCalendar insert/update failed.', GoogleSyncException::GEVENT_INSERT_OR_UPDATE_FAILURE);
         }
 
-        // Set the SuiteCRM Meeting's last sync timestamp, and google id
-        $ret = $this->setLastSync($event_local, $return->getId());
-        if (empty($ret)) {
-            // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see above)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'setLastSync returned error.');
-            return false;
-        }
-
-        return $ret;
+        // Set the SuiteCRM Meeting's last sync timestamp, and google id. Return the saved meeting id from called method.
+        return $this->setLastSync($event_local, $return->getId());
     }
 
     /**
@@ -654,6 +620,7 @@ class GoogleSyncBase
      * @param Meeting $event_local Meeting (optional) \Meeting Bean
      *
      * @return bool Success/Failure of setLastSync, since that's what saves the record
+     * @throws GoogleSyncException if returned event invalid
      */
     protected function pullEvent(Google_Service_Calendar_Event $event_remote = null, Meeting $event_local = null)
     {
@@ -669,9 +636,7 @@ class GoogleSyncBase
         }
 
         if (empty($event)) {
-            // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see belove: setLastSync() also could returns a 'false')
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Something Horrible Happened in [create|update]SuitecrmMeetingEvent!');
-            return false;
+            throw new GoogleSyncException('Something Horrible Happened in [create|update]SuitecrmMeetingEvent!', GoogleSyncException::MEETING_CREATE_OR_UPDATE_FAILURE);
         }
 
         // We need to set the suitecrm_ private properties in the Google event here,
@@ -716,7 +681,11 @@ class GoogleSyncBase
      * @param \Google_Service_Calendar_Event $event \Google_Service_Calendar_Event Object
      * @param String $meeting_id SuiteCRM Meeting Id
      *
-     * @return string|bool Meeting Id on success, false on failure
+     * @return string Meeting Id on success
+     * @throws GoogleSyncException If Google Service Unset
+     * @throws GoogleSyncException If Meeting ID missing
+     * @throws GoogleSyncException If Meeting ID fails validation
+     * @throws GoogleSyncException If delete fails
      */
     protected function delEvent(Google_Service_Calendar_Event $event = null, $meeting_id = null)
     {
@@ -726,25 +695,19 @@ class GoogleSyncBase
         
         // Make sure the calendar service is set up
         if (!$this->isServiceExists()) {
-            // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see belove)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
-            return false;
+            throw new GoogleSyncException('The Google Service is not set up. See setGService Method.', GoogleSyncException::NO_GSERVICE_SET);
         }
 
         // Make sure we got a meeting_id
         if (!$meeting_id) {
-            // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see belove and above)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'This method requires a meeting id as the 2nd parameter');
-            return false;
+            throw new GoogleSyncException('This method requires a meeting id as the 2nd parameter', GoogleSyncException::MEETING_ID_IS_EMPTY);
         }
 
         // Validate and quote the meetingID
         $valMeetingId = $this->db->quote($meeting_id);
         $isValidator = new SuiteValidator();
         if (!$isValidator->isValidId($valMeetingId)) {
-            // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see belove and above at other returns)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Meeting ID could not be validated');
-            return false;
+            throw new GoogleSyncException('Meeting ID could not be validated', GoogleSyncException::RECORD_VALIDATION_FAILURE);
         }
 
         $return = $this->gService->events->delete($this->calendarId, $event->getId());
@@ -762,12 +725,9 @@ class GoogleSyncBase
             if (!$res) {
                 $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to remove gsync_id from record' . $valMeetingId);
             }
-            //$this->syncedList[] = $meeting_id;
             return $meeting_id;
         }
-        // TODO: Confusing return value: It should be an exception, do not use similar return value (false) by different reaon os failure (see above at other returns)
-        $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Failure Status Code: ' . $statusCode . ' on delete!');
-        return false;
+        throw new GoogleSyncException('Received Failure Status Code: ' . $statusCode . ' on delete!', GoogleSyncException::GEVENT_INSERT_OR_UPDATE_FAILURE);
     }
 
     /**
@@ -989,7 +949,8 @@ class GoogleSyncBase
      *
      * @param string $timezone : timezone_identifier (ie. America/New_York)
      *
-     * @return bool Success/Failure
+     * @return bool true on Success
+     * @throws GoogleSyncException on failure
      */
     protected function setTimezone($timezone)
     {
@@ -998,9 +959,7 @@ class GoogleSyncBase
             $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Timezone set to \'' . $this->timezone . '\'');
             return true;
         }
-        // TODO: I think a warning enough into log instead fatal (but it should be handled by caller function)
-        $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set timezone to \'' . $timezone . '\'');
-        return false;
+        throw new GoogleSyncException('Failed to set timezone to ' . $timezone, GoogleSyncException::TIMEZONE_SET_FAILURE);
     }
 
     /**
@@ -1008,12 +967,13 @@ class GoogleSyncBase
      *
      * This *must* be called *after* the sync is done
      * This also saves the event, so you don't need to do it twice. Just call this.
-     * Also adds the id of the event so it doesn't get synced again this session.
      *
      * @param Meeting $event_local SuiteCRM Meeting bean
      * @param string $gEventId (optional) The ID that Google has for the event.
      *
-     * @return string|bool Meeting Id on success, false on failure
+     * @return string Meeting Id on success
+     * @throws GoogleSyncException If working user invalid
+     * @throws GoogleSyncException if meeting save fails
      */
     protected function setLastSync(Meeting $event_local, $gEventId = null)
     {
@@ -1033,8 +993,6 @@ class GoogleSyncBase
             //$this->syncedList[] = $event_local->id;
             return $event_local->id;
         }
-        // TODO: I think a warning enough into log instead fatal (but it should be handled by caller function)
-        $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Something went wrong saving the local record.');
-        return false;
+        throw new GoogleSyncException('Something went wrong saving the local record.', GoogleSyncException::MEETING_SAVE_FAILURE);
     }
 }
