@@ -670,8 +670,22 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $Google_Event = new Google_Service_Calendar_Event();
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
-        //FIXME: THIS CURRENTLY FAILS. NEED TO MOCK GoogleSync::isServiceExists()
-        //$this->assertEquals(false, $method->invoke($object, $Google_Event, '1234567890'));
+        $property = self::$reflection->getProperty('gService');
+        $property->setAccessible(true);
+        $property->setValue($object, true);
+        try {
+            $this->assertEquals(false, $method->invoke($object, $Google_Event, null));
+            $this->assertTrue(false, 'It should throw an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::MEETING_ID_IS_EMPTY, $e->getCode());
+        }
+        // -- another test
+        try {
+            $this->assertEquals(false, $method->invoke($object, $Google_Event, 'INVALID_ID'));
+            $this->assertTrue(false, 'It should throw an exception.');
+        } catch (GoogleSyncException $e) {
+            $this->assertEquals(GoogleSyncException::RECORD_VALIDATION_FAILURE, $e->getCode());
+        }
     }
 
     /**
