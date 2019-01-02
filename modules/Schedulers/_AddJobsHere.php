@@ -610,7 +610,7 @@ function pollMonitoredInboxesAOP()
                             $emailId = $aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists);
                             if ($emailId) {
                                 // add to folder
-                                $sugarFolder->addBean($aopInboundEmailX->email);
+                                $sugarFolder->addBean($aopInboundEmailX);
                                 if ($aopInboundEmailX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
