@@ -634,16 +634,18 @@ class EmailsController extends SugarController
      */
     public function action_DisplayDetailView()
     {
+        $result = null;
+
         $db = DBManagerFactory::getInstance();
         $emails = BeanFactory::getBean("Emails");
 
+        $uid = $_REQUEST['uid'];
         $inboundEmailRecordId = $_REQUEST['inbound_email_record'];
 
-        $uid = $_REQUEST['uid'];
-
-        $subQuery = "`mailbox_id` = " . $db->quoted($inboundEmailRecordId) . " AND `uid` = " . $db->quoted($uid);
-
-        $result = $emails->get_full_list('', $subQuery);
+        if (SuiteValidator::isValidId($uid)) {
+            $subQuery = "`mailbox_id` = " . $db->quoted($inboundEmailRecordId) . " AND `uid` = " . $db->quoted($uid);
+            $result = $emails->get_full_list('', $subQuery);
+        }
 
         if (empty($result)) {
             $this->view = 'detailnonimported';
