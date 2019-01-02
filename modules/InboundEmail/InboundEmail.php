@@ -5662,7 +5662,6 @@ class InboundEmail extends SugarBean
             SE_UID
         );
 
-
         foreach ($emailSortedHeaders as $uid) {
             $response[] = $this->returnImportedEmail(null, $uid);
         }

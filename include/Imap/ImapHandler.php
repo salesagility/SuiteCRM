@@ -77,17 +77,24 @@ class ImapHandler implements ImapHandlerInterface
      * @var bool
      */
     protected $logCalls;
+
+    /**
+     *
+     * @var string
+     */
+    protected $charset;
     
     /**
      *
      * @param bool $log
      */
-    public function __construct($logErrors = true, $logCalls = true)
+    public function __construct($logErrors = true, $logCalls = true, $charset = null)
     {
         $this->logCall(__FUNCTION__, func_get_args());
         $this->logErrors = $logErrors;
         $this->logCalls = $logCalls;
         $this->logger = LoggerManager::getLogger();
+        $this->charset = $charset;
     }
     
     /**
@@ -330,8 +337,10 @@ class ImapHandler implements ImapHandlerInterface
      */
     public function sort($criteria, $reverse, $options = 0, $search_criteria = null, $charset = null)
     {
+        // Default to class charset if none is specified
+        $emailCharset = (!empty($charset)) ? $charset : $this->charset;
         $this->logCall(__FUNCTION__, func_get_args());
-        $ret = imap_sort($this->getStream(), $criteria, $reverse, $options, $search_criteria, $charset);
+        $ret = imap_sort($this->getStream(), $criteria, $reverse, $options, $search_criteria, $emailCharset);
         $this->logReturn(__FUNCTION__, $ret);
         return $ret;
     }
@@ -692,8 +701,13 @@ class ImapHandler implements ImapHandlerInterface
      */
     public function search($criteria, $options = SE_FREE, $charset = null)
     {
+        // Default to class charset if none is specified
+        $emailCharset = (!empty($charset)) ? $charset : $this->charset;
+
         $this->logCall(__FUNCTION__, func_get_args());
-        $ret = imap_search($this->getStream(), $criteria, $options, $charset);
+
+        $ret = imap_search($this->getStream(), $criteria, $options, $emailCharset);
+
         if (!$ret) {
             $this->log('IMAP search error');
         }
