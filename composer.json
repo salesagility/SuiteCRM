@@ -34,7 +34,8 @@
     "filp/whoops": "^2.2",
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
-    "symfony/yaml": "^3.4"
+    "symfony/yaml": "^3.4",
+    "tinymce/tinymce": "^4.9"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
