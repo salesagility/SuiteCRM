@@ -170,7 +170,7 @@ function pollMonitoredInboxes()
                         if ($isGroupFolderExists) {
                             if ($ieX->returnImportedEmail($msgNo, $uid)) {
                                 // add to folder
-                                $sugarFolder->addBean($ieX->email);
+                                $sugarFolder->addBean($ieX);
                                 if ($ieX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
@@ -623,7 +623,7 @@ function pollMonitoredInboxesAOP()
                             if (!empty($emailId)) {
                                 // add to folder
 
-                                $sugarFolder->addBean($aopInboundEmailX->email);
+                                $sugarFolder->addBean($aopInboundEmailX);
                                 if ($aopInboundEmailX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
