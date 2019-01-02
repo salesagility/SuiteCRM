@@ -1925,9 +1925,7 @@ class SugarEmailAddress extends SugarBean
      */
     public function confirmOptIn()
     {
-        global $timedate;
-        $date = new DateTime();
-        $this->confirm_opt_in_date = $date->format($timedate::DB_DATETIME_FORMAT);
+        $this->confirm_opt_in_date = TimeDate::getInstance()->nowDb();
         $this->confirm_opt_in = self::COI_STAT_CONFIRMED_OPT_IN;
     }
 

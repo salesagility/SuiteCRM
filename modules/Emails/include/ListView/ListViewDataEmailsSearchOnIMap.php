@@ -118,6 +118,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         }
 
         // Get emails from email server
+        // TODO: PHP Warning:  imap_fetchbody(): Bad message number
         $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter, $filter_fields);
 
         $total = $emailServerEmails['mailbox_info']['Nmsgs']; // + count($importedEmails['data']);
@@ -129,7 +130,16 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         /// Populate the data and its fields from the email server
         $request['uids'] = array();
 
-        foreach ($emailServerEmails['data'] as $h => $emailHeader) {
+        if (isset($emailServerEmails['data']) && is_array($emailServerEmails['data'])) {
+            $emailServerEmailsData = $emailServerEmails['data'];
+        } else {
+            if (!isset($emailServerEmails['data'])) {
+                LoggerManager::getLogger()->warn('server email data is not set for seearch');
+            } elseif (!is_array($emailServerEmails['data'])) {
+                LoggerManager::getLogger()->warn('server email data should be an array, ' . gettype($emailServerEmails['data']) . ' given.');
+            }            
+        }
+        foreach ($emailServerEmailsData as $h => $emailHeader) {
             $emailRecord = $this->lvde->getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder);
             if ($emailRecord === false) {
                 continue;
@@ -349,6 +359,10 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: qurey string is not set');
         }
 
+        // $data could be undefined
+        if (!isset($data)) {
+            LoggerManager::getLogger()->warn('Invalid search results data.');
+        }
         $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
 
         return $ret;

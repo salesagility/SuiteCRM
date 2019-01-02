@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,39 +37,17 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once __DIR__ . '/ImapHandlerFactory.php';
+include_once __DIR__ . '/ImapTestSettingsEntryHandler.php';
 
 global $sugar_config;
 
-if (!isset($sugar_config['imap_test']) || !$sugar_config['imap_test']) {
-    throw new Exception('IMAP test required');
-}
+$handler = new ImapTestSettingsEntryHandler();
+$output = $handler->handleEntryPointRequest($sugar_config, $_REQUEST);
 
-$var = 'imap_test_settings';
-$key = isset($_REQUEST[$var]) && $_REQUEST[$var] ? $_REQUEST[$var] : null;
-if (!$key) {
-    // TODO: should it be translatable?
-    $error = "Invalud request, use '$var' value.";
-} else {
-    $imapHandlerFactory = new ImapHandlerFactory();
-    try {
-        if (!$imapHandlerFactory->saveTestSettingsKey($key)) {
-            // TODO: should it be translatable?
-            $error = 'Unknown error occured, key not saved.';
-        }
-    } catch (Exception $e) {
-        // TODO: should we use exception code in a switch and message is translatable?
-        $error = $e->getMessage();
-    }
-}
-if (!empty($error)) {
-    echo "ERROR: $error";
-} else {
-    // TODO: should it be translatable?
-    echo "OK: test settings changed to '$key'\n";
-}
+echo $output;
 exit;

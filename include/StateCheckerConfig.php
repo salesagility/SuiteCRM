@@ -185,7 +185,7 @@ class StateCheckerConfig
      */
     protected static $phpConfigOptionKeys = ['max_execution_time', 'display_errors', 'display_startup_errors'];
     
-    
+
     /**
      *
      * @var boolean

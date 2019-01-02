@@ -38,7 +38,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
 
-    public function testThisCallback() {
+    public function testThisCallback()
+    {
         $str = ['nope', '%foo', 'bar%', '%bazz%'];
         $ret = this_callback($str);
         $result = [];
@@ -3589,6 +3590,16 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $this->restoreStateAll($state);
+    }
+    
+    public function testSetStoredOptions()
+    {
+        $ie = new InboundEmail();
+        $so = $ie->getStoredOptions();
+        $so['something'] = 'testinfo';
+        $ie->setStoredOptions($so);
+        $ret = $ie->getStoredOptions();
+        $this->assertEquals('testinfo', $ret['something']);
     }
 
     public function testgetRelatedId()
