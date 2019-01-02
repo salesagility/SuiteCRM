@@ -815,6 +815,8 @@ class SugarApplication {
     {
         if ($clear_queue) {
             unset($_SESSION['suite_messages']);
+            unset($_SESSION['user_error_message']);
+            unset($_SESSION['user_success_message']);
         }
     }
 
