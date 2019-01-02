@@ -456,7 +456,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_SESSION['user_error_message'] = [];
         $user_error_message_count = count($_SESSION['user_error_message']);
         SugarApplication::appendErrorMessage('some error');
-        $this->assertGreaterThan($user_error_message_count, count($_SESSION['user_error_message']));
+        $this->assertGreaterThan($user_error_message_count, count($_SESSION['suite_messages']['error']));
         
         // cleanup
         
