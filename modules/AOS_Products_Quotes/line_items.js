@@ -942,7 +942,13 @@ function formatNumber(n, num_grp_sep, dec_sep, round, precision) {
     if (round > 0 && n.length > 1) {
       n[1] = parseFloat("0." + n[1]);
       n[1] = Math.round(n[1] * Math.pow(10, round)) / Math.pow(10, round);
+      if(n[1].toString().includes('.')) {
       n[1] = n[1].toString().split(".")[1];
+    }
+      else {
+	  n[0] = (parseInt(n[0]) + n[1]).toString();
+	  n[1] = "";
+      }
     }
     if (round <= 0) {
       n[0] = Math.round(parseInt(n[0], 10) * Math.pow(10, round)) / Math.pow(10, round);

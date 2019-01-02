@@ -69,18 +69,26 @@ class SyncInboundEmailAccountsSubActionHandler
     protected $db;
 
     /**
+     *
+     * @var ImapHandlerInterface
+     */
+    protected $imap;
+
+    /**
      * SyncInboundEmailAccountsSubActionHandler constructor.
      *
      * Handle sub-action for Sync Inbound Email Accounts
      *
      * @param SyncInboundEmailAccountsPage $sync
+     * @param ImapHandlerInterface $imap
      * @throws SyncInboundEmailAccountsException
      * @throws SyncInboundEmailAccountsNoMethodException
      */
-    public function __construct(SyncInboundEmailAccountsPage $sync) {
-
+    public function __construct(SyncInboundEmailAccountsPage $sync, ImapHandlerInterface $imap)
+    {
         global $mod_strings;
 
+        $this->imap = $imap;
         $this->sync = $sync;
 
         try {
@@ -277,16 +285,16 @@ class SyncInboundEmailAccountsSubActionHandler
 
         global $mod_strings;
 
-        $errs = imap_errors();
-        if($errs) {
+        $errs = $this->imap->getErrors();
+        if ($errs) {
             foreach ($errs as $err) {
                 $GLOBALS['log']->error("IMAP error detected: " . $err);
             }
             $this->output($mod_strings['LBL_SYNC_ERROR_FOUND']);
         }
 
-        $warns = imap_alerts();
-        if($warns) {
+        $warns = $this->imap->getAlerts();
+        if ($warns) {
             foreach ($warns as $warn) {
                 $GLOBALS['log']->warn("IMAP error detected: " . $warn);
             }
@@ -404,11 +412,11 @@ class SyncInboundEmailAccountsSubActionHandler
 
         // ------------- READ IMAP EMAIL-HEADERS AND CALCULATE MD5 BASED MESSAGE_IDs ----------------
 
-        $imap_uids = imap_sort($ie->conn, SORTDATE, 0, SE_UID);
+        $imap_uids = $this->imap->sort(SORTDATE, 0, SE_UID);
         $headers = array();
-        foreach($imap_uids as $imap_uid) {
-            $msgNo = imap_msgno ($ie->conn, (int)$imap_uid);
-            $headers[$imap_uid] = imap_header($ie->conn, $msgNo);
+        foreach ($imap_uids as $imap_uid) {
+            $msgNo = $this->imap->getMessageNo((int)$imap_uid);
+            $headers[$imap_uid] = $this->imap->getHeaderInfo($msgNo);
             $headers[$imap_uid]->imap_uid = $imap_uid;
             $headers[$imap_uid]->imap_msgid_int = (int)$msgNo;
         }
@@ -421,7 +429,7 @@ class SyncInboundEmailAccountsSubActionHandler
 
         // ------------ IMAP CLOSE -------------
 
-        imap_close($ie->conn);
+        $this->imap->close();
 
 
         return $headers;
@@ -435,14 +443,14 @@ class SyncInboundEmailAccountsSubActionHandler
      * @param null $msgNo
      * @return string
      */
-    protected function getCompoundMessageIdMD5(InboundEmail $ie, $uid, $msgNo = null) {
-
-        if(empty($msgNo) and !empty($uid)) {
-            $msgNo = imap_msgno ($ie->conn, (int)$uid);
+    protected function getCompoundMessageIdMD5(InboundEmail $ie, $uid, $msgNo = null)
+    {
+        if (empty($msgNo) and !empty($uid)) {
+            $msgNo = $this->imap->getMessageNo((int)$uid);
         }
 
-        $header = imap_headerinfo($ie->conn, $msgNo);
-        $fullHeader = imap_fetchheader($ie->conn, $msgNo);
+        $header = $this->imap->getHeaderInfo($msgNo);
+        $fullHeader = $this->imap->fetchHeader($msgNo);
         $message_id = $header->message_id;
         $deliveredTo = $ie->id;
         $matches = array();

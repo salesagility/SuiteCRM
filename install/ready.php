@@ -39,23 +39,16 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if(!defined('sugarEntry') || !sugarEntry) {
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-if( !isset( $install_script ) || !$install_script ){
-	die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
+include_once __DIR__ . '/../include/Imap/ImapHandlerFactory.php';
+
+if (!isset($install_script) || !$install_script) {
+    die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 // $mod_strings come from calling page.
-
-
-
-
-
-
-
-
-
 
 
 // System Environment
@@ -87,7 +80,7 @@ $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CUSTOM'].'</b> '.$mod_strings['
 
 
 // modules dir
-$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p';
+$envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // upload dir
 $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_UPLOAD'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
@@ -175,7 +168,9 @@ if(defined('PCRE_VERSION')) {
 $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_PCRE'].'</b> '.$pcreStatus.'</p>';
 
 // imap
-if(function_exists('imap_open')) {
+$imapFactory = new ImapHandlerFactory();
+$imap = $imapFactory->getImapHandler();
+if ($imap->isAvailable()) {
     $imapStatus = "{$mod_strings['LBL_CHECKSYS_OK']}";
 } else {
     $imapStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_IMAP']}</b></span>";
