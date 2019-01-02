@@ -50,7 +50,7 @@
                     <td class="submitButtons" colspan="8" nowrap="">
                         <label for="searchFieldMain" class="text-muted hide">{$APP.LBL_SEARCH_QUERY}</label>
                         <input id="searchFieldMain" title="{$APP.LBL_SEARCH_TEXT_FIELD_TITLE_ATTR}" class="searchField" type="text" size="80" name="search-query-string" value="{$searchQueryString}" autofocus>
-                        <input type="submit" title="{$APP.LBL_SEARCH_SUBMIT_FIELD_TITLE_ATTR}" class="button primary" value="{$APP.LBL_SEARCH_SUBMIT_FIELD_VALUE}">&nbsp;
+                        <input type="submit" onclick="searchForm.onSubmitClick(this);" title="{$APP.LBL_SEARCH_SUBMIT_FIELD_TITLE_ATTR}" class="button primary" value="{$APP.LBL_SEARCH_SUBMIT_FIELD_VALUE}">&nbsp;
                     </td>
                 <tr>
             	<tr height="5">
@@ -65,6 +65,7 @@
                                         <label for="search-query-size" class="text-muted">{$APP.LBL_SEARCH_RESULTS_PER_PAGE}</label>
                                         {html_options options=$sizeOptions selected=$searchQuerySize id="search-query-size" name="search-query-size"}
                                         &nbsp;&nbsp;
+                                        <input type="hidden" name="search-query-from" value="{$searchQueryFrom}">
 
                                         {if $engineOptions|@count gt 1}
                                             <label for="search-query-size" class="text-muted">{$APP.LBL_SEARCH_ENGINE}</label>
@@ -82,4 +83,14 @@
         	</tbody>
         </table>
     </form>
+    <script>
+        {literal}
+            var searchForm = {
+                onSubmitClick: function(e) {
+                    $('input[name="search-query-from"]').val(0);
+                    return true;
+                }
+            };
+        {/literal}
+    </script>
 </div>
