@@ -1,6 +1,7 @@
 <?php
 //include_once __DIR__ . '/SugarBeanMock.php';
 include_once __DIR__ . '/../../../../include/SubPanel/SubPanelDefinitions.php';
+include_once __DIR__ . '/../../../../modules/Campaigns/ProspectLink.php';
 
 use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 use SuiteCRM\StateSaver;
