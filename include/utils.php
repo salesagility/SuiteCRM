@@ -3202,7 +3202,8 @@ function check_php_version($sys_php_version = '')
         return 0;
     }
 
-    // Everything else is fair gamereturn 1;
+    // Everything else is fair game
+    return 1;
 }
 
 /**
@@ -3941,7 +3942,7 @@ function getPhpInfo($level = -1)
  *
  * @return $result a formatted string
  */
-function string_format($format, $args)
+function string_format($format, $args, $escape = true)
 {
     $result = $format;
 
@@ -3958,13 +3959,21 @@ function string_format($format, $args)
     }
     /* End of fix */
 
+    if ($escape) {
+        $db = DBManagerFactory::getInstance();
+    }
     for ($i = 0; $i < count($args); ++$i) {
-        if(strpos($args[$i], ',') !== false) {
+        if (strpos($args[$i], ',') !== false) {
             $values = explode(',', $args[$i]);
-            $args[$i] = implode("','",$values);
+            if ($escape) {
+                foreach ($values as &$value) {
+                    $value = $db->quote($value);
+                }
+            }
+            $args[$i] = implode("','", $values);
         }
 
-        $result = str_replace('{'.$i.'}',"'" . $args[$i] . "'", $result);
+        $result = str_replace('{'.$i.'}', "'" . $args[$i] . "'", $result);
     }
 
     return $result;

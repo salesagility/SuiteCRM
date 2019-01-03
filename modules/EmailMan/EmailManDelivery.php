@@ -263,8 +263,7 @@ do {
                 $emailAddress = new EmailAddress();
                 $emailAddress->email_address = $emailAddress->getAddressesByGUID($row['related_id'], $row['related_type']);
                 
-                $date = new DateTime();
-                $now = $date->format($timedate::DB_DATETIME_FORMAT);
+                $now = TimeDate::getInstance()->nowDb();
                     
                 if (!$emailman->sendOptInEmail($emailAddress, $row['related_type'], $row['related_id'])) {
                     $GLOBALS['log']->fatal("Confirm Opt In Email delivery FAILURE:" . print_r($row, true));
