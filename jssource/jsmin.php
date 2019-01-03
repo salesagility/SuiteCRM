@@ -76,7 +76,7 @@ class SugarMin {
 
                     if ($jsFileContent === false) {
                         LoggerManager::getLogger()->warn(
-                            "joinAndMinifyJSFiles - There was an error opening ".
+                            "joinAndMinifyJSFiles - There was an error opening ". 
                             "the file: {$jsFileName}"
                         );
                     } else if (strlen($jsFileContent) === 0) {
