@@ -57,12 +57,12 @@ class SugarMin {
      */
     static public function joinAndMinifyJSFiles($jsFiles)
     {
-        $ret = false;
         $target = SugarThemeRegistry::current()->getJSPath()
                 . '/' .
                 sha1(implode('|', $jsFiles)) . '.js';
+        $ret = sugar_cached($target);
 
-        if (!is_file(sugar_cached($target))) {
+        if (!is_file($ret)) {
             $customJSContents = '';
 
             foreach ($jsFiles as $jsFileName) {
@@ -99,11 +99,10 @@ class SugarMin {
                     "joinAndMinifyJSFiles - There was an error writing the file".
                     " {$customJSPath}"
                 );
-                return $ret;
+                return false;
             }
         }
 
-        $ret = sugar_cached($target);
         return getJSPath($ret);
     }
 }
