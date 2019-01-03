@@ -103,15 +103,15 @@ class SugarMin {
                     );
                     return false;
                 }
+
+                if (!inDeveloperMode() && !is_file($customJSPath)) {
+                    $customJSContents = SugarMin::minify($customJSContents);
+                }
             } catch (Exception $e) {
                 LoggerManager::getLogger()->error(
                     "joinAndMinifyJSFiles - {$e->getMessage()}"
                 );
-            }
-
-
-            if (!inDeveloperMode() && !is_file($customJSPath)) {
-                $customJSContents = SugarMin::minify($customJSContents);
+                return false;
             }
 
             $sfpc = sugar_file_put_contents($customJSPath, $customJSContents);
