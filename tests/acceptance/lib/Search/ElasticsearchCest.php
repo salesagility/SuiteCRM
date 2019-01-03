@@ -48,9 +48,15 @@ use Step\Acceptance\NavigationBarTester;
  *
  * @author gyula
  */
-class ElasticsearchCest {
-    
-    public function testSearchSetup(AcceptanceTester $I, WebDriverHelper $helper) {
+class ElasticsearchCest
+{
+    /**
+     * 
+     * @param AcceptanceTester $I
+     * @param WebDriverHelper $helper
+     */
+    public function testSearchSetup(AcceptanceTester $I, WebDriverHelper $helper)
+    {
         
         // login..
         
@@ -78,12 +84,12 @@ class ElasticsearchCest {
         $I->click('Schedule full indexing');
         $I->wait(1);
         $I->seeInPopup('A full indexing has been scheduled and will start in the next 60 seconds. Search results might be inconsistent until the process is complete.');
-        $I->acceptPopup();  
+        $I->acceptPopup();
         
         $I->click('Schedule partial indexing');
         $I->wait(1);
         $I->seeInPopup('A partial indexing has been scheduled and will start in the next 60 seconds.');
-        $I->acceptPopup();  
+        $I->acceptPopup();
 
         $I->click('Test connection');
         $I->wait(1);
@@ -93,7 +99,13 @@ class ElasticsearchCest {
         $I->click('Save');
     }
     
-    public function testSearchNotFound(AcceptanceTester $I, WebDriverHelper $helper) {
+    /**
+     * 
+     * @param AcceptanceTester $I
+     * @param WebDriverHelper $helper
+     */
+    public function testSearchNotFound(AcceptanceTester $I, WebDriverHelper $helper)
+    {
         
         // login..
         
@@ -122,10 +134,15 @@ class ElasticsearchCest {
         $I->see('Results');
         $I->see('No results matching your search criteria. Try broadening your search.');
         $I->see('Search performed in');
-        
     }
     
-    protected function createTestAccounts(AccountsTester $accounts, $max) {
+    /**
+     * 
+     * @param AccountsTester $accounts
+     * @param type $max
+     */
+    protected function createTestAccounts(AccountsTester $accounts, $max)
+    {
         $navi = new NavigationBarTester($accounts->getPublicScenario());
         $navi->clickAllMenuItem('Accounts');
         
@@ -134,7 +151,14 @@ class ElasticsearchCest {
         }
     }
     
-    protected function deleteTestAccounts(AcceptanceTester $I, AccountsTester $accounts, $max) {
+    /**
+     * 
+     * @param AcceptanceTester $I
+     * @param AccountsTester $accounts
+     * @param type $max
+     */
+    protected function deleteTestAccounts(AcceptanceTester $I, AccountsTester $accounts, $max)
+    {
         $navi = new NavigationBarTester($accounts->getPublicScenario());
         $navi->clickAllMenuItem('Accounts');
         
@@ -144,12 +168,18 @@ class ElasticsearchCest {
             $I->click('Delete');
             $I->wait(1);
             $I->seeInPopup('Are you sure you want to delete this record?');
-            $I->acceptPopup();  
+            $I->acceptPopup();
         }
     }
     
-    public function testSearchFounds(AcceptanceTester $I, WebDriverHelper $helper, AccountsTester $accounts) {
-        
+    /**
+     * 
+     * @param AcceptanceTester $I
+     * @param WebDriverHelper $helper
+     * @param AccountsTester $accounts
+     */
+    public function testSearchFounds(AcceptanceTester $I, WebDriverHelper $helper, AccountsTester $accounts)
+    {
         $max = 15;
         
         // login..
@@ -189,8 +219,6 @@ class ElasticsearchCest {
         $I->see('acc_for_test 11');
         
         // clean up test accounts
-        $this->deleteTestAccounts($I, $accounts, $max);        
-        
+        $this->deleteTestAccounts($I, $accounts, $max);
     }
-    
 }
