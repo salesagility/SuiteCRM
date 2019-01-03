@@ -73,7 +73,7 @@ class SugarMin {
                     $jsFileContent = sugar_file_get_contents($jsFileName);
 
                     if ($jsFileContent === false) {
-                        LoggerManager::getLogger()->warn(
+                        LoggerManager::getLogger()->error(
                             "joinAndMinifyJSFiles - There was an error opening ". 
                             "the file: {$jsFileName}"
                         );
@@ -86,14 +86,29 @@ class SugarMin {
                         $jsFileContents .= $jsFileContent;
                     }
                 } else {
-                    LoggerManager::getLogger()->warn(
+                    LoggerManager::getLogger()->error(
                         "joinAndMinifyJSFiles - {$jsFileName} is not a file."
                     );
                 }
                 $customJSContents .= $jsFileContents;
             }
 
-            $customJSPath = create_cache_directory($target);
+            try {
+                $customJSPath = create_cache_directory($target);
+
+                if ($customJSPath === false) {
+                    LoggerManager::getLogger()->error(
+                        "joinAndMinifyJSFiles - The directory {$customJSPath} could".
+                        " not be created"
+                    );
+                    return false;
+                }
+            } catch (Exception $e) {
+                LoggerManager::getLogger()->error(
+                    "joinAndMinifyJSFiles - {$e->getMessage()}"
+                );
+            }
+
 
             if ((!inDeveloperMode()) && (!is_file($customJSPath))) {
                 $customJSContents = SugarMin::minify($customJSContents);
