@@ -87,6 +87,27 @@ class SearchResultsController extends Controller
     public function display()
     {
         $headers = $this->getListViewHeaders();
+        
+        $total = $this->results->getTotal();
+        if ($total > 1) {
+            $from = $this->query->getFrom();
+            $size = $this->query->getSize();
+            $page = (int)($from / $size) + 1;
+            $string = $this->query->getSearchString();
+
+            $this->view->getTemplate()->assign('pagination', [
+                'prev' => $page > 1,
+                'next' => $total - $from > $size,
+                'page' => $page,
+                'last' => (int)($total / $size) + 1,
+                'size' => $size,
+                'from' => $from,
+                'total' => $total,
+                'string' => $string,
+            ]);
+        }
+        $this->view->getTemplate()->assign('total', $total);
+        
         $this->view->getTemplate()->assign('headers', $headers);
         $this->view->getTemplate()->assign('results', $this->results);
         $this->view->getTemplate()->assign('resultsAsBean', $this->results->getHitsAsBeans());

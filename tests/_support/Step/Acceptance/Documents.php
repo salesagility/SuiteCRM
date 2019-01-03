@@ -9,7 +9,7 @@ class Documents extends \AcceptanceTester
      */
     public function gotoDocuments()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Documents');
     }
 }

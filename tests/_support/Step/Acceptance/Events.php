@@ -9,7 +9,7 @@ class Events extends \AcceptanceTester
      */
     public function gotoEvents()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Events');
     }
 
