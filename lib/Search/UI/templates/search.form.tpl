@@ -87,6 +87,7 @@
         {literal}
             var searchForm = {
                 onSubmitClick: function(e) {
+                    // jump to the first page on new results list
                     $('input[name="search-query-from"]').val(0);
                     return true;
                 }

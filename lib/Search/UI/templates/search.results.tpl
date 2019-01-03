@@ -79,6 +79,7 @@
                     } else {
                         throw 'Invalid direction';
                     }
+                    // keep search form values
                     $('input[name="search-query-from"]').val(from);
                     $('select[name="search-query-size"]').val(size);
                     $('input[name="search-query-string"').val(string);
