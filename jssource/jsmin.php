@@ -110,7 +110,7 @@ class SugarMin {
             }
 
 
-            if ((!inDeveloperMode()) && (!is_file($customJSPath))) {
+            if (!inDeveloperMode() && !is_file($customJSPath)) {
                 $customJSContents = SugarMin::minify($customJSContents);
             }
 
