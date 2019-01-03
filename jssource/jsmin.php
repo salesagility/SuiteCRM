@@ -57,6 +57,7 @@ class SugarMin {
      */
     static public function joinAndMinifyJSFiles($jsFiles)
     {
+        $ret = false;
         $target = SugarThemeRegistry::current()->getJSPath()
                 . '/' .
                 sha1(implode('|', $jsFiles)) . '.js';
@@ -86,10 +87,23 @@ class SugarMin {
                 $customJSContents = SugarMin::minify($customJSContents);
             }
 
-            sugar_file_put_contents($customJSPath, $customJSContents);
+            $sfpc = sugar_file_put_contents($customJSPath, $customJSContents);
+
+            if ($sfpc === 0) {
+                LoggerManager::getLogger()->warn(
+                    "joinAndMinifyJSFiles - The".
+                    " content of all files is empty."
+                );
+            } else if ($sfpc === false) {
+                LoggerManager::getLogger()->error(
+                    "joinAndMinifyJSFiles - There was an error writing the file".
+                    " {$customJSPath}"
+                );
+                return $ret;
+            }
         }
 
-        $customJSURL = sugar_cached($target);
-        return getJSPath($customJSURL);
+        $ret = sugar_cached($target);
+        return getJSPath($ret);
     }
 }

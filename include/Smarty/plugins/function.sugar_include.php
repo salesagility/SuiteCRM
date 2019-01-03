@@ -90,9 +90,14 @@ function smarty_function_sugar_include($params, &$smarty)
 	   	  } //foreach
 
         if (!empty($jsFiles)) {
-            $code .= "<script src=\"".
-                  SugarMin::joinAndMinifyJSFiles($jsFiles) .
-                  "\"></script>";
+
+            $includeFile = SugarMin::joinAndMinifyJSFiles($jsFiles);
+
+            if ($includeFile) {
+                $code .= "<script src=\"".
+                      $includeFile.
+                      "\"></script>";
+            }
         }
 	      return $code;
    	} //if
