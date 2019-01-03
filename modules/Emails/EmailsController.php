@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Utility\SuiteValidator;
+
 include_once 'include/Exceptions/SugarControllerException.php';
 
 class EmailsController extends SugarController
@@ -642,7 +644,9 @@ class EmailsController extends SugarController
         $uid = $_REQUEST['uid'];
         $inboundEmailRecordId = $_REQUEST['inbound_email_record'];
 
-        if (SuiteValidator::isValidId($uid)) {
+        $validator = new SuiteValidator();
+
+        if ($validator->isValidId($uid)) {
             $subQuery = "`mailbox_id` = " . $db->quoted($inboundEmailRecordId) . " AND `uid` = " . $db->quoted($uid);
             $result = $emails->get_full_list('', $subQuery);
         }
