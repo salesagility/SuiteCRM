@@ -93,6 +93,7 @@ class SearchResultsController extends Controller
             $from = $this->query->getFrom();
             $size = $this->query->getSize();
             $page = (int)($from / $size) + 1;
+            $string = $this->query->getSearchString();
 
             $this->view->getTemplate()->assign('pagination', [
                 'prev' => $page > 1,
@@ -102,6 +103,7 @@ class SearchResultsController extends Controller
                 'size' => $size,
                 'from' => $from,
                 'total' => $total,
+                'string' => $string,
             ]);
         }
         $this->view->getTemplate()->assign('total', $total);

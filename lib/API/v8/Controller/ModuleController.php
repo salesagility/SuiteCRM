@@ -445,7 +445,7 @@ class ModuleController extends ApiController
         ) {
                 $beanID = $body['data']['id'];
                 $isValidator = new SuiteValidator();
-                if (!$isValidator->isValidId($beanID)) {
+                if (!$isValidator->isValidId($beanID)) {                    
                     throw new InvalidArgumentException(sprintf('Bean id %s is invalid', $beanID));
                 }
 

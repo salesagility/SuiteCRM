@@ -71,6 +71,7 @@
                 onClick: function(dir) {
                     var from = {/literal}{$pagination.from}{literal};
                     var size = {/literal}{$pagination.size}{literal};
+                    var string = {/literal}{$pagination.string}{literal};
                     if (dir === 'prev') {
                         from -= size;
                     } else if (dir === 'next') {
@@ -79,6 +80,8 @@
                         throw 'Invalid direction';
                     }
                     $('input[name="search-query-from"]').val(from);
+                    $('select[name="search-query-size"]').val(size);
+                    $('input[name="search-query-string"').val(string);
                     $('#search-wrapper-form').submit();
                 }
             };
