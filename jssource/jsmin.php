@@ -71,8 +71,6 @@ class SugarMin {
 
                 if (is_file($jsFileName)) {
                     $jsFileContent = sugar_file_get_contents($jsFileName);
-                    $jsFileContents .= $jsFileContent;
-
 
                     if ($jsFileContent === false) {
                         LoggerManager::getLogger()->warn(
@@ -84,6 +82,8 @@ class SugarMin {
                             "joinAndMinifyJSFiles - The content of JS is empty: " .
                             "{$jsFileName}"
                         );
+                    } else {
+                        $jsFileContents .= $jsFileContent;
                     }
                 } else {
                     LoggerManager::getLogger()->warn(
