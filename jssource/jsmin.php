@@ -67,15 +67,27 @@ class SugarMin {
 
             foreach ($jsFiles as $jsFileName) {
                 $jsFileContents = '';
+                $jsFileContent = '';
 
                 if (is_file($jsFileName)) {
-                    $jsFileContents .= sugar_file_get_contents($jsFileName);
-                }
+                    $jsFileContent = sugar_file_get_contents($jsFileName);
+                    $jsFileContents .= $jsFileContent;
 
-                if (empty($jsFileContents)) {
+
+                    if ($jsFileContent === false) {
+                        LoggerManager::getLogger()->warn(
+                            "joinAndMinifyJSFiles - There was an error opening the file: ".
+                            "{$jsFileName}"
+                        );
+                    } else if (strlen($jsFileContent) === 0) {
+                        LoggerManager::getLogger()->warn(
+                            "joinAndMinifyJSFiles - The content of JS is empty: " .
+                            "{$jsFileName}"
+                        );
+                    }
+                } else {
                     LoggerManager::getLogger()->warn(
-                        "joinAndMinifyJSFiles - The content of JS is empty: " .
-                        "{$jsFileName}"
+                        "joinAndMinifyJSFiles - {$jsFileName} is not a file."
                     );
                 }
                 $customJSContents .= $jsFileContents;
