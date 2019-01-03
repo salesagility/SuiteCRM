@@ -73,7 +73,8 @@ class SugarMin {
 
                 if (empty($jsFileContents)) {
                     LoggerManager::getLogger()->warn(
-                        "joinAndMinifyJSFiles - The content of JS is empty: " . "{$jsFileName}"
+                        "joinAndMinifyJSFiles - The content of JS is empty: " .
+                        "{$jsFileName}"
                     );
                 }
                 $customJSContents .= $jsFileContents;
