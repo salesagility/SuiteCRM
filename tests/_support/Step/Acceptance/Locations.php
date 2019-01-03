@@ -9,7 +9,7 @@ class Locations extends \AcceptanceTester
      */
     public function gotoLocations()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Locations');
     }
 

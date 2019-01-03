@@ -71,7 +71,7 @@
                 onClick: function(dir) {
                     var from = {/literal}{$pagination.from}{literal};
                     var size = {/literal}{$pagination.size}{literal};
-                    var string = {/literal}{$pagination.string}{literal};
+                    var string = "{/literal}{$pagination.string}{literal}";
                     if (dir === 'prev') {
                         from -= size;
                     } else if (dir === 'next') {

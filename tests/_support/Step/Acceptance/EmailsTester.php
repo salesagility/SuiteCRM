@@ -9,7 +9,7 @@ class EmailsTester extends \AcceptanceTester
      */
     public function gotoEmails()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Emails');
     }
 }
