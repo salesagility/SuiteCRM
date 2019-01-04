@@ -47,6 +47,15 @@ array(
       'maxColumns' => '2',
       'form' =>
       array(
+        'buttons' =>
+        array(
+          0 => 'EDIT',
+          1 => 'DUPLICATE',
+          2 => 'DELETE',
+        ),
+        'headerTpl' => 'modules/Documents/tpls/detailHeader.tpl',
+      ),
+      array(
         'hidden' =>
         array(
           0 => '<input type="hidden" name="old_id" value="{$fields.document_revision_id.value}">',

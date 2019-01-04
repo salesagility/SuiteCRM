@@ -489,8 +489,7 @@ function get_subscription_lists($focus, $descriptions = false)
                 } else {
                     //this list is not exempt, and user is subscribed, so add to subscribed array, and unset from the unsubs_arr
                     //as long as this list is not in exempt array
-                    $temp = "prospect_list@".$news_list['prospect_list_id']."@campaign@".$news_list['campaign_id'];
-                    if (!array_search($temp, $unsubs_arr)) {
+                    if (!array_key_exists($news_list['name'], $unsubs_arr)) {
                         $subs_arr[$news_list['name']] = "prospect_list@".$news_list['prospect_list_id']."@campaign@".$news_list['campaign_id'];
                         $match = 'true';
                         unset($unsubs_arr[$news_list['name']]);

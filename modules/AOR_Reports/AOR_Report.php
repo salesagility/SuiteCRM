@@ -1111,7 +1111,7 @@ class AOR_Report extends Basic
         $sql = $this->build_report_query();
         $result = $this->db->query($sql);
 
-        while ($row = $this->db->fetchByAssoc($result)) {
+        while ($row = $this->db->fetchByAssoc($result,false)) {
             $csv .= "\r\n";
             foreach ($fields as $name => $att) {
                 $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';

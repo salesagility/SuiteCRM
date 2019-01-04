@@ -5662,7 +5662,6 @@ class InboundEmail extends SugarBean
             SE_UID
         );
 
-
         foreach ($emailSortedHeaders as $uid) {
             $response[] = $this->returnImportedEmail(null, $uid);
         }
@@ -6809,7 +6808,7 @@ class InboundEmail extends SugarBean
                         $importStatus = $this->returnImportedEmail($msgNo, $uid);
                         // add to folder
                         if ($importStatus) {
-                            $sugarFolder->addBean($this->email);
+                            $sugarFolder->addBean($this);
                             if (!$copy && isset($_REQUEST['delete']) && ($_REQUEST['delete'] == "true") && $importStatus) {
                                 $GLOBALS['log']->error("********* delete from mailserver [ {explode(", ", $uids)} ]");
                                 // delete from mailserver
