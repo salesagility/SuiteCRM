@@ -99,7 +99,7 @@ class SearchResultsController extends Controller
                 'prev' => $page > 1,
                 'next' => $total - $from > $size,
                 'page' => $page,
-                'last' => (int)($total / $size) + 1,
+                'last' => (int)($total / $size) + ($total%$size === 0 ? 0 : 1),
                 'size' => $size,
                 'from' => $from,
                 'total' => $total,
