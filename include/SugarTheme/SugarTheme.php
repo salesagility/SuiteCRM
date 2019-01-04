@@ -767,7 +767,7 @@ EOHTML;
                     $other_attributes .= ' data-orig="'.$imageName.'"';
 
                     if ($sprite = $this->getSprite($sp['class'], $other_attributes, $alt)) {
-                        return $sprite;
+                        return $imageJSONEncode ? json_encode($sprite) : $sprite;
                     }
                 }
             }
