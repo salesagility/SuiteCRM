@@ -12,7 +12,7 @@ jobs:
       - stage: codecoverage
         if: type IN (pull_request) OR branch in (master, develop)
         php: 7.0
-        script: ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 2;" >> config_override.php  ; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
+        script: ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 0;" >> config_override.php  ; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
 sudo: required
 dist: trusty
 services:
@@ -22,7 +22,7 @@ addons:
   chrome: stable
 
 env:
-  - INSTANCE_URL=http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1 GSYNC_LOGLEVEL=info
+  - INSTANCE_URL=http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1
 
 before_install:
   # Install chrome driver#
