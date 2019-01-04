@@ -550,24 +550,26 @@ class ListViewDataEmails extends ListViewData
                 }
                 break;
             case 'is_imported':
+                $db = DBManagerFactory::getInstance();
+
                 $uid = $emailHeader['uid'];
                 $importedEmailBeans = BeanFactory::getBean('Emails');
                 $is_imported = $importedEmailBeans->get_full_list(
                     '',
-                    'emails.uid LIKE "' . $uid . '"'
+                    'emails.uid LIKE ' . $db->quoted($uid) . ' AND emails.mailbox_id = ' . $db->quoted($inboundEmail->id)
                 );
-                
+
                 if (null === $is_imported) {
                     $is_imported = [];
                 }
-                
+
                 if ($is_imported instanceof Countable) {
                     $count = count($is_imported);
                 } else {
                     LoggerManager::getLogger()->warn('ListViewDataEmails::getEmailRecordFieldValue: email list should be a Countable');
                     $count = count((array)$is_imported);
                 }
-                
+
                 if ($count > 0) {
                     $ret = true;
                 } else {
