@@ -266,6 +266,12 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
     force_load = false;
   }
 
+  function checkRefreshPage(url) {
+    if (typeof(url) != 'undefined' && url != null && url.indexOf('refresh_page=1') > 0) {
+      document.location.reload();
+    }
+  }
+
   if (force_load || typeof( child_field_loaded[child_field] ) == 'undefined') {
     request_map[request_id] = child_field;
     if (typeof (url) == 'undefined' || url == null) {
@@ -304,6 +310,8 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
           $('#whole_subpanel_' + child_field + ' .table-responsive').footable();
         }
         request_id++;
+
+        checkRefreshPage(url);
       }
     });
 
@@ -319,11 +327,9 @@ function showSubPanel(child_field, url, force_load, layout_def_key) {
     }
 
     current_child_field = child_field;
-  }
-  if (typeof(url) != 'undefined' && url != null && url.indexOf('refresh_page=1') > 0) {
-    document.location.reload();
-  }
 
+    checkRefreshPage(url);
+  }
 }
 
 function toggleSubpanelCookie(tab) {
