@@ -85,9 +85,6 @@ class GoogleSyncBase
     /** @var object A Logger Instance */
     protected $logger;
 
-    /** @var string The log level before we begin */
-    protected $oldLogLevel;
-
     /**
      * Class Constructor
      * 
@@ -95,13 +92,7 @@ class GoogleSyncBase
      */
     public function __construct($sugarConfig)
     {
-        // This sets the log level to a variable that can be set in config_override.php. It's for debugging only.
         $this->logger = LoggerManager::getLogger();
-        if (isset($sugarConfig['gsync_loglevel'])) {
-            $this->oldLogLevel = $this->logger->getLogLevel();
-            $this->logger->setLevel($sugarConfig['gsync_loglevel']); // TODO: it changes the log level but as it is a global, it will affect the other parts of core until this class __destructor is called! (and it's bad)
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Log Level Set To: ' . $sugarConfig['gsync_loglevel']);
-        }
         $this->timezone = date_default_timezone_get(); // This defaults to the server timezone. Overridden later.
         $this->authJson = $this->getAuthJson($sugarConfig);
         $this->db = DBManagerFactory::getInstance();
@@ -115,10 +106,6 @@ class GoogleSyncBase
     {
         // Set the log level back to the original value
         $this->logger->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . '__destruct');
-        if (isset($this->oldLogLevel)) {
-            $this->logger->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Setting Log Level Back To: ' . $this->oldLogLevel);
-            $this->logger->setLevel($this->oldLogLevel);
-        }
     }
 
     /**

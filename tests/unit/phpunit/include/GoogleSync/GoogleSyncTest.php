@@ -51,10 +51,9 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
      * @param string $googleAuthJson
      * @return string
      */
-    protected function getFakeSugarConfig($googleAuthJson = null, $loglevel = 'fatal') {
+    protected function getFakeSugarConfig($googleAuthJson = null) {
         return [
             'google_auth_json' => $this->getFakeGoogleAuthJson($googleAuthJson),
-            'gsync_loglevel' => $loglevel,
         ];
     }
     
@@ -81,10 +80,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         // base64 encoded of {"web":"test"}
         $sugar_config['google_auth_json'] = 'eyJ3ZWIiOiJ0ZXN0In0=';
 
-        // Set Log Level
-        $expectedLogLevel = 'info';
-
-        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}', $expectedLogLevel));
+        $object = new GoogleSync($this->getFakeSugarConfig('{"web":"test"}'));
 
         // Test GoogleSync::timezone
         $timezone = self::$reflection->getProperty('timezone');
@@ -102,10 +98,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $expectedClass = DBManager::class;
         $actualClass = self::$dbProperty->getValue($object);
         $this->assertInstanceOf($expectedClass, $actualClass);
-
-        // Test log level
-        $actualLogLevel = LoggerManager::getLogLevel();
-        $this->assertEquals($expectedLogLevel, $actualLogLevel);
     }
 
     /**
