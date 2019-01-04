@@ -231,13 +231,6 @@ class ElasticsearchCest
         $I->see('Search performed in');
         $I->see('Page 1 of 2');
         
-        $I->selectOption('name["search-query-size"]', 20);        
-        $I->see('SEARCH');
-        $I->see('Results');
-        $I->see('Total result(s): ' . $end);
-        $I->see('Search performed in');
-        $I->see('Page 2 of 2');
-        
         // clean up test accounts
         $this->deleteTestAccounts($I, $accounts, $end);
     }
