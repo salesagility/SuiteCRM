@@ -423,6 +423,32 @@ eoq;
     }
 
     /**
+     * @param string $module_name
+     * @param string $record_id
+     * @param string $name
+     * @param string $addr
+     * @param string $text
+     * @return string
+     */
+    private function createEmailLink($module_name, $record_id, $name, $addr, $text) {
+        global $current_user;
+
+        if ($current_user->getEmailClient() == 'sugar') {
+            return '<a class="email-link"'
+                . ' onclick="$(document).openComposeViewModal(this);"'
+                . ' data-module="' . $module_name
+                . '" data-record-id="' . $record_id
+                . '" data-module-name="' . $name
+                . '" data-email-address="' . $addr  . '">'
+                . $text . '</a>';
+        }
+
+        return '<a class="email-link"'
+            . ' href="mailto:' .  $addr . '">'
+            . $text . '</a>';
+    }
+
+    /**
      *
      * @global SugarBean $focus
      * @param SugarBean|null $bean
@@ -458,13 +484,8 @@ eoq;
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
-        $emailLink = '<a class="email-link"'
-            . ' onclick="$(document).openComposeViewModal(this);"'
-            . ' data-module="' . $myBean->module_name
-            . '" data-record-id="' . $myBean->id
-            . '" data-module-name="' . $myBean->name
-            . '" data-email-address="">'
-            . $innerText;
+        $emailLink = $this->createEmailLink(
+            $myBean->module_name, $myBean->id, $myBean->name, '', $innerText);
 
         // focus is set?
         if (!is_object($myBean)) {
@@ -490,25 +511,20 @@ eoq;
 
             foreach ($emailFields as $emailField) {
                 if (!empty($composeData)) {
-                    $emailLink = '<a onclick=" $(document).openComposeViewModal(this);" ' .
-                        'data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="' .
-                        $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name'] .
-                        '"  data-email-address="' . $composeData['to_addrs'] . '">';
+                    $emailLink = $this->createEmailLink(
+                        $composeData['parent_type'], $composeData['parent_id'],
+                        $composeData['parent_name'], $composeData['to_addrs'],
+                        '');
                 } elseif (is_object($myBean) && (property_exists($myBean, $emailField))) {
                     $email_tick = $this->getEmailAddressConfirmOptInTick($myBean, $emailField);
                     $optOut = false;
                     $invalid = false;
 
                     if ($enableConfirmedOptIn === SugarEmailAddress::COI_STAT_DISABLED) {
-                        $emailLink = '<a class="email-link"'
-                            . ' onclick="$(document).openComposeViewModal(this);"'
-                            . ' data-module="'
-                            . $myBean->module_name . '" ' . 'data-record-id="'
-                            . $myBean->id . '" data-module-name="'
-                            . $myBean->name . '" data-email-address="'
-                            . $myBean->{$emailField} . '">';
 
-                        $emailLink .= $myBean->{$emailField} . '</a>';
+                        $emailLink = $this->createEmailLink(
+                            $myBean->module_name, $myBean->id, $myBean->name,
+                            $myBean->{$emailField}, $myBean->{$emailField});
                         return $emailLink;
                     }
 
@@ -537,35 +553,30 @@ eoq;
                                         $optOut === true
                                         || $invalid === true
                                     ) {
-                                        $emailLink =
-                                            '<a class="email-link"'
-                                            . ' onclick="$(document).openComposeViewModal(this);"'
-                                            . ' data-module="' . $myBean->module_name . '" ' . 'data-record-id="'
-                                            . $myBean->id . '" data-module-name="'
-                                            . $myBean->name . '" data-email-address="'
-                                            . $myBean->{$emailField} . '">';
+                                        $emailText = '';
                                         if ($this->appendTick) {
-                                            $emailLink .= $email_tick;
+                                            $emailText .= $email_tick;
                                         }
-                                        $emailLink .= '<span class="email-line-through">';
-                                        $emailLink .= $myBean->{$emailField};
+                                        $emailText .= '<span class="email-line-through">';
+                                        $emailText .= $myBean->{$emailField};
                                         $emailLink .= '</span>';
-                                    } else {
-                                        $emailLink =
-                                            '<a class="email-link"'
-                                            . ' onclick="$(document).openComposeViewModal(this);"'
-                                            . ' data-module="'
-                                            . $myBean->module_name . '" ' . 'data-record-id="'
-                                            . $myBean->id . '" data-module-name="'
-                                            . $myBean->name . '" data-email-address="'
-                                            . $myBean->{$emailField} . '">';
-                                        if ($this->appendTick) {
-                                            $emailLink .= $email_tick;
-                                        }
-                                        $emailLink .= $myBean->{$emailField};
-                                    }
-                                    $emailLink .= '</a>';
 
+                                        $emailLink = $this->createEmailLink(
+                                            $myBean->module_name, $myBean->id, $myBean->name,
+                                            $myBean->{$emailField}, $emailText);
+                                    } else {
+
+                                        $emailText = '';
+                                        if ($this->appendTick) {
+                                            $emailText .= $email_tick;
+                                        }
+
+                                        $emailText .= $myBean->{$emailField};
+
+                                        $emailLink = $this->createEmailLink(
+                                            $myBean->module_name, $myBean->id, $myBean->name,
+                                            $myBean->{$emailField}, $emailText);
+                                    }
                                     return $emailLink;
                                 }
                             }
@@ -575,8 +586,6 @@ eoq;
                     }
                 }
             }
-
-            $emailLink .= '</a>';
 
             return $emailLink;
         }
