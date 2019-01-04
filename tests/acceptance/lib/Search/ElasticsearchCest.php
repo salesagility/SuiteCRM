@@ -141,12 +141,12 @@ class ElasticsearchCest
      * @param AccountsTester $accounts
      * @param type $max
      */
-    protected function createTestAccounts(AccountsTester $accounts, $max)
+    protected function createTestAccounts(AccountsTester $accounts, $max, $from = 0)
     {
         $navi = new NavigationBarTester($accounts->getPublicScenario());
         $navi->clickAllMenuItem('Accounts');
         
-        for ($i=0; $i<$max; $i++) {
+        for ($i=$from; $i<$max; $i++) {
             $accounts->createAccount('acc_for_test ' . $i, false, false);
         }
     }
@@ -218,7 +218,27 @@ class ElasticsearchCest
         $I->see('Account Name');
         $I->see('acc_for_test 11');
         
+        // add few more until end of the last page
+        $end = 20;
+        $this->createTestAccounts($accounts, $end, $max);
+           
+        $I->fillField('div.desktop-bar ul#toolbar li #searchform .input-group #query_string', 'acc_for_test');
+        $I->click('.desktop-bar #searchform > div > span > button');
+        
+        $I->see('SEARCH');
+        $I->see('Results');
+        $I->see('Total result(s): ' . $end);
+        $I->see('Search performed in');
+        $I->see('Page 1 of 2');
+        
+        $I->selectOption('name["search-query-size"]', 20);        
+        $I->see('SEARCH');
+        $I->see('Results');
+        $I->see('Total result(s): ' . $end);
+        $I->see('Search performed in');
+        $I->see('Page 2 of 2');
+        
         // clean up test accounts
-        $this->deleteTestAccounts($I, $accounts, $max);
+        $this->deleteTestAccounts($I, $accounts, $end);
     }
 }
