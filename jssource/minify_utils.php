@@ -594,10 +594,6 @@ function processJSFiles($jsFiles)
                 );
             } else {
                 $jsFilesContents .= $jsFileContent;
-                LoggerManager::getLogger()->warn(
-                    "processJSFiles - " .
-                    "{$jsFilesContent}"
-                );
             }
         } else {
             LoggerManager::getLogger()->error(
