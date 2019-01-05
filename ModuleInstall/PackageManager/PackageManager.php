@@ -493,17 +493,15 @@ class PackageManager
     {
         // takes a manifest.php manifest array and validates contents
         global $subdirs;
-        global $sugar_version;
-        global $suitecrm_version;
         global $sugar_flavor;
         global $mod_strings;
 
-        if (!validate_manifest_type($manifest['type']))
+        if (!PackageManager::validate_manifest_type($manifest['type']))
             exit();
 
 
-        $versionSugarOk = validate_manifest_crm_version($manifest['acceptable_sugar_versions'], 'acceptable_sugar_versions');
-        $versionSuiteOk = validate_manifest_crm_version($manifest['acceptable_suitecrm_versions'], 'acceptable_suitecrm_versions');
+        $versionSugarOk = PackageManager::validate_manifest_crm_version($manifest['acceptable_sugar_versions'], 'acceptable_sugar_versions');
+        $versionSuiteOk = PackageManager::validate_manifest_crm_version($manifest['acceptable_suitecrm_versions'], 'acceptable_suitecrm_versions');
 
         if (!$versionSugarOk || !$versionSuiteOk)
             exit();
