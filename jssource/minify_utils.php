@@ -518,8 +518,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 function joinAndMinifyJSFiles($jsFiles)
 {
     $jsFiles = array_map('realpath', array_unique($jsFiles));
-    $target = SugarThemeRegistry::current()->getJSPath()
-            . '/' .
+    $target = SugarThemeRegistry::current()->getJSPath(). '/' .
             sha1(implode('|', $jsFiles)) . '.js';
     $ret = sugar_cached($target);
 
@@ -551,8 +550,7 @@ function joinAndMinifyJSFiles($jsFiles)
 
         if ($sfpc === 0) {
             LoggerManager::getLogger()->warn(
-                "joinAndMinifyJSFiles - The".
-                " content of all files is empty."
+                "joinAndMinifyJSFiles - The content of all files is empty."
             );
         } else if ($sfpc === false) {
             LoggerManager::getLogger()->error(
