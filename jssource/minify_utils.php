@@ -504,3 +504,107 @@ if (!defined('sugarEntry') || !sugarEntry) {
             }
 
         }
+
+
+/**
+ * Join and minify JS files
+ *
+ * @param array $jsFiles an 'array' of js files
+ *
+ * @author Jose C. Massón <jose@gcoop.coop>
+ *
+ * @return Minified JS file path
+ */
+function joinAndMinifyJSFiles($jsFiles)
+{
+    $target = SugarThemeRegistry::current()->getJSPath()
+            . '/' .
+            sha1(implode('|', $jsFiles)) . '.js';
+    $ret = sugar_cached($target);
+
+    if (!is_file($ret)) {
+        $jsFilesContents = processJSFiles($jsFiles);
+
+        try {
+            $customJSPath = create_cache_directory($target);
+
+            if ($customJSPath === false) {
+                LoggerManager::getLogger()->error(
+                    "joinAndMinifyJSFiles - The directory {$customJSPath} could".
+                    " not be created"
+                );
+                return false;
+            }
+
+            if (!inDeveloperMode() && !is_file($customJSPath)) {
+                $jsFilesContents = SugarMin::minify($jsFilesContents);
+            }
+        } catch (Exception $e) {
+            LoggerManager::getLogger()->error(
+                "joinAndMinifyJSFiles - {$e->getMessage()}"
+            );
+            return false;
+        }
+
+        $sfpc = sugar_file_put_contents($customJSPath, $jsFilesContents);
+
+        if ($sfpc === 0) {
+            LoggerManager::getLogger()->warn(
+                "joinAndMinifyJSFiles - The".
+                " content of all files is empty."
+            );
+        } else if ($sfpc === false) {
+            LoggerManager::getLogger()->error(
+                "joinAndMinifyJSFiles - There was an error writing the file".
+                " {$customJSPath}"
+            );
+            return false;
+        }
+    }
+
+    return getJSPath($ret);
+}
+
+
+/**
+ * Process an array of JS files and return its content concatenated
+ *
+ * @param array $jsFiles an 'array' of js files
+ *
+ * @author Jose C. Massón <jose@gcoop.coop>
+ *
+ * @return The content of the JS files concatenated
+ */
+function processJSFiles($jsFiles)
+{
+    $jsFilesContents = '';
+
+    foreach ($jsFiles as $jsFileName) {
+        if (is_file($jsFileName)) {
+            $jsFileContent = sugar_file_get_contents($jsFileName);
+
+            if ($jsFileContent === false) {
+                LoggerManager::getLogger()->error(
+                    "processJSFiles - There was an error opening ".
+                    "the file: {$jsFileName}"
+                );
+            } else if (strlen($jsFileContent) === 0) {
+                LoggerManager::getLogger()->warn(
+                    "processJSFiles - The content of JS is empty: " .
+                    "{$jsFileName}"
+                );
+            } else {
+                $jsFilesContents .= $jsFileContent;
+                LoggerManager::getLogger()->warn(
+                    "processJSFiles - " .
+                    "{$jsFilesContent}"
+                );
+            }
+        } else {
+            LoggerManager::getLogger()->error(
+                "processJSFiles - {$jsFileName} is not a file."
+            );
+        }
+    }
+    return $jsFilesContents;
+}

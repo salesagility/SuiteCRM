@@ -39,6 +39,7 @@ r22571 - 2007-05-08 16:35:35 -0700 (Tue, 08 May 2007) - clee -
  * @subpackage plugins
  */
 
+require_once 'jssource/minify_utils.php';
 
 /**
  * Smarty {sugar_include} function plugin
@@ -90,8 +91,7 @@ function smarty_function_sugar_include($params, &$smarty)
 	   	  } //foreach
 
         if (!empty($jsFiles)) {
-
-            $includeFile = SugarMin::joinAndMinifyJSFiles($jsFiles);
+            $includeFile = joinAndMinifyJSFiles($jsFiles);
 
             if ($includeFile) {
                 $code .= "<script src=\"".
