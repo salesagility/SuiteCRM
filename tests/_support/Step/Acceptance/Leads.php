@@ -9,7 +9,7 @@ class Leads extends \AcceptanceTester
      */
     public function gotoLeads()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Leads');
     }
 

@@ -9,7 +9,7 @@ class KnowledgeBase extends \AcceptanceTester
      */
     public function gotoKnowledgeBase()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Knowledge Base');
     }
 

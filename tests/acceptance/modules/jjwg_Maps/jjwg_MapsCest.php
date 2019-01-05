@@ -60,7 +60,7 @@ class jjwg_MapsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Maps $map
-     * @param \Step\Acceptance\Accounts $accounts
+     * @param \Step\Acceptance\AccountsTester $accounts
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a map so that I can test
@@ -71,7 +71,7 @@ class jjwg_MapsCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Maps $map,
-        \Step\Acceptance\Accounts $accounts,
+        \Step\Acceptance\AccountsTester $accounts,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Map');

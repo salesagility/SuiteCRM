@@ -9,7 +9,7 @@ class Calls extends \AcceptanceTester
      */
     public function gotoCalls()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Calls');
     }
 

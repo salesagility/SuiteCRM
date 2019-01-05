@@ -7,7 +7,7 @@ use \AcceptanceTester as Tester;
 class Workflow extends Tester
 {
     public function navigateToWorkflow(
-        NavigationBar $navigationBar,
+        NavigationBarTester $navigationBar,
         ListView $listView
     ) {
         $navigationBar->clickAllMenuItem('WorkFlow');
