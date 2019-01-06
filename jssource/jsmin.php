@@ -45,5 +45,4 @@ class SugarMin {
         require_once('jssource/Minifier.php');
         return Minifier::minify($this->text);
 	}
-
 }
