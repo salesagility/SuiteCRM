@@ -9,7 +9,7 @@ class MapsMarkers extends \AcceptanceTester
      */
     public function gotoMapsMarkers()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Maps - Markers ');
     }
 

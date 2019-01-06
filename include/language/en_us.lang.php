@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -3648,6 +3648,14 @@ $app_strings['MSG_BROWSER_NOTIFICATIONS_ENABLED'] = 'Desktop notifications are n
 $app_strings['MSG_BROWSER_NOTIFICATIONS_DISABLED'] = 'Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.';
 $app_strings['MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED'] = 'This browser does not support desktop notifications.';
 
+$app_strings['IMAP_HANDLER_ERROR'] = 'ERROR: {error}; key was: "{key}".';
+$app_strings['IMAP_HANDLER_SUCCESS'] = 'OK: test settings changed to "{key}"';
+$app_strings['IMAP_HANDLER_ERROR_INVALID_REQUEST'] = 'Invalid request, use "{var}" value.';
+$app_strings['IMAP_HANDLER_ERROR_UNKNOWN_BY_KEY'] = 'Unknown error occured, key "{key}" not saved.';
+$app_strings['IMAP_HANDLER_ERROR_NO_TEST_SET'] = 'Test settings does not exists.';
+$app_strings['IMAP_HANDLER_ERROR_NO_KEY'] = 'Key not found.';
+$app_strings['IMAP_HANDLER_ERROR_KEY_SAVE'] = 'Key saving error.';
+$app_strings['IMAP_HANDLER_ERROR_UNKNOWN'] = 'Unknown error';
 $app_strings['LBL_SEARCH_TITLE']                   = 'Search';
 $app_strings['LBL_SEARCH_TEXT_FIELD_TITLE_ATTR']   = 'Input Search Criteria';
 $app_strings['LBL_SEARCH_SUBMIT_FIELD_TITLE_ATTR'] = 'Search';
@@ -3655,3 +3663,8 @@ $app_strings['LBL_SEARCH_SUBMIT_FIELD_VALUE']      = 'Search';
 $app_strings['LBL_SEARCH_QUERY']                   = 'Search query: ';
 $app_strings['LBL_SEARCH_RESULTS_PER_PAGE']        = 'Results per page: ';
 $app_strings['LBL_SEARCH_ENGINE']                  = 'Engine: ';
+$app_strings['LBL_SEARCH_TOTAL'] = 'Total result(s): ';
+$app_strings['LBL_SEARCH_PREV'] = 'Previous';
+$app_strings['LBL_SEARCH_NEXT'] = 'Next';
+$app_strings['LBL_SEARCH_PAGE'] = 'Page ';
+$app_strings['LBL_SEARCH_OF'] = ' of ';

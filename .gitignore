@@ -101,7 +101,13 @@ browserstack.err
 cache/
 custom/**/
 .sass-cache/
-.php_cs.cache
 
 # Ignore testing environment
 build/tmp/
+
+# IMAP testing
+fakeImapResource
+include/Imap/ImapTestSettings.txt
+
+# Ignore php-cs-fixer cache
+.php_cs.cache

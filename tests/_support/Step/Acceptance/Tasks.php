@@ -9,7 +9,7 @@ class Tasks extends \AcceptanceTester
      */
     public function gotoTasks()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Tasks');
     }
 }

@@ -87,7 +87,7 @@ class ApiTester extends \Codeception\Actor
     {
         $I = $this;
 
-        if(!empty(self::$accessToken)) {
+        if (!empty(self::$accessToken)) {
             return;
         }
 
@@ -146,7 +146,6 @@ class ApiTester extends \Codeception\Actor
      */
     public function logout()
     {
-
     }
 
 
@@ -176,7 +175,6 @@ class ApiTester extends \Codeception\Actor
     {
         $I = $this;
         $I->seeHttpHeader(self::CONTENT_TYPE, self::CONTENT_TYPE_JSON);
-
     }
 
     /**
