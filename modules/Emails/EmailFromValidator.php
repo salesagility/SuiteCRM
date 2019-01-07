@@ -100,7 +100,7 @@ class EmailFromValidator
      *
      * @param Email $email
      * @param bool $tryToFix
-     * @return array
+     * @return bool
      */
     public function isValid(Email $email, $tryToFix = true)
     {
@@ -134,6 +134,7 @@ class EmailFromValidator
     /**
      *
      * @return Email
+     * @throws EmailValidatorException
      */
     protected function getEmail()
     {
