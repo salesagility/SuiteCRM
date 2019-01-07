@@ -44,6 +44,134 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once __DIR__ . '/../../include/SugarEmailAddress/SugarEmailAddress.php';
 
+
+class EmailsControllerActionGetFromFieldsSignatureResolver {
+    
+    const ERR_HTML_AMBIGUOUS = 1;
+    const ERR_HTML_NONE = 2;
+    const ERR_PLAINTEXT_AMBIGUOUS = 3;
+    const ERR_PLAINTEXT_NONE = 4;
+    
+    protected $signatureArray;
+    
+    protected $html;
+    
+    protected $plaintext;
+    
+    protected $errors;
+    
+    protected $noDefaultAvailable;
+    
+    public function setSignatureArray($signatureArray) {
+        $this->signatureArray = $signatureArray;
+        $this->errors = [];
+        $this->html = $this->resolveHtml();
+        $this->plaintext = $this->resolvePlaintext();
+        $this->noDefaultAvailable = false;
+        if (in_array(self::ERR_HTML_NONE, $this->errors) && in_array(self::ERR_PLAINTEXT_NONE, $this->errors)) {
+            $this->noDefaultAvailable = true;
+        }
+        return $this->error;
+    }
+    
+    protected function resolveHtml() {
+        if (isset($this->signatureArray['html']) && $this->signatureArray['html']) {
+            if (isset($this->signatureArray['signature_html']) && $this->signatureArray['signature_html'] && 
+                    $this->signatureArray['signature_html'] != $this->signatureArray['html']) {
+                $this->errors[] = self::ERR_HTML_AMBIGUOUS;
+                LoggerManager::getLogger()->error('Ambiguous signature html found!');
+            }
+            return $this->signatureArray['html'];
+        }
+        if (isset($this->signatureArray['signature_html']) && $this->signatureArray['signature_html']) {
+            return $this->signatureArray['signature_html'];
+        }
+        $this->errors[] = self::ERR_HTML_NONE;
+        LoggerManager::getLogger()->error('Signature html not found!');
+        return null;
+    }
+    
+    protected function resolvePlaintext() {
+        if (isset($this->signatureArray['plain']) && $this->signatureArray['plain']) {
+            if (isset($this->signatureArray['signature']) && $this->signatureArray['signature'] && 
+                    $this->signatureArray['signature'] != $this->signatureArray['plain']) {
+                $this->errors[] = self::ERR_PLAINTEXT_AMBIGUOUS;
+                LoggerManager::getLogger()->error('Ambiguous signature plain text found!');
+            }
+            return $this->signatureArray['plain'];
+        }
+        if (isset($this->signatureArray['signature']) && $this->signatureArray['signature']) {
+            return $this->signatureArray['signature'];
+        }
+        $this->errors[] = self::ERR_PLAINTEXT_NONE;   
+        LoggerManager::getLogger()->error('Signature plain text not found!');     
+        return null;
+    }
+    
+    public function getHtml() {
+        return $this->html;
+    }
+    
+    public function getPlaintext() {
+        return $this->plaintext;
+    }
+    
+    public function isNoDefaultAvailable() {
+        return $this->noDefaultAvailable;
+    }
+    
+}
+
+class EmailsControllerActionGetFromFieldsDataAddress {
+    
+    public function getDataArray(
+            $type,
+            $id,
+            $attributesReplyTo,
+            $attributesFrom,
+            $attributesName,
+            $attributesOe,
+            $prepend,
+            $isPersonalEmailAccount,
+            $isGroupEmailAccount,
+            $outboundEmailId,
+            $outboundEmailName,
+            $emailSignaturesArray
+    ) {
+        $signatureResolver = new EmailsControllerActionGetFromFieldsSignatureResolver($emailSignaturesArray);
+        
+        $dataArray = [
+            'type' => $type,
+            'id' => $id,
+            'attributes' => $this->getDataArrayAttributes($attributesReplyTo, $attributesFrom, $attributesName, $attributesOe),
+            'prepend' => $prepend,
+            'isPersonalEmailAccount' => $isPersonalEmailAccount,
+            'isGroupEmailAccount' => $isGroupEmailAccount,
+            'outboundEmail' => [
+                'id' => $outboundEmailId,
+                'name' => $outboundEmailName,
+            ],
+            'emailSignatures' => [
+                'html' => $signatureResolver->getHtml(),
+                'plain' => $signatureResolver->getPlaintext(),
+                'no_default_available' => $signatureResolver->isNoDefaultAvailable(),
+            ],
+        ];
+        
+        return $dataArray;
+    }
+    
+    protected function getDataArrayAttributes($attributesReplyTo, $attributesFrom, $attributesName, $attributesOe) {
+        return [
+            'reply_to' => utf8_encode($attributesReplyTo),
+            'from' => utf8_encode($attributesFrom),
+            'name' => utf8_encode($attributesName),
+            'oe' => utf8_encode($attributesOe),
+        ];
+    }
+    
+}
+
 /**
  *
  * @author gyula
@@ -132,36 +260,25 @@ class EmailsControllerActionGetFromFields {
     }
 
     protected function getFillDataAddressArray($id, $name, $fromName, $fromAddr, $mailUser, $defaultEmailSignature) {
-        return [
-            'type' => 'system',
-            'id' => $id,
-            'attributes' => $this->getFillDataAddressAttributes(
-                    utf8_encode($fromName), utf8_encode($fromAddr), utf8_encode($mailUser)
-            ),
-            'prepend' => false,
-            'isPersonalEmailAccount' => false,
-            'isGroupEmailAccount' => true,
-            'outboundEmail' => $this->getFillDataAddressOutboundEmail($id, $name),
-            'emailSignatures' => $defaultEmailSignature,
-        ];
+        
+        $dataAddress = new EmailsControllerActionGetFromFieldsDataAddress();
+        $dataArray = $dataAddress->getDataArray(
+            'system', 
+            $id, 
+            "$fromName &lt;$fromAddr&gt;", 
+            "$fromName &lt;$fromAddr&gt;", 
+            $fromName, 
+            false, 
+            false, 
+            true, 
+            $id, 
+            $name, 
+            $mailUser, 
+            $defaultEmailSignature
+        );
+        return $dataArray;
     }
-
-    protected function getFillDataAddressAttributes($fromName, $fromAddr, $mailUser) {
-        return [
-            'reply_to' => "$fromName &lt;$fromAddr&gt;",
-            'from' => "$fromName &lt;$fromAddr&gt;",
-            'name' => $fromName,
-            'oe' => $mailUser,
-        ];
-    }
-
-    protected function getFillDataAddressOutboundEmail($id, $name) {
-        return [
-            'id' => $id,
-            'name' => $name,
-        ];
-    }
-
+    
     protected function collectDataAddressesFromUserAddresses(
     $dataAddresses, $userAddressesArr, $defaultEmailSignature, $prependSignature
     ) {
@@ -181,22 +298,24 @@ class EmailsControllerActionGetFromFields {
     }
 
     protected function getCollectDataAddressArrayFromUserAddresses($userAddress, $fromString, $prependSignature, $signatureHtml, $signatureTxt) {
-        return [
-            'type' => 'personal',
-            'id' => $userAddress['email_address_id'],
-            'attributes' => array(
-                'from' => utf8_encode($fromString),
-                'reply_to' => utf8_encode($this->currentUser->full_name . ' &lt;' . $userAddress['email_address'] . '&gt;'),
-                'name' => utf8_encode($this->currentUser->full_name),
-            ),
-            'prepend' => $prependSignature,
-            'isPersonalEmailAccount' => true,
-            'isGroupEmailAccount' => false,
-            'emailSignatures' => array(
+        
+        $dataAddress = new EmailsControllerActionGetFromFieldsDataAddress();
+        $dataArray = $dataAddress->getDataArray(
+            'personal', 
+            $userAddress['email_address_id'], 
+            $this->currentUser->full_name . ' &lt;' . $userAddress['email_address'] . '&gt;', 
+            $fromString, 
+            $this->currentUser->full_name, 
+            null, 
+            $prependSignature, 
+            true,
+            false, 
+            null, 
+            null, [
                 'html' => utf8_encode(html_entity_decode($signatureHtml)),
                 'plain' => $signatureTxt,
-            ),
-        ];
+            ]);
+        return $dataArray;
     }
 
     protected function getSignatureTxt($defaultEmailSignature) {
@@ -339,23 +458,22 @@ class EmailsControllerActionGetFromFields {
     }
 
     protected function getDataAddressArrayFromIEAccounts(InboundEmail $inboundEmail, $storedOptions, $prependSignature, $isPersonalEmailAccount, $isGroupEmailAccount) {
-
-        return array(
-            'type' => $inboundEmail->module_name,
-            'id' => $inboundEmail->id,
-            'attributes' => array(
-                'reply_to' => utf8_encode($storedOptions['reply_to_addr']),
-                'name' => utf8_encode($storedOptions['from_name']),
-                'from' => utf8_encode($storedOptions['from_addr']),
-            ),
-            'prepend' => $prependSignature,
-            'isPersonalEmailAccount' => $isPersonalEmailAccount,
-            'isGroupEmailAccount' => $isGroupEmailAccount,
-            'outboundEmail' => array(
-                'id' => $this->oeId,
-                'name' => $this->oeName,
-            ),
+        $dataAddress = new EmailsControllerActionGetFromFieldsDataAddress();
+        $dataArray = $dataAddress->getDataArray(
+            $inboundEmail->module_name, 
+            $inboundEmail->id, 
+            $storedOptions['reply_to_addr'], 
+            $storedOptions['from_addr'], 
+            $storedOptions['from_name'], 
+            null, 
+            $prependSignature, 
+            $isPersonalEmailAccount, 
+            $isGroupEmailAccount, 
+            $this->oeId, 
+            $this->oeName, 
+            []
         );
+        return $dataArray;
     }
 
     protected function getEmailSignatureId($emailSignatures, InboundEmail $inboundEmail) {
