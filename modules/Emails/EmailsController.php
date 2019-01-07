@@ -565,7 +565,7 @@ class EmailsController extends SugarController
                 } else {
                     
                     $splits = explode(' ', $replyTo);
-                    if (count($splits) != 2) {
+                    if (count($splits) !== 2) {
                         LoggerManager::getLogger()->error('Incorrect "replay to" format found: ' . $replyTo);
                         $replyToErr = self::ERR_REPLY_TO_FROMAT_INVALID_SPLITS;
                     } else {
