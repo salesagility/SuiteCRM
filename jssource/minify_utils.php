@@ -524,7 +524,7 @@ function joinAndMinifyJSFiles($jsFiles)
     $ret = sugar_cached($target);
 
     if (!is_file($ret)) {
-        $jsFilesContents = processJSFiles($jsFiles);
+        $jsFilesContents = processJSFilesContents($jsFiles);
 
         try {
             $customJSPath = create_cache_directory($target);
@@ -567,7 +567,7 @@ function joinAndMinifyJSFiles($jsFiles)
 
 
 /**
- * Process an array of JS files and return its content concatenated
+ * Process an array of JS files and return their content concatenated
  *
  * @param array $jsFiles an 'array' of js files
  *
@@ -575,7 +575,7 @@ function joinAndMinifyJSFiles($jsFiles)
  *
  * @return The content of the JS files concatenated
  */
-function processJSFiles($jsFiles)
+function processJSFilesContents($jsFiles)
 {
     $jsFilesContents = '';
 
