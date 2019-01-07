@@ -1601,6 +1601,10 @@ class Email extends Basic
                     $this->date_sent = $date_sent_obj->asDb();
                 }
             }
+             
+            if (in_array($this->status, ['sent', 'replied']) && (!isset($this->date_sent) || !$this->date_sent)) {
+                $this->date_sent = TimeDate::getInstance()->nowDb();
+            }
 
             $id = parent::save($check_notify);
 
@@ -3085,7 +3089,11 @@ class Email extends Basic
                 $this->getTempEmailAtSend()->status = 'replied';
                 $ie = $ie ? $ie : new InboundEmail();
                 $nonGmailSentFolder = $nonGmailSentFolder ? $nonGmailSentFolder : new NonGmailSentFolderHandler();
-                $ieMailId = $this->getTempEmailAtSend()->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder, $check_notify, $options);
+                if ($ieMailId = $this->getTempEmailAtSend()->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder, $check_notify, $options)) {
+                    if (!$tempEmail->save()) {
+                        LoggerManager::getLogger()->debug('Email saving error: after save and store in non-gmail sent folder.');
+                    }
+                }
                 LoggerManager::getLogger()->debug('IE Mail ID is ' . ($ieMailId === null ? 'null' : $ieMailId) . ' after save and store in non-gmail sent folder.');
             }
             $GLOBALS['log']->debug(' --------------------- buh bye -- sent successful');
