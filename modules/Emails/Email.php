@@ -3089,12 +3089,12 @@ class Email extends Basic
                 $this->getTempEmailAtSend()->status = 'replied';
                 $ie = $ie ? $ie : new InboundEmail();
                 $nonGmailSentFolder = $nonGmailSentFolder ? $nonGmailSentFolder : new NonGmailSentFolderHandler();
-                if ($ieMailId = $this->getTempEmailAtSend()->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder, $check_notify, $options)) {
-                    if (!$tempEmail->save()) {
-                        LoggerManager::getLogger()->debug('Email saving error: after save and store in non-gmail sent folder.');
-                    }
+                if (!$ieMailId = $this->getTempEmailAtSend()->saveAndStoreInSentFolderIfNoGmail($ie, $ieId, $mail, $nonGmailSentFolder, $check_notify, $options)) {
+                    LoggerManager::getLogger()->debug('IE Mail ID is ' . ($ieMailId === null ? 'null' : $ieMailId) . ' after save and store in non-gmail sent folder.');                    
                 }
-                LoggerManager::getLogger()->debug('IE Mail ID is ' . ($ieMailId === null ? 'null' : $ieMailId) . ' after save and store in non-gmail sent folder.');
+                if (!$this->getTempEmailAtSend()->save()) {
+                    LoggerManager::getLogger()->warn('Email saving error: after save and store in non-gmail sent folder.');
+                }
             }
             $GLOBALS['log']->debug(' --------------------- buh bye -- sent successful');
             ////	END INBOUND EMAIL HANDLING
