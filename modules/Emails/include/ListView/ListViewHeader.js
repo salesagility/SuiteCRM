@@ -121,6 +121,18 @@ SUGAR.Emails.handleSelectedListViewItems =  function(
 
 $(document).ready(function () {
 
+  $.ajax({
+    type: "GET",
+    cache: false,
+    url: 'index.php?module=Emails&action=GetFolders'
+  }).done(function (data) {
+    var response = JSON.parse(data);
+
+    response = response.response;
+
+    jQueryBtnEmailsCurrentFolder.text(response[0].text);
+  });
+
   var query = JSON.parse($('[name=current_query_by_page]').val());
   var jQueryBtnEmailsCurrentFolder = $('.btn-emails-current-folder');
 
