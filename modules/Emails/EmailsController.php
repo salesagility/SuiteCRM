@@ -593,23 +593,6 @@ class EmailsController extends SugarController
                     }
                 }
                 
-                
-                
-                $tmpEmail = new Email();
-                $tmpEmail->FromName = $tmpEmail->from_name = $fromName;
-                $tmpEmail->From = $tmpEmail->from_addr = $fromAddr;
-                $tmpEmail->from_addr_name = "$fromName <$fromAddr>";
-                if (!$emailFromValidator->isValid($tmpEmail)) {
-                    // exception
-                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() panic: An Outbound Email From Name and/or Address is invalid.');
-                }
-                
-                // try to fix addresses...
-                if ($replyToErr) {
-                    // using from address instead reply-to if any error occurred about "reply to"
-                    $replyTo = $fromName . ' &lt;' . $fromAddr  . '&gt;';
-                }
-                
                 $dataAddress = array(
                     'type' => $inboundEmail->module_name,
                     'id' => $inboundEmail->id,
