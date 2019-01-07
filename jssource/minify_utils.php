@@ -517,7 +517,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 function joinAndMinifyJSFiles($jsFiles)
 {
-    $jsFiles = array_map('realpath', array_unique($jsFiles));
+
+    $jsFiles = proccessJSFilesPaths($jsFiles);
     $target = SugarThemeRegistry::current()->getJSPath(). '/' .
             sha1(implode('|', $jsFiles)) . '.js';
     $ret = sugar_cached($target);
@@ -602,4 +603,39 @@ function processJSFiles($jsFiles)
         }
     }
     return $jsFilesContents;
+}
+
+/**
+ * Process an array of JS files and return their realpaths
+ * and verify that there are no duplicates
+ *
+ * @param array $jsFiles an 'array' of js files
+ *
+ * @author Gyula Madarasz
+ * @author Jose C. Massón <jose@gcoop.coop>
+ *
+ * @return array $jsFilesReal
+ */
+function proccessJSFilesPaths($jsFiles)
+{
+    $jsFilesReal = [];
+    foreach ($jsFiles as $jsFilesKey => $jsFile) {
+        $jsFileReal = realpath($jsFile);
+        if (!$jsFileReal) {
+            LoggerManager::getLogger()->error(
+                'proccessJSFilesPaths - Given JS File path is wrong: '
+                . $jsFile
+            );
+        } else {
+            if (in_array($jsFileReal, $jsFilesReal)) {
+                LoggerManager::getLogger()->warn(
+                    'proccessJSFilesPaths - Given JS File is duplicated: '
+                    . $jsFile
+                );
+            } else {
+                $jsFilesReal[$jsFilesKey] = $jsFileReal;
+            }
+        }
+    }
+    return $jsFilesReal;
 }
