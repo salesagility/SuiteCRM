@@ -822,18 +822,30 @@ class SugarApplication {
 
 
     /**
-     * Append old messages types set throught $_SESSION
+     * Append old messages types seted throught $_SESSION
      *
      * @return none
      */
     private static function _appendOldMessageTypes()
     {
-        if (!empty($_SESSION['user_error_message'])) {
-            self::appendMessage('error', $_SESSION['user_error_message']);
+        if (isset($_SESSION['user_error_message'])) {
+            if (is_string($_SESSION['user_error_message'])) {
+                self::appendMessage('error', $_SESSION['user_error_message']);
+            } else if (is_array($_SESSION['user_error_message'])) {
+                foreach ($_SESSION['user_error_message'] as $msg) {
+                    self::appendMessage('error', $msg);
+                }
+            }
         }
 
-        if (!empty($_SESSION['user_success_message'])) {
-            self::appendMessage('okay', $_SESSION['user_success_message']);
+        if (isset($_SESSION['user_success_message'])) {
+            if (is_string($_SESSION['user_success_message'])) {
+                self::appendMessage('okay', $_SESSION['user_success_message']);
+            } else if (is_array($_SESSION['user_success_message'])) {
+                foreach ($_SESSION['user_success_message'] as $msg) {
+                    self::appendMessage('okay', $msg);
+                }
+            }
         }
     }
 
