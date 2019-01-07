@@ -182,8 +182,10 @@ class ImapHandlerFactory
     {
         if (null === $this->interfaceObject) {
             global $sugar_config;
+
             $test = (isset($sugar_config['imap_test']) && $sugar_config['imap_test']) || $testSettings;
-            
+            $charset = (isset($sugar_config['default_email_charset'])) ? $sugar_config['default_email_charset'] : null;
+
             if (inDeveloperMode()) {
                 $logErrors = true;
                 $logCalls = true;
@@ -191,12 +193,12 @@ class ImapHandlerFactory
                 $logErrors = true;
                 $logCalls = false;
             }
-            
+
             $interfaceClass = ImapHandler::class;
             if ($test) {
                 $this->loadTestSettings($testSettings);
             } else {
-                $this->setInterfaceObject(new $interfaceClass($logErrors, $logCalls));
+                $this->setInterfaceObject(new $interfaceClass($logErrors, $logCalls, $charset));
             }
         }
         return $this->interfaceObject;
