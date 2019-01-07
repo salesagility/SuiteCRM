@@ -4740,7 +4740,7 @@ eoq;
     {
         global $app_strings;
         
-        LoggerManager::getLogger()->deprecated(__FUNCION__ . ' is deprecated.');
+        LoggerManager::getLogger()->deprecated(__FUNCTION__ . ' is deprecated.');
 
         $ret = false;
 
