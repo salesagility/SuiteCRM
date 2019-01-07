@@ -307,7 +307,7 @@ class EmailFromValidator
         $matches = null;
         $results = preg_match('/([^<]+)\s+<([^>]+)>/', $fromAddrName, $matches);
         if ($results === false) {
-            throw new EmailValidatorException('preg_match error occured at from_addr_name check.', EmailValidatorException::PREG_MATCH_ERROR_AT_FROMADDRNAME);
+            throw new EmailValidatorException('preg_match error occurred at from_addr_name check.', EmailValidatorException::PREG_MATCH_ERROR_AT_FROMADDRNAME);
         }
         if (!$results) {
             $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX);

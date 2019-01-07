@@ -2447,7 +2447,7 @@ function executeConvertTablesSql($tables)
         $query = "ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
         if (!empty($table)) {
             logThis("Sending query: ".$query);
-            $db->query($query);//, true, "An error has occured while performing db query.  See log file for details.<br>");
+            $db->query($query);//, true, "An error has occurred while performing db query.  See log file for details.<br>");
         }
     }
     return true;

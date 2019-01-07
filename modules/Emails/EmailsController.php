@@ -489,7 +489,7 @@ class EmailsController extends SugarController
                 }
                 
                 if ($err) {
-                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() panic: An error occured! (' . $err . ')');
+                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() panic: An error occurred! (' . $err . ')');
                     
                     
                     if (!isset($storedOptions['reply_to_addr'])) {
@@ -606,7 +606,7 @@ class EmailsController extends SugarController
                 
                 // try to fix addresses...
                 if ($replyToErr) {
-                    // using from address instead reply-to if any error occured about "reply to"
+                    // using from address instead reply-to if any error occurred about "reply to"
                     $replyTo = $fromName . ' &lt;' . $fromAddr  . '&gt;';
                 }
                 
