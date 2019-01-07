@@ -649,7 +649,7 @@ class EmailsController extends SugarController
             $userAddressesArr = $sugarEmailAddress->getAddressesByGUID($current_user->id, 'Users');
             foreach ($userAddressesArr as $userAddress) {
                 if (!isset($userAddress['reply_to_addr']) || !$userAddress['reply_to_addr']) {
-                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() is panicing: Reply-To address is not filled.');
+                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() is Panicking: Reply-To address is not filled.');
                 }
                 if (isset($userAddress['reply_to_addr']) && $userAddress['reply_to_addr'] === '1') {
                     $fromString =  $current_user->full_name . ' &lt;' . $userAddress['email_address'] . '&gt;';
@@ -659,14 +659,14 @@ class EmailsController extends SugarController
                 // ($userAddress['reply_to_addr'] === '1') ? $current_user->email1 : $userAddress['email_address']
                 
                 if (!isset($defaultEmailSignature['signature_html'])) {
-                    LoggerManager::getLogger()->warn('EmailController::action_getFromFields() is panicing: Default email signature array does not have index as signature_html');
+                    LoggerManager::getLogger()->warn('EmailController::action_getFromFields() is Panicking: Default email signature array does not have index as signature_html');
                     $signatureHtml = null;
                 } else {
                     $signatureHtml = $defaultEmailSignature['signature_html'];
                 }
                 
                 if (!isset($defaultEmailSignature['signature'])) {
-                    LoggerManager::getLogger()->warn('EmailController::action_getFromFields() is panicing: Default email signature array does not have index as signature');
+                    LoggerManager::getLogger()->warn('EmailController::action_getFromFields() is Panicking: Default email signature array does not have index as signature');
                     $signatureTxt = null;
                 } else {
                     $signatureTxt = $defaultEmailSignature['signature'];
