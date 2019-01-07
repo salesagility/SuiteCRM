@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+use SuiteCRM\Utility\SuiteValidator;
+
 include_once 'include/Exceptions/SugarControllerException.php';
 
 class EmailsController extends SugarController
@@ -545,9 +547,9 @@ class EmailsController extends SugarController
                     $oeName = isset($oe->name) ? $oe->name : null;
                     
                 } else {
-                    $replyTo = $storedOptions['reply_to_addr'];
-                    $fromName = $storedOptions['from_name'];
-                    $fromAddr = $storedOptions['from_addr'];
+                    $replyTo = utf8_encode($storedOptions['reply_to_addr']);
+                    $fromName = utf8_encode($storedOptions['from_name']);
+                    $fromAddr = utf8_encode($storedOptions['from_addr']);
                     $oeId = $oe->id;
                     $oeName = $oe->name;
                 }
@@ -612,9 +614,9 @@ class EmailsController extends SugarController
                     'type' => $inboundEmail->module_name,
                     'id' => $inboundEmail->id,
                     'attributes' => array(
-                        'reply_to' => $replyTo,
-                        'name' => $fromName,
-                        'from' => "$fromName &lt;$fromAddr&gt;",
+                        'reply_to' => utf8_encode($storedOptions['reply_to_addr']),
+                        'name' => utf8_encode($storedOptions['from_name']),
+                        'from' => utf8_encode($storedOptions['from_addr']),
                     ),
                     'prepend' => $prependSignature,
                     'isPersonalEmailAccount' => $isPersonalEmailAccount,
@@ -686,9 +688,9 @@ class EmailsController extends SugarController
                     'type' => 'personal',
                     'id' => $userAddress['email_address_id'],
                     'attributes' => array(
-                        'from' => $fromString,
-                        'reply_to' =>  $current_user->full_name . ' &lt;' . $userAddress['email_address']  . '&gt;',
-                        'name' => $current_user->full_name,
+                        'from' => utf8_encode($fromString),
+                        'reply_to' =>  utf8_encode($current_user->full_name . ' &lt;' . $userAddress['email_address']  . '&gt;'),
+                        'name' => utf8_encode($current_user->full_name),
                     ),
                     'prepend' => $prependSignature,
                     'isPersonalEmailAccount' => true,
@@ -808,13 +810,20 @@ class EmailsController extends SugarController
      */
     public function action_DisplayDetailView()
     {
+        $result = null;
+
         $db = DBManagerFactory::getInstance();
         $emails = BeanFactory::getBean("Emails");
-        
-        $inboundEmailRecordIdQuoted = $db->quote($_REQUEST['inbound_email_record']);
-        $uidQuoted = $db->quote($_REQUEST['uid']);
-        
-        $result = $emails->get_full_list('', "mailbox_id = '" . $inboundEmailRecordIdQuoted . "' AND uid = '" . $uidQuoted . "'");
+
+        $uid = $_REQUEST['uid'];
+        $inboundEmailRecordId = $_REQUEST['inbound_email_record'];
+
+        $validator = new SuiteValidator();
+
+        if ($validator->isValidId($uid)) {
+            $subQuery = "`mailbox_id` = " . $db->quoted($inboundEmailRecordId) . " AND `uid` = " . $db->quoted($uid);
+            $result = $emails->get_full_list('', $subQuery);
+        }
 
         if (empty($result)) {
             $this->view = 'detailnonimported';
@@ -834,7 +843,6 @@ class EmailsController extends SugarController
             $inboundEmail->retrieve($db->quote($_REQUEST['inbound_email_record']), true, true);
             $inboundEmail->connectMailserver();
             $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
-
 
             // Set the fields which have been posted in the request
             $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
@@ -988,7 +996,7 @@ class EmailsController extends SugarController
         $db = DBManagerFactory::getInstance();
         global $mod_strings;
 
-                
+
         global $current_user;
         $email = new Email();
         $email->email2init();
@@ -1001,8 +1009,8 @@ class EmailsController extends SugarController
                     "You don't have any valid email account settings yet. <a href=\"$url\">Click here to set your email accounts.</a>"
             );
         }
-        
-        
+
+
         if (isset($request['record']) && !empty($request['record'])) {
             $parent_name = $this->bean->parent_name;
             $this->bean->retrieve($request['record']);
@@ -1139,6 +1147,7 @@ class EmailsController extends SugarController
     protected function setAfterImport($importedEmailId, $request)
     {
         $emails = BeanFactory::getBean("Emails", $importedEmailId);
+
         foreach ($request as $requestKey => $requestValue) {
             if (strpos($requestKey, 'SET_AFTER_IMPORT_') !== false) {
                 $field = str_replace('SET_AFTER_IMPORT_', '', $requestKey);

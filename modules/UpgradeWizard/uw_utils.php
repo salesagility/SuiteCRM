@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/../../include/Imap/ImapHandlerFactory.php';
+
 /**
  * Implodes some parts of version with specified delimiter, beta & rc parts are removed all time
  *

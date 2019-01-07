@@ -104,7 +104,7 @@ class EmailsViewCompose extends ViewEdit
             $attachment = BeanFactory::getBean($_GET['return_module'], $_GET['return_id']);
             if (!$attachment) {
                 SugarApplication::appendErrorMessage($mod_strings['ERR_NO_RETURN_ID']);
-                $log->fatal('Attacment is not found. Requested return id is not related to an exists Bean.');
+                $log->fatal('Attachment not found. Requested return ID is not related to an existing Bean.');
             } else {
                 if (isset($attachment->name) && $attachment->name) {
                     $attachmentName = $attachment->name;
