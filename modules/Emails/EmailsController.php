@@ -593,6 +593,11 @@ class EmailsController extends SugarController
                     }
                 }
                 
+                if (isset($replyToErr) && $replyToErr) {
+                    // exception
+                    LoggerManager::getLogger()->error('EmailController::action_getFromFields() error: ' . $replyToErr);
+                }
+                
                 $dataAddress = array(
                     'type' => $inboundEmail->module_name,
                     'id' => $inboundEmail->id,
