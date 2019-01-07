@@ -90,6 +90,11 @@ function smarty_function_sugar_include($params, &$smarty)
                      } else {
                          if (preg_match('/tiny_mce.*[\.]js$/si', $file)) {
                              $code .= "<script src=\"".$file ."\"></script>";
+                             LoggerManager::getLogger()->warn(
+                                 'smarty_function_sugar_include - tiny_mce are not '.
+                                 'minifyed and concatenated with other JS Files '.
+                                 'because stop working.'
+                             );
                          } else if(preg_match('/[\.]js$/si',$file)) {
                              if (in_array($file, $jsFiles)) {
                                  LoggerManager::getLogger()->warn(
