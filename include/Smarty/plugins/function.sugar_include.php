@@ -103,6 +103,11 @@ function smarty_function_sugar_include($params, &$smarty)
                                  );
                              } else {
                                  $jsFiles[] = $file;
+                                 LoggerManager::getLogger()->debug(
+                                     'smarty_function_sugar_include - JS file'.
+                                     ' added to be minifyed and concatenated: '
+                                     . $file
+                                 );
                              }
                          } else if(preg_match('/[\.]php$/si', $file)) {
                              require_once($file);
@@ -118,6 +123,11 @@ function smarty_function_sugar_include($params, &$smarty)
                 $code .= "<script src=\"".
                       $includeFile.
                       "\"></script>";
+            } else {
+                LoggerManager::getLogger()->warn(
+                    'smarty_function_sugar_include - JS files cannot be included '.
+                    'in HTML code. Please verify joinAndMinifyJSFiles function'
+                );
             }
         }
 	      return $code;

@@ -517,7 +517,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 function joinAndMinifyJSFiles($jsFiles)
 {
-
     $jsFiles = proccessJSFilesPaths($jsFiles);
     $target = SugarThemeRegistry::current()->getJSPath(). '/' .
             sha1(implode('|', $jsFiles)) . '.js';
