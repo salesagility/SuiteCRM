@@ -91,7 +91,14 @@ function smarty_function_sugar_include($params, &$smarty)
                          if (preg_match('/tiny_mce.*[\.]js$/si', $file)) {
                              $code .= "<script src=\"".$file ."\"></script>";
                          } else if(preg_match('/[\.]js$/si',$file)) {
-                             $jsFiles[] = $file;
+                             if (in_array($file, $jsFiles)) {
+                                 LoggerManager::getLogger()->warn(
+                                     'smarty_function_sugar_include - JS file'.
+                                     ' already added: ' . $file
+                                 );
+                             } else {
+                                 $jsFiles[] = $file;
+                             }
                          } else if(preg_match('/[\.]php$/si', $file)) {
                              require_once($file);
                          }
