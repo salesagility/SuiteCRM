@@ -53,6 +53,9 @@ class SearchQuery implements \JsonSerializable
     {
         $this->query = strval($searchString);
         $this->size = intval($size);
+        if ($this->size < 0) {
+            $this->size = 1;
+        }
         $this->from = intval($from);
         $this->options = $options;
         $this->engine = $engine !== null ? strval($engine) : null;
@@ -164,6 +167,9 @@ class SearchQuery implements \JsonSerializable
      */
     public function getSize()
     {
+        if ((int)$this->size < 0) {
+            $this->size = 1;
+        }
         return (int)$this->size;
     }
 
