@@ -707,14 +707,17 @@ class EmailsController extends SugarController
         $oe = new OutboundEmail();
         if ($oe->isAllowUserAccessToSystemDefaultOutbound()) {
             $system = $oe->getSystemMailerSettings();
+            $systemSmtpFromName = utf8_encode($system->smtp_from_name);
+            $systemSmtpFromAddr = utf8_encode($system->smtp_from_addr);
+            $systemMailSmtpUser = utf8_encode($system->mail_smtpuser);
             $data[] = array(
                 'type' => 'system',
                 'id' => $system->id,
                 'attributes' => array(
-                    'reply_to' => "$system->smtp_from_name &lt;$system->smtp_from_addr&gt;",
-                    'from' => "$system->smtp_from_name &lt;$system->smtp_from_addr&gt;",
-                    'name' => $system->smtp_from_name,
-                    'oe' => $system->mail_smtpuser,
+                    'reply_to' => "$systemSmtpFromName &lt;$systemSmtpFromAddr&gt;",
+                    'from' => "$systemSmtpFromName &lt;$systemSmtpFromAddr&gt;",
+                    'name' => $systemSmtpFromName,
+                    'oe' => $systemMailSmtpUser,
                 ),
                 'prepend' => false,
                 'isPersonalEmailAccount' => false,
