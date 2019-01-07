@@ -51,13 +51,13 @@ class Minify_UtilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     } 
 
     /**
-     * Test processJSFiles function
+     * Test processJSFilesContents function
      *
      * @author Jose C. Massón <jose@gcoop.coop>
      *
      * @return none
      */    
-    public function testprocessJSFiles()
+    public function testprocessJSFilesContents()
     {
 
         $jsFiles = array (
@@ -65,18 +65,18 @@ class Minify_UtilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'jssource/src_files/modules/Contacts/Contact.js',
         );
 
-        $jsContent = processJSFiles($jsFiles);
+        $jsContent = processJSFilesContents($jsFiles);
         $this->assertGreaterThan(0, strlen($jsContent));
     }
 
     /**
-     * Test joinAndMinifyJSFiles and processJSFiles
+     * Test joinAndMinifyJSFiles and processJSFilesContents
      *
      * @author Jose C. Massón <jose@gcoop.coop>
      *
      * @return none
      */    
-    public function testprocessJSFilesVSjoinAndMinifyJSFiles()
+    public function testprocessJSFilesContentsVSjoinAndMinifyJSFiles()
     {
 
         $jsFiles = array (
@@ -89,7 +89,7 @@ class Minify_UtilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $len = stripos($jsURI, '?');
         $jsURI = substr($jsURI, 0, $len);
         $jsContentMinified = sugar_file_get_contents($jsURI);
-        $jsContent = processJSFiles($jsFiles);
+        $jsContent = processJSFilesContents($jsFiles);
         $this->assertGreaterThan(strlen($jsContentMinified), strlen($jsContent));
     }    
 }
