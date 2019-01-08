@@ -431,8 +431,8 @@ class EmailsController extends SugarController
         global $sugar_config;
         $email = new Email();
         $ie = new InboundEmail();
-        $collector = new EmailsControllerActionGetFromFieldsDataAddressCollector($current_user);
-        $handler = new EmailsControllerActionGetFromFields($current_user, $sugar_config, $collector);
+        $collector = new EmailsControllerActionGetFromFieldsDataAddressCollector($current_user, $sugar_config);
+        $handler = new EmailsControllerActionGetFromFields($current_user, $collector);
         $results = $handler->handleActionGetFromFields($email, $ie);
         echo $results;
         $this->view = 'ajax';
