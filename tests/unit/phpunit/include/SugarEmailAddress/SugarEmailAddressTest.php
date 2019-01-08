@@ -1685,7 +1685,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'Users');
 
-        self::assertTrue(is_string($result));
+        self::assertFalse(is_string($result));
 
         // test
         $_POST['return_id'] = 'test_contact_1';
