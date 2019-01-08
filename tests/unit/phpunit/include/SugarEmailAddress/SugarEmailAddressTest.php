@@ -11,6 +11,10 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     protected $ea;
     
+    /**
+     *
+     * @var \SuiteCRM\StateSaver
+     */
     protected $stateSaver;
 
 
@@ -26,10 +30,11 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->stateSaver->pushTable('contacts');
         $this->stateSaver->pushTable('email_addr_bean_rel');
         $this->stateSaver->pushTable('email_addresses');
+        $this->stateSaver->pushGlobals();
 
-        global $current_user;
-        get_sugar_config_defaults();
-        $current_user = new User();
+//        global $current_user;
+//        get_sugar_config_defaults();
+//        $current_user = new User();
 
         $this->ea = new SugarEmailAddress();
     }
@@ -55,6 +60,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $db->query($query);
         
         
+        $this->stateSaver->popGlobals();
         $this->stateSaver->popTable('email_addresses');
         $this->stateSaver->popTable('email_addr_bean_rel');
         $this->stateSaver->popTable('contacts');
