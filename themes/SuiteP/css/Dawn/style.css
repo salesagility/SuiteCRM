@@ -7339,12 +7339,12 @@ footer.collapsedSidebar {
   .sidebar {
     display: none; } }
 /**** NAVBAR ****/
-.searchform .query_string::selection {
+.navbar .query_string::selection {
   /* Safari */
   background-color: #FFFFFF !important;
   color: #534D64 !important; }
 
-.searchform .query_string::-moz-selection {
+.navbar .query_string::-moz-selection {
   /* Firefox */
   background-color: #FFFFFF !important;
   color: #534D64 !important; }
