@@ -126,22 +126,25 @@ $(document).ready(function () {
     cache: false,
     url: 'index.php?module=Emails&action=GetFolders'
   }).done(function (data) {
+    var query = JSON.parse($('[name=current_query_by_page]').val());
+    var jQueryBtnEmailsCurrentFolder = $('.btn-emails-current-folder');
     var response = JSON.parse(data);
 
-    response = response.response;
+    responses = response.response;
 
-    jQueryBtnEmailsCurrentFolder.text(response[0].text);
+
+    if(typeof query.folder === 'undefined' ||  query.folder === '') {
+      jQueryBtnEmailsCurrentFolder.remove();
+    } else if(query.folder === null) {
+      jQueryBtnEmailsCurrentFolder.html('<span class="glyphicon glyphicon-alert"></span>');
+    }
+
+    for (let i = 0; i < (responses.length); i++) {
+
+      if (responses[i].id === query.folders_id) {
+        jQueryBtnEmailsCurrentFolder.text(responses[(i)].text);
+      }
+    }
   });
-
-  var query = JSON.parse($('[name=current_query_by_page]').val());
-  var jQueryBtnEmailsCurrentFolder = $('.btn-emails-current-folder');
-
-  if(typeof query.folder === 'undefined' ||  query.folder === '') {
-    jQueryBtnEmailsCurrentFolder.remove();
-  } else if(query.folder === null) {
-    jQueryBtnEmailsCurrentFolder.html('<span class="glyphicon glyphicon-alert"></span>');
-  } else {
-    jQueryBtnEmailsCurrentFolder.text(query.folder);
-  }
 
 });
