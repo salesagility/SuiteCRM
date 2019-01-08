@@ -12,9 +12,11 @@ class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
         
         $this->state = new StateSaver();
         $this->state->pushTable('user_preferences');
+        $this->state->pushTable('users');
     }
     
     protected function tearDown() {
+        $this->state->popTable('users');
         $this->state->popTable('user_preferences');
         
         parent::tearDown();
