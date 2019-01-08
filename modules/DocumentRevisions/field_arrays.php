@@ -48,30 +48,30 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['DocumentRevision'] = array ('column_fields' => Array("id"
-		,"change_log"
-		,"document_id"
-		,"date_entered"
-		,"created_by"
-		,"filename"
-		,"file_ext"
-		,"file_mime_type"
-		,"revision"
-		,"date_modified"
-		,"deleted"				
-		),
-        'list_fields' =>  Array("id"
-		,"change_log"
-		,"document_id"
-		,"date_entered"
-		,"created_by"
-		,"filename"
-		,"file_ext"
-		,"file_mime_type"
-		,"revision"
-		,"date_modified"
-		,"deleted"		
-		,"latest_revision_id"		
-		),
-        'required_fields' => Array("revision"=>1),
+$fields_array['DocumentRevision'] = array('column_fields' => array("id"
+        ,"change_log"
+        ,"document_id"
+        ,"date_entered"
+        ,"created_by"
+        ,"filename"
+        ,"file_ext"
+        ,"file_mime_type"
+        ,"revision"
+        ,"date_modified"
+        ,"deleted"
+        ),
+        'list_fields' =>  array("id"
+        ,"change_log"
+        ,"document_id"
+        ,"date_entered"
+        ,"created_by"
+        ,"filename"
+        ,"file_ext"
+        ,"file_mime_type"
+        ,"revision"
+        ,"date_modified"
+        ,"deleted"
+        ,"latest_revision_id"
+        ),
+        'required_fields' => array("revision"=>1),
 );

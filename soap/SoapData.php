@@ -48,12 +48,13 @@ $server->register(
     'sync_get_modified_relationships',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string','related_module'=>'xsd:string', 'from_date'=>'xsd:string', 'to_date'=>'xsd:string','offset'=>'xsd:int', 'max_results'=>'xsd:int','deleted'=>'xsd:int', 'module_id'=>'xsd:string', 'select_fields'=>'tns:select_fields', 'ids'=>'tns:select_fields', 'relationship_name'=>'xsd:string', 'deletion_date'=>'xsd:string', 'php_serialize'=>'xsd:int'),
     array('return'=>'tns:get_entry_list_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 
 
 /**
- * Get a list of the relationship records that have been modified within a 
+ * Get a list of the relationship records that have been modified within a
  * specified date range.  This is used to perform a sync with a mobile client.
  * The results are paged.
  *
@@ -71,68 +72,65 @@ $server->register(
  * @param xsd:string $relationship_name
  * @param xsd:string $deletion_date
  * @param xsd:int $php_serialize
- * @return 
+ * @return
  */
-function sync_get_modified_relationships($session, $module_name, $related_module,$from_date,$to_date,$offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1){
-	global  $beanList, $beanFiles;
-	$error = new SoapError();
-	$output_list = array();
-	if(!validate_authenticated($session)){
-		$error->set_error('invalid_login');	
-		return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
-	}
-	if(empty($beanList[$module_name]) || empty($beanList[$related_module])){
-		$error->set_error('no_module');	
-		return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
-	}
-	global $current_user;
-	if(!check_modules_access($current_user, $module_name, 'read') || !check_modules_access($current_user, $related_module, 'read')){
-		$error->set_error('no_access');	
-		return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
-	}
+function sync_get_modified_relationships($session, $module_name, $related_module, $from_date, $to_date, $offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1)
+{
+    global  $beanList, $beanFiles;
+    $error = new SoapError();
+    $output_list = array();
+    if (!validate_authenticated($session)) {
+        $error->set_error('invalid_login');
+        return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+    }
+    if (empty($beanList[$module_name]) || empty($beanList[$related_module])) {
+        $error->set_error('no_module');
+        return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+    }
+    global $current_user;
+    if (!check_modules_access($current_user, $module_name, 'read') || !check_modules_access($current_user, $related_module, 'read')) {
+        $error->set_error('no_access');
+        return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+    }
     // Cast to integer
     $deleted = (int)$deleted;
-	if($max_results > 0 || $max_results == '-99'){
-		global $sugar_config;
-		$sugar_config['list_max_entries_per_page'] = $max_results;	
-	}
+    if ($max_results > 0 || $max_results == '-99') {
+        global $sugar_config;
+        $sugar_config['list_max_entries_per_page'] = $max_results;
+    }
 
-	$date_query = "(m1.date_modified > " . db_convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". db_convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
-	if(isset($deletion_date) && !empty($deletion_date)){
-		$date_query .= " OR ({0}.date_modified > " . db_convert("'".DBManagerFactory::getInstance()->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". db_convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
-	}
+    $date_query = "(m1.date_modified > " . db_convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". db_convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
+    if (isset($deletion_date) && !empty($deletion_date)) {
+        $date_query .= " OR ({0}.date_modified > " . db_convert("'".DBManagerFactory::getInstance()->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". db_convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
+    }
 
-	$in = '';
-	if(isset($ids) && !empty($ids)){
-		foreach($ids as $value){
-			if(empty($in))
-			{
-				$in .= "('" . DBManagerFactory::getInstance()->quote($value) . "'";	
-			}
-			else
-			{
-				$in .= ",'" . DBManagerFactory::getInstance()->quote($value) . "'";	
-			}
-		}
-		$in .=')';
-	}
-	$query = '';
-	if(isset($in) && !empty($in)){
-		$query .= "( $date_query AND m1.id IN $in) OR (m1.id NOT IN $in AND {0}.deleted = 0)";
-	}
-	else{
-		$query .= "( {0}.deleted = 0)";
-	}
-	if(isset($module_id) && !empty($module_id)){
-		//if(isset($in) && !empty($in)){
-			$query .= " AND";
-		//}
+    $in = '';
+    if (isset($ids) && !empty($ids)) {
+        foreach ($ids as $value) {
+            if (empty($in)) {
+                $in .= "('" . DBManagerFactory::getInstance()->quote($value) . "'";
+            } else {
+                $in .= ",'" . DBManagerFactory::getInstance()->quote($value) . "'";
+            }
+        }
+        $in .=')';
+    }
+    $query = '';
+    if (isset($in) && !empty($in)) {
+        $query .= "( $date_query AND m1.id IN $in) OR (m1.id NOT IN $in AND {0}.deleted = 0)";
+    } else {
+        $query .= "( {0}.deleted = 0)";
+    }
+    if (isset($module_id) && !empty($module_id)) {
+        //if(isset($in) && !empty($in)){
+        $query .= " AND";
+        //}
         $query .= " m2.id = '".DBManagerFactory::getInstance()->quote($module_id)."'";
-	}
-	if($related_module == 'Meetings' || $related_module == 'Calls'){
-		$query = string_format($query, array('m1'));	
-	}	
-	$results = retrieve_modified_relationships($module_name,  $related_module, $query, $deleted, $offset, $max_results, $select_fields, $relationship_name);
+    }
+    if ($related_module == 'Meetings' || $related_module == 'Calls') {
+        $query = string_format($query, array('m1'));
+    }
+    $results = retrieve_modified_relationships($module_name, $related_module, $query, $deleted, $offset, $max_results, $select_fields, $relationship_name);
 
     $list = $results['result'];
 
@@ -161,7 +159,8 @@ $server->register(
     'get_modified_entries',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'ids'=>'tns:select_fields', 'select_fields'=>'tns:select_fields'),
     array('return'=>'tns:get_sync_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 function get_modified_entries($session, $module_name, $ids, $select_fields)
 {
@@ -220,33 +219,42 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
         $in .=')';
     }
 
-	$ret_array = $seed->create_new_list_query('', "$table_name.id IN $in", $select_fields, array(), -2, '', true, $seed, true);
-    if(!is_array($params)) $params = array();
-    if(!isset($params['custom_select'])) $params['custom_select'] = '';
-    if(!isset($params['custom_from'])) $params['custom_from'] = '';
-    if(!isset($params['custom_where'])) $params['custom_where'] = '';
-    if(!isset($params['custom_order_by'])) $params['custom_order_by'] = '';
-	$main_query = $ret_array['select'] . $params['custom_select'] . $ret_array['from'] . $params['custom_from'] . $ret_array['where'] . $params['custom_where'] . $ret_array['order_by'] . $params['custom_order_by'];
-	$result = $seed->db->query($main_query);
+    $ret_array = $seed->create_new_list_query('', "$table_name.id IN $in", $select_fields, array(), -2, '', true, $seed, true);
+    if (!is_array($params)) {
+        $params = array();
+    }
+    if (!isset($params['custom_select'])) {
+        $params['custom_select'] = '';
+    }
+    if (!isset($params['custom_from'])) {
+        $params['custom_from'] = '';
+    }
+    if (!isset($params['custom_where'])) {
+        $params['custom_where'] = '';
+    }
+    if (!isset($params['custom_order_by'])) {
+        $params['custom_order_by'] = '';
+    }
+    $main_query = $ret_array['select'] . $params['custom_select'] . $ret_array['from'] . $params['custom_from'] . $ret_array['where'] . $params['custom_where'] . $ret_array['order_by'] . $params['custom_order_by'];
+    $result = $seed->db->query($main_query);
 
-	$xml = '<?xml version="1.0" encoding="utf-8"?><items>';
-	while($row = $seed->db->fetchByAssoc($result))
-	{
-		if (version_compare(phpversion(), '5.0') < 0) {
-        	$temp = $seed;
+    $xml = '<?xml version="1.0" encoding="utf-8"?><items>';
+    while ($row = $seed->db->fetchByAssoc($result)) {
+        if (version_compare(phpversion(), '5.0') < 0) {
+            $temp = $seed;
         } else {
-        	$temp = @clone($seed);
+            $temp = @clone($seed);
         }
         $temp->setupCustomFields($temp->module_dir);
-		$temp->loadFromRow($row);
-		$temp->fill_in_additional_detail_fields();
-		if(isset($temp->emailAddress)){
-			$temp->emailAddress->handleLegacyRetrieve($temp);
-		}
-		$val = get_return_value($temp, $table_name);
-		$xml .= get_name_value_xml($val, $module_name);	
-	}
-	$xml .= "</items>";
+        $temp->loadFromRow($row);
+        $temp->fill_in_additional_detail_fields();
+        if (isset($temp->emailAddress)) {
+            $temp->emailAddress->handleLegacyRetrieve($temp);
+        }
+        $val = get_return_value($temp, $table_name);
+        $xml .= get_name_value_xml($val, $module_name);
+    }
+    $xml .= "</items>";
 
     $xml = base64_encode($xml);
 
@@ -257,7 +265,8 @@ $server->register(
     'get_attendee_list',
     array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'id'=>'xsd:string'),
     array('return'=>'tns:get_sync_result_encoded'),
-    $NAMESPACE);
+    $NAMESPACE
+);
 
 function get_attendee_list($session, $module_name, $id)
 {
@@ -328,4 +337,3 @@ function get_attendee_list($session, $module_name, $id)
     $xml = base64_encode($xml);
     return array('result'=>$xml, 'error'=>$error->get_soap_array());
 }
-

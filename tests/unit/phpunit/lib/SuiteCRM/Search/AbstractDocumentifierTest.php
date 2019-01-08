@@ -111,7 +111,6 @@ class AbstractDocumentifierTest extends SearchTestAbstract
 
     public function setUp()
     {
-
         $this->documentifier = new AbstractDocumentifierMock();
 
         return parent::setUp();

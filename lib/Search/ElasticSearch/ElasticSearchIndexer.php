@@ -364,7 +364,6 @@ class ElasticSearchIndexer extends AbstractIndexer
 
         $meta = $results[$this->index]['mappings'][$module]['_meta'];
         return $meta;
-
     }
 
     /** @return int */

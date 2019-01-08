@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('XTemplate/xtpl.php');
 
@@ -13,15 +15,17 @@ global $app_strings;
 global $current_user;
 
 
-if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
+if (!is_admin($current_user)) {
+    sugar_die("Unauthorized access to administration.");
+}
 //Fix Notice error
 $mod_id = "";
 $mod_name = "";
-if(isset($mod_strings['LBL_MODULE_ID'])) {
-	$mod_id = $mod_strings['LBL_MODULE_ID'];
+if (isset($mod_strings['LBL_MODULE_ID'])) {
+    $mod_id = $mod_strings['LBL_MODULE_ID'];
 }
-if(isset($mod_strings['LBL_MODULE_NAME'])) {
-	$mod_name = $mod_strings['LBL_MODULE_NAME'];
+if (isset($mod_strings['LBL_MODULE_NAME'])) {
+    $mod_name = $mod_strings['LBL_MODULE_NAME'];
 }
 echo "\n<p>\n";
 echo get_module_title($mod_id, $mod_name.": ".$mod_strings['LBL_CONFIGURE_SETTINGS'], false);
@@ -36,7 +40,7 @@ $focus = new Administration();
 $focus->retrieveSettings(); //retrieve all admin settings.
 $GLOBALS['log']->info("SecuritySuite Configure Settings view");
 
-$xtpl=new XTemplate ('modules/SecurityGroups/config.html');
+$xtpl=new XTemplate('modules/SecurityGroups/config.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 
@@ -51,68 +55,68 @@ $xtpl->assign("HEADER", get_module_title("SecurityGroups", "{MOD.LBL_CONFIGURE_S
 
 // securitysuite_additive
 $securitysuite_additive = '';
-if(isset($sugar_config['securitysuite_additive']) && $sugar_config['securitysuite_additive'] == true) {
-	$securitysuite_additive = 'CHECKED';
-} 
+if (isset($sugar_config['securitysuite_additive']) && $sugar_config['securitysuite_additive'] == true) {
+    $securitysuite_additive = 'CHECKED';
+}
 $xtpl->assign('securitysuite_additive', $securitysuite_additive);
 
 // securitysuite_strict_rights
 $securitysuite_strict_rights = '';
-if(isset($sugar_config['securitysuite_strict_rights']) && $sugar_config['securitysuite_strict_rights'] == true) {
-	$securitysuite_strict_rights = 'CHECKED';
-} 
+if (isset($sugar_config['securitysuite_strict_rights']) && $sugar_config['securitysuite_strict_rights'] == true) {
+    $securitysuite_strict_rights = 'CHECKED';
+}
 $xtpl->assign('securitysuite_strict_rights', $securitysuite_strict_rights);
 
 // securitysuite_filter_user_list
 $securitysuite_filter_user_list = '';
-if(isset($sugar_config['securitysuite_filter_user_list']) && $sugar_config['securitysuite_filter_user_list'] == true) {
-	$securitysuite_filter_user_list = 'CHECKED';
-} 
+if (isset($sugar_config['securitysuite_filter_user_list']) && $sugar_config['securitysuite_filter_user_list'] == true) {
+    $securitysuite_filter_user_list = 'CHECKED';
+}
 $xtpl->assign('securitysuite_filter_user_list', $securitysuite_filter_user_list);
 
 // securitysuite_user_role_precedence
 $securitysuite_user_role_precedence = '';
-if(isset($sugar_config['securitysuite_user_role_precedence']) && $sugar_config['securitysuite_user_role_precedence'] == true) {
-	$securitysuite_user_role_precedence = 'CHECKED';
-} 
+if (isset($sugar_config['securitysuite_user_role_precedence']) && $sugar_config['securitysuite_user_role_precedence'] == true) {
+    $securitysuite_user_role_precedence = 'CHECKED';
+}
 $xtpl->assign('securitysuite_user_role_precedence', $securitysuite_user_role_precedence);
 // securitysuite_user_popup
 $securitysuite_user_popup = '';
-if(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true) {
-	$securitysuite_user_popup = 'CHECKED';
-} 
+if (isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true) {
+    $securitysuite_user_popup = 'CHECKED';
+}
 $xtpl->assign('securitysuite_user_popup', $securitysuite_user_popup);
 // securitysuite_popup_select
 $securitysuite_popup_select = '';
-if(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true) {
-	$securitysuite_popup_select = 'CHECKED';
-} 
+if (isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true) {
+    $securitysuite_popup_select = 'CHECKED';
+}
 $xtpl->assign('securitysuite_popup_select', $securitysuite_popup_select);
 // securitysuite_inherit_creator
 $securitysuite_inherit_creator = '';
-if(isset($sugar_config['securitysuite_inherit_creator']) && $sugar_config['securitysuite_inherit_creator'] == true) {
-	$securitysuite_inherit_creator = 'CHECKED';
-} 
+if (isset($sugar_config['securitysuite_inherit_creator']) && $sugar_config['securitysuite_inherit_creator'] == true) {
+    $securitysuite_inherit_creator = 'CHECKED';
+}
 $xtpl->assign('securitysuite_inherit_creator', $securitysuite_inherit_creator);
 // securitysuite_inherit_parent
 $securitysuite_inherit_parent = '';
-if(isset($sugar_config['securitysuite_inherit_parent']) && $sugar_config['securitysuite_inherit_parent'] == true) {
-	$securitysuite_inherit_parent = 'CHECKED';
-} 
+if (isset($sugar_config['securitysuite_inherit_parent']) && $sugar_config['securitysuite_inherit_parent'] == true) {
+    $securitysuite_inherit_parent = 'CHECKED';
+}
 $xtpl->assign('securitysuite_inherit_parent', $securitysuite_inherit_parent);
 // securitysuite_inherit_assigned
 $securitysuite_inherit_assigned = '';
-if(isset($sugar_config['securitysuite_inherit_assigned']) && $sugar_config['securitysuite_inherit_assigned'] == true) {
-	$securitysuite_inherit_assigned = 'CHECKED';
-} 
+if (isset($sugar_config['securitysuite_inherit_assigned']) && $sugar_config['securitysuite_inherit_assigned'] == true) {
+    $securitysuite_inherit_assigned = 'CHECKED';
+}
 $xtpl->assign('securitysuite_inherit_assigned', $securitysuite_inherit_assigned);
 
 
 // securitysuite_inbound_email
 $securitysuite_inbound_email = '';
-if(isset($sugar_config['securitysuite_inbound_email']) && $sugar_config['securitysuite_inbound_email'] == true) {
+if (isset($sugar_config['securitysuite_inbound_email']) && $sugar_config['securitysuite_inbound_email'] == true) {
     $securitysuite_inbound_email = 'CHECKED';
-} 
+}
 $xtpl->assign('securitysuite_inbound_email', $securitysuite_inbound_email);
 
 
@@ -120,8 +124,8 @@ $xtpl->assign('securitysuite_inbound_email', $securitysuite_inbound_email);
 $groupFocus = new SecurityGroup();
 $defaultGroups = $groupFocus->retrieveDefaultGroups();
 $defaultGroup_string = "";
-foreach($defaultGroups as $default_id => $defaultGroup) {
-	$defaultGroup_string .= "
+foreach ($defaultGroups as $default_id => $defaultGroup) {
+    $defaultGroup_string .= "
 	<tr>
 	<td class='dataLabel' width='30%'>
 		".$mod_strings['LBL_GROUP']." ".$defaultGroup['group']."
@@ -138,8 +142,8 @@ $xtpl->assign("DEFAULT_GROUPS", $defaultGroup_string);
 
 $groups = $groupFocus->get_list("name");
 $options = array(""=>"");
-foreach($groups['list'] as $group) {
-	$options[$group->id] = $group->name;
+foreach ($groups['list'] as $group) {
+    $options[$group->id] = $group->name;
 }
 $xtpl->assign("SECURITY_GROUP_OPTIONS", get_select_options_with_id($options, ""));
 

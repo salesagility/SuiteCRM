@@ -39,9 +39,9 @@
  */
 
 $viewdefs['Users']['EditView'] = array(
-    'templateMeta' => array('maxColumns' => '2', 
+    'templateMeta' => array('maxColumns' => '2',
                             'widths' => array(
-                                array('label' => '10', 'field' => '30'), 
+                                array('label' => '10', 'field' => '30'),
                                 array('label' => '10', 'field' => '30')
                             ),
                             'form' => array(
@@ -49,8 +49,8 @@ $viewdefs['Users']['EditView'] = array(
                                 'footerTpl'=>'modules/Users/tpls/EditViewFooter.tpl',
                             ),
                       ),
-    'panels' => array (
-        'LBL_USER_INFORMATION' => array (
+    'panels' => array(
+        'LBL_USER_INFORMATION' => array(
             array(
                 array(
                     'name'=>'user_name',

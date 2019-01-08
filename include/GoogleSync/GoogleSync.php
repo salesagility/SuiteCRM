@@ -101,7 +101,7 @@ class GoogleSync
         global $sugar_config;
         $authJson_local = json_decode(base64_decode($sugar_config['google_auth_json']), true);
         if (!$authJson_local) {
-        // The authconfig json string is invalid json
+            // The authconfig json string is invalid json
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid AuthConfig JSON');
             return false;
         } elseif (!array_key_exists('web', $authJson_local)) {
@@ -190,7 +190,7 @@ class GoogleSync
         // Retrieve Access Token JSON from user preference
         $accessToken = json_decode(base64_decode($this->workingUser->getPreference('GoogleApiToken', 'GoogleSync')), true);
         if (!array_key_exists('access_token', $accessToken)) {
-        // The Token is invalid JSON or missing
+            // The Token is invalid JSON or missing
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid or Missing AuthToken');
             return false;
         }
@@ -390,7 +390,7 @@ class GoogleSync
         }
 
         if (empty($event_id)) {
-         // If we didn't get passed an event, return null
+            // If we didn't get passed an event, return null
             return;
         }
 
@@ -509,7 +509,7 @@ class GoogleSync
             switch (get_class($event_1)) {
                 case "Google_Service_Calendar_Event":
                     if ($event_1->status !== 'cancelled') {
-                     // We only pull if the Google Event is not deleted/cancelled
+                        // We only pull if the Google Event is not deleted/cancelled
                         $return = "pull";
                     } else {
                         $return = "skip";
@@ -517,7 +517,7 @@ class GoogleSync
                     break;
                 case "Meeting":
                     if ($event_1->deleted == '0') {
-                     // We only push if the meeting is not deleted
+                        // We only push if the meeting is not deleted
                         $return = "push";
                     } else {
                         $return = "skip";
@@ -589,7 +589,7 @@ class GoogleSync
             if ($gModified > $lastSync || $sModified > $lastSync) {
                 if ($gModified > $sModified) {
                     if ($event_remote->status == 'cancelled') {
-                         // if the remote event is deleted, delete it here
+                        // if the remote event is deleted, delete it here
                         return "pull_delete";
                     } else {
                         return "pull";
@@ -621,7 +621,6 @@ class GoogleSync
      */
     public function pushEvent($event_local, $event_remote = null)
     {
-
         if (!isset($event_remote) || empty($event_remote)) {
             $event = $this->createGoogleCalendarEvent($event_local);
             $return = $this->gService->events->insert($this->calendarId, $event);
@@ -634,7 +633,7 @@ class GoogleSync
         $this->setLastSync($event_local, $return->getId());
 
         /* We don't get a status code back showing success. Instead, the return of the
-         * create or update is the Google_Service_Calendar_Event object after saving. 
+         * create or update is the Google_Service_Calendar_Event object after saving.
          * So we check to make sure it has an ID to determine Success/Failure.
          */
         if (isset($return->id)) {
@@ -657,7 +656,6 @@ class GoogleSync
      */
     public function pullEvent($event_remote, $event_local = null)
     {
-
         if (!isset($event_local) || empty($event_local)) {
             $event = $this->createSuitecrmMeetingEvent($event_remote);
         } else {
@@ -740,7 +738,7 @@ class GoogleSync
         $statusCode = $return->getStatusCode();
 
         if ($statusCode >= 200 && $statusCode <= 299) {
-         // 2xx statusCode = success
+            // 2xx statusCode = success
             $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Success Status Code: ' . $statusCode . ' on delete.');
 
             // This removes the gsync_id reference from the table.
@@ -765,7 +763,6 @@ class GoogleSync
      */
     public function updateSuitecrmMeetingEvent($event_local, $event_remote)
     {
-
         if ((!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote))) {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'ERROR:Missing Variables');
             return false;
@@ -854,7 +851,6 @@ class GoogleSync
      */
     public function updateGoogleCalendarEvent($event_local, $event_remote)
     {
-
         if ((!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote))) {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'ERROR:Missing Variables');
             return false;
@@ -974,7 +970,6 @@ class GoogleSync
      */
     protected function setLastSync($event_local, $gEventId = null)
     {
-
         if (isset($gEventId)) {
             $event_local->gsync_id = $gEventId;
         }
@@ -1002,7 +997,6 @@ class GoogleSync
      */
     public function doSync($id)
     {
-
         if (!$this->setClient($id)) {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Client');
             return false;
@@ -1113,7 +1107,6 @@ class GoogleSync
      */
     public function setSyncUsers()
     {
-
         $query = "SELECT id FROM users WHERE deleted = '0'";
         $result = $this->db->query($query);
 

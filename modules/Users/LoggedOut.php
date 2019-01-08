@@ -42,8 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-if (isset($_SESSION['authenticated_user_id']))
-{
+if (isset($_SESSION['authenticated_user_id'])) {
     ob_clean();
     header('Location: ' . $GLOBALS['app']->getLoginRedirect());
     sugar_cleanup(true);

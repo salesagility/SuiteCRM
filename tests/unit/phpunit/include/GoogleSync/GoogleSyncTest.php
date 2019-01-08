@@ -89,13 +89,11 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
     public function testAddUser()
     {
-
         $object = new GoogleSync();
         $return = $object->addUser('ABC123', 'End User');
 
         $this->assertTrue($return);
         $this->assertArrayHasKey('ABC123', $object->users);
-
     }
 
     public function testPullEvent()
@@ -125,7 +123,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
     public function testCreateSuitecrmMeetingEvent()
     {
-
         $state = new StateSaver();
         $state->pushTable('reminders');
         $state->pushTable('reminders_invitees');
@@ -208,7 +205,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
     public function testDelEvent()
     {
-
     }
 
     public function testPushPullSkip()
@@ -287,7 +283,6 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $CRM_Meeting->fetched_row['gsync_lastsync'] = strtotime('2018-01-01 13:00:00 UTC');
         $Google_Event->updated = '2018-01-01 12:00:00 UTC';
         $this->assertEquals('skip', $object->pushPullSkip($CRM_Meeting, $Google_Event));
-
     }
 
     public function testSetUsersGoogleCalendar()
@@ -378,7 +373,7 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
 
     public function testUpdateSuitecrmMeetingEvent()
     {
-       // This is tested by testCreateSuitecrmMeetingEvent, Since that method calls it.
+        // This is tested by testCreateSuitecrmMeetingEvent, Since that method calls it.
     }
 
     public function testSetTimezone()
@@ -392,6 +387,5 @@ class GoogleSyncTest extends StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($return);
         $this->assertEquals($expectedTimezone, $object->timezone);
         $this->assertEquals($expectedTimezone, date_default_timezone_get());
-
     }
 }

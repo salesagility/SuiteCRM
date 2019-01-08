@@ -161,7 +161,7 @@ $listViewDefs['Emails'] = array(
         'default' => false,
     ),
     'CATEGORY_ID' =>
-        array (
+        array(
             'width' => '10%',
             'label' => 'LBL_LIST_CATEGORY',
             'default' => true,

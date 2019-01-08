@@ -114,8 +114,10 @@ class ImapHandlerFactory
             $info .= "\n[debug info this] " . var_dump($this, true);
             $info .= "\n[debug info callset] " . var_dump($interfaceCallsSettings, true);
             LoggerManager::getLogger()->debug('Imap test setting failure: ' . $info);
-            throw new ImapHandlerException("Test settings does not exists: $testSettings",
-                ImapHandlerException::ERR_TEST_SET_NOT_EXISTS);
+            throw new ImapHandlerException(
+                "Test settings does not exists: $testSettings",
+                ImapHandlerException::ERR_TEST_SET_NOT_EXISTS
+            );
         }
 
         $interfaceCalls = $interfaceCallsSettings[$testSettings];
@@ -159,8 +161,10 @@ class ImapHandlerFactory
         $calls = include $this->imapHandlerTestInterface['calls'];
 
         if (!isset($calls[$key])) {
-            throw new ImapHandlerException('Key not found: ' . $key,
-                ImapHandlerException::ERR_KEY_NOT_FOUND);
+            throw new ImapHandlerException(
+                'Key not found: ' . $key,
+                ImapHandlerException::ERR_KEY_NOT_FOUND
+            );
         } else {
             if (!file_put_contents(__DIR__ . self::SETTINGS_KEY_FILE, $key)) {
                 throw new ImapHandlerException('Key saving error', ImapHandlerException::ERR_KEY_SAVE_ERROR);

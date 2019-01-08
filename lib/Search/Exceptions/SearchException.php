@@ -48,7 +48,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SearchException extends \RuntimeException
 {
-    
     const ZERO_SIZE = 100;
-
 }

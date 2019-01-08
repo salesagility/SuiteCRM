@@ -117,13 +117,13 @@ class ViewAdminsettings extends SugarView
                     $modulesWithFeeds = SugarFeed::getAllFeedModules();
 
                     foreach ($modulesWithFeeds as $currFeedModule) {
-                        SugarFeed::disableModuleFeed($currFeedModule, FALSE);
+                        SugarFeed::disableModuleFeed($currFeedModule, false);
                     }
                 }
 
-                $admin->retrieveSettings(FALSE, TRUE);
+                $admin->retrieveSettings(false, true);
                 SugarFeed::flushBackendCache();
-            } else if ($_REQUEST['process'] == 'deleteRecords') {
+            } elseif ($_REQUEST['process'] == 'deleteRecords') {
                 if (!isset($db)) {
                     $db = DBManagerFactory::getInstance();
                 }
@@ -165,9 +165,7 @@ class ViewAdminsettings extends SugarView
                 $userFeedEnabled = $currModule['enabled'];
                 continue;
             } elseif ($module == 'Facebook' || $module == 'Twitter') {
-
                 $currModule['label'] = $module;
-
             } else {
                 $currModule['label'] = $GLOBALS['app_list_strings']['moduleList'][$module];
             }
@@ -188,4 +186,3 @@ class ViewAdminsettings extends SugarView
         $sugar_smarty->display('modules/SugarFeed/tpls/AdminSettings.tpl');
     }
 }
-
