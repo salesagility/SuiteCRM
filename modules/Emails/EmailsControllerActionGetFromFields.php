@@ -174,6 +174,8 @@ class EmailsControllerActionGetFromFieldsDataAddress {
 
 class EmailsControllerActionGetFromFieldsDataAddressCollector {
     
+    protected $currentUser;
+    
     protected $err;
     protected $oe;
     
@@ -185,6 +187,10 @@ class EmailsControllerActionGetFromFieldsDataAddressCollector {
     protected $oeName;
 
     // -------------------------------------------------------
+    
+    public function __construct(User $currentUser) {
+        $this->currentUser = $currentUser;
+    }
 
     /**
      *
