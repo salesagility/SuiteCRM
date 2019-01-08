@@ -121,15 +121,30 @@ SUGAR.Emails.handleSelectedListViewItems =  function(
 
 $(document).ready(function () {
 
-  var query = JSON.parse($('[name=current_query_by_page]').val());
-  var jQueryBtnEmailsCurrentFolder = $('.btn-emails-current-folder');
+  $.ajax({
+    type: "GET",
+    cache: false,
+    url: 'index.php?module=Emails&action=GetFolders'
+  }).done(function (data) {
+    var query = JSON.parse($('[name=current_query_by_page]').val());
+    var jQueryBtnEmailsCurrentFolder = $('.btn-emails-current-folder');
+    var response = JSON.parse(data);
 
-  if(typeof query.folder === 'undefined' ||  query.folder === '') {
-    jQueryBtnEmailsCurrentFolder.remove();
-  } else if(query.folder === null) {
-    jQueryBtnEmailsCurrentFolder.html('<span class="glyphicon glyphicon-alert"></span>');
-  } else {
-    jQueryBtnEmailsCurrentFolder.text(query.folder);
-  }
+    responses = response.response;
+
+
+    if(typeof query.folder === 'undefined' ||  query.folder === '') {
+      jQueryBtnEmailsCurrentFolder.remove();
+    } else if(query.folder === null) {
+      jQueryBtnEmailsCurrentFolder.html('<span class="glyphicon glyphicon-alert"></span>');
+    }
+
+    for (let i = 0; i < (responses.length); i++) {
+
+      if (responses[i].id === query.folders_id) {
+        jQueryBtnEmailsCurrentFolder.text(responses[(i)].text);
+      }
+    }
+  });
 
 });
