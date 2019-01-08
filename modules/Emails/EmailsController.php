@@ -46,6 +46,9 @@ use SuiteCRM\Utility\SuiteValidator;
 
 include_once 'include/Exceptions/SugarControllerException.php';
 
+include_once __DIR__ . '/EmailsDataAddressCollector.php';
+include_once __DIR__ . '/EmailsControllerActionGetFromFields.php';
+
 class EmailsController extends SugarController
 {
     
@@ -431,7 +434,7 @@ class EmailsController extends SugarController
         global $sugar_config;
         $email = new Email();
         $ie = new InboundEmail();
-        $collector = new EmailsControllerActionGetFromFieldsDataAddressCollector($current_user, $sugar_config);
+        $collector = new EmailsDataAddressCollector($current_user, $sugar_config);
         $handler = new EmailsControllerActionGetFromFields($current_user, $collector);
         $results = $handler->handleActionGetFromFields($email, $ie);
         echo $results;

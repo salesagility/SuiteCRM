@@ -79,7 +79,8 @@ class EmailsDataAddress
             $outboundEmailName,
             $emailSignaturesArray
     ) {
-        $signatureResolver = new EmailsSignatureResolver($emailSignaturesArray);
+        $signatureResolver = new EmailsSignatureResolver();
+        $signatureResolver->setSignatureArray($emailSignaturesArray);
         
         $dataArray = [
             'type' => $type,

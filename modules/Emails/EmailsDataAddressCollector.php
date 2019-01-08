@@ -132,7 +132,7 @@ class EmailsDataAddressCollector {
      * @param mixed $showFolders
      * @return array
      */
-    protected function collectDataAddressesFromIEAccounts(
+    public function collectDataAddressesFromIEAccounts(
         $ieAccounts, $showFolders, $prependSignature, $emailSignatures, $defaultEmailSignature
     ) {
         $dataAddresses = array();
@@ -144,7 +144,7 @@ class EmailsDataAddressCollector {
                 $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
                 $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
 
-                $this->getOutboundEmailOrError();
+                $this->getOutboundEmailOrError($storedOptions, $inboundEmail);
                 $this->retriveFromDataStruct($storedOptions);
 
                 $emailFromValidator = new EmailFromValidator();
@@ -246,10 +246,11 @@ class EmailsDataAddressCollector {
                 LoggerManager::getLogger()->error('Incorrect "replay to" format found: ' . $this->replyTo);
                 $replyToErr = self::ERR_REPLY_TO_FROMAT_INVALID_SPLITS;
             } else {
-                $tmpName = $this->getTmpNameForLogReplyToError($splits, &$replyToErr);
-                $tmpAddr = $this->getTmpAddrForLogReplyToError($splits, &$replyToErr);
+                $replyToErr = null;
+                $tmpName = $this->getTmpNameForLogReplyToError($splits, $replyToErr);
+                $tmpAddr = $this->getTmpAddrForLogReplyToError($splits, $replyToErr);
 
-                $this->validateForLogReplyToError($tmpName, $tmpAddr, $emailFromValidator, &$replyToErr);
+                $this->validateForLogReplyToError($tmpName, $tmpAddr, $emailFromValidator, $replyToErr);
             }
         }
 
