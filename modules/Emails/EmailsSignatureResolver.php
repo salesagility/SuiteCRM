@@ -46,8 +46,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class EmailsSignatureResolver {
-    
+class EmailsSignatureResolver
+{
     const ERR_HTML_AMBIGUOUS = 301;
     const ERR_HTML_NONE = 302;
     const ERR_PLAINTEXT_AMBIGUOUS = 303;
@@ -84,11 +84,12 @@ class EmailsSignatureResolver {
     protected $noDefaultAvailable;
     
     /**
-     * 
+     *
      * @param array $signatureArray
      * @return array errors
      */
-    public function setSignatureArray($signatureArray) {
+    public function setSignatureArray($signatureArray)
+    {
         $this->signatureArray = $signatureArray;
         $this->errors = [];
         $this->html = $this->resolveHtml();
@@ -101,12 +102,13 @@ class EmailsSignatureResolver {
     }
     
     /**
-     * 
+     *
      * @return string|null this function returns null and/or set errors variable if error(s) occured
      */
-    protected function resolveHtml() {
+    protected function resolveHtml()
+    {
         if (isset($this->signatureArray['html']) && $this->signatureArray['html']) {
-            if (isset($this->signatureArray['signature_html']) && $this->signatureArray['signature_html'] && 
+            if (isset($this->signatureArray['signature_html']) && $this->signatureArray['signature_html'] &&
                     $this->signatureArray['signature_html'] != $this->signatureArray['html']) {
                 $this->errors[] = self::ERR_HTML_AMBIGUOUS;
                 LoggerManager::getLogger()->error('Ambiguous signature html found!');
@@ -122,12 +124,13 @@ class EmailsSignatureResolver {
     }
     
     /**
-     * 
+     *
      * @return string|null this function returns null and/or set errors variable if error(s) occured
      */
-    protected function resolvePlaintext() {
+    protected function resolvePlaintext()
+    {
         if (isset($this->signatureArray['plain']) && $this->signatureArray['plain']) {
-            if (isset($this->signatureArray['signature']) && $this->signatureArray['signature'] && 
+            if (isset($this->signatureArray['signature']) && $this->signatureArray['signature'] &&
                     $this->signatureArray['signature'] != $this->signatureArray['plain']) {
                 $this->errors[] = self::ERR_PLAINTEXT_AMBIGUOUS;
                 LoggerManager::getLogger()->error('Ambiguous signature plain text found!');
@@ -137,33 +140,35 @@ class EmailsSignatureResolver {
         if (isset($this->signatureArray['signature']) && $this->signatureArray['signature']) {
             return $this->signatureArray['signature'];
         }
-        $this->errors[] = self::ERR_PLAINTEXT_NONE;   
-        LoggerManager::getLogger()->error('Signature plain text not found!');     
+        $this->errors[] = self::ERR_PLAINTEXT_NONE;
+        LoggerManager::getLogger()->error('Signature plain text not found!');
         return null;
     }
     
     /**
-     * 
+     *
      * @return string
      */
-    public function getHtml() {
+    public function getHtml()
+    {
         return $this->html;
     }
     
     /**
-     * 
+     *
      * @return string
      */
-    public function getPlaintext() {
+    public function getPlaintext()
+    {
         return $this->plaintext;
     }
     
     /**
-     * 
+     *
      * @return bool
      */
-    public function isNoDefaultAvailable() {
+    public function isNoDefaultAvailable()
+    {
         return $this->noDefaultAvailable;
     }
-    
 }

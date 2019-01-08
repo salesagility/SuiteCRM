@@ -46,10 +46,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
-class EmailsDataAddress {
+class EmailsDataAddress
+{
     
     /**
-     * 
+     *
      * @param string $type
      * @param string $id
      * @param string $attributesReplyTo
@@ -103,14 +104,15 @@ class EmailsDataAddress {
     }
     
     /**
-     * 
+     *
      * @param string $attributesReplyTo
      * @param string $attributesFrom
      * @param string $attributesName
      * @param string $attributesOe
      * @return array
      */
-    protected function getDataArrayAttributes($attributesReplyTo, $attributesFrom, $attributesName, $attributesOe) {
+    protected function getDataArrayAttributes($attributesReplyTo, $attributesFrom, $attributesName, $attributesOe)
+    {
         return [
             'reply_to' => utf8_encode($attributesReplyTo),
             'from' => utf8_encode($attributesFrom),
@@ -118,5 +120,4 @@ class EmailsDataAddress {
             'oe' => utf8_encode($attributesOe),
         ];
     }
-    
 }
