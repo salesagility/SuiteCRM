@@ -101,6 +101,7 @@ class EmailFromValidator
      * @param Email $email
      * @param bool $tryToFix
      * @return bool
+     * @throws EmailValidatorException
      */
     public function isValid(Email $email, $tryToFix = true)
     {
@@ -158,8 +159,9 @@ class EmailFromValidator
     }
     
     /**
-     *
-     * @param int $error
+     * 
+     * @param type $error
+     * @throws InvalidArgumentException
      */
     protected function addError($error)
     {
@@ -192,6 +194,10 @@ class EmailFromValidator
         return $errors;
     }
     
+    /**
+     * 
+     * @return array
+     */
     public function getErrorsAsText()
     {
         $txts = [];
@@ -205,6 +211,12 @@ class EmailFromValidator
         ];
     }
     
+    /**
+     * 
+     * @param int $error
+     * @return type
+     * @throws InvalidArgumentException
+     */
     protected function getErrorAsText($error)
     {
         if ($error !== (int)$error) {
@@ -254,6 +266,10 @@ class EmailFromValidator
         return $lbl;
     }
     
+    /**
+     * 
+     * @return bool
+     */
     protected function hasErrors()
     {
         return !empty($this->errors);
@@ -270,6 +286,11 @@ class EmailFromValidator
         return $valid;
     }
     
+    /**
+     * 
+     * @param string $nonEmailAddress
+     * @return boolean
+     */
     protected function isValidNonEmailAddress($nonEmailAddress)
     {
         $valid = true;
@@ -302,6 +323,12 @@ class EmailFromValidator
         return $valid;
     }
     
+    /**
+     * 
+     * @param string $fromAddrName
+     * @return boolean
+     * @throws EmailValidatorException
+     */
     protected function isValidFromAddrName($fromAddrName)
     {
         $valid = false;
@@ -361,6 +388,7 @@ class EmailFromValidator
      * validate field 'From' - should be a valid email address
      *
      * @return array
+     * @throws EmailValidatorException
      */
     protected function validateFrom()
     {
@@ -383,6 +411,7 @@ class EmailFromValidator
      * validate field 'from_addr' - should be a valid email address
      *
      * @return array
+     * @throws EmailValidatorException
      */
     protected function validateFromAddr()
     {
@@ -405,6 +434,7 @@ class EmailFromValidator
      * validate field 'FromName' - should be a valid name string
      *
      * @return array
+     * @throws EmailValidatorException
      */
     protected function validateFromName()
     {
@@ -427,6 +457,7 @@ class EmailFromValidator
      * validate field 'from_name' - should be a valid name string
      *
      * @return array
+     * @throws EmailValidatorException
      */
     protected function validateFrom_Name()
     {
@@ -450,6 +481,7 @@ class EmailFromValidator
      * where email address in between '<' and '>' characters
      *
      * @return array
+     * @throws EmailValidatorException
      */
     protected function validateFromAddrName()
     {
