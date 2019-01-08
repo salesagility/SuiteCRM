@@ -83,7 +83,7 @@ class EmailsControllerActionGetFromFields {
     public function handleActionGetFromFields(Email $email, InboundEmail $ie) {
         $email->email2init();
         $ie->email = $email;
-        $ieAccounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($this->currentUser->id);
+        $ieAccounts = $ie->retrieveAllByGroupIdWithGroupAccounts($this->currentUser->id);
         $accountSignatures = $this->currentUser->getPreference('account_signatures', 'Emails');
         $showFolders = unserialize(base64_decode($this->currentUser->getPreference('showFolders', 'Emails')));
         $emailSignatures = $this->getEmailSignatures($accountSignatures);
