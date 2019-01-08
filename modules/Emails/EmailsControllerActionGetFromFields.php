@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -45,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once __DIR__ . '/../../include/SugarEmailAddress/SugarEmailAddress.php';
 
 
-class EmailsControllerActionGetFromFieldsSignatureResolver {
+class EmailsSignatureResolver {
     
     const ERR_HTML_AMBIGUOUS = 301;
     const ERR_HTML_NONE = 302;
@@ -167,7 +166,7 @@ class EmailsControllerActionGetFromFieldsSignatureResolver {
     
 }
 
-class EmailsControllerActionGetFromFieldsDataAddress {
+class EmailsDataAddress {
     
     /**
      * 
@@ -199,7 +198,7 @@ class EmailsControllerActionGetFromFieldsDataAddress {
             $outboundEmailName,
             $emailSignaturesArray
     ) {
-        $signatureResolver = new EmailsControllerActionGetFromFieldsSignatureResolver($emailSignaturesArray);
+        $signatureResolver = new EmailsSignatureResolver($emailSignaturesArray);
         
         $dataArray = [
             'type' => $type,
@@ -241,7 +240,7 @@ class EmailsControllerActionGetFromFieldsDataAddress {
     
 }
 
-class EmailsControllerActionGetFromFieldsDataAddressCollector {
+class EmailsDataAddressCollector {
     
     const ERR_INVALID_INBOUND_EMAIL_TYPE = 201;
     const ERR_STORED_OUTBOUND_EMAIL_NOT_SET = 202;
@@ -314,6 +313,7 @@ class EmailsControllerActionGetFromFieldsDataAddressCollector {
     /**
      * 
      * @param User $currentUser
+     * @param array $sugarConfig
      */
     public function __construct(User $currentUser, $sugarConfig) {
         $this->currentUser = $currentUser;
@@ -561,7 +561,7 @@ class EmailsControllerActionGetFromFieldsDataAddressCollector {
      * @return array
      */
     protected function getDataAddressArrayFromIEAccounts(InboundEmail $inboundEmail, $storedOptions, $prependSignature, $isPersonalEmailAccount, $isGroupEmailAccount) {
-        $dataAddress = new EmailsControllerActionGetFromFieldsDataAddress();
+        $dataAddress = new EmailsDataAddress();
         $dataArray = $dataAddress->getDataArray(
             $inboundEmail->module_name, 
             $inboundEmail->id, 
@@ -727,7 +727,7 @@ class EmailsControllerActionGetFromFieldsDataAddressCollector {
      * @return array
      */
     protected function getCollectDataAddressArrayFromUserAddresses($userAddress, $fromString, $prependSignature, $signatureHtml, $signatureTxt) {
-        $dataAddress = new EmailsControllerActionGetFromFieldsDataAddress();
+        $dataAddress = new EmailsDataAddress();
         $dataArray = $dataAddress->getDataArray(
             'personal', 
             $userAddress['email_address_id'], 
@@ -783,7 +783,7 @@ class EmailsControllerActionGetFromFieldsDataAddressCollector {
      * @return array
      */
     protected function getFillDataAddressArray($id, $name, $fromName, $fromAddr, $mailUser, $defaultEmailSignature) {
-        $dataAddress = new EmailsControllerActionGetFromFieldsDataAddress();
+        $dataAddress = new EmailsDataAddress();
         $dataArray = $dataAddress->getDataArray(
             'system', 
             $id, 
@@ -877,16 +877,16 @@ class EmailsControllerActionGetFromFields {
     
     /**
      *
-     * @var EmailsControllerActionGetFromFieldsDataAddressCollector 
+     * @var EmailsDataAddressCollector 
      */
     protected $collector;
 
     /**
-     *
+     * 
      * @param User $currentUser
-     * @param array $sugarConfig
+     * @param EmailsDataAddressCollector $collector
      */
-    public function __construct(User $currentUser, EmailsControllerActionGetFromFieldsDataAddressCollector $collector) {
+    public function __construct(User $currentUser, EmailsDataAddressCollector $collector) {
         $this->currentUser = $currentUser;
         $this->collector = $collector;
     }
