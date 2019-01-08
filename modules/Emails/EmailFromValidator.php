@@ -45,7 +45,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once __DIR__ . '/Email.php';
-require_once __DIR__ . '/EmailFixer.php';
 require_once __DIR__ . '/EmailValidatorException.php';
 
 /**
@@ -78,23 +77,23 @@ class EmailFromValidator
     const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR = 20;
     const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME = 21;
     const ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME = 22;
-    
+
     const EX_ERROR_CODE_TYRE_IS_INCORRECT = 100;
     const EX_ERROR_CODE_IS_NOT_IMPLEMENTED = 101;
-    
+
     /**
      *
      * @var Email;
      */
     protected $email;
-    
+
     /**
      *
      * @var array
      */
     protected $errors;
-    
-    
+
+
     /**
      * Specially use before email sending.
      *
@@ -120,9 +119,10 @@ class EmailFromValidator
         if (!$valid && $tryToFix) {
             $valid = !$this->hasErrors();
         }
+
         return $valid;
     }
-    
+
     /**
      *
      * @param Email $email
@@ -131,7 +131,7 @@ class EmailFromValidator
     {
         $this->email = $email;
     }
-    
+
     /**
      *
      * @return Email
@@ -147,9 +147,10 @@ class EmailFromValidator
             throw new EmailValidatorException('Trying to get Email but object type is incorrect:' . gettype($this->email),
                 EmailValidatorException::EMAIL_ISNT_EMAILOBJ);
         }
+
         return $this->email;
     }
-    
+
     /**
      *
      */
@@ -157,22 +158,23 @@ class EmailFromValidator
     {
         $this->errors = [];
     }
-    
+
     /**
-     * 
-     * @param type $error
+     *
+     * @param $error
      * @throws InvalidArgumentException
      */
     protected function addError($error)
     {
         if ($error !== (int)$error) {
-            throw new InvalidArgumentException('Error code should be an integer, ' . gettype($error) . ' given', self::EX_ERROR_CODE_TYRE_IS_INCORRECT);
+            throw new InvalidArgumentException('Error code should be an integer, ' . gettype($error) . ' given',
+                self::EX_ERROR_CODE_TYRE_IS_INCORRECT);
         }
         if (!in_array($error, $this->errors)) {
             $this->errors[] = $error;
         }
     }
-    
+
     /**
      *
      * @param array $errors
@@ -182,51 +184,52 @@ class EmailFromValidator
         $this->errors = array_merge($this->errors, $errors);
         $this->errors = array_unique($this->errors);
     }
-    
+
     /**
      *
      * @return array
      */
     public function getErrors()
     {
-        $errors = $this->errors;
+        $errorsArray = $this->errors;
         $this->clearErrors();
-        return $errors;
+
+        return $errorsArray;
     }
-    
+
     /**
-     * 
      * @return array
+     * @throws \SuiteCRM\ErrorMessageException
      */
     public function getErrorsAsText()
     {
         $txts = [];
-        $errors = $this->getErrors();
-        foreach ($errors as $error) {
+        $errorsArray = $this->getErrors();
+        foreach ($errorsArray as $error) {
             $txts[] = $this->getErrorAsText($error);
         }
+
         return [
-            'messages' => implode("\n", $txts), 
-            'codes' => implode(', ', $errors)
+            'messages' => implode("\n", $txts),
+            'codes' => implode(', ', $errorsArray)
         ];
     }
-    
+
     /**
-     * 
-     * @param int $error
-     * @return type
-     * @throws InvalidArgumentException
+     * @param $error
+     * @return string
+     * @throws \SuiteCRM\ErrorMessageException
      */
     protected function getErrorAsText($error)
     {
         if ($error !== (int)$error) {
-            throw new InvalidArgumentException('Error code should be an integer, ' . gettype($error) . ' given', self::EX_ERROR_CODE_TYRE_IS_INCORRECT);
+            throw new InvalidArgumentException('Error code should be an integer, ' . gettype($error) . ' given',
+                self::EX_ERROR_CODE_TYRE_IS_INCORRECT);
         }
         $lbl = $this->getErrorTextLabel($error);
-        $text = LangText::get($lbl, null, LangText::USING_ALL_STRINGS, true, false, 'Emails');
-        return $text;
+        return LangText::get($lbl, null, LangText::USING_ALL_STRINGS, true, false, 'Emails');
     }
-    
+
     /**
      *
      * @param int $error
@@ -236,45 +239,93 @@ class EmailFromValidator
     protected function getErrorTextLabel($error)
     {
         if ($error !== (int)$error) {
-            throw new InvalidArgumentException('Error code should be an integer, ' . gettype($error) . ' given', self::EX_ERROR_CODE_TYRE_IS_INCORRECT);
+            throw new InvalidArgumentException('Error code should be an integer, ' . gettype($error) . ' given',
+                self::EX_ERROR_CODE_TYRE_IS_INCORRECT);
         }
         switch ($error) {
-            case self::ERR_FIELD_FROM_IS_NOT_SET: $lbl = 'ERR_FIELD_FROM_IS_NOT_SET'; break;
-            case self::ERR_FIELD_FROM_IS_EMPTY: $lbl = 'ERR_FIELD_FROM_IS_EMPTY'; break;
-            case self::ERR_FIELD_FROM_IS_INVALID: $lbl = 'ERR_FIELD_FROM_IS_INVALID'; break;
-            case self::ERR_FIELD_FROM_ADDR_IS_NOT_SET: $lbl = 'ERR_FIELD_FROM_ADDR_IS_NOT_SET'; break;
-            case self::ERR_FIELD_FROM_ADDR_IS_EMPTY: $lbl = 'ERR_FIELD_FROM_ADDR_IS_EMPTY'; break;
-            case self::ERR_FIELD_FROM_ADDR_IS_INVALID: $lbl = 'ERR_FIELD_FROM_ADDR_IS_INVALID'; break;
-            case self::ERR_FIELD_FROMNAME_IS_NOT_SET: $lbl = 'ERR_FIELD_FROMNAME_IS_NOT_SET'; break;
-            case self::ERR_FIELD_FROMNAME_IS_EMPTY: $lbl = 'ERR_FIELD_FROMNAME_IS_EMPTY'; break;
-            case self::ERR_FIELD_FROMNAME_IS_INVALID: $lbl = 'ERR_FIELD_FROMNAME_IS_INVALID'; break;
-            case self::ERR_FIELD_FROM_NAME_IS_NOT_SET: $lbl = 'ERR_FIELD_FROM_NAME_IS_NOT_SET'; break;
-            case self::ERR_FIELD_FROM_NAME_IS_EMPTY: $lbl = 'ERR_FIELD_FROM_NAME_IS_EMPTY'; break;
-            case self::ERR_FIELD_FROM_NAME_IS_INVALID: $lbl = 'ERR_FIELD_FROM_NAME_IS_INVALID'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_INVALID'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME'; break;
-            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME: $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME'; break;
-            default: throw new InvalidArgumentException('Error code is not implemented: ' . $error, self::EX_ERROR_CODE_IS_NOT_IMPLEMENTED);
+            case self::ERR_FIELD_FROM_IS_NOT_SET:
+                $lbl = 'ERR_FIELD_FROM_IS_NOT_SET';
+                break;
+            case self::ERR_FIELD_FROM_IS_EMPTY:
+                $lbl = 'ERR_FIELD_FROM_IS_EMPTY';
+                break;
+            case self::ERR_FIELD_FROM_IS_INVALID:
+                $lbl = 'ERR_FIELD_FROM_IS_INVALID';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_IS_NOT_SET:
+                $lbl = 'ERR_FIELD_FROM_ADDR_IS_NOT_SET';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_IS_EMPTY:
+                $lbl = 'ERR_FIELD_FROM_ADDR_IS_EMPTY';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_IS_INVALID:
+                $lbl = 'ERR_FIELD_FROM_ADDR_IS_INVALID';
+                break;
+            case self::ERR_FIELD_FROMNAME_IS_NOT_SET:
+                $lbl = 'ERR_FIELD_FROMNAME_IS_NOT_SET';
+                break;
+            case self::ERR_FIELD_FROMNAME_IS_EMPTY:
+                $lbl = 'ERR_FIELD_FROMNAME_IS_EMPTY';
+                break;
+            case self::ERR_FIELD_FROMNAME_IS_INVALID:
+                $lbl = 'ERR_FIELD_FROMNAME_IS_INVALID';
+                break;
+            case self::ERR_FIELD_FROM_NAME_IS_NOT_SET:
+                $lbl = 'ERR_FIELD_FROM_NAME_IS_NOT_SET';
+                break;
+            case self::ERR_FIELD_FROM_NAME_IS_EMPTY:
+                $lbl = 'ERR_FIELD_FROM_NAME_IS_EMPTY';
+                break;
+            case self::ERR_FIELD_FROM_NAME_IS_INVALID:
+                $lbl = 'ERR_FIELD_FROM_NAME_IS_INVALID';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET:
+                $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY:
+                $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID:
+                $lbl = 'ERR_FIELD_FROM_ADDR_NAME_IS_INVALID';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX:
+                $lbl = 'ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART:
+                $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART:
+                $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM:
+                $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR:
+                $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME:
+                $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME';
+                break;
+            case self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME:
+                $lbl = 'ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME';
+                break;
+            default:
+                throw new InvalidArgumentException('Error code is not implemented: ' . $error,
+                    self::EX_ERROR_CODE_IS_NOT_IMPLEMENTED);
         }
+
         return $lbl;
     }
-    
+
     /**
-     * 
+     *
      * @return bool
      */
     protected function hasErrors()
     {
         return !empty($this->errors);
     }
-    
+
     /**
      *
      * @param string $emailAddress
@@ -282,12 +333,11 @@ class EmailFromValidator
      */
     protected function isValidEmailAddress($emailAddress)
     {
-        $valid = is_string($emailAddress) && isValidEmailAddress($emailAddress, '', false, '');
-        return $valid;
+        return is_string($emailAddress) && isValidEmailAddress($emailAddress, '', false, '');
     }
-    
+
     /**
-     * 
+     *
      * @param string $nonEmailAddress
      * @return boolean
      */
@@ -297,10 +347,11 @@ class EmailFromValidator
         if (!is_string($nonEmailAddress) || !$nonEmailAddress || isValidEmailAddress($nonEmailAddress, '', false, '')) {
             $valid = false;
         }
+
         return $valid;
     }
-    
-    
+
+
     /**
      *
      * @param string $fromAddress
@@ -308,10 +359,9 @@ class EmailFromValidator
      */
     protected function isValidFromAddress($fromAddress)
     {
-        $valid = $this->isValidEmailAddress($fromAddress);
-        return $valid;
+        return $this->isValidEmailAddress($fromAddress);
     }
-    
+
     /**
      *
      * @param string $fromName
@@ -319,12 +369,11 @@ class EmailFromValidator
      */
     protected function isValidFromName($fromName)
     {
-        $valid = $this->isValidNonEmailAddress($fromName);
-        return $valid;
+        return $this->isValidNonEmailAddress($fromName);
     }
-    
+
     /**
-     * 
+     *
      * @param string $fromAddrName
      * @return boolean
      * @throws EmailValidatorException
@@ -335,51 +384,53 @@ class EmailFromValidator
         $matches = null;
         $results = preg_match('/([^<]+)\s+<([^>]+)>/', $fromAddrName, $matches);
         if ($results === false) {
-            throw new EmailValidatorException('preg_match error occurred at from_addr_name check.', EmailValidatorException::PREG_MATCH_ERROR_AT_FROMADDRNAME);
+            throw new EmailValidatorException('preg_match error occurred at from_addr_name check.',
+                EmailValidatorException::PREG_MATCH_ERROR_AT_FROMADDRNAME);
         }
         if (!$results) {
             $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_DOESNT_MATCH_REGEX);
         } else {
             $name = $matches[1];
-            $email = $matches[2];
-            
+            $emailAddress = $matches[2];
+
             $ok = true;
             if (!$this->isValidNonEmailAddress($name)) {
                 $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_NAME_PART);
                 $ok = false;
             }
-            
-            if (!$this->isValidEmailAddress($email)) {
+
+            if (!$this->isValidEmailAddress($emailAddress)) {
                 $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART);
                 $ok = false;
             }
-            
+
             $emailObj = $this->getEmail();
-            
-            if (isset($emailObj->From) && $email !== $emailObj->From) {
+
+            if (isset($emailObj->From) && $emailAddress !== $emailObj->From) {
                 $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM);
                 $ok = false;
             }
-            
-            if (isset($emailObj->from_addr) && $email !== $emailObj->from_addr) {
+
+            if (isset($emailObj->from_addr) && $emailAddress !== $emailObj->from_addr) {
                 $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR);
                 $ok = false;
             }
-            
+
             if (isset($emailObj->FromName) && $name !== $emailObj->FromName) {
                 $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME);
                 $ok = false;
             }
-            
+
             if (isset($emailObj->from_name) && $name !== $emailObj->from_name) {
                 $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME);
                 $ok = false;
             }
-            
+
             if ($ok) {
                 $valid = true;
             }
         }
+
         return $valid;
     }
 
@@ -392,21 +443,19 @@ class EmailFromValidator
      */
     protected function validateFrom()
     {
-        $email = $this->getEmail();
-        if (!isset($email->From)) {
+        $emailAddress = $this->getEmail();
+        if (!isset($emailAddress->From)) {
             $this->addError(self::ERR_FIELD_FROM_IS_NOT_SET);
-        } else {
-            if (!$email->From) {
-                $this->addError(self::ERR_FIELD_FROM_IS_EMPTY);
-            } else {
-                if (!$this->isValidFromAddress($email->From)) {
-                    $this->addError(self::ERR_FIELD_FROM_IS_INVALID);
-                }
-            }
+        } elseif (!$emailAddress->From) {
+            $this->addError(self::ERR_FIELD_FROM_IS_EMPTY);
+        } elseif (!$this->isValidFromAddress($emailAddress->From)) {
+            $this->addError(self::ERR_FIELD_FROM_IS_INVALID);
         }
+
+
         return $this->getErrors();
     }
-    
+
     /**
      * validate field 'from_addr' - should be a valid email address
      *
@@ -415,21 +464,18 @@ class EmailFromValidator
      */
     protected function validateFromAddr()
     {
-        $email = $this->getEmail();
-        if (!isset($email->from_addr)) {
+        $emailAddress = $this->getEmail();
+        if (!isset($emailAddress->from_addr)) {
             $this->addError(self::ERR_FIELD_FROM_ADDR_IS_NOT_SET);
-        } else {
-            if (!$email->from_addr) {
-                $this->addError(self::ERR_FIELD_FROM_ADDR_IS_EMPTY);
-            } else {
-                if (!$this->isValidFromAddress($email->from_addr)) {
-                    $this->addError(self::ERR_FIELD_FROM_ADDR_IS_INVALID);
-                }
-            }
+        } elseif (!$emailAddress->from_addr) {
+            $this->addError(self::ERR_FIELD_FROM_ADDR_IS_EMPTY);
+        } elseif (!$this->isValidFromAddress($emailAddress->from_addr)) {
+            $this->addError(self::ERR_FIELD_FROM_ADDR_IS_INVALID);
         }
+
         return $this->getErrors();
     }
-    
+
     /**
      * validate field 'FromName' - should be a valid name string
      *
@@ -438,21 +484,18 @@ class EmailFromValidator
      */
     protected function validateFromName()
     {
-        $email = $this->getEmail();
-        if (!isset($email->FromName)) {
+        $emailAddress = $this->getEmail();
+        if (!isset($emailAddress->FromName)) {
             $this->addError(self::ERR_FIELD_FROMNAME_IS_NOT_SET);
-        } else {
-            if (!$email->FromName) {
-                $this->addError(self::ERR_FIELD_FROMNAME_IS_EMPTY);
-            } else {
-                if (!$this->isValidFromName($email->FromName)) {
-                    $this->addError(self::ERR_FIELD_FROMNAME_IS_INVALID);
-                }
-            }
+        } elseif (!$emailAddress->FromName) {
+            $this->addError(self::ERR_FIELD_FROMNAME_IS_EMPTY);
+        } elseif (!$this->isValidFromName($emailAddress->FromName)) {
+            $this->addError(self::ERR_FIELD_FROMNAME_IS_INVALID);
         }
+
         return $this->getErrors();
     }
-    
+
     /**
      * validate field 'from_name' - should be a valid name string
      *
@@ -461,21 +504,18 @@ class EmailFromValidator
      */
     protected function validateFrom_Name()
     {
-        $email = $this->getEmail();
-        if (!isset($email->from_name)) {
+        $emailAddress = $this->getEmail();
+        if (!isset($emailAddress->from_name)) {
             $this->addError(self::ERR_FIELD_FROM_NAME_IS_NOT_SET);
-        } else {
-            if (!$email->from_name) {
-                $this->addError(self::ERR_FIELD_FROM_NAME_IS_EMPTY);
-            } else {
-                if (!$this->isValidFromName($email->from_name)) {
-                    $this->addError(self::ERR_FIELD_FROM_NAME_IS_INVALID);
-                }
-            }
+        } elseif (!$emailAddress->from_name) {
+            $this->addError(self::ERR_FIELD_FROM_NAME_IS_EMPTY);
+        } elseif (!$this->isValidFromName($emailAddress->from_name)) {
+            $this->addError(self::ERR_FIELD_FROM_NAME_IS_INVALID);
         }
+
         return $this->getErrors();
     }
-    
+
     /**
      * validate field 'from_addr_name' - should be a valid name string and email address pair
      * where email address in between '<' and '>' characters
@@ -485,19 +525,15 @@ class EmailFromValidator
      */
     protected function validateFromAddrName()
     {
-        $email = $this->getEmail();
-        if (!isset($email->from_addr_name)) {
+        $emailAddress = $this->getEmail();
+        if (!isset($emailAddress->from_addr_name)) {
             $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET);
-        } else {
-            if (!$email->from_addr_name) {
-                $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY);
-            } else {
-                if (!$this->isValidFromAddrName($email->from_addr_name)) {
-                    $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID);
-                }
-            }
+        } elseif (!$emailAddress->from_addr_name) {
+            $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY);
+        } elseif (!$this->isValidFromAddrName($emailAddress->from_addr_name)) {
+            $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_IS_INVALID);
         }
+
         return $this->getErrors();
     }
-    
 }
