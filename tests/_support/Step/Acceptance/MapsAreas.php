@@ -9,7 +9,7 @@ class MapsAreas extends \AcceptanceTester
      */
     public function gotoMapsAreas()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Maps - Areas');
     }
 }

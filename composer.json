@@ -35,7 +35,8 @@
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
     "symfony/yaml": "^3.4",
-    "fullcalendar/fullcalendar": "^3.9"
+    "fullcalendar/fullcalendar": "^3.9",
+    "phpmailer/phpmailer": "^6.0"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",

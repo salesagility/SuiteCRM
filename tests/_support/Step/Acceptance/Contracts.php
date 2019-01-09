@@ -9,7 +9,7 @@ class Contracts extends \AcceptanceTester
      */
     public function gotoContracts()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Contracts');
     }
 

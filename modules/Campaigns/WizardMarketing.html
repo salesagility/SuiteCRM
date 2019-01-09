@@ -1378,7 +1378,7 @@
 </tr>
 </table>
 
-<div class="template-panel-container panel">
+<div class="template-panel-container panel" id="step1_editor">
 	<div class="template-container-full">
 		{if !$hide_width_set}
 		<label>{$MOD.LBL_CLICK_TO_ADD}</label>
@@ -1469,6 +1469,9 @@ function determine_back(){
 				// show uploader form below template form only
 
 				$('#step1_uploader').css('display', $('#step1').css('display'));
+
+				// only show the template editor below step 1
+				$('#step1_editor').css('display', $('#step1').css('display'));
 
 				// hide cancel and save button on summary page
 

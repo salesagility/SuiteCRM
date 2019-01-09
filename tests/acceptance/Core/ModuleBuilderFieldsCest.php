@@ -346,18 +346,18 @@ class ModuleBuilderFieldsCest
 
     /**
      * @param AcceptanceTester $I
-     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\NavigationBarTester $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Step\Acceptance\Accounts $accounts
+     * @param \Step\Acceptance\AccountsTester $accounts
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to test relating to the accounts module
      */
     public function testScenarioRelateToAccounts(
         \AcceptanceTester $I,
-        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\NavigationBarTester $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\DetailView $detailView,
