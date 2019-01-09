@@ -2411,10 +2411,10 @@ class SugarBean
                         '',
                         $this->in_workflow);
                 } else {
-                    DatabaseManager::getLogger()->fatal('SugarBeanMock::$emailAddress should be an EmailAddress, ' . gettype($this->emailAddress) . ' given.');
+                    LoggerManager::getLogger()->fatal('SugarBeanMock::$emailAddress should be an EmailAddress, ' . gettype($this->emailAddress) . ' given.');
                 }
             } else {
-                DatabaseManager::getLogger()->fatal('SugarBeanMock::$emailAddress is not set, email address(es) is not applied to Bean.');
+                LoggerManager::getLogger()->fatal('SugarBeanMock::$emailAddress is not set, email address(es) is not applied to Bean.');
             }
         }
 
