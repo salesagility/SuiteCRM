@@ -21,7 +21,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     protected $fieldDefsStore = [];
     
     protected function getTouchedModules() {
-        return ['Users', 'Contacts', 'AM_ProjectTemplates_sugar'];
+        return ['Users', 'Contacts', 'AM_ProjectTemplates_sugar', 'AOBH_BusinessHours'];
     }
     
     protected function getStateSaver() {
@@ -35,7 +35,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         parent::setUp();
         $this->fieldDefsStore();
-        $this->getStateSaver()->pushTable('users');
         $this->getStateSaver()->pushGlobals();
     }
 
@@ -43,7 +42,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     protected function tearDown()
     {
         $this->getStateSaver()->popGlobals();
-        $this->getStateSaver()->popTable('users');
         $this->fieldDefsRestore();
         parent::tearDown();
     }
@@ -2278,10 +2276,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     public function testIsAuditEnabled()
     {
 
-//        // test
-//        $bean = new SugarBeanMock();
-//        $results = $bean->is_AuditEnabled();
-//        self::assertEquals(false, $results);
+        // test
+        $bean = BeanFactory::getBean('AOBH_BusinessHours');
+        $results = $bean->is_AuditEnabled();
+        self::assertEquals(false, $results);
 
         // test
         $bean = BeanFactory::getBean('Contacts');
@@ -2335,6 +2333,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $state = new StateSaver();
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
+        $state->pushTable('users');
 
         // test
         
@@ -2617,6 +2616,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('users');
         $state->popTable('aod_index');
         $state->popTable('tracker');
     }
