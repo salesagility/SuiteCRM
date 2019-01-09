@@ -1950,9 +1950,9 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $clone = clone $bean;
-//        self::assertEquals($bean, $clone);
+        $bean = BeanFactory::getBean('Contacts');
+        $clone = clone $bean;
+        self::assertEquals($bean, $clone);
 ////        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 //
 //        // test
@@ -1986,41 +1986,41 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs = array();
-//        $results = $bean->get_linked_fields();
-//        self::assertEquals(array(), $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs = array();
+        $results = $bean->get_linked_fields();
+        self::assertEquals(array(), $results);
 ////        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs = array(1);
-//        $results = $bean->get_linked_fields();
-//        self::assertEquals(array(), $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs = array(1);
+        $results = $bean->get_linked_fields();
+        self::assertEquals(array(), $results);
 ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs = array(array(1));
-//        $results = $bean->get_linked_fields();
-//        self::assertEquals(array(), $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs = array(array(1));
+        $results = $bean->get_linked_fields();
+        self::assertEquals(array(), $results);
 ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs = array(array('type' => 'link'));
-//        $results = $bean->get_linked_fields();
-//        self::assertEquals(array(
-//            0 => array(
-//                'type' => 'link',
-//            ),
-//        ), $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs = array(array('type' => 'link'));
+        $results = $bean->get_linked_fields();
+        self::assertEquals(array(
+            0 => array(
+                'type' => 'link',
+            ),
+        ), $results);
 ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
@@ -2048,121 +2048,121 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $results = $bean->load_relationship(null);
-//        self::assertEquals(false, $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $results = $bean->load_relationship(null);
+        self::assertEquals(false, $results);
 ////        self::assertCount(1, $GLOBALS['log']->calls['error']);
 ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $results = $bean->load_relationship('test');
-//        self::assertEquals(false, $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $results = $bean->load_relationship('test');
+        self::assertEquals(false, $results);
 ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs['testKey'] = 'testValue';
-//        $results = $bean->load_relationship('testKey');
-//        self::assertEquals(false, $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs['testKey'] = 'testValue';
+        $results = $bean->load_relationship('testKey');
+        self::assertEquals(false, $results);
 ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs['testKey'] = 'testValue';
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testKey = new Link2('test', $bean);
-//        $results = $bean->load_relationship('testKey');
-//        self::assertEquals(true, $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs['testKey'] = 'testValue';
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testKey = new Link2('test', $bean);
+        $results = $bean->load_relationship('testKey');
+        self::assertEquals(true, $results);
 ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs['testKey'] = array('type' => 'link');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testKey = 'testValue';
-//        $results = $bean->load_relationship('testKey');
-//        self::assertEquals(false, $results);
-//        /** @noinspection MissingIssetImplementationInspection */
-//        self::assertNotTrue(isset($bean->testKey));
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs['testKey'] = array('type' => 'link');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testKey = 'testValue';
+        $results = $bean->load_relationship('testKey');
+        self::assertEquals(false, $results);
+        /** @noinspection MissingIssetImplementationInspection */
+        self::assertNotTrue(isset($bean->testKey));
 ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs['testKey'] = array(
-//            'type' => 'link',
-//            'link_class' => 'testClass',
-//            'link_file' => 'testClass.php',
-//        );
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testKey = 'testValue';
-//        $results = $bean->load_relationship('testKey');
-//        self::assertEquals(false, $results);
-//        /** @noinspection MissingIssetImplementationInspection */
-//        self::assertNotTrue(isset($bean->testKey));
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs['testKey'] = array(
+            'type' => 'link',
+            'link_class' => 'testClass',
+            'link_file' => 'testClass.php',
+        );
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testKey = 'testValue';
+        $results = $bean->load_relationship('testKey');
+        self::assertEquals(false, $results);
+        /** @noinspection MissingIssetImplementationInspection */
+        self::assertNotTrue(isset($bean->testKey));
 ////        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs['testKey'] = array(
-//            'type' => 'link',
-//            'link_class' => 'testClass',
-//            'link_file' => 'modules/Campaigns/ProspectLink.php',
-//        );
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testKey = 'testValue';
-//        $results = $bean->load_relationship('testKey');
-//        self::assertEquals(true, $results);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('testValue', $bean->testKey);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs['testKey'] = array(
+            'type' => 'link',
+            'link_class' => 'testClass',
+            'link_file' => 'modules/Campaigns/ProspectLink.php',
+        );
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testKey = 'testValue';
+        $results = $bean->load_relationship('testKey');
+        self::assertEquals(true, $results);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('testValue', $bean->testKey);
 ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs['testKey'] = array(
-//            'type' => 'link',
-//            'link_class' => 'ProspectLink',
-//            'link_file' => 'modules/Campaigns/ProspectLink.php',
-//        );
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testKey = 'testValue';
-//        $results = $bean->load_relationship('testKey');
-//        self::assertEquals(true, $results);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('testValue', $bean->testKey);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs['testKey'] = array(
+            'type' => 'link',
+            'link_class' => 'ProspectLink',
+            'link_file' => 'modules/Campaigns/ProspectLink.php',
+        );
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testKey = 'testValue';
+        $results = $bean->load_relationship('testKey');
+        self::assertEquals(true, $results);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('testValue', $bean->testKey);
 ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 //
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs['testKey'] = array(
-//            'type' => 'link',
-//            'link_class' => 'ProspectLink',
-//            'link_file' => 'modules/Campaigns/ProspectLink.php',
-//            'relationship' => 'campaign_leads',
-//        );
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testKey = 'testValue';
-//        $results = $bean->load_relationship('testKey');
-//        self::assertEquals(false, $results);
-//        /** @noinspection MissingIssetImplementationInspection */
-//        self::assertNotTrue(isset($bean->testKey));
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs['testKey'] = array(
+            'type' => 'link',
+            'link_class' => 'ProspectLink',
+            'link_file' => 'modules/Campaigns/ProspectLink.php',
+            'relationship' => 'campaign_leads',
+        );
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testKey = 'testValue';
+        $results = $bean->load_relationship('testKey');
+        self::assertEquals(false, $results);
+        /** @noinspection MissingIssetImplementationInspection */
+        self::assertNotTrue(isset($bean->testKey));
 ////        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
     }
 
