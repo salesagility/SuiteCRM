@@ -1,7 +1,8 @@
 <?php
-//include_once __DIR__ . '/SugarBeanMock.php';
+
 include_once __DIR__ . '/../../../../include/SubPanel/SubPanelDefinitions.php';
 include_once __DIR__ . '/../../../../modules/Campaigns/ProspectLink.php';
+include_once __DIR__ . '/../../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
 
 use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
 use SuiteCRM\StateSaver;
@@ -17,42 +18,82 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     protected $state;
     
+    protected $fieldDefsStore = [];
+    
+    protected function getTouchedModules() {
+        return ['Contacts', 'AM_ProjectTemplates_sugar'];
+    }
+    
+    protected function getStateSaver() {
+        if (!isset($this->state)) {
+            $this->state = new StateSaver();
+        }
+        return $this->state;
+    }
 
     protected function setUp()
     {
         parent::setUp();
-//        $this->fieldDefsStore();
-        $this->state = new StateSaver();
-        $this->state->pushGlobals();
+        $this->fieldDefsStore();
+        $this->getStateSaver()->pushGlobals();
     }
 
 
     protected function tearDown()
     {
-        $this->state->popGlobals();
-//        $this->fieldDefsRestore();
+        $this->getStateSaver()->popGlobals();
+        $this->fieldDefsRestore();
         parent::tearDown();
     }
 
-//    /**
-//     * Store static field_defs per modules
-//     * @param string $key
-//     */
-//    protected function fieldDefsStore($key = 'base')
-//    {
-//        $object = BeanFactory::getBean('Contacts');
-//        $this->fieldDefsStore[$key]['Contact'] = $object->field_defs;
-//    }
-//
-//    /**
-//     * Restore static field_defs per modules
-//     * @param string $key
-//     */
-//    protected function fieldDefsRestore($key = 'base')
-//    {
-//        $object = BeanFactory::getBean('Contacts');
-//        $object->field_defs = $this->fieldDefsStore[$key]['Contact'];
-//    }
+    /**
+     * Store static field_defs per modules
+     * @param string $key
+     */
+    protected function fieldDefsStore($key = 'base')
+    {
+        foreach ($this->getTouchedModules() as $module) {
+            $this->fieldDefsStoreBean($module, $key);
+        }
+    }
+
+    /**
+     * Restore static field_defs per modules
+     * @param string $key
+     */
+    protected function fieldDefsRestore($key = 'base')
+    {
+        foreach ($this->getTouchedModules() as $module) {
+            $this->fieldDefsRestoreBean($module, $key);
+        }
+    }
+    
+    protected function fieldDefsStoreBean($module, $key = 'base') {
+        $object = $this->getModuleBean($module);
+        if (isset($this->fieldDefsStore[$key][$module])) {
+            throw new Exception('Field definition already stored for module ' . $module . ' at key ' . $key);
+        }
+        $this->fieldDefsStore[$key][$module] = $object->field_defs;
+    }
+    
+    protected function fieldDefsRestoreBean($module, $key = 'base') {
+        $object = $this->getModuleBean($module);
+        if (!isset($this->fieldDefsStore[$key][$module])) {
+            throw new Exception('Field definition is not stored for module ' . $module . ' at key ' . $key);
+        }
+        $object->field_defs = $this->fieldDefsStore[$key][$module];
+    }
+    
+    protected function getModuleBean($module) {
+        $object = BeanFactory::getBean($module);
+        if (!$object) {
+            if (!class_exists($module)) {
+                throw new Exception('Module bean retrieve error: ' . $module);
+            }
+            $object = new $module();
+        }
+        return $object;
+    }
 
     /**
      * @see SugarBean::__construct()
