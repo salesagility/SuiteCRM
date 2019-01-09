@@ -2396,21 +2396,25 @@ class SugarBean
         if ($this->hasEmails() && !empty($this->email_addresses_non_primary)
             && is_array($this->email_addresses_non_primary)) {
             // Add each mail to the account
-            if (!isset($this->emailAddress)) {
-                $GLOBALS['log']->fatal('Undefined property: SugarBeanMock::$emailAddress');
-            } else {
-                foreach ($this->email_addresses_non_primary as $mail) {
-                    $this->emailAddress->addAddress($mail);
+            if (isset($this->emailAddress)) {
+                if ($this->emailAddress instanceof EmailAddress) {
+                    foreach ($this->email_addresses_non_primary as $mail) {
+                        $this->emailAddress->addAddress($mail);
+                    }
+                    $this->emailAddress->saveEmail(
+                        $this->id,
+                        $this->module_dir,
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        $this->in_workflow);
+                } else {
+                    DatabaseManager::getLogger()->fatal('SugarBeanMock::$emailAddress should be an EmailAddress, ' . gettype($this->emailAddress) . ' given.');
                 }
-                $this->emailAddress->saveEmail(
-                    $this->id,
-                    $this->module_dir,
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    $this->in_workflow);
+            } else {
+                DatabaseManager::getLogger()->fatal('SugarBeanMock::$emailAddress is not set, email address(es) is not applied to Bean.');
             }
         }
 
