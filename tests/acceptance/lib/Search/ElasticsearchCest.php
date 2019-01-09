@@ -227,6 +227,7 @@ class ElasticsearchCest
         
         $I->see('SEARCH');
         $I->see('Results');
+        $I->wait(3);
         $I->see('Total result(s): ' . $end);
         $I->see('Search performed in');
         $I->see('Page 1 of 2');
