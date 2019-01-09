@@ -2342,15 +2342,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
-        $results = null;
-        try {
-            $results = $bean->save();
-            self::assertTrue(false);
-        } catch (Exception $e) {
-            self::assertTrue(true);
-        }
+        $results = $bean->save();
+        $this->assertTrue(!$results);
+        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
+        $this->assertSame(
+                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
+                $bean->emailAddress->lastSaveAtUserProfileErrors);
         $isValidator = new SuiteValidator();
-        self::assertNotTrue($isValidator->isValidId($results));
+        self::assertTrue($isValidator->isValidId($bean->id));
 
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
@@ -2361,15 +2360,18 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
-        
 
-
+        LoggerManager::getLogger()->fatal('------------------------- [INTERESTING PART FOR DEBUGGING] -------------------------');
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->new_with_id = true;
         $results = $bean->save();
-        $this->assertTrue((bool)$results);
+        $this->assertTrue(!$results);
+        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
+        $this->assertSame(
+                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
+                $bean->emailAddress->lastSaveAtUserProfileErrors);
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($results));
 
@@ -2385,18 +2387,21 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(true, $bean->new_with_id);
         self::assertEquals($bean->modified_by_name, $bean->old_modified_by_name);
 
+        LoggerManager::getLogger()->fatal('------------------------- [end of INTERESTING PART FOR DEBUGGING] -------------------------');
+
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->new_with_id = true;
         $bean->modified_by_name = 'testing';
-        $results = null;
-        try {
-            $results = $bean->save();
-            self::assertTrue(false);
-        } catch (Exception $e) {
-        }
-        self::assertFalse($isValidator->isValidId($results));
+        $results = $bean->save();
+        $this->assertTrue(!$results);
+        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
+        $this->assertSame(
+                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
+                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $isValidator = new SuiteValidator();
+        self::assertTrue($isValidator->isValidId($bean->id));
 
         self::assertEquals(true, $bean->in_save);
         
@@ -2416,14 +2421,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         $bean = BeanFactory::getBean('Users');
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
-        $results = null;
-        try {
-            $results = $bean->save();
-            self::assertTrue(false);
-        } catch (Exception $e) {
-            self::assertTrue(true);
-        }
-        self::assertFalse($isValidator->isValidId($results));
+        $results = $bean->save();
+        $this->assertTrue(!$results);
+        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
+        $this->assertSame(
+                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
+                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $isValidator = new SuiteValidator();
+        self::assertTrue($isValidator->isValidId($bean->id));
 
         
         
@@ -2455,14 +2460,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         );
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
-        $results = null;
-        try {
-            $results = $bean->save();
-            self::assertTrue(false);
-        } catch (Exception $e) {
-            self::assertTrue(true);
-        }
-        self::assertFalse($isValidator->isValidId($results));
+        $results = $bean->save();
+        $this->assertTrue(!$results);
+        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
+        $this->assertSame(
+                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
+                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $isValidator = new SuiteValidator();
+        self::assertTrue($isValidator->isValidId($bean->id));
 
         self::assertEquals(null, $bean->in_save);
         
@@ -2494,13 +2499,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         );
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
-        $results = null;
-        try {
-            $results = $bean->save();
-            self::assertTrue(false);
-        } catch (Exception $e) {
-        }
-        self::assertFalse($isValidator->isValidId($results));
+        $results = $bean->save();
+        $this->assertTrue(!$results);
+        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
+        $this->assertSame(
+                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
+                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $isValidator = new SuiteValidator();
+        self::assertTrue($isValidator->isValidId($bean->id));
 
         self::assertEquals(false, $bean->in_save);
         
@@ -2533,13 +2539,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         );
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
-        $results = null;
-        try {
-            $results = $bean->save();
-            self::assertTrue(false);
-        } catch (Exception $e) {
-        }
-        self::assertFalse($isValidator->isValidId($results));
+        $results = $bean->save();
+        $this->assertTrue(!$results);
+        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
+        $this->assertSame(
+                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
+                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $isValidator = new SuiteValidator();
+        self::assertTrue($isValidator->isValidId($bean->id));
 
         self::assertEquals(false, $bean->in_save);
         
@@ -2573,13 +2580,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         ));
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array('testbean1@email.com');
-        $results = null;
-        try {
-            $results = $bean->save();
-            self::assertTrue(false);
-        } catch (Exception $e) {
-        }
-        self::assertFalse($isValidator->isValidId($results));
+        $results = $bean->save();
+        $this->assertTrue(!$results);
+        $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
+        $this->assertSame(
+                [SugarEmailAddress::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION], 
+                $bean->emailAddress->lastSaveAtUserProfileErrors);
+        $isValidator = new SuiteValidator();
+        self::assertTrue($isValidator->isValidId($bean->id));
 
         self::assertEquals(false, $bean->in_save);
         self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);

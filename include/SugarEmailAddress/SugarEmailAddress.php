@@ -48,6 +48,16 @@ require_once("include/JSON.php");
 
 class SugarEmailAddress extends SugarBean
 {
+    const ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION = 1;
+    const ERR_INVALID_REQUEST_NO_REQUEST = 2;
+    const ERR_INVALID_REQUEST_NO_EMAIL_INFOS = 3;
+    const ERR_INVALID_REQUEST_NO_VALID_EMAIL_ADDR_IN_REQUEST = 4;
+    const ERR_INVALID_REQUEST_VALID_USER_IS_SET_BUT_NO_IN_REQUEST = 5;
+    const ERR_PRIMARY_EMAIL_IS_NOT_SELECTED = 6;
+    const ERR_REPLYTO_EMAIL_IS_NOT_SELECTED = 7;
+    const ERR_INVALID_REQUEST_NO_VALID_USER_IN_REQUEST = 8;
+    const ERR_INVALID_REQUEST_MORE_THAN_ONE_USER_IN_REQUEST = 9;
+    const ERR_SOME_EMAILS_WERE_NOT_SAVED_OR_UPDATED = 10;
 
     // Opt In Flags (for Ticks)
     const COI_FLAG_OPT_IN = 'OPT_IN';
@@ -182,6 +192,14 @@ class SugarEmailAddress extends SugarBean
         'Users',
         'Employees'
     );
+    
+    /**
+     * For saveAtUserProfile() method to telling what 
+     * went wrong at the last call.
+     * 
+     * @var array
+     */
+    public $lastSaveAtUserProfileErrors = [];
 
     /**
      * Sole constructor
@@ -259,23 +277,34 @@ class SugarEmailAddress extends SugarBean
      * returns:
      * true - success
      * false - error
+     * 
+     * Note: 
+     * This function could head to many errors but return 
+     * value is false in each case.
+     * It is confusing because the ambiguous return value.
+     * This function also stores the error code(s) in 
+     * array SugarEmailAddress::$lastSaveAtUserProfileErrors 
      *
      * @param array $request $_REQUEST
      * @return bool
      */
     public function saveAtUserProfile($request)
     {
+        
+        $this->lastSaveAtUserProfileErrors = [];
 
         // validate the request first
 
         if (!$this->isUserProfileEditViewPageSaveAction($request)) {
             $GLOBALS['log']->error('Invalid Referrer: '.
                 'expected the Save action to be called from the User\'s Profile Edit View');
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_NO_USER_PROFILE_PAGE_SAVE_ACTION;
             return false;
         }
 
         if (!$request) {
             $GLOBALS['log']->error('This function requires a request array');
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_NO_REQUEST;
             return false;
         }
 
@@ -290,6 +319,7 @@ class SugarEmailAddress extends SugarBean
 
         if (!$neededRequest) {
             $GLOBALS['log']->error('Email info is not found in request');
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_NO_EMAIL_INFOS;
             return false;
         }
 
@@ -309,11 +339,13 @@ class SugarEmailAddress extends SugarBean
 
         if (!$usefulRequest) {
             $GLOBALS['log']->error('Cannot find valid email address(es) in request');
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_NO_VALID_EMAIL_ADDR_IN_REQUEST;
             return false;
         }
 
         if (!isset($usefulRequest['Users']) || !$usefulRequest['Users']) {
             $GLOBALS['log']->error('Cannot find valid user in request');
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_VALID_USER_IS_SET_BUT_NO_IN_REQUEST;
             return false;
         }
 
@@ -350,21 +382,25 @@ class SugarEmailAddress extends SugarBean
             $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]]['primary'] = true;
         } else {
             $GLOBALS['log']->warn("Primary email is not selected.");
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_PRIMARY_EMAIL_IS_NOT_SELECTED;
         }
 
         if ($replyTo && preg_match('/^Users(\d+)emailAddress(\d+)$/', $replyTo, $matches)) {
             $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]]['replyTo'] = true;
         } else {
             $GLOBALS['log']->warn("Reply-to email is not selected.");
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_REPLYTO_EMAIL_IS_NOT_SELECTED;
         }
 
         if (count($usefulRequest['Users']) < 1) {
             $GLOBALS['log']->error("Cannot find valid user in request");
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_NO_VALID_USER_IN_REQUEST;
             return false;
         }
 
         if (count($usefulRequest['Users']) > 1) {
             $GLOBALS['log']->warn("Expected only one user in request");
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_INVALID_REQUEST_MORE_THAN_ONE_USER_IN_REQUEST;
         }
 
         $return = true;
@@ -377,6 +413,9 @@ class SugarEmailAddress extends SugarBean
             }
         }
 
+        if ($return === false) {
+            $this->lastSaveAtUserProfileErrors[] = self::ERR_SOME_EMAILS_WERE_NOT_SAVED_OR_UPDATED;
+        }
 
         return $return;
     }

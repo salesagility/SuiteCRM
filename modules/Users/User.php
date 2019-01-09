@@ -119,6 +119,22 @@ class User extends Person implements EmailInterface
      * @var string
      */
     public $factor_auth_interface;
+    
+    /**
+     * Normally a bean returns ID from save() method if it was 
+     * success and false (or maybe null) is something went wrong.
+     * BUT (for some reason) if User bean saved properly except 
+     * the email addresses of it, this User::save() method also 
+     * return a false.
+     * It's a confusing ambiguous return value for caller method. 
+     * 
+     * To handle this issue when save method can not save email 
+     * addresses and return false it also set this variable to 
+     * true.
+     *
+     * @var bool|null
+     */
+    public $lastSaveErrorIsEmailAddressSaveError = null;
 
     public function __construct()
     {
@@ -569,6 +585,24 @@ class User extends Person implements EmailInterface
         return "1<>1";
     }
 
+    /**
+     * Normally a bean returns ID from save() method if it was 
+     * success and false (or maybe null) is something went wrong.
+     * BUT (for some reason) if User bean saved properly except 
+     * the email addresses of it, this User::save() method also 
+     * return a false.
+     * It's a confusing ambiguous return value for caller method. 
+     * 
+     * To handle this issue when save method can not save email 
+     * addresses and return false it also set the variable called
+     * User::$lastSaveErrorIsEmailAddressSaveError to true.
+     * 
+     * @global User $current_user
+     * @global array $sugar_config
+     * @global array $mod_strings
+     * @param bool $check_notify
+     * @return boolean
+     */
     public function save($check_notify = false)
     {
         global $current_user, $sugar_config, $mod_strings;
@@ -641,8 +675,13 @@ class User extends Person implements EmailInterface
         $setNewUserPreferences = empty($this->id) || !empty($this->new_with_id);
 
 
-        parent::save($check_notify);
-
+        $retId = parent::save($check_notify);
+        if (!$retId) {
+            LoggerManager::getLogger()->fatal('save error: User is not saved, Person ID is not returned.');
+        }
+        if ($retId != $this->id) {
+            LoggerManager::getLogger()->fatal('save error: User is not saved properly, returned Person ID does not match to User ID.');
+        }
         // set some default preferences when creating a new user
         if ($setNewUserPreferences) {
             if (!$this->getPreference('calendar_publish_key')) {
@@ -655,8 +694,10 @@ class User extends Person implements EmailInterface
         $this->savePreferencesToDB();
 
         // User Profile specific save for Email addresses
+        $this->lastSaveErrorIsEmailAddressSaveError = false;
         if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
-            $GLOBALS['log']->error('Email address save error');
+            LoggerManager::getLogger()->fatal('Email address save error');
+            $this->lastSaveErrorIsEmailAddressSaveError = true;
             return false;
         }
 
