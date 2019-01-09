@@ -1766,48 +1766,48 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetPrimaryFieldDefinition()
     {
-//
-//        // test
-//////        $GLOBALS['log']->reset();
-//        $bean = BeanFactory::getBean('Contacts');
-//        $results = $bean->getPrimaryFieldDefinition();
-//        self::assertEquals(array(
-//            'name' => 'id',
-//            'vname' => 'LBL_ID',
-//            'type' => 'id',
-//            'required' => true,
-//            'reportable' => true,
-//            'comment' => 'Unique identifier',
-//            'inline_edit' => false,
-//        ), $results);
-////        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
-//
-//        // test
-//////        $GLOBALS['log']->reset();
-//        $bean = BeanFactory::getBean('Contacts');
-//        unset($bean->field_defs['id']);
-//        $results = $bean->getPrimaryFieldDefinition();
-//        self::assertEquals(array(
-//            'name' => 'name',
-//            'vname' => 'LBL_NAME',
-//            'type' => 'name',
-//            'rname' => 'name',
-//            'link' => true,
-//            'fields' => array(
-//                0 => 'first_name',
-//                1 => 'last_name',
-//            ),
-//            'sort_on' => 'last_name',
-//            'source' => 'non-db',
-//            'group' => 'last_name',
-//            'len' => '255',
-//            'db_concat_fields' => array(
-//                0 => 'first_name',
-//                1 => 'last_name',
-//            ),
-//            'importable' => 'false',
-//        ), $results);
-////        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+////        $GLOBALS['log']->reset();
+        $bean = BeanFactory::getBean('Contacts');
+        $results = $bean->getPrimaryFieldDefinition();
+        self::assertEquals(array(
+            'name' => 'id',
+            'vname' => 'LBL_ID',
+            'type' => 'id',
+            'required' => true,
+            'reportable' => true,
+            'comment' => 'Unique identifier',
+            'inline_edit' => false,
+        ), $results);
+//        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+////        $GLOBALS['log']->reset();
+        $bean = BeanFactory::getBean('Contacts');
+        unset($bean->field_defs['id']);
+        $results = $bean->getPrimaryFieldDefinition();
+        self::assertEquals(array(
+            'name' => 'name',
+            'vname' => 'LBL_NAME',
+            'type' => 'name',
+            'rname' => 'name',
+            'link' => true,
+            'fields' => array(
+                0 => 'first_name',
+                1 => 'last_name',
+            ),
+            'sort_on' => 'last_name',
+            'source' => 'non-db',
+            'group' => 'last_name',
+            'len' => '255',
+            'db_concat_fields' => array(
+                0 => 'first_name',
+                1 => 'last_name',
+            ),
+            'importable' => 'false',
+        ), $results);
+//        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
     }
 
     /**
@@ -1909,35 +1909,35 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        /** @noinspection PhpVoidFunctionResultUsedInspection */
-//        $results = $bean->unPopulateDefaultValues();
-//        self::assertEquals(null, $results);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals(null, $bean->portal_user_type);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals(null, $bean->jjwg_maps_lat_c);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals(null, $bean->jjwg_maps_lng_c);
+        $bean = BeanFactory::getBean('Contacts');
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $bean->unPopulateDefaultValues();
+        self::assertEquals(null, $results);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals(null, $bean->portal_user_type);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals(null, $bean->jjwg_maps_lat_c);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals(null, $bean->jjwg_maps_lng_c);
 ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs = false;
-//        /** @noinspection PhpVoidFunctionResultUsedInspection */
-//        $results = $bean->unPopulateDefaultValues();
-//        self::assertEquals(null, $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs = false;
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $bean->unPopulateDefaultValues();
+        self::assertEquals(null, $results);
 ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 //
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        /** @noinspection PhpVoidFunctionResultUsedInspection */
-//        $results = $bean->unPopulateDefaultValues();
-//        self::assertEquals(null, $results);
+        $bean = BeanFactory::getBean('Contacts');
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $bean->unPopulateDefaultValues();
+        self::assertEquals(null, $results);
 ////        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
     }
 
