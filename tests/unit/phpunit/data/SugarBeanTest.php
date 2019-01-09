@@ -21,7 +21,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     protected $fieldDefsStore = [];
     
     protected function getTouchedModules() {
-        return ['Contacts', 'AM_ProjectTemplates_sugar'];
+        return ['Users', 'Contacts', 'AM_ProjectTemplates_sugar'];
     }
     
     protected function getStateSaver() {
@@ -35,6 +35,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         parent::setUp();
         $this->fieldDefsStore();
+        $this->getStateSaver()->pushTable('users');
         $this->getStateSaver()->pushGlobals();
     }
 
@@ -42,6 +43,7 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
     protected function tearDown()
     {
         $this->getStateSaver()->popGlobals();
+        $this->getStateSaver()->popTable('users');
         $this->fieldDefsRestore();
         parent::tearDown();
     }
@@ -2328,294 +2330,295 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSave()
     {
-//        // save state
-//
-//        $state = new StateSaver();
-//        $state->pushTable('tracker');
-//        $state->pushTable('aod_index');
-//
-//        // test
-//        
-//        global $current_user;
-//
-//        // test
-////        $GLOBALS['log']->reset();
-//        $bean = BeanFactory::getBean('Users');
-//        $results = null;
-//        try {
-//            $results = $bean->save();
-//            self::assertTrue(false);
-//        } catch (Exception $e) {
-//            self::assertTrue(true);
-//        }
-//        $isValidator = new SuiteValidator();
-//        self::assertNotTrue($isValidator->isValidId($results));
-//
-//        self::assertEquals($current_user->id, $bean->modified_user_id);
-//        self::assertEquals($current_user->user_name, $bean->modified_by_name);
-//        self::assertEquals(0, $bean->deleted);
-//        self::assertEquals($bean->date_modified, $bean->date_entered);
-//        /** @noinspection UnSafeIsSetOverArrayInspection */
-//        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
-//
-//        self::assertEquals($bean, $bean->custom_fields->bean);
-//        self::assertEquals(false, $bean->new_with_id);
-//        
-//
-//
-//        // test
-////        $GLOBALS['log']->reset();
-//        $bean = BeanFactory::getBean('Users');
-//        $bean->new_with_id = true;
-//        $results = null;
-//        try {
-//            $results = $bean->save();
-//            self::assertTrue(false);
-//        } catch (Exception $e) {
-//        }
-//        $isValidator = new SuiteValidator();
-//        self::assertFalse($isValidator->isValidId($results));
-//
-//        self::assertEquals(true, $bean->in_save);
-//        self::assertEquals($current_user->id, $bean->modified_user_id);
-//        self::assertEquals($current_user->user_name, $bean->modified_by_name);
-//        self::assertEquals(0, $bean->deleted);
-//        self::assertEquals($bean->date_modified, $bean->date_entered);
-//        /** @noinspection UnSafeIsSetOverArrayInspection */
-//        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
-//        self::assertFalse($isValidator->isValidId($bean->id));
-//        self::assertEquals($bean, $bean->custom_fields->bean);
-//        self::assertEquals(true, $bean->new_with_id);
-//        self::assertEquals($bean->modified_by_name, $bean->old_modified_by_name);
-//
-//        // test
-////        $GLOBALS['log']->reset();
-//        $bean = BeanFactory::getBean('Users');
-//        $bean->new_with_id = true;
-//        $bean->modified_by_name = 'testing';
-//        $results = null;
-//        try {
-//            $results = $bean->save();
-//            self::assertTrue(false);
-//        } catch (Exception $e) {
-//        }
-//        self::assertFalse($isValidator->isValidId($results));
-//
-//        self::assertEquals(true, $bean->in_save);
-//        
-//        self::assertEquals($current_user->id, $bean->modified_user_id);
-//        
-//        self::assertEquals(0, $bean->deleted);
-//        self::assertEquals($bean->date_modified, $bean->date_entered);
-//        /** @noinspection UnSafeIsSetOverArrayInspection */
-//        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
-//        self::assertFalse($isValidator->isValidId($bean->id));
-//        self::assertEquals($bean, $bean->custom_fields->bean);
-//        self::assertEquals(true, $bean->new_with_id);
-//        
-//
-//        // test
-////        $GLOBALS['log']->reset();
-//        $bean = BeanFactory::getBean('Users');
-//        $bean->id = 'testBean_1';
-//        $bean->modified_by_name = 'testing';
-//        $results = null;
-//        try {
-//            $results = $bean->save();
-//            self::assertTrue(false);
-//        } catch (Exception $e) {
-//            self::assertTrue(true);
-//        }
-//        self::assertFalse($isValidator->isValidId($results));
-//
-//        
-//        
-//        self::assertEquals($current_user->id, $bean->modified_user_id);
-//        
-//        self::assertEquals(0, $bean->deleted);
-//        /** @noinspection UnSafeIsSetOverArrayInspection */
-//        self::assertFalse(isset($bean->date_entered));
-//        /** @noinspection UnSafeIsSetOverArrayInspection */
-//        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
-//        self::assertFalse($isValidator->isValidId($bean->id));
-//        self::assertEquals($bean, $bean->custom_fields->bean);
-//        self::assertEquals(false, $bean->new_with_id);
-//        
-//
-//
-//        // test
-////        $GLOBALS['log']->reset();
-//        $bean = BeanFactory::getBean('Users');
-//        $bean->id = 'testBean_1';
-//        $bean->modified_by_name = 'testing';
-//        $bean->field_defs = array(
-//            'email_addresses' => array(
-//                'type' => 'link',
-//            ),
-//            'email_addresses_non_primary' => array(
-//                'type' => 'email',
-//            ),
-//        );
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->email_addresses_non_primary = array(true);
-//        $results = null;
-//        try {
-//            $results = $bean->save();
-//            self::assertTrue(false);
-//        } catch (Exception $e) {
-//            self::assertTrue(true);
-//        }
-//        self::assertFalse($isValidator->isValidId($results));
-//
-//        self::assertEquals(null, $bean->in_save);
-//        
-//        self::assertEquals($current_user->id, $bean->modified_user_id);
-//        
-//        self::assertEquals($current_user->user_name, null);
-//        self::assertEquals(0, $bean->deleted);
-//        /** @noinspection UnSafeIsSetOverArrayInspection */
-//        self::assertFalse(isset($bean->date_entered));
-//        /** @noinspection UnSafeIsSetOverArrayInspection */
-//        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
-//        self::assertFalse($isValidator->isValidId($bean->id));
-//        self::assertEquals($bean, $bean->custom_fields->bean);
-//        self::assertEquals(false, $bean->new_with_id);
-//        
-//
-//        // test
-////        $GLOBALS['log']->reset();
-////        $bean = BeanFactory::getBean('Users');
-////        $bean->id = 'testBean_1';
-////        $bean->modified_by_name = 'testing';
-////        $bean->field_defs = array(
-////            'email_addresses' => array(
-////                'type' => 'link',
-////            ),
-////            'email_addresses_non_primary' => array(
-////                'type' => 'email',
-////            ),
-////        );
-////        /** @noinspection PhpUndefinedFieldInspection */
-////        $bean->emailAddress = new EmailAddress();
-////        /** @noinspection PhpUndefinedFieldInspection */
-////        $bean->email_addresses_non_primary = array(true);
-////        $results = null;
-////        try {
-////            $results = $bean->save();
-////            self::assertTrue(false);
-////        } catch (Exception $e) {
-////        }
-////        self::assertFalse($isValidator->isValidId($results));
-////
-////        self::assertEquals(false, $bean->in_save);
-////        
-////        self::assertEquals($current_user->id, $bean->modified_user_id);
-////        
-////        self::assertEquals($current_user->user_name, null);
-////        self::assertEquals(0, $bean->deleted);
-////        /** @noinspection UnSafeIsSetOverArrayInspection */
-////        self::assertFalse(isset($bean->date_entered));
-////        /** @noinspection UnSafeIsSetOverArrayInspection */
-////        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
-////        self::assertFalse($isValidator->isValidId($bean->id));
-////        self::assertEquals($bean, $bean->custom_fields->bean);
-////        self::assertEquals(false, $bean->new_with_id);
-//        
-//
-//
-//        // test
-////        $GLOBALS['log']->reset();
-////        $bean = BeanFactory::getBean('Users');
-////        $bean->id = 'testBean_1';
-////        $bean->modified_by_name = 'testing';
-////        $bean->field_defs = array(
-////            'email_addresses' => array(
-////                'type' => 'link',
-////            ),
-////            'email_addresses_non_primary' => array(
-////                'type' => 'email',
-////            ),
-////        );
-////        /** @noinspection PhpUndefinedFieldInspection */
-////        $bean->emailAddress = new EmailAddress();
-////        /** @noinspection PhpUndefinedFieldInspection */
-////        $bean->email_addresses_non_primary = array(true);
-////        $results = null;
-////        try {
-////            $results = $bean->save();
-////            self::assertTrue(false);
-////        } catch (Exception $e) {
-////        }
-////        self::assertFalse($isValidator->isValidId($results));
-////
-////        self::assertEquals(false, $bean->in_save);
-////        
-////        self::assertEquals($current_user->id, $bean->modified_user_id);
-////        
-////        self::assertEquals($current_user->user_name, null);
-////        self::assertEquals(0, $bean->deleted);
-////        /** @noinspection UnSafeIsSetOverArrayInspection */
-////        self::assertFalse(isset($bean->date_entered));
-////        /** @noinspection UnSafeIsSetOverArrayInspection */
-////        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
-////        self::assertFalse($isValidator->isValidId($bean->id));
-////        self::assertEquals($bean, $bean->custom_fields->bean);
-////        self::assertEquals(false, $bean->new_with_id);
-//        
-//
-//        // test
-////        $GLOBALS['log']->reset();
-////        $this->fieldDefsStore('temp1');
-////        $this->fieldDefsRestore();
-////        $bean = BeanFactory::getBean('Contacts');
-////        $bean->id = 'testBean_1';
-////        $bean->modified_by_name = 'testing';
-////        $bean->field_defs = array_merge($bean->field_defs, $bean->field_defs = array(
-////            'email_addresses' => array(
-////                'type' => 'link',
-////            ),
-////            'email_addresses_non_primary' => array(
-////                'type' => 'email',
-////            ),
-////        ));
-////        /** @noinspection PhpUndefinedFieldInspection */
-////        $bean->emailAddress = new EmailAddress();
-////        /** @noinspection PhpUndefinedFieldInspection */
-////        $bean->email_addresses_non_primary = array('testbean1@email.com');
-////        $results = null;
-////        try {
-////            $results = $bean->save();
-////            self::assertTrue(false);
-////        } catch (Exception $e) {
-////        }
-////        self::assertFalse($isValidator->isValidId($results));
-////
-////        self::assertEquals(false, $bean->in_save);
-////        self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);
-////        self::assertEquals($current_user->id, $bean->modified_user_id);
-////        self::assertEquals($current_user->user_name, $bean->modified_by_name);
-////        self::assertEquals(0, $bean->deleted);
-////        /** @noinspection UnSafeIsSetOverArrayInspection */
-////        self::assertFalse(isset($bean->date_entered));
-////        /** @noinspection UnSafeIsSetOverArrayInspection */
-////        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
-////        self::assertFalse($isValidator->isValidId($bean->id));
-////        self::assertEquals($bean, $bean->custom_fields->bean);
-////        self::assertEquals(false, $bean->new_with_id);
-////        self::assertEquals('testing', $bean->old_modified_by_name);
-////
-////        $this->fieldDefsRestore('temp1', true);
-//
-//        // cleanup
-//        DBManagerFactory::getInstance()->query("DELETE FROM sugarfeed WHERE related_id LIKE 'testBean_1'");
-//        DBManagerFactory::getInstance()->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'testBean_1'");
-//        DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1'");
-//        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
-//        
-//        // clean up
-//        
-//        $state->popTable('aod_index');
-//        $state->popTable('tracker');
+        // save state
+
+        $state = new StateSaver();
+        $state->pushTable('tracker');
+        $state->pushTable('aod_index');
+
+        // test
+        
+        global $current_user;
+
+        // test
+//        $GLOBALS['log']->reset();
+        $bean = BeanFactory::getBean('Users');
+        $results = null;
+        try {
+            $results = $bean->save();
+            self::assertTrue(false);
+        } catch (Exception $e) {
+            self::assertTrue(true);
+        }
+        $isValidator = new SuiteValidator();
+        self::assertNotTrue($isValidator->isValidId($results));
+
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        self::assertEquals($bean->date_modified, $bean->date_entered);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
+
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        
+
+
+        // test
+//        $GLOBALS['log']->reset();
+        $bean = BeanFactory::getBean('Users');
+        $bean->new_with_id = true;
+        $results = null;
+        try {
+            $results = $bean->save();
+            $this->assertTrue(false);
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+        }
+        $isValidator = new SuiteValidator();
+        self::assertFalse($isValidator->isValidId($results));
+
+        self::assertEquals(true, $bean->in_save);
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        self::assertEquals($bean->date_modified, $bean->date_entered);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse($isValidator->isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(true, $bean->new_with_id);
+        self::assertEquals($bean->modified_by_name, $bean->old_modified_by_name);
+
+        // test
+//        $GLOBALS['log']->reset();
+        $bean = BeanFactory::getBean('Users');
+        $bean->new_with_id = true;
+        $bean->modified_by_name = 'testing';
+        $results = null;
+        try {
+            $results = $bean->save();
+            self::assertTrue(false);
+        } catch (Exception $e) {
+        }
+        self::assertFalse($isValidator->isValidId($results));
+
+        self::assertEquals(true, $bean->in_save);
+        
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        
+        self::assertEquals(0, $bean->deleted);
+        self::assertEquals($bean->date_modified, $bean->date_entered);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse($isValidator->isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(true, $bean->new_with_id);
+        
+
+        // test
+//        $GLOBALS['log']->reset();
+        $bean = BeanFactory::getBean('Users');
+        $bean->id = 'testBean_1';
+        $bean->modified_by_name = 'testing';
+        $results = null;
+        try {
+            $results = $bean->save();
+            self::assertTrue(false);
+        } catch (Exception $e) {
+            self::assertTrue(true);
+        }
+        self::assertFalse($isValidator->isValidId($results));
+
+        
+        
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        
+        self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertFalse(isset($bean->date_entered));
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse($isValidator->isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        
+
+
+        // test
+//        $GLOBALS['log']->reset();
+        $bean = BeanFactory::getBean('Users');
+        $bean->id = 'testBean_1';
+        $bean->modified_by_name = 'testing';
+        $bean->field_defs = array(
+            'email_addresses' => array(
+                'type' => 'link',
+            ),
+            'email_addresses_non_primary' => array(
+                'type' => 'email',
+            ),
+        );
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->email_addresses_non_primary = array(true);
+        $results = null;
+        try {
+            $results = $bean->save();
+            self::assertTrue(false);
+        } catch (Exception $e) {
+            self::assertTrue(true);
+        }
+        self::assertFalse($isValidator->isValidId($results));
+
+        self::assertEquals(null, $bean->in_save);
+        
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        
+        self::assertEquals($current_user->user_name, null);
+        self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertFalse(isset($bean->date_entered));
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse($isValidator->isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        
+
+        // test
+//        $GLOBALS['log']->reset();
+        $bean = BeanFactory::getBean('Users');
+        $bean->id = 'testBean_1';
+        $bean->modified_by_name = 'testing';
+        $bean->field_defs = array(
+            'email_addresses' => array(
+                'type' => 'link',
+            ),
+            'email_addresses_non_primary' => array(
+                'type' => 'email',
+            ),
+        );
+        /** @noinspection PhpUndefinedFieldInspection */
+        //$bean->emailAddress = BeanFactory::getBean('EmailAddress');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->email_addresses_non_primary = array(true);
+        $results = null;
+        try {
+            $results = $bean->save();
+            self::assertTrue(false);
+        } catch (Exception $e) {
+        }
+        self::assertFalse($isValidator->isValidId($results));
+
+        self::assertEquals(false, $bean->in_save);
+        
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        
+        self::assertEquals($current_user->user_name, null);
+        self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertFalse(isset($bean->date_entered));
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse($isValidator->isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        
+
+
+        // test
+//        $GLOBALS['log']->reset();
+        $bean = BeanFactory::getBean('Users');
+        $bean->id = 'testBean_1';
+        $bean->modified_by_name = 'testing';
+        $bean->field_defs = array(
+            'email_addresses' => array(
+                'type' => 'link',
+            ),
+            'email_addresses_non_primary' => array(
+                'type' => 'email',
+            ),
+        );
+        /** @noinspection PhpUndefinedFieldInspection */
+//        $bean->emailAddress = BeanFactory::getBean('EmailAddress');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->email_addresses_non_primary = array(true);
+        $results = null;
+        try {
+            $results = $bean->save();
+            self::assertTrue(false);
+        } catch (Exception $e) {
+        }
+        self::assertFalse($isValidator->isValidId($results));
+
+        self::assertEquals(false, $bean->in_save);
+        
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        
+        self::assertEquals($current_user->user_name, null);
+        self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertFalse(isset($bean->date_entered));
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse($isValidator->isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        
+
+        // test
+//        $GLOBALS['log']->reset();
+        $this->fieldDefsStore('temp1');
+        $this->fieldDefsRestore();
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'testBean_1';
+        $bean->modified_by_name = 'testing';
+        $bean->field_defs = array_merge($bean->field_defs, $bean->field_defs = array(
+            'email_addresses' => array(
+                'type' => 'link',
+            ),
+            'email_addresses_non_primary' => array(
+                'type' => 'email',
+            ),
+        ));
+        /** @noinspection PhpUndefinedFieldInspection */
+//        $bean->emailAddress = BeanFactory::getBean('EmailAddress');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->email_addresses_non_primary = array('testbean1@email.com');
+        $results = null;
+        try {
+            $results = $bean->save();
+            self::assertTrue(false);
+        } catch (Exception $e) {
+        }
+        self::assertFalse($isValidator->isValidId($results));
+
+        self::assertEquals(false, $bean->in_save);
+        self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertFalse(isset($bean->date_entered));
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse($isValidator->isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals('testing', $bean->old_modified_by_name);
+
+        $this->fieldDefsRestore('temp1', true);
+
+        // cleanup
+        DBManagerFactory::getInstance()->query("DELETE FROM sugarfeed WHERE related_id LIKE 'testBean_1'");
+        DBManagerFactory::getInstance()->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'testBean_1'");
+        DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1'");
+        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
+        
+        // clean up
+        
+        $state->popTable('aod_index');
+        $state->popTable('tracker');
     }
 
     /**
