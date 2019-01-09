@@ -2623,14 +2623,14 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testCleanBean()
     {
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs['testField'] = array('type' => 'html');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField = '<p>test <b>html</b> value</p>';
-//        $bean->cleanBean();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('&lt;p&gt;test &lt;b&gt;html&lt;/b&gt; value&lt;/p&gt;', $bean->testField);
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs['testField'] = array('type' => 'html');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField = '<p>test <b>html</b> value</p>';
+        $bean->cleanBean();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('&lt;p&gt;test &lt;b&gt;html&lt;/b&gt; value&lt;/p&gt;', $bean->testField);
     }
 
     /**
