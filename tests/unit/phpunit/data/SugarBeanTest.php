@@ -626,74 +626,74 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testPopulateDefaultValues()
     {
-//        $testBean1 = BeanFactory::getBean('Users');
-//        ;
-//        $testBean1->field_defs = null;
-//        /** @noinspection PhpVoidFunctionResultUsedInspection */
-//        $results = $testBean1->populateDefaultValues();
-//        self::assertEquals(null, $results);
-//        self::assertEquals(null, $testBean1->field_defs);
-//
-//        // test
-//        $bean = BeanFactory::getBean('Users');
-//        $force = false;
-//        $fieldDefsBefore = $bean->field_defs;
-//        /** @noinspection PhpVoidFunctionResultUsedInspection */
-//        $results = $bean->populateDefaultValues($force);
-//        self::assertEquals(null, $results);
-//        self::assertEquals($fieldDefsBefore, $bean->field_defs);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Users');
-//        $force = true;
-//        $bean->field_defs['test'] = array(
-//            'default' => true,
-//        );
-//        /** @noinspection PhpVoidFunctionResultUsedInspection */
-//        $results = $bean->populateDefaultValues($force);
-//        self::assertEquals(null, $results);
-//        self::assertEquals(array(
-//            'test' => array(
-//                'default' => true,
-//            ),
-//        ), $bean->field_defs);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Users');
-//        $force = true;
-//        $bean->field_defs['test'] = array(
-//            'default' => true,
-//        );
-//        /** @noinspection PhpVoidFunctionResultUsedInspection */
-//        $results = $bean->populateDefaultValues($force);
-//        self::assertEquals(null, $results);
-//        self::assertEquals(array(
-//            'test' => array(
-//                'default' => true,
-//            ),
-//        ), $bean->field_defs);
-//        $field = 'test';
-//        self::assertEquals(1, $bean->$field);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Users');
-//        $force = true;
-//        $bean->field_defs['test'] = array(
-//            'default' => '',
-//        );
-//        /** @noinspection PhpVoidFunctionResultUsedInspection */
-//        $results = $bean->populateDefaultValues($force);
-//        self::assertEquals(null, $results);
-//        self::assertEquals(array(
-//            'test' => array(
-//                'default' => '',
-//            ),
-//        ), $bean->field_defs);
-//        $field = 'test';
-//        self::assertEquals('', $bean->$field);
+        $testBean1 = BeanFactory::getBean('Users');
+        
+        $testBean1->field_defs = null;
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $testBean1->populateDefaultValues();
+        self::assertEquals(null, $results);
+        self::assertEquals(null, $testBean1->field_defs);
+
+        // test
+        $bean = BeanFactory::getBean('Users');
+        $force = false;
+        $fieldDefsBefore = $bean->field_defs;
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals($fieldDefsBefore, $bean->field_defs);
+
+
+        // test
+        $bean = BeanFactory::getBean('Users');
+        $force = true;
+        $bean->field_defs['test'] = array(
+            'default' => true,
+        );
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals(array(
+            'test' => array(
+                'default' => true,
+            ),
+        ), $bean->field_defs);
+
+
+        // test
+        $bean = BeanFactory::getBean('Users');
+        $force = true;
+        $bean->field_defs['test'] = array(
+            'default' => true,
+        );
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals(array(
+            'test' => array(
+                'default' => true,
+            ),
+        ), $bean->field_defs);
+        $field = 'test';
+        self::assertEquals(1, $bean->$field);
+
+
+        // test
+        $bean = BeanFactory::getBean('Users');
+        $force = true;
+        $bean->field_defs['test'] = array(
+            'default' => '',
+        );
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals(array(
+            'test' => array(
+                'default' => '',
+            ),
+        ), $bean->field_defs);
+        $field = 'test';
+        self::assertEquals('', $bean->$field);
     }
 
     /**
