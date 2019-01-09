@@ -2638,310 +2638,310 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
      */
     public function testFixUpFormatting()
     {
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->fixUpFormatting();
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'datetime');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'NULL';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('', $bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'datetime');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'invalid-format';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('', $bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'date');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'NULL';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('', $bean->testField1);
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'date');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'invalid-format';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('', $bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'time');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'NULL';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('', $bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'time');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'invalid-format';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('invalid-format', $bean->testField1);
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'time');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'am';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('am', $bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'float');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'NULL';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('NULL', $bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'int');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'NULL';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('NULL', $bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'int');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'a string here..';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals(0, $bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = true;
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertTrue($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotNull($bean->testField1);
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 1;
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertTrue($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotNull($bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'true';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertTrue($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotNull($bean->testField1);
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'TRUE';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertTrue($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotNull($bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'on';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertTrue($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotNull($bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = false;
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertFalse($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotNull($bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = '';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertFalse($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotNull($bean->testField1);
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 0;
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertFalse($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotNull($bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = '0';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertFalse($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotNull($bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = null;
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotTrue($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotFalse($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNull($bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'bool');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'NULL';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertTrue($bean->testField1);
-//
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'encrypt');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = '';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotTrue($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotFalse($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertEquals('', $bean->testField1);
-//
-//        // test
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->id = 'test_contact_10';
-//        $bean->fetched_row['id'] = 'test_contact_10';
-//        $bean->field_defs['testField1'] = array('type' => 'encrypt');
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->testField1 = 'a test string value';
-//        $bean->fixUpFormatting();
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotTrue($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotFalse($bean->testField1);
-//        /** @noinspection PhpUndefinedFieldInspection */
-//        self::assertNotEquals('', $bean->testField1);
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->fixUpFormatting();
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'datetime');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'NULL';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('', $bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'datetime');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'invalid-format';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('', $bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'date');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'NULL';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('', $bean->testField1);
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'date');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'invalid-format';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('', $bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'time');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'NULL';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('', $bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'time');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'invalid-format';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('invalid-format', $bean->testField1);
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'time');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'am';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('am', $bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'float');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'NULL';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('NULL', $bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'int');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'NULL';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('NULL', $bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'int');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'a string here..';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals(0, $bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = true;
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertTrue($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotNull($bean->testField1);
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 1;
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertTrue($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotNull($bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'true';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertTrue($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotNull($bean->testField1);
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'TRUE';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertTrue($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotNull($bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'on';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertTrue($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotNull($bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = false;
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertFalse($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotNull($bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = '';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertFalse($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotNull($bean->testField1);
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 0;
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertFalse($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotNull($bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = '0';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertFalse($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotNull($bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = null;
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotTrue($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotFalse($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNull($bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'bool');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'NULL';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertTrue($bean->testField1);
+
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'encrypt');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = '';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotTrue($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotFalse($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals('', $bean->testField1);
+
+        // test
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'test_contact_10';
+        $bean->fetched_row['id'] = 'test_contact_10';
+        $bean->field_defs['testField1'] = array('type' => 'encrypt');
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->testField1 = 'a test string value';
+        $bean->fixUpFormatting();
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotTrue($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotFalse($bean->testField1);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertNotEquals('', $bean->testField1);
     }
 
     /**
