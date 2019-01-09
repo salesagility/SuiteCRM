@@ -2218,10 +2218,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs = array();
-//        $results = $bean->get_import_required_fields();
-//        self::assertEquals(array(), $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs = array();
+        $results = $bean->get_import_required_fields();
+        self::assertEquals(array(), $results);
 ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
@@ -2233,10 +2233,10 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        // test
 ////        $GLOBALS['log']->reset();
 ////        $GLOBALS['log']->fatal('test');
-//        $bean = BeanFactory::getBean('Contacts');
-//        $bean->field_defs = array();
-//        $results = $bean->get_importable_fields();
-//        self::assertEquals(array(), $results);
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->field_defs = array();
+        $results = $bean->get_importable_fields();
+        self::assertEquals(array(), $results);
 ////        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
@@ -2498,8 +2498,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
             ),
         );
         /** @noinspection PhpUndefinedFieldInspection */
-        //$bean->emailAddress = BeanFactory::getBean('EmailAddress');
-        /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
         $results = null;
         try {
@@ -2538,8 +2536,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
                 'type' => 'email',
             ),
         );
-        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->emailAddress = BeanFactory::getBean('EmailAddress');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
         $results = null;
@@ -2580,8 +2576,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
                 'type' => 'email',
             ),
         ));
-        /** @noinspection PhpUndefinedFieldInspection */
-//        $bean->emailAddress = BeanFactory::getBean('EmailAddress');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array('testbean1@email.com');
         $results = null;
