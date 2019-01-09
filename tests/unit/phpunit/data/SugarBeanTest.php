@@ -2368,17 +2368,12 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->new_with_id = true;
-        $results = null;
-        try {
-            $results = $bean->save();
-            $this->assertTrue(false);
-        } catch (Exception $e) {
-            $this->assertTrue(true);
-        }
+        $results = $bean->save();
+        $this->assertTrue((bool)$results);
         $isValidator = new SuiteValidator();
         self::assertFalse($isValidator->isValidId($results));
 
-        self::assertEquals(true, $bean->in_save);
+        self::assertEquals(false, $bean->in_save);
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
