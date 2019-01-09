@@ -9,7 +9,7 @@ class Reports extends \AcceptanceTester
      */
     public function gotoReports()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Reports');
     }
 
@@ -18,7 +18,7 @@ class Reports extends \AcceptanceTester
      */
     public function gotoProfile()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickUserMenuItem('Profile');
     }
 

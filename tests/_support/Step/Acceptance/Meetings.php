@@ -9,7 +9,7 @@ class Meetings extends \AcceptanceTester
      */
     public function gotoMeetings()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Meetings');
     }
 

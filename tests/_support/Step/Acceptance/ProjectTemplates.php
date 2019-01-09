@@ -9,7 +9,7 @@ class ProjectTemplates extends \AcceptanceTester
      */
     public function gotoProjectTemplates()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Projects - Templates');
     }
 

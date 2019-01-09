@@ -140,8 +140,8 @@ class ListViewDataEmails extends ListViewData
      * @return InboundEmail
      * @throws SuiteException
      */
-    protected function getInboundEmail($currentUser, $folder) {
-
+    protected function getInboundEmail($currentUser, $folder)
+    {
         $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
         $id = $folder->getId();
         if (!empty($id)) {
@@ -158,7 +158,7 @@ class ListViewDataEmails extends ListViewData
          */
         $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
 
-        if(!$inboundEmail || !isset($inboundEmail->id) || !$inboundEmail->id) {
+        if (!$inboundEmail || !isset($inboundEmail->id) || !$inboundEmail->id) {
 
             // something went wrong when SugarBean trying to retrieve the inbound email account
             // maybe there is no IE bean in database or wrong ID stored in user preferences?
@@ -549,22 +549,26 @@ class ListViewDataEmails extends ListViewData
                 }
                 break;
             case 'is_imported':
+                $db = DBManagerFactory::getInstance();
+
                 $uid = $emailHeader['uid'];
                 $importedEmailBeans = BeanFactory::getBean('Emails');
-                $is_imported = $importedEmailBeans->get_full_list('',
-                    'emails.uid LIKE "' . $uid . '"'); 
-                
+                $is_imported = $importedEmailBeans->get_full_list(
+                    '',
+                    'emails.uid LIKE ' . $db->quoted($uid) . ' AND emails.mailbox_id = ' . $db->quoted($inboundEmail->id)
+                );
+
                 if (null === $is_imported) {
                     $is_imported = [];
                 }
-                
+
                 if ($is_imported instanceof Countable) {
                     $count = count($is_imported);
                 } else {
                     LoggerManager::getLogger()->warn('ListViewDataEmails::getEmailRecordFieldValue: email list should be a Countable');
                     $count = count((array)$is_imported);
                 }
-                
+
                 if ($count > 0) {
                     $ret = true;
                 } else {
