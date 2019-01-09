@@ -180,7 +180,7 @@ class ElasticsearchCest
      */
     public function testSearchFounds(AcceptanceTester $I, WebDriverHelper $helper, AccountsTester $accounts)
     {
-        $max = 15;
+        $max = 14;
         
         // login..
         
