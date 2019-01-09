@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -685,7 +685,7 @@ $mod_strings = array(
     // for Google Token/Synchronization settings
     'LBL_GOOGLE_API_SETTINGS' => 'Google Account Synchronization',
     'LBL_GOOGLE_API_TOKEN' => 'Google API Token',
-    'LBL_GOOGLE_API_TOKEN_HELP' => 'Use this to authorize SuiteCRM to access your Google Calendar. This is required for synchronization. Don’t forget to check the "Enable Calendar Sync" checkbox when done.',
+    'LBL_GOOGLE_API_TOKEN_HELP' => 'Use this to authorize SuiteCRM to access your Google Calendar. This is required for synchronization. Don\'t forget to check the "Enable Calendar Sync" checkbox when done.',
     'LBL_GOOGLE_API_TOKEN_BTN' => 'Get Token',
     'LBL_GSYNC_CAL' => 'Enable Calendar Sync',
     // END Google Token/Synchronization settings

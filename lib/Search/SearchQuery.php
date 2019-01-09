@@ -154,7 +154,7 @@ class SearchQuery implements \JsonSerializable
      */
     public function getFrom()
     {
-        return $this->from;
+        return (int)$this->from;
     }
 
     /**
@@ -164,7 +164,7 @@ class SearchQuery implements \JsonSerializable
      */
     public function getSize()
     {
-        return $this->size;
+        return (int)$this->size;
     }
 
     /**

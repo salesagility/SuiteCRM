@@ -182,6 +182,9 @@ class GoogleApiKeySaverEntryPoint
             throw new Exception('Unable to retrive user by ID: ' . $this->currentUser->id, 2);
         }
         $accessToken = $this->client->fetchAccessTokenWithAuthCode($this->request['code']);
+        if (array_key_exists('error', $accessToken)) {
+            throw new Exception('Unable to fetch access token: ' . $accessToken['error'] . '|' . $accessToken['error_description'], 10);
+        }
         $user->setPreference('GoogleApiToken', base64_encode(json_encode($accessToken)), false, 'GoogleSync');
         $accessRefreshToken = $accessToken['refresh_token'];
         if (isset($accessRefreshToken)) {

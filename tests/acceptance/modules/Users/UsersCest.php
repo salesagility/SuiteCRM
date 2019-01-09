@@ -3,7 +3,7 @@
 use Faker\Factory;
 use Faker\Generator;
 use Helper\WebDriverHelper;
-use Step\Acceptance\Accounts;
+use Step\Acceptance\AccountsTester;
 use Step\Acceptance\DetailView;
 use Step\Acceptance\EditView;
 use Step\Acceptance\ListView;
@@ -60,7 +60,7 @@ class UsersCest
         UsersTester $Users,
         ListView $listView,
         EditView $EditView,
-        Accounts $accounts,
+        AccountsTester $accounts,
         WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View the collapsed subpanel hints on Accounts');

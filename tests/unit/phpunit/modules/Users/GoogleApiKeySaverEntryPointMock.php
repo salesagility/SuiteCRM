@@ -59,6 +59,12 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
      * @var string 
      */
     protected $exitString;
+
+    /**
+     * 
+     * @var string
+     */
+    protected $redirectUrl;
     
     /**
      * 
@@ -84,5 +90,21 @@ class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
     public function getExitString() {
         return $this->exitString;
     }
+
+    /**
+     * 
+     * @return string
+     */
+    public function getRedirectUrl() {
+        return $this->redirectUrl;
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public function redirect($url) {
+        $this->redirectUrl = $url;
+    } 
     
 }

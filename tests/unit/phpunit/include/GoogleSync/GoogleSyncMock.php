@@ -27,7 +27,7 @@ class GoogleSyncMock extends GoogleSync {
         if (!method_exists($this, $name)) {
             throw new Exception('Method is not exists: ' . $name);
         }
-        $ret = call_user_func_array([$this, $name], $params);
+        $ret = call_user_func_array([$this, $name], (array)$params);
         return $ret;
     }
     
