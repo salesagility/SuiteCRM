@@ -180,7 +180,7 @@ class ElasticsearchCest
      */
     public function testSearchFounds(AcceptanceTester $I, WebDriverHelper $helper, AccountsTester $accounts)
     {
-        $max = 14;
+        $max = 15;
         
         // login..
         
@@ -228,7 +228,7 @@ class ElasticsearchCest
         $I->see('SEARCH');
         $I->see('Results');
         $I->wait(3);
-        $I->see('Total result(s): ' . $end);
+        $I->see('Total result(s): ' . $end - 1);
         $I->see('Search performed in');
         $I->see('Page 1 of 2');
         
