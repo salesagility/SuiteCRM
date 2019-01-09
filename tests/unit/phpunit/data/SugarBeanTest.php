@@ -2361,7 +2361,6 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
 
-        LoggerManager::getLogger()->fatal('------------------------- [INTERESTING PART FOR DEBUGGING] -------------------------');
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
@@ -2387,14 +2386,18 @@ class SugarBeanTest extends StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(false, $bean->new_with_id);
         self::assertEquals($bean->modified_by_name, $bean->old_modified_by_name);
 
-        LoggerManager::getLogger()->fatal('------------------------- [end of INTERESTING PART FOR DEBUGGING] -------------------------');
-
         // test
 //        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->new_with_id = true;
         $bean->modified_by_name = 'testing';
-        $results = $bean->save();
+        $results = null;
+        try {
+            $results = $bean->save();
+            $this->assertTrue(false);
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+        }
         $this->assertTrue(!$results);
         $this->assertTrue($bean->lastSaveErrorIsEmailAddressSaveError);
         $this->assertSame(
