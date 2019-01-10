@@ -1588,9 +1588,7 @@ class Email extends Basic
             }
 
             $GLOBALS['log']->debug('-------------------------------> Email called save()');
-
-            // handle legacy concatenation of date and time fields
-            //Bug 39503 - SugarBean is not setting date_sent_received when seconds missing
+            
             if (empty($this->date_sent_received)) {
                 global $timedate;
 
