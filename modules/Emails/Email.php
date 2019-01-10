@@ -1593,11 +1593,13 @@ class Email extends Basic
             //Bug 39503 - SugarBean is not setting date_sent_received when seconds missing
             if (empty($this->date_sent_received)) {
                 global $timedate;
+
                 $date_sent_received_obj = $timedate->fromUser(
                     $timedate->merge_date_time($this->date_start, $this->time_start),
                     $current_user
                 );
-                if (!empty($date_sent_received_obj) && ($date_sent_received_obj instanceof SugarDateTime)) {
+
+                if ($date_sent_received_obj !== null && ($date_sent_received_obj instanceof SugarDateTime)) {
                     $this->date_sent_received = $date_sent_received_obj->asDb();
                 }
             }
