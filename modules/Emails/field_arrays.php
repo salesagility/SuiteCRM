@@ -106,7 +106,6 @@ $fields_array['Email'] = array(
         'date_entered',
         'attachment_image',
         'intent',
-        'date_sent_received',
         'category_id'
         ),
 );
