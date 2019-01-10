@@ -1,5 +1,6 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -37,20 +38,34 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search\Exceptions;
+namespace SuiteCRM;
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+use InvalidArgumentException;
+use RecursiveDirectoryIterator;
+use RecursiveFilterIterator;
 
 /**
- * A generic Search exception that should be thrown when an error internal the SearchWrapper is detected.
+ * StateCheckerDirectoryIterator
+ *
+ * Readable directory iterator
+ *
+ * @author gyula
  */
-class SearchException extends \RuntimeException
+class StateCheckerDirectoryIterator extends RecursiveFilterIterator
 {
-    
-    const ZERO_SIZE = 100;
-    const ES_DISABLED = 101;
-    const ES_MODULE_BLACKLISTED = 102;
+    public function __construct($path)
+    {
+        if (!$path instanceof RecursiveDirectoryIterator) {
+            if (! is_readable($path) || ! is_dir($path)) {
+                throw new InvalidArgumentException("$path is not a valid directory or not readable");
+            }
+            $path = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
+        }
+        parent::__construct($path);
+    }
 
+    public function accept()
+    {
+        return $this->current()->isReadable() && $this->current()->isDir();
+    }
 }

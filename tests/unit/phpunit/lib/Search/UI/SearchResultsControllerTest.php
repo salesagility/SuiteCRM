@@ -54,41 +54,124 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
     
-    public function testDisplayFoundOne() {
-        
-        $state = new SuiteCRM\StateSaver();
+    public function testDisplayFoundOnePage() {
+                $state = new SuiteCRM\StateSaver();
         $state->pushTable('accounts');
         $state->pushTable('accounts_cstm');
-            
-        $account = BeanFactory::getBean('Accounts');
-        $account->name = 'test account 1';
-        $ok = $account->save();
-        $this->assertTrue((bool)$ok);
-        $searchHooks = new \SuiteCRM\Search\ElasticSearch\ElasticSearchHooks();
-        $searchHooks->beanSaved($account, null, null);
-            
+        $state->pushGlobals();
+             
+        $ids = [];
+        for ($i=0; $i<15; $i++) {
+            $account = BeanFactory::getBean('Accounts');
+            $account->name = 'test account ' . $i;
+            $ok = $account->save();
+            $this->assertTrue((bool)$ok);
+            $ids[] = $account->id;
+        }
+        $this->assertEquals(15, count($ids));
+
         $request = [
             'search-query-string' => 'test account',
-            //'query_string' => '',
+            'query_string' => 'test account',
             'search-query-size' => 10,
             'search-query-from' => 0,
             'search-engine' => 0,
         ];
         $query = SearchQuery::fromRequestArray($request);
-        $hits = [];
+        $hits = [
+            'Accounts' => $ids,
+        ];
         $groupedByModule = true;
-        $searchTime = null;
-        $total = null;
+        $searchTime = 0.05;
+        $total = 15;
         $scores = null;
         $options = null;
         $results = new SearchResults($hits, $groupedByModule, $searchTime, $total, $scores, $options);
         $searchResultsController = new SearchResultsController($query, $results);
         ob_start();        
         $searchResultsController->display();
-        $contents = ob_get_contents();
+        $content = ob_get_contents();
         ob_end_clean();
-        $this->assertContains('test account 1', $contents);
+        $this->assertContains('Total result(s): 15', $content);
+        $this->assertContains('Page 1 of 2', $content);
         
+        // add 5 more..
+        for ($i=15; $i<20; $i++) {
+            $account = BeanFactory::getBean('Accounts');
+            $account->name = 'test account ' . $i;
+            $ok = $account->save();
+            $this->assertTrue((bool)$ok);
+            $ids[] = $account->id;
+        }
+        $this->assertEquals(20, count($ids));
+        
+        $request = [
+            'search-query-string' => 'test account',
+            'query_string' => 'test account',
+            'search-query-size' => 10,
+            'search-query-from' => 10,
+            'search-engine' => 0,
+        ];
+        $query = SearchQuery::fromRequestArray($request);
+        $hits = [
+            'Accounts' => $ids,
+        ];
+        $groupedByModule = true;
+        $searchTime = 0.05;
+        $total = 20;
+        $scores = null;
+        $options = null;
+        $results = new SearchResults($hits, $groupedByModule, $searchTime, $total, $scores, $options);
+        $searchResultsController = new SearchResultsController($query, $results);
+        ob_start();        
+        $searchResultsController->display();
+        $content = ob_get_contents();
+        ob_end_clean();
+        $this->assertContains('Total result(s): 20', $content);
+        $this->assertContains('Page 2 of 2', $content);
+        
+        $state->popGlobals();
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+    }
+    
+    public function testDisplayFoundOne() {
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushGlobals();
+             
+        $account = BeanFactory::getBean('Accounts');
+        $account->name = 'test account 1';
+        $ok = $account->save();
+        $this->assertTrue((bool)$ok);
+
+        $request = [
+            'search-query-string' => 'test account',
+            'query_string' => 'test account',
+            'search-query-size' => 10,
+            'search-query-from' => 0,
+            'search-engine' => 0,
+        ];
+        $query = SearchQuery::fromRequestArray($request);
+        $hits = [
+            'Accounts' => [$account->id],
+        ];
+        $groupedByModule = true;
+        $searchTime = 0.05;
+        $total = 1;
+        $scores = null;
+        $options = null;
+        $results = new SearchResults($hits, $groupedByModule, $searchTime, $total, $scores, $options);
+        $searchResultsController = new SearchResultsController($query, $results);
+        ob_start();        
+        $searchResultsController->display();
+        $content = ob_get_contents();
+        ob_end_clean();
+        $this->assertContains('test account 1', $content);
+        
+        $state->popGlobals();
         $state->popTable('accounts_cstm');
         $state->popTable('accounts');
     }

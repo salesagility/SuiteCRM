@@ -5236,7 +5236,7 @@ class SugarBean
      * @param string $id
      */
     public function mark_deleted($id)
-    {
+    {        
         global $current_user;
         $date_modified = $GLOBALS['timedate']->nowDb();
         $id = $this->db->quote($id);
