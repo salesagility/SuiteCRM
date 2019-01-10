@@ -65,11 +65,11 @@ class ElasticsearchCest
         
         // setup elasticsearch..
         
-        $I->click('admin');
+        $I->click('.container-fluid .desktop-bar ul#toolbar li#globalLinks .dropdown-toggle.user-menu-button');
         
         // Click on Admin menu:
         // TODO: Page css selector error: I found element #admin_link at 3 times. Html tag should have uniqe ID.
-        $I->click('.navbar.navbar-inverse.navbar-fixed-top .container-fluid .desktop-bar #toolbar #globalLinks .dropdown-menu.user-dropdown.user-menu #admin_link');
+        $I->click('.container-fluid .desktop-bar ul#toolbar li#globalLinks ul.dropdown-menu.user-dropdown.user-menu #admin_link');
         
         $I->click('Search Settings');
         $I->selectOption('#search-engine', 'Elasticsearch Engine');
@@ -85,7 +85,7 @@ class ElasticsearchCest
         $I->wait(1);
         $I->seeInPopup('A full indexing has been scheduled and will start in the next 60 seconds. Search results might be inconsistent until the process is complete.');
         $I->acceptPopup();
-        
+
         $I->click('Schedule partial indexing');
         $I->wait(1);
         $I->seeInPopup('A partial indexing has been scheduled and will start in the next 60 seconds.');
@@ -115,12 +115,12 @@ class ElasticsearchCest
         // lets try out elasticsearch..
         
         $I->amOnUrl($helper->getInstanceURL());
-        
+        $I->click('.desktop-bar #toolbar .dropdown.nav.navbar-nav.navbar-search #searchbutton');
         // TODO [Selenium browser Logs] 12:47:10.930 SEVERE - http://localhost/SuiteCRM/index.php?action=Login&module=Users - [DOM] Found 2 elements with non-unique id #form: (More info: https://goo.gl/9p2vKq)
-        $I->fillField('div.desktop-bar ul#toolbar li #searchform .input-group #query_string', 'I_bet_there_is_nothing_to_contains_this');
+        $I->fillField('div.desktop-bar ul.toolbar li.dropdown.nav.navbar-nav.navbar-search.open div.dropdown-menu #searchformdropdown .input-group #query_string', 'I_bet_there_is_nothing_to_contains_this');
         
         // click on search icon: TODO: search icon ID is not unique:
-        $I->click('.desktop-bar #searchform > div > span > button');
+        $I->click('div.desktop-bar ul#toolbar li.dropdown.nav.navbar-nav.navbar-search.open div.dropdown-menu #searchformdropdown div.input-group .btn.btn-default.suitepicon.suitepicon-action-search');
         
         $I->see('SEARCH');
         $I->see('Results');
