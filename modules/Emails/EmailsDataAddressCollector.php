@@ -560,6 +560,14 @@ class EmailsDataAddressCollector
         }
         return $fromString;
     }
+
+    /**
+     * @param $email
+     * @return string
+     */
+    protected function getPersonalString($email) {
+        return $this->currentUser->full_name . ' &lt;' . $email . '&gt;';
+    }
     
     /**
      *
@@ -657,8 +665,8 @@ class EmailsDataAddressCollector
     {
         foreach ($dataAddresses as $address => $userAddress) {
             $emailInfo = $userAddress['attributes'];
-            $fromString = $this->getFromString($emailInfo['from']);
-            $replyString = $this->getFromString($emailInfo['reply_to']);
+            $fromString = $this->getPersonalString($emailInfo['from']);
+            $replyString = $this->getPersonalString($emailInfo['reply_to']);
 
             $dataAddresses[$address]['attributes'] = [
                 'from' => $fromString,
