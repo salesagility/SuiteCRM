@@ -191,10 +191,16 @@ class ElasticsearchCest
         $this->createTestAccounts($accounts, $max);
         
         // search for them..
-        
-        $I->fillField('div.desktop-bar ul#toolbar li #searchform .input-group #query_string', 'acc_for_test');
-        $I->click('.desktop-bar #searchform > div > span > button');
-        
+        $I->click('div.desktop-bar ul#toolbar li #searchbutton');
+        $I->fillField(
+            'div.desktop-bar ul#toolbar #query_string',
+            'acc_for_test'
+        );
+        $I->click(
+            '#toolbar .dropdown.nav.navbar-nav.navbar-search.open
+            .dropdown-menu #searchformdropdown .input-group .input-group-btn .btn'
+        );
+
         $I->see('SEARCH');
         $I->see('Results');
         $I->see('Total result(s): ' . $max);
