@@ -11,6 +11,10 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     protected $ea;
     
+    /**
+     *
+     * @var \SuiteCRM\StateSaver
+     */
     protected $stateSaver;
 
 
@@ -18,7 +22,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         
@@ -26,10 +30,11 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->stateSaver->pushTable('contacts');
         $this->stateSaver->pushTable('email_addr_bean_rel');
         $this->stateSaver->pushTable('email_addresses');
+        $this->stateSaver->pushGlobals();
 
-        global $current_user;
-        get_sugar_config_defaults();
-        $current_user = new User();
+//        global $current_user;
+//        get_sugar_config_defaults();
+//        $current_user = new User();
 
         $this->ea = new SugarEmailAddress();
     }
@@ -38,7 +43,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      */
-    public function tearDown()
+    protected function tearDown()
     {
         $db = DBManagerFactory::getInstance();
         $query = /** @lang sql */
@@ -55,6 +60,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $db->query($query);
         
         
+        $this->stateSaver->popGlobals();
         $this->stateSaver->popTable('email_addresses');
         $this->stateSaver->popTable('email_addr_bean_rel');
         $this->stateSaver->popTable('contacts');
@@ -1679,7 +1685,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'Users');
 
-        self::assertTrue(is_string($result));
+        self::assertFalse(is_string($result));
 
         // test
         $_POST['return_id'] = 'test_contact_1';

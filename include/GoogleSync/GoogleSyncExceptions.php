@@ -1,5 +1,6 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -36,84 +37,46 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-
-namespace SuiteCRM\Test;
-
-use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
-use SuiteCRM\Search\SearchTestAbstract;
-use SuiteCRM\StateSaver;
-
-require_once __DIR__ . "/AbstractDocumentifierMock.php";
-require_once __DIR__ . "/SearchTestAbstract.php";
-
-
-class AbstractDocumentifierTest extends SearchTestAbstract
-{
-    /** @var AbstractDocumentifier */
-    private $documentifier;
-
-    public function testSanitizePhone()
-    {
-        $state = new StateSaver();
-        $state->pushTable('reminders');
-        $state->pushTable('reminders_invitees');
-
-
-        $data1 = "(+44) 012321323";
-        $expe1 = "+44012321323";
-
-        $data2 = "(+45) 0123-213-23";
-        $expe2 = "+45012321323";
-
-        $data3 = "(ab) 0123 213 23";
-        $expe3 = "012321323";
-
-        self::assertEquals($expe1, $this->documentifier->sanitizePhone($data1));
-        self::assertEquals($expe2, $this->documentifier->sanitizePhone($data2));
-        self::assertEquals($expe3, $this->documentifier->sanitizePhone($data3));
-
-        $state->popTable('reminders');
-        $state->popTable('reminders_invitees');
-    }
-
-    public function testFixPhone()
-    {
-        $state = new StateSaver();
-        $state->pushTable('reminders');
-        $state->pushTable('reminders_invitees');
-
-
-        $document = [
-            'name' => 'foo',
-            'phone' => [
-                'home' => '+44 077 099 885',
-                'work' => '+44-077-099-885',
-            ],
-        ];
-
-        $expected = [
-            'name' => 'foo',
-            'phone' => [
-                'home' => '+44077099885',
-                'work' => '+44077099885',
-            ],
-        ];
-
-
-        $this->documentifier->fixPhone($document);
-
-        self::assertEquals($expected, $document);
-
-        $state->popTable('reminders');
-        $state->popTable('reminders_invitees');
-    }
-
-    protected function setUp()
-    {
-
-        $this->documentifier = new AbstractDocumentifierMock();
-
-        return parent::setUp();
-    }
+/**
+ * This class define unique exceptions for GoogleSync
+ * When we don't need to support PHP < 7 we can set these to extend the new Exception classes
+ * Exception Codes & Messages are set to unique values, but can still be overridden if needed.
+ * Standard: Classes should be in separated files..
+ */
+class GoogleSyncException extends Exception {
+    const UNKNOWN_EXCEPTION = 100;
+    const MEETING_NOT_FOUND = 101;
+    const EVENT_ID_IS_EMPTY = 102;
+    const INVALID_ACTION = 103;
+    const INVALID_CLIENT_ID = 104;
+    const UNABLE_TO_RETRIEVE_USER = 105;
+    const UNABLE_TO_SETUP_GCLIENT = 106;
+    const TIMEZONE_SET_FAILURE = 107;
+    const GSERVICE_FAILURE = 108;
+    const GCALENDAR_FAILURE = 109;
+    const NO_REFRESH_TOKEN = 110;
+    const UNABLE_TO_RETRIEVE_MEETING = 111;
+    const AMBIGUOUS_MEETING_ID = 112;
+    const GOOGLE_RECORD_PARSE_FAILURE = 113;
+    const INVALID_USER_ID = 114;
+    const NO_GRESOURCE_SET = 115;
+    const NO_GSERVICE_SET = 116;
+    const NO_REMOVE_EVENT_START_IS_NOT_SET = 117;
+    const NO_REMOVE_EVENT_START_IS_INCORRECT = 118;
+    const INCORRECT_WORKING_USER_TYPE = 119;
+    const UNABLE_TO_RETRIEVE_USER_ALL = 120;
+    const JSON_CORRUPT = 121;
+    const JSON_KEY_MISSING = 122;
+    const NO_GCLIENT_SET = 123;
+    const GEVENT_INSERT_OR_UPDATE_FAILURE = 124;
+    const MEETING_SAVE_FAILURE = 125;
+    const MEETING_CREATE_OR_UPDATE_FAILURE = 126;
+    const MEETING_ID_IS_EMPTY = 127;
+    const RECORD_VALIDATION_FAILURE = 128;
+    const SQL_FAILURE = 129;
+    const ACCSESS_TOKEN_PARAMETER_MISSING = 130;
 }

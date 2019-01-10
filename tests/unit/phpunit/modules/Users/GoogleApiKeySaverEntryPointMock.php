@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,28 +34,77 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-error_reporting(E_ALL);
 
-/* bootstrap composer's autoloader */
-require_once __DIR__ . '/../vendor/autoload.php';
+include_once __DIR__ . '/../../../../../modules/Users/GoogleApiKeySaverEntryPoint.php';
 
-/* bootstrap sugarcrm */
-//echo "CWD:" . getcwd() . "\n";
-chdir('../');
-define('sugarEntry', true);
-global $sugar_config, $db;
-require_once 'include/utils.php';
-require_once 'include/modules.php';
-require_once 'include/entryPoint.php';
-//Oddly entry point loads app_strings but not app_list_strings, manually do this here.
-$GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
+/**
+ * GoogleApiKeySaverEntryPointMock
+ *
+ * @author gyula
+ */
+class GoogleApiKeySaverEntryPointMock extends GoogleApiKeySaverEntryPoint {
+    
+    /**
+     *
+     * @var bool 
+     */
+    protected $dieOk = false;
+    
+    /**
+     *
+     * @var string 
+     */
+    protected $exitString;
 
-/* VERY BAD :-( - but for now at least tests are running */
-$GLOBALS['sugar_config']['resource_management']['default_limit'] = 999999;
+    /**
+     * 
+     * @var string
+     */
+    protected $redirectUrl;
+    
+    /**
+     * 
+     * @param string $exitString
+     */
+    public function protectedDie($exitString) {
+        $this->dieOk = true;
+        $this->exitString = $exitString;
+    }
+    
+    /**
+     * 
+     * @return bool
+     */
+    public function getDieOk() {
+        return $this->dieOk;
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getExitString() {
+        return $this->exitString;
+    }
 
+    /**
+     * 
+     * @return string
+     */
+    public function getRedirectUrl() {
+        return $this->redirectUrl;
+    }
 
-define('SUITE_PHPUNIT_RUNNER', true);
+    /**
+     * 
+     * @return string
+     */
+    public function redirect($url) {
+        $this->redirectUrl = $url;
+    } 
+    
+}
