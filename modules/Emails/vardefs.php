@@ -131,9 +131,9 @@ $dictionary['Email'] = array(
             'inline_edit' => false,
 
         ),
-        'date_sent' => array(
-            'name' => 'date_sent',
-            'vname' => 'LBL_DATE_SENT',
+        'date_sent_received' => array(
+            'name' => 'date_sent_received',
+            'vname' => 'LBL_DATE_SENT_RECEIVED',
             'type' => 'datetime',
             'inline_edit' => false,
         ),

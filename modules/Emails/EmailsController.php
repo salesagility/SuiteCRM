@@ -92,7 +92,7 @@ class EmailsController extends SugarController
         'raw_source',
         'description',
         'description_html',
-        'date_sent',
+        'date_sent_received',
         'message_id',
         'name',
         'status',

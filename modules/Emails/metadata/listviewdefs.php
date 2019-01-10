@@ -155,6 +155,11 @@ $listViewDefs['Emails'] = array(
         'label' => 'LBL_DATE_ENTERED',
         'default' => true,
     ),
+    'DATE_SENT_RECEIVED' => array(
+        'width' => '32',
+        'label' => 'LBL_LIST_DATE_SENT_RECEIVED',
+        'default' => true,
+    ),
     'TO_ADDRS_NAMES' => array(
         'width' => '32',
         'label' => 'LBL_LIST_TO_ADDR',
