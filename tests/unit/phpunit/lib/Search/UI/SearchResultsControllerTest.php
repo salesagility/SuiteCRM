@@ -55,9 +55,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
     
     public function testDisplayFoundOnePage() {
-                $state = new SuiteCRM\StateSaver();
+                
+        $state = new SuiteCRM\StateSaver();
         $state->pushTable('accounts');
         $state->pushTable('accounts_cstm');
+        $state->pushTable('aod_indexevent');
         $state->pushGlobals();
              
         $ids = [];
@@ -131,6 +133,7 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
         $this->assertContains('Page 2 of 2', $content);
         
         $state->popGlobals();
+        $state->popTable('aod_indexevent');
         $state->popTable('accounts_cstm');
         $state->popTable('accounts');
     }
@@ -140,6 +143,7 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('accounts');
         $state->pushTable('accounts_cstm');
+        $state->pushTable('aod_indexevent');
         $state->pushGlobals();
              
         $account = BeanFactory::getBean('Accounts');
@@ -172,11 +176,16 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
         $this->assertContains('test account 1', $content);
         
         $state->popGlobals();
+        $state->popTable('aod_indexevent');
         $state->popTable('accounts_cstm');
         $state->popTable('accounts');
     }
     
     public function testDisplayNotFound() {
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
         $request = [
             'search-query-string' => 'test query string (not found)',
             'query_string' => 'test query string (not found) alt',
@@ -198,6 +207,9 @@ class SearchResultsControllerTest extends StateCheckerPHPUnitTestCaseAbstract {
         $content = ob_get_contents();
         ob_end_clean();
         $this->assertContains('No results matching your search criteria. Try broadening your search.', $content);
+        
+        
+        $state->popTable('aod_indexevent');
     }
     
 }
