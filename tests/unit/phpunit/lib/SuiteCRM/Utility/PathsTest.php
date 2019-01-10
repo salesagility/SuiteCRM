@@ -18,7 +18,7 @@ class PathsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     private static $projectPath;
 
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         if (self::$paths === null) {

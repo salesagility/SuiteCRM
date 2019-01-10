@@ -4,7 +4,7 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     protected $stateSaver;
     
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         
@@ -16,7 +16,7 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
     
-    protected function tearDown()
+    public function tearDown()
     {
         $this->stateSaver->popTable('email_addresses');
         

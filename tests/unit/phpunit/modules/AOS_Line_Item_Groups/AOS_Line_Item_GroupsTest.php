@@ -2,7 +2,7 @@
 
 class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

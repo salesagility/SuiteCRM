@@ -14,7 +14,7 @@ class ModuleLanguageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     private static $language;
 
 
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         if (self::$language === null) {

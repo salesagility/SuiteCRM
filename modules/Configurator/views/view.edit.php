@@ -1,4 +1,7 @@
 <?php
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,10 +40,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 
 /*********************************************************************************
 
@@ -167,9 +166,15 @@ class ConfiguratorViewEdit extends ViewEdit
         else {
             $this->ss->assign('logger_visible', true);
         }
-        
         // Check for Google Sync JSON
-        $this->checkGoogleSyncJSON($configurator->config['google_auth_json']);
+        $json = base64_decode($configurator->config['google_auth_json']);
+        if ($config = json_decode($json, true)) {
+            $this->ss->assign("GOOGLE_JSON_CONF", 'CONFIGURED');
+            $this->ss->assign("GOOGLE_JSON_CONF_COLOR", 'green');
+        } else {
+            $this->ss->assign("GOOGLE_JSON_CONF", 'UNCONFIGURED');
+            $this->ss->assign("GOOGLE_JSON_CONF_COLOR", 'black');
+        }
 
         echo $this->getModuleTitle(false);
         
@@ -185,22 +190,4 @@ class ConfiguratorViewEdit extends ViewEdit
         $javascript->addFieldGeneric("proxy_username", "varchar", $mod_strings['LBL_PROXY_USERNAME'], TRUE, "");
         echo $javascript->getScript();
 	}
-    
-    /**
-     * 
-     * @param string $googleAuthJSON
-     */
-    protected function checkGoogleSyncJSON($googleAuthJSON) 
-    {
-        $json = base64_decode($googleAuthJSON);
-        $config = json_decode($json, true);
-        if ($config) {
-            $this->ss->assign("GOOGLE_JSON_CONF", 'CONFIGURED');
-            $this->ss->assign("GOOGLE_JSON_CONF_COLOR", 'green');
-        } else {
-            $this->ss->assign("GOOGLE_JSON_CONF", 'UNCONFIGURED');
-            $this->ss->assign("GOOGLE_JSON_CONF_COLOR", 'black');
-        }
-    }
-
 }

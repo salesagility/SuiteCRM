@@ -9,7 +9,7 @@ require_once __DIR__ . '/EmailMock.php';
 
 class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

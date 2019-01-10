@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class BaseHandlerTest extends StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp() {
+    public function setUp() {
         parent::setUp();
     }
 

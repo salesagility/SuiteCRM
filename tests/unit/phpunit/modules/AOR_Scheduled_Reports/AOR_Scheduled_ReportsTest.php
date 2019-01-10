@@ -2,7 +2,7 @@
 
 class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

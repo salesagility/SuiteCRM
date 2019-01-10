@@ -527,9 +527,8 @@ function trimSugarFeeds()
  * + */
 function syncGoogleCalendar()
 {
-    global $sugar_config;
     require_once 'include/GoogleSync/GoogleSync.php';
-    $googleSync = new GoogleSync($sugar_config);
+    $googleSync = new GoogleSync();
     $googleSync->syncAllUsers();
 
     return true;

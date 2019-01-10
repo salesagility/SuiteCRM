@@ -5,7 +5,7 @@ use org\bovigo\vfs\vfsStream;
 require_once 'include/utils/file_utils.php';
 class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

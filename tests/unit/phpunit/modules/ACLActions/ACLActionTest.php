@@ -3,7 +3,7 @@
 
 class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
@@ -12,7 +12,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
     
-    protected function tearDown()
+    public function tearDown()
     {
         parent::tearDown();
     }

@@ -2,7 +2,7 @@
 
 class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

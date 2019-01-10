@@ -2,7 +2,7 @@
 
 class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

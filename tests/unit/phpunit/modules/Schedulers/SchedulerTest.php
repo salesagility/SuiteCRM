@@ -5,7 +5,7 @@ require_once 'install/install_utils.php';
 
 class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

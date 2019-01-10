@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SubPanelTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         if (!defined('sugarEntry')) {

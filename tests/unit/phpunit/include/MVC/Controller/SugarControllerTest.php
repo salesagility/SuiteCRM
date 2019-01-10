@@ -1,30 +1,19 @@
 <?php
 
-use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
-use SuiteCRM\StateSaver;
 use SuiteCRM\Test\TestLogger;
 
-class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
+class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    /**
-     *
-     * @var StateSaver
-     */
-    protected $state;
-    
-    protected function setUp() {
+    public function setUp()
+    {
         parent::setUp();
-        
-        $this->state = new StateSaver();
-        $this->state->pushTable('user_preferences');
-        $this->state->pushTable('users');
-    }
-    
-    protected function tearDown() {
-        $this->state->popTable('users');
-        $this->state->popTable('user_preferences');
-        
-        parent::tearDown();
+
+        global $current_user;
+        $current_user = new User();
+        get_sugar_config_defaults();
+        if (!isset($GLOBALS['app']) || !$GLOBALS['app']) {
+            $GLOBALS['app'] = new SugarApplication();
+        }
     }
 
     public function testsetup()
@@ -75,7 +64,7 @@ class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         // save state
 
-        $state = new StateSaver();
+        $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
         
@@ -116,7 +105,7 @@ class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
 
     public function testprocess()
     {
-        $state = new StateSaver();
+        $state = new SuiteCRM\StateSaver();
         
         
         
@@ -178,7 +167,7 @@ class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
 
     public function testaction_save()
     {
-        $state = new StateSaver();
+        $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
@@ -252,7 +241,7 @@ class SugarControllerTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         // store state
         
-        $state = new StateSaver();
+        $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
         // test

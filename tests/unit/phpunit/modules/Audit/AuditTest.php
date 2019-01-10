@@ -3,7 +3,7 @@
 require_once 'modules/Audit/Audit.php';
 class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

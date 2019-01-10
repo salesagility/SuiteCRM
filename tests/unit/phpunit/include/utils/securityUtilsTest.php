@@ -3,7 +3,7 @@
 require_once 'include/utils/security_utils.php';
 class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 

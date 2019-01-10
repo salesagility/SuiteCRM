@@ -16,7 +16,7 @@ class ExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     private static $exception;
 
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
         if (self::$exception === null) {
