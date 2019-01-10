@@ -476,13 +476,17 @@ class EmailsDataAddressCollector
             $defaultEmailSignature,
             $prependSignature
         );
-        $dataAddressesWithUserAddressesAndMailerSettings =
-                $this->fillDataAddressWithSystemMailerSettings(
-                    $dataAddressesWithUserAddresses,
-                    $defaultEmailSignature
-                );
+        $dataAddressesWithUserAddressesAndSystem = $this->fillDataAddressWithSystemMailerSettings(
+            $dataAddressesWithUserAddresses,
+            $defaultEmailSignature
+        );
 
-        return $dataAddressesWithUserAddressesAndMailerSettings;
+        $allDataAddresses =
+            $this->fillDataAddressFromPersonal(
+                $dataAddressesWithUserAddressesAndSystem
+            );
+
+        return $allDataAddresses;
     }
     
     /**
@@ -646,6 +650,24 @@ class EmailsDataAddressCollector
                 $defaultEmailSignature
             );
         }
+        return $dataAddresses;
+    }
+
+    protected function fillDataAddressFromPersonal($dataAddresses)
+    {
+        foreach ($dataAddresses as $address => $userAddress) {
+            $emailInfo = $userAddress['attributes'];
+            $fromString = $this->getFromString($emailInfo['from']);
+            $replyString = $this->getFromString($emailInfo['reply_to']);
+
+            $dataAddresses[$address]['attributes'] = [
+                'from' => $fromString,
+                'name' => $userAddress['attributes']['name'],
+                'oe' => $userAddress['attributes']['oe'],
+                'reply_to' => $replyString
+            ];
+        }
+
         return $dataAddresses;
     }
     
