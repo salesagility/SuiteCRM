@@ -1602,7 +1602,7 @@ class Email extends Basic
                 }
             }
 
-            if (in_array($this->status, ['sent', 'replied']) && (!isset($this->date_sent_received) || !$this->date_sent_received)) {
+            if ((!isset($this->date_sent_received) || !$this->date_sent_received) && in_array($this->status, ['sent', 'replied'])) {
                 $this->date_sent_received = TimeDate::getInstance()->nowDb();
             }
 

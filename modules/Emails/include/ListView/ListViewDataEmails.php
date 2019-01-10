@@ -544,15 +544,7 @@ class ListViewDataEmails extends ListViewData
                         $date
                     );
 
-                    if ($dateTime == false) {
-                        // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMap
-                        $dateTime = DateTime::createFromFormat(
-                            'd M Y H:i:s O',
-                            $date
-                        );
-                    }
-
-                    if (!$dateTime == false) {
+                    if ($dateTime) {
                         $timeDate = new TimeDate();
                         $ret = $timeDate->asUser($dateTime, $currentUser);
                     }
@@ -563,25 +555,27 @@ class ListViewDataEmails extends ListViewData
                     LoggerManager::getLogger()->warn('Given email header does not contains date field.');
                     $ret = '';
                 } else {
+                    $ret = '';
+                    $dateTime = false;
+
                     $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
 
-                    $dateTime = DateTime::createFromFormat(
+                    $formats = array(
                         'D, d M Y H:i:s O',
-                        $date
+                        'd M Y H:i:s O'
                     );
-                    if ($dateTime == false) {
-                        // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMap
+
+                    foreach ($formats as $format) {
                         $dateTime = DateTime::createFromFormat(
-                            'd M Y H:i:s O',
+                            $format,
                             $date
                         );
-                    }
 
-                    if ($dateTime == false) {
-                        $ret = '';
-                    } else {
-                        $timeDate = new TimeDate();
-                        $ret = $timeDate->asUser($dateTime, $currentUser);
+                        if ($dateTime) {
+                            $timeDate = new TimeDate();
+                            $ret = $timeDate->asUser($dateTime, $currentUser);
+                            break;
+                        }
                     }
                 }
 
