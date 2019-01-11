@@ -143,10 +143,16 @@ class ListViewDataEmails extends ListViewData
      */
     protected function getInboundEmail($currentUser, $folder)
     {
-        $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
         $id = $folder->getId();
         if (!empty($id)) {
-            $inboundEmailID = $folder->getId();
+            $inboundEmailID = $id;
+        } else {
+            $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
+        }
+        
+        if (!$inboundEmailID) {
+            LoggerManager::getLogger()->warn('Unable to resolve inbound email ID.');
+            return false;
         }
 
         $isValidator = new SuiteValidator();
@@ -202,10 +208,9 @@ class ListViewDataEmails extends ListViewData
      * set $inboundEmail->mailbox and return $this->searchType
      *
      * @param Folder $folder
-     * @param InboundEmail $inboundEmail
      * @return string $this->searchType
      */
-    protected function getSearchType($folder, $inboundEmail)
+    protected function getSearchType($folder)
     {
         switch ($folder->getType()) {
 
@@ -736,11 +741,19 @@ class ListViewDataEmails extends ListViewData
             $folderObj = new Folder();
             $folderObj->retrieveFromRequest($request);
 
-            $inboundEmail = $this->getInboundEmail($current_user, $folderObj);
+            $inboundEmail = $this->getInboundEmail($current_user, $folderObj);            
+            if (!$inboundEmail || $inboundEmail && !$inboundEmail->id) {
+                LoggerManager::getLogger()->warn('Unable get Inbound Email for List View. Please check your settings and try again.');
+                return false;
+            }
 
 
-            $this->searchType = $this->getSearchType($folderObj, $inboundEmail);
+            $this->searchType = $this->getSearchType($folderObj);
             $this->setInboundEmailMailbox($folderObj, $inboundEmail);
+            if (!$inboundEmail) {
+                $folder = null;
+                LoggerManager::getLogger()->warn('Unable to set Inbound Email mailbox: Inbound Email is not found.');
+            }
 
 
             // search in draft in CRM db?
@@ -754,6 +767,10 @@ class ListViewDataEmails extends ListViewData
 
 
             $folder = $inboundEmail->mailbox;
+            if (!$inboundEmail) {
+                $folder = null;
+                LoggerManager::getLogger()->warn('Unable to retrive mailbox folder: Inbound Email is not found.');
+            }
 
             $filter = $this->getFilter($filter_fields, $where, $request);
 
@@ -804,6 +821,7 @@ class ListViewDataEmails extends ListViewData
                         $pageData,
                         $filter_fields
                     );
+                    
                     break;
 
                 default:

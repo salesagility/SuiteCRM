@@ -38,33 +38,19 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Utility;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-class SuiteValidator
-{
-    /**
-     * @param string $id
-     * @return bool
-     */
-    public function isValidId($id)
-    {
-        $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
-
-        return $valid;
-    }
-
-    /**
-     * @param string $fieldname
-     * @return bool
-     */
-    public function isPercentageField($fieldname)
-    {
-        if ($fieldname === 'aos_products_quotes_vat' ||
-            strpos(strtolower($fieldname), 'pct') !== false ||
-            strpos(strtolower($fieldname), 'percent') !== false ||
-            strpos(strtolower($fieldname), 'percentage') !== false) {
-            return true;
-        }
-        return false;
-    }
+/**
+ * EmailValidatorException
+ *
+ * @author gyula
+ */
+class EmailValidatorException extends Exception {
+    
+    const EMAIL_IS_NOT_SET = 1;
+    const PREG_MATCH_ERROR_AT_FROMADDRNAME = 2;
+    const EMAIL_ISNT_EMAILOBJ = 3;
+    
 }

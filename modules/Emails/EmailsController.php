@@ -46,8 +46,22 @@ use SuiteCRM\Utility\SuiteValidator;
 
 include_once 'include/Exceptions/SugarControllerException.php';
 
+include_once __DIR__ . '/EmailsDataAddressCollector.php';
+include_once __DIR__ . '/EmailsControllerActionGetFromFields.php';
+
 class EmailsController extends SugarController
 {
+    
+    const ERR_INVALID_INBOUND_EMAIL_TYPE = 100;
+    const ERR_STORED_OUTBOUND_EMAIL_NOT_SET = 101;
+    const ERR_STORED_OUTBOUND_EMAIL_ID_IS_INVALID = 102;
+    const ERR_STORED_OUTBOUND_EMAIL_NOT_FOUND = 103;
+    const ERR_REPLY_TO_ADDR_NOT_FOUND = 110;
+    const ERR_REPLY_TO_FROMAT_INVALID_SPLITS = 111;
+    const ERR_REPLY_TO_FROMAT_INVALID_NO_NAME = 112;
+    const ERR_REPLY_TO_FROMAT_INVALID_NO_ADDR = 113;
+    const ERR_REPLY_TO_FROMAT_INVALID_AS_FROM = 114;
+    
     /**
      * @var Email $bean ;
      */
@@ -414,147 +428,16 @@ class EmailsController extends SugarController
      * Gets the values of the "from" field
      * includes the signatures for each account
      */
-    public function action_GetFromFields()
+    public function action_getFromFields()
     {
         global $current_user;
         global $sugar_config;
         $email = new Email();
-        $email->email2init();
         $ie = new InboundEmail();
-        $ie->email = $email;
-        $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
-        $accountSignatures = $current_user->getPreference('account_signatures', 'Emails');
-        $showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-        if ($accountSignatures != null) {
-            $emailSignatures = unserialize(base64_decode($accountSignatures));
-        } else {
-            $GLOBALS['log']->warn('User ' . $current_user->name . ' does not have a signature');
-        }
-
-        $defaultEmailSignature = $current_user->getDefaultSignature();
-        if (empty($defaultEmailSignature)) {
-            $defaultEmailSignature = array(
-                'html' => '<br>',
-                'plain' => '\r\n',
-            );
-            $defaultEmailSignature['no_default_available'] = true;
-        } else {
-            $defaultEmailSignature['no_default_available'] = false;
-        }
-
-        $prependSignature = $current_user->getPreference('signature_prepend');
-
-        $data = array();
-        foreach ($accounts as $inboundEmailId => $inboundEmail) {
-            if (in_array($inboundEmail->id, $showFolders)) {
-                $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
-                $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
-                $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
-
-                $oe = new OutboundEmail();
-                $oe->retrieve($storedOptions['outbound_email']);
-
-                $dataAddress = array(
-                    'type' => $inboundEmail->module_name,
-                    'id' => $inboundEmail->id,
-                    'attributes' => array(
-                        'reply_to' => utf8_encode($storedOptions['reply_to_addr']),
-                        'name' => utf8_encode($storedOptions['from_name']),
-                        'from' => utf8_encode($storedOptions['from_addr']),
-                    ),
-                    'prepend' => $prependSignature,
-                    'isPersonalEmailAccount' => $isPersonalEmailAccount,
-                    'isGroupEmailAccount' => $isGroupEmailAccount,
-                    'outboundEmail' => array(
-                        'id' => $oe->id,
-                        'name' => $oe->name,
-                    ),
-                );
-
-                // Include signature
-                if (isset($emailSignatures[$inboundEmail->id]) && !empty($emailSignatures[$inboundEmail->id])) {
-                    $emailSignatureId = $emailSignatures[$inboundEmail->id];
-                } else {
-                    $emailSignatureId = '';
-                }
-
-                $signature = $current_user->getSignature($emailSignatureId);
-                if (!$signature) {
-                    if ($defaultEmailSignature['no_default_available'] === true) {
-                        $dataAddress['emailSignatures'] = $defaultEmailSignature;
-                    } else {
-                        $dataAddress['emailSignatures'] = array(
-                            'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
-                            'plain' => $defaultEmailSignature['signature'],
-                        );
-                    }
-                } else {
-                    $dataAddress['emailSignatures'] = array(
-                        'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
-                        'plain' => $signature['signature'],
-                    );
-                }
-
-                $data[] = $dataAddress;
-            }
-        }
-
-        if (isset($sugar_config['email_allow_send_as_user']) && ($sugar_config['email_allow_send_as_user'])) {
-            require_once('include/SugarEmailAddress/SugarEmailAddress.php');
-            $sugarEmailAddress = new SugarEmailAddress();
-            $userAddressesArr = $sugarEmailAddress->getAddressesByGUID($current_user->id, 'Users');
-            foreach ($userAddressesArr as $userAddress) {
-                if ($userAddress['reply_to_addr'] === '1') {
-                    $fromString =  $current_user->full_name . ' &lt;' . $userAddress['email_address'] . '&gt;';
-                } else {
-                    $fromString =  $current_user->full_name . ' &lt;' . $current_user->email1 . '&gt;';
-                }
-                // ($userAddress['reply_to_addr'] === '1') ? $current_user->email1 : $userAddress['email_address']
-                $data[] = array(
-                    'type' => 'personal',
-                    'id' => $userAddress['email_address_id'],
-                    'attributes' => array(
-                        'from' => utf8_encode($fromString),
-                        'reply_to' =>  utf8_encode($current_user->full_name . ' &lt;' . $userAddress['email_address']  . '&gt;'),
-                        'name' => utf8_encode($current_user->full_name),
-                    ),
-                    'prepend' => $prependSignature,
-                    'isPersonalEmailAccount' => true,
-                    'isGroupEmailAccount' => false,
-                    'emailSignatures' => array(
-                        'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
-                        'plain' => $defaultEmailSignature['signature'],
-                    ),
-                );
-            }
-            unset($userAddress);
-        }
-
-        $oe = new OutboundEmail();
-        if ($oe->isAllowUserAccessToSystemDefaultOutbound()) {
-            $system = $oe->getSystemMailerSettings();
-            $data[] = array(
-                'type' => 'system',
-                'id' => $system->id,
-                'attributes' => array(
-                    'reply_to' => utf8_encode($system->smtp_from_addr),
-                    'from' => utf8_encode($system->smtp_from_addr),
-                    'name' => utf8_encode($system->smtp_from_name),
-                    'oe' => utf8_encode($system->mail_smtpuser),
-                ),
-                'prepend' => false,
-                'isPersonalEmailAccount' => false,
-                'isGroupEmailAccount' => true,
-                'outboundEmail' => array(
-                    'id' => $system->id,
-                    'name' => $system->name,
-                ),
-                'emailSignatures' => $defaultEmailSignature,
-            );
-        }
-
-        $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
-        echo utf8_decode($dataEncoded);
+        $collector = new EmailsDataAddressCollector($current_user, $sugar_config);
+        $handler = new EmailsControllerActionGetFromFields($current_user, $collector);
+        $results = $handler->handleActionGetFromFields($email, $ie);
+        echo $results;
         $this->view = 'ajax';
     }
 

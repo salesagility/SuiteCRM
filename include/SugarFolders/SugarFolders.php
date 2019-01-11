@@ -726,6 +726,8 @@ class SugarFolder
                     }
 
                     $return[] = $a;
+                } elseif ($found[$a['id']] === true) {
+                    LoggerManager::getLogger()->error('Duplicated folder detected: ' . $a['id']);
                 }
             }
         }
@@ -733,7 +735,7 @@ class SugarFolder
 
 
         if (empty($found)) {
-            throw new SugarFolderEmptyException(
+            LoggerManager::getLogger()->error(
                 ' SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - '.
                 'Please check the users inbound email settings.'
             );

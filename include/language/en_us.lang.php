@@ -1347,7 +1347,7 @@ $app_strings = array(
     'LBL_EMAIL_SETTINGS_TITLE_LAYOUT' => 'Visual Settings',
     'LBL_EMAIL_SETTINGS_TITLE_PREFERENCES' => 'Preferences',
     'LBL_EMAIL_SETTINGS_USER_FOLDERS' => 'Available User Folders',
-    'LBL_EMAIL_ERROR_PREPEND' => 'Error:',
+    'LBL_EMAIL_ERROR_PREPEND' => 'An email error occurred:',
     'LBL_EMAIL_INVALID_PERSONAL_OUTBOUND' => 'The outbound mail server selected for the mail account you are using is invalid. Check the settings or select a different mail server for the mail account.',
     'LBL_EMAIL_INVALID_SYSTEM_OUTBOUND' => 'An outgoing mail server is not configured to send emails. Please configure an outgoing mail server or select an outgoing mail server for the mail account that you are using in Settings >> Mail Account.',
     'LBL_DEFAULT_EMAIL_SIGNATURES' => 'Default Signature',
@@ -3645,7 +3645,7 @@ $app_list_strings['oauth2_duration_units'] = [
 
 
 $app_strings['LBL_DEFAULT_API_ERROR_TITLE'] = 'JSON API Error';
-$app_strings['LBL_DEFAULT_API_ERROR_DETAIL'] = 'JSON API Error occured.';
+$app_strings['LBL_DEFAULT_API_ERROR_DETAIL'] = 'JSON API Error occurred.';
 $app_strings['LBL_API_EXCEPTION_DETAIL'] = 'Api Version: 8';
 $app_strings['LBL_BAD_REQUEST_EXCEPTION_DETAIL'] = 'Please ensure you fill in the fields required';
 $app_strings['LBL_EMPTY_BODY_EXCEPTION_DETAIL'] = 'Json API expects body of the request to be JSON';
@@ -3662,7 +3662,7 @@ $app_strings['MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED'] = 'This browser does not s
 $app_strings['IMAP_HANDLER_ERROR'] = 'ERROR: {error}; key was: "{key}".';
 $app_strings['IMAP_HANDLER_SUCCESS'] = 'OK: test settings changed to "{key}"';
 $app_strings['IMAP_HANDLER_ERROR_INVALID_REQUEST'] = 'Invalid request, use "{var}" value.';
-$app_strings['IMAP_HANDLER_ERROR_UNKNOWN_BY_KEY'] = 'Unknown error occured, key "{key}" not saved.';
+$app_strings['IMAP_HANDLER_ERROR_UNKNOWN_BY_KEY'] = 'Unknown error occurred, key "{key}" not saved.';
 $app_strings['IMAP_HANDLER_ERROR_NO_TEST_SET'] = 'Test settings does not exists.';
 $app_strings['IMAP_HANDLER_ERROR_NO_KEY'] = 'Key not found.';
 $app_strings['IMAP_HANDLER_ERROR_KEY_SAVE'] = 'Key saving error.';
