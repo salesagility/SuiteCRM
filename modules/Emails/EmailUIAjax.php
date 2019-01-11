@@ -161,9 +161,9 @@ if (isset($_REQUEST['emailUIAction'])) {
                 $ie->mailbox = $_REQUEST['mbox'];
                 global $timedate;
                 $ie->setEmailForDisplay($_REQUEST['uid']);
-                $ie->email->date_start = $timedate->to_display_date($ie->email->date_sent);
-                $ie->email->time_start = $timedate->to_display_time($ie->email->date_sent);
-                $ie->email->date_sent = $timedate->to_display_date_time($ie->email->date_sent);
+                $ie->email->date_start = $timedate->to_display_date($ie->email->date_sent_received);
+                $ie->email->time_start = $timedate->to_display_time($ie->email->date_sent_received);
+                $ie->email->date_sent_received = $timedate->to_display_date_time($ie->email->date_sent_received);
                 $email = $ie->email->et->handleReplyType($ie->email, $_REQUEST['composeType']);
                 $ret = $ie->email->et->displayComposeEmail($email);
                 if ($_REQUEST['composeType'] == 'forward') {

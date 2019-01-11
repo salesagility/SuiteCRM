@@ -563,7 +563,7 @@ class EmailMan extends SugarBean
             if (empty($this->ref_email->id) or $upd_ref_email) {
                 //create email record.
                 $this->ref_email->id = $marketing_id;
-                $this->ref_email->date_sent = '';
+                $this->ref_email->date_sent_received = '';
 
                 if ($upd_ref_email == false) {
                     $this->ref_email->new_with_id = true;

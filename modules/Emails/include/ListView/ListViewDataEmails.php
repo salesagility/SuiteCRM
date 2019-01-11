@@ -122,6 +122,7 @@ class ListViewDataEmails extends ListViewData
         'subject' => 'name',
         'has_attachment' => 'has_attachment',
         'status' => 'emails.status',
+        'date_sent_received' => 'emails.date_sent_received'
     );
 
 
@@ -523,31 +524,61 @@ class ListViewDataEmails extends ListViewData
                 $ret = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
                 break;
             case 'date_entered':
-                if (!isset($emailHeader['date'])) {
-                    LoggerManager::getLogger()->warn('Given email header does not contains date field.');
-                    $ret = '';
-                } else {
-                    $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
+                $db = DBManagerFactory::getInstance();
+
+                $ret = '';
+                $uid = $emailHeader['uid'];
+
+                $emailBean = BeanFactory::getBean('Emails');
+
+                $emails = $emailBean->get_full_list(
+                    '',
+                    'emails.uid LIKE ' . $db->quoted($uid) . ' AND emails.mailbox_id = ' . $db->quoted($inboundEmail->id)
+                );
+
+                if (!empty($emails) && !empty($emails[0]->date_entered)) {
+                    $date = preg_replace('/(\ \([A-Z]+\))/', '', $emails[0]->date_entered);
 
                     $dateTime = DateTime::createFromFormat(
-                        'D, d M Y H:i:s O',
+                        'Y-m-d H:i:s',
                         $date
                     );
-                    if ($dateTime == false) {
-                        // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMap
-                        $dateTime = DateTime::createFromFormat(
-                            'd M Y H:i:s O',
-                            $date
-                        );
-                    }
 
-                    if ($dateTime == false) {
-                        $ret = '';
-                    } else {
+                    if ($dateTime) {
                         $timeDate = new TimeDate();
                         $ret = $timeDate->asUser($dateTime, $currentUser);
                     }
                 }
+                break;
+            case 'date_sent_received':
+                if (!isset($emailHeader['date'])) {
+                    LoggerManager::getLogger()->warn('Given email header does not contains date field.');
+                    $ret = '';
+                } else {
+                    $ret = '';
+                    $dateTime = false;
+
+                    $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
+
+                    $formats = array(
+                        'D, d M Y H:i:s O',
+                        'd M Y H:i:s O'
+                    );
+
+                    foreach ($formats as $format) {
+                        $dateTime = DateTime::createFromFormat(
+                            $format,
+                            $date
+                        );
+
+                        if ($dateTime) {
+                            $timeDate = new TimeDate();
+                            $ret = $timeDate->asUser($dateTime, $currentUser);
+                            break;
+                        }
+                    }
+                }
+
                 break;
             case 'is_imported':
                 $db = DBManagerFactory::getInstance();
@@ -663,7 +694,7 @@ class ListViewDataEmails extends ListViewData
     public function getEmailUIds($data)
     {
         $emailUIds = array();
-        
+
         foreach ((array)$data as $row) {
             $emailUIds[] = $row['UID'];
         }
@@ -791,7 +822,7 @@ class ListViewDataEmails extends ListViewData
                 ")\ntrace info:\n" . $e->getTraceAsString()
             );
         }
-        
+
         // TODO: don't override the superglobals!!!!
         $_REQUEST = $request;
 

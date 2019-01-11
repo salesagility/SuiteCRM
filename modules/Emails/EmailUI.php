@@ -1852,7 +1852,7 @@ eoq;
         $smarty->assign('BCC', nl2br($focus->bcc_addrs));
         $smarty->assign('CREATED_BY', $focus->created_by_name);
         $smarty->assign('MODIFIED_BY', $focus->modified_by_name);
-        $smarty->assign('DATE_SENT', $focus->date_entered);
+        $smarty->assign('DATE_SENT_RECEIVED', $focus->date_sent_received);
         $smarty->assign('EMAIL_NAME', 'RE: ' . $focus->name);
         $smarty->assign("TAG", $focus->listviewACLHelper());
         $smarty->assign("SUGAR_VERSION", $GLOBALS['sugar_version']);
@@ -2031,7 +2031,7 @@ eoq;
 
     public function doAssignment($distributeMethod, $ieid, $folder, $uids, $users)
     {
-        global $app_strings;        
+        global $app_strings;
         $users = explode(",", $users);
         $emailIds = explode($app_strings['LBL_EMAIL_DELIMITER'], $uids);
         $out = "";

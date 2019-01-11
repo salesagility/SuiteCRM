@@ -731,7 +731,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
 
         $email->from_name = 'from test';
         $email->name = 'test';
-        $email->date_sent = '2016-01-01';
+        $email->date_sent_received = '2016-01-01';
         $email->to_addrs = 'to@email.com';
         $email->cc_addrs = 'cc@email.com';
 
@@ -1071,7 +1071,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
         $email = new Email();
 
         //test with empty string params
-        $expected = "SELECT emails.*, users.user_name as assigned_user_name\n FROM emails\n LEFT JOIN users ON emails.assigned_user_id=users.id \nWHERE  emails.deleted=0 \n ORDER BY date_sent DESC";
+        $expected = "SELECT emails.*, users.user_name as assigned_user_name\n FROM emails\n LEFT JOIN users ON emails.assigned_user_id=users.id \nWHERE  emails.deleted=0 \n ORDER BY date_sent_received DESC";
         $actual = $email->create_new_list_query('', '');
         $this->assertSame($expected, $actual);
 
@@ -1191,7 +1191,7 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
     {
         $email = new Email();
 
-        $expected = "SELECT emails.id , emails.mailbox_id, emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, emails.reply_to_status,
+        $expected = "SELECT emails.id , emails.mailbox_id, emails.name, emails.date_sent_received, emails.status, emails.type, emails.flagged, emails.reply_to_status,
 		                      emails_text.from_addr, emails_text.to_addrs  FROM emails   JOIN emails_text on emails.id = emails_text.email_id   WHERE (emails.type= 'inbound' OR emails.type='archived' OR emails.type='out') AND emails.deleted = 0 ";
         $actual = $email->_genereateSearchImportedEmailsQuery();
         $this->assertSame($expected, $actual);
@@ -1217,22 +1217,22 @@ class EmailTest extends StateCheckerPHPUnitTestCaseAbstract
 
         //test with searchDateFrom request param only
         $_REQUEST['searchDateFrom'] = '2015-01-01 00:00:00';
-        $expected = "emails.date_sent >= '' ";
+        $expected = "emails.date_sent_received >= '' ";
         $actual = $email->_generateSearchImportWhereClause();
         $this->assertSame($expected, $actual);
 
         //test with searchDateTo request param only
         $_REQUEST['searchDateFrom'] = '';
         $_REQUEST['searchDateTo'] = '2015-01-01 00:00:00';
-        $expected = "emails.date_sent <= '' ";
+        $expected = "emails.date_sent_received <= '' ";
         $actual = $email->_generateSearchImportWhereClause();
         $this->assertSame($expected, $actual);
 
         //test with both request params
         $_REQUEST['searchDateFrom'] = '2015-01-01 00:00:00';
         $_REQUEST['searchDateTo'] = '2015-01-01 00:00:00';
-        $expected = "( emails.date_sent >= '' AND
-                                          emails.date_sent <= '' )";
+        $expected = "( emails.date_sent_received >= '' AND
+                                          emails.date_sent_received <= '' )";
         $actual = $email->_generateSearchImportWhereClause();
         $this->assertSame($expected, $actual);
 
