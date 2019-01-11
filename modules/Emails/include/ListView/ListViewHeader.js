@@ -138,7 +138,6 @@ $(document).ready(function () {
     }
 
     for (let i = 0; i < (responses.length); i++) {
-
       if (responses[i].id === query.folders_id) {
         jQueryBtnEmailsCurrentFolder.text(responses[(i)].text);
       } else if (responses[i].id === query.inbound_email_record) {
