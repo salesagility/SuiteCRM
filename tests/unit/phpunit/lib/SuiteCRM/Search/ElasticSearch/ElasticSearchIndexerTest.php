@@ -439,7 +439,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         // no exception should appear here, as the 404 has to be caught.
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         m::close();
         parent::tearDown();

@@ -46,7 +46,7 @@ abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHP
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -78,7 +78,7 @@ abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHP
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      */
-    public function tearDown()
+    protected function tearDown()
     {
         global $sugar_config;
 
