@@ -106,7 +106,7 @@ class EmailsController extends SugarController
         'raw_source',
         'description',
         'description_html',
-        'date_sent',
+        'date_sent_received',
         'message_id',
         'name',
         'status',
@@ -451,18 +451,21 @@ class EmailsController extends SugarController
         if (!empty($_REQUEST['id'])) {
             $bean = BeanFactory::getBean('Emails', $_REQUEST['id']);
             $data['draft'] = $bean->status == 'draft' ? 1 : 0;
-            $attachmentBeans = BeanFactory::getBean('Notes')
-                ->get_full_list('', "parent_id = '" . $_REQUEST['id'] . "'");
-            foreach ($attachmentBeans as $attachmentBean) {
-                $data['attachments'][] = array(
-                    'id' => $attachmentBean->id,
-                    'name' => $attachmentBean->name,
-                    'file_mime_type' => $attachmentBean->file_mime_type,
-                    'filename' => $attachmentBean->filename,
-                    'parent_type' => $attachmentBean->parent_type,
-                    'parent_id' => $attachmentBean->parent_id,
-                    'description' => $attachmentBean->description,
-                );
+            if (!$attachmentBeans = BeanFactory::getBean('Notes')
+                ->get_full_list('', "parent_id = '" . $_REQUEST['id'] . "'")) {
+                LoggerManager::getLogger()->warn('No attachment Note for selected Email.');
+            } else {
+                foreach ($attachmentBeans as $attachmentBean) {
+                    $data['attachments'][] = array(
+                        'id' => $attachmentBean->id,
+                        'name' => $attachmentBean->name,
+                        'file_mime_type' => $attachmentBean->file_mime_type,
+                        'filename' => $attachmentBean->filename,
+                        'parent_type' => $attachmentBean->parent_type,
+                        'parent_id' => $attachmentBean->parent_id,
+                        'description' => $attachmentBean->description,
+                    );
+                }
             }
         }
 

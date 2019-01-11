@@ -1161,7 +1161,7 @@ EOQ;
         if (!empty($where)) {
             $query .= " AND $where";
         }
-	$query .= " AND deleted=0"; 
+	$query .= " AND deleted=0";
         $result = $db->limitQuery($query, 0, 1, false);
         if (!empty($result)) {
             $row = $db->fetchByAssoc($result);
@@ -2256,7 +2256,7 @@ EOQ;
             $emailObj->from_addr = $mail->From;
             isValidEmailAddress($emailObj->from_addr);
             $emailObj->parent_type = 'User';
-            $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+            $emailObj->date_sent_received = TimeDate::getInstance()->nowDb();
             $emailObj->modified_user_id = '1';
             $emailObj->created_by = '1';
             $emailObj->status = 'sent';
