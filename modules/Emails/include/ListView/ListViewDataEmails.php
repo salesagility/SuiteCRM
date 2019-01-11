@@ -724,7 +724,6 @@ class ListViewDataEmails extends ListViewData
         global $current_user;
         global $sugar_config;
         global $mod_strings;
-        global $app_strings;
 
         $data = array();
         $pageData = array();
@@ -742,7 +741,7 @@ class ListViewDataEmails extends ListViewData
             $folderObj = new Folder();
             $folderObj->retrieveFromRequest($request);
 
-            $inboundEmail = $this->getInboundEmail($current_user, $folderObj);
+            $inboundEmail = $this->getInboundEmail($current_user, $folderObj);            
             if (!$inboundEmail || $inboundEmail && !$inboundEmail->id) {
                 LoggerManager::getLogger()->warn('Unable get Inbound Email for List View. Please check your settings and try again.');
                 //return false;
