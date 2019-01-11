@@ -744,8 +744,7 @@ class ListViewDataEmails extends ListViewData
 
             $inboundEmail = $this->getInboundEmail($current_user, $folderObj);
             if (!$inboundEmail || $inboundEmail && !$inboundEmail->id) {
-                SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_NO_INBOUND_EMAIL']);
-                LoggerManager::getLogger()->warn('Unable to get InboundEmail.');
+                LoggerManager::getLogger()->warn('Unable get Inbound Email for List View. Please check your settings and try again.');
                 //return false;
             }
 
