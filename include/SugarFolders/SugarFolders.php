@@ -718,9 +718,6 @@ class SugarFolder
                 $a['folder_type'] !== $myArchiveTypeString
             ) {
                 if (!isset($found[$a['id']])) {
-                    if ($found[$a['id']] == true) {
-                        LoggerManager::getLogger()->error('Duplicated folder detected: ' . $a['id']);
-                    }
                     $found[$a['id']] = true;
 
                     $children = $this->db->query("SELECT * FROM folders WHERE parent_folder = '" . $a['id'] . "'");
@@ -729,6 +726,8 @@ class SugarFolder
                     }
 
                     $return[] = $a;
+                } elseif ($found[$a['id']] === true) {
+                    LoggerManager::getLogger()->error('Duplicated folder detected: ' . $a['id']);
                 }
             }
         }

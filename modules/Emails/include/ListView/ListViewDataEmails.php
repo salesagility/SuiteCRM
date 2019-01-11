@@ -813,7 +813,7 @@ class ListViewDataEmails extends ListViewData
                         $request,
                         $where,
                         $id,
-                        $inboundEmail ? $inbounEmail : null,
+                        $inboundEmail ? $inboundEmail : null,
                         $filter,
                         $folderObj,
                         $current_user,

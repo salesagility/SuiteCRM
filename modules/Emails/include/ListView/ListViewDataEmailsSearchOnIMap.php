@@ -135,9 +135,9 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         /// Populate the data and its fields from the email server
         $request['uids'] = array();
 
-
+            
+        $emailServerEmailsData = null;
         if (!isset($emailServerEmails['data'])) {
-            $emailServerEmailsData = null;
             LoggerManager::getLogger()->warn('server email data is not set for seearch');
         } elseif (!is_array($emailServerEmails['data'])) {
             $emailServerEmailsData = $emailServerEmails['data'];
