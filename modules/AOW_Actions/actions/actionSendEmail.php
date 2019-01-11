@@ -28,13 +28,13 @@ require_once __DIR__ . '/../../AOW_WorkFlow/aow_utils.php';
 class actionSendEmail extends actionBase
 {
     private $emailableModules = array();
-    
+
     /**
      *
      * @var int
      */
     protected $lastEmailsFailed;
-    
+
     /**
      *
      * @var int
@@ -318,9 +318,9 @@ class actionSendEmail extends actionBase
     public function run_action(SugarBean $bean, $params = array(), $in_save = false)
     {
         include_once __DIR__ . '/../../EmailTemplates/EmailTemplate.php';
-        
+
         $this->clearLastEmailsStatus();
-        
+
         $emailTemp = new EmailTemplate();
         $emailTemp->retrieve($params['email_template']);
 
@@ -367,7 +367,7 @@ class actionSendEmail extends actionBase
         }
         return $ret;
     }
-    
+
     /**
      *  clear last email sending status
      */
@@ -376,7 +376,7 @@ class actionSendEmail extends actionBase
         $this->lastEmailsFailed = 0;
         $this->lastEmailsSuccess = 0;
     }
-    
+
     /**
      * failed emails count at last run_action
      * @return int
@@ -385,7 +385,7 @@ class actionSendEmail extends actionBase
     {
         return $this->lastEmailsFailed;
     }
-    
+
     /**
      * successfully sent emails count at last run_action
      * @return type
@@ -526,7 +526,7 @@ class actionSendEmail extends actionBase
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;
             }
-            $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+            $emailObj->date_sent_received = TimeDate::getInstance()->nowDb();
             $emailObj->modified_user_id = '1';
             $emailObj->created_by = '1';
             $emailObj->status = 'sent';

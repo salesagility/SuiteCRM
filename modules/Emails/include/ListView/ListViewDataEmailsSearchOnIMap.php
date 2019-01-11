@@ -137,7 +137,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
                 LoggerManager::getLogger()->warn('server email data is not set for seearch');
             } elseif (!is_array($emailServerEmails['data'])) {
                 LoggerManager::getLogger()->warn('server email data should be an array, ' . gettype($emailServerEmails['data']) . ' given.');
-            }            
+            }
         }
         foreach ($emailServerEmailsData as $h => $emailHeader) {
             $emailRecord = $this->lvde->getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder);
@@ -356,13 +356,14 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
 
         if (!isset($queryString)) {
             $queryString = null;
-            LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: qurey string is not set');
+            LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: query string is not set');
         }
 
         // $data could be undefined
         if (!isset($data)) {
             LoggerManager::getLogger()->warn('Invalid search results data.');
         }
+
         $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
 
         return $ret;
