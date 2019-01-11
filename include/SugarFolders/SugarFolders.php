@@ -718,6 +718,9 @@ class SugarFolder
                 $a['folder_type'] !== $myArchiveTypeString
             ) {
                 if (!isset($found[$a['id']])) {
+                    if ($found[$a['id']] == true) {
+                        LoggerManager::getLogger()->error('Duplicated folder detected: ' . $a['id']);
+                    }
                     $found[$a['id']] = true;
 
                     $children = $this->db->query("SELECT * FROM folders WHERE parent_folder = '" . $a['id'] . "'");
@@ -733,7 +736,7 @@ class SugarFolder
 
 
         if (empty($found)) {
-            throw new SugarFolderEmptyException(
+            LoggerManager::getLogger()->error(
                 ' SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - '.
                 'Please check the users inbound email settings.'
             );
