@@ -116,6 +116,16 @@ function requestToUserParameters($reportBean = null)
                 'value' => $value,
             );
 
+            // Fix AOR_Report runtime parameter type "Period"
+            if ($_REQUEST['parameter_type'][$key] === 'Period') {
+                $params[$parameterId] = array(
+                    'id' => $parameterId,
+                    'operator' => $_REQUEST['parameter_operator'][$key],
+                    'type' => $_REQUEST['parameter_type'][$key],
+                    'value' => $_REQUEST['parameter_value'][$key],
+                );
+            }
+
             // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
             if ($_REQUEST['parameter_type'][$key] === 'Date') {
                 $values = array();
