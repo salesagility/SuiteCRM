@@ -51,7 +51,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
      * @param array $filterFields
      * @param array $request $_REQUEST
      * @param string $where
-     * @param InboundEmail|null $inboundEmail
+     * @param InboundEmail $inboundEmail
      * @param array $params
      * @param Email $seed
      * @param bool $singleSelect
@@ -62,7 +62,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
      * @param int $offset
      * @return array
      */
-    public function search($filterFields, $request, $where, InboundEmail $inboundEmail = null, $params, Email $seed, $singleSelect, $id, $limit, User $currentUser, $idField, $offset)
+    public function search($filterFields, $request, $where, InboundEmail $inboundEmail, $params, Email $seed, $singleSelect, $id, $limit, User $currentUser, $idField, $offset)
     {
         // Fix fields in filter fields
 
@@ -78,7 +78,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
         if (!empty($where)) {
             $where .= ' AND ';
         }
-        if ($inboundEmail) {
+        if ($inboundEmail->id) {
             $inboundEmailIdQuoted = DBManagerFactory::getInstance()->quote($inboundEmail->id);
         } else {
             $inboundEmailIdQuoted = '';

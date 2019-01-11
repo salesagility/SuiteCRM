@@ -744,14 +744,13 @@ class ListViewDataEmails extends ListViewData
             $inboundEmail = $this->getInboundEmail($current_user, $folderObj);            
             if (!$inboundEmail || $inboundEmail && !$inboundEmail->id) {
                 LoggerManager::getLogger()->warn('Unable get Inbound Email for List View. Please check your settings and try again.');
-                //return false;
+                return false;
             }
 
 
             $this->searchType = $this->getSearchType($folderObj);
-            if ($inboundEmail) {
-                $this->setInboundEmailMailbox($folderObj, $inboundEmail);
-            } else {
+            $this->setInboundEmailMailbox($folderObj, $inboundEmail);
+            if (!$inboundEmail) {
                 $folder = null;
                 LoggerManager::getLogger()->warn('Unable to set Inbound Email mailbox: Inbound Email is not found.');
             }
@@ -767,9 +766,8 @@ class ListViewDataEmails extends ListViewData
             }
 
 
-            if ($inboundEmail) {
-                $folder = $inboundEmail->mailbox;
-            } else {
+            $folder = $inboundEmail->mailbox;
+            if (!$inboundEmail) {
                 $folder = null;
                 LoggerManager::getLogger()->warn('Unable to retrive mailbox folder: Inbound Email is not found.');
             }
@@ -789,7 +787,7 @@ class ListViewDataEmails extends ListViewData
                         $filter_fields,
                         $request,
                         $where,
-                        $inboundEmail ? $inboundEmail : null,
+                        $inboundEmail,
                         $params,
                         $seed,
                         $singleSelect,
@@ -812,7 +810,7 @@ class ListViewDataEmails extends ListViewData
                         $request,
                         $where,
                         $id,
-                        $inboundEmail ? $inboundEmail : null,
+                        $inboundEmail,
                         $filter,
                         $folderObj,
                         $current_user,

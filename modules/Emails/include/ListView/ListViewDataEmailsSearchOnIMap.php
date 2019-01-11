@@ -52,7 +52,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
      * @param array $request
      * @param string $where
      * @param string $id
-     * @param InboundEmail|null $inboundEmail
+     * @param InboundEmail $inboundEmail
      * @param array $filter
      * @param Folder $folderObj
      * @param User $currentUser
@@ -67,7 +67,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         &$request,
         $where,
         $id,
-        InboundEmail $inboundEmail = null,
+        InboundEmail $inboundEmail,
         $filter,
         Folder $folderObj,
         User $currentUser,
@@ -119,12 +119,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
 
         // Get emails from email server
         // TODO: PHP Warning:  imap_fetchbody(): Bad message number
-        if ($inboundEmail) {
-            $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter, $filter_fields);
-        } else {
-            $emailServerEmails = null;
-            LoggerManager::getLogger()->warn('Unable to check with pagination: Inbound email is not set.');
-        }
+        $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter, $filter_fields);
 
         $total = $emailServerEmails['mailbox_info']['Nmsgs']; // + count($importedEmails['data']);
         if ($page === "end") {
@@ -136,12 +131,14 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         $request['uids'] = array();
 
             
-        $emailServerEmailsData = null;
-        if (!isset($emailServerEmails['data'])) {
-            LoggerManager::getLogger()->warn('server email data is not set for seearch');
-        } elseif (!is_array($emailServerEmails['data'])) {
+        if (isset($emailServerEmails['data']) && is_array($emailServerEmails['data'])) {
             $emailServerEmailsData = $emailServerEmails['data'];
-            LoggerManager::getLogger()->error('server email data should be an array, ' . gettype($emailServerEmails['data']) . ' given.');
+        } else {
+            if (!isset($emailServerEmails['data'])) {	
+                LoggerManager::getLogger()->warn('server email data is not set for seearch');	
+            } elseif (!is_array($emailServerEmails['data'])) {
+                LoggerManager::getLogger()->warn('server email data should be an array, ' . gettype($emailServerEmails['data']) . ' given.');	
+            }	
         }
 
         if ($inboundEmail) {
