@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarObjects/templates/person/Person.php');
 require_once __DIR__ . '/../../include/EmailInterface.php';
+require_once __DIR__ . '/../Emails/EmailUI.php';
 
 // User is used to store customer information.
 class User extends Person implements EmailInterface
@@ -1202,7 +1203,7 @@ EOQ;
         if (!empty($where)) {
             $query .= " AND $where";
         }
-	$query .= " AND deleted=0"; 
+	$query .= " AND deleted=0";
         $result = $db->limitQuery($query, 0, 1, false);
         if (!empty($result)) {
             $row = $db->fetchByAssoc($result);
@@ -1772,6 +1773,29 @@ EOQ;
     $emailAddress, &$focus, $contact_id = '', $ret_module = '', $ret_action = 'DetailView', $ret_id = '', $class = ''
     ) {
         $emailLink = '';
+
+        $emailUI = new EmailUI();
+        for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
+            $emailField = 'email' . (string) ($i + 1);
+            $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
+            if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
+                $focus->$emailField = $emailAddress;
+                $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
+                break;
+            }
+        }
+
+        return $emailLink;
+    }
+
+    /**
+     * Returns the email client type that should be used for this user.
+     * Either "sugar" for the "SuiteCRM E-mail Client" or "mailto" for the
+     * "External Email Client".
+     *
+     * @return string
+     */
+    public function getEmailClient() {
         global $sugar_config;
 
         if (!isset($sugar_config['email_default_client'])) {
@@ -1786,24 +1810,7 @@ EOQ;
             $client = $defaultPref;
         }
 
-        if ($client == 'sugar') {
-            require_once('modules/Emails/EmailUI.php');
-            $emailUI = new EmailUI();
-            for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
-                $emailField = 'email' . (string) ($i + 1);
-                $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
-                if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
-                    $focus->$emailField = $emailAddress;
-                    $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
-                    break;
-                }
-            }
-        } else {
-            // straight mailto:
-            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $emailAddress);
-        }
-
-        return $emailLink;
+        return $client;
     }
 
     /**
@@ -1821,30 +1828,8 @@ EOQ;
     public function getEmailLink(
     $attribute, &$focus, $contact_id = '', $ret_module = '', $ret_action = 'DetailView', $ret_id = '', $class = ''
     ) {
-        require_once('modules/Emails/EmailUI.php');
-        $emailLink = '';
-        global $sugar_config;
-
-
-        if (!isset($sugar_config['email_default_client'])) {
-            $this->setDefaultsInConfig();
-        }
-
-        $userPref = $this->getPreference('email_link_type');
-        $defaultPref = $sugar_config['email_default_client'];
-        if ($userPref != '') {
-            $client = $userPref;
-        } else {
-            $client = $defaultPref;
-        }
-
-        if ($client == 'sugar') {
-            $emailUI = new EmailUI();
-            $emailLink = $emailUI->populateComposeViewFields($focus);
-        } else {
-            // straight mailto:
-            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $focus->$attribute);
-        }
+        $emailUI = new EmailUI();
+        $emailLink = $emailUI->populateComposeViewFields($focus);
 
         return $emailLink;
     }
@@ -2293,7 +2278,7 @@ EOQ;
             $emailObj->from_addr = $mail->From;
             isValidEmailAddress($emailObj->from_addr);
             $emailObj->parent_type = 'User';
-            $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+            $emailObj->date_sent_received = TimeDate::getInstance()->nowDb();
             $emailObj->modified_user_id = '1';
             $emailObj->created_by = '1';
             $emailObj->status = 'sent';

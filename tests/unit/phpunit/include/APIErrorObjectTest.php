@@ -93,7 +93,7 @@ class JsonApiErrorObjectTest extends StateCheckerPHPUnitTestCaseAbstract
             'status' => '200',
             'code' => '1',
             'title' => 'JSON API Error',
-            'detail' => 'JSON API Error occured.',
+            'detail' => 'JSON API Error occurred.',
             'source' => ['pointer' => null, 'parameter' => null],
             'meta' => [],
         ];
@@ -133,7 +133,7 @@ class JsonApiErrorObjectTest extends StateCheckerPHPUnitTestCaseAbstract
             'links' => ['about' => null],
             'status' => '200',
             'title' => 'JSON API Error',
-            'detail' => 'JSON API Error occured.',
+            'detail' => 'JSON API Error occurred.',
             'source' => ['pointer' => null, 'parameter' => null],
             'meta' => [
                 'about' => 'Exception',

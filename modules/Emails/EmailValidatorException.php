@@ -1,3 +1,4 @@
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,73 +38,19 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-SUGAR.email2.templates['viewPrintable'] = '<html>' +
-'<body onload="javascript:window.print();">' + 
-'<style>' + 
-'body {' + 
-'	margin: 0px;' + 
-'	font-family: helvetica, impact, sans-serif;' +
-'	font-size : 12pt;' +
-'} ' +
-'table {' +
-'	padding:10px;' +
-'}' +
-'</style>' +
-'<div>' +
-'<table cellpadding="0" cellspacing="0" border="0" width="100%">' +
-'	<tr>' +
-'		<td>' +
-'			<table cellpadding="0" cellspacing="0" border="0" width="100%">' +
-'				<tr>' +
-'					<td NOWRAP valign="top" width="1%" class="displayEmailLabel">' +
-'						{app_strings.LBL_EMAIL_FROM}:' +
-'					</td>' +
-'					<td width="99%" class="displayEmailValue">' +
-'						{email.from_name} &lt;{email.from_addr}&gt;' +
-'					</td>' +
-'				</tr>' +
-'				<tr>' +
-'					<td NOWRAP valign="top" class="displayEmailLabel">' +
-'						{app_strings.LBL_EMAIL_SUBJECT}:' +
-'					</td>' +
-'					<td NOWRAP valign="top" class="displayEmailValue">' +
-'						<b>{email.name}</b>' +
-'					</td>' +
-'				</tr>' +
-'				<tr>' +
-'					<td NOWRAP valign="top" class="displayEmailLabel">' +
-'						{app_strings.LBL_EMAIL_DATE_SENT_RECEIVED_BY_SENDER}:' +
-'					</td>' +
-'					<td class="displayEmailValue">' +
-'						{email.date_start} {email.time_start}' +
-'					</td>' +
-'				</tr>' +
-'				<tr>' +
-'					<td NOWRAP valign="top" class="displayEmailLabel">' +
-'						{app_strings.LBL_EMAIL_TO}:' +
-'					</td>' +
-'					<td class="displayEmailValue">' +
-'						{email.toaddrs}' +
-'					</td>' +
-'				</tr>' +
-'				{email.cc}' +
-'				{email.attachments}' +
-'			</table>' +
-'		</td>' +
-'	</tr>' +
-'	<tr>' +
-'		<td>' +
-'			<table cellpadding="0" cellspacing="0" border="0" style="width:100%;">' +
-'				<tr>' +
-'					<td style="border-top: 1px solid #333;">' +
-'						<div style="padding:5px;">' +
-							'{email.description}' +
-'						</div>' +
-'					</td>' +
-'				</tr>' +
-'			</table>' +
-'		</td>' +
-'	</tr>' +
-'</table>' +
-'</div>' +
-'</body></html>';
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+/**
+ * EmailValidatorException
+ *
+ * @author gyula
+ */
+class EmailValidatorException extends Exception {
+    
+    const EMAIL_IS_NOT_SET = 1;
+    const PREG_MATCH_ERROR_AT_FROMADDRNAME = 2;
+    const EMAIL_ISNT_EMAILOBJ = 3;
+    
+}
