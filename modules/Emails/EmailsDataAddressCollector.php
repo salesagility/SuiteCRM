@@ -676,16 +676,19 @@ class EmailsDataAddressCollector
     protected function fillDataAddressFromPersonal($dataAddresses)
     {
         foreach ($dataAddresses as $address => $userAddress) {
-            $emailInfo = $userAddress['attributes'];
-            $fromString = $this->addCurrentUserToEmailString($emailInfo['from']);
-            $replyString = $this->addCurrentUserToEmailString($emailInfo['reply_to']);
 
-            $dataAddresses[$address]['attributes'] = [
-                'from' => $fromString,
-                'name' => $userAddress['attributes']['name'],
-                'oe' => $userAddress['attributes']['oe'],
-                'reply_to' => $replyString
-            ];
+            if ($userAddress['type'] !== 'system') {
+                $emailInfo = $userAddress['attributes'];
+                $fromString = $this->addCurrentUserToEmailString($emailInfo['from']);
+                $replyString = $this->addCurrentUserToEmailString($emailInfo['reply_to']);
+
+                $dataAddresses[$address]['attributes'] = [
+                    'from' => $fromString,
+                    'name' => $userAddress['attributes']['name'],
+                    'oe' => $userAddress['attributes']['oe'],
+                    'reply_to' => $replyString
+                ];
+            }
         }
 
         return $dataAddresses;
