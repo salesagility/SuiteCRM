@@ -300,9 +300,9 @@ class Popup_Picker
                 }
             }
             $ts = '';
-            if (!empty($email->fetched_row['date_sent'])) {
+            if (!empty($email->fetched_row['date_sent_received'])) {
                 //emails can have an empty date sent field
-                $ts = $timedate->fromDb($email->fetched_row['date_sent'])->ts;
+                $ts = $timedate->fromDb($email->fetched_row['date_sent_received'])->ts;
             } elseif (!empty($email->fetched_row['date_entered'])) {
                 $ts = $timedate->fromDb($email->fetched_row['date_entered'])->ts;
             }
@@ -362,7 +362,7 @@ class Popup_Picker
                     'date_modified' => $email->date_start . ' ' . $email->time_start,
                     'description' => $this->getEmailDetails($email),
                     'date_type' => $mod_strings['LBL_DATA_TYPE_SENT'],
-                    'sort_value' => strtotime($email->fetched_row['date_sent'] . ' GMT'),
+                    'sort_value' => strtotime($email->fetched_row['date_sent_received'] . ' GMT'),
                     'image' => SugarThemeRegistry::current()->getImageURL('Emails.svg')
                 );
             }
