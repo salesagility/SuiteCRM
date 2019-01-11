@@ -2699,6 +2699,10 @@ class InboundEmail extends SugarBean
      */
     public function generateDynamicFolderQuery($type, $userId)
     {
+        if (!isset($this->coreDynamicFolderQuery)) {
+            $this->coreDynamicFolderQuery = null;
+            LoggerManager::getLogger()->warn('Attempt to generate dynamic folder query with an unset core dynamic folder query?!');
+        }
         $q = $this->coreDynamicFolderQuery;
 
         $status = $type;
