@@ -143,10 +143,16 @@ class ListViewDataEmails extends ListViewData
      */
     protected function getInboundEmail($currentUser, $folder)
     {
-        $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
         $id = $folder->getId();
         if (!empty($id)) {
-            $inboundEmailID = $folder->getId();
+            $inboundEmailID = $id;
+        } else {
+            $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
+        }
+        
+        if (!$inboundEmailID) {
+            LoggerManager::getLogger()->warn('Unable to resolve inbound email ID.');
+            return false;
         }
 
         $isValidator = new SuiteValidator();
@@ -202,10 +208,9 @@ class ListViewDataEmails extends ListViewData
      * set $inboundEmail->mailbox and return $this->searchType
      *
      * @param Folder $folder
-     * @param InboundEmail $inboundEmail
      * @return string $this->searchType
      */
-    protected function getSearchType($folder, $inboundEmail)
+    protected function getSearchType($folder)
     {
         switch ($folder->getType()) {
 
@@ -719,6 +724,7 @@ class ListViewDataEmails extends ListViewData
         global $current_user;
         global $sugar_config;
         global $mod_strings;
+        global $app_strings;
 
         $data = array();
         $pageData = array();
@@ -737,10 +743,20 @@ class ListViewDataEmails extends ListViewData
             $folderObj->retrieveFromRequest($request);
 
             $inboundEmail = $this->getInboundEmail($current_user, $folderObj);
+            if (!$inboundEmail || $inboundEmail && !$inboundEmail->id) {
+                SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_NO_INBOUND_EMAIL']);
+                LoggerManager::getLogger()->warn('Unable to get InboundEmail.');
+                //return false;
+            }
 
 
-            $this->searchType = $this->getSearchType($folderObj, $inboundEmail);
-            $this->setInboundEmailMailbox($folderObj, $inboundEmail);
+            $this->searchType = $this->getSearchType($folderObj);
+            if ($inboundEmail) {
+                $this->setInboundEmailMailbox($folderObj, $inboundEmail);
+            } else {
+                $folder = null;
+                LoggerManager::getLogger()->warn('Unable to set Inbound Email mailbox: Inbound Email is not found.');
+            }
 
 
             // search in draft in CRM db?
@@ -753,7 +769,12 @@ class ListViewDataEmails extends ListViewData
             }
 
 
-            $folder = $inboundEmail->mailbox;
+            if ($inboundEmail) {
+                $folder = $inboundEmail->mailbox;
+            } else {
+                $folder = null;
+                LoggerManager::getLogger()->warn('Unable to retrive mailbox folder: Inbound Email is not found.');
+            }
 
             $filter = $this->getFilter($filter_fields, $where, $request);
 
@@ -770,7 +791,7 @@ class ListViewDataEmails extends ListViewData
                         $filter_fields,
                         $request,
                         $where,
-                        $inboundEmail,
+                        $inboundEmail ? $inboundEmail : null,
                         $params,
                         $seed,
                         $singleSelect,
@@ -793,7 +814,7 @@ class ListViewDataEmails extends ListViewData
                         $request,
                         $where,
                         $id,
-                        $inboundEmail,
+                        $inboundEmail ? $inbounEmail : null,
                         $filter,
                         $folderObj,
                         $current_user,
@@ -804,6 +825,7 @@ class ListViewDataEmails extends ListViewData
                         $pageData,
                         $filter_fields
                     );
+                    
                     break;
 
                 default:
