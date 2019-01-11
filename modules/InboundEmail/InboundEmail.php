@@ -3257,6 +3257,7 @@ class InboundEmail extends SugarBean
             $newCert = '';
             $newSsl = '';
             $newNotls = '';
+            $secure = '';
             $newNovalidate_cert = '';
             $good = array_pop($retArray['good']); // get most complete string
             $exGood = explode('/', $good);

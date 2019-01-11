@@ -369,6 +369,7 @@ $mod_strings = array(
     'LBL_LAST_SYNCED' => 'Last Synchronised',
     'LBL_ORPHANED' => 'Orphaned',
     'LBL_IMAP_KEYWORDS' => 'IMAP Keywords',
+    'LBL_ERROR_NO_INBOUND_EMAIL' => 'Unable get Inbound Email for List View. Please check your settings and try again.',
     'LBL_ERROR_NO_FOLDERS' => 'Error: There are no folders available. Please check your email settings.',
     'LBL_ORIGINAL_MESSAGE_SEPERATOR' => '---',
 

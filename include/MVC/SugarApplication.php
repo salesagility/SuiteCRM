@@ -110,7 +110,7 @@ class SugarApplication
         $this->loadDisplaySettings();
         $this->loadGlobals();
         $this->setupResourceManagement($module);
-        $this->controller->execute();
+        $this->controller->execute();        
         sugar_cleanup();
     }
 
@@ -657,6 +657,7 @@ class SugarApplication
          * If the headers have been sent, then we cannot send an additional location header
          * so we will output a javascript redirect statement.
          */
+        
         if (!empty($_REQUEST['ajax_load'])) {
             ob_get_clean();
             $ajax_ret = array(
