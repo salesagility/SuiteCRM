@@ -243,7 +243,10 @@ class ListViewDisplay
      */
     public function process($file, $data, $htmlVar)
     {
-        $this->rowCount = count($data['data']);
+        if (!is_array($data['data'])) {
+            LoggerManager::getLogger()->warn('Row data must be an array, ' . gettype($data['data']) . ' given and converting to an array.');
+        }
+        $this->rowCount = count((array)$data['data']);
         if (!isset($data['pageData']['bean'])) {
             $GLOBALS['log']->warn("List view process error: Invalid data, bean is not set");
             return false;

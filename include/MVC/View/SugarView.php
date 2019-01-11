@@ -198,17 +198,25 @@ class SugarView
                 echo $this->_getModLanguageJS();
             }
         }
+        
+        ob_start();
+
+        $this->_buildModuleList();
+        $this->preDisplay();
+        $this->displayErrors();
+        $this->display();
+        
+        $displayContents = ob_get_contents();
+        ob_end_clean();
 
         if ($this->_getOption('show_header')) {
             $this->displayHeader();
         } else {
             $this->renderJavascript();
         }
-
-        $this->_buildModuleList();
-        $this->preDisplay();
-        $this->displayErrors();
-        $this->display();
+        
+        echo $displayContents;
+        
         if (!empty($this->module)) {
             $GLOBALS['logic_hook']->call_custom_logic($this->module, 'after_ui_frame');
         } else {

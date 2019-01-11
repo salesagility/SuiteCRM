@@ -110,7 +110,16 @@ class SugarApplication
         $this->loadDisplaySettings();
         $this->loadGlobals();
         $this->setupResourceManagement($module);
-        $this->controller->execute();
+        
+//        ob_start();
+        
+        $this->controller->execute();        
+//        
+//        $constents = ob_get_contents();
+//        ob_end_clean();
+//        echo '[ERROR HERE?]';
+//        echo $constents;
+        
         sugar_cleanup();
     }
 
@@ -657,6 +666,7 @@ class SugarApplication
          * If the headers have been sent, then we cannot send an additional location header
          * so we will output a javascript redirect statement.
          */
+        
         if (!empty($_REQUEST['ajax_load'])) {
             ob_get_clean();
             $ajax_ret = array(
@@ -672,6 +682,10 @@ class SugarApplication
             if (headers_sent()) {
                 echo "<script>SUGAR.ajaxUI.loadContent('$url');</script>\n";
             } else {
+                        
+                // store messages before redirect (we don't want to lose it)
+                $this->storeErrors();
+                
                 //@ob_end_clean(); // clear output buffer
                 session_write_close();
                 header('HTTP/1.1 301 Moved Permanently');
@@ -691,7 +705,17 @@ class SugarApplication
             $href = $matches[1];
             SugarApplication::redirect($href);
         } else {
+            
+            // store messages before redirect (we don't want to lose it)
+            $this->storeErrors();
+
             header($header_URL);
+        }
+    }
+    
+    protected function storeErrors() {
+        foreach ($this->errors as $error) {
+            SugarApplication::appendErrorMessage($error);
         }
     }
 
