@@ -1,0 +1,8 @@
+.current-selected-module {
+    background-color: #5880BA;
+}
+/* optional: reimplement the link underline to support the visibility uncomment lines below */
+
+/*.current-selected-module-link {*/
+    /*text-decoration: underline;*/
+/*}*/

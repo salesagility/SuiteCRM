@@ -232,13 +232,11 @@ $mod_strings = array(
 	'LBL_DBCONFIG_MSG3'                 => 'Name of the database that will contain the data for the SuiteCRM instance you are about to install:',
 	'LBL_DBCONFIG_MSG3_LABEL' => 'Database Name',
 	'LBL_DBCONFIG_B_MSG1'               => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.',
-	'LBL_DBCONFIG_B_MSG1_LABEL' => '',
 	'LBL_DBCONFIG_SECURITY'             => 'For security purposes, you can specify an exclusive database user to connect to the SuiteCRM database. This user must be able to write, update and retrieve data on the SuiteCRM database that will be created for this instance. This user can be the database administrator specified above, or you can provide new or existing database user information.',
 	'LBL_DBCONFIG_AUTO_DD'              => 'Do it for me',
 	'LBL_DBCONFIG_PROVIDE_DD'           => 'Provide existing user',
 	'LBL_DBCONFIG_CREATE_DD'            => 'Define user to create',
 	'LBL_DBCONFIG_SAME_DD'              => 'Same as Admin User',
-	//'LBL_DBCONF_I18NFIX'              => 'Apply database column expansion for varchar and char types (up to 255) for multi-byte data?',
 	'LBL_FTS'                           => 'Full Text Search',
 	'LBL_FTS_INSTALLED'                 => 'Installed',
 	'LBL_FTS_INSTALLED_ERR1'            => 'Full Text Search capability is not installed.',
@@ -583,7 +581,7 @@ $contact_user_link_guid',
 	),
 
 	// SMTP settings
-    
+
     'LBL_FROM_NAME' => '"From" Name:',
     'LBL_FROM_ADDR' => '"From" Address:',
 
@@ -685,5 +683,3 @@ $contact_user_link_guid',
 
 
 );
-
-?>

@@ -107,6 +107,7 @@ $mod_strings = array(
     'CREATED_CASE' => 'created a <b>NEW</b> {0}',
     'CREATED_LEAD' => 'created a <b>NEW</b> {0}',
     'FOR' => 'for',
+    'FOR_AMOUNT' => 'for amount',
     'CLOSED_CASE' => '<b>CLOSED</b> a {0} ',
     'CONVERTED_LEAD' => '<b>CONVERTED</b> a {0}',
     'WON_OPPORTUNITY' => 'has <b>WON</b> an {0}',
@@ -132,4 +133,3 @@ $mod_strings = array(
     'LBL_TEAM_VISIBILITY_TITLE' => 'team that can see this post',
     'LBL_SOCIAL' => 'Social',
 );
-?>

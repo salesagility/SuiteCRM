@@ -8,6 +8,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_products');
+        $state->pushTable('cron_remove_documents');
         
         // test
         
@@ -27,6 +28,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // cleanup
         
+        $state->popTable('cron_remove_documents');
         $state->popTable('aos_products');
     }
 
@@ -37,6 +39,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_products');
         $state->pushTable('aod_index');
+        $state->pushTable('cron_remove_documents');
         $state->pushGlobals();
         
         // test
@@ -47,14 +50,13 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aosProducts->name = 'test';
         $aosProducts->category = 1;
         $aosProducts->product_image = 'test img';
-        $_POST['deleteAttachment'] = '1';
 
         $aosProducts->save();
 
         //test for record ID to verify that record is saved
         $this->assertTrue(isset($aosProducts->id));
         $this->assertEquals(36, strlen($aosProducts->id));
-        $this->assertEquals('', $aosProducts->product_image);
+        $this->assertEquals('test img', $aosProducts->product_image);
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $aosProducts->mark_deleted($aosProducts->id);
@@ -64,6 +66,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // cleanup
         
         $state->popGlobals();
+        $state->popTable('cron_remove_documents');
         $state->popTable('aod_index');
         $state->popTable('aos_products');
     }
@@ -74,6 +77,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_products');
+        $state->pushTable('cron_remove_documents');
         
         // test
         
@@ -106,6 +110,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // cleanup
         
+        $state->popTable('cron_remove_documents');
         $state->popTable('aos_products');
     }
 }

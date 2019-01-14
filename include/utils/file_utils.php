@@ -130,13 +130,7 @@ function write_array_to_file( $the_name, $the_array, $the_file, $mode="w", $head
                     var_export_helper( $the_array ) .
                     ";";
 
-    $result = sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
-
-    if (function_exists('opcache_invalidate')) {
-        opcache_invalidate($the_file, true);
-    }
-
-    return $result;
+    return sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
 }
 
 function write_encoded_file( $soap_result, $write_to_dir, $write_to_file="" )
