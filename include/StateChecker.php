@@ -51,6 +51,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once __DIR__ . '/StateCheckerDirectoryIterator.php';
+
 /**
  * StateChecker
  *
@@ -325,7 +327,7 @@ class StateChecker
             throw new StateCheckerException('Real path can not resolved for: ' . $path);
         }
 
-        $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($realpath), RecursiveIteratorIterator::SELF_FIRST);
+        $objects = new RecursiveIteratorIterator(new StateCheckerDirectoryIterator($realpath), RecursiveIteratorIterator::SELF_FIRST);
         $files = [];
         foreach ($objects as $name => $object) {
             if (!$object->isDir() && !$this->isExcludedFile($name)) {

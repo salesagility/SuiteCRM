@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarObjects/templates/person/Person.php');
 require_once __DIR__ . '/../../include/EmailInterface.php';
+require_once __DIR__ . '/../Emails/EmailUI.php';
 
 // User is used to store customer information.
 class User extends Person implements EmailInterface
@@ -119,6 +120,22 @@ class User extends Person implements EmailInterface
      * @var string
      */
     public $factor_auth_interface;
+    
+    /**
+     * Normally a bean returns ID from save() method if it was 
+     * success and false (or maybe null) is something went wrong.
+     * BUT (for some reason) if User bean saved properly except 
+     * the email addresses of it, this User::save() method also 
+     * return a false.
+     * It's a confusing ambiguous return value for caller method. 
+     * 
+     * To handle this issue when save method can not save email 
+     * addresses and return false it also set this variable to 
+     * true.
+     *
+     * @var bool|null
+     */
+    public $lastSaveErrorIsEmailAddressSaveError = null;
 
     public function __construct()
     {
@@ -569,6 +586,24 @@ class User extends Person implements EmailInterface
         return "1<>1";
     }
 
+    /**
+     * Normally a bean returns ID from save() method if it was 
+     * success and false (or maybe null) is something went wrong.
+     * BUT (for some reason) if User bean saved properly except 
+     * the email addresses of it, this User::save() method also 
+     * return a false.
+     * It's a confusing ambiguous return value for caller method. 
+     * 
+     * To handle this issue when save method can not save email 
+     * addresses and return false it also set the variable called
+     * User::$lastSaveErrorIsEmailAddressSaveError to true.
+     * 
+     * @global User $current_user
+     * @global array $sugar_config
+     * @global array $mod_strings
+     * @param bool $check_notify
+     * @return boolean
+     */
     public function save($check_notify = false)
     {
         global $current_user, $sugar_config, $mod_strings;
@@ -584,6 +619,9 @@ class User extends Person implements EmailInterface
         // only admin user can change 2 factor authentication settings
         if ($smtp_error || $isUpdate && !is_admin($current_user)) {
             $tmpUser = BeanFactory::getBean('Users', $this->id);
+            if (!$tmpUser instanceof User) {
+                LoggerManager::getLogger()->fatal('User update error: Temp User is not retrieved at ID ' . $this->id . ', ' . gettype($tmpUser) . ' given');
+            }
 
             if ($smtp_error) {
                 $msg .= 'SMTP server settings required first.';
@@ -592,7 +630,7 @@ class User extends Person implements EmailInterface
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
                 }
             } else {
-                if ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
+                if (($tmpUser instanceof User) && ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface)) {
                     $msg .= 'Current user is not able to change two factor authentication settings.';
                     $GLOBALS['log']->warn($msg);
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
@@ -641,8 +679,13 @@ class User extends Person implements EmailInterface
         $setNewUserPreferences = empty($this->id) || !empty($this->new_with_id);
 
 
-        parent::save($check_notify);
-
+        $retId = parent::save($check_notify);
+        if (!$retId) {
+            LoggerManager::getLogger()->fatal('save error: User is not saved, Person ID is not returned.');
+        }
+        if ($retId != $this->id) {
+            LoggerManager::getLogger()->fatal('save error: User is not saved properly, returned Person ID does not match to User ID.');
+        }
         // set some default preferences when creating a new user
         if ($setNewUserPreferences) {
             if (!$this->getPreference('calendar_publish_key')) {
@@ -655,8 +698,10 @@ class User extends Person implements EmailInterface
         $this->savePreferencesToDB();
 
         // User Profile specific save for Email addresses
+        $this->lastSaveErrorIsEmailAddressSaveError = false;
         if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
-            $GLOBALS['log']->error('Email address save error');
+            LoggerManager::getLogger()->fatal('Email address save error');
+            $this->lastSaveErrorIsEmailAddressSaveError = true;
             return false;
         }
 
@@ -878,6 +923,11 @@ class User extends Person implements EmailInterface
                 $this->setPreference('calendar_publish_key', $_POST['calendar_publish_key'], 0, 'global');
             if (isset($_POST['subtheme'])) {
                 $this->setPreference('subtheme', $_POST['subtheme'], 0, 'global');
+            }
+            if (isset($_POST['gsync_cal'])) {
+                $this->setPreference('syncGCal', 1, 0, 'GoogleSync');
+            } else {
+                $this->setPreference('syncGCal', 0, 0, 'GoogleSync');
             }
         }
     }
@@ -1153,7 +1203,7 @@ EOQ;
         if (!empty($where)) {
             $query .= " AND $where";
         }
-	$query .= " AND deleted=0"; 
+	$query .= " AND deleted=0";
         $result = $db->limitQuery($query, 0, 1, false);
         if (!empty($result)) {
             $row = $db->fetchByAssoc($result);
@@ -1723,6 +1773,29 @@ EOQ;
     $emailAddress, &$focus, $contact_id = '', $ret_module = '', $ret_action = 'DetailView', $ret_id = '', $class = ''
     ) {
         $emailLink = '';
+
+        $emailUI = new EmailUI();
+        for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
+            $emailField = 'email' . (string) ($i + 1);
+            $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
+            if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
+                $focus->$emailField = $emailAddress;
+                $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
+                break;
+            }
+        }
+
+        return $emailLink;
+    }
+
+    /**
+     * Returns the email client type that should be used for this user.
+     * Either "sugar" for the "SuiteCRM E-mail Client" or "mailto" for the
+     * "External Email Client".
+     *
+     * @return string
+     */
+    public function getEmailClient() {
         global $sugar_config;
 
         if (!isset($sugar_config['email_default_client'])) {
@@ -1737,24 +1810,7 @@ EOQ;
             $client = $defaultPref;
         }
 
-        if ($client == 'sugar') {
-            require_once('modules/Emails/EmailUI.php');
-            $emailUI = new EmailUI();
-            for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
-                $emailField = 'email' . (string) ($i + 1);
-                $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
-                if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
-                    $focus->$emailField = $emailAddress;
-                    $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
-                    break;
-                }
-            }
-        } else {
-            // straight mailto:
-            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $emailAddress);
-        }
-
-        return $emailLink;
+        return $client;
     }
 
     /**
@@ -1772,30 +1828,8 @@ EOQ;
     public function getEmailLink(
     $attribute, &$focus, $contact_id = '', $ret_module = '', $ret_action = 'DetailView', $ret_id = '', $class = ''
     ) {
-        require_once('modules/Emails/EmailUI.php');
-        $emailLink = '';
-        global $sugar_config;
-
-
-        if (!isset($sugar_config['email_default_client'])) {
-            $this->setDefaultsInConfig();
-        }
-
-        $userPref = $this->getPreference('email_link_type');
-        $defaultPref = $sugar_config['email_default_client'];
-        if ($userPref != '') {
-            $client = $userPref;
-        } else {
-            $client = $defaultPref;
-        }
-
-        if ($client == 'sugar') {
-            $emailUI = new EmailUI();
-            $emailLink = $emailUI->populateComposeViewFields($focus);
-        } else {
-            // straight mailto:
-            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $focus->$attribute);
-        }
+        $emailUI = new EmailUI();
+        $emailLink = $emailUI->populateComposeViewFields($focus);
 
         return $emailLink;
     }
@@ -2244,7 +2278,7 @@ EOQ;
             $emailObj->from_addr = $mail->From;
             isValidEmailAddress($emailObj->from_addr);
             $emailObj->parent_type = 'User';
-            $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+            $emailObj->date_sent_received = TimeDate::getInstance()->nowDb();
             $emailObj->modified_user_id = '1';
             $emailObj->created_by = '1';
             $emailObj->status = 'sent';

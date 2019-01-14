@@ -62,14 +62,14 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
      * @return array
      */
     public function search(
-        $seed,
+        Email $seed,
         &$request,
         $where,
         $id,
-        $inboundEmail,
+        InboundEmail $inboundEmail,
         $filter,
-        $folderObj,
-        $currentUser,
+        Folder $folderObj,
+        User $currentUser,
         $folder,
         $limit,
         $limitPerPage,
@@ -128,6 +128,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
         /// Populate the data and its fields from the email server
         $request['uids'] = array();
 
+
         if (isset($emailServerEmails['data']) && is_array($emailServerEmails['data'])) {
             $emailServerEmailsData = $emailServerEmails['data'];
         } else {
@@ -135,24 +136,35 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
                 LoggerManager::getLogger()->warn('server email data is not set for seearch');
             } elseif (!is_array($emailServerEmails['data'])) {
                 LoggerManager::getLogger()->warn('server email data should be an array, ' . gettype($emailServerEmails['data']) . ' given.');
-            }            
-        }
-        foreach ($emailServerEmailsData as $h => $emailHeader) {
-            $emailRecord = $this->lvde->getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder);
-            if($emailRecord === false) {
-                continue;
             }
-            $assigned_user = $this->retrieveEmailAssignedUser($emailRecord['UID']);
-            $emailRecord['ASSIGNED_USER_NAME'] = $assigned_user['assigned_user_name'];
-            $emailRecord['ASSIGNED_USER_ID'] = $assigned_user['assigned_user_id'];
-            $data[] = $emailRecord;
-            $pageData['rowAccess'][$h] = array('edit' => true, 'view' => true);
-            $pageData['additionalDetails'][$h] = '';
-            $pageData['tag'][$h]['MAIN'] = 'a';
+        }
+
+        if ($inboundEmail) {
+            foreach ((array)$emailServerEmailsData as $h => $emailHeader) {
+                $emailRecord = $this->lvde->getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder);
+                if ($emailRecord === false) {
+                    continue;
+                }
+                $assigned_user = $this->retrieveEmailAssignedUser($emailRecord['UID']);
+                $emailRecord['ASSIGNED_USER_NAME'] = $assigned_user['assigned_user_name'];
+                $emailRecord['ASSIGNED_USER_ID'] = $assigned_user['assigned_user_id'];
+                $data[] = $emailRecord;
+                $pageData['rowAccess'][$h] = array('edit' => true, 'view' => true);
+                $pageData['additionalDetails'][$h] = '';
+                $pageData['tag'][$h]['MAIN'] = 'a';
+            }
+        } else {
+            LoggerManager::getLogger()->warn('Unable to collect page data, Inbound Email is not set.');
         }
 
         // Filter imported emails based on the UID of the results from the IMap server
-        $crmWhere = $where . " AND mailbox_id LIKE " . "'" . $inboundEmail->id . "'";
+        if ($inboundEmail) {
+            $inboundEmailIdQuoted = DBManagerFactory::getInstance()->quote($inboundEmail->id);
+        } else {
+            $inboundEmailIdQuoted = '';
+            LoggerManager::getLogger()->warn('Unable to quote Inbound Email ID, Inbound Email is not set.');
+        }
+        $crmWhere = $where . " AND mailbox_id LIKE " . "'" . $inboundEmailIdQuoted . "'";
 
         $ret_array['inner_join'] = '';
         if (!empty($this->lvde->seed->listview_inner_join)) {
@@ -245,15 +257,25 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
         // inject post values
         $request['folder'] = $folder;
         $request['folder_type'] = $folderObj->getType();
-        $request['inbound_email_record'] = $inboundEmail->id;
+        if ($inboundEmail) {
+            $request['inbound_email_record'] = $inboundEmail->id;
+        } else {
+            $request['inbound_email_record'] = null;
+            LoggerManager::getLogger()->warn('Unable to get inbound email record. Inbound Email is not set.');
+        }
 
         if (empty($folder)) {
-            if (!empty($inboundEmail->mailbox)) {
-                $request['folder'] = $inboundEmail->mailbox;
-            } elseif (!empty($inboundEmail->mailboxarray)
-                && is_array($inboundEmail->mailboxarray)
-                && count($inboundEmail->mailboxarray)) {
-                $request['folder'] = $inboundEmail->mailboxarray[0];
+            if ($inboundEmail) {
+                if (!empty($inboundEmail->mailbox)) {
+                    $request['folder'] = $inboundEmail->mailbox;
+                } elseif (!empty($inboundEmail->mailboxarray)
+                    && is_array($inboundEmail->mailboxarray)
+                    && count($inboundEmail->mailboxarray)) {
+                    $request['folder'] = $inboundEmail->mailboxarray[0];
+                }
+            } else {
+                $request['folder'] = null;
+                LoggerManager::getLogger()->warn('Unable to resolve folder. Inbound Email is not set.');
             }
         }
 
@@ -352,17 +374,23 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
             }
         }
 
+        if (!isset($data)) {
+            $data = null;
+            LoggerManager::getLogger()->warn('Data for recieving email UIDs is not set.');
+        }
+
         $request['email_uids'] = $this->lvde->getEmailUIds($data);
 
         if (!isset($queryString)) {
             $queryString = null;
-            LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: qurey string is not set');
+            LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: query string is not set');
         }
 
         // $data could be undefined
         if (!isset($data)) {
             LoggerManager::getLogger()->warn('Invalid search results data.');
         }
+
         $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
 
         return $ret;
