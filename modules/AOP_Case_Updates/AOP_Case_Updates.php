@@ -318,7 +318,7 @@ class AOP_Case_Updates extends Basic
                     $emailObj->parent_type = 'Cases';
                     $emailObj->parent_id = $caseId;
                 }
-                $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+                $emailObj->date_sent_received = TimeDate::getInstance()->nowDb();
                 $emailObj->modified_user_id = '1';
                 $emailObj->created_by = '1';
                 $emailObj->status = 'sent';
