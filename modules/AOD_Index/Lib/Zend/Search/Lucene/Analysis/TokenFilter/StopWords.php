@@ -49,8 +49,7 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
      *
      * @param array $stopwords array (set) of words that will be filtered out
      */
-    public function __construct($stopwords = array())
-    {
+    public function __construct($stopwords = array()) {
         $this->_stopSet = array_flip($stopwords);
     }
 
@@ -60,12 +59,12 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
      * @param Zend_Search_Lucene_Analysis_Token $srcToken
      * @return Zend_Search_Lucene_Analysis_Token
      */
-    public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken)
-    {
+    public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken) {
         if (array_key_exists($srcToken->getTermText(), $this->_stopSet)) {
             return null;
+        } else {
+            return $srcToken;
         }
-        return $srcToken;
     }
 
     /**
@@ -77,8 +76,7 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
      * @param string $filepath full path for text file with stopwords
      * @throws Zend_Search_Exception When the file doesn`t exists or is not readable.
      */
-    public function loadFromFile($filepath = null)
-    {
+    public function loadFromFile($filepath = null) {
         if (! $filepath || ! file_exists($filepath)) {
             require_once 'Zend/Search/Lucene/Exception.php';
             throw new Zend_Search_Lucene_Exception('You have to provide valid file path');
@@ -88,7 +86,7 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
             require_once 'Zend/Search/Lucene/Exception.php';
             throw new Zend_Search_Lucene_Exception('Cannot open file ' . $filepath);
         }
-        while (!feof($fd)) {
+        while (!feof ($fd)) {
             $buffer = trim(fgets($fd));
             if (strlen($buffer) > 0 && $buffer[0] != '#') {
                 $this->_stopSet[$buffer] = 1;
@@ -100,3 +98,4 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
         }
     }
 }
+

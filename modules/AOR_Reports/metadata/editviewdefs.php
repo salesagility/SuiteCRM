@@ -23,21 +23,21 @@
  */
 
 $viewdefs ['AOR_Reports'] =
-array(
-  'EditView' =>
-  array(
-    'templateMeta' =>
-    array(
+array (
+  'EditView' => 
+  array (
+    'templateMeta' => 
+    array (
       'maxColumns' => '2',
-      'widths' =>
-      array(
-        0 =>
-        array(
+      'widths' => 
+      array (
+        0 => 
+        array (
           'label' => '10',
           'field' => '30',
         ),
-        1 =>
-        array(
+        1 => 
+        array (
           'label' => '10',
           'field' => '30',
         ),
@@ -48,19 +48,19 @@ array(
             'footerTpl' => 'modules/AOR_Reports/tpls/EditViewFooter.tpl',
         ),
     ),
-    'panels' =>
-    array(
-      'default' =>
-      array(
-        0 =>
-        array(
+    'panels' => 
+    array (
+      'default' => 
+      array (
+        0 => 
+        array (
           0 => 'name',
           1 => 'assigned_user_name',
         ),
-        1 =>
-        array(
-          0 =>
-          array(
+        1 => 
+        array (
+          0 => 
+          array (
             'name' => 'report_module',
             'studio' => 'visible',
             'label' => 'LBL_REPORT_MODULE',
@@ -68,9 +68,9 @@ array(
           1 => '',
         ),
           2 =>
-              array(
+              array (
                   0 =>
-                      array(
+                      array (
                           'name' => 'graphs_per_row',
                           'label' => 'LBL_GRAPHS_PER_ROW',
                       ),

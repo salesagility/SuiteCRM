@@ -75,8 +75,8 @@ class SuiteEditorSettingsForDirectHTML extends SuiteEditorSettings
      * and if settings argument exists extends it
      * @param null $settings (optional)
      */
-    public function __construct($settings = null)
-    {
+    public function __construct($settings = null) {
         parent::__construct($settings);
     }
+
 }

@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * This file intialize the service class and does all the setters based on the values provided in soap/rest entry point
- * and calls serve method which takes the request and send response back to the client
+ * and calls serve method which takes the request and send response back to the client  
  */
 ob_start();
 chdir(dirname(__FILE__).'/../../');
@@ -54,9 +54,8 @@ require_once('SoapHelperWebService.php');
 require_once('SugarRestUtils.php');
 require_once($webservice_path);
 require_once($registry_path);
-if (isset($webservice_impl_class_path)) {
+if(isset($webservice_impl_class_path))
     require_once($webservice_impl_class_path);
-}
 $url = $GLOBALS['sugar_config']['site_url'].$location;
 $service = new $webservice_class($url);
 $service->registerClass($registry_class);
@@ -68,3 +67,6 @@ global $service_object;
 $service_object = $service;
 
 $service->serve();
+
+
+		

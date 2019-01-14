@@ -158,11 +158,8 @@ class JsonRPCServer
         $response['id'] = $request['id'];
 
         if (method_exists($this->jsonServerCalls, $request['method'])) {
-            $response = call_user_func(
-                array($this->jsonServerCalls, $request['method']),
-                $request['id'],
-                $request['params']
-            );
+            $response = call_user_func(array($this->jsonServerCalls, $request['method']), $request['id'],
+                $request['params']);
             if (!empty($response)) {
                 return $response;
             }
@@ -171,5 +168,6 @@ class JsonRPCServer
         $response['error'] = array('error_msg' => 'method:' . $request['method'] . ' not supported');
 
         return $response;
+
     }
 }

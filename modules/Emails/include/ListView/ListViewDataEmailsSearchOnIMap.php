@@ -42,8 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
-{
+class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
 
 
 
@@ -76,8 +75,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         $limitPerPage,
         $params,
         $pageData,
-        $filter_fields
-    ) {
+        $filter_fields) {
 
 
         // Create the data structure which are required to view a list view.
@@ -130,15 +128,15 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         /// Populate the data and its fields from the email server
         $request['uids'] = array();
 
-            
+
         if (isset($emailServerEmails['data']) && is_array($emailServerEmails['data'])) {
             $emailServerEmailsData = $emailServerEmails['data'];
         } else {
-            if (!isset($emailServerEmails['data'])) {	
-                LoggerManager::getLogger()->warn('server email data is not set for seearch');	
+            if (!isset($emailServerEmails['data'])) {
+                LoggerManager::getLogger()->warn('server email data is not set for seearch');
             } elseif (!is_array($emailServerEmails['data'])) {
-                LoggerManager::getLogger()->warn('server email data should be an array, ' . gettype($emailServerEmails['data']) . ' given.');	
-            }	
+                LoggerManager::getLogger()->warn('server email data should be an array, ' . gettype($emailServerEmails['data']) . ' given.');
+            }
         }
 
         if ($inboundEmail) {
@@ -236,6 +234,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         }
 
         foreach ($queries as $query) {
+
             if ($total < $limitPerPage || $nextOffset >= $total) {
                 if (isset($pageData['queries'][$query])) {
                     unset($pageData['queries'][$query]);
@@ -250,6 +249,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
                 $pageData['queries'][$query]['lvso'] = "DESC";
 
                 $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
+
             }
         }
 
@@ -279,7 +279,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             }
         }
 
-        if (!isset($pageData['ordering'])) {
+        if(!isset($pageData['ordering'])) {
             $pageData['ordering'] = array(
                 'orderBy' => 'date_entered',
                 'sortOrder'=> 'ASC'
@@ -334,10 +334,10 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         }
 
 
-        if ($this->lvde->isRequestedSearchAdvanced($request)) {
+        if ( $this->lvde->isRequestedSearchAdvanced($request) ) {
             $queryString = "-advanced_search";
         } else {
-            if ($this->lvde->isRequestedSearchBasic($request)) {
+            if ( $this->lvde->isRequestedSearchBasic($request) ) {
 
                 // SearchForm is a (SearchForm2)
                 $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);

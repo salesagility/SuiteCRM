@@ -204,6 +204,7 @@ class OneLogin_Saml2_LogoutResponse
     private function _query($query)
     {
         return OneLogin_Saml2_Utils::query($this->document, $query);
+
     }
 
     /**
@@ -213,6 +214,7 @@ class OneLogin_Saml2_LogoutResponse
      */
     public function build($inResponseTo)
     {
+
         $spData = $this->_settings->getSPData();
         $idpData = $this->_settings->getIdPData();
 
@@ -268,9 +270,9 @@ LOGOUTRESPONSE;
         return $this->_error;
     }
 
-    /**
-     * @return the ID of the Response
-     */
+   /**
+    * @return the ID of the Response
+    */
     public function getId()
     {
         return $this->id;

@@ -80,7 +80,7 @@ class Zend_Oauth_Http
      * @return void
      */
     public function __construct(
-        Zend_Oauth_Consumer $consumer,
+        Zend_Oauth_Consumer $consumer, 
         array $parameters = null,
         Zend_Oauth_Http_Utility $utility = null
     ) {
@@ -233,7 +233,7 @@ class Zend_Oauth_Http
                 require_once 'Zend/Oauth/Exception.php';
                 throw new Zend_Oauth_Exception(
                     'Could not retrieve a valid Token response from Token URL:'
-                    . ($response !== null
+                    . ($response !== null 
                         ? PHP_EOL . $response->getBody()
                         : ' No body - check for headers')
                 );

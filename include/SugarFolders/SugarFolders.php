@@ -42,10 +42,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once(__DIR__ . '/../ytree/Tree.php');
-require_once(__DIR__ . '/../ytree/ExtNode.php');
-require_once(__DIR__ . '/SugarFolderEmptyException.php');
-require_once(__DIR__ . '/../TimeDate.php');
+require_once __DIR__ . '/../ytree/Tree.php';
+require_once __DIR__ . '/../ytree/ExtNode.php';
+require_once __DIR__ . '/SugarFolderEmptyException.php';
+require_once __DIR__ . '/../TimeDate.php';
 
 /**
  * Polymorphic buckets - place any item in a folder
@@ -251,7 +251,6 @@ class SugarFolder
         if ($a['c'] > 0) {
             return true;
         }
-
         return false;
     }
 
@@ -551,6 +550,7 @@ class SugarFolder
         $email = new Email(); //Needed for email specific functions.
 
         while ($a = $this->db->fetchByAssoc($r)) {
+
             $temp = array();
             $temp['flagged']   = (is_null($a['flagged']) || $a['flagged'] == '0') ? '' : 1;
             $temp['status']    = (is_null($a['reply_to_status']) || $a['reply_to_status'] == '0') ? '' : 1;
@@ -852,11 +852,11 @@ class SugarFolder
      * @param array $folders - array of folders table rows
      * @return array
      */
-    private function removeDeletedFolders($folders)
-    {
+    private function removeDeletedFolders($folders) {
+
         $ret = array();
 
-        foreach ($folders as $folder) {
+        foreach($folders as $folder) {
             $correct = false;
 
             if (!$folder['id']) {
@@ -869,7 +869,7 @@ class SugarFolder
                 $correct = true;
             }
 
-            if ($correct) {
+            if($correct) {
                 $ret[] = $folder;
             }
         }

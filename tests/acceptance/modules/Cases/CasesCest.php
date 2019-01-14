@@ -71,7 +71,7 @@ class CasesCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Cases $cases,
-        \Step\Acceptance\Accounts $account,
+        \Step\Acceptance\AccountsTester $account,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a Case');

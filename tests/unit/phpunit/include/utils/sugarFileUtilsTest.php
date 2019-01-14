@@ -12,7 +12,7 @@ class sugar_file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     /*
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

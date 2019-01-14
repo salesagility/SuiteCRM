@@ -61,11 +61,9 @@ class Zend_Gdata_Gapps_UserQuery extends Zend_Gdata_Gapps_Query
      * @param string $startUsername (optional) Value for the
      *          startUsername property.
      */
-    public function __construct(
-        $domain = null,
-        $username = null,
-            $startUsername = null
-    ) {
+    public function __construct($domain = null, $username = null,
+            $startUsername = null)
+    {
         parent::__construct($domain);
         $this->setUsername($username);
         $this->setStartUsername($startUsername);
@@ -145,4 +143,5 @@ class Zend_Gdata_Gapps_UserQuery extends Zend_Gdata_Gapps_Query
         $uri .= $this->getQueryString();
         return $uri;
     }
+
 }

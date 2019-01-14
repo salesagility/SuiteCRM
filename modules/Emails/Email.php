@@ -404,14 +404,14 @@ class Email extends Basic
 
     /**
      * Should be a From Address (From Name should be stored in $FromName class variable)
-     * 
+     *
      * @var string
      */
     public $From;
 
     /**
      * Should be a From Name (From Address should be stored in $From class variable)
-     * 
+     *
      * @var string
      */
     public $FromName;
@@ -1592,7 +1592,7 @@ class Email extends Basic
             }
 
             $GLOBALS['log']->debug('-------------------------------> Email called save()');
-            
+
             if (empty($this->date_sent_received)) {
                 global $timedate;
 
@@ -1613,7 +1613,7 @@ class Email extends Basic
                 $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}";
                 LoggerManager::getLogger()->error("Saving Email with invalid From name and/or Address. $details");
             }
-            
+
 
             if ((!isset($this->date_sent_received) || !$this->date_sent_received) && in_array($this->status, ['sent', 'replied'])) {
                 $this->date_sent_received = TimeDate::getInstance()->nowDb();
@@ -3090,17 +3090,17 @@ class Email extends Basic
         $mail->prepForOutbound();
         ////	END I18N TRANSLATION
         ///////////////////////////////////////////////////////////////////////
-        
+
         $validator = new EmailFromValidator();
-        if (!$validator->isValid($this)) { 
-            
-            // if an email is invalid before sending, 
-            // maybe at this point sould "return false;" because the email having 
+        if (!$validator->isValid($this)) {
+
+            // if an email is invalid before sending,
+            // maybe at this point sould "return false;" because the email having
             // invalid from address and/or name but we will trying to send it..
             // and we should log the problem at least:
-            
+
             // (needs EmailFromValidation and EmailFromFixer.. everywhere where from name and/or from email address get a value)
-            
+
             $errors = $validator->getErrorsAsText();
             $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}";
             LoggerManager::getLogger()->error("Invalid email from address or name detected before sending. $details");
@@ -3216,6 +3216,7 @@ class Email extends Basic
         $is_owner = false;
         $in_group = false; //SECURITY GROUPS
         if (!empty($this->parent_name)) {
+
             if (!empty($this->parent_name_owner)) {
                 global $current_user;
                 $is_owner = $current_user->id == $this->parent_name_owner;
@@ -4752,7 +4753,7 @@ eoq;
     private function sendOptInEmail(EmailAddress $emailAddress)
     {
         global $app_strings;
-        
+
         LoggerManager::getLogger()->deprecated(__FUNCTION__ . ' is deprecated.');
 
         $ret = false;

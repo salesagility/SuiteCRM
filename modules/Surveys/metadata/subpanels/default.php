@@ -74,3 +74,5 @@ $subpanel_layout = array(
         ),
     ),
 );
+
+?>

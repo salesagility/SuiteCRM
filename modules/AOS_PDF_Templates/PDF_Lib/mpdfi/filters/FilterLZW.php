@@ -17,8 +17,7 @@
 //  limitations under the License.
 //
 
-class FilterLZW
-{
+class FilterLZW {
     
     var $sTable = array();
     var $data = null;
@@ -122,9 +121,9 @@ class FilterLZW
 
         if ($this->tIdx == 511) {
             $this->bitsToGet = 10;
-        } elseif ($this->tIdx == 1023) {
+        } else if ($this->tIdx == 1023) {
             $this->bitsToGet = 11;
-        } elseif ($this->tIdx == 2047) {
+        } else if ($this->tIdx == 2047) {
             $this->bitsToGet = 12;
         }
     }

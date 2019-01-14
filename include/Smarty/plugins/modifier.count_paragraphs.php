@@ -25,3 +25,5 @@ function smarty_modifier_count_paragraphs($string)
 }
 
 /* vim: set expandtab: */
+
+?>

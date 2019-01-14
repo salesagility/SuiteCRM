@@ -9,7 +9,7 @@ class Targets extends \AcceptanceTester
      */
     public function gotoTargets()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Targets');
     }
 }

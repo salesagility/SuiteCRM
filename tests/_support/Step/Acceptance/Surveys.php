@@ -9,7 +9,7 @@ class Surveys extends \AcceptanceTester
      */
     public function gotoSurveys()
     {
-        $I = new NavigationBar($this->getScenario());
+        $I = new NavigationBarTester($this->getScenario());
         $I->clickAllMenuItem('Surveys');
     }
 }

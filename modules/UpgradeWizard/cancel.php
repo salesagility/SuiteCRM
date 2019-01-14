@@ -53,8 +53,8 @@ logThis('cleaning up files and session.  goodbye.');
 
 //Check the current step.
 
-if (isset($_SESSION['install_file']) && file_exists(isset($_SESSION['install_file']))) {
-    @unlink(isset($_SESSION['install_file']));
+if(isset($_SESSION['install_file']) && file_exists(isset($_SESSION['install_file']))){
+	@unlink(isset($_SESSION['install_file']));
 }
 unlinkUWTempFiles();
 unlinkUploadFiles();
@@ -93,3 +93,4 @@ $stepBack		= $_REQUEST['step'] - 1;
 $stepNext		= $_REQUEST['step'] + 1;
 $stepCancel		= -1;
 $stepRecheck	= $_REQUEST['step'];
+

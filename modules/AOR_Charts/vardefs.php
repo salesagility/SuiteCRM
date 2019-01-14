@@ -23,11 +23,11 @@
  */
 
 $dictionary['AOR_Chart'] = array(
-    'table'=>'aor_charts',
-    'audited'=>false,
-    'duplicate_merge'=>true,
-    'fields'=>array(
-        "aor_report" => array(
+	'table'=>'aor_charts',
+	'audited'=>false,
+	'duplicate_merge'=>true,
+	'fields'=>array (
+        "aor_report" => array (
             'name' => 'aor_report',
             'type' => 'link',
             'relationship' => 'aor_charts_aor_reports',
@@ -39,7 +39,7 @@ $dictionary['AOR_Chart'] = array(
             'side' => 'left',
             'id_name' => 'aor_report_id',
         ),
-        "aor_report_name" => array(
+        "aor_report_name" => array (
             'name' => 'aor_report_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -51,14 +51,14 @@ $dictionary['AOR_Chart'] = array(
             'module' => 'AOR_Report',
             'rname' => 'name',
         ),
-        "aor_report_id" => array(
+        "aor_report_id" => array (
             'name' => 'aor_report_id',
             'type' => 'id',
             'reportable' => false,
             'vname' => 'LBL_AOR_REPORT_ID',
         ),
         'type' =>
-            array(
+            array (
                 'required' => false,
                 'name' => 'type',
                 'vname' => 'LBL_TYPE',
@@ -69,22 +69,22 @@ $dictionary['AOR_Chart'] = array(
                 'options' => 'aor_chart_types',
             ),
         'x_field' =>
-            array(
+            array (
                 'required' => false,
                 'name' => 'x_field',
                 'vname' => 'LBL_X_FIELD',
                 'type' => 'int',
             ),
         'y_field' =>
-            array(
+            array (
                 'required' => false,
                 'name' => 'y_field',
                 'vname' => 'LBL_Y_FIELD',
                 'type' => 'int',
             ),
-    ),
-    'relationships'=>array(
-        "aor_charts_aor_reports" => array(
+	),
+	'relationships'=>array (
+        "aor_charts_aor_reports" => array (
             'lhs_module'=> 'AOR_Reports',
             'lhs_table'=> 'aor_reports',
             'lhs_key' => 'id',
@@ -93,12 +93,12 @@ $dictionary['AOR_Chart'] = array(
             'rhs_key' => 'aor_report_id',
             'relationship_type'=>'one-to-many',
         ),
-    ),
-    'optimistic_locking'=>true,
-    'unified_search'=>true,
+	),
+	'optimistic_locking'=>true,
+	'unified_search'=>true,
 );
 
-if (!class_exists('VardefManager')) {
-    require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Charts', 'AOR_Chart', array('basic'));
+VardefManager::createVardef('AOR_Charts','AOR_Chart', array('basic'));

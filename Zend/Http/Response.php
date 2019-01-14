@@ -352,9 +352,7 @@ class Zend_Http_Response
     public function getHeader($header)
     {
         $header = ucwords(strtolower($header));
-        if (! is_string($header) || ! isset($this->headers[$header])) {
-            return null;
-        }
+        if (! is_string($header) || ! isset($this->headers[$header])) return null;
 
         return $this->headers[$header];
     }
@@ -375,10 +373,12 @@ class Zend_Http_Response
         }
 
         // Iterate over the headers and stringify them
-        foreach ($this->headers as $name => $value) {
-            if (is_string($value)) {
+        foreach ($this->headers as $name => $value)
+        {
+            if (is_string($value))
                 $str .= "{$name}: {$value}{$br}";
-            } elseif (is_array($value)) {
+
+            elseif (is_array($value)) {
                 foreach ($value as $subval) {
                     $str .= "{$name}: {$subval}{$br}";
                 }
@@ -424,9 +424,7 @@ class Zend_Http_Response
     public static function responseCodeAsText($code = null, $http11 = true)
     {
         $messages = self::$messages;
-        if (! $http11) {
-            $messages[302] = 'Moved Temporarily';
-        }
+        if (! $http11) $messages[302] = 'Moved Temporarily';
 
         if ($code === null) {
             return $messages;
@@ -500,20 +498,16 @@ class Zend_Http_Response
 
         // First, split body and headers
         $parts = preg_split('|(?:\r?\n){2}|m', $response_str, 2);
-        if (! $parts[0]) {
-            return $headers;
-        }
+        if (! $parts[0]) return $headers;
 
         // Split headers part to lines
         $lines = explode("\n", $parts[0]);
         unset($parts);
         $last_header = null;
 
-        foreach ($lines as $line) {
+        foreach($lines as $line) {
             $line = trim($line, "\r\n");
-            if ($line == "") {
-                break;
-            }
+            if ($line == "") break;
 
             // Locate headers like 'Location: ...' and 'Location:...' (note the missing space)
             if (preg_match("|^([\w-]+):\s*(.+)|", $line, $m)) {
@@ -574,6 +568,7 @@ class Zend_Http_Response
         // override it's internal encoding
         if (function_exists('mb_internal_encoding') &&
            ((int) ini_get('mbstring.func_overload')) & 2) {
+
             $mbIntEnc = mb_internal_encoding();
             mb_internal_encoding('ASCII');
         }

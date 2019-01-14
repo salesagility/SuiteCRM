@@ -52,6 +52,7 @@ require_once 'Zend/Gdata/App/Extension/Uri.php';
  */
 abstract class Zend_Gdata_App_Extension_Person extends Zend_Gdata_App_Extension
 {
+
     protected $_rootElement = null;
     protected $_name = null;
     protected $_email = null;
@@ -158,4 +159,5 @@ abstract class Zend_Gdata_App_Extension_Person extends Zend_Gdata_App_Extension
         $this->_uri = $value;
         return $this;
     }
+
 }

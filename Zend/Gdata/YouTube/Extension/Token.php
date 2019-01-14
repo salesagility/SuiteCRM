@@ -37,6 +37,7 @@ require_once 'Zend/Gdata/Extension.php';
  */
 class Zend_Gdata_YouTube_Extension_Token extends Zend_Gdata_App_Extension
 {
+
     protected $_rootNamespace = 'yt';
     protected $_rootElement = 'token';
 
@@ -65,4 +66,5 @@ class Zend_Gdata_YouTube_Extension_Token extends Zend_Gdata_App_Extension
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         return $element;
     }
+
 }

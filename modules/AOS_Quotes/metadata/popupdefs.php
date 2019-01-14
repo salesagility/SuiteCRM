@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * Advanced OpenSales, Advanced, robust set of sales modules.
  * @package Advanced OpenSales for SugarCRM
@@ -28,17 +26,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $module_name = 'AOS_Quotes';
 $_module_name = 'aos_quotes';
 $popupMeta = array('moduleMain' => $module_name,
-                        'varName' => $module_name,
-                        'orderBy' => $_module_name.'.name',
-                        'whereClauses' =>
-                            array('name' => $_module_name.'.name',
-                                    'billing_address_city' => $_module_name.'.billing_address_city',
-                                    'phone_office' => $_module_name.'.phone_office'),
-                        'searchInputs' =>
-                            array('name',
-                                  'billing_address_city',
-                                  'phone_office',
-                                  'industry'
-                                  
-                            ),
-                        );
+						'varName' => $module_name,
+						'orderBy' => $_module_name.'.name',
+						'whereClauses' => 
+							array('name' => $_module_name.'.name', 
+									'billing_address_city' => $_module_name.'.billing_address_city',
+									'phone_office' => $_module_name.'.phone_office'),
+						'searchInputs' =>
+							array('name', 
+								  'billing_address_city',
+								  'phone_office',
+								  'industry'
+								  
+							),
+						);

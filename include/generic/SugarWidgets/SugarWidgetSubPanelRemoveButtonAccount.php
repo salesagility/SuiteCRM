@@ -45,19 +45,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-class SugarWidgetSubPanelRemoveButtonAccount extends SugarWidgetSubPanelRemoveButton
-{
+class SugarWidgetSubPanelRemoveButtonAccount extends SugarWidgetSubPanelRemoveButton {
     /**
      *
      * @see SugarWidgetSubPanelRemoveButton::displayList()
      * @param $layout_def
      * @return bool|string
      */
-    public function displayList(&$layout_def)
-    {
-        if (!$layout_def['EditView']) {
-            return false;
-        }
-        return parent::displayList($layout_def);
-    }
+	function displayList(&$layout_def) {
+		if (!$layout_def['EditView']) {
+			return false;
+		}
+		return parent::displayList($layout_def);
+	}
 }

@@ -40,7 +40,6 @@
 use Interop\Container\Exception\ContainerException;
 use Psr\Container\ContainerInterface;
 use Slim\Exception\ContainerValueNotFoundException;
-
 /**
  * @param ContainerInterface $container
  * @throws ContainerException

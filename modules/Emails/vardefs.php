@@ -552,7 +552,7 @@ $dictionary['Email'] = array(
             'reportable' => true,
         ),
 
-        "emails_email_templates" => array(
+        "emails_email_templates" => array (
             'name' => 'emails_email_templates',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
@@ -562,7 +562,7 @@ $dictionary['Email'] = array(
             'vname' => 'LBL_EMAIL_TEMPLATE',
             'id_name' => 'emails_email_templates_idb',
         ),
-        "emails_email_templates_name" => array(
+        "emails_email_templates_name" => array (
             'name' => 'emails_email_templates_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -574,7 +574,7 @@ $dictionary['Email'] = array(
             'module' => 'EmailTemplates',
             'rname' => 'name',
         ),
-        "emails_email_templates_idb" => array(
+        "emails_email_templates_idb" => array (
             'name' => 'emails_email_templates_idb',
             'type' => 'link',
             'relationship' => 'emails_email_templates',
