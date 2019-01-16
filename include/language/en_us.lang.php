@@ -1805,7 +1805,6 @@ $app_strings = array(
     'MSG_LIST_VIEW_CHANGE_SEARCH' => 'or change your search criteria',
     'MSG_EMPTY_LIST_VIEW_NO_RESULTS' => 'You currently have no records saved. <item2> or <item3> one now.',
 
-    'LBL_CLICK_HERE' => 'Click here',
     // contextMenu strings
     'LBL_ADD_TO_FAVORITES' => 'Add to My Favorites',
     'LBL_CREATE_CONTACT' => 'Create Contact',
