@@ -236,17 +236,16 @@ if (!isset($focus->date_start))
 	list($focus->date_start,  $focus->time_start) = $timedate->split_date_time($timedate->now());
 }
 
-$focus->date_sent = "";
+$focus->date_sent_received = "";
 
 require_once('include/formbase.php');
 $focus = populateFromPost('', $focus);
 
 //CCL - Bug: 40168 Fix ability to change date sent from saved emails
-if($focus->type == 'archived') 
-{	
-  $focus->date_start = $_REQUEST['date_start'];
-  $focus->time_start = $_REQUEST['time_start'] . $_REQUEST['meridiem'];
-  $focus->date_sent = '';	
+if ($focus->type == 'archived') {
+    $focus->date_start = $_REQUEST['date_start'];
+    $focus->time_start = $_REQUEST['time_start'] . $_REQUEST['meridiem'];
+    $focus->date_sent_received = '';
 }
 
 $focus->save(false);

@@ -270,7 +270,22 @@ class ImapHandler implements ImapHandlerInterface
     public function open($mailbox, $username, $password, $options = 0, $n_retries = 0, $params = null)
     {
         $this->logCall(__FUNCTION__, func_get_args());
+        
+        // TODO: it makes a php notice, should be fixed on a way like this:
+        // $stream = false;
+        // if ($username) {
+        //     $stream = @imap_open($mailbox, $username, $password, $options, $n_retries, $params);
+        // } else {
+        //     LoggerManager::getLogger()->error('Trying to connect to an IMAP server without username.');
+        // }
+        // if (!$stream) {
+        //     LoggerManager::getLogger()->warn('Unable to connecting and get a stream to IMAP server.');
+        // }
+        // $this->setStream($stream);
+        
         $this->setStream(@imap_open($mailbox, $username, $password, $options, $n_retries, $params));
+        
+        
         if (!$this->getStream()) {
             $this->log('IMAP open error');
         }

@@ -10,9 +10,9 @@ matrix:
 jobs:
   include:
       - stage: codecoverage
-        if: type IN (pull_request) OR branch in (master, develop)
+        if: type IN (pull_request) OR branch in (master, develop, hotfix)
         php: 7.0
-        script: ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; echo "\$sugar_config['state_checker']['test_state_check_mode'] = 0;" >> config_override.php  ; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
+        script: ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d ; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f ./_output/coverage.xml
 sudo: required
 dist: trusty
 services:
@@ -71,6 +71,9 @@ script:
   # Run the unit tests
   # - ./vendor/bin/codecept run unit --steps -f -vvv -d
   - sudo chmod -R 777 .
+  - echo "\$sugar_config['state_checker']['test_state_check_mode'] = 2;" >> config_override.php
+  - echo "\$sugar_config['show_log_trace'] = true;" >> config_override.php
+  - echo "\$sugar_config['logger']['level'] = 'fatal';" >> config_override.php
   - cd tests
   - ../vendor/bin/phpunit --stop-on-failure --stop-on-error --colors --configuration $(pwd)/phpunit.xml.dist ./tests/unit/phpunit
   - cd ..

@@ -281,7 +281,13 @@ class ListViewSmarty extends ListViewDisplay
         if(!isset($this->data['pageData']['offsets'])) {
             $GLOBALS['log']->warn("Incorrect pageData: trying to display but offset is not set");
         } else {
-            $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
+            if (!isset($data['data'])) {
+                $data['data'] = null;
+                LoggerManager::getLogger()->warn('List view smarty data must be an array, undefined data given and converting to an empty array.');
+            } elseif (!is_array($data['data'])) {
+                LoggerManager::getLogger()->warn('List view smarty data must be an array, ' . gettype($this->data['data']) . ' given and converting to an array.');
+            }
+            $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count((array)$this->data['data']);
         }
 
         $this->ss->assign('pageData', $this->data['pageData']);

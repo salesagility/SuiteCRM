@@ -93,14 +93,11 @@ if (isset($focus->parent_type))
 $xtpl->assign("PARENT_ID", $focus->parent_id);
 $xtpl->assign("NAME", $focus->name);
 //$xtpl->assign("SENT_BY_USER_NAME", $focus->sent_by_user_name);
-$xtpl->assign("DATE_SENT", $focus->date_start." ".$focus->time_start);
-if ($focus->status == 'sent')
-{
-$xtpl->assign("STATUS", $mod_strings['LBL_MESSAGE_SENT']);
-}
-else
-{
-$xtpl->assign("STATUS", "<font color=red>".$mod_strings['LBL_ERROR_SENDING_EMAIL']."</font>");
+$xtpl->assign("DATE_SENT_RECEIVED", $focus->date_start." ".$focus->time_start);
+if ($focus->status == 'sent') {
+    $xtpl->assign("STATUS", $mod_strings['LBL_MESSAGE_SENT']);
+} else {
+    $xtpl->assign("STATUS", "<font color=red>".$mod_strings['LBL_ERROR_SENDING_EMAIL']."</font>");
 }
 
 global $current_user;
