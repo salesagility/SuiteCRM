@@ -58,7 +58,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
     /** @var StateSaver */
     private $state;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         echo PHP_EOL;
@@ -90,7 +90,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->state->pushGlobals();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         $this->restore();
 

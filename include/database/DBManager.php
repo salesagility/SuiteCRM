@@ -515,7 +515,7 @@ abstract class DBManager
         $sql = $this->insertSQL($bean);
         $tablename = $bean->getTableName();
         $msg = "Error inserting into table: $tablename:";
-
+        
         return $this->query($sql, true, $msg);
     }
 

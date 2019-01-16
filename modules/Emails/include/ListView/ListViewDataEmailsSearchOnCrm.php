@@ -61,7 +61,8 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
      * @param int $offset
      * @return array
      */
-    public function search($filterFields, $request, $where, $inboundEmail, $params, $seed, $singleSelect, $id, $limit, $currentUser, $idField, $offset) {
+    public function search($filterFields, $request, $where, InboundEmail $inboundEmail, $params, Email $seed, $singleSelect, $id, $limit, User $currentUser, $idField, $offset)
+    {
         // Fix fields in filter fields
 
         if(!is_string($id)) {
@@ -76,7 +77,13 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
         if(!empty($where)) {
             $where .= ' AND ';
         }
-        $crmWhere = $where . "mailbox_id LIKE " ."'" . $inboundEmail->id . "'";
+        if ($inboundEmail->id) {
+            $inboundEmailIdQuoted = DBManagerFactory::getInstance()->quote($inboundEmail->id);
+        } else {
+            $inboundEmailIdQuoted = '';
+            LoggerManager::getLogger()->warn('Unable to quote Inbound Email ID, Inbound Email is not set.');
+        }
+        $crmWhere = $where . "mailbox_id LIKE " ."'" . $inboundEmailIdQuoted . "'";
 
 
         // Populates CRM fields

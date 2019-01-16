@@ -219,7 +219,7 @@ class SurveyResponses extends Basic
             $emailObj->parent_type = "Contacts";
             $emailObj->parent_id = $contactId;
         }
-        $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+        $emailObj->date_sent_received = TimeDate::getInstance()->nowDb();
         $emailObj->modified_user_id = '1';
         $emailObj->created_by = '1';
         $emailObj->status = 'sent';

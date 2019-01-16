@@ -149,7 +149,7 @@ $server->register(
         'password' => 'xsd:string',
         'parent_id' => 'xsd:string',
         'contact_ids' => 'xsd:string',
-        'date_sent' => 'xsd:date',
+        'date_sent_received' => 'xsd:date',
         'email_subject' => 'xsd:string',
         'email_body' => 'xsd:string'
     ),
@@ -833,25 +833,25 @@ function case_by_search($name, $where = '', $msi_id = '0')
  * @param string $password -- MD5 hash of the user password for authentication
  * @param id $parent_id -- [optional] The parent record to link the email to.
  * @param unknown_type $contact_ids
- * @param string $date_sent -- Date/time the email was sent in Visual Basic Date format. (e.g. '7/22/2004 9:36:31 AM')
+ * @param string $date_sent_received -- Date/time the email was sent in Visual Basic Date format. (e.g. '7/22/2004 9:36:31 AM')
  * @param string $email_subject -- The subject of the email
  * @param string $email_body -- The body of the email
  * @return "Invalid username and/or password"
  * @return -1 If the authenticated user does not have ACL access to save Email.
  */
-function track_email($user_name, $password, $parent_id, $contact_ids, $date_sent, $email_subject, $email_body)
+function track_email($user_name, $password, $parent_id, $contact_ids, $date_sent_received, $email_subject, $email_body)
 {
     if (!validate_user($user_name, $password)) {
         return "Invalid username and/or password";
     }
     global $current_user;
 
-    $GLOBALS['log']->info("In track email: username: $user_name contacts: $contact_ids date_sent: $date_sent");
+    $GLOBALS['log']->info("In track email: username: $user_name contacts: $contact_ids date_sent_received: $date_sent_received");
 
     // translate date sent from VB format 7/22/2004 9:36:31 AM
     // to yyyy-mm-dd 9:36:31 AM
 
-    $date_sent = preg_replace("@([0-9]*)/([0-9]*)/([0-9]*)( .*$)@", "\\3-\\1-\\2\\4", $date_sent);
+    $date_sent_received = preg_replace("@([0-9]*)/([0-9]*)/([0-9]*)( .*$)@", "\\3-\\1-\\2\\4", $date_sent_received);
 
 
     $seed_user = new User();
@@ -870,7 +870,7 @@ function track_email($user_name, $password, $parent_id, $contact_ids, $date_sent
     $email->user_id = $user_id;
     $email->assigned_user_id = $user_id;
     $email->assigned_user_name = $user_name;
-    $email->date_start = $date_sent;
+    $email->date_start = $date_sent_received;
 
     // Save one copy of the email message
     $parent_id_list = explode(";", $parent_id);

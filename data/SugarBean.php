@@ -2321,7 +2321,7 @@ class SugarBean
      * @todo Add support for field type validation and encoding of parameters.
      */
     public function save($check_notify = false)
-    {
+    {   
         $this->in_save = true;
         // cn: SECURITY - strip XSS potential vectors
         $this->cleanBean();
@@ -2396,21 +2396,25 @@ class SugarBean
         if ($this->hasEmails() && !empty($this->email_addresses_non_primary)
             && is_array($this->email_addresses_non_primary)) {
             // Add each mail to the account
-            if (!isset($this->emailAddress)) {
-                $GLOBALS['log']->fatal('Undefined property: SugarBeanMock::$emailAddress');
-            } else {
-                foreach ($this->email_addresses_non_primary as $mail) {
-                    $this->emailAddress->addAddress($mail);
+            if (isset($this->emailAddress)) {
+                if ($this->emailAddress instanceof EmailAddress) {
+                    foreach ($this->email_addresses_non_primary as $mail) {
+                        $this->emailAddress->addAddress($mail);
+                    }
+                    $this->emailAddress->saveEmail(
+                        $this->id,
+                        $this->module_dir,
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        $this->in_workflow);
+                } else {
+                    LoggerManager::getLogger()->fatal('SugarBean::$emailAddress should be an EmailAddress, ' . gettype($this->emailAddress) . ' given.');
                 }
-                $this->emailAddress->saveEmail(
-                    $this->id,
-                    $this->module_dir,
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    $this->in_workflow);
+            } else {
+                LoggerManager::getLogger()->fatal('SugarBean::$emailAddress is not set, email address(es) is not applied to Bean.');
             }
         }
 
@@ -2422,9 +2426,9 @@ class SugarBean
         $this->_sendNotifications($check_notify);
 
         if ($isUpdate) {
-            $this->db->update($this);
+            $ret = $this->db->update($this);
         } else {
-            $this->db->insert($this);
+            $ret = $this->db->insert($this);
         }
 
         if (empty($GLOBALS['resavingRelatedBeans'])) {
@@ -2507,84 +2511,86 @@ class SugarBean
                     continue;
                 }
                 $reformatted = false;
-                switch ($def['type']) {
-                    case 'datetime':
-                    case 'datetimecombo':
-                        if (empty($this->$field) || $this->$field == 'NULL') {
-                            $this->$field = '';
-                            break;
-                        }
-                        if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $this->$field)) {
-                            $this->$field = $timedate->to_db($this->$field);
-                            $reformatted = true;
-                        }
-                        break;
-                    case 'date':
-                        if (empty($this->$field) || $this->$field == 'NULL') {
-                            $this->$field = '';
-                            break;
-                        }
-                        if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $this->$field)) {
-                            $this->$field = $timedate->to_db_date($this->$field, false);
-                            $reformatted = true;
-                        }
-                        break;
-                    case 'time':
-                        if (empty($this->$field) || $this->$field == 'NULL') {
-                            $this->$field = '';
-                            break;
-                        }
-                        if (preg_match('/(am|pm)/i', $this->$field)) {
-                            $fromUserTime = $timedate->fromUserTime($this->$field);
-                            if (is_object($fromUserTime) && method_exists($fromUserTime, 'format')) {
-                                $this->$field = $fromUserTime->format(TimeDate::DB_TIME_FORMAT);
-                                $reformatted = true;
-                            } else {
-                                $GLOBALS['log']->fatal('Get DateTime from user time string is failed.');
+                if (isset($def['type']) && $def['type']) {
+                    switch ($def['type']) {
+                        case 'datetime':
+                        case 'datetimecombo':
+                            if (empty($this->$field) || $this->$field == 'NULL') {
+                                $this->$field = '';
+                                break;
                             }
-                        }
-                        break;
-                    case 'double':
-                    case 'decimal':
-                    case 'currency':
-                    case 'float':
-                        if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                            continue;
-                        }
-                        if (is_string($this->$field)) {
-                            $this->$field = (float)unformat_number($this->$field);
-                            $reformatted = true;
-                        }
-                        break;
-                    case 'uint':
-                    case 'ulong':
-                    case 'long':
-                    case 'short':
-                    case 'tinyint':
-                    case 'int':
-                        if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                            continue;
-                        }
-                        if (is_string($this->$field)) {
-                            $this->$field = (int)unformat_number($this->$field);
-                            $reformatted = true;
-                        }
-                        break;
-                    case 'bool':
-                        if (empty($this->$field) || in_array(strval($this->$field), $bool_false_values)) {
-                            $this->$field = false;
-                        } elseif (true === $this->$field || 1 == $this->$field) {
-                            $this->$field = true;
-                        } else {
-                            $this->$field = true;
-                            $reformatted = true;
-                        }
-                        break;
-                    case 'encrypt':
-                        $this->$field = $this->encrpyt_before_save($this->$field);
-                        break;
-                    default :
-                        //do nothing
+                            if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $this->$field)) {
+                                $this->$field = $timedate->to_db($this->$field);
+                                $reformatted = true;
+                            }
+                            break;
+                        case 'date':
+                            if (empty($this->$field) || $this->$field == 'NULL') {
+                                $this->$field = '';
+                                break;
+                            }
+                            if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $this->$field)) {
+                                $this->$field = $timedate->to_db_date($this->$field, false);
+                                $reformatted = true;
+                            }
+                            break;
+                        case 'time':
+                            if (empty($this->$field) || $this->$field == 'NULL') {
+                                $this->$field = '';
+                                break;
+                            }
+                            if (preg_match('/(am|pm)/i', $this->$field)) {
+                                $fromUserTime = $timedate->fromUserTime($this->$field);
+                                if (is_object($fromUserTime) && method_exists($fromUserTime, 'format')) {
+                                    $this->$field = $fromUserTime->format(TimeDate::DB_TIME_FORMAT);
+                                    $reformatted = true;
+                                } else {
+                                    $GLOBALS['log']->fatal('Get DateTime from user time string is failed.');
+                                }
+                            }
+                            break;
+                        case 'double':
+                        case 'decimal':
+                        case 'currency':
+                        case 'float':
+                            if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
+                                continue;
+                            }
+                            if (is_string($this->$field)) {
+                                $this->$field = (float)unformat_number($this->$field);
+                                $reformatted = true;
+                            }
+                            break;
+                        case 'uint':
+                        case 'ulong':
+                        case 'long':
+                        case 'short':
+                        case 'tinyint':
+                        case 'int':
+                            if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
+                                continue;
+                            }
+                            if (is_string($this->$field)) {
+                                $this->$field = (int)unformat_number($this->$field);
+                                $reformatted = true;
+                            }
+                            break;
+                        case 'bool':
+                            if (empty($this->$field) || in_array(strval($this->$field), $bool_false_values)) {
+                                $this->$field = false;
+                            } elseif (true === $this->$field || 1 == $this->$field) {
+                                $this->$field = true;
+                            } else {
+                                $this->$field = true;
+                                $reformatted = true;
+                            }
+                            break;
+                        case 'encrypt':
+                            $this->$field = $this->encrpyt_before_save($this->$field);
+                            break;
+                        default :
+                            //do nothing
+                    }
                 }
                 if ($reformatted) {
                     $GLOBALS['log']->deprecated('Formatting correction: ' . $this->module_dir . '->' . $field .
@@ -5230,7 +5236,7 @@ class SugarBean
      * @param string $id
      */
     public function mark_deleted($id)
-    {
+    {        
         global $current_user;
         $date_modified = $GLOBALS['timedate']->nowDb();
         $id = $this->db->quote($id);
