@@ -676,22 +676,6 @@ class User extends Person implements EmailInterface
             exit;
         }
 
-        if ((isset($_POST['old_password']) || $this->portal_only) &&
-            (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
-            (isset($_POST['password_change']) && $_POST['password_change'] === 'true')) {
-            if (!$this->change_password($_POST['old_password'], $_POST['new_password'])) {
-                if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
-                    SugarApplication::appendErrorMessage($this->error_string);
-                    header("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
-                    exit;
-                }
-                if (isset($_POST['page']) && $_POST['page'] === 'Change') {
-                    SugarApplication::appendErrorMessage($this->error_string);
-                    header("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
-                    exit;
-                }
-            }
-        }
 
         $retId = parent::save($check_notify);
         if (!$retId) {
@@ -710,6 +694,23 @@ class User extends Person implements EmailInterface
         $this->saveFormPreferences();
 
         $this->savePreferencesToDB();
+
+        if ((isset($_POST['old_password']) || $this->portal_only) &&
+            (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
+            (isset($_POST['password_change']) && $_POST['password_change'] === 'true')) {
+            if (!$this->change_password($_POST['old_password'], $_POST['new_password'])) {
+                if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
+                    SugarApplication::appendErrorMessage($this->error_string);
+                    header("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
+                    exit;
+                }
+                if (isset($_POST['page']) && $_POST['page'] === 'Change') {
+                    SugarApplication::appendErrorMessage($this->error_string);
+                    header("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
+                    exit;
+                }
+            }
+        }
 
         // User Profile specific save for Email addresses
         $this->lastSaveErrorIsEmailAddressSaveError = false;
