@@ -520,6 +520,18 @@ class User extends Person {
             exit;
         }
 
+		parent::save($check_notify);
+
+
+		// set some default preferences when creating a new user
+		if ( $setNewUserPreferences ) {
+	        if(!$this->getPreference('calendar_publish_key')) {
+		        $this->setPreference('calendar_publish_key', create_guid());
+	        }
+		}
+        $this->saveFormPreferences();
+        $this->savePreferencesToDB();
+
         if ((isset($_POST['old_password']) || $this->portal_only) &&
             (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
             (isset($_POST['password_change']) && $_POST['password_change'] === 'true')) {
@@ -537,17 +549,6 @@ class User extends Person {
             }
         }
 
-		parent::save($check_notify);
-
-
-		// set some default preferences when creating a new user
-		if ( $setNewUserPreferences ) {
-	        if(!$this->getPreference('calendar_publish_key')) {
-		        $this->setPreference('calendar_publish_key', create_guid());
-	        }
-		}
-        $this->saveFormPreferences();
-        $this->savePreferencesToDB();
         return $this->id;
 	}
 
