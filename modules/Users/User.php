@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -477,13 +477,22 @@ class User extends Person {
 	    return "1<>1";
 	}
 
-	function save($check_notify = false) {
-		$isUpdate = !empty($this->id) && !$this->new_with_id;
-
-
-		$query = "SELECT count(id) as total from users WHERE ".self::getLicensedUsersWhere();
-
-
+    /**
+     * Normally a bean returns ID from save() method if it was
+     * success and false (or maybe null) is something went wrong.
+     * BUT (for some reason) if User bean saved properly except
+     * the email addresses of it, this User::save() method also
+     * return a false.
+     * It's a confusing ambiguous return value for caller method.
+     *
+     * To handle this issue when save method can not save email
+     * addresses and return false it also set the variable called
+     * User::$lastSaveErrorIsEmailAddressSaveError to true.
+     *
+     * @param bool $check_notify
+     * @return string
+     */
+	public function save($check_notify = false) {
         // is_group & portal should be set to 0 by default
         if (!isset($this->is_group)) {
             $this->is_group = 0;
@@ -505,6 +514,27 @@ class User extends Person {
 		// set some default preferences when creating a new user
 		$setNewUserPreferences = empty($this->id) || !empty($this->new_with_id);
 
+        if (!$this->verify_data()) {
+            SugarApplication::appendErrorMessage($this->error_string);
+            header('Location: index.php?action=Error&module=Users');
+            exit;
+        }
+
+        if ((isset($_POST['old_password']) || $this->portal_only) &&
+            (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
+            (isset($_POST['password_change']) && $_POST['password_change'] === 'true') &&
+            (!$this->change_password($_POST['old_password'], $_POST['new_password']))) {
+            if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
+                SugarApplication::appendErrorMessage($this->error_string);
+                header("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
+                exit;
+            }
+            if (isset($_POST['page']) && $_POST['page'] === 'Change') {
+                SugarApplication::appendErrorMessage($this->error_string);
+                header("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
+                exit;
+            }
+        }
 
 		parent::save($check_notify);
 
