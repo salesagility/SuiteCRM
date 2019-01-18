@@ -666,6 +666,20 @@ class User extends Person implements EmailInterface
             exit;
         }
 
+        parent::save($check_notify);
+
+        // set some default preferences when creating a new user
+        if ($setNewUserPreferences) {
+            if (!$this->getPreference('calendar_publish_key')) {
+                $this->setPreference('calendar_publish_key', create_guid());
+            }
+        }
+
+        $this->saveFormPreferences();
+
+        $this->savePreferencesToDB();
+
+
         if ((isset($_POST['old_password']) || $this->portal_only) &&
             (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
             (isset($_POST['password_change']) && $_POST['password_change'] === 'true')) {
@@ -682,19 +696,6 @@ class User extends Person implements EmailInterface
                 }
             }
         }
-
-        parent::save($check_notify);
-
-        // set some default preferences when creating a new user
-        if ($setNewUserPreferences) {
-            if (!$this->getPreference('calendar_publish_key')) {
-                $this->setPreference('calendar_publish_key', create_guid());
-            }
-        }
-
-        $this->saveFormPreferences();
-
-        $this->savePreferencesToDB();
 
         // User Profile specific save for Email addresses
         if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
